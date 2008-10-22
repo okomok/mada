@@ -14,6 +14,17 @@ object AppTest {
     }
 }
 
+
+class Identity[T] {
+  type Type = T
+}
+
+/*
+object Foo {
+  def id[T](x: T) = new Identity[T]#Type() { }
+}
+*/
+
 /**
  * Unit test for simple App.
  */
@@ -24,6 +35,10 @@ class AppTest extends TestCase("app") {
      */
     def testOK() = assertTrue(true);
     def testKO() = assertTrue(true);
+    /*
+    val x: Identity[Integer]#Type = 3;
     
-
+    def testType() = assertTrue(x == 3);
+*/
+        
 }
