@@ -13,13 +13,17 @@ case class RandomAccess extends Bidirectional
 object NotImplemented extends UnsupportedOperationException
 
 
+
+object forceClone {
+//  def apply[T](x: T): T = x.clone().asInstance[T]
+}
+
+
 // Pointer trait
 
-trait Pointer {
-  type PointerType <: Pointer
-//  def lower: PointerType = { self: PointerType => self } // doesn't compile
-
-  type ElementType
+trait Pointer[E] {
+  type PointerType = Pointer[E]
+  type ElementType = E
   type DifferenceType = Long // means BigInt can't be RandomAccess.
   protected def _traversalTag: TraversalTag
   protected def _read: ElementType = { throw NotImplemented }
@@ -32,63 +36,24 @@ trait Pointer {
   protected def _difference(that: PointerType): DifferenceType = { throw NotImplemented }
 
   final def traversalTag = _traversalTag
-  override def equals(that: Any) = this _equals (that.asInstanceOf[PointerType])
-  override def clone: PointerType = this _clone
-  final def read = this _read
-  final def write(e: ElementType) = this _write e
-  final def ++ : Unit = this _increment
-  final def -- : Unit = this _decrement
-  final def += (n: DifferenceType) = this _offset n
-  final def -  (that: PointerType) = this _difference that
-  final def <  (that: PointerType) = (this _difference that) < 0
+  override def equals(that: Any) = _equals(that.asInstanceOf[PointerType])
+  override def clone(): PointerType = _clone
+  final def read = _read
+  final def write(e: ElementType): PointerType = { _write(e); this }
+  final def ++ : PointerType = { _increment; this }
+  final def -- : PointerType = { _decrement; this }
+  final def += (n: DifferenceType): PointerType = { _offset(n); this }
+  final def -  (that: PointerType) = _difference(that)
+  final def <  (that: PointerType) = _difference(that) < 0
 
-  final def to(last: PointerType) = { self: PointerType => new PointerRange[PointerType](self, last) }
-}
-
-
-trait PointerAdapter extends Pointer {
-  type Type = PointerAdapter
-  type UnderlyingPointerType <: Pointer
-  protected def _underlying: UnderlyingPointerType
-  def underlying = _underlying
-
-  override type PointerType <: Type
-  override def _traversalTag = underlying traversalTag
-//  override def _read = underlying read
-//  override def _write(e: ElementType) = this.underlying.write(e) //
-  override def _equals(that: PointerType) = underlying equals that.underlying
-  override def _increment = underlying ++
-  override def _decrement = underlying --
-  override def _offset(d: DifferenceType) = underlying += d
-  override def _difference(that: PointerType) = { self: PointerType => self.underlying - that.underlying }
-}
-
-class BBBB[P](p: P) {
-  def 
-
-class TransformPointer[P <: Pointer, R](p: P, f: Function1[P#ElementType, R]) extends PointerAdapter {
-  type UnderlyingPointerType = P
-  def call_clone: P = p.clone().asInstanceOf[P]
-  override def underlying:P = p
-  override type PointerType = TransformPointer[P, R]
-  override type ElementType = R
-  override def _read = f(p.read)
-  override def _clone = new TransformPointer[P, R](p.clone, f)
-}
-
-// PointerRange
-
-class PointerRange[P <: Pointer](first: P, last: P) extends Range {
-  type PointerType = P
-  override def _begin = first
-  override def _end = last
+  final def to(last: PointerType) = new PointerRange(this, last)
 }
 
 
 // Range trait
 
-trait Range {
-  type PointerType <: Pointer
+trait Range[E] {
+  type PointerType = Pointer[E]
   type ElementType = PointerType#ElementType
   type DifferenceType = PointerType#DifferenceType
 
@@ -100,6 +65,44 @@ trait Range {
   final def traversalTag = begin.traversalTag
 }
 
+
+class PointerRange[E](first: Pointer[E], last: Pointer[E]) extends Range[E] {
+  override def _begin = first
+  override def _end = last
+}
+
+
+object Tester {
+  def apply[E](p: Pointer[E]): Pointer[E] = p.clone
+}
+
+trait PointerAdapter[From, To] extends Pointer[To] {
+  type Type = PointerAdapter[From, To]
+  type UnderlyingPointerType = Pointer[From]
+  protected def _underlying: UnderlyingPointerType
+  def underlying = _underlying
+
+  def lower(p: PointerType) = p.asInstanceOf[PointerAdapter[From, To]]
+  override def _traversalTag = underlying traversalTag
+//  override def _read = underlying read
+//  override def _write(e: ElementType) = underlying write e
+  override def _equals(that: PointerType) = underlying equals lower(that).underlying
+  override def _increment = underlying ++
+  override def _decrement = underlying --
+  override def _offset(d: DifferenceType) = underlying += d
+  override def _difference(that: PointerType) = this.underlying - lower(that).underlying
+}
+
+
+class TransformPointer[E, R](p: Pointer[E], f: Function1[E, R]) extends PointerAdapter[E, R] {
+  override def _underlying = p
+  override def _read = f(p.read)
+  override def _clone = new TransformPointer[E, R](p.clone, f)
+}
+
+
+
+/*
 
 abstract
 class RangeIterator[A](rng: Range) extends Iterator[Range#ElementType] {
@@ -127,13 +130,12 @@ object fromIterator {
 object foo {
   def bar(c: Pointer): Pointer#ElementType = { val v: Pointer#ElementType = c.read ; v }
 }
+*/
+
 
 object filter {
-  def apply[R <: Range](r: R, f: Function1[R#ElementType, boolean]) =
-    new PointerRange[R#PointerType](r begin, r end) // (r begin) to (r end) doesn't compile
+  def apply[E](r: Range[E]) = (r begin) to (r end)
 }
-
-
 
 
 
