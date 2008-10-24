@@ -14,6 +14,28 @@ object NotImplemented extends UnsupportedOperationException
 
 
 
+class Nil
+object Nil
+
+class Cons[Head, Tail](head: Head, tail: Tail) {
+}
+
+object Cons {
+	def apply[Head, Tail](head: Head, tail: Tail) = new Cons(head, tail)
+}
+
+
+object Evaluator {
+	def apply[C](c: C) = { }
+	def apply[Tail](c: Cons[boo, Cons[boo, Tail]]) = { }
+}
+
+class Consifier[C](c: C) {
+	def >[Y](y: Y) = new Consifier(Cons(y, c))
+	def < = Evaluator(c)
+}
+
+
 object forceClone {
 //  def apply[T](x: T): T = x.clone().asInstance[T]
 }
@@ -34,6 +56,7 @@ trait Pointer[E] {
   protected def _decrement: Unit = { throw NotImplemented }
   protected def _offset(d: DifferenceType): Unit = { throw NotImplemented }
   protected def _difference(that: PointerType): DifferenceType = { throw NotImplemented }
+  protected def _isCompatible(that: PointerType): boolean = true
 
   final def traversalTag = _traversalTag
   override def equals(that: Any) = _equals(that.asInstanceOf[PointerType])
@@ -63,6 +86,8 @@ trait Range[E] {
   final def begin = _begin
   final def end = _end
   final def traversalTag = begin.traversalTag
+
+  final def >[X](x: X) = new Consifier(Cons(x, Cons(this, Nil)))
 }
 
 
@@ -72,12 +97,16 @@ class PointerRange[E](first: Pointer[E], last: Pointer[E]) extends Range[E] {
 }
 
 
+class boo
+object boo
+
+
 object Tester {
   def apply[E](p: Pointer[E]): Pointer[E] = p.clone
+  def apply2[E](r: Range[E]) = { r > boo > boo > boo > boo <  }
 }
 
 trait PointerAdapter[From, To] extends Pointer[To] {
-  type Type = PointerAdapter[From, To]
   type UnderlyingPointerType = Pointer[From]
   protected def _underlying: UnderlyingPointerType
   def underlying = _underlying
@@ -90,7 +119,7 @@ trait PointerAdapter[From, To] extends Pointer[To] {
   override def _increment = underlying ++
   override def _decrement = underlying --
   override def _offset(d: DifferenceType) = underlying += d
-  override def _difference(that: PointerType) = this.underlying - lower(that).underlying
+  override def _difference(that: PointerType) = underlying - lower(that).underlying
 }
 
 
