@@ -8,9 +8,9 @@ extends PointerFacade[To, P] {
     override def _write(e: To) = base.write(e.asInstanceOf[From])
     override def _traversalTag = base.traversalTag
     override def _equals(that: P) = base == that.base
-    override def _increment = base.pre_++
+    override def _increment = base++/
     override def _hashCode = base.hashCode
-    override def _decrement = base.pre_--
+    override def _decrement = base--/
     override def _offset(d: Long) = base += d
     override def _difference(that: P) = base - that.base
 }

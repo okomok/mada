@@ -13,7 +13,7 @@ trait Range[E] {
     final def toIterator = new Iterator[E] {
         private val first = begin
         override def hasNext = first != end
-        override def next() = { first.pre_++; first.read }
+        override def next() = { first++/; first.read }
     }
 }
 

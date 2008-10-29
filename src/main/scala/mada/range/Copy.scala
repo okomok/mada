@@ -7,7 +7,7 @@ object Copy {
         val first = r.begin; val last = r.end
         while (first != last) {
             o << first.read
-            first.pre_++
+            first++/
         }
         o
     }
