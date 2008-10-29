@@ -23,10 +23,10 @@ class IteratorRange[E](val base: Iterator[E]) extends Range[E] {
     override def _end = new IteratorPointer(base, None)
 }
 
-class IteratorPointer[E](private val i: Iterator[E], private var e: Option[E])
+class IteratorPointer[E](private val it: Iterator[E], private var e: Option[E])
 extends PointerFacade[E, IteratorPointer[E]] {
     override def _read = e.get
     override def _traversalTag = SinglePassTraversalTag()
-    override def _equals(that: IteratorPointer[E]) = i.hasNext == that.i.hasNext
-    override def _increment = { e = Some(i.next); }
+    override def _equals(that: IteratorPointer[E]) = e.isEmpty == that.e.isEmpty
+    override def _increment = { if (it.hasNext) e = Some(it.next) else e = None; }
 }
