@@ -19,6 +19,10 @@ class Identity[T] {
   type Type = T
 }
 
+class Super {
+  def foo(a: AppTest) = {}
+}
+
 /*
 object Foo {
   def id[T](x: T) = new Identity[T]#Type() { }
@@ -37,8 +41,9 @@ class AppTest extends TestCase("app") {
     def testKO() = assertTrue(true);
     /*
     val x: Identity[Integer]#Type = 3;
-    
+
     def testType() = assertTrue(x == 3);
 */
-        
+
+
 }
