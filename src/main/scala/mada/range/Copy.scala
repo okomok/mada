@@ -4,11 +4,10 @@ package mada.range
 
 object Copy {
     final def apply[E](r: Range[E], o: Output[E]): Output[E] = {
-        val first = r.begin
-        var last = r.end
+        val first = r.begin; val last = r.end
         while (first != last) {
             o << first.read
-            first++
+            first.pre_++
         }
         o
     }

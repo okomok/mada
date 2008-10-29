@@ -8,7 +8,7 @@ case class ForEach[E] extends ((Range[E], E => Any) => (E => Any)) {
         val last = r.end
         while (first != last) {
             f(first.read)
-            first++
+            first.pre_++
         }
         f
     }
