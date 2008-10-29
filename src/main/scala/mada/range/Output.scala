@@ -3,8 +3,8 @@ package mada.range
 
 
 trait Output[-E] {
-    def _write(e: E): Unit
-    def << (e: E): Output[E] = { _write(e); this }
+    protected def _write(e: E): Unit
+    final def << (e: E): Output[E] = { _write(e); this }
 }
 
 

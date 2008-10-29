@@ -14,22 +14,16 @@ trait Pointer[E] {
     final def traversalTag = _traversalTag
 
 // single-pass
-    protected def _equals(that: Pointer[E]): Boolean
     protected def _increment: Unit
-    final def ===(that: Pointer[E]): Boolean = _equals(that)
-    final def !==(that: Pointer[E]): Boolean = !(this === that)
+//  override final def equals(that: Any): Boolean
     final def ++ : Unit = _increment
-    override final def equals(that: Any): Boolean = that match {
-        case that: Pointer[E] => this === that.asInstanceOf[Pointer[E]]
-        case _ => false
-    }
 
 // forward
     protected def _clone: Pointer[E] = { throw NotForward(this) }
     protected def _hashCode: Int = { throw NotForward(this) }
     override final def clone(): Pointer[E] = _clone
-    final def +++ : Pointer[E] = { val tmp = this.clone(); this++; tmp }
     override final def hashCode = _hashCode
+    final def +++ : Pointer[E] = { val tmp = this.clone(); this++; tmp }
 
 // bidirectional
     protected def _decrement: Unit = { throw NotBidirectional(this) }
@@ -37,15 +31,15 @@ trait Pointer[E] {
     final def --- : Pointer[E] = { val tmp = this.clone(); this--; tmp }
 
 // random-access
-    protected def _offset(n: Long): Unit = { throw NotRandomAccess(this) }
-    protected def _difference(that: Pointer[E]): Long = { throw NotRandomAccess(this) }
-    final def - (that: Pointer[E]): Long = _difference(that)
-    final def +=(n: Long): Pointer[E] = { _offset(n); this }
-    final def -=(n: Long): Pointer[E] = this += (-n)
-    final def + (n: Long): Pointer[E] = clone() += n
-    final def - (n: Long): Pointer[E] = clone() -= n
-    final def < (that: Pointer[E]): Boolean = _difference(that) < 0
-    final def apply(n: Long): E = (this + n).read
+    protected def _offset(d: Long): Unit = { throw NotRandomAccess(this) }
+    protected def _difference_(that: Pointer[E]): Long = { throw NotRandomAccess(this) }
+    final def - (that: Pointer[E]): Long = _difference_(that)
+    final def +=(d: Long): Pointer[E] = { _offset(d); this }
+    final def -=(d: Long): Pointer[E] = this += (-d)
+    final def + (d: Long): Pointer[E] = clone() += d
+    final def - (d: Long): Pointer[E] = clone() -= d
+    final def < (that: Pointer[E]): Boolean = this - that < 0
+    final def apply(d: Long): E = (this + d).read
 
 // Range construction
     def ~(that: Pointer[E]) = new Range[E] {

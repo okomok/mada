@@ -6,7 +6,7 @@ object Copy {
     final def apply[E](r: Range[E], o: Output[E]): Output[E] = {
         val first = r.begin
         var last = r.end
-        while (first !== last) {
+        while (first != last) {
             o << first.read
             first++
         }
