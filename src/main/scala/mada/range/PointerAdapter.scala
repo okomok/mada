@@ -2,10 +2,12 @@
 package mada.range
 
 
-class PointerAdapter[E, P <: PointerAdapter[E, P]](protected val base: Pointer[E]) extends PointerFacade[E, P] {
+abstract class PointerAdapter[From, To, P <: PointerAdapter[From, To, P]](protected val base: Pointer[From]) extends PointerFacade[To, P] {
+    protected def __read: To
+    protected def __write(e: To): Unit
+    override def _read = __read
+    override def _write(e: To) = __write(e)
     override def _traversalTag = base.traversalTag
-    override def _read = base.read
-    override def _write(e: E) = base.write(e)
     override def _equals(that: P) = base == that.base
     override def _increment = base++
     override def _hashCode = base.hashCode
