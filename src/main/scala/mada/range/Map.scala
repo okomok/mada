@@ -2,6 +2,13 @@
 package mada.range
 
 
+case class Map[From, To](f: From => To) extends RangeFunction[Range[To]] {
+    def apply[X <: From](r: Range[X]): Range[To] =
+        new MapPointer[X, To](r.begin, f) ~ new MapPointer[X, To](r.end, f)
+    override def fromRange[X] = Map(f.asInstanceOf[X => To]).apply[X](_)
+}
+
+
 class MapPointer[From, To](private val p: Pointer[From], val function: From => To)
     extends PointerAdapter[From, To, MapPointer[From, To]](p) {
     override def _read = function(base.read)
@@ -10,20 +17,8 @@ class MapPointer[From, To](private val p: Pointer[From], val function: From => T
 }
 
 
-class MonoMap[From, To](f: From => To) extends (Range[From] => Range[To]) {
-    override final def apply(r: Range[From]) = new Range[To] {
-        override def _begin = new MapPointer(r.begin, f)
-        override def _end = new MapPointer(r.end, f)
-    }
-}
-
-case class Map[From, To](f: From => To) extends RangeFunction[Range[To]] {
-    override def fromRange[X] = new MonoMap[X, To](f.asInstanceOf[X => To])
-}
-
-
 object mytest {
     def apply(r: Range[Int], f: Int => Boolean, g: Boolean => Int) {
-        val v: Long = r >> Map(f) >> Map(g) >> Filter(f) >> Size;
+        val v: Long = r->Map(f)->Map(g)->Filter(f)->Size;
     }
 }

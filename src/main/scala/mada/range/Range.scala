@@ -10,12 +10,8 @@ trait Range[E] {
     final def end = _end
     final def traversalTag = begin.traversalTag
 
-//    final def >>[To](f: Range[E] => To): To = f(this)
-    final def >>[To](f: RangeFunction[To]): To = (f.fromRange[E])(this)
+    final def ->[To](f: RangeFunction[To]): To = (f.fromRange[E])(this)
+    final def ->(f: RangeTransformation): Range[E] = (f.fromRange[E])(this)
 
-    final def toIterator = new Iterator[E] {
-        private val first = begin
-        override def hasNext = first != end
-        override def next() = { first++/; first.read }
-    }
+    final def toIterator: Iterator[E] = new RangeIterator(this)
 }

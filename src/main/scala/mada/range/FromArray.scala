@@ -2,9 +2,8 @@
 package mada.range
 
 
-class ArrayRange[E](val base: Array[E]) extends Range[E] {
-    override def _begin = new ArrayPointer(base, 0)
-    override def _end = new ArrayPointer(base, base.length)
+object FromArray {
+    def apply[E](a: Array[E]) = new ArrayPointer(a, 0) ~ new ArrayPointer(a, a.length)
 }
 
 
