@@ -20,7 +20,7 @@ class Equals[E1, E2] {
         if (Size(r1) != Size(r2))
             false
         else
-            ofSinglePass(r1, r2, f)
+            ofSinglePass(r1, r2, f) // TODO
     }
 
     private final def ofSinglePass(r1: Range[E1], r2: Range[E2], f: (E1, E2) => Boolean): Boolean = {
