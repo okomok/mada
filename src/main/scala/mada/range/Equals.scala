@@ -2,7 +2,8 @@
 package mada.range
 
 
-case class EqualsIf[E1_, E2](private val r2: Range[E2], private val f: (E1_, E2) => Boolean) extends RangeFunction[Boolean] {
+case class EqualsIf[E1_, E2](private val r2: Range[E2], private val f: (E1_, E2) => Boolean)
+        extends RangeFunction[Boolean] {
     def apply[E1 <: E1_](r1: Range[E1]): Boolean = {
         r1.traversal min r2.traversal match {
             case RandomAccessTraversal() => ofRandomAccess(r1)
