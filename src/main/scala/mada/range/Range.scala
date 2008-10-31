@@ -8,7 +8,7 @@ trait Range[E] {
 
     final def begin = _begin
     final def end = _end
-    final def traversalTag = begin.traversalTag
+    final def traversal = begin.traversal
 
     final def ->[To](f: RangeFunction[To]): To = (f.fromRange[E])(this)
     final def ->(f: RangeTransformation): Range[E] = (f.fromRange[E])(this)

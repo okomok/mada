@@ -10,8 +10,9 @@ trait Pointer[E] {
     final def write(e: E): Pointer[E] = { _write(e); this }
 
 // traversal
-    protected def _traversalTag: TraversalTag
-    final def traversalTag = _traversalTag
+    protected def _traversal: Traversal
+    final def traversal = _traversal
+    final def cloneIn(t: Traversal): Pointer[E] = if (traversal conformsTo t) clone else this
 
 // single-pass
     protected def _increment: Unit
@@ -23,12 +24,12 @@ trait Pointer[E] {
     protected def _hashCode: Int = { throw NotForward(this) }
     override final def clone: Pointer[E] = _clone
     override final def hashCode = _hashCode
-    final def /++ : Pointer[E] = { val tmp = this.clone; this++/; tmp }
+    final def /++ : Pointer[E] = { val tmp = clone; this++/; tmp }
 
 // bidirectional
     protected def _decrement: Unit = { throw NotBidirectional(this) }
     final def --/ : Pointer[E] = { _decrement; this }
-    final def /-- : Pointer[E] = { val tmp = this.clone; this--/; tmp }
+    final def /-- : Pointer[E] = { val tmp = clone; this--/; tmp }
 
 // random-access
     protected def _offset(d: Long): Unit = { throw NotRandomAccess(this) }

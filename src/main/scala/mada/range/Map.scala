@@ -9,7 +9,7 @@ case class Map[From, To](f: From => To) extends RangeFunction[Range[To]] {
 }
 
 class MapPointer[From, To](private val p: Pointer[From], val function: From => To)
-    extends PointerAdapter[From, To, MapPointer[From, To]](p) {
+        extends PointerAdapter[From, To, MapPointer[From, To]](p) {
     override def _read = function(base.read)
     override def _write(e: To) = { throw NotWritable(this) }
     override def _clone = new MapPointer(p.clone, function)

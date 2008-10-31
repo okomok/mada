@@ -10,8 +10,8 @@ class Equals[E1, E2] {
     final def apply(r1: Range[E1], r2: Range[E2]): Boolean = apply(r1, r2, new EqualTo[E1, E2])
 
     final def apply(r1: Range[E1], r2: Range[E2], f: (E1, E2) => Boolean): Boolean = {
-        r1.traversalTag min r2.traversalTag match {
-            case RandomAccessTraversalTag() => ofRandomAccess(r1, r2, f)
+        r1.traversal min r2.traversal match {
+            case RandomAccessTraversal() => ofRandomAccess(r1, r2, f)
             case _ => ofSinglePass(r1, r2, f)
         }
     }
