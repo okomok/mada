@@ -9,3 +9,7 @@ trait RangeFunction[Y] {
 trait RangeTransformation {
     def fromRange[X]: Range[X] => Range[X]
 }
+
+trait OutdirectFunction {
+    def fromRange[X]: Range[X] => Range[Pointer[X]]
+}

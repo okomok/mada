@@ -2,11 +2,11 @@
 package mada.range
 
 
-class Outdirect[E](private val p: Pointer[E], private val q: Pointer[E]) extends Range[Pointer[E]] {
-    override def _begin = new OutdirectPointer(p)
-    override def _end = new OutdirectPointer(q)
-}
 
+object Outdirect extends OutdirectFunction {
+    def apply[X](r: Range[X]): Range[Pointer[X]] = new OutdirectPointer[X](r.begin) <=< new OutdirectPointer[X](r.end)
+    override def fromRange[X] = apply[X](_)
+}
 
 class OutdirectPointer[E](private var p: Pointer[E]) extends PointerAdapter[E, Pointer[E], OutdirectPointer[E]](p) {
     override def _read = p

@@ -2,9 +2,10 @@
 package mada.range
 
 
-class IteratorRange[E](val base: Iterator[E]) extends Range[E] {
-    override def _begin = new IteratorPointer(base, if (base.hasNext) Some(base.next) else None)
-    override def _end = new IteratorPointer(base, None)
+object FromIterator {
+    def apply[E](it: Iterator[E]): Range[E] =
+        new IteratorPointer(it, if (it.hasNext) Some(it.next) else None) <=<
+	        new IteratorPointer(it, None)
 }
 
 class IteratorPointer[E](private val it: Iterator[E], private var e: Option[E])

@@ -42,7 +42,7 @@ trait Pointer[E] {
     final def apply(d: Long): E = (this + d).read
 
 // PointerRange construction
-    def ~(that: Pointer[E]): Range[E] = new PointerRange(this, that)
+    def <=<(that: Pointer[E]): Range[E] = new PointerRange(this, that)
 
 // as Output
     def toOutput = new Output[E] {

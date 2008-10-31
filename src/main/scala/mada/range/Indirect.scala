@@ -2,11 +2,14 @@
 package mada.range
 
 
-class Indirect[E](private val p: Pointer[Pointer[E]], private val q: Pointer[Pointer[E]]) extends Range[E] {
-    override def _begin = new IndirectPointer(p)
-    override def _end = new IndirectPointer(q)
+object Indirect {
+    def apply[X](r: Range[Pointer[X]]): Range[X] = new IndirectPointer[X](r.begin) <=< new IndirectPointer[X](r.begin)
+    def to[E] = new IndirectTo[E]
 }
 
+class IndirectTo[E] extends RangeFunction[Range[E]] {
+    def fromRange[X] = {(r: Range[X]) => Indirect(r->AsRangeOf[Pointer[E]])}
+}
 
 class IndirectPointer[E](private var p: Pointer[Pointer[E]]) extends PointerAdapter[Pointer[E], E, IndirectPointer[E]](p) {
     override def _read = p.read.read

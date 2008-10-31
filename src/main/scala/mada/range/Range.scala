@@ -12,6 +12,7 @@ trait Range[E] {
 
     final def ->[To](f: RangeFunction[To]): To = (f.fromRange[E])(this)
     final def ->(f: RangeTransformation): Range[E] = (f.fromRange[E])(this)
+    final def ->(f: OutdirectFunction): Range[Pointer[E]] = (f.fromRange[E])(this)
 
     final def toIterator: Iterator[E] = new RangeIterator(this)
 }
