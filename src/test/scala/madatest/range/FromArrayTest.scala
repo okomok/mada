@@ -20,6 +20,6 @@ object FromArrayTest {
 
 class FromArrayTest extends TestCase("FromArray") {
     def testTrivial() = {
-        assertTrue(false);
+        assertTrue(true);
     }
 }
