@@ -2,11 +2,9 @@
 package mada.range
 
 
-class Numbers(private val n: Long, private val m: Long) extends Range[Long] {
-    override def _begin = new NumberPointer(n)
-    override def _end = new NumberPointer(m)
+object Numbers extends ((Long, Long) => Range[Long]) {
+    def apply(n: Long, m: Long) = new NumberPointer(n) <=< new NumberPointer(m)
 }
-
 
 class NumberPointer(private var n: Long) extends PointerFacade[Long, NumberPointer] {
     override def _read = n
