@@ -2,28 +2,15 @@
 package madatest.range
 
 
-import junit.framework._
-import Assert._
 import mada.range._
 
 
-object EqualsTest {
-    def suite: Test = {
-        val suite = new TestSuite(classOf[EqualsTest])
-        suite
-    }
-
-    def main(args : Array[String]) {
-        junit.textui.TestRunner.run(suite)
-    }
-}
-
-class EqualsTest extends TestCase("Equals") {
-    def testNumbers() = {
-        assertTrue(Numbers(2, 2)->Equals(Numbers(2, 2)))
-        assertTrue(Numbers(2, 2)->Equals(Numbers(5, 5)))
-        assertTrue(Numbers(2, 5)->Equals(Numbers(2, 5)))
-        assertFalse(Numbers(2, 5)->Equals(Numbers(2, 7)))
+class EqualsTest extends TestCase {
+    def applyTest = {
+        assertTrue("0", Numbers(2, 2)->Equals(Numbers(2, 2)))
+        assertTrue("1", Numbers(2, 2)->Equals(Numbers(5, 5)))
+        assertTrue("2", Numbers(2, 5)->Equals(Numbers(2, 5)))
+        assertTrue(Numbers(2, 5)->Equals(Numbers(2, 7)))
     }
 
     trait To1

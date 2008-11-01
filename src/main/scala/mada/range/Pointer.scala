@@ -12,11 +12,10 @@ trait Pointer[E] {
 // traversal
     protected def _traversal: Traversal
     final def traversal = _traversal
-    final def cloneIn(t: Traversal): Pointer[E] = if (traversal conformsTo t) clone else this
 
 // single-pass
     protected def _increment: Unit
-//  override final def equals(that: Any): Boolean
+//  override def equals(that: Any): Boolean
     final def ++/ : Pointer[E]  = { _increment; this }
 
 // forward
@@ -43,13 +42,40 @@ trait Pointer[E] {
     final def apply(d: Long): E = (this + d).read
     final def update(d: Long, e: E): Unit = (this + d).write(e)
 
-// PointerRange construction
+// debug
+    protected def invariant: Boolean = true
+    protected def compatible(that: Pointer[E]): Boolean = true
+
+// Range construction
     def <=<(that: Pointer[E]): Range[E] = new PointerRange(this, that)
 
 // as Output
     def toOutput = new Output[E] {
         override def _write(e: E) = { Pointer.this.write(e); Pointer.this++/; }
     }
+
+// utilities
+    final def swap(that: Pointer[E]) = {
+        val tmp = read
+        write(that.read);
+        that.write(tmp)
+    }
+
+    final def advance(d_ : Long): Unit = {
+        var d = d_
+        traversal match {
+            case RandomAccessTraversal() => this += d
+            case BidirectionalTraversal() => {
+                if (d >= 0)
+                    while (d != 0) { this++/; d = d - 1 }
+                else
+                    while (d != 0) { this--/; d = d + 1 }
+            }
+            case _ => while (d != 0) { this++/; d = d - 1 }
+        }
+    }
+
+    final def cloneIn(t: Traversal): Pointer[E] = if (traversal conformsTo t) clone else this
 }
 
 // dereference

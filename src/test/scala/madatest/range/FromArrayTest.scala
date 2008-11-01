@@ -2,23 +2,11 @@
 package madatest.range
 
 
-import junit.framework._;
-import Assert._;
+import junit.framework.Assert._;
 import mada.range._;
 
 
-object FromArrayTest {
-    def suite: Test = {
-        val suite = new TestSuite(classOf[FromArrayTest]);
-        suite
-    }
-
-    def main(args : Array[String]) {
-        junit.textui.TestRunner.run(suite);
-    }
-}
-
-class FromArrayTest extends TestCase("FromArray") {
+class FromArrayTest {
     def testTrivial() = {
         val a = FromArray(Array.range(0, 6))
         val b = FromArray(Array.range(0, 6))
