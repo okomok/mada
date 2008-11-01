@@ -41,6 +41,7 @@ trait Pointer[E] {
     final def - (d: Long): Pointer[E] = clone -= d
     final def < (that: Pointer[E]): Boolean = this - that < 0
     final def apply(d: Long): E = (this + d).read
+    final def update(d: Long, e: E): Unit = (this + d).write(e)
 
 // PointerRange construction
     def <=<(that: Pointer[E]): Range[E] = new PointerRange(this, that)
@@ -49,6 +50,12 @@ trait Pointer[E] {
     def toOutput = new Output[E] {
         override def _write(e: E) = { Pointer.this.write(e); Pointer.this++/; }
     }
+}
+
+// dereference
+object * {
+    def apply[E](p: Pointer[E]): E = p.read
+    def update[E](p: Pointer[E], e: E): Unit = p.write(e)
 }
 
 

@@ -24,7 +24,7 @@ case class EqualsIf[E1_, E2](private val r2: Range[E2], private val f: (E1_, E2)
         val p1 = r1.begin; val q1 = r1.end
         val p2 = r2.begin; val q2 = r2.end
         while (p1 != q1 && p2 != q2) {
-            if (!f(p1.read, p2.read))
+            if (!f(*(p1), *(p2)))
                 return false
             p1++/; p2++/
         }
