@@ -17,7 +17,6 @@ class AssertTest extends TestCase {
 
         Assert.enable
         var thrown = false
-
         try {
             Assert(false)
         } catch {
