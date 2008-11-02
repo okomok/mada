@@ -3,7 +3,7 @@ package madatest
 
 
 trait TestCase {
-    mada.Assert.enable
+    mada.NDebug.value = false
 
     private var assertions: Int = 0
     private var failures: Int = 0
@@ -25,10 +25,16 @@ trait TestCase {
 
     def testThis {
         message.append("  <test>\n")
-        applyTest
+        try {
+            applyTest
+        } catch {
+            case e: java.lang.AssertionError =>
+                message.append("    <exception>" ++ e.toString ++ "</exception>\n")
+        }
         message.append("    <assertions>" ++ assertions.toString ++ "</assertions>\n")
         message.append("    <failures>" ++ failures.toString ++ "</failures>\n")
         message.append("  </test>")
+
         if (failures != 0) {
             println(message.toString)
             throw new junit.framework.AssertionFailedError()

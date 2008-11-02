@@ -3,6 +3,7 @@ package madatest
 
 
 import mada.Assert
+import mada.NDebug
 
 
 class AssertTest extends TestCase {
@@ -12,15 +13,16 @@ class AssertTest extends TestCase {
     }
 
     def applyTest {
-        assertTrue(Assert.isEnabled)
+        assertTrue(!NDebug.value)
 
-        Assert.disable
-        Assert(neverEvaluated())
+        NDebug.value = true
+        assertTrue(NDebug.value)
+        Assert("never evaluated", neverEvaluated())
 
-        Assert.enable
+        NDebug.value = false
         var thrown = false
         try {
-            Assert(false)
+            Assert("fail", false)
         } catch {
             case e: java.lang.AssertionError => thrown = true
         }
