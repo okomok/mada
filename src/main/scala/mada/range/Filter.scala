@@ -2,17 +2,19 @@
 package mada.range
 
 
-case class Filter[E](f: E => Boolean) extends RangeTransformation {
-    def apply[X <: E](r: Range[X]): Range[X] = {
-        val q = r.end
-        new FilterPointer[X](r.begin, q, f) <=<
-            new FilterPointer[X](q.cloneIn(BidirectionalTraversal()), q, f)
-    }
-    override def fromRange[X] = Filter[X](f.asInstanceOf[X => Boolean]).apply[X](_)
+object Filter {
+    def apply[A](r: Range[A], g: A => Boolean): Range[A] = new FilterRange(r, g, r.end)
 }
 
-class FilterPointer[E](private val p: Pointer[E], private val q: Pointer[E], val predicate: E => Boolean)
-        extends PointerAdapter[E, E, FilterPointer[E]](p) {
+class FilterRange[A](private val r: Range[A], private val g: A => Boolean, private val q: Pointer[A])
+        extends PointerRange[A](
+            new FilterPointer(r.begin, q, g),
+            new FilterPointer(q.cloneIn(BidirectionalTraversal()), q, g)) {
+    override def filter(f: A => Boolean) = r.filter({(a: A) => g(a) && f(a)})
+}
+
+class FilterPointer[A](private val p: Pointer[A], private val q: Pointer[A], val predicate: A => Boolean)
+        extends PointerAdapter[A, A, FilterPointer[A]](p) {
     satisfy
     override def _traversal = p.traversal min BidirectionalTraversal()
     override def _increment = { p++/; satisfy; }

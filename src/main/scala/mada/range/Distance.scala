@@ -2,16 +2,11 @@
 package mada.range
 
 
-object Distance extends RangeFunction[Long] {
-    def apply[E](r: Range[E]): Long = {
-        val p = r.begin; val q = r.end
-        var d: Long = 0
+object Distance {
+    def apply[A](r: Range[A]): Long = {
         r.traversal match {
-            case RandomAccessTraversal() => q - p
-            case _ => while (p != q) { p++/; d = d + 1 }
+            case RandomAccessTraversal() => r.size
+            case _ => r.accumulate(0: Long, {(b: Long, a: A) => b + 1})
         }
-        d
     }
-
-    override def fromRange[E] = apply[E](_)
 }
