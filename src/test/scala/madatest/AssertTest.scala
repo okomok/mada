@@ -12,6 +12,8 @@ class AssertTest extends TestCase {
     }
 
     def applyTest {
+        assertTrue(Assert.isEnabled)
+
         Assert.disable
         Assert(neverEvaluated())
 

@@ -3,7 +3,9 @@ package mada
 
 
 object Assert {
-    private var enabled: Boolean = true
+    private var enabled: Boolean = false
+
+    final def isEnabled = enabled
 
     final def enable {
         enabled = true

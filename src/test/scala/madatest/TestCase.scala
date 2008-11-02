@@ -3,6 +3,8 @@ package madatest
 
 
 trait TestCase {
+    mada.Assert.enable
+
     private var assertions: Int = 0
     private var failures: Int = 0
     private var message = new StringBuilder
