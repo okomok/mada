@@ -10,7 +10,7 @@ class EqualsTest extends TestCase {
         assertTrue("0", Numbers(2, 2)->Equals(Numbers(2, 2)))
         assertTrue("1", Numbers(2, 2)->Equals(Numbers(5, 5)))
         assertTrue("2", Numbers(2, 5)->Equals(Numbers(2, 5)))
-        assertTrue(Numbers(2, 5)->Equals(Numbers(2, 7)))
+        assertTrue(Numbers(2, 5)->Equals(Numbers(2, 7)) == false)
     }
 
     trait To1

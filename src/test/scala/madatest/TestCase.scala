@@ -1,5 +1,5 @@
 
-package madatest.range
+package madatest
 
 
 trait TestCase {
