@@ -13,7 +13,7 @@ object Equals {
     def apply[E](r1: Range[E], r2: Range[E]): Boolean = apply[E, E](r1, r2, _ == _)
 
     private def inRandomAccess[E1, E2](r1: Range[E1], r2: Range[E2], f: (E1, E2) => Boolean): Boolean = {
-        if (Size(r1) != Size(r2))
+        if (r1.size != r2.size)
             false
         else
             Equal(r1, r2.begin, f)
@@ -25,7 +25,7 @@ object Equals {
         while (p1 != q1 && p2 != q2) {
             if (!f(*(p1), *(p2)))
                 return false
-            p1++/; p2++/
+            ++(p1); ++(p2)
         }
         (p2 == q2) && (p1 == q1)
     }

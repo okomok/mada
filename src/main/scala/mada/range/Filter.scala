@@ -21,6 +21,6 @@ class FilterPointer[A](private val p: Pointer[A], private val q: Pointer[A], val
     override def _traversal = p.traversal min BidirectionalTraversal()
     override def _increment = { p++/; satisfy; }
     override def _clone = new FilterPointer(p.clone, q, function)
-    override def _decrement = { while (!function((p--/).read)) { } }
-    final private def satisfy = { while (p != q && !function(p.read)) { p++/; } }
+    override def _decrement = { while (!function(*(p--/))) { } }
+    final private def satisfy = { while (p != q && !function(*(p))) { p++/ } }
 }

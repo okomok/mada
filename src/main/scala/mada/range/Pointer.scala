@@ -23,12 +23,12 @@ trait Pointer[A] {
     protected def _hashCode: Int = { throw ErrorNotForward(this) }
     override final def clone: Pointer[A] = _clone
     override final def hashCode = _hashCode
-    final def /++ : Pointer[A] = { val tmp = clone; this++/; tmp }
+    final def ++ : Pointer[A] = { val tmp = clone; this++/; tmp }
 
 // bidirectional
     protected def _decrement: Unit = { throw ErrorNotBidirectional(this) }
     final def --/ : Pointer[A] = { _decrement; this }
-    final def /-- : Pointer[A] = { val tmp = clone; this--/; tmp }
+    final def -- : Pointer[A] = { val tmp = clone; this--/; tmp }
 
 // random-access
     protected def _offset(d: Long): Unit = { throw ErrorNotRandomAccess(this) }
@@ -48,19 +48,23 @@ trait Pointer[A] {
 // utilities
     final def advance(d : Long) = PointerAdvance(this, d)
     final def swap(that: Pointer[A]) = PointerSwap(this, that)
-    def toImmutable: Pointer[A] = new ImmutablePointer(this)
     final def <=<(that: Pointer[A]): PointerRange[A] = new PointerRange(this, that)
-
-// as Output
-    def toOutput = new Output[A] {
-        override def _write(e: A) = { Pointer.this.write(e); Pointer.this++/; }
-    }
+    def toImmutable: Pointer[A] = new ImmutablePointer(this)
+    def output: (A => Pointer[A]) = {(e: A) => write(e); this++/; this}
 }
 
-// dereference
+
 object * {
     def apply[A](p: Pointer[A]): A = p.read
     def update[A](p: Pointer[A], e: A): Unit = p.write(e)
+}
+
+object ++ {
+    def apply[A](p: Pointer[A]): Pointer[A] = p++/
+}
+
+object -- {
+    def apply[A](p: Pointer[A]): Pointer[A] = p--/
 }
 
 

@@ -9,11 +9,11 @@ object PointerAdvance {
             case RandomAccessTraversal() => p += d
             case BidirectionalTraversal() => {
                 if (d >= 0)
-                    while (d != 0) { p++/; d = d - 1 }
+                    while (d != 0) { ++(p); d = d - 1 }
                 else
-                    while (d != 0) { p--/; d = d + 1 }
+                    while (d != 0) { --(p); d = d + 1 }
             }
-            case _ => while (d != 0) { p++/; d = d - 1 }
+            case _ => while (d != 0) { ++(p); d = d - 1 }
         }
         p
     }

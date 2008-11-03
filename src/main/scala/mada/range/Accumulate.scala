@@ -8,7 +8,7 @@ object Accumulate {
         var acc = z
         while (p != q) {
             acc = op(acc, *(p))
-            p++/
+            ++(p)
         }
         acc
     }
