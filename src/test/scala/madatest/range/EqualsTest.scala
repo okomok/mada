@@ -9,6 +9,7 @@ class EqualsTest extends TestCase {
     def applyTest = {
         assertTrue(Numbers(2, 5) == Numbers(2, 5))
         assertTrue(Numbers(2, 6) != Numbers(2, 5))
+        assertTrue(Numbers(2, 5).asRangeIn(SinglePassTraversal()) == Numbers(2, 5))
     }
 
     trait To1

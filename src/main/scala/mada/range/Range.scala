@@ -30,6 +30,7 @@ trait Range[A] {
     def mismatch(p: Pointer[A]) = Mismatch(this, p)
     def mismatch[B](p: Pointer[B], f: (A, B) => Boolean) = Mismatch(this, p, f)
     def outdirect = Outdirect(this)
+    def readOnly = ReadOnly(this)
     def reverse = Reverse(this)
     def transform[B](f: A => B) = Transform(this, f)
     def size = Size(this)
@@ -38,4 +39,10 @@ trait Range[A] {
     def ->(f: RangeTransformation): Range[A] = (f.fromRange[A])(this)
 
     def toIterator: Iterator[A] = new RangeIterator(this)
+    override def toString = {
+        val sb = new StringBuilder
+        sb.append('[')
+        forEach({(e: A) => sb.append(e.toString).append(',')})
+        sb.append(']').toString
+    }
 }

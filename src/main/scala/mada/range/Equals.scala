@@ -16,7 +16,7 @@ object Equals {
         if (r1.size != r2.size)
             false
         else
-            Equal(r1, r2.begin, f)
+            r1.equal(r2.begin, f)
     }
 
     private def inSinglePass[E1, E2](r1: Range[E1], r2: Range[E2], f: (E1, E2) => Boolean): Boolean = {

@@ -10,6 +10,7 @@ class FromArrayTest extends TestCase {
         testTrivial
         testWritable
         testWritable2
+        testMake
     }
 
     def testTrivial() = {
@@ -35,5 +36,9 @@ class FromArrayTest extends TestCase {
         assertTrue((r2.begin + 2).read == 97)
         (r2.begin)(2) = 96
         assertTrue(*(r2.begin + 2) == 96)
+    }
+
+    def testMake {
+        assertTrue(Numbers(1, 7) == FromArray(1,2,3,4,5,6))
     }
 }
