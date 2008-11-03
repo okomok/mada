@@ -48,9 +48,9 @@ trait Pointer[A] {
 // utilities
     final def advance(d : Long) = PointerAdvance(this, d)
     final def swap(that: Pointer[A]) = PointerSwap(this, that)
+    final def output: (A => Pointer[A]) = {(e: A) => write(e); this++/; this}
     final def <=<(that: Pointer[A]): PointerRange[A] = new PointerRange(this, that)
     def toImmutable: Pointer[A] = new ImmutablePointer(this)
-    def output: (A => Pointer[A]) = {(e: A) => write(e); this++/; this}
 }
 
 

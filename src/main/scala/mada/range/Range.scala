@@ -18,6 +18,7 @@ trait Range[A] {
     def accumulate[B](z: B, op: (B, A) => B) = Accumulate(this, z, op)
     def asRangeIn(t: Traversal) = AsRangeIn(this, t)
     def asRangeOf[B] = (new AsRangeOf[B])(this)
+    def copy[B >: A](p: Pointer[B]) = Copy(this, p)
     def distance = Distance(this)
     def equal(p: Pointer[A]) = Equal(this, p)
     def equal[B](p: Pointer[B], f: (A, B) => Boolean) = Equal(this, p, f)
