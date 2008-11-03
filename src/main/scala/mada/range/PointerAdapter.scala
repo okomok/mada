@@ -2,8 +2,10 @@
 package mada.range
 
 
-abstract class PointerAdapter[From, To, P <: PointerAdapter[From, To, P]](protected val base: Pointer[From])
+trait PointerAdapter[From, To, P <: PointerAdapter[From, To, P]]
         extends PointerFacade[To, P] {
+    protected def _base: Pointer[From]
+    final def base = _base
     override def _read = *(base).asInstanceOf[To]
     override def _write(e: To) = *(base) = e.asInstanceOf[From]
     override def _traversal = base.traversal

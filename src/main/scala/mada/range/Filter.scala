@@ -15,12 +15,12 @@ class FilterRange[A](val base: Range[A], val function: A => Boolean)
     override def filter(f: A => Boolean) = base.filter({(a: A) => function(a) && f(a)})
 }
 
-class FilterPointer[A](private val p: Pointer[A], private val q: Pointer[A], val function: A => Boolean)
-        extends PointerAdapter[A, A, FilterPointer[A]](p) {
+class FilterPointer[A](override val _base: Pointer[A], private val q: Pointer[A], val function: A => Boolean)
+        extends PointerAdapter[A, A, FilterPointer[A]] {
     satisfy
-    override def _traversal = p.traversal min BidirectionalTraversal()
-    override def _increment = { p++/; satisfy; }
-    override def _clone = new FilterPointer(p.clone, q, function)
-    override def _decrement = { while (!function(*(p--/))) { } }
-    final private def satisfy = { while (p != q && !function(*(p))) { p++/ } }
+    override def _traversal = base.traversal min BidirectionalTraversal()
+    override def _increment = { base++/; satisfy; }
+    override def _clone = new FilterPointer(base.clone, q, function)
+    override def _decrement = { while (!function(*(base--/))) { } }
+    final private def satisfy = { while (base != q && !function(*(base))) { base++/ } }
 }

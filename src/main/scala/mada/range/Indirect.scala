@@ -7,8 +7,8 @@ object Indirect {
         new IndirectPointer(r.begin) <=< new IndirectPointer(r.end)
 }
 
-class IndirectPointer[A](private var p: Pointer[Pointer[A]])
-        extends PointerAdapter[Pointer[A], A, IndirectPointer[A]](p) {
+class IndirectPointer[A](override val _base: Pointer[Pointer[A]])
+        extends PointerAdapter[Pointer[A], A, IndirectPointer[A]] {
     override def _read = *(*(base))
     override def _write(e: A) = *(*(base)) = e
     override def _clone = new IndirectPointer[A](base.clone)

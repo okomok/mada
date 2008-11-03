@@ -11,8 +11,8 @@ class ReadOnlyRange[A](val base: Range[A])
     override def readOnly = this
 }
 
-class ReadOnlyPointer[A](private val p: Pointer[A])
-        extends PointerAdapter[A, A, ReadOnlyPointer[A]](p) {
+class ReadOnlyPointer[A](override val _base: Pointer[A])
+        extends PointerAdapter[A, A, ReadOnlyPointer[A]] {
     override def _write(e: A) = { throw ErrorNotWritable(this) }
-    override def _clone = new ReadOnlyPointer(p.clone)
+    override def _clone = new ReadOnlyPointer(base.clone)
 }

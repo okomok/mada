@@ -22,7 +22,8 @@ class ArrayRange[A](val array: Array[A])
 }
 
 class ArrayPointer[A](private val a: Array[A], private var i: Int)
-        extends PointerAdapter[Long, A, ArrayPointer[A]](new NumberPointer(i)) {
+		extends PointerAdapter[Long, A, ArrayPointer[A]] {
+    override val _base = new NumberPointer(i)
     override def _read = a(derefBase)
     override def _write(e: A) = a(derefBase) = e
     override def _clone = new ArrayPointer(a, derefBase)

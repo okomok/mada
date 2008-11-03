@@ -11,7 +11,8 @@ class ReverseRange[A](val base: Range[A])
     override def reverse = base
 }
 
-class ReversePointer[A](private val p: Pointer[A]) extends PointerAdapter[A, A, ReversePointer[A]](p) {
+class ReversePointer[A](override val _base: Pointer[A])
+        extends PointerAdapter[A, A, ReversePointer[A]] {
     override def _increment = base--/
     override def _clone = new ReversePointer(base.clone)
     override def _decrement = base++/

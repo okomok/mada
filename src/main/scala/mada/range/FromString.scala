@@ -12,7 +12,8 @@ class StringRange(val string: String)
 }
 
 class StringPointer(private val s: String, private var i: Int)
-        extends PointerAdapter[Long, Char, StringPointer](new NumberPointer(i)) {
+        extends PointerAdapter[Long, Char, StringPointer] {
+    override val _base = new NumberPointer(i)
     override def _read = s.charAt(derefBase)
     override def _clone = new StringPointer(s, derefBase)
     private def derefBase: Int = *(base).toInt

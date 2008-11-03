@@ -17,7 +17,7 @@ class AsRangeInRange[A](val base: Range[A], val trv: Traversal)
     override def asRangeIn(t: Traversal) = base.asRangeIn(t)
 }
 
-class AsRangeInPointer[A](private val p: Pointer[A], private val t: Traversal)
-        extends PointerAdapter[A, A, AsRangeInPointer[A]](p) {
+class AsRangeInPointer[A](override val _base: Pointer[A], private val t: Traversal)
+        extends PointerAdapter[A, A, AsRangeInPointer[A]] {
     override def _traversal = t
 }

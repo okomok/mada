@@ -2,8 +2,8 @@
 package mada.range
 
 
-class ImmutablePointer[A](private val p: Pointer[A])
-        extends PointerAdapter[A, A, ImmutablePointer[A]](p) {
+class ImmutablePointer[A](override val _base: Pointer[A])
+        extends PointerAdapter[A, A, ImmutablePointer[A]] {
     override def _increment = { throw ErrorImmutable(this) }
     override def _clone = { throw ErrorImmutable(this) }
     override def _decrement =  { throw ErrorImmutable(this) }

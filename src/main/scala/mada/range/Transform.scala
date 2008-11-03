@@ -16,9 +16,9 @@ class TransformRange[Z, A](val base: Range[Z], val function: Z => A)
     override def transform[B](f: A => B) = base.transform(f compose function)
 }
 
-class TransformPointer[Z, A](private val p: Pointer[Z], val function: Z => A)
-        extends PointerAdapter[Z, A, TransformPointer[Z, A]](p) {
+class TransformPointer[Z, A](override val _base: Pointer[Z], val function: Z => A)
+        extends PointerAdapter[Z, A, TransformPointer[Z, A]] {
     override def _read = function(*(base))
     override def _write(e: A) = { throw ErrorNotWritable(this) }
-    override def _clone = new TransformPointer(p.clone, function)
+    override def _clone = new TransformPointer(base.clone, function)
 }
