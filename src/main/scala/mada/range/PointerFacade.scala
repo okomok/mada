@@ -4,7 +4,7 @@ package mada.range
 
 trait PointerFacade[E, P] extends Pointer[E] {
     protected def _equals(that: P): Boolean
-    protected def _difference(that: P): Long = { throw NotRandomAccess(this) }
+    protected def _difference(that: P): Long = { throw ErrorNotRandomAccess(this) }
     protected def _compatible(that: P): Unit = { }
 
     override def equals(that: Any) = that match {
