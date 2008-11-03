@@ -3,9 +3,16 @@ package mada.range
 
 
 object FromArray {
-    def apply[A](a: Array[A]): ArrayRange[A] = new ArrayRange(a)
+    def apply[A](a: Array[A]): Range[A] = {
+        val ia = new IndexAccess[A] {
+            override def _set(i: Long, e: A) = a(i.toInt) = e
+            override def _get(i: Long) = a(i.toInt)
+            override def _length = a.length
+        }
+        FromIndexAccess(ia)
+    }
 
-    def apply[A](es: A*): ArrayRange[A] = {
+    def apply[A](es: A*): Range[A] = {
         val a = new Array[A](es.length)
         var i = 0
         for (e <- es.elements) {
@@ -14,18 +21,4 @@ object FromArray {
         }
         apply(a)
     }
-}
-
-class ArrayRange[A](val array: Array[A])
-        extends PointerRange[A](new ArrayPointer(array, 0), new ArrayPointer(array, array.length)) {
-    override def size = array.length
-}
-
-class ArrayPointer[A](private val a: Array[A], private var i: Int)
-		extends PointerAdapter[Long, A, ArrayPointer[A]] {
-    override val _base = new NumberPointer(i)
-    override def _read = a(derefBase)
-    override def _write(e: A) = a(derefBase) = e
-    override def _clone = new ArrayPointer(a, derefBase)
-    private def derefBase: Int = *(base).toInt
 }
