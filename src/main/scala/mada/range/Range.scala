@@ -32,13 +32,14 @@ trait Range[A] {
     def outdirect = Outdirect(this)
     def readOnly = ReadOnly(this)
     def reverse = Reverse(this)
+    def toArrayList = ToArrayList(this)
+    def toIterator: Iterator[A] = ToIterator(this)
     def transform[B](f: A => B) = Transform(this, f)
     def size = Size(this)
 
     def ->[To](f: RangeFunction[To]): To = (f.fromRange[A])(this)
     def ->(f: RangeTransformation): Range[A] = (f.fromRange[A])(this)
 
-    def toIterator: Iterator[A] = new RangeIterator(this)
     override def toString = {
         val sb = new StringBuilder
         sb.append('[')

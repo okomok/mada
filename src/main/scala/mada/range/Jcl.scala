@@ -23,3 +23,11 @@ object FromArrayList {
         apply(a)
     }
 }
+
+object ToArrayList {
+    def apply[A](r: Range[A]): ArrayList[A] = {
+        val a = new ArrayList[A]
+        r.forEach({(e: A) => a.add(e)})
+        a
+    }
+}

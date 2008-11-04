@@ -15,20 +15,20 @@ case class ErrorNonWritableIndexAccess(message: String) extends UnsupportedOpera
 
 
 object FromIndexAccess {
-    def apply[A](ia: IndexAccess[A]): Range[A] = new FromIndexAccessRange(ia)
+    def apply[A](ia: IndexAccess[A]): Range[A] = new IndexAccessRange(ia)
 }
 
-class FromIndexAccessRange[A](val indexAccess: IndexAccess[A])
+class IndexAccessRange[A](val indexAccess: IndexAccess[A])
         extends PointerRange[A](
-            new FromIndexAccessPointer(indexAccess, 0),
-            new FromIndexAccessPointer(indexAccess, indexAccess.length)) {
+            new IndexAccessPointer(indexAccess, 0),
+            new IndexAccessPointer(indexAccess, indexAccess.length)) {
     override def size = indexAccess.length
 }
 
-class FromIndexAccessPointer[A](private val ia: IndexAccess[A], private var i: Long)
-        extends PointerAdapter[Long, A, FromIndexAccessPointer[A]] {
+class IndexAccessPointer[A](private val ia: IndexAccess[A], private var i: Long)
+        extends PointerAdapter[Long, A, IndexAccessPointer[A]] {
     override val _base = new NumberPointer(i)
     override def _read = ia.get(*(base))
     override def _write(e: A) = ia.set(*(base), e)
-    override def _clone = new FromIndexAccessPointer(ia, *(base))
+    override def _clone = new IndexAccessPointer(ia, *(base))
 }
