@@ -2,7 +2,7 @@
 package mada.range
 
 
-import  scala.collection.jcl.ArrayList
+import scala.collection.jcl.ArrayList
 
 
 object FromArrayList {
@@ -17,10 +17,8 @@ object FromArrayList {
 
     def apply[A](es: A*): Range[A] = {
         val a = new ArrayList[A]
-        var i = 0
         for (e <- es.elements) {
             a.add(e)
-            i = i + 1
         }
         apply(a)
     }
