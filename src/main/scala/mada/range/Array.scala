@@ -7,7 +7,7 @@ object FromArray {
         val ia = new IndexAccess[A] {
             override def _set(i: Long, e: A) = a(i.toInt) = e
             override def _get(i: Long) = a(i.toInt)
-            override def _length = a.length
+            override def _size = a.length
         }
         FromIndexAccess(ia)
     }

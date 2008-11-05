@@ -7,7 +7,7 @@ object FromString {
         val ia = new IndexAccess[Char] {
             override def _set(i: Long, e: Char) = { throw new ErrorNonWritableIndexAccess("String") }
             override def _get(i: Long) = a.charAt(i.toInt)
-            override def _length = a.length
+            override def _size = a.length
         }
         new IndexAccessRange(ia) {
             override def stringize = a

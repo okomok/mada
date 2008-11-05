@@ -5,10 +5,10 @@ package mada.range
 trait IndexAccess[A] {
     protected def _set(i: Long, e: A): Unit
     protected def _get(i: Long): A
-    protected def _length: Long
+    protected def _size: Long
     final def set(i: Long, e: A) = _set(i, e)
     final def get(i: Long) = _get(i)
-    final def length = _length
+    final def size = _size
 }
 
 case class ErrorNonWritableIndexAccess(val message: String) extends UnsupportedOperationException
@@ -21,8 +21,8 @@ object FromIndexAccess {
 class IndexAccessRange[A](val indexAccess: IndexAccess[A])
         extends PointerRange[A](
             new IndexAccessPointer(indexAccess, 0),
-            new IndexAccessPointer(indexAccess, indexAccess.length)) {
-    override def size = indexAccess.length
+            new IndexAccessPointer(indexAccess, indexAccess.size)) {
+    override def size = indexAccess.size
 }
 
 class IndexAccessPointer[A](ia: IndexAccess[A], private var i: Long)
