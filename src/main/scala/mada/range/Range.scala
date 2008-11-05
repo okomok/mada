@@ -28,6 +28,7 @@ trait Range[A] {
     def equals[B](that: Range[B], f: (A, B) => Boolean) = Equals(this, that, f)
     def filter(f: A => Boolean) = Filter(this, f)
     def forEach[X](f: A => X) = ForEach(this, f)
+    def indirect[B] = (new UnsafeIndirect[B])(this)
     def joint(that: Range[A]) = Joint(this, that)
     def mismatch(p: Pointer[A]) = Mismatch(this, p)
     def mismatch[B](p: Pointer[B], f: (A, B) => Boolean) = Mismatch(this, p, f)
@@ -39,8 +40,8 @@ trait Range[A] {
     def toIterator: Iterator[A] = ToIterator(this)
     def transform[B](f: A => B) = Transform(this, f)
     def size = Size(this)
-    def stringize = Stringize(this)
+    def stringize = UnsafeStringize(this)
 
-    def ->[To](f: RangeFunction[To]): To = (f.fromRange[A])(this)
-    def ->(f: RangeTransformation): Range[A] = (f.fromRange[A])(this)
+    final def ->[To](f: RangeFunction[To]): To = (f.fromRange[A])(this)
+    final def ->(f: RangeTransformation): Range[A] = (f.fromRange[A])(this)
 }

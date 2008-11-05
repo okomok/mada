@@ -6,8 +6,10 @@ object ReadOnly {
     def apply[A](base: Range[A]): Range[A] = new ReadOnlyRange(base)
 }
 
-class ReadOnlyRange[A](val base: Range[A])
-        extends PointerRange[A](new ReadOnlyPointer(base.begin), new ReadOnlyPointer(base.end)) {
+class ReadOnlyRange[A](val base: Range[A]) extends Range[A] {
+    override val _begin = new ReadOnlyPointer(base.begin)
+    override val _end = new ReadOnlyPointer(base.end)
+
     override def readOnly = this
 }
 

@@ -3,13 +3,23 @@ package mada.range
 
 
 object Indirect {
-    def apply[A](r: Range[Pointer[A]]): Range[A] =
-        new IndirectPointer(r.begin) <=< new IndirectPointer(r.end)
+    def apply[To](base: Range[Pointer[To]]): Range[To] = new IndirectRange(base)
 }
 
-class IndirectPointer[A](override val _base: Pointer[Pointer[A]])
-        extends PointerAdapter[Pointer[A], A, IndirectPointer[A]] {
+class UnsafeIndirect[To] {
+    def apply[From](base: Range[From]): Range[To] = Indirect(base.asRangeOf[Pointer[To]])
+}
+
+class IndirectRange[To](base: Range[Pointer[To]]) extends Range[To] {
+    override val _begin = new IndirectPointer(base.begin)
+    override val _end = new IndirectPointer(base.end)
+
+    override def outdirect = base
+}
+
+class IndirectPointer[To](override val _base: Pointer[Pointer[To]])
+        extends PointerAdapter[Pointer[To], To, IndirectPointer[To]] {
     override def _read = *(*(base))
-    override def _write(e: A) = *(*(base)) = e
-    override def _clone = new IndirectPointer[A](base.clone)
+    override def _write(e: To) = *(*(base)) = e
+    override def _clone = new IndirectPointer[To](base.clone)
 }

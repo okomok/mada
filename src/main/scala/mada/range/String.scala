@@ -16,9 +16,15 @@ object FromString {
 }
 
 object Stringize {
-    def apply[E](r: Range[E]): String = {
+    def apply(r: Range[Char]): String = {
         val sb = new StringBuilder
-        r.asRangeOf[Char].forEach(sb.append(_))
+        r.forEach(sb.append(_))
         sb.toString
+    }
+}
+
+object UnsafeStringize {
+    def apply[A](r: Range[A]): String = {
+        Stringize(r.asRangeOf[Char])
     }
 }
