@@ -14,10 +14,12 @@ trait Range[A] {
         case that: Range[A] => equals(that)
         case _ => false
     }
+    override def toString = toArrayList.toString // TODO
 
     def accumulate[B](z: B, op: (B, A) => B) = Accumulate(this, z, op)
     def asRangeIn(t: Traversal) = AsRangeIn(this, t)
     def asRangeOf[B] = (new AsRangeOf[B])(this)
+    def copy = FromArrayList(toArrayList)
     def copy[B >: A](p: Pointer[B]) = Copy(this, p)
     def distance = Distance(this)
     def equal(p: Pointer[A]) = Equal(this, p)
@@ -32,18 +34,13 @@ trait Range[A] {
     def outdirect = Outdirect(this)
     def readOnly = ReadOnly(this)
     def reverse = Reverse(this)
+    def toArray = ToArray(this)
     def toArrayList = ToArrayList(this)
     def toIterator: Iterator[A] = ToIterator(this)
     def transform[B](f: A => B) = Transform(this, f)
     def size = Size(this)
+    def stringize = Stringize(this)
 
     def ->[To](f: RangeFunction[To]): To = (f.fromRange[A])(this)
     def ->(f: RangeTransformation): Range[A] = (f.fromRange[A])(this)
-
-    override def toString = {
-        val sb = new StringBuilder
-        sb.append('[')
-        forEach({(e: A) => sb.append(e.toString).append(',')})
-        sb.append(']').toString
-    }
 }

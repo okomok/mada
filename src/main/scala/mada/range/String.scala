@@ -9,6 +9,16 @@ object FromString {
             override def _get(i: Long) = a.charAt(i.toInt)
             override def _length = a.length
         }
-        FromIndexAccess(ia)
+        new IndexAccessRange(ia) {
+            override def stringize = a
+        }
+    }
+}
+
+object Stringize {
+    def apply[E](r: Range[E]): String = {
+        val sb = new StringBuilder
+        r.asRangeOf[Char].forEach(sb.append(_))
+        sb.toString
     }
 }

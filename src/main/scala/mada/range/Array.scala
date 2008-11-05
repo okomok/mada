@@ -23,10 +23,15 @@ object FromArray {
     }
 }
 
-
 object ToArray {
     def apply[A](r: Range[A]): Array[A] = {
-        Assert("needs ForwardRange", r.traversal conformsTo ForwardTraversal)
+        r.traversal match {
+            case ForwardTraversal => inForward(r)
+            case SinglePassTraversal => inForward(r.copy)
+        }
+    }
+
+    private def inForward[A](r: Range[A]): Array[A] = {
         val a = new Array[A](r.distance.toInt)
         var i = 0
         r.forEach({(e: A) => a(i) = e; i = i + 1})

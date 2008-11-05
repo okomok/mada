@@ -12,7 +12,9 @@ object FromArrayList {
             override def _get(i: Long) = a(i.toInt)
             override def _length = a.length
         }
-        FromIndexAccess(ia)
+        new IndexAccessRange(ia) {
+            override def toArrayList = a
+        }
     }
 
     def apply[A](es: A*): Range[A] = {
