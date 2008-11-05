@@ -4,11 +4,10 @@ package mada.range
 
 class ImmutablePointer[A](override val _base: Pointer[A])
         extends PointerAdapter[A, A, ImmutablePointer[A]] {
-    override def _increment = { throw ErrorImmutable(this) }
-    override def _clone = { throw ErrorImmutable(this) }
-    override def _decrement =  { throw ErrorImmutable(this) }
-    override def _offset(d: Long) = { throw ErrorImmutable(this) }
-    override def toImmutable = this
+    override def _increment = { throw new ErrorImmutable(this) }
+    override def _clone = { throw new ErrorImmutable(this) }
+    override def _decrement =  { throw new ErrorImmutable(this) }
+    override def _offset(d: Long) = { throw new ErrorImmutable(this) }
 }
 
-case class ErrorImmutable[A](pointer: Pointer[A]) extends UnsupportedOperationException
+class ErrorImmutable[A](val pointer: Pointer[A]) extends UnsupportedOperationException

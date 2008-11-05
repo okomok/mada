@@ -12,10 +12,10 @@ class IteratorRange[A](val iterator: Iterator[A])
             new IteratorPointer(iterator, None)) {
 }
 
-class IteratorPointer[A](private val it: Iterator[A], private var e: Option[A])
+class IteratorPointer[A](it: Iterator[A], private var e: Option[A])
         extends PointerFacade[A, IteratorPointer[A]] {
     override def _read = e.get
-    override def _traversal = SinglePassTraversal()
+    override def _traversal = SinglePassTraversal
     override def _equals(that: IteratorPointer[A]) = e.isEmpty == that.e.isEmpty
     override def _increment = { if (it.hasNext) e = Some(it.next) else e = None; }
 }

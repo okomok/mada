@@ -4,8 +4,8 @@ package mada.range
 
 trait Pointer[A] {
 // element-access
-    protected def _read: A = { throw ErrorNotReadable(this) }
-    protected def _write(e: A): Unit = { throw ErrorNotWritable(this) }
+    protected def _read: A = { throw new ErrorNotReadable(this) }
+    protected def _write(e: A): Unit = { throw new ErrorNotWritable(this) }
     final def read: A = _read
     final def write(e: A): Pointer[A] = { _write(e); this }
 
@@ -14,25 +14,25 @@ trait Pointer[A] {
     final def traversal = _traversal
 
 // single-pass
-    protected def _increment: Unit
+    protected def _increment: Unit = { throw new ErrorNotSinglePass(this) }
 //  override def equals(that: Any): Boolean
     final def ++/ : Pointer[A]  = { _increment; this }
 
 // forward
-    protected def _clone: Pointer[A] = { throw ErrorNotForward(this) }
-    protected def _hashCode: Int = { throw ErrorNotForward(this) }
+    protected def _clone: Pointer[A] = { throw new ErrorNotForward(this) }
+    protected def _hashCode: Int = { throw new ErrorNotForward(this) }
     override final def clone: Pointer[A] = _clone
     override final def hashCode = _hashCode
     final def ++ : Pointer[A] = { val tmp = clone; this++/; tmp }
 
 // bidirectional
-    protected def _decrement: Unit = { throw ErrorNotBidirectional(this) }
+    protected def _decrement: Unit = { throw new ErrorNotBidirectional(this) }
     final def --/ : Pointer[A] = { _decrement; this }
     final def -- : Pointer[A] = { val tmp = clone; this--/; tmp }
 
 // random-access
-    protected def _offset(d: Long): Unit = { throw ErrorNotRandomAccess(this) }
-    protected def _difference_(that: Pointer[A]): Long = { throw ErrorNotRandomAccess(this) }
+    protected def _offset(d: Long): Unit = { throw new ErrorNotRandomAccess(this) }
+    protected def _difference_(that: Pointer[A]): Long = { throw new ErrorNotRandomAccess(this) }
     final def - (that: Pointer[A]): Long = _difference_(that)
     final def +=(d: Long): Pointer[A] = { _offset(d); this }
     final def -=(d: Long): Pointer[A] = this += (-d)
@@ -44,13 +44,14 @@ trait Pointer[A] {
 
 // debug
     protected def _invariant: Unit = { }
+    final def immutable: Pointer[A] = if (NDebug.value) this else new ImmutablePointer(this)
+    final def readOnly: Pointer[A] = if (NDebug.value) this else new ReadOnlyPointer(this)
 
 // utilities
     final def advance(d : Long) = PointerAdvance(this, d)
+    final def output = new PointerOutput(this)
     final def swap(that: Pointer[A]) = PointerSwap(this, that)
-    final def output: (A => Pointer[A]) = {(e: A) => write(e); this++/; this}
-    final def <=<(that: Pointer[A]): PointerRange[A] = new PointerRange(this, that)
-    def toImmutable: Pointer[A] = new ImmutablePointer(this)
+    final def <=<(that: Pointer[A]) = new PointerRange(this, that)
 }
 
 
@@ -68,9 +69,10 @@ object -- {
 }
 
 
-case class ErrorNotReadable[A](pointer: Pointer[A]) extends UnsupportedOperationException
-case class ErrorNotWritable[A](pointer: Pointer[A]) extends UnsupportedOperationException
+class ErrorNotReadable[A](val pointer: Pointer[A]) extends UnsupportedOperationException
+class ErrorNotWritable[A](val pointer: Pointer[A]) extends UnsupportedOperationException
 
-case class ErrorNotForward[A](pointer: Pointer[A]) extends UnsupportedOperationException
-case class ErrorNotBidirectional[A](private val p: Pointer[A]) extends ErrorNotForward[A](p)
-case class ErrorNotRandomAccess[A](private val p: Pointer[A]) extends ErrorNotBidirectional[A](p)
+class ErrorNotSinglePass[A](val pointer: Pointer[A]) extends UnsupportedOperationException
+class ErrorNotForward[A](p: Pointer[A]) extends ErrorNotSinglePass[A](p)
+class ErrorNotBidirectional[A](p: Pointer[A]) extends ErrorNotForward[A](p)
+class ErrorNotRandomAccess[A](p: Pointer[A]) extends ErrorNotBidirectional[A](p)

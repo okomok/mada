@@ -13,6 +13,6 @@ class ReadOnlyRange[A](val base: Range[A])
 
 class ReadOnlyPointer[A](override val _base: Pointer[A])
         extends PointerAdapter[A, A, ReadOnlyPointer[A]] {
-    override def _write(e: A) = { throw ErrorNotWritable(this) }
+    override def _write(e: A) = { throw new ErrorNotWritable(this) }
     override def _clone = new ReadOnlyPointer(base.clone)
 }

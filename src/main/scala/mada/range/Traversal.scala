@@ -9,18 +9,22 @@ trait Traversal {
 }
 
 
-case class SinglePassTraversal extends Traversal {
+class SinglePassTraversal extends Traversal {
     override def precedence = 0
 }
+object SinglePassTraversal extends SinglePassTraversal
 
-case class ForwardTraversal extends SinglePassTraversal {
+class ForwardTraversal extends SinglePassTraversal {
     override def precedence = 1
 }
+object ForwardTraversal extends ForwardTraversal
 
-case class BidirectionalTraversal extends ForwardTraversal {
+class BidirectionalTraversal extends ForwardTraversal {
     override def precedence = 2
 }
+object BidirectionalTraversal extends BidirectionalTraversal
 
-case class RandomAccessTraversal extends BidirectionalTraversal {
+class RandomAccessTraversal extends BidirectionalTraversal {
     override def precedence = 3
 }
+object RandomAccessTraversal extends RandomAccessTraversal

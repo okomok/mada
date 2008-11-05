@@ -11,7 +11,7 @@ trait IndexAccess[A] {
     final def length = _length
 }
 
-case class ErrorNonWritableIndexAccess(message: String) extends UnsupportedOperationException
+case class ErrorNonWritableIndexAccess(val message: String) extends UnsupportedOperationException
 
 
 object FromIndexAccess {
@@ -25,7 +25,7 @@ class IndexAccessRange[A](val indexAccess: IndexAccess[A])
     override def size = indexAccess.length
 }
 
-class IndexAccessPointer[A](private val ia: IndexAccess[A], private var i: Long)
+class IndexAccessPointer[A](ia: IndexAccess[A], private var i: Long)
         extends PointerAdapter[Long, A, IndexAccessPointer[A]] {
     override val _base = new NumberPointer(i)
     override def _read = ia.get(*(base))

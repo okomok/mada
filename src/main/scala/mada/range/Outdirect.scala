@@ -8,8 +8,8 @@ object Outdirect {
 }
 
 class OutdirectPointer[A](override val _base: Pointer[A])
-		extends PointerAdapter[A, Pointer[A], OutdirectPointer[A]] {
+        extends PointerAdapter[A, Pointer[A], OutdirectPointer[A]] {
     override def _read = base
-    override def _write(e: Pointer[A]) = { throw ErrorNotWritable(this) }
+    override def _write(e: Pointer[A]) = { throw new ErrorNotWritable(this) }
     override def _clone = new OutdirectPointer(base.clone)
 }

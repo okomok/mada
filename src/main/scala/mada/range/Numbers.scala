@@ -8,7 +8,7 @@ object Numbers extends ((Long, Long) => Range[Long]) {
 
 class NumberPointer(private var n: Long) extends PointerFacade[Long, NumberPointer] {
     override def _read = n
-    override def _traversal = RandomAccessTraversal()
+    override def _traversal = RandomAccessTraversal
     override def _equals(that: NumberPointer) = n == that.n
     override def _increment = n = n + 1
     override def _clone = new NumberPointer(n)

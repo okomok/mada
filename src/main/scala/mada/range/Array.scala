@@ -26,7 +26,7 @@ object FromArray {
 
 object ToArray {
     def apply[A](r: Range[A]): Array[A] = {
-        Assert("needs ForwardRange", r.traversal conformsTo ForwardTraversal())
+        Assert("needs ForwardRange", r.traversal conformsTo ForwardTraversal)
         val a = new Array[A](r.distance.toInt)
         var i = 0
         r.forEach({(e: A) => a(i) = e; i = i + 1})

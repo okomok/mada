@@ -1,0 +1,10 @@
+
+package mada.range
+
+
+class PointerOutput[A](val pointer: Pointer[A]) extends (A => Pointer[A]) {
+    override def apply(e: A) = {
+        *(pointer) = e
+        ++(pointer)
+    }
+}
