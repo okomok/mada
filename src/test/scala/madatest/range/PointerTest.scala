@@ -3,9 +3,10 @@ package madatest.range
 
 
 import mada.range._;
+import junit.framework.Assert._
 
 
-class PointerTest extends TestCase {
-    def applyTest = {
+class PointerTest {
+    def testTrivial {
     }
 }

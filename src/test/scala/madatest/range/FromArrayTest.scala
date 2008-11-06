@@ -3,16 +3,10 @@ package madatest.range
 
 
 import mada.range._;
+import junit.framework.Assert._
 
 
-class FromArrayTest extends TestCase {
-    def applyTest() {
-        testTrivial
-        testWritable
-        testWritable2
-        testMake
-    }
-
+class FromArrayTest {
     def testTrivial() = {
         val a = FromArray(Array.range(0, 6))
         val b = FromArray(Array.range(0, 6))

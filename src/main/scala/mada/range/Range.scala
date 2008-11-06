@@ -11,9 +11,10 @@ trait Range[A] {
     lazy val traversal = begin.traversal // dynamic traversal?
 
     override def equals(that: Any) = that match {
-        case that: Range[A] => equals(that)
+        case that: Range[_] => equals(that.asInstanceOf[Range[A]])
         case _ => false
     }
+
     override def toString = toArrayList.toString // TODO
 
     def accumulate[B](z: B, op: (B, A) => B) = Accumulate(this, z, op)
