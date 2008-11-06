@@ -4,15 +4,21 @@ package madatest
 
 import mada.Assert
 import mada.NDebug
+import junit.framework.Assert._
+import junit.framework.TestCase
 
 
 class AssertTest extends TestCase {
+    override def setUp {
+        NDebug.value = false
+    }
+
     def neverEvaluated(): Boolean = {
         assertTrue("impossible", false)
         false
     }
 
-    def applyTest {
+    def testTrivial {
         assertTrue(!NDebug.value)
 
         NDebug.value = true

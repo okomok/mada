@@ -10,6 +10,7 @@ class IteratorRange[A](val iterator: Iterator[A])
         extends PointerRange[A](
             new IteratorPointer(iterator, if (iterator.hasNext) Some(iterator.next) else None),
             new IteratorPointer(iterator, None)) {
+    override def toIterator = iterator
 }
 
 class IteratorPointer[A](it: Iterator[A], private var e: Option[A])

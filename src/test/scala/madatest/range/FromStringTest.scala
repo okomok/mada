@@ -6,8 +6,7 @@ import mada.range._
 import junit.framework.Assert._
 
 
-
-class FromStringTest extends TestCase {
+class FromStringTest {
     def testTrivial = {
         assertTrue(FromString("abcdefg") == FromString("abcdefg"))
         assertTrue(FromString("abcdefg") != FromString("abXdefg"))
