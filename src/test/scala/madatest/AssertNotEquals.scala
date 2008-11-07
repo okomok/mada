@@ -13,7 +13,7 @@ object AssertNotEquals {
             sb.append(message).append(' ')
         }
 
-        var isEqual =
+        val isEqual =
             try {
                 assertEquals(unexpected, actual); true
             } catch {

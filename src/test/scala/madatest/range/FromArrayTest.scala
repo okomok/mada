@@ -35,5 +35,9 @@ class FromArrayTest {
     def testMake {
         assertTrue(Numbers(1, 7) == FromArray(1,2,3,4,5,6))
     }
+
+    def testPointer() {
+        RandomAccessReadablePointerTest(FromArray(7,6,2,5,1,3,9).begin, 7, Array(7,6,2,5,1,3,9))
+    }
 }
 
