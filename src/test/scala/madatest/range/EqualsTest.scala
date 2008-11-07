@@ -9,7 +9,7 @@ import junit.framework.Assert._
 class EqualsTest {
     def testTrivial = {
         assertEquals(Numbers(2, 5), Numbers(2, 5))
-        assertTrue(Numbers(2, 6) != Numbers(2, 5))
+        AssertNotEquals(Numbers(2, 6), Numbers(2, 5))
         assertEquals(Numbers(2, 5).asRangeIn(SinglePassTraversal), Numbers(2, 5))
     }
 

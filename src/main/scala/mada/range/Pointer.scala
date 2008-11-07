@@ -48,7 +48,7 @@ trait Pointer[A] {
     final def readOnly: Pointer[A] = if (NDebug.value) this else new ReadOnlyPointer(this)
 
 // utilities
-    final def advance(d : Long) = PointerAdvance(this, d)
+    final def advance(d: Long) = PointerAdvance(this, d)
     final def output = new PointerOutput(this)
     final def swap(that: Pointer[A]) = PointerSwap(this, that)
     final def <=<(that: Pointer[A]) = new PointerRange(this, that)

@@ -14,3 +14,4 @@ class FromStringTest {
         assertTrue(FromString("abcdefg") != FromArray('a','X','c','d','e','f','g'))
     }
 }
+
