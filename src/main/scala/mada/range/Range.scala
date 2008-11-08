@@ -17,12 +17,12 @@ trait Range[A] {
     def asRangeOf[B] = (new AsRangeOf[B])(this)
     def concat(that: Range[A]) = Concat(this, that)
     def copy = FromArrayList(toArrayList)
-    def copy[B >: A](p: Pointer[B]) = Copy(this, p)
+    def copyTo[B >: A](p: Pointer[B]) = CopyTo(this, p)
     def distance = Distance(this)
-    def equal(p: Pointer[A]) = Equal(this, p)
-    def equal[B](p: Pointer[B], f: (A, B) => Boolean) = Equal(this, p, f)
     def equals(that: Range[A]) = Equals(this, that)
     def equals[B](that: Range[B], f: (A, B) => Boolean) = Equals(this, that, f)
+    def equalsTo(p: Pointer[A]) = EqualsTo(this, p)
+    def equalsTo[B](p: Pointer[B], f: (A, B) => Boolean) = EqualsTo(this, p, f)
     def exists(f: A => Boolean) = Exists(this, f)
     def filter(f: A => Boolean) = Filter(this, f)
     def find(f: A => Boolean) = Find(this, f)
@@ -45,6 +45,6 @@ trait Range[A] {
     def toArrayList = ToArrayList(this)
     def toIterator: Iterator[A] = ToIterator(this)
 
-    final def ->[To](f: RangeFunction[To]): To = (f.fromRange[A])(this)
+    final def ->[X](f: RangeFunction[X]): X = (f.fromRange[A])(this)
     final def ->(f: RangeTransformation): Range[A] = (f.fromRange[A])(this)
 }

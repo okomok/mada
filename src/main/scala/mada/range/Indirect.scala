@@ -20,6 +20,6 @@ class IndirectRange[To](base: Range[Pointer[To]]) extends Range[To] {
 class IndirectPointer[To](override val _base: Pointer[Pointer[To]])
         extends PointerAdapter[Pointer[To], To, IndirectPointer[To]] {
     override def _read = *(*(base))
-    override def _write(e: To) = *(*(base)) = e
+    override def _write(e: To) { *(*(base)) = e }
     override def _clone = new IndirectPointer[To](base.clone)
 }

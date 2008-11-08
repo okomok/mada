@@ -5,11 +5,12 @@ package mada.range
 object FromArray {
     def apply[A](a: Array[A]): Range[A] = {
         val ia = new IndexAccess[A] {
-            override def _set(i: Long, e: A) = a(i.toInt) = e
+            override def _set(i: Long, e: A) { a(i.toInt) = e }
             override def _get(i: Long) = a(i.toInt)
             override def _size = a.length
         }
-        FromIndexAccess(ia)
+        new IndexAccessRange(ia) {
+        }
     }
 
     def apply[A](es: A*): Range[A] = {

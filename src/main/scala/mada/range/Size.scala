@@ -2,7 +2,9 @@
 package mada.range
 
 
-object Size extends RangeFunction[Long] {
-    def apply[E](r: Range[E]): Long = r.end - r.begin
-    override def fromRange[E] = apply[E](_)
+object Size {
+    def apply[E](r: Range[E]): Long = {
+        Assert("requires RandomAccessRange", r.traversal conformsTo RandomAccessTraversal)
+        r.end - r.begin
+    }
 }
