@@ -3,12 +3,12 @@ package mada.range
 
 
 
-object Joint {
-    def apply[A](r1: Range[A], r2: Range[A]): Range[A] = r1 // new JointRange(r1, r2)
+object Concat {
+    def apply[A](r1: Range[A], r2: Range[A]): Range[A] = r1 // new ConcatRange(r1, r2)
 }
 
 /*
-class JointRange[A](r1: Range[A], r2: Range[A])
+class ConcatRange[A](r1: Range[A], r2: Range[A])
         extends {
             val p1 = r1.begin
             val q1 = r1.end

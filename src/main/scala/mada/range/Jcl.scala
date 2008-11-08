@@ -29,7 +29,7 @@ object FromArrayList {
 object ToArrayList {
     def apply[A](r: Range[A]): ArrayList[A] = {
         var a: ArrayList[A] = newArrayList(r)
-        r.forEach({(e: A) => a.add(e)})
+        r.foreach({(e: A) => a.add(e)})
         a
     }
 

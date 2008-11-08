@@ -18,7 +18,7 @@ object FromString {
 object Stringize {
     def apply(r: Range[Char]): String = {
         val sb = new StringBuilder
-        r.forEach(sb.append(_))
+        r.foreach(sb.append(_))
         sb.toString
     }
 }

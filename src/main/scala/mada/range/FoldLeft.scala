@@ -2,7 +2,7 @@
 package mada.range
 
 
-object Accumulate {
+object FoldLeft {
     def apply[A, B](r: Range[A], z: B, op: (B, A) => B): B = {
         val p = r.begin; val q = r.end
         var acc = z
