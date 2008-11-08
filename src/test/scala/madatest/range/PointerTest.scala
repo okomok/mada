@@ -87,8 +87,8 @@ object RandomAccessReadablePointerTest {
     def apply[A](i: Pointer[A], n: Int, vals: Array[A]) {
         BidirectionalReadablePointerTest(i, vals(0), vals(1))
         val j = i.clone
-        var c = 0
 
+        var c = 0
         while (c < n-1) {
             assertEquals(i, j + c)
             assertEquals(*(i), vals(c))
@@ -104,6 +104,8 @@ object RandomAccessReadablePointerTest {
         }
 
         val k = j + n - 1
+
+        c = 0
         while (c < n-1) {
             assertEquals(i, k - c)
             assertEquals(*(i), vals(n - 1 - c))
