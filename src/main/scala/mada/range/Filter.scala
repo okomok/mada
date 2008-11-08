@@ -8,11 +8,10 @@ object Filter {
 
 class FilterRange[A](val base: Range[A], val function: A => Boolean)
         extends {
-            val bq = base.end
-            val q = bq.immutable
-            val q_ = if (bq.traversal conformsTo BidirectionalTraversal) bq.clone else q
+            val q = base.end
+            val q_ = if (q.traversal conformsTo BidirectionalTraversal) q.clone else q
         } with PointerRange[A](new FilterPointer(base.begin, q, function), new FilterPointer(q_, q, function)) {
-    override def filter(f: A => Boolean) = base.filter({(a: A) => function(a) && f(a)})
+    override def filter(f: A => Boolean) = base.filter({(e: A) => function(e) && f(e)})
 }
 
 class FilterPointer[A](override val _base: Pointer[A], q: Pointer[A], val function: A => Boolean)

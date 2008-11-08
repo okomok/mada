@@ -77,7 +77,7 @@ class IntervalPointer[N](private var _base: Long) extends PointerFacade[N, Inter
     override def _equals(that: IntervalPointer[N]) = _base == that._base
     override def _increment = { _base = _base + 1 }
     override def _clone = new IntervalPointer[N](_base)
-    override def _hashCode = new java.lang.Long(_base).hashCode
+    override def _hashCode = long2Long(_base).hashCode
     override def _decrement = { _base = _base - 1 }
     override def _offset(d: Long) = { _base = _base + d }
     override def _difference(that: IntervalPointer[N]) = _base - that._base

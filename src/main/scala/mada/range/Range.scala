@@ -39,6 +39,8 @@ trait Range[A] {
     def reverse = Reverse(this)
     def size = Size(this)
     def stringize = UnsafeStringize(this)
+    def take(n: Long) = Take(this, n)
+    def takeWhile(f: A => Boolean) = TakeWhile(this, f)
     def toArray = ToArray(this)
     def toArrayList = ToArrayList(this)
     def toIterator: Iterator[A] = ToIterator(this)
