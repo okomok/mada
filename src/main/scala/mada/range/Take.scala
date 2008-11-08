@@ -17,8 +17,8 @@ class TakeRange[A](val base: Range[A], val count: Long) extends Range[A] {
     override def take(n: Long) = new TakeRange(base, count + n)
 }
 
-class TakePointer[A](_base: Pointer[A], val end: Pointer[A], var count: Long)
-        extends PointerRefAdapter[A, A, TakeWhilePointer[A]](_base) {
+class TakePointer[A](override val _base: Pointer[A], val end: Pointer[A], var count: Long)
+        extends PointerAdapter[A, A, TakeWhilePointer[A]] {
     countDown
     override def _traversal = base.traversal min ForwardTraversal
     override def _increment { base++/; countDown }
@@ -46,8 +46,8 @@ class TakeWhileRange[A](val base: Range[A], val predicate: A => Boolean) extends
     override val _end = new TakeWhilePointer(q, q, predicate)
 }
 
-class TakeWhilePointer[A](_base: Pointer[A], val end: Pointer[A], val predicate: A => Boolean)
-        extends PointerRefAdapter[A, A, TakeWhilePointer[A]](_base) {
+class TakeWhilePointer[A](override val _base: Pointer[A], val end: Pointer[A], val predicate: A => Boolean)
+        extends PointerAdapter[A, A, TakeWhilePointer[A]] {
     countDown
     override def _traversal = base.traversal min ForwardTraversal
     override def _increment { base++/; countDown }

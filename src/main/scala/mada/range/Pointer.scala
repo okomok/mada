@@ -5,7 +5,7 @@ package mada.range
 trait Pointer[A] {
 // element-access
     protected def _read: A = { throw new ErrorNotReadable(this) }
-    protected def _write(e: A): Unit = { throw new ErrorNotWritable(this) }
+    protected def _write(e: A) { throw new ErrorNotWritable(this) }
     final def read: A = _read
     final def write(e: A): Pointer[A] = { _write(e); this }
 
@@ -14,9 +14,9 @@ trait Pointer[A] {
     final def traversal = _traversal
 
 // single-pass
-    protected def _increment: Unit = { throw new ErrorNotSinglePass(this) }
+    protected def _increment { throw new ErrorNotSinglePass(this) }
 //  override def equals(that: Any): Boolean
-    final def ++/ : Pointer[A]  = { _increment; this }
+    final def ++/ : Pointer[A] = { _increment; this }
 
 // forward
     protected def _clone: Pointer[A] = { throw new ErrorNotForward(this) }
@@ -26,12 +26,12 @@ trait Pointer[A] {
     final def ++ : Pointer[A] = { val tmp = clone; this++/; tmp }
 
 // bidirectional
-    protected def _decrement: Unit = { throw new ErrorNotBidirectional(this) }
+    protected def _decrement { throw new ErrorNotBidirectional(this) }
     final def --/ : Pointer[A] = { _decrement; this }
     final def -- : Pointer[A] = { val tmp = clone; this--/; tmp }
 
 // random-access
-    protected def _offset(d: Long): Unit = { throw new ErrorNotRandomAccess(this) }
+    protected def _offset(d: Long) { throw new ErrorNotRandomAccess(this) }
     protected def _difference_(that: Pointer[A]): Long = { throw new ErrorNotRandomAccess(this) }
     final def - (that: Pointer[A]): Long = _difference_(that)
     final def +=(d: Long): Pointer[A] = { _offset(d); this }
@@ -43,10 +43,10 @@ trait Pointer[A] {
     final def <= (that: Pointer[A]): Boolean = this - that <= 0
     final def >= (that: Pointer[A]): Boolean = this - that >= 0
     final def apply(d: Long): A = (this + d).read
-    final def update(d: Long, e: A): Unit = (this + d).write(e)
+    final def update(d: Long, e: A) { (this + d).write(e) }
 
 // debug
-    protected def _invariant: Unit = { }
+    protected def _invariant { }
 
 // utilities
     final def advance(d: Long) = PointerAdvance(this, d)
@@ -59,7 +59,7 @@ trait Pointer[A] {
 
 object * {
     def apply[A](p: Pointer[A]): A = p.read
-    def update[A](p: Pointer[A], e: A): Unit = p.write(e)
+    def update[A](p: Pointer[A], e: A) { p.write(e) }
 }
 
 object ++ {
