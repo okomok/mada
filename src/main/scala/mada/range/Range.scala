@@ -41,11 +41,11 @@ trait Range[A] {
     def outdirect = Outdirect(this)
     def readOnly = ReadOnly(this)
     def reverse = Reverse(this)
+    def size = Size(this)
+    def stringize = UnsafeStringize(this)
     def toArray = ToArray(this)
     def toArrayList = ToArrayList(this)
     def toIterator: Iterator[A] = ToIterator(this)
-    def size = Size(this)
-    def stringize = UnsafeStringize(this)
 
     final def ->[To](f: RangeFunction[To]): To = (f.fromRange[A])(this)
     final def ->(f: RangeTransformation): Range[A] = (f.fromRange[A])(this)

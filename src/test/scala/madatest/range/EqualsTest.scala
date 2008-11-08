@@ -8,9 +8,9 @@ import junit.framework.Assert._
 
 class EqualsTest {
     def testTrivial = {
-        assertEquals(Ints(2, 5), Ints(2, 5))
-        AssertNotEquals(Ints(2, 6), Ints(2, 5))
-        assertEquals(Ints(2, 5).asRangeIn(SinglePassTraversal), Ints(2, 5))
+        assertEquals(Interval(2, 5), Interval(2, 5))
+        AssertNotEquals(Interval(2, 6), Interval(2, 5))
+        assertEquals(Interval(2, 5).asRangeIn(SinglePassTraversal), Interval(2, 5))
     }
 
     trait To1

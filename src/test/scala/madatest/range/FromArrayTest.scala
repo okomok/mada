@@ -33,7 +33,7 @@ class FromArrayTest {
     }
 
     def testMake {
-        assertTrue(Ints(1, 7) == FromArray(1,2,3,4,5,6))
+        assertTrue(Interval(1, 7) == FromArray(1,2,3,4,5,6))
     }
 
     def testPointer() {

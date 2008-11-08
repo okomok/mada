@@ -27,7 +27,7 @@ class IndexAccessRange[A](val indexAccess: IndexAccess[A])
 
 class IndexAccessPointer[A](ia: IndexAccess[A], private var i: Long)
         extends PointerAdapter[Long, A, IndexAccessPointer[A]] {
-    override val _base = new LongsPointer(i)
+    override val _base = new LongIntervalPointer(i)
     override def _read = ia.get(*(base))
     override def _write(e: A) = ia.set(*(base), e)
     override def _clone = new IndexAccessPointer(ia, *(base))

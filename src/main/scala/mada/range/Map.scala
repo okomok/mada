@@ -9,7 +9,7 @@ object Map {
 class MapRange[Z, A](val base: Range[Z], val function: Z => A)
         extends PointerRange[A](new MapPointer(base.begin, function), new MapPointer(base.end, function)) {
     override def concat(that: Range[A]) = that match {
-        case that: MapRange[Z, A] if that.function == function => base.concat(that.base).map(function)
+        case that: MapRange[Z, A] if that.function == function => base.concat(that.base).map(function) // BUBUG: A and Z is unchecked
         case _ => super.concat(that)
     }
 
