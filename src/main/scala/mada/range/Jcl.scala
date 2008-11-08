@@ -8,7 +8,7 @@ import java.util.ArrayList
 object FromArrayList {
     def apply[A](a: ArrayList[A]): Range[A] = {
         val ia = new IndexAccess[A] {
-            override def _set(i: Long, e: A) = a.set(i.toInt, e)
+            override def _set(i: Long, e: A) { a.set(i.toInt, e) }
             override def _get(i: Long) = a.get(i.toInt)
             override def _size = a.size
         }
