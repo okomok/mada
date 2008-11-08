@@ -10,7 +10,7 @@ trait Range[A] {
     final def end = _end
     lazy val traversal = begin.traversal // dynamic traversal?
 
-    override def equals(that: Any) = if (null == that) false else equals(that.asInstanceOf[Range[A]])
+    override def equals(that: Any) = equals(that.asInstanceOf[Range[A]])
     override def toString = toArrayList.toString // TODO
 
     def asRangeIn(t: Traversal) = AsRangeIn(this, t)
