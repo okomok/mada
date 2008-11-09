@@ -3,6 +3,7 @@ package madatest
 
 
 import mada.Assert
+import mada.Verify
 import mada.NDebug
 import junit.framework.Assert._
 import junit.framework.TestCase
@@ -31,6 +32,21 @@ class AssertTest extends TestCase {
             Assert("fail", false)
         } catch {
             case e: java.lang.AssertionError => thrown = true
+        }
+        assertTrue("must be thrown", thrown)
+    }
+
+    def mustBeEvaluated(): Boolean = {
+        assertTrue("possible", false)
+        true
+    }
+
+    def testVerify {
+        var thrown = false
+        try {
+            Verify("fail", mustBeEvaluated)
+        } catch {
+            case e: junit.framework.AssertionFailedError => thrown = true
         }
         assertTrue("must be thrown", thrown)
     }
