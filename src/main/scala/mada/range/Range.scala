@@ -39,6 +39,7 @@ trait Range[A] {
     def mismatch[B](p: Pointer[B], f: (A, B) => Boolean) = Mismatch(this, p, f)
     def offset(n1: Long, n2: Long) = Offset(this, n1, n2)
     def outdirect = Outdirect(this)
+    def permutation(indices: Range[Long]) = Permutation(this, indices)
     def readOnly = ReadOnly(this)
     def reverse = Reverse(this)
     def size = Size(this)
