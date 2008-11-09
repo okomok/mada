@@ -9,7 +9,7 @@ trait Range[A] {
     final def begin = _begin
     final def end = _end
     final lazy val traversal = begin.traversal
-    final def in(t: Traversal): Boolean = traversal conformsTo t
+    final def models(t: Traversal): Boolean = traversal conformsTo t
 
     override def equals(that: Any) = equals(that.asInstanceOf[Range[A]])
     override def toString = toArrayList.toString // TODO

@@ -4,7 +4,7 @@ package mada.range
 
 object Permutation {
     def apply[A](elements: Range[A], indices: Range[Long]): Range[A] = {
-        Assert("requires RandomAccessRange", elements in RandomAccessTraversal)
+        Assert("requires RandomAccessRange", elements models RandomAccessTraversal)
         new PermutationRange(elements, indices)
     }
 }

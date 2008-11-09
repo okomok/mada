@@ -3,7 +3,7 @@ package mada.range
 
 
 trait IndexAccess[A] {
-    protected def _set(i: Long, e: A): Unit
+    protected def _set(i: Long, e: A) { throw new ErrorNotWritableIndexAccess }
     protected def _get(i: Long): A
     protected def _size: Long
     final def set(i: Long, e: A) { _set(i, e) }
@@ -11,7 +11,7 @@ trait IndexAccess[A] {
     final def size = _size
 }
 
-case class ErrorNonWritableIndexAccess(val message: String) extends UnsupportedOperationException
+class ErrorNotWritableIndexAccess extends UnsupportedOperationException
 
 
 object FromIndexAccess {
@@ -30,6 +30,12 @@ class IndexAccessPointer[A](ia: IndexAccess[A], private var i: Long)
     override val _base = new LongIntervalPointer(i)
 
     override def _read = ia.get(*(base))
-    override def _write(e: A) { ia.set(*(base), e) }
+    override def _write(e: A) {
+        try {
+            ia.set(*(base), e)
+        } catch {
+            case _: ErrorNotWritableIndexAccess => throw new ErrorNotWritable(this)
+        }
+    }
     override def _clone = new IndexAccessPointer(ia, *(base))
 }
