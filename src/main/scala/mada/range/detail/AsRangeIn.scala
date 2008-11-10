@@ -4,7 +4,7 @@ package mada.range.detail
 
 object AsRangeIn {
     def apply[A](base: Range[A], t: Traversal): Range[A] = {
-        Assert("requires compatible traversal", base.traversal conformsTo t)
+        Assert("requires compatible traversals", base.traversal conformsTo t)
         if (t conformsTo base.traversal)
             base
         else

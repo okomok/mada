@@ -2,7 +2,9 @@
 package mada.range
 
 
-object Range extends Conversions with Indirect with Stringize
+object Range extends Conversions with Indirect with Stringize {
+
+}
 
 
 trait Range[A] {
@@ -33,9 +35,12 @@ trait Range[A] {
     def filter(f: A => Boolean) = Filter(this, f)
     def find(f: A => Boolean) = Find(this, f)
     def findPointerOf(f: A => Boolean) = FindPointerOf(this, f)
+    def first = detail.First(this)
     def foldLeft[B](z: B, op: (B, A) => B) = FoldLeft(this, z, op)
     def forall(f: A => Boolean) = Forall(this, f)
     def foreach[X](f: A => X) = Foreach(this, f)
+    def isEmpty = detail.IsEmpty(this)
+    def last = detail.Last(this)
     def map[B](f: A => B) = Map(this, f)
     def mismatch(p: Pointer[A]) = Mismatch(this, p)
     def mismatch[B](p: Pointer[B], f: (A, B) => Boolean) = Mismatch(this, p, f)
