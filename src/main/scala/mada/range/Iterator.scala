@@ -2,6 +2,12 @@
 package mada.range
 
 
+object IteratorConversion {
+    implicit def madaRangeFromIterator[A](from: Iterator[A]) = FromIterator(from)
+    implicit def madaRangeToIterator[A](from: Range[A]) = from.toIterator
+}
+
+
 object FromIterator {
     def apply[A](it: Iterator[A]): Range[A] = new IteratorRange(it)
 }

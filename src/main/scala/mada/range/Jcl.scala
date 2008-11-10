@@ -5,6 +5,14 @@ package mada.range
 import java.util.ArrayList
 
 
+object JclConversion extends JclConversion
+
+trait JclConversion {
+    implicit def madaRangeFromArrayList[A](from: java.util.ArrayList[A]) = FromArrayList(from)
+    implicit def madaRangeToArrayList[A](from: Range[A]) = from.toArrayList
+}
+
+
 object FromArrayList {
     def apply[A](a: ArrayList[A]): Range[A] = new ArrayListRange(a)
 

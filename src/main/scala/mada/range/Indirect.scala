@@ -3,20 +3,20 @@ package mada.range
 
 
 object Indirect {
-    def apply[A](r: Range[Pointer[A]]): Range[A] = new IndirectRange(r)
-
-    object Operator {
-        trait MadaRangeIndirectLeft[A] {
-            def indirect: Range[A]
+    trait MadaRangeIndirect[A] {
+        def indirect(b: Range[Pointer[A]]): Range[A]
+    }
+    def toMadaRangeIndirect[A](b: Range[Pointer[A]]) = b match {
+        case OutdirectRange(bb) => new MadaRangeIndirect[A] {
+            def indirect(b: Range[Pointer[A]]) = bb
         }
-        implicit def toMadaRangeIndirectLeft[A](l: Range[Pointer[A]]) = l match {
-            case OutdirectRange(base) => new MadaRangeIndirectLeft[A] { override def indirect = base }
-            case _ => new MadaRangeIndirectLeft[A] { override def indirect = apply(l) }
+        case _ => new MadaRangeIndirect[A] {
+            def indirect(b: Range[Pointer[A]]) = new IndirectRange(b)
         }
     }
 }
 
-case class IndirectRange[A](base: Range[Pointer[A]]) extends Range[A] {
+class IndirectRange[A](base: Range[Pointer[A]]) extends Range[A] {
     override val _begin = new IndirectPointer(base.begin)
     override val _end = new IndirectPointer(base.end)
 

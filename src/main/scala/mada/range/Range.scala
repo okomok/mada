@@ -14,7 +14,7 @@ trait Range[A] {
     override def equals(that: Any) = equals(that.asInstanceOf[Range[A]])
     override def toString = toArrayList.toString // TODO
 
-    def asRangeIn(t: Traversal) = AsRangeIn(this, t)
+    def asRangeIn(t: Traversal) = detail.AsRangeIn(this, t)
     def asRangeOf[B] = (new AsRangeOf[B])(this)
     def concat(that: Range[A]) = Concat(this, that)
     def copy = FromArrayList(toArrayList)
@@ -45,10 +45,11 @@ trait Range[A] {
     def slice(n: Long, m: Long) = Slice(this, n, m)
     def take(n: Long) = Take(this, n)
     def takeWhile(f: A => Boolean) = TakeWhile(this, f)
+    def window(n: Long, m: Long) = Window(this, n, m)
+
     def toArray = ToArray(this)
     def toArrayList = ToArrayList(this)
     def toIterator: Iterator[A] = ToIterator(this)
-    def window(n: Long, m: Long) = Window(this, n, m)
 
     final def ->[X](f: RangeFunction[X]): X = (f.fromRange[A])(this)
     final def ->(f: RangeTransformation): Range[A] = (f.fromRange[A])(this)

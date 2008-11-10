@@ -2,6 +2,14 @@
 package mada.range
 
 
+object ArrayConversion extends ArrayConversion
+
+trait ArrayConversion {
+    implicit def madaRangeFromArray[A](from: Array[A]) = FromArray(from)
+    implicit def madaRangeToArray[A](from: Range[A]) = from.toArray
+}
+
+
 object FromArray {
     def apply[A](a: Array[A]): Range[A] = new ArrayRange(a)
 
