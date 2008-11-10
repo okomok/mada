@@ -2,6 +2,9 @@
 package mada.range
 
 
+object Range extends Conversions with Indirect with Stringize
+
+
 trait Range[A] {
     protected def _begin: Pointer[A]
     protected def _end: Pointer[A]

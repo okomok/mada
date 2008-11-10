@@ -2,7 +2,9 @@
 package mada.range
 
 
-object IteratorConversion {
+object IteratorConversion extends IteratorConversion
+
+trait IteratorConversion {
     implicit def madaRangeFromIterator[A](from: Iterator[A]) = FromIterator(from)
     implicit def madaRangeToIterator[A](from: Range[A]) = from.toIterator
 }

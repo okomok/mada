@@ -2,16 +2,24 @@
 package mada.range
 
 
-object Indirect {
-    trait MadaRangeIndirect[A] {
-        def indirect(b: Range[Pointer[A]]): Range[A]
+object Indirect extends Indirect
+
+trait Indirect {
+    trait MadaRangeIndirect[A] extends IndirectImpl.Operator[A]
+    implicit def toMadaRangeIndirect[A](b: Range[Pointer[A]]) = IndirectImpl(b)
+}
+
+object IndirectImpl {
+    trait Operator[A] {
+        def indirect: Range[A]
     }
-    def toMadaRangeIndirect[A](b: Range[Pointer[A]]) = b match {
-        case OutdirectRange(bb) => new MadaRangeIndirect[A] {
-            def indirect(b: Range[Pointer[A]]) = bb
+
+    def apply[A](b: Range[Pointer[A]]) = b match {
+        case OutdirectRange(bb) => new Operator[A] {
+            def indirect = bb
         }
-        case _ => new MadaRangeIndirect[A] {
-            def indirect(b: Range[Pointer[A]]) = new IndirectRange(b)
+        case _ => new Operator[A] {
+            def indirect = new IndirectRange(b)
         }
     }
 }
