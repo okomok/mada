@@ -5,8 +5,8 @@ package mada.range
 object Equals {
     def apply[E1, E2](r1: Range[E1], r2: Range[E2], f: (E1, E2) => Boolean): Boolean = {
         r1.traversal min r2.traversal match {
-            case RandomAccessTraversal => inRandomAccess(r1, r2, f)
-            case SinglePassTraversal => inSinglePass(r1, r2, f)
+            case _: RandomAccessTraversal => inRandomAccess(r1, r2, f)
+            case _: SinglePassTraversal => inSinglePass(r1, r2, f)
         }
     }
 

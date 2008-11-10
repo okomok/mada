@@ -39,5 +39,11 @@ class FromArrayTest {
     def testPointer() {
         RandomAccessReadablePointerTest(FromArray(7,6,2,5,1,3,9).begin, 7, Array(7,6,2,5,1,3,9))
     }
+
+    def testImplicit {
+        import mada.range.Conversions._
+        Array.range(0, 6).traversal
+        FromArray(1,2,3).deepMkString("abc")
+    }
 }
 

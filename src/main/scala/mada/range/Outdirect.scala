@@ -3,10 +3,10 @@ package mada.range
 
 
 object Outdirect {
-    def apply[A](base: Range[A]): Range[Pointer[A]] = new OutdirectRange(base)
+    def apply[A](r: Range[A]): Range[Pointer[A]] = new OutdirectRange(r)
 }
 
-class OutdirectRange[A](val base: Range[A]) extends Range[Pointer[A]] {
+case class OutdirectRange[A](base: Range[A]) extends Range[Pointer[A]] {
     override val _begin = new OutdirectPointer(base.begin)
     override val _end = new OutdirectPointer(base.end)
 }
