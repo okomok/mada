@@ -1,5 +1,5 @@
 
-package mada.range
+package mada.range.detail
 
 
 object Find {

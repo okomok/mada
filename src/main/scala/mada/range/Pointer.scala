@@ -49,9 +49,9 @@ trait Pointer[A] {
     protected def _invariant { }
 
 // utilities
-    final def advance(d: Long) = PointerAdvance(this, d)
-    final def output = new PointerOutput(this)
-    final def swap(that: Pointer[A]) = PointerSwap(this, that)
+    final def advance(d: Long) = detail.PointerAdvance(this, d)
+    final def output = new detail.PointerOutput(this)
+    final def swap(that: Pointer[A]) = detail.PointerSwap(this, that)
     final def <=<(that: Pointer[A]) = new PointerRange(this, that)
     final def cloneIn(t: Traversal): Pointer[A] = if (traversal conformsTo t) clone else this
 }

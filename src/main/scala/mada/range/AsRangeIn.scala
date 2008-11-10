@@ -1,5 +1,5 @@
 
-package mada.range.detail
+package mada.range
 
 
 object AsRangeIn {
