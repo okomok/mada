@@ -11,6 +11,8 @@ trait Expr[A] {
 
 trait Context[A, X] extends (Expr[A] => X)
 
+abstract case class DefaultContext[A]() extends Context[A, A]
+
 
 case class Terminal[T1](_1: T1) extends Expr[T1] with Product1[T1] {
     override def _eval = _1

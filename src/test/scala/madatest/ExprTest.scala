@@ -4,7 +4,7 @@ package madatest.exprtoy
 
 
 import junit.framework.Assert._
-import mada.{Expr, Terminal, Context}
+import mada.{Expr, Terminal, Context, DefaultContext}
 import mada.ExprConversions._
 
 
@@ -46,10 +46,13 @@ object MapImpl {
     }
 }
 
+abstract case class RngContext[A] extends Context[Rng[A], Rng[A]]
+
 
 class MapExpr[Z, A](val base: Expr[Rng[Z]], val function: Z => A) extends Expr[Rng[A]] {
     override def _eval = new MapRng(base.eval, function)
     override def _eval[X](c: Context[Rng[A], X]): X = c match {
+        case RngContext() => new MapRng(base.eval, function)
         case SizeContext() => 9 // Optimize
         case _ => c(this) // default
     }
