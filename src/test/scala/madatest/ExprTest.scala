@@ -11,7 +11,7 @@ import mada.ExprConversions._
 trait Rng[A]
 
 
-object Map {
+trait Map {
     class MapOperator1[A](expr: Expr[Rng[A]]) {
         def map[B](function: A => B) = MapImpl(expr, function)
     }
@@ -22,6 +22,10 @@ object Map {
     }
     implicit def toMapOperator[Z, A](expr: MapExpr[Z, A]) = new MapOperator2(expr)
 }
+
+object Map extends Map
+object AmbiguityCheck extends Map
+
 
 object MapImpl {
     var expected = 999
@@ -57,6 +61,7 @@ class ExprTest {
 
     def testInfix {
         import Map._
+        import AmbiguityCheck._
         MapImpl.expected = 1
         val e = Terminal(fromString("abc")).map({(x: Char) => 99})
         MapImpl.expected = 2
