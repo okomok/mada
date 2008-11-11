@@ -1,10 +1,10 @@
 
 
-package madatest
+package madatest.exprtoy
 
 
 import junit.framework.Assert._
-import mada.{Expr, IdentityExpr}
+import mada.{Expr, Terminal}
 import mada.ExprConversions._
 
 
@@ -58,7 +58,7 @@ class ExprTest {
     def testInfix {
         import Map._
         MapImpl.expected = 1
-        val e = IdentityExpr(fromString("abc")).map({(x: Char) => 99})
+        val e = Terminal(fromString("abc")).map({(x: Char) => 99})
         MapImpl.expected = 2
         e.map({(x: Int) => 'a'})
     }
