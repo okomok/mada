@@ -7,6 +7,8 @@ object Concat {
     def apply[A](r1: Rng[A], r2: Rng[A]): Rng[A] = r1 // new ConcatRng(r1, r2)
 }
 
+
+
 /*
 class ConcatRng[A](r1: Rng[A], r2: Rng[A])
         extends {
