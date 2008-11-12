@@ -4,11 +4,13 @@ package madatest.exprtoy
 
 
 import junit.framework.Assert._
-import mada.{Expr, Terminal, Context, DefaultContext}
+import mada.{Expr, Terminal, Context}
 import mada.ExprConversions._
 
 
-trait Rng[A]
+trait Rng[A] {
+    def size: Long = 999
+}
 
 
 trait Map {
@@ -46,27 +48,28 @@ object MapImpl {
     }
 }
 
-abstract case class RngContext[A] extends Context[Rng[A], Rng[A]]
+abstract case class RngContext[A] extends Context[Rng[A], Rng[A]] // Context[A, A] doesn't conform to Context[Rng[A], X]
 
 
 class MapExpr[Z, A](val base: Expr[Rng[Z]], val function: Z => A) extends Expr[Rng[A]] {
-    override def _eval = new MapRng(base.eval, function)
-    override def _eval[X](c: Context[Rng[A], X]): X = c match {
+    override def eval = new MapRng(base.eval, function)
+    override def eval[X](c: Context[Rng[A], X]): X = c match {
         case RngContext() => new MapRng(base.eval, function)
         case SizeContext() => 9 // Optimize
         case _ => c(this) // default
     }
 }
 
-class MapRng[Z, A](val base: Rng[Z], val function: Z => A) extends Rng[A]
+class MapRng[Z, A](val base: Rng[Z], val function: Z => A) extends Rng[A] {
+}
 
 
 case class SizeContext[A]() extends Context[Rng[A], Long] {
-    override def apply(e: Expr[Rng[A]]) = 999 // default
+    override def apply(e: Expr[Rng[A]]) = e.eval.size // default
 }
 
 class SizeExpr[A](val base: Expr[Rng[A]]) extends Expr[Long] {
-    def _eval = base.eval(new SizeContext[A])
+    override def eval = base.eval(new SizeContext[A])
 }
 
 

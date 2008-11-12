@@ -53,9 +53,9 @@ trait Rng[A] {
     def slice(n: Long, m: Long) = Slice(this, n, m)
     def take(n: Long) = Take(this, n)
     def takeWhile(f: A => Boolean) = TakeWhile(this, f)
-    def window(n: Long, m: Long) = Window(this, n, m)
+//    def window(n: Long, m: Long) = Window(this, n, m)
 
     def toArray = ToArray(this)
     def toArrayList = ToArrayList(this)
-    def toIterator: Iterator[A] = ToIterator(this)
+//    def toIterator: Iterator[A] = ToIterator(this)
 }
