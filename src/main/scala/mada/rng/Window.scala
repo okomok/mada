@@ -16,9 +16,11 @@ trait Window {
     implicit def toMadaRngWindow2[A](base: WindowExpr[A]) = new MadaRngWindow2(base)
 }
 
+
 case class WindowExpr[A](base: Expr[Rng[A]], from: Long, until: Long) extends Expr[Rng[A]] {
     def eval = WindowImpl(base.eval, from, until)
 }
+
 
 object WindowImpl {
     def apply[A](r: Rng[A], n: Long, m: Long): Rng[A] = {

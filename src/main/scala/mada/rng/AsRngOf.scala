@@ -1,9 +1,12 @@
 
 package mada.rng
 
-import Map._
 
+object AsRngOf extends AsRngOf
 
-class AsRngOf[To] {
-    def apply[From](r: Rng[From]): Rng[To] = r.map((_: From).asInstanceOf[To])
+trait AsRngOf {
+    class MadaRngAsRngOf[From](base: Expr[Rng[From]]) {
+        def asRngOf[To] = MapExpr(base, (_: From).asInstanceOf[To])
+    }
+    implicit def toMadaRngAsRngOf[From](base: Expr[Rng[From]]) = new MadaRngAsRngOf(base)
 }

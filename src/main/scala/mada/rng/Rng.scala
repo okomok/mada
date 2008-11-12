@@ -20,7 +20,7 @@ trait Rng[A] {
     override def toString = toArrayList.toString // TODO
 
     def asRngIn(t: Traversal) = AsRngIn(this, t)
-    def asRngOf[B] = (new AsRngOf[B])(this)
+//    def asRngOf[B] = (new AsRngOf[B])(this)
     def concat(that: Rng[A]) = Concat(this, that)
     def copy = FromArrayList(toArrayList)
     def copyTo[B >: A](p: Pointer[B]) = detail.CopyTo(this, p)
@@ -41,7 +41,7 @@ trait Rng[A] {
     def foreach[X](f: A => X) = detail.Foreach(this, f)
     def isEmpty = detail.IsEmpty(this)
     def last = detail.Last(this)
-    def map[B](f: A => B) = Map(this, f)
+//    def map[B](f: A => B) = Map(this, f)
     def mismatch(p: Pointer[A]) = detail.Mismatch(this, p)
     def mismatch[B](p: Pointer[B], f: (A, B) => Boolean) = detail.Mismatch(this, p, f)
     def offset(n1: Long, n2: Long) = Offset(this, n1, n2)
