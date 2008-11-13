@@ -6,11 +6,11 @@ package mada.rng
 
 
 object Interval {
-    def apply(n: Byte, m: Byte) = ByteInterval(n, m)
-    def apply(n: Char, m: Char) = CharInterval(n, m)
-    def apply(n: Short, m: Short) = ShortInterval(n, m)
-    def apply(n: Int, m: Int) = IntInterval(n, m)
-    def apply(n: Long, m: Long) = LongInterval(n, m)
+    def apply(n: Byte, m: Byte) = ByteInterval(n, m).rng
+    def apply(n: Char, m: Char) = CharInterval(n, m).rng
+    def apply(n: Short, m: Short) = ShortInterval(n, m).rng
+    def apply(n: Int, m: Int) = IntInterval(n, m).rng
+    def apply(n: Long, m: Long) = LongInterval(n, m).rng
 }
 
 

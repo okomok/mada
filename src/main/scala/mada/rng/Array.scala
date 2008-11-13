@@ -40,7 +40,7 @@ object ToArray {
     private def inForward[A](r: Rng[A]): Array[A] = {
         val a = new Array[A](r.distance.toInt)
         var i = 0
-        r.foreach({(e: A) => a(i) = e; i = i + 1})
+        ForeachExpr(Expr(r), {(e: A) => a(i) = e; i = i + 1}).eval
         a
     }
 }

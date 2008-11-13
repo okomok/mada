@@ -5,22 +5,17 @@ package mada.rng
 object Map extends Map
 
 trait Map {
-    class MadaRngMap[From](base: Expr[Rng[From]]) {
-        def map[To](function: From => To) = MapExpr(base, function)
+    class MadaRngMap[From](_1: Expr[Rng[From]]) {
+        def map[To](_2: From => To) = MapExpr(_1, _2).expr
     }
-    implicit def toMadaRngMap[To](base: Expr[Rng[To]]) = new MadaRngMap(base)
-
-    class MadaRngMap2[From, To](base: MapExpr[From, To]) {
-        def map[Far](function: To => Far) = MapExpr(base.base, function compose base.function)
-    }
-    implicit def toMadaRngMap2[From, To](base: MapExpr[From, To]) = new MadaRngMap2(base)
+    implicit def toMadaRngMap[From](_1: Expr[Rng[From]]) = new MadaRngMap(_1)
 }
 
 
-case class MapExpr[From, To](base: Expr[Rng[From]], function: From => To) extends Expr[Rng[To]] {
-    def eval = base match {
-        case MapExpr(b, f) => new MapRng(b.eval, function compose f)
-        case _ => new MapRng(base.eval, function)
+case class MapExpr[From, To](_1: Expr[Rng[From]], _2: From => To) extends Expr[Rng[To]] {
+    def eval = _1 match {
+        case MapExpr(a1, a2) => new MapRng(a1.eval, _2 compose a2) // map-fusion
+        case _ => new MapRng(_1.eval, _2)
     }
 }
 

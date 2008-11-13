@@ -5,14 +5,17 @@ package mada.rng
 // toRng
 
 trait IteratorToRng {
-    class MadaRngIteratorToRng[A](base: Iterator[A]) {
-        def toRng = FromIteratorExpr(base)
+    class MadaRngIteratorToRng[A](base: Expr[Iterator[A]]) {
+        def toRng = FromIteratorExpr(base).expr
     }
-    implicit def toMadaRngIteratorToRng[A](base: Iterator[A]) = new MadaRngIteratorToRng(base)
+    implicit def toMadaRngIteratorToRng[A](base: Expr[Iterator[A]]) = new MadaRngIteratorToRng(base)
 }
 
-case class FromIteratorExpr[A](base: Iterator[A]) extends Expr[IteratorRng[A]] {
-    override def eval = new IteratorRng(base)
+case class FromIteratorExpr[A](base: Expr[Iterator[A]]) extends Expr[Rng[A]] {
+    override def eval = base match {
+        case ToIteratorExpr(b) => b.eval
+        case _ => new IteratorRng(base.eval)
+    }
 }
 
 class IteratorRng[A](val base: Iterator[A]) extends Rng[A] {
@@ -35,18 +38,16 @@ object ToIterator extends ToIterator
 
 trait ToIterator {
     class MadaRngToIterator[A](base: Expr[Rng[A]]) {
-        def toIterator = ToIteratorExpr(base)
+        def toIterator = ToIteratorExpr(base).expr
     }
     implicit def toMadaRngToIterator[A](base: Expr[Rng[A]]) = new MadaRngToIterator(base)
-
-    class MadaRngFromIteratorToIterator[A](base: FromIteratorExpr[A]) {
-        def toIterator = Terminal(base.base)
-    }
-    implicit def toMadaRngFromIteratorToIterator[A](base: FromIteratorExpr[A]) = new MadaRngFromIteratorToIterator(base)
 }
 
 case class ToIteratorExpr[A](base: Expr[Rng[A]]) extends Expr[Iterator[A]] {
-    override def eval = new RngIterator(base.eval)
+    override def eval = base match {
+        case FromIteratorExpr(b) => b.eval
+        case _ => new RngIterator(base.eval)
+    }
 }
 
 class RngIterator[A](val base: Rng[A]) extends Iterator[A] {

@@ -5,20 +5,18 @@ package mada.rng
 object Window extends Window
 
 trait Window {
-    class MadaRngWindow[A](base: Expr[Rng[A]]) {
-        def window(from: Long, until: Long) = WindowExpr(base, from, until)
+    class MadaRngWindow[A](_1: Expr[Rng[A]]) {
+        def window(_2: Long, _3: Long) = WindowExpr(_1, _2, _3).expr
     }
-    implicit def toMadaRngWindow[A](base: Expr[Rng[A]]) = new MadaRngWindow(base)
-
-    class MadaRngWindow2[A](base: WindowExpr[A]) {
-        def window(from: Long, until: Long) = WindowExpr(base.base, base.from + from, base.from + until)
-    }
-    implicit def toMadaRngWindow2[A](base: WindowExpr[A]) = new MadaRngWindow2(base)
+    implicit def toMadaRngWindow[A](_1: Expr[Rng[A]]) = new MadaRngWindow(_1)
 }
 
 
-case class WindowExpr[A](base: Expr[Rng[A]], from: Long, until: Long) extends Expr[Rng[A]] {
-    def eval = WindowImpl(base.eval, from, until)
+case class WindowExpr[A](_1: Expr[Rng[A]], _2: Long, _3: Long) extends Expr[Rng[A]] {
+    def eval = _1 match {
+        case WindowExpr(a1, a2, a3) => WindowImpl(a1.eval, a2 + _2, a2 + _3)
+        case _ => WindowImpl(_1.eval, _2, _3)
+    }
 }
 
 

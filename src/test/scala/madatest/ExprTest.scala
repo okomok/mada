@@ -32,7 +32,7 @@ case class MapExpr[Z, A](val base: Expr[Rng[Z]], val function: Z => A) extends E
     override def eval = base match {
         case MapExpr(b, f) => {
             optimized = true
-            new MapRng(b.eval, function compose f)
+            new MapRng(b.eval, function compose f) // MapRng[Any, To]
         }
         case _ => {
             new MapRng(base.eval, function)
