@@ -27,7 +27,7 @@ trait Rng[A] {
 //    def distance = detail.Distance(this)
 //    def drop(n: Long) = Drop(this, n)
 //    def dropWhile(f: A => Boolean) = DropWhile(this, f)
-    def equals(that: Rng[A]) = EqualsExpr(Expr(this), Expr(that), Expr((_: A) == (_: A))).eval
+    def equals(that: Rng[A]) = EqualsImpl[A, A](this, that, _ == _)
 //    def equals[B](that: Rng[B], f: (A, B) => Boolean) = detail.Equals(this, that, f)
 //    def equalsTo(p: Pointer[A]) = detail.EqualsTo(this, p)
 //    def equalsTo[B](p: Pointer[B], f: (A, B) => Boolean) = detail.EqualsTo(this, p, f)

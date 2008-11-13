@@ -21,11 +21,3 @@ case class DistanceExpr[A](_1: Expr[Rng[A]]) extends Expr[Long] {
         }
     }
 }
-/*
-object DistanceImpl {
-    def apply[A](r: Rng[A]): Long = r.traversal match {
-        case _: RandomAccessTraversal => r.size
-        case _: SinglePassTraversal => r.foldLeft(0: Long, {(b: Long, a: A) => b + 1})
-    }
-}
-*/
