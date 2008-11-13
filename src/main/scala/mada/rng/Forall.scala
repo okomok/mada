@@ -12,5 +12,8 @@ trait Forall {
 }
 
 case class ForallExpr[A](_1: Expr[Rng[A]], _2: Expr[A => Boolean]) extends Expr[Boolean] {
-    def eval = FindExpr(_1, Expr(!_2.eval.apply(_: A))).eval == None
+    def eval = {
+        val not_2: A => Boolean = !_2.eval.apply(_)
+        FindExpr(_1, Expr(not_2)).eval == None
+    }
 }

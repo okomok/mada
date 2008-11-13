@@ -2,7 +2,7 @@
 package mada.rng
 
 
-// Equals
+// equals
 
 object Equals extends Equals
 
@@ -20,7 +20,7 @@ case class EqualsExpr[A1, A2](_1: Expr[Rng[A1]], _2: Expr[Rng[A2]], _3: Expr[(A1
         val x2 = _2.toLazy
         x1.eval.traversal min x2.eval.traversal match {
             case _: RandomAccessTraversal => {
-                if (SizeExpr(x1).eval != SizeExpr(x2).eval) false else EqualsToExpr(x1, Expr(x2.eval.begin), _3).eval
+                if (SizeExpr(x1).eval != SizeExpr(x2).eval) false else EqualsToExpr(x1, BeginExpr(x2), _3).eval
             }
             case _: SinglePassTraversal => EqualsImpl(x1.eval, x2.eval, _3.eval)
         }
@@ -41,8 +41,7 @@ object EqualsImpl {
 }
 
 
-// EqualsTo
-
+// equalsTo
 
 object EqualsTo extends EqualsTo
 
@@ -57,6 +56,6 @@ trait EqualsTo {
 case class EqualsToExpr[A1, A2](_1: Expr[Rng[A1]], _2: Expr[Pointer[A2]], _3: Expr[(A1, A2) => Boolean]) extends Expr[Boolean] {
     def eval = {
         val x1 = _1.toLazy
-        MismatchExpr(x1, _2, _3).eval._1 == x1.eval.end
+        MismatchExpr(x1, _2, _3).eval._1 == EndExpr(x1).eval
     }
 }

@@ -6,7 +6,7 @@ object SingleConversion extends SingleConversion
 
 trait SingleConversion {
     implicit def madaRngFromSingle[A](from: A) = FromSingle(from)
-    implicit def madaRngToSingle[A](from: Rng[A]): A = from.first
+    implicit def madaRngToSingle[A](from: Rng[A]): A = FirstImpl(from)
 }
 
 

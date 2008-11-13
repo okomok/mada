@@ -1,0 +1,22 @@
+
+package mada.rng
+
+
+object IsEmpty extends IsEmpty
+
+trait IsEmpty {
+    class MadaRngIsEmpty[A](_1: Expr[Rng[A]]) {
+        def isEmpty = IsEmptyExpr(_1).expr
+    }
+    implicit def toMadaRngIsEmpty[A](_1: Expr[Rng[A]]) = new MadaRngIsEmpty(_1)
+}
+
+
+case class IsEmptyExpr[A](_1: Expr[Rng[A]]) extends Expr[Boolean] {
+    def eval = IsEmptyImpl(_1.eval)
+}
+
+
+object IsEmptyImpl {
+    def apply[A](r: Rng[A]): Boolean = r.begin == r.end
+}

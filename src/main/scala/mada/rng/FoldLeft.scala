@@ -19,7 +19,7 @@ case class FoldLeftExpr[A, B](_1: Expr[Rng[A]], _2: Expr[B], _3: Expr[(B, A) => 
 
 object FoldLeftImpl {
     def apply[A, B](r: Rng[A], z: B, op: (B, A) => B): B = {
-        val p = r.begin; val q = r.end
+        val (p, q) = (r.begin, r.end)
         var acc = z
         while (p != q) {
             acc = op(acc, *(p))
