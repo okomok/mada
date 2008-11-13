@@ -38,9 +38,9 @@ object ToArray {
     }
 
     private def inForward[A](r: Rng[A]): Array[A] = {
-        val a = new Array[A](r.distance.toInt)
+        val a = new Array[A](DistanceExpr(Expr(r)).eval.toInt)
         var i = 0
-        ForeachExpr(Expr(r), {(e: A) => a(i) = e; i = i + 1}).eval
+        ForeachExpr(Expr(r), Expr({(e: A) => a(i) = e; i = i + 1})).eval
         a
     }
 }

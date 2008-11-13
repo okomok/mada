@@ -8,9 +8,7 @@ trait IndexAccessRng[A] extends Rng[A] {
     def _size: Long
 
     override lazy val _begin = new IndexAccessPointer(this, 0)
-    override def _end = new IndexAccessPointer(this, size)
-    override def distance = _size
-    override def size = _size
+    override def _end = new IndexAccessPointer(this, _size)
 }
 
 class IndexAccessPointer[A](ia: IndexAccessRng[A], private var i: Long)

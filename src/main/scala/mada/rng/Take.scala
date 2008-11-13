@@ -8,15 +8,15 @@ object Take extends Take
 
 trait Take {
     class MadaRngTake[A](_1: Expr[Rng[A]]) {
-        def take(_2: Long) = TakeExpr(_1, _2).expr
+        def take(_2: Expr[Long]) = TakeExpr(_1, _2).expr
     }
     implicit def toMadaRngTake[A](_1: Expr[Rng[A]]) = new MadaRngTake(_1)
 }
 
-case class TakeExpr[A](_1: Expr[Rng[A]], _2: Long) extends Expr[Rng[A]] {
+case class TakeExpr[A](_1: Expr[Rng[A]], _2: Expr[Long]) extends Expr[Rng[A]] {
     def eval = _1 match {
-        case TakeExpr(a1, a2) => new TakeRng(a1.eval, a2 + _2)
-        case _ => new TakeRng(_1.eval, _2)
+        case TakeExpr(a1, a2) => new TakeRng(a1.eval, a2.eval + _2.eval)
+        case _ => new TakeRng(_1.eval, _2.eval)
     }
 }
 
@@ -26,7 +26,7 @@ class TakeRng[A](val base: Rng[A], val count: Long) extends Rng[A] {
     override val _begin = new TakePointer(p, q, count)
     override val _end = new TakePointer(q, q, count)
 
-    def toExpr = TakeExpr(Expr(base), count)
+    def toExpr = TakeExpr(Expr(base), Expr(count))
 }
 
 class TakePointer[A](override val _base: Pointer[A], val end: Pointer[A], var count: Long)
@@ -52,13 +52,13 @@ object TakeWhile extends TakeWhile
 
 trait TakeWhile {
     class MadaRngTakeWhile[A](_1: Expr[Rng[A]]) {
-        def take(_2: A => Boolean) = TakeWhileExpr(_1, _2).expr
+        def take(_2: Expr[A => Boolean]) = TakeWhileExpr(_1, _2).expr
     }
     implicit def toMadaRngTakeWhile[A](_1: Expr[Rng[A]]) = new MadaRngTakeWhile(_1)
 }
 
-case class TakeWhileExpr[A](_1: Expr[Rng[A]], _2: A => Boolean) extends Expr[Rng[A]] {
-    def eval = new TakeWhileRng(_1.eval, _2)
+case class TakeWhileExpr[A](_1: Expr[Rng[A]], _2: Expr[A => Boolean]) extends Expr[Rng[A]] {
+    def eval = new TakeWhileRng(_1.eval, _2.eval)
 }
 
 class TakeWhileRng[A](val base: Rng[A], val predicate: A => Boolean) extends Rng[A] {
@@ -66,7 +66,7 @@ class TakeWhileRng[A](val base: Rng[A], val predicate: A => Boolean) extends Rng
     override val _begin = new TakeWhilePointer(p, q, predicate)
     override val _end = new TakeWhilePointer(q, q, predicate)
 
-    def toExpr = TakeWhileExpr(Expr(base), predicate)
+    def toExpr = TakeWhileExpr(Expr(base), Expr(predicate))
 }
 
 class TakeWhilePointer[A](override val _base: Pointer[A], val end: Pointer[A], val predicate: A => Boolean)

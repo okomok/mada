@@ -7,4 +7,6 @@ class PointerOutput[A](val pointer: Pointer[A]) extends (A => Pointer[A]) {
         *(pointer) = e
         ++(pointer)
     }
+
+    final def function: (A => Pointer[A]) = this
 }

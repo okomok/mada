@@ -40,7 +40,7 @@ object ToArrayList {
     }
 
     private def newArrayList[A](r: Rng[A]) = r.traversal match {
-        case _: RandomAccessTraversal => new ArrayList[A](r.size.toInt)
+        case _: RandomAccessTraversal => new ArrayList[A](SizeExpr(Expr(r)).eval.toInt)
         case _: SinglePassTraversal => new ArrayList[A]
     }
 }

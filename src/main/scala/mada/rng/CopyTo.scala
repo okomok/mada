@@ -12,10 +12,10 @@ trait CopyTo {
 }
 
 
-case class CopyToExpr[From, To >: From](_1: Expr[Rng[From]], _2: Expr[Pointer[To]])
-        extends Expression[Pointer[To]]({
-            val p2 = _2.eval
-            ForeachExpr(_1, p2.output).eval
-            p2
-        })
-
+case class CopyToExpr[From, To >: From](_1: Expr[Rng[From]], _2: Expr[Pointer[To]]) extends Expr[Pointer[To]] {
+    def eval = {
+        val x2 = _2.toLazy
+        ForeachExpr(AsRngOfExpr[From, To](_1), Expr(x2.eval.output)).eval
+        x2.eval
+    }
+}

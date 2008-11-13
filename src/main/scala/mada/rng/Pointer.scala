@@ -50,7 +50,7 @@ trait Pointer[A] {
 
 // utilities
     final def advance(d: Long) = detail.PointerAdvance(this, d)
-    final def output = new detail.PointerOutput(this)
+    final def output = new detail.PointerOutput(this).function
     final def swap(that: Pointer[A]) = detail.PointerSwap(this, that)
     final def <=<(that: Pointer[A]) = new PointerRng(this, that)
     final def cloneIn(t: Traversal): Pointer[A] = if (traversal conformsTo t) clone else this
