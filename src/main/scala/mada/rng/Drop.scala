@@ -15,7 +15,7 @@ trait Drop extends Predefs {
 
 case class DropExpr[A](_1: Expr[Rng[A]], _2: Expr[Long]) extends Expr[Rng[A]] {
     def eval = _1 match {
-        case DropExpr(a1, a2) => DropImpl(a1.eval, a2.eval + _2.eval)
+        case DropExpr(x1, x2) => DropImpl(x1.eval, x2.eval + _2.eval)
         case _ => DropImpl(_1.eval, _2.eval)
     }
 }

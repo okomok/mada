@@ -4,11 +4,11 @@ package mada.rng
 
 //  Array[A] <-> Expr[Rng[A]]
 
-object ArrayConversion extends ArrayConversion
+object ArrayConversions extends ArrayConversions
 
-trait ArrayConversion {
+trait ArrayConversions {
     implicit def toMadaArrayRngExpr[A](from: => Array[A]) = FromArrayExpr(Expr(from)).expr
-    implicit def fromMadaArrayRngExpr[A](from: Expr[Rng[A]]) = ToArrayExpr(from).eval
+//    implicit def fromMadaArrayRngExpr[A](from: Expr[Rng[A]]) = ToArrayExpr(from).eval
 }
 
 
@@ -25,7 +25,7 @@ trait ArrayToRng extends Predefs {
 
 case class FromArrayExpr[A](_1: Expr[Array[A]]) extends Expr[Rng[A]] {
     override def eval = _1 match {
-        case ToArrayExpr(a1) => a1.eval
+        case ToArrayExpr(x1) => x1.eval
         case _ => new ArrayRng(_1.eval)
     }
 }
@@ -50,7 +50,7 @@ trait ToArray extends Predefs {
 
 case class ToArrayExpr[A](_1: Expr[Rng[A]]) extends Expr[Array[A]] {
     override def eval = _1 match {
-        case FromArrayExpr(a1) => a1.eval
+        case FromArrayExpr(x1) => x1.eval
         case _ => ToArrayImpl(_1.toLazy)
     }
 }

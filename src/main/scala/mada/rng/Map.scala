@@ -14,7 +14,7 @@ trait Map extends Predefs {
 
 case class MapExpr[From, To](_1: Expr[Rng[From]], _2: Expr[From => To]) extends Expr[Rng[To]] {
     def eval = _1 match {
-        case MapExpr(a1, a2) => MapImpl(a1.eval, _2.eval compose a2.eval) // map-fusion
+        case MapExpr(x1, x2) => MapImpl(x1.eval, _2.eval compose x2.eval) // map-fusion
         case _ => MapImpl(_1.eval, _2.eval)
     }
 }

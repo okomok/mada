@@ -3,9 +3,10 @@ package madatest.rng
 
 
 import mada.rng._
-//import mada.rng.Conversions._
-import mada.rng.From._
-import mada.rng.ArrayConversion._
+import mada.rng.Conversions._
+import mada.rng.ToArray._
+//import mada.rng.From._
+//import mada.rng.ArrayConversions._
 import junit.framework.Assert._
 
 class FromArrayTest {
@@ -35,7 +36,7 @@ class FromArrayTest {
     }
 
     def testMake {
-        assertEquals(Interval(1, 7), from(Array(1,2,3,4,5,6)).eval)
+        assertEquals(from(1, 7).eval, from(Array(1,2,3,4,5,6)).eval)
     }
 
     def testPointer() {
@@ -45,7 +46,7 @@ class FromArrayTest {
     def testImplicit {
 //        import mada.rng.Rng._
 //        Array.range(0, 6).traversal
-        from(Array('1','2','3')).deepMkString("abc")
+        from(Array('1','2','3')).toArray.eval.deepMkString("abc")
     }
 }
 

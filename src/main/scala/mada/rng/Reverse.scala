@@ -14,7 +14,7 @@ trait Reverse extends Predefs {
 
 case class ReverseExpr[A](_1: Expr[Rng[A]]) extends Expr[Rng[A]] {
     override def eval = _1 match {
-        case ReverseExpr(a1) => a1.eval
+        case ReverseExpr(x1) => x1.eval
         case _ => ReverseImpl(_1.eval)
     }
 }

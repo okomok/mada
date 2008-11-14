@@ -6,7 +6,8 @@ object Conversions extends Conversions
 
 trait Conversions
         extends From
-        with ArrayConversion
-        with IteratorConversion
-        with JclConversion
-        with StringConversion
+        with ArrayConversions
+        with IntervalConversions
+        with IteratorConversions
+        with JclConversions
+        with StringConversions

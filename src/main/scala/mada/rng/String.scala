@@ -4,11 +4,11 @@ package mada.rng
 
 //  String <-> Expr[Rng[Char]]
 
-object StringConversion
+object StringConversions
 
-trait StringConversion {
+trait StringConversions {
     implicit def toMadaStringRngExpr(from: => String) = FromStringExpr(Expr(from)).expr
-    implicit def fromMadaStringRngExpr(from: Expr[Rng[Char]]) = StringizeExpr(from).eval
+//    implicit def fromMadaStringRngExpr(from: Expr[Rng[Char]]) = StringizeExpr(from).eval
 }
 
 
@@ -25,7 +25,7 @@ trait StringToRng extends Predefs {
 
 case class FromStringExpr(_1: Expr[String]) extends Expr[Rng[Char]] {
     override def eval = _1 match {
-        case StringizeExpr(a1) => a1.eval
+        case StringizeExpr(x1) => x1.eval
         case _ => new StringRng(_1.eval)
     }
 }
@@ -49,7 +49,7 @@ trait Stringize extends Predefs {
 
 case class StringizeExpr(_1: Expr[Rng[Char]]) extends Expr[String] {
     override def eval = _1 match {
-        case FromStringExpr(a1) => a1.eval
+        case FromStringExpr(x1) => x1.eval
         case _ => {
             val sb = new StringBuilder
             ForeachExpr(_1, Expr(sb.append(_: Char))).eval

@@ -4,15 +4,15 @@ package madatest.rng
 
 import mada.rng._
 import mada.rng.AsRngBy._
-import mada.Expr
+import mada.rng.Conversions._
 import junit.framework.Assert._
 
 
 class EqualsTest {
     def testTrivial = {
-        assertEquals(Interval(2, 5), Interval(2, 5))
-        AssertNotEquals(Interval(2, 6), Interval(2, 5))
-        assertEquals(Expr(Interval(2, 5)).asRngBy(SinglePassTraversal).eval, Interval(2, 5))
+        assertEquals(from((2, 5)).eval, from(2, 5).eval)
+        AssertNotEquals(from(2, 6).eval, from(2, 5).eval)
+        assertEquals(from(2, 5).asRngBy(SinglePassTraversal).eval, from(2, 5).eval)
     }
 
     trait To1

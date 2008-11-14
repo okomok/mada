@@ -15,7 +15,7 @@ trait Take extends Predefs {
 
 case class TakeExpr[A](_1: Expr[Rng[A]], _2: Expr[Long]) extends Expr[Rng[A]] {
     def eval = _1 match {
-        case TakeExpr(a1, a2) => TakeImpl(a1.eval, a2.eval + _2.eval)
+        case TakeExpr(x1, x2) => TakeImpl(x1.eval, x2.eval + _2.eval)
         case _ => TakeImpl(_1.eval, _2.eval)
     }
 }

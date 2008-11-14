@@ -26,20 +26,6 @@ class Expression[A](e: => A) extends Expr[A] {
     def eval = e
 }
 
-case class Terminal[A](base: A) extends Expr[A] {
-    def eval = base
-}
-
-
-object ToExpr extends ToExpr
-
-trait ToExpr {
-    class MadaToExpr[A](base: A) {
-        def toExpr = Terminal(base).expr
-    }
-    implicit def toMadaToExpr[A](base: A) = new MadaToExpr(base)
-}
-
 
 object ExprConversions extends ExprConversions
 

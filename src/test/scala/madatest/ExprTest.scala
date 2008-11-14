@@ -4,7 +4,7 @@ package madatest.exprtoy
 
 
 import junit.framework.Assert._
-import mada.{Expr, Terminal, Context}
+import mada.{Expr, Context}
 import mada.ExprConversions._
 
 
@@ -62,7 +62,7 @@ class ExprTest {
     implicit def fromString(s: String) = new Rng[Char] { }
 
     def testTrivial {
-        val e1 = MapExpr(Terminal(fromString("abc")), {(x: Char) => 99})
+        val e1 = MapExpr(Expr(fromString("abc")), {(x: Char) => 99})
         val e2 = MapExpr(e1, {(x: Int) => 'a'})
         assertFalse(e2.optimized)
         val r = e2.eval
@@ -75,7 +75,7 @@ class ExprTest {
 
     def testInfix {
         import Map._
-        val e1 = Terminal(fromString("abc")).map({(x: Char) => 99})
+        val e1 = Expr(fromString("abc")).map({(x: Char) => 99})
         val e2 = e1.map({(x: Int) => 'a'})
         assertFalse(e2.optimized)
         val r = e2.eval
@@ -88,9 +88,9 @@ class ExprTest {
 
     def testContext {
         import Map._
-        val e = Terminal(fromString("abc")).map({(x: Char) => 99})
+        val e = Expr(fromString("abc")).map({(x: Char) => 99})
         assertEquals(new SizeExpr(e).eval, 9L)
-        assertEquals(new SizeExpr(Terminal(fromString("abc"))).eval, 999L)
+        assertEquals(new SizeExpr(Expr(fromString("abc"))).eval, 999L)
     }
 }
 

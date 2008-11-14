@@ -5,9 +5,9 @@ package mada.rng
 
 // Iterator[A] <-> Expr[Rng[A]]
 
-trait IteratorConversion {
+trait IteratorConversions {
     implicit def toMadaIteratorRngExpr[A](from: => Iterator[A]) = FromIteratorExpr(Expr(from)).expr
-    implicit def fromMadaIteratorRngExpr[A](from: Expr[Rng[A]]) = ToIteratorExpr(from).eval
+//    implicit def fromMadaIteratorRngExpr[A](from: Expr[Rng[A]]) = ToIteratorExpr(from).eval
 }
 
 
@@ -24,7 +24,7 @@ trait IteratorToRng extends Predefs {
 
 case class FromIteratorExpr[A](_1: Expr[Iterator[A]]) extends Expr[Rng[A]] {
     override def eval = _1 match {
-        case ToIteratorExpr(a1) => a1.eval
+        case ToIteratorExpr(x1) => x1.eval
         case _ => FromIteratorImpl(_1.eval)
     }
 }
@@ -58,7 +58,7 @@ trait ToIterator extends Predefs {
 
 case class ToIteratorExpr[A](_1: Expr[Rng[A]]) extends Expr[Iterator[A]] {
     override def eval = _1 match {
-        case FromIteratorExpr(a1) => a1.eval
+        case FromIteratorExpr(x1) => x1.eval
         case _ => new RngIterator(_1.eval)
     }
 }

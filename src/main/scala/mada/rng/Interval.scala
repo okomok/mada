@@ -5,52 +5,38 @@ package mada.rng
 // Note: "x.AsInstanceOf[N] to x.toN" seems compile-time translation.
 
 
-object Interval {
-    def apply(n: Byte, m: Byte) = ByteInterval(n, m).rng
-    def apply(n: Char, m: Char) = CharInterval(n, m).rng
-    def apply(n: Short, m: Short) = ShortInterval(n, m).rng
-    def apply(n: Int, m: Int) = IntInterval(n, m).rng
-    def apply(n: Long, m: Long) = LongInterval(n, m).rng
+//  Array[A] <-> Expr[Rng[A]]
+
+object IntervalConversions extends IntervalConversions
+
+trait IntervalConversions {
+    // Int
+    implicit def toMadaIntIntervalRngExpr(from: => (Int, Int)) = FromIntIntervalExpr(Expr(from)).expr
+    // Long
+    //implicit def toMadaLongIntervalRngExpr(from: => (Long, Long)) = FromLongIntervalExpr(Expr(from)).expr
 }
 
 
-// Byte
+object IntervalToRng extends IntervalToRng
 
-object ByteInterval {
-    def apply(n: Byte, m: Byte) = new ByteIntervalPointer(n) <=< new ByteIntervalPointer(m)
-}
-
-class ByteIntervalPointer(n: Byte) extends IntervalPointer[Byte](n) {
-    override def _read = base.toByte
-}
-
-
-// Char
-
-object CharInterval {
-    def apply(n: Char, m: Char) = new CharIntervalPointer(n) <=< new CharIntervalPointer(m)
-}
-
-class CharIntervalPointer(n: Char) extends IntervalPointer[Char](n) {
-    override def _read = base.toChar
-}
-
-
-// Short
-
-object ShortInterval {
-    def apply(n: Short, m: Short) = new ShortIntervalPointer(n) <=< new ShortIntervalPointer(m)
-}
-
-class ShortIntervalPointer(n: Short) extends IntervalPointer[Short](n) {
-    override def _read = base.toShort
+trait IntervalToRng extends Predefs {
+    // Int
+    class MadaRngIntIntervalToRng(_1: Expr[(Int, Int)]) {
+        def toRng = FromIntIntervalExpr(_1).expr
+    }
+    implicit def toMadaRngIntIntervalToRng(_1: Expr[(Int, Int)]) = new MadaRngIntIntervalToRng(_1)
+    // Long
+    class MadaRngLongIntervalToRng(_1: Expr[(Long, Long)]) {
+        def toRng = FromLongIntervalExpr(_1).expr
+    }
+    implicit def toMadaRngLongIntervalToRng(_1: Expr[(Long, Long)]) = new MadaRngLongIntervalToRng(_1)
 }
 
 
 // Int
 
-object IntInterval {
-    def apply(n: Int, m: Int) = new IntIntervalPointer(n) <=< new IntIntervalPointer(m)
+case class FromIntIntervalExpr(_1: Expr[(Int, Int)]) extends Expr[Rng[Int]] {
+    override def eval = new IntIntervalPointer(_1.eval._1) <=< new IntIntervalPointer(_1.eval._2)
 }
 
 class IntIntervalPointer(n: Int) extends IntervalPointer[Int](n) {
@@ -60,8 +46,8 @@ class IntIntervalPointer(n: Int) extends IntervalPointer[Int](n) {
 
 // Long
 
-object LongInterval {
-    def apply(n: Long, m: Long) = new LongIntervalPointer(n) <=< new LongIntervalPointer(m)
+case class FromLongIntervalExpr(_1: Expr[(Long, Long)]) extends Expr[Rng[Long]] {
+    override def eval = new LongIntervalPointer(_1.eval._1) <=< new LongIntervalPointer(_1.eval._2)
 }
 
 class LongIntervalPointer(n: Long) extends IntervalPointer[Long](n) {
