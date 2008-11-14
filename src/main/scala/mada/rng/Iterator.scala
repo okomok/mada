@@ -13,7 +13,9 @@ trait IteratorConversion {
 
 // toRng
 
-trait IteratorToRng {
+object IteratorToRng
+
+trait IteratorToRng extends Predefs {
     class MadaRngIteratorToRng[A](_1: Expr[Iterator[A]]) {
         def toRng = FromIteratorExpr(_1).expr
     }
@@ -47,7 +49,7 @@ class IteratorPointer[A](base: Iterator[A], private var e: Option[A])
 
 object ToIterator extends ToIterator
 
-trait ToIterator {
+trait ToIterator extends Predefs {
     class MadaRngToIterator[A](_1: Expr[Rng[A]]) {
         def toIterator = ToIteratorExpr(_1).expr
     }

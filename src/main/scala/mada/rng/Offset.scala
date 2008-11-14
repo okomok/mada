@@ -4,7 +4,7 @@ package mada.rng
 
 object Offset extends Offset
 
-trait Offset {
+trait Offset extends Predefs {
     class MadaRngOffset[A](_1: Expr[Rng[A]]) {
         def offset(_2: Expr[Long], _3: Expr[Long]) = OffsetExpr(_1, _2, _3).expr
     }

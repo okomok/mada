@@ -4,7 +4,7 @@ package mada.rng
 
 object CopyTo extends CopyTo
 
-trait CopyTo {
+trait CopyTo extends Predefs {
     class MadaRngCopyTo[From](_1: Expr[Rng[From]]) {
         def find[To >: From](_2: Expr[Pointer[To]]) = CopyToExpr(_1, _2).expr
     }

@@ -6,7 +6,7 @@ package mada.rng
 
 object Drop extends Drop
 
-trait Drop {
+trait Drop extends Predefs {
     class MadaRngDrop[A](_1: Expr[Rng[A]]) {
         def drop(_2: Expr[Long]) = DropExpr(_1, _2).expr
     }
@@ -42,7 +42,7 @@ object DropImpl {
 
 object DropWhile extends DropWhile
 
-trait DropWhile {
+trait DropWhile extends Predefs {
     class MadaRngDropWhile[A](_1: Expr[Rng[A]]) {
         def dropWhile(_2: Expr[A => Boolean]) = DropWhileExpr(_1, _2).expr
     }

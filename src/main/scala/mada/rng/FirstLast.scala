@@ -6,7 +6,7 @@ package mada.rng
 
 object First extends First
 
-trait First {
+trait First extends Predefs {
     class MadaRngFirst[A](_1: Expr[Rng[A]]) {
         def first = FirstExpr(_1).expr
     }
@@ -29,7 +29,7 @@ object FirstImpl {
 
 object Last extends Last
 
-trait Last {
+trait Last extends Predefs {
     class MadaRngLast[A](_1: Expr[Rng[A]]) {
         def last = LastExpr(_1).expr
     }

@@ -4,7 +4,7 @@ package mada.rng
 
 object PointerSwap extends PointerSwap
 
-trait PointerSwap {
+trait PointerSwap extends Predefs {
     class MadaRngPointerSwap[A](_1: Expr[Pointer[A]]) {
         def swap(_2: Expr[Pointer[A]]) = PointerSwapExpr(_1, _2).expr
     }

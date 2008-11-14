@@ -6,7 +6,7 @@ package mada.rng
 
 object Find extends Find
 
-trait Find {
+trait Find extends Predefs {
     class MadaRngFind[A](_1: Expr[Rng[A]]) {
         def find(_2: Expr[A => Boolean]) = FindExpr(_1, _2).expr
     }
@@ -29,7 +29,7 @@ object FindImpl {
 
 object FindPointerOf extends FindPointerOf
 
-trait FindPointerOf {
+trait FindPointerOf extends Predefs {
     class MadaRngFindPointerOf[A](_1: Expr[Rng[A]]) {
         def findPointerOf(_2: Expr[A => Boolean]) = FindPointerOfExpr(_1, _2).expr
     }

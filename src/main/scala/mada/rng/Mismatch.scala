@@ -4,7 +4,7 @@ package mada.rng
 
 object Mismatch extends Mismatch
 
-trait Mismatch {
+trait Mismatch extends Predefs {
     class MadaRngMismatch[A1](_1: Expr[Rng[A1]]) {
         def equals[A2](_2: Expr[Pointer[A2]], _3: Expr[(A1, A2) => Boolean]) = MismatchExpr(_1, _2, _3).expr
         def equals(_2: Expr[Pointer[A1]]) = MismatchExpr(_1, _2, Expr((_: A1) == (_: A1))).expr

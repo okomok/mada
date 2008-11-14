@@ -4,7 +4,7 @@ package mada.rng
 
 object Copy extends Copy
 
-trait Copy {
+trait Copy extends Predefs {
     class MadaRngCopy[A](_1: Expr[Rng[A]]) {
         def copy = CopyExpr(_1).expr
     }

@@ -6,7 +6,7 @@ package mada.rng
 
 object Take extends Take
 
-trait Take {
+trait Take extends Predefs {
     class MadaRngTake[A](_1: Expr[Rng[A]]) {
         def take(_2: Expr[Long]) = TakeExpr(_1, _2).expr
     }
@@ -48,7 +48,7 @@ class TakePointer[A](override val _base: Pointer[A], val end: Pointer[A], var co
 
 object TakeWhile extends TakeWhile
 
-trait TakeWhile {
+trait TakeWhile extends Predefs {
     class MadaRngTakeWhile[A](_1: Expr[Rng[A]]) {
         def take(_2: Expr[A => Boolean]) = TakeWhileExpr(_1, _2).expr
     }

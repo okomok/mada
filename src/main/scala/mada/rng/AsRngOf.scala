@@ -4,7 +4,7 @@ package mada.rng
 
 object AsRngOf extends AsRngOf
 
-trait AsRngOf {
+trait AsRngOf extends Predefs {
     class MadaRngAsRngOf[From](_1: Expr[Rng[From]]) {
         def asRngOf[To] = AsRngOfExpr[From, To](_1).expr
     }

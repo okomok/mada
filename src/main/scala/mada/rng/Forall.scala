@@ -4,7 +4,7 @@ package mada.rng
 
 object Forall extends Forall
 
-trait Forall {
+trait Forall extends Predefs {
     class MadaRngForall[A](_1: Expr[Rng[A]]) {
         def forall(_2: Expr[A => Boolean]) = ForallExpr(_1, _2).expr
     }

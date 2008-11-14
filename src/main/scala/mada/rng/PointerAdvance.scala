@@ -4,7 +4,7 @@ package mada.rng
 
 object PointerAdvance extends PointerAdvance
 
-trait PointerAdvance {
+trait PointerAdvance extends Predefs {
     class MadaRngPointerAdvance[A](_1: Expr[Pointer[A]]) {
         def advance(_2: Expr[Long]) = PointerAdvanceExpr(_1, _2).expr
     }

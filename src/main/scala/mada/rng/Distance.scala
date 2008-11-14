@@ -4,7 +4,7 @@ package mada.rng
 
 object Distance extends Distance
 
-trait Distance {
+trait Distance extends Predefs {
     class MadaRngDistance[A](_1: Expr[Rng[A]]) {
         def distance = DistanceExpr(_1).expr
     }

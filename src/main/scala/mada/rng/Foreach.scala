@@ -4,7 +4,7 @@ package mada.rng
 
 object Foreach extends Foreach
 
-trait Foreach {
+trait Foreach extends Predefs {
     class MadaRngForeach[A](_1: Expr[Rng[A]]) {
         def foreach[X](_2: Expr[A => X]) = ForeachExpr(_1, _2).expr
     }

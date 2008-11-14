@@ -6,7 +6,7 @@ package mada.rng
 
 object Equals extends Equals
 
-trait Equals {
+trait Equals extends Predefs {
     class MadaRngEquals[A1](_1: Expr[Rng[A1]]) {
         def equals[A2](_2: Expr[Rng[A2]], _3: Expr[(A1, A2) => Boolean]) = EqualsExpr(_1, _2, _3).expr
         def equals(_2: Expr[Rng[A1]]) = EqualsExpr(_1, _2, Expr((_: A1) == (_: A1))).expr
@@ -45,7 +45,7 @@ object EqualsImpl {
 
 object EqualsTo extends EqualsTo
 
-trait EqualsTo {
+trait EqualsTo extends Predefs {
     class MadaRngEqualsTo[A1](_1: Expr[Rng[A1]]) {
         def equals[A2](_2: Expr[Pointer[A2]], _3: Expr[(A1, A2) => Boolean]) = EqualsToExpr(_1, _2, _3).expr
         def equals(_2: Expr[Pointer[A1]]) = EqualsToExpr(_1, _2, Expr((_: A1) == (_: A1))).expr

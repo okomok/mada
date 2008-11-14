@@ -4,7 +4,7 @@ package mada.rng
 
 object PointerOutput extends PointerOutput
 
-trait PointerOutput {
+trait PointerOutput extends Predefs {
     class MadaRngPointerOutput[A](_1: Expr[Pointer[A]]) {
         def output = PointerOutputExpr(_1).expr
     }
