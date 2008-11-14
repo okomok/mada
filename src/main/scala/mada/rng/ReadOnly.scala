@@ -2,15 +2,29 @@
 package mada.rng
 
 
-object ReadOnly {
-    def apply[A](base: Rng[A]): Rng[A] = new ReadOnlyRng(base)
+object ReadOnly extends ReadOnly
+
+trait ReadOnly extends Predefs {
+    class MadaRngReadOnly[A](_1: Expr[Rng[A]]) {
+        def readOnly = ReadOnlyExpr(_1).expr
+    }
+    implicit def toMadaRngReadOnly[A](_1: Expr[Rng[A]]) = new MadaRngReadOnly(_1)
 }
 
-class ReadOnlyRng[A](val base: Rng[A]) extends Rng[A] {
-    override val _begin = new ReadOnlyPointer(base.begin)
-    override val _end = new ReadOnlyPointer(base.end)
 
-    override def readOnly = this
+case class ReadOnlyExpr[A](_1: Expr[Rng[A]]) extends Expr[Rng[A]] {
+    override def eval = _1 match {
+        case x: ReadOnlyExpr[_] => x.eval
+        case _ => ReadOnlyImpl(_1.eval)
+    }
+}
+
+
+object ReadOnlyImpl {
+    def apply[A](r: Rng[A]): Rng[A] = {
+        val (p, q) = (r.begin, r.end)
+        new ReadOnlyPointer(p) <=< new ReadOnlyPointer(q)
+    }
 }
 
 class ReadOnlyPointer[A](override val _base: Pointer[A])

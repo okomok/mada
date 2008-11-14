@@ -2,15 +2,30 @@
 package mada.rng
 
 
-object Reverse {
-    def apply[A](base: Rng[A]): Rng[A] = new ReverseRng(base)
+object Reverse extends Reverse
+
+trait Reverse extends Predefs {
+    class MadaRngReverse[A](_1: Expr[Rng[A]]) {
+        def reverse = ReverseExpr(_1).expr
+    }
+    implicit def toMadaRngReverse[A](_1: Expr[Rng[A]]) = new MadaRngReverse(_1)
 }
 
-class ReverseRng[A](val base: Rng[A]) extends Rng[A] {
-    override val _begin = new ReversePointer(base.end)
-    override val _end = new ReversePointer(base.begin)
 
-    override def reverse = base
+case class ReverseExpr[A](_1: Expr[Rng[A]]) extends Expr[Rng[A]] {
+    override def eval = _1 match {
+        case ReverseExpr(a1) => a1.eval
+        case _ => ReverseImpl(_1.eval)
+    }
+}
+
+
+object ReverseImpl {
+    def apply[A](r: Rng[A]): Rng[A] = {
+        Assert("requires BidirectionalRng", r models BidirectionalTraversal)
+        val (p, q) = (r.end, r.begin) // order matters!
+        new ReversePointer(p) <=< new ReversePointer(q)
+    }
 }
 
 class ReversePointer[A](override val _base: Pointer[A])

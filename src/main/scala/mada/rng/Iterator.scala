@@ -13,7 +13,7 @@ trait IteratorConversion {
 
 // toRng
 
-object IteratorToRng
+object IteratorToRng extends IteratorToRng
 
 trait IteratorToRng extends Predefs {
     class MadaRngIteratorToRng[A](_1: Expr[Iterator[A]]) {

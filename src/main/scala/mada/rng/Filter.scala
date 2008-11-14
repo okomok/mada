@@ -2,16 +2,29 @@
 package mada.rng
 
 
-object Filter {
-    def apply[A](base: Rng[A], predicate: A => Boolean): Rng[A] = new FilterRng(base, predicate)
+object Filter extends Filter
+
+trait Filter extends Predefs {
+    class MadaRngFilter[A](_1: Expr[Rng[A]]) {
+        def filter(_2: Expr[A => Boolean]) = FilterExpr(_1, _2).expr
+    }
+    implicit def toMadaRngFilter[A](_1: Expr[Rng[A]]) = new MadaRngFilter(_1)
 }
 
-class FilterRng[A](val base: Rng[A], val predicate: A => Boolean) extends Rng[A] {
-    val q = base.end
-    override val _begin = new FilterPointer(base.begin, q, predicate)
-    override val _end = new FilterPointer(q.cloneIn(BidirectionalTraversal), q, predicate)
 
-    override def filter(f: A => Boolean) = base.filter({(e: A) => predicate(e) && f(e)})
+case class FilterExpr[A](_1: Expr[Rng[A]], _2: Expr[A => Boolean]) extends Expr[Rng[A]] {
+    override def eval = _1 match {
+        case FilterExpr(a1, a2) => FilterImpl(a1.eval, {(e: A) => a2.eval.apply(e) && _2.eval.apply(e)})
+        case _ => FilterImpl(_1.eval, _2.eval)
+    }
+}
+
+
+object FilterImpl {
+    def apply[A](r: Rng[A], f: A => Boolean): Rng[A] = {
+        val (p, q) = (r.begin, r.end)
+        new FilterPointer(p, q, f) <=< new FilterPointer(q.cloneIn(BidirectionalTraversal), q, f)
+    }
 }
 
 class FilterPointer[A](override val _base: Pointer[A], val end: Pointer[A], val predicate: A => Boolean)
