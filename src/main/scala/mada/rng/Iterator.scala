@@ -2,19 +2,28 @@
 package mada.rng
 
 
+
+// Iterator[A] <-> Expr[Rng[A]]
+
+trait IteratorConversion {
+    implicit def toMadaIteratorRngExpr[A](from: => Iterator[A]) = FromIteratorExpr(Expr(from)).expr
+    implicit def fromMadaIteratorRngExpr[A](from: Expr[Rng[A]]) = ToIteratorExpr(from).eval
+}
+
+
 // toRng
 
 trait IteratorToRng {
-    class MadaRngIteratorToRng[A](base: Expr[Iterator[A]]) {
-        def toRng = FromIteratorExpr(base).expr
+    class MadaRngIteratorToRng[A](_1: Expr[Iterator[A]]) {
+        def toRng = FromIteratorExpr(_1).expr
     }
-    implicit def toMadaRngIteratorToRng[A](base: Expr[Iterator[A]]) = new MadaRngIteratorToRng(base)
+    implicit def toMadaRngIteratorToRng[A](_1: Expr[Iterator[A]]) = new MadaRngIteratorToRng(_1)
 }
 
-case class FromIteratorExpr[A](base: Expr[Iterator[A]]) extends Expr[Rng[A]] {
-    override def eval = base match {
-        case ToIteratorExpr(b) => b.eval
-        case _ => new IteratorRng(base.eval)
+case class FromIteratorExpr[A](_1: Expr[Iterator[A]]) extends Expr[Rng[A]] {
+    override def eval = _1 match {
+        case ToIteratorExpr(a1) => a1.eval
+        case _ => new IteratorRng(_1.eval)
     }
 }
 
@@ -37,16 +46,16 @@ class IteratorPointer[A](base: Iterator[A], private var e: Option[A])
 object ToIterator extends ToIterator
 
 trait ToIterator {
-    class MadaRngToIterator[A](base: Expr[Rng[A]]) {
-        def toIterator = ToIteratorExpr(base).expr
+    class MadaRngToIterator[A](_1: Expr[Rng[A]]) {
+        def toIterator = ToIteratorExpr(_1).expr
     }
-    implicit def toMadaRngToIterator[A](base: Expr[Rng[A]]) = new MadaRngToIterator(base)
+    implicit def toMadaRngToIterator[A](_1: Expr[Rng[A]]) = new MadaRngToIterator(_1)
 }
 
-case class ToIteratorExpr[A](base: Expr[Rng[A]]) extends Expr[Iterator[A]] {
-    override def eval = base match {
-        case FromIteratorExpr(b) => b.eval
-        case _ => new RngIterator(base.eval)
+case class ToIteratorExpr[A](_1: Expr[Rng[A]]) extends Expr[Iterator[A]] {
+    override def eval = _1 match {
+        case FromIteratorExpr(a1) => a1.eval
+        case _ => new RngIterator(_1.eval)
     }
 }
 

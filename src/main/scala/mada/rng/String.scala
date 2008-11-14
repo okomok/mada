@@ -2,20 +2,32 @@
 package mada.rng
 
 
-// StringConversion
+//  String <-> Expr[Rng[Char]]
 
-object StringConversion extends StringConversion
+object StringConversion
 
 trait StringConversion {
-    implicit def madaRngFromString(from: String) = FromString(from)
-    implicit def madaRngToString(from: Rng[Char]) = StringizeImpl(from).stringize
+    implicit def toMadaStringRngExpr(from: => String) = FromStringExpr(Expr(from)).expr
+    implicit def fromMadaStringRngExpr(from: Expr[Rng[Char]]) = StringizeExpr(from).eval
 }
 
 
-// FromString
+// toRng
 
-object FromString {
-    def apply(a: String): Rng[Char] = new StringRng(a)
+object StringToRng extends StringToRng
+
+trait StringToRng extends Predefs {
+    class MadaRngStringToRng(_1: Expr[String]) {
+        def toRng = FromStringExpr(_1).expr
+    }
+    implicit def toMadaRngStringToRng(_1: Expr[String]) = new MadaRngStringToRng(_1)
+}
+
+case class FromStringExpr(_1: Expr[String]) extends Expr[Rng[Char]] {
+    override def eval = _1 match {
+        case StringizeExpr(a1) => a1.eval
+        case _ => new StringRng(_1.eval)
+    }
 }
 
 case class StringRng(base: String) extends IndexAccessRng[Char] {
@@ -24,32 +36,25 @@ case class StringRng(base: String) extends IndexAccessRng[Char] {
 }
 
 
-// Stringize
+// stringize
 
 object Stringize extends Stringize
 
-trait Stringize {
-    trait MadaRngStringize extends StringizeImpl.Operator
-    implicit def toMadaRngStringize(r: Rng[Char]) = StringizeImpl(r)
+trait Stringize extends Predefs {
+    class MadaRngStringize(_1: Expr[Rng[Char]]) {
+        def stringize = StringizeExpr(_1).expr
+    }
+    implicit def toMadaRngStringize(_1: Expr[Rng[Char]]) = new MadaRngStringize(_1)
 }
 
-object StringizeImpl {
-    trait Operator {
-        def stringize: String
-    }
+case class StringizeExpr(_1: Expr[Rng[Char]]) extends Expr[String] {
+    override def eval = _1 match {
+        case FromStringExpr(a1) => a1.eval
+        case _ => {
+            val sb = new StringBuilder
+            ForeachExpr(_1, Expr(sb.append(_: Char))).eval
+            sb.toString
 
-    def apply(r: Rng[Char]) = r match {
-        case StringRng(b) => new Operator {
-            def stringize = b
         }
-        case _ => new Operator {
-            def stringize = impl(r)
-        }
-    }
-
-    private def impl(r: Rng[Char]): String = {
-        val sb = new StringBuilder
-        r.foreach(sb.append(_))
-        sb.toString
     }
 }

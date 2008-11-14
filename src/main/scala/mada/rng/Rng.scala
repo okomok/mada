@@ -17,12 +17,12 @@ trait Rng[A] {
     final def models(t: Traversal): Boolean = traversal conformsTo t
 
     override def equals(that: Any) = equals(that.asInstanceOf[Rng[A]])
-    override def toString = toArrayList.toString // TODO
+    override def toString = ToArrayListExpr(Expr(this)).eval.toString // TODO
 
     def asRngIn(t: Traversal) = AsRngIn(this, t)
 //    def asRngOf[B] = (new AsRngOf[B])(this)
     def concat(that: Rng[A]) = Concat(this, that)
-    def copy = FromArrayList(toArrayList)
+//    def copy = FromArrayList(toArrayList)
 //    def copyTo[B >: A](p: Pointer[B]) = detail.CopyTo(this, p)
 //    def distance = detail.Distance(this)
 //    def drop(n: Long) = Drop(this, n)
@@ -55,8 +55,8 @@ trait Rng[A] {
 //    def takeWhile(f: A => Boolean) = TakeWhile(this, f)
 //    def window(n: Long, m: Long) = Window(this, n, m)
 
-    def toArray = ToArray(this)
-    def toArrayList = ToArrayList(this)
+//    def toArray = ToArray(this)
+//    def toArrayList = ToArrayList(this)
 //    def toIterator: Iterator[A] = ToIterator(this)
 
     final def rng: Rng[A] = this

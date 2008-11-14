@@ -5,23 +5,35 @@ package mada.rng
 import java.util.ArrayList
 
 
+// Jcl <-> Expr[Rng[A]]
+
 object JclConversion extends JclConversion
 
 trait JclConversion {
-    implicit def madaRngFromArrayList[A](from: java.util.ArrayList[A]) = FromArrayList(from)
-    implicit def madaRngToArrayList[A](from: Rng[A]) = from.toArrayList
+    implicit def toMadaArrayListRngExpr[A](from: => ArrayList[A]) = FromArrayListExpr(Expr(from)).expr
+    implicit def fromMadaArrayListRngExpr[A](from: Expr[Rng[A]]) = ToArrayListExpr(from).eval
 }
 
 
-object FromArrayList {
-    def apply[A](a: ArrayList[A]): Rng[A] = new ArrayListRng(a)
+// Expr[Jcl[A]] -> Expr[Rng[A]]
 
-    def apply[A](es: A*): Rng[A] = {
-        val a = new ArrayList[A](es.length)
-        for (e <- es.elements) {
-            a.add(e)
-        }
-        apply(a)
+trait JclToRng
+        extends ArrayListToRng
+
+
+// toRng
+
+trait ArrayListToRng extends Predefs {
+    class MadaRngArrayListToRng[A](_1: Expr[ArrayList[A]]) {
+        def toRng = FromArrayListExpr(_1).expr
+    }
+    implicit def toMadaRngArrayListToRng[A](_1: Expr[ArrayList[A]]) = new MadaRngArrayListToRng(_1)
+}
+
+case class FromArrayListExpr[A](_1: Expr[ArrayList[A]]) extends Expr[Rng[A]] {
+    override def eval = _1 match {
+        case ToArrayListExpr(a1) => a1.eval
+        case _ => new ArrayListRng(_1.eval)
     }
 }
 
@@ -32,15 +44,44 @@ class ArrayListRng[A](a: ArrayList[A]) extends IndexAccessRng[A] {
 }
 
 
-object ToArrayList {
-    def apply[A](r: Rng[A]): ArrayList[A] = {
-        var a: ArrayList[A] = newArrayList(r)
-        r.foreach({(e: A) => a.add(e)})
+// toArrayList
+
+object ToArrayList extends ToArrayList
+
+trait ToArrayList extends Predefs {
+    class MadaRngToArrayList[A](_1: Expr[Rng[A]]) {
+        def toArrayList = ToArrayListExpr(_1).expr
+    }
+    implicit def toMadaRngToArrayList[A](_1: Expr[Rng[A]]) = new MadaRngToArrayList(_1)
+}
+
+case class ToArrayListExpr[A](_1: Expr[Rng[A]]) extends Expr[ArrayList[A]] {
+    override def eval = _1 match {
+        case FromArrayListExpr(a1) => a1.eval
+        case _ => ToArrayListImpl(_1.toLazy)
+    }
+}
+
+object ToArrayListImpl {
+    def apply[A](x: Expr[Rng[A]]): ArrayList[A] = {
+        var a = newArrayList(x)
+        ForeachExpr(x, Expr({(e: A) => a.add(e)}))
         a
     }
 
-    private def newArrayList[A](r: Rng[A]) = r.traversal match {
-        case _: RandomAccessTraversal => new ArrayList[A](SizeExpr(Expr(r)).eval.toInt)
+    private def newArrayList[A](x: Expr[Rng[A]]) = x.eval.traversal match {
+        case _: RandomAccessTraversal => new ArrayList[A](SizeExpr(x).eval.toInt)
         case _: SinglePassTraversal => new ArrayList[A]
+    }
+}
+
+
+// MkArrayList
+
+object MkArrayList {
+    def apply[A](es: A*): ArrayList[A] = {
+        val a = new ArrayList[A](es.length)
+        for (e <- es.elements) a.add(e)
+        a
     }
 }
