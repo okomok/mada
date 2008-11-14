@@ -2,14 +2,14 @@
 package madatest.rng
 
 
-import mada.rng.MkArrayList
+import mada.rng.ArrayList
 import mada.rng.Conversions._
 import junit.framework.Assert._
 
 
 class FromArrayListTest {
     def testTrivial = {
-        assertEquals(from("abcdefg").eval, from(MkArrayList('a','b','c','d','e','f','g')).eval)
-        AssertNotEquals(from("abcdefg").eval, from(MkArrayList('a','X','c','d','e','f','g')).eval)
+        assertEquals(from("abcdefg").eval, from(ArrayList('a','b','c','d','e','f','g')).eval)
+        AssertNotEquals(from("abcdefg").eval, from(ArrayList('a','X','c','d','e','f','g')).eval)
     }
 }

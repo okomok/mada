@@ -19,7 +19,7 @@ trait Rng[A] {
     override def equals(that: Any) = equals(that.asInstanceOf[Rng[A]])
     override def toString = ToArrayListExpr(Expr(this)).eval.toString // TODO
 
-    def asRngIn(t: Traversal) = AsRngIn(this, t)
+//    def asRngBy(t: Traversal) = AsRngIn(this, t)
 //    def asRngOf[B] = (new AsRngOf[B])(this)
     def concat(that: Rng[A]) = Concat(this, that)
 //    def copy = FromArrayList(toArrayList)

@@ -3,6 +3,8 @@ package madatest.rng
 
 
 import mada.rng._
+import mada.rng.AsRngBy._
+import mada.Expr
 import junit.framework.Assert._
 
 
@@ -10,7 +12,7 @@ class EqualsTest {
     def testTrivial = {
         assertEquals(Interval(2, 5), Interval(2, 5))
         AssertNotEquals(Interval(2, 6), Interval(2, 5))
-        assertEquals(Interval(2, 5).asRngIn(SinglePassTraversal), Interval(2, 5))
+        assertEquals(Expr(Interval(2, 5)).asRngBy(SinglePassTraversal).eval, Interval(2, 5))
     }
 
     trait To1

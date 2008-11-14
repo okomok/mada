@@ -23,13 +23,15 @@ trait IteratorToRng {
 case class FromIteratorExpr[A](_1: Expr[Iterator[A]]) extends Expr[Rng[A]] {
     override def eval = _1 match {
         case ToIteratorExpr(a1) => a1.eval
-        case _ => new IteratorRng(_1.eval)
+        case _ => FromIteratorImpl(_1.eval)
     }
 }
 
-class IteratorRng[A](val base: Iterator[A]) extends Rng[A] {
-    override def _begin = new IteratorPointer(base, if (base.hasNext) Some(base.next) else None)
-    override def _end = new IteratorPointer(base, None)
+object FromIteratorImpl {
+    def apply[A](r: Iterator[A]): Rng[A] = {
+        new IteratorPointer(r, if (r.hasNext) Some(r.next) else None) <=<
+            new IteratorPointer(r, None)
+    }
 }
 
 class IteratorPointer[A](base: Iterator[A], private var e: Option[A])

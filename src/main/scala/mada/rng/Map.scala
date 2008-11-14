@@ -14,15 +14,16 @@ trait Map {
 
 case class MapExpr[From, To](_1: Expr[Rng[From]], _2: Expr[From => To]) extends Expr[Rng[To]] {
     def eval = _1 match {
-        case MapExpr(a1, a2) => new MapRng(a1.eval, _2.eval compose a2.eval) // map-fusion
-        case _ => new MapRng(_1.eval, _2.eval)
+        case MapExpr(a1, a2) => MapImpl(a1.eval, _2.eval compose a2.eval) // map-fusion
+        case _ => MapImpl(_1.eval, _2.eval)
     }
 }
 
 
-class MapRng[From, To](val base: Rng[From], val function: From => To) extends Rng[To] {
-    override val _begin = new MapPointer(base.begin, function)
-    override val _end = new MapPointer(base.end, function)
+object MapImpl {
+    def apply[From, To](r: Rng[From], f: From => To): Rng[To] = {
+        new MapPointer(r.begin, f) <=< new MapPointer(r.end, f)
+    }
 }
 
 class MapPointer[From, To](override val _base: Pointer[From], val function: From => To)

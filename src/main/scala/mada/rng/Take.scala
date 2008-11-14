@@ -15,18 +15,16 @@ trait Take {
 
 case class TakeExpr[A](_1: Expr[Rng[A]], _2: Expr[Long]) extends Expr[Rng[A]] {
     def eval = _1 match {
-        case TakeExpr(a1, a2) => new TakeRng(a1.eval, a2.eval + _2.eval)
-        case _ => new TakeRng(_1.eval, _2.eval)
+        case TakeExpr(a1, a2) => TakeImpl(a1.eval, a2.eval + _2.eval)
+        case _ => TakeImpl(_1.eval, _2.eval)
     }
 }
 
-class TakeRng[A](val base: Rng[A], val count: Long) extends Rng[A] {
-    private val p = base.begin
-    private val q = base.end
-    override val _begin = new TakePointer(p, q, count)
-    override val _end = new TakePointer(q, q, count)
-
-    def toExpr = TakeExpr(Expr(base), Expr(count))
+object TakeImpl {
+    def apply[A](r: Rng[A], n: Long): Rng[A] = {
+        val (p, q) = (r.begin, r.end)
+        new TakePointer(p, q, n) <=< new TakePointer(q, q, n)
+    }
 }
 
 class TakePointer[A](override val _base: Pointer[A], val end: Pointer[A], var count: Long)
@@ -58,15 +56,14 @@ trait TakeWhile {
 }
 
 case class TakeWhileExpr[A](_1: Expr[Rng[A]], _2: Expr[A => Boolean]) extends Expr[Rng[A]] {
-    def eval = new TakeWhileRng(_1.eval, _2.eval)
+    def eval = TakeWhileImpl(_1.eval, _2.eval)
 }
 
-class TakeWhileRng[A](val base: Rng[A], val predicate: A => Boolean) extends Rng[A] {
-    private val p = base.begin; private val q = base.end
-    override val _begin = new TakeWhilePointer(p, q, predicate)
-    override val _end = new TakeWhilePointer(q, q, predicate)
-
-    def toExpr = TakeWhileExpr(Expr(base), Expr(predicate))
+object TakeWhileImpl {
+    def apply[A](r: Rng[A], f: A => Boolean): Rng[A] = {
+        val (p, q) = (r.begin, r.end)
+        new TakeWhilePointer(p, q, f) <=< new TakeWhilePointer(q, q, f)
+    }
 }
 
 class TakeWhilePointer[A](override val _base: Pointer[A], val end: Pointer[A], val predicate: A => Boolean)
