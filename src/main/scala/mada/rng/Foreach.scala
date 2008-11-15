@@ -12,18 +12,9 @@ trait Foreach extends Predefs {
 }
 
 
-case class ForeachExpr[A, X](_1: Expr[Rng[A]], _2: Expr[A => X]) extends Expr[Rng[A]] {
-    def eval = ForeachImpl(_1.eval, _2.eval)
-}
-
-
-object ForeachImpl {
-    def apply[A, X](r: Rng[A], f: A => X): Rng[A] = {
-        val p = r.begin; val q = r.end
-        while (p != q) {
-            f(*(p))
-            ++(p)
-        }
-        r
+case class ForeachExpr[A, X](_1: Expr[Rng[A]], _2: Expr[A => X]) extends Expr[Unit] {
+    def eval = {
+        val a2 = _2.eval
+        LoopExpr(_1, Expr({ (e: A) => a2(e); true })).eval
     }
 }

@@ -28,5 +28,6 @@ class FindTest {
     def testForall {
         val r = from(2, 100)
         assertTrue(r.forall((_: Int) < 300).eval)
+        assertFalse(r.forall((_: Int) == 50).eval)
     }
 }

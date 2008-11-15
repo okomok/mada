@@ -14,13 +14,12 @@ trait Find extends Predefs {
 }
 
 case class FindExpr[A](_1: Expr[Rng[A]], _2: Expr[A => Boolean]) extends Expr[Option[A]] {
-    def eval = FindImpl(_1.eval, _2.eval)
-}
-
-object FindImpl {
-    def apply[A](r: Rng[A], f: A => Boolean): Option[A] = {
-        val (p, q) = (FindPointerOfImpl(r, f), r.end)
-        if (p != q) Some(*(p)) else None
+    def eval = {
+        val acc = Ref[Option[A]](None)
+        val a2 = _2.eval
+        // Prefer Loop to FindPointerOf so loop-fusion is enabled.
+        LoopExpr(_1, Expr({ (e: A) => if (a2(e)) { acc := Some(e); false } else true })).eval
+        acc.deref
     }
 }
 

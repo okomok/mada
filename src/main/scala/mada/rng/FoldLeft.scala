@@ -13,18 +13,10 @@ trait FoldLeft extends Predefs {
 
 
 case class FoldLeftExpr[A, B](_1: Expr[Rng[A]], _2: Expr[B], _3: Expr[(B, A) => B]) extends Expr[B] {
-    def eval = FoldLeftImpl(_1.eval, _2.eval, _3.eval)
-}
-
-
-object FoldLeftImpl {
-    def apply[A, B](r: Rng[A], z: B, op: (B, A) => B): B = {
-        val (p, q) = (r.begin, r.end)
-        var acc = z
-        while (p != q) {
-            acc = op(acc, *(p))
-            ++(p)
-        }
-        acc
+    def eval = {
+        val acc = Ref(_2.eval)
+        val a3 = _3.eval
+        ForeachExpr(_1, Expr({(e: A) => acc := a3(acc.deref, e)}))
+        acc.deref
     }
 }
