@@ -16,13 +16,13 @@ trait Equals extends Predefs {
 
 case class EqualsExpr[A1, A2](_1: Expr[Rng[A1]], _2: Expr[Rng[A2]], _3: Expr[(A1, A2) => Boolean]) extends Expr[Boolean] {
     def eval = {
-        val l1 = _1.toLazy
-        val l2 = _2.toLazy
-        l1.eval.traversal min l2.eval.traversal match {
+        val z1 = _1.toLazy
+        val z2 = _2.toLazy
+        z1.eval.traversal min z2.eval.traversal match {
             case _: RandomAccessTraversal => {
-                if (SizeExpr(l1).eval != SizeExpr(l2).eval) false else EqualsToExpr(l1, BeginExpr(l2), _3).eval
+                if (SizeExpr(z1).eval != SizeExpr(z2).eval) false else EqualsToExpr(z1, BeginExpr(z2), _3).eval
             }
-            case _: SinglePassTraversal => EqualsImpl(l1.eval, l2.eval, _3.eval)
+            case _: SinglePassTraversal => EqualsImpl(z1.eval, z2.eval, _3.eval)
         }
     }
 }
@@ -55,7 +55,7 @@ trait EqualsTo extends Predefs {
 
 case class EqualsToExpr[A1, A2](_1: Expr[Rng[A1]], _2: Expr[Pointer[A2]], _3: Expr[(A1, A2) => Boolean]) extends Expr[Boolean] {
     def eval = {
-        val l1 = _1.toLazy
-        MismatchExpr(l1, _2, _3).eval._1 == EndExpr(l1).eval
+        val z1 = _1.toLazy
+        MismatchExpr(z1, _2, _3).eval._1 == EndExpr(z1).eval
     }
 }
