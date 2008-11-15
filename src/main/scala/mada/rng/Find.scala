@@ -17,7 +17,7 @@ case class FindExpr[A](_1: Expr[Rng[A]], _2: Expr[A => Boolean]) extends Expr[Op
     def eval = {
         val acc = Ref[Option[A]](None)
         val a2 = _2.eval
-        // Prefer Loop to FindPointerOf so loop-fusion is enabled.
+        // Prefer Loop to FindPointerOf so a fusion is enabled.
         LoopExpr(_1, Expr({ (e: A) => if (a2(e)) { acc := Some(e); false } else true })).eval
         acc.deref
     }

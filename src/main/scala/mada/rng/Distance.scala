@@ -14,10 +14,10 @@ trait Distance extends Predefs {
 
 case class DistanceExpr[A](_1: Expr[Rng[A]]) extends Expr[Long] {
     def eval = {
-        val x1 = _1.toLazy
-        x1.eval.traversal match {
-            case _: RandomAccessTraversal => SizeExpr(x1).eval
-            case _: SinglePassTraversal => FoldLeftExpr(x1, Expr(0: Long), Expr({(b: Long, a: A) => b + 1})).eval
+        val l1 = _1.toLazy
+        l1.eval.traversal match {
+            case _: RandomAccessTraversal => SizeExpr(l1).eval
+            case _: SinglePassTraversal => FoldLeftExpr(l1, Expr(0: Long), Expr({ (b: Long, a: A) => b + 1 })).eval
         }
     }
 }

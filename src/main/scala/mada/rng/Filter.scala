@@ -14,7 +14,11 @@ trait Filter extends Predefs {
 
 case class FilterExpr[A](_1: Expr[Rng[A]], _2: Expr[A => Boolean]) extends Expr[Rng[A]] {
     override def eval = _1 match {
-        case FilterExpr(x1, x2) => FilterImpl(x1.eval, {(e: A) => x2.eval.apply(e) && _2.eval.apply(e)}) // filter-fusion
+        case FilterExpr(x1, x2) => { // filter-filter fusion
+            val a2 = _2.eval
+            val b2 = x2.eval
+            FilterImpl(x1.eval, {(e: A) => a2(e) && b2(e)})
+        }
         case _ => FilterImpl(_1.eval, _2.eval)
     }
 }
