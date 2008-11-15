@@ -13,7 +13,7 @@ trait Window extends Predefs {
 
 
 case class WindowExpr[A](_1: Expr[Rng[A]], _2: Expr[Long], _3: Expr[Long]) extends Expr[Rng[A]] {
-    def eval = _1 match {
+    override def _eval = _1 match {
         case WindowExpr(x1, x2, x3) => WindowImpl(x1.eval, x2.eval + _2.eval, x2.eval + _3.eval)
         case _ => WindowImpl(_1.eval, _2.eval, _3.eval)
     }

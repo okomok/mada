@@ -14,7 +14,7 @@ trait Indirect extends Predefs {
 }
 
 case class IndirectExpr[A](_1: Expr[Rng[Pointer[A]]]) extends Expr[Rng[A]] {
-    override def eval = _1 match {
+    override def _eval = _1 match {
         case OutdirectExpr(x1) => x1.eval
         case _ => IndirectImpl(_1.eval)
     }
@@ -47,7 +47,7 @@ trait Outdirect extends Predefs {
 }
 
 case class OutdirectExpr[A](_1: Expr[Rng[A]]) extends Expr[Rng[Pointer[A]]] {
-    override def eval = _1 match {
+    override def _eval = _1 match {
         case IndirectExpr(x1) => x1.eval
         case _ => OutdirectImpl(_1.eval)
     }

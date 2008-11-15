@@ -24,7 +24,7 @@ trait StringToRng extends Predefs {
 }
 
 case class FromStringExpr(_1: Expr[String]) extends Expr[Rng[Char]] {
-    override def eval = _1 match {
+    override def _eval = _1 match {
         case StringizeExpr(x1) => x1.eval
         case _ => new StringRng(_1.eval)
     }
@@ -48,7 +48,7 @@ trait Stringize extends Predefs {
 }
 
 case class StringizeExpr(_1: Expr[Rng[Char]]) extends Expr[String] {
-    override def eval = _1 match {
+    override def _eval = _1 match {
         case FromStringExpr(x1) => x1.eval
         case _ => {
             val sb = new StringBuilder

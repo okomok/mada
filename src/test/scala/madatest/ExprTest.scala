@@ -29,7 +29,7 @@ abstract case class RngContext[A] extends Context[Rng[A], Rng[A]] // Context[A, 
 
 case class MapExpr[Z, A](val base: Expr[Rng[Z]], val function: Z => A) extends Expr[Rng[A]] {
     var optimized = false
-    override def eval = base match {
+    override def _eval = base match {
         case MapExpr(b, f) => {
             optimized = true
             new MapRng(b.eval, function compose f) // MapRng[Any, To]
@@ -38,7 +38,7 @@ case class MapExpr[Z, A](val base: Expr[Rng[Z]], val function: Z => A) extends E
             new MapRng(base.eval, function)
         }
     }
-    override def eval[X](c: Context[Rng[A], X]): X = c match {
+    override def _eval[X](c: Context[Rng[A], X]): X = c match {
         case RngContext() => new MapRng(base.eval, function)
         case SizeContext() => 9 // Optimize
         case _ => c(this) // default
@@ -54,7 +54,7 @@ case class SizeContext[A]() extends Context[Rng[A], Long] {
 }
 
 class SizeExpr[A](val base: Expr[Rng[A]]) extends Expr[Long] {
-    override def eval = base.eval(new SizeContext[A])
+    override def _eval = base.eval(new SizeContext[A])
 }
 
 

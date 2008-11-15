@@ -13,5 +13,5 @@ trait Slice extends Predefs {
 
 
 case class SliceExpr[A](_1: Expr[Rng[A]], _2: Expr[Long], _3: Expr[Long]) extends Expr[Rng[A]] {
-    def eval = TakeExpr(DropExpr(_1, _2), Expr(_3.eval - _2.eval)).eval
+    override def _eval = TakeExpr(DropExpr(_1, _2), Expr(_3.eval - _2.eval)).eval
 }

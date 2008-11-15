@@ -14,7 +14,7 @@ trait Drop extends Predefs {
 }
 
 case class DropExpr[A](_1: Expr[Rng[A]], _2: Expr[Long]) extends Expr[Rng[A]] {
-    def eval = _1 match {
+    override def _eval = _1 match {
         case DropExpr(x1, x2) => DropImpl(x1.eval, x2.eval + _2.eval)
         case _ => DropImpl(_1.eval, _2.eval)
     }
@@ -50,7 +50,7 @@ trait DropWhile extends Predefs {
 }
 
 case class DropWhileExpr[A](_1: Expr[Rng[A]], _2: Expr[A => Boolean]) extends Expr[Rng[A]] {
-    def eval = {
+    override def _eval = {
         val x1 = _1.toLazy
         val not2: A => Boolean = !_2.eval.apply(_)
         FindPointerOfExpr(x1, Expr(not2)).eval <=< x1.eval.end

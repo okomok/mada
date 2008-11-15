@@ -13,7 +13,7 @@ trait Loop extends Predefs {
 
 
 case class LoopExpr[A](_1: Expr[Rng[A]], _2: Expr[A => Boolean]) extends Expr[Unit] {
-    def eval = _1 match {
+    override def _eval = _1 match {
         case FilterExpr(x1, x2) => { // loop-filter fusion
             val a2 = _2.eval
             val b2 = x2.eval

@@ -14,7 +14,7 @@ trait Take extends Predefs {
 }
 
 case class TakeExpr[A](_1: Expr[Rng[A]], _2: Expr[Long]) extends Expr[Rng[A]] {
-    def eval = _1 match {
+    override def _eval = _1 match {
         case TakeExpr(x1, x2) => TakeImpl(x1.eval, x2.eval + _2.eval)
         case _ => TakeImpl(_1.eval, _2.eval)
     }
@@ -56,7 +56,7 @@ trait TakeWhile extends Predefs {
 }
 
 case class TakeWhileExpr[A](_1: Expr[Rng[A]], _2: Expr[A => Boolean]) extends Expr[Rng[A]] {
-    def eval = TakeWhileImpl(_1.eval, _2.eval)
+    override def _eval = TakeWhileImpl(_1.eval, _2.eval)
 }
 
 object TakeWhileImpl {

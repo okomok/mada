@@ -13,7 +13,7 @@ trait Distance extends Predefs {
 
 
 case class DistanceExpr[A](_1: Expr[Rng[A]]) extends Expr[Long] {
-    def eval = {
+    override def _eval = {
         val z1 = _1.toLazy
         z1.eval.traversal match {
             case _: RandomAccessTraversal => SizeExpr(z1).eval

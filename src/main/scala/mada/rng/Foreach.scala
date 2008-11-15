@@ -13,7 +13,7 @@ trait Foreach extends Predefs {
 
 
 case class ForeachExpr[A, X](_1: Expr[Rng[A]], _2: Expr[A => X]) extends Expr[Unit] {
-    def eval = {
+    override def _eval = {
         val a2 = _2.eval
         LoopExpr(_1, Expr({ (e: A) => a2(e); true })).eval
     }

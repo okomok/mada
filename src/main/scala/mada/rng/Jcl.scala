@@ -28,7 +28,7 @@ trait ArrayListToRng extends Predefs {
 }
 
 case class FromArrayListExpr[A](_1: Expr[java.util.ArrayList[A]]) extends Expr[Rng[A]] {
-    override def eval = _1 match {
+    override def _eval = _1 match {
         case ToArrayListExpr(x1) => x1.eval
         case _ => new ArrayListRng(_1.eval)
     }
@@ -53,7 +53,7 @@ trait ToArrayList extends Predefs {
 }
 
 case class ToArrayListExpr[A](_1: Expr[Rng[A]]) extends Expr[java.util.ArrayList[A]] {
-    override def eval = _1 match {
+    override def _eval = _1 match {
         case FromArrayListExpr(x1) => x1.eval
         case _ => ToArrayListImpl(_1.toLazy)
     }

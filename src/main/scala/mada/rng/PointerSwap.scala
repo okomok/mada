@@ -13,7 +13,7 @@ trait PointerSwap extends Predefs {
 
 
 case class PointerSwapExpr[A](_1: Expr[Pointer[A]], _2: Expr[Pointer[A]]) extends Expr[Unit] {
-    def eval = PointerSwapImpl(_1.eval, _2.eval)
+    override def _eval = PointerSwapImpl(_1.eval, _2.eval)
 }
 
 

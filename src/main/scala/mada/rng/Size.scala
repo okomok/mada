@@ -13,7 +13,7 @@ trait Size extends Predefs {
 
 
 case class SizeExpr[A](_1: Expr[Rng[A]]) extends Expr[Long] {
-    def eval = SizeImpl(_1.eval)
+    override def _eval = SizeImpl(_1.eval)
 }
 
 

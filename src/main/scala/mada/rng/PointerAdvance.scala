@@ -13,7 +13,7 @@ trait PointerAdvance extends Predefs {
 
 
 case class PointerAdvanceExpr[A](_1: Expr[Pointer[A]], _2: Expr[Long]) extends Expr[Pointer[A]] {
-    def eval = PointerAdvanceImpl(_1.eval, _2.eval)
+    override def _eval = PointerAdvanceImpl(_1.eval, _2.eval)
 }
 
 

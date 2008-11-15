@@ -13,7 +13,7 @@ trait Permutation extends Predefs {
 
 
 case class PermutationExpr[A](_1: Expr[Rng[A]], _2: Expr[Rng[Long]]) extends Expr[Rng[A]] {
-    override def eval = PermutationImpl(_1.eval, _2.eval)
+    override def _eval = PermutationImpl(_1.eval, _2.eval)
 }
 
 

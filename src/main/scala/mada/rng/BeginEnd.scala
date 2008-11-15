@@ -14,7 +14,7 @@ trait Begin extends Predefs {
 }
 
 case class BeginExpr[A](_1: Expr[Rng[A]]) extends Expr[Pointer[A]] {
-    def eval = _1.eval.begin
+    override def _eval = _1.eval.begin
 }
 
 
@@ -30,5 +30,5 @@ trait End extends Predefs {
 }
 
 case class EndExpr[A](_1: Expr[Rng[A]]) extends Expr[Pointer[A]] {
-    def eval = _1.eval.end
+    override def _eval = _1.eval.end
 }

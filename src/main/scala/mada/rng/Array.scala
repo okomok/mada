@@ -24,7 +24,7 @@ trait ArrayToRng extends Predefs {
 }
 
 case class FromArrayExpr[A](_1: Expr[Array[A]]) extends Expr[Rng[A]] {
-    override def eval = _1 match {
+    override def _eval = _1 match {
         case ToArrayExpr(x1) => x1.eval
         case _ => new ArrayRng(_1.eval)
     }
@@ -49,7 +49,7 @@ trait ToArray extends Predefs {
 }
 
 case class ToArrayExpr[A](_1: Expr[Rng[A]]) extends Expr[Array[A]] {
-    override def eval = _1 match {
+    override def _eval = _1 match {
         case FromArrayExpr(x1) => x1.eval
         case _ => ToArrayImpl(_1.toLazy)
     }

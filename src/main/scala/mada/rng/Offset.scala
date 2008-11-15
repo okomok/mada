@@ -13,7 +13,7 @@ trait Offset extends Predefs {
 
 
 case class OffsetExpr[A](_1: Expr[Rng[A]], _2: Expr[Long], _3: Expr[Long]) extends Expr[Rng[A]] {
-    def eval = OffsetImpl(_1.eval, _2.eval, _3.eval)
+    override def _eval = OffsetImpl(_1.eval, _2.eval, _3.eval)
 }
 
 

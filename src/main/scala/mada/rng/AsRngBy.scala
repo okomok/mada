@@ -13,7 +13,7 @@ trait AsRngBy extends Predefs {
 
 
 case class AsRngByExpr[A](_1: Expr[Rng[A]], _2: Expr[Traversal]) extends Expr[Rng[A]] {
-    def eval = AsRngByImpl(_1.eval, _2.eval)
+    override def _eval = AsRngByImpl(_1.eval, _2.eval)
 }
 
 

@@ -13,7 +13,7 @@ trait PointerOutput extends Predefs {
 
 
 case class PointerOutputExpr[A](_1: Expr[Pointer[A]]) extends Expr[A => Pointer[A]] {
-    def eval = PointerOutputImpl(_1.eval, (_: A))
+    override def _eval = PointerOutputImpl(_1.eval, (_: A))
 }
 
 

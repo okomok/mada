@@ -23,7 +23,7 @@ trait IteratorToRng extends Predefs {
 }
 
 case class FromIteratorExpr[A](_1: Expr[Iterator[A]]) extends Expr[Rng[A]] {
-    override def eval = _1 match {
+    override def _eval = _1 match {
         case ToIteratorExpr(x1) => x1.eval
         case _ => FromIteratorImpl(_1.eval)
     }
@@ -57,7 +57,7 @@ trait ToIterator extends Predefs {
 }
 
 case class ToIteratorExpr[A](_1: Expr[Rng[A]]) extends Expr[Iterator[A]] {
-    override def eval = _1 match {
+    override def _eval = _1 match {
         case FromIteratorExpr(x1) => x1.eval
         case _ => new RngIterator(_1.eval)
     }

@@ -13,7 +13,7 @@ trait IsEmpty extends Predefs {
 
 
 case class IsEmptyExpr[A](_1: Expr[Rng[A]]) extends Expr[Boolean] {
-    def eval = IsEmptyImpl(_1.eval)
+    override def _eval = IsEmptyImpl(_1.eval)
 }
 
 

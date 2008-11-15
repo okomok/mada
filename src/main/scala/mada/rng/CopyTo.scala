@@ -13,7 +13,7 @@ trait CopyTo extends Predefs {
 
 
 case class CopyToExpr[From, To >: From](_1: Expr[Rng[From]], _2: Expr[Pointer[To]]) extends Expr[Pointer[To]] {
-    def eval = {
+    override def _eval = {
         val z2 = _2.toLazy
         ForeachExpr(AsRngOfExpr[From, To](_1), PointerOutputExpr(z2)).eval
         z2.eval

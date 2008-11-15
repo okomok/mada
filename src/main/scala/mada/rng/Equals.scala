@@ -15,7 +15,7 @@ trait Equals extends Predefs {
 }
 
 case class EqualsExpr[A1, A2](_1: Expr[Rng[A1]], _2: Expr[Rng[A2]], _3: Expr[(A1, A2) => Boolean]) extends Expr[Boolean] {
-    def eval = {
+    override def _eval = {
         val z1 = _1.toLazy
         val z2 = _2.toLazy
         z1.eval.traversal min z2.eval.traversal match {
@@ -54,7 +54,7 @@ trait EqualsTo extends Predefs {
 }
 
 case class EqualsToExpr[A1, A2](_1: Expr[Rng[A1]], _2: Expr[Pointer[A2]], _3: Expr[(A1, A2) => Boolean]) extends Expr[Boolean] {
-    def eval = {
+    override def _eval = {
         val z1 = _1.toLazy
         MismatchExpr(z1, _2, _3).eval._1 == EndExpr(z1).eval
     }

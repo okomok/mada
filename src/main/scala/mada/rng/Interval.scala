@@ -36,7 +36,7 @@ trait IntervalToRng extends Predefs {
 // Int
 
 case class FromIntIntervalExpr(_1: Expr[(Int, Int)]) extends Expr[Rng[Int]] {
-    override def eval = new IntIntervalPointer(_1.eval._1) <=< new IntIntervalPointer(_1.eval._2)
+    override def _eval = new IntIntervalPointer(_1.eval._1) <=< new IntIntervalPointer(_1.eval._2)
 }
 
 class IntIntervalPointer(n: Int) extends IntervalPointer[Int](n) {
@@ -47,7 +47,7 @@ class IntIntervalPointer(n: Int) extends IntervalPointer[Int](n) {
 // Long
 
 case class FromLongIntervalExpr(_1: Expr[(Long, Long)]) extends Expr[Rng[Long]] {
-    override def eval = new LongIntervalPointer(_1.eval._1) <=< new LongIntervalPointer(_1.eval._2)
+    override def _eval = new LongIntervalPointer(_1.eval._1) <=< new LongIntervalPointer(_1.eval._2)
 }
 
 class LongIntervalPointer(n: Long) extends IntervalPointer[Long](n) {

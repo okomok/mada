@@ -14,7 +14,7 @@ trait First extends Predefs {
 }
 
 case class FirstExpr[A](_1: Expr[Rng[A]]) extends Expr[A] {
-    def eval = FirstImpl(_1.eval)
+    override def _eval = FirstImpl(_1.eval)
 }
 
 object FirstImpl {
@@ -37,7 +37,7 @@ trait Last extends Predefs {
 }
 
 case class LastExpr[A](_1: Expr[Rng[A]]) extends Expr[A] {
-    def eval = LastImpl(_1.eval)
+    override def _eval = LastImpl(_1.eval)
 }
 
 object LastImpl {

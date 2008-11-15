@@ -13,5 +13,5 @@ trait Exists extends Predefs {
 
 
 case class ExistsExpr[A](_1: Expr[Rng[A]], _2: Expr[A => Boolean]) extends Expr[Boolean] {
-    def eval = FindExpr(_1, _2).eval != None
+    override def _eval = FindExpr(_1, _2).eval != None
 }

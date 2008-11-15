@@ -14,7 +14,7 @@ trait Find extends Predefs {
 }
 
 case class FindExpr[A](_1: Expr[Rng[A]], _2: Expr[A => Boolean]) extends Expr[Option[A]] {
-    def eval = {
+    override def _eval = {
         val acc = Ref[Option[A]](None)
         val a2 = _2.eval
         // Prefer Loop to FindPointerOf so a fusion is enabled.
@@ -36,7 +36,7 @@ trait FindPointerOf extends Predefs {
 }
 
 case class FindPointerOfExpr[A](_1: Expr[Rng[A]], _2: Expr[A => Boolean]) extends Expr[Pointer[A]] {
-    def eval = FindPointerOfImpl(_1.eval, _2.eval)
+    override def _eval = FindPointerOfImpl(_1.eval, _2.eval)
 }
 
 object FindPointerOfImpl {
