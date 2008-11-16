@@ -13,9 +13,10 @@ trait Reverse extends Predefs {
 
 
 case class ReverseExpr[A](_1: Expr[Rng[A]]) extends Expr[Rng[A]] {
-    override def _eval = _1 match {
-        case ReverseExpr(x1) => x1.eval
-        case _ => ReverseImpl(_1.eval)
+    override def _eval = ReverseImpl(_1.eval)
+    override def _eval[U](c: Context[Rng[A], U]) = _1 match {
+        case ReverseExpr(x1) => x1.eval(c) // reverse-reverse fusion
+        case _ => super._eval(c)
     }
 }
 
@@ -30,6 +31,8 @@ object ReverseImpl {
 
 class ReversePointer[A](override val _base: Pointer[A])
         extends PointerAdapter[A, A, ReversePointer[A]] {
+    override def _read = base.clone.--/.read
+    override def _write(e: A) { base.clone.--/.write(e) }
     override def _increment { base--/ }
     override def _clone = new ReversePointer(base.clone)
     override def _decrement { base++/ }

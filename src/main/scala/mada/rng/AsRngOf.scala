@@ -13,5 +13,5 @@ trait AsRngOf extends Predefs {
 
 
 case class AsRngOfExpr[From, To](_1: Expr[Rng[From]]) extends Expr[Rng[To]] {
-    override def _eval = MapExpr(_1, Expr((_: From).asInstanceOf[To])).eval
+    override def _eval[U](c: Context[Rng[To], U]) = MapExpr(_1, Expr((_: From).asInstanceOf[To])).eval(c)
 }

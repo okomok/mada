@@ -62,7 +62,7 @@ case class ToArrayListExpr[A](_1: Expr[Rng[A]]) extends Expr[java.util.ArrayList
 object ToArrayListImpl {
     def apply[A](x: Expr[Rng[A]]): java.util.ArrayList[A] = {
         var a = newArrayList(x)
-        ForeachExpr(x, Expr({(e: A) => a.add(e)}))
+        ForeachExpr(x, Expr({(e: A) => a.add(e)})).eval
         a
     }
 

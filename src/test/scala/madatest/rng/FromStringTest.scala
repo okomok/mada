@@ -13,5 +13,8 @@ class FromStringTest {
         assertEquals(from("abcdefg").eval, from(Array('a','b','c','d','e','f','g')).eval)
         AssertNotEquals(from("abcdefg").eval, from(Array('a','X','c','d','e','f','g')).eval)
     }
-}
 
+    def testPointer() {
+        RandomAccessReadablePointerTest(from("abcde").eval.begin, 5, Array('a','b','c','d','e'))
+    }
+}

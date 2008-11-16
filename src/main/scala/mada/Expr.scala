@@ -20,32 +20,22 @@ trait Expr[A] {
 }
 
 
-// contexts
+// Context
 
 trait Context[A, B] extends (Expr[A] => B)
 
-case class DefaultContext[A] extends Context[A, A] {
-    override def apply(x: Expr[A]) = x._eval
-}
 
-case class LazyContext[A, B](c: Context[A, B]) extends Context[A, B] {
-    override def apply(x: Expr[A]) = { lazy val v = c(x); v }
-}
-
-
-// expressions
+// predefined expressions
 
 class ConstantExpr[A](e: => A) extends Expr[A] {
     override def _eval = e
 }
 
 case class LazyExpr[A](_1: Expr[A]) extends Expr[A] {
-    override def _eval = _1.eval
     override def _eval[B](c: Context[A, B]) = _1.eval(new LazyContext(c))
 }
 
 case class ForwardExpr[A](_1: Expr[A]) extends Expr[A] {
-    override def _eval = _1.eval
     override def _eval[B](c: Context[A, B]) = _1.eval(c)
 }
 
@@ -53,6 +43,17 @@ object ExprConversions extends ExprConversions
 
 trait ExprConversions {
     implicit def toMadaExpr[A](e: => A) = Expr(e)
+}
+
+
+// predefined contexts
+
+case class DefaultContext[A] extends Context[A, A] {
+    override def apply(x: Expr[A]) = x._eval
+}
+
+case class LazyContext[A, B](c: Context[A, B]) extends Context[A, B] {
+    override def apply(x: Expr[A]) = { lazy val v = c(x); v }
 }
 
 
