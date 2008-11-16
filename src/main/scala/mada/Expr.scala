@@ -32,7 +32,8 @@ class ConstantExpr[A](e: => A) extends Expr[A] {
 }
 
 case class LazyExpr[A](_1: Expr[A]) extends Expr[A] {
-    override def _eval[B](c: Context[A, B]) = _1.eval(new LazyContext(c))
+    private val c = new LazyDefaultContext[A]
+    override def _eval = _1.eval(c) // DefaultContext only
 }
 
 case class ForwardExpr[A](_1: Expr[A]) extends Expr[A] {
@@ -53,7 +54,11 @@ case class DefaultContext[A] extends Context[A, A] {
 }
 
 case class LazyContext[A, B](c: Context[A, B]) extends Context[A, B] {
-    override def apply(x: Expr[A]) = { lazy val v = c(x); v }
+    private val e = new LazyRef[B]
+    override def apply(x: Expr[A]) = e := c(x)
+}
+
+case class LazyDefaultContext[A] extends LazyContext[A, A](new DefaultContext[A]) {
 }
 
 

@@ -12,7 +12,7 @@ object IntervalConversions extends IntervalConversions
 trait IntervalConversions {
     // Int
     implicit def toMadaIntIntervalRngExpr(from: => (Int, Int)) = FromIntIntervalExpr(Expr(from)).expr
-    // Long
+    // Long... ambiguous!
     //implicit def toMadaLongIntervalRngExpr(from: => (Long, Long)) = FromLongIntervalExpr(Expr(from)).expr
 }
 

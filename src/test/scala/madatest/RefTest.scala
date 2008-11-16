@@ -17,7 +17,7 @@ class RefTest {
 
     def testTrivial {
         var x = 10
-        val v = Ref(x)
+        val v = new Ref(x)
         assign(v)
         x = v.deref
         assertTrue(x == 12)
@@ -25,7 +25,7 @@ class RefTest {
 
     def testTrivial2 {
         var x = 10
-        val v = Ref(x)
+        val v = new Ref(x)
         assign2(v)
         x = v.deref
         assertTrue(x == 12)
