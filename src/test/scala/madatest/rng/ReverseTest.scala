@@ -23,15 +23,6 @@ class ReverseTest {
 
     def testFusion() {
         NDebug.value = false
-        val l = from(Array(6,5,4,3,2,1))
-        val lc = new mada.LazyDefaultContext[mada.rng.Rng[Int]]
-        val l1 = l.eval(lc)
-        val l2 = l.reverse.reverse.eval(lc)
-        assertSame(l1, l2)
-    }
-
-    def testFusion2() {
-        NDebug.value = false
         val l = from(Array(6,5,4,3,2,1)).toLazy
         val l1 = l.eval
         val l2 = l.reverse.reverse.eval

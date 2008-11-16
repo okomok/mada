@@ -40,6 +40,7 @@ case class MapExpr[Z, A](val base: Expr[Rng[Z]], val function: Z => A) extends E
         }
     }
     override def _eval[X](c: Context[Rng[A], X]): X = c match {
+        case DefaultContext => _eval
 //        case _: DefaultContext_[Rng[_]] => _eval // hmm, ugly. and warnings
         case RngContext() => new MapRng(base.eval, function)
         case SizeContext() => 9 // Optimize
