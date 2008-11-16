@@ -24,13 +24,21 @@ trait StringToRng extends Predefs {
 }
 
 case class FromStringExpr(_1: Expr[String]) extends Expr[Rng[Char]] {
-    override def _eval = _1 match {
-        case StringizeExpr(x1) => x1.eval
-        case _ => new StringRng(_1.eval)
+    override def _eval[U](c: Context[Rng[Char], U]): U = c match {
+        case DefaultContext => _1 match {
+            case StringizeExpr(x1) => x1.eval
+            case _ => forward.eval
+        }
+        case _ => forward.eval(c)
+    }
+
+    private def forward = {
+        val ia = new StringIndexAccess(_1.eval).indexAccess
+        IndexAccessRngExpr(Expr(ia))
     }
 }
 
-case class StringRng(base: String) extends IndexAccessRng[Char] {
+class StringIndexAccess(val base: String) extends IndexAccess[Char] {
     override def _get(i: Long) = base.charAt(i.toInt)
     override def _size = base.length
 }

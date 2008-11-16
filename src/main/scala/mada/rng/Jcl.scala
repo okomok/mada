@@ -28,16 +28,24 @@ trait ArrayListToRng extends Predefs {
 }
 
 case class FromArrayListExpr[A](_1: Expr[java.util.ArrayList[A]]) extends Expr[Rng[A]] {
-    override def _eval = _1 match {
-        case ToArrayListExpr(x1) => x1.eval
-        case _ => new ArrayListRng(_1.eval)
+    override def _eval[U](c: Context[Rng[A], U]): U = c match {
+        case DefaultContext => _1 match {
+            case ToArrayListExpr(x1) => x1.eval
+            case _ => forward.eval
+        }
+        case _ => forward.eval(c)
+    }
+
+    private def forward = {
+        val ia = new ArrayListIndexAccess(_1.eval).indexAccess
+        IndexAccessRngExpr(Expr(ia))
     }
 }
 
-class ArrayListRng[A](a: java.util.ArrayList[A]) extends IndexAccessRng[A] {
-    override def _set(i: Long, e: A) { a.set(i.toInt, e) }
-    override def _get(i: Long) = a.get(i.toInt)
-    override def _size = a.size
+class ArrayListIndexAccess[A](val base: java.util.ArrayList[A]) extends IndexAccess[A] {
+    override def _set(i: Long, e: A) { base.set(i.toInt, e) }
+    override def _get(i: Long) = base.get(i.toInt)
+    override def _size = base.size
 }
 
 

@@ -59,5 +59,5 @@ trait Rng[A] {
 //    def toArrayList = ToArrayList(this)
 //    def toIterator: Iterator[A] = ToIterator(this)
 
-    final def rng: Rng[A] = this
+    final def rng = this
 }

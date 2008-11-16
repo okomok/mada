@@ -2,28 +2,35 @@
 package mada.rng
 
 
-trait IndexAccessRng[A] extends Rng[A] {
-    def _set(i: Long, e: A) { throw new ErrorNotWritableIndexAccess }
-    def _get(i: Long): A
+trait IndexAccess[A] {
+    def _set(startIndex: Long, e: A) { throw new ErrorNotWritableIndexAccess }
+    def _get(startIndex: Long): A
     def _size: Long
-
-    override lazy val _begin = new IndexAccessPointer(this, 0)
-    override def _end = new IndexAccessPointer(this, _size)
+    final def indexAccess = this
 }
 
-class IndexAccessPointer[A](ia: IndexAccessRng[A], private var i: Long)
-        extends PointerAdapter[Long, A, IndexAccessPointer[A]] {
-    override val _base = new LongIntervalPointer(i)
 
-    override def _read = ia._get(*(base))
+case class IndexAccessRngExpr[A](_1: Expr[IndexAccess[A]]) extends Expr[Rng[A]] {
+    override def _eval = {
+        val ia = _1.eval
+        new IndexAccessPointer(ia, 0) <=< new IndexAccessPointer(ia, ia._size)
+    }
+}
+
+
+class IndexAccessPointer[A](val indexAccess: IndexAccess[A], val startIndex: Long)
+        extends PointerAdapter[Long, A, IndexAccessPointer[A]] {
+    override val _base = new LongIntervalPointer(startIndex)
+
+    override def _read = indexAccess._get(*(base))
     override def _write(e: A) {
         try {
-            ia._set(*(base), e)
+            indexAccess._set(*(base), e)
         } catch {
             case _: ErrorNotWritableIndexAccess => throw new ErrorNotWritable(this)
         }
     }
-    override def _clone = new IndexAccessPointer(ia, *(base))
+    override def _clone = new IndexAccessPointer(indexAccess, *(base))
 }
 
 class ErrorNotWritableIndexAccess extends UnsupportedOperationException

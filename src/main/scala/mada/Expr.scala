@@ -19,7 +19,7 @@ trait Expr[A] {
         override def apply(x: Expr[A]) = x._eval
     }
 
-    final def expr: Expr[A] = this
+    final def expr = this
     final def toLazy[A] = LazyExpr(this).expr
 }
 

@@ -24,13 +24,21 @@ trait ArrayToRng extends Predefs {
 }
 
 case class FromArrayExpr[A](_1: Expr[Array[A]]) extends Expr[Rng[A]] {
-    override def _eval = _1 match {
-        case ToArrayExpr(x1) => x1.eval
-        case _ => new ArrayRng(_1.eval)
+    override def _eval[U](c: Context[Rng[A], U]): U = c match {
+        case DefaultContext => _1 match {
+            case ToArrayExpr(x1) => x1.eval
+            case _ => forward.eval
+        }
+        case _ => forward.eval(c)
+    }
+
+    private def forward = {
+        val ia = new ArrayIndexAccess(_1.eval).indexAccess
+        IndexAccessRngExpr(Expr(ia))
     }
 }
 
-case class ArrayRng[A](base: Array[A]) extends IndexAccessRng[A] {
+class ArrayIndexAccess[A](val base: Array[A]) extends IndexAccess[A] {
     override def _set(i: Long, e: A) { base(i.toInt) = e }
     override def _get(i: Long) = base(i.toInt)
     override def _size = base.length
