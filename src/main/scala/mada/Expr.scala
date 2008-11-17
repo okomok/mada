@@ -40,8 +40,8 @@ case class LazyExpr[A](_1: Expr[A]) extends Expr[A] {
     override def _eval = _1.eval(c)
 }
 
-case class ForwardExpr[To](_1: Expr[To]) extends Expr[To] {
-    override def _eval[B](c: Context[To, B]) = _1.eval(c)
+case class ForwardExpr[A](_1: Expr[A]) extends Expr[A] {
+    override def _eval[B](c: Context[A, B]) = _1.eval(c)
 }
 
 object ExprConversions extends ExprConversions
