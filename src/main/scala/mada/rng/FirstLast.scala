@@ -42,8 +42,8 @@ case class LastExpr[A](_1: Expr[Rng[A]]) extends Expr[A] {
 
 object LastImpl {
     def apply[A](r: Rng[A]): A = {
+        AssertModels(r, BidirectionalTraversal)
         Assert("out of Rng", !IsEmptyImpl(r))
-        Assert("requires BidirectionalRng", r models BidirectionalTraversal)
         *(--(r.end))
     }
 }

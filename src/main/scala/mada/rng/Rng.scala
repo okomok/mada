@@ -14,7 +14,7 @@ trait Rng[A] {
     final def begin = _begin
     final def end = _end
     final lazy val traversal = begin.traversal
-    final def models(t: Traversal): Boolean = traversal conformsTo t
+    final def models(t: Traversal): Boolean = traversal <:< t
 
     override def equals(that: Any) = equals(that.asInstanceOf[Rng[A]])
     override def toString = ToArrayListExpr(Expr(this)).eval.toString // TODO

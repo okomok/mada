@@ -18,11 +18,11 @@ case class EqualsExpr[A1, A2](_1: Expr[Rng[A1]], _2: Expr[Rng[A2]], _3: Expr[(A1
     override def _eval = {
         val z1 = _1.toLazy
         val z2 = _2.toLazy
-        z1.eval.traversal min z2.eval.traversal match {
-            case _: RandomAccessTraversal => {
+        z1.eval.traversal upper z2.eval.traversal match {
+            case RandomAccessTraversal => {
                 if (SizeExpr(z1).eval != SizeExpr(z2).eval) false else EqualsToExpr(z1, BeginExpr(z2), _3).eval
             }
-            case _: SinglePassTraversal => EqualsImpl(z1.eval, z2.eval, _3.eval)
+            case SinglePassTraversal => EqualsImpl(z1.eval, z2.eval, _3.eval)
         }
     }
 }

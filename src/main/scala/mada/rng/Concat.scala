@@ -30,7 +30,7 @@ class ConcatPointer[A](
     val firstR = firstR~.immutable.readonly
     val pR = pR~
     override def _read = if (inLeft) p1.read else p2.read
-    override def _traversal = p1.traversal min p2.traversal
+    override def _traversal = p1.traversal upper p2.traversal
     override def _equals(that: ConcatPointer[A]) = (p1 == that.p1) && (p2 == that.p2)
     override def _increment = ConcatPointerIncrement(p1,
     override def _clone = new NumberPointer(n)

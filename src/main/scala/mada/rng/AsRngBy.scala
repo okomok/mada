@@ -19,8 +19,8 @@ case class AsRngByExpr[A](_1: Expr[Rng[A]], _2: Expr[Traversal]) extends Expr[Rn
 
 object AsRngByImpl {
     def apply[A](r: Rng[A], t: Traversal): Rng[A] = {
-        Assert("requires compatible traversals", r.traversal conformsTo t)
-        if (t conformsTo r.traversal)
+        Assert("requires compatible traversals", r.traversal <:< t)
+        if (t <:< r.traversal)
             r
         else
             new AsRngByPointer(r.begin, t) <=< new AsRngByPointer(r.end, t)

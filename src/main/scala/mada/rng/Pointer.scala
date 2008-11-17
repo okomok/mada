@@ -53,7 +53,7 @@ trait Pointer[A] {
     final def output = PointerOutputImpl(this, (_: A))
     final def swap(that: Pointer[A]) = PointerSwapImpl(this, that)
     final def <=<(that: Pointer[A]) = new PointerRng(this, that)
-    final def cloneIn(t: Traversal): Pointer[A] = if (traversal conformsTo t) clone else this
+    final def cloneIn(t: Traversal): Pointer[A] = if (traversal <:< t) clone else this
 }
 
 

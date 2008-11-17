@@ -19,7 +19,7 @@ case class OffsetExpr[A](_1: Expr[Rng[A]], _2: Expr[Long], _3: Expr[Long]) exten
 
 object OffsetImpl {
     def apply[A](r: Rng[A], n1: Long, n2: Long): Rng[A] = {
-        Assert("requires ForwardRng", r models ForwardTraversal)
+        AssertModels(r, ForwardTraversal)
         Assert("too many offsets", Implies(r models RandomAccessTraversal, n1 <= SizeExpr(Expr(r)).eval + n2))
         Assert("requires BidirectionalRng", Implies(n1 < 0, r models BidirectionalTraversal))
         Assert("requires BidirectionalRng", Implies(n2 < 0, r models BidirectionalTraversal))

@@ -23,7 +23,7 @@ case class ReverseExpr[A](_1: Expr[Rng[A]]) extends Expr[Rng[A]] {
 
 object ReverseImpl {
     def apply[A](r: Rng[A]): Rng[A] = {
-        Assert("requires BidirectionalRng", r models BidirectionalTraversal)
+        AssertModels(r, BidirectionalTraversal)
         val (p, q) = (r.end, r.begin) // order matters!
         new ReversePointer(p) <=< new ReversePointer(q)
     }

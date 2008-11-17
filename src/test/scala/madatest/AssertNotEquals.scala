@@ -8,7 +8,7 @@ import junit.framework.AssertionFailedError
 
 object AssertNotEquals {
     private def _apply(message: String, unexpected: AnyRef, actual: AnyRef) {
-        var sb = new StringBuilder
+        val sb = new StringBuilder
         if (message ne null) {
             sb.append(message).append(' ')
         }

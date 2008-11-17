@@ -22,7 +22,7 @@ case class WindowExpr[A](_1: Expr[Rng[A]], _2: Expr[Long], _3: Expr[Long]) exten
 
 object WindowImpl {
     def apply[A](r: Rng[A], n: Long, m: Long): Rng[A] = {
-        Assert("requires ForwardRng", r models ForwardTraversal)
+        AssertModels(r, ForwardTraversal)
         Assert("requires n <= m", n <= m)
         Assert("requires BidirectionalRng", Implies(n < 0, r models BidirectionalTraversal))
 

@@ -34,7 +34,7 @@ object FilterImpl {
 class FilterPointer[A](override val _base: Pointer[A], val end: Pointer[A], val predicate: A => Boolean)
         extends PointerAdapter[A, A, FilterPointer[A]] {
     satisfy
-    override def _traversal = base.traversal min BidirectionalTraversal
+    override def _traversal = base.traversal upper BidirectionalTraversal
     override def _increment { base++/; satisfy }
     override def _clone = new FilterPointer(base.clone, end, predicate)
     override def _decrement { while (!predicate(*(base--/))) { } }

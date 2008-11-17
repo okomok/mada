@@ -3,28 +3,34 @@ package mada.rng
 
 
 trait Traversal {
-    def precedence: Int
-    def conformsTo(that: Traversal): Boolean = that.precedence <= precedence
-    def min(that: Traversal): Traversal = if (precedence < that.precedence) this else that
+    protected def bound: Int
+    final def <:<(that: Traversal): Boolean = bound <= that.bound
+    final def >:>(that: Traversal): Boolean = bound >= that.bound
+    final def lower(that: Traversal): Traversal = if (this <:< this) this else that
+    final def upper(that: Traversal): Traversal = if (this >:> that) this else that
 }
 
 
-class SinglePassTraversal extends Traversal {
-    override def precedence = 0
+sealed abstract class SinglePassTraversal extends Traversal {
+    override def bound = 0
+    override def toString = "SinglePassTraversal"
 }
 object SinglePassTraversal extends SinglePassTraversal
 
-class ForwardTraversal extends SinglePassTraversal {
-    override def precedence = 1
+sealed abstract class ForwardTraversal extends SinglePassTraversal {
+    override def bound = -1
+    override def toString = "ForwardTraversal"
 }
 object ForwardTraversal extends ForwardTraversal
 
-class BidirectionalTraversal extends ForwardTraversal {
-    override def precedence = 2
+sealed abstract class BidirectionalTraversal extends ForwardTraversal {
+    override def bound = -2
+    override def toString = "BidirectionalTraversal"
 }
 object BidirectionalTraversal extends BidirectionalTraversal
 
-class RandomAccessTraversal extends BidirectionalTraversal {
-    override def precedence = 3
+sealed abstract class RandomAccessTraversal extends BidirectionalTraversal {
+    override def bound = -3
+    override def toString = "RandomAccessTraversal"
 }
 object RandomAccessTraversal extends RandomAccessTraversal

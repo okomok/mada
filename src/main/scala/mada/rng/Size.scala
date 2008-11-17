@@ -19,7 +19,7 @@ case class SizeExpr[A](_1: Expr[Rng[A]]) extends Expr[Long] {
 
 object SizeImpl {
     def apply[A](r: Rng[A]): Long = {
-        Assert("requires RandomAccessRng", r models RandomAccessTraversal)
+        AssertModels(r, RandomAccessTraversal)
         r.end - r.begin
     }
 }
