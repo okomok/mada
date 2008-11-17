@@ -4,7 +4,7 @@ package madatest.rng
 
 import mada.Expr
 import mada.rng._
-import mada.rng.Conversions._
+import mada.rng.From._
 import mada.rng.FindPointerOf._
 import mada.rng.Find._
 import mada.rng.Exists._

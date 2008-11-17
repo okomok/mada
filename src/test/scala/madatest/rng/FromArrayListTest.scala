@@ -3,7 +3,7 @@ package madatest.rng
 
 
 import mada.rng.ArrayList
-import mada.rng.Conversions._
+import mada.rng.From._
 import junit.framework.Assert._
 
 

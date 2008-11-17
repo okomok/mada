@@ -5,8 +5,7 @@ package mada.rng
 object Conversions extends Conversions
 
 trait Conversions
-        extends From
-        with ArrayConversions
+        extends ArrayConversions
         with IntervalConversions
         with IteratorConversions
         with JclConversions

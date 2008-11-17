@@ -10,15 +10,15 @@ package mada.rng
 object IntervalConversions extends IntervalConversions
 
 trait IntervalConversions {
-    // Ideally, tuples should conform to Rng, but tuples are the same types after type-erasure.
-    // implicit def toMadaIntIntervalRngExpr(from: (Int, Int)) = FromIntIntervalExpr(Expr(from)).expr
-    // implicit def toMadaLongIntervalRngExpr(from: (Long, Long)) = FromLongIntervalExpr(Expr(from)).expr
+    // Ideally, (N, N) should conform to Rng, but tuples are the same types after type-erasure.
+    implicit def toMadaIntIntervalRngExpr(from: IntInterval) = FromIntIntervalExpr(Expr(from)).expr
+    implicit def toMadaLongIntervalRngExpr(from: LongInterval) = FromLongIntervalExpr(Expr(from)).expr
 }
 
 trait FromIntervalImpl {
     // Note by-name-parameters also are the same types after type-erasure.
-    def from(_1: Int, _2: Int) = FromIntIntervalExpr(Expr((_1, _2))).expr
-    def from(_1: Long, _2: Long) = FromLongIntervalExpr(Expr((_1, _2))).expr
+    def from(_1: Int, _2: Int) = FromIntIntervalExpr(Expr(IntInterval(_1, _2))).expr
+    def from(_1: Long, _2: Long) = FromLongIntervalExpr(Expr(LongInterval(_1, _2))).expr
 }
 
 
@@ -28,23 +28,23 @@ object IntervalToRng extends IntervalToRng
 
 trait IntervalToRng extends Predefs {
     // Int
-    class MadaRngIntIntervalToRng(_1: Expr[(Int, Int)]) {
+    class MadaRngIntIntervalToRng(_1: Expr[IntInterval]) {
         def toRng = FromIntIntervalExpr(_1).expr
     }
-    implicit def toMadaRngIntIntervalToRng(_1: Expr[(Int, Int)]) = new MadaRngIntIntervalToRng(_1)
+    implicit def toMadaRngIntIntervalToRng(_1: Expr[IntInterval]) = new MadaRngIntIntervalToRng(_1)
     // Long
-    class MadaRngLongIntervalToRng(_1: Expr[(Long, Long)]) {
+    class MadaRngLongIntervalToRng(_1: Expr[LongInterval]) {
         def toRng = FromLongIntervalExpr(_1).expr
     }
-    implicit def toMadaRngLongIntervalToRng(_1: Expr[(Long, Long)]) = new MadaRngLongIntervalToRng(_1)
+    implicit def toMadaRngLongIntervalToRng(_1: Expr[LongInterval]) = new MadaRngLongIntervalToRng(_1)
 }
 
 
 // Int
 
-trait IntRngExpr
+case class IntInterval(_1: Int, _2: Int)
 
-case class FromIntIntervalExpr(_1: Expr[(Int, Int)]) extends Expr[Rng[Int]] with IntRngExpr {
+case class FromIntIntervalExpr(_1: Expr[IntInterval]) extends Expr[Rng[Int]] {
     override def _eval = new IntIntervalPointer(_1.eval._1) <=< new IntIntervalPointer(_1.eval._2)
 }
 
@@ -55,9 +55,9 @@ class IntIntervalPointer(n: Int) extends IntervalPointer[Int](n) {
 
 // Long
 
-trait LongRngExpr
+case class LongInterval(_1: Long, _2: Long)
 
-case class FromLongIntervalExpr(_1: Expr[(Long, Long)]) extends Expr[Rng[Long]] with LongRngExpr {
+case class FromLongIntervalExpr(_1: Expr[LongInterval]) extends Expr[Rng[Long]] {
     override def _eval = new LongIntervalPointer(_1.eval._1) <=< new LongIntervalPointer(_1.eval._2)
 }
 

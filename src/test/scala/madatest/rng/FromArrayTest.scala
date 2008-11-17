@@ -3,7 +3,7 @@ package madatest.rng
 
 
 import mada.rng._
-import mada.rng.Conversions._
+import mada.rng.From._
 import mada.rng.ToArray._
 //import mada.rng.From._
 //import mada.rng.ArrayConversions._

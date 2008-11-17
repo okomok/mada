@@ -5,7 +5,7 @@ package madatest.rng
 import mada.rng._
 import mada.rng.Indirect._
 import mada.rng.Outdirect._
-import mada.rng.Conversions._
+import mada.rng.From._
 import junit.framework.Assert._
 
 
