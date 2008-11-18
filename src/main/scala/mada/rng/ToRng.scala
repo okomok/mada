@@ -9,4 +9,5 @@ trait ToRng
         with IntervalToRng
         with IteratorToRng
         with JclToRng
+        with SingleToRng
         with StringToRng

@@ -9,4 +9,5 @@ trait Conversions
         with IntervalConversions
         with IteratorConversions
         with JclConversions
+        with SingleConversions
         with StringConversions

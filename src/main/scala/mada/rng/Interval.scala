@@ -5,14 +5,33 @@ package mada.rng
 // Note: "x.AsInstanceOf[N] to x.toN" seems compile-time translation.
 
 
-//  Array[A] <-> Expr[Rng[A]]
+// Intervals
+
+object IntInterval {
+    def apply(_1: => Int, _2: => Int) = new IntInterval(_1, _2)
+}
+class IntInterval(a1: => Int, a2: => Int) {
+    def _1 = a1
+    def _2 = a2
+}
+
+object LongInterval {
+    def apply(_1: => Long, _2: => Long) = new LongInterval(_1, _2)
+}
+class LongInterval(a1: => Long, a2: => Long) {
+    def _1 = a1
+    def _2 = a2
+}
+
+
+//  Interval <-> Expr[Rng[A]]
 
 object IntervalConversions extends IntervalConversions
 
 trait IntervalConversions {
     // Ideally, (N, N) should conform to Rng, but tuples are the same types after type-erasure.
-    implicit def toMadaIntIntervalRngExpr(from: IntInterval) = FromIntIntervalExpr(Expr(from)).expr
-    implicit def toMadaLongIntervalRngExpr(from: LongInterval) = FromLongIntervalExpr(Expr(from)).expr
+    implicit def toMadaIntIntervalRngExpr(from: => IntInterval) = FromIntIntervalExpr(Expr(from)).expr
+    implicit def toMadaLongIntervalRngExpr(from: => LongInterval) = FromLongIntervalExpr(Expr(from)).expr
 }
 
 trait FromIntervalImpl {
@@ -42,8 +61,6 @@ trait IntervalToRng extends Predefs {
 
 // Int
 
-case class IntInterval(_1: Int, _2: Int)
-
 case class FromIntIntervalExpr(_1: Expr[IntInterval]) extends Expr[Rng[Int]] {
     override def _eval = new IntIntervalPointer(_1.eval._1) <=< new IntIntervalPointer(_1.eval._2)
 }
@@ -54,8 +71,6 @@ class IntIntervalPointer(n: Int) extends IntervalPointer[Int](n) {
 
 
 // Long
-
-case class LongInterval(_1: Long, _2: Long)
 
 case class FromLongIntervalExpr(_1: Expr[LongInterval]) extends Expr[Rng[Long]] {
     override def _eval = new LongIntervalPointer(_1.eval._1) <=< new LongIntervalPointer(_1.eval._2)
