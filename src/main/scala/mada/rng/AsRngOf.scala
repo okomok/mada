@@ -8,7 +8,7 @@ trait AsRngOf extends Predefs {
     class MadaRngAsRngOf[From](_1: Expr[Rng[From]]) {
         def asRngOf[To] = AsRngOfExpr[From, To](_1).expr
     }
-    implicit def toMadaRngAsRngOf[From](_1: Expr[Rng[From]]) = new MadaRngAsRngOf(_1)
+    implicit def toMadaRngAsRngOf[From](_1: Expr[Rng[From]]): MadaRngAsRngOf[From] = new MadaRngAsRngOf[From](_1)
 }
 
 

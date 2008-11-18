@@ -8,7 +8,7 @@ trait Window extends Predefs {
     class MadaRngWindow[A](_1: Expr[Rng[A]]) {
         def window(_2: Expr[Long], _3: Expr[Long]) = WindowExpr(_1, _2, _3).expr
     }
-    implicit def toMadaRngWindow[A](_1: Expr[Rng[A]]) = new MadaRngWindow(_1)
+    implicit def toMadaRngWindow[A](_1: Expr[Rng[A]]): MadaRngWindow[A] = new MadaRngWindow[A](_1)
 }
 
 

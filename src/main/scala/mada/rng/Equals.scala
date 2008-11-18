@@ -11,7 +11,7 @@ trait Equals extends Predefs {
         def equals[A2](_2: Expr[Rng[A2]], _3: Expr[(A1, A2) => Boolean]) = EqualsExpr(_1, _2, _3).expr
         def equals(_2: Expr[Rng[A1]]) = EqualsExpr(_1, _2, Expr((_: A1) == (_: A1))).expr
     }
-    implicit def toMadaRngEquals[A1](_1: Expr[Rng[A1]]) = new MadaRngEquals(_1)
+    implicit def toMadaRngEquals[A1](_1: Expr[Rng[A1]]): MadaRngEquals[A1] = new MadaRngEquals[A1](_1)
 }
 
 case class EqualsExpr[A1, A2](_1: Expr[Rng[A1]], _2: Expr[Rng[A2]], _3: Expr[(A1, A2) => Boolean]) extends Expr[Boolean] {
@@ -50,7 +50,7 @@ trait EqualsTo extends Predefs {
         def equals[A2](_2: Expr[Pointer[A2]], _3: Expr[(A1, A2) => Boolean]) = EqualsToExpr(_1, _2, _3).expr
         def equals(_2: Expr[Pointer[A1]]) = EqualsToExpr(_1, _2, Expr((_: A1) == (_: A1))).expr
     }
-    implicit def toMadaRngEqualsTo[A1](_1: Expr[Rng[A1]]) = new MadaRngEqualsTo(_1)
+    implicit def toMadaRngEqualsTo[A1](_1: Expr[Rng[A1]]): MadaRngEqualsTo[A1] = new MadaRngEqualsTo[A1](_1)
 }
 
 case class EqualsToExpr[A1, A2](_1: Expr[Rng[A1]], _2: Expr[Pointer[A2]], _3: Expr[(A1, A2) => Boolean]) extends Expr[Boolean] {

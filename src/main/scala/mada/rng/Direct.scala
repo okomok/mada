@@ -10,7 +10,7 @@ trait Indirect extends Predefs {
     class MadaRngIndirect[A](_1: Expr[Rng[Pointer[A]]]) {
         def indirect = IndirectExpr(_1).expr
     }
-    implicit def toMadaRngIndirect[A](_1: Expr[Rng[Pointer[A]]]) = new MadaRngIndirect(_1)
+    implicit def toMadaRngIndirect[A](_1: Expr[Rng[Pointer[A]]]): MadaRngIndirect[A] = new MadaRngIndirect[A](_1)
 }
 
 case class IndirectExpr[A](_1: Expr[Rng[Pointer[A]]]) extends Expr[Rng[A]] {
@@ -43,7 +43,7 @@ trait Outdirect extends Predefs {
     class MadaRngOutdirect[A](_1: Expr[Rng[A]]) {
         def outdirect = OutdirectExpr(_1).expr
     }
-    implicit def toMadaRngOutdirect[A](_1: Expr[Rng[A]]) = new MadaRngOutdirect(_1)
+    implicit def toMadaRngOutdirect[A](_1: Expr[Rng[A]]): MadaRngOutdirect[A] = new MadaRngOutdirect[A](_1)
 }
 
 case class OutdirectExpr[A](_1: Expr[Rng[A]]) extends Expr[Rng[Pointer[A]]] {

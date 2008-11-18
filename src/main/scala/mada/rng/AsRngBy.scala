@@ -8,7 +8,7 @@ trait AsRngBy extends Predefs {
     class MadaRngAsRngBy[A](_1: Expr[Rng[A]]) {
         def asRngBy(_2: Expr[Traversal]) = AsRngByExpr(_1, _2).expr
     }
-    implicit def toMadaRngAsRngBy[A](_1: Expr[Rng[A]]) = new MadaRngAsRngBy(_1)
+    implicit def toMadaRngAsRngBy[A](_1: Expr[Rng[A]]): MadaRngAsRngBy[A] = new MadaRngAsRngBy[A](_1)
 }
 
 

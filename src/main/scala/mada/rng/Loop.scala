@@ -8,7 +8,7 @@ trait Loop extends Predefs {
     class MadaRngLoop[A](_1: Expr[Rng[A]]) {
         def foreach(_2: Expr[A => Boolean]) = LoopExpr(_1, _2).expr
     }
-    implicit def toMadaRngLoop[A](_1: Expr[Rng[A]]) = new MadaRngLoop(_1)
+    implicit def toMadaRngLoop[A](_1: Expr[Rng[A]]): MadaRngLoop[A] = new MadaRngLoop[A](_1)
 }
 
 

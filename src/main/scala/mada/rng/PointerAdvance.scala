@@ -8,7 +8,7 @@ trait PointerAdvance extends Predefs {
     class MadaRngPointerAdvance[A](_1: Expr[Pointer[A]]) {
         def advance(_2: Expr[Long]) = PointerAdvanceExpr(_1, _2).expr
     }
-    implicit def toMadaRngPointerAdvance[A](_1: Expr[Pointer[A]]) = new MadaRngPointerAdvance(_1)
+    implicit def toMadaRngPointerAdvance[A](_1: Expr[Pointer[A]]): MadaRngPointerAdvance[A] = new MadaRngPointerAdvance[A](_1)
 }
 
 

@@ -6,8 +6,8 @@ object ToRng extends ToRng
 
 trait ToRng
         extends ArrayToRng
+        with CellToRng
         with IntervalToRng
         with IteratorToRng
         with JclToRng
-        with SingleToRng
         with StringToRng

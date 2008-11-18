@@ -8,7 +8,7 @@ trait Distance extends Predefs {
     class MadaRngDistance[A](_1: Expr[Rng[A]]) {
         def distance = DistanceExpr(_1).expr
     }
-    implicit def toMadaRngDistance[A](_1: Expr[Rng[A]]) = new MadaRngDistance(_1)
+    implicit def toMadaRngDistance[A](_1: Expr[Rng[A]]): MadaRngDistance[A] = new MadaRngDistance[A](_1)
 }
 
 

@@ -8,7 +8,7 @@ trait FoldLeft extends Predefs {
     class MadaRngFoldLeft[A](_1: Expr[Rng[A]]) {
         def foldLeft[B](_2: Expr[B], _3: Expr[(B, A) => B]) = FoldLeftExpr(_1, _2, _3).expr
     }
-    implicit def toMadaRngFoldLeft[A](_1: Expr[Rng[A]]) = new MadaRngFoldLeft(_1)
+    implicit def toMadaRngFoldLeft[A](_1: Expr[Rng[A]]): MadaRngFoldLeft[A] = new MadaRngFoldLeft[A](_1)
 }
 
 

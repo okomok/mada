@@ -7,7 +7,7 @@ package mada.rng
 object StringConversions
 
 trait StringConversions {
-    implicit def toMadaStringRngExpr(from: => String) = FromStringExpr(Expr(from)).expr
+    implicit def toMadaStringRngExpr(from: => String): Expr[Rng[Char]] = FromStringExpr(Expr(from)).expr
 //    implicit def fromMadaStringRngExpr(from: Expr[Rng[Char]]) = StringizeExpr(from).eval
 }
 
@@ -20,7 +20,7 @@ trait StringToRng extends Predefs {
     class MadaRngStringToRng(_1: Expr[String]) {
         def toRng = FromStringExpr(_1).expr
     }
-    implicit def toMadaRngStringToRng(_1: Expr[String]) = new MadaRngStringToRng(_1)
+    implicit def toMadaRngStringToRng(_1: Expr[String]): MadaRngStringToRng = new MadaRngStringToRng(_1)
 }
 
 case class FromStringExpr(_1: Expr[String]) extends Expr[Rng[Char]] {
@@ -52,7 +52,7 @@ trait Stringize extends Predefs {
     class MadaRngStringize(_1: Expr[Rng[Char]]) {
         def stringize = StringizeExpr(_1).expr
     }
-    implicit def toMadaRngStringize(_1: Expr[Rng[Char]]) = new MadaRngStringize(_1)
+    implicit def toMadaRngStringize(_1: Expr[Rng[Char]]): MadaRngStringize = new MadaRngStringize(_1)
 }
 
 case class StringizeExpr(_1: Expr[Rng[Char]]) extends Expr[String] {

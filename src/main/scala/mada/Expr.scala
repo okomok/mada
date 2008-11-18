@@ -47,7 +47,7 @@ case class ForwardExpr[A](_1: Expr[A]) extends Expr[A] {
 object ExprConversions extends ExprConversions
 
 trait ExprConversions {
-    implicit def toMadaExpr[A](e: => A) = Expr(e)
+    implicit def toMadaExpr[A](e: => A): ConstantExpr[A] = new ConstantExpr[A](e)
 }
 
 

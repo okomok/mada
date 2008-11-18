@@ -10,7 +10,7 @@ trait Find extends Predefs {
     class MadaRngFind[A](_1: Expr[Rng[A]]) {
         def find(_2: Expr[A => Boolean]) = FindExpr(_1, _2).expr
     }
-    implicit def toMadaRngFind[A](_1: Expr[Rng[A]]) = new MadaRngFind(_1)
+    implicit def toMadaRngFind[A](_1: Expr[Rng[A]]): MadaRngFind[A] = new MadaRngFind[A](_1)
 }
 
 case class FindExpr[A](_1: Expr[Rng[A]], _2: Expr[A => Boolean]) extends Expr[Option[A]] {
@@ -32,7 +32,7 @@ trait FindPointerOf extends Predefs {
     class MadaRngFindPointerOf[A](_1: Expr[Rng[A]]) {
         def findPointerOf(_2: Expr[A => Boolean]) = FindPointerOfExpr(_1, _2).expr
     }
-    implicit def toMadaRngFindPointerOf[A](_1: Expr[Rng[A]]) = new MadaRngFindPointerOf(_1)
+    implicit def toMadaRngFindPointerOf[A](_1: Expr[Rng[A]]): MadaRngFindPointerOf[A] = new MadaRngFindPointerOf[A](_1)
 }
 
 case class FindPointerOfExpr[A](_1: Expr[Rng[A]], _2: Expr[A => Boolean]) extends Expr[Pointer[A]] {

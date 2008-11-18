@@ -8,7 +8,7 @@ trait Map extends Predefs {
     class MadaRngMap[From](_1: Expr[Rng[From]]) {
         def map[To](_2: Expr[From => To]) = MapExpr(_1, _2).expr
     }
-    implicit def toMadaRngMap[From](_1: Expr[Rng[From]]) = new MadaRngMap(_1)
+    implicit def toMadaRngMap[From](_1: Expr[Rng[From]]): MadaRngMap[From] = new MadaRngMap[From](_1)
 }
 
 

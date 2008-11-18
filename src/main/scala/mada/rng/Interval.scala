@@ -30,8 +30,8 @@ object IntervalConversions extends IntervalConversions
 
 trait IntervalConversions {
     // Ideally, (N, N) should conform to Rng, but tuples are the same types after type-erasure.
-    implicit def toMadaIntIntervalRngExpr(from: => IntInterval) = FromIntIntervalExpr(Expr(from)).expr
-    implicit def toMadaLongIntervalRngExpr(from: => LongInterval) = FromLongIntervalExpr(Expr(from)).expr
+    implicit def toMadaIntIntervalRngExpr(from: => IntInterval): Expr[Rng[Int]] = FromIntIntervalExpr(Expr(from)).expr
+    implicit def toMadaLongIntervalRngExpr(from: => LongInterval): Expr[Rng[Long]] = FromLongIntervalExpr(Expr(from)).expr
 }
 
 trait FromIntervalImpl {
@@ -50,12 +50,12 @@ trait IntervalToRng extends Predefs {
     class MadaRngIntIntervalToRng(_1: Expr[IntInterval]) {
         def toRng = FromIntIntervalExpr(_1).expr
     }
-    implicit def toMadaRngIntIntervalToRng(_1: Expr[IntInterval]) = new MadaRngIntIntervalToRng(_1)
+    implicit def toMadaRngIntIntervalToRng(_1: Expr[IntInterval]): MadaRngIntIntervalToRng = new MadaRngIntIntervalToRng(_1)
     // Long
     class MadaRngLongIntervalToRng(_1: Expr[LongInterval]) {
         def toRng = FromLongIntervalExpr(_1).expr
     }
-    implicit def toMadaRngLongIntervalToRng(_1: Expr[LongInterval]) = new MadaRngLongIntervalToRng(_1)
+    implicit def toMadaRngLongIntervalToRng(_1: Expr[LongInterval]): MadaRngLongIntervalToRng = new MadaRngLongIntervalToRng(_1)
 }
 
 

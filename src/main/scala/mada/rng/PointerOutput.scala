@@ -8,7 +8,7 @@ trait PointerOutput extends Predefs {
     class MadaRngPointerOutput[A](_1: Expr[Pointer[A]]) {
         def output = PointerOutputExpr(_1).expr
     }
-    implicit def toMadaRngPointerOutput[A](_1: Expr[Pointer[A]]) = new MadaRngPointerOutput(_1)
+    implicit def toMadaRngPointerOutput[A](_1: Expr[Pointer[A]]): MadaRngPointerOutput[A] = new MadaRngPointerOutput[A](_1)
 }
 
 

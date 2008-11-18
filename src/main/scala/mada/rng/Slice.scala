@@ -8,7 +8,7 @@ trait Slice extends Predefs {
     class MadaRngSlice[A](_1: Expr[Rng[A]]) {
         def slice(_2: Expr[Long], _3: Expr[Long]) = SliceExpr(_1, _2, _3).expr
     }
-    implicit def toMadaRngSlice[A](_1: Expr[Rng[A]]) = new MadaRngSlice(_1)
+    implicit def toMadaRngSlice[A](_1: Expr[Rng[A]]): MadaRngSlice[A] = new MadaRngSlice[A](_1)
 }
 
 

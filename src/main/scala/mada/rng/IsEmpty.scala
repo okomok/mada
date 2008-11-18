@@ -8,7 +8,7 @@ trait IsEmpty extends Predefs {
     class MadaRngIsEmpty[A](_1: Expr[Rng[A]]) {
         def isEmpty = IsEmptyExpr(_1).expr
     }
-    implicit def toMadaRngIsEmpty[A](_1: Expr[Rng[A]]) = new MadaRngIsEmpty(_1)
+    implicit def toMadaRngIsEmpty[A](_1: Expr[Rng[A]]): MadaRngIsEmpty[A] = new MadaRngIsEmpty[A](_1)
 }
 
 

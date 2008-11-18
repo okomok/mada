@@ -7,7 +7,7 @@ package mada.rng
 object JclConversions extends JclConversions
 
 trait JclConversions {
-    implicit def toMadaArrayListRngExpr[A](from: => java.util.ArrayList[A]) = FromArrayListExpr(Expr(from)).expr
+    implicit def toMadaArrayListRngExpr[A](from: => java.util.ArrayList[A]): Expr[Rng[A]] = FromArrayListExpr(Expr(from)).expr
 //    implicit def fromMadaArrayListRngExpr[A](from: Expr[Rng[A]]) = ToArrayListExpr(from).eval
 }
 
@@ -24,7 +24,7 @@ trait ArrayListToRng extends Predefs {
     class MadaRngArrayListToRng[A](_1: Expr[java.util.ArrayList[A]]) {
         def toRng = FromArrayListExpr(_1).expr
     }
-    implicit def toMadaRngArrayListToRng[A](_1: Expr[java.util.ArrayList[A]]) = new MadaRngArrayListToRng(_1)
+    implicit def toMadaRngArrayListToRng[A](_1: Expr[java.util.ArrayList[A]]): MadaRngArrayListToRng[A] = new MadaRngArrayListToRng[A](_1)
 }
 
 case class FromArrayListExpr[A](_1: Expr[java.util.ArrayList[A]]) extends Expr[Rng[A]] {
@@ -57,7 +57,7 @@ trait ToArrayList extends Predefs {
     class MadaRngToArrayList[A](_1: Expr[Rng[A]]) {
         def toArrayList = ToArrayListExpr(_1).expr
     }
-    implicit def toMadaRngToArrayList[A](_1: Expr[Rng[A]]) = new MadaRngToArrayList(_1)
+    implicit def toMadaRngToArrayList[A](_1: Expr[Rng[A]]): MadaRngToArrayList[A] = new MadaRngToArrayList[A](_1)
 }
 
 case class ToArrayListExpr[A](_1: Expr[Rng[A]]) extends Expr[java.util.ArrayList[A]] {
