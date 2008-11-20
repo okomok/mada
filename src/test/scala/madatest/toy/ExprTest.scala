@@ -1,6 +1,6 @@
 
 
-package madatest.exprtoy
+package madatest.toy
 
 
 import junit.framework.Assert._

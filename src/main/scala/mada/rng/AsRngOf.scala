@@ -2,6 +2,9 @@
 package mada.rng
 
 
+import Map._
+
+
 object AsRngOf extends AsRngOf
 
 trait AsRngOf extends Predefs {
@@ -13,5 +16,5 @@ trait AsRngOf extends Predefs {
 
 
 case class AsRngOfExpr[From, To](_1: Expr[Rng[From]]) extends Expr[Rng[To]] {
-    override def _eval[U](c: Context[Rng[To], U]) = MapExpr(_1, Expr((_: From).asInstanceOf[To])).eval(c)
+    override def _eval[U](c: Context[Rng[To], U]) = _1.map((_: From).asInstanceOf[To]).eval(c)
 }
