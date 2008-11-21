@@ -4,9 +4,9 @@ package mada.rng
 
 //  String <-> Expr[Rng[Char]]
 
-object StringConversions
+object StringCompatible
 
-trait StringConversions {
+trait StringCompatible {
     implicit def toMadaStringRngExpr(from: => String): Expr[Rng[Char]] = FromStringExpr(Expr(from)).expr
     implicit def fromMadaStringRngExpr(from: Expr[Rng[Char]]): String = StringizeExpr(from).eval
 }

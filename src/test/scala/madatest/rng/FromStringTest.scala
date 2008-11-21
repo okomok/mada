@@ -3,6 +3,7 @@ package madatest.rng
 
 
 import mada.rng.From._
+import mada.rng.StringCompatible._
 import junit.framework.Assert._
 
 

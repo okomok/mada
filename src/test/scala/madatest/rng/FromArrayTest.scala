@@ -3,10 +3,9 @@ package madatest.rng
 
 
 import mada.rng._
+import mada.rng.ArrayCompatible._
 import mada.rng.From._
 import mada.rng.ToArray._
-//import mada.rng.From._
-//import mada.rng.ArrayConversions._
 import junit.framework.Assert._
 
 class FromArrayTest {
@@ -44,10 +43,7 @@ class FromArrayTest {
     }
 
     def testImplicit {
-//        import mada.rng.Rng._
-//        Array.range(0, 6).traversal
         from(Array('1','2','3')).rng_toArray.eval.deepMkString("abc")
         from(Array('1','2','3')).deepMkString("abc")
     }
 }
-

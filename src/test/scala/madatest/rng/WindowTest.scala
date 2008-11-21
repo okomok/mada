@@ -4,6 +4,7 @@ package madatest.rng
 
 import mada.NDebug
 import mada.rng.Window._
+import mada.rng.ArrayCompatible._
 import mada.rng.From._
 import junit.framework.Assert._
 

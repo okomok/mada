@@ -4,4 +4,6 @@ package mada.rng
 
 object Predefs extends Predefs
 
-trait Predefs extends Conversions with ExprConversions
+trait Predefs extends Traits
+        with ExprConversions
+        with DefaultCompatibles

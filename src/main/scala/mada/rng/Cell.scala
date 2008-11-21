@@ -4,10 +4,11 @@ package mada.rng
 
 //  Cell[A] <-> Expr[Rng[A]]
 
-object CellConversions extends CellConversions
+object CellCompatible extends CellCompatible
 
-trait CellConversions {
+trait CellCompatible {
     implicit def toMadaCellRngExpr[A](from: => Cell[A]): Expr[Rng[A]] = FromCellExpr(Expr(from)).expr
+    implicit def fromMadaCellRngExpr[A](from: Expr[Rng[A]]): Cell[A] = ToCellExpr(from).eval
 }
 
 

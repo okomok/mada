@@ -4,9 +4,9 @@ package mada.rng
 
 //  Array[A] <-> Expr[Rng[A]]
 
-object ArrayConversions extends ArrayConversions
+object ArrayCompatible extends ArrayCompatible
 
-trait ArrayConversions {
+trait ArrayCompatible {
     implicit def toMadaArrayRngExpr[A](from: => Array[A]): Expr[Rng[A]] = FromArrayExpr(Expr(from)).expr
     implicit def fromMadaArrayRngExpr[A](from: Expr[Rng[A]]): Array[A] = ToArrayExpr(from).eval
 }

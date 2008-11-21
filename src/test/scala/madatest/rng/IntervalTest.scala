@@ -10,6 +10,7 @@ import junit.framework.Assert._
 
 
 class IntervalTest {
+
     def testTrivial = {
         assertEquals(from(2, 5).eval, from(2, 5).eval)
         assertEquals(from(2L, 5L).eval, from(2L, 5L).eval)

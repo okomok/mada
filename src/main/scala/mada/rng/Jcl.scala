@@ -4,9 +4,9 @@ package mada.rng
 
 // Jcl <-> Expr[Rng[A]]
 
-object JclConversions extends JclConversions
+object JclCompatible extends JclCompatible
 
-trait JclConversions {
+trait JclCompatible {
     implicit def toMadaArrayListRngExpr[A](from: => java.util.ArrayList[A]): Expr[Rng[A]] = FromArrayListExpr(Expr(from)).expr
     implicit def fromMadaArrayListRngExpr[A](from: Expr[Rng[A]]): java.util.ArrayList[A] = ToArrayListExpr(from).eval
 }
