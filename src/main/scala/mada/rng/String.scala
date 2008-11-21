@@ -32,10 +32,7 @@ case class FromStringExpr(_1: Expr[String]) extends Expr[Rng[Char]] {
         case _ => forward.eval(c)
     }
 
-    private def forward = {
-        val ia = new StringIndexAccess(_1.eval).indexAccess
-        IndexAccessRngExpr(Expr(ia))
-    }
+    private def forward = IndexAccessRngExpr(new StringIndexAccess(_1.eval))
 }
 
 class StringIndexAccess(val base: String) extends IndexAccess[Char] {
@@ -60,7 +57,7 @@ case class StringizeExpr(_1: Expr[Rng[Char]]) extends Expr[String] {
         case FromStringExpr(x1) => x1.eval
         case _ => {
             val sb = new StringBuilder
-            ForeachExpr(_1, Expr(sb.append(_: Char))).eval
+            ForeachExpr(_1, sb.append(_: Char)).eval
             sb.toString
 
         }

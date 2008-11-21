@@ -30,13 +30,13 @@ case class FromIteratorExpr[A](_1: Expr[Iterator[A]]) extends Expr[Rng[A]] {
 }
 
 object FromIteratorImpl {
-    def apply[A](r: Iterator[A]): Rng[A] = {
-        new IteratorPointer(r, if (r.hasNext) Some(r.next) else None) <=<
-            new IteratorPointer(r, None)
+    def apply[A](it: Iterator[A]): Rng[A] = {
+        new IteratorPointer(it, if (it.hasNext) Some(it.next) else None) <=<
+            new IteratorPointer(it, None)
     }
 }
 
-class IteratorPointer[A](base: Iterator[A], private var e: Option[A])
+class IteratorPointer[A](val base: Iterator[A], private var e: Option[A])
         extends PointerFacade[A, IteratorPointer[A]] {
     override def _read = e.get
     override def _traversal = SinglePassTraversal

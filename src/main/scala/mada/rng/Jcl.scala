@@ -36,10 +36,7 @@ case class FromArrayListExpr[A](_1: Expr[java.util.ArrayList[A]]) extends Expr[R
         case _ => forward.eval(c)
     }
 
-    private def forward = {
-        val ia = new ArrayListIndexAccess(_1.eval).indexAccess
-        IndexAccessRngExpr(Expr(ia))
-    }
+    private def forward = IndexAccessRngExpr(new ArrayListIndexAccess(_1.eval))
 }
 
 class ArrayListIndexAccess[A](val base: java.util.ArrayList[A]) extends IndexAccess[A] {
@@ -70,7 +67,7 @@ case class ToArrayListExpr[A](_1: Expr[Rng[A]]) extends Expr[java.util.ArrayList
 object ToArrayListImpl {
     def apply[A](x: Expr[Rng[A]]): java.util.ArrayList[A] = {
         var a = newArrayList(x)
-        ForeachExpr(x, Expr({(e: A) => a.add(e)})).eval
+        ForeachExpr(x, a.add(_: A)).eval // {(e: A) => a.add(e)}).eval
         a
     }
 

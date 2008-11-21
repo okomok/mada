@@ -4,8 +4,8 @@ package mada.rng
 
 object ToRng extends ToRng
 
-trait ToRng
-        extends ArrayToRng
+trait ToRng extends Traits
+        with ArrayToRng
         with CellToRng
         with IntervalToRng
         with IteratorToRng

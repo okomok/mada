@@ -10,10 +10,9 @@ trait IndexAccess[A] {
 }
 
 
-case class IndexAccessRngExpr[A](_1: Expr[IndexAccess[A]]) extends Expr[Rng[A]] {
+case class IndexAccessRngExpr[A](_1: IndexAccess[A]) extends Expr[Rng[A]] {
     override def _eval = {
-        val ia = _1.eval
-        new IndexAccessPointer(ia, 0) <=< new IndexAccessPointer(ia, ia._size)
+        new IndexAccessPointer(_1, 0) <=< new IndexAccessPointer(_1, _1._size)
     }
 }
 

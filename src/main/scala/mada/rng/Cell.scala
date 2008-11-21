@@ -32,10 +32,7 @@ case class FromCellExpr[A](_1: Expr[Cell[A]]) extends Expr[Rng[A]] {
         case _ => forward.eval(c)
     }
 
-    private def forward = {
-        val ia = new CellIndexAccess(_1.eval.elem).indexAccess
-        IndexAccessRngExpr(Expr(ia))
-    }
+    private def forward = IndexAccessRngExpr(new CellIndexAccess(_1.eval.elem))
 }
 
 class CellIndexAccess[A](val base: A) extends IndexAccess[A] {

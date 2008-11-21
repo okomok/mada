@@ -6,16 +6,16 @@ object Map extends Map
 
 trait Map extends Predefs {
     class MadaRngMap[From](_1: Expr[Rng[From]]) {
-        def rng_map[To](_2: Expr[From => To]) = MapExpr(_1, _2).expr
+        def rng_map[To](_2: From => To) = MapExpr(_1, _2).expr
     }
     implicit def toMadaRngMap[From](_1: Expr[Rng[From]]): MadaRngMap[From] = new MadaRngMap[From](_1)
 }
 
 
-case class MapExpr[From, To](_1: Expr[Rng[From]], _2: Expr[From => To]) extends Expr[Rng[To]] {
+case class MapExpr[From, To](_1: Expr[Rng[From]], _2: From => To) extends Expr[Rng[To]] {
     override def _eval = _1 match {
-        case MapExpr(x1, x2) => MapImpl(x1.eval, _2.eval compose x2.eval) // map-map fusion
-        case _ => MapImpl(_1.eval, _2.eval)
+        case MapExpr(x1, x2) => MapImpl(x1.eval, _2 compose x2) // map-map fusion
+        case _ => MapImpl(_1.eval, _2)
     }
 }
 

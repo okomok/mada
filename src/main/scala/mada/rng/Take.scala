@@ -8,15 +8,15 @@ object Take extends Take
 
 trait Take extends Predefs {
     class MadaRngTake[A](_1: Expr[Rng[A]]) {
-        def rng_take(_2: Expr[Long]) = TakeExpr(_1, _2).expr
+        def rng_take(_2: Long) = TakeExpr(_1, _2).expr
     }
     implicit def toMadaRngTake[A](_1: Expr[Rng[A]]): MadaRngTake[A] = new MadaRngTake[A](_1)
 }
 
-case class TakeExpr[A](_1: Expr[Rng[A]], _2: Expr[Long]) extends Expr[Rng[A]] {
+case class TakeExpr[A](_1: Expr[Rng[A]], _2: Long) extends Expr[Rng[A]] {
     override def _eval = _1 match {
-        case TakeExpr(x1, x2) => TakeImpl(x1.eval, x2.eval + _2.eval)
-        case _ => TakeImpl(_1.eval, _2.eval)
+        case TakeExpr(x1, x2) => TakeImpl(x1.eval, x2 + _2)
+        case _ => TakeImpl(_1.eval, _2)
     }
 }
 
@@ -50,13 +50,13 @@ object TakeWhile extends TakeWhile
 
 trait TakeWhile extends Predefs {
     class MadaRngTakeWhile[A](_1: Expr[Rng[A]]) {
-        def rng_takeWhile(_2: Expr[A => Boolean]) = TakeWhileExpr(_1, _2).expr
+        def rng_takeWhile(_2: A => Boolean) = TakeWhileExpr(_1, _2).expr
     }
     implicit def toMadaRngTakeWhile[A](_1: Expr[Rng[A]]): MadaRngTakeWhile[A] = new MadaRngTakeWhile[A](_1)
 }
 
-case class TakeWhileExpr[A](_1: Expr[Rng[A]], _2: Expr[A => Boolean]) extends Expr[Rng[A]] {
-    override def _eval = TakeWhileImpl(_1.eval, _2.eval)
+case class TakeWhileExpr[A](_1: Expr[Rng[A]], _2: A => Boolean) extends Expr[Rng[A]] {
+    override def _eval = TakeWhileImpl(_1.eval, _2)
 }
 
 object TakeWhileImpl {

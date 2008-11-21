@@ -32,10 +32,7 @@ case class FromArrayExpr[A](_1: Expr[Array[A]]) extends Expr[Rng[A]] {
         case _ => forward.eval(c)
     }
 
-    private def forward = {
-        val ia = new ArrayIndexAccess(_1.eval).indexAccess
-        IndexAccessRngExpr(Expr(ia))
-    }
+    private def forward = IndexAccessRngExpr(new ArrayIndexAccess(_1.eval))
 }
 
 class ArrayIndexAccess[A](val base: Array[A]) extends IndexAccess[A] {
@@ -72,7 +69,7 @@ object ToArrayImpl {
     private def inForward[A](x: Expr[Rng[A]]): Array[A] = {
         val a = new Array[A](DistanceExpr(x).eval.toInt)
         var i = 0
-        ForeachExpr(x, Expr({(e: A) => a(i) = e; i = i + 1})).eval
+        ForeachExpr(x, {(e: A) => a(i) = e; i = i + 1}).eval
         a
     }
 }

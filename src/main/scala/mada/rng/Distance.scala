@@ -17,7 +17,7 @@ case class DistanceExpr[A](_1: Expr[Rng[A]]) extends Expr[Long] {
         val z1 = _1.toLazy
         z1.eval.traversal match {
             case RandomAccessTraversal => SizeExpr(z1).eval
-            case SinglePassTraversal => FoldLeftExpr(z1, Expr(0: Long), Expr({ (b: Long, a: A) => b + 1 })).eval
+            case SinglePassTraversal => FoldLeftExpr(z1, 0L, { (b: Long, a: A) => b + 1 }).eval
         }
     }
 }
