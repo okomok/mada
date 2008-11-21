@@ -6,7 +6,7 @@ object Permutation extends Permutation
 
 trait Permutation extends Predefs {
     class MadaRngPermutation[A](_1: Expr[Rng[A]]) {
-        def permutation(_2: Expr[Rng[Long]]) = PermutationExpr(_1, _2).expr
+        def rng_permutation(_2: Expr[Rng[Long]]) = PermutationExpr(_1, _2).expr
     }
     implicit def toMadaRngPermutation[A](_1: Expr[Rng[A]]): MadaRngPermutation[A] = new MadaRngPermutation[A](_1)
 }

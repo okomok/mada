@@ -8,7 +8,7 @@ object StringConversions
 
 trait StringConversions {
     implicit def toMadaStringRngExpr(from: => String): Expr[Rng[Char]] = FromStringExpr(Expr(from)).expr
-//    implicit def fromMadaStringRngExpr(from: Expr[Rng[Char]]) = StringizeExpr(from).eval
+    implicit def fromMadaStringRngExpr(from: Expr[Rng[Char]]): String = StringizeExpr(from).eval
 }
 
 
@@ -50,7 +50,7 @@ object Stringize extends Stringize
 
 trait Stringize extends Predefs {
     class MadaRngStringize(_1: Expr[Rng[Char]]) {
-        def stringize = StringizeExpr(_1).expr
+        def rng_stringize = StringizeExpr(_1).expr
     }
     implicit def toMadaRngStringize(_1: Expr[Rng[Char]]): MadaRngStringize = new MadaRngStringize(_1)
 }

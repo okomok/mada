@@ -6,7 +6,7 @@ object Size extends Size
 
 trait Size extends Predefs {
     class MadaRngSize[A](_1: Expr[Rng[A]]) {
-        def size = SizeExpr(_1).expr
+        def rng_size = SizeExpr(_1).expr
     }
     implicit def toMadaRngSize[A](_1: Expr[Rng[A]]): MadaRngSize[A] = new MadaRngSize[A](_1)
 }

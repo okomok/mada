@@ -7,7 +7,7 @@ package mada.rng
 
 trait IteratorConversions {
     implicit def toMadaIteratorRngExpr[A](from: => Iterator[A]): Expr[Rng[A]] = FromIteratorExpr(Expr(from)).expr
-//    implicit def fromMadaIteratorRngExpr[A](from: Expr[Rng[A]]) = ToIteratorExpr(from).eval
+    implicit def fromMadaIteratorRngExpr[A](from: Expr[Rng[A]]): Iterator[A] = ToIteratorExpr(from).eval
 }
 
 
@@ -51,7 +51,7 @@ object ToIterator extends ToIterator
 
 trait ToIterator extends Predefs {
     class MadaRngToIterator[A](_1: Expr[Rng[A]]) {
-        def toIterator = ToIteratorExpr(_1).expr
+        def rng_toIterator = ToIteratorExpr(_1).expr
     }
     implicit def toMadaRngToIterator[A](_1: Expr[Rng[A]]): MadaRngToIterator[A] = new MadaRngToIterator[A](_1)
 }

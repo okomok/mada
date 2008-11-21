@@ -8,7 +8,7 @@ object Drop extends Drop
 
 trait Drop extends Predefs {
     class MadaRngDrop[A](_1: Expr[Rng[A]]) {
-        def drop(_2: Expr[Long]) = DropExpr(_1, _2).expr
+        def rng_drop(_2: Expr[Long]) = DropExpr(_1, _2).expr
     }
     implicit def toMadaRngDrop[A](_1: Expr[Rng[A]]): MadaRngDrop[A] = new MadaRngDrop[A](_1)
 }
@@ -44,7 +44,7 @@ object DropWhile extends DropWhile
 
 trait DropWhile extends Predefs {
     class MadaRngDropWhile[A](_1: Expr[Rng[A]]) {
-        def dropWhile(_2: Expr[A => Boolean]) = DropWhileExpr(_1, _2).expr
+        def rng_dropWhile(_2: Expr[A => Boolean]) = DropWhileExpr(_1, _2).expr
     }
     implicit def toMadaRngDropWhile[A](_1: Expr[Rng[A]]): MadaRngDropWhile[A] = new MadaRngDropWhile[A](_1)
 }

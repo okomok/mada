@@ -6,7 +6,7 @@ object Copy extends Copy
 
 trait Copy extends Predefs {
     class MadaRngCopy[A](_1: Expr[Rng[A]]) {
-        def copy = CopyExpr(_1).expr
+        def rng_copy = CopyExpr(_1).expr
     }
     implicit def toMadaRngCopy[A](_1: Expr[Rng[A]]): MadaRngCopy[A] = new MadaRngCopy[A](_1)
 }

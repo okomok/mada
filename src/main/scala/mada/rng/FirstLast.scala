@@ -8,7 +8,7 @@ object First extends First
 
 trait First extends Predefs {
     class MadaRngFirst[A](_1: Expr[Rng[A]]) {
-        def first = FirstExpr(_1).expr
+        def rng_first = FirstExpr(_1).expr
     }
     implicit def toMadaRngFirst[A](_1: Expr[Rng[A]]): MadaRngFirst[A] = new MadaRngFirst[A](_1)
 }
@@ -31,7 +31,7 @@ object Last extends Last
 
 trait Last extends Predefs {
     class MadaRngLast[A](_1: Expr[Rng[A]]) {
-        def last = LastExpr(_1).expr
+        def rng_last = LastExpr(_1).expr
     }
     implicit def toMadaRngLast[A](_1: Expr[Rng[A]]): MadaRngLast[A] = new MadaRngLast[A](_1)
 }

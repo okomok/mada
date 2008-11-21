@@ -8,7 +8,7 @@ object ArrayConversions extends ArrayConversions
 
 trait ArrayConversions {
     implicit def toMadaArrayRngExpr[A](from: => Array[A]): Expr[Rng[A]] = FromArrayExpr(Expr(from)).expr
-//    implicit def fromMadaArrayRngExpr[A](from: Expr[Rng[A]]) = ToArrayExpr(from).eval
+    implicit def fromMadaArrayRngExpr[A](from: Expr[Rng[A]]): Array[A] = ToArrayExpr(from).eval
 }
 
 
@@ -51,7 +51,7 @@ object ToArray extends ToArray
 
 trait ToArray extends Predefs {
     class MadaRngToArray[A](_1: Expr[Rng[A]]) {
-        def toArray = ToArrayExpr(_1).expr
+        def rng_toArray = ToArrayExpr(_1).expr
     }
     implicit def toMadaRngToArray[A](_1: Expr[Rng[A]]): MadaRngToArray[A] = new MadaRngToArray[A](_1)
 }

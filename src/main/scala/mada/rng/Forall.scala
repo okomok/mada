@@ -6,7 +6,7 @@ object Forall extends Forall
 
 trait Forall extends Predefs {
     class MadaRngForall[A](_1: Expr[Rng[A]]) {
-        def forall(_2: Expr[A => Boolean]) = ForallExpr(_1, _2).expr
+        def rng_forall(_2: Expr[A => Boolean]) = ForallExpr(_1, _2).expr
     }
     implicit def toMadaRngForall[A](_1: Expr[Rng[A]]): MadaRngForall[A] = new MadaRngForall[A](_1)
 }

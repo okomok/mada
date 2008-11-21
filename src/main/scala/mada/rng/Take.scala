@@ -8,7 +8,7 @@ object Take extends Take
 
 trait Take extends Predefs {
     class MadaRngTake[A](_1: Expr[Rng[A]]) {
-        def take(_2: Expr[Long]) = TakeExpr(_1, _2).expr
+        def rng_take(_2: Expr[Long]) = TakeExpr(_1, _2).expr
     }
     implicit def toMadaRngTake[A](_1: Expr[Rng[A]]): MadaRngTake[A] = new MadaRngTake[A](_1)
 }
@@ -50,7 +50,7 @@ object TakeWhile extends TakeWhile
 
 trait TakeWhile extends Predefs {
     class MadaRngTakeWhile[A](_1: Expr[Rng[A]]) {
-        def take(_2: Expr[A => Boolean]) = TakeWhileExpr(_1, _2).expr
+        def rng_takeWhile(_2: Expr[A => Boolean]) = TakeWhileExpr(_1, _2).expr
     }
     implicit def toMadaRngTakeWhile[A](_1: Expr[Rng[A]]): MadaRngTakeWhile[A] = new MadaRngTakeWhile[A](_1)
 }

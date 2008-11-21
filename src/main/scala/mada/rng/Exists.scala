@@ -6,7 +6,7 @@ object Exists extends Exists
 
 trait Exists extends Predefs {
     class MadaRngExists[A](_1: Expr[Rng[A]]) {
-        def exists(_2: Expr[A => Boolean]) = ExistsExpr(_1, _2).expr
+        def rng_exists(_2: Expr[A => Boolean]) = ExistsExpr(_1, _2).expr
     }
     implicit def toMadaRngExists[A](_1: Expr[Rng[A]]): MadaRngExists[A] = new MadaRngExists[A](_1)
 }

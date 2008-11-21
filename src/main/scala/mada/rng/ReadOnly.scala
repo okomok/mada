@@ -6,7 +6,7 @@ object ReadOnly extends ReadOnly
 
 trait ReadOnly extends Predefs {
     class MadaRngReadOnly[A](_1: Expr[Rng[A]]) {
-        def readOnly = ReadOnlyExpr(_1).expr
+        def rng_readOnly = ReadOnlyExpr(_1).expr
     }
     implicit def toMadaRngReadOnly[A](_1: Expr[Rng[A]]): MadaRngReadOnly[A] = new MadaRngReadOnly[A](_1)
 }

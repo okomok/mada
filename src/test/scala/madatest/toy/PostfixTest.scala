@@ -8,6 +8,8 @@ import junit.framework.Assert._
 // See: Techniques for Embedding Postfix Languages in Haskell
 //      at http://www.eecs.usma.edu/webs/people/okasaki/pubs.html
 
+// Hmm, scala's eta-expansion is too weak.
+
 
 object Stack {
     object Empty extends Empty
@@ -39,9 +41,6 @@ class StackTest {
     def testTrivial {
         assertEquals(11, only (addInt (push (6) (push (5) (Empty)))))
         assertEquals(11, Empty -- (push (5)) -- (push (6)) -- (addInt[Empty]) -- only[Int])
-        // 1 :: 2 :: 3 :: null
-        // 1 :: (2:: (3:: null))
-        // null.::(3).::(2).::(1)
     }
 }
 

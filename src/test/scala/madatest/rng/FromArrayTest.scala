@@ -46,7 +46,8 @@ class FromArrayTest {
     def testImplicit {
 //        import mada.rng.Rng._
 //        Array.range(0, 6).traversal
-        from(Array('1','2','3')).toArray.eval.deepMkString("abc")
+        from(Array('1','2','3')).rng_toArray.eval.deepMkString("abc")
+        from(Array('1','2','3')).deepMkString("abc")
     }
 }
 
