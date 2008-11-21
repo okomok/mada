@@ -49,7 +49,7 @@ object ToCell extends ToCell
 
 trait ToCell extends Predefs {
     class MadaRngToCell[A](_1: Expr[Rng[A]]) {
-        def toCell = ToCellExpr(_1).expr
+        def rng_toCell = ToCellExpr(_1).expr
     }
     implicit def toMadaRngToCell[A](_1: Expr[Rng[A]]): MadaRngToCell[A] = new MadaRngToCell[A](_1)
 }

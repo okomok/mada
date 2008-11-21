@@ -8,7 +8,7 @@ object Begin extends Begin
 
 trait Begin extends Predefs {
     class MadaRngBegin[A](_1: Expr[Rng[A]]) {
-        def begin = BeginExpr(_1).expr
+        def rng_begin = BeginExpr(_1).expr
     }
     implicit def toMadaRngBegin[A](_1: Expr[Rng[A]]): MadaRngBegin[A] = new MadaRngBegin[A](_1)
 }
@@ -24,7 +24,7 @@ object End extends End
 
 trait End extends Predefs {
     class MadaRngEnd[A](_1: Expr[Rng[A]]) {
-        def end = EndExpr(_1).expr
+        def rng_end = EndExpr(_1).expr
     }
     implicit def toMadaRngEnd[A](_1: Expr[Rng[A]]): MadaRngEnd[A] = new MadaRngEnd[A](_1)
 }

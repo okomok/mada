@@ -67,5 +67,5 @@ class RngIterator[A](val base: Rng[A]) extends Iterator[A] {
     private val p = base.begin
     private val q = base.end
     override def hasNext = p != q
-    override def next = { p++/; p.read }
+    override def next = { p.pre_++; p.read }
 }

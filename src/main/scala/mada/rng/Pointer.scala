@@ -16,19 +16,19 @@ trait Pointer[A] {
 // single-pass
     protected def _increment { throw new ErrorNotSinglePass(this) }
 //  override def equals(that: Any): Boolean
-    final def ++/ : Pointer[A] = { _increment; this }
+    final def pre_++ : Pointer[A] = { _increment; this }
 
 // forward
     protected def _clone: Pointer[A] = { throw new ErrorNotForward(this) }
     protected def _hashCode: Int = { throw new ErrorNotForward(this) }
     override final def clone: Pointer[A] = _clone
     override final def hashCode = _hashCode
-    final def ++ : Pointer[A] = { val tmp = clone; this++/; tmp }
+    final def ++ : Pointer[A] = { val tmp = clone; pre_++; tmp }
 
 // bidirectional
     protected def _decrement { throw new ErrorNotBidirectional(this) }
-    final def --/ : Pointer[A] = { _decrement; this }
-    final def -- : Pointer[A] = { val tmp = clone; this--/; tmp }
+    final def pre_-- : Pointer[A] = { _decrement; this }
+    final def -- : Pointer[A] = { val tmp = clone; pre_--; tmp }
 
 // random-access
     protected def _offset(d: Long) { throw new ErrorNotRandomAccess(this) }
@@ -63,11 +63,11 @@ object * {
 }
 
 object ++ {
-    def apply[A](p: Pointer[A]): Pointer[A] = p++/
+    def apply[A](p: Pointer[A]): Pointer[A] = p.pre_++
 }
 
 object -- {
-    def apply[A](p: Pointer[A]): Pointer[A] = p--/
+    def apply[A](p: Pointer[A]): Pointer[A] = p.pre_--
 }
 
 

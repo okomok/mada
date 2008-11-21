@@ -1,0 +1,5 @@
+
+package mada
+
+
+trait Traits

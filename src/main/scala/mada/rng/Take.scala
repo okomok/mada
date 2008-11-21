@@ -31,7 +31,7 @@ class TakePointer[A](override val _base: Pointer[A], val end: Pointer[A], var co
         extends PointerAdapter[A, A, TakeWhilePointer[A]] {
     countDown
     override def _traversal = base.traversal upper ForwardTraversal
-    override def _increment { base++/; countDown }
+    override def _increment { base.pre_++; countDown }
     override def _clone = new TakePointer(base.clone, end, count)
 
     private def countDown {
@@ -70,7 +70,7 @@ class TakeWhilePointer[A](override val _base: Pointer[A], val end: Pointer[A], v
         extends PointerAdapter[A, A, TakeWhilePointer[A]] {
     countDown
     override def _traversal = base.traversal upper ForwardTraversal
-    override def _increment { base++/; countDown }
+    override def _increment { base.pre_++; countDown }
     override def _clone = new TakeWhilePointer(base.clone, end, predicate)
 
     private def countDown {
