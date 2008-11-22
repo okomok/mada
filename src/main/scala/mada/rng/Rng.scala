@@ -2,6 +2,11 @@
 package mada.rng
 
 
+import Equals._
+import From._
+import ToArrayList._
+
+
 object Rng extends Traits
         with ToArray
         with AsRngBy
@@ -46,8 +51,8 @@ trait Rng[A] {
     final def models(t: Traversal): Boolean = traversal <:< t
 
     override def equals(that: Any) = equals(that.asInstanceOf[Rng[A]])
-    def equals(that: Rng[A]) = EqualsImpl[A, A](this, that, _ == _)
-    override def toString = ToArrayListExpr(Expr(this)).eval.toString // TODO
+    def equals(that: Rng[A]) = from(this).rng_equals(that).eval
+    override def toString = from(this).rng_toArrayList.eval.toString // TODO
 
     final def rng = this
 }

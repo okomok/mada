@@ -19,7 +19,7 @@ case class FirstExpr[A](_1: Expr[Rng[A]]) extends Expr[A] {
 
 object FirstImpl {
     def apply[A](r: Rng[A]): A = {
-        Assert("out of Rng", !IsEmptyImpl(r))
+        AssertNotEmpty(r)
         *(r.begin)
     }
 }
@@ -42,8 +42,25 @@ case class LastExpr[A](_1: Expr[Rng[A]]) extends Expr[A] {
 
 object LastImpl {
     def apply[A](r: Rng[A]): A = {
-        AssertModels(r, BidirectionalTraversal)
-        Assert("out of Rng", !IsEmptyImpl(r))
-        *(--(r.end))
+        AssertNotEmpty(r)
+        r.traversal match {
+            case BidirectionalTraversal => *(--(r.end))
+            // case ForwardTraversal => inForward(r)
+            case SinglePassTraversal => inSinglePass(r)
+        }
+    }
+
+    private def inForward[A](r: Rng[A]): A = {
+        val (p, q) = (r.begin, r.end)
+        var p_ = p.clone
+        while (++(p) != q) { p_ = p.clone }
+        *(p_)
+    }
+
+    private def inSinglePass[A](r: Rng[A]): A = {
+        val (p, q) = (r.begin, r.end)
+        var e = *(p)
+        while (++(p) != q) { e = *(p) }
+        e
     }
 }

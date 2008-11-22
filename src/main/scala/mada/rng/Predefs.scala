@@ -5,5 +5,6 @@ package mada.rng
 object Predefs extends Predefs
 
 trait Predefs extends Traits
-//        with ExprConversions
-        with DefaultCompatibles
+        with DefaultCompatibles {
+    implicit def toMadaRngExpr[A](r: Rng[A]): Expr[Rng[A]] = Expr(r)
+}

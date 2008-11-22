@@ -50,8 +50,8 @@ trait Pointer[A] {
 
 // utilities
     final def advance(d: Long) = PointerAdvanceImpl(this, d)
-    final def output = PointerOutputImpl(this, (_: A))
-    final def swap(that: Pointer[A]) = PointerSwapImpl(this, that)
+    final def output: A => Pointer[A] = { (e: A) => write(e); pre_++ }
+    final def swap(that: Pointer[A]) = detail.PointerSwap(this, that)
     final def <=<(that: Pointer[A]) = new PointerRng(this, that)
     final def cloneIn(t: Traversal): Pointer[A] = if (traversal <:< t) clone else this
 }
