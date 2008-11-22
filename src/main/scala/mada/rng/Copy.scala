@@ -13,5 +13,5 @@ trait Copy extends Predefs {
 
 
 case class CopyExpr[A](_1: Expr[Rng[A]]) extends Expr[Rng[A]] {
-    override def _eval = FromArrayListExpr(ToArrayListExpr(_1)).eval
+    override def _eval[U](c: Context[Rng[A], U]) = FromArrayListExpr(ToArrayListExpr(_1)).eval(c)
 }
