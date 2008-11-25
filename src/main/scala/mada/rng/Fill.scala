@@ -17,5 +17,5 @@ trait Fill extends Predefs {
 
 
 case class FillExpr[A, B <: A](_1: Expr[Rng[A]], _2: B) extends Expr[Unit] {
-    override def _eval = _1.rng_outdirect.rng_foreach(*(_) = _2).eval
+    override def _eval[U](c: Context[Unit, U]) = _1.rng_outdirect.rng_foreach(*(_) = _2).eval(c)
 }
