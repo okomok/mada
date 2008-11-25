@@ -49,7 +49,7 @@ trait Pointer[A] {
     protected def _invariant { }
 
 // utilities
-    final def advance(d: Long) = PointerAdvanceImpl(this, d)
+    final def advance(d: Long) = detail.PointerAdvance(this, d)
     final def output: A => Pointer[A] = { (e: A) => write(e); pre_++ }
     final def swap(that: Pointer[A]) = detail.PointerSwap(this, that)
     final def <=<(that: Pointer[A]) = new PointerRng(this, that)
