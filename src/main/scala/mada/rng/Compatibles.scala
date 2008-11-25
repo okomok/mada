@@ -10,6 +10,7 @@ trait DefaultCompatibles extends Traits
         with IntervalCompatible
         with IteratorCompatible
         with JclCompatible
+        with ListCompatible
         with StringCompatible
 
 

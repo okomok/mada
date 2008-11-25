@@ -2,6 +2,8 @@
 package mada.rng
 
 
+import Copy._
+import Distance._
 import Foreach._
 
 
@@ -17,7 +19,7 @@ trait ArrayCompatible {
 
 // toRng
 
-object ArrayToRng
+object ArrayToRng extends ArrayToRng
 
 trait ArrayToRng extends Predefs {
     class MadaRngArrayToRng[A](_1: Expr[Array[A]]) {
@@ -66,11 +68,11 @@ case class ToArrayExpr[A](_1: Expr[Rng[A]]) extends Expr[Array[A]] {
 object ToArrayImpl {
     def apply[A](x: Expr[Rng[A]]): Array[A] = x.eval.traversal match {
         case ForwardTraversal => inForward(x)
-        case SinglePassTraversal => inForward(CopyExpr(x))
+        case SinglePassTraversal => inForward(x.rng_copy)
     }
 
     private def inForward[A](x: Expr[Rng[A]]): Array[A] = {
-        val a = new Array[A](DistanceExpr(x).eval.toInt)
+        val a = new Array[A](x.rng_distance.eval.toInt)
         var i = 0
         x.rng_foreach({ (e: A) => a(i) = e; i = i + 1 }).eval
         a

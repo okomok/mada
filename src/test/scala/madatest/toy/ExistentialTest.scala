@@ -29,4 +29,9 @@ class ExistentialTest {
     def testTrivial {
         assertEquals("1fooc", xsToString)
     }
+
+    trait Expr[A]
+    class Val[A](a: A) extends Expr[A]
+    class ApplyImpl[A, B](x: Expr[B => A], y: Expr[B]) extends Expr[A]
+    type Apply[A] = ApplyImpl[A, _]
 }
