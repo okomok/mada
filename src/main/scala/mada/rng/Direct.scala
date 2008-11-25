@@ -47,14 +47,13 @@ trait Outdirect extends Predefs {
 }
 
 case class OutdirectExpr[A](_1: Expr[Rng[A]]) extends Expr[Rng[Pointer[A]]] {
-    override def _eval[U](c: Context[Rng[Pointer[A]], U]): U = c match {
-        case DefaultContext => evalDefault
-        case LoopContext(f) => OutdirectLoopImpl(_1.eval, f) // loop-outdirect fusion
-        case _ => super._eval(c)
-    }
-    private def evalDefault = _1 match {
+    override def _eval = _1 match {
         case IndirectExpr(x1) => x1.eval // outdirect-indirect fusion
         case _ => OutdirectImpl(_1.eval)
+    }
+    override def _eval[U](c: Context[Rng[Pointer[A]], U]): U = c match {
+        case LoopContext(f) => OutdirectLoopImpl(_1.eval, f) // loop-outdirect fusion
+        case _ => super._eval(c)
     }
 }
 

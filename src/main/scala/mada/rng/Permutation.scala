@@ -29,5 +29,6 @@ object PermutationImpl {
 class PermutationPointer[A](override val _base: Pointer[Long], val elementsBegin: Pointer[A])
         extends PointerAdapter[Long, A, PermutationPointer[A]] {
     override def _read = *(elementsBegin + *(base))
+    override def _write(e: A) { *(elementsBegin + *(base)) = e }
     override def _clone = new PermutationPointer(base.clone, elementsBegin)
 }

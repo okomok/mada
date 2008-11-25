@@ -29,8 +29,12 @@ trait ListToRng extends Predefs {
 case class FromListExpr[A](_1: Expr[List[A]]) extends Expr[Rng[A]] {
     override def _eval = _1 match {
         case ToListExpr(x1) => x1.eval
-        case _ => new ListPointer(_1.eval) <=< new ListPointer(Nil)
+        case _ => FromListImpl(_1.eval)
     }
+}
+
+object FromListImpl {
+    def apply[A](l: List[A]): Rng[A] = new ListPointer(l) <=< new ListPointer(Nil)
 }
 
 class ListPointer[A](var base: List[A]) extends PointerFacade[A, ListPointer[A]] {

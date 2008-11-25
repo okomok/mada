@@ -2,6 +2,9 @@
 package mada.rng
 
 
+import Loop._
+
+
 object Find extends Find
 
 trait Find extends Predefs {
@@ -16,7 +19,7 @@ case class FindExpr[A](_1: Expr[Rng[A]], _2: A => Boolean) extends Expr[Option[A
     override def _eval = {
         val acc = new Ref[Option[A]](None)
         // Prefer Loop to FindPointerOf so a fusion is enabled.
-        LoopExpr(_1, { (e: A) => if (_2(e)) { acc := Some(e); false } else true }).eval
+        _1.rng_loop({ (e: A) => if (_2(e)) { acc := Some(e); false } else true }).eval
         acc.deref
     }
 }
