@@ -12,6 +12,7 @@ trait EqualsTo extends Predefs {
     implicit def toMadaRngEqualsTo[A1](_1: Expr[Rng[A1]]): MadaRngEqualsTo[A1] = new MadaRngEqualsTo[A1](_1)
 }
 
+
 case class EqualsToExpr[A1, A2](_1: Expr[Rng[A1]], _2: Expr[Pointer[A2]], _3: (A1, A2) => Boolean) extends Expr[Boolean] {
     override def _eval = {
         val z1 = _1.toLazy

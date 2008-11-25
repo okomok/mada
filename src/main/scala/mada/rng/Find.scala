@@ -11,6 +11,7 @@ trait Find extends Predefs {
     implicit def toMadaRngFind[A](_1: Expr[Rng[A]]): MadaRngFind[A] = new MadaRngFind[A](_1)
 }
 
+
 case class FindExpr[A](_1: Expr[Rng[A]], _2: A => Boolean) extends Expr[Option[A]] {
     override def _eval = {
         val acc = new Ref[Option[A]](None)

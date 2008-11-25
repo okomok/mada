@@ -12,6 +12,7 @@ trait Equals extends Predefs {
     implicit def toMadaRngEquals[A1](_1: Expr[Rng[A1]]): MadaRngEquals[A1] = new MadaRngEquals[A1](_1)
 }
 
+
 case class EqualsExpr[A1, A2](_1: Expr[Rng[A1]], _2: Expr[Rng[A2]], _3: (A1, A2) => Boolean) extends Expr[Boolean] {
     override def _eval = {
         val z1 = _1.toLazy
@@ -24,6 +25,7 @@ case class EqualsExpr[A1, A2](_1: Expr[Rng[A1]], _2: Expr[Rng[A2]], _3: (A1, A2)
         }
     }
 }
+
 
 object EqualsImpl {
     def apply[A1, A2](r1: Rng[A1], r2: Rng[A2], f: (A1, A2) => Boolean): Boolean = {
