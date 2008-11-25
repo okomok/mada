@@ -2,6 +2,9 @@
 package mada.rng
 
 
+import Foreach._
+
+
 //  String <-> Expr[Rng[Char]]
 
 object StringCompatible
@@ -57,9 +60,8 @@ case class StringizeExpr(_1: Expr[Rng[Char]]) extends Expr[String] {
         case FromStringExpr(x1) => x1.eval
         case _ => {
             val sb = new StringBuilder
-            ForeachExpr(_1, sb.append(_: Char)).eval
+            _1.rng_foreach(sb.append(_)).eval
             sb.toString
-
         }
     }
 }

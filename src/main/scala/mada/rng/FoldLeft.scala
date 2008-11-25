@@ -2,6 +2,9 @@
 package mada.rng
 
 
+import Foreach._
+
+
 object FoldLeft extends FoldLeft
 
 trait FoldLeft extends Predefs {
@@ -15,7 +18,7 @@ trait FoldLeft extends Predefs {
 case class FoldLeftExpr[A, B](_1: Expr[Rng[A]], _2: B, _3: (B, A) => B) extends Expr[B] {
     override def _eval = {
         val acc = new Ref(_2)
-        ForeachExpr(_1, acc := _3(acc.deref, (_: A))).eval
+        _1.rng_foreach(acc := _3(acc.deref, _)).eval
         acc.deref
     }
 }

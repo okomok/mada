@@ -2,6 +2,9 @@
 package mada.rng
 
 
+import Foreach._
+
+
 object CopyTo extends CopyTo
 
 trait CopyTo extends Predefs {
@@ -15,7 +18,7 @@ trait CopyTo extends Predefs {
 case class CopyToExpr[From, To >: From](_1: Expr[Rng[From]], _2: Expr[Pointer[To]]) extends Expr[Pointer[To]] {
     override def _eval = {
         val p = _2.eval
-        ForeachExpr(AsRngOfExpr[From, To](_1), p.output).eval
+        _1.rng_foreach(p.output).eval
         p
     }
 }

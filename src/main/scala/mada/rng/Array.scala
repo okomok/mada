@@ -2,6 +2,9 @@
 package mada.rng
 
 
+import Foreach._
+
+
 //  Array[A] <-> Expr[Rng[A]]
 
 object ArrayCompatible extends ArrayCompatible
@@ -69,7 +72,7 @@ object ToArrayImpl {
     private def inForward[A](x: Expr[Rng[A]]): Array[A] = {
         val a = new Array[A](DistanceExpr(x).eval.toInt)
         var i = 0
-        ForeachExpr(x, {(e: A) => a(i) = e; i = i + 1}).eval
+        x.rng_foreach({ (e: A) => a(i) = e; i = i + 1 }).eval
         a
     }
 }
