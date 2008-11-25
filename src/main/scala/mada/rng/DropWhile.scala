@@ -2,6 +2,10 @@
 package mada.rng
 
 
+import End._
+import FindPointerOf._
+
+
 object DropWhile extends DropWhile
 
 trait DropWhile extends Predefs {
@@ -14,7 +18,7 @@ trait DropWhile extends Predefs {
 
 case class DropWhileExpr[A](_1: Expr[Rng[A]], _2: A => Boolean) extends Expr[Rng[A]] {
     override def _eval = {
-        val x1 = _1.toLazy
-        FindPointerOfExpr(x1, !_2(_: A)).eval <=< EndExpr(x1).eval
+        val z1 = _1.toLazy
+        z1.rng_findPointerOf(!_2(_)).eval <=< z1.rng_end.eval
     }
 }

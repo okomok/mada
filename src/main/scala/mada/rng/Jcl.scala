@@ -20,6 +20,8 @@ trait JclToRng
 
 // toRng
 
+object ArrayListToRng extends ArrayListToRng
+
 trait ArrayListToRng extends Predefs {
     class MadaRngArrayListToRng[A](_1: Expr[java.util.ArrayList[A]]) {
         def toRng = FromArrayListExpr(_1).expr

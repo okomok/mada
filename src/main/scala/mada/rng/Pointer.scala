@@ -2,6 +2,9 @@
 package mada.rng
 
 
+import PointerAdvance._
+
+
 trait Pointer[A] {
 // element-access
     protected def _read: A = { throw new ErrorNotReadable(this) }
@@ -49,11 +52,12 @@ trait Pointer[A] {
     protected def _invariant { }
 
 // utilities
-    final def advance(d: Long) = detail.PointerAdvance(this, d)
+    final def advance(d: Long) = toExpr.ptr_advance(d).eval
     final def output: A => Pointer[A] = { (e: A) => write(e); pre_++ }
     final def swap(that: Pointer[A]) = detail.PointerSwap(this, that)
     final def <=<(that: Pointer[A]) = new PointerRng(this, that)
     final def cloneIn(t: Traversal): Pointer[A] = if (traversal <:< t) clone else this
+    final def toExpr = Expr(this)
 }
 
 

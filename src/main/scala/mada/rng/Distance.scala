@@ -2,6 +2,10 @@
 package mada.rng
 
 
+import FoldLeft._
+import Size._
+
+
 object Distance extends Distance
 
 trait Distance extends Predefs {
@@ -16,8 +20,8 @@ case class DistanceExpr[A](_1: Expr[Rng[A]]) extends Expr[Long] {
     override def _eval = {
         val z1 = _1.toLazy
         z1.eval.traversal match {
-            case RandomAccessTraversal => SizeExpr(z1).eval
-            case SinglePassTraversal => FoldLeftExpr(z1, 0L, { (b: Long, a: A) => b + 1 }).eval
+            case RandomAccessTraversal => z1.rng_size.eval
+            case SinglePassTraversal => z1.rng_foldLeft(0L, { (b: Long, a: A) => b + 1 }).eval
         }
     }
 }

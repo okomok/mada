@@ -2,6 +2,10 @@
 package mada.rng
 
 
+import ArrayListToRng._
+import ToArrayList._
+
+
 object Copy extends Copy
 
 trait Copy extends Predefs {
@@ -13,5 +17,5 @@ trait Copy extends Predefs {
 
 
 case class CopyExpr[A](_1: Expr[Rng[A]]) extends Expr[Rng[A]] {
-    override def _eval[U](c: Context[Rng[A], U]) = FromArrayListExpr(ToArrayListExpr(_1)).eval(c)
+    override def _eval[U](c: Context[Rng[A], U]) = _1.rng_toArrayList.toRng.eval(c)
 }

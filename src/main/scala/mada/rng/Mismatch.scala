@@ -7,7 +7,7 @@ object Mismatch extends Mismatch
 trait Mismatch extends Predefs {
     class MadaRngMismatch[A1](_1: Expr[Rng[A1]]) {
         def rng_mismatch[A2](_2: Expr[Pointer[A2]], _3: (A1, A2) => Boolean) = MismatchExpr(_1, _2, _3).expr
-        def rng_mismatch(_2: Expr[Pointer[A1]]) = MismatchExpr(_1, _2, (_: A1) == (_: A1)).expr
+        def rng_mismatch(_2: Expr[Pointer[A1]]) = MismatchExpr[A1, A1](_1, _2, _ == _).expr
     }
     implicit def toMadaRngMismatch[A1](_1: Expr[Rng[A1]]): MadaRngMismatch[A1] = new MadaRngMismatch[A1](_1)
 }
