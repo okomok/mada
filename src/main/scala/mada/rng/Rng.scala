@@ -4,7 +4,6 @@ package mada.rng
 
 import Equals._
 import From._
-import ShallowCopy._
 import ShallowEquals._
 import ToArrayList._
 
@@ -41,7 +40,6 @@ object Rng extends Traits
         with Permutation
         with ReadOnly
         with Reverse
-        with ShallowCopy
         with ShallowEquals
         with Size
         with Slice
@@ -64,7 +62,6 @@ trait Rng[A] {
 
     final def equals(that: Rng[A]) = toExpr.rng_equals(that).eval
     final def shallowEquals(that: Rng[A]) = toExpr.rng_shallowEquals(that).eval
-    final def shallowCopy = toExpr.rng_shallowCopy.eval
 
     final def rng = this
     final def toExpr = Expr(this)

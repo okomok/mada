@@ -8,41 +8,23 @@ import junit.framework.Assert._
 
 class SortTest {
     def expected = from(Array(0, 0, 4, 4, 6, 8,11,12,13,14,15,17,18,19,23)).eval
-    def example = Array (0,18,14,17,19, 8,13, 6, 4,23, 0,12,15,11, 4)
+    def example =  from(Array(0,18,14,17,19, 8,13, 6, 4,23, 0,12,15,11, 4)).eval
 
     def testSelection {
-        val a = example
-        SelectionSort(from(a).eval)
-        assertEquals(expected, from(a).eval)
+        val r = example
+        SelectionSort(r)
+        assertEquals(expected, r)
     }
 
     def testBubble {
-        val a = example
-        BubbleSort(from(a).eval)
-        assertEquals(expected, from(a).eval)
+        val r = example
+        BubbleSort(r)
+        assertEquals(expected, r)
     }
 
     def testComb {
-        val a = example
-        CombSort(from(a).eval)
-        assertEquals(expected, from(a).eval)
-    }
-
-    def testSelectionShallowCopy {
-        val r = from(example).eval
-        SelectionSort(r.shallowCopy)
-        assertEquals(expected, r)
-    }
-
-    def testBubbleShallowCopy {
-        val r = from(example).eval
-        BubbleSort(r.shallowCopy)
-        assertEquals(expected, r)
-    }
-
-    def testCombShallowCopy {
-        val r = from(example).eval
-        CombSort(r.shallowCopy)
+        val r = example
+        CombSort(r)
         assertEquals(expected, r)
     }
 }

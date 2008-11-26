@@ -67,6 +67,7 @@ case class FromIntIntervalExpr(_1: Expr[IntInterval]) extends Expr[Rng[Int]] {
 
 class IntIntervalPointer(n: Int) extends IntervalPointer[Int](n) {
     override def _read = base.toInt
+    override def _copy = new IntIntervalPointer(base.toInt)
 }
 
 
@@ -78,16 +79,16 @@ case class FromLongIntervalExpr(_1: Expr[LongInterval]) extends Expr[Rng[Long]] 
 
 class LongIntervalPointer(n: Long) extends IntervalPointer[Long](n) {
     override def _read = base
+    override def _copy = new LongIntervalPointer(base)
 }
 
 
 // IntervalPointer
 
-class IntervalPointer[N](var base: Long) extends PointerFacade[N, IntervalPointer[N]] {
+abstract class IntervalPointer[N](var base: Long) extends PointerFacade[N, IntervalPointer[N]] {
     override def _traversal = RandomAccessTraversal
     override def _equals(that: IntervalPointer[N]) = base == that.base
     override def _increment { base = base + 1 }
-    override def _copy = new IntervalPointer[N](base)
     override def _decrement { base = base - 1 }
     override def _offset(d: Long) { base = base + d }
     override def _difference(that: IntervalPointer[N]) = base - that.base
