@@ -42,8 +42,8 @@ class ListPointer[A](var base: List[A]) extends PointerFacade[A, ListPointer[A]]
     override def _traversal = ForwardTraversal
     override def _equals(that: ListPointer[A]) = base eq that.base
     override def _increment { base = base.tail }
-    override def _clone = new ListPointer[A](base)
-    override def _hashCode = base.hashCode
+    override def _copy = new ListPointer[A](base)
+    override def hashCode = base.hashCode
 }
 
 

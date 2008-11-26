@@ -30,5 +30,5 @@ class MapPointer[From, To](override val _base: Pointer[From], val function: From
         extends PointerAdapter[From, To, MapPointer[From, To]] {
     override def _read = function(*(base))
     override def _write(e: To) { throw new ErrorNotWritable(this) }
-    override def _clone = new MapPointer(base.clone, function)
+    override def _copy = new MapPointer(base.copy, function)
 }

@@ -31,7 +31,7 @@ class IndirectPointer[A](override val _base: Pointer[Pointer[A]])
         extends PointerAdapter[Pointer[A], A, IndirectPointer[A]] {
     override def _read = *(*(base))
     override def _write(e: A) { *(*(base)) = e }
-    override def _clone = new IndirectPointer[A](base.clone)
+    override def _copy = new IndirectPointer[A](base.copy)
 }
 
 
@@ -68,7 +68,7 @@ class OutdirectPointer[A](override val _base: Pointer[A])
         extends PointerAdapter[A, Pointer[A], OutdirectPointer[A]] {
     override def _read = base
     override def _write(e: Pointer[A]) { throw new ErrorNotWritable(this) }
-    override def _clone = new OutdirectPointer(base.clone)
+    override def _copy = new OutdirectPointer(base.copy)
 }
 
 object OutdirectLoopImpl {

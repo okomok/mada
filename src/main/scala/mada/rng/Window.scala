@@ -27,6 +27,6 @@ object WindowImpl {
         Assert("requires BidirectionalRng", Implies(n < 0, r models BidirectionalTraversal))
 
         val p = r.begin.advance(n)
-        p <=< p.clone.advance(m - n)
+        p <=< p.copy.advance(m - n)
     }
 }

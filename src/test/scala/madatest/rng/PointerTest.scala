@@ -34,8 +34,8 @@ object WritablePointerTest {
 
 object ForwardReadablePointerTest {
     def apply[T](iv: (Pointer[T], T), jv: (Pointer[T], T)) {
-        val i2 = iv._1.clone
-        val i3 = iv._1.clone
+        val i2 = iv._1.copy
+        val i3 = iv._1.copy
         assertEquals(i2, i3)
         AssertNotEquals(iv._1, jv._1)
         AssertNotEquals(i2, jv._1)
@@ -56,12 +56,12 @@ object ForwardReadablePointerTest {
 object BidirectionalReadablePointerTest {
     // Preconditions: *(i) == v1, *(++(i)) == v2
     def apply[A](i: Pointer[A], v1: A, v2: A) {
-        val j = i.clone
+        val j = i.copy
         ++(j)
         ForwardReadablePointerTest((i, v1), (j, v2))
         ++(i)
 
-        val i1 = i.clone; val i2 = i.clone
+        val i1 = i.copy; val i2 = i.copy
 
         assertEquals(i, i1--)
         AssertNotEquals(i, --(i2))
@@ -86,7 +86,7 @@ object BidirectionalReadablePointerTest {
 object RandomAccessReadablePointerTest {
     def apply[A](i: Pointer[A], n: Int, vals: Array[A]) {
         BidirectionalReadablePointerTest(i, vals(0), vals(1))
-        val j = i.clone
+        val j = i.copy
 
         var c = 0
         while (c < n-1) {

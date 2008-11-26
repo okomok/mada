@@ -18,20 +18,18 @@ trait Pointer[A] {
 
 // single-pass
     protected def _increment { throw new ErrorNotSinglePass(this) }
-//  override def equals(that: Any): Boolean
+    // override def equals(that: Any): Boolean
     final def pre_++ : Pointer[A] = { _increment; this }
 
 // forward
-    protected def _clone: Pointer[A] = { throw new ErrorNotForward(this) }
-    protected def _hashCode: Int = { throw new ErrorNotForward(this) }
-    override final def clone: Pointer[A] = _clone
-    override final def hashCode = _hashCode
-    final def ++ : Pointer[A] = { val tmp = clone; pre_++; tmp }
+    protected def _copy: Pointer[A] = { throw new ErrorNotForward(this) }
+    final def copy: Pointer[A] = _copy
+    final def ++ : Pointer[A] = { val tmp = copy; pre_++; tmp }
 
 // bidirectional
     protected def _decrement { throw new ErrorNotBidirectional(this) }
     final def pre_-- : Pointer[A] = { _decrement; this }
-    final def -- : Pointer[A] = { val tmp = clone; pre_--; tmp }
+    final def -- : Pointer[A] = { val tmp = copy; pre_--; tmp }
 
 // random-access
     protected def _offset(d: Long) { throw new ErrorNotRandomAccess(this) }
@@ -39,8 +37,8 @@ trait Pointer[A] {
     final def - (that: Pointer[A]): Long = _difference_(that)
     final def +=(d: Long): Pointer[A] = { _offset(d); this }
     final def -=(d: Long): Pointer[A] = this += (-d)
-    final def + (d: Long): Pointer[A] = clone += d
-    final def - (d: Long): Pointer[A] = clone -= d
+    final def + (d: Long): Pointer[A] = copy += d
+    final def - (d: Long): Pointer[A] = copy -= d
     final def < (that: Pointer[A]): Boolean = this - that < 0
     final def > (that: Pointer[A]): Boolean = this - that > 0
     final def <= (that: Pointer[A]): Boolean = this - that <= 0
@@ -56,7 +54,7 @@ trait Pointer[A] {
     final def output: A => Pointer[A] = { (e: A) => write(e); pre_++ }
     final def swap(that: Pointer[A]) { val tmp = *(this); *(this) = *(that); *(that) = tmp }
     final def <=<(that: Pointer[A]) = new PointerRng(this, that)
-    final def cloneIn(t: Traversal): Pointer[A] = if (traversal <:< t) clone else this
+    final def copyIn(t: Traversal): Pointer[A] = if (traversal <:< t) copy else this
     final def toExpr = Expr(this)
 }
 

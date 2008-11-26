@@ -2,8 +2,8 @@
 package mada.rng
 
 
-import Copy._
 import Distance._
+import Force._
 import Foreach._
 
 
@@ -68,7 +68,7 @@ case class ToArrayExpr[A](_1: Expr[Rng[A]]) extends Expr[Array[A]] {
 object ToArrayImpl {
     def apply[A](x: Expr[Rng[A]]): Array[A] = x.eval.traversal match {
         case ForwardTraversal => inForward(x)
-        case SinglePassTraversal => inForward(x.rng_copy)
+        case SinglePassTraversal => inForward(x.rng_force)
     }
 
     private def inForward[A](x: Expr[Rng[A]]): Array[A] = {

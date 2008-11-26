@@ -14,7 +14,7 @@ object CombSort {
         if (gap < 1L)
             return
 
-        val p2 = q.clone
+        val p2 = q.copy
         var swapped = false
         do {
             var newgap = (gap * 10L + 3L) / 13L
@@ -25,7 +25,7 @@ object CombSort {
             gap = newgap
             swapped = false
 
-            val (target1, target2) = (p.clone, p2.clone)
+            val (target1, target2) = (p.copy, p2.copy)
             while (target2 != q) {
                 if (f(*(target2), *(target1))) {
                     target1 swap target2

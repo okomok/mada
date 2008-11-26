@@ -29,7 +29,7 @@ class TakeWhilePointer[A](override val _base: Pointer[A], val end: Pointer[A], v
     countDown
     override def _traversal = base.traversal upper ForwardTraversal
     override def _increment { base.pre_++; countDown }
-    override def _clone = new TakeWhilePointer(base.clone, end, predicate)
+    override def _copy = new TakeWhilePointer(base.copy, end, predicate)
 
     private def countDown {
         if (base == end)

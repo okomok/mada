@@ -29,7 +29,7 @@ class IndexAccessPointer[A](val indexAccess: IndexAccess[A], val startIndex: Lon
             case ErrorNotWritableIndexAccess => throw new ErrorNotWritable(this)
         }
     }
-    override def _clone = new IndexAccessPointer(indexAccess, *(base))
+    override def _copy = new IndexAccessPointer(indexAccess, *(base))
 }
 
 object ErrorNotWritableIndexAccess extends UnsupportedOperationException

@@ -14,7 +14,6 @@ object Rng extends Traits
         with Begin with End
         with ToCell
         with Compatibles
-        with Copy
         with CopyTo
         with Indirect with Outdirect
         with Distance
@@ -29,6 +28,7 @@ object Rng extends Traits
         with First with Last
         with FoldLeft
         with Forall
+        with Force
         with Foreach
         with From
         with IsEmpty

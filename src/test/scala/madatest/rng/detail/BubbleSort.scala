@@ -12,8 +12,8 @@ object BubbleSort {
 
         var swapped = false
         do {
-            val curr = p.clone
-            val next = curr.clone
+            val curr = p.copy
+            val next = curr.copy
             ++(next)
             swapped = false
             while (next != q) {

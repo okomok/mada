@@ -33,11 +33,11 @@ class ConcatPointer[A](
     override def _traversal = p1.traversal upper p2.traversal
     override def _equals(that: ConcatPointer[A]) = (p1 == that.p1) && (p2 == that.p2)
     override def _increment = ConcatPointerIncrement(p1,
-    override def _clone = new NumberPointer(n)
-    override def _hashCode = n.toInt // BUGBUG
+    override def _copy = new NumberPointer(n)
     override def _decrement = n = n - 1
     override def _offset(d: Long) = n += d
     override def _difference(that: NumberPointer) = n - that.n
+    override def hashCode = n.toInt // BUGBUG
 
     private def inLeft = p1 != q1
 }

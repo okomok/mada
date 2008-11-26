@@ -52,8 +52,8 @@ object LastImpl {
 
     private def inForward[A](r: Rng[A]): A = {
         val (p, q) = (r.begin, r.end)
-        var p_ = p.clone
-        while (++(p) != q) { p_ = p.clone }
+        var p_ = p.copy
+        while (++(p) != q) { p_ = p.copy }
         *(p_)
     }
 

@@ -32,7 +32,7 @@ class TakePointer[A](override val _base: Pointer[A], val end: Pointer[A], var co
     countDown
     override def _traversal = base.traversal upper ForwardTraversal
     override def _increment { base.pre_++; countDown }
-    override def _clone = new TakePointer(base.clone, end, count)
+    override def _copy = new TakePointer(base.copy, end, count)
 
     private def countDown {
         if (base == end)

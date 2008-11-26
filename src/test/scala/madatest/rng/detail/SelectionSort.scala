@@ -25,14 +25,14 @@ object SelectionSort {
 
 object MinElement {
     def apply[A](pp: Pointer[A], q: Pointer[A], f: (A, A) => Boolean): Pointer[A] = {
-        val p = pp.clone
+        val p = pp.copy
 
         if (p == q)
             return p
 
-        var t = p.clone
+        var t = p.copy
         while (++(p) != q) {
-            if (f(*(p), *(t))) { t = p.clone }
+            if (f(*(p), *(t))) { t = p.copy }
         }
 
         t
