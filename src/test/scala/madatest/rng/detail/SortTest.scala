@@ -27,4 +27,22 @@ class SortTest {
         CombSort(from(a).eval)
         assertEquals(expected, from(a).eval)
     }
+
+    def testSelectionShallowCopy {
+        val r = from(example).eval
+        SelectionSort(r.shallowCopy)
+        assertEquals(expected, r)
+    }
+
+    def testBubbleShallowCopy {
+        val r = from(example).eval
+        BubbleSort(r.shallowCopy)
+        assertEquals(expected, r)
+    }
+
+    def testCombShallowCopy {
+        val r = from(example).eval
+        CombSort(r.shallowCopy)
+        assertEquals(expected, r)
+    }
 }
