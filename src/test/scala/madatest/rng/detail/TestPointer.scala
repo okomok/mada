@@ -11,54 +11,54 @@
 //
 
 
-package madatest.rng
+package madatest.rng.detail
 
 
 import mada.rng._;
 import junit.framework.Assert._
 
 
-object ReadablePointerTest {
+object TestReadablePointer {
     def apply[T](i1: Pointer[T], v: T) {
         assertEquals(*(i1), v)
     }
 }
 
 
-object WritablePointerTest {
+object TestWritablePointer {
     def apply[T](i1: Pointer[T], v: T) {
         *(i1) = v
     }
 }
 
 
-object ForwardReadablePointerTest {
+object TestForwardReadablePointer {
     def apply[T](iv: (Pointer[T], T), jv: (Pointer[T], T)) {
         val i2 = iv._1.copy
         val i3 = iv._1.copy
         assertEquals(i2, i3)
         AssertNotEquals(iv._1, jv._1)
         AssertNotEquals(i2, jv._1)
-        ReadablePointerTest(iv._1, iv._2)
-        ReadablePointerTest(i2, iv._2)
-        ReadablePointerTest(i3, iv._2)
+        TestReadablePointer(iv._1, iv._2)
+        TestReadablePointer(i2, iv._2)
+        TestReadablePointer(i3, iv._2)
 
         assertEquals(iv._1, i2++)
         AssertNotEquals(iv._1, ++(i3))
 
-        ReadablePointerTest(i2, jv._2)
-        ReadablePointerTest(i3, jv._2)
-        ReadablePointerTest(iv._1, iv._2)
+        TestReadablePointer(i2, jv._2)
+        TestReadablePointer(i3, jv._2)
+        TestReadablePointer(iv._1, iv._2)
     }
 }
 
 
-object BidirectionalReadablePointerTest {
+object TestBidirectionalReadablePointer {
     // Preconditions: *(i) == v1, *(++(i)) == v2
     def apply[A](i: Pointer[A], v1: A, v2: A) {
         val j = i.copy
         ++(j)
-        ForwardReadablePointerTest((i, v1), (j, v2))
+        TestForwardReadablePointer((i, v1), (j, v2))
         ++(i)
 
         val i1 = i.copy; val i2 = i.copy
@@ -66,9 +66,9 @@ object BidirectionalReadablePointerTest {
         assertEquals(i, i1--)
         AssertNotEquals(i, --(i2))
 
-        ReadablePointerTest(i, v2)
-        ReadablePointerTest(i1, v1)
-        ReadablePointerTest(i2, v1)
+        TestReadablePointer(i, v2)
+        TestReadablePointer(i1, v1)
+        TestReadablePointer(i2, v1)
 
         --(i)
         assertEquals(i, i1)
@@ -76,16 +76,16 @@ object BidirectionalReadablePointerTest {
         ++(i1)
         ++(i2)
 
-        ReadablePointerTest(i, v1)
-        ReadablePointerTest(i1, v2)
-        ReadablePointerTest(i2, v2)
+        TestReadablePointer(i, v1)
+        TestReadablePointer(i1, v2)
+        TestReadablePointer(i2, v2)
     }
 }
 
 
-object RandomAccessReadablePointerTest {
+object TestRandomAccessReadablePointer {
     def apply[A](i: Pointer[A], n: Int, vals: Array[A]) {
-        BidirectionalReadablePointerTest(i, vals(0), vals(1))
+        TestBidirectionalReadablePointer(i, vals(0), vals(1))
         val j = i.copy
 
         var c = 0

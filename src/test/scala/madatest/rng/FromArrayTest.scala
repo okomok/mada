@@ -39,11 +39,18 @@ class FromArrayTest {
     }
 
     def testPointer() {
-        RandomAccessReadablePointerTest(from(Array(7,6,2,5,1,3,9)).eval.begin, 7, Array(7,6,2,5,1,3,9))
+        detail.TestRandomAccessReadablePointer(from(Array(7,6,2,5,1,3,9)).eval.begin, 7, Array(7,6,2,5,1,3,9))
     }
 
     def testImplicit {
         from(Array('1','2','3')).rng_toArray.eval.deepMkString("abc")
         from(Array('1','2','3')).deepMkString("abc")
+    }
+
+    def testMe {
+        val ex = Array(0,18,14,17,19, 8,13, 6, 4,23, 0,12,15,11, 4)
+        val ac = Array(0,18,14,17,19, 8,13, 6, 4,23, 0,12,15,11, 4)
+        assertNotSame(ex, ac)
+        detail.TestRandomAccessReadWrite(ex, from(ac).eval)
     }
 }

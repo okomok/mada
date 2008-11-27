@@ -11,9 +11,6 @@ import mada.rng.ArrayList
 import junit.framework.Assert._
 
 
-// expected same:<[6, 5, 4, 3, 2, 1]> was not:<[6, 5, 4, 3, 2, 1]>
-
-
 class ReverseTest {
     def testTrivial {
         NDebug.value = false
@@ -30,6 +27,7 @@ class ReverseTest {
     }
 
     def testPointer() {
-        RandomAccessReadablePointerTest(from(Array(6,5,4,3,2,1,0)).rng_reverse.eval.begin, 7, Array(0,1,2,3,4,5,6))
+        detail.NDebugReverse.value = false
+        detail.TestRandomAccessReadablePointer(from(Array(6,5,4,3,2,1,0)).rng_reverse.eval.begin, 7, Array(0,1,2,3,4,5,6))
     }
 }

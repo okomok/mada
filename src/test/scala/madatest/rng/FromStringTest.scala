@@ -16,6 +16,6 @@ class FromStringTest {
     }
 
     def testPointer() {
-        RandomAccessReadablePointerTest(from("abcde").eval.begin, 5, Array('a','b','c','d','e'))
+        detail.TestRandomAccessReadablePointer(from("abcde").eval.begin, 5, Array('a','b','c','d','e'))
     }
 }
