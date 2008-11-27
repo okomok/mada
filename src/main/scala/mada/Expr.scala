@@ -20,6 +20,7 @@ trait Expr[A] {
     }
 
     final def expr = this
+    final def cut = CutExpr(this).expr
     final def toLazy[A] = LazyExpr(this).expr
 }
 
@@ -35,7 +36,7 @@ class ConstantExpr[A](e: => A) extends Expr[A] {
     override def _eval = e
 }
 
-case class ForwardExpr[A](_1: Expr[A]) extends Expr[A] {
+case class CutExpr[A](_1: Expr[A]) extends Expr[A] {
     override def _eval[B](c: Context[A, B]) = _1.eval(c)
 }
 
