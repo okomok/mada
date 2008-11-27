@@ -2,6 +2,10 @@
 package mada.rng
 
 
+import Drop._
+import Take._
+
+
 object Slice extends Slice
 
 trait Slice extends Predefs {
@@ -13,5 +17,5 @@ trait Slice extends Predefs {
 
 
 case class SliceExpr[A](_1: Expr[Rng[A]], _2: Long, _3: Long) extends Expr[Rng[A]] {
-    override def _eval[U](c: Context[Rng[A], U]) = TakeExpr(DropExpr(_1, _2), _3 - _2).eval(c)
+    override def _eval[U](c: Context[Rng[A], U]) = _1.rng_drop(_2).rng_take(_3 - _2).eval(c)
 }
