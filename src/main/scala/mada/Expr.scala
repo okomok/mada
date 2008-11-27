@@ -9,8 +9,8 @@ object Expr {
 }
 
 trait Expr[A] {
-    def _eval: A = { throw new ErrorUnknownContext(this, DefaultContext) }
-    def _eval[B](c: Context[A, B]): B = c(this)
+    protected def _eval: A = { throw new ErrorUnknownContext(this, DefaultContext) }
+    protected def _eval[B](c: Context[A, B]): B = c(this)
 
     final def eval: A = eval(DefaultContext)
     final def eval[B](c: Context[A, B]): B = _eval(c)
@@ -33,16 +33,16 @@ trait Context[A, B] extends (Expr[A] => B)
 // predefined expressions
 
 class ConstantExpr[A](e: => A) extends Expr[A] {
-    override def _eval = e
+    override protected def _eval = e
 }
 
 case class CutExpr[A](_1: Expr[A]) extends Expr[A] {
-    override def _eval[B](c: Context[A, B]) = _1.eval(c)
+    override protected def _eval[B](c: Context[A, B]) = _1.eval(c)
 }
 
 case class LazyExpr[A](_1: Expr[A]) extends Expr[A] {
     private val c = new LazyContext(_1.DefaultContext) // DefaultContext only
-    override def _eval = _1.eval(c)
+    override protected def _eval = _1.eval(c)
 }
 
 object ExprConversions extends ExprConversions
