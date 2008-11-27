@@ -21,7 +21,7 @@ trait Expr[A] {
 
     final def expr = this
     final def cut = CutExpr(this).expr
-    final def toLazy[A] = LazyExpr(this).expr
+    final def lazy_ = LazyExpr(this).expr
 }
 
 

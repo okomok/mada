@@ -61,7 +61,7 @@ trait ToArray extends Predefs {
 case class ToArrayExpr[A](_1: Expr[Rng[A]]) extends Expr[Array[A]] {
     override def _eval = _1 match {
         case FromArrayExpr(x1) => x1.eval
-        case _ => ToArrayImpl(_1.toLazy)
+        case _ => ToArrayImpl(_1.lazy_)
     }
 }
 

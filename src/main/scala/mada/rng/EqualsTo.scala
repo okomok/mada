@@ -19,7 +19,7 @@ trait EqualsTo extends Predefs {
 
 case class EqualsToExpr[A1, A2](_1: Expr[Rng[A1]], _2: Expr[Pointer[A2]], _3: (A1, A2) => Boolean) extends Expr[Boolean] {
     override def _eval = {
-        val z1 = _1.toLazy
+        val z1 = _1.lazy_
         z1.rng_mismatch(_2, _3).eval._1 == z1.rng_end.eval
     }
 }
