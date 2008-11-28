@@ -65,4 +65,5 @@ trait Rng[A] {
 
     final def rng = this
     final def toExpr = Expr(this)
+    final def toPair = (begin, end)
 }

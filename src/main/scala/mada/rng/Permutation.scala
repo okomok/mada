@@ -20,7 +20,7 @@ case class PermutationExpr[A](_1: Expr[Rng[A]], _2: Expr[Rng[Long]]) extends Exp
 object PermutationImpl {
     def apply[A](elements: Rng[A], indices: Rng[Long]): Rng[A] = {
         AssertModels(elements, RandomAccessTraversal)
-        val (p, q) = (indices.begin, indices.end)
+        val (p, q) = indices.toPair
         val pe = elements.begin
         new PermutationPointer(p, pe) <=< new PermutationPointer(q, pe)
     }

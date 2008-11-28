@@ -23,7 +23,7 @@ case class MismatchExpr[A1, A2](_1: Expr[Rng[A1]], _2: Expr[Pointer[A2]], _3: (A
 
 object MismatchImpl {
     def apply[A1, A2](r1: Rng[A1], p2: Pointer[A2], f: (A1, A2) => Boolean): (Pointer[A1], Pointer[A2]) = {
-        val (p1, q1) = (r1.begin, r1.end)
+        val (p1, q1) = r1.toPair
         while (p1 != q1 && f(*(p1), *(p2))) {
             ++(p1); ++(p2)
         }

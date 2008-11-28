@@ -22,7 +22,7 @@ case class ReadOnlyExpr[A](_1: Expr[Rng[A]]) extends Expr[Rng[A]] {
 
 object ReadOnlyImpl {
     def apply[A](r: Rng[A]): Rng[A] = {
-        val (p, q) = (r.begin, r.end)
+        val (p, q) = r.toPair
         new ReadOnlyPointer(p) <=< new ReadOnlyPointer(q)
     }
 }

@@ -25,7 +25,7 @@ case class IndirectExpr[A](_1: Expr[Rng[Pointer[A]]]) extends Expr[Rng[A]] {
 
 object IndirectImpl {
     def apply[A](r: Rng[Pointer[A]]): Rng[A] = {
-        val (p, q) = (r.begin, r.end)
+        val (p, q) = r.toPair
         new IndirectPointer(p) <=< new IndirectPointer(q)
     }
 }
@@ -62,7 +62,7 @@ case class OutdirectExpr[A](_1: Expr[Rng[A]]) extends Expr[Rng[Pointer[A]]] {
 
 object OutdirectImpl {
     def apply[A](r: Rng[A]): Rng[Pointer[A]] = {
-        val (p, q) = (r.begin, r.end)
+        val (p, q) = r.toPair
         new OutdirectPointer(p) <=< new OutdirectPointer(q)
     }
 }
@@ -76,7 +76,7 @@ class OutdirectPointer[A](override val _base: Pointer[A])
 
 object OutdirectLoopImpl {
     def apply[A](r: Rng[A], f: Pointer[A] => Boolean) {
-        val (p, q) = (r.begin, r.end)
+        val (p, q) = r.toPair
         while (p != q && f(p))
             ++(p)
     }

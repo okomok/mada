@@ -35,7 +35,7 @@ case class EqualsExpr[A1, A2](_1: Expr[Rng[A1]], _2: Expr[Rng[A2]], _3: (A1, A2)
 
 object EqualsImpl {
     def apply[A1, A2](r1: Rng[A1], r2: Rng[A2], f: (A1, A2) => Boolean): Boolean = {
-        val (p1, q1) = (r1.begin, r1.end)
+        val (p1, q1) = r1.toPair
         val (p2, q2) = (r2.begin, r2.end)
         while (p1 != q1 && p2 != q2) {
             if (!f(*(p1), *(p2)))

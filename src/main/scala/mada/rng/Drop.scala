@@ -25,7 +25,7 @@ case class DropExpr[A](_1: Expr[Rng[A]], _2: Long) extends Expr[Rng[A]] {
 
 object DropImpl {
     def apply[A](r: Rng[A], n: Long): Rng[A] = {
-        val (p, q) = (r.begin, r.end)
+        val (p, q) = r.toPair
         r.traversal match {
             case RandomAccessTraversal => {
                 p += java.lang.Math.min(q - p, n)

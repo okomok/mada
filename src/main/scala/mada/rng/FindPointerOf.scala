@@ -22,7 +22,7 @@ case class FindPointerOfExpr[A](_1: Expr[Rng[A]], _2: A => Boolean) extends Expr
 
 object FindPointerOfImpl {
     def apply[A](r: Rng[A], f: A => Boolean): Pointer[A] = {
-        val (p, q) = (r.begin, r.end)
+        val (p, q) = r.toPair
         while (p != q && !f(*(p))) { ++(p) }
         p
     }

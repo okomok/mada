@@ -22,6 +22,8 @@ object TestForwardReadOnly {
     def apply[A](expected: Array[A], actual: Rng[A]) {
         assertTrue(expected.length >= 2)
 
+        TestSinglePass(expected, actual)
+
         TestForwardReadablePointer((actual.begin, expected(0)), (actual.begin.pre_++, expected(1)))
 
         val ex = from(expected).eval

@@ -22,7 +22,7 @@ case class FilterExpr[A](_1: Expr[Rng[A]], _2: A => Boolean) extends Expr[Rng[A]
 
 object FilterImpl {
     def apply[A](r: Rng[A], f: A => Boolean): Rng[A] = {
-        val (p, q) = (r.begin, r.end)
+        val (p, q) = r.toPair
         new FilterPointer(p, q, f) <=< new FilterPointer(q.copyIn(BidirectionalTraversal), q, f)
     }
 }

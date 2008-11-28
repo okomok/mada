@@ -20,7 +20,7 @@ object TestRandomAccessReadWrite {
 
 object TestRandomAccessReadOnly {
     def apply[A](expected: Array[A], actual: Rng[A]) {
-        TestRandomAccessReadablePointer(actual.begin, expected.length, expected)
         TestBidirectionalReadOnly(expected, actual)
+        TestRandomAccessReadablePointer(actual.begin, expected.length, expected)
     }
 }

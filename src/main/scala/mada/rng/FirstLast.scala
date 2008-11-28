@@ -54,14 +54,14 @@ object LastImpl {
     }
 
     private def inForward[A](r: Rng[A]): A = {
-        val (p, q) = (r.begin, r.end)
+        val (p, q) = r.toPair
         var p_ = p.copy
         while (++(p) != q) { p_ = p.copy }
         *(p_)
     }
 
     private def inSinglePass[A](r: Rng[A]): A = {
-        val (p, q) = (r.begin, r.end)
+        val (p, q) = r.toPair
         var e = *(p)
         while (++(p) != q) { e = *(p) }
         e

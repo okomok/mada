@@ -30,7 +30,7 @@ case class LoopContext[A](_2: A => Boolean) extends Context[Rng[A], Unit] {
 
 object LoopImpl {
     def apply[A](r: Rng[A], f: A => Boolean) {
-        val (p, q) = (r.begin, r.end)
+        val (p, q) = r.toPair
         while (p != q && f(*(p))) // f(p) would disable loop-map fusion.
             ++(p)
         // r is abandoned for fusions.

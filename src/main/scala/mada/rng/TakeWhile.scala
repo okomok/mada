@@ -19,7 +19,7 @@ case class TakeWhileExpr[A](_1: Expr[Rng[A]], _2: A => Boolean) extends Expr[Rng
 
 object TakeWhileImpl {
     def apply[A](r: Rng[A], f: A => Boolean): Rng[A] = {
-        val (p, q) = (r.begin, r.end)
+        val (p, q) = r.toPair
         new TakeWhilePointer(p, q, f) <=< new TakeWhilePointer(q, q, f)
     }
 }

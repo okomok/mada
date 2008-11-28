@@ -22,7 +22,7 @@ case class TakeExpr[A](_1: Expr[Rng[A]], _2: Long) extends Expr[Rng[A]] {
 
 object TakeImpl {
     def apply[A](r: Rng[A], n: Long): Rng[A] = {
-        val (p, q) = (r.begin, r.end)
+        val (p, q) = r.toPair
         new TakePointer(p, q, n) <=< new TakePointer(q, q, n)
     }
 }
