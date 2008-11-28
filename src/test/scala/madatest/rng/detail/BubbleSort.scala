@@ -8,8 +8,10 @@ import mada.rng.Pointer._
 
 
 object BubbleSort {
-    def apply[A](p: Pointer[A], q: Pointer[A], f: (A, A) => Boolean): Unit = {
-        Assert("requires BidirectionalPointer", p.traversal <:< BidirectionalTraversal)
+    def apply[A](r: Rng[A], f: (A, A) => Boolean): Unit = {
+        AssertModels(r, BidirectionalTraversal)
+
+        val (p, q) = r.toPair
 
         var swapped = false
         do {
@@ -28,7 +30,5 @@ object BubbleSort {
         } while (swapped)
     }
 
-    def apply[A](r: Rng[A], f: (A, A) => Boolean): Unit = apply(r.begin, r.end, f)
-    def apply[A <% Ordered[A]](p: Pointer[A], q: Pointer[A]): Unit = apply(p, q, (_: A) < (_: A))
     def apply[A <% Ordered[A]](r: Rng[A]): Unit = apply(r, (_: A) < (_: A))
 }

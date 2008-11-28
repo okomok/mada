@@ -37,8 +37,12 @@ import junit.framework.Assert._
 
 
 object Search {
-    def apply[A1, A2](__first1: Pointer[A1], __last1: Pointer[A1], __first2: Pointer[A2], __last2: Pointer[A2], __predicate: (A1, A2) => Boolean): Pointer[A1] = {
-        Assert("requires ForwardPointer", __first1.traversal <:< ForwardTraversal)
+    def apply[A1, A2](__rng1: Rng[A1], __rng2: Rng[A2], __predicate: (A1, A2) => Boolean): Pointer[A1] = {
+        AssertModels(__rng1, ForwardTraversal)
+        AssertModels(__rng2, ForwardTraversal)
+
+        val (__first1, __last1) = __rng1.toPair
+        val (__first2, __last2) = __rng2.toPair
 
         // Test for empty ranges
         if (__first1 == __last1 || __first2 == __last2)
@@ -83,8 +87,6 @@ object Search {
         __first1
     }
 
-    def apply[A1, A2](r1: Rng[A1], r2: Rng[A2], f: (A1, A2) => Boolean): Pointer[A1] = apply(r1.begin, r1.end, r2.begin, r2.end, f)
-    def apply[A](p1: Pointer[A], q1: Pointer[A], p2: Pointer[A], q2: Pointer[A]): Pointer[A] = apply(p1, q1, p2, q2, (_: A) == (_: A))
     def apply[A](r1: Rng[A], r2: Rng[A]): Pointer[A] = apply(r1, r2, (_: A) == (_: A))
 }
 

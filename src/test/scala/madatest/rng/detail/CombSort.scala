@@ -8,8 +8,10 @@ import mada.rng.Pointer._
 
 
 object CombSort {
-    def apply[A](p: Pointer[A], q: Pointer[A], f: (A, A) => Boolean): Unit = {
-        Assert("requires RandomAccessPointer", p.traversal <:< RandomAccessTraversal)
+    def apply[A](r: Rng[A], f: (A, A) => Boolean): Unit = {
+        AssertModels(r, RandomAccessTraversal)
+
+        val (p, q) = r.toPair
 
         var gap = q - p
         if (gap < 1L)
@@ -37,7 +39,5 @@ object CombSort {
         } while ((gap > 1L) || swapped)
     }
 
-    def apply[A](r: Rng[A], f: (A, A) => Boolean): Unit = apply(r.begin, r.end, f)
-    def apply[A <% Ordered[A]](p: Pointer[A], q: Pointer[A]): Unit = apply(p, q, (_: A) < (_: A))
     def apply[A <% Ordered[A]](r: Rng[A]): Unit = apply(r, (_: A) < (_: A))
 }
