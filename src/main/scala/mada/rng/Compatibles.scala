@@ -4,7 +4,7 @@ package mada.rng
 
 object DefaultCompatibles extends DefaultCompatibles
 
-trait DefaultCompatibles extends Traits
+trait DefaultCompatibles extends Namespace
         with ArrayCompatible
         with CellCompatible
         with IntervalCompatible
@@ -16,5 +16,5 @@ trait DefaultCompatibles extends Traits
 
 object Compatibles extends Compatibles
 
-trait Compatibles extends Traits
+trait Compatibles extends Namespace
         with DefaultCompatibles

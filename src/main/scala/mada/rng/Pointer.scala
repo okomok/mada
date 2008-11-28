@@ -5,7 +5,7 @@ package mada.rng
 import PointerAdvance._
 
 
-object Pointer extends Traits
+object Pointer extends Namespace
         with PointerPreOps
 
 
@@ -66,7 +66,7 @@ trait Pointer[A] {
 // prefix operations
 
 object PointerPreOps extends PointerPreOps
-trait PointerPreOps extends Traits
+trait PointerPreOps extends Namespace
         with PointerPre_*
         with PointerPre_++
         with PointerPre_--
@@ -81,12 +81,12 @@ trait PointerPre_* {
 
 object PointerPre_++ extends PointerPre_++
 trait PointerPre_++ {
-    def ++[A](p: Pointer[A]): Pointer[A] = p.pre_++
+    final def ++[A](p: Pointer[A]): Pointer[A] = p.pre_++
 }
 
 object PointerPre_-- extends PointerPre_--
 trait PointerPre_-- {
-    def --[A](p: Pointer[A]): Pointer[A] = p.pre_--
+    final def --[A](p: Pointer[A]): Pointer[A] = p.pre_--
 }
 
 

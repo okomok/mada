@@ -8,7 +8,7 @@ import ShallowEquals._
 import ToArrayList._
 
 
-object Rng extends Traits
+object Rng extends Namespace
         with ToArray
         with AsRngBy
         with AsRngOf

@@ -2,4 +2,4 @@
 package mada
 
 
-trait Traits
+trait Namespace
