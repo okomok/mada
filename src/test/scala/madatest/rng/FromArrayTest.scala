@@ -5,6 +5,7 @@ package madatest.rng
 import mada.rng._
 import mada.rng.ArrayCompatible._
 import mada.rng.From._
+import mada.rng.Pointer._
 import mada.rng.ToArray._
 import junit.framework.Assert._
 

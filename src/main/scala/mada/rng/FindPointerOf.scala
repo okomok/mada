@@ -2,6 +2,9 @@
 package mada.rng
 
 
+import Pointer._
+
+
 object FindPointerOf extends FindPointerOf
 
 trait FindPointerOf extends Predefs {

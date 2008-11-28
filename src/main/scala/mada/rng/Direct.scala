@@ -2,6 +2,9 @@
 package mada.rng
 
 
+import Pointer._
+
+
 // indirect
 
 object Indirect extends Indirect

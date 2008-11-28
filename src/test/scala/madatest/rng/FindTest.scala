@@ -9,6 +9,7 @@ import mada.rng.FindPointerOf._
 import mada.rng.Find._
 import mada.rng.Exists._
 import mada.rng.Forall._
+import mada.rng.Pointer._
 import junit.framework.Assert._
 
 

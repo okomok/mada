@@ -4,6 +4,7 @@ package mada.rng
 
 import Foreach._
 import Outdirect._
+import Pointer._
 
 
 object Fill extends Fill

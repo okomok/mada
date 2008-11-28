@@ -2,6 +2,9 @@
 package mada.rng
 
 
+import Pointer._
+
+
 object PointerAdvance extends PointerAdvance
 
 trait PointerAdvance extends Predefs {

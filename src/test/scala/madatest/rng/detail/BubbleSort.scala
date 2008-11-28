@@ -4,6 +4,7 @@ package madatest.rng.detail
 
 import mada.Assert
 import mada.rng._
+import mada.rng.Pointer._
 
 
 object BubbleSort {

@@ -2,6 +2,9 @@
 package mada.rng
 
 
+import Pointer._
+
+
 // first
 
 object First extends First

@@ -2,7 +2,7 @@
 package mada.rng
 
 
-trait PointerFacade[E, P] extends Pointer[E] {
+trait PointerFacade[E, P] extends Pointer[E] with PointerPre_* {
     protected def _equals(that: P): Boolean = { throw new ErrorNotSinglePass(this) }
     protected def _difference(that: P): Long = { throw new ErrorNotRandomAccess(this) }
     protected def _compatible(that: P) { }

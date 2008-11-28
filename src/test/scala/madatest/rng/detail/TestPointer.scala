@@ -15,6 +15,7 @@ package madatest.rng.detail
 
 
 import mada.rng._;
+import mada.rng.Pointer._
 import junit.framework.Assert._
 
 

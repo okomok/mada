@@ -5,6 +5,10 @@ package mada.rng
 import PointerAdvance._
 
 
+object Pointer extends Traits
+        with PointerPreOps
+
+
 trait Pointer[A] {
 // element-access
     protected def _read: A = { throw new ErrorNotReadable(this) }
@@ -52,26 +56,41 @@ trait Pointer[A] {
 // utilities
     final def advance(d: Long) = toExpr.ptr_advance(d).eval
     final def output: A => Pointer[A] = { (e: A) => write(e); pre_++ }
-    final def swap(that: Pointer[A]) { val tmp = *(this); *(this) = *(that); *(that) = tmp }
+    final def swap(that: Pointer[A]) { import PointerPre_*._; val tmp = *(this); *(this) = *(that); *(that) = tmp }
     final def <=<(that: Pointer[A]) = new PointerRng(this, that)
     final def copyIn(t: Traversal): Pointer[A] = if (traversal <:< t) copy else this
     final def toExpr = Expr(this)
 }
 
 
-object * {
-    def apply[A](p: Pointer[A]): A = p.read
-    def update[A](p: Pointer[A], e: A) { p.write(e) }
+// prefix operations
+
+object PointerPreOps extends PointerPreOps
+trait PointerPreOps extends Traits
+        with PointerPre_*
+        with PointerPre_++
+        with PointerPre_--
+
+object PointerPre_* extends PointerPre_*
+trait PointerPre_* {
+    object * {
+        def apply[A](p: Pointer[A]): A = p.read
+        def update[A](p: Pointer[A], e: A) { p.write(e) }
+    }
 }
 
-object ++ {
-    def apply[A](p: Pointer[A]): Pointer[A] = p.pre_++
+object PointerPre_++ extends PointerPre_++
+trait PointerPre_++ {
+    def ++[A](p: Pointer[A]): Pointer[A] = p.pre_++
 }
 
-object -- {
-    def apply[A](p: Pointer[A]): Pointer[A] = p.pre_--
+object PointerPre_-- extends PointerPre_--
+trait PointerPre_-- {
+    def --[A](p: Pointer[A]): Pointer[A] = p.pre_--
 }
 
+
+// exceptions
 
 class ErrorNotReadable[A](val pointer: Pointer[A]) extends UnsupportedOperationException
 class ErrorNotWritable[A](val pointer: Pointer[A]) extends UnsupportedOperationException

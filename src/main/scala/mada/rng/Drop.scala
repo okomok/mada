@@ -2,6 +2,9 @@
 package mada.rng
 
 
+import Pointer._
+
+
 object Drop extends Drop
 
 trait Drop extends Predefs {

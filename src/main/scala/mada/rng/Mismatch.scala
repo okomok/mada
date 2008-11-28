@@ -2,6 +2,9 @@
 package mada.rng
 
 
+import Pointer._
+
+
 object Mismatch extends Mismatch
 
 trait Mismatch extends Predefs {

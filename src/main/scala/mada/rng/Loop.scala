@@ -2,6 +2,9 @@
 package mada.rng
 
 
+import Pointer._
+
+
 object Loop extends Loop
 
 trait Loop extends Predefs {

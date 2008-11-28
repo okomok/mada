@@ -4,6 +4,7 @@ package mada.rng
 
 import Begin._
 import EqualsTo._
+import Pointer._
 import Size._
 
 
