@@ -55,9 +55,9 @@ trait Pointer[A] {
 
 // utilities
     final def advance(d: Long) = toExpr.ptr_advance(d).eval
-    final def output: A => Pointer[A] = { (e: A) => write(e); pre_++ }
-    final def swap(that: Pointer[A]) { import PointerPre_*._; val tmp = *(this); *(this) = *(that); *(that) = tmp }
-    final def <=<(that: Pointer[A]) = new PointerRng(this, that)
+    final def output: A => Pointer[A] = detail.PointerOutput(this, _)
+    final def swap(that: Pointer[A]) = detail.PointerSwap(this, that)
+    final def <=<(that: Pointer[A]) = new detail.PointerRng(this, that).rng
     final def copyIn(t: Traversal): Pointer[A] = if (traversal <:< t) copy else this
     final def toExpr = Expr(this)
 }
