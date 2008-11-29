@@ -54,11 +54,6 @@ trait Pointer[A] {
 // debug
     protected def _invariant { }
 
-// safety
-    def plain = this
-    def immutable = new ImmutablePointer(this).pointer
-    def readOnly = new ReadOnlyPointer(this).pointer
-
 // utilities
     final def advance(d: Long) = toExpr.ptr_advance(d).eval
     final def output: A => Pointer[A] = detail.PointerOutput(this, _)
@@ -102,5 +97,3 @@ class ErrorNotSinglePass[A](val pointer: Pointer[A]) extends UnsupportedOperatio
 class ErrorNotForward[A](p: Pointer[A]) extends ErrorNotSinglePass[A](p)
 class ErrorNotBidirectional[A](p: Pointer[A]) extends ErrorNotForward[A](p)
 class ErrorNotRandomAccess[A](p: Pointer[A]) extends ErrorNotBidirectional[A](p)
-
-class ErrorNotMutable[A](val pointer: Pointer[A]) extends UnsupportedOperationException

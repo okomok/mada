@@ -25,17 +25,8 @@ object ReadOnlyImpl {
     }
 }
 
-class ReadOnlyPointer[A](val base: Pointer[A]) extends Pointer[A] {
-    override def _read = base.read
+class ReadOnlyPointer[A](override val _base: Pointer[A])
+        extends PointerAdapter[A, A, ReadOnlyPointer[A]] {
     override def _write(e: A) { throw new ErrorNotWritable(this) }
-    override def _traversal = base.traversal
-    override def _equals_(that: Pointer[A]): Boolean = this.plain == that.plain
-    override def _increment { base.pre_++ }
     override def _copy = new ReadOnlyPointer(base.copy)
-    override def _decrement { base.pre_-- }
-    override def _offset(d: Long) { base += d }
-    override def _difference_(that: Pointer[A]): Long = this.plain - that.plain
-
-    override def plain = base.plain
-    override def readOnly = this
 }
