@@ -22,7 +22,8 @@ trait Pointer[A] {
 
 // single-pass
     protected def _increment { throw new ErrorNotSinglePass(this) }
-    // override def equals(that: Any): Boolean
+    protected def _equals_(that: Pointer[A]): Boolean
+    override final def equals(that: Any): Boolean = _equals_(that.asInstanceOf[Pointer[A]])
     final def pre_++ : Pointer[A] = { _increment; this }
 
 // forward
@@ -53,12 +54,18 @@ trait Pointer[A] {
 // debug
     protected def _invariant { }
 
+// safety
+    def plain = this
+    def immutable = new ImmutablePointer(this).pointer
+    def readOnly = new ReadOnlyPointer(this).pointer
+
 // utilities
     final def advance(d: Long) = toExpr.ptr_advance(d).eval
     final def output: A => Pointer[A] = detail.PointerOutput(this, _)
     final def swap(that: Pointer[A]) = detail.PointerSwap(this, that)
     final def <=<(that: Pointer[A]) = new detail.PointerRng(this, that).rng
     final def copyIn(t: Traversal): Pointer[A] = if (traversal <:< t) copy else this
+    final def pointer = this
     final def toExpr = Expr(this)
 }
 
@@ -95,3 +102,5 @@ class ErrorNotSinglePass[A](val pointer: Pointer[A]) extends UnsupportedOperatio
 class ErrorNotForward[A](p: Pointer[A]) extends ErrorNotSinglePass[A](p)
 class ErrorNotBidirectional[A](p: Pointer[A]) extends ErrorNotForward[A](p)
 class ErrorNotRandomAccess[A](p: Pointer[A]) extends ErrorNotBidirectional[A](p)
+
+class ErrorNotMutable[A](val pointer: Pointer[A]) extends UnsupportedOperationException

@@ -4,6 +4,7 @@ package mada.rng
 
 import Equals._
 import From._
+import ReadOnly._
 import ShallowEquals._
 import ToArrayList._
 
@@ -58,10 +59,11 @@ trait Rng[A] {
     final def models(t: Traversal): Boolean = traversal <:< t
 
     override def equals(that: Any) = equals(that.asInstanceOf[Rng[A]])
-    override def toString = toExpr.rng_toArrayList.eval.toString // TODO
+    override def toString = toExpr.rng_toArrayList.eval.toString
 
     final def equals(that: Rng[A]) = toExpr.rng_equals(that).eval
     final def shallowEquals(that: Rng[A]) = toExpr.rng_shallowEquals(that).eval
+    final def readOnly = toExpr.rng_readOnly.eval
 
     final def rng = this
     final def toExpr = Expr(this)
