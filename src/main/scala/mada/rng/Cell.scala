@@ -2,6 +2,9 @@
 package mada.rng
 
 
+import First._
+
+
 //  Cell[A] <-> Expr[Rng[A]]
 
 object CellCompatible extends CellCompatible; trait CellCompatible {
@@ -49,6 +52,6 @@ object ToCell extends ToCell; trait ToCell extends Predefs {
 case class ToCellExpr[A](_1: Expr[Rng[A]]) extends Expr[Cell[A]] {
     override def _eval = _1 match {
         case FromCellExpr(x1) => x1.eval
-        case _ => Cell(FirstExpr(_1).eval)
+        case _ => Cell(_1.rng_first.eval)
     }
 }
