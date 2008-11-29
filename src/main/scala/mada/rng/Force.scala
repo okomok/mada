@@ -6,9 +6,7 @@ import ArrayListToRng._
 import ToArrayList._
 
 
-object Force extends Force
-
-trait Force extends Predefs {
+object Force extends Force; trait Force extends Predefs {
     class MadaRngForce[A](_1: Expr[Rng[A]]) {
         def rng_force = ForceExpr(_1).expr
     }

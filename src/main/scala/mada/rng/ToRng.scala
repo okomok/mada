@@ -2,9 +2,7 @@
 package mada.rng
 
 
-object ToRng extends ToRng
-
-trait ToRng extends Namespace
+object ToRng extends ToRng; trait ToRng extends Namespace
         with ArrayToRng
         with CellToRng
         with IntervalToRng

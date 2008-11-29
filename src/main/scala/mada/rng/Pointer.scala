@@ -65,27 +65,23 @@ trait Pointer[A] {
 
 // prefix operations
 
-object PointerPreOps extends PointerPreOps
-trait PointerPreOps extends Namespace
+object PointerPreOps extends PointerPreOps; trait PointerPreOps extends Namespace
         with PointerPre_*
         with PointerPre_++
         with PointerPre_--
 
-object PointerPre_* extends PointerPre_*
-trait PointerPre_* {
+object PointerPre_* extends PointerPre_*; trait PointerPre_* {
     object * {
         def apply[A](p: Pointer[A]): A = p.read
         def update[A](p: Pointer[A], e: A) { p.write(e) }
     }
 }
 
-object PointerPre_++ extends PointerPre_++
-trait PointerPre_++ {
+object PointerPre_++ extends PointerPre_++; trait PointerPre_++ {
     final def ++[A](p: Pointer[A]): Pointer[A] = p.pre_++
 }
 
-object PointerPre_-- extends PointerPre_--
-trait PointerPre_-- {
+object PointerPre_-- extends PointerPre_--; trait PointerPre_-- {
     final def --[A](p: Pointer[A]): Pointer[A] = p.pre_--
 }
 

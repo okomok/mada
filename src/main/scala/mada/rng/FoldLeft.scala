@@ -5,9 +5,7 @@ package mada.rng
 import Foreach._
 
 
-object FoldLeft extends FoldLeft
-
-trait FoldLeft extends Predefs {
+object FoldLeft extends FoldLeft; trait FoldLeft extends Predefs {
     class MadaRngFoldLeft[A](_1: Expr[Rng[A]]) {
         def rng_foldLeft[B](_2: B, _3: (B, A) => B) = FoldLeftExpr(_1, _2, _3).expr
     }

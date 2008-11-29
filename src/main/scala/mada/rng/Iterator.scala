@@ -13,9 +13,7 @@ trait IteratorCompatible {
 
 // toRng
 
-object IteratorToRng extends IteratorToRng
-
-trait IteratorToRng extends Predefs {
+object IteratorToRng extends IteratorToRng; trait IteratorToRng extends Predefs {
     class MadaRngIteratorToRng[A](_1: Expr[Iterator[A]]) {
         def toRng = FromIteratorExpr(_1).expr
     }
@@ -55,9 +53,7 @@ class IteratorPointer[A](val base: Iterator[A], private var e: Option[A])
 
 // toIterator
 
-object ToIterator extends ToIterator
-
-trait ToIterator extends Predefs {
+object ToIterator extends ToIterator; trait ToIterator extends Predefs {
     class MadaRngToIterator[A](_1: Expr[Rng[A]]) {
         def rng_toIterator = ToIteratorExpr(_1).expr
     }

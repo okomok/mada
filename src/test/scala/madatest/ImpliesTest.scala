@@ -2,8 +2,7 @@
 package madatest
 
 
-import mada.Implies
-import mada.Implies.Operator._
+import mada.Implies._
 import junit.framework.Assert._
 
 
@@ -13,15 +12,7 @@ class ImpliesTest {
         false
     }
 
-    def testTrivial {
-        assertTrue(Implies(true, true))
-        assertTrue(Implies(false, true))
-        assertTrue(Implies(false, false))
-        assertFalse(Implies(true, false))
-        Implies(false, neverEvaluated)
-    }
-
-    def testInfix {
+    def testMe {
         assertTrue(true implies true)
         assertTrue(false implies true)
         assertTrue(false implies false)

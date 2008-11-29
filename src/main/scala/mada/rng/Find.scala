@@ -5,9 +5,7 @@ package mada.rng
 import Loop._
 
 
-object Find extends Find
-
-trait Find extends Predefs {
+object Find extends Find; trait Find extends Predefs {
     class MadaRngFind[A](_1: Expr[Rng[A]]) {
         def rng_find(_2: A => Boolean) = FindExpr(_1, _2).expr
     }

@@ -8,9 +8,7 @@ import Pointer._
 import Size._
 
 
-object Equals extends Equals
-
-trait Equals extends Predefs {
+object Equals extends Equals; trait Equals extends Predefs {
     class MadaRngEquals[A1](_1: Expr[Rng[A1]]) {
         def rng_equals[A2](_2: Expr[Rng[A2]], _3: (A1, A2) => Boolean) = EqualsExpr(_1, _2, _3).expr
         def rng_equals(_2: Expr[Rng[A1]]) = EqualsExpr[A1, A1](_1, _2, _ == _).expr

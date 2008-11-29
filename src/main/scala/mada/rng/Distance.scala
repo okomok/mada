@@ -6,9 +6,7 @@ import FoldLeft._
 import Size._
 
 
-object Distance extends Distance
-
-trait Distance extends Predefs {
+object Distance extends Distance; trait Distance extends Predefs {
     class MadaRngDistance[A](_1: Expr[Rng[A]]) {
         def rng_distance = DistanceExpr(_1).expr
     }

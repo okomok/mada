@@ -7,9 +7,7 @@ import ToIterator._
 
 //  List[A] <-> Expr[Rng[A]]
 
-object ListCompatible extends ListCompatible
-
-trait ListCompatible {
+object ListCompatible extends ListCompatible; trait ListCompatible {
     implicit def toMadaListRngExpr[A](from: => List[A]): Expr[Rng[A]] = FromListExpr(Expr(from)).expr
     implicit def fromMadaListRngExpr[A](from: Expr[Rng[A]]): List[A] = ToListExpr(from).eval
 }
@@ -17,9 +15,7 @@ trait ListCompatible {
 
 // toRng
 
-object ListToRng extends ListToRng
-
-trait ListToRng extends Predefs {
+object ListToRng extends ListToRng; trait ListToRng extends Predefs {
     class MadaRngListToRng[A](_1: Expr[List[A]]) {
         def toRng = FromListExpr(_1).expr
     }
@@ -49,9 +45,7 @@ class ListPointer[A](var base: List[A]) extends PointerFacade[A, ListPointer[A]]
 
 // toList
 
-object ToList extends ToList
-
-trait ToList extends Predefs {
+object ToList extends ToList; trait ToList extends Predefs {
     class MadaRngToList[A](_1: Expr[Rng[A]]) {
         def rng_toList = ToListExpr(_1).expr
     }

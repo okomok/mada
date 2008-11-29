@@ -5,9 +5,7 @@ package mada.rng
 import Pointer._
 
 
-object Drop extends Drop
-
-trait Drop extends Predefs {
+object Drop extends Drop; trait Drop extends Predefs {
     class MadaRngDrop[A](_1: Expr[Rng[A]]) {
         def rng_drop(_2: Long) = DropExpr(_1, _2).expr
     }

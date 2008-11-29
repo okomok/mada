@@ -4,9 +4,7 @@ package mada.rng
 
 // begin
 
-object Begin extends Begin
-
-trait Begin extends Predefs {
+object Begin extends Begin; trait Begin extends Predefs {
     class MadaRngBegin[A](_1: Expr[Rng[A]]) {
         def rng_begin = BeginExpr(_1).expr
     }
@@ -20,9 +18,7 @@ case class BeginExpr[A](_1: Expr[Rng[A]]) extends Expr[Pointer[A]] {
 
 // end
 
-object End extends End
-
-trait End extends Predefs {
+object End extends End; trait End extends Predefs {
     class MadaRngEnd[A](_1: Expr[Rng[A]]) {
         def rng_end = EndExpr(_1).expr
     }

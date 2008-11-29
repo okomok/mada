@@ -2,9 +2,7 @@
 package mada.rng
 
 
-object TakeWhile extends TakeWhile
-
-trait TakeWhile extends Predefs {
+object TakeWhile extends TakeWhile; trait TakeWhile extends Predefs {
     class MadaRngTakeWhile[A](_1: Expr[Rng[A]]) {
         def rng_takeWhile(_2: A => Boolean) = TakeWhileExpr(_1, _2).expr
     }

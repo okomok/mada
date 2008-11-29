@@ -7,9 +7,7 @@ import Pointer._
 
 // indirect
 
-object Indirect extends Indirect
-
-trait Indirect extends Predefs {
+object Indirect extends Indirect; trait Indirect extends Predefs {
     class MadaRngIndirect[A](_1: Expr[Rng[Pointer[A]]]) {
         def rng_indirect = IndirectExpr(_1).expr
     }
@@ -40,9 +38,7 @@ class IndirectPointer[A](override val _base: Pointer[Pointer[A]])
 
 // outdirect
 
-object Outdirect extends Outdirect
-
-trait Outdirect extends Predefs {
+object Outdirect extends Outdirect; trait Outdirect extends Predefs {
     class MadaRngOutdirect[A](_1: Expr[Rng[A]]) {
         def rng_outdirect = OutdirectExpr(_1).expr
     }

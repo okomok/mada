@@ -6,9 +6,7 @@ import Drop._
 import Take._
 
 
-object Slice extends Slice
-
-trait Slice extends Predefs {
+object Slice extends Slice; trait Slice extends Predefs {
     class MadaRngSlice[A](_1: Expr[Rng[A]]) {
         def rng_slice(_2: Long, _3: Long) = SliceExpr(_1, _2, _3).expr
     }

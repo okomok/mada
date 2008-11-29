@@ -5,9 +5,7 @@ package mada.rng
 import Find._
 
 
-object Forall extends Forall
-
-trait Forall extends Predefs {
+object Forall extends Forall; trait Forall extends Predefs {
     class MadaRngForall[A](_1: Expr[Rng[A]]) {
         def rng_forall(_2: A => Boolean) = ForallExpr(_1, _2).expr
     }

@@ -7,9 +7,7 @@ import Outdirect._
 import Pointer._
 
 
-object Fill extends Fill
-
-trait Fill extends Predefs {
+object Fill extends Fill; trait Fill extends Predefs {
     class MadaRngFill[A](_1: Expr[Rng[A]]) {
         def rng_fill[B <: A](_2: B) = FillExpr(_1, _2).expr
     }

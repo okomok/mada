@@ -7,9 +7,7 @@ import Foreach._
 
 //  String <-> Expr[Rng[Char]]
 
-object StringCompatible
-
-trait StringCompatible {
+object StringCompatible; trait StringCompatible {
     implicit def toMadaStringRngExpr(from: => String): Expr[Rng[Char]] = FromStringExpr(Expr(from)).expr
     implicit def fromMadaStringRngExpr(from: Expr[Rng[Char]]): String = StringizeExpr(from).eval
 }
@@ -17,9 +15,7 @@ trait StringCompatible {
 
 // toRng
 
-object StringToRng extends StringToRng
-
-trait StringToRng extends Predefs {
+object StringToRng extends StringToRng; trait StringToRng extends Predefs {
     class MadaRngStringToRng(_1: Expr[String]) {
         def toRng = FromStringExpr(_1).expr
     }
@@ -46,9 +42,7 @@ class StringIndexAccess(val base: String) extends IndexAccess[Char] {
 
 // stringize
 
-object Stringize extends Stringize
-
-trait Stringize extends Predefs {
+object Stringize extends Stringize; trait Stringize extends Predefs {
     class MadaRngStringize(_1: Expr[Rng[Char]]) {
         def rng_stringize = StringizeExpr(_1).expr
     }

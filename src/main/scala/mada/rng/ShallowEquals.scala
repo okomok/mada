@@ -2,9 +2,7 @@
 package mada.rng
 
 
-object ShallowEquals extends ShallowEquals
-
-trait ShallowEquals extends Predefs {
+object ShallowEquals extends ShallowEquals; trait ShallowEquals extends Predefs {
     class MadaRngShallowEquals[A](_1: Expr[Rng[A]]) {
         def rng_shallowEquals(_2: Expr[Rng[A]]) = ShallowEqualsExpr(_1, _2).expr
     }

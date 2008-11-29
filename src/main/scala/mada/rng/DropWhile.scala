@@ -6,9 +6,7 @@ import End._
 import FindPointerOf._
 
 
-object DropWhile extends DropWhile
-
-trait DropWhile extends Predefs {
+object DropWhile extends DropWhile; trait DropWhile extends Predefs {
     class MadaRngDropWhile[A](_1: Expr[Rng[A]]) {
         def rng_dropWhile(_2: A => Boolean) = DropWhileExpr(_1, _2).expr
     }

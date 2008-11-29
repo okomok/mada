@@ -2,9 +2,7 @@
 package mada.rng
 
 
-object Permutation extends Permutation
-
-trait Permutation extends Predefs {
+object Permutation extends Permutation; trait Permutation extends Predefs {
     class MadaRngPermutation[A](_1: Expr[Rng[A]]) {
         def rng_permutation(_2: Expr[Rng[Long]]) = PermutationExpr(_1, _2).expr
     }

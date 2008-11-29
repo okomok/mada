@@ -5,9 +5,7 @@ package mada.rng
 import Loop._
 
 
-object Foreach extends Foreach
-
-trait Foreach extends Predefs {
+object Foreach extends Foreach; trait Foreach extends Predefs {
     class MadaRngForeach[A](_1: Expr[Rng[A]]) {
         def rng_foreach(_2: A => Any) = ForeachExpr(_1, _2).expr
     }

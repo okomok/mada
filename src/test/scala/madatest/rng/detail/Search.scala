@@ -69,7 +69,7 @@ object Search {
             while (__first1 != __last1 && !__predicate(*(__first1), *(__first2)))
                 ++(__first1)
             if (__first1 == __last1)
-                return __last1;
+                return __last1
 
             __p = __p1.copy
             __current = __first1.copy

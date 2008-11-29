@@ -2,9 +2,7 @@
 package mada.rng
 
 
-object Filter extends Filter
-
-trait Filter extends Predefs {
+object Filter extends Filter; trait Filter extends Predefs {
     class MadaRngFilter[A](_1: Expr[Rng[A]]) {
         def rng_filter(_2: A => Boolean) = FilterExpr(_1, _2).expr
     }

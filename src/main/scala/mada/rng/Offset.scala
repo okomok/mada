@@ -2,9 +2,10 @@
 package mada.rng
 
 
-object Offset extends Offset
+import Implies._
 
-trait Offset extends Predefs {
+
+object Offset extends Offset; trait Offset extends Predefs {
     class MadaRngOffset[A](_1: Expr[Rng[A]]) {
         def rng_offset(_2: Long, _3: Long) = OffsetExpr(_1, _2, _3).expr
     }
@@ -20,9 +21,9 @@ case class OffsetExpr[A](_1: Expr[Rng[A]], _2: Long, _3: Long) extends Expr[Rng[
 object OffsetImpl {
     def apply[A](r: Rng[A], n1: Long, n2: Long): Rng[A] = {
         AssertModels(r, ForwardTraversal)
-        Assert("too many offsets", Implies(r models RandomAccessTraversal, n1 <= SizeExpr(Expr(r)).eval + n2))
-        Assert("requires BidirectionalRng", Implies(n1 < 0, r models BidirectionalTraversal))
-        Assert("requires BidirectionalRng", Implies(n2 < 0, r models BidirectionalTraversal))
+        Assert("too many offsets", (r models RandomAccessTraversal) implies (n1 <= SizeExpr(Expr(r)).eval + n2))
+        Assert("requires BidirectionalRng", (n1 < 0) implies (r models BidirectionalTraversal))
+        Assert("requires BidirectionalRng", (n2 < 0) implies ( r models BidirectionalTraversal))
 
         r.begin.advance(n1) <=< r.end.advance(n2)
     }

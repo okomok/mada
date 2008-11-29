@@ -5,9 +5,7 @@ package mada.rng
 import Find._
 
 
-object Exists extends Exists
-
-trait Exists extends Predefs {
+object Exists extends Exists; trait Exists extends Predefs {
     class MadaRngExists[A](_1: Expr[Rng[A]]) {
         def rng_exists(_2: A => Boolean) = ExistsExpr(_1, _2).expr
     }

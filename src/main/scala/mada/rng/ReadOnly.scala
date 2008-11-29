@@ -2,9 +2,7 @@
 package mada.rng
 
 
-object ReadOnly extends ReadOnly
-
-trait ReadOnly extends Predefs {
+object ReadOnly extends ReadOnly; trait ReadOnly extends Predefs {
     class MadaRngReadOnly[A](_1: Expr[Rng[A]]) {
         def rng_readOnly = ReadOnlyExpr(_1).expr
     }

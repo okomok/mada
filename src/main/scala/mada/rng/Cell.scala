@@ -4,9 +4,7 @@ package mada.rng
 
 //  Cell[A] <-> Expr[Rng[A]]
 
-object CellCompatible extends CellCompatible
-
-trait CellCompatible {
+object CellCompatible extends CellCompatible; trait CellCompatible {
     implicit def toMadaCellRngExpr[A](from: => Cell[A]): Expr[Rng[A]] = FromCellExpr(Expr(from)).expr
     implicit def fromMadaCellRngExpr[A](from: Expr[Rng[A]]): Cell[A] = ToCellExpr(from).eval
 }
@@ -14,9 +12,7 @@ trait CellCompatible {
 
 // toRng
 
-object CellToRng
-
-trait CellToRng extends Predefs {
+object CellToRng extends CellToRng; trait CellToRng extends Predefs {
     class MadaRngCellToRng[A](_1: Expr[Cell[A]]) {
         def toRng = FromCellExpr(_1).expr
     }
@@ -43,9 +39,7 @@ class CellIndexAccess[A](val base: A) extends IndexAccess[A] {
 
 // toCell
 
-object ToCell extends ToCell
-
-trait ToCell extends Predefs {
+object ToCell extends ToCell; trait ToCell extends Predefs {
     class MadaRngToCell[A](_1: Expr[Rng[A]]) {
         def rng_toCell = ToCellExpr(_1).expr
     }

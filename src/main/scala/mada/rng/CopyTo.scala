@@ -5,9 +5,7 @@ package mada.rng
 import Foreach._
 
 
-object CopyTo extends CopyTo
-
-trait CopyTo extends Predefs {
+object CopyTo extends CopyTo; trait CopyTo extends Predefs {
     class MadaRngCopyTo[From](_1: Expr[Rng[From]]) {
         def rng_copyTo[To >: From](_2: Expr[Pointer[To]]) = CopyToExpr(_1, _2).expr
     }

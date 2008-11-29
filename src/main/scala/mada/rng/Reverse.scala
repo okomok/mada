@@ -2,9 +2,7 @@
 package mada.rng
 
 
-object Reverse extends Reverse
-
-trait Reverse extends Predefs {
+object Reverse extends Reverse; trait Reverse extends Predefs {
     class MadaRngReverse[A](_1: Expr[Rng[A]]) {
         def rng_reverse = ReverseExpr(_1).expr
     }

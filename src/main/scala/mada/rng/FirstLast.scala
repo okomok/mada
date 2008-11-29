@@ -7,9 +7,7 @@ import Pointer._
 
 // first
 
-object First extends First
-
-trait First extends Predefs {
+object First extends First; trait First extends Predefs {
     class MadaRngFirst[A](_1: Expr[Rng[A]]) {
         def rng_first = FirstExpr(_1).expr
     }
@@ -30,9 +28,7 @@ object FirstImpl {
 
 // last
 
-object Last extends Last
-
-trait Last extends Predefs {
+object Last extends Last; trait Last extends Predefs {
     class MadaRngLast[A](_1: Expr[Rng[A]]) {
         def rng_last = LastExpr(_1).expr
     }

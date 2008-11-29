@@ -2,9 +2,7 @@
 package mada.rng
 
 
-object Map extends Map
-
-trait Map extends Predefs {
+object Map extends Map; trait Map extends Predefs {
     class MadaRngMap[From](_1: Expr[Rng[From]]) {
         def rng_map[To](_2: From => To) = MapExpr(_1, _2).expr
     }

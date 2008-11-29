@@ -2,9 +2,10 @@
 package mada.rng
 
 
-object Window extends Window
+import Implies._
 
-trait Window extends Predefs {
+
+object Window extends Window; trait Window extends Predefs {
     class MadaRngWindow[A](_1: Expr[Rng[A]]) {
         def rng_window(_2: Long, _3: Long) = WindowExpr(_1, _2, _3).expr
     }
@@ -24,7 +25,7 @@ object WindowImpl {
     def apply[A](r: Rng[A], n: Long, m: Long): Rng[A] = {
         AssertModels(r, ForwardTraversal)
         Assert("requires n <= m", n <= m)
-        Assert("requires BidirectionalRng", Implies(n < 0, r models BidirectionalTraversal))
+        Assert("requires BidirectionalRng", (n < 0) implies (r models BidirectionalTraversal))
 
         val p = r.begin.advance(n)
         p <=< p.copy.advance(m - n)

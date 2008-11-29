@@ -2,9 +2,7 @@
 package mada.rng
 
 
-object Size extends Size
-
-trait Size extends Predefs {
+object Size extends Size; trait Size extends Predefs {
     class MadaRngSize[A](_1: Expr[Rng[A]]) {
         def rng_size = SizeExpr(_1).expr
     }

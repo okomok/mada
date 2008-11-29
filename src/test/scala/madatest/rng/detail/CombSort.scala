@@ -24,7 +24,7 @@ object CombSort {
             if (newgap < 1L)
                 newgap = 1L
 
-            p2 += (newgap - gap) // paren is needed!
+            p2 += (newgap - gap) // paren is needed in scala 2.7.1
             gap = newgap
             swapped = false
 
