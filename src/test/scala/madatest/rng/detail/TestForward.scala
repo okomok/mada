@@ -22,7 +22,7 @@ object TestForwardReadOnly {
     def apply[A](expected: Array[A], actual: Rng[A]) {
         assertTrue(expected.length >= 2)
 
-        TestSinglePass(expected, actual)
+        TestSinglePassReadOnly(expected, actual)
 
         TestForwardReadablePointer((actual.begin, expected(0)), (actual.begin.pre_++, expected(1)))
 
