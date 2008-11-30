@@ -6,6 +6,7 @@ import PointerAdvance._
 
 
 object Pointer extends Namespace
+        with PointerOrdered
         with PointerPreOps
 
 

@@ -5,29 +5,105 @@ package mada.rng
 import java.io.{File, RandomAccessFile}
 
 
+// RandomAccessFiles
+
+class IntRandomAccessFile(val base: RandomAccessFile) {
+    def this(_1: File, _2: String) = this(new RandomAccessFile(_1, _2))
+    def this(_1: String, _2: String) = this(new RandomAccessFile(_1, _2))
+
+    def _indexAccess = new IndexAccess[Int] {
+        override def _set(i: Long, e: Int) = { base.seek(i * 4); base.write(e) }
+        override def _get(i: Long) = { base.seek(i); base.read }
+        override def _size = base.length / 4
+    }
+}
+
+class LongRandomAccessFile(val base: RandomAccessFile) {
+    def this(_1: File, _2: String) = this(new RandomAccessFile(_1, _2))
+    def this(_1: String, _2: String) = this(new RandomAccessFile(_1, _2))
+
+    def _indexAccess = new IndexAccess[Long] {
+        override def _set(i: Long, e: Long) = { base.seek(i * 8); base.writeLong(e) }
+        override def _get(i: Long) = { base.seek(i); base.readLong }
+        override def _size = base.length / 8
+    }
+}
+
+
 /*
-object FromIntFile {
-    def apply(a: RandomAccessFile): Rng[Int] = new IntFileRng(a)
-}
+class RandomAccessFileOf[A](val base: RandomAccessFile) {
+    def this(_1: File, _2: String) = this(new RandomAccessFile(_1, _2))
+    def this(_1: String, _2: String) = this(new RandomAccessFile(_1, _2))
 
-class IntFileIndexAccess(a: RandomAccessFile) extends IndexAccess[Int] {
-    override def _set(i: Long, e: Int) = { a.seek(i * 4); a.write(e) }
-    override def _get(i: Long) = { a.seek(i); a.read }
-    override def _size = a.length / 4
-}
+    def _indexAccess = new IndexAccess[A] {
+        override def _set(i: Long, e: A) = { base.seek(i * sizeOfA); writerOfA(e) }
+        override def _get(i: Long) = { base.seek(i); readerOfA() }
+        override def _size = base.length / sizeOfA
+    }
 
-
-object InFile {
-    def apply[X](file: File, mode: String, op: Rng[Byte] => X): X = {
-        val a = new RandomAccessFile(file, mode)
-        val ia = new IndexAccess[Byte] {
-            override def _set(i: Long, e: Byte) = { a.seek(i); a.writeByte(e) }
-            override def _get(i: Long) = { a.seek(i); a.readByte }
-            override def _size = a.length
+    private val sizeOfA: Long = {
+        null.asInstanceOf[A] match {
+            case _: java.lang.Byte => 1L
+            case _: java.lang.Short => 2L
+            case _: java.lang.Integer => 4L
+            case _: java.lang.Long => 8L
+            case _: java.lang.Character => 2L
         }
-        val x = op(new IndexAccessRng(ia))
-        a.close
-        x
+    }
+
+    private val readerOfA: Unit => A = {
+        null.asInstanceOf[A] match {
+            case _: java.lang.Byte => base.readByte
+            case _: java.lang.Short => base.readShort
+            case _: java.lang.Integer => base.read
+            case _: java.lang.Long => base.readLong
+            case _: java.lang.Character => base.readChar
+        }
+    }
+
+    private val writerOfA: A => Unit = {
+        null.asInstanceOf[A] match {
+            case _: java.lang.Byte => base.writeByte(_)
+            case _: java.lang.Short => base.writeShort(_)
+            case _: java.lang.Integer => base.write(_)
+            case _: java.lang.Long => base.writeLong(_)
+            case _: java.lang.Character => base.writeChar(_)
+        }
     }
 }
 */
+
+
+//  RandomAccessFile <-> Expr[Rng[A]]
+
+object RandomAccessFileCompatible extends RandomAccessFileCompatible; trait RandomAccessFileCompatible {
+    implicit def toMadaIntRandomAccessFileRngExpr(from: => IntRandomAccessFile): Expr[Rng[Int]] = FromIntRandomAccessFileExpr(Expr(from)).expr
+    implicit def toMadaLongRandomAccessFileRngExpr(from: => LongRandomAccessFile): Expr[Rng[Long]] = FromLongRandomAccessFileExpr(Expr(from)).expr
+}
+
+
+// toRng
+
+object RandomAccessFileToRng extends RandomAccessFileToRng; trait RandomAccessFileToRng extends Predefs {
+    // Int
+    class MadaRngIntRandomAccessFileToRng(_1: Expr[IntRandomAccessFile]) {
+        def toRng = FromIntRandomAccessFileExpr(_1).expr
+    }
+    implicit def toMadaRngIntRandomAccessFileToRng(_1: Expr[IntRandomAccessFile]): MadaRngIntRandomAccessFileToRng = new MadaRngIntRandomAccessFileToRng(_1)
+    // Long
+    class MadaRngLongRandomAccessFileToRng(_1: Expr[LongRandomAccessFile]) {
+        def toRng = FromLongRandomAccessFileExpr(_1).expr
+    }
+    implicit def toMadaRngLongRandomAccessFileToRng(_1: Expr[LongRandomAccessFile]): MadaRngLongRandomAccessFileToRng = new MadaRngLongRandomAccessFileToRng(_1)
+}
+
+
+// RandomAccessFileExprs
+
+case class FromIntRandomAccessFileExpr(_1: Expr[IntRandomAccessFile]) extends Expr[Rng[Int]] {
+    override def _eval[U](c: Context[Rng[Int], U]): U = IndexAccessRngExpr(_1.eval._indexAccess).eval(c)
+}
+
+case class FromLongRandomAccessFileExpr(_1: Expr[LongRandomAccessFile]) extends Expr[Rng[Long]] {
+    override def _eval[U](c: Context[Rng[Long], U]): U = IndexAccessRngExpr(_1.eval._indexAccess).eval(c)
+}

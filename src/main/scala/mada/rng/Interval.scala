@@ -7,21 +7,8 @@ package mada.rng
 
 // Intervals
 
-object IntInterval {
-    def apply(_1: => Int, _2: => Int) = new IntInterval(_1, _2)
-}
-class IntInterval(a1: => Int, a2: => Int) {
-    def _1 = a1
-    def _2 = a2
-}
-
-object LongInterval {
-    def apply(_1: => Long, _2: => Long) = new LongInterval(_1, _2)
-}
-class LongInterval(a1: => Long, a2: => Long) {
-    def _1 = a1
-    def _2 = a2
-}
+case class IntInterval(a1: Int, a2: Int) extends Tuple2[Int, Int](a1, a2)
+case class LongInterval(a1: Long, a2: Long) extends Tuple2[Long, Long](a1, a2)
 
 
 //  Interval <-> Expr[Rng[A]]
@@ -32,7 +19,7 @@ object IntervalCompatible extends IntervalCompatible; trait IntervalCompatible {
     implicit def toMadaLongIntervalRngExpr(from: => LongInterval): Expr[Rng[Long]] = FromLongIntervalExpr(Expr(from)).expr
 }
 
-trait FromIntervalImpl {
+object FromInterval extends FromInterval; trait FromInterval {
     // Note by-name-parameters also are the same types after type-erasure.
     def from(_1: Int, _2: Int) = FromIntIntervalExpr(Expr(IntInterval(_1, _2))).expr
     def from(_1: Long, _2: Long) = FromLongIntervalExpr(Expr(LongInterval(_1, _2))).expr
