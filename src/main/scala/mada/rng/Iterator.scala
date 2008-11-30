@@ -72,8 +72,7 @@ case class ToIteratorContext[A] extends Context[Rng[A], Iterator[A]] {
 }
 
 class RngIterator[A](val base: Rng[A]) extends Iterator[A] {
-    private val p = base.begin
-    private val q = base.end
+    private val (p, q) = base.toPair
     override def hasNext = p != q
-    override def next = { p.pre_++; p.read }
+    override def next = { val tmp = p.read; p.pre_++; tmp }
 }

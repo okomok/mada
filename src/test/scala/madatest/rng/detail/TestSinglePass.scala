@@ -5,7 +5,7 @@ package madatest.rng.detail
 import mada.Implies._
 import mada.rng._
 import mada.rng.From._
-import mada.rng.ToArray._
+import mada.rng.Force._
 import junit.framework.Assert._
 
 
@@ -22,6 +22,6 @@ object TestSinglePassReadOnly {
         if (actual models ForwardTraversal)
             assertEquals(from(expected).eval, p <=< q)
         else
-            assertEquals(from(expected).eval, (p <=< q).toExpr.rng_toArray.eval)
+            assertEquals(from(expected).eval, (p <=< q).toExpr.rng_force.eval)
     }
 }
