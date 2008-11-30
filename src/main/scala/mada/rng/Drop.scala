@@ -25,11 +25,11 @@ object DropImpl {
     def apply[A](r: Rng[A], n: Long): Rng[A] = {
         val (p, q) = r.toPair
         r.traversal match {
-            case RandomAccessTraversal => {
+            case _: RandomAccessTraversal => {
                 p += java.lang.Math.min(q - p, n)
                 p <=< q
             }
-            case SinglePassTraversal => {
+            case _: SinglePassTraversal => {
                 var m = n
                 while (m != 0 && p != q) { ++(p); m = m - 1 }
                 p <=< q

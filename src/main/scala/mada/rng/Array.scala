@@ -61,8 +61,8 @@ case class ToArrayExpr[A](_1: Expr[Rng[A]]) extends Expr[Array[A]] {
 
 object ToArrayImpl {
     def apply[A](x: Expr[Rng[A]]): Array[A] = x.eval.traversal match {
-        case ForwardTraversal => inForward(x)
-        case SinglePassTraversal => inForward(x.rng_force)
+        case _: ForwardTraversal => inForward(x)
+        case _: SinglePassTraversal => inForward(x.rng_force)
     }
 
     private def inForward[A](x: Expr[Rng[A]]): Array[A] = {

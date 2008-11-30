@@ -22,10 +22,10 @@ case class EqualsExpr[A1, A2](_1: Expr[Rng[A1]], _2: Expr[Rng[A2]], _3: (A1, A2)
         val z1 = _1.lazy_
         val z2 = _2.lazy_
         z1.eval.traversal upper z2.eval.traversal match {
-            case RandomAccessTraversal => {
+            case _: RandomAccessTraversal => {
                 if (z1.rng_size.eval != z2.rng_size.eval) false else z1.rng_equalsTo(z2.rng_begin, _3).eval
             }
-            case SinglePassTraversal => EqualsImpl(z1.eval, z2.eval, _3)
+            case _: SinglePassTraversal => EqualsImpl(z1.eval, z2.eval, _3)
         }
     }
 }
