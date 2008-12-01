@@ -26,10 +26,10 @@ object TestBidirectionalReadWrite {
 
 object TestBidirectionalReadOnly {
     def apply[A](expected: Array[A], actual: Rng[A]) {
+        TestForwardReadOnly(expected, actual)
+        TestBidirectionalReadablePointer(actual.begin, expected(0), expected(1))
+
         if (NDebugReverse.value)
             TestForwardReadOnly(CopyReverseArray(expected), actual.toExpr.rng_reverse.eval)
-        TestForwardReadOnly(expected, actual)
-
-        TestBidirectionalReadablePointer(actual.begin, expected(0), expected(1))
     }
 }
