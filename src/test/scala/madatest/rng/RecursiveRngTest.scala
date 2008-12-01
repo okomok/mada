@@ -14,9 +14,10 @@ import detail.Example._
 class RecursiveRngTest {
     def testTrivial {
         val x = new RecursiveRng[Int]
-        x := x
+        x := x // left-recursion will result in stack-overflow
         val r = x.eval
-        r.begin
+        val p = r.begin
+        // val p1 = p.copy // undefined in left-recursion
         ()
     }
 

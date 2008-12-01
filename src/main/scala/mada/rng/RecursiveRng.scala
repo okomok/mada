@@ -25,7 +25,8 @@ if ConcatExpr.eval calls *(p), stack overflows.
 
 
 class RecursiveRng[A](val traversal: Traversal) extends Ref[Expr[Rng[A]]](null) with Expr[Rng[A]] {
-    Assert("RecursiveRng is Forward", traversal <:< ForwardTraversal)
+    Assert("RecursiveRng must be Forward", traversal <:< ForwardTraversal)
+    Assert("RecursiveRng can't be RandomAccess", traversal >:> BidirectionalTraversal)
     def this() = this(ForwardTraversal)
     override def _eval = RecursiveImpl(deref, traversal)
 }
