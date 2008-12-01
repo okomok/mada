@@ -40,6 +40,7 @@ class ArrayIndexAccess[A](val base: Array[A]) extends IndexAccess[A] {
     override def _set(i: Long, e: A) { base(i.toInt) = e }
     override def _get(i: Long) = base(i.toInt)
     override def _size = base.length
+    override def toString = "ArrayIndexAccess"
 }
 
 

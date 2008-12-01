@@ -27,5 +27,10 @@ class FilterTest {
     def testFusion {
         val expected = Array(18,14,17,13,12,15,11)
         detail.TestBidirectionalReadWrite(expected, from(example1).rng_filter(_ >= 10).rng_filter(_ <= 18).eval)
+//        println(from(example1).rng_filter(_ >= 10).rng_filter(_ <= 18).eval.toString)
+    }
+
+    def testEmpty {
+        detail.TestEmpty(from(example1).rng_filter(_ >= 99).eval)
     }
 }

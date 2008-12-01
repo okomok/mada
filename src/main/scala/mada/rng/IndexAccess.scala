@@ -30,6 +30,8 @@ class IndexAccessPointer[A](val indexAccess: IndexAccess[A], val startIndex: Lon
         }
     }
     override def _copy = new IndexAccessPointer(indexAccess, *(base))
+
+    override def toString = new StringBuilder().append("IndexAccessPointer(").append(*(base)).append(") of ").append(indexAccess).toString
 }
 
 object ErrorNotWritableIndexAccess extends UnsupportedOperationException

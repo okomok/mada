@@ -33,4 +33,6 @@ class FilterPointer[A](override val _base: Pointer[A], val end: Pointer[A], val 
     override def _copy = new FilterPointer(base.copy, end, predicate)
     override def _decrement { while (!predicate(*(base.pre_--))) { } }
     private def satisfy { while (base != end && !predicate(*(base))) { base.pre_++ } }
+
+    override def toString = new StringBuilder().append("FilterPointer of ").append(base).toString
 }

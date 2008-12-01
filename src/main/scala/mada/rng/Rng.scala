@@ -59,7 +59,7 @@ trait Rng[A] {
     final def models(t: Traversal): Boolean = traversal <:< t
 
     override def equals(that: Any) = equals(that.asInstanceOf[Rng[A]])
-    override def toString = toExpr.rng_toArrayList.eval.toString
+    override def toString = detail.ToString(this)
 
     final def equals(that: Rng[A]) = toExpr.rng_equals(that).eval
     final def shallowEquals(that: Rng[A]) = toExpr.rng_shallowEquals(that).eval
