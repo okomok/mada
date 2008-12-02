@@ -16,6 +16,11 @@ class ForTest {
         detail.TestSinglePassReadOnly(expected, actual)
     }
 
+    def testEach {
+        def doNothing[A](a: A) { }
+        for (i <- from(1, 10).eval; j <- from(1, i).eval; if (i + j > 7)) doNothing((i, j))
+    }
+
     def testInterval {
         val r = for (i <- from(1, 10).eval; j <- from(1, i).eval; if (i + j > 7)) yield (i, j)
 //        println(r.toString)
