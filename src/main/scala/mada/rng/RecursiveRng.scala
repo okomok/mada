@@ -2,28 +2,6 @@
 package mada.rng
 
 
-/*
-val x = new RecursiveRng[A]
-x := a.rng_concat(x) // x.deref = a.rng_concat( x ).rng_filter(f) // x.deref Expr(..Expr(...(x)))
-
-
-x := x // x.deref = x
-val r = x.eval // RecursiveImpl(x) // does nothing.
-r.begin // base touched -> x.eval.begin --> stack overflows.
-
-r.begin // touches base by copy methods.
-r.begin // does nothing. See .copy method // but NOT thread-safe.
-
-while eval, RecursivePointer doesn't touch base... how?
-if ConcatExpr.eval calls *(p), stack overflows.
-
-
-
-
-??? def fun: Expr[Rng[A]] = a.rng_concat(fun())
-*/
-
-
 class RecursiveRng[A](val traversal: Traversal) extends Ref[Expr[Rng[A]]](null) with Expr[Rng[A]] {
     Assert("RecursiveRng must be Forward", traversal <:< ForwardTraversal)
     Assert("RecursiveRng can't be RandomAccess", traversal >:> BidirectionalTraversal)
@@ -35,22 +13,67 @@ class RecursiveRng[A](val traversal: Traversal) extends Ref[Expr[Rng[A]]](null) 
 object RecursiveImpl {
     def apply[A](x: Expr[Rng[A]], t: Traversal): Rng[A] = {
         val z = x.lazy_
-        new Rng[A] { // avoid PointerRng forcing to copy.
-            override def _begin = new RecursivePointer(z.eval.begin, t)
-            override def _end = new RecursivePointer(z.eval.end, t)
-        }
+        new RecursivePointer(z, false, t) <=< new RecursivePointer(z, true, t)
     }
 }
 
-class RecursivePointer[A](_base: => Pointer[A], override val _traversal: Traversal) // by-name
+class RecursivePointer[A](rngExpr: Expr[Rng[A]], private val fromEnd: Boolean, override val _traversal: Traversal)
         extends PointerFacade[A, RecursivePointer[A]] {
-    lazy val base = _base
+    def base = { optionBaseInit; optionBase.get }
     override def _read = *(base)
     override def _write(e: A) { *(base) = e }
-    override def _equals(that: RecursivePointer[A]) = base == that.base
-    override def _increment { base.pre_++ }
-    override def _copy = { val b = base.copy; new RecursivePointer(b, traversal) }
-    override def _decrement { base.pre_-- }
+
+    override def _equals(that: RecursivePointer[A]) = {
+        if (fromEnd != that.fromEnd) {
+            false
+        } else if (!optionBase.isEmpty || !that.optionBase.isEmpty) {
+            base == that.base
+        } else {
+            savedDiff == that.savedDiff
+        }
+    }
+
+    override def _increment = {
+        if (optionBase.isEmpty) {
+            savedDiff = savedDiff + 1
+        } else {
+            base.pre_++
+        }
+    }
+
+    override def _copy = {
+        val that = new RecursivePointer(rngExpr, fromEnd, traversal)
+        that.savedDiff = savedDiff
+        that.optionBase = optionBaseCopy
+        that
+    }
+
+    override def _decrement = {
+        if (optionBase.isEmpty) {
+           savedDiff = savedDiff - 1
+        } else {
+            base.pre_--
+        }
+    }
+
+    private var savedDiff = 0L
+    private var optionBase: Option[Pointer[A]] = None
+
+    private def optionBaseInit {
+        if (optionBase.isEmpty) {
+            optionBase = new Some(if (fromEnd) rngExpr.eval.end else rngExpr.eval.begin)
+            optionBase.get.advance(savedDiff)
+        }
+    }
+
+    private def optionBaseCopy: Option[Pointer[A]] = {
+        if (optionBase.isEmpty) {
+            None
+        } else {
+            new Some(optionBase.get.copy)
+        }
+    }
+
     override def hashCode = base.hashCode
     override def toString = new StringBuilder().append("RecursivePointer of ").append(base).toString
 }
