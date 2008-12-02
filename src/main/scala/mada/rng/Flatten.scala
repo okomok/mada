@@ -22,9 +22,10 @@ case class FlattenExpr[A](_1: Expr[Rng[Rng[A]]], _2: Option[Traversal]) extends 
 
 object FlattenImpl {
     def apply[A](r: Rng[Rng[A]], ot: Option[Traversal]): Rng[A] = {
-        Assert("Flatten can't be RandomAccess", !ot.isEmpty implies ot.get >:> BidirectionalTraversal)
         val (p, q) = r.toPair
-        val t = ot.getOrElse(p.traversal upper BidirectionalTraversal)
+        val t = ot.getOrElse(SinglePassTraversal)
+        Assert("Flatten can't be RandomAccess", t >:> BidirectionalTraversal)
+        Assert("requires " + t.toString, p.traversal <:< t)
         new FlattenPointer(p, q, t) <=< new FlattenPointer(q.copyIn(BidirectionalTraversal), q, t)
     }
 }

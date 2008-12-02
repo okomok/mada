@@ -75,7 +75,7 @@ trait Rng[A] {
 
 // for-comprehension
     final def map[B](f: A => B) = toExpr.rng_map(f).eval
-    final def flatMap[B](f: A => Rng[B]) = toExpr.rng_map(f).rng_flatten(SinglePassTraversal).eval
+    final def flatMap[B](f: A => Rng[B]) = toExpr.rng_map(f).rng_flatten.eval
     final def filter(p: A => Boolean) = toExpr.rng_filter(p).eval
     final def foreach(f: A => Unit) = toExpr.rng_foreach(f).eval
 }
