@@ -12,7 +12,7 @@ object Filter extends Filter; trait Filter extends Predefs {
 
 case class FilterExpr[A](_1: Expr[Rng[A]], _2: A => Boolean) extends Expr[Rng[A]] {
     override def _eval = _1 match {
-        case FilterExpr(x1, x2) => FilterImpl(x1.eval, {(e: A) => x2(e) && _2(e)}) // filter-filter fusion
+        case FilterExpr(x1, x2) => FilterExpr(x1, {(e: A) => x2(e) && _2(e)}).eval // filter-filter fusion
         case _ => FilterImpl(_1.eval, _2)
     }
 }

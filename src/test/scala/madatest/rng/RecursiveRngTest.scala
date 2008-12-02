@@ -28,7 +28,7 @@ class RecursiveRngTest {
         x := (from(Array(1,2,3)) rng_++ x) // paren is needed
         val r = x.eval
 //        r.begin.read
-        println(r.toExpr.rng_window(0, 10).eval)
+//        println(r.toExpr.rng_window(0, 10).eval)
         ()
     }
 

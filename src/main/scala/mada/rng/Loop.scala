@@ -19,8 +19,8 @@ case class LoopExpr[A](_1: Expr[Rng[A]], _2: A => Boolean) extends Expr[Unit] {
 
 case class LoopContext[A](_2: A => Boolean) extends Context[Rng[A], Unit] {
     override def apply(_1: Expr[Rng[A]]) = _1 match {
-        case FilterExpr(x1, x2) => LoopImpl(x1.eval, { (e: A) => if (x2(e)) _2(e) else true }) // loop-filter fusion
-        case MapExpr(x1, x2) => LoopImpl(x1.eval, _2 compose x2) // loop-map fusion
+        case FilterExpr(x1, x2) => LoopExpr(x1, { (e: A) => if (x2(e)) _2(e) else true }).eval // loop-filter fusion
+        case MapExpr(x1, x2) => LoopExpr(x1, _2 compose x2).eval // loop-map fusion
         case _ => LoopImpl(_1.eval, _2)
     }
 }
