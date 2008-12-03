@@ -56,7 +56,7 @@ class CyclePointer[A](override val _base: Pointer[A], var count: Long, val begin
         Assert("doh", 0 <= rem)
         Assert("doh", rem < end - begin)
         baseRef := (begin + rem)
-        count = count + quo
+        count += quo
     }
 
     override def _difference(that: CyclePointer[A]) = {
