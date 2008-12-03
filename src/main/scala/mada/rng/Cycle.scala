@@ -6,7 +6,7 @@ object Cycle extends Cycle; trait Cycle extends Predefs {
     class MadaRngCycle[A](_1: Expr[Rng[A]]) {
         def rng_cycle(_2: Long, _3: Long) = CycleExpr(_1, _2, _3).expr
         def rng_cycle(_2: Long) = CycleExpr(_1, 0, _2).expr
-        def rng_cycle = CycleExpr(_1, 0, java.lang.Long.MAX_VALUE).expr
+        def rng_cycle = CycleExpr(_1, 0, Math.MAX_LONG).expr
     }
     implicit def toMadaRngCycle[A](_1: Expr[Rng[A]]): MadaRngCycle[A] = new MadaRngCycle[A](_1)
 }

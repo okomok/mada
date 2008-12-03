@@ -12,7 +12,7 @@ object Take extends Take; trait Take extends Predefs {
 
 case class TakeExpr[A](_1: Expr[Rng[A]], _2: Long) extends Expr[Rng[A]] {
     override def _eval = _1 match {
-        case TakeExpr(x1, x2) => TakeExpr(x1, java.lang.Math.min(x2, _2)).eval // take-take fusion
+        case TakeExpr(x1, x2) => TakeExpr(x1, Math.min(x2, _2)).eval // take-take fusion
         case _ => TakeImpl(_1.eval, _2)
     }
 }

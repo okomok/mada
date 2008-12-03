@@ -72,6 +72,11 @@ case class ToListIteratorContext[A] extends Context[Rng[A], ListIterator[A]] {
 class RngListIterator[A](val base: Rng[A]) extends ListIterator[A] {
     AssertModels(base, BidirectionalTraversal)
 
+    private val (begin, end) = base.toPair
+    private val p = begin.copy
+    private var index = 0
+    private var latest: Pointer[A] = null
+
     override def hasNext = p != end
     override def nextIndex = index
     override def hasPrevious = p != begin
@@ -79,11 +84,6 @@ class RngListIterator[A](val base: Rng[A]) extends ListIterator[A] {
     override def previous = { p.pre_--; index -= 1; latest = p.copy; latest.read }
     override def previousIndex = index - 1
     override def set(e: A) = { latest.write(e) }
-
-    private val (begin, end) = base.toPair
-    private val p = begin.copy
-    private var index = 0
-    private var latest: Pointer[A] = null
 }
 */
 

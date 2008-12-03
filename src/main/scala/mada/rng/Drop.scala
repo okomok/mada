@@ -26,7 +26,7 @@ object DropImpl {
         val (p, q) = r.toPair
         r.traversal match {
             case _: RandomAccessTraversal => {
-                p += java.lang.Math.min(q - p, n)
+                p += Math.min(q - p, n)
                 p <=< q
             }
             case _: SinglePassTraversal => {

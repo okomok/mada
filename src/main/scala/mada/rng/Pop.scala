@@ -43,9 +43,9 @@ class ForwardPopPointer[A](override val _base: Pointer[A], end: Pointer[A])
 class SinglePassPopPointer[A](override val _base: Pointer[A], fromEnd: Boolean)
         extends PointerAdapter[A, A, SinglePassPopPointer[A]] {
     Assert("doh", _base.traversal == SinglePassTraversal)
+    private var tmp: A = _
     if (!fromEnd) { _increment }
     override def _read = tmp
     override def _write(e: A) { throw new NotWritablePointerError(this) }
     override def _increment { tmp = *(base); base.pre_++ }
-    private var tmp: A = _
 }

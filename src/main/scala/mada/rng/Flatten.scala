@@ -33,6 +33,7 @@ object FlattenImpl {
 
 class FlattenPointer[A](override val _base: Pointer[Rng[A]], val end: Pointer[Rng[A]], override val _traversal: Traversal)
         extends PointerAdapter[Rng[A], A, FlattenPointer[A]] {
+    private var local: Pointer[A] = null
     resetLocalForward
 
     override def _read = {
@@ -70,8 +71,6 @@ class FlattenPointer[A](override val _base: Pointer[Rng[A]], val end: Pointer[Rn
     }
 
     override def toString = new StringBuilder().append("FlattenPointer of ").append(base).toString
-
-    private var local: Pointer[A] = _
 
     private def localRng = {
         *(base)
