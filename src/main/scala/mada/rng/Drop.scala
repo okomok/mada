@@ -31,7 +31,7 @@ object DropImpl {
             }
             case _: SinglePassTraversal => {
                 var m = n
-                while (m != 0 && p != q) { ++(p); m = m - 1 }
+                while (m != 0 && p != q) { ++(p); m -= 1 }
                 p <=< q
             }
         }

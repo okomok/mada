@@ -36,7 +36,7 @@ class CyclePointer[A](override val _base: Pointer[A], var count: Long, val begin
     override def _increment = {
         if (base.pre_++ == end) {
             baseRef := begin.copy
-            count = count + 1
+            count += 1
         }
     }
 
@@ -45,7 +45,7 @@ class CyclePointer[A](override val _base: Pointer[A], var count: Long, val begin
     override def _decrement = {
         if (base == begin) {
             baseRef := end.copy
-            count = count - 1
+            count -= 1
         }
         base.pre_--
     }

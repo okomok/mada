@@ -25,11 +25,11 @@ object PointerAdvanceImpl {
             case _: RandomAccessTraversal => p += d
             case _: BidirectionalTraversal => {
                 if (d >= 0)
-                    while (d != 0) { ++(p); d = d - 1 }
+                    while (d != 0) { ++(p); d -= 1 }
                 else
-                    while (d != 0) { --(p); d = d + 1 }
+                    while (d != 0) { --(p); d += 1 }
             }
-            case _: SinglePassTraversal => while (d != 0) { ++(p); d = d - 1 }
+            case _: SinglePassTraversal => while (d != 0) { ++(p); d -= 1 }
         }
         p
     }

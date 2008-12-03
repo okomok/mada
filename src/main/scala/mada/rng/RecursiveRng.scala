@@ -35,7 +35,7 @@ class RecursivePointer[A](rngExpr: Expr[Rng[A]], private val fromEnd: Boolean, o
 
     override def _increment = {
         if (optionBase.isEmpty) {
-            savedDiff = savedDiff + 1
+            savedDiff += 1
         } else {
             base.pre_++
         }
@@ -50,7 +50,7 @@ class RecursivePointer[A](rngExpr: Expr[Rng[A]], private val fromEnd: Boolean, o
 
     override def _decrement = {
         if (optionBase.isEmpty) {
-           savedDiff = savedDiff - 1
+           savedDiff -= 1
         } else {
             base.pre_--
         }
