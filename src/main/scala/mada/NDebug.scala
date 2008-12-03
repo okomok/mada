@@ -3,5 +3,5 @@ package mada
 
 
 object NDebug {
-    var value: Boolean = true
+    var value: Boolean = false
 }

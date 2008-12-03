@@ -9,7 +9,7 @@ object Expr {
 }
 
 trait Expr[A] {
-    protected def _eval: A = { throw new ErrorUnknownContext(this, DefaultContext) }
+    protected def _eval: A = { throw new UnknownContextException(this, DefaultContext) }
     protected def _eval[B](c: Context[A, B]): B = c(this)
 
     final def eval: A = eval(DefaultContext)
@@ -65,5 +65,5 @@ case class LazyContext[A, B](c: Context[A, B]) extends Context[A, B] {
 
 // exceptions
 
-case class ErrorUnknownExpr[A, B](expr: Expr[A], context: Context[A, B]) extends UnsupportedOperationException
-case class ErrorUnknownContext[A, B](expr: Expr[A], context: Context[A, B]) extends UnsupportedOperationException
+case class UnknownExprException[A, B](expr: Expr[A], context: Context[A, B]) extends UnsupportedOperationException
+case class UnknownContextException[A, B](expr: Expr[A], context: Context[A, B]) extends UnsupportedOperationException

@@ -3,8 +3,14 @@ package mada.rng
 
 
 trait PointerFacade[A, P] extends Pointer[A] with PointerPre_* {
-    protected def _equals(that: P): Boolean = { throw new ErrorNotSinglePass(this) }
-    protected def _difference(that: P): Long = { throw new ErrorNotRandomAccess(this) }
+    protected def _equals(that: P): Boolean = {
+        Assert("must be overridden", false)
+        throw new Error()
+    }
+    protected def _difference(that: P): Long = {
+        Assert("must be overridden", false)
+        throw new Error()
+    }
     protected def _compatible(that: P) { }
 
     override final def _equals_(that: Pointer[A]) = {

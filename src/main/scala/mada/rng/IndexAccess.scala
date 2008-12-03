@@ -3,7 +3,7 @@ package mada.rng
 
 
 trait IndexAccess[A] {
-    def _set(startIndex: Long, e: A) { throw ErrorNotWritableIndexAccess }
+    def _set(startIndex: Long, e: A) { throw NotWritableErrorIndexAccess }
     def _get(startIndex: Long): A
     def _size: Long
     final def indexAccess = this
@@ -26,7 +26,7 @@ class IndexAccessPointer[A](val indexAccess: IndexAccess[A], val startIndex: Lon
         try {
             indexAccess._set(*(base), e)
         } catch {
-            case ErrorNotWritableIndexAccess => throw new ErrorNotWritable(this)
+            case NotWritableErrorIndexAccess => throw new NotWritableError(this)
         }
     }
     override def _copy = new IndexAccessPointer(indexAccess, *(base))
@@ -34,4 +34,4 @@ class IndexAccessPointer[A](val indexAccess: IndexAccess[A], val startIndex: Lon
     override def toString = new StringBuilder().append("IndexAccessPointer(").append(*(base)).append(") of ").append(indexAccess).toString
 }
 
-object ErrorNotWritableIndexAccess extends UnsupportedOperationException
+object NotWritableErrorIndexAccess extends Error

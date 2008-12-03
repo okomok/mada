@@ -12,8 +12,8 @@ object Pointer extends Namespace
 
 trait Pointer[A] {
 // element-access
-    protected def _read: A = { throw new ErrorNotReadable(this) }
-    protected def _write(e: A) { throw new ErrorNotWritable(this) }
+    protected def _read: A = { throw new NotReadableError(this) }
+    protected def _write(e: A) { throw new NotWritableError(this) }
     final def read: A = _read
     final def write(e: A): Pointer[A] = { _write(e); this }
 
@@ -22,26 +22,56 @@ trait Pointer[A] {
     final def traversal = _traversal
 
 // single-pass
-    protected def _increment { throw new ErrorNotSinglePass(this) }
+    protected def _increment {
+        Assert("must be overridden", false)
+        throw new Error()
+    }
     protected def _equals_(that: Pointer[A]): Boolean
     override final def equals(that: Any): Boolean = _equals_(that.asInstanceOf[Pointer[A]])
-    final def pre_++ : Pointer[A] = { _increment; this }
+    final def pre_++ : Pointer[A] = {
+        Assert("must be SinglePass", traversal <:< SinglePassTraversal)
+        _increment; this
+    }
 
 // forward
-    protected def _copy: Pointer[A] = { throw new ErrorNotForward(this) }
-    final def copy: Pointer[A] = _copy
+    protected def _copy: Pointer[A] = {
+        Assert("must be overridden", false)
+        throw new Error()
+    }
+    final def copy: Pointer[A] = {
+        Assert("must be Forward", traversal <:< ForwardTraversal)
+        _copy
+    }
     final def ++ : Pointer[A] = { val tmp = copy; pre_++; tmp }
 
 // bidirectional
-    protected def _decrement { throw new ErrorNotBidirectional(this) }
-    final def pre_-- : Pointer[A] = { _decrement; this }
+    protected def _decrement {
+        Assert("must be overridden", false)
+        throw new Error()
+    }
+    final def pre_-- : Pointer[A] = {
+        Assert("must be Bidirectional", traversal <:< BidirectionalTraversal)
+        _decrement; this
+    }
     final def -- : Pointer[A] = { val tmp = copy; pre_--; tmp }
 
 // random-access
-    protected def _offset(d: Long) { throw new ErrorNotRandomAccess(this) }
-    protected def _difference_(that: Pointer[A]): Long = { throw new ErrorNotRandomAccess(this) }
-    final def - (that: Pointer[A]): Long = _difference_(that)
-    final def +=(d: Long): Pointer[A] = { _offset(d); this }
+    protected def _offset(d: Long) {
+        Assert("must be overridden", false)
+        throw new Error()
+    }
+    protected def _difference_(that: Pointer[A]): Long = {
+        Assert("must be overridden", false)
+        throw new Error()
+    }
+    final def - (that: Pointer[A]): Long = {
+        Assert("must be RandomAccess", traversal <:< RandomAccessTraversal)
+        _difference_(that)
+    }
+    final def +=(d: Long): Pointer[A] = {
+        Assert("must be RandomAccess", traversal <:< RandomAccessTraversal)
+        _offset(d); this
+    }
     final def -=(d: Long): Pointer[A] = this += (-d)
     final def + (d: Long): Pointer[A] = copy += d
     final def - (d: Long): Pointer[A] = copy -= d
@@ -89,12 +119,7 @@ object PointerPre_-- extends PointerPre_--; trait PointerPre_-- {
 }
 
 
-// exceptions
+// errors
 
-class ErrorNotReadable[A](val pointer: Pointer[A]) extends UnsupportedOperationException
-class ErrorNotWritable[A](val pointer: Pointer[A]) extends UnsupportedOperationException
-
-class ErrorNotSinglePass[A](val pointer: Pointer[A]) extends UnsupportedOperationException
-class ErrorNotForward[A](p: Pointer[A]) extends ErrorNotSinglePass[A](p)
-class ErrorNotBidirectional[A](p: Pointer[A]) extends ErrorNotForward[A](p)
-class ErrorNotRandomAccess[A](p: Pointer[A]) extends ErrorNotBidirectional[A](p)
+class NotReadableError[A](val pointer: Pointer[A]) extends Error
+class NotWritableError[A](val pointer: Pointer[A]) extends Error
