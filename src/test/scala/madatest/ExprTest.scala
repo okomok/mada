@@ -33,4 +33,8 @@ class ExprTest {
         assertSame(l2.eval, l2.eval)
         assertNotSame(l2.eval, l1.eval)
     }
+
+    def testSugar {
+        assertEquals(Expr(100)!, 100)
+    }
 }
