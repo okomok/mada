@@ -20,6 +20,7 @@ case class CycleExpr[A](_1: Expr[Rng[A]], _2: Long, _3: Long) extends Expr[Rng[A
 object CycleImpl {
     def apply[A](r: Rng[A], n: Long, m: Long): Rng[A] = {
         AssertModels(r, ForwardTraversal)
+        AssertNotEmpty(r)
         val (p, q) = r.toPair
         new CyclePointer(p.copy, n, p, q) <=< new CyclePointer(p.copyIn(BidirectionalTraversal), m, p, q)
     }

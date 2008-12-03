@@ -17,8 +17,4 @@ class CycleTest {
         val actual = from(Array(4,23,0,12)).rng_cycle(4).eval
         detail.TestRandomAccessReadOnly(expected, actual)
     }
-
-    def testEmpty {
-//        detail.TestEmpty(from(empty1).rng_cycle(10).eval)
-    }
 }
