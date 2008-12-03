@@ -6,8 +6,6 @@ import mada.NDebug
 import mada.rng.Foreach._
 import mada.rng.Reverse._
 import mada.rng.From._
-import mada.rng.ToArrayListExpr
-import mada.rng.ArrayList
 import junit.framework.Assert._
 
 

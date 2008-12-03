@@ -3,9 +3,9 @@ package madatest.rng
 
 
 import mada.rng.From._
-import mada.rng.ArrayList
 import mada.rng.Fill._
 import junit.framework.Assert._
+import mada.rng.jcl.ArrayList
 
 
 class FillTest {

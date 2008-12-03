@@ -10,7 +10,7 @@ import From._
 import Map._
 import ReadOnly._
 import ShallowEquals._
-import ToArrayList._
+import jcl.ToArrayList._
 
 
 object Rng extends Namespace

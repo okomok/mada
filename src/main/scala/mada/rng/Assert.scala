@@ -26,7 +26,7 @@ object AssertNotEmpty {
     }
 
     private def msg[A](r: Rng[A]) = {
-        val actual = if (r.traversal <:< ForwardTraversal) r.toString else "not empty"
+        val actual = if (r models ForwardTraversal) r.toString else "not empty"
         new StringBuilder().
             append("requires:<").append("empty rng").append('>').
             append(" but was:<").append(actual).append('>').

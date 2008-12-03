@@ -1,19 +1,13 @@
 
-package mada.rng
+package mada.rng.jcl
 
 
-// Jcl <-> Expr[Rng[A]]
+// ArrayList[A] <-> Expr[Rng[A]]
 
-object JclCompatible extends JclCompatible; trait JclCompatible {
-    implicit def toMadaArrayListRngExpr[A](from: => java.util.ArrayList[A]): Expr[Rng[A]] = FromArrayListExpr(Expr(from)).expr
-    implicit def fromMadaArrayListRngExpr[A](from: Expr[Rng[A]]): java.util.ArrayList[A] = ToArrayListExpr(from).eval
+object ArrayListCompatible extends ArrayListCompatible; trait ArrayListCompatible {
+    implicit def madaRngJcl_ArrayList2RngExpr[A](from: => java.util.ArrayList[A]): Expr[Rng[A]] = FromArrayListExpr(Expr(from)).expr
+    implicit def madaRngJcl_RngExpr2ArrayList[A](from: Expr[Rng[A]]): java.util.ArrayList[A] = ToArrayListExpr(from).eval
 }
-
-
-// Expr[Jcl[A]] -> Expr[Rng[A]]
-
-object JclToRng extends JclToRng; trait JclToRng extends Namespace
-        with ArrayListToRng
 
 
 // toRng
@@ -48,7 +42,7 @@ class ArrayListIndexAccess[A](val base: java.util.ArrayList[A]) extends IndexAcc
 
 object ToArrayList extends ToArrayList; trait ToArrayList extends Predefs {
     class MadaRngToArrayList[A](_1: Expr[Rng[A]]) {
-        def rng_toArrayList = ToArrayListExpr(_1).expr
+        def rng_jcl_toArrayList = ToArrayListExpr(_1).expr
     }
     implicit def toMadaRngToArrayList[A](_1: Expr[Rng[A]]): MadaRngToArrayList[A] = new MadaRngToArrayList[A](_1)
 }
