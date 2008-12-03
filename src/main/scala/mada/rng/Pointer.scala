@@ -12,8 +12,8 @@ object Pointer extends Namespace
 
 trait Pointer[A] {
 // element-access
-    protected def _read: A = { throw new NotReadableError(this) }
-    protected def _write(e: A) { throw new NotWritableError(this) }
+    protected def _read: A = { throw new NotReadablePointerError(this) }
+    protected def _write(e: A) { throw new NotWritablePointerError(this) }
     final def read: A = _read
     final def write(e: A): Pointer[A] = { _write(e); this }
 
@@ -121,5 +121,5 @@ object PointerPre_-- extends PointerPre_--; trait PointerPre_-- {
 
 // errors
 
-class NotReadableError[A](val pointer: Pointer[A]) extends Error
-class NotWritableError[A](val pointer: Pointer[A]) extends Error
+class NotReadablePointerError[A](val pointer: Pointer[A]) extends Error
+class NotWritablePointerError[A](val pointer: Pointer[A]) extends Error

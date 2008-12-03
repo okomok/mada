@@ -23,7 +23,7 @@ class ReadOnlyTest {
             try {
                 detail.TestRandomAccessReadWrite(ex, from(ac).rng_readOnly.eval); false
             } catch {
-                case e: NotWritableError[_] => true
+                case e: NotWritablePointerError[_] => true
             }
 
         assertTrue(thrown)

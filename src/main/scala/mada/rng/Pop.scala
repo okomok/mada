@@ -30,15 +30,6 @@ object PopImpl {
     }
 }
 
-class SinglePassPopPointer[A](override val _base: Pointer[A], fromEnd: Boolean)
-        extends PointerAdapter[A, A, SinglePassPopPointer[A]] {
-    Assert("doh", _base.traversal == SinglePassTraversal)
-    if (!fromEnd) { _increment }
-    override def _read = tmp
-    override def _write(e: A) { throw new NotWritableError(this) }
-    override def _increment { tmp = *(base); base.pre_++ }
-    private var tmp: A = _
-}
 
 class ForwardPopPointer[A](override val _base: Pointer[A], end: Pointer[A])
         extends PointerAdapter[A, A, ForwardPopPointer[A]] {
@@ -47,4 +38,14 @@ class ForwardPopPointer[A](override val _base: Pointer[A], end: Pointer[A])
     override def _increment { base.pre_++; lookNext }
     override def _copy = new ForwardPopPointer(base.copy, end)
     private def lookNext { if (base.copy.pre_++ == end) { baseRef := end } }
+}
+
+class SinglePassPopPointer[A](override val _base: Pointer[A], fromEnd: Boolean)
+        extends PointerAdapter[A, A, SinglePassPopPointer[A]] {
+    Assert("doh", _base.traversal == SinglePassTraversal)
+    if (!fromEnd) { _increment }
+    override def _read = tmp
+    override def _write(e: A) { throw new NotWritablePointerError(this) }
+    override def _increment { tmp = *(base); base.pre_++ }
+    private var tmp: A = _
 }
