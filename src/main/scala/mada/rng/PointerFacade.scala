@@ -11,7 +11,7 @@ trait PointerFacade[A, P] extends Pointer[A] with PointerPre_* {
         Assert("must be overridden", false)
         throw new Error()
     }
-    protected def _compatible(that: P) = { }
+    protected def _compatible(that: P): Unit = { }
 
     override final def _equals_(that: Pointer[A]) = {
         val p = that.asInstanceOf[P]
