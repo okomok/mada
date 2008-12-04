@@ -23,10 +23,10 @@ case class StepExpr[A](_1: Expr[Rng[A]], _2: Long) extends Expr[Rng[A]] {
 
 object StepFunction {
     def apply[A](r: Rng[A], d: Long): Pointer[A] = {
-        Assert("zero step", d > 0)
+        Assert("zero step isn't allowed", d > 0)
         val (p, q) = r.toPair
         p.traversal match {
-            case _: RandomAccessTraversal => p + Math.min(q - p, d)
+            case _: RandomAccessTraversal => p += Math.min(q - p, d)
             case _: SinglePassTraversal => {
                 var dd = d
                 do {

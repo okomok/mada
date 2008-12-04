@@ -20,6 +20,12 @@ class StepTest {
         detail.TestForwardReadOnly(expected, actual)
     }
 
+    def testSinglePass {
+        val expected = Array(0,17,13,23,15)
+        val actual = from(example1).rng_asRngBy(SinglePassTraversal).rng_step(3).eval
+        detail.TestSinglePassReadOnly(expected, actual)
+    }
+
     def testBounds {
         val expected = Array(0, 6, 4)
         val actual = from(example1).rng_step(7).eval
