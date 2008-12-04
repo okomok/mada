@@ -31,11 +31,11 @@ case class FromCellExpr[A](_1: Expr[Cell[A]]) extends Expr[Rng[A]] {
         case _ => forward.eval(c)
     }
 
-    private def forward = IndexAccessRngExpr(new CellIndexAccess(_1.eval.elem))
+    private def forward = IndexAccessRngExpr(new CellIndexAccess(_1.eval))
 }
 
-class CellIndexAccess[A](val base: A) extends IndexAccess[A] {
-    override def _get(i: Long) = { Assert("out of CellRng", i == 0); base }
+class CellIndexAccess[A](val base: Cell[A]) extends IndexAccess[A] {
+    override def _get(i: Long) = { Assert("out of CellRng", i == 0); base.elem }
     override def _size = 1
 }
 
