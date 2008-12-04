@@ -12,7 +12,10 @@ object AsRngBy extends AsRngBy; trait AsRngBy extends Predefs {
 
 case class AsRngByExpr[A](_1: Expr[Rng[A]], _2: Traversal) extends Expr[Rng[A]] {
     override def _eval = _1 match {
-        case AsRngByExpr(x1, x2) if (x2 == _2) => AsRngByExpr(x1, x2).eval // asRngBy-asRngBy fusion
+        case AsRngByExpr(x1, x2) => {
+            Assert("requires compatible Traversals", x2 <:< _2)
+            AsRngByExpr(x1, _2).eval // asRngBy-asRngBy fusion
+        }
         case _ => AsRngByImpl(_1.eval, _2)
     }
 }
@@ -20,7 +23,7 @@ case class AsRngByExpr[A](_1: Expr[Rng[A]], _2: Traversal) extends Expr[Rng[A]] 
 
 object AsRngByImpl {
     def apply[A](r: Rng[A], t: Traversal): Rng[A] = {
-        Assert("requires compatible traversals", r.traversal <:< t)
+        Assert("requires compatible Traversals", r.traversal <:< t)
         if (t <:< r.traversal)
             r
         else
