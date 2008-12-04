@@ -3,6 +3,7 @@ package mada.rng
 
 
 import FoldLeft._
+import Outdirect._
 import Size._
 
 
@@ -19,7 +20,7 @@ case class DistanceExpr[A](_1: Expr[Rng[A]]) extends Expr[Long] {
         val z1 = _1.lazy_
         z1.eval.traversal match {
             case _: RandomAccessTraversal => z1.rng_size.eval
-            case _: SinglePassTraversal => z1.rng_foldLeft(0L, { (b: Long, a: A) => b + 1 }).eval
+            case _: SinglePassTraversal => z1.rng_outdirect.rng_foldLeft(0L, { (b: Long, a: Pointer[A]) => b + 1 }).eval
         }
     }
 }
