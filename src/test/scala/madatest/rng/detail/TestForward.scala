@@ -20,7 +20,7 @@ object TestForwardReadWrite {
 
 object TestForwardReadOnly {
     def apply[A](expected: Array[A], actual: Rng[A]) {
-        assertTrue(expected.length >= 2)
+        assertTrue("testing rng is too small", expected.length >= 2)
 
         TestSinglePassReadOnly(expected, actual)
 

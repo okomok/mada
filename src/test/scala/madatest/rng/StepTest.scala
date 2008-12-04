@@ -6,6 +6,7 @@ import mada.NDebug
 import mada.rng._
 import mada.rng.Step._
 import mada.rng.From._
+import mada.rng.Distance._
 import junit.framework.Assert._
 import detail.Example._
 
@@ -28,6 +29,12 @@ class StepTest {
     def testOne {
         val actual = from(example1).rng_step(1).eval
         detail.TestForwardReadOnly(example1, actual)
+    }
+
+    def testBigStep {
+        val r = from(example1).rng_step(99).eval
+        assertEquals(r.begin.read, 0)
+        assertEquals(r.toExpr.rng_distance.eval, 1L)
     }
 
     def testEmpty {
