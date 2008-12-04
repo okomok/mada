@@ -11,7 +11,10 @@ object AsRngBy extends AsRngBy; trait AsRngBy extends Predefs {
 
 
 case class AsRngByExpr[A](_1: Expr[Rng[A]], _2: Traversal) extends Expr[Rng[A]] {
-    override def _eval = AsRngByImpl(_1.eval, _2)
+    override def _eval = _1 match {
+        case AsRngByExpr(x1, x2) if (x2 == _2) => AsRngByExpr(x1, x2).eval // asRngBy-asRngBy fusion
+        case _ => AsRngByImpl(_1.eval, _2)
+    }
 }
 
 
@@ -28,4 +31,5 @@ object AsRngByImpl {
 class AsRngByPointer[A](override val _base: Pointer[A], override val _traversal: Traversal)
         extends PointerAdapter[A, A, AsRngByPointer[A]] {
     override def _copy = new AsRngByPointer(base.copy, traversal)
+    override def toString = new StringBuilder().append("AsRngByPointer of ").append(base).toString
 }
