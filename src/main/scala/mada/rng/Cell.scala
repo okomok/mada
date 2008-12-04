@@ -8,7 +8,7 @@ import First._
 //  Cell[A] <-> Expr[Rng[A]]
 
 object CellCompatible extends CellCompatible; trait CellCompatible {
-    implicit def toMadaCellRngExpr[A](from: => Cell[A]): Expr[Rng[A]] = FromCellExpr(Expr(from)).expr
+    implicit def toMadaCellRngExpr[A](from: Cell[A]): Expr[Rng[A]] = FromCellExpr(Expr(from)).expr
     implicit def fromMadaCellRngExpr[A](from: Expr[Rng[A]]): Cell[A] = ToCellExpr(from).eval
 }
 
@@ -26,12 +26,12 @@ case class FromCellExpr[A](_1: Expr[Cell[A]]) extends Expr[Rng[A]] {
     override def _eval[U](c: Context[Rng[A], U]): U = c match {
         case DefaultContext => _1 match {
             case ToCellExpr(x1) => x1.eval
-            case _ => forward.eval
+            case _ => delegate.eval
         }
-        case _ => forward.eval(c)
+        case _ => delegate.eval(c)
     }
 
-    private def forward = IndexAccessRngExpr(new CellIndexAccess(_1.eval))
+    private def delegate = IndexAccessRngExpr(new CellIndexAccess(_1.eval))
 }
 
 class CellIndexAccess[A](val base: Cell[A]) extends IndexAccess[A] {

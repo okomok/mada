@@ -8,7 +8,7 @@ import Foreach._
 //  String <-> Expr[Rng[Char]]
 
 object StringCompatible; trait StringCompatible {
-    implicit def toMadaStringRngExpr(from: => String): Expr[Rng[Char]] = FromStringExpr(Expr(from)).expr
+    implicit def toMadaStringRngExpr(from: String): Expr[Rng[Char]] = FromStringExpr(Expr(from)).expr
     implicit def fromMadaStringRngExpr(from: Expr[Rng[Char]]): String = StringizeExpr(from).eval
 }
 
@@ -26,12 +26,12 @@ case class FromStringExpr(_1: Expr[String]) extends Expr[Rng[Char]] {
     override def _eval[U](c: Context[Rng[Char], U]): U = c match {
         case DefaultContext => _1 match {
             case StringizeExpr(x1) => x1.eval
-            case _ => forward.eval
+            case _ => delegate.eval
         }
-        case _ => forward.eval(c)
+        case _ => delegate.eval(c)
     }
 
-    private def forward = IndexAccessRngExpr(new StringIndexAccess(_1.eval))
+    private def delegate = IndexAccessRngExpr(new StringIndexAccess(_1.eval))
 }
 
 class StringIndexAccess(val base: String) extends IndexAccess[Char] {

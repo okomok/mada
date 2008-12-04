@@ -6,7 +6,7 @@ package mada.rng
 // Iterator[A] <-> Expr[Rng[A]]
 
 trait IteratorCompatible {
-    implicit def toMadaIteratorRngExpr[A](from: => Iterator[A]): Expr[Rng[A]] = FromIteratorExpr(Expr(from)).expr
+    implicit def toMadaIteratorRngExpr[A](from: Iterator[A]): Expr[Rng[A]] = FromIteratorExpr(Expr(from)).expr
     implicit def fromMadaIteratorRngExpr[A](from: Expr[Rng[A]]): Iterator[A] = ToIteratorExpr(from).eval
 }
 

@@ -7,7 +7,7 @@ import mada.rng.StringCompatible._
 import junit.framework.Assert._
 
 
-class FromStringTest {
+class StringTest {
     def testTrivial = {
         assertEquals(from("abcdefg").eval, from("abcdefg").eval)
         AssertNotEquals(from("abcdefg").eval, from("abXdefg").eval)

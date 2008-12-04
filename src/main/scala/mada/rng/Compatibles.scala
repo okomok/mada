@@ -8,5 +8,6 @@ object Compatibles extends Compatibles; trait Compatibles extends Namespace
         with IntervalCompatible
         with IteratorCompatible
         with ListCompatible
+        with RandomAccessSeqCompatible
         with StringCompatible
         with jcl.Compatibles

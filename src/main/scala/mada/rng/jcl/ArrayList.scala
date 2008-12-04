@@ -5,7 +5,7 @@ package mada.rng.jcl
 // ArrayList[A] <-> Expr[Rng[A]]
 
 object ArrayListCompatible extends ArrayListCompatible; trait ArrayListCompatible {
-    implicit def madaRngJcl_ArrayList2RngExpr[A](from: => java.util.ArrayList[A]): Expr[Rng[A]] = FromArrayListExpr(Expr(from)).expr
+    implicit def madaRngJcl_ArrayList2RngExpr[A](from: java.util.ArrayList[A]): Expr[Rng[A]] = FromArrayListExpr(Expr(from)).expr
     implicit def madaRngJcl_RngExpr2ArrayList[A](from: Expr[Rng[A]]): java.util.ArrayList[A] = ToArrayListExpr(from).eval
 }
 
@@ -23,12 +23,12 @@ case class FromArrayListExpr[A](_1: Expr[java.util.ArrayList[A]]) extends Expr[R
     override def _eval[U](c: Context[Rng[A], U]): U = c match {
         case DefaultContext => _1 match {
             case ToArrayListExpr(x1) => x1.eval
-            case _ => forward.eval
+            case _ => delegate.eval
         }
-        case _ => forward.eval(c)
+        case _ => delegate.eval(c)
     }
 
-    private def forward = IndexAccessRngExpr(new ArrayListIndexAccess(_1.eval))
+    private def delegate = IndexAccessRngExpr(new ArrayListIndexAccess(_1.eval))
 }
 
 class ArrayListIndexAccess[A](val base: java.util.ArrayList[A]) extends IndexAccess[A] {

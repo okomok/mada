@@ -9,7 +9,7 @@ import mada.rng.Pointer._
 import mada.rng.ToArray._
 import junit.framework.Assert._
 
-class FromArrayTest {
+class ArrayTest {
     def testTrivial() = {
         val a = from(Array.range(0, 6)).eval
         val b = from(Array.range(0, 6)).eval

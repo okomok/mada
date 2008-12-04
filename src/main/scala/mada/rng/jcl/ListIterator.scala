@@ -10,7 +10,7 @@ import Pointer._
 // LinkedList <-> Expr[Rng[A]]
 
 object LinkedListCompatible extends LinkedListCompatible; trait LinkedListCompatible {
-    implicit def madaRngJcl_LinkedList2RngExpr[A](from: => LinkedList[A]): Expr[Rng[A]] = FromLinkedListExpr(Expr(from)).expr
+    implicit def madaRngJcl_LinkedList2RngExpr[A](from: LinkedList[A]): Expr[Rng[A]] = FromLinkedListExpr(Expr(from)).expr
     implicit def madaRngJcl_RngExpr2LinkedList[A](from: Expr[Rng[A]]): LinkedList[A] = ToLinkedListExpr(from).eval
 }
 

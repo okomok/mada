@@ -10,7 +10,7 @@ import Foreach._
 //  Array[A] <-> Expr[Rng[A]]
 
 object ArrayCompatible extends ArrayCompatible; trait ArrayCompatible {
-    implicit def toMadaArrayRngExpr[A](from: => Array[A]): Expr[Rng[A]] = FromArrayExpr(Expr(from)).expr
+    implicit def toMadaArrayRngExpr[A](from: Array[A]): Expr[Rng[A]] = FromArrayExpr(Expr(from)).expr
     implicit def fromMadaArrayRngExpr[A](from: Expr[Rng[A]]): Array[A] = ToArrayExpr(from).eval
 }
 
@@ -28,12 +28,12 @@ case class FromArrayExpr[A](_1: Expr[Array[A]]) extends Expr[Rng[A]] {
     override def _eval[U](c: Context[Rng[A], U]): U = c match {
         case DefaultContext => _1 match {
             case ToArrayExpr(x1) => x1.eval
-            case _ => forward.eval
+            case _ => delegate.eval
         }
-        case _ => forward.eval(c)
+        case _ => delegate.eval(c)
     }
 
-    private def forward = IndexAccessRngExpr(new ArrayIndexAccess(_1.eval))
+    private def delegate = IndexAccessRngExpr(new ArrayIndexAccess(_1.eval))
 }
 
 class ArrayIndexAccess[A](val base: Array[A]) extends IndexAccess[A] {

@@ -8,7 +8,7 @@ import Pointer._
 //  Option[A] <-> Expr[Rng[A]]
 
 object OptionCompatible extends OptionCompatible; trait OptionCompatible {
-    implicit def toMadaOptionRngExpr[A](from: => Option[A]): Expr[Rng[A]] = FromOptionExpr(Expr(from)).expr
+    implicit def toMadaOptionRngExpr[A](from: Option[A]): Expr[Rng[A]] = FromOptionExpr(Expr(from)).expr
     implicit def fromMadaOptionRngExpr[A](from: Expr[Rng[A]]): Option[A] = ToOptionExpr(from).eval
 }
 
@@ -26,12 +26,12 @@ case class FromOptionExpr[A](_1: Expr[Option[A]]) extends Expr[Rng[A]] {
     override def _eval[U](c: Context[Rng[A], U]): U = c match {
         case DefaultContext => _1 match {
             case ToOptionExpr(x1) => x1.eval
-            case _ => forward.eval
+            case _ => delegate.eval
         }
-        case _ => forward.eval(c)
+        case _ => delegate.eval(c)
     }
 
-    private def forward = IndexAccessRngExpr(new OptionIndexAccess(_1.eval))
+    private def delegate = IndexAccessRngExpr(new OptionIndexAccess(_1.eval))
 }
 
 class OptionIndexAccess[A](val base: Option[A]) extends IndexAccess[A] {
