@@ -56,6 +56,7 @@ class IteratorPointer[A](val base: Iterator[A], private var e: Option[A])
 object ToIterator extends ToIterator; trait ToIterator extends Predefs {
     class MadaRngToIterator[A](_1: Expr[Rng[A]]) {
         def rng_toIterator = ToIteratorExpr(_1).expr
+        def rng_elements = rng_toIterator
     }
     implicit def toMadaRngToIterator[A](_1: Expr[Rng[A]]): MadaRngToIterator[A] = new MadaRngToIterator[A](_1)
 }
