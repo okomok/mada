@@ -28,7 +28,7 @@ object CycleImpl {
 
 class CyclePointer[A](override val _base: Pointer[A], var count: Long, val begin: Pointer[A], val end: Pointer[A])
         extends PointerAdapter[A, A, CyclePointer[A]] {
-    override def _write(e: A) { throw new NotWritablePointerError(this) }
+    override def _write(e: A) = { throw new NotWritablePointerError(this) }
 
     override def _equals(that: CyclePointer[A]) = {
         count == that.count && base == that.base

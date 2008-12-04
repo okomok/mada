@@ -32,7 +32,7 @@ case class FromArrayListExpr[A](_1: Expr[java.util.ArrayList[A]]) extends Expr[R
 }
 
 class ArrayListIndexAccess[A](val base: java.util.ArrayList[A]) extends IndexAccess[A] {
-    override def _set(i: Long, e: A) { base.set(i.toInt, e) }
+    override def _set(i: Long, e: A) = { base.set(i.toInt, e) }
     override def _get(i: Long) = base.get(i.toInt)
     override def _size = base.size
 }

@@ -13,7 +13,7 @@ object Pointer extends Namespace
 trait Pointer[A] {
 // element-access
     protected def _read: A = { throw new NotReadablePointerError(this) }
-    protected def _write(e: A) { throw new NotWritablePointerError(this) }
+    protected def _write(e: A): Unit = { throw new NotWritablePointerError(this) }
     final def read: A = _read
     final def write(e: A): Pointer[A] = { _write(e); this }
 
@@ -22,7 +22,7 @@ trait Pointer[A] {
     final def traversal = _traversal
 
 // single-pass
-    protected def _increment {
+    protected def _increment: Unit = {
         Assert("must be overridden", false)
         throw new Error()
     }
@@ -45,7 +45,7 @@ trait Pointer[A] {
     final def ++ : Pointer[A] = { val tmp = copy; pre_++; tmp }
 
 // bidirectional
-    protected def _decrement {
+    protected def _decrement: Unit = {
         Assert("must be overridden", false)
         throw new Error()
     }
@@ -56,7 +56,7 @@ trait Pointer[A] {
     final def -- : Pointer[A] = { val tmp = copy; pre_--; tmp }
 
 // random-access
-    protected def _offset(d: Long) {
+    protected def _offset(d: Long): Unit = {
         Assert("must be overridden", false)
         throw new Error()
     }
@@ -80,10 +80,10 @@ trait Pointer[A] {
     final def <= (that: Pointer[A]): Boolean = this - that <= 0
     final def >= (that: Pointer[A]): Boolean = this - that >= 0
     final def apply(d: Long): A = (this + d).read
-    final def update(d: Long, e: A) { (this + d).write(e) }
+    final def update(d: Long, e: A) = { (this + d).write(e) }
 
 // debug
-    protected def _invariant { }
+    protected def _invariant = { }
 
 // utilities
     final def advance(d: Long) = toExpr.ptr_advance(d).eval
@@ -106,7 +106,7 @@ object PointerPreOps extends PointerPreOps; trait PointerPreOps extends Namespac
 object PointerPre_* extends PointerPre_*; trait PointerPre_* {
     object * {
         def apply[A](p: Pointer[A]): A = p.read
-        def update[A](p: Pointer[A], e: A) { p.write(e) }
+        def update[A](p: Pointer[A], e: A) = { p.write(e) }
     }
 }
 

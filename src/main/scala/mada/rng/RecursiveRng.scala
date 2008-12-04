@@ -21,7 +21,7 @@ class RecursivePointer[A](rngExpr: Expr[Rng[A]], private val fromEnd: Boolean, o
         extends PointerFacade[A, RecursivePointer[A]] {
     def base = { optionBaseInit; optionBase.get }
     override def _read = *(base)
-    override def _write(e: A) { *(base) = e }
+    override def _write(e: A) = { *(base) = e }
 
     override def _equals(that: RecursivePointer[A]) = {
         if (fromEnd != that.fromEnd) {
@@ -59,7 +59,7 @@ class RecursivePointer[A](rngExpr: Expr[Rng[A]], private val fromEnd: Boolean, o
     private var savedDiff = 0L
     private var optionBase: Option[Pointer[A]] = None
 
-    private def optionBaseInit {
+    private def optionBaseInit = {
         if (optionBase.isEmpty) {
             optionBase = new Some(if (fromEnd) rngExpr.eval.end else rngExpr.eval.begin)
             optionBase.get.advance(savedDiff)

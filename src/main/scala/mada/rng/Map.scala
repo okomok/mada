@@ -27,7 +27,7 @@ object MapImpl {
 class MapPointer[From, To](override val _base: Pointer[From], val function: From => To)
         extends PointerAdapter[From, To, MapPointer[From, To]] {
     override def _read = function(*(base))
-    override def _write(e: To) { throw new NotWritablePointerError(this) }
+    override def _write(e: To) = { throw new NotWritablePointerError(this) }
     override def _copy = new MapPointer(base.copy, function)
     override def toString = new StringBuilder().append("MapPointer of ").append(base).toString
 }

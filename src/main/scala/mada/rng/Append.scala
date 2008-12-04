@@ -49,7 +49,7 @@ class AppendPointer[A](
         rightBase = pL.base
     }
 
-    override def _offset(d: Long) {
+    override def _offset(d: Long) = {
         if (d >= 0) {
             AppendPointerOffset(baseRef, rightBase, d, leftEnd)
         } else {
@@ -79,7 +79,7 @@ class AppendPointer[A](
 
 
 object AppendPointerIncrement {
-    def apply[A](pL: Pointer[A], pR: Pointer[A], qL: Pointer[A]) {
+    def apply[A](pL: Pointer[A], pR: Pointer[A], qL: Pointer[A]) = {
         if (pL != qL) {
             ++(pL)
         } else {
@@ -89,7 +89,7 @@ object AppendPointerIncrement {
 }
 
 object AppendPointerOffset {
-    def apply[A](pL: Ref[Pointer[A]], pR: Pointer[A], d: Long, qL: Pointer[A]) {
+    def apply[A](pL: Ref[Pointer[A]], pR: Pointer[A], d: Long, qL: Pointer[A]) = {
         Assert("impossible", d >= 0)
 
         if (pL.deref != qL) {

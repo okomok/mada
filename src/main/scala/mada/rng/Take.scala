@@ -29,11 +29,11 @@ class TakePointer[A](override val _base: Pointer[A], val end: Pointer[A], var co
         extends PointerAdapter[A, A, TakePointer[A]] {
     taken
     override def _traversal = base.traversal upper ForwardTraversal
-    override def _increment { base.pre_++; count -= 1; taken }
+    override def _increment = { base.pre_++; count -= 1; taken }
     override def _copy = new TakePointer(base.copy, end, count)
     override def toString = new StringBuilder().append("TakePointer of ").append(base).toString
 
-    private def taken {
+    private def taken = {
         if (count == 0) {
             baseRef := end
         }

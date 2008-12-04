@@ -7,7 +7,7 @@ import IsEmpty._
 
 
 object AssertModels {
-    def apply[A](r: Rng[A], t: Traversal) {
+    def apply[A](r: Rng[A], t: Traversal) = {
         Assert(msg(r, t), r models t)
     }
 
@@ -21,7 +21,7 @@ object AssertModels {
 
 
 object AssertNotEmpty {
-    def apply[A](r: Rng[A]) {
+    def apply[A](r: Rng[A]) = {
         Assert(msg(r), !from(r).rng_isEmpty.eval)
     }
 

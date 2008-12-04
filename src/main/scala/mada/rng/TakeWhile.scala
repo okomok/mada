@@ -26,11 +26,11 @@ class TakeWhilePointer[A](override val _base: Pointer[A], val end: Pointer[A], v
         extends PointerAdapter[A, A, TakeWhilePointer[A]] {
     taken
     override def _traversal = base.traversal upper ForwardTraversal
-    override def _increment { base.pre_++; taken }
+    override def _increment = { base.pre_++; taken }
     override def _copy = new TakeWhilePointer(base.copy, end, predicate)
     override def toString = new StringBuilder().append("TakeWhilePointer of ").append(base).toString
 
-    private def taken {
+    private def taken = {
         if (base != end && !predicate(*(base))) {
             baseRef := end
         }

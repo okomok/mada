@@ -3,7 +3,7 @@ package mada.rng
 
 
 trait IndexAccess[A] {
-    def _set(startIndex: Long, e: A) { throw NotWritableIndexAccessError }
+    def _set(startIndex: Long, e: A): Unit = { throw NotWritableIndexAccessError }
     def _get(startIndex: Long): A
     def _size: Long
     final def indexAccess = this
@@ -22,7 +22,7 @@ class IndexAccessPointer[A](val indexAccess: IndexAccess[A], val startIndex: Lon
     override val _base = new LongIntervalPointer(startIndex)
 
     override def _read = indexAccess._get(*(base))
-    override def _write(e: A) {
+    override def _write(e: A) = {
         try {
             indexAccess._set(*(base), e)
         } catch {

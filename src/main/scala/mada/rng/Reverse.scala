@@ -30,10 +30,10 @@ object ReverseImpl {
 class ReversePointer[A](override val _base: Pointer[A])
         extends PointerAdapter[A, A, ReversePointer[A]] {
     override def _read = base.copy.pre_--.read
-    override def _write(e: A) { base.copy.pre_--.write(e) }
-    override def _increment { base.pre_-- }
+    override def _write(e: A) = { base.copy.pre_--.write(e) }
+    override def _increment = { base.pre_-- }
     override def _copy = new ReversePointer(base.copy)
-    override def _decrement { base.pre_++ }
-    override def _offset(d: Long) { base -= d }
+    override def _decrement = { base.pre_++ }
+    override def _offset(d: Long) = { base -= d }
     override def _difference(that: ReversePointer[A]) = that.base - base
 }

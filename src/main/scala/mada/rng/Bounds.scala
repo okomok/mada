@@ -29,7 +29,7 @@ object BoundsImpl {
 
 class BoundsPointer[A](override val _base: Pointer[A], val begin: Pointer[A], val end: Pointer[A])
         extends PointerAdapter[A, A, BoundsPointer[A]] {
-    override def _increment {
+    override def _increment = {
         if (base == end)
             throw new ErrorOutOfBounds(this, begin <=< end, "end-pointer to increment")
 
@@ -38,14 +38,14 @@ class BoundsPointer[A](override val _base: Pointer[A], val begin: Pointer[A], va
 
     override def _copy = new BoundsPointer(base.copy, begin, end)
 
-    override def _decrement {
+    override def _decrement = {
         if (base == begin)
             throw new ErrorOutOfBounds(this, begin <=< end, "begin-pointer to decrement")
 
         base.pre_--
     }
 
-    override def _offset(d: Long) {
+    override def _offset(d: Long) = {
         if (d >= 0 && d > end - base)
             throw new ErrorOutOfBounds(this, begin <=< end, "end-pointer to advance")
         else if (d < 0 && -d > base - begin)
