@@ -18,7 +18,7 @@ class ReverseTest {
 
     def testFusion() {
         NDebug.value = false
-        val l = from(Array(6,5,4,3,2,1)).lazy_
+        val l = from(Array(6,5,4,3,2,1)).Lazy
         val l1 = l.eval
         val l2 = l.rng_reverse.rng_reverse.eval
         assertSame(l1, l2)

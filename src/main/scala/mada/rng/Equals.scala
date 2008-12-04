@@ -19,8 +19,8 @@ object Equals extends Equals; trait Equals extends Predefs {
 
 case class EqualsExpr[A1, A2](_1: Expr[Rng[A1]], _2: Expr[Rng[A2]], _3: (A1, A2) => Boolean) extends Expr[Boolean] {
     override def _eval = {
-        val z1 = _1.lazy_
-        val z2 = _2.lazy_
+        val z1 = _1.Lazy
+        val z2 = _2.Lazy
         z1.eval.traversal upper z2.eval.traversal match {
             case _: RandomAccessTraversal => {
                 if (z1.rng_size.eval != z2.rng_size.eval) false else z1.rng_equalsTo(z2.rng_begin, _3).eval

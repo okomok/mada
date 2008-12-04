@@ -16,7 +16,7 @@ object DropWhile extends DropWhile; trait DropWhile extends Predefs {
 
 case class DropWhileExpr[A](_1: Expr[Rng[A]], _2: A => Boolean) extends Expr[Rng[A]] {
     override def _eval = {
-        val z1 = _1.lazy_
+        val z1 = _1.Lazy
         z1.rng_findPointerOf(!_2(_)).eval <=< z1.rng_end.eval
     }
 }
