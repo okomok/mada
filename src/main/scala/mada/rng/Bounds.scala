@@ -12,7 +12,7 @@ object Bounds extends Bounds; trait Bounds extends Predefs {
 
 case class BoundsExpr[A](_1: Expr[Rng[A]]) extends Expr[Rng[A]] {
     override def _eval = _1 match {
-        case x: BoundsExpr[_] => x.eval // bounds-bounds fusion
+        case BoundsExpr(x1) => BoundsExpr(x1).eval // bounds-bounds fusion
         case _ => BoundsImpl(_1.eval)
     }
 }
