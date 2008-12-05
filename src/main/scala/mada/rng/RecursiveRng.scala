@@ -12,7 +12,7 @@ class RecursiveRng[A](val traversal: Traversal) extends Ref[Expr[Rng[A]]](null) 
 
 object RecursiveImpl {
     def apply[A](x: Expr[Rng[A]], t: Traversal): Rng[A] = {
-        val z = x.Lazy
+        val z = x.xlazy
         new RecursivePointer(z, false, t) <=< new RecursivePointer(z, true, t)
     }
 }

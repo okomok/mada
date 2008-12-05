@@ -4,7 +4,7 @@ package mada.rng
 
 object Bounds extends Bounds; trait Bounds extends Predefs {
     class MadaRngBounds[A](_1: Expr[Rng[A]]) {
-        def rng_bounds = BoundsExpr(_1).expr
+        def bounds = BoundsExpr(_1).expr
     }
     implicit def toMadaRngBounds[A](_1: Expr[Rng[A]]): MadaRngBounds[A] = new MadaRngBounds[A](_1)
 }

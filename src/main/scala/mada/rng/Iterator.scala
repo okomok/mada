@@ -6,8 +6,7 @@ package mada.rng
 // Iterator[A] <-> Expr[Rng[A]]
 
 trait IteratorCompatible {
-    implicit def toMadaIteratorRngExpr[A](from: Iterator[A]): Expr[Rng[A]] = FromIteratorExpr(Expr(from)).expr
-    implicit def fromMadaIteratorRngExpr[A](from: Expr[Rng[A]]): Iterator[A] = ToIteratorExpr(from).eval
+    implicit def madaRng_Iterator2ExprRng[A](from: Iterator[A]): Expr[Rng[A]] = FromIteratorExpr(Expr(from)).expr
 }
 
 
@@ -56,8 +55,8 @@ class IteratorPointer[A](val base: Iterator[A], private var e: Option[A])
 
 object ToIterator extends ToIterator; trait ToIterator extends Predefs {
     class MadaRngToIterator[A](_1: Expr[Rng[A]]) {
-        def rng_toIterator = ToIteratorExpr(_1).expr
-        def rng_elements = rng_toIterator
+        def toIterator = ToIteratorExpr(_1).expr
+        def elements = toIterator
     }
     implicit def toMadaRngToIterator[A](_1: Expr[Rng[A]]): MadaRngToIterator[A] = new MadaRngToIterator[A](_1)
 }

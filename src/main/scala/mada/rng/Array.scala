@@ -10,8 +10,7 @@ import Foreach._
 //  Array[A] <-> Expr[Rng[A]]
 
 object ArrayCompatible extends ArrayCompatible; trait ArrayCompatible {
-    implicit def toMadaArrayRngExpr[A](from: Array[A]): Expr[Rng[A]] = FromArrayExpr(Expr(from)).expr
-    implicit def fromMadaArrayRngExpr[A](from: Expr[Rng[A]]): Array[A] = ToArrayExpr(from).eval
+    implicit def madaRng_Array2ExprRng[A](from: Array[A]): Expr[Rng[A]] = FromArrayExpr(Expr(from)).expr
 }
 
 
@@ -48,7 +47,7 @@ class ArrayIndexAccess[A](val base: Array[A]) extends IndexAccess[A] {
 
 object ToArray extends ToArray; trait ToArray extends Predefs {
     class MadaRngToArray[A](_1: Expr[Rng[A]]) {
-        def rng_toArray = ToArrayExpr(_1).expr
+        def toArray = ToArrayExpr(_1).expr
     }
     implicit def toMadaRngToArray[A](_1: Expr[Rng[A]]): MadaRngToArray[A] = new MadaRngToArray[A](_1)
 }
@@ -56,20 +55,20 @@ object ToArray extends ToArray; trait ToArray extends Predefs {
 case class ToArrayExpr[A](_1: Expr[Rng[A]]) extends Expr[Array[A]] {
     override def _eval = _1 match {
         case FromArrayExpr(x1) => x1.eval
-        case _ => ToArrayImpl(_1.Lazy)
+        case _ => ToArrayImpl(_1.xlazy)
     }
 }
 
 object ToArrayImpl {
     def apply[A](x: Expr[Rng[A]]): Array[A] = x.eval.traversal match {
         case _: ForwardTraversal => inForward(x)
-        case _: SinglePassTraversal => inForward(x.rng_force)
+        case _: SinglePassTraversal => inForward(x.force)
     }
 
     private def inForward[A](x: Expr[Rng[A]]): Array[A] = {
-        val a = new Array[A](x.rng_distance.eval.toInt)
+        val a = new Array[A](x.distance.eval.toInt)
         var i = 0
-        x.rng_foreach({ (e: A) => a(i) = e; i += 1 }).eval
+        x.foreach({ (e: A) => a(i) = e; i += 1 }).eval
         a
     }
 }

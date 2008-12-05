@@ -11,6 +11,6 @@ import junit.framework.Assert._
 
 class IndirectTest {
     def testTrivial {
-        from(Array(1,2,3)).rng_outdirect.rng_indirect
+        from(Array(1,2,3)).outdirect.indirect
     }
 }

@@ -15,12 +15,12 @@ class IteratorTest {
     }
 
     def testTo {
-        assertEquals(example1.elements.toList.toString, from(example1).rng_toIterator.eval.toList.toString)
+        assertEquals(example1.elements.toList.toString, from(example1).toIterator.eval.toList.toString)
     }
 
     def testFusion {
         val it = example1.elements
-        assertSame(it, from(it).rng_toIterator.eval)
+        assertSame(it, from(it).toIterator.eval)
     }
 
     def testEmpty {

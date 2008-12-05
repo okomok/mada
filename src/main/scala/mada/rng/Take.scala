@@ -4,7 +4,7 @@ package mada.rng
 
 object Take extends Take; trait Take extends Predefs {
     class MadaRngTake[A](_1: Expr[Rng[A]]) {
-        def rng_take(_2: Long) = TakeExpr(_1, _2).expr
+        def take(_2: Long) = TakeExpr(_1, _2).expr
     }
     implicit def toMadaRngTake[A](_1: Expr[Rng[A]]): MadaRngTake[A] = new MadaRngTake[A](_1)
 }

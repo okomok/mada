@@ -4,7 +4,7 @@ package mada.rng
 
 object IsEmpty extends IsEmpty; trait IsEmpty extends Predefs {
     class MadaRngIsEmpty[A](_1: Expr[Rng[A]]) {
-        def rng_isEmpty = IsEmptyExpr(_1).expr
+        def isEmpty = IsEmptyExpr(_1).expr
     }
     implicit def toMadaRngIsEmpty[A](_1: Expr[Rng[A]]): MadaRngIsEmpty[A] = new MadaRngIsEmpty[A](_1)
 }

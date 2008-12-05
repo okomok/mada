@@ -16,19 +16,19 @@ import junit.framework.Assert._
 class FindTest {
     def testFind {
         val r = from(2, 100)
-        assertEquals(r.rng_find((_: Int) == 30).eval.get, 30)
-        assertEquals(*(r.rng_findPointerOf((_: Int) == 30).eval), 30)
+        assertEquals(r.find((_: Int) == 30).eval.get, 30)
+        assertEquals(*(r.findPointerOf((_: Int) == 30).eval), 30)
     }
 
     def testExists {
         val r = from(2, 100)
-        assertTrue(r.rng_exists((_: Int) == 30).eval)
-        assertFalse(r.rng_exists((_: Int) == 200).eval)
+        assertTrue(r.exists((_: Int) == 30).eval)
+        assertFalse(r.exists((_: Int) == 200).eval)
     }
 
     def testForall {
         val r = from(2, 100)
-        assertTrue(r.rng_forall((_: Int) < 300).eval)
-        assertFalse(r.rng_forall((_: Int) == 50).eval)
+        assertTrue(r.forall((_: Int) < 300).eval)
+        assertFalse(r.forall((_: Int) == 50).eval)
     }
 }

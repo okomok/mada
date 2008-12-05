@@ -7,7 +7,7 @@ import Pointer._
 
 object Loop extends Loop; trait Loop extends Predefs {
     class MadaRngLoop[A](_1: Expr[Rng[A]]) {
-        def rng_loop(_2: A => Boolean) = LoopExpr(_1, _2).expr
+        def loop(_2: A => Boolean) = LoopExpr(_1, _2).expr
     }
     implicit def toMadaRngLoop[A](_1: Expr[Rng[A]]): MadaRngLoop[A] = new MadaRngLoop[A](_1)
 }

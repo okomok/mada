@@ -7,7 +7,7 @@ import Pointer._
 
 object Init extends Init; trait Init extends Predefs {
     class MadaRngInit[A](_1: Expr[Rng[A]]) {
-        def rng_init = InitExpr(_1).expr
+        def init = InitExpr(_1).expr
     }
     implicit def toMadaRngInit[A](_1: Expr[Rng[A]]): MadaRngInit[A] = new MadaRngInit[A](_1)
 }

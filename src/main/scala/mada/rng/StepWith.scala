@@ -4,7 +4,7 @@ package mada.rng
 
 object StepWith extends StepWith; trait StepWith extends Predefs {
     class MadaRngStepWith[A](_1: Expr[Rng[A]]) {
-        def rng_stepWith(_2: Rng[A] => Pointer[A]) = StepWithExpr(_1, _2).expr
+        def stepWith(_2: Rng[A] => Pointer[A]) = StepWithExpr(_1, _2).expr
     }
     implicit def toMadaRngStepWith[A](_1: Expr[Rng[A]]): MadaRngStepWith[A] = new MadaRngStepWith[A](_1)
 }

@@ -7,7 +7,7 @@ import Find._
 
 object Forall extends Forall; trait Forall extends Predefs {
     class MadaRngForall[A](_1: Expr[Rng[A]]) {
-        def rng_forall(_2: A => Boolean) = ForallExpr(_1, _2).expr
+        def forall(_2: A => Boolean) = ForallExpr(_1, _2).expr
     }
     implicit def toMadaRngForall[A](_1: Expr[Rng[A]]): MadaRngForall[A] = new MadaRngForall[A](_1)
 }
@@ -18,5 +18,5 @@ case class ForallExpr[A](_1: Expr[Rng[A]], _2: A => Boolean) extends Expr[Boolea
 }
 
 case class ForallContext[A](_2: A => Boolean) extends Context[Rng[A], Boolean] {
-    override def apply(_1: Expr[Rng[A]]) = _1.rng_find(!_2(_: A)).eval == None
+    override def apply(_1: Expr[Rng[A]]) = _1.find(!_2(_: A)).eval == None
 }

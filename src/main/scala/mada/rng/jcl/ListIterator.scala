@@ -11,7 +11,6 @@ import Pointer._
 
 object LinkedListCompatible extends LinkedListCompatible; trait LinkedListCompatible {
     implicit def madaRngJcl_LinkedList2RngExpr[A](from: LinkedList[A]): Expr[Rng[A]] = FromLinkedListExpr(Expr(from)).expr
-    implicit def madaRngJcl_RngExpr2LinkedList[A](from: Expr[Rng[A]]): LinkedList[A] = ToLinkedListExpr(from).eval
 }
 
 
@@ -53,7 +52,7 @@ class LinkedListPointer(val base: ListIterator[A], val list: LinkedList) extends
 
 object ToListIterator extends ToListIterator; trait ToListIterator extends Predefs {
     class MadaRngToListIterator[A](_1: Expr[Rng[A]]) {
-        def rng_toListIterator = ToListIteratorExpr(_1).expr
+        def toListIterator = ToListIteratorExpr(_1).expr
     }
     implicit def toMadaRngToListIterator[A](_1: Expr[Rng[A]]): MadaRngToListIterator[A] = new MadaRngToListIterator[A](_1)
 }

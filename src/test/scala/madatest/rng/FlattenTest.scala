@@ -16,7 +16,7 @@ class FlattenTest {
         val r2 = from(Array(19, 8,13)).eval
         val r3 = from(Array(6, 4,23, 0,12,15)).eval
         val r4 = from(Array(11, 4)).eval
-        val actual = from(Array[Rng[Int]](r1, r2, r3, r4)).rng_flatten(BidirectionalTraversal).eval
+        val actual = from(Array[Rng[Int]](r1, r2, r3, r4)).flatten(BidirectionalTraversal).eval
         detail.TestBidirectionalReadWrite(example1, actual)
     }
 
@@ -26,7 +26,7 @@ class FlattenTest {
         val r2 = from(Array(19, 8,13)).eval
         val r3 = from(Array(6, 4,23, 0,12,15)).eval
         val r4 = from(Array(11, 4)).eval
-        val actual = from(Array[Rng[Int]](re, r1, re, re, re, r2, r3, re, r4, re)).rng_flatten(BidirectionalTraversal).eval
+        val actual = from(Array[Rng[Int]](re, r1, re, re, re, r2, r3, re, r4, re)).flatten(BidirectionalTraversal).eval
         detail.TestBidirectionalReadWrite(example1, actual)
     }
 
@@ -35,12 +35,12 @@ class FlattenTest {
         val r2 = from(Array(19, 8,13)).eval
         val r3 = from(Array(6, 4,23, 0,12,15)).eval
         val r4 = from(Array(11, 4)).eval
-        val actual = from(Array[Rng[Int]](r1, r2, r3, r4)).rng_flatten.eval
+        val actual = from(Array[Rng[Int]](r1, r2, r3, r4)).flatten.eval
         detail.TestSinglePassReadOnly(example1, actual)
     }
 
     def testEmpty {
         val r = from(empty1).eval
-        detail.TestEmpty(from(Array[Rng[Int]](r, from(empty1).eval, r)).rng_flatten.eval)
+        detail.TestEmpty(from(Array[Rng[Int]](r, from(empty1).eval, r)).flatten.eval)
     }
 }

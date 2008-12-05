@@ -19,12 +19,12 @@ class StreamTest {
     }
 
     def testTo {
-        assertEquals(Stream.fromIterator(example1.elements).toString, from(Stream.fromIterator(example1.elements)).rng_toStream.eval.toString)
+        assertEquals(Stream.fromIterator(example1.elements).toString, from(Stream.fromIterator(example1.elements)).toStream.eval.toString)
     }
 
     def testFusion {
         val stm = Stream.fromIterator(example1.elements)
-        assertSame(stm, from(stm).rng_toStream.eval)
+        assertSame(stm, from(stm).toStream.eval)
     }
 
     def testEmpty {

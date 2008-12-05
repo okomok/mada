@@ -5,7 +5,7 @@ package mada
 object Assert {
     def apply(msg: => Any, cond: => Boolean) {
         if (!NDebug.value)
-            assert(cond, msg)
+            assert(cond, msg) // BUGBUG: msg is always evaluated.
     }
 }
 

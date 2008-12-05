@@ -7,8 +7,8 @@ import Pointer._
 
 object Append extends Append; trait Append extends Predefs {
     class MadaRngAppend[A](_1: Expr[Rng[A]]) {
-        def rng_append(_2: Expr[Rng[A]]) = AppendExpr(_1, _2).expr
-        def rng_++(_2: Expr[Rng[A]]) = AppendExpr(_1, _2).expr
+        def append(_2: Expr[Rng[A]]) = AppendExpr(_1, _2).expr
+        def ++(_2: Expr[Rng[A]]) = AppendExpr(_1, _2).expr
     }
     implicit def toMadaRngAppend[A](_1: Expr[Rng[A]]): MadaRngAppend[A] = new MadaRngAppend[A](_1)
 }

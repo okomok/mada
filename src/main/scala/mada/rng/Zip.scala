@@ -4,7 +4,7 @@ package mada.rng
 
 object Zip extends Zip; trait Zip extends Predefs {
     class MadaRngZip[A1](_1: Expr[Rng[A1]]) {
-        def rng_zip[A2](_2: Expr[Rng[A2]]) = ZipExpr(_1, _2).expr
+        def zip[A2](_2: Expr[Rng[A2]]) = ZipExpr(_1, _2).expr
     }
     implicit def toMadaRngZip[A1](_1: Expr[Rng[A1]]): MadaRngZip[A1] = new MadaRngZip[A1](_1)
 }

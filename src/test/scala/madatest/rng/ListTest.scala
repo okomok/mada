@@ -15,12 +15,12 @@ class ListTest {
     }
 
     def testTo {
-        assertEquals(example1.elements.toList.toString, from(example1).rng_toList.eval.toString)
+        assertEquals(example1.elements.toList.toString, from(example1).toList.eval.toString)
     }
 
     def testFusion {
         val lst = example1.elements.toList
-        assertSame(lst, from(lst).rng_toList.eval)
+        assertSame(lst, from(lst).toList.eval)
     }
 
     def testEmpty {

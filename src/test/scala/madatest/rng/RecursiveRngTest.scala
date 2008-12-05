@@ -25,10 +25,10 @@ class RecursiveRngTest {
 
     def testTrivial2 {
         val x = new RecursiveRng[Int]
-        x := (from(Array(1,2,3)) rng_++ x) // paren is needed
+        x := (from(Array(1,2,3)) ++ x) // paren is needed
         val r = x.eval
 //        r.begin.read
-//        println(r.toExpr.rng_window(0, 10).eval)
+//        println(r.toExpr.window(0, 10).eval)
         ()
     }
 

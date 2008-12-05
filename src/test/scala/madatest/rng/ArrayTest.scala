@@ -44,8 +44,8 @@ class ArrayTest {
     }
 
     def testImplicit {
-        from(Array('1','2','3')).rng_toArray.eval.deepMkString("abc")
-        from(Array('1','2','3')).deepMkString("abc")
+        from(Array('1','2','3')).toArray.eval.deepMkString("abc")
+        // from(Array('1','2','3')).deepMkString("abc")
     }
 
     def testMe {

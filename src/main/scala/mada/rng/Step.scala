@@ -7,7 +7,7 @@ import Pointer._
 
 object Step extends Step; trait Step extends Predefs {
     class MadaRngStep[A](_1: Expr[Rng[A]]) {
-        def rng_step(_2: Long) = StepExpr(_1, _2).expr
+        def step(_2: Long) = StepExpr(_1, _2).expr
     }
     implicit def toMadaRngStep[A](_1: Expr[Rng[A]]): MadaRngStep[A] = new MadaRngStep[A](_1)
 }

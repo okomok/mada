@@ -8,8 +8,7 @@ import ToIterator._
 //  Stream[A] <-> Expr[Rng[A]]
 
 object StreamCompatible extends StreamCompatible; trait StreamCompatible {
-    implicit def toMadaStreamRngExpr[A](from: Stream[A]): Expr[Rng[A]] = FromStreamExpr(Expr(from)).expr
-    implicit def fromMadaStreamRngExpr[A](from: Expr[Rng[A]]): Stream[A] = ToStreamExpr(from).eval
+    implicit def madaRng_Stream2ExprRng[A](from: Stream[A]): Expr[Rng[A]] = FromStreamExpr(Expr(from)).expr
 }
 
 
@@ -49,7 +48,7 @@ class StreamPointer[A](var base: Stream[A]) extends PointerFacade[A, StreamPoint
 
 object ToStream extends ToStream; trait ToStream extends Predefs {
     class MadaRngToStream[A](_1: Expr[Rng[A]]) {
-        def rng_toStream = ToStreamExpr(_1).expr
+        def toStream = ToStreamExpr(_1).expr
     }
     implicit def toMadaRngToStream[A](_1: Expr[Rng[A]]): MadaRngToStream[A] = new MadaRngToStream[A](_1)
 }
@@ -57,6 +56,6 @@ object ToStream extends ToStream; trait ToStream extends Predefs {
 case class ToStreamExpr[A](_1: Expr[Rng[A]]) extends Expr[Stream[A]] {
     override def _eval = _1 match {
         case FromStreamExpr(x1) => x1.eval
-        case _ => Stream.fromIterator(_1.rng_toIterator.eval)
+        case _ => Stream.fromIterator(_1.toIterator.eval)
     }
 }

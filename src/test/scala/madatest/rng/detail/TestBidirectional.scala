@@ -30,6 +30,6 @@ object TestBidirectionalReadOnly {
         TestBidirectionalReadablePointer(actual.begin, expected(0), expected(1))
 
         if (NDebugReverse.value)
-            TestForwardReadOnly(CopyReverseArray(expected), actual.toExpr.rng_reverse.eval)
+            TestForwardReadOnly(CopyReverseArray(expected), actual.toExpr.reverse.eval)
     }
 }

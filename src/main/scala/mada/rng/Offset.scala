@@ -7,7 +7,7 @@ import Implies._
 
 object Offset extends Offset; trait Offset extends Predefs {
     class MadaRngOffset[A](_1: Expr[Rng[A]]) {
-        def rng_offset(_2: Long, _3: Long) = OffsetExpr(_1, _2, _3).expr
+        def offset(_2: Long, _3: Long) = OffsetExpr(_1, _2, _3).expr
     }
     implicit def toMadaRngOffset[A](_1: Expr[Rng[A]]): MadaRngOffset[A] = new MadaRngOffset[A](_1)
 }

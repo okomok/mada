@@ -8,8 +8,8 @@ import IsEmpty._
 
 object Flatten extends Flatten; trait Flatten extends Predefs {
     class MadaRngFlatten[A](_1: Expr[Rng[Rng[A]]]) {
-        def rng_flatten = FlattenExpr(_1, None).expr
-        def rng_flatten(_2: Traversal) = FlattenExpr(_1, Some(_2)).expr
+        def flatten = FlattenExpr(_1, None).expr
+        def flatten(_2: Traversal) = FlattenExpr(_1, Some(_2)).expr
     }
     implicit def toMadaRngFlatten[A](_1: Expr[Rng[Rng[A]]]): MadaRngFlatten[A] = new MadaRngFlatten[A](_1)
 }
@@ -77,7 +77,7 @@ class FlattenPointer[A](override val _base: Pointer[Rng[A]], val end: Pointer[Rn
     }
 
     private def resetLocalForward = {
-        while (base != end && localRng.toExpr.rng_isEmpty.eval) {
+        while (base != end && localRng.toExpr.isEmpty.eval) {
             base.pre_++
         }
         if (base != end) {
@@ -86,7 +86,7 @@ class FlattenPointer[A](override val _base: Pointer[Rng[A]], val end: Pointer[Rn
     }
 
     private def resetLocalBackward = {
-        while (localRng.toExpr.rng_isEmpty.eval) {
+        while (localRng.toExpr.isEmpty.eval) {
             base.pre_--
         }
         local = localRng.end

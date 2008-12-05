@@ -22,6 +22,6 @@ object TestSinglePassReadOnly {
         if (actual models ForwardTraversal)
             assertEquals(from(expected).eval, p <=< q)
         else
-            assertEquals(from(expected).eval, (p <=< q).toExpr.rng_force.eval)
+            assertEquals(from(expected).eval, (p <=< q).toExpr.force.eval)
     }
 }

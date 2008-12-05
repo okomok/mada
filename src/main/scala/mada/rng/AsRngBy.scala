@@ -4,7 +4,7 @@ package mada.rng
 
 object AsRngBy extends AsRngBy; trait AsRngBy extends Predefs {
     class MadaRngAsRngBy[A](_1: Expr[Rng[A]]) {
-        def rng_asRngBy(_2: Traversal) = AsRngByExpr(_1, _2).expr
+        def asRngBy(_2: Traversal) = AsRngByExpr(_1, _2).expr
     }
     implicit def toMadaRngAsRngBy[A](_1: Expr[Rng[A]]): MadaRngAsRngBy[A] = new MadaRngAsRngBy[A](_1)
 }

@@ -7,7 +7,7 @@ import Pointer._
 
 object Drop extends Drop; trait Drop extends Predefs {
     class MadaRngDrop[A](_1: Expr[Rng[A]]) {
-        def rng_drop(_2: Long) = DropExpr(_1, _2).expr
+        def drop(_2: Long) = DropExpr(_1, _2).expr
     }
     implicit def toMadaRngDrop[A](_1: Expr[Rng[A]]): MadaRngDrop[A] = new MadaRngDrop[A](_1)
 }

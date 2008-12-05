@@ -10,8 +10,8 @@ import Size._
 
 object Equals extends Equals; trait Equals extends Predefs {
     class MadaRngEquals[A1](_1: Expr[Rng[A1]]) {
-        def rng_equals[A2](_2: Expr[Rng[A2]], _3: (A1, A2) => Boolean) = EqualsExpr(_1, _2, _3).expr
-        def rng_equals(_2: Expr[Rng[A1]]) = EqualsExpr[A1, A1](_1, _2, _ == _).expr
+        def requals[A2](_2: Expr[Rng[A2]], _3: (A1, A2) => Boolean) = EqualsExpr(_1, _2, _3).expr
+        def requals(_2: Expr[Rng[A1]]) = EqualsExpr[A1, A1](_1, _2, _ == _).expr
     }
     implicit def toMadaRngEquals[A1](_1: Expr[Rng[A1]]): MadaRngEquals[A1] = new MadaRngEquals[A1](_1)
 }
@@ -19,11 +19,11 @@ object Equals extends Equals; trait Equals extends Predefs {
 
 case class EqualsExpr[A1, A2](_1: Expr[Rng[A1]], _2: Expr[Rng[A2]], _3: (A1, A2) => Boolean) extends Expr[Boolean] {
     override def _eval = {
-        val z1 = _1.Lazy
-        val z2 = _2.Lazy
+        val z1 = _1.xlazy
+        val z2 = _2.xlazy
         z1.eval.traversal upper z2.eval.traversal match {
             case _: RandomAccessTraversal => {
-                if (z1.rng_size.eval != z2.rng_size.eval) false else z1.rng_equalsTo(z2.rng_begin, _3).eval
+                if (z1.size.eval != z2.size.eval) false else z1.equalsTo(z2.begin, _3).eval
             }
             case _: SinglePassTraversal => EqualsImpl(z1.eval, z2.eval, _3)
         }

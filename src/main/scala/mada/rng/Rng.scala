@@ -65,17 +65,17 @@ trait Rng[A] {
     override def equals(that: Any) = equals(that.asInstanceOf[Rng[A]])
     override def toString = detail.ToString(this)
 
-    final def equals(that: Rng[A]) = toExpr.rng_equals(that).eval
-    final def shallowEquals(that: Rng[A]) = toExpr.rng_shallowEquals(that).eval
-    final def readOnly = toExpr.rng_readOnly.eval
+    final def equals(that: Rng[A]) = toExpr.requals(that).eval
+    final def shallowEquals(that: Rng[A]) = toExpr.shallowEquals(that).eval
+    final def readOnly = toExpr.readOnly.eval
 
     final def rng = this
     final def toExpr = Expr(this)
     final def toPair = (begin, end)
 
 // for-comprehension
-    final def map[B](f: A => B) = toExpr.rng_map(f).eval
-    final def flatMap[B](f: A => Rng[B]) = toExpr.rng_map(f).rng_flatten.eval
-    final def filter(p: A => Boolean) = toExpr.rng_filter(p).eval
-    final def foreach(f: A => Unit) = toExpr.rng_foreach(f).eval
+    final def map[B](f: A => B) = toExpr.map(f).eval
+    final def flatMap[B](f: A => Rng[B]) = toExpr.map(f).flatten.eval
+    final def filter(p: A => Boolean) = toExpr.filter(p).eval
+    final def foreach(f: A => Unit) = toExpr.foreach(f).eval
 }

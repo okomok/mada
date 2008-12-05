@@ -14,7 +14,7 @@ class CycleTest {
     def testTrivial {
         mada.NDebug.value = false
         val expected = Array(4,23,0,12,4,23,0,12,4,23,0,12,4,23,0,12)
-        val actual = from(Array(4,23,0,12)).rng_cycle(4).eval
+        val actual = from(Array(4,23,0,12)).cycle(4).eval
         detail.TestRandomAccessReadOnly(expected, actual)
     }
 }
