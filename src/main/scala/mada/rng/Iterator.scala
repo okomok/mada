@@ -42,6 +42,7 @@ object FromIteratorImpl {
     }
 }
 
+// null can't replace Option in case A is an AnyVal.
 class IteratorPointer[A](val base: Iterator[A], private var e: Option[A])
         extends PointerFacade[A, IteratorPointer[A]] {
     override def _read = e.get

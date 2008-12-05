@@ -31,18 +31,15 @@ case class FromStreamExpr[A](_1: Expr[Stream[A]]) extends Expr[Rng[A]] {
 
 object FromStreamImpl {
     def apply[A](s: Stream[A]): Rng[A] = {
-        new StreamPointer(if (s.isEmpty) None else Some(s)) <=< new StreamPointer(None)
+        new StreamPointer(if (s.isEmpty) null else s) <=< new StreamPointer(null)
     }
 }
 
-class StreamPointer[A](var base: Option[Stream[A]]) extends PointerFacade[A, StreamPointer[A]] {
-    override def _read = base.get.head
+class StreamPointer[A](var base: Stream[A]) extends PointerFacade[A, StreamPointer[A]] {
+    override def _read = base.head
     override def _traversal = ForwardTraversal
-    override def _equals(that: StreamPointer[A]) = base.getOrElse(null) eq that.base.getOrElse(null)
-    override def _increment = {
-        val tl = base.get.tail
-        base = if (tl.isEmpty) None else Some(tl)
-    }
+    override def _equals(that: StreamPointer[A]) = base eq that.base
+    override def _increment = { val tl = base.tail; base = if (tl.isEmpty) null else tl }
     override def _copy = new StreamPointer[A](base)
     override def hashCode = base.hashCode
 }
