@@ -23,7 +23,7 @@ object OffsetImpl {
         AssertModels(r, ForwardTraversal)
         Assert("too many offsets", (r models RandomAccessTraversal) implies (n1 <= SizeExpr(Expr(r)).eval + n2))
         Assert("requires BidirectionalRng", (n1 < 0) implies (r models BidirectionalTraversal))
-        Assert("requires BidirectionalRng", (n2 < 0) implies ( r models BidirectionalTraversal))
+        Assert("requires BidirectionalRng", (n2 < 0) implies (r models BidirectionalTraversal))
 
         r.begin.advance(n1) <=< r.end.advance(n2)
     }
