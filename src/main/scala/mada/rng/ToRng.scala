@@ -8,5 +8,6 @@ object ToRng extends ToRng; trait ToRng extends Namespace
         with IntervalToRng
         with IteratorToRng
         with ListToRng
+        with StreamToRng
         with StringToRng
         with jcl.ToRng
