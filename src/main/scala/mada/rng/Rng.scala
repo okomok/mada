@@ -67,6 +67,7 @@ trait Rng[A] {
 
     final def equals(that: Rng[A]) = toExpr.requals(that).eval
     final def shallowEquals(that: Rng[A]) = toExpr.shallowEquals(that).eval
+    final def shallowToString = detail.ShallowToString(this)
     final def readOnly = toExpr.readOnly.eval
 
     final def rng = this
