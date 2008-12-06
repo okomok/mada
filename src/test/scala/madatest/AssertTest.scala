@@ -19,6 +19,11 @@ class AssertTest extends TestCase {
         false
     }
 
+    def neverEvaluatedMsg(): String = {
+        fail("doh")
+        "doh"
+    }
+
     def testTrivial {
         assertTrue(!NDebug.value)
 
@@ -49,5 +54,14 @@ class AssertTest extends TestCase {
             case e: junit.framework.AssertionFailedError => thrown = true
         }
         assertTrue("must be thrown", thrown)
+    }
+
+    def testNotEvaluatedMsg: Unit = {
+        NDebug.value = true
+        Assert(neverEvaluatedMsg, true)
+        Verify(neverEvaluatedMsg, true)
+        NDebug.value = false
+        Assert(neverEvaluatedMsg, true)
+        Verify(neverEvaluatedMsg, true)
     }
 }

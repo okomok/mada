@@ -3,14 +3,13 @@ package mada
 
 
 object Assert {
-    def apply(msg: => Any, cond: => Boolean) {
-        if (!NDebug.value)
-            assert(cond, msg) // BUGBUG: msg is always evaluated.
+    def apply(msg: => Any, cond: => Boolean): Unit = {
+        if (!NDebug.value && !cond) {
+            throw new java.lang.AssertionError("assertion failed: " + msg)
+        }
     }
 }
 
 object Verify {
-    def apply(msg: => Any, cond: Boolean) {
-        assert(cond, msg)
-    }
+    def apply(msg: => Any, cond: Boolean) = Assert(msg, cond)
 }
