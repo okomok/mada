@@ -100,10 +100,10 @@ object RandomAccessFileToRng extends RandomAccessFileToRng; trait RandomAccessFi
 
 // RandomAccessFileExprs
 
-case class FromIntRandomAccessFileExpr(_1: Expr[IntRandomAccessFile]) extends Expr[Rng[Int]] {
-    override def _eval[U](c: Context[Rng[Int], U]): U = IndexAccessRngExpr(_1.eval._indexAccess).eval(c)
+case class FromIntRandomAccessFileExpr(_1: Expr[IntRandomAccessFile]) extends ExprAdapter[Rng[Int]] {
+    override protected def _base = IndexAccessRngExpr(_1.eval._indexAccess)
 }
 
-case class FromLongRandomAccessFileExpr(_1: Expr[LongRandomAccessFile]) extends Expr[Rng[Long]] {
-    override def _eval[U](c: Context[Rng[Long], U]): U = IndexAccessRngExpr(_1.eval._indexAccess).eval(c)
+case class FromLongRandomAccessFileExpr(_1: Expr[LongRandomAccessFile]) extends ExprAdapter[Rng[Long]] {
+    override protected def _base = IndexAccessRngExpr(_1.eval._indexAccess)
 }

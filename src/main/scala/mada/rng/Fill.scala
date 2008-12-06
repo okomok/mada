@@ -2,8 +2,6 @@
 package mada.rng
 
 
-import Foreach._
-import Outdirect._
 import Pointer._
 
 
@@ -15,6 +13,6 @@ object Fill extends Fill; trait Fill extends Predefs {
 }
 
 
-case class FillExpr[A, B <: A](_1: Expr[Rng[A]], _2: B) extends Expr[Unit] {
-    override def _eval[U](c: Context[Unit, U]) = _1.outdirect.foreach(*(_) = _2).eval(c)
+case class FillExpr[A, B <: A](_1: Expr[Rng[A]], _2: B) extends ExprAdapter[Unit] {
+    override protected def _base = ForeachExpr(OutdirectExpr(_1), *(_: Pointer[A]) = _2)
 }

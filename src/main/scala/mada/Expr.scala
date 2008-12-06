@@ -28,7 +28,7 @@ trait Expr[A] {
 }
 
 
-// Adapter
+// ExprAdapter
 
 trait ExprAdapter[A] extends Expr[A] {
     protected def _base: Expr[A]

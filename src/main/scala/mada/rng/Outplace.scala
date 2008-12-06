@@ -2,10 +2,6 @@
 package mada.rng
 
 
-import Force._
-import Outdirect._
-
-
 object Outplace extends Outplace; trait Outplace extends Predefs {
     class MadaRngOutplace[A](_1: Expr[Rng[A]]) {
         def outplace = OutplaceExpr(_1).expr
@@ -14,6 +10,6 @@ object Outplace extends Outplace; trait Outplace extends Predefs {
 }
 
 
-case class OutplaceExpr[A](_1: Expr[Rng[A]]) extends Expr[Rng[Pointer[A]]] {
-    override def _eval[U](c: Context[Rng[Pointer[A]], U]): U = _1.outdirect.force.eval(c)
+case class OutplaceExpr[A](_1: Expr[Rng[A]]) extends ExprAdapter[Rng[Pointer[A]]] {
+    override protected def _base = ForceExpr(OutdirectExpr(_1))
 }

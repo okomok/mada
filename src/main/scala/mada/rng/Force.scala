@@ -2,10 +2,6 @@
 package mada.rng
 
 
-import jcl.ArrayListToRng._
-import jcl.ToArrayList._
-
-
 object Force extends Force; trait Force extends Predefs {
     class MadaRngForce[A](_1: Expr[Rng[A]]) {
         def force = ForceExpr(_1).expr
@@ -14,6 +10,6 @@ object Force extends Force; trait Force extends Predefs {
 }
 
 
-case class ForceExpr[A](_1: Expr[Rng[A]]) extends Expr[Rng[A]] {
-    override def _eval[U](c: Context[Rng[A], U]) = _1.jcl_toArrayList.toRng.eval(c)
+case class ForceExpr[A](_1: Expr[Rng[A]]) extends ExprAdapter[Rng[A]] {
+    override protected def _base = jcl.FromArrayListExpr(jcl.ToArrayListExpr(_1))
 }
