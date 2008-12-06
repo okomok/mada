@@ -28,6 +28,15 @@ trait Expr[A] {
 }
 
 
+// Adapter
+
+trait ExprAdapter[A] extends Expr[A] {
+    protected def _base: Expr[A]
+    final def base = _base
+    override protected def _eval[B](c: Context[A, B]) = base.eval(c)
+}
+
+
 // Context
 
 trait Context[A, B] extends (Expr[A] => B)
@@ -48,6 +57,7 @@ case class LazyExpr[A](_1: Expr[A]) extends Expr[A] {
     override protected def _eval = _1.eval(c)
 }
 
+// will be rejected.
 object ExprConversions extends ExprConversions
 
 trait ExprConversions {
