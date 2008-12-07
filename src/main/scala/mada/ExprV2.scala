@@ -48,9 +48,9 @@ object ExprV2 {
     }
 
     case class Lazy[A](_1: ExprV2.Of[A]) extends Terminal[A] {
-        private val e = new mada.LazyRef[A]
+        private val e = new LazyRef[A]
         override protected def _eval[B](x: ExprV2[A, B]): B = x match {
-            case Self => e := _1.eval(x) // Self only
+            case Self => e := _1.eval // Self only
             case _ => unknown(x)
         }
     }

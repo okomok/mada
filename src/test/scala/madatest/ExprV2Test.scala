@@ -59,9 +59,11 @@ class ExprV2Test {
         assertEquals(5, SizeExpr(x).eval)
     }
 
-    def testTrivial {
-        val a = Array(1,2,3)
-        // SizeExpr(MapExpr(ExprV2.Constant(a.toList), { (e: Int) => "abc" }))
-        ()
+    def testLazy {
+        val l1 = ExprV2.Constant(100).xlazy
+        assertSame(l1.eval, l1.eval)
+        val l2 = ExprV2.Constant(101).xlazy
+        assertSame(l2.eval, l2.eval)
+        assertNotSame(l2.eval, l1.eval)
     }
 }

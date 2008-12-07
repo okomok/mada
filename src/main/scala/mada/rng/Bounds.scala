@@ -3,16 +3,16 @@ package mada.rng
 
 
 object Bounds extends Bounds; trait Bounds extends Predefs {
-    class MadaRngBounds[A](_1: Expr[Rng[A]]) {
+    class MadaRngBounds[A](_1: ExprV2.Of[Rng[A]]) {
         def bounds = BoundsExpr(_1).expr
     }
-    implicit def toMadaRngBounds[A](_1: Expr[Rng[A]]): MadaRngBounds[A] = new MadaRngBounds[A](_1)
+    implicit def toMadaRngBounds[A](_1: ExprV2.Of[Rng[A]]): MadaRngBounds[A] = new MadaRngBounds[A](_1)
 }
 
 
-case class BoundsExpr[A](_1: Expr[Rng[A]]) extends Expr[Rng[A]] {
-    override def _eval = _1 match {
-        case BoundsExpr(x1) => BoundsExpr(x1).eval // bounds-bounds fusion
+case class BoundsExpr[A](override val _1: ExprV2.Of[Rng[A]]) extends ExprV2.Method[Rng[A], Rng[A]] {
+    override protected def _default = _1 match {
+        case y @ BoundsExpr(x1) => y.eval // bounds-bounds fusion
         case _ => BoundsImpl(_1.eval)
     }
 }
