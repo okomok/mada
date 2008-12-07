@@ -21,6 +21,7 @@ import junit.framework.Assert._
 
 object Expr {
     type Of[A] = Expr[_, A]
+    type Terminal[A] = Expr[A, A]
 
     trait Method[Z, A] extends Expr[Z, A] {
         protected def _1: Of[Z] // object
@@ -33,6 +34,7 @@ object Expr {
     }
 
     /*
+
     trait Adapter[A, B] extends Expr[A, B] {
         protected def _base: Expr[A, B]
         override protected def _eval[C](x: Expr[B, C]): C = _base.eval(x) // delegate
@@ -50,12 +52,29 @@ object Expr {
     }
 
     */
-    case class Constant[A](_1: A) extends Expr[A, A] {
+
+    case class Constant[A](_1: A) extends Terminal[A] {
         override protected def _eval[B](x: Expr[A, B]): B = x match {
             case Self => _1
             case _ => unknown(x)
         }
     }
+
+    case class Cut[A](_1: Expr.Of[A]) extends Terminal[A] {
+        override protected def _eval[B](x: Expr[A, B]): B = _1.eval(x)
+    }
+
+    case class Lazy[A](_1: Expr.Of[A]) extends Terminal[A] {
+        private val e = new mada.LazyRef[A]
+        override protected def _eval[B](x: Expr[A, B]): B = x match {
+            case Self => e := _1.eval(x) // Self only
+            case _ => unknown(x)
+        }
+    }
+
+
+    case object NoSelfCaseError extends Error
+    case object NoDefaultCaseError extends Error
 }
 
 trait Expr[Z, A] {
@@ -63,15 +82,19 @@ trait Expr[Z, A] {
     final def eval[B](x: Expr[A, B]): B = _eval(x)
     final def eval: A = eval(Self)
 
-    case object Self extends Expr[A, A] {
-        override protected def _eval[B](x: Expr[A, B]): B = throw new Error("Self case missing")
+    case object Self extends Expr.Terminal[A] {
+        override protected def _eval[B](x: Expr[A, B]): B = throw Expr.NoSelfCaseError
     }
 
-    case object Default extends Expr[A, A] { // thrown if Self doesn't match
-        override protected def _eval[B](x: Expr[A, B]): B = throw new Error("Default case missing")
+    case object Default extends Expr.Terminal[A] { // if Self doesn't match
+        override protected def _eval[B](x: Expr[A, B]): B = throw Expr.NoDefaultCaseError
     }
 
     protected def unknown[B](x: Expr[A, B]): B = x.eval(x.Default)
+
+    final def expr = this
+    final def cut = Expr.Cut(this).expr
+    final def lazy_ = Expr.Lazy(this).expr
 }
 
 
