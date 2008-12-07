@@ -14,9 +14,11 @@ case class SizeExpr[A](override val _1: Expr.Of[List[A]]) extends Expr.Method[Li
 
 case class MapExpr[A, B](override val _1: Expr.Of[List[A]], _2: A => B) extends Expr.Method[List[A], List[B]] {
     override def _default = _1 match {
-        case MapExpr(x1, x2) => MapExpr(x1, _2 compose x2).eval
+        case MapExpr(x1, x2) => { deforsed = true; MapExpr(x1, _2 compose x2).eval }
         case _ => _1.eval.map(_2)
     }
+
+    var deforsed = false
 }
 
 
@@ -63,13 +65,23 @@ class ExprV2Test {
         assertEquals(5, SizeExpr(x).eval)
     }
 
-    def testAdapter: Unit = {
+    def testAlias: Unit = {
         val x = IteratorToListExprProxy(Expr.Constant(anIterator))
         assertEquals(aList, x.eval)
         assertEquals(99, SizeExpr(x).eval)
     }
 
-    def testLazy {
+    def testCut: Unit = {
+        val x = MapExpr(MapExpr(Expr.Constant(aList), { (e: Int) => "wow" }), { (e: String) => 10 })
+        x.deforsed = false
+        x.eval
+        assertTrue(x.deforsed)
+        val y = MapExpr(MapExpr(Expr.Constant(aList), { (e: Int) => "wow" }).cut, { (e: String) => 10 })
+        y.deforsed = false
+        assertFalse(y.deforsed)
+    }
+
+    def testLazy: Unit = {
         val l1 = Expr.Constant(100).xlazy
         assertSame(l1.eval, l1.eval)
         val l2 = Expr.Constant(101).xlazy

@@ -42,8 +42,8 @@ object Expr {
         override protected val _of = _1
     }
 
-    case class Cut[A](_1: Of[A]) extends Terminal[A] {
-        override protected def _eval[B](x: Expr[A, B]): B = _1.eval(x)
+    case class Cut[A](_1: Of[A]) extends Alias[Nothing, A] {
+        override protected def _alias = _1
     }
 
     case class Lazy[A](_1: Of[A]) extends Terminal[A] {
