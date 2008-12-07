@@ -3,15 +3,15 @@ package mada.rng
 
 
 object Map extends Map; trait Map extends Predefs {
-    class MadaRngMap[From](_1: Expr[Rng[From]]) {
+    class MadaRngMap[From](_1: ExprV2.Of[Rng[From]]) {
         def map[To](_2: From => To) = MapExpr(_1, _2).expr
     }
-    implicit def toMadaRngMap[From](_1: Expr[Rng[From]]): MadaRngMap[From] = new MadaRngMap[From](_1)
+    implicit def toMadaRngMap[From](_1: ExprV2.Of[Rng[From]]): MadaRngMap[From] = new MadaRngMap[From](_1)
 }
 
 
-case class MapExpr[From, To](_1: Expr[Rng[From]], _2: From => To) extends Expr[Rng[To]] {
-    override def _eval = _1 match {
+case class MapExpr[From, To](override val _1: ExprV2.Of[Rng[From]], _2: From => To) extends ExprV2.Method[Rng[From], Rng[To]] {
+    override def _default = _1 match {
         case MapExpr(x1, x2) => MapExpr(x1, _2 compose x2).eval // map-map fusion
         case _ => MapImpl(_1.eval, _2)
     }

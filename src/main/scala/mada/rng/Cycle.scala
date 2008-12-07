@@ -3,17 +3,17 @@ package mada.rng
 
 
 object Cycle extends Cycle; trait Cycle extends Predefs {
-    class MadaRngCycle[A](_1: Expr[Rng[A]]) {
+    class MadaRngCycle[A](_1: ExprV2.Of[Rng[A]]) {
         def cycle(_2: Long, _3: Long) = CycleExpr(_1, _2, _3).expr
         def cycle(_2: Long) = CycleExpr(_1, 0, _2).expr
         def cycle = CycleExpr(_1, 0, Math.MAX_LONG).expr
     }
-    implicit def toMadaRngCycle[A](_1: Expr[Rng[A]]): MadaRngCycle[A] = new MadaRngCycle[A](_1)
+    implicit def toMadaRngCycle[A](_1: ExprV2.Of[Rng[A]]): MadaRngCycle[A] = new MadaRngCycle[A](_1)
 }
 
 
-case class CycleExpr[A](_1: Expr[Rng[A]], _2: Long, _3: Long) extends Expr[Rng[A]] {
-    override def _eval = CycleImpl(_1.eval, _2, _3)
+case class CycleExpr[A](override val _1: ExprV2.Of[Rng[A]], _2: Long, _3: Long) extends ExprV2.Transform[Rng[A]] {
+    override def _default = CycleImpl(_1.eval, _2, _3)
 }
 
 

@@ -3,15 +3,15 @@ package mada.rng
 
 
 object Size extends Size; trait Size extends Predefs {
-    class MadaRngSize[A](_1: Expr[Rng[A]]) {
+    class MadaRngSize[A](_1: ExprV2.Of[Rng[A]]) {
         def size = SizeExpr(_1).expr
     }
-    implicit def toMadaRngSize[A](_1: Expr[Rng[A]]): MadaRngSize[A] = new MadaRngSize[A](_1)
+    implicit def toMadaRngSize[A](_1: ExprV2.Of[Rng[A]]): MadaRngSize[A] = new MadaRngSize[A](_1)
 }
 
 
-case class SizeExpr[A](_1: Expr[Rng[A]]) extends Expr[Long] {
-    override def _eval = SizeImpl(_1.eval)
+case class SizeExpr[A](override val _1: ExprV2.Of[Rng[A]]) extends ExprV2.Method[Rng[A], Long] {
+    override def _default = SizeImpl(_1.eval)
 }
 
 

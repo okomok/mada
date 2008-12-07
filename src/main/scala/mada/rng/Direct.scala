@@ -8,14 +8,14 @@ import Pointer._
 // indirect
 
 object Indirect extends Indirect; trait Indirect extends Predefs {
-    class MadaRngIndirect[A](_1: Expr[Rng[Pointer[A]]]) {
+    class MadaRngIndirect[A](_1: ExprV2.Of[Rng[Pointer[A]]]) {
         def indirect = IndirectExpr(_1).expr
     }
-    implicit def toMadaRngIndirect[A](_1: Expr[Rng[Pointer[A]]]): MadaRngIndirect[A] = new MadaRngIndirect[A](_1)
+    implicit def toMadaRngIndirect[A](_1: ExprV2.Of[Rng[Pointer[A]]]): MadaRngIndirect[A] = new MadaRngIndirect[A](_1)
 }
 
-case class IndirectExpr[A](_1: Expr[Rng[Pointer[A]]]) extends Expr[Rng[A]] {
-    override def _eval = _1 match {
+case class IndirectExpr[A](_1: ExprV2.Of[Rng[Pointer[A]]]) extends ExprV2.Method[Rng[Pointer[A]], Rng[A]] {
+    override def _default = _1 match {
         case OutdirectExpr(x1) => x1.eval // indirect-outdirect fusion
         case _ => IndirectImpl(_1.eval)
     }
@@ -39,20 +39,21 @@ class IndirectPointer[A](override val _base: Pointer[Pointer[A]])
 // outdirect
 
 object Outdirect extends Outdirect; trait Outdirect extends Predefs {
-    class MadaRngOutdirect[A](_1: Expr[Rng[A]]) {
+    class MadaRngOutdirect[A](_1: ExprV2.Of[Rng[A]]) {
         def outdirect = OutdirectExpr(_1).expr
     }
-    implicit def toMadaRngOutdirect[A](_1: Expr[Rng[A]]): MadaRngOutdirect[A] = new MadaRngOutdirect[A](_1)
+    implicit def toMadaRngOutdirect[A](_1: ExprV2.Of[Rng[A]]): MadaRngOutdirect[A] = new MadaRngOutdirect[A](_1)
 }
 
-case class OutdirectExpr[A](_1: Expr[Rng[A]]) extends Expr[Rng[Pointer[A]]] {
-    override def _eval = _1 match {
-        case IndirectExpr(x1) => x1.eval // outdirect-indirect fusion
-        case _ => OutdirectImpl(_1.eval)
-    }
-    override def _eval[U](c: Context[Rng[Pointer[A]], U]): U = c match {
-        case LoopContext(f) => OutdirectLoopImpl(_1.eval, f) // loop-outdirect fusion
-        case _ => super._eval(c)
+case class OutdirectExpr[A](_1: ExprV2.Of[Rng[A]]) extends ExprV2[Rng[A], Rng[Pointer[A]]] {
+    override def _eval[U](x: ExprV2[Rng[Pointer[A]], U]): U = x match {
+        case Self => _1.eval(this)
+        case Default => _1 match {
+            case IndirectExpr(x1) => x1.eval // outdirect-indirect fusion
+            case _ => OutdirectImpl(_1.eval)
+        }
+        case LoopExpr(_, f) => OutdirectLoopImpl(_1.eval, f) // loop-outdirect fusion
+        case _ => unknown(x)
     }
 }
 

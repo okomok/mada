@@ -15,14 +15,14 @@ case class LongInterval(a1: Long, a2: Long) extends Tuple2[Long, Long](a1, a2)
 
 object IntervalCompatible extends IntervalCompatible; trait IntervalCompatible {
     // Ideally, (N, N) should conform to Rng, but tuples are the same types after type-erasure.
-    implicit def toMadaIntIntervalRngExpr(from: IntInterval): Expr[Rng[Int]] = FromIntIntervalExpr(Expr(from)).expr
-    implicit def toMadaLongIntervalRngExpr(from: LongInterval): Expr[Rng[Long]] = FromLongIntervalExpr(Expr(from)).expr
+    implicit def toMadaIntIntervalRngExpr(from: IntInterval): ExprV2.Of[Rng[Int]] = FromIntIntervalExpr(ExprV2.Constant(from)).expr
+    implicit def toMadaLongIntervalRngExpr(from: LongInterval): ExprV2.Of[Rng[Long]] = FromLongIntervalExpr(ExprV2.Constant(from)).expr
 }
 
 object FromInterval extends FromInterval; trait FromInterval {
     // Note by-name-parameters also are the same types after type-erasure.
-    def from(_1: Int, _2: Int) = FromIntIntervalExpr(Expr(IntInterval(_1, _2))).expr
-    def from(_1: Long, _2: Long) = FromLongIntervalExpr(Expr(LongInterval(_1, _2))).expr
+    def from(_1: Int, _2: Int) = FromIntIntervalExpr(ExprV2.Constant(IntInterval(_1, _2))).expr
+    def from(_1: Long, _2: Long) = FromLongIntervalExpr(ExprV2.Constant(LongInterval(_1, _2))).expr
 }
 
 
@@ -30,22 +30,22 @@ object FromInterval extends FromInterval; trait FromInterval {
 
 object IntervalToRng extends IntervalToRng; trait IntervalToRng extends Predefs {
     // Int
-    class MadaRngIntIntervalToRng(_1: Expr[IntInterval]) {
+    class MadaRngIntIntervalToRng(_1: ExprV2.Of[IntInterval]) {
         def toRng = FromIntIntervalExpr(_1).expr
     }
-    implicit def toMadaRngIntIntervalToRng(_1: Expr[IntInterval]): MadaRngIntIntervalToRng = new MadaRngIntIntervalToRng(_1)
+    implicit def toMadaRngIntIntervalToRng(_1: ExprV2.Of[IntInterval]): MadaRngIntIntervalToRng = new MadaRngIntIntervalToRng(_1)
     // Long
-    class MadaRngLongIntervalToRng(_1: Expr[LongInterval]) {
+    class MadaRngLongIntervalToRng(_1: ExprV2.Of[LongInterval]) {
         def toRng = FromLongIntervalExpr(_1).expr
     }
-    implicit def toMadaRngLongIntervalToRng(_1: Expr[LongInterval]): MadaRngLongIntervalToRng = new MadaRngLongIntervalToRng(_1)
+    implicit def toMadaRngLongIntervalToRng(_1: ExprV2.Of[LongInterval]): MadaRngLongIntervalToRng = new MadaRngLongIntervalToRng(_1)
 }
 
 
 // Int
 
-case class FromIntIntervalExpr(_1: Expr[IntInterval]) extends Expr[Rng[Int]] {
-    override def _eval = new IntIntervalPointer(_1.eval._1) <=< new IntIntervalPointer(_1.eval._2)
+case class FromIntIntervalExpr(override val _1: ExprV2.Of[IntInterval]) extends ExprV2.Method[IntInterval, Rng[Int]] {
+    override def _default = new IntIntervalPointer(_1.eval._1) <=< new IntIntervalPointer(_1.eval._2)
 }
 
 class IntIntervalPointer(n: Int) extends IntervalPointer[Int](n) {
@@ -56,8 +56,8 @@ class IntIntervalPointer(n: Int) extends IntervalPointer[Int](n) {
 
 // Long
 
-case class FromLongIntervalExpr(_1: Expr[LongInterval]) extends Expr[Rng[Long]] {
-    override def _eval = new LongIntervalPointer(_1.eval._1) <=< new LongIntervalPointer(_1.eval._2)
+case class FromLongIntervalExpr(override val _1: ExprV2.Of[LongInterval]) extends ExprV2.Method[LongInterval, Rng[Long]] {
+    override def _default = new LongIntervalPointer(_1.eval._1) <=< new LongIntervalPointer(_1.eval._2)
 }
 
 class LongIntervalPointer(n: Long) extends IntervalPointer[Long](n) {

@@ -3,15 +3,15 @@ package mada.rng
 
 
 object TakeWhile extends TakeWhile; trait TakeWhile extends Predefs {
-    class MadaRngTakeWhile[A](_1: Expr[Rng[A]]) {
+    class MadaRngTakeWhile[A](_1: ExprV2.Of[Rng[A]]) {
         def takeWhile(_2: A => Boolean) = TakeWhileExpr(_1, _2).expr
     }
-    implicit def toMadaRngTakeWhile[A](_1: Expr[Rng[A]]): MadaRngTakeWhile[A] = new MadaRngTakeWhile[A](_1)
+    implicit def toMadaRngTakeWhile[A](_1: ExprV2.Of[Rng[A]]): MadaRngTakeWhile[A] = new MadaRngTakeWhile[A](_1)
 }
 
 
-case class TakeWhileExpr[A](_1: Expr[Rng[A]], _2: A => Boolean) extends Expr[Rng[A]] {
-    override def _eval = TakeWhileImpl(_1.eval, _2)
+case class TakeWhileExpr[A](override val _1: ExprV2.Of[Rng[A]], _2: A => Boolean) extends ExprV2.Transform[Rng[A]] {
+    override def _default = TakeWhileImpl(_1.eval, _2)
 }
 
 

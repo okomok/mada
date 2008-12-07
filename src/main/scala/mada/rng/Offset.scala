@@ -6,22 +6,22 @@ import Implies._
 
 
 object Offset extends Offset; trait Offset extends Predefs {
-    class MadaRngOffset[A](_1: Expr[Rng[A]]) {
+    class MadaRngOffset[A](_1: ExprV2.Of[Rng[A]]) {
         def offset(_2: Long, _3: Long) = OffsetExpr(_1, _2, _3).expr
     }
-    implicit def toMadaRngOffset[A](_1: Expr[Rng[A]]): MadaRngOffset[A] = new MadaRngOffset[A](_1)
+    implicit def toMadaRngOffset[A](_1: ExprV2.Of[Rng[A]]): MadaRngOffset[A] = new MadaRngOffset[A](_1)
 }
 
 
-case class OffsetExpr[A](_1: Expr[Rng[A]], _2: Long, _3: Long) extends Expr[Rng[A]] {
-    override def _eval = OffsetImpl(_1.eval, _2, _3)
+case class OffsetExpr[A](override val _1: ExprV2.Of[Rng[A]], _2: Long, _3: Long) extends ExprV2.Transform[Rng[A]] {
+    override def _default = OffsetImpl(_1.eval, _2, _3)
 }
 
 
 object OffsetImpl {
     def apply[A](r: Rng[A], n1: Long, n2: Long): Rng[A] = {
         AssertModels(r, ForwardTraversal)
-        Assert("too many offsets", (r models RandomAccessTraversal) implies (n1 <= SizeExpr(Expr(r)).eval + n2))
+        Assert("too many offsets", (r models RandomAccessTraversal) implies (n1 <= SizeExpr(r.toExpr).eval + n2))
         Assert("requires BidirectionalRng", (n1 < 0) implies (r models BidirectionalTraversal))
         Assert("requires BidirectionalRng", (n2 < 0) implies (r models BidirectionalTraversal))
 

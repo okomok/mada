@@ -3,15 +3,15 @@ package mada.rng
 
 
 object ReadOnly extends ReadOnly; trait ReadOnly extends Predefs {
-    class MadaRngReadOnly[A](_1: Expr[Rng[A]]) {
+    class MadaRngReadOnly[A](_1: ExprV2.Of[Rng[A]]) {
         def readOnly = ReadOnlyExpr(_1).expr
     }
-    implicit def toMadaRngReadOnly[A](_1: Expr[Rng[A]]): MadaRngReadOnly[A] = new MadaRngReadOnly[A](_1)
+    implicit def toMadaRngReadOnly[A](_1: ExprV2.Of[Rng[A]]): MadaRngReadOnly[A] = new MadaRngReadOnly[A](_1)
 }
 
 
-case class ReadOnlyExpr[A](_1: Expr[Rng[A]]) extends Expr[Rng[A]] {
-    override def _eval = _1 match {
+case class ReadOnlyExpr[A](override val _1: ExprV2.Of[Rng[A]]) extends ExprV2.Transform[Rng[A]] {
+    override def _default = _1 match {
         case ReadOnlyExpr(x1) => ReadOnlyExpr(x1).eval // readOnly-readOnly fusion
         case _ => ReadOnlyImpl(_1.eval)
     }

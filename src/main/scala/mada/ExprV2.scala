@@ -4,7 +4,16 @@ package mada
 
 object ExprV2 {
     type Of[A] = ExprV2[_, A]
+
     type Terminal[A] = ExprV2[A, A]
+
+    trait ConstantOf[A] extends Terminal[A] {
+        protected def _of: A
+        override protected def _eval[B](x: ExprV2[A, B]): B = x match {
+            case Self => _of
+            case _ => unknown(x)
+        }
+    }
 
     trait Method[Z, A] extends ExprV2[Z, A] {
         protected def _1: Of[Z]
@@ -16,12 +25,14 @@ object ExprV2 {
         }
     }
 
-    /*
+    type Transform[A] = Method[A, A]
 
-    trait Adapter[A, B] extends ExprV2[A, B] {
-        protected def _base: ExprV2[A, B]
-        override protected def _eval[C](x: ExprV2[B, C]): C = _base.eval(x) // delegate
+    trait Adapter[A] extends Terminal[A] {
+        protected def _base: Of[A]
+        override protected def _eval[B](x: ExprV2[A, B]): B = _base.eval(x)
     }
+
+    /*
 
     trait MethodAdapter[A, B] extends ExprV2[A, B] {
         protected def _1: Terminal[A]
@@ -36,11 +47,8 @@ object ExprV2 {
 
     */
 
-    case class Constant[A](_1: A) extends Terminal[A] {
-        override protected def _eval[B](x: ExprV2[A, B]): B = x match {
-            case Self => _1
-            case _ => unknown(x)
-        }
+    case class Constant[A](_1: A) extends ConstantOf[A] {
+        override protected val _of = _1
     }
 
     case class Cut[A](_1: ExprV2.Of[A]) extends Terminal[A] {

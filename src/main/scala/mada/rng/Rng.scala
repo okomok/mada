@@ -71,7 +71,7 @@ trait Rng[A] {
     final def readOnly = toExpr.readOnly.eval
 
     final def rng = this
-    final def toExpr = Expr(this)
+    final def toExpr = ExprV2.Constant(this)
     final def toPair = (begin, end)
 
 // for-comprehension

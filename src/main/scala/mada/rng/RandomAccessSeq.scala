@@ -5,20 +5,20 @@ package mada.rng
 //  RandomAccessSeq[A] <-> Expr[Rng[A]]
 
 object RandomAccessSeqCompatible extends RandomAccessSeqCompatible; trait RandomAccessSeqCompatible {
-    implicit def toMadaRandomAccessSeqRngExpr[A](from: RandomAccessSeq[A]): Expr[Rng[A]] = FromRandomAccessSeqExpr(Expr(from)).expr
+    implicit def toMadaRandomAccessSeqRngExpr[A](from: RandomAccessSeq[A]): ExprV2.Of[Rng[A]] = FromRandomAccessSeqExpr(ExprV2.Constant(from)).expr
 }
 
 
 // toRng
 
 object RandomAccessSeqToRng extends RandomAccessSeqToRng; trait RandomAccessSeqToRng extends Predefs {
-    class MadaRngRandomAccessSeqToRng[A](_1: Expr[RandomAccessSeq[A]]) {
+    class MadaRngRandomAccessSeqToRng[A](_1: ExprV2.Of[RandomAccessSeq[A]]) {
         def toRng = FromRandomAccessSeqExpr(_1).expr
     }
-    implicit def toMadaRngRandomAccessSeqToRng[A](_1: Expr[RandomAccessSeq[A]]): MadaRngRandomAccessSeqToRng[A] = new MadaRngRandomAccessSeqToRng[A](_1)
+    implicit def toMadaRngRandomAccessSeqToRng[A](_1: ExprV2.Of[RandomAccessSeq[A]]): MadaRngRandomAccessSeqToRng[A] = new MadaRngRandomAccessSeqToRng[A](_1)
 }
 
-case class FromRandomAccessSeqExpr[A](_1: Expr[RandomAccessSeq[A]]) extends ExprAdapter[Rng[A]] {
+case class FromRandomAccessSeqExpr[A](_1: ExprV2.Of[RandomAccessSeq[A]]) extends ExprV2.Adapter[Rng[A]] {
     override protected def _base = IndexAccessRngExpr(new RandomAccessSeqIndexAccess(_1.eval))
 }
 

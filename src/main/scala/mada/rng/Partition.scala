@@ -6,15 +6,15 @@ import Filter._
 
 
 object Partition extends Partition; trait Partition extends Predefs {
-    class MadaRngPartition[A](_1: Expr[Rng[A]]) {
+    class MadaRngPartition[A](_1: ExprV2.Of[Rng[A]]) {
         def partition(_2: A => Boolean) = PartitionExpr(_1, _2).expr
     }
-    implicit def toMadaRngPartition[A](_1: Expr[Rng[A]]): MadaRngPartition[A] = new MadaRngPartition[A](_1)
+    implicit def toMadaRngPartition[A](_1: ExprV2.Of[Rng[A]]): MadaRngPartition[A] = new MadaRngPartition[A](_1)
 }
 
 
-case class PartitionExpr[A](_1: Expr[Rng[A]], _2: A => Boolean) extends Expr[(Rng[A], Rng[A])] {
-    override def _eval = PartitionImpl(_1.eval, _2)
+case class PartitionExpr[A](override val _1: ExprV2.Of[Rng[A]], _2: A => Boolean) extends ExprV2.Method[Rng[A], (Rng[A], Rng[A])] {
+    override def _default = PartitionImpl(_1.eval, _2)
 }
 
 

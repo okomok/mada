@@ -8,26 +8,27 @@ import Pointer._
 //  Option[A] <-> Expr[Rng[A]]
 
 object OptionCompatible extends OptionCompatible; trait OptionCompatible {
-    implicit def madaRng_Option2ExprRng[A](from: Option[A]): Expr[Rng[A]] = FromOptionExpr(Expr(from)).expr
+    implicit def madaRng_Option2ExprRng[A](from: Option[A]): ExprV2.Of[Rng[A]] = FromOptionExpr(ExprV2.Constant(from)).expr
 }
 
 
 // toRng
 
 object OptionToRng extends OptionToRng; trait OptionToRng extends Predefs {
-    class MadaRngOptionToRng[A](_1: Expr[Option[A]]) {
+    class MadaRngOptionToRng[A](_1: ExprV2.Of[Option[A]]) {
         def toRng = FromOptionExpr(_1).expr
     }
-    implicit def toMadaRngOptionToRng[A](_1: Expr[Option[A]]): MadaRngOptionToRng[A] = new MadaRngOptionToRng[A](_1)
+    implicit def toMadaRngOptionToRng[A](_1: ExprV2.Of[Option[A]]): MadaRngOptionToRng[A] = new MadaRngOptionToRng[A](_1)
 }
 
-case class FromOptionExpr[A](_1: Expr[Option[A]]) extends Expr[Rng[A]] {
-    override def _eval[U](c: Context[Rng[A], U]): U = c match {
-        case DefaultContext => _1 match {
+case class FromOptionExpr[A](_1: ExprV2.Of[Option[A]]) extends ExprV2[Option[A], Rng[A]] {
+    override def _eval[U](x: ExprV2[Rng[A], U]): U = x match {
+        case Self => _1.eval(this)
+        case Default => _1 match {
             case ToOptionExpr(x1) => x1.eval
             case _ => delegate.eval
         }
-        case _ => delegate.eval(c)
+        case _ => delegate.eval(x)
     }
 
     private def delegate = IndexAccessRngExpr(new OptionIndexAccess(_1.eval))
@@ -42,14 +43,14 @@ class OptionIndexAccess[A](val base: Option[A]) extends IndexAccess[A] {
 // toOption
 
 object ToOption extends ToOption; trait ToOption extends Predefs {
-    class MadaRngToOption[A](_1: Expr[Rng[A]]) {
+    class MadaRngToOption[A](_1: ExprV2.Of[Rng[A]]) {
         def toOption = ToOptionExpr(_1).expr
     }
-    implicit def toMadaRngToOption[A](_1: Expr[Rng[A]]): MadaRngToOption[A] = new MadaRngToOption[A](_1)
+    implicit def toMadaRngToOption[A](_1: ExprV2.Of[Rng[A]]): MadaRngToOption[A] = new MadaRngToOption[A](_1)
 }
 
-case class ToOptionExpr[A](_1: Expr[Rng[A]]) extends Expr[Option[A]] {
-    override def _eval = _1 match {
+case class ToOptionExpr[A](override val _1: ExprV2.Of[Rng[A]]) extends ExprV2.Method[Rng[A], Option[A]] {
+    override def _default = _1 match {
         case FromOptionExpr(x1) => x1.eval
         case _ => ToOptionImpl(_1.eval)
     }

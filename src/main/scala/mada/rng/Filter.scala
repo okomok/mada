@@ -3,15 +3,15 @@ package mada.rng
 
 
 object Filter extends Filter; trait Filter extends Predefs {
-    class MadaRngFilter[A](_1: Expr[Rng[A]]) {
+    class MadaRngFilter[A](_1: ExprV2.Of[Rng[A]]) {
         def filter(_2: A => Boolean) = FilterExpr(_1, _2).expr
     }
-    implicit def toMadaRngFilter[A](_1: Expr[Rng[A]]): MadaRngFilter[A] = new MadaRngFilter[A](_1)
+    implicit def toMadaRngFilter[A](_1: ExprV2.Of[Rng[A]]): MadaRngFilter[A] = new MadaRngFilter[A](_1)
 }
 
 
-case class FilterExpr[A](_1: Expr[Rng[A]], _2: A => Boolean) extends Expr[Rng[A]] {
-    override def _eval = _1 match {
+case class FilterExpr[A](override val _1: ExprV2.Of[Rng[A]], _2: A => Boolean) extends ExprV2.Transform[Rng[A]] {
+    override def _default = _1 match {
         case FilterExpr(x1, x2) => FilterExpr(x1, {(e: A) => x2(e) && _2(e)}).eval // filter-filter fusion
         case _ => FilterImpl(_1.eval, _2)
     }

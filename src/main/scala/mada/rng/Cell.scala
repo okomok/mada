@@ -8,26 +8,27 @@ import First._
 //  Cell[A] <-> Expr[Rng[A]]
 
 object CellCompatible extends CellCompatible; trait CellCompatible {
-    implicit def madaRng_Cell2ExprRng[A](from: Cell[A]): Expr[Rng[A]] = FromCellExpr(Expr(from)).expr
+    implicit def madaRng_Cell2ExprRng[A](from: Cell[A]): ExprV2.Of[Rng[A]] = FromCellExpr(ExprV2.Constant(from)).expr
 }
 
 
 // toRng
 
 object CellToRng extends CellToRng; trait CellToRng extends Predefs {
-    class MadaRngCellToRng[A](_1: Expr[Cell[A]]) {
+    class MadaRngCellToRng[A](_1: ExprV2.Of[Cell[A]]) {
         def toRng = FromCellExpr(_1).expr
     }
-    implicit def toMadaRngCellToRng[A](_1: Expr[Cell[A]]): MadaRngCellToRng[A] = new MadaRngCellToRng[A](_1)
+    implicit def toMadaRngCellToRng[A](_1: ExprV2.Of[Cell[A]]): MadaRngCellToRng[A] = new MadaRngCellToRng[A](_1)
 }
 
-case class FromCellExpr[A](_1: Expr[Cell[A]]) extends Expr[Rng[A]] {
-    override def _eval[U](c: Context[Rng[A], U]): U = c match {
-        case DefaultContext => _1 match {
+case class FromCellExpr[A](_1: ExprV2.Of[Cell[A]]) extends ExprV2[Cell[A], Rng[A]] {
+    override def _eval[U](x: ExprV2[Rng[A], U]): U = x match {
+        case Self => _1.eval(this)
+        case Default => _1 match {
             case ToCellExpr(x1) => x1.eval
             case _ => delegate.eval
         }
-        case _ => delegate.eval(c)
+        case _ => delegate.eval(x)
     }
 
     private def delegate = IndexAccessRngExpr(new CellIndexAccess(_1.eval))
@@ -42,14 +43,14 @@ class CellIndexAccess[A](val base: Cell[A]) extends IndexAccess[A] {
 // toCell
 
 object ToCell extends ToCell; trait ToCell extends Predefs {
-    class MadaRngToCell[A](_1: Expr[Rng[A]]) {
+    class MadaRngToCell[A](_1: ExprV2.Of[Rng[A]]) {
         def toCell = ToCellExpr(_1).expr
     }
-    implicit def toMadaRngToCell[A](_1: Expr[Rng[A]]): MadaRngToCell[A] = new MadaRngToCell[A](_1)
+    implicit def toMadaRngToCell[A](_1: ExprV2.Of[Rng[A]]): MadaRngToCell[A] = new MadaRngToCell[A](_1)
 }
 
-case class ToCellExpr[A](_1: Expr[Rng[A]]) extends Expr[Cell[A]] {
-    override def _eval = _1 match {
+case class ToCellExpr[A](override val _1: ExprV2.Of[Rng[A]]) extends ExprV2.Method[Rng[A], Cell[A]] {
+    override def _default = _1 match {
         case FromCellExpr(x1) => x1.eval
         case _ => Cell(_1.first.eval)
     }

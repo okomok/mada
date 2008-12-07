@@ -8,21 +8,21 @@ import ToIterator._
 //  Stream[A] <-> Expr[Rng[A]]
 
 object StreamCompatible extends StreamCompatible; trait StreamCompatible {
-    implicit def madaRng_Stream2ExprRng[A](from: Stream[A]): Expr[Rng[A]] = FromStreamExpr(Expr(from)).expr
+    implicit def madaRng_Stream2ExprRng[A](from: Stream[A]): ExprV2.Of[Rng[A]] = FromStreamExpr(ExprV2.Constant(from)).expr
 }
 
 
 // toRng
 
 object StreamToRng extends StreamToRng; trait StreamToRng extends Predefs {
-    class MadaRngStreamToRng[A](_1: Expr[Stream[A]]) {
+    class MadaRngStreamToRng[A](_1: ExprV2.Of[Stream[A]]) {
         def toRng = FromStreamExpr(_1).expr
     }
-    implicit def toMadaRngStreamToRng[A](_1: Expr[Stream[A]]): MadaRngStreamToRng[A] = new MadaRngStreamToRng[A](_1)
+    implicit def toMadaRngStreamToRng[A](_1: ExprV2.Of[Stream[A]]): MadaRngStreamToRng[A] = new MadaRngStreamToRng[A](_1)
 }
 
-case class FromStreamExpr[A](_1: Expr[Stream[A]]) extends Expr[Rng[A]] {
-    override def _eval = _1 match {
+case class FromStreamExpr[A](override val _1: ExprV2.Of[Stream[A]]) extends ExprV2.Method[Stream[A], Rng[A]] {
+    override def _default = _1 match {
         case ToStreamExpr(x1) => x1.eval
         case _ => FromStreamImpl(_1.eval)
     }
@@ -47,14 +47,14 @@ class StreamPointer[A](var base: Stream[A]) extends PointerFacade[A, StreamPoint
 // toStream
 
 object ToStream extends ToStream; trait ToStream extends Predefs {
-    class MadaRngToStream[A](_1: Expr[Rng[A]]) {
+    class MadaRngToStream[A](_1: ExprV2.Of[Rng[A]]) {
         def toStream = ToStreamExpr(_1).expr
     }
-    implicit def toMadaRngToStream[A](_1: Expr[Rng[A]]): MadaRngToStream[A] = new MadaRngToStream[A](_1)
+    implicit def toMadaRngToStream[A](_1: ExprV2.Of[Rng[A]]): MadaRngToStream[A] = new MadaRngToStream[A](_1)
 }
 
-case class ToStreamExpr[A](_1: Expr[Rng[A]]) extends Expr[Stream[A]] {
-    override def _eval = _1 match {
+case class ToStreamExpr[A](override val _1: ExprV2.Of[Rng[A]]) extends ExprV2.Method[Rng[A], Stream[A]] {
+    override def _default = _1 match {
         case FromStreamExpr(x1) => x1.eval
         case _ => Stream.fromIterator(_1.toIterator.eval)
     }

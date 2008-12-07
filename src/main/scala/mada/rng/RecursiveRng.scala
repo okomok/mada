@@ -2,22 +2,22 @@
 package mada.rng
 
 
-class RecursiveRng[A](val traversal: Traversal) extends Ref[Expr[Rng[A]]](null) with Expr[Rng[A]] {
+class RecursiveRng[A](val traversal: Traversal) extends Ref[ExprV2.Of[Rng[A]]](null) with ExprV2.ConstantOf[Rng[A]] {
     Assert("RecursiveRng must be Forward", traversal <:< ForwardTraversal)
     Assert("RecursiveRng can't be RandomAccess", traversal >:> BidirectionalTraversal)
     def this() = this(ForwardTraversal)
-    override def _eval = RecursiveImpl(deref, traversal)
+    override def _of = RecursiveImpl(deref, traversal)
 }
 
 
 object RecursiveImpl {
-    def apply[A](x: Expr[Rng[A]], t: Traversal): Rng[A] = {
+    def apply[A](x: ExprV2.Of[Rng[A]], t: Traversal): Rng[A] = {
         val z = x.xlazy
         new RecursivePointer(z, false, t) <=< new RecursivePointer(z, true, t)
     }
 }
 
-class RecursivePointer[A](rngExpr: Expr[Rng[A]], private val fromEnd: Boolean, override val _traversal: Traversal)
+class RecursivePointer[A](rngExpr: ExprV2.Of[Rng[A]], private val fromEnd: Boolean, override val _traversal: Traversal)
         extends PointerFacade[A, RecursivePointer[A]] {
     def base = { optionBaseInit; optionBase.get }
     override def _read = *(base)

@@ -6,16 +6,16 @@ import Pointer._
 
 
 object Append extends Append; trait Append extends Predefs {
-    class MadaRngAppend[A](_1: Expr[Rng[A]]) {
-        def append(_2: Expr[Rng[A]]) = AppendExpr(_1, _2).expr
-        def ++(_2: Expr[Rng[A]]) = AppendExpr(_1, _2).expr
+    class MadaRngAppend[A](_1: ExprV2.Of[Rng[A]]) {
+        def append(_2: ExprV2.Of[Rng[A]]) = AppendExpr(_1, _2).expr
+        def ++(_2: ExprV2.Of[Rng[A]]) = AppendExpr(_1, _2).expr
     }
-    implicit def toMadaRngAppend[A](_1: Expr[Rng[A]]): MadaRngAppend[A] = new MadaRngAppend[A](_1)
+    implicit def toMadaRngAppend[A](_1: ExprV2.Of[Rng[A]]): MadaRngAppend[A] = new MadaRngAppend[A](_1)
 }
 
 
-case class AppendExpr[A](_1: Expr[Rng[A]], _2: Expr[Rng[A]]) extends Expr[Rng[A]] {
-    override def _eval = AppendImpl(_1.eval, _2.eval)
+case class AppendExpr[A](override val _1: ExprV2.Of[Rng[A]], _2: ExprV2.Of[Rng[A]]) extends ExprV2.Transform[Rng[A]] {
+    override protected def _default = AppendImpl(_1.eval, _2.eval)
 }
 
 

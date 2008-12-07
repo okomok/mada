@@ -6,15 +6,15 @@ import Pointer._
 
 
 object Drop extends Drop; trait Drop extends Predefs {
-    class MadaRngDrop[A](_1: Expr[Rng[A]]) {
+    class MadaRngDrop[A](_1: ExprV2.Of[Rng[A]]) {
         def drop(_2: Long) = DropExpr(_1, _2).expr
     }
-    implicit def toMadaRngDrop[A](_1: Expr[Rng[A]]): MadaRngDrop[A] = new MadaRngDrop[A](_1)
+    implicit def toMadaRngDrop[A](_1: ExprV2.Of[Rng[A]]): MadaRngDrop[A] = new MadaRngDrop[A](_1)
 }
 
 
-case class DropExpr[A](_1: Expr[Rng[A]], _2: Long) extends Expr[Rng[A]] {
-    override def _eval = _1 match {
+case class DropExpr[A](override val _1: ExprV2.Of[Rng[A]], _2: Long) extends ExprV2.Transform[Rng[A]] {
+    override def _default = _1 match {
         case DropExpr(x1, x2) => DropImpl(x1.eval, x2 + _2)
         case _ => DropImpl(_1.eval, _2)
     }

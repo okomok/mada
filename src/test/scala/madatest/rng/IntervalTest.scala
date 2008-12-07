@@ -22,8 +22,8 @@ class IntervalTest {
     }
 
     def testToRng = {
-        assertEquals(Expr(IntInterval(2, 5)).toRng.eval, from(2, 5).eval)
-        assertEquals(Expr(LongInterval(2L, 5L)).toRng.eval, from(2L, 5L).eval)
+        assertEquals(mada.ExprV2.Constant(IntInterval(2, 5)).toRng.eval, from(2, 5).eval)
+        assertEquals(mada.ExprV2.Constant(LongInterval(2L, 5L)).toRng.eval, from(2L, 5L).eval)
     }
 
     def testMe {

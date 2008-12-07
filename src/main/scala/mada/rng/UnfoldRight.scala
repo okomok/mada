@@ -7,8 +7,8 @@ object UnfoldRight extends UnfoldRight; trait UnfoldRight extends Predefs {
 }
 
 
-case class UnfoldRightExpr[From, To](_1: From, _2: From => Option[(To, From)]) extends Expr[Rng[To]] {
-    override def _eval = UnfoldRightImpl(_1, _2)
+case class UnfoldRightExpr[From, To](_1: From, _2: From => Option[(To, From)]) extends ExprV2.ConstantOf[Rng[To]] {
+    override def _of = UnfoldRightImpl(_1, _2)
 }
 
 

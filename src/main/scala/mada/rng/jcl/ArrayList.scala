@@ -5,26 +5,27 @@ package mada.rng.jcl
 // ArrayList[A] <-> Expr[Rng[A]]
 
 object ArrayListCompatible extends ArrayListCompatible; trait ArrayListCompatible {
-    implicit def madaRngJcl_ArrayList2ExprRng[A](from: java.util.ArrayList[A]): Expr[Rng[A]] = FromArrayListExpr(Expr(from)).expr
+    implicit def madaRngJcl_ArrayList2ExprRng[A](from: java.util.ArrayList[A]): ExprV2.Of[Rng[A]] = FromArrayListExpr(ExprV2.Constant(from)).expr
 }
 
 
 // toRng
 
 object ArrayListToRng extends ArrayListToRng; trait ArrayListToRng extends Predefs {
-    class MadaRngArrayListToRng[A](_1: Expr[java.util.ArrayList[A]]) {
+    class MadaRngArrayListToRng[A](_1: ExprV2.Of[java.util.ArrayList[A]]) {
         def toRng = FromArrayListExpr(_1).expr
     }
-    implicit def toMadaRngArrayListToRng[A](_1: Expr[java.util.ArrayList[A]]): MadaRngArrayListToRng[A] = new MadaRngArrayListToRng[A](_1)
+    implicit def toMadaRngArrayListToRng[A](_1: ExprV2.Of[java.util.ArrayList[A]]): MadaRngArrayListToRng[A] = new MadaRngArrayListToRng[A](_1)
 }
 
-case class FromArrayListExpr[A](_1: Expr[java.util.ArrayList[A]]) extends Expr[Rng[A]] {
-    override def _eval[U](c: Context[Rng[A], U]): U = c match {
-        case DefaultContext => _1 match {
+case class FromArrayListExpr[A](_1: ExprV2.Of[java.util.ArrayList[A]]) extends ExprV2[java.util.ArrayList[A], Rng[A]] {
+    override def _eval[U](x: ExprV2[Rng[A], U]): U = x match {
+        case Self => _1.eval(this)
+        case Default => _1 match {
             case ToArrayListExpr(x1) => x1.eval
             case _ => delegate.eval
         }
-        case _ => delegate.eval(c)
+        case _ => unknown(x)
     }
 
     private def delegate = IndexAccessRngExpr(new ArrayListIndexAccess(_1.eval))
@@ -40,27 +41,27 @@ class ArrayListIndexAccess[A](val base: java.util.ArrayList[A]) extends IndexAcc
 // toArrayList
 
 object ToArrayList extends ToArrayList; trait ToArrayList extends Predefs {
-    class MadaRngToArrayList[A](_1: Expr[Rng[A]]) {
+    class MadaRngToArrayList[A](_1: ExprV2.Of[Rng[A]]) {
         def jcl_toArrayList = ToArrayListExpr(_1).expr
     }
-    implicit def toMadaRngToArrayList[A](_1: Expr[Rng[A]]): MadaRngToArrayList[A] = new MadaRngToArrayList[A](_1)
+    implicit def toMadaRngToArrayList[A](_1: ExprV2.Of[Rng[A]]): MadaRngToArrayList[A] = new MadaRngToArrayList[A](_1)
 }
 
-case class ToArrayListExpr[A](_1: Expr[Rng[A]]) extends Expr[java.util.ArrayList[A]] {
-    override def _eval = _1 match {
+case class ToArrayListExpr[A](override val _1: ExprV2.Of[Rng[A]]) extends ExprV2.Method[Rng[A], java.util.ArrayList[A]] {
+    override def _default = _1 match {
         case FromArrayListExpr(x1) => x1.eval
         case _ => ToArrayListImpl(_1.xlazy)
     }
 }
 
 object ToArrayListImpl {
-    def apply[A](x: Expr[Rng[A]]): java.util.ArrayList[A] = {
+    def apply[A](x: ExprV2.Of[Rng[A]]): java.util.ArrayList[A] = {
         var a = newArrayList(x)
         ForeachExpr(x, a.add(_: A)).eval
         a
     }
 
-    private def newArrayList[A](x: Expr[Rng[A]]) = x.eval.traversal match {
+    private def newArrayList[A](x: ExprV2.Of[Rng[A]]) = x.eval.traversal match {
         case _: RandomAccessTraversal => new java.util.ArrayList[A](SizeExpr(x).eval.toInt)
         case _: SinglePassTraversal => new java.util.ArrayList[A]
     }

@@ -3,15 +3,15 @@ package mada.rng
 
 
 object AsRngBy extends AsRngBy; trait AsRngBy extends Predefs {
-    class MadaRngAsRngBy[A](_1: Expr[Rng[A]]) {
+    class MadaRngAsRngBy[A](_1: ExprV2.Of[Rng[A]]) {
         def asRngBy(_2: Traversal) = AsRngByExpr(_1, _2).expr
     }
-    implicit def toMadaRngAsRngBy[A](_1: Expr[Rng[A]]): MadaRngAsRngBy[A] = new MadaRngAsRngBy[A](_1)
+    implicit def toMadaRngAsRngBy[A](_1: ExprV2.Of[Rng[A]]): MadaRngAsRngBy[A] = new MadaRngAsRngBy[A](_1)
 }
 
 
-case class AsRngByExpr[A](_1: Expr[Rng[A]], _2: Traversal) extends Expr[Rng[A]] {
-    override def _eval = _1 match {
+case class AsRngByExpr[A](override val _1: ExprV2.Of[Rng[A]], _2: Traversal) extends ExprV2.Transform[Rng[A]] {
+    override def _default = _1 match {
         case AsRngByExpr(x1, x2) => {
             Assert("requires compatible Traversals", x2 <:< _2)
             AsRngByExpr(x1, _2).eval // asRngBy-asRngBy fusion

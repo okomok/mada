@@ -3,15 +3,16 @@ package mada.rng
 
 
 object Permutation extends Permutation; trait Permutation extends Predefs {
-    class MadaRngPermutation[A](_1: Expr[Rng[A]]) {
-        def permutation(_2: Expr[Rng[Long]]) = PermutationExpr(_1, _2).expr
+    class MadaRngPermutation[A](_1: ExprV2.Of[Rng[A]]) {
+        def permutation(_2: ExprV2.Of[Rng[Long]]) = PermutationExpr(_1, _2).expr
     }
-    implicit def toMadaRngPermutation[A](_1: Expr[Rng[A]]): MadaRngPermutation[A] = new MadaRngPermutation[A](_1)
+    implicit def toMadaRngPermutation[A](_1: ExprV2.Of[Rng[A]]): MadaRngPermutation[A] = new MadaRngPermutation[A](_1)
 }
 
 
-case class PermutationExpr[A](_1: Expr[Rng[A]], _2: Expr[Rng[Long]]) extends Expr[Rng[A]] {
-    override def _eval = PermutationImpl(_1.eval, _2.eval)
+case class PermutationExpr[A](override val _1: ExprV2.Of[Rng[A]], _2: ExprV2.Of[Rng[Long]])
+        extends ExprV2.Transform[Rng[A]] {
+    override def _default = PermutationImpl(_1.eval, _2.eval)
 }
 
 
