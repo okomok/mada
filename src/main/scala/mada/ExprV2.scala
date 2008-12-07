@@ -29,7 +29,10 @@ object ExprV2 {
 
     trait Adapter[A] extends Terminal[A] {
         protected def _base: Of[A]
-        override protected def _eval[B](x: ExprV2[A, B]): B = _base.eval(x)
+        override protected def _eval[B](x: ExprV2[A, B]): B = x match {
+            case Self => _base.eval
+            case _ => _base.eval(x)
+        }
     }
 
     /*

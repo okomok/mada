@@ -29,7 +29,11 @@ case class IteratorToListExpr[A](_1: ExprV2.Of[Iterator[A]]) extends ExprV2[Iter
         case _ => unknown(x)
     }
 
-    var hookSize = false
+    var hookSize = true
+}
+
+case class IteratorToListExprProxy[A](_1: ExprV2.Of[Iterator[A]]) extends ExprV2.Adapter[List[A]] {
+    override protected def _base = IteratorToListExpr(_1)
 }
 
 
@@ -57,6 +61,12 @@ class ExprV2Test {
         assertEquals(99, SizeExpr(x).eval)
         x.hookSize = false
         assertEquals(5, SizeExpr(x).eval)
+    }
+
+    def testAdapter: Unit = {
+        val x = IteratorToListExprProxy(ExprV2.Constant(anIterator))
+        assertEquals(aList, x.eval)
+        assertEquals(99, SizeExpr(x).eval)
     }
 
     def testLazy {

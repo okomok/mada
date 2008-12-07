@@ -14,7 +14,7 @@ case class ReverseExpr[A](_1: ExprV2.Of[Rng[A]]) extends ExprV2[Rng[A], Rng[A]] 
     override def _eval[U](x: ExprV2[Rng[A], U]): U = x match {
         case Self => _1.eval(this)
         case Default => _1 match {
-            case ReverseExpr(x1) => x1.eval(x) // reverse-reverse fusion
+            case ReverseExpr(x1) => x1.eval // reverse-reverse fusion
             case _ => ReverseImpl(_1.eval)
         }
         case _ => unknown(x)
