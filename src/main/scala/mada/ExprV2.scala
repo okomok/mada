@@ -5,7 +5,9 @@ package mada
 object ExprV2 {
     type Of[A] = ExprV2[_, A]
 
-    type Terminal[A] = ExprV2[A, A]
+    type Identity[A] = ExprV2[A, A]
+
+    type Terminal[A] = ExprV2[Nothing, A]
 
     trait ConstantOf[A] extends Terminal[A] {
         protected def _of: A
@@ -35,30 +37,15 @@ object ExprV2 {
         }
     }
 
-    /*
-
-    trait MethodAdapter[A, B] extends ExprV2[A, B] {
-        protected def _1: Terminal[A]
-        protected def _base: ExprV2[A, B]
-        protected def _default: B = _base.eval
-        override protected def _eval[C](x: ExprV2[B, C]): C = x match {
-            case Self => _1.eval(this) // as method
-            case Default => _default
-            case _ => _base.eval(x)
-        }
-    }
-
-    */
-
     case class Constant[A](_1: A) extends ConstantOf[A] {
         override protected val _of = _1
     }
 
-    case class Cut[A](_1: ExprV2.Of[A]) extends Terminal[A] {
+    case class Cut[A](_1: Of[A]) extends Terminal[A] {
         override protected def _eval[B](x: ExprV2[A, B]): B = _1.eval(x)
     }
 
-    case class Lazy[A](_1: ExprV2.Of[A]) extends Terminal[A] {
+    case class Lazy[A](_1: Of[A]) extends Terminal[A] {
         private val e = new LazyRef[A]
         override protected def _eval[B](x: ExprV2[A, B]): B = x match {
             case Self => e := _1.eval // Self only
@@ -77,11 +64,11 @@ trait ExprV2[Z, A] {
     final def eval[B](x: ExprV2[A, B]): B = _eval(x)
     final def eval: A = eval(Self)
 
-    case object Self extends ExprV2.Terminal[A] {
+    case object Self extends ExprV2.Identity[A] {
         override protected def _eval[B](x: ExprV2[A, B]): B = throw ExprV2.NoSelfCaseError
     }
 
-    case object Default extends ExprV2.Terminal[A] {
+    case object Default extends ExprV2.Identity[A] {
         override protected def _eval[B](x: ExprV2[A, B]): B = throw ExprV2.NoDefaultCaseError
     }
 
