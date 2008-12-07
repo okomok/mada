@@ -18,7 +18,7 @@ object RandomAccessSeqToRng extends RandomAccessSeqToRng; trait RandomAccessSeqT
     implicit def toMadaRngRandomAccessSeqToRng[A](_1: ExprV2.Of[RandomAccessSeq[A]]): MadaRngRandomAccessSeqToRng[A] = new MadaRngRandomAccessSeqToRng[A](_1)
 }
 
-case class FromRandomAccessSeqExpr[A](_1: ExprV2.Of[RandomAccessSeq[A]]) extends ExprV2.Adapter[Rng[A]] {
+case class FromRandomAccessSeqExpr[A](_1: ExprV2.Of[RandomAccessSeq[A]]) extends ExprV2.Adapter[RandomAccessSeq[A], Rng[A]] {
     override protected def _base = IndexAccessRngExpr(new RandomAccessSeqIndexAccess(_1.eval))
 }
 

@@ -13,6 +13,6 @@ object Fill extends Fill; trait Fill extends Predefs {
 }
 
 
-case class FillExpr[A, B <: A](_1: ExprV2.Of[Rng[A]], _2: B) extends ExprV2.Adapter[Unit] {
+case class FillExpr[A, B <: A](_1: ExprV2.Of[Rng[A]], _2: B) extends ExprV2.Adapter[Rng[A], Unit] {
     override protected def _base = ForeachExpr(OutdirectExpr(_1), *(_: Pointer[A]) = _2)
 }

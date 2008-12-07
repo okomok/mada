@@ -10,6 +10,6 @@ object Outplace extends Outplace; trait Outplace extends Predefs {
 }
 
 
-case class OutplaceExpr[A](_1: ExprV2.Of[Rng[A]]) extends ExprV2.Adapter[Rng[Pointer[A]]] {
+case class OutplaceExpr[A](_1: ExprV2.Of[Rng[A]]) extends ExprV2.Adapter[Rng[A], Rng[Pointer[A]]] {
     override protected def _base = ForceExpr(OutdirectExpr(_1))
 }

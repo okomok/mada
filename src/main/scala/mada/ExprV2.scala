@@ -27,7 +27,7 @@ object ExprV2 {
 
     type Transform[A] = Method[A, A]
 
-    trait Adapter[A] extends Terminal[A] {
+    trait Adapter[Z, A] extends ExprV2[Z, A] {
         protected def _base: Of[A]
         override protected def _eval[B](x: ExprV2[A, B]): B = x match {
             case Self => _base.eval

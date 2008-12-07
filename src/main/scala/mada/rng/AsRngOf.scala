@@ -10,6 +10,6 @@ object AsRngOf extends AsRngOf; trait AsRngOf extends Predefs {
 }
 
 
-case class AsRngOfExpr[From, To](_1: ExprV2.Of[Rng[From]]) extends ExprV2.Adapter[Rng[To]] {
+case class AsRngOfExpr[From, To](_1: ExprV2.Of[Rng[From]]) extends ExprV2.Adapter[Rng[From], Rng[To]] {
     override protected def _base = MapExpr(_1, (_: From).asInstanceOf[To])
 }
