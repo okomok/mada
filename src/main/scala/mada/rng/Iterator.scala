@@ -6,21 +6,21 @@ package mada.rng
 // Iterator[A] <-> Expr[Rng[A]]
 
 trait IteratorCompatible {
-    implicit def madaRng_Iterator2ExprRng[A](from: Iterator[A]): ExprV2.Of[Rng[A]] = FromIteratorExpr(ExprV2.Constant(from)).expr
+    implicit def madaRng_Iterator2ExprRng[A](from: Iterator[A]): Expr.Of[Rng[A]] = FromIteratorExpr(Expr.Constant(from)).expr
 }
 
 
 // toRng
 
 object IteratorToRng extends IteratorToRng; trait IteratorToRng extends Predefs {
-    class MadaRngIteratorToRng[A](_1: ExprV2.Of[Iterator[A]]) {
+    class MadaRngIteratorToRng[A](_1: Expr.Of[Iterator[A]]) {
         def toRng = FromIteratorExpr(_1).expr
     }
-    implicit def toMadaRngIteratorToRng[A](_1: ExprV2.Of[Iterator[A]]): MadaRngIteratorToRng[A] = new MadaRngIteratorToRng[A](_1)
+    implicit def toMadaRngIteratorToRng[A](_1: Expr.Of[Iterator[A]]): MadaRngIteratorToRng[A] = new MadaRngIteratorToRng[A](_1)
 }
 
-case class FromIteratorExpr[A](_1: ExprV2.Of[Iterator[A]]) extends ExprV2[Iterator[A], Rng[A]] {
-    override def _eval[U](x: ExprV2[Rng[A], U]): U = x match {
+case class FromIteratorExpr[A](_1: Expr.Of[Iterator[A]]) extends Expr[Iterator[A], Rng[A]] {
+    override def _eval[U](x: Expr[Rng[A], U]): U = x match {
         case Self => _1.eval(this)
         case Default => _1 match {
             case ToIteratorExpr(x1) => x1.eval
@@ -51,14 +51,14 @@ class IteratorPointer[A](val base: Iterator[A], private var e: Option[A])
 // toIterator
 
 object ToIterator extends ToIterator; trait ToIterator extends Predefs {
-    class MadaRngToIterator[A](_1: ExprV2.Of[Rng[A]]) {
+    class MadaRngToIterator[A](_1: Expr.Of[Rng[A]]) {
         def toIterator = ToIteratorExpr(_1).expr
         def elements = toIterator
     }
-    implicit def toMadaRngToIterator[A](_1: ExprV2.Of[Rng[A]]): MadaRngToIterator[A] = new MadaRngToIterator[A](_1)
+    implicit def toMadaRngToIterator[A](_1: Expr.Of[Rng[A]]): MadaRngToIterator[A] = new MadaRngToIterator[A](_1)
 }
 
-case class ToIteratorExpr[A](override val _1: ExprV2.Of[Rng[A]]) extends ExprV2.Method[Rng[A], Iterator[A]] {
+case class ToIteratorExpr[A](override val _1: Expr.Of[Rng[A]]) extends Expr.Method[Rng[A], Iterator[A]] {
     override def _default = _1 match {
         case FromIteratorExpr(x1) => x1.eval
         case _ => new RngIterator(_1.eval)

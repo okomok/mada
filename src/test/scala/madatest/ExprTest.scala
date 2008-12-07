@@ -1,40 +1,79 @@
 
 
-package madatest
+package madatest.exprv2
 
 
 import mada._
 import junit.framework.Assert._
 
 
-class ExprTest {
-    def testTrivial {
+case class SizeExpr[A](override val _1: Expr.Of[List[A]]) extends Expr.Method[List[A], Int] {
+    override protected def _default = _1.eval.size
+}
+
+
+case class MapExpr[A, B](override val _1: Expr.Of[List[A]], _2: A => B) extends Expr.Method[List[A], List[B]] {
+    override def _default = _1 match {
+        case MapExpr(x1, x2) => MapExpr(x1, _2 compose x2).eval
+        case _ => _1.eval.map(_2)
+    }
+}
+
+
+case class IteratorToListExpr[A](_1: Expr.Of[Iterator[A]]) extends Expr[Iterator[A], List[A]] {
+    override protected def _eval[B](x: Expr[List[A], B]): B = x match {
+        case Self => _1.eval(this) // as method
+        case Default => _1.eval.toList // default-implementation of this method
+        case SizeExpr(_) if (hookSize) => 99 // as object
+        case MapExpr(x1, x2) => _1.eval.map(x2).toList // as object
+        case _ => unknown(x)
     }
 
-    case class IntExpr(_1: Int) extends Expr[Int] {
-        override def _eval = _1
+    var hookSize = true
+}
+
+case class IteratorToListExprProxy[A](_1: Expr.Of[Iterator[A]]) extends Expr.Alias[Iterator[A], List[A]] {
+    override protected def _alias = IteratorToListExpr(_1)
+}
+
+
+class ExprV2Test {
+    def aList = Array(1,2,3,4,5).toList
+    def anIterator = aList.elements
+
+    def testConstant: Unit = {
+        assertEquals(10, Expr.Constant(10).eval)
     }
 
-    def testCut {
-        val x = IntExpr(100)
-        x match {
-            case IntExpr(i) => ()
-        }
-        x.cut match {
-            case IntExpr(i) => fail("doh")
-            case _ => ()
-        }
+    def testMethod: Unit = {
+        assertEquals(5, SizeExpr(Expr.Constant(aList)).eval)
+    }
+
+    def testMap: Unit = {
+        val lst = MapExpr(MapExpr(Expr.Constant(aList), { (e: Int) => "wow" }), { (e: String) => 10 }).eval
+        assertEquals(10, lst.first)
+    }
+
+    def testNontrivial: Unit = {
+        val x = IteratorToListExpr(Expr.Constant(anIterator))
+        assertEquals(aList, x.eval)
+        x.hookSize = true
+        assertEquals(99, SizeExpr(x).eval)
+        x.hookSize = false
+        assertEquals(5, SizeExpr(x).eval)
+    }
+
+    def testAdapter: Unit = {
+        val x = IteratorToListExprProxy(Expr.Constant(anIterator))
+        assertEquals(aList, x.eval)
+        assertEquals(99, SizeExpr(x).eval)
     }
 
     def testLazy {
-        val l1 = Expr(100)
+        val l1 = Expr.Constant(100).xlazy
         assertSame(l1.eval, l1.eval)
-        val l2 = Expr(101)
+        val l2 = Expr.Constant(101).xlazy
         assertSame(l2.eval, l2.eval)
         assertNotSame(l2.eval, l1.eval)
-    }
-
-    def testSugar {
-        assertEquals(Expr(100)!, 100)
     }
 }

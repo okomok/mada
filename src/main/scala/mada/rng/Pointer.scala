@@ -92,7 +92,7 @@ trait Pointer[A] {
     final def <=<(that: Pointer[A]) = new detail.PointerRng(this, that).rng
     final def copyIn(t: Traversal): Pointer[A] = if (traversal <:< t) copy else this
     final def pointer = this
-    final def toExpr = ExprV2.Constant(this)
+    final def toExpr = Expr.Constant(this)
 }
 
 

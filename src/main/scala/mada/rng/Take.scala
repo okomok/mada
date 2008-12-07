@@ -3,14 +3,14 @@ package mada.rng
 
 
 object Take extends Take; trait Take extends Predefs {
-    class MadaRngTake[A](_1: ExprV2.Of[Rng[A]]) {
+    class MadaRngTake[A](_1: Expr.Of[Rng[A]]) {
         def take(_2: Long) = TakeExpr(_1, _2).expr
     }
-    implicit def toMadaRngTake[A](_1: ExprV2.Of[Rng[A]]): MadaRngTake[A] = new MadaRngTake[A](_1)
+    implicit def toMadaRngTake[A](_1: Expr.Of[Rng[A]]): MadaRngTake[A] = new MadaRngTake[A](_1)
 }
 
 
-case class TakeExpr[A](override val _1: ExprV2.Of[Rng[A]], _2: Long) extends ExprV2.Transform[Rng[A]] {
+case class TakeExpr[A](override val _1: Expr.Of[Rng[A]], _2: Long) extends Expr.Transform[Rng[A]] {
     override def _default = _1 match {
         case TakeExpr(x1, x2) => TakeExpr(x1, Math.min(x2, _2)).eval // take-take fusion
         case _ => TakeImpl(_1.eval, _2)

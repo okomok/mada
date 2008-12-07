@@ -6,15 +6,15 @@ import Pointer._
 
 
 object PointerAdvance extends PointerAdvance; trait PointerAdvance extends Predefs {
-    class MadaRngPointerAdvance[A](_1: ExprV2.Of[Pointer[A]]) {
+    class MadaRngPointerAdvance[A](_1: Expr.Of[Pointer[A]]) {
         def ptr_advance(_2: Long) = PointerAdvanceExpr(_1, _2).expr
     }
-    implicit def toMadaRngPointerAdvance[A](_1: ExprV2.Of[Pointer[A]]): MadaRngPointerAdvance[A] = new MadaRngPointerAdvance[A](_1)
+    implicit def toMadaRngPointerAdvance[A](_1: Expr.Of[Pointer[A]]): MadaRngPointerAdvance[A] = new MadaRngPointerAdvance[A](_1)
 }
 
 
-case class PointerAdvanceExpr[A](override val _1: ExprV2.Of[Pointer[A]], _2: Long)
-        extends ExprV2.Method[Pointer[A], Pointer[A]] {
+case class PointerAdvanceExpr[A](override val _1: Expr.Of[Pointer[A]], _2: Long)
+        extends Expr.Method[Pointer[A], Pointer[A]] {
     override def _default = PointerAdvanceImpl(_1.eval, _2)
 }
 

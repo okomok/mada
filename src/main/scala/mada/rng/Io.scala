@@ -77,8 +77,8 @@ class RandomAccessFileOf[A](val base: RandomAccessFile) {
 //  RandomAccessFile <-> Expr[Rng[A]]
 
 object RandomAccessFileCompatible extends RandomAccessFileCompatible; trait RandomAccessFileCompatible {
-    implicit def toMadaIntRandomAccessFileRngExpr(from: IntRandomAccessFile): ExprV2.Of[Rng[Int]] = FromIntRandomAccessFileExpr(ExprV2.Constant(from)).expr
-    implicit def toMadaLongRandomAccessFileRngExpr(from: LongRandomAccessFile): ExprV2.Of[Rng[Long]] = FromLongRandomAccessFileExpr(ExprV2.Constant(from)).expr
+    implicit def toMadaIntRandomAccessFileRngExpr(from: IntRandomAccessFile): Expr.Of[Rng[Int]] = FromIntRandomAccessFileExpr(Expr.Constant(from)).expr
+    implicit def toMadaLongRandomAccessFileRngExpr(from: LongRandomAccessFile): Expr.Of[Rng[Long]] = FromLongRandomAccessFileExpr(Expr.Constant(from)).expr
 }
 
 
@@ -86,24 +86,24 @@ object RandomAccessFileCompatible extends RandomAccessFileCompatible; trait Rand
 
 object RandomAccessFileToRng extends RandomAccessFileToRng; trait RandomAccessFileToRng extends Predefs {
     // Int
-    class MadaRngIntRandomAccessFileToRng(_1: ExprV2.Of[IntRandomAccessFile]) {
+    class MadaRngIntRandomAccessFileToRng(_1: Expr.Of[IntRandomAccessFile]) {
         def toRng = FromIntRandomAccessFileExpr(_1).expr
     }
-    implicit def toMadaRngIntRandomAccessFileToRng(_1: ExprV2.Of[IntRandomAccessFile]): MadaRngIntRandomAccessFileToRng = new MadaRngIntRandomAccessFileToRng(_1)
+    implicit def toMadaRngIntRandomAccessFileToRng(_1: Expr.Of[IntRandomAccessFile]): MadaRngIntRandomAccessFileToRng = new MadaRngIntRandomAccessFileToRng(_1)
     // Long
-    class MadaRngLongRandomAccessFileToRng(_1: ExprV2.Of[LongRandomAccessFile]) {
+    class MadaRngLongRandomAccessFileToRng(_1: Expr.Of[LongRandomAccessFile]) {
         def toRng = FromLongRandomAccessFileExpr(_1).expr
     }
-    implicit def toMadaRngLongRandomAccessFileToRng(_1: ExprV2.Of[LongRandomAccessFile]): MadaRngLongRandomAccessFileToRng = new MadaRngLongRandomAccessFileToRng(_1)
+    implicit def toMadaRngLongRandomAccessFileToRng(_1: Expr.Of[LongRandomAccessFile]): MadaRngLongRandomAccessFileToRng = new MadaRngLongRandomAccessFileToRng(_1)
 }
 
 
 // RandomAccessFileExprs
 
-case class FromIntRandomAccessFileExpr(_1: ExprV2.Of[IntRandomAccessFile]) extends ExprV2.Alias[IntRandomAccessFile, Rng[Int]] {
+case class FromIntRandomAccessFileExpr(_1: Expr.Of[IntRandomAccessFile]) extends Expr.Alias[IntRandomAccessFile, Rng[Int]] {
     override protected def _alias = IndexAccessRngExpr(_1.eval._indexAccess)
 }
 
-case class FromLongRandomAccessFileExpr(_1: ExprV2.Of[LongRandomAccessFile]) extends ExprV2.Alias[LongRandomAccessFile, Rng[Long]] {
+case class FromLongRandomAccessFileExpr(_1: Expr.Of[LongRandomAccessFile]) extends Expr.Alias[LongRandomAccessFile, Rng[Long]] {
     override protected def _alias = IndexAccessRngExpr(_1.eval._indexAccess)
 }

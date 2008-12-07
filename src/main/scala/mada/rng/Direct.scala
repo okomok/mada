@@ -8,13 +8,13 @@ import Pointer._
 // indirect
 
 object Indirect extends Indirect; trait Indirect extends Predefs {
-    class MadaRngIndirect[A](_1: ExprV2.Of[Rng[Pointer[A]]]) {
+    class MadaRngIndirect[A](_1: Expr.Of[Rng[Pointer[A]]]) {
         def indirect = IndirectExpr(_1).expr
     }
-    implicit def toMadaRngIndirect[A](_1: ExprV2.Of[Rng[Pointer[A]]]): MadaRngIndirect[A] = new MadaRngIndirect[A](_1)
+    implicit def toMadaRngIndirect[A](_1: Expr.Of[Rng[Pointer[A]]]): MadaRngIndirect[A] = new MadaRngIndirect[A](_1)
 }
 
-case class IndirectExpr[A](_1: ExprV2.Of[Rng[Pointer[A]]]) extends ExprV2.Method[Rng[Pointer[A]], Rng[A]] {
+case class IndirectExpr[A](_1: Expr.Of[Rng[Pointer[A]]]) extends Expr.Method[Rng[Pointer[A]], Rng[A]] {
     override def _default = _1 match {
         case OutdirectExpr(x1) => x1.eval // indirect-outdirect fusion
         case _ => IndirectImpl(_1.eval)
@@ -39,14 +39,14 @@ class IndirectPointer[A](override val _base: Pointer[Pointer[A]])
 // outdirect
 
 object Outdirect extends Outdirect; trait Outdirect extends Predefs {
-    class MadaRngOutdirect[A](_1: ExprV2.Of[Rng[A]]) {
+    class MadaRngOutdirect[A](_1: Expr.Of[Rng[A]]) {
         def outdirect = OutdirectExpr(_1).expr
     }
-    implicit def toMadaRngOutdirect[A](_1: ExprV2.Of[Rng[A]]): MadaRngOutdirect[A] = new MadaRngOutdirect[A](_1)
+    implicit def toMadaRngOutdirect[A](_1: Expr.Of[Rng[A]]): MadaRngOutdirect[A] = new MadaRngOutdirect[A](_1)
 }
 
-case class OutdirectExpr[A](_1: ExprV2.Of[Rng[A]]) extends ExprV2[Rng[A], Rng[Pointer[A]]] {
-    override def _eval[U](x: ExprV2[Rng[Pointer[A]], U]): U = x match {
+case class OutdirectExpr[A](_1: Expr.Of[Rng[A]]) extends Expr[Rng[A], Rng[Pointer[A]]] {
+    override def _eval[U](x: Expr[Rng[Pointer[A]], U]): U = x match {
         case Self => _1.eval(this)
         case Default => _1 match {
             case IndirectExpr(x1) => x1.eval // outdirect-indirect fusion

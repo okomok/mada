@@ -8,13 +8,13 @@ import Pointer._
 // first
 
 object First extends First; trait First extends Predefs {
-    class MadaRngFirst[A](_1: ExprV2.Of[Rng[A]]) {
+    class MadaRngFirst[A](_1: Expr.Of[Rng[A]]) {
         def first = FirstExpr(_1).expr
     }
-    implicit def toMadaRngFirst[A](_1: ExprV2.Of[Rng[A]]): MadaRngFirst[A] = new MadaRngFirst[A](_1)
+    implicit def toMadaRngFirst[A](_1: Expr.Of[Rng[A]]): MadaRngFirst[A] = new MadaRngFirst[A](_1)
 }
 
-case class FirstExpr[A](override val _1: ExprV2.Of[Rng[A]]) extends ExprV2.Method[Rng[A], A] {
+case class FirstExpr[A](override val _1: Expr.Of[Rng[A]]) extends Expr.Method[Rng[A], A] {
     override def _default = FirstImpl(_1.eval)
 }
 
@@ -29,13 +29,13 @@ object FirstImpl {
 // last
 
 object Last extends Last; trait Last extends Predefs {
-    class MadaRngLast[A](_1: ExprV2.Of[Rng[A]]) {
+    class MadaRngLast[A](_1: Expr.Of[Rng[A]]) {
         def last = LastExpr(_1).expr
     }
-    implicit def toMadaRngLast[A](_1: ExprV2.Of[Rng[A]]): MadaRngLast[A] = new MadaRngLast[A](_1)
+    implicit def toMadaRngLast[A](_1: Expr.Of[Rng[A]]): MadaRngLast[A] = new MadaRngLast[A](_1)
 }
 
-case class LastExpr[A](override val _1: ExprV2.Of[Rng[A]]) extends ExprV2.Method[Rng[A], A] {
+case class LastExpr[A](override val _1: Expr.Of[Rng[A]]) extends Expr.Method[Rng[A], A] {
     override def _default = LastImpl(_1.eval)
 }
 

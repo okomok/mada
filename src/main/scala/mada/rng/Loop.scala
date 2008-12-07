@@ -6,14 +6,14 @@ import Pointer._
 
 
 object Loop extends Loop; trait Loop extends Predefs {
-    class MadaRngLoop[A](_1: ExprV2.Of[Rng[A]]) {
+    class MadaRngLoop[A](_1: Expr.Of[Rng[A]]) {
         def loop(_2: A => Boolean) = LoopExpr(_1, _2).expr
     }
-    implicit def toMadaRngLoop[A](_1: ExprV2.Of[Rng[A]]): MadaRngLoop[A] = new MadaRngLoop[A](_1)
+    implicit def toMadaRngLoop[A](_1: Expr.Of[Rng[A]]): MadaRngLoop[A] = new MadaRngLoop[A](_1)
 }
 
 
-case class LoopExpr[A](override val _1: ExprV2.Of[Rng[A]], _2: A => Boolean) extends ExprV2.Method[Rng[A], Unit] {
+case class LoopExpr[A](override val _1: Expr.Of[Rng[A]], _2: A => Boolean) extends Expr.Method[Rng[A], Unit] {
     override def _default = _1 match {
         case FilterExpr(x1, x2) => LoopExpr(x1, { (e: A) => if (x2(e)) _2(e) else true }).eval // loop-filter fusion
         case MapExpr(x1, x2) => LoopExpr(x1, _2 compose x2).eval // loop-map fusion

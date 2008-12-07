@@ -2,78 +2,83 @@
 package mada
 
 
-// Expr
-
 object Expr {
-    def apply[A](e: => A) = new ConstantExpr(e).expr
-}
+    type Of[A] = Expr[_, A]
 
-trait Expr[A] {
-    protected def _eval: A = { throw new UnknownContextException(this, DefaultContext) }
-    protected def _eval[B](c: Context[A, B]): B = c(this)
+    type Identity[A] = Expr[A, A]
 
-    final def eval: A = eval(DefaultContext)
-    final def eval[B](c: Context[A, B]): B = _eval(c)
+    type Terminal[A] = Expr[Nothing, A]
 
-    case object DefaultContext extends Context[A, A] {
-        override def apply(x: Expr[A]) = x._eval
+    trait ConstantOf[A] extends Terminal[A] {
+        protected def _of: A
+        override protected def _eval[B](x: Expr[A, B]): B = x match {
+            case Self => _of
+            case _ => unknown(x)
+        }
     }
 
+    trait Method[Z, A] extends Expr[Z, A] {
+        protected def _1: Of[Z]
+        protected def _default: A
+        override protected def _eval[B](x: Expr[A, B]): B = x match {
+            case Self => _1.eval(this)
+            case Default => _default
+            case _ => unknown(x)
+        }
+    }
+
+    type Transform[A] = Method[A, A]
+
+    trait Alias[Z, A] extends Expr[Z, A] {
+        protected def _alias: Of[A]
+        override protected def _eval[B](x: Expr[A, B]): B = x match {
+            case Self => _alias.eval
+            case _ => _alias.eval(x)
+        }
+    }
+
+
+    case class Constant[A](_1: A) extends ConstantOf[A] {
+        override protected val _of = _1
+    }
+
+    case class Cut[A](_1: Of[A]) extends Terminal[A] {
+        override protected def _eval[B](x: Expr[A, B]): B = _1.eval(x)
+    }
+
+    case class Lazy[A](_1: Of[A]) extends Terminal[A] {
+        private val e = new LazyRef[A]
+        override protected def _eval[B](x: Expr[A, B]): B = x match {
+            case Self => e := _1.eval // Self only
+            case _ => unknown(x)
+        }
+    }
+
+
+    case object NoSelfCaseError extends Error
+    case object NoDefaultCaseError extends Error
+}
+
+
+trait Expr[Z, A] {
+    protected def _eval[B](x: Expr[A, B]): B
+    final def eval[B](x: Expr[A, B]): B = _eval(x)
+    final def eval: A = eval(Self)
+
+    case object Self extends Expr.Identity[A] {
+        override protected def _eval[B](x: Expr[A, B]): B = throw Expr.NoSelfCaseError
+    }
+
+    case object Default extends Expr.Identity[A] {
+        override protected def _eval[B](x: Expr[A, B]): B = throw Expr.NoDefaultCaseError
+    }
+
+    protected def unknown[B](x: Expr[A, B]): B = x.eval(x.Default)
+
     final def expr = this
-    final def cut = CutExpr(this).expr
-    final def xlazy = LazyExpr(this).expr
+    final def cut = Expr.Cut(this).expr
+    final def xlazy = Expr.Lazy(this).expr
 
     final def ! = eval
-    final def ![B](c: Context[A, B]) = eval(c)
+    final def ![B](x: Expr[A, B]) = eval(x)
 }
-
-
-// ExprAdapter
-
-trait ExprAdapter[A] extends Expr[A] {
-    protected def _base: Expr[A]
-    final def base = _base
-    override protected def _eval[B](c: Context[A, B]) = base.eval(c)
-}
-
-
-// Context
-
-trait Context[A, B] extends (Expr[A] => B)
-
-
-// predefined expressions
-
-class ConstantExpr[A](e: => A) extends Expr[A] {
-    override protected def _eval = e
-}
-
-case class CutExpr[A](_1: Expr[A]) extends Expr[A] {
-    override protected def _eval[B](c: Context[A, B]) = _1.eval(c)
-}
-
-case class LazyExpr[A](_1: Expr[A]) extends Expr[A] {
-    private val c = new LazyContext(_1.DefaultContext) // DefaultContext only
-    override protected def _eval = _1.eval(c)
-}
-
-// will be rejected.
-object ExprConversions extends ExprConversions
-
-trait ExprConversions {
-    implicit def toMadaExpr[A](e: => A): ConstantExpr[A] = new ConstantExpr[A](e)
-}
-
-
-// predefined contexts
-
-case class LazyContext[A, B](c: Context[A, B]) extends Context[A, B] {
-    private val e = new LazyRef[B]
-    override def apply(x: Expr[A]) = e := c(x)
-}
-
-
-// exceptions
-
-case class UnknownExprException[A, B](expr: Expr[A], context: Context[A, B]) extends UnsupportedOperationException
-case class UnknownContextException[A, B](expr: Expr[A], context: Context[A, B]) extends UnsupportedOperationException

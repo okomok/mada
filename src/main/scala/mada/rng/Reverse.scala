@@ -3,15 +3,15 @@ package mada.rng
 
 
 object Reverse extends Reverse; trait Reverse extends Predefs {
-    class MadaRngReverse[A](_1: ExprV2.Of[Rng[A]]) {
+    class MadaRngReverse[A](_1: Expr.Of[Rng[A]]) {
         def reverse = ReverseExpr(_1).expr
     }
-    implicit def toMadaRngReverse[A](_1: ExprV2.Of[Rng[A]]): MadaRngReverse[A] = new MadaRngReverse[A](_1)
+    implicit def toMadaRngReverse[A](_1: Expr.Of[Rng[A]]): MadaRngReverse[A] = new MadaRngReverse[A](_1)
 }
 
 
-case class ReverseExpr[A](_1: ExprV2.Of[Rng[A]]) extends ExprV2[Rng[A], Rng[A]] {
-    override def _eval[U](x: ExprV2[Rng[A], U]): U = x match {
+case class ReverseExpr[A](_1: Expr.Of[Rng[A]]) extends Expr[Rng[A], Rng[A]] {
+    override def _eval[U](x: Expr[Rng[A], U]): U = x match {
         case Self => _1.eval(this)
         case Default => _1 match {
             case ReverseExpr(x1) => x1.eval // reverse-reverse fusion

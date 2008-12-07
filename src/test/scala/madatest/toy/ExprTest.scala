@@ -2,7 +2,7 @@
 
 package madatest.toy
 
-
+/*
 import junit.framework.Assert._
 import mada.{Expr, Context}
 import mada.ExprConversions._
@@ -97,3 +97,4 @@ class ExprTest {
     }
 }
 
+*/

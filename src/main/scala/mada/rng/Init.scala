@@ -6,14 +6,14 @@ import Pointer._
 
 
 object Init extends Init; trait Init extends Predefs {
-    class MadaRngInit[A](_1: ExprV2.Of[Rng[A]]) {
+    class MadaRngInit[A](_1: Expr.Of[Rng[A]]) {
         def init = InitExpr(_1).expr
     }
-    implicit def toMadaRngInit[A](_1: ExprV2.Of[Rng[A]]): MadaRngInit[A] = new MadaRngInit[A](_1)
+    implicit def toMadaRngInit[A](_1: Expr.Of[Rng[A]]): MadaRngInit[A] = new MadaRngInit[A](_1)
 }
 
 
-case class InitExpr[A](override val _1: ExprV2.Of[Rng[A]]) extends ExprV2.Transform[Rng[A]] {
+case class InitExpr[A](override val _1: Expr.Of[Rng[A]]) extends Expr.Transform[Rng[A]] {
     override def _default = InitImpl(_1.eval)
 }
 

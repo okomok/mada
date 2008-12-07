@@ -9,16 +9,16 @@ import Size._
 
 
 object Equals extends Equals; trait Equals extends Predefs {
-    class MadaRngEquals[A1](_1: ExprV2.Of[Rng[A1]]) {
-        def requals[A2](_2: ExprV2.Of[Rng[A2]], _3: (A1, A2) => Boolean) = EqualsExpr(_1, _2, _3).expr
-        def requals(_2: ExprV2.Of[Rng[A1]]) = EqualsExpr[A1, A1](_1, _2, _ == _).expr
+    class MadaRngEquals[A1](_1: Expr.Of[Rng[A1]]) {
+        def requals[A2](_2: Expr.Of[Rng[A2]], _3: (A1, A2) => Boolean) = EqualsExpr(_1, _2, _3).expr
+        def requals(_2: Expr.Of[Rng[A1]]) = EqualsExpr[A1, A1](_1, _2, _ == _).expr
     }
-    implicit def toMadaRngEquals[A1](_1: ExprV2.Of[Rng[A1]]): MadaRngEquals[A1] = new MadaRngEquals[A1](_1)
+    implicit def toMadaRngEquals[A1](_1: Expr.Of[Rng[A1]]): MadaRngEquals[A1] = new MadaRngEquals[A1](_1)
 }
 
 
-case class EqualsExpr[A1, A2](override val _1: ExprV2.Of[Rng[A1]], _2: ExprV2.Of[Rng[A2]], _3: (A1, A2) => Boolean)
-        extends ExprV2.Method[Rng[A1], Boolean] {
+case class EqualsExpr[A1, A2](override val _1: Expr.Of[Rng[A1]], _2: Expr.Of[Rng[A2]], _3: (A1, A2) => Boolean)
+        extends Expr.Method[Rng[A1], Boolean] {
     override def _default = {
         val z1 = _1.xlazy
         val z2 = _2.xlazy

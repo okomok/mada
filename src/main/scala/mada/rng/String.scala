@@ -8,21 +8,21 @@ import Foreach._
 //  String <-> Expr[Rng[Char]]
 
 object StringCompatible; trait StringCompatible {
-    implicit def madaRng_String2ExprRng(from: String): ExprV2.Of[Rng[Char]] = FromStringExpr(ExprV2.Constant(from)).expr
+    implicit def madaRng_String2ExprRng(from: String): Expr.Of[Rng[Char]] = FromStringExpr(Expr.Constant(from)).expr
 }
 
 
 // toRng
 
 object StringToRng extends StringToRng; trait StringToRng extends Predefs {
-    class MadaRngStringToRng(_1: ExprV2.Of[String]) {
+    class MadaRngStringToRng(_1: Expr.Of[String]) {
         def toRng = FromStringExpr(_1).expr
     }
-    implicit def toMadaRngStringToRng(_1: ExprV2.Of[String]): MadaRngStringToRng = new MadaRngStringToRng(_1)
+    implicit def toMadaRngStringToRng(_1: Expr.Of[String]): MadaRngStringToRng = new MadaRngStringToRng(_1)
 }
 
-case class FromStringExpr(_1: ExprV2.Of[String]) extends ExprV2[String, Rng[Char]] {
-    override def _eval[U](x: ExprV2[Rng[Char], U]): U = x match {
+case class FromStringExpr(_1: Expr.Of[String]) extends Expr[String, Rng[Char]] {
+    override def _eval[U](x: Expr[Rng[Char], U]): U = x match {
         case Self => _1.eval(this)
         case Default => _1 match {
             case StringizeExpr(x1) => x1.eval
@@ -43,13 +43,13 @@ class StringIndexAccess(val base: String) extends IndexAccess[Char] {
 // stringize
 
 object Stringize extends Stringize; trait Stringize extends Predefs {
-    class MadaRngStringize(_1: ExprV2.Of[Rng[Char]]) {
+    class MadaRngStringize(_1: Expr.Of[Rng[Char]]) {
         def stringize = StringizeExpr(_1).expr
     }
-    implicit def toMadaRngStringize(_1: ExprV2.Of[Rng[Char]]): MadaRngStringize = new MadaRngStringize(_1)
+    implicit def toMadaRngStringize(_1: Expr.Of[Rng[Char]]): MadaRngStringize = new MadaRngStringize(_1)
 }
 
-case class StringizeExpr(override val _1: ExprV2.Of[Rng[Char]]) extends ExprV2.Method[Rng[Char], String] {
+case class StringizeExpr(override val _1: Expr.Of[Rng[Char]]) extends Expr.Method[Rng[Char], String] {
     override def _default = _1 match {
         case FromStringExpr(x1) => x1.eval
         case _ => {

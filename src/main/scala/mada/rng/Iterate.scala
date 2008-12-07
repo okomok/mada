@@ -7,6 +7,6 @@ object Iterate extends Iterate; trait Iterate extends Predefs {
 }
 
 
-case class IterateExpr[A](_1: A, _2: A => A) extends ExprV2.Alias[Nothing, Rng[A]] {
+case class IterateExpr[A](_1: A, _2: A => A) extends Expr.Alias[Nothing, Rng[A]] {
     override protected def _alias = UnfoldRightExpr(_1, { (x: A) => Some(x, _2(x)) })
 }

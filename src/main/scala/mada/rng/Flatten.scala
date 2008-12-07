@@ -7,15 +7,15 @@ import IsEmpty._
 
 
 object Flatten extends Flatten; trait Flatten extends Predefs {
-    class MadaRngFlatten[A](_1: ExprV2.Of[Rng[Rng[A]]]) {
+    class MadaRngFlatten[A](_1: Expr.Of[Rng[Rng[A]]]) {
         def flatten = FlattenExpr(_1, None).expr
         def flatten(_2: Traversal) = FlattenExpr(_1, Some(_2)).expr
     }
-    implicit def toMadaRngFlatten[A](_1: ExprV2.Of[Rng[Rng[A]]]): MadaRngFlatten[A] = new MadaRngFlatten[A](_1)
+    implicit def toMadaRngFlatten[A](_1: Expr.Of[Rng[Rng[A]]]): MadaRngFlatten[A] = new MadaRngFlatten[A](_1)
 }
 
 
-case class FlattenExpr[A](override val _1: ExprV2.Of[Rng[Rng[A]]], _2: Option[Traversal]) extends ExprV2.Method[Rng[Rng[A]], Rng[A]] {
+case class FlattenExpr[A](override val _1: Expr.Of[Rng[Rng[A]]], _2: Option[Traversal]) extends Expr.Method[Rng[Rng[A]], Rng[A]] {
     override def _default = FlattenImpl(_1.eval, _2)
 }
 

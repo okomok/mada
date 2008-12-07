@@ -6,14 +6,14 @@ import Pointer._
 
 
 object Step extends Step; trait Step extends Predefs {
-    class MadaRngStep[A](_1: ExprV2.Of[Rng[A]]) {
+    class MadaRngStep[A](_1: Expr.Of[Rng[A]]) {
         def step(_2: Long) = StepExpr(_1, _2).expr
     }
-    implicit def toMadaRngStep[A](_1: ExprV2.Of[Rng[A]]): MadaRngStep[A] = new MadaRngStep[A](_1)
+    implicit def toMadaRngStep[A](_1: Expr.Of[Rng[A]]): MadaRngStep[A] = new MadaRngStep[A](_1)
 }
 
 
-case class StepExpr[A](override val _1: ExprV2.Of[Rng[A]], _2: Long) extends ExprV2.Transform[Rng[A]] {
+case class StepExpr[A](override val _1: Expr.Of[Rng[A]], _2: Long) extends Expr.Transform[Rng[A]] {
     override def _default = _1 match {
         case StepExpr(x1, x2) => StepExpr(x1, x2 + _2).eval // step-step fusion
         case _ => StepWithExpr(_1, StepFunction(_: Rng[A], _2)).eval

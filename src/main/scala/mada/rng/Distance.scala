@@ -8,14 +8,14 @@ import Size._
 
 
 object Distance extends Distance; trait Distance extends Predefs {
-    class MadaRngDistance[A](_1: ExprV2.Of[Rng[A]]) {
+    class MadaRngDistance[A](_1: Expr.Of[Rng[A]]) {
         def distance = DistanceExpr(_1).expr
     }
-    implicit def toMadaRngDistance[A](_1: ExprV2.Of[Rng[A]]): MadaRngDistance[A] = new MadaRngDistance[A](_1)
+    implicit def toMadaRngDistance[A](_1: Expr.Of[Rng[A]]): MadaRngDistance[A] = new MadaRngDistance[A](_1)
 }
 
 
-case class DistanceExpr[A](override val _1: ExprV2.Of[Rng[A]]) extends ExprV2.Method[Rng[A], Long] {
+case class DistanceExpr[A](override val _1: Expr.Of[Rng[A]]) extends Expr.Method[Rng[A], Long] {
     override def _default = {
         val z1 = _1.xlazy
         z1.eval.traversal match {

@@ -3,14 +3,14 @@ package mada.rng
 
 
 object Zip extends Zip; trait Zip extends Predefs {
-    class MadaRngZip[A1](_1: ExprV2.Of[Rng[A1]]) {
-        def zip[A2](_2: ExprV2.Of[Rng[A2]]) = ZipExpr(_1, _2).expr
+    class MadaRngZip[A1](_1: Expr.Of[Rng[A1]]) {
+        def zip[A2](_2: Expr.Of[Rng[A2]]) = ZipExpr(_1, _2).expr
     }
-    implicit def toMadaRngZip[A1](_1: ExprV2.Of[Rng[A1]]): MadaRngZip[A1] = new MadaRngZip[A1](_1)
+    implicit def toMadaRngZip[A1](_1: Expr.Of[Rng[A1]]): MadaRngZip[A1] = new MadaRngZip[A1](_1)
 }
 
 
-case class ZipExpr[A1, A2](override val _1: ExprV2.Of[Rng[A1]], _2: ExprV2.Of[Rng[A2]]) extends ExprV2.Method[Rng[A1], Rng[(A1, A2)]] {
+case class ZipExpr[A1, A2](override val _1: Expr.Of[Rng[A1]], _2: Expr.Of[Rng[A2]]) extends Expr.Method[Rng[A1], Rng[(A1, A2)]] {
     override def _default = ZipImpl(_1.eval, _2.eval)
 }
 
