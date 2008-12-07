@@ -29,11 +29,11 @@ object ExprV2 {
 
     type Transform[A] = Method[A, A]
 
-    trait Adapter[Z, A] extends ExprV2[Z, A] {
-        protected def _base: Of[A]
+    trait Alias[Z, A] extends ExprV2[Z, A] {
+        protected def _alias: Of[A]
         override protected def _eval[B](x: ExprV2[A, B]): B = x match {
-            case Self => _base.eval
-            case _ => _base.eval(x)
+            case Self => _alias.eval
+            case _ => _alias.eval(x)
         }
     }
 

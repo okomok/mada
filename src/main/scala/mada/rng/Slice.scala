@@ -10,6 +10,6 @@ object Slice extends Slice; trait Slice extends Predefs {
 }
 
 
-case class SliceExpr[A](_1: ExprV2.Of[Rng[A]], _2: Long, _3: Long) extends ExprV2.Adapter[Rng[A], Rng[A]] {
-    override protected def _base = TakeExpr(DropExpr(_1, _2), _3 - _2)
+case class SliceExpr[A](_1: ExprV2.Of[Rng[A]], _2: Long, _3: Long) extends ExprV2.Alias[Rng[A], Rng[A]] {
+    override protected def _alias = TakeExpr(DropExpr(_1, _2), _3 - _2)
 }

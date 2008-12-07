@@ -10,6 +10,6 @@ object Force extends Force; trait Force extends Predefs {
 }
 
 
-case class ForceExpr[A](_1: ExprV2.Of[Rng[A]]) extends ExprV2.Adapter[Rng[A], Rng[A]] {
-    override protected def _base = jcl.FromArrayListExpr(jcl.ToArrayListExpr(_1))
+case class ForceExpr[A](_1: ExprV2.Of[Rng[A]]) extends ExprV2.Alias[Rng[A], Rng[A]] {
+    override protected def _alias = jcl.FromArrayListExpr(jcl.ToArrayListExpr(_1))
 }

@@ -10,6 +10,6 @@ object Foreach extends Foreach; trait Foreach extends Predefs {
 }
 
 
-case class ForeachExpr[A](_1: ExprV2.Of[Rng[A]], _2: A => Any) extends ExprV2.Adapter[Rng[A], Unit] {
-    override protected def _base = LoopExpr(_1, { (e: A) => _2(e); true })
+case class ForeachExpr[A](_1: ExprV2.Of[Rng[A]], _2: A => Any) extends ExprV2.Alias[Rng[A], Unit] {
+    override protected def _alias = LoopExpr(_1, { (e: A) => _2(e); true })
 }

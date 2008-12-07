@@ -32,8 +32,8 @@ case class IteratorToListExpr[A](_1: ExprV2.Of[Iterator[A]]) extends ExprV2[Iter
     var hookSize = true
 }
 
-case class IteratorToListExprProxy[A](_1: ExprV2.Of[Iterator[A]]) extends ExprV2.Adapter[Iterator[A], List[A]] {
-    override protected def _base = IteratorToListExpr(_1)
+case class IteratorToListExprProxy[A](_1: ExprV2.Of[Iterator[A]]) extends ExprV2.Alias[Iterator[A], List[A]] {
+    override protected def _alias = IteratorToListExpr(_1)
 }
 
 
