@@ -21,7 +21,7 @@ object Expr {
         protected def _1: Of[Z]
         protected def _default: A
         override protected def _eval[B](x: Expr[A, B]): B = x match {
-            case Self => _1.eval(this)
+            case Self => methodOf(_1)
             case Default => _default
             case _ => unknown(x)
         }
@@ -74,6 +74,7 @@ trait Expr[Z, A] {
     }
 
     protected def unknown[B](x: Expr[A, B]): B = x.eval(x.Default)
+    protected def methodOf(x: Expr.Of[Z]): A = x.eval(this)
 
     final def expr = this
     final def cut = Expr.Cut(this).expr

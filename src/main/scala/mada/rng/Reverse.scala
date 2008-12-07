@@ -12,7 +12,7 @@ object Reverse extends Reverse; trait Reverse extends Predefs {
 
 case class ReverseExpr[A](_1: Expr.Of[Rng[A]]) extends Expr[Rng[A], Rng[A]] {
     override def _eval[U](x: Expr[Rng[A], U]): U = x match {
-        case Self => _1.eval(this)
+        case Self => methodOf(_1)
         case Default => _1 match {
             case ReverseExpr(x1) => x1.eval // reverse-reverse fusion
             case _ => ReverseImpl(_1.eval)
