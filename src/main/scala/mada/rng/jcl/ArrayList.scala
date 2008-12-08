@@ -20,12 +20,12 @@ object ArrayListToRng extends ArrayListToRng; trait ArrayListToRng extends Prede
 
 case class FromArrayListExpr[A](_1: Expr.Of[java.util.ArrayList[A]]) extends Expr[java.util.ArrayList[A], Rng[A]] {
     override protected def _eval[U](x: Expr[Rng[A], U]): U = x match {
-        case Self => _1 ! this
+        case Self => _1?this
         case Unknown => _1 match {
             case ToArrayListExpr(x1) => x1.eval
             case _ => delegate.eval
         }
-        case _ => unknown(x)
+        case _ => dontKnow(x)
     }
 
     private def delegate = IndexAccessRngExpr(new ArrayListIndexAccess(_1.eval))

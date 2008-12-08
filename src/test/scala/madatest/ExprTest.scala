@@ -28,7 +28,7 @@ case class IteratorToListExpr[A](_1: Expr.Of[Iterator[A]]) extends Expr[Iterator
         case Unknown => _1.eval.toList // default-implementation of this method
         case SizeExpr(_) if (hookSize) => 99 // as object
         case MapExpr(x1, x2) => _1.eval.map(x2).toList // as object
-        case _ => unknown(x)
+        case _ => dontKnow(x)
     }
 
     var hookSize = true

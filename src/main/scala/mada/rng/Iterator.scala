@@ -21,13 +21,13 @@ object IteratorToRng extends IteratorToRng; trait IteratorToRng extends Predefs 
 
 case class FromIteratorExpr[A](_1: Expr.Of[Iterator[A]]) extends Expr[Iterator[A], Rng[A]] {
     override protected def _eval[U](x: Expr[Rng[A], U]): U = x match {
-        case Self => _1 ! this
+        case Self => _1?this
         case Unknown => _1 match {
             case ToIteratorExpr(x1) => x1.eval
             case _ => FromIteratorImpl(_1.eval)
         }
         case ForallExpr(_, f) => _1.eval.forall(f)
-        case _ => unknown(x)
+        case _ => dontKnow(x)
     }
 }
 

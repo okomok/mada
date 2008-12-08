@@ -29,7 +29,7 @@ object Expr {
         override protected def _eval[B](x: Expr[A, B]): B = x match {
             case Self => _1.eval(this) // as method
             case Default => _default
-            case _ => unknown(x)
+            case _ => dontKnow(x)
         }
     }
 
@@ -56,7 +56,7 @@ object Expr {
     case class Constant[A](_1: A) extends Terminal[A] {
         override protected def _eval[B](x: Expr[A, B]): B = x match {
             case Self => _1
-            case _ => unknown(x)
+            case _ => dontKnow(x)
         }
     }
 
@@ -68,7 +68,7 @@ object Expr {
         private val e = new mada.LazyRef[A]
         override protected def _eval[B](x: Expr[A, B]): B = x match {
             case Self => e := _1.eval(x) // Self only
-            case _ => unknown(x)
+            case _ => dontKnow(x)
         }
     }
 
@@ -90,7 +90,7 @@ trait Expr[Z, A] {
         override protected def _eval[B](x: Expr[A, B]): B = throw Expr.NoDefaultCaseError
     }
 
-    protected def unknown[B](x: Expr[A, B]): B = x.eval(x.Default)
+    protected def dontKnow[B](x: Expr[A, B]): B = x.eval(x.Default)
 
     final def expr = this
     final def cut = Expr.Cut(this).expr
@@ -117,7 +117,7 @@ case class IteratorToListExpr[A](_1: Expr.Of[Iterator[A]]) extends Expr[Iterator
         case Default => _1.eval.toList // default-implementation of this method
         case SizeExpr(_) if (hookSize) => 99 // as object
         case MapExpr(x1, x2) => _1.eval.map(x2).toList // as object
-        case _ => unknown(x)
+        case _ => dontKnow(x)
     }
 
     var hookSize = false
@@ -129,7 +129,7 @@ case class IteratorToListExpr[A](_1: Expr.Of[Iterator[A]]) extends Expr[Iterator
 // id.eval(Self)
 // IdentityExpr2(p).eval(id) // <= Self
 // p.eval(id) <= _
-// p.unknown(id)
+// p.dontKnow(id)
 // id.eval(id.Default)
 //
 

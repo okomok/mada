@@ -13,7 +13,7 @@ object Expr {
         protected def _of: A
         override protected def _eval[B](x: Expr[A, B]): B = x match {
             case Self => _of
-            case _ => unknown(x)
+            case _ => dontKnow(x)
         }
     }
 
@@ -22,9 +22,9 @@ object Expr {
         protected def _1: Of[Z]
         protected def _default: A
         override protected def _eval[B](x: Expr[A, B]): B = x match {
-            case Self => _1 ! this
+            case Self => _1?this
             case Unknown => _default
-            case _ => unknown(x)
+            case _ => dontKnow(x)
         }
     }
 
@@ -51,7 +51,7 @@ object Expr {
         private val e = new LazyRef[A]
         override protected def _eval[B](x: Expr[A, B]): B = x match {
             case Self => e := _1.eval // Self only
-            case _ => unknown(x)
+            case _ => dontKnow(x)
         }
     }
 
@@ -74,12 +74,12 @@ trait Expr[Z, A] {
         override protected def _eval[B](x: Expr[A, B]): B = throw Expr.NoUnknownCaseError
     }
 
-    protected def unknown[B](x: Expr[A, B]): B = x.eval(x.Unknown)
+    protected def dontKnow[B](x: Expr[A, B]): B = x.eval(x.Unknown)
 
     final def expr = this
     final def cut = Expr.Cut(this).expr
     final def xlazy = Expr.Lazy(this).expr
 
     final def ! = eval
-    final def ![B](x: Expr[A, B]) = eval(x)
+    final def ?[B](x: Expr[A, B]) = eval(x)
 }

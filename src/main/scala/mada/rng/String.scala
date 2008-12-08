@@ -23,7 +23,7 @@ object StringToRng extends StringToRng; trait StringToRng extends Predefs {
 
 case class FromStringExpr(_1: Expr.Of[String]) extends Expr[String, Rng[Char]] {
     override protected def _eval[U](x: Expr[Rng[Char], U]): U = x match {
-        case Self => _1 ! this
+        case Self => _1?this
         case Unknown => _1 match {
             case StringizeExpr(x1) => x1.eval
             case _ => delegate.eval
