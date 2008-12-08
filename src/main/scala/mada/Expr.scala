@@ -82,4 +82,5 @@ trait Expr[Z, A] {
 
     final def ! = eval
     final def ?[B](x: Expr[A, B]) = eval(x)
+    final def / = cut
 }
