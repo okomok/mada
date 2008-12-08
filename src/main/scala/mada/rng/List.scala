@@ -8,7 +8,7 @@ import ToIterator._
 //  List[A] <-> Expr[Rng[A]]
 
 object ListCompatible extends ListCompatible; trait ListCompatible {
-    implicit def madaRng_List2ExprRng[A](from: List[A]): Expr.Of[Rng[A]] = FromListExpr(Expr(from)).expr
+    implicit def madaRng_List2ExprOfRng[A](from: List[A]): Expr.Of[Rng[A]] = FromListExpr(Expr(from)).expr
 }
 
 

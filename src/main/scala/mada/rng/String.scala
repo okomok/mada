@@ -8,7 +8,7 @@ import Foreach._
 //  String <-> Expr[Rng[Char]]
 
 object StringCompatible; trait StringCompatible {
-    implicit def madaRng_String2ExprRng(from: String): Expr.Of[Rng[Char]] = FromStringExpr(Expr(from)).expr
+    implicit def madaRng_String2ExprOfRng(from: String): Expr.Of[Rng[Char]] = FromStringExpr(Expr(from)).expr
 }
 
 
