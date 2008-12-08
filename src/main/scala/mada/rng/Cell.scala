@@ -5,7 +5,7 @@ package mada.rng
 import First._
 
 
-//  Cell[A] <-> Expr[Rng[A]]
+//  Cell[A] -> Expr[Rng[A]]
 
 object CellCompatible extends CellCompatible; trait CellCompatible {
     implicit def madaRng_Cell2ExprOfRng[A](from: Cell[A]): Expr.Of[Rng[A]] = FromCellExpr(Expr(from)).expr

@@ -2,7 +2,7 @@
 package mada.rng.jcl
 
 
-// ArrayList[A] <-> Expr[Rng[A]]
+// ArrayList[A] -> Expr[Rng[A]]
 
 object ArrayListCompatible extends ArrayListCompatible; trait ArrayListCompatible {
     implicit def madaRngJcl_ArrayList2ExprOfRng[A](from: java.util.ArrayList[A]): Expr.Of[Rng[A]] = FromArrayListExpr(Expr(from)).expr

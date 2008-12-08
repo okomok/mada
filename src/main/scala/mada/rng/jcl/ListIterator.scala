@@ -7,7 +7,7 @@ import java.util.ListIterator
 import Pointer._
 
 
-// LinkedList <-> Expr[Rng[A]]
+// LinkedList -> Expr[Rng[A]]
 
 object LinkedListCompatible extends LinkedListCompatible; trait LinkedListCompatible {
     implicit def madaRngJcl_LinkedList2RngExpr[A](from: LinkedList[A]): Expr[Rng[A]] = FromLinkedListExpr(Expr(from)).expr

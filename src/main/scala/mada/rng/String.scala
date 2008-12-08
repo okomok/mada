@@ -5,7 +5,7 @@ package mada.rng
 import Foreach._
 
 
-//  String <-> Expr[Rng[Char]]
+//  String -> Expr[Rng[Char]]
 
 object StringCompatible; trait StringCompatible {
     implicit def madaRng_String2ExprOfRng(from: String): Expr.Of[Rng[Char]] = FromStringExpr(Expr(from)).expr

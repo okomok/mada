@@ -2,7 +2,7 @@
 package mada.rng
 
 
-//  RandomAccessSeq[A] <-> Expr[Rng[A]]
+//  RandomAccessSeq[A] -> Expr[Rng[A]]
 
 object RandomAccessSeqCompatible extends RandomAccessSeqCompatible; trait RandomAccessSeqCompatible {
     implicit def toMadaRandomAccessSeqRngExpr[A](from: RandomAccessSeq[A]): Expr.Of[Rng[A]] = FromRandomAccessSeqExpr(Expr(from)).expr

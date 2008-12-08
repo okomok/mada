@@ -5,7 +5,7 @@ package mada.rng
 import Pointer._
 
 
-//  Option[A] <-> Expr[Rng[A]]
+//  Option[A] -> Expr[Rng[A]]
 
 object OptionCompatible extends OptionCompatible; trait OptionCompatible {
     implicit def madaRng_Option2ExprOfRng[A](from: Option[A]): Expr.Of[Rng[A]] = FromOptionExpr(Expr(from)).expr

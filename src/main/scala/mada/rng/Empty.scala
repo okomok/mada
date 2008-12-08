@@ -12,7 +12,7 @@ object Empty extends Empty; trait Empty extends Predefs {
 
 case class EmptyExpr[A](override val _1: Expr.Of[Rng[A]]) extends Expr.Transform[Rng[A]] {
     override protected def _default = _1 match {
-        case EmptyExpr(x1) => EmptyExpr(x1).eval // empty-empty fusion
+        case y @ EmptyExpr(x1) => y.eval // empty-empty fusion
         case _ => EmptyImpl(_1.eval)
     }
 }

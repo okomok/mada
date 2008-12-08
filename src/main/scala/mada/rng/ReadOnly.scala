@@ -12,7 +12,7 @@ object ReadOnly extends ReadOnly; trait ReadOnly extends Predefs {
 
 case class ReadOnlyExpr[A](override val _1: Expr.Of[Rng[A]]) extends Expr.Transform[Rng[A]] {
     override protected def _default = _1 match {
-        case ReadOnlyExpr(x1) => ReadOnlyExpr(x1).eval // readOnly-readOnly fusion
+        case y @ ReadOnlyExpr(x1) => y.eval // readOnly-readOnly fusion
         case _ => ReadOnlyImpl(_1.eval)
     }
 }
