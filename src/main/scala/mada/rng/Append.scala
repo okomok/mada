@@ -30,7 +30,7 @@ object AppendImpl {
 
 
 class AppendPointer[A](
-    override val _base: Pointer[A],
+    override protected val _base: Pointer[A],
     private val leftEnd: Pointer[A], private val rightBegin: Pointer[A],
     private var rightBase: Pointer[A])
         extends PointerAdapter[A, A, AppendPointer[A]] {

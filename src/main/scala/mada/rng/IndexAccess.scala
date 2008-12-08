@@ -11,13 +11,13 @@ trait IndexAccess[A] {
 
 
 case class IndexAccessRngExpr[A](_1: IndexAccess[A]) extends Expr.ConstantOf[Rng[A]] {
-    override def _of = new IndexAccessPointer(_1, 0) <=< new IndexAccessPointer(_1, _1._size)
+    override protected def _of = new IndexAccessPointer(_1, 0) <=< new IndexAccessPointer(_1, _1._size)
 }
 
 
 class IndexAccessPointer[A](val indexAccess: IndexAccess[A], val startIndex: Long)
         extends PointerAdapter[Long, A, IndexAccessPointer[A]] {
-    override val _base = new LongIntervalPointer(startIndex)
+    override protected val _base = new LongIntervalPointer(startIndex)
 
     override protected def _read = indexAccess._get(*(base))
     override protected def _write(e: A) = {

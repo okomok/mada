@@ -31,7 +31,7 @@ object AsRngByImpl {
     }
 }
 
-class AsRngByPointer[A](override val _base: Pointer[A], override val _traversal: Traversal)
+class AsRngByPointer[A](override protected val _base: Pointer[A], override protected val _traversal: Traversal)
         extends PointerAdapter[A, A, AsRngByPointer[A]] {
     override protected def _copy = new AsRngByPointer(base.copy, traversal)
     override def toString = new StringBuilder().append("AsRngByPointer of ").append(base).toString

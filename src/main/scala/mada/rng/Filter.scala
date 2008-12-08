@@ -25,7 +25,7 @@ object FilterImpl {
     }
 }
 
-class FilterPointer[A](override val _base: Pointer[A], val end: Pointer[A], val predicate: A => Boolean)
+class FilterPointer[A](override protected val _base: Pointer[A], val end: Pointer[A], val predicate: A => Boolean)
         extends PointerAdapter[A, A, FilterPointer[A]] {
     satisfy
     override protected def _traversal = base.traversal upper BidirectionalTraversal

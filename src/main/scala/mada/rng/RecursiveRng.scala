@@ -6,7 +6,7 @@ class RecursiveRng[A](val traversal: Traversal) extends Ref[Expr.Of[Rng[A]]](nul
     Assert("RecursiveRng must be Forward", traversal <:< ForwardTraversal)
     Assert("RecursiveRng can't be RandomAccess", traversal >:> BidirectionalTraversal)
     def this() = this(ForwardTraversal)
-    override def _of = RecursiveImpl(deref, traversal)
+    override protected def _of = RecursiveImpl(deref, traversal)
 }
 
 
@@ -17,7 +17,7 @@ object RecursiveImpl {
     }
 }
 
-class RecursivePointer[A](rngExpr: Expr.Of[Rng[A]], private val fromEnd: Boolean, override val _traversal: Traversal)
+class RecursivePointer[A](rngExpr: Expr.Of[Rng[A]], private val fromEnd: Boolean, override protected val _traversal: Traversal)
         extends PointerFacade[A, RecursivePointer[A]] {
     def base = { optionBaseInit; optionBase.get }
     override protected def _read = *(base)

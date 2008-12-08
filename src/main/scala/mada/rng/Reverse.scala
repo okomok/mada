@@ -29,7 +29,7 @@ object ReverseImpl {
     }
 }
 
-class ReversePointer[A](override val _base: Pointer[A])
+class ReversePointer[A](override protected val _base: Pointer[A])
         extends PointerAdapter[A, A, ReversePointer[A]] {
     override protected def _read = base.copy.pre_--.read
     override protected def _write(e: A) = { base.copy.pre_--.write(e) }

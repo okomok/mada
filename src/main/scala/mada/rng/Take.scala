@@ -25,7 +25,7 @@ object TakeImpl {
     }
 }
 
-class TakePointer[A](override val _base: Pointer[A], val end: Pointer[A], var count: Long)
+class TakePointer[A](override protected val _base: Pointer[A], val end: Pointer[A], var count: Long)
         extends PointerAdapter[A, A, TakePointer[A]] {
     taken
     override protected def _traversal = base.traversal upper ForwardTraversal

@@ -27,7 +27,7 @@ object BoundsImpl {
     }
 }
 
-class BoundsPointer[A](override val _base: Pointer[A], val begin: Pointer[A], val end: Pointer[A])
+class BoundsPointer[A](override protected val _base: Pointer[A], val begin: Pointer[A], val end: Pointer[A])
         extends PointerAdapter[A, A, BoundsPointer[A]] {
     override protected def _increment = {
         if (base == end)

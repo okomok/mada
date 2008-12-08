@@ -25,7 +25,7 @@ object ReadOnlyImpl {
     }
 }
 
-class ReadOnlyPointer[A](override val _base: Pointer[A])
+class ReadOnlyPointer[A](override protected val _base: Pointer[A])
         extends PointerAdapter[A, A, ReadOnlyPointer[A]] {
     override protected def _write(e: A) = { throw new NotWritablePointerError(this) }
     override protected def _copy = new ReadOnlyPointer(base.copy)

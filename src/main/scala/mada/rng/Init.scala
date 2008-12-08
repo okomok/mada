@@ -31,7 +31,7 @@ object InitImpl {
 }
 
 
-class ForwardInitPointer[A](override val _base: Pointer[A], end: Pointer[A])
+class ForwardInitPointer[A](override protected val _base: Pointer[A], end: Pointer[A])
         extends PointerAdapter[A, A, ForwardInitPointer[A]] {
     Assert("doh", _base.traversal == ForwardTraversal)
     lookNext
@@ -40,7 +40,7 @@ class ForwardInitPointer[A](override val _base: Pointer[A], end: Pointer[A])
     private def lookNext = { if (base.copy.pre_++ == end) { baseRef := end } }
 }
 
-class SinglePassInitPointer[A](override val _base: Pointer[A], fromEnd: Boolean)
+class SinglePassInitPointer[A](override protected val _base: Pointer[A], fromEnd: Boolean)
         extends PointerAdapter[A, A, SinglePassInitPointer[A]] {
     Assert("doh", _base.traversal == SinglePassTraversal)
     private var tmp: A = _

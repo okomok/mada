@@ -31,7 +31,7 @@ object FlattenImpl {
 }
 
 
-class FlattenPointer[A](override val _base: Pointer[Rng[A]], val end: Pointer[Rng[A]], override val _traversal: Traversal)
+class FlattenPointer[A](override protected val _base: Pointer[Rng[A]], val end: Pointer[Rng[A]], override protected val _traversal: Traversal)
         extends PointerAdapter[Rng[A], A, FlattenPointer[A]] {
     private var local: Pointer[A] = null
     resetLocalForward

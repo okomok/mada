@@ -28,7 +28,7 @@ object IndirectImpl {
     }
 }
 
-class IndirectPointer[A](override val _base: Pointer[Pointer[A]])
+class IndirectPointer[A](override protected val _base: Pointer[Pointer[A]])
         extends PointerAdapter[Pointer[A], A, IndirectPointer[A]] {
     override protected def _read = *(*(base))
     override protected def _write(e: A) = { *(*(base)) = e }
@@ -64,7 +64,7 @@ object OutdirectImpl {
     }
 }
 
-class OutdirectPointer[A](override val _base: Pointer[A])
+class OutdirectPointer[A](override protected val _base: Pointer[A])
         extends PointerAdapter[A, Pointer[A], OutdirectPointer[A]] {
     override protected def _read = base
     override protected def _write(e: Pointer[A]) = { throw new NotWritablePointerError(this) }
