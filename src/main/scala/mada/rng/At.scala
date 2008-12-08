@@ -2,6 +2,7 @@
 package mada.rng
 
 
+import Distance._
 import Pointer._
 
 
