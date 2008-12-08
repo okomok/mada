@@ -15,7 +15,7 @@ object First extends First; trait First extends Predefs {
 }
 
 case class FirstExpr[A](override val _1: Expr.Of[Rng[A]]) extends Expr.Method[Rng[A], A] {
-    override def _default = FirstImpl(_1.eval)
+    override protected def _default = FirstImpl(_1.eval)
 }
 
 object FirstImpl {
@@ -36,7 +36,7 @@ object Last extends Last; trait Last extends Predefs {
 }
 
 case class LastExpr[A](override val _1: Expr.Of[Rng[A]]) extends Expr.Method[Rng[A], A] {
-    override def _default = LastImpl(_1.eval)
+    override protected def _default = LastImpl(_1.eval)
 }
 
 object LastImpl {

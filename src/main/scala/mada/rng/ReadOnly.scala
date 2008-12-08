@@ -11,7 +11,7 @@ object ReadOnly extends ReadOnly; trait ReadOnly extends Predefs {
 
 
 case class ReadOnlyExpr[A](override val _1: Expr.Of[Rng[A]]) extends Expr.Transform[Rng[A]] {
-    override def _default = _1 match {
+    override protected def _default = _1 match {
         case ReadOnlyExpr(x1) => ReadOnlyExpr(x1).eval // readOnly-readOnly fusion
         case _ => ReadOnlyImpl(_1.eval)
     }
@@ -27,6 +27,6 @@ object ReadOnlyImpl {
 
 class ReadOnlyPointer[A](override val _base: Pointer[A])
         extends PointerAdapter[A, A, ReadOnlyPointer[A]] {
-    override def _write(e: A) = { throw new NotWritablePointerError(this) }
-    override def _copy = new ReadOnlyPointer(base.copy)
+    override protected def _write(e: A) = { throw new NotWritablePointerError(this) }
+    override protected def _copy = new ReadOnlyPointer(base.copy)
 }

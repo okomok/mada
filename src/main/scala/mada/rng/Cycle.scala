@@ -13,7 +13,7 @@ object Cycle extends Cycle; trait Cycle extends Predefs {
 
 
 case class CycleExpr[A](override val _1: Expr.Of[Rng[A]], _2: Long, _3: Long) extends Expr.Transform[Rng[A]] {
-    override def _default = CycleImpl(_1.eval, _2, _3)
+    override protected def _default = CycleImpl(_1.eval, _2, _3)
 }
 
 
@@ -28,22 +28,22 @@ object CycleImpl {
 
 class CyclePointer[A](override val _base: Pointer[A], var count: Long, val begin: Pointer[A], val end: Pointer[A])
         extends PointerAdapter[A, A, CyclePointer[A]] {
-    override def _write(e: A) = { throw new NotWritablePointerError(this) }
+    override protected def _write(e: A) = { throw new NotWritablePointerError(this) }
 
-    override def _equals(that: CyclePointer[A]) = {
+    override protected def _equals(that: CyclePointer[A]) = {
         count == that.count && base == that.base
     }
 
-    override def _increment = {
+    override protected def _increment = {
         if (base.pre_++ == end) {
             baseRef := begin.copy
             count += 1
         }
     }
 
-    override def _copy = new CyclePointer(base.copy, count, begin, end)
+    override protected def _copy = new CyclePointer(base.copy, count, begin, end)
 
-    override def _decrement = {
+    override protected def _decrement = {
         if (base == begin) {
             baseRef := end.copy
             count -= 1
@@ -51,7 +51,7 @@ class CyclePointer[A](override val _base: Pointer[A], var count: Long, val begin
         base.pre_--
     }
 
-    override def _offset(d: Long) = {
+    override protected def _offset(d: Long) = {
         val (quo, rem) = positiveRemainderDivision((base - begin) + d, end - begin)
         Assert("doh", 0 <= rem)
         Assert("doh", rem < end - begin)
@@ -59,7 +59,7 @@ class CyclePointer[A](override val _base: Pointer[A], var count: Long, val begin
         count += quo
     }
 
-    override def _difference(that: CyclePointer[A]) = {
+    override protected def _difference(that: CyclePointer[A]) = {
         ((end - begin) * (count - that.count)) + (base - that.base)
     }
 

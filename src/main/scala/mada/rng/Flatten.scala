@@ -16,7 +16,7 @@ object Flatten extends Flatten; trait Flatten extends Predefs {
 
 
 case class FlattenExpr[A](override val _1: Expr.Of[Rng[Rng[A]]], _2: Option[Traversal]) extends Expr.Method[Rng[Rng[A]], Rng[A]] {
-    override def _default = FlattenImpl(_1.eval, _2)
+    override protected def _default = FlattenImpl(_1.eval, _2)
 }
 
 
@@ -36,19 +36,19 @@ class FlattenPointer[A](override val _base: Pointer[Rng[A]], val end: Pointer[Rn
     private var local: Pointer[A] = null
     resetLocalForward
 
-    override def _read = {
+    override protected def _read = {
         *(local)
     }
 
-    override def _write(e: A) = {
+    override protected def _write(e: A) = {
         *(local) = e
     }
 
-    override def _equals(that: FlattenPointer[A]) = {
+    override protected def _equals(that: FlattenPointer[A]) = {
         (base == that.base) && (base != end implies local == that.local)
     }
 
-    override def _increment = {
+    override protected def _increment = {
         local.pre_++
         if (local == localRng.end) {
             base.pre_++
@@ -56,13 +56,13 @@ class FlattenPointer[A](override val _base: Pointer[Rng[A]], val end: Pointer[Rn
         }
     }
 
-    override def _copy = {
+    override protected def _copy = {
         val that = new FlattenPointer(base.copy, end, traversal)
         that.local = if (local eq null) null else local.copy
         that
     }
 
-    override def _decrement = {
+    override protected def _decrement = {
         if (base == end || local == localRng.begin) {
             base.pre_--
             resetLocalBackward

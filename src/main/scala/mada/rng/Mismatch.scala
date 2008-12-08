@@ -16,7 +16,7 @@ object Mismatch extends Mismatch; trait Mismatch extends Predefs {
 
 case class MismatchExpr[A1, A2](override val _1: Expr.Of[Rng[A1]], _2: Expr.Of[Pointer[A2]], _3: (A1, A2) => Boolean)
         extends Expr.Method[Rng[A1], (Pointer[A1], Pointer[A2])] {
-    override def _default = MismatchImpl(_1.eval, _2.eval, _3)
+    override protected def _default = MismatchImpl(_1.eval, _2.eval, _3)
 }
 
 

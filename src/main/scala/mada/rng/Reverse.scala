@@ -11,7 +11,7 @@ object Reverse extends Reverse; trait Reverse extends Predefs {
 
 
 case class ReverseExpr[A](_1: Expr.Of[Rng[A]]) extends Expr[Rng[A], Rng[A]] {
-    override def _eval[U](x: Expr[Rng[A], U]): U = x match {
+    override protected def _eval[U](x: Expr[Rng[A], U]): U = x match {
         case Self => methodOf(_1)
         case Default => _1 match {
             case ReverseExpr(x1) => x1.eval // reverse-reverse fusion
@@ -31,11 +31,11 @@ object ReverseImpl {
 
 class ReversePointer[A](override val _base: Pointer[A])
         extends PointerAdapter[A, A, ReversePointer[A]] {
-    override def _read = base.copy.pre_--.read
-    override def _write(e: A) = { base.copy.pre_--.write(e) }
-    override def _increment = { base.pre_-- }
-    override def _copy = new ReversePointer(base.copy)
-    override def _decrement = { base.pre_++ }
-    override def _offset(d: Long) = { base -= d }
-    override def _difference(that: ReversePointer[A]) = that.base - base
+    override protected def _read = base.copy.pre_--.read
+    override protected def _write(e: A) = { base.copy.pre_--.write(e) }
+    override protected def _increment = { base.pre_-- }
+    override protected def _copy = new ReversePointer(base.copy)
+    override protected def _decrement = { base.pre_++ }
+    override protected def _offset(d: Long) = { base -= d }
+    override protected def _difference(that: ReversePointer[A]) = that.base - base
 }

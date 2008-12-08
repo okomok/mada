@@ -14,7 +14,7 @@ object Offset extends Offset; trait Offset extends Predefs {
 
 
 case class OffsetExpr[A](override val _1: Expr.Of[Rng[A]], _2: Long, _3: Long) extends Expr.Transform[Rng[A]] {
-    override def _default = OffsetImpl(_1.eval, _2, _3)
+    override protected def _default = OffsetImpl(_1.eval, _2, _3)
 }
 
 

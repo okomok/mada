@@ -22,7 +22,7 @@ object ListToRng extends ListToRng; trait ListToRng extends Predefs {
 }
 
 case class FromListExpr[A](override val _1: Expr.Of[List[A]]) extends Expr.Method[List[A], Rng[A]] {
-    override def _default = _1 match {
+    override protected def _default = _1 match {
         case ToListExpr(x1) => x1.eval
         case _ => FromListImpl(_1.eval)
     }
@@ -33,11 +33,11 @@ object FromListImpl {
 }
 
 class ListPointer[A](var base: List[A]) extends PointerFacade[A, ListPointer[A]] {
-    override def _read = base.head
-    override def _traversal = ForwardTraversal
-    override def _equals(that: ListPointer[A]) = base eq that.base
-    override def _increment = { base = base.tail }
-    override def _copy = new ListPointer[A](base)
+    override protected def _read = base.head
+    override protected def _traversal = ForwardTraversal
+    override protected def _equals(that: ListPointer[A]) = base eq that.base
+    override protected def _increment = { base = base.tail }
+    override protected def _copy = new ListPointer[A](base)
     override def hashCode = base.hashCode
 }
 
@@ -52,7 +52,7 @@ object ToList extends ToList; trait ToList extends Predefs {
 }
 
 case class ToListExpr[A](override val _1: Expr.Of[Rng[A]]) extends Expr.Method[Rng[A], List[A]] {
-    override def _default = _1 match {
+    override protected def _default = _1 match {
         case FromListExpr(x1) => x1.eval
         case _ => List.fromIterator(_1.toIterator.eval)
     }

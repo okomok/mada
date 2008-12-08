@@ -16,7 +16,7 @@ object Distance extends Distance; trait Distance extends Predefs {
 
 
 case class DistanceExpr[A](override val _1: Expr.Of[Rng[A]]) extends Expr.Method[Rng[A], Long] {
-    override def _default = {
+    override protected def _default = {
         val z1 = _1.xlazy
         z1.eval.traversal match {
             case _: RandomAccessTraversal => z1.size.eval

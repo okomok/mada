@@ -19,7 +19,7 @@ object Equals extends Equals; trait Equals extends Predefs {
 
 case class EqualsExpr[A1, A2](override val _1: Expr.Of[Rng[A1]], _2: Expr.Of[Rng[A2]], _3: (A1, A2) => Boolean)
         extends Expr.Method[Rng[A1], Boolean] {
-    override def _default = {
+    override protected def _default = {
         val z1 = _1.xlazy
         val z2 = _2.xlazy
         z1.eval.traversal upper z2.eval.traversal match {

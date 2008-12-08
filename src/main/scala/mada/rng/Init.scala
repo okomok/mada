@@ -14,7 +14,7 @@ object Init extends Init; trait Init extends Predefs {
 
 
 case class InitExpr[A](override val _1: Expr.Of[Rng[A]]) extends Expr.Transform[Rng[A]] {
-    override def _default = InitImpl(_1.eval)
+    override protected def _default = InitImpl(_1.eval)
 }
 
 
@@ -35,8 +35,8 @@ class ForwardInitPointer[A](override val _base: Pointer[A], end: Pointer[A])
         extends PointerAdapter[A, A, ForwardInitPointer[A]] {
     Assert("doh", _base.traversal == ForwardTraversal)
     lookNext
-    override def _increment = { base.pre_++; lookNext }
-    override def _copy = new ForwardInitPointer(base.copy, end)
+    override protected def _increment = { base.pre_++; lookNext }
+    override protected def _copy = new ForwardInitPointer(base.copy, end)
     private def lookNext = { if (base.copy.pre_++ == end) { baseRef := end } }
 }
 
@@ -45,7 +45,7 @@ class SinglePassInitPointer[A](override val _base: Pointer[A], fromEnd: Boolean)
     Assert("doh", _base.traversal == SinglePassTraversal)
     private var tmp: A = _
     if (!fromEnd) { _increment }
-    override def _read = tmp
-    override def _write(e: A) = { throw new NotWritablePointerError(this) }
-    override def _increment = { tmp = *(base); base.pre_++ }
+    override protected def _read = tmp
+    override protected def _write(e: A) = { throw new NotWritablePointerError(this) }
+    override protected def _increment = { tmp = *(base); base.pre_++ }
 }

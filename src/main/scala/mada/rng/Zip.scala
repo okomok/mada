@@ -11,7 +11,7 @@ object Zip extends Zip; trait Zip extends Predefs {
 
 
 case class ZipExpr[A1, A2](override val _1: Expr.Of[Rng[A1]], _2: Expr.Of[Rng[A2]]) extends Expr.Method[Rng[A1], Rng[(A1, A2)]] {
-    override def _default = ZipImpl(_1.eval, _2.eval)
+    override protected def _default = ZipImpl(_1.eval, _2.eval)
 }
 
 
@@ -25,14 +25,14 @@ object ZipImpl {
 
 class ZipPointer[A1, A2](val base1: Pointer[A1], val base2: Pointer[A2])
         extends PointerFacade[(A1, A2), ZipPointer[A1, A2]] {
-    override def _read = (*(base1), *(base2))
-    override def _traversal = base1.traversal upper base2.traversal
-    override def _equals(that: ZipPointer[A1, A2]) = base1 == that.base1 && base2 == that.base2
-    override def _increment = { base1.pre_++; base2.pre_++ }
-    override def _copy = new ZipPointer(base1.copy, base2.copy)
-    override def _decrement = { base1.pre_--; base2.pre_-- }
-    override def _offset(d: Long) = { base1 += d; base2 += d; }
-    override def _difference(that: ZipPointer[A1, A2]) = base1 - that.base1
+    override protected def _read = (*(base1), *(base2))
+    override protected def _traversal = base1.traversal upper base2.traversal
+    override protected def _equals(that: ZipPointer[A1, A2]) = base1 == that.base1 && base2 == that.base2
+    override protected def _increment = { base1.pre_++; base2.pre_++ }
+    override protected def _copy = new ZipPointer(base1.copy, base2.copy)
+    override protected def _decrement = { base1.pre_--; base2.pre_-- }
+    override protected def _offset(d: Long) = { base1 += d; base2 += d; }
+    override protected def _difference(that: ZipPointer[A1, A2]) = base1 - that.base1
 
     override def toString = new StringBuilder().append("ZipPointer of (").append(base1).append(", ").append(base2).append(')').toString
 }

@@ -24,7 +24,7 @@ object LinkedListToRng extends LinkedListToRng; trait LinkedListToRng extends Pr
 }
 
 case class FromLinkedListExpr[A](_1: Expr[LinkedList[A]]) extends Expr[Rng[A]] {
-    override def _eval = _1 match {
+    override protected def _eval = _1 match {
         case ToLinkedListExpr(x1) => x1.eval
         case _ => FromLinkedListImpl(_1.eval)
     }
@@ -38,12 +38,12 @@ object FromLinkedListImpl {
 }
 
 class LinkedListPointer(val base: ListIterator[A], val list: LinkedList) extends PointerFacade[A, LinkedListPointer[A]] {
-    override def _read = { val tmp = base.next; base.previous; tmp }
-    override def _traversal = BidirectionalTraversal
-    override def _equals(that: LinkedListPointer[A]) = base.nextIndex == that.base.nextIndex
-    override def _increment = { base.next }
-    override def _copy = new LinkedListPointer(list.listIterator(base.nextIndex), list) // linear
-    override def _decrement = { base.previous }
+    override protected def _read = { val tmp = base.next; base.previous; tmp }
+    override protected def _traversal = BidirectionalTraversal
+    override protected def _equals(that: LinkedListPointer[A]) = base.nextIndex == that.base.nextIndex
+    override protected def _increment = { base.next }
+    override protected def _copy = new LinkedListPointer(list.listIterator(base.nextIndex), list) // linear
+    override protected def _decrement = { base.previous }
     override def hashCode = base.hashCode
 }
 
@@ -58,7 +58,7 @@ object ToListIterator extends ToListIterator; trait ToListIterator extends Prede
 }
 
 case class ToListIteratorExpr[A](_1: Expr[Rng[A]]) extends Expr[ListIterator[A]] {
-    override def _eval = _1.eval(ToListIteratorContext[A]())
+    override protected def _eval = _1.eval(ToListIteratorContext[A]())
 }
 
 case class ToListIteratorContext[A] extends Context[Rng[A], ListIterator[A]] {

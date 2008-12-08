@@ -14,5 +14,5 @@ object Forall extends Forall; trait Forall extends Predefs {
 
 
 case class ForallExpr[A](override val _1: Expr.Of[Rng[A]], _2: A => Boolean) extends Expr.Method[Rng[A], Boolean] {
-    override def _default = _1.find(!_2(_: A)).eval == None
+    override protected def _default = _1.find(!_2(_: A)).eval == None
 }

@@ -22,7 +22,7 @@ object CellToRng extends CellToRng; trait CellToRng extends Predefs {
 }
 
 case class FromCellExpr[A](_1: Expr.Of[Cell[A]]) extends Expr[Cell[A], Rng[A]] {
-    override def _eval[U](x: Expr[Rng[A], U]): U = x match {
+    override protected def _eval[U](x: Expr[Rng[A], U]): U = x match {
         case Self => methodOf(_1)
         case Default => _1 match {
             case ToCellExpr(x1) => x1.eval
@@ -50,7 +50,7 @@ object ToCell extends ToCell; trait ToCell extends Predefs {
 }
 
 case class ToCellExpr[A](override val _1: Expr.Of[Rng[A]]) extends Expr.Method[Rng[A], Cell[A]] {
-    override def _default = _1 match {
+    override protected def _default = _1 match {
         case FromCellExpr(x1) => x1.eval
         case _ => Cell(_1.first.eval)
     }

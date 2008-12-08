@@ -19,7 +19,7 @@ object ArrayListToRng extends ArrayListToRng; trait ArrayListToRng extends Prede
 }
 
 case class FromArrayListExpr[A](_1: Expr.Of[java.util.ArrayList[A]]) extends Expr[java.util.ArrayList[A], Rng[A]] {
-    override def _eval[U](x: Expr[Rng[A], U]): U = x match {
+    override protected def _eval[U](x: Expr[Rng[A], U]): U = x match {
         case Self => methodOf(_1)
         case Default => _1 match {
             case ToArrayListExpr(x1) => x1.eval
@@ -48,7 +48,7 @@ object ToArrayList extends ToArrayList; trait ToArrayList extends Predefs {
 }
 
 case class ToArrayListExpr[A](override val _1: Expr.Of[Rng[A]]) extends Expr.Method[Rng[A], java.util.ArrayList[A]] {
-    override def _default = _1 match {
+    override protected def _default = _1 match {
         case FromArrayListExpr(x1) => x1.eval
         case _ => ToArrayListImpl(_1.xlazy)
     }

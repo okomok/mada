@@ -11,7 +11,7 @@ object Size extends Size; trait Size extends Predefs {
 
 
 case class SizeExpr[A](override val _1: Expr.Of[Rng[A]]) extends Expr.Method[Rng[A], Long] {
-    override def _default = SizeImpl(_1.eval)
+    override protected def _default = SizeImpl(_1.eval)
 }
 
 

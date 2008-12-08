@@ -15,7 +15,7 @@ object Indirect extends Indirect; trait Indirect extends Predefs {
 }
 
 case class IndirectExpr[A](_1: Expr.Of[Rng[Pointer[A]]]) extends Expr.Method[Rng[Pointer[A]], Rng[A]] {
-    override def _default = _1 match {
+    override protected def _default = _1 match {
         case OutdirectExpr(x1) => x1.eval // indirect-outdirect fusion
         case _ => IndirectImpl(_1.eval)
     }
@@ -30,9 +30,9 @@ object IndirectImpl {
 
 class IndirectPointer[A](override val _base: Pointer[Pointer[A]])
         extends PointerAdapter[Pointer[A], A, IndirectPointer[A]] {
-    override def _read = *(*(base))
-    override def _write(e: A) = { *(*(base)) = e }
-    override def _copy = new IndirectPointer[A](base.copy)
+    override protected def _read = *(*(base))
+    override protected def _write(e: A) = { *(*(base)) = e }
+    override protected def _copy = new IndirectPointer[A](base.copy)
 }
 
 
@@ -46,7 +46,7 @@ object Outdirect extends Outdirect; trait Outdirect extends Predefs {
 }
 
 case class OutdirectExpr[A](_1: Expr.Of[Rng[A]]) extends Expr[Rng[A], Rng[Pointer[A]]] {
-    override def _eval[U](x: Expr[Rng[Pointer[A]], U]): U = x match {
+    override protected def _eval[U](x: Expr[Rng[Pointer[A]], U]): U = x match {
         case Self => methodOf(_1)
         case Default => _1 match {
             case IndirectExpr(x1) => x1.eval // outdirect-indirect fusion
@@ -66,9 +66,9 @@ object OutdirectImpl {
 
 class OutdirectPointer[A](override val _base: Pointer[A])
         extends PointerAdapter[A, Pointer[A], OutdirectPointer[A]] {
-    override def _read = base
-    override def _write(e: Pointer[A]) = { throw new NotWritablePointerError(this) }
-    override def _copy = new OutdirectPointer(base.copy)
+    override protected def _read = base
+    override protected def _write(e: Pointer[A]) = { throw new NotWritablePointerError(this) }
+    override protected def _copy = new OutdirectPointer(base.copy)
 }
 
 object OutdirectLoopImpl {

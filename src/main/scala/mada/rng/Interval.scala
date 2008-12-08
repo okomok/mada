@@ -45,35 +45,35 @@ object IntervalToRng extends IntervalToRng; trait IntervalToRng extends Predefs 
 // Int
 
 case class FromIntIntervalExpr(override val _1: Expr.Of[IntInterval]) extends Expr.Method[IntInterval, Rng[Int]] {
-    override def _default = new IntIntervalPointer(_1.eval._1) <=< new IntIntervalPointer(_1.eval._2)
+    override protected def _default = new IntIntervalPointer(_1.eval._1) <=< new IntIntervalPointer(_1.eval._2)
 }
 
 class IntIntervalPointer(n: Int) extends IntervalPointer[Int](n) {
-    override def _read = base.toInt
-    override def _copy = new IntIntervalPointer(base.toInt)
+    override protected def _read = base.toInt
+    override protected def _copy = new IntIntervalPointer(base.toInt)
 }
 
 
 // Long
 
 case class FromLongIntervalExpr(override val _1: Expr.Of[LongInterval]) extends Expr.Method[LongInterval, Rng[Long]] {
-    override def _default = new LongIntervalPointer(_1.eval._1) <=< new LongIntervalPointer(_1.eval._2)
+    override protected def _default = new LongIntervalPointer(_1.eval._1) <=< new LongIntervalPointer(_1.eval._2)
 }
 
 class LongIntervalPointer(n: Long) extends IntervalPointer[Long](n) {
-    override def _read = base
-    override def _copy = new LongIntervalPointer(base)
+    override protected def _read = base
+    override protected def _copy = new LongIntervalPointer(base)
 }
 
 
 // IntervalPointer
 
 abstract class IntervalPointer[N](var base: Long) extends PointerFacade[N, IntervalPointer[N]] {
-    override def _traversal = RandomAccessTraversal
-    override def _equals(that: IntervalPointer[N]) = base == that.base
-    override def _increment = { base += 1 }
-    override def _decrement = { base -= 1 }
-    override def _offset(d: Long) = { base += d }
-    override def _difference(that: IntervalPointer[N]) = base - that.base
+    override protected def _traversal = RandomAccessTraversal
+    override protected def _equals(that: IntervalPointer[N]) = base == that.base
+    override protected def _increment = { base += 1 }
+    override protected def _decrement = { base -= 1 }
+    override protected def _offset(d: Long) = { base += d }
+    override protected def _difference(that: IntervalPointer[N]) = base - that.base
     override def hashCode = long2Long(base).hashCode
 }

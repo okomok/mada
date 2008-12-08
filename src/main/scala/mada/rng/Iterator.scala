@@ -20,7 +20,7 @@ object IteratorToRng extends IteratorToRng; trait IteratorToRng extends Predefs 
 }
 
 case class FromIteratorExpr[A](_1: Expr.Of[Iterator[A]]) extends Expr[Iterator[A], Rng[A]] {
-    override def _eval[U](x: Expr[Rng[A], U]): U = x match {
+    override protected def _eval[U](x: Expr[Rng[A], U]): U = x match {
         case Self => methodOf(_1)
         case Default => _1 match {
             case ToIteratorExpr(x1) => x1.eval
@@ -41,10 +41,10 @@ object FromIteratorImpl {
 // null can't replace Option in case A is an AnyVal.
 class IteratorPointer[A](val base: Iterator[A], private var e: Option[A])
         extends PointerFacade[A, IteratorPointer[A]] {
-    override def _read = e.get
-    override def _traversal = SinglePassTraversal
-    override def _equals(that: IteratorPointer[A]) = e.isEmpty == that.e.isEmpty
-    override def _increment = { e = if (base.hasNext) Some(base.next) else None }
+    override protected def _read = e.get
+    override protected def _traversal = SinglePassTraversal
+    override protected def _equals(that: IteratorPointer[A]) = e.isEmpty == that.e.isEmpty
+    override protected def _increment = { e = if (base.hasNext) Some(base.next) else None }
 }
 
 
@@ -59,7 +59,7 @@ object ToIterator extends ToIterator; trait ToIterator extends Predefs {
 }
 
 case class ToIteratorExpr[A](override val _1: Expr.Of[Rng[A]]) extends Expr.Method[Rng[A], Iterator[A]] {
-    override def _default = _1 match {
+    override protected def _default = _1 match {
         case FromIteratorExpr(x1) => x1.eval
         case _ => new RngIterator(_1.eval)
     }

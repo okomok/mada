@@ -14,7 +14,7 @@ object FindPointerOf extends FindPointerOf; trait FindPointerOf extends Predefs 
 
 
 case class FindPointerOfExpr[A](override val _1: Expr.Of[Rng[A]], _2: A => Boolean) extends Expr.Method[Rng[A], Pointer[A]] {
-    override def _default = FindPointerOfImpl(_1.eval, _2)
+    override protected def _default = FindPointerOfImpl(_1.eval, _2)
 }
 
 

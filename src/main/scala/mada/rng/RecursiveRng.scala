@@ -20,10 +20,10 @@ object RecursiveImpl {
 class RecursivePointer[A](rngExpr: Expr.Of[Rng[A]], private val fromEnd: Boolean, override val _traversal: Traversal)
         extends PointerFacade[A, RecursivePointer[A]] {
     def base = { optionBaseInit; optionBase.get }
-    override def _read = *(base)
-    override def _write(e: A) = { *(base) = e }
+    override protected def _read = *(base)
+    override protected def _write(e: A) = { *(base) = e }
 
-    override def _equals(that: RecursivePointer[A]) = {
+    override protected def _equals(that: RecursivePointer[A]) = {
         if (fromEnd != that.fromEnd) {
             false
         } else if (!optionBase.isEmpty || !that.optionBase.isEmpty) {
@@ -33,7 +33,7 @@ class RecursivePointer[A](rngExpr: Expr.Of[Rng[A]], private val fromEnd: Boolean
         }
     }
 
-    override def _increment = {
+    override protected def _increment = {
         if (optionBase.isEmpty) {
             savedDiff += 1
         } else {
@@ -41,14 +41,14 @@ class RecursivePointer[A](rngExpr: Expr.Of[Rng[A]], private val fromEnd: Boolean
         }
     }
 
-    override def _copy = {
+    override protected def _copy = {
         val that = new RecursivePointer(rngExpr, fromEnd, traversal)
         that.savedDiff = savedDiff
         that.optionBase = optionBaseCopy
         that
     }
 
-    override def _decrement = {
+    override protected def _decrement = {
         if (optionBase.isEmpty) {
            savedDiff -= 1
         } else {

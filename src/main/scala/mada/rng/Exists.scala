@@ -14,5 +14,5 @@ object Exists extends Exists; trait Exists extends Predefs {
 
 
 case class ExistsExpr[A](override val _1: Expr.Of[Rng[A]], _2: A => Boolean) extends Expr.Method[Rng[A], Boolean] {
-    override def _default = _1.find(_2).eval != None
+    override protected def _default = _1.find(_2).eval != None
 }

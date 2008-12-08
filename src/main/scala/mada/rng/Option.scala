@@ -22,7 +22,7 @@ object OptionToRng extends OptionToRng; trait OptionToRng extends Predefs {
 }
 
 case class FromOptionExpr[A](_1: Expr.Of[Option[A]]) extends Expr[Option[A], Rng[A]] {
-    override def _eval[U](x: Expr[Rng[A], U]): U = x match {
+    override protected def _eval[U](x: Expr[Rng[A], U]): U = x match {
         case Self => methodOf(_1)
         case Default => _1 match {
             case ToOptionExpr(x1) => x1.eval
@@ -50,7 +50,7 @@ object ToOption extends ToOption; trait ToOption extends Predefs {
 }
 
 case class ToOptionExpr[A](override val _1: Expr.Of[Rng[A]]) extends Expr.Method[Rng[A], Option[A]] {
-    override def _default = _1 match {
+    override protected def _default = _1 match {
         case FromOptionExpr(x1) => x1.eval
         case _ => ToOptionImpl(_1.eval)
     }

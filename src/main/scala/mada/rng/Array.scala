@@ -54,7 +54,7 @@ object ToArray extends ToArray; trait ToArray extends Predefs {
 }
 
 case class ToArrayExpr[A](override val _1: Expr.Of[Rng[A]]) extends Expr.Method[Rng[A], Array[A]] {
-    override def _default = _1 match {
+    override protected def _default = _1 match {
         case FromArrayExpr(x1) => x1.eval
         case _ => ToArrayImpl(_1.xlazy)
     }

@@ -14,7 +14,7 @@ object Drop extends Drop; trait Drop extends Predefs {
 
 
 case class DropExpr[A](override val _1: Expr.Of[Rng[A]], _2: Long) extends Expr.Transform[Rng[A]] {
-    override def _default = _1 match {
+    override protected def _default = _1 match {
         case DropExpr(x1, x2) => DropImpl(x1.eval, x2 + _2)
         case _ => DropImpl(_1.eval, _2)
     }

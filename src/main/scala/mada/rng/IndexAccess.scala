@@ -19,15 +19,15 @@ class IndexAccessPointer[A](val indexAccess: IndexAccess[A], val startIndex: Lon
         extends PointerAdapter[Long, A, IndexAccessPointer[A]] {
     override val _base = new LongIntervalPointer(startIndex)
 
-    override def _read = indexAccess._get(*(base))
-    override def _write(e: A) = {
+    override protected def _read = indexAccess._get(*(base))
+    override protected def _write(e: A) = {
         try {
             indexAccess._set(*(base), e)
         } catch {
             case NotWritableIndexAccessError => throw new NotWritablePointerError(this)
         }
     }
-    override def _copy = new IndexAccessPointer(indexAccess, *(base))
+    override protected def _copy = new IndexAccessPointer(indexAccess, *(base))
 
     override def toString = new StringBuilder().append("IndexAccessPointer(").append(*(base)).append(") of ").append(indexAccess).toString
 }

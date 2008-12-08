@@ -12,7 +12,7 @@ object Begin extends Begin; trait Begin extends Predefs {
 }
 
 case class BeginExpr[A](_1: Expr.Of[Rng[A]]) extends Expr.Method[Rng[A], Pointer[A]] {
-    override def _default = _1.eval.begin
+    override protected def _default = _1.eval.begin
 }
 
 
@@ -26,5 +26,5 @@ object End extends End; trait End extends Predefs {
 }
 
 case class EndExpr[A](_1: Expr.Of[Rng[A]]) extends Expr.Method[Rng[A], Pointer[A]] {
-    override def _default = _1.eval.end
+    override protected def _default = _1.eval.end
 }

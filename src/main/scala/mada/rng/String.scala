@@ -22,7 +22,7 @@ object StringToRng extends StringToRng; trait StringToRng extends Predefs {
 }
 
 case class FromStringExpr(_1: Expr.Of[String]) extends Expr[String, Rng[Char]] {
-    override def _eval[U](x: Expr[Rng[Char], U]): U = x match {
+    override protected def _eval[U](x: Expr[Rng[Char], U]): U = x match {
         case Self => methodOf(_1)
         case Default => _1 match {
             case StringizeExpr(x1) => x1.eval
@@ -50,7 +50,7 @@ object Stringize extends Stringize; trait Stringize extends Predefs {
 }
 
 case class StringizeExpr(override val _1: Expr.Of[Rng[Char]]) extends Expr.Method[Rng[Char], String] {
-    override def _default = _1 match {
+    override protected def _default = _1 match {
         case FromStringExpr(x1) => x1.eval
         case _ => {
             val sb = new StringBuilder

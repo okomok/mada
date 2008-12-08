@@ -21,8 +21,8 @@ object UnfoldRightImpl {
 // ForwardTraversal would need state is copyable.
 class UnfoldRightPointer[From, To](var state: Option[(To, From)], val function: From => Option[(To, From)])
         extends PointerFacade[To, UnfoldRightPointer[From, To]] {
-    override def _read = state.get._1
-    override def _traversal = SinglePassTraversal
-    override def _equals(that: UnfoldRightPointer[From, To]) = state.isEmpty == that.state.isEmpty
-    override def _increment = { state = function(state.get._2) }
+    override protected def _read = state.get._1
+    override protected def _traversal = SinglePassTraversal
+    override protected def _equals(that: UnfoldRightPointer[From, To]) = state.isEmpty == that.state.isEmpty
+    override protected def _increment = { state = function(state.get._2) }
 }

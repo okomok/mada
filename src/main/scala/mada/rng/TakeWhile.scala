@@ -11,7 +11,7 @@ object TakeWhile extends TakeWhile; trait TakeWhile extends Predefs {
 
 
 case class TakeWhileExpr[A](override val _1: Expr.Of[Rng[A]], _2: A => Boolean) extends Expr.Transform[Rng[A]] {
-    override def _default = TakeWhileImpl(_1.eval, _2)
+    override protected def _default = TakeWhileImpl(_1.eval, _2)
 }
 
 
@@ -25,9 +25,9 @@ object TakeWhileImpl {
 class TakeWhilePointer[A](override val _base: Pointer[A], val end: Pointer[A], val predicate: A => Boolean)
         extends PointerAdapter[A, A, TakeWhilePointer[A]] {
     taken
-    override def _traversal = base.traversal upper ForwardTraversal
-    override def _increment = { base.pre_++; taken }
-    override def _copy = new TakeWhilePointer(base.copy, end, predicate)
+    override protected def _traversal = base.traversal upper ForwardTraversal
+    override protected def _increment = { base.pre_++; taken }
+    override protected def _copy = new TakeWhilePointer(base.copy, end, predicate)
     override def toString = new StringBuilder().append("TakeWhilePointer of ").append(base).toString
 
     private def taken = {

@@ -34,14 +34,14 @@ class AppendPointer[A](
     private val leftEnd: Pointer[A], private val rightBegin: Pointer[A],
     private var rightBase: Pointer[A])
         extends PointerAdapter[A, A, AppendPointer[A]] {
-    override def _read = if (inLeft) *(base) else *(rightBase)
-    override def _write(e: A) = if (inLeft) { *(base) = e } else { *(rightBase) = e }
-    override def _traversal = leftEnd.traversal upper rightBegin.traversal
-    override def _equals(that: AppendPointer[A]) = (base == that.base) && (rightBase == that.rightBase)
-    override def _increment = AppendPointerIncrement(base, rightBase, leftEnd)
-    override def _copy = new AppendPointer(base.copy, leftEnd, rightBegin, rightBase.copy)
+    override protected def _read = if (inLeft) *(base) else *(rightBase)
+    override protected def _write(e: A) = if (inLeft) { *(base) = e } else { *(rightBase) = e }
+    override protected def _traversal = leftEnd.traversal upper rightBegin.traversal
+    override protected def _equals(that: AppendPointer[A]) = (base == that.base) && (rightBase == that.rightBase)
+    override protected def _increment = AppendPointerIncrement(base, rightBase, leftEnd)
+    override protected def _copy = new AppendPointer(base.copy, leftEnd, rightBegin, rightBase.copy)
 
-    override def _decrement = {
+    override protected def _decrement = {
         val (pL, qL) = (new ReversePointer(rightBase.copy), new ReversePointer(rightBegin.copy))
         val pR = new ReversePointer(base)
         AppendPointerIncrement(pL, pR, qL)
@@ -49,7 +49,7 @@ class AppendPointer[A](
         rightBase = pL.base
     }
 
-    override def _offset(d: Long) = {
+    override protected def _offset(d: Long) = {
         if (d >= 0) {
             AppendPointerOffset(baseRef, rightBase, d, leftEnd)
         } else {
@@ -61,7 +61,7 @@ class AppendPointer[A](
         }
     }
 
-    override def _difference(that: AppendPointer[A]) = {
+    override protected def _difference(that: AppendPointer[A]) = {
         if (inLeft && that.inLeft) {
             base - that.base
         } else if (!inLeft && !that.inLeft) {

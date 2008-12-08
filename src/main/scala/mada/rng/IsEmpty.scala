@@ -11,7 +11,7 @@ object IsEmpty extends IsEmpty; trait IsEmpty extends Predefs {
 
 
 case class IsEmptyExpr[A](override val _1: Expr.Of[Rng[A]]) extends Expr.Method[Rng[A], Boolean] {
-    override def _default = IsEmptyImpl(_1.eval)
+    override protected def _default = IsEmptyImpl(_1.eval)
 }
 
 

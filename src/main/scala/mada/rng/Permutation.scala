@@ -12,7 +12,7 @@ object Permutation extends Permutation; trait Permutation extends Predefs {
 
 case class PermutationExpr[A](override val _1: Expr.Of[Rng[A]], _2: Expr.Of[Rng[Long]])
         extends Expr.Transform[Rng[A]] {
-    override def _default = PermutationImpl(_1.eval, _2.eval)
+    override protected def _default = PermutationImpl(_1.eval, _2.eval)
 }
 
 
@@ -27,7 +27,7 @@ object PermutationImpl {
 
 class PermutationPointer[A](override val _base: Pointer[Long], val elementsBegin: Pointer[A])
         extends PointerAdapter[Long, A, PermutationPointer[A]] {
-    override def _read = *(elementsBegin + *(base))
-    override def _write(e: A) = { *(elementsBegin + *(base)) = e }
-    override def _copy = new PermutationPointer(base.copy, elementsBegin)
+    override protected def _read = *(elementsBegin + *(base))
+    override protected def _write(e: A) = { *(elementsBegin + *(base)) = e }
+    override protected def _copy = new PermutationPointer(base.copy, elementsBegin)
 }

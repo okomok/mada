@@ -14,7 +14,7 @@ object Step extends Step; trait Step extends Predefs {
 
 
 case class StepExpr[A](override val _1: Expr.Of[Rng[A]], _2: Long) extends Expr.Transform[Rng[A]] {
-    override def _default = _1 match {
+    override protected def _default = _1 match {
         case StepExpr(x1, x2) => StepExpr(x1, x2 + _2).eval // step-step fusion
         case _ => StepWithExpr(_1, StepFunction(_: Rng[A], _2)).eval
     }

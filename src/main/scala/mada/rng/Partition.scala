@@ -14,7 +14,7 @@ object Partition extends Partition; trait Partition extends Predefs {
 
 
 case class PartitionExpr[A](override val _1: Expr.Of[Rng[A]], _2: A => Boolean) extends Expr.Method[Rng[A], (Rng[A], Rng[A])] {
-    override def _default = PartitionImpl(_1.eval, _2)
+    override protected def _default = PartitionImpl(_1.eval, _2)
 }
 
 

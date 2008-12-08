@@ -15,7 +15,7 @@ object PointerAdvance extends PointerAdvance; trait PointerAdvance extends Prede
 
 case class PointerAdvanceExpr[A](override val _1: Expr.Of[Pointer[A]], _2: Long)
         extends Expr.Method[Pointer[A], Pointer[A]] {
-    override def _default = PointerAdvanceImpl(_1.eval, _2)
+    override protected def _default = PointerAdvanceImpl(_1.eval, _2)
 }
 
 

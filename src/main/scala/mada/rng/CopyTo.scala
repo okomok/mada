@@ -15,7 +15,7 @@ object CopyTo extends CopyTo; trait CopyTo extends Predefs {
 
 case class CopyToExpr[From, To >: From](override val _1: Expr.Of[Rng[From]], _2: Expr.Of[Pointer[To]])
         extends Expr.Method[Rng[From], Pointer[To]] {
-    override def _default = {
+    override protected def _default = {
         val p = _2.eval
         _1.foreach(p.output).eval
         p
