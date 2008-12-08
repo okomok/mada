@@ -25,7 +25,7 @@ case class MapExpr[A, B](override val _1: Expr.Of[List[A]], _2: A => B) extends 
 case class IteratorToListExpr[A](_1: Expr.Of[Iterator[A]]) extends Expr[Iterator[A], List[A]] {
     override protected def _eval[B](x: Expr[List[A], B]): B = x match {
         case Self => _1.eval(this) // as method
-        case Default => _1.eval.toList // default-implementation of this method
+        case Unknown => _1.eval.toList // default-implementation of this method
         case SizeExpr(_) if (hookSize) => 99 // as object
         case MapExpr(x1, x2) => _1.eval.map(x2).toList // as object
         case _ => unknown(x)

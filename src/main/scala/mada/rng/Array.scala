@@ -25,8 +25,8 @@ object ArrayToRng extends ArrayToRng; trait ArrayToRng extends Predefs {
 
 case class FromArrayExpr[A](_1: Expr.Of[Array[A]]) extends Expr[Array[A], Rng[A]] {
     override protected def _eval[U](x: Expr[Rng[A], U]): U = x match {
-        case Self => methodOf(_1)
-        case Default => _1 match {
+        case Self => _1 ! this
+        case Unknown => _1 match {
             case ToArrayExpr(x1) => x1.eval
             case _ => delegate.eval
         }

@@ -23,8 +23,8 @@ object CellToRng extends CellToRng; trait CellToRng extends Predefs {
 
 case class FromCellExpr[A](_1: Expr.Of[Cell[A]]) extends Expr[Cell[A], Rng[A]] {
     override protected def _eval[U](x: Expr[Rng[A], U]): U = x match {
-        case Self => methodOf(_1)
-        case Default => _1 match {
+        case Self => _1 ! this
+        case Unknown => _1 match {
             case ToCellExpr(x1) => x1.eval
             case _ => delegate.eval
         }

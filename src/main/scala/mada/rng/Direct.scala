@@ -47,8 +47,8 @@ object Outdirect extends Outdirect; trait Outdirect extends Predefs {
 
 case class OutdirectExpr[A](_1: Expr.Of[Rng[A]]) extends Expr[Rng[A], Rng[Pointer[A]]] {
     override protected def _eval[U](x: Expr[Rng[Pointer[A]], U]): U = x match {
-        case Self => methodOf(_1)
-        case Default => _1 match {
+        case Self => _1 ! this
+        case Unknown => _1 match {
             case IndirectExpr(x1) => x1.eval // outdirect-indirect fusion
             case _ => OutdirectImpl(_1.eval)
         }

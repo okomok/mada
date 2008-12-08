@@ -17,12 +17,13 @@ object Expr {
         }
     }
 
+
     trait Method[Z, A] extends Expr[Z, A] {
         protected def _1: Of[Z]
         protected def _default: A
         override protected def _eval[B](x: Expr[A, B]): B = x match {
-            case Self => methodOf(_1)
-            case Default => _default
+            case Self => _1 ! this
+            case Unknown => _default
             case _ => unknown(x)
         }
     }
@@ -56,7 +57,7 @@ object Expr {
 
 
     case object NoSelfCaseError extends Error
-    case object NoDefaultCaseError extends Error
+    case object NoUnknownCaseError extends Error
 }
 
 
@@ -69,12 +70,11 @@ trait Expr[Z, A] {
         override protected def _eval[B](x: Expr[A, B]): B = throw Expr.NoSelfCaseError
     }
 
-    case object Default extends Expr.Identity[A] {
-        override protected def _eval[B](x: Expr[A, B]): B = throw Expr.NoDefaultCaseError
+    case object Unknown extends Expr.Identity[A] {
+        override protected def _eval[B](x: Expr[A, B]): B = throw Expr.NoUnknownCaseError
     }
 
-    protected def unknown[B](x: Expr[A, B]): B = x.eval(x.Default)
-    protected def methodOf(x: Expr.Of[Z]): A = x.eval(this)
+    protected def unknown[B](x: Expr[A, B]): B = x.eval(x.Unknown)
 
     final def expr = this
     final def cut = Expr.Cut(this).expr
