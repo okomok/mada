@@ -93,7 +93,7 @@ trait Pointer[A] {
     final def copyIn(t: Traversal): Pointer[A] = if (traversal <:< t) copy else this
     final def pointer = this
     final def toExpr = Expr(this)
-    final def ! = toExpr
+    final def / = toExpr
 }
 
 

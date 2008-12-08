@@ -82,7 +82,7 @@ trait Expr[Z, A] {
     final def cut = Expr.Cut(this).expr
     final def xlazy = Expr.Lazy(this).expr
 
-    final def ! = eval
+    final def / = eval
     final def ?[B](x: Expr[A, B]) = eval(x)
-    final def / = cut
+    final def ! = cut
 }

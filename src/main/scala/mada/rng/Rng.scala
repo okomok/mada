@@ -72,7 +72,7 @@ trait Rng[A] {
 
     final def rng = this
     final def toExpr = Expr(this)
-    final def ! = toExpr
+    final def / = toExpr
     final def toPair = (begin, end)
 
 // for-comprehension
