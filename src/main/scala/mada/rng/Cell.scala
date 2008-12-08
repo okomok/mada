@@ -8,7 +8,7 @@ import First._
 //  Cell[A] <-> Expr[Rng[A]]
 
 object CellCompatible extends CellCompatible; trait CellCompatible {
-    implicit def madaRng_Cell2ExprRng[A](from: Cell[A]): Expr.Of[Rng[A]] = FromCellExpr(Expr.Constant(from)).expr
+    implicit def madaRng_Cell2ExprRng[A](from: Cell[A]): Expr.Of[Rng[A]] = FromCellExpr(Expr(from)).expr
 }
 
 

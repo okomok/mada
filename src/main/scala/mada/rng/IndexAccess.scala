@@ -10,8 +10,8 @@ trait IndexAccess[A] {
 }
 
 
-case class IndexAccessRngExpr[A](_1: IndexAccess[A]) extends Expr.ConstantOf[Rng[A]] {
-    override protected def _of = new IndexAccessPointer(_1, 0) <=< new IndexAccessPointer(_1, _1._size)
+case class IndexAccessRngExpr[A](_1: IndexAccess[A]) extends Expr.ConstantFrom[Rng[A]] {
+    override protected def _from = new IndexAccessPointer(_1, 0) <=< new IndexAccessPointer(_1, _1._size)
 }
 
 

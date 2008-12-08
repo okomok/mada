@@ -10,7 +10,7 @@ import Foreach._
 //  Array[A] <-> Expr[Rng[A]]
 
 object ArrayCompatible extends ArrayCompatible; trait ArrayCompatible {
-    implicit def madaRng_Array2ExprRng[A](from: Array[A]): Expr.Of[Rng[A]] = FromArrayExpr(Expr.Constant(from)).expr
+    implicit def madaRng_Array2ExprRng[A](from: Array[A]): Expr.Of[Rng[A]] = FromArrayExpr(Expr(from)).expr
 }
 
 

@@ -77,8 +77,8 @@ class RandomAccessFileOf[A](val base: RandomAccessFile) {
 //  RandomAccessFile <-> Expr[Rng[A]]
 
 object RandomAccessFileCompatible extends RandomAccessFileCompatible; trait RandomAccessFileCompatible {
-    implicit def toMadaIntRandomAccessFileRngExpr(from: IntRandomAccessFile): Expr.Of[Rng[Int]] = FromIntRandomAccessFileExpr(Expr.Constant(from)).expr
-    implicit def toMadaLongRandomAccessFileRngExpr(from: LongRandomAccessFile): Expr.Of[Rng[Long]] = FromLongRandomAccessFileExpr(Expr.Constant(from)).expr
+    implicit def toMadaIntRandomAccessFileRngExpr(from: IntRandomAccessFile): Expr.Of[Rng[Int]] = FromIntRandomAccessFileExpr(Expr(from)).expr
+    implicit def toMadaLongRandomAccessFileRngExpr(from: LongRandomAccessFile): Expr.Of[Rng[Long]] = FromLongRandomAccessFileExpr(Expr(from)).expr
 }
 
 

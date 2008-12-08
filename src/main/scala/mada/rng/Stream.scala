@@ -8,7 +8,7 @@ import ToIterator._
 //  Stream[A] <-> Expr[Rng[A]]
 
 object StreamCompatible extends StreamCompatible; trait StreamCompatible {
-    implicit def madaRng_Stream2ExprRng[A](from: Stream[A]): Expr.Of[Rng[A]] = FromStreamExpr(Expr.Constant(from)).expr
+    implicit def madaRng_Stream2ExprRng[A](from: Stream[A]): Expr.Of[Rng[A]] = FromStreamExpr(Expr(from)).expr
 }
 
 

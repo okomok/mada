@@ -44,20 +44,20 @@ class ExprV2Test {
     def anIterator = aList.elements
 
     def testConstant: Unit = {
-        assertEquals(10, Expr.Constant(10).eval)
+        assertEquals(10, Expr(10).eval)
     }
 
     def testMethod: Unit = {
-        assertEquals(5, SizeExpr(Expr.Constant(aList)).eval)
+        assertEquals(5, SizeExpr(Expr(aList)).eval)
     }
 
     def testMap: Unit = {
-        val lst = MapExpr(MapExpr(Expr.Constant(aList), { (e: Int) => "wow" }), { (e: String) => 10 }).eval
+        val lst = MapExpr(MapExpr(Expr(aList), { (e: Int) => "wow" }), { (e: String) => 10 }).eval
         assertEquals(10, lst.first)
     }
 
     def testNontrivial: Unit = {
-        val x = IteratorToListExpr(Expr.Constant(anIterator))
+        val x = IteratorToListExpr(Expr(anIterator))
         assertEquals(aList, x.eval)
         x.hookSize = true
         assertEquals(99, SizeExpr(x).eval)
@@ -66,25 +66,25 @@ class ExprV2Test {
     }
 
     def testAlias: Unit = {
-        val x = IteratorToListExprProxy(Expr.Constant(anIterator))
+        val x = IteratorToListExprProxy(Expr(anIterator))
         assertEquals(aList, x.eval)
         assertEquals(99, SizeExpr(x).eval)
     }
 
     def testCut: Unit = {
-        val x = MapExpr(MapExpr(Expr.Constant(aList), { (e: Int) => "wow" }), { (e: String) => 10 })
+        val x = MapExpr(MapExpr(Expr(aList), { (e: Int) => "wow" }), { (e: String) => 10 })
         x.deforsed = false
         x.eval
         assertTrue(x.deforsed)
-        val y = MapExpr(MapExpr(Expr.Constant(aList), { (e: Int) => "wow" }).cut, { (e: String) => 10 })
+        val y = MapExpr(MapExpr(Expr(aList), { (e: Int) => "wow" }).cut, { (e: String) => 10 })
         y.deforsed = false
         assertFalse(y.deforsed)
     }
 
     def testLazy: Unit = {
-        val l1 = Expr.Constant(100).xlazy
+        val l1 = Expr(100).xlazy
         assertSame(l1.eval, l1.eval)
-        val l2 = Expr.Constant(101).xlazy
+        val l2 = Expr(101).xlazy
         assertSame(l2.eval, l2.eval)
         assertNotSame(l2.eval, l1.eval)
     }

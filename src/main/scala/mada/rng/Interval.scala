@@ -15,14 +15,14 @@ case class LongInterval(a1: Long, a2: Long) extends Tuple2[Long, Long](a1, a2)
 
 object IntervalCompatible extends IntervalCompatible; trait IntervalCompatible {
     // Ideally, (N, N) should conform to Rng, but tuples are the same types after type-erasure.
-    implicit def toMadaIntIntervalRngExpr(from: IntInterval): Expr.Of[Rng[Int]] = FromIntIntervalExpr(Expr.Constant(from)).expr
-    implicit def toMadaLongIntervalRngExpr(from: LongInterval): Expr.Of[Rng[Long]] = FromLongIntervalExpr(Expr.Constant(from)).expr
+    implicit def toMadaIntIntervalRngExpr(from: IntInterval): Expr.Of[Rng[Int]] = FromIntIntervalExpr(Expr(from)).expr
+    implicit def toMadaLongIntervalRngExpr(from: LongInterval): Expr.Of[Rng[Long]] = FromLongIntervalExpr(Expr(from)).expr
 }
 
 object FromInterval extends FromInterval; trait FromInterval {
     // Note by-name-parameters also are the same types after type-erasure.
-    def from(_1: Int, _2: Int) = FromIntIntervalExpr(Expr.Constant(IntInterval(_1, _2))).expr
-    def from(_1: Long, _2: Long) = FromLongIntervalExpr(Expr.Constant(LongInterval(_1, _2))).expr
+    def from(_1: Int, _2: Int) = FromIntIntervalExpr(Expr(IntInterval(_1, _2))).expr
+    def from(_1: Long, _2: Long) = FromLongIntervalExpr(Expr(LongInterval(_1, _2))).expr
 }
 
 
