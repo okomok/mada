@@ -21,11 +21,13 @@ case class FlattenExpr[A](override val _1: Expr.Of[Rng[Rng[A]]], _2: Option[Trav
 
 
 object FlattenImpl {
-    def apply[A](r: Rng[Rng[A]], ot: Option[Traversal]): Rng[A] = {
+    def apply[A](r: Rng[Rng[A]], localTrv: Option[Traversal]): Rng[A] = {
         val (p, q) = r.toPair
-        val t = ot.getOrElse(SinglePassTraversal)
-        Assert("Flatten can't be RandomAccess", t >:> BidirectionalTraversal)
-        Assert("requires " + t.toString, p.traversal <:< t)
+        val lt = localTrv.getOrElse(SinglePassTraversal)
+        val t = lt upper p.traversal match {
+            case _: BidirectionalTraversal => BidirectionalTraversal
+            case _ => lt upper ForwardTraversal
+        }
         new FlattenPointer(p, q, t) <=< new FlattenPointer(q.copyIn(BidirectionalTraversal), q, t)
     }
 }
@@ -77,7 +79,7 @@ class FlattenPointer[A](override protected val _base: Pointer[Rng[A]], val end: 
     }
 
     private def resetLocalForward = {
-        while (base != end && localRng.toExpr.isEmpty.eval) {
+        while (base != end && localRng./.isEmpty./) {
             base.pre_++
         }
         if (base != end) {
@@ -86,7 +88,7 @@ class FlattenPointer[A](override protected val _base: Pointer[Rng[A]], val end: 
     }
 
     private def resetLocalBackward = {
-        while (localRng.toExpr.isEmpty.eval) {
+        while (localRng./.isEmpty./) {
             base.pre_--
         }
         local = localRng.end

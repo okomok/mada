@@ -18,6 +18,7 @@ object Separate extends Separate; trait Separate extends Predefs {
 case class SeparateExpr[A](_1: Expr.Of[Rng[Rng[A]]], _2: Expr.Of[Rng[A]], _3: Option[Traversal]) extends Expr.Alias[Rng[A], Rng[A]] {
     override protected def _alias = {
         val sep = _2.readOnly.eval
+        AssertModels(sep, ForwardTraversal)
         FlattenExpr(MapExpr(_1, { (r: Rng[A]) => sep./.append(r.toExpr)./ }), _3)
     }
 }
