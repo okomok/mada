@@ -21,7 +21,7 @@ case class FindExpr[A](override val _1: Expr.Of[Rng[A]], _2: A => Boolean) exten
 object FindImpl {
     def apply[A](r: Rng[A], f: A => Boolean): Option[A] = {
         var acc: Option[A] = None
-        // Prefer Loop to FindPointerOf so a fusion is enabled.
+        // Prefer loop to findPointerOf so a fusion is enabled.
         r./.loop({ (e: A) => if (f(e)) { acc = Some(e); false } else true })./
         acc
     }
