@@ -22,6 +22,6 @@ object SplitAtImpl {
     def apply[A](r: Rng[A], n: Long): (Rng[A], Rng[A]) = {
         AssertModels(r, ForwardTraversal)
         val r2 = r./.drop(n)./
-        (r.begin <=< r2.end, r2)
+        (r.begin <=< r2.begin, r2)
     }
 }
