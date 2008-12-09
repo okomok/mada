@@ -14,10 +14,15 @@ object Find extends Find; trait Find extends Predefs {
 
 
 case class FindExpr[A](override val _1: Expr.Of[Rng[A]], _2: A => Boolean) extends Expr.Method[Rng[A], Option[A]] {
-    override protected def _default = {
-        val acc = new Ref[Option[A]](None)
+    override protected def _default = FindImpl(_1.eval, _2)
+}
+
+
+object FindImpl {
+    def apply[A](r: Rng[A], f: A => Boolean): Option[A] = {
+        var acc: Option[A] = None
         // Prefer Loop to FindPointerOf so a fusion is enabled.
-        _1.loop({ (e: A) => if (_2(e)) { acc := Some(e); false } else true }).eval
-        acc.deref
+        r./.loop({ (e: A) => if (f(e)) { acc = Some(e); false } else true })./
+        acc
     }
 }

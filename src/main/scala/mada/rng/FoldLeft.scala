@@ -14,9 +14,14 @@ object FoldLeft extends FoldLeft; trait FoldLeft extends Predefs {
 
 
 case class FoldLeftExpr[A, B](override val _1: Expr.Of[Rng[A]], _2: B, _3: (B, A) => B) extends Expr.Method[Rng[A], B] {
-    override protected def _default = {
-        val acc = new Ref(_2)
-        _1.foreach(acc := _3(acc.deref, _)).eval
-        acc.deref
+    override protected def _default = FoldLeftImpl(_1.eval, _2, _3)
+}
+
+
+object FoldLeftImpl {
+    def apply[A, B](r: Rng[A], z: B, f: (B, A) => B): B = {
+        var acc = z
+        r./.foreach({ (e: A) => acc = f(acc, e) })./
+        acc
     }
 }
