@@ -3,21 +3,16 @@ package mada.rng
 
 
 object Empty extends Empty; trait Empty extends Predefs {
-    class MadaRngEmpty[A](_1: Expr.Of[Rng[A]]) {
-        def empty = EmptyExpr(_1).expr
-    }
-    implicit def toMadaRngEmpty[A](_1: Expr.Of[Rng[A]]): MadaRngEmpty[A] = new MadaRngEmpty[A](_1)
+     def empty[A] = EmptyExpr[A]().expr
 }
 
 
-case class EmptyExpr[A](override val _1: Expr.Of[Rng[A]]) extends Expr.Transform[Rng[A]] {
-    override protected def _default = _1 match {
-        case y @ EmptyExpr(x1) => y.eval // empty-empty fusion
-        case _ => EmptyImpl(_1.eval)
-    }
+case class EmptyExpr[A]() extends Expr.Alias[Unit, Rng[A]] {
+    override protected def _alias = IndexAccessRngExpr(new EmptyIndexAccess[A])
 }
 
-
-object EmptyImpl {
-    def apply[A](r: Rng[A]): Rng[A] = { val q = r.end; q <=< q }
+class EmptyIndexAccess[A] extends IndexAccess[A] {
+    override def _get(i: Long) = throw new java.lang.AssertionError("out of EmptyRng")
+    override def _size = 0
+    override def toString = "EmptyIndexAccess"
 }
