@@ -23,11 +23,9 @@ case class FlattenExpr[A](override val _1: Expr.Of[Rng[Rng[A]]], _2: Option[Trav
 object FlattenImpl {
     def apply[A](r: Rng[Rng[A]], localTrv: Option[Traversal]): Rng[A] = {
         val (p, q) = r.toPair
+        val st = p.traversal
         val lt = localTrv.getOrElse(SinglePassTraversal)
-        val t = lt upper p.traversal match {
-            case _: BidirectionalTraversal => BidirectionalTraversal
-            case _ => lt upper ForwardTraversal
-        }
+        val t = st upper BidirectionalTraversal upper lt // Oven was wrong.
         new FlattenPointer(p, q, t) <=< new FlattenPointer(q.copyIn(BidirectionalTraversal), q, t)
     }
 }
