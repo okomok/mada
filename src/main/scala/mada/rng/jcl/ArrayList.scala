@@ -2,6 +2,10 @@
 package mada.rng.jcl
 
 
+import Foreach._
+import Size._
+
+
 // ArrayList[A] -> Expr[Rng[A]]
 
 object ArrayListCompatible extends ArrayListCompatible; trait ArrayListCompatible {
@@ -50,19 +54,19 @@ object ToArrayList extends ToArrayList; trait ToArrayList extends Predefs {
 case class ToArrayListExpr[A](override val _1: Expr.Of[Rng[A]]) extends Expr.Method[Rng[A], java.util.ArrayList[A]] {
     override protected def _default = _1 match {
         case FromArrayListExpr(x1) => x1.eval
-        case _ => ToArrayListImpl(_1.lazy_)
+        case _ => ToArrayListImpl(_1.eval)
     }
 }
 
 object ToArrayListImpl {
-    def apply[A](x: Expr.Of[Rng[A]]): java.util.ArrayList[A] = {
-        var a = newArrayList(x)
-        ForeachExpr(x, a.add(_: A)).eval
+    def apply[A](r: Rng[A]): java.util.ArrayList[A] = {
+        var a = newArrayList(r)
+        r./.foreach(a.add(_: A))./
         a
     }
 
-    private def newArrayList[A](x: Expr.Of[Rng[A]]) = x.eval.traversal match {
-        case _: RandomAccessTraversal => new java.util.ArrayList[A](SizeExpr(x).eval.toInt)
+    private def newArrayList[A](r: Rng[A]) = r.traversal match {
+        case _: RandomAccessTraversal => new java.util.ArrayList[A](r./.size./.toInt)
         case _: SinglePassTraversal => new java.util.ArrayList[A]
     }
 }
