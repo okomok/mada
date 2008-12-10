@@ -77,5 +77,6 @@ class BufferedPointer[A](val base: Pointer[A], map: HashMap[Long, A])
         that
     }
 
+    override def hashCode = long2Long(baseId).hashCode
     override def toString = new StringBuilder().append("BufferedPointer of ").append(base).toString
 }
