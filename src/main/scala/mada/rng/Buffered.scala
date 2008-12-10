@@ -2,7 +2,7 @@
 package mada.rng
 
 
-import scala.collection.mutable.HashMap
+import scala.collection.jcl.HashMap
 
 
 object Buffered extends Buffered; trait Buffered extends Predefs {
@@ -20,8 +20,7 @@ case class BufferedExpr[A](override val _1: Expr.Of[Rng[A]]) extends Expr.Method
 
 object BufferedImpl {
     def apply[A](r: Rng[A]): Rng[A] = {
-        val m = new HashMap[Long, A]
-        new BufferedPointer(r.begin, m) <=< new BufferedPointer(r.end, m)
+        new BufferedPointer(r.begin, new HashMap[Long, A]) <=< new BufferedPointer(r.end, null)
     }
 }
 
@@ -29,24 +28,15 @@ class BufferedPointer[A](val base: Pointer[A], map: HashMap[Long, A])
         extends PointerFacade[A, BufferedPointer[A]] {
     private var baseId = 0L
 
-    override protected def _read = {
-        val v = map.get(baseId)
-        if (v.isEmpty) {
-            val e = *(base)
-            map.update(baseId, e)
-            e
-        } else {
-            v.get
-        }
-    }
+    override protected def _read = buffering
 
     override protected def _write(e: A) = { throw new NotWritablePointerError(this) }
 
     override protected def _traversal = ForwardTraversal
 
     override protected def _equals(that: BufferedPointer[A]) = {
-        val thisInBuffer = map.contains(baseId)
-        val thatInBuffer = map.contains(that.baseId)
+        val thisInBuffer = inBuffer
+        val thatInBuffer = that.inBuffer
 
         if (thisInBuffer && thatInBuffer) {
             baseId == that.baseId
@@ -58,16 +48,7 @@ class BufferedPointer[A](val base: Pointer[A], map: HashMap[Long, A])
     }
 
     override protected def _increment = {
-        val v = map.get(baseId)
-        if (v.isEmpty) {
-            map.update(baseId, *(base))
-            try {
-                base.pre_++
-            } catch {
-                case e => { map -= baseId; throw e }
-            }
-        }
-
+        buffering
         baseId += 1L
     }
 
@@ -79,4 +60,28 @@ class BufferedPointer[A](val base: Pointer[A], map: HashMap[Long, A])
 
     override def hashCode = long2Long(baseId).hashCode
     override def toString = new StringBuilder().append("BufferedPointer of ").append(base).toString
+
+    private def buffering: A = {
+        val v = map.get(baseId)
+        if (v.isEmpty) {
+            val e = *(base)
+            map.put(baseId, e)
+            try {
+                base.pre_++
+            } catch {
+                case any => { map.removeKey(baseId); throw any }
+            }
+            e
+        } else {
+            v.get
+        }
+    }
+
+    private def inBuffer: Boolean = {
+        if (null eq map) {
+            false
+        } else {
+            map.contains(baseId)
+        }
+    }
 }

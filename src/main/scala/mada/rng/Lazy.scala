@@ -2,7 +2,7 @@
 package mada.rng
 
 
-import scala.collection.immutable.HashMap
+import scala.collection.jcl.HashMap
 
 
 object Lazy extends Lazy; trait Lazy extends Predefs {
@@ -14,7 +14,10 @@ object Lazy extends Lazy; trait Lazy extends Predefs {
 
 
 case class LazyExpr[A](override val _1: Expr.Of[Rng[A]]) extends Expr.Method[Rng[A], Rng[A]] {
-    override protected def _default = LazyImpl(_1.eval)
+    override protected def _default = _1 match {
+        case y @ LazyExpr(_) => y.eval
+        case _ => LazyImpl(_1.eval)
+    }
 }
 
 
@@ -32,7 +35,7 @@ class LazyPointer[A](override val _base: Pointer[A], map: HashMap[Pointer[A], A]
         val v = map.get(base)
         if (v.isEmpty) {
             val e = *(base)
-            map.update(base, e)
+            map.put(base, e)
             e
         } else {
             v.get
