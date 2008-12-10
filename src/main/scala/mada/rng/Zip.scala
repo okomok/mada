@@ -2,8 +2,6 @@
 package mada.rng
 
 
-// TODO: maybe zip should take a tuple.
-
 object Zip extends Zip; trait Zip extends Predefs {
     class MadaRngZip[A1](_1: Expr.Of[Rng[A1]]) {
         def zip[A2](_2: Expr.Of[Rng[A2]]) = ZipExpr(_1, _2).expr
