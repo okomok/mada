@@ -9,10 +9,10 @@ object Expr {
 
     type Terminal[A] = Expr[Nothing, A]
 
-    trait ConstantFrom[A] extends Terminal[A] {
-        protected def _from: A
+    trait ConstantOf[A] extends Terminal[A] {
+        protected def _of: A
         override protected def _eval[B](x: Expr[A, B]): B = x match {
-            case Self => _from
+            case Self => _of
             case _ => dontKnow(x)
         }
     }
@@ -38,8 +38,8 @@ object Expr {
     }
 
 
-    case class Constant[A](_1: A) extends ConstantFrom[A] {
-        override protected val _from = _1
+    case class Constant[A](_1: A) extends ConstantOf[A] {
+        override protected val _of = _1
     }
 
     case class Cut[A](_1: Of[A]) extends Alias[Nothing, A] {
