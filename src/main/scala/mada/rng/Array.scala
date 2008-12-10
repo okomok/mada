@@ -56,20 +56,20 @@ object ToArray extends ToArray; trait ToArray extends Predefs {
 case class ToArrayExpr[A](override val _1: Expr.Of[Rng[A]]) extends Expr.Method[Rng[A], Array[A]] {
     override protected def _default = _1 match {
         case FromArrayExpr(x1) => x1.eval
-        case _ => ToArrayImpl(_1.xlazy)
+        case _ => ToArrayImpl(_1.eval)
     }
 }
 
 object ToArrayImpl {
-    def apply[A](x: Expr.Of[Rng[A]]): Array[A] = x.eval.traversal match {
-        case _: ForwardTraversal => inForward(x)
-        case _: SinglePassTraversal => inForward(x.force)
+    def apply[A](r: Rng[A]): Array[A] = r.traversal match {
+        case _: ForwardTraversal => inForward(r)
+        case _: SinglePassTraversal => inForward(r./.force./)
     }
 
-    private def inForward[A](x: Expr.Of[Rng[A]]): Array[A] = {
-        val a = new Array[A](x.distance.eval.toInt)
+    private def inForward[A](r: Rng[A]): Array[A] = {
+        val a = new Array[A](r./.distance./.toInt)
         var i = 0
-        x.foreach({ (e: A) => a(i) = e; i += 1 }).eval
+        r./.foreach({ (e: A) => a(i) = e; i += 1 })./
         a
     }
 }

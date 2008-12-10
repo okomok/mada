@@ -82,9 +82,9 @@ class ExprV2Test {
     }
 
     def testLazy: Unit = {
-        val l1 = Expr(100).xlazy
+        val l1 = Expr(100).lazy_
         assertSame(l1.eval, l1.eval)
-        val l2 = Expr(101).xlazy
+        val l2 = Expr(101).lazy_
         assertSame(l2.eval, l2.eval)
         assertNotSame(l2.eval, l1.eval)
     }

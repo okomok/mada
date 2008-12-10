@@ -50,7 +50,7 @@ object ToArrayList extends ToArrayList; trait ToArrayList extends Predefs {
 case class ToArrayListExpr[A](override val _1: Expr.Of[Rng[A]]) extends Expr.Method[Rng[A], java.util.ArrayList[A]] {
     override protected def _default = _1 match {
         case FromArrayListExpr(x1) => x1.eval
-        case _ => ToArrayListImpl(_1.xlazy)
+        case _ => ToArrayListImpl(_1.lazy_)
     }
 }
 

@@ -85,7 +85,7 @@ class DefaultMergeRoutine[A](override val lt: (A, A) => Boolean) extends MergeRo
         }
     }
 
-    override def afterYield(r1: Rng[A], r2: Rng[A]): (Pointer[A], Pointer[A]) = {
+    override def afterYield(r1: Rng[A], r2: Rng[A]) = {
         val (p1, q1) = r1.toPair
         val (p2, q2) = r2.toPair
 
