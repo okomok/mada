@@ -20,7 +20,7 @@ case class UnzipExpr[A1, A2](override val _1: Expr.Of[Rng[(A1, A2)]]) extends Ex
 
 object UnzipImpl {
     def apply[A1, A2](r: Rng[(A1, A2)]): (Rng[A1], Rng[A2]) = {
-        AssertModels(r, ForwardTraversal) // too strict?
+        // AssertModels(r, ForwardTraversal) // too strict.
         (new UnzipPointer1(r.begin) <=< new UnzipPointer1(r.end), new UnzipPointer2(r.begin) <=< new UnzipPointer2(r.end))
     }
 }
