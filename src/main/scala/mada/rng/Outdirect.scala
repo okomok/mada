@@ -5,45 +5,13 @@ package mada.rng
 import Pointer._
 
 
-// indirect
-
-object Indirect extends Indirect; trait Indirect extends Predefs {
-    class MadaRngIndirect[A](_1: Expr.Of[Rng[Pointer[A]]]) {
-        def indirect = IndirectExpr(_1).expr
-    }
-    implicit def toMadaRngIndirect[A](_1: Expr.Of[Rng[Pointer[A]]]): MadaRngIndirect[A] = new MadaRngIndirect[A](_1)
-}
-
-case class IndirectExpr[A](_1: Expr.Of[Rng[Pointer[A]]]) extends Expr.Method[Rng[Pointer[A]], Rng[A]] {
-    override protected def _default = _1 match {
-        case OutdirectExpr(x1) => x1.eval // indirect-outdirect fusion
-        case _ => IndirectImpl(_1.eval)
-    }
-}
-
-object IndirectImpl {
-    def apply[A](r: Rng[Pointer[A]]): Rng[A] = {
-        val (p, q) = r.toPair
-        new IndirectPointer(p) <=< new IndirectPointer(q)
-    }
-}
-
-class IndirectPointer[A](override protected val _base: Pointer[Pointer[A]])
-        extends PointerAdapter[Pointer[A], A, IndirectPointer[A]] {
-    override protected def _read = *(*(base))
-    override protected def _write(e: A) = { *(*(base)) = e }
-    override protected def _copy = new IndirectPointer[A](base.copy)
-}
-
-
-// outdirect
-
 object Outdirect extends Outdirect; trait Outdirect extends Predefs {
     class MadaRngOutdirect[A](_1: Expr.Of[Rng[A]]) {
         def outdirect = OutdirectExpr(_1).expr
     }
     implicit def toMadaRngOutdirect[A](_1: Expr.Of[Rng[A]]): MadaRngOutdirect[A] = new MadaRngOutdirect[A](_1)
 }
+
 
 case class OutdirectExpr[A](_1: Expr.Of[Rng[A]]) extends Expr[Rng[A], Rng[Pointer[A]]] {
     override protected def _eval[U](x: Expr[Rng[Pointer[A]], U]): U = x match {
@@ -56,6 +24,7 @@ case class OutdirectExpr[A](_1: Expr.Of[Rng[A]]) extends Expr[Rng[A], Rng[Pointe
         case _ => dontKnow(x)
     }
 }
+
 
 object OutdirectImpl {
     def apply[A](r: Rng[A]): Rng[Pointer[A]] = {
@@ -71,10 +40,12 @@ class OutdirectPointer[A](override protected val _base: Pointer[A])
     override protected def _copy = new OutdirectPointer(base.copy)
 }
 
+
 object OutdirectLoopImpl {
     def apply[A](r: Rng[A], f: Pointer[A] => Boolean) {
         val (p, q) = r.toPair
-        while (p != q && f(p))
+        while (p != q && f(p)) {
             ++(p)
+        }
     }
 }
