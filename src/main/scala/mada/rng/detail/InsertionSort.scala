@@ -34,15 +34,15 @@ import Pointer._
 
 
 object InsertionSort {
-    def apply[A](r: Rng[A], __comp: (A, A) => Boolean) = new InsertionSortImpl(__comp).apply(r)
+    def apply[A](r: Rng[A], __comp: (A, A) => Boolean) = new InsertionSort(__comp).apply(r)
 }
 
 object UnguardedInsertionSort {
-    def apply[A](r: Rng[A], __comp: (A, A) => Boolean) = new InsertionSortImpl(__comp).unguarded(r)
+    def apply[A](r: Rng[A], __comp: (A, A) => Boolean) = new InsertionSort(__comp).unguarded(r)
 }
 
 
-class InsertionSortImpl[A](__comp: (A, A) => Boolean) {
+class InsertionSort[A](__comp: (A, A) => Boolean) {
     def apply(r: Rng[A]): Unit = {
         val (__first, __last) = r.toPair
         if (__first != __last) {

@@ -40,7 +40,7 @@ object PartialSort {
         val __i = __middle.copy
         while (__i < __last) {
             if (__comp(*(__i), *(__first))) {
-                new HeapImpl(__comp).__pop(__first <=< __middle, __i, *(__i))
+                new Heap(__comp).__pop(__first <=< __middle, __i, *(__i))
             }
             ++(__i)
         }

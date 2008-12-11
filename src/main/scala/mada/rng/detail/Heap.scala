@@ -33,12 +33,12 @@ import Pointer._
 
 
 object Heap {
-    def make[A](r: Rng[A], __comp: (A, A) => Boolean) = new HeapImpl(__comp).make(r)
-    def sort[A](r: Rng[A], __comp: (A, A) => Boolean) = new HeapImpl(__comp).sort(r)
+    def make[A](r: Rng[A], __comp: (A, A) => Boolean) = new Heap(__comp).make(r)
+    def sort[A](r: Rng[A], __comp: (A, A) => Boolean) = new Heap(__comp).sort(r)
 }
 
 
-class HeapImpl[A](__comp: (A, A) => Boolean) {
+class Heap[A](__comp: (A, A) => Boolean) {
 // adjust
     def adjust(first: Pointer[A], holeIndex: Long, __len: Long, __value: A): Unit = {
         val __first = first.copy
