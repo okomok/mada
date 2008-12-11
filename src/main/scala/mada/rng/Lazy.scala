@@ -16,6 +16,7 @@ object Lazy extends Lazy; trait Lazy extends Predefs {
 case class LazyExpr[A](override val _1: Expr.Of[Rng[A]]) extends Expr.Method[Rng[A], Rng[A]] {
     override protected def _default = _1 match {
         case y @ LazyExpr(_) => y.eval
+        case y @ BufferedExpr(x1) => y.eval
         case _ => LazyImpl(_1.eval)
     }
 }
