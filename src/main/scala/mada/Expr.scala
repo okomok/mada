@@ -79,10 +79,11 @@ trait Expr[Z, A] {
     protected def dontKnow[B](x: Expr[A, B]): B = x.eval(x.Unknown)
 
     final def expr = this
-    final def cut = Expr.Cut(this).expr
-    final def lazy_ = Expr.Lazy(this).expr
+
+    final def xcut = Expr.Cut(this).expr
+    final def xlazy = Expr.Lazy(this).expr
 
     final def / = eval
     final def ?[B](x: Expr[A, B]) = eval(x)
-    final def ! = cut
+    final def ! = xcut
 }
