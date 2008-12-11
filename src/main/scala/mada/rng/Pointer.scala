@@ -86,6 +86,7 @@ trait Pointer[A] {
     protected def _invariant = { }
 
 // utilities
+    final def models(t: Traversal) = traversal <:< t
     final def advance(d: Long) = toExpr.ptr_advance(d).eval
     final def output: A => Pointer[A] = detail.PointerOutput(this, _)
     final def swap(that: Pointer[A]) = detail.PointerSwap(this, that)

@@ -20,7 +20,7 @@ object Rng extends Namespace
         with Begin with End
         with ToCell
         with Compatibles
-        with CopyTo
+        with CopyTo with CopyBackwardTo
         with Indirect with Outdirect
         with Distance
         with Drop
@@ -60,7 +60,7 @@ trait Rng[A] {
     final def begin = _begin
     final def end = _end
     final lazy val traversal = begin.traversal
-    final def models(t: Traversal): Boolean = traversal <:< t
+    final def models(t: Traversal) = traversal <:< t
 
     override def equals(that: Any) = equals(that.asInstanceOf[Rng[A]])
     override def toString = detail.ToString(this)

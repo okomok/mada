@@ -2,6 +2,9 @@
 package mada.rng
 
 
+// unneeded; force is enough
+
+
 object Outplace extends Outplace; trait Outplace extends Predefs {
     class MadaRngOutplace[A](_1: Expr.Of[Rng[A]]) {
         def outplace = OutplaceExpr(_1).expr

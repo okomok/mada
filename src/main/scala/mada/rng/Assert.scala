@@ -7,14 +7,18 @@ import IsEmpty._
 
 
 object AssertModels {
-    def apply[A](r: Rng[A], t: Traversal) = {
-        Assert(msg(r, t), r models t)
+    def apply[A](p: Pointer[A], t: Traversal) = {
+        Assert(msg(t, p.traversal), p models t)
     }
 
-    private def msg[A](r: Rng[A], t: Traversal) = {
+    def apply[A](r: Rng[A], t: Traversal) = {
+        Assert(msg(t, r.traversal), r models t)
+    }
+
+    private def msg[A](expected: Traversal, actual: Traversal) = {
         new StringBuilder().
-            append("requires:<").append(t.toString).append('>').
-            append(" but was:<").append(r.traversal.toString).append('>').
+            append("requires:<").append(expected.toString).append('>').
+            append(" but was:<").append(actual.toString).append('>').
             toString
     }
 }
