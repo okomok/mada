@@ -40,11 +40,11 @@ object Median {
                 __a
             }
         } else if (__comp(__a, __c)) {
-            return __a
+            __a
         } else if (__comp(__b, __c)) {
-            return __c
+            __c
         } else {
-            return __b
+            __b
         }
     }
 }
