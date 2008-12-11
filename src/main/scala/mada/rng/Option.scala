@@ -26,12 +26,12 @@ case class FromOptionExpr[A](_1: Expr.Of[Option[A]]) extends Expr[Option[A], Rng
         case Self => _1?this
         case Unknown => _1 match {
             case ToOptionExpr(x1) => x1.eval
-            case _ => delegate.eval
+            case _ => aux.eval
         }
-        case _ => delegate.eval(x)
+        case _ => aux.eval(x)
     }
 
-    private def delegate = IndexAccessRngExpr(new OptionIndexAccess(_1.eval))
+    private def aux = IndexAccessRngExpr(new OptionIndexAccess(_1.eval))
 }
 
 class OptionIndexAccess[A](val base: Option[A]) extends IndexAccess[A] {

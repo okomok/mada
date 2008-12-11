@@ -26,12 +26,12 @@ case class FromCellExpr[A](_1: Expr.Of[Cell[A]]) extends Expr[Cell[A], Rng[A]] {
         case Self => _1?this
         case Unknown => _1 match {
             case ToCellExpr(x1) => x1.eval
-            case _ => delegate.eval
+            case _ => aux.eval
         }
-        case _ => delegate.eval(x)
+        case _ => aux.eval(x)
     }
 
-    private def delegate = IndexAccessRngExpr(new CellIndexAccess(_1.eval))
+    private def aux = IndexAccessRngExpr(new CellIndexAccess(_1.eval))
 }
 
 class CellIndexAccess[A](val base: Cell[A]) extends IndexAccess[A] {

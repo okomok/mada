@@ -26,12 +26,12 @@ case class FromStringExpr(_1: Expr.Of[String]) extends Expr[String, Rng[Char]] {
         case Self => _1?this
         case Unknown => _1 match {
             case StringizeExpr(x1) => x1.eval
-            case _ => delegate.eval
+            case _ => aux.eval
         }
-        case _ => delegate.eval(x)
+        case _ => aux.eval(x)
     }
 
-    private def delegate = IndexAccessRngExpr(new StringIndexAccess(_1.eval))
+    private def aux = IndexAccessRngExpr(new StringIndexAccess(_1.eval))
 }
 
 class StringIndexAccess(val base: String) extends IndexAccess[Char] {

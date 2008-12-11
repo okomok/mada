@@ -27,12 +27,12 @@ case class FromArrayListExpr[A](_1: Expr.Of[java.util.ArrayList[A]]) extends Exp
         case Self => _1?this
         case Unknown => _1 match {
             case ToArrayListExpr(x1) => x1.eval
-            case _ => delegate.eval
+            case _ => aux.eval
         }
         case _ => dontKnow(x)
     }
 
-    private def delegate = IndexAccessRngExpr(new ArrayListIndexAccess(_1.eval))
+    private def aux = IndexAccessRngExpr(new ArrayListIndexAccess(_1.eval))
 }
 
 class ArrayListIndexAccess[A](val base: java.util.ArrayList[A]) extends IndexAccess[A] {

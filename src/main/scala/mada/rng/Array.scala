@@ -28,12 +28,12 @@ case class FromArrayExpr[A](_1: Expr.Of[Array[A]]) extends Expr[Array[A], Rng[A]
         case Self => _1?this
         case Unknown => _1 match {
             case ToArrayExpr(x1) => x1.eval
-            case _ => delegate.eval
+            case _ => aux.eval
         }
-        case _ => delegate.eval(x)
+        case _ => aux.eval(x)
     }
 
-    private def delegate = IndexAccessRngExpr(new ArrayIndexAccess(_1.eval))
+    private def aux = IndexAccessRngExpr(new ArrayIndexAccess(_1.eval))
 }
 
 class ArrayIndexAccess[A](val base: Array[A]) extends IndexAccess[A] {

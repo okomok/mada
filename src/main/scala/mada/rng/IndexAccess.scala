@@ -3,8 +3,8 @@ package mada.rng
 
 
 trait IndexAccess[A] {
-    def _set(startIndex: Long, e: A): Unit = { throw NotWritableIndexAccessError }
-    def _get(startIndex: Long): A
+    def _set(i: Long, e: A): Unit = { throw NotWritableIndexAccessError }
+    def _get(i: Long): A
     def _size: Long
     final def indexAccess = this
 }
