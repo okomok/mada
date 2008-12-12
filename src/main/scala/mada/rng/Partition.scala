@@ -21,6 +21,6 @@ case class PartitionExpr[A](override val _1: Expr.Of[Rng[A]], _2: A => Boolean) 
 object PartitionImpl {
     def apply[A](r: Rng[A], f: A => Boolean): (Rng[A], Rng[A]) = {
         AssertModels(r, ForwardTraversal)
-        (r.toExpr.filter(f).eval, r.toExpr.filter(!f(_)).eval)
+        (r./.filter(f)./, r./.filter(!f(_))./)
     }
 }

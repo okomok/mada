@@ -2,7 +2,6 @@
 package mada.rng
 
 
-import End._
 import Mismatch._
 
 
@@ -17,8 +16,12 @@ object EqualsTo extends EqualsTo; trait EqualsTo extends Predefs {
 
 case class EqualsToExpr[A1, A2](override val _1: Expr.Of[Rng[A1]], _2: Expr.Of[Pointer[A2]], _3: (A1, A2) => Boolean)
         extends Expr.Method[Rng[A1], Boolean] {
-    override protected def _default = {
-        val z1 = _1.xlazy
-        z1.mismatch(_2, _3).eval._1 == z1.end.eval
+    override protected def _default = EqualsToImpl(_1.eval, _2.eval, _3)
+}
+
+
+object EqualsToImpl {
+    def apply[A1, A2](r1: Rng[A1], p2: Pointer[A2], f: (A1, A2) => Boolean): Boolean = {
+        r1./.mismatch(p2, f)./._1 == r1.end
     }
 }
