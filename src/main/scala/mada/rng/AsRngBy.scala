@@ -24,10 +24,11 @@ case class AsRngByExpr[A](override val _1: Expr.Of[Rng[A]], _2: Traversal) exten
 object AsRngByImpl {
     def apply[A](r: Rng[A], t: Traversal): Rng[A] = {
         Assert("requires compatible Traversals", r.traversal <:< t)
-        if (t <:< r.traversal)
+        if (t <:< r.traversal) {
             r
-        else
+        } else {
             new AsRngByPointer(r.begin, t) <=< new AsRngByPointer(r.end, t)
+        }
     }
 }
 

@@ -4,12 +4,18 @@ package madatest.rng.detail
 
 import mada.rng.From._
 import mada.rng.Rng
+import mada.rng._
 import junit.framework.Assert._
 
 
 object TestRandomAccessReadWrite {
-    def apply[A <% Ordered[A]](expected: Array[A], actual: Rng[A]) {
-        TestRandomAccessReadOnly(expected, actual)
+    def apply[A <% Ordered[A]](expected: Array[A], actual: Rng[A]): Unit = {
+        assertEquals(RandomAccessTraversal, actual.traversal)
+        impl(expected, actual)
+    }
+
+    def impl[A <% Ordered[A]](expected: Array[A], actual: Rng[A]): Unit = {
+        TestRandomAccessReadOnly.impl(expected, actual)
 
         CombSort(actual)
         val ex = CopyArray(expected); CombSort(from(ex).eval)
@@ -19,8 +25,15 @@ object TestRandomAccessReadWrite {
 
 
 object TestRandomAccessReadOnly {
-    def apply[A](expected: Array[A], actual: Rng[A]) {
-        TestBidirectionalReadOnly(expected, actual)
+    def apply[A](expected: Array[A], actual: Rng[A]): Unit = {
+        assertEquals(RandomAccessTraversal, actual.traversal)
+        impl(expected, actual)
+    }
+
+    def impl[A](expected: Array[A], actual: Rng[A]): Unit = {
+        AssertModels(actual, RandomAccessTraversal)
+
+        TestBidirectionalReadOnly.impl(expected, actual)
         TestRandomAccessReadablePointer(actual.begin, expected.length, expected)
     }
 }

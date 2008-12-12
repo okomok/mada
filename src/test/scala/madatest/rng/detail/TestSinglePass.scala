@@ -10,7 +10,12 @@ import junit.framework.Assert._
 
 
 object TestSinglePassReadOnly {
-    def apply[A](expected: Array[A], actual: Rng[A]) {
+    def apply[A](expected: Array[A], actual: Rng[A]): Unit = {
+        assertEquals(SinglePassTraversal, actual.traversal)
+        impl(expected, actual)
+    }
+
+    def impl[A](expected: Array[A], actual: Rng[A]): Unit = {
         AssertModels(actual, SinglePassTraversal)
 
         val (p, q) = actual.toPair

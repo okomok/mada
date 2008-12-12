@@ -5,6 +5,7 @@ package madatest.rng.detail
 import mada.rng.From._
 import mada.rng.Reverse._
 import mada.rng.Rng
+import mada.rng._
 import junit.framework.Assert._
 
 
@@ -14,8 +15,13 @@ object NDebugReverse {
 
 
 object TestBidirectionalReadWrite {
-    def apply[A <% Ordered[A]](expected: Array[A], actual: Rng[A]) {
-        TestBidirectionalReadOnly(expected, actual)
+    def apply[A <% Ordered[A]](expected: Array[A], actual: Rng[A]): Unit = {
+        assertEquals(BidirectionalTraversal, actual.traversal)
+        impl(expected, actual)
+    }
+
+    def impl[A <% Ordered[A]](expected: Array[A], actual: Rng[A]): Unit = {
+        TestBidirectionalReadOnly.impl(expected, actual)
 
         BubbleSort(actual)
         val ex = CopyArray(expected); BubbleSort(from(ex).eval)
@@ -25,11 +31,18 @@ object TestBidirectionalReadWrite {
 
 
 object TestBidirectionalReadOnly {
-    def apply[A](expected: Array[A], actual: Rng[A]) {
-        TestForwardReadOnly(expected, actual)
+    def apply[A](expected: Array[A], actual: Rng[A]): Unit = {
+        assertEquals(BidirectionalTraversal, actual.traversal)
+        impl(expected, actual)
+    }
+
+    def impl[A](expected: Array[A], actual: Rng[A]): Unit = {
+        AssertModels(actual, BidirectionalTraversal)
+
+        TestForwardReadOnly.impl(expected, actual)
         TestBidirectionalReadablePointer(actual.begin, expected(0), expected(1))
 
         if (NDebugReverse.value)
-            TestForwardReadOnly(CopyReverseArray(expected), actual.toExpr.reverse.eval)
+            TestForwardReadOnly.impl(CopyReverseArray(expected), actual.toExpr.reverse.eval)
     }
 }

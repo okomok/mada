@@ -53,6 +53,7 @@ class MergePointer[A](
     assign(routine.beforeYield(base <=< end1, base2 <=< end2))
 
     override protected def _read = routine.doYield(base <=< end1, base2 <=< end2)
+    override protected def _traversal = base.traversal upper ForwardTraversal upper base2.traversal
     override protected def _equals(that: MergePointer[A]) = base == that.base && base2 == that.base2
     override protected def _increment = {
         Assert("out of MergeRng", base != end1)

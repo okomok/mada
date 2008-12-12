@@ -2,6 +2,7 @@
 package mada.rng
 
 
+import AsRngBy._
 import Equals._
 import Filter._
 import Flatten._
@@ -76,8 +77,8 @@ trait Rng[A] {
     final def toPair = (begin, end)
 
 // for-comprehension
-    final def map[B](f: A => B) = toExpr.map(f).eval
-    final def flatMap[B](f: A => Rng[B]) = toExpr.map(f).flatten.eval
-    final def filter(p: A => Boolean) = toExpr.filter(p).eval
-    final def foreach(f: A => Unit) = toExpr.foreach(f).eval
+    final def map[B](f: A => B) = /.asRngBy(SinglePassTraversal).map(f)./
+    final def flatMap[B](f: A => Rng[B]) = /.asRngBy(SinglePassTraversal).map(f).flatten./
+    final def filter(p: A => Boolean) = /.asRngBy(SinglePassTraversal).filter(p)./
+    final def foreach(f: A => Unit) = /.asRngBy(SinglePassTraversal).foreach(f)./
 }
