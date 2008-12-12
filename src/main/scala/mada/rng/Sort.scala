@@ -18,15 +18,14 @@ object Sort extends Sort; trait Sort extends Predefs {
 }
 
 
-case class SortExpr[A](override val _1: Expr.Of[Rng[A]], _2: (A, A) => Boolean) extends Expr.Method[Rng[A], Rng[A]] {
+case class SortExpr[A](override val _1: Expr.Of[Rng[A]], _2: (A, A) => Boolean) extends Expr.Method[Rng[A], Unit] {
     override protected def _default = SortImpl(_1.eval, _2)
 }
 
 
 object SortImpl {
-    def apply[A](r: Rng[A], f: (A, A) => Boolean): Rng[A] = {
+    def apply[A](r: Rng[A], f: (A, A) => Boolean): Unit = {
         AssertModels(r, Traversal.RandomAccess)
         detail.IntroSort(r, f)
-        r
     }
 }
