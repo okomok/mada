@@ -39,7 +39,7 @@ object FromLinkedListImpl {
 
 class LinkedListPointer(val base: ListIterator[A], val list: LinkedList) extends PointerFacade[A, LinkedListPointer[A]] {
     override protected def _read = { val tmp = base.next; base.previous; tmp }
-    override protected def _traversal = BidirectionalTraversal
+    override protected def _traversal = Bidirectional
     override protected def _equals(that: LinkedListPointer[A]) = base.nextIndex == that.base.nextIndex
     override protected def _increment = { base.next }
     override protected def _copy = new LinkedListPointer(list.listIterator(base.nextIndex), list) // linear
@@ -69,7 +69,7 @@ case class ToListIteratorContext[A] extends Context[Rng[A], ListIterator[A]] {
 }
 
 class RngListIterator[A](val base: Rng[A]) extends ListIterator[A] {
-    AssertModels(base, BidirectionalTraversal)
+    AssertModels(base, Traversal.Bidirectional)
 
     private val (begin, end) = base.toPair
     private val p = begin.copy

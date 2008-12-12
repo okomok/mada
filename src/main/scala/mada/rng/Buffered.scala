@@ -32,7 +32,7 @@ class BufferedPointer[A](val base: Pointer[A], map: HashMap[Long, A])
 
     override protected def _write(e: A) = { throw new NotWritablePointerError(this) }
 
-    override protected def _traversal = ForwardTraversal
+    override protected def _traversal = Forward
 
     override protected def _equals(that: BufferedPointer[A]) = {
         val thisInBuffer = inBuffer

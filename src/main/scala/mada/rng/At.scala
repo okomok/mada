@@ -21,7 +21,7 @@ case class AtExpr[A](override val _1: Expr.Of[Rng[A]], _2: Long) extends Expr.Me
 
 object AtImpl {
     def apply[A](r: Rng[A], i: Long): A = {
-        AssertModels(r, RandomAccessTraversal)
+        AssertModels(r, Traversal.RandomAccess)
         Assert("out of Rng", 0 <= i)
         Assert("out of Rng", i < r./.distance./)
         *(r.begin + i)

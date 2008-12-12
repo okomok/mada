@@ -15,13 +15,13 @@ class FilterTest {
     def testTrivial {
         val expected = Array(18,14,17,19,13,23,12,15,11)
         val actual = from(example1).filter(_ >= 10).eval
-        assertFalse(actual models RandomAccessTraversal)
+        assertFalse(actual models Traversal.RandomAccess)
         detail.TestBidirectionalReadWrite(expected, actual)
     }
 
     def testSinglePass {
         val expected = Array(18,14,17,19,13,23,12,15,11)
-        detail.TestSinglePassReadOnly(expected, from(example1).asRngBy(SinglePassTraversal).filter(_ >= 10).eval)
+        detail.TestSinglePassReadOnly(expected, from(example1).asRngBy(Traversal.SinglePass).filter(_ >= 10).eval)
     }
 
     def testFusion {

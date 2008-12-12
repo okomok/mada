@@ -36,7 +36,7 @@ object FromStreamImpl {
 
 class StreamPointer[A](var base: Stream[A]) extends PointerFacade[A, StreamPointer[A]] {
     override protected def _read = base.head
-    override protected def _traversal = ForwardTraversal
+    override protected def _traversal = Forward
     override protected def _equals(that: StreamPointer[A]) = base eq that.base
     override protected def _increment = { val tl = base.tail; base = if (tl.isEmpty) null else tl }
     override protected def _copy = new StreamPointer[A](base)

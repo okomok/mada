@@ -25,8 +25,8 @@ case class EqualsExpr[A1, A2](override val _1: Expr.Of[Rng[A1]], _2: Expr.Of[Rng
 object EqualsImpl {
     def apply[A1, A2](r1: Rng[A1], r2: Rng[A2], f: (A1, A2) => Boolean): Boolean = {
         r1.traversal upper r2.traversal match {
-            case _: RandomAccessTraversal => inRandomAccess(r1, r2, f)
-            case _: SinglePassTraversal => inSinglePass(r1, r2, f)
+            case _: Traversal.RandomAccess => inRandomAccess(r1, r2, f)
+            case _: Traversal.SinglePass => inSinglePass(r1, r2, f)
         }
     }
 

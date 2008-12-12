@@ -15,7 +15,7 @@ object TestEmpty {
         assertEquals(p, q)
         assertEquals(q, p)
 
-        if (r models ForwardTraversal) {
+        if (r models Traversal.Forward) {
             val (p1, q1) = (p.copy, q.copy)
 
             assertNotSame(p1, p)

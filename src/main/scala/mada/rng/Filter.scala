@@ -21,14 +21,14 @@ case class FilterExpr[A](override val _1: Expr.Of[Rng[A]], _2: A => Boolean) ext
 object FilterImpl {
     def apply[A](r: Rng[A], f: A => Boolean): Rng[A] = {
         val (p, q) = r.toPair
-        new FilterPointer(p, q, f) <=< new FilterPointer(q.copyIn(BidirectionalTraversal), q, f)
+        new FilterPointer(p, q, f) <=< new FilterPointer(q.copyIn(Traversal.Bidirectional), q, f)
     }
 }
 
 class FilterPointer[A](override protected val _base: Pointer[A], val end: Pointer[A], val predicate: A => Boolean)
         extends PointerAdapter[A, A, FilterPointer[A]] {
     satisfy
-    override protected def _traversal = base.traversal upper BidirectionalTraversal
+    override protected def _traversal = base.traversal upper Bidirectional
     override protected def _increment = { base.pre_++; satisfy }
     override protected def _copy = new FilterPointer(base.copy, end, predicate)
     override protected def _decrement = { while (!predicate(*(base.pre_--))) { } }

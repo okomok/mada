@@ -22,7 +22,7 @@ class StepTest {
 
     def testSinglePass {
         val expected = Array(0,17,13,23,15)
-        val actual = from(example1).asRngBy(SinglePassTraversal).step(3).eval
+        val actual = from(example1).asRngBy(Traversal.SinglePass).step(3).eval
         detail.TestSinglePassReadOnly(expected, actual)
     }
 

@@ -23,8 +23,8 @@ case class DistanceExpr[A](override val _1: Expr.Of[Rng[A]]) extends Expr.Method
 object DistanceImpl {
     def apply[A](r: Rng[A]): Long = {
         r.traversal match {
-            case _: RandomAccessTraversal => r./.size./
-            case _: SinglePassTraversal => r./.outdirect.foldLeft(0L, { (b: Long, a: Pointer[A]) => b + 1 })./
+            case _: Traversal.RandomAccess => r./.size./
+            case _: Traversal.SinglePass => r./.outdirect.foldLeft(0L, { (b: Long, a: Pointer[A]) => b + 1 })./
         }
     }
 }

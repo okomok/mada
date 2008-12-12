@@ -18,7 +18,7 @@ case class PermutationExpr[A](override val _1: Expr.Of[Rng[A]], _2: Expr.Of[Rng[
 
 object PermutationImpl {
     def apply[A](elements: Rng[A], indices: Rng[Long]): Rng[A] = {
-        AssertModels(elements, RandomAccessTraversal)
+        AssertModels(elements, Traversal.RandomAccess)
         val (p, q) = indices.toPair
         val pe = elements.begin
         new PermutationPointer(p, pe) <=< new PermutationPointer(q, pe)

@@ -3,9 +3,9 @@ package mada.rng
 
 
 class RecursiveRng[A](val traversal: Traversal) extends Ref[Expr.Of[Rng[A]]](null) with Expr.ConstantOf[Rng[A]] {
-    Assert("RecursiveRng must be Forward", traversal <:< ForwardTraversal)
-    Assert("RecursiveRng can't be RandomAccess", traversal >:> BidirectionalTraversal)
-    def this() = this(ForwardTraversal)
+    Assert("RecursiveRng must be Forward", traversal <:< Traversal.Forward)
+    Assert("RecursiveRng can't be RandomAccess", traversal >:> Traversal.Bidirectional)
+    def this() = this(Traversal.Forward)
     override protected def _of = RecursiveImpl(deref, traversal)
 }
 

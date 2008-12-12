@@ -24,4 +24,9 @@ trait PointerFacade[A, P] extends Pointer[A] with PointerPre_* {
         _compatible(p)
         _difference(p)
     }
+
+    protected final def SinglePass = Traversal.SinglePass
+    protected final def Forward = Traversal.Forward
+    protected final def Bidirectional = Traversal.Bidirectional
+    protected final def RandomAccess = Traversal.RandomAccess
 }

@@ -16,6 +16,6 @@ class DistanceTest {
     }
 
     def testSinglePass {
-        assertEquals(from(example1).asRngBy(SinglePassTraversal).distance.eval, 15L)
+        assertEquals(from(example1).asRngBy(Traversal.SinglePass).distance.eval, 15L)
     }
 }

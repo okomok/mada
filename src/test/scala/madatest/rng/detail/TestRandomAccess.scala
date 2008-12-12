@@ -10,7 +10,7 @@ import junit.framework.Assert._
 
 object TestRandomAccessReadWrite {
     def apply[A <% Ordered[A]](expected: Array[A], actual: Rng[A]): Unit = {
-        assertEquals(RandomAccessTraversal, actual.traversal)
+        assertEquals(Traversal.RandomAccess, actual.traversal)
         impl(expected, actual)
     }
 
@@ -26,12 +26,12 @@ object TestRandomAccessReadWrite {
 
 object TestRandomAccessReadOnly {
     def apply[A](expected: Array[A], actual: Rng[A]): Unit = {
-        assertEquals(RandomAccessTraversal, actual.traversal)
+        assertEquals(Traversal.RandomAccess, actual.traversal)
         impl(expected, actual)
     }
 
     def impl[A](expected: Array[A], actual: Rng[A]): Unit = {
-        AssertModels(actual, RandomAccessTraversal)
+        AssertModels(actual, Traversal.RandomAccess)
 
         TestBidirectionalReadOnly.impl(expected, actual)
         TestRandomAccessReadablePointer(actual.begin, expected.length, expected)

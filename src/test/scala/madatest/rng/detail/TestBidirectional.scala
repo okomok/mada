@@ -16,7 +16,7 @@ object NDebugReverse {
 
 object TestBidirectionalReadWrite {
     def apply[A <% Ordered[A]](expected: Array[A], actual: Rng[A]): Unit = {
-        assertEquals(BidirectionalTraversal, actual.traversal)
+        assertEquals(Traversal.Bidirectional, actual.traversal)
         impl(expected, actual)
     }
 
@@ -32,12 +32,12 @@ object TestBidirectionalReadWrite {
 
 object TestBidirectionalReadOnly {
     def apply[A](expected: Array[A], actual: Rng[A]): Unit = {
-        assertEquals(BidirectionalTraversal, actual.traversal)
+        assertEquals(Traversal.Bidirectional, actual.traversal)
         impl(expected, actual)
     }
 
     def impl[A](expected: Array[A], actual: Rng[A]): Unit = {
-        AssertModels(actual, BidirectionalTraversal)
+        AssertModels(actual, Traversal.Bidirectional)
 
         TestForwardReadOnly.impl(expected, actual)
         TestBidirectionalReadablePointer(actual.begin, expected(0), expected(1))

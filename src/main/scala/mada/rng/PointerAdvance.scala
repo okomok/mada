@@ -23,14 +23,14 @@ object PointerAdvanceImpl {
     def apply[A](p: Pointer[A], dd : Long): Pointer[A] = {
         var d = dd
         p.traversal match {
-            case _: RandomAccessTraversal => p += d
-            case _: BidirectionalTraversal => {
+            case _: Traversal.RandomAccess => p += d
+            case _: Traversal.Bidirectional => {
                 if (d >= 0)
                     while (d != 0) { ++(p); d -= 1 }
                 else
                     while (d != 0) { --(p); d += 1 }
             }
-            case _: SinglePassTraversal => while (d != 0) { ++(p); d -= 1 }
+            case _: Traversal.SinglePass => while (d != 0) { ++(p); d -= 1 }
         }
         p
     }

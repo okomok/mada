@@ -23,7 +23,7 @@ case class MismatchExpr[A1, A2](override val _1: Expr.Of[Rng[A1]], _2: Expr.Of[P
 object MismatchImpl {
     def apply[A1, A2](r1: Rng[A1], _p2: Pointer[A2], f: (A1, A2) => Boolean): (Pointer[A1], Pointer[A2]) = {
         val (p1, q1) = r1.toPair
-        val p2 = _p2.copyIn(ForwardTraversal)
+        val p2 = _p2.copyIn(Traversal.Forward)
 
         while (p1 != q1 && f(*(p1), *(p2))) {
             ++(p1); ++(p2)

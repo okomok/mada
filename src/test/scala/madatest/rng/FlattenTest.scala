@@ -17,8 +17,8 @@ class FlattenTest {
         val r2 = from(Array(19, 8,13)).eval
         val r3 = from(Array(6, 4,23, 0,12,15)).eval
         val r4 = from(Array(11, 4)).eval
-        val actual = from(Array[Rng[Int]](r1, r2, r3, r4)).flatten(RandomAccessTraversal).eval
-        assertEquals(BidirectionalTraversal, actual.traversal)
+        val actual = from(Array[Rng[Int]](r1, r2, r3, r4)).flatten(Traversal.RandomAccess).eval
+        assertEquals(Traversal.Bidirectional, actual.traversal)
         detail.TestBidirectionalReadWrite(example1, actual)
     }
 
@@ -28,8 +28,8 @@ class FlattenTest {
         val r2 = from(Array(19, 8,13)).eval
         val r3 = from(Array(6, 4,23, 0,12,15)).eval
         val r4 = from(Array(11, 4)).eval
-        val actual = from(Array[Rng[Int]](re, r1, re, re, re, r2, r3, re, r4, re)).flatten(RandomAccessTraversal).eval
-        assertEquals(BidirectionalTraversal, actual.traversal)
+        val actual = from(Array[Rng[Int]](re, r1, re, re, re, r2, r3, re, r4, re)).flatten(Traversal.RandomAccess).eval
+        assertEquals(Traversal.Bidirectional, actual.traversal)
         detail.TestBidirectionalReadWrite(example1, actual)
     }
 
@@ -39,7 +39,7 @@ class FlattenTest {
         val r3 = from(Array(6, 4,23, 0,12,15)).eval
         val r4 = from(Array(11, 4)).eval
         val actual = from(Array[Rng[Int]](r1, r2, r3, r4)).flatten.eval
-        assertEquals(SinglePassTraversal, actual.traversal)
+        assertEquals(Traversal.SinglePass, actual.traversal)
         detail.TestSinglePassReadOnly(example1, actual)
     }
 
@@ -53,8 +53,8 @@ class FlattenTest {
         val r2 = from(Array(19, 8,13)).eval
         val r3 = from(Array(6, 4,23, 0,12,15)).eval
         val r4 = from(Array(11, 4)).eval
-        val actual = from(Array[Rng[Int]](r1, r2, r3, r4)).asRngBy(SinglePassTraversal).flatten(RandomAccessTraversal).eval
-        assertEquals(SinglePassTraversal, actual.traversal)
+        val actual = from(Array[Rng[Int]](r1, r2, r3, r4)).asRngBy(Traversal.SinglePass).flatten(Traversal.RandomAccess).eval
+        assertEquals(Traversal.SinglePass, actual.traversal)
         detail.TestSinglePassReadOnly(example1, actual)
     }
 }

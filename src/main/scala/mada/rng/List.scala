@@ -34,7 +34,7 @@ object FromListImpl {
 
 class ListPointer[A](var base: List[A]) extends PointerFacade[A, ListPointer[A]] {
     override protected def _read = base.head
-    override protected def _traversal = ForwardTraversal
+    override protected def _traversal = Forward
     override protected def _equals(that: ListPointer[A]) = base eq that.base
     override protected def _increment = { base = base.tail }
     override protected def _copy = new ListPointer[A](base)

@@ -24,9 +24,9 @@ object FlattenImpl {
     def apply[A](r: Rng[Rng[A]], localTrv: Option[Traversal]): Rng[A] = {
         val (p, q) = r.toPair
         val st = p.traversal
-        val lt = localTrv.getOrElse(SinglePassTraversal)
-        val t = st upper BidirectionalTraversal upper lt // Oven was wrong.
-        new FlattenPointer(p, q, t) <=< new FlattenPointer(q.copyIn(BidirectionalTraversal), q, t)
+        val lt = localTrv.getOrElse(Traversal.SinglePass)
+        val t = st upper Traversal.Bidirectional upper lt // Oven was wrong.
+        new FlattenPointer(p, q, t) <=< new FlattenPointer(q.copyIn(Traversal.Bidirectional), q, t)
     }
 }
 

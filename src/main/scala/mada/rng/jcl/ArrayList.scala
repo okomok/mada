@@ -66,8 +66,8 @@ object ToArrayListImpl {
     }
 
     private def newArrayList[A](r: Rng[A]) = r.traversal match {
-        case _: RandomAccessTraversal => new java.util.ArrayList[A](r./.size./.toInt)
-        case _: SinglePassTraversal => new java.util.ArrayList[A]
+        case _: Traversal.RandomAccess => new java.util.ArrayList[A](r./.size./.toInt)
+        case _: Traversal.SinglePass => new java.util.ArrayList[A]
     }
 }
 

@@ -10,7 +10,7 @@ import junit.framework.Assert._
 
 object TestForwardReadWrite {
     def apply[A <% Ordered[A]](expected: Array[A], actual: Rng[A]): Unit = {
-        assertEquals(ForwardTraversal, actual.traversal)
+        assertEquals(Traversal.Forward, actual.traversal)
         impl(expected, actual)
     }
 
@@ -26,12 +26,12 @@ object TestForwardReadWrite {
 
 object TestForwardReadOnly {
     def apply[A](expected: Array[A], actual: Rng[A]): Unit = {
-        assertEquals(ForwardTraversal, actual.traversal)
+        assertEquals(Traversal.Forward, actual.traversal)
         impl(expected, actual)
     }
 
     def impl[A](expected: Array[A], actual: Rng[A]) {
-        AssertModels(actual, ForwardTraversal)
+        AssertModels(actual, Traversal.Forward)
         assertTrue("testing rng is too small", expected.length >= 2)
 
         TestSinglePassReadOnly.impl(expected, actual)

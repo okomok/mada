@@ -13,7 +13,7 @@ import detail.Example._
 
 class BufferedTest {
     def testTrivial {
-        detail.TestForwardReadOnly(example1, from(example1).asRngBy(SinglePassTraversal).buffered.eval)
+        detail.TestForwardReadOnly(example1, from(example1).asRngBy(Traversal.SinglePass).buffered.eval)
     }
 
     def testTrivial2 {
@@ -21,7 +21,7 @@ class BufferedTest {
     }
 
     def testEmpty {
-        detail.TestEmpty(from(empty1).asRngBy(SinglePassTraversal).buffered.eval)
+        detail.TestEmpty(from(empty1).asRngBy(Traversal.SinglePass).buffered.eval)
         detail.TestEmpty(from(empty1.elements).buffered.eval)
     }
 }

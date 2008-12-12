@@ -23,8 +23,8 @@ object AppendImpl {
     def apply[A](rL: Rng[A], rR: Rng[A]): Rng[A] = {
         val (pL, qL) = rL.toPair
         val (pR, qR) = rR.toPair
-        new AppendPointer(pL, qL, pR, pR.copyIn(ForwardTraversal)) <=<
-            new AppendPointer(qL.copyIn(ForwardTraversal), qL, pR, qR)
+        new AppendPointer(pL, qL, pR, pR.copyIn(Traversal.Forward)) <=<
+            new AppendPointer(qL.copyIn(Traversal.Forward), qL, pR, qR)
     }
 }
 

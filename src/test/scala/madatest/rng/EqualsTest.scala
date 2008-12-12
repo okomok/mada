@@ -15,7 +15,7 @@ class EqualsTest {
         assertEquals(from(2, 5).eval, from(2, 5).eval)
         assertEquals(from(2L, 5L).eval, from(2L, 5L).eval)
         AssertNotEquals(from(2, 6).eval, from(2, 5).eval)
-        assertEquals(from(2, 5).asRngBy(SinglePassTraversal).eval, from(2, 5).eval)
+        assertEquals(from(2, 5).asRngBy(Traversal.SinglePass).eval, from(2, 5).eval)
     }
 
     trait To1

@@ -25,7 +25,7 @@ object StepWithImpl {
 class StepWithPointer[A](override protected val _base: Pointer[A], val end: Pointer[A], function: Rng[A] => Pointer[A])
         extends PointerAdapter[A, A, StepWithPointer[A]] {
     override protected def _write(e: A) = { throw new NotWritablePointerError(this) }
-    override protected def _traversal = base.traversal upper ForwardTraversal
+    override protected def _traversal = base.traversal upper Forward
     override protected def _increment = { baseRef := function(base <=< end) }
     override protected def _copy = new StepWithPointer(base.copy, end, function)
     override def toString = new StringBuilder().append("StepWithPointer of ").append(base).toString

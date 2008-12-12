@@ -9,7 +9,7 @@ import mada.rng.Pointer._
 
 object SelectionSort {
     def apply[A](r: Rng[A], f: (A, A) => Boolean): Unit = {
-        AssertModels(r, ForwardTraversal)
+        AssertModels(r, Traversal.Forward)
 
         val (p, q) = r.toPair
 

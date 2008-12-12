@@ -20,7 +20,7 @@ case class SortExpr[A](override val _1: Expr.Of[Rng[A]], _2: (A, A) => Boolean) 
 
 object SortImpl {
     def apply[A](r: Rng[A], f: (A, A) => Boolean): Rng[A] = {
-        AssertModels(r, RandomAccessTraversal)
+        AssertModels(r, Traversal.RandomAccess)
         detail.IntroSort(r, f)
         r
     }

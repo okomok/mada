@@ -77,8 +77,8 @@ trait Rng[A] {
     final def toPair = (begin, end)
 
 // for-comprehension
-    final def map[B](f: A => B) = /.asRngBy(SinglePassTraversal).map(f)./
-    final def flatMap[B](f: A => Rng[B]) = /.asRngBy(SinglePassTraversal).map(f).flatten./
-    final def filter(p: A => Boolean) = /.asRngBy(SinglePassTraversal).filter(p)./
-    final def foreach(f: A => Unit) = /.asRngBy(SinglePassTraversal).foreach(f)./
+    final def map[B](f: A => B) = /.asRngBy(Traversal.SinglePass).map(f)./
+    final def flatMap[B](f: A => Rng[B]) = /.asRngBy(Traversal.SinglePass).map(f).flatten./
+    final def filter(p: A => Boolean) = /.asRngBy(Traversal.SinglePass).filter(p)./
+    final def foreach(f: A => Unit) = /.asRngBy(Traversal.SinglePass).foreach(f)./
 }

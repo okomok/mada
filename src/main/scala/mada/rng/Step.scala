@@ -26,8 +26,8 @@ object StepFunction {
         Assert("zero step isn't allowed", d > 0)
         val (p, q) = r.toPair
         p.traversal match {
-            case _: RandomAccessTraversal => p += Math.min(q - p, d)
-            case _: SinglePassTraversal => {
+            case _: Traversal.RandomAccess => p += Math.min(q - p, d)
+            case _: Traversal.SinglePass => {
                 var dd = d
                 do {
                     ++(p)

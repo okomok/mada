@@ -28,7 +28,7 @@ object TakeImpl {
 class TakePointer[A](override protected val _base: Pointer[A], val end: Pointer[A], var count: Long)
         extends PointerAdapter[A, A, TakePointer[A]] {
     taken
-    override protected def _traversal = base.traversal upper ForwardTraversal
+    override protected def _traversal = base.traversal upper Forward
     override protected def _increment = { base.pre_++; count -= 1; taken }
     override protected def _copy = new TakePointer(base.copy, end, count)
     override def toString = new StringBuilder().append("TakePointer of ").append(base).toString

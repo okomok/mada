@@ -18,18 +18,18 @@ class InitTest {
     }
 
     def testForward {
-        val actual = from(Array(0,18,14,17,19, 8,13, 6, 4,23, 0,12,15,11, 4,99)).asRngBy(ForwardTraversal).init.eval
+        val actual = from(Array(0,18,14,17,19, 8,13, 6, 4,23, 0,12,15,11, 4,99)).asRngBy(Traversal.Forward).init.eval
         detail.TestForwardReadWrite(example1, actual)
     }
 
     def testSinglePass {
-        val actual = from(Array(0,18,14,17,19, 8,13, 6, 4,23, 0,12,15,11, 4,99)).asRngBy(SinglePassTraversal).init.eval
+        val actual = from(Array(0,18,14,17,19, 8,13, 6, 4,23, 0,12,15,11, 4,99)).asRngBy(Traversal.SinglePass).init.eval
         detail.TestSinglePassReadOnly(example1, actual)
     }
 
     def testEmpty {
         detail.TestEmpty(from(single(99)).init.eval)
-        detail.TestEmpty(from(single(99)).asRngBy(ForwardTraversal).init.eval)
-        detail.TestEmpty(from(single(99)).asRngBy(SinglePassTraversal).init.eval)
+        detail.TestEmpty(from(single(99)).asRngBy(Traversal.Forward).init.eval)
+        detail.TestEmpty(from(single(99)).asRngBy(Traversal.SinglePass).init.eval)
     }
 }

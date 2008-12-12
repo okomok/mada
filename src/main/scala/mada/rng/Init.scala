@@ -23,9 +23,9 @@ object InitImpl {
         AssertNotEmpty(r)
         val (p, q) = r.toPair
         p.traversal match {
-            case _: BidirectionalTraversal => p <=< --(q)
-            case _: ForwardTraversal => new ForwardInitPointer(p, q) <=< new ForwardInitPointer(q, q)
-            case _: SinglePassTraversal => new SinglePassInitPointer(p, false) <=< new SinglePassInitPointer(q, true)
+            case _: Traversal.Bidirectional => p <=< --(q)
+            case _: Traversal.Forward => new ForwardInitPointer(p, q) <=< new ForwardInitPointer(q, q)
+            case _: Traversal.SinglePass => new SinglePassInitPointer(p, false) <=< new SinglePassInitPointer(q, true)
         }
     }
 }
@@ -33,7 +33,7 @@ object InitImpl {
 
 class ForwardInitPointer[A](override protected val _base: Pointer[A], end: Pointer[A])
         extends PointerAdapter[A, A, ForwardInitPointer[A]] {
-    Assert("doh", _base.traversal == ForwardTraversal)
+    Assert("doh", _base.traversal == Traversal.Forward)
     lookNext
     override protected def _increment = { base.pre_++; lookNext }
     override protected def _copy = new ForwardInitPointer(base.copy, end)
@@ -42,7 +42,7 @@ class ForwardInitPointer[A](override protected val _base: Pointer[A], end: Point
 
 class SinglePassInitPointer[A](override protected val _base: Pointer[A], fromEnd: Boolean)
         extends PointerAdapter[A, A, SinglePassInitPointer[A]] {
-    Assert("doh", _base.traversal == SinglePassTraversal)
+    Assert("doh", _base.traversal == Traversal.SinglePass)
     private var tmp: A = _
     if (!fromEnd) { _increment }
     override protected def _read = tmp

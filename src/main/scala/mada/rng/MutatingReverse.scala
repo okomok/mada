@@ -47,8 +47,8 @@ case class MutatingReverseExpr[A](override val _1: Expr.Of[Rng[A]]) extends Expr
 
 object MutatingReverseImpl {
     def apply[A](r: Rng[A]): Unit = r.traversal match {
-        case _: RandomAccessTraversal => inRandomAccess(r)
-        case _: BidirectionalTraversal => inBidirectional(r)
+        case _: Traversal.RandomAccess => inRandomAccess(r)
+        case _: Traversal.Bidirectional => inBidirectional(r)
     }
 
     def inRandomAccess[A](r: Rng[A]): Unit = {

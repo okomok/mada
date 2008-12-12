@@ -20,7 +20,7 @@ case class SpanExpr[A](override val _1: Expr.Of[Rng[A]], _2: A => Boolean) exten
 
 object SpanImpl {
     def apply[A](r: Rng[A], f: A => Boolean): (Rng[A], Rng[A]) = {
-        AssertModels(r, ForwardTraversal)
+        AssertModels(r, Traversal.Forward)
         val r2 = r./.dropWhile(f)./
         (r.begin <=< r2.end, r2)
     }

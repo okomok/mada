@@ -43,9 +43,9 @@ object LastImpl {
     def apply[A](r: Rng[A]): A = {
         AssertNotEmpty(r)
         r.traversal match {
-            case _: BidirectionalTraversal => *(--(r.end))
-            // case _: ForwardTraversal => inForward(r)
-            case _: SinglePassTraversal => inSinglePass(r)
+            case _: Traversal.Bidirectional => *(--(r.end))
+            // case _: Traversal.Forward => inForward(r)
+            case _: Traversal.SinglePass => inSinglePass(r)
         }
     }
 

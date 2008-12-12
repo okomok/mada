@@ -29,7 +29,7 @@ trait Pointer[A] {
     protected def _equals_(that: Pointer[A]): Boolean
     override final def equals(that: Any): Boolean = _equals_(that.asInstanceOf[Pointer[A]])
     final def pre_++ : Pointer[A] = {
-        Assert("must be SinglePass", traversal <:< SinglePassTraversal)
+        Assert("must be SinglePass", traversal <:< Traversal.SinglePass)
         _increment; this
     }
 
@@ -39,7 +39,7 @@ trait Pointer[A] {
         throw new Error()
     }
     final def copy: Pointer[A] = {
-        Assert("must be Forward", traversal <:< ForwardTraversal)
+        Assert("must be Forward", traversal <:< Traversal.Forward)
         _copy
     }
     final def ++ : Pointer[A] = { val tmp = copy; pre_++; tmp }
@@ -50,7 +50,7 @@ trait Pointer[A] {
         throw new Error()
     }
     final def pre_-- : Pointer[A] = {
-        Assert("must be Bidirectional", traversal <:< BidirectionalTraversal)
+        Assert("must be Bidirectional", traversal <:< Traversal.Bidirectional)
         _decrement; this
     }
     final def -- : Pointer[A] = { val tmp = copy; pre_--; tmp }
@@ -65,11 +65,11 @@ trait Pointer[A] {
         throw new Error()
     }
     final def - (that: Pointer[A]): Long = {
-        Assert("must be RandomAccess", traversal <:< RandomAccessTraversal)
+        Assert("must be RandomAccess", traversal <:< Traversal.RandomAccess)
         _difference_(that)
     }
     final def +=(d: Long): Pointer[A] = {
-        Assert("must be RandomAccess", traversal <:< RandomAccessTraversal)
+        Assert("must be RandomAccess", traversal <:< Traversal.RandomAccess)
         _offset(d); this
     }
     final def -=(d: Long): Pointer[A] = this += (-d)

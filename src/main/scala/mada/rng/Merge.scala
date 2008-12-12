@@ -27,7 +27,7 @@ object MergeImpl {
         val (p1, q1) = r1.toPair
         val (p2, q2) = r2.toPair
         new MergePointer(p1, q1, p2, q2, mr) <=<
-            new MergePointer(q1.copyIn(BidirectionalTraversal), q1, q2.copyIn(BidirectionalTraversal), q2, mr)
+            new MergePointer(q1.copyIn(Traversal.Bidirectional), q1, q2.copyIn(Traversal.Bidirectional), q2, mr)
     }
 }
 
@@ -53,7 +53,7 @@ class MergePointer[A](
     assign(routine.beforeYield(base <=< end1, base2 <=< end2))
 
     override protected def _read = routine.doYield(base <=< end1, base2 <=< end2)
-    override protected def _traversal = base.traversal upper ForwardTraversal upper base2.traversal
+    override protected def _traversal = base.traversal upper Forward upper base2.traversal
     override protected def _equals(that: MergePointer[A]) = base == that.base && base2 == that.base2
     override protected def _increment = {
         Assert("out of MergeRng", base != end1)

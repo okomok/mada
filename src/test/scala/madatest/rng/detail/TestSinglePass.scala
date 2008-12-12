@@ -11,12 +11,12 @@ import junit.framework.Assert._
 
 object TestSinglePassReadOnly {
     def apply[A](expected: Array[A], actual: Rng[A]): Unit = {
-        assertEquals(SinglePassTraversal, actual.traversal)
+        assertEquals(Traversal.SinglePass, actual.traversal)
         impl(expected, actual)
     }
 
     def impl[A](expected: Array[A], actual: Rng[A]): Unit = {
-        AssertModels(actual, SinglePassTraversal)
+        AssertModels(actual, Traversal.SinglePass)
 
         val (p, q) = actual.toPair
         assertEquals(p, p);
@@ -24,7 +24,7 @@ object TestSinglePassReadOnly {
         assertTrue(!(p == q) implies p != q)
         assertTrue(!(p != q) implies p == q)
 
-        if (actual models ForwardTraversal)
+        if (actual models Traversal.Forward)
             assertTrue(NetBeansSucks(from(expected).eval, p <=< q))
 //            assertEquals(from(expected).eval, p <=< q)
         else

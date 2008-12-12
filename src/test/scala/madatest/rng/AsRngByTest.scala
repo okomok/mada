@@ -11,23 +11,23 @@ import junit.framework.Assert._
 
 class AsRngByTest {
     def testTrivial {
-        val r = from(example1).asRngBy(ForwardTraversal).eval
-        assertEquals(ForwardTraversal, r.traversal)
+        val r = from(example1).asRngBy(Traversal.Forward).eval
+        assertEquals(Traversal.Forward, r.traversal)
     }
 
     def testNotrivial {
-        val r = from(example1).asRngBy(ForwardTraversal).asRngBy(SinglePassTraversal).eval
-        assertEquals(SinglePassTraversal, r.traversal)
+        val r = from(example1).asRngBy(Traversal.Forward).asRngBy(Traversal.SinglePass).eval
+        assertEquals(Traversal.SinglePass, r.traversal)
     }
 
     def testFusion {
-        val r = from(example1).asRngBy(ForwardTraversal).asRngBy(ForwardTraversal).asRngBy(ForwardTraversal).eval
-        assertEquals(ForwardTraversal, r.traversal)
+        val r = from(example1).asRngBy(Traversal.Forward).asRngBy(Traversal.Forward).asRngBy(Traversal.Forward).eval
+        assertEquals(Traversal.Forward, r.traversal)
     }
 
     def testFusion2 {
         val r = from(example1).eval
-        val rr = r.toExpr.asRngBy(RandomAccessTraversal).asRngBy(RandomAccessTraversal).asRngBy(RandomAccessTraversal).eval
+        val rr = r.toExpr.asRngBy(Traversal.RandomAccess).asRngBy(Traversal.RandomAccess).asRngBy(Traversal.RandomAccess).eval
         assertEquals(r, rr)
     }
 }
