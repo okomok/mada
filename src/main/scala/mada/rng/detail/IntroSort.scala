@@ -46,24 +46,25 @@ class IntroSortImpl[A](__comp: (A, A) => Boolean) {
 
     def apply(r: Rng[A]): Unit = {
         val (__first, __last) = r.toPair
+
         if (__first != __last) {
             loop(__first <=< __last, lg(__last - __first) * 2)
             finalInsertionSort(__first <=< __last)
         }
     }
 
+    // See: http://marc.info/?l=apache-stdcxx-dev&m=120120284610472&w=2
     private def loop(r: Rng[A], depth_limit: Long): Unit = {
         var (__first, __last) = r.toPair
         var __depth_limit = depth_limit
 
         while (__last - __first > __stl_threshold) {
-            if (__depth_limit == 0L) {
+            if (__depth_limit == 0) {
                 PartialSort(__first, __last, __last, __comp)
                 return
             }
-            __depth_limit += 1
-            val med = Median(*(__first), *(__first + (__last - __first)/2), *(__last - 1), __comp)
-            val __cut = UnguardedPartition(__first <=< __last, med, __comp)
+            val __cut = UnguardedPartition(__first <=< __last, Median(*(__first), *(__first + (__last - __first)/2), *(__last - 1), __comp), __comp)
+            __depth_limit /= 2
             loop(__cut <=< __last, __depth_limit)
             __last = __cut
         }

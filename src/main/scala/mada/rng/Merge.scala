@@ -15,9 +15,9 @@ object Merge extends Merge; trait Merge extends Predefs {
         def merge(_2: Rng[A]) = MergeExpr(_1, _2, new DefaultMergeRoutine(lt)).expr
     }
     class MadaRngMergeWith[A](_1: Expr.Of[Rng[A]]) {
-        def merge(_2: Rng[A], lt: (A, A) => Boolean) = MergeExpr(_1, _2, new DefaultMergeRoutine(lt)).expr
+        def mergeWith(_2: Rng[A], lt: (A, A) => Boolean) = MergeExpr(_1, _2, new DefaultMergeRoutine(lt)).expr
     }
-    implicit def toMadaRngMerge[A <% Ordered[A]](_1: Expr.Of[Rng[A]]): MadaRngMerge[A] = new MadaRngMerge[A](_1, (_: A) < (_: A))
+    implicit def toMadaRngMerge[A <% Ordered[A]](_1: Expr.Of[Rng[A]]): MadaRngMerge[A] = new MadaRngMerge[A](_1, _ < _)
     implicit def toMadaRngMergeWith[A](_1: Expr.Of[Rng[A]]): MadaRngMergeWith[A] = new MadaRngMergeWith[A](_1)
 }
 

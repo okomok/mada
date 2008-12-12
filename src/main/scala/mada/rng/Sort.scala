@@ -11,10 +11,14 @@ package mada.rng
 
 
 object Sort extends Sort; trait Sort extends Predefs {
-    class MadaRngSort[A](_1: Expr.Of[Rng[A]]) {
-        def sort(_2: (A, A) => Boolean) = SortExpr(_1, _2).expr
+    class MadaRngSort[A](_1: Expr.Of[Rng[A]], _2: (A, A) => Boolean) {
+        def sort = SortExpr(_1, _2).expr
     }
-    implicit def toMadaRngSort[A](_1: Expr.Of[Rng[A]]): MadaRngSort[A] = new MadaRngSort[A](_1)
+    implicit def toMadaRngSort[A <% Ordered[A]](_1: Expr.Of[Rng[A]]): MadaRngSort[A] = new MadaRngSort[A](_1, _ < _)
+    class MadaRngSortWith[A](_1: Expr.Of[Rng[A]]) {
+        def sortWith(_2: (A, A) => Boolean) = SortExpr(_1, _2).expr
+    }
+    implicit def toMadaRngSortWith[A](_1: Expr.Of[Rng[A]]): MadaRngSortWith[A] = new MadaRngSortWith[A](_1)
 }
 
 
