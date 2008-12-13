@@ -60,10 +60,16 @@ class IntroSortImpl[A](__comp: (A, A) => Boolean) {
 
         while (__last - __first > __stl_threshold) {
             if (__depth_limit == 0) {
+//                val start = java.lang.System.currentTimeMillis
                 PartialSort(__first, __last, __last, __comp)
+//                val elapsed = java.lang.System.currentTimeMillis - start
+//                if (elapsed != 0) { println("PartialSort: " + elapsed) }
                 return
             }
+//            val start = java.lang.System.currentTimeMillis
             val __cut = UnguardedPartition(__first <=< __last, Median(*(__first), *(__first + (__last - __first)/2), *(__last - 1), __comp), __comp)
+//            val elapsed = java.lang.System.currentTimeMillis - start
+//            if (elapsed != 0) { println("UnguardedPartition: " + elapsed) }
             __depth_limit /= 2
             loop(__cut <=< __last, __depth_limit)
             __last = __cut

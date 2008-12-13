@@ -39,15 +39,16 @@ import Pointer._
 object PartialSort {
     def apply[A](first: Pointer[A], middle: Pointer[A], last: Pointer[A], __comp: (A, A) => Boolean): Unit = {
         val (__first, __middle, __last) = (first.copy, middle.copy, last.copy)
+        val heap = new Heap(__comp)
 
-        Heap.make(__first <=< __middle, __comp)
+        heap.make(__first <=< __middle)
         val __i = __middle.copy
         while (__i < __last) {
             if (__comp(*(__i), *(__first))) {
-                new Heap(__comp).__pop(__first <=< __middle, __i, *(__i))
+                heap.__pop(__first <=< __middle, __i, *(__i))
             }
             ++(__i)
         }
-        Heap.sort(__first <=< __middle, __comp)
+        heap.sort(__first <=< __middle)
     }
 }

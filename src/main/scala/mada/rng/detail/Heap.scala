@@ -49,14 +49,14 @@ class Heap[A](__comp: (A, A) => Boolean) {
         var __holeIndex = holeIndex
 
         val __topIndex = __holeIndex;
-        var __secondChild = 2 * __holeIndex + 2;
+        var __secondChild = 2 * __holeIndex + 2
         while (__secondChild < __len) {
             if (__comp(*(__first + __secondChild), *(__first + (__secondChild - 1)))) {
                 __secondChild -= 1
             }
-            *(__first + __holeIndex) = *(__first + __secondChild);
-            __holeIndex = __secondChild;
-            __secondChild = 2 * (__secondChild + 1);
+            *(__first + __holeIndex) = *(__first + __secondChild)
+            __holeIndex = __secondChild
+            __secondChild = 2 * (__secondChild + 1)
         }
         if (__secondChild == __len) {
             *(__first + __holeIndex) = *(__first + (__secondChild - 1))
