@@ -38,16 +38,7 @@ import Pointer._
 
 
 object InsertionSort {
-    def apply[A](r: Rng[A], __comp: (A, A) => Boolean) = new InsertionSort(__comp).apply(r)
-}
-
-object UnguardedInsertionSort {
-    def apply[A](r: Rng[A], __comp: (A, A) => Boolean) = new InsertionSort(__comp).unguarded(r)
-}
-
-
-class InsertionSort[A](__comp: (A, A) => Boolean) {
-    def apply(r: Rng[A]): Unit = {
+    def apply[A](r: Rng[A], __comp: (A, A) => Boolean): Unit = {
         val (__first, __last) = r.toPair
 
         if (__first == __last) {
@@ -55,32 +46,39 @@ class InsertionSort[A](__comp: (A, A) => Boolean) {
         }
         val __i = __first + 1
         while (__i != __last) {
-            linearInsert(__first <=< __i, *(__i))
+            LinearInsert(__first <=< __i, *(__i), __comp)
             ++(__i)
         }
     }
+}
 
-    def unguarded(r: Rng[A]): Unit = {
-        val (__first, __last) = r.toPair
-
-        val __i = __first
-        while (__i != __last) {
-            unguardedLinearInsert(__i, *(__i))
-            ++(__i)
-        }
-    }
-
-    private def linearInsert(r: Rng[A], __val: A): Unit = {
+object LinearInsert {
+    def apply[A](r: Rng[A], __val: A, __comp: (A, A) => Boolean): Unit = {
         val (__first, __last) = r.toPair
         if (__comp(__val, *(__first))) {
             (__first <=< __last)./.copyBackwardTo(__last + 1)./
             *(__first) = __val
         } else {
-            unguardedLinearInsert(__last, __val)
+            UnguardedLinearInsert(__last, __val, __comp)
         }
     }
+}
 
-    private def unguardedLinearInsert(last: Pointer[A], __val: A): Unit = {
+
+object UnguardedInsertionSort {
+    def apply[A](r: Rng[A], __comp: (A, A) => Boolean): Unit = {
+        val (__first, __last) = r.toPair
+
+        val __i = __first
+        while (__i != __last) {
+            UnguardedLinearInsert(__i, *(__i), __comp)
+            ++(__i)
+        }
+    }
+}
+
+object UnguardedLinearInsert {
+    def apply[A](last: Pointer[A], __val: A, __comp: (A, A) => Boolean): Unit = {
         var __last = last.copy
         val __next = __last.copy
 

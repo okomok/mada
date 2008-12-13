@@ -36,37 +36,32 @@ package mada.rng.detail
 import Pointer._
 
 
-object Heap {
-    def make[A](r: Rng[A], __comp: (A, A) => Boolean) = new Heap(__comp).make(r)
-    def sort[A](r: Rng[A], __comp: (A, A) => Boolean) = new Heap(__comp).sort(r)
-}
-
-
-class Heap[A](__comp: (A, A) => Boolean) {
-// adjust
-    def adjust(first: Pointer[A], holeIndex: Long, __len: Long, __value: A): Unit = {
+object AdjustHeap {
+    def apply[A](first: Pointer[A], holeIndex: Long, __len: Long, __value: A, __comp: (A, A) => Boolean): Unit = {
         val __first = first.copy
         var __holeIndex = holeIndex
 
         val __topIndex = __holeIndex;
         var __secondChild = 2 * __holeIndex + 2
         while (__secondChild < __len) {
-            if (__comp(*(__first + __secondChild), *(__first + (__secondChild - 1)))) {
+            if (__comp(__first(__secondChild), __first(__secondChild - 1))) {
                 __secondChild -= 1
             }
-            *(__first + __holeIndex) = *(__first + __secondChild)
+            __first(__holeIndex) = __first(__secondChild)
             __holeIndex = __secondChild
             __secondChild = 2 * (__secondChild + 1)
         }
         if (__secondChild == __len) {
-            *(__first + __holeIndex) = *(__first + (__secondChild - 1))
+            __first(__holeIndex) = __first(__secondChild - 1)
             __holeIndex = __secondChild - 1
         }
-        __push(__first, __holeIndex, __topIndex, __value)
+        __PushHeap(__first, __holeIndex, __topIndex, __value, __comp)
     }
+}
 
-// make
-    def make(r: Rng[A]): Unit = {
+
+object MakeHeap {
+    def apply[A](r: Rng[A], __comp: (A, A) => Boolean): Unit = {
         val (__first, __last) = r.toPair
 
         if (__last - __first < 2) {
@@ -76,53 +71,65 @@ class Heap[A](__comp: (A, A) => Boolean) {
         var __parent = (__len - 2)/2
 
         while (true) {
-            adjust(__first, __parent, __len, *(__first + __parent))
+            AdjustHeap(__first, __parent, __len, __first(__parent), __comp)
             if (__parent == 0) {
                 return
             }
             __parent -= 1
         }
     }
+}
 
-// push
-    def push(r: Rng[A]): Unit = {
+
+object PushHeap {
+    def apply[A](r: Rng[A], __comp: (A, A) => Boolean): Unit = {
         val (__first, __last) = r.toPair
 
-        __push(__first, (__last - __first) - 1, 0, *(__last - 1))
+        __PushHeap(__first, (__last - __first) - 1, 0, __last(-1), __comp)
     }
+}
 
-    def __push(__first: Pointer[A], holeIndex: Long, __topIndex: Long, __value: A): Unit = {
+object __PushHeap {
+    def apply[A](__first: Pointer[A], holeIndex: Long, __topIndex: Long, __value: A, __comp: (A, A) => Boolean): Unit = {
         var __holeIndex = holeIndex
 
         var __parent = (__holeIndex - 1) / 2
-        while (__holeIndex > __topIndex && __comp(*(__first + __parent), __value)) {
-            *(__first + __holeIndex) = *(__first + __parent)
+        while (__holeIndex > __topIndex && __comp(__first(__parent), __value)) {
+            __first(__holeIndex) = __first(__parent)
             __holeIndex = __parent
             __parent = (__holeIndex - 1) / 2
         }
-        *(__first + __holeIndex) = __value
+        __first(__holeIndex) = __value
     }
+}
 
-// pop
-    def pop(r: Rng[A]): Unit = {
+
+object PopHeap {
+    def apply[A](r: Rng[A], __comp: (A, A) => Boolean): Unit = {
         val (__first, __last) = r.toPair
 
-        __pop(__first <=< __last - 1, __last - 1, *(__last - 1))
+        val last_minus_1 = --(__last)
+        __PopHeap(__first <=< last_minus_1, last_minus_1, *(last_minus_1), __comp)
     }
+}
 
-    def __pop(r: Rng[A], __result: Pointer[A], __value: A): Unit = {
+object __PopHeap {
+    def apply[A](r: Rng[A], __result: Pointer[A], __value: A, __comp: (A, A) => Boolean): Unit = {
         val (__first, __last) = r.toPair
 
         *(__result) = *(__first)
-        adjust(__first, 0, __last - __first, __value);
+        AdjustHeap(__first, 0, __last - __first, __value, __comp);
     }
+}
 
-// sort
-    def sort(r: Rng[A]): Unit = {
+
+object SortHeap {
+    def apply[A](r: Rng[A], __comp: (A, A) => Boolean): Unit = {
         val (__first, __last) = r.toPair
 
         while (__last - __first > 1) {
-            pop(__first <=< (__last.--))
+            PopHeap(__first <=< __last, __comp)
+            --(__last)
         }
     }
 }

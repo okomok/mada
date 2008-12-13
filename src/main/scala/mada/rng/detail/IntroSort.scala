@@ -67,7 +67,7 @@ class IntroSortImpl[A](__comp: (A, A) => Boolean) {
                 return
             }
 //            val start = java.lang.System.currentTimeMillis
-            val __cut = UnguardedPartition(__first <=< __last, Median(*(__first), *(__first + (__last - __first)/2), *(__last - 1), __comp), __comp)
+            val __cut = UnguardedPartition(__first <=< __last, Median(*(__first), __first((__last - __first)/2), __last(-1), __comp), __comp)
 //            val elapsed = java.lang.System.currentTimeMillis - start
 //            if (elapsed != 0) { println("UnguardedPartition: " + elapsed) }
             __depth_limit /= 2

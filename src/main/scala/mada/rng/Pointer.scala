@@ -84,8 +84,9 @@ trait Pointer[A] {
     final def > (that: Pointer[A]): Boolean = this - that > 0
     final def <= (that: Pointer[A]): Boolean = this - that <= 0
     final def >= (that: Pointer[A]): Boolean = this - that >= 0
-    final def apply(d: Long): A = (this + d).read
-    final def update(d: Long, e: A): Unit = { (this + d).write(e) }
+
+    def apply(d: Long): A = (this + d).read
+    def update(d: Long, e: A): Unit = { (this + d).write(e) }
 
 // debug
     protected def _invariant = { }

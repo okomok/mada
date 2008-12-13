@@ -34,6 +34,9 @@ class IndexAccessPointer[A](val indexAccess: IndexAccess[A], val startIndex: Lon
     }
     override protected def _copy = new IndexAccessPointer(indexAccess, *(base))
 
+    override def apply(d: Long): A = indexAccess._get(*(base) + d)
+    override def update(d: Long, e: A): Unit = indexAccess._set(*(base) + d, e)
+
     override def toString = new StringBuilder().append("IndexAccessPointer(").append(*(base)).append(") of ").append(indexAccess).toString
 }
 
