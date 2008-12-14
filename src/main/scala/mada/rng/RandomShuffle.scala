@@ -57,14 +57,14 @@ object RandomShuffleImpl {
         aux(p, 0, q - p, g)
     }
 
-    def aux[A](at: Pointer[A], __first: Long, __last: Long, g: Long => Long): Unit = {
+    def aux[A](* : Pointer[A], __first: Long, __last: Long, g: Long => Long): Unit = {
         if (__first == __last) {
             return
         }
 
         var __i = __first + 1
         while (__i != __last) {
-            detail.PointerSwap(at, __i, __first + g((__i - __first) + 1))
+            *.swap(__i, __first + g((__i - __first) + 1))
             __i += 1
         }
     }

@@ -98,6 +98,7 @@ trait Pointer[A] {
     final def advance(d: Long) = /.advance(d)./
     final def output: A => Pointer[A] = detail.PointerOutput(this, _)
     final def swap(that: Pointer[A]) = detail.PointerSwap(this, that)
+    final def swap(i: Long, j: Long) = detail.PointerSwap(this, i, j)
     final def <=<(that: Pointer[A]) = new detail.PointerRng(this, that).rng
     final def copyIn(t: Traversal): Pointer[A] = if (traversal <:< t) copy else this
     final def pointer = this

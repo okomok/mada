@@ -48,7 +48,7 @@ object UnguardedPartition {
             if (!(__first < __last)) {
                 return __first
             }
-            PointerSwap(*, __first, __last)
+            *.swap(__first, __last)
             __first += 1
         }
 
