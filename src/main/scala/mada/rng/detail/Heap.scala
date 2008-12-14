@@ -44,15 +44,15 @@ object AdjustHeap {
         val __topIndex = __holeIndex;
         var __secondChild = 2 * __holeIndex + 2
         while (__secondChild < __len) {
-            if (__comp(__first(__secondChild), __first(__secondChild - 1))) {
+            if (__comp(*(__first, + __secondChild), *(__first, + __secondChild - 1))) {
                 __secondChild -= 1
             }
-            __first(__holeIndex) = __first(__secondChild)
+            *((__first, + __holeIndex)) = *(__first, + __secondChild)
             __holeIndex = __secondChild
             __secondChild = 2 * (__secondChild + 1)
         }
         if (__secondChild == __len) {
-            __first(__holeIndex) = __first(__secondChild - 1)
+            *((__first, + __holeIndex)) = *(__first, + (__secondChild - 1))
             __holeIndex = __secondChild - 1
         }
         __PushHeap(__first, __holeIndex, __topIndex, __value, __comp)
@@ -71,7 +71,7 @@ object MakeHeap {
         var __parent = (__len - 2)/2
 
         while (true) {
-            AdjustHeap(__first, __parent, __len, __first(__parent), __comp)
+            AdjustHeap(__first, __parent, __len, *((__first, + __parent)), __comp)
             if (__parent == 0) {
                 return
             }
@@ -85,7 +85,7 @@ object PushHeap {
     def apply[A](r: Rng[A], __comp: (A, A) => Boolean): Unit = {
         val (__first, __last) = r.toPair
 
-        __PushHeap(__first, (__last - __first) - 1, 0, __last(-1), __comp)
+        __PushHeap(__first, (__last - __first) - 1, 0, *(__last, - 1), __comp)
     }
 }
 
@@ -94,8 +94,8 @@ object __PushHeap {
         var __holeIndex = holeIndex
 
         var __parent = (__holeIndex - 1) / 2
-        while (__holeIndex > __topIndex && __comp(__first(__parent), __value)) {
-            __first(__holeIndex) = __first(__parent)
+        while (__holeIndex > __topIndex && __comp(*(__first, + __parent), __value)) {
+            *((__first, + __holeIndex)) = *(__first, + __parent)
             __holeIndex = __parent
             __parent = (__holeIndex - 1) / 2
         }

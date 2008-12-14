@@ -29,5 +29,5 @@ class UnfoldRightPointer[From, To](var state: Option[(To, From)], val function: 
     override protected def _read = state.get._1
     override protected def _traversal = SinglePass
     override protected def _equals(that: UnfoldRightPointer[From, To]) = state.isEmpty == that.state.isEmpty
-    override protected def _increment = { state = function(state.get._2) }
+    override protected def _increment = state = function(state.get._2)
 }

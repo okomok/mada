@@ -36,6 +36,6 @@ object IndirectImpl {
 class IndirectPointer[A](override protected val _base: Pointer[Pointer[A]])
         extends PointerAdapter[Pointer[A], A, IndirectPointer[A]] {
     override protected def _read = *(*(base))
-    override protected def _write(e: A) = { *(*(base)) = e }
+    override protected def _write(e: A) = *(*(base)) = e
     override protected def _copy = new IndirectPointer[A](base.copy)
 }

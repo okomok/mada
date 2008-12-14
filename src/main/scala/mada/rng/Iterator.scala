@@ -49,7 +49,7 @@ class IteratorPointer[A](val base: Iterator[A], private var e: Option[A])
     override protected def _read = e.get
     override protected def _traversal = SinglePass
     override protected def _equals(that: IteratorPointer[A]) = e.isEmpty == that.e.isEmpty
-    override protected def _increment = { e = if (base.hasNext) Some(base.next) else None }
+    override protected def _increment = e = if (base.hasNext) Some(base.next) else None
 }
 
 

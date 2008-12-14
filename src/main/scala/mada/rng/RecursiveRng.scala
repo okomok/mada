@@ -26,7 +26,7 @@ class RecursivePointer[A](rngExpr: Expr.Of[Rng[A]], private val fromEnd: Boolean
         extends PointerFacade[A, RecursivePointer[A]] {
     def base = { optionBaseInit; optionBase.get }
     override protected def _read = *(base)
-    override protected def _write(e: A) = { *(base) = e }
+    override protected def _write(e: A) = *(base) = e
 
     override protected def _equals(that: RecursivePointer[A]) = {
         if (fromEnd != that.fromEnd) {

@@ -35,7 +35,7 @@ class BufferedPointer[A](val base: Pointer[A], map: HashMap[Long, A])
 
     override protected def _read = buffering
 
-    override protected def _write(e: A) = { throw new NotWritablePointerError(this) }
+    override protected def _write(e: A) = throw new NotWritablePointerError(this)
 
     override protected def _traversal = Forward
 

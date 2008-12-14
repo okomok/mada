@@ -36,8 +36,8 @@ class FilterPointer[A](override protected val _base: Pointer[A], val end: Pointe
     override protected def _traversal = base.traversal upper Bidirectional
     override protected def _increment = { base.pre_++; satisfy }
     override protected def _copy = new FilterPointer(base.copy, end, predicate)
-    override protected def _decrement = { while (!predicate(*(base.pre_--))) { } }
-    private def satisfy = { while (base != end && !predicate(*(base))) { base.pre_++ } }
+    override protected def _decrement = while (!predicate(*(base.pre_--))) { }
+    private def satisfy = while (base != end && !predicate(*(base))) { base.pre_++ }
 
     override def toString = new StringBuilder().append("FilterPointer of ").append(base).toString
 }

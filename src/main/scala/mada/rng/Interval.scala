@@ -76,9 +76,9 @@ class LongIntervalPointer(n: Long) extends IntervalPointer[Long](n) {
 abstract class IntervalPointer[N](var base: Long) extends PointerFacade[N, IntervalPointer[N]] {
     override protected def _traversal = RandomAccess
     override protected def _equals(that: IntervalPointer[N]) = base == that.base
-    override protected def _increment = { base += 1 }
-    override protected def _decrement = { base -= 1 }
-    override protected def _offset(d: Long) = { base += d }
+    override protected def _increment = base += 1
+    override protected def _decrement = base -= 1
+    override protected def _offset(d: Long) = base += d
     override protected def _difference(that: IntervalPointer[N]) = base - that.base
     override def hashCode = long2Long(base).hashCode
 }

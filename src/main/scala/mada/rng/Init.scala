@@ -42,7 +42,7 @@ class ForwardInitPointer[A](override protected val _base: Pointer[A], end: Point
     lookNext
     override protected def _increment = { base.pre_++; lookNext }
     override protected def _copy = new ForwardInitPointer(base.copy, end)
-    private def lookNext = { if (base.copy.pre_++ == end) { baseRef := end } }
+    private def lookNext = if (base.copy.pre_++ == end) { baseRef := end }
 }
 
 class SinglePassInitPointer[A](override protected val _base: Pointer[A], fromEnd: Boolean)
@@ -51,6 +51,6 @@ class SinglePassInitPointer[A](override protected val _base: Pointer[A], fromEnd
     private var tmp: A = _
     if (!fromEnd) { _increment }
     override protected def _read = tmp
-    override protected def _write(e: A) = { throw new NotWritablePointerError(this) }
+    override protected def _write(e: A) = throw new NotWritablePointerError(this)
     override protected def _increment = { tmp = *(base); base.pre_++ }
 }

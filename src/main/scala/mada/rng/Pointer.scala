@@ -17,8 +17,8 @@ object Pointer extends Namespace
 
 trait Pointer[A] {
 // element-access
-    protected def _read: A = { throw new NotReadablePointerError(this) }
-    protected def _write(e: A): Unit = { throw new NotWritablePointerError(this) }
+    protected def _read: A = throw new NotReadablePointerError(this)
+    protected def _write(e: A): Unit = throw new NotWritablePointerError(this)
     final def read: A = _read
     final def write(e: A): Pointer[A] = { _write(e); this }
 
@@ -85,15 +85,17 @@ trait Pointer[A] {
     final def <= (that: Pointer[A]): Boolean = this - that <= 0
     final def >= (that: Pointer[A]): Boolean = this - that >= 0
 
-    def apply(d: Long): A = (this + d).read
-    def update(d: Long, e: A): Unit = { (this + d).write(e) }
+    protected def _offsetRead(d: Long): A = (this + d).read
+    protected def _offsetWrite(d: Long, e: A): Unit = (this + d).write(e)
+    final def apply(d: Long): A = _offsetRead(d)
+    final def update(d: Long, e: A): Unit = _offsetWrite(d, e)
 
 // debug
     protected def _invariant = { }
 
 // utilities
     final def models(t: Traversal) = traversal <:< t
-    final def advance(d: Long) = toExpr.ptr_advance(d).eval
+    final def advance(d: Long) = /.ptr_advance(d)./
     final def output: A => Pointer[A] = detail.PointerOutput(this, _)
     final def swap(that: Pointer[A]) = detail.PointerSwap(this, that)
     final def <=<(that: Pointer[A]) = new detail.PointerRng(this, that).rng
@@ -114,7 +116,10 @@ object PointerPreOps extends PointerPreOps; trait PointerPreOps extends Namespac
 object PointerPre_* extends PointerPre_*; trait PointerPre_* {
     object * {
         def apply[A](p: Pointer[A]): A = p.read
-        def update[A](p: Pointer[A], e: A) = { p.write(e) }
+        def update[A](p: Pointer[A], e: A): Unit = p.write(e)
+
+        def apply[A](p_d: (Pointer[A], Long)): A = p_d._1(p_d._2)
+        def update[A](p_d: (Pointer[A], Long), e: A): Unit = p_d._1(p_d._2) = e
     }
 }
 
