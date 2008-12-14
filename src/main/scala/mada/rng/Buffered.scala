@@ -30,7 +30,7 @@ object BufferedImpl {
 }
 
 class BufferedPointer[A](val base: Pointer[A], map: HashMap[Long, A])
-        extends PointerFacade[A, BufferedPointer[A]] with NotWritablePointer[A] {
+        extends PointerFacade[A, BufferedPointer[A]] {
     private var baseId = 0L
 
     override protected def _read = buffering

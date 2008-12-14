@@ -42,5 +42,7 @@ class ReversePointer[A](override protected val _base: Pointer[A])
     override protected def _copy = new ReversePointer(base.copy)
     override protected def _decrement = base.pre_++
     override protected def _offset(d: Long) = base -= d
+    override protected def _offsetRead(d: Long) = *(base, - d - 1)
+    override protected def _offsetWrite(d: Long, e: A) = *(base, - d - 1) = e
     override protected def _difference(that: ReversePointer[A]) = that.base - base
 }

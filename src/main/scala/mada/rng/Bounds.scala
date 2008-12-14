@@ -51,12 +51,25 @@ class BoundsPointer[A](override protected val _base: Pointer[A], val begin: Poin
     }
 
     override protected def _offset(d: Long) = {
+        checkOffset(d)
+        base += d
+    }
+
+    override protected def _offsetRead(d: Long) = {
+        checkOffset(d)
+        *(base, + d)
+    }
+
+    override protected def _offsetWrite(d: Long, e: A) = {
+        checkOffset(d)
+        *(base + d) = e
+    }
+
+    private def checkOffset(d: Long): Unit = {
         if (d >= 0 && d > end - base)
             throw new ErrorOutOfBounds(this, begin <=< end, "end-pointer to advance")
         else if (d < 0 && -d > base - begin)
             throw new ErrorOutOfBounds(this, begin <=< end, "begin-pointer to advance")
-
-        base += d
     }
 }
 

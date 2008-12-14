@@ -22,3 +22,9 @@ trait PointerAdapter[From, To, P <: PointerAdapter[From, To, P]]
     override protected def _difference(that: P) = base - that.base
     override def hashCode = base.hashCode
 }
+
+
+trait NotWritablePointer[A] extends Pointer[A] {
+    override protected def _write(e: A) = throw new NotWritablePointerError(this)
+    override protected def _offsetWrite(d: Long, e: A) = throw new NotWritablePointerError(this)
+}

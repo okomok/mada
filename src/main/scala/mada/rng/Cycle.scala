@@ -57,10 +57,13 @@ class CyclePointer[A](override protected val _base: Pointer[A], var count: Long,
 
     override protected def _offset(d: Long) = {
         val (quo, rem) = positiveRemainderDivision((base - begin) + d, end - begin)
-        Assert("doh", 0 <= rem)
-        Assert("doh", rem < end - begin)
         baseRef := (begin + rem)
         count += quo
+    }
+
+    override protected def _offsetRead(d: Long) = {
+        val rem = positiveRemainder((base - begin) + d, end - begin)
+        *(begin, + rem)
     }
 
     override protected def _difference(that: CyclePointer[A]) = {
@@ -76,6 +79,17 @@ class CyclePointer[A](override protected val _base: Pointer[A], var count: Long,
             (quo - 1, rem + b)
         } else {
             (quo, rem)
+        }
+    }
+
+    // avoid any heap allocation.
+    private def positiveRemainder(a: Long, b: Long): Long = {
+        Assert("doh", b >= 0)
+        val rem = a % b
+        if (rem < 0) {
+            rem + b
+        } else {
+            rem
         }
     }
 }

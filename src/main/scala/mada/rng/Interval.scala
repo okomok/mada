@@ -56,6 +56,7 @@ case class FromIntIntervalExpr(override val _1: Expr.Of[IntInterval]) extends Ex
 class IntIntervalPointer(n: Int) extends IntervalPointer[Int](n) {
     override protected def _read = base.toInt
     override protected def _copy = new IntIntervalPointer(base.toInt)
+    override protected def _offsetRead(d: Long) = (base + d).toInt
 }
 
 
@@ -68,6 +69,7 @@ case class FromLongIntervalExpr(override val _1: Expr.Of[LongInterval]) extends 
 class LongIntervalPointer(n: Long) extends IntervalPointer[Long](n) {
     override protected def _read = base
     override protected def _copy = new LongIntervalPointer(base)
+    override protected def _offsetRead(d: Long) = base + d
 }
 
 
