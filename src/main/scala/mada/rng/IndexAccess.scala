@@ -35,7 +35,13 @@ class IndexAccessPointer[A](val indexAccess: IndexAccess[A], val startIndex: Lon
     override protected def _copy = new IndexAccessPointer(indexAccess, *(base))
 
     override def _offsetRead(d: Long): A = indexAccess._get(*(base) + d)
-    override def _offsetWrite(d: Long, e: A): Unit = indexAccess._set(*(base) + d, e)
+    override def _offsetWrite(d: Long, e: A): Unit = {
+        try {
+            indexAccess._set(*(base) + d, e)
+        } catch {
+            case NotWritableIndexAccessError => throw new NotWritablePointerError(this)
+        }
+    }
 
     override def toString = new StringBuilder().append("IndexAccessPointer(").append(*(base)).append(") of ").append(indexAccess).toString
 }

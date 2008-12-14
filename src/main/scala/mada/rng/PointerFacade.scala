@@ -35,3 +35,9 @@ trait PointerFacade[A, P] extends Pointer[A] with PointerPre_* {
     protected final def Bidirectional = Traversal.Bidirectional
     protected final def RandomAccess = Traversal.RandomAccess
 }
+
+
+trait NotWritablePointer[A] extends Pointer[A] {
+    override protected def _write(e: A) = throw new NotWritablePointerError(this)
+    override protected def _offsetWrite(d: Long, e: A) = throw new NotWritablePointerError(this)
+}

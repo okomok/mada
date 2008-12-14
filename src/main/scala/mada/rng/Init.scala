@@ -46,11 +46,10 @@ class ForwardInitPointer[A](override protected val _base: Pointer[A], end: Point
 }
 
 class SinglePassInitPointer[A](override protected val _base: Pointer[A], fromEnd: Boolean)
-        extends PointerAdapter[A, A, SinglePassInitPointer[A]] {
+        extends PointerAdapter[A, A, SinglePassInitPointer[A]] with NotWritablePointer[A] {
     Assert("doh", _base.traversal == Traversal.SinglePass)
     private var tmp: A = _
     if (!fromEnd) { _increment }
     override protected def _read = tmp
-    override protected def _write(e: A) = throw new NotWritablePointerError(this)
     override protected def _increment = { tmp = *(base); base.pre_++ }
 }

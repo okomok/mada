@@ -39,9 +39,8 @@ object OutdirectImpl {
 }
 
 class OutdirectPointer[A](override protected val _base: Pointer[A])
-        extends PointerAdapter[A, Pointer[A], OutdirectPointer[A]] {
+        extends PointerAdapter[A, Pointer[A], OutdirectPointer[A]] with NotWritablePointer[Pointer[A]] {
     override protected def _read = base
-    override protected def _write(e: Pointer[A]) = throw new NotWritablePointerError(this)
     override protected def _copy = new OutdirectPointer(base.copy)
 }
 

@@ -36,7 +36,7 @@ object LazyImpl {
 }
 
 class LazyPointer[A](override val _base: Pointer[A], map: HashMap[Pointer[A], A])
-        extends PointerAdapter[A, A, LazyPointer[A]] {
+        extends PointerAdapter[A, A, LazyPointer[A]] with NotWritablePointer[A] {
     override protected def _read = {
         val v = map.get(base)
         if (v.isEmpty) {
@@ -47,7 +47,6 @@ class LazyPointer[A](override val _base: Pointer[A], map: HashMap[Pointer[A], A]
             v.get
         }
     }
-    override protected def _write(e: A) = throw new NotWritablePointerError(this)
     override protected def _copy = new LazyPointer(base.copy, map)
 
     override def toString = new StringBuilder().append("LazyPointer of ").append(base).toString

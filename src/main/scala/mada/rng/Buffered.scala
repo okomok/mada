@@ -30,12 +30,10 @@ object BufferedImpl {
 }
 
 class BufferedPointer[A](val base: Pointer[A], map: HashMap[Long, A])
-        extends PointerFacade[A, BufferedPointer[A]] {
+        extends PointerFacade[A, BufferedPointer[A]] with NotWritablePointer[A] {
     private var baseId = 0L
 
     override protected def _read = buffering
-
-    override protected def _write(e: A) = throw new NotWritablePointerError(this)
 
     override protected def _traversal = Forward
 

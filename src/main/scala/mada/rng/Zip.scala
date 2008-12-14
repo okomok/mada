@@ -29,7 +29,7 @@ object ZipImpl {
 }
 
 class ZipPointer[A1, A2](val base1: Pointer[A1], val base2: Pointer[A2])
-        extends PointerFacade[(A1, A2), ZipPointer[A1, A2]] {
+        extends PointerFacade[(A1, A2), ZipPointer[A1, A2]] with NotWritablePointer[(A1, A2)]{
     override protected def _read = (*(base1), *(base2))
     override protected def _traversal = base1.traversal upper base2.traversal
     override protected def _equals(that: ZipPointer[A1, A2]) = base1 == that.base1 && base2 == that.base2

@@ -7,7 +7,7 @@
 package mada.rng
 
 
-import PointerAdvance._
+import Advance._
 
 
 object Pointer extends Namespace
@@ -95,7 +95,7 @@ trait Pointer[A] {
 
 // utilities
     final def models(t: Traversal) = traversal <:< t
-    final def advance(d: Long) = /.ptr_advance(d)./
+    final def advance(d: Long) = /.advance(d)./
     final def output: A => Pointer[A] = detail.PointerOutput(this, _)
     final def swap(that: Pointer[A]) = detail.PointerSwap(this, that)
     final def <=<(that: Pointer[A]) = new detail.PointerRng(this, that).rng
