@@ -40,29 +40,60 @@ class AppendPointer[A](
     private var rightBase: Pointer[A])
         extends PointerAdapter[A, A, AppendPointer[A]] {
     override protected def _read = if (inLeft) *(base) else *(rightBase)
+
     override protected def _write(e: A) = if (inLeft) { *(base) = e } else { *(rightBase) = e }
+
     override protected def _traversal = leftEnd.traversal upper rightBegin.traversal
+
     override protected def _equals(that: AppendPointer[A]) = (base == that.base) && (rightBase == that.rightBase)
-    override protected def _increment = AppendPointerIncrement(base, rightBase, leftEnd)
+
+    override protected def _increment = {
+        if (inLeft) {
+            base.pre_++
+        } else {
+            rightBase.pre_++
+        }
+    }
+
     override protected def _copy = new AppendPointer(base.copy, leftEnd, rightBegin, rightBase.copy)
 
     override protected def _decrement = {
-        val (pL, qL) = (new ReversePointer(rightBase.copy), new ReversePointer(rightBegin.copy))
-        val pR = new ReversePointer(base)
-        AppendPointerIncrement(pL, pR, qL)
-        baseRef := pR.base
-        rightBase = pL.base
+        if (!inLeft) {
+            if (rightBase == rightBegin) {
+                baseRef := leftEnd.copy.pre_--
+            } else {
+                rightBase.pre_--
+            }
+        } else {
+            base.pre_--
+        }
     }
 
     override protected def _offset(d: Long) = {
         if (d >= 0) {
-            AppendPointerOffset(baseRef, rightBase, d, leftEnd)
+            if (inLeft) {
+                val over = d - (leftEnd - base)
+                if (over < 0) {
+                    base += d
+                } else {
+                    baseRef := leftEnd
+                    rightBase += over
+                }
+            } else {
+                rightBase += d
+            }
         } else {
-            val (pL, qL) = (new Ref(new ReversePointer(rightBase.copy).pointer), new ReversePointer(rightBegin.copy))
-            val pR = new ReversePointer(base)
-            AppendPointerOffset(pL, pR, -d, qL)
-            baseRef := pR.base
-            rightBase = pL.deref.asInstanceOf[ReversePointer[A]].base
+            if (!inLeft) {
+                val over = d - (rightBegin - rightBase)
+                if (over >= 0) {
+                    rightBase += d
+                } else {
+                    rightBase = rightBegin
+                    base += over
+                }
+            } else {
+                base += d
+            }
         }
     }
 
@@ -73,7 +104,7 @@ class AppendPointer[A](
                 if (over < 0) {
                     *(base, + d)
                 } else {
-                    *(rightBegin, + over)
+                    *(rightBase, + over)
                 }
             } else {
                 *(rightBase, + d)
@@ -84,7 +115,7 @@ class AppendPointer[A](
                 if (over >= 0) {
                     *(rightBase, + d)
                 } else {
-                    *(leftEnd, + over)
+                    *(base, + over)
                 }
             } else {
                 *(base, + d)
@@ -99,7 +130,7 @@ class AppendPointer[A](
                 if (over < 0) {
                     *(base, + d) = e
                 } else {
-                    *(rightBegin, + over) = e
+                    *(rightBase, + over) = e
                 }
             } else {
                 *(rightBase, + d) = e
@@ -110,7 +141,7 @@ class AppendPointer[A](
                 if (over >= 0) {
                     *(rightBase, + d) = e
                 } else {
-                    *(leftEnd, + over) = e
+                    *(base, + over) = e
                 }
             } else {
                 *(base, + d) = e
@@ -132,35 +163,4 @@ class AppendPointer[A](
     }
 
     private def inLeft = base != leftEnd
-}
-
-
-object AppendPointerIncrement {
-    def apply[A](pL: Pointer[A], pR: Pointer[A], qL: Pointer[A]): Unit = {
-        if (pL != qL) {
-            ++(pL)
-        } else {
-            ++(pR)
-        }
-    }
-}
-
-object AppendPointerOffset {
-    def apply[A](pL: Ref[Pointer[A]], pR: Pointer[A], d: Long, qL: Pointer[A]): Unit = {
-        Assert("impossible", d >= 0)
-
-        if (pL.deref != qL) {
-            val dL = qL - pL.deref
-            if (d > dL) {
-                pL := qL
-                pR += (d - dL) // paren is needed in scala 2.7.1
-            }
-            else {
-                pL.deref += d
-            }
-        }
-        else {
-            pR += d
-        }
-    }
 }
