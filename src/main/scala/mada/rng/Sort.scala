@@ -7,15 +7,6 @@
 package mada.rng
 
 
-import CopyTo._
-import From._
-import jcl.ArrayListToRng._
-import jcl.ToArrayList._
-
-
-// Note: implicit call of force seems not good, because force is a heavy method.
-
-
 object Sort extends Sort; trait Sort extends Predefs {
     class MadaRngSort[A](_1: Expr.Of[Rng[A]], _2: (A, A) => Boolean) {
         def sort = SortExpr(_1, _2).expr
@@ -36,7 +27,12 @@ case class SortExpr[A](override val _1: Expr.Of[Rng[A]], _2: (A, A) => Boolean) 
 object SortImpl {
     def apply[A](r: Rng[A], f: (A, A) => Boolean): Unit = {
         AssertModels(r, Traversal.RandomAccess)
-//        detail.IntroSort(r, f)
+        detail.IntroSort(r, f)
+        /*
+        import jcl.ArrayListToRng._
+        import CopyTo._
+        import From._
+        import jcl.ToArrayList._
         val a = r./.jcl_toArrayList./
         java.util.Collections.sort(a,
             new java.util.Comparator[A] {
@@ -46,5 +42,6 @@ object SortImpl {
                 }
             })
         from(a).copyTo(r.begin).eval
+        */
     }
 }
