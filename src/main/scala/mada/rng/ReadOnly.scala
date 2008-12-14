@@ -33,4 +33,5 @@ object ReadOnlyImpl {
 class ReadOnlyPointer[A](override protected val _base: Pointer[A])
         extends PointerAdapter[A, A, ReadOnlyPointer[A]] with NotWritablePointer[A] {
     override protected def _copy = new ReadOnlyPointer(base.copy)
+    override protected def _offsetRead(d: Long) = *(base, + d)
 }

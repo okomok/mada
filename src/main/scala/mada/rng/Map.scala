@@ -33,5 +33,6 @@ class MapPointer[From, To](override protected val _base: Pointer[From], val func
         extends PointerAdapter[From, To, MapPointer[From, To]] with NotWritablePointer[To] {
     override protected def _read = function(*(base))
     override protected def _copy = new MapPointer(base.copy, function)
+    override protected def _offsetRead(d: Long) = function(*(base, + d))
     override def toString = new StringBuilder().append("MapPointer of ").append(base).toString
 }

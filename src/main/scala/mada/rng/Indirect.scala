@@ -38,4 +38,6 @@ class IndirectPointer[A](override protected val _base: Pointer[Pointer[A]])
     override protected def _read = *(*(base))
     override protected def _write(e: A) = *(*(base)) = e
     override protected def _copy = new IndirectPointer[A](base.copy)
+    override protected def _offsetRead(d: Long) = *(*(base), + d)
+    override protected def _offsetWrite(d: Long, e: A) = *(*(base), + d) = e
 }
