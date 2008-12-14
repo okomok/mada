@@ -47,12 +47,12 @@ object AdjustHeap {
             if (__comp(*(__first, + __secondChild), *(__first, + __secondChild - 1))) {
                 __secondChild -= 1
             }
-            *((__first, + __holeIndex)) = *(__first, + __secondChild)
+            *(__first, + __holeIndex) = *(__first, + __secondChild)
             __holeIndex = __secondChild
             __secondChild = 2 * (__secondChild + 1)
         }
         if (__secondChild == __len) {
-            *((__first, + __holeIndex)) = *(__first, + (__secondChild - 1))
+            *(__first, + __holeIndex) = *(__first, + (__secondChild - 1))
             __holeIndex = __secondChild - 1
         }
         __PushHeap(__first, __holeIndex, __topIndex, __value, __comp)
@@ -95,7 +95,7 @@ object __PushHeap {
 
         var __parent = (__holeIndex - 1) / 2
         while (__holeIndex > __topIndex && __comp(*(__first, + __parent), __value)) {
-            *((__first, + __holeIndex)) = *(__first, + __parent)
+            *(__first, + __holeIndex) = *(__first, + __parent)
             __holeIndex = __parent
             __parent = (__holeIndex - 1) / 2
         }

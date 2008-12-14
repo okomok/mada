@@ -118,8 +118,8 @@ object PointerPre_* extends PointerPre_*; trait PointerPre_* {
         def apply[A](p: Pointer[A]): A = p.read
         def update[A](p: Pointer[A], e: A): Unit = p.write(e)
 
-        def apply[A](p_d: (Pointer[A], Long)): A = p_d._1(p_d._2)
-        def update[A](p_d: (Pointer[A], Long), e: A): Unit = p_d._1(p_d._2) = e
+        def apply[A](p: Pointer[A], d: Long): A = p(d)
+        def update[A](p: Pointer[A], d: Long, e: A): Unit = p(d) = e
     }
 }
 
