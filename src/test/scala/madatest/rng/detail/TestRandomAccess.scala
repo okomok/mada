@@ -10,6 +10,7 @@ package madatest.rng.detail
 import mada.rng.From._
 import mada.rng.Rng
 import mada.rng._
+import mada.rng.RandomShuffle._
 import junit.framework.Assert._
 
 
@@ -22,8 +23,14 @@ object TestRandomAccessReadWrite {
     def impl[A <% Ordered[A]](expected: Array[A], actual: Rng[A]): Unit = {
         TestRandomAccessReadOnly.impl(expected, actual)
 
+        // test offset
         CombSort(actual)
         val ex = CopyArray(expected); CombSort(from(ex).eval)
+        assertEquals(from(ex).eval, actual)
+
+        // test offsetRead/Write
+        actual./.randomShuffle./
+        mada.rng.detail.IntroSort[A](actual, _ < _)
         assertEquals(from(ex).eval, actual)
     }
 }
