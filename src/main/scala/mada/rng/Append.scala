@@ -76,7 +76,7 @@ class AppendPointer[A](
                 if (over < 0) {
                     base += d
                 } else {
-                    baseRef := leftEnd
+                    baseRef := leftEnd.copy
                     rightBase += over
                 }
             } else {
@@ -88,7 +88,7 @@ class AppendPointer[A](
                 if (over >= 0) {
                     rightBase += d
                 } else {
-                    rightBase = rightBegin
+                    rightBase = rightBegin.copy
                     base += over
                 }
             } else {
