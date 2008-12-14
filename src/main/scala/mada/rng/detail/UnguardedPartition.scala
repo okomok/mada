@@ -37,22 +37,22 @@ import Pointer._
 
 
 object UnguardedPartition {
-    def apply[A](r: Rng[A], __pivot: A, __comp: (A, A) => Boolean): Pointer[A] = {
-        val (__first, __last) = r.toPair
+    def apply[A](at: Pointer[A], first: Long, last: Long, __pivot: A, __comp: (A, A) => Boolean): Long = {
+        var __first = first; var __last = last
 
         while (true) {
-            while (__comp(*(__first), __pivot)) {
-                ++(__first)
+            while (__comp(*(at, __first), __pivot)) {
+                __first += 1
             }
-            --(__last)
-            while (__comp(__pivot, *(__last))) {
-                --(__last)
+            __last -= 1
+            while (__comp(__pivot, *(at, __last))) {
+                __last -= 1
             }
             if (!(__first < __last)) {
                 return __first
             }
-            __first swap __last
-            ++(__first)
+            PointerSwap(at, __first, __last)
+            __first += 1
         }
 
         throw new Error("unreachable")

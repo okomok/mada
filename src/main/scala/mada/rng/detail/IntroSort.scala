@@ -40,42 +40,35 @@ object IntroSort {
     def apply[A](r: Rng[A], __comp: (A, A) => Boolean): Unit = {
         val (__first, __last) = r.toPair
 
-        if (__first != __last) {
-            loop(__first <=< __last, lg(__last - __first) * 2, __comp)
-            finalInsertionSort(__first <=< __last, __comp)
+        val len = __last - __first
+        if (len != 0) {
+            loop(__first, 0, len, lg(len) * 2, __comp)
+            finalInsertionSort(__first, 0, len, __comp)
         }
     }
 
-    def loop[A](r: Rng[A], depth_limit: Long, __comp: (A, A) => Boolean): Unit = {
-        var (__first, __last) = r.toPair
+    def loop[A](at: Pointer[A], __first: Long, last: Long, depth_limit: Long, __comp: (A, A) => Boolean): Unit = {
+        var __last = last
         var __depth_limit = depth_limit
 
         while (__last - __first > __stl_threshold) {
             if (__depth_limit == 0) {
-//                val start = java.lang.System.currentTimeMillis
-                PartialSort(__first, __last, __last, __comp)
-//                val elapsed = java.lang.System.currentTimeMillis - start
-//                if (elapsed != 0) { println("PartialSort: " + elapsed) }
+                PartialSort(at, __first, __last, __last, __comp)
                 return
             }
-//            val start = java.lang.System.currentTimeMillis
-            val __cut = UnguardedPartition(__first <=< __last, Median(*(__first), *(__first, + (__last - __first)/2), *(__last, - 1), __comp), __comp)
-//            val elapsed = java.lang.System.currentTimeMillis - start
-//            if (elapsed != 0) { println("UnguardedPartition: " + elapsed) }
+            val __cut = UnguardedPartition(at, __first, __last, Median(*(at, __first), *(at, __first + (__last - __first)/2), *(at, __last - 1), __comp), __comp)
             __depth_limit /= 2 // See: http://marc.info/?l=apache-stdcxx-dev&m=120120284610472&w=2
-            loop(__cut <=< __last, __depth_limit, __comp)
+            loop(at, __cut, __last, __depth_limit, __comp)
             __last = __cut
         }
     }
 
-    def finalInsertionSort[A](r: Rng[A], __comp: (A, A) => Boolean): Unit = {
-        val (__first, __last) = r.toPair
-
+    def finalInsertionSort[A](at: Pointer[A], __first: Long, __last: Long, __comp: (A, A) => Boolean): Unit = {
         if (__last - __first > __stl_threshold) {
-            InsertionSort(__first <=< __first + __stl_threshold, __comp)
-            InsertionSort.unguarded(__first + __stl_threshold <=< __last, __comp)
+            InsertionSort(at, __first, __first + __stl_threshold, __comp)
+            InsertionSort.unguarded(at, __first + __stl_threshold, __last, __comp)
         } else {
-            InsertionSort(__first <=< __last, __comp)
+            InsertionSort(at, __first, __last, __comp)
         }
     }
 

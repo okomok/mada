@@ -37,31 +37,28 @@ import Pointer._
 
 
 object Heap {
-    def adjust[A](first: Pointer[A], holeIndex: Long, __len: Long, __value: A, __comp: (A, A) => Boolean): Unit = {
-        val __first = first.copy
+    def adjust[A](at: Pointer[A], __first: Long, holeIndex: Long, __len: Long, __value: A, __comp: (A, A) => Boolean): Unit = {
         var __holeIndex = holeIndex
 
         val __topIndex = __holeIndex;
         var __secondChild = 2 * __holeIndex + 2
         while (__secondChild < __len) {
-            if (__comp(*(__first, + __secondChild), *(__first, + __secondChild - 1))) {
+            if (__comp(*(at, __first + __secondChild), *(at, __first + __secondChild - 1))) {
                 __secondChild -= 1
             }
-            *(__first, + __holeIndex) = *(__first, + __secondChild)
+            *(at, __first + __holeIndex) = *(at, __first + __secondChild)
             __holeIndex = __secondChild
             __secondChild = 2 * (__secondChild + 1)
         }
         if (__secondChild == __len) {
-            *(__first, + __holeIndex) = *(__first, + (__secondChild - 1))
+            *(at, __first + __holeIndex) = *(at, __first + (__secondChild - 1))
             __holeIndex = __secondChild - 1
         }
-        __push(__first, __holeIndex, __topIndex, __value, __comp)
+        __push(at, __first, __holeIndex, __topIndex, __value, __comp)
     }
 
 
-    def make[A](r: Rng[A], __comp: (A, A) => Boolean): Unit = {
-        val (__first, __last) = r.toPair
-
+    def make[A](at: Pointer[A], __first: Long, __last: Long, __comp: (A, A) => Boolean): Unit = {
         if (__last - __first < 2) {
             return
         }
@@ -69,7 +66,7 @@ object Heap {
         var __parent = (__len - 2)/2
 
         while (true) {
-            adjust(__first, __parent, __len, *(__first, + __parent), __comp)
+            adjust(at, __first, __parent, __len, *(at, __first + __parent), __comp)
             if (__parent == 0) {
                 return
             }
@@ -78,46 +75,39 @@ object Heap {
     }
 
 
-    def push[A](r: Rng[A], __comp: (A, A) => Boolean): Unit = {
-        val (__first, __last) = r.toPair
-
-        __push(__first, (__last - __first) - 1, 0, *(__last, - 1), __comp)
+    def push[A](at: Pointer[A], __first: Long, __last: Long, __comp: (A, A) => Boolean): Unit = {
+        __push(at, __first, (__last - __first) - 1, 0, *(at, __last - 1), __comp)
     }
 
-    def __push[A](__first: Pointer[A], holeIndex: Long, __topIndex: Long, __value: A, __comp: (A, A) => Boolean): Unit = {
+    def __push[A](at: Pointer[A], __first: Long, holeIndex: Long, __topIndex: Long, __value: A, __comp: (A, A) => Boolean): Unit = {
         var __holeIndex = holeIndex
 
         var __parent = (__holeIndex - 1) / 2
-        while (__holeIndex > __topIndex && __comp(*(__first, + __parent), __value)) {
-            *(__first, + __holeIndex) = *(__first, + __parent)
+        while (__holeIndex > __topIndex && __comp(*(at, __first + __parent), __value)) {
+            *(at, __first + __holeIndex) = *(at, __first + __parent)
             __holeIndex = __parent
             __parent = (__holeIndex - 1) / 2
         }
-        __first(__holeIndex) = __value
+        *(at, __first + __holeIndex) = __value
     }
 
 
-    def pop[A](r: Rng[A], __comp: (A, A) => Boolean): Unit = {
-        val (__first, __last) = r.toPair
-
-        val last_minus_1 = --(__last)
-        __pop(__first <=< last_minus_1, last_minus_1, *(last_minus_1), __comp)
+    def pop[A](at: Pointer[A], __first: Long, __last: Long, __comp: (A, A) => Boolean): Unit = {
+        __pop(at, __first, __last - 1, __last - 1, *(at, __last - 1), __comp)
     }
 
-    def __pop[A](r: Rng[A], __result: Pointer[A], __value: A, __comp: (A, A) => Boolean): Unit = {
-        val (__first, __last) = r.toPair
-
-        *(__result) = *(__first)
-        adjust(__first, 0, __last - __first, __value, __comp);
+    def __pop[A](at: Pointer[A], __first: Long, __last: Long, __result: Long, __value: A, __comp: (A, A) => Boolean): Unit = {
+        *(at, __result) = *(at, __first)
+        adjust(at, __first, 0, __last - __first, __value, __comp);
     }
 
 
-    def sort[A](r: Rng[A], __comp: (A, A) => Boolean): Unit = {
-        val (__first, __last) = r.toPair
+    def sort[A](at: Pointer[A], __first: Long, last: Long, __comp: (A, A) => Boolean): Unit = {
+        var __last = last
 
         while (__last - __first > 1) {
-            pop(__first <=< __last, __comp)
-            --(__last)
+            pop(at, __first, __last, __comp)
+            __last -= 1
         }
     }
 }
