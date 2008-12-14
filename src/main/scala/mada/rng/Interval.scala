@@ -80,5 +80,5 @@ abstract class IntervalPointer[N](var base: Long) extends PointerFacade[N, Inter
     override protected def _decrement = base -= 1
     override protected def _offset(d: Long) = base += d
     override protected def _difference(that: IntervalPointer[N]) = base - that.base
-    override def hashCode = long2Long(base).hashCode
+    override def hashCode = detail.LongHashCode(base)
 }

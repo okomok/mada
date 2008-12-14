@@ -29,6 +29,6 @@ object AtImpl {
         AssertModels(r, Traversal.RandomAccess)
         Assert("out of Rng", 0 <= i)
         Assert("out of Rng", i < r./.distance./)
-        *(r.begin + i)
+        *(r.begin, + i)
     }
 }
