@@ -33,25 +33,22 @@
 package mada.rng.detail
 
 
-import Pointer._
-
-
 object UnguardedPartition {
-    def apply[A](at: Pointer[A], first: Long, last: Long, __pivot: A, __comp: (A, A) => Boolean): Long = {
+    def apply[A](* : Pointer[A], first: Long, last: Long, __pivot: A, __comp: (A, A) => Boolean): Long = {
         var __first = first; var __last = last
 
         while (true) {
-            while (__comp(*(at, __first), __pivot)) {
+            while (__comp(*(__first), __pivot)) {
                 __first += 1
             }
             __last -= 1
-            while (__comp(__pivot, *(at, __last))) {
+            while (__comp(__pivot, *(__last))) {
                 __last -= 1
             }
             if (!(__first < __last)) {
                 return __first
             }
-            PointerSwap(at, __first, __last)
+            PointerSwap(*, __first, __last)
             __first += 1
         }
 

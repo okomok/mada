@@ -17,9 +17,9 @@ object PointerSwap {
         *(q) = tmp
     }
 
-    def apply[A](at: Pointer[A], i: Long, j: Long) = {
-        val tmp = *(at, i)
-        *(at, i) = *(at, j)
-        *(at, j) = tmp
+    def apply[A](* : Pointer[A], i: Long, j: Long) = {
+        val tmp = *(i)
+        *(i) = *(j)
+        *(j) = tmp
     }
 }

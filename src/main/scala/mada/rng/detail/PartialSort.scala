@@ -33,19 +33,16 @@
 package mada.rng.detail
 
 
-import Pointer._
-
-
 object PartialSort {
-    def apply[A](at: Pointer[A], __first: Long, __middle: Long, __last: Long, __comp: (A, A) => Boolean): Unit = {
-        Heap.make(at, __first, __middle, __comp)
+    def apply[A](* : Pointer[A], __first: Long, __middle: Long, __last: Long, __comp: (A, A) => Boolean): Unit = {
+        Heap.make(*, __first, __middle, __comp)
         var __i = __middle
         while (__i < __last) {
-            if (__comp(*(at, __i), *(at, __first))) {
-                Heap.__pop(at, __first, __middle, __i, *(at, __i), __comp)
+            if (__comp(*(__i), *(__first))) {
+                Heap.__pop(*, __first, __middle, __i, *(__i), __comp)
             }
             __i += 1
         }
-        Heap.sort(at, __first, __middle, __comp)
+        Heap.sort(*, __first, __middle, __comp)
     }
 }
