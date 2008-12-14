@@ -53,7 +53,6 @@ class IntroSortImpl[A](__comp: (A, A) => Boolean) {
         }
     }
 
-    // See: http://marc.info/?l=apache-stdcxx-dev&m=120120284610472&w=2
     private def loop(r: Rng[A], depth_limit: Long): Unit = {
         var (__first, __last) = r.toPair
         var __depth_limit = depth_limit
@@ -70,7 +69,7 @@ class IntroSortImpl[A](__comp: (A, A) => Boolean) {
             val __cut = UnguardedPartition(__first <=< __last, Median(*(__first), *(__first, + (__last - __first)/2), *(__last, - 1), __comp), __comp)
 //            val elapsed = java.lang.System.currentTimeMillis - start
 //            if (elapsed != 0) { println("UnguardedPartition: " + elapsed) }
-            __depth_limit /= 2
+            __depth_limit /= 2 // See: http://marc.info/?l=apache-stdcxx-dev&m=120120284610472&w=2
             loop(__cut <=< __last, __depth_limit)
             __last = __cut
         }

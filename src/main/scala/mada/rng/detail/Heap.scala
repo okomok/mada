@@ -71,7 +71,7 @@ object MakeHeap {
         var __parent = (__len - 2)/2
 
         while (true) {
-            AdjustHeap(__first, __parent, __len, *((__first, + __parent)), __comp)
+            AdjustHeap(__first, __parent, __len, *(__first, + __parent), __comp)
             if (__parent == 0) {
                 return
             }
