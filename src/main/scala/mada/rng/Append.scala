@@ -66,6 +66,58 @@ class AppendPointer[A](
         }
     }
 
+    override protected def _offsetRead(d: Long) = {
+        if (d >= 0) {
+            if (inLeft) {
+                val over = d - (leftEnd - base)
+                if (over < 0) {
+                    *(base, + d)
+                } else {
+                    *(rightBegin, + over)
+                }
+            } else {
+                *(rightBase, + d)
+            }
+        } else {
+            if (!inLeft) {
+                val over = d - (rightBegin - rightBase)
+                if (over >= 0) {
+                    *(rightBase, + d)
+                } else {
+                    *(leftEnd, + over)
+                }
+            } else {
+                *(base, + d)
+            }
+        }
+    }
+
+    override protected def _offsetWrite(d: Long, e: A) = {
+        if (d >= 0) {
+            if (inLeft) {
+                val over = d - (leftEnd - base)
+                if (over < 0) {
+                    *(base, + d) = e
+                } else {
+                    *(rightBegin, + over) = e
+                }
+            } else {
+                *(rightBase, + d) = e
+            }
+        } else {
+            if (!inLeft) {
+                val over = d - (rightBegin - rightBase)
+                if (over >= 0) {
+                    *(rightBase, + d) = e
+                } else {
+                    *(leftEnd, + over) = e
+                }
+            } else {
+                *(base, + d) = e
+            }
+        }
+    }
+
     override protected def _difference(that: AppendPointer[A]) = {
         if (inLeft && that.inLeft) {
             base - that.base
