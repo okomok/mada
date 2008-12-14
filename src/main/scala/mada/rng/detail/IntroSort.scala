@@ -37,23 +37,16 @@ import Pointer._
 
 
 object IntroSort {
-    def apply[A](r: Rng[A], __comp: (A, A) => Boolean) = new IntroSortImpl(__comp).apply(r)
-}
-
-
-class IntroSortImpl[A](__comp: (A, A) => Boolean) {
-    private val __stl_threshold = 16
-
-    def apply(r: Rng[A]): Unit = {
+    def apply[A](r: Rng[A], __comp: (A, A) => Boolean): Unit = {
         val (__first, __last) = r.toPair
 
         if (__first != __last) {
-            loop(__first <=< __last, lg(__last - __first) * 2)
-            finalInsertionSort(__first <=< __last)
+            loop(__first <=< __last, lg(__last - __first) * 2, __comp)
+            finalInsertionSort(__first <=< __last, __comp)
         }
     }
 
-    private def loop(r: Rng[A], depth_limit: Long): Unit = {
+    def loop[A](r: Rng[A], depth_limit: Long, __comp: (A, A) => Boolean): Unit = {
         var (__first, __last) = r.toPair
         var __depth_limit = depth_limit
 
@@ -70,23 +63,25 @@ class IntroSortImpl[A](__comp: (A, A) => Boolean) {
 //            val elapsed = java.lang.System.currentTimeMillis - start
 //            if (elapsed != 0) { println("UnguardedPartition: " + elapsed) }
             __depth_limit /= 2 // See: http://marc.info/?l=apache-stdcxx-dev&m=120120284610472&w=2
-            loop(__cut <=< __last, __depth_limit)
+            loop(__cut <=< __last, __depth_limit, __comp)
             __last = __cut
         }
     }
 
-    private def finalInsertionSort(r: Rng[A]): Unit = {
+    def finalInsertionSort[A](r: Rng[A], __comp: (A, A) => Boolean): Unit = {
         val (__first, __last) = r.toPair
 
         if (__last - __first > __stl_threshold) {
             InsertionSort(__first <=< __first + __stl_threshold, __comp)
-            UnguardedInsertionSort(__first + __stl_threshold <=< __last, __comp)
+            InsertionSort.unguarded(__first + __stl_threshold <=< __last, __comp)
         } else {
             InsertionSort(__first <=< __last, __comp)
         }
     }
 
-    private def lg(n: Long): Long = {
+    val __stl_threshold = 16
+
+    def lg(n: Long): Long = {
         var __n = n
         var __k = 0L
         while (__n != 1) {

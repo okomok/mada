@@ -36,8 +36,8 @@ package mada.rng.detail
 import Pointer._
 
 
-object AdjustHeap {
-    def apply[A](first: Pointer[A], holeIndex: Long, __len: Long, __value: A, __comp: (A, A) => Boolean): Unit = {
+object Heap {
+    def adjust[A](first: Pointer[A], holeIndex: Long, __len: Long, __value: A, __comp: (A, A) => Boolean): Unit = {
         val __first = first.copy
         var __holeIndex = holeIndex
 
@@ -55,13 +55,11 @@ object AdjustHeap {
             *(__first, + __holeIndex) = *(__first, + (__secondChild - 1))
             __holeIndex = __secondChild - 1
         }
-        __PushHeap(__first, __holeIndex, __topIndex, __value, __comp)
+        __push(__first, __holeIndex, __topIndex, __value, __comp)
     }
-}
 
 
-object MakeHeap {
-    def apply[A](r: Rng[A], __comp: (A, A) => Boolean): Unit = {
+    def make[A](r: Rng[A], __comp: (A, A) => Boolean): Unit = {
         val (__first, __last) = r.toPair
 
         if (__last - __first < 2) {
@@ -71,26 +69,22 @@ object MakeHeap {
         var __parent = (__len - 2)/2
 
         while (true) {
-            AdjustHeap(__first, __parent, __len, *(__first, + __parent), __comp)
+            adjust(__first, __parent, __len, *(__first, + __parent), __comp)
             if (__parent == 0) {
                 return
             }
             __parent -= 1
         }
     }
-}
 
 
-object PushHeap {
-    def apply[A](r: Rng[A], __comp: (A, A) => Boolean): Unit = {
+    def push[A](r: Rng[A], __comp: (A, A) => Boolean): Unit = {
         val (__first, __last) = r.toPair
 
-        __PushHeap(__first, (__last - __first) - 1, 0, *(__last, - 1), __comp)
+        __push(__first, (__last - __first) - 1, 0, *(__last, - 1), __comp)
     }
-}
 
-object __PushHeap {
-    def apply[A](__first: Pointer[A], holeIndex: Long, __topIndex: Long, __value: A, __comp: (A, A) => Boolean): Unit = {
+    def __push[A](__first: Pointer[A], holeIndex: Long, __topIndex: Long, __value: A, __comp: (A, A) => Boolean): Unit = {
         var __holeIndex = holeIndex
 
         var __parent = (__holeIndex - 1) / 2
@@ -101,34 +95,28 @@ object __PushHeap {
         }
         __first(__holeIndex) = __value
     }
-}
 
 
-object PopHeap {
-    def apply[A](r: Rng[A], __comp: (A, A) => Boolean): Unit = {
+    def pop[A](r: Rng[A], __comp: (A, A) => Boolean): Unit = {
         val (__first, __last) = r.toPair
 
         val last_minus_1 = --(__last)
-        __PopHeap(__first <=< last_minus_1, last_minus_1, *(last_minus_1), __comp)
+        __pop(__first <=< last_minus_1, last_minus_1, *(last_minus_1), __comp)
     }
-}
 
-object __PopHeap {
-    def apply[A](r: Rng[A], __result: Pointer[A], __value: A, __comp: (A, A) => Boolean): Unit = {
+    def __pop[A](r: Rng[A], __result: Pointer[A], __value: A, __comp: (A, A) => Boolean): Unit = {
         val (__first, __last) = r.toPair
 
         *(__result) = *(__first)
-        AdjustHeap(__first, 0, __last - __first, __value, __comp);
+        adjust(__first, 0, __last - __first, __value, __comp);
     }
-}
 
 
-object SortHeap {
-    def apply[A](r: Rng[A], __comp: (A, A) => Boolean): Unit = {
+    def sort[A](r: Rng[A], __comp: (A, A) => Boolean): Unit = {
         val (__first, __last) = r.toPair
 
         while (__last - __first > 1) {
-            PopHeap(__first <=< __last, __comp)
+            pop(__first <=< __last, __comp)
             --(__last)
         }
     }

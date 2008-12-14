@@ -46,39 +46,33 @@ object InsertionSort {
         }
         val __i = __first + 1
         while (__i != __last) {
-            LinearInsert(__first <=< __i, *(__i), __comp)
+            linearInsert(__first <=< __i, *(__i), __comp)
             ++(__i)
         }
     }
-}
 
-object LinearInsert {
-    def apply[A](r: Rng[A], __val: A, __comp: (A, A) => Boolean): Unit = {
+    def linearInsert[A](r: Rng[A], __val: A, __comp: (A, A) => Boolean): Unit = {
         val (__first, __last) = r.toPair
+
         if (__comp(__val, *(__first))) {
             (__first <=< __last)./.copyBackwardTo(__last + 1)./
             *(__first) = __val
         } else {
-            UnguardedLinearInsert(__last, __val, __comp)
+            unguardedLinearInsert(__last, __val, __comp)
         }
     }
-}
 
-
-object UnguardedInsertionSort {
-    def apply[A](r: Rng[A], __comp: (A, A) => Boolean): Unit = {
+    def unguarded[A](r: Rng[A], __comp: (A, A) => Boolean): Unit = {
         val (__first, __last) = r.toPair
 
         val __i = __first
         while (__i != __last) {
-            UnguardedLinearInsert(__i, *(__i), __comp)
+            unguardedLinearInsert(__i, *(__i), __comp)
             ++(__i)
         }
     }
-}
 
-object UnguardedLinearInsert {
-    def apply[A](last: Pointer[A], __val: A, __comp: (A, A) => Boolean): Unit = {
+    def unguardedLinearInsert[A](last: Pointer[A], __val: A, __comp: (A, A) => Boolean): Unit = {
         var __last = last.copy
         val __next = __last.copy
 
