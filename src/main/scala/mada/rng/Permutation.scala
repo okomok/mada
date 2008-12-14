@@ -35,4 +35,6 @@ class PermutationPointer[A](override protected val _base: Pointer[Long], val ele
     override protected def _read = *(elementsBegin, + *(base))
     override protected def _write(e: A) = { *(elementsBegin, + *(base)) = e }
     override protected def _copy = new PermutationPointer(base.copy, elementsBegin)
+    override protected def _offsetRead(d: Long) = *(elementsBegin, + *(base, + d))
+    override protected def _offsetWrite(d: Long, e: A) = *(elementsBegin, + *(base, + d)) = e
 }
