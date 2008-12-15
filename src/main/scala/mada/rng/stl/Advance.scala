@@ -58,7 +58,7 @@ object AdvanceImpl {
         }
     }
 
-    private def inSinglePass[A](__i: Pointer[A], n: Long): Unit = {
+    def inSinglePass[A](__i: Pointer[A], n: Long): Unit = {
         var __n = n
 
         while (__n != 0) {
@@ -67,7 +67,7 @@ object AdvanceImpl {
         }
     }
 
-    private def inBidirectional[A](__i: Pointer[A], n: Long): Unit = {
+    def inBidirectional[A](__i: Pointer[A], n: Long): Unit = {
         var __n = n
 
         if (__n > 0) {

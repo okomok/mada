@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.rng
+package madatest.rng.stl
 
 
 import mada.NDebug
@@ -13,11 +13,12 @@ import mada.rng.stl.Sort._
 import mada.rng.AsRngBy._
 import mada.rng.From._
 import junit.framework.Assert._
-import detail.Example._
+import madatest.rng.detail.Example._
 import mada.rng.Cycle._
 import mada.rng.jcl.ToArrayList._
 import mada.rng.Force._
 import mada.rng.ToList._
+import madatest.rng.detail._
 
 
 class SortTest {
@@ -36,7 +37,7 @@ class SortTest {
     def testEmpty: Unit = {
         val r = from(empty1).eval
         r./.stl_sort./
-        detail.TestEmpty(r)
+        TestEmpty(r)
     }
 
     def longExample1 = Array(

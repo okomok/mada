@@ -7,9 +7,9 @@
 package mada.rng
 
 
-import EqualsTo._
 import Pointer._
 import Size._
+import stl.Equal._
 
 
 object Equals extends Equals; trait Equals extends Predefs {
@@ -39,7 +39,7 @@ object EqualsImpl {
         if (r1./.size./ != r2./.size./) {
             false
         } else {
-            r1./.equalsTo(r2.begin, f)./
+            r1./.stl_equal(r2.begin, f)./
         }
     }
 

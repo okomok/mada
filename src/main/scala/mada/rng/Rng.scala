@@ -21,13 +21,10 @@ object Rng extends Namespace
         with Begin with End
         with ToCell
         with Compatibles
-        with CopyTo with CopyBackwardTo
         with Indirect with Outdirect
-        with Distance
         with Drop
         with DropWhile
         with Equals
-        with EqualsTo
         with Exists
         with Filter
         with Find

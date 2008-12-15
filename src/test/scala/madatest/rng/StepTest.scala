@@ -11,7 +11,7 @@ import mada.NDebug
 import mada.rng._
 import mada.rng.Step._
 import mada.rng.From._
-import mada.rng.Distance._
+import mada.rng.stl.Distance._
 import junit.framework.Assert._
 import detail.Example._
 
@@ -45,7 +45,7 @@ class StepTest {
     def testBigStep {
         val r = from(example1).step(99).eval
         assertEquals(r.begin.read, 0)
-        assertEquals(r.toExpr.distance.eval, 1L)
+        assertEquals(r.toExpr.stl_distance.eval, 1L)
     }
 
     def testEmpty {

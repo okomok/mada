@@ -33,9 +33,6 @@
 package mada.rng.detail
 
 
-import CopyBackwardTo._
-
-
 object InsertionSort {
     def apply[A](* : Pointer[A], __first: Long, __last: Long, __comp: (A, A) => Boolean): Unit = {
         if (__first == __last) {
@@ -50,7 +47,7 @@ object InsertionSort {
 
     def linearInsert[A](* : Pointer[A], __first: Long, __last: Long, __val: A, __comp: (A, A) => Boolean): Unit = {
         if (__comp(__val, *(__first))) {
-            CopyBackward(*, __first, __last, __last + 1)
+            stl.CopyBackwardImpl.inRandomAccess(*, __first, __last, __last + 1)
             *(__first) = __val
         } else {
             unguardedLinearInsert(*, __last, __val, __comp)

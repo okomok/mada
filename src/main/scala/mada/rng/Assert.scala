@@ -7,13 +7,13 @@
 package mada.rng
 
 
-import From._
+import __/._
 import IsEmpty._
 
 
 object AssertNotEmpty {
     def apply[A](r: Rng[A]) = {
-        Assert(msg(r), !from(r).isEmpty.eval)
+        Assert(msg(r), !(/.from(r).isEmpty./))
     }
 
     private def msg[A](r: Rng[A]) = {

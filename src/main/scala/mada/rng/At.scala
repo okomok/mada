@@ -7,8 +7,8 @@
 package mada.rng
 
 
-import Distance._
 import Pointer._
+import Size._
 
 
 object At extends At; trait At extends Predefs {
@@ -28,7 +28,7 @@ object AtImpl {
     def apply[A](r: Rng[A], i: Long): A = {
         r.assertModels(Traversal.RandomAccess)
         Assert("out of Rng", 0 <= i)
-        Assert("out of Rng", i < r./.distance./)
+        Assert("out of Rng", i < r./.size./)
         *(r.begin, + i)
     }
 }

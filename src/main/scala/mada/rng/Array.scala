@@ -7,9 +7,9 @@
 package mada.rng
 
 
-import Distance._
 import Force._
 import Foreach._
+import stl.Distance._
 
 
 //  Array[A] -> Expr[Rng[A]]
@@ -72,7 +72,7 @@ object ToArrayImpl {
     }
 
     private def inForward[A](r: Rng[A]): Array[A] = {
-        val a = new Array[A](r./.distance./.toInt)
+        val a = new Array[A](r./.stl_distance./.toInt)
         var i = 0
         r./.foreach({ (e: A) => a(i) = e; i += 1 })./
         a
