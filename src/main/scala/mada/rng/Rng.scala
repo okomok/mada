@@ -7,13 +7,8 @@
 package mada.rng
 
 
-import AsRngBy._
 import Equals._
-import Filter._
-import Flatten._
-import Foreach._
 import From._
-import Map._
 import ReadOnly._
 import ShallowEquals._
 import jcl.ToArrayList._
@@ -59,7 +54,9 @@ object Rng extends Namespace
         with ToRng
 
 
-trait Rng[A] extends Traversal.Modeller with Expr.Start[Rng[A]] {
+trait Rng[A] extends Expr.Start[Rng[A]]
+        with Traversal.Modeller
+        with detail.ForComprehension[A] {
     protected def _begin: Pointer[A]
     protected def _end: Pointer[A]
 
@@ -79,10 +76,4 @@ trait Rng[A] extends Traversal.Modeller with Expr.Start[Rng[A]] {
 
     final def toPair: (Pointer[A], Pointer[A]) = (begin, end)
     final def toTriple: (Pointer[A], Long, Long) = { val (p, q) = toPair; (p, 0, q - p) }
-
-// for-comprehension
-    final def map[B](f: A => B) = /.asRngBy(Traversal.SinglePass).map(f)./
-    final def flatMap[B](f: A => Rng[B]) = /.asRngBy(Traversal.SinglePass).map(f).flatten./
-    final def filter(p: A => Boolean) = /.asRngBy(Traversal.SinglePass).filter(p)./
-    final def foreach(f: A => Unit) = /.asRngBy(Traversal.SinglePass).foreach(f)./
 }
