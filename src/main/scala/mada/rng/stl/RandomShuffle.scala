@@ -33,9 +33,6 @@
 package mada.rng.stl
 
 
-import java.util.Random
-
-
 object RandomShuffle extends RandomShuffle; trait RandomShuffle extends Predefs {
     class MadaRngStlRandomShuffle[A](_1: Expr.Of[Rng[A]]) {
         def stl_randomShuffle = RandomShuffleExpr(_1, new DefaultRandomNumberGenerator).expr
@@ -53,24 +50,22 @@ case class RandomShuffleExpr[A](override val _1: Expr.Of[Rng[A]], _2: Long => Lo
 object RandomShuffleImpl {
     def apply[A](r: Rng[A], g: Long => Long): Unit = {
         r.assertModels(Traversal.RandomAccess)
-        val (p, q) = r.toPair
-        aux(p, 0, q - p, g)
-    }
 
-    def aux[A](* : Pointer[A], __first: Long, __last: Long, g: Long => Long): Unit = {
+        val (__*, __first, __last) = r.toTriple
+
         if (__first == __last) {
             return
         }
 
         var __i = __first + 1
         while (__i != __last) {
-            *.swap(__i, __first + g((__i - __first) + 1))
+            __*.swap(__i, __first + g((__i - __first) + 1))
             __i += 1
         }
     }
 }
 
 class DefaultRandomNumberGenerator extends (Long => Long) {
-    private val rnd = new Random
-    def apply(__n: Long) = Math.abs(rnd.nextLong) % __n
+    private val rnd = new java.util.Random
+    def apply(__n: Long) = Math.abs(rnd.nextLong % __n)
 }
