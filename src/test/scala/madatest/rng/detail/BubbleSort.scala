@@ -14,7 +14,7 @@ import mada.rng.Pointer._
 
 object BubbleSort {
     def apply[A](r: Rng[A], f: (A, A) => Boolean): Unit = {
-        AssertModels(r, Traversal.Bidirectional)
+        r.assertModels(Traversal.Bidirectional)
 
         val (p, q) = r.toPair
 

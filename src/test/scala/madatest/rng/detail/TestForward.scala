@@ -36,7 +36,7 @@ object TestForwardReadOnly {
     }
 
     def impl[A](expected: Array[A], actual: Rng[A]) {
-        AssertModels(actual, Traversal.Forward)
+        actual.assertModels(Traversal.Forward)
         assertTrue("testing rng is too small", expected.length >= 2)
 
         TestSinglePassReadOnly.impl(expected, actual)

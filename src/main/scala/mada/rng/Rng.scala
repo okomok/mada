@@ -59,7 +59,7 @@ object Rng extends Namespace
         with ToRng
 
 
-trait Rng[A] extends TraversalModeller {
+trait Rng[A] extends Traversal.Modeller {
     protected def _begin: Pointer[A]
     protected def _end: Pointer[A]
 

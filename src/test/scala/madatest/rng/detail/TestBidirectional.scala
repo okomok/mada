@@ -42,7 +42,7 @@ object TestBidirectionalReadOnly {
     }
 
     def impl[A](expected: Array[A], actual: Rng[A]): Unit = {
-        AssertModels(actual, Traversal.Bidirectional)
+        actual.assertModels(Traversal.Bidirectional)
 
         TestForwardReadOnly.impl(expected, actual)
         TestBidirectionalReadablePointer(actual.begin, expected(0), expected(1))

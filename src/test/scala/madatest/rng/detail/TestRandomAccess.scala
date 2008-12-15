@@ -43,7 +43,7 @@ object TestRandomAccessReadOnly {
     }
 
     def impl[A](expected: Array[A], actual: Rng[A]): Unit = {
-        AssertModels(actual, Traversal.RandomAccess)
+        actual.assertModels(Traversal.RandomAccess)
 
         TestBidirectionalReadOnly.impl(expected, actual)
         TestRandomAccessReadablePointer(actual.begin, expected.length, expected)

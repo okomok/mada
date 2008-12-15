@@ -21,7 +21,7 @@ object TestSinglePassReadOnly {
     }
 
     def impl[A](expected: Array[A], actual: Rng[A]): Unit = {
-        AssertModels(actual, Traversal.SinglePass)
+        actual.assertModels(Traversal.SinglePass)
 
         val (p, q) = actual.toPair
         assertEquals(p, p);

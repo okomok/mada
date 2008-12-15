@@ -14,7 +14,7 @@ import mada.rng.Pointer._
 
 object CombSort {
     def apply[A](r: Rng[A], f: (A, A) => Boolean): Unit = {
-        AssertModels(r, Traversal.RandomAccess)
+        r.assertModels(Traversal.RandomAccess)
 
         val (p, q) = r.toPair
 

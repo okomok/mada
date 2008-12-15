@@ -15,7 +15,7 @@ object Pointer extends Namespace
         with PointerPreOps
 
 
-trait Pointer[A] extends TraversalModeller {
+trait Pointer[A] extends Traversal.Modeller {
 // element-access
     protected def _read: A = throw new NotReadablePointerError(this)
     protected def _write(e: A): Unit = throw new NotWritablePointerError(this)

@@ -43,8 +43,8 @@ import junit.framework.Assert._
 
 object Search {
     def apply[A1, A2](__rng1: Rng[A1], __rng2: Rng[A2], __predicate: (A1, A2) => Boolean): Pointer[A1] = {
-        AssertModels(__rng1, Traversal.Forward)
-        AssertModels(__rng2, Traversal.Forward)
+        __rng1.assertModels(Traversal.Forward)
+        __rng2.assertModels(Traversal.Forward)
 
         val (__first1, __last1) = __rng1.toPair
         val (__first2, __last2) = __rng2.toPair
