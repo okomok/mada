@@ -38,7 +38,7 @@ object InitImpl {
 
 class ForwardInitPointer[A](override protected val _base: Pointer[A], end: Pointer[A])
         extends PointerAdapter[A, A, ForwardInitPointer[A]] {
-    Assert("doh", _base.traversal == Traversal.Forward)
+    Assert(_base.traversal == Traversal.Forward)
     lookNext
     override protected def _increment = { base.pre_++; lookNext }
     override protected def _copy = new ForwardInitPointer(base.copy, end)
@@ -47,7 +47,7 @@ class ForwardInitPointer[A](override protected val _base: Pointer[A], end: Point
 
 class SinglePassInitPointer[A](override protected val _base: Pointer[A], fromEnd: Boolean)
         extends PointerAdapter[A, A, SinglePassInitPointer[A]] with NotWritablePointer[A] {
-    Assert("doh", _base.traversal == Traversal.SinglePass)
+    Assert(_base.traversal == Traversal.SinglePass)
     private var tmp: A = _
     if (!fromEnd) { _increment }
     override protected def _read = tmp

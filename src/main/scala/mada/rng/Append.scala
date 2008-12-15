@@ -157,7 +157,7 @@ class AppendPointer[A](
         } else if (inLeft) {
             (base - leftEnd) + (that.rightBegin - that.rightBase)
         } else {
-            Assert("impossible", !inLeft)
+            Assert(!inLeft)
             (rightBase - rightBegin) + (that.leftEnd - that.base)
         }
     }

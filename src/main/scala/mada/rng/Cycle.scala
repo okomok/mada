@@ -73,7 +73,7 @@ class CyclePointer[A](override protected val _base: Pointer[A], var count: Long,
     override def toString = new StringBuilder().append("CyclePointer of ").append(base).toString
 
     private def positiveRemainderDivision(a: Long, b: Long): (Long, Long) = {
-        Assert("doh", b >= 0)
+        Assert(b >= 0)
         val (quo, rem) = (a / b, a % b)
         if (rem < 0) {
             (quo - 1, rem + b)
@@ -84,7 +84,7 @@ class CyclePointer[A](override protected val _base: Pointer[A], var count: Long,
 
     // avoid any heap allocation.
     private def positiveRemainder(a: Long, b: Long): Long = {
-        Assert("doh", b >= 0)
+        Assert(b >= 0)
         val rem = a % b
         if (rem < 0) {
             rem + b
