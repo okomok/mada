@@ -35,12 +35,11 @@ package mada.rng.detail
 
 object IntroSort {
     def apply[A](r: Rng[A], __comp: (A, A) => Boolean): Unit = {
-        val (__first, __last) = r.toPair
+        val (__*, __first, __last) = r.indexForm
 
-        val len = __last - __first
-        if (len != 0) {
-            loop(__first, 0, len, lg(len) * 2, __comp)
-            finalInsertionSort(__first, 0, len, __comp)
+        if (__first != __last) {
+            loop(__*, __first, __last, lg(__last - __first) * 2, __comp)
+            finalInsertionSort(__*, __first, __last, __comp)
         }
     }
 

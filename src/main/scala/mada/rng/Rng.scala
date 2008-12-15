@@ -56,7 +56,9 @@ object Rng extends Namespace
         with Slice
         with Take
         with TakeWhile
-        with ToRng
+        with ToRng {
+    type IndexForm[A] = (Pointer[A], Long, Long)
+}
 
 
 trait Rng[A] extends Traversal.Modeller {
@@ -74,6 +76,7 @@ trait Rng[A] extends Traversal.Modeller {
     final def shallowEquals(that: Rng[A]) = /.shallowEquals(that)./
     final def shallowToString = detail.ShallowToString(this)
     final def readOnly = /.readOnly./
+    final def indexForm: Rng.IndexForm[A] = { val (p, q) = toPair; (p, 0, q - p) }
 
     final def rng = this
     final def toExpr = Expr(this)

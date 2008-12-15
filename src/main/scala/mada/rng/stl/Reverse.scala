@@ -30,37 +30,38 @@
  */
 
 
-package mada.rng
+package mada.rng.stl
 
 
 import Pointer._
 
 
-object MutatingReverse extends MutatingReverse; trait MutatingReverse extends Predefs {
-    class MadaRngMutatingReverse[A](_1: Expr.Of[Rng[A]]) {
-        def mutatingReverse = MutatingReverseExpr(_1).expr
+object Reverse extends Reverse; trait Reverse extends Predefs {
+    class MadaRngStlReverse[A](_1: Expr.Of[Rng[A]]) {
+        def stl_reverse = ReverseExpr(_1).expr
     }
-    implicit def toMadaRngMutatingReverse[A](_1: Expr.Of[Rng[A]]): MadaRngMutatingReverse[A] = new MadaRngMutatingReverse[A](_1)
+    implicit def toMadaRngStlReverse[A](_1: Expr.Of[Rng[A]]): MadaRngStlReverse[A] = new MadaRngStlReverse[A](_1)
 }
 
 
-case class MutatingReverseExpr[A](override val _1: Expr.Of[Rng[A]]) extends Expr.Method[Rng[A], Unit] {
-    override protected def _default = MutatingReverseImpl(_1.eval)
+case class ReverseExpr[A](override val _1: Expr.Of[Rng[A]]) extends Expr.Method[Rng[A], Unit] {
+    override protected def _default = ReverseImpl(_1.eval)
 }
 
 
-object MutatingReverseImpl {
+object ReverseImpl {
     def apply[A](r: Rng[A]): Unit = r.traversal match {
         case _: Traversal.RandomAccess => inRandomAccess(r)
         case _: Traversal.Bidirectional => inBidirectional(r)
     }
 
     def inRandomAccess[A](r: Rng[A]): Unit = {
-        val (__first, __last) = r.toPair
+        var (__*, __first, __last) = r.indexForm
 
         while (__first < __last) {
-            __first swap --(__last)
-            ++(__first)
+            __last -= 1
+            __*.swap(__first, __last)
+            __first += 1
         }
     }
 
