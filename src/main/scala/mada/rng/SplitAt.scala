@@ -25,7 +25,7 @@ case class SplitAtExpr[A](override val _1: Expr.Of[Rng[A]], _2: Long) extends Ex
 
 object SplitAtImpl {
     def apply[A](r: Rng[A], n: Long): (Rng[A], Rng[A]) = {
-        AssertModels(r, Traversal.Forward)
+        r.assertModels(Traversal.Forward)
         val r2 = r./.drop(n)./
         (r.begin <=< r2.begin, r2)
     }

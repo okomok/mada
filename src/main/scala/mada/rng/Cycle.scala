@@ -24,7 +24,7 @@ case class CycleExpr[A](override val _1: Expr.Of[Rng[A]], _2: Long, _3: Long) ex
 
 object CycleImpl {
     def apply[A](r: Rng[A], n: Long, m: Long): Rng[A] = {
-        AssertModels(r, Traversal.Forward)
+        r.assertModels(Traversal.Forward)
         AssertNotEmpty(r)
         val (p, q) = r.toPair
         new CyclePointer(p.copy, n, p, q) <=< new CyclePointer(p.copyIn(Traversal.Bidirectional), m, p, q)

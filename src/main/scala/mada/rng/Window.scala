@@ -28,7 +28,7 @@ case class WindowExpr[A](override val _1: Expr.Of[Rng[A]], _2: Long, _3: Long) e
 
 object WindowImpl {
     def apply[A](r: Rng[A], n: Long, m: Long): Rng[A] = {
-        AssertModels(r, Traversal.Forward)
+        r.assertModels(Traversal.Forward)
         Assert("requires n <= m", n <= m)
         Assert("requires BidirectionalRng", (n < 0) implies (r models Traversal.Bidirectional))
 

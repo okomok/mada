@@ -25,7 +25,7 @@ case class RotateExpr[A](override val _1: Expr.Of[Rng[A]], _2: Rng[A] => Pointer
 
 object RotateImpl {
     def apply[A](r: Rng[A], f: Rng[A] => Pointer[A]): Rng[A] = {
-        AssertModels(r, Traversal.Forward)
+        r.assertModels(Traversal.Forward)
         val mid = f(r)
         (mid <=< r.end)./.append(r.begin <=< mid)./
     }

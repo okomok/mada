@@ -45,8 +45,8 @@ case class CopyBackwardToExpr[From, To >: From](override val _1: Expr.Of[Rng[Fro
 
 object CopyBackwardToImpl {
     def apply[From, To >: From](r1: Rng[From], _q2: Pointer[To]): Pointer[To] = {
-        AssertModels(r1, Traversal.Bidirectional)
-        AssertModels(_q2, Traversal.Bidirectional)
+        r1.assertModels(Traversal.Bidirectional)
+        _q2.assertModels(Traversal.Bidirectional)
         val (p1, q1) = r1.toPair
         val q2 = _q2.copy
 

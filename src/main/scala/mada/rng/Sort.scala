@@ -26,7 +26,7 @@ case class SortExpr[A](override val _1: Expr.Of[Rng[A]], _2: (A, A) => Boolean) 
 
 object SortImpl {
     def apply[A](r: Rng[A], f: (A, A) => Boolean): Unit = {
-        AssertModels(r, Traversal.RandomAccess)
+        r.assertModels(Traversal.RandomAccess)
         detail.IntroSort(r, f)
         /*
         import jcl.ArrayListToRng._

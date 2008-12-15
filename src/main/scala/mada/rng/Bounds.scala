@@ -25,7 +25,7 @@ case class BoundsExpr[A](override val _1: Expr.Of[Rng[A]]) extends Expr.Transfor
 
 object BoundsImpl {
     def apply[A](r: Rng[A]): Rng[A] = {
-        AssertModels(r, Traversal.Forward)
+        r.assertModels(Traversal.Forward)
         val (p, q) = r.toPair
         val (ip, iq) = r.toPair
         new BoundsPointer(p, ip, iq) <=< new BoundsPointer(q, ip, iq)

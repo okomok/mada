@@ -59,22 +59,21 @@ object Rng extends Namespace
         with ToRng
 
 
-trait Rng[A] {
+trait Rng[A] extends TraversalModeller {
     protected def _begin: Pointer[A]
     protected def _end: Pointer[A]
 
     final def begin = _begin
     final def end = _end
-    final lazy val traversal = begin.traversal
-    final def models(t: Traversal) = traversal <:< t
+    override protected def _traversal = begin.traversal
 
     override def equals(that: Any) = equals(that.asInstanceOf[Rng[A]])
     override def toString = detail.ToString(this)
 
-    final def equals(that: Rng[A]) = toExpr.requals(that).eval
-    final def shallowEquals(that: Rng[A]) = toExpr.shallowEquals(that).eval
+    final def equals(that: Rng[A]) = /.requals(that)./
+    final def shallowEquals(that: Rng[A]) = /.shallowEquals(that)./
     final def shallowToString = detail.ShallowToString(this)
-    final def readOnly = toExpr.readOnly.eval
+    final def readOnly = /.readOnly./
 
     final def rng = this
     final def toExpr = Expr(this)

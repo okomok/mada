@@ -22,7 +22,7 @@ case class SizeExpr[A](override val _1: Expr.Of[Rng[A]]) extends Expr.Method[Rng
 
 object SizeImpl {
     def apply[A](r: Rng[A]): Long = {
-        AssertModels(r, Traversal.RandomAccess)
+        r.assertModels(Traversal.RandomAccess)
         r.end - r.begin
     }
 }

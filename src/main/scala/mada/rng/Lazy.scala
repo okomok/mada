@@ -29,7 +29,7 @@ case class LazyExpr[A](override val _1: Expr.Of[Rng[A]]) extends Expr.Method[Rng
 
 object LazyImpl {
     def apply[A](r: Rng[A]): Rng[A] = {
-        AssertModels(r, Traversal.Forward)
+        r.assertModels(Traversal.Forward)
         val m = new HashMap[Pointer[A], A]
         new LazyPointer(r.begin, m) <=< new LazyPointer(r.end, m)
     }

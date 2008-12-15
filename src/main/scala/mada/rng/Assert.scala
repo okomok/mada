@@ -12,12 +12,8 @@ import IsEmpty._
 
 
 object AssertModels {
-    def apply[A](p: Pointer[A], t: Traversal) = {
-        Assert(msg(t, p.traversal), p models t)
-    }
-
-    def apply[A](r: Rng[A], t: Traversal) = {
-        Assert(msg(t, r.traversal), r models t)
+    def apply[A](tm: TraversalModeller, t: Traversal) = {
+        Assert(msg(t, tm.traversal), tm models t)
     }
 
     private def msg[A](expected: Traversal, actual: Traversal) = {

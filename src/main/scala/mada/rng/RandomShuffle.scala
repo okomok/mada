@@ -52,7 +52,7 @@ case class RandomShuffleExpr[A](override val _1: Expr.Of[Rng[A]], _2: Long => Lo
 
 object RandomShuffleImpl {
     def apply[A](r: Rng[A], g: Long => Long): Unit = {
-        AssertModels(r, Traversal.RandomAccess)
+        r.assertModels(Traversal.RandomAccess)
         val (p, q) = r.toPair
         aux(p, 0, q - p, g)
     }

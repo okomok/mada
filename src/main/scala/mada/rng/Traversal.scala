@@ -33,11 +33,25 @@ object Traversal {
     }
 }
 
-
 trait Traversal {
     protected def bound: Int
     final def <:<(that: Traversal): Boolean = bound <= that.bound
     final def >:>(that: Traversal): Boolean = bound >= that.bound
     final def lower(that: Traversal): Traversal = if (this <:< that) this else that
     final def upper(that: Traversal): Traversal = if (this >:> that) this else that
+}
+
+
+trait TraversalModeller {
+    protected def _traversal: Traversal
+
+    final def traversal = _traversal
+    final def models(t: Traversal) = traversal <:< t
+    final def notModels(t: Traversal) = !models(t)
+    final def assertModels(t: Traversal) = AssertModels(this, t)
+
+    final protected def SinglePass = Traversal.SinglePass
+    final protected def Forward = Traversal.Forward
+    final protected def Bidirectional = Traversal.Bidirectional
+    final protected def RandomAccess = Traversal.RandomAccess
 }

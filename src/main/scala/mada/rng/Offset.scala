@@ -26,7 +26,7 @@ case class OffsetExpr[A](override val _1: Expr.Of[Rng[A]], _2: Long, _3: Long) e
 
 object OffsetImpl {
     def apply[A](r: Rng[A], n1: Long, n2: Long): Rng[A] = {
-        AssertModels(r, Traversal.Forward)
+        r.assertModels(Traversal.Forward)
         Assert("too many offsets", (r models Traversal.RandomAccess) implies (n1 <= r./.size./ + n2))
         Assert("requires BidirectionalRng", (n1 < 0) implies (r models Traversal.Bidirectional))
         Assert("requires BidirectionalRng", (n2 < 0) implies (r models Traversal.Bidirectional))

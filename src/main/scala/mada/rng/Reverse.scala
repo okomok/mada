@@ -29,7 +29,7 @@ case class ReverseExpr[A](_1: Expr.Of[Rng[A]]) extends Expr[Rng[A], Rng[A]] {
 
 object ReverseImpl {
     def apply[A](r: Rng[A]): Rng[A] = {
-        AssertModels(r, Traversal.Bidirectional)
+        r.assertModels(Traversal.Bidirectional)
         new ReversePointer(r.end) <=< new ReversePointer(r.begin)
     }
 }
