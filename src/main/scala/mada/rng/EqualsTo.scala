@@ -7,7 +7,7 @@
 package mada.rng
 
 
-import Mismatch._
+import stl.Mismatch._
 
 
 object EqualsTo extends EqualsTo; trait EqualsTo extends Predefs {
@@ -27,6 +27,6 @@ case class EqualsToExpr[A1, A2](override val _1: Expr.Of[Rng[A1]], _2: Expr.Of[P
 
 object EqualsToImpl {
     def apply[A1, A2](r1: Rng[A1], p2: Pointer[A2], f: (A1, A2) => Boolean): Boolean = {
-        r1./.mismatch(p2, f)./._1 == r1.end
+        r1./.stl_mismatch(p2, f)./._1 == r1.end
     }
 }

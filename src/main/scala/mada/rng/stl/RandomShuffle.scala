@@ -30,18 +30,18 @@
  */
 
 
-package mada.rng
+package mada.rng.stl
 
 
 import java.util.Random
 
 
 object RandomShuffle extends RandomShuffle; trait RandomShuffle extends Predefs {
-    class MadaRngRandomShuffle[A](_1: Expr.Of[Rng[A]]) {
-        def randomShuffle = RandomShuffleExpr(_1, new DefaultRandomNumberGenerator).expr
-        def randomShuffle(_2: Long => Long) = RandomShuffleExpr(_1, _2).expr
+    class MadaRngStlRandomShuffle[A](_1: Expr.Of[Rng[A]]) {
+        def stl_randomShuffle = RandomShuffleExpr(_1, new DefaultRandomNumberGenerator).expr
+        def stl_randomShuffle(_2: Long => Long) = RandomShuffleExpr(_1, _2).expr
     }
-    implicit def toMadaRngRandomShuffle[A](_1: Expr.Of[Rng[A]]): MadaRngRandomShuffle[A] = new MadaRngRandomShuffle[A](_1)
+    implicit def toMadaRngStlRandomShuffle[A](_1: Expr.Of[Rng[A]]): MadaRngStlRandomShuffle[A] = new MadaRngStlRandomShuffle[A](_1)
 }
 
 

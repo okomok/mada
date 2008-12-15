@@ -7,7 +7,7 @@
 package mada.rng
 
 
-import Advance._
+import stl.Advance._
 
 
 object Pointer extends Namespace
@@ -61,7 +61,7 @@ trait Pointer[A] extends Expr.Start[Pointer[A]]
     protected def _invariant = { }
 
 // utilities
-    final def advance(d: Long) = /.advance(d)./
+    final def advance(d: Long) = { /.stl_advance(d)./; this }
     final def output: A => Pointer[A] = detail.PointerOutput(this, _)
     final def swap(that: Pointer[A]) = detail.PointerSwap(this, that)
     final def swap(i: Long, j: Long) = detail.PointerSwap(this, i, j)

@@ -9,7 +9,7 @@ package madatest.rng
 
 import mada.NDebug
 import mada.rng._
-import mada.rng.Sort._
+import mada.rng.stl.Sort._
 import mada.rng.AsRngBy._
 import mada.rng.From._
 import junit.framework.Assert._
@@ -23,19 +23,19 @@ import mada.rng.ToList._
 class SortTest {
     def testTrivial: Unit = {
         val r = from(example1).eval
-        r./.sort./
+        r./.stl_sort./
         assertEquals(from(example1Sorted).eval, r)
     }
 
     def testWith: Unit = {
         val r = from(example1).eval
-        r./.sortWith(_ > _)./
+        r./.stl_sortWith(_ > _)./
         assertEquals(from(example1ReversedSorted).eval, r)
     }
 
     def testEmpty: Unit = {
         val r = from(empty1).eval
-        r./.sort./
+        r./.stl_sort./
         detail.TestEmpty(r)
     }
 
@@ -45,7 +45,7 @@ class SortTest {
 
     def testLongExample1: Unit = {
         val r = from(longExample1).eval
-        r./.sort./
+        r./.stl_sort./
         assertEquals(from(0, 1000).eval, r)
     }
 
@@ -79,7 +79,7 @@ class SortTest {
         val e = from(longExampleArrayList1).cycle(cycleCount).force
         val c: (Integer, Integer) => Boolean = _.intValue < _.intValue
         val start = java.lang.System.currentTimeMillis
-        e.sortWith(c).eval
+        e.stl_sortWith(c).eval
         println(java.lang.System.currentTimeMillis - start)
     }
 

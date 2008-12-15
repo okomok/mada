@@ -4,18 +4,18 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.rng
+package mada.rng.stl
 
 
 import Pointer._
 
 
 object Mismatch extends Mismatch; trait Mismatch extends Predefs {
-    class MadaRngMismatch[A1](_1: Expr.Of[Rng[A1]]) {
-        def mismatch[A2](_2: Expr.Of[Pointer[A2]], _3: (A1, A2) => Boolean) = MismatchExpr(_1, _2, _3).expr
-        def mismatch(_2: Expr.Of[Pointer[A1]]) = MismatchExpr[A1, A1](_1, _2, _ == _).expr
+    class MadaRngStlMismatch[A1](_1: Expr.Of[Rng[A1]]) {
+        def stl_mismatch[A2](_2: Expr.Of[Pointer[A2]], _3: (A1, A2) => Boolean) = MismatchExpr(_1, _2, _3).expr
+        def stl_mismatch(_2: Expr.Of[Pointer[A1]]) = MismatchExpr[A1, A1](_1, _2, _ == _).expr
     }
-    implicit def toMadaRngMismatch[A1](_1: Expr.Of[Rng[A1]]): MadaRngMismatch[A1] = new MadaRngMismatch[A1](_1)
+    implicit def toMadaRngStlMismatch[A1](_1: Expr.Of[Rng[A1]]): MadaRngStlMismatch[A1] = new MadaRngStlMismatch[A1](_1)
 }
 
 

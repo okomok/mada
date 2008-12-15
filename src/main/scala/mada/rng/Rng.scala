@@ -41,7 +41,6 @@ object Rng extends Namespace
         with IsEmpty
         with Loop
         with Map
-        with Mismatch
         with Offset
         with Permutation
         with ReadOnly

@@ -10,7 +10,7 @@ package madatest.rng.detail
 import mada.rng.From._
 import mada.rng.Rng
 import mada.rng._
-import mada.rng.RandomShuffle._
+import mada.rng.stl.RandomShuffle._
 import junit.framework.Assert._
 
 
@@ -29,7 +29,7 @@ object TestRandomAccessReadWrite {
         assertEquals(from(ex).eval, actual)
 
         // test offsetRead/Write
-        actual./.randomShuffle./
+        actual./.stl_randomShuffle./
         mada.rng.detail.IntroSort[A](actual, _ < _)
         assertEquals(from(ex).eval, actual)
     }
