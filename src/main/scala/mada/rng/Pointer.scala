@@ -15,7 +15,7 @@ object Pointer extends Namespace
         with PointerPreOps
 
 
-trait Pointer[A] extends Traversal.Modeller {
+trait Pointer[A] extends Traversal.Modeller with Expr.Start[Pointer[A]] {
 // element-access
     protected def _read: A = throw new NotReadablePointerError(this)
     protected def _write(e: A): Unit = throw new NotWritablePointerError(this)
@@ -67,8 +67,6 @@ trait Pointer[A] extends Traversal.Modeller {
     final def <=<(that: Pointer[A]) = new detail.PointerRng(this, that).rng
     final def copyIn(t: Traversal): Pointer[A] = if (traversal <:< t) copy else this
     final def pointer = this
-    final def toExpr = Expr(this)
-    final def / = toExpr
 }
 
 

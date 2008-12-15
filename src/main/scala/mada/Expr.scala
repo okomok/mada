@@ -63,6 +63,12 @@ object Expr {
     def apply[A](from: A) = Constant(from).expr
 
 
+    trait Start[X] { self: X =>
+        def toExpr = Expr(self)
+        def / = toExpr
+    }
+
+
     case object NoSelfCaseError extends Error
     case object NoUnknownCaseError extends Error
 }

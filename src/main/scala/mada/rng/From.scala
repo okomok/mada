@@ -12,3 +12,12 @@ object From extends From; trait From extends Namespace
         with FromInterval {
     def from[A](x: Expr.Of[Rng[A]]) = x
 }
+
+
+object __/ extends __/; trait __/ extends Namespace
+        with Predefs
+        with FromInterval {
+    object / {
+        def from[A](x: Expr.Of[Rng[A]]) = x
+    }
+}

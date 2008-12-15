@@ -59,7 +59,7 @@ object Rng extends Namespace
         with ToRng
 
 
-trait Rng[A] extends Traversal.Modeller {
+trait Rng[A] extends Traversal.Modeller with Expr.Start[Rng[A]] {
     protected def _begin: Pointer[A]
     protected def _end: Pointer[A]
 
@@ -76,8 +76,6 @@ trait Rng[A] extends Traversal.Modeller {
     final def readOnly = /.readOnly./
 
     final def rng = this
-    final def toExpr = Expr(this)
-    final def / = toExpr
 
     final def toPair: (Pointer[A], Pointer[A]) = (begin, end)
     final def toTriple: (Pointer[A], Long, Long) = { val (p, q) = toPair; (p, 0, q - p) }
