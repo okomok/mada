@@ -37,7 +37,7 @@ object Traversal {
 
         final def traversal = _traversal
         final def models(t: Traversal) = traversal <:< t
-        final def notModels(t: Traversal) = !models(t)
+        final def notModels(t: Traversal) = !(this models t)
         final def assertModels(t: Traversal) = Assert(assertModelsMsg(t, traversal), this models t)
 
         final protected def SinglePass = Traversal.SinglePass
@@ -46,7 +46,7 @@ object Traversal {
         final protected def RandomAccess = Traversal.RandomAccess
     }
 
-    private def assertModelsMsg[A](expected: Traversal, actual: Traversal) = {
+    private def assertModelsMsg[A](expected: Traversal, actual: Traversal): String = {
         new StringBuilder().
             append("requires:<").append(expected.toString).append('>').
             append(" but was:<").append(actual.toString).append('>').
