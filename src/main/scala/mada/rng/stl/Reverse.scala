@@ -56,7 +56,7 @@ object ReverseImpl {
     }
 
     def inRandomAccess[A](r: Rng[A]): Unit = {
-        var (__*, __first, __last) = r.indexForm
+        var (__*, __first, __last) = r.toTriple
 
         while (__first < __last) {
             __last -= 1
