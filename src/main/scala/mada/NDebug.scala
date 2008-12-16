@@ -8,5 +8,6 @@ package mada
 
 
 object NDebug {
-    var value: Boolean = false
+    final val value = false
+    // var value = false
 }

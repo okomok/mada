@@ -10,10 +10,11 @@ package madatest
 import mada.Assert
 import mada.Verify
 import mada.NDebug
+import mada.Check
 import junit.framework.Assert._
 import junit.framework.TestCase
 
-
+/*
 class AssertTest extends TestCase {
     override def setUp {
         NDebug.value = false
@@ -69,4 +70,17 @@ class AssertTest extends TestCase {
         Assert(neverEvaluatedMsg, true)
         Verify(neverEvaluatedMsg, true)
     }
+
+    def testCheck: Unit = {
+        assertEquals(12, Check(10 < (_: Int), 12))
+
+        var thrown = false
+        try {
+            Check("fail", 10 > (_: Int), 12)
+        } catch {
+            case e: java.lang.AssertionError => thrown = true
+        }
+        assertTrue("must be thrown", thrown)
+    }
 }
+*/
