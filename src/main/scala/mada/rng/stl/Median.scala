@@ -30,10 +30,12 @@
  */
 
 
-package mada.rng.detail
+package mada.rng.stl
 
 
 object Median {
+    def apply[A <% Ordered[A]](__a: A, __b: A, __c: A): A = apply[A](__a, __b, __c, (_: A) < (_: A))
+
     def apply[A](__a: A, __b: A, __c: A, __comp: (A, A) => Boolean): A = {
         if (__comp(__a, __b)) {
             if (__comp(__b, __c)) {

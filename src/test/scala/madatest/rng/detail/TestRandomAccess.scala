@@ -30,7 +30,7 @@ object TestRandomAccessReadWrite {
 
         // test offsetRead/Write
         actual./.stl_randomShuffle./
-        mada.rng.detail.IntroSort[A](actual, _ < _)
+        mada.rng.stl.detail.IntroSort[A](actual, _ < _)
         assertEquals(from(ex).eval, actual)
     }
 }

@@ -30,7 +30,7 @@
  */
 
 
-package mada.rng.detail
+package mada.rng.stl.detail
 
 
 object IntroSort {
@@ -49,7 +49,7 @@ object IntroSort {
 
         while (__last - __first > __stl_threshold) {
             if (__depth_limit == 0) {
-                PartialSort(*, __first, __last, __last, __comp)
+                PartialSortImpl(*, __first, __last, __last, __comp)
                 return
             }
             val __cut = UnguardedPartition(*, __first, __last, Median(*(__first), *(__first + (__last - __first)/2), *(__last - 1), __comp), __comp)

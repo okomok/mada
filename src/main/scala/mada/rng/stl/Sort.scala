@@ -8,14 +8,11 @@ package mada.rng.stl
 
 
 object Sort extends Sort; trait Sort extends Predefs {
-    class MadaRngStlSort[A](_1: Expr.Of[Rng[A]], _2: (A, A) => Boolean) {
-        def stl_sort = SortExpr(_1, _2).expr
-    }
-    implicit def toMadaRngStlSort[A <% Ordered[A]](_1: Expr.Of[Rng[A]]): MadaRngStlSort[A] = new MadaRngStlSort[A](_1, _ < _)
-    class MadaRngStlSortWith[A](_1: Expr.Of[Rng[A]]) {
+    class MadaRngStlSort[A](_1: Expr.Of[Rng[A]]) {
+        def stl_sort(implicit _2: A => Ordered[A]) = SortExpr[A](_1, _2(_) < _).expr
         def stl_sortWith(_2: (A, A) => Boolean) = SortExpr(_1, _2).expr
     }
-    implicit def toMadaRngStlSortWith[A](_1: Expr.Of[Rng[A]]): MadaRngStlSortWith[A] = new MadaRngStlSortWith[A](_1)
+    implicit def toMadaRngStlSort[A](_1: Expr.Of[Rng[A]]): MadaRngStlSort[A] = new MadaRngStlSort[A](_1)
 }
 
 

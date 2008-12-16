@@ -52,7 +52,7 @@ class SortTest {
 
     def testIntroSort: Unit = {
         val r = from(longExample1).eval
-        mada.rng.detail.IntroSort[Int](r, _ < _)
+        mada.rng.stl.detail.IntroSort[Int](r, _ < _)
         assertEquals(from(0, 1000).eval, r)
     }
 

@@ -30,7 +30,7 @@
  */
 
 
-package mada.rng.detail
+package mada.rng.stl.detail
 
 
 object UnguardedPartition {
