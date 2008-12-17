@@ -39,7 +39,7 @@ object EqualsImpl {
         if (r1./.size./ != r2./.size./) {
             false
         } else {
-            r1./.stl_equal(r2.begin, f)./
+            r1./.stl_equalIf(r2.begin, f)./
         }
     }
 

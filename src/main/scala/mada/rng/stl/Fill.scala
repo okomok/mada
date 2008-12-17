@@ -16,5 +16,5 @@ object Fill extends Fill; trait Fill extends Predefs {
 
 
 case class FillExpr[A, B <: A](_1: Expr.Of[Rng[A]], _2: B) extends Expr.Alias[Rng[A], Unit] {
-    override protected def _alias = ReplaceExpr(_1, { (e: A) => _2 })
+    override protected def _alias = rng.ReplaceExpr(_1, { (e: A) => _2 })
 }

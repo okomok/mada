@@ -35,20 +35,25 @@ package mada.rng.stl
 
 object Mismatch extends Mismatch; trait Mismatch extends Predefs {
     class MadaRngStlMismatch[A1](_1: Expr.Of[Rng[A1]]) {
-        def stl_mismatch[A2](_2: Expr.Of[Pointer[A2]], _3: (A1, A2) => Boolean) = MismatchExpr(_1, _2, _3).expr
-        def stl_mismatch(_2: Expr.Of[Pointer[A1]]) = MismatchExpr[A1, A1](_1, _2, _ == _).expr
+        def stl_mismatch(_2: Expr.Of[Pointer[A1]]) = MismatchExpr(_1, _2).expr
+        def stl_mismatchIf[A2](_2: Expr.Of[Pointer[A2]], _3: (A1, A2) => Boolean) = MismatchIfExpr(_1, _2, _3).expr
     }
     implicit def toMadaRngStlMismatch[A1](_1: Expr.Of[Rng[A1]]): MadaRngStlMismatch[A1] = new MadaRngStlMismatch[A1](_1)
 }
 
 
-case class MismatchExpr[A1, A2](override val _1: Expr.Of[Rng[A1]], _2: Expr.Of[Pointer[A2]], _3: (A1, A2) => Boolean)
+case class MismatchExpr[A](_1: Expr.Of[Rng[A]], _2: Expr.Of[Pointer[A]])
+        extends Expr.Alias[Rng[A], (Pointer[A], Pointer[A])] {
+    override protected def _alias = MismatchIfExpr[A, A](_1, _2, _ == _)
+}
+
+case class MismatchIfExpr[A1, A2](override val _1: Expr.Of[Rng[A1]], _2: Expr.Of[Pointer[A2]], _3: (A1, A2) => Boolean)
         extends Expr.Method[Rng[A1], (Pointer[A1], Pointer[A2])] {
-    override protected def _default = MismatchImpl(_1.eval, _2.eval, _3)
+    override protected def _default = MismatchIfImpl(_1.eval, _2.eval, _3)
 }
 
 
-object MismatchImpl {
+object MismatchIfImpl {
     import Pointer._
 
     def apply[A1, A2](r1: Rng[A1], first2: Pointer[A2], __binary_pred: (A1, A2) => Boolean): (Pointer[A1], Pointer[A2]) = {
