@@ -10,7 +10,7 @@ package madatest.rng
 import mada.Expr
 import mada.rng._
 import mada.rng.From._
-import mada.rng.FindPointerOf._
+import mada.rng.stl.Find._
 import mada.rng.Find._
 import mada.rng.Exists._
 import mada.rng.Forall._
@@ -22,7 +22,7 @@ class FindTest {
     def testFind {
         val r = from(2, 100)
         assertEquals(r.find((_: Int) == 30).eval.get, 30)
-        assertEquals(*(r.findPointerOf((_: Int) == 30).eval), 30)
+        assertEquals(*(r.stl_find((_: Int) == 30).eval), 30)
     }
 
     def testExists {

@@ -8,10 +8,10 @@ package mada.rng.stl
 
 
 object Fill extends Fill; trait Fill extends Predefs {
-    class MadaRngFill[A](_1: Expr.Of[Rng[A]]) {
+    class MadaRngStlFill[A](_1: Expr.Of[Rng[A]]) {
         def stl_fill[B <: A](_2: B) = FillExpr(_1, _2).expr
     }
-    implicit def toMadaRngFill[A](_1: Expr.Of[Rng[A]]): MadaRngFill[A] = new MadaRngFill[A](_1)
+    implicit def toMadaRngStlFill[A](_1: Expr.Of[Rng[A]]): MadaRngStlFill[A] = new MadaRngStlFill[A](_1)
 }
 
 

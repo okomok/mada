@@ -7,9 +7,6 @@
 package mada.rng
 
 
-import Loop._
-
-
 object Find extends Find; trait Find extends Predefs {
     class MadaRngFind[A](_1: Expr.Of[Rng[A]]) {
         def find(_2: A => Boolean) = FindExpr(_1, _2).expr
@@ -24,9 +21,11 @@ case class FindExpr[A](override val _1: Expr.Of[Rng[A]], _2: A => Boolean) exten
 
 
 object FindImpl {
+    import Loop._
+
     def apply[A](r: Rng[A], f: A => Boolean): Option[A] = {
         var acc: Option[A] = None
-        // Prefer loop to findPointerOf so a fusion is enabled.
+        // Prefer loop to stl_find so a fusion is enabled.
         r./.loop({ (e: A) => if (f(e)) { acc = Some(e); false } else true })./
         acc
     }

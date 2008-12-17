@@ -11,11 +11,11 @@ import Mismatch._
 
 
 object Equal extends Equal; trait Equal extends Predefs {
-    class MadaRngEqual[A1](_1: Expr.Of[Rng[A1]]) {
+    class MadaRngStlEqual[A1](_1: Expr.Of[Rng[A1]]) {
         def stl_equal[A2](_2: Expr.Of[Pointer[A2]], _3: (A1, A2) => Boolean) = EqualExpr(_1, _2, _3).expr
         def stl_equal(_2: Expr.Of[Pointer[A1]]) = EqualExpr[A1, A1](_1, _2, _ == _).expr
     }
-    implicit def toMadaRngEqual[A1](_1: Expr.Of[Rng[A1]]): MadaRngEqual[A1] = new MadaRngEqual[A1](_1)
+    implicit def toMadaRngStlEqual[A1](_1: Expr.Of[Rng[A1]]): MadaRngStlEqual[A1] = new MadaRngStlEqual[A1](_1)
 }
 
 

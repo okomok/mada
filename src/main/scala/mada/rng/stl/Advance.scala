@@ -34,10 +34,10 @@ package mada.rng.stl
 
 
 object Advance extends Advance; trait Advance extends Predefs {
-    class MadaRngAdvance[A](_1: Expr.Of[Pointer[A]]) {
+    class MadaRngStlAdvance[A](_1: Expr.Of[Pointer[A]]) {
         def stl_advance(_2: Long) = AdvanceExpr(_1, _2).expr
     }
-    implicit def toMadaRngAdvance[A](_1: Expr.Of[Pointer[A]]): MadaRngAdvance[A] = new MadaRngAdvance[A](_1)
+    implicit def toMadaRngStlAdvance[A](_1: Expr.Of[Pointer[A]]): MadaRngStlAdvance[A] = new MadaRngStlAdvance[A](_1)
 }
 
 

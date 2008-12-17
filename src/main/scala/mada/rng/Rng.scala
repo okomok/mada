@@ -28,7 +28,6 @@ object Rng extends Namespace
         with Exists
         with Filter
         with Find
-        with FindPointerOf
         with First with Last
         with FoldLeft
         with Forall

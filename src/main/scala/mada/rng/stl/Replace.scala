@@ -11,10 +11,10 @@ import Pointer._
 
 
 object Replace extends Replace; trait Replace extends Predefs {
-    class MadaRngReplace[A](_1: Expr.Of[Rng[A]]) {
+    class MadaRngStlReplace[A](_1: Expr.Of[Rng[A]]) {
         def replace(_2: A => A) = ReplaceExpr(_1, _2).expr
     }
-    implicit def toMadaRngReplace[A](_1: Expr.Of[Rng[A]]): MadaRngReplace[A] = new MadaRngReplace[A](_1)
+    implicit def toMadaRngStlReplace[A](_1: Expr.Of[Rng[A]]): MadaRngStlReplace[A] = new MadaRngStlReplace[A](_1)
 }
 
 

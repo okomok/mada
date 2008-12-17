@@ -7,9 +7,6 @@
 package mada.rng
 
 
-import FindPointerOf._
-
-
 object DropWhile extends DropWhile; trait DropWhile extends Predefs {
     class MadaRngDropWhile[A](_1: Expr.Of[Rng[A]]) {
         def dropWhile(_2: A => Boolean) = DropWhileExpr(_1, _2).expr
@@ -24,7 +21,9 @@ case class DropWhileExpr[A](override val _1: Expr.Of[Rng[A]], _2: A => Boolean) 
 
 
 object DropWhileImpl {
+    import stl.Find._
+
     def apply[A](r: Rng[A], f: A => Boolean): Rng[A] = {
-        r./.findPointerOf(!f(_: A))./ <=< r.end
+        r./.stl_find(!f(_: A))./ <=< r.end
     }
 }

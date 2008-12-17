@@ -34,10 +34,10 @@ package mada.rng.stl
 
 
 object CopyBackward extends CopyBackward; trait CopyBackward extends Predefs {
-    class MadaRngCopyBackward[From](_1: Expr.Of[Rng[From]]) {
+    class MadaRngStlCopyBackward[From](_1: Expr.Of[Rng[From]]) {
         def stl_copyBackward[To >: From](_2: Expr.Of[Pointer[To]]) = CopyBackwardExpr(_1, _2).expr
     }
-    implicit def toMadaRngCopyBackward[From](_1: Expr.Of[Rng[From]]): MadaRngCopyBackward[From] = new MadaRngCopyBackward[From](_1)
+    implicit def toMadaRngStlCopyBackward[From](_1: Expr.Of[Rng[From]]): MadaRngStlCopyBackward[From] = new MadaRngStlCopyBackward[From](_1)
 }
 
 

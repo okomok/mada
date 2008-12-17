@@ -8,10 +8,10 @@ package mada.rng.stl
 
 
 object Copy extends Copy; trait Copy extends Predefs {
-    class MadaRngCopy[From](_1: Expr.Of[Rng[From]]) {
+    class MadaRngStlCopy[From](_1: Expr.Of[Rng[From]]) {
         def stl_copy[To >: From](_2: Expr.Of[Pointer[To]]) = CopyExpr(_1, _2).expr
     }
-    implicit def toMadaRngCopy[From](_1: Expr.Of[Rng[From]]): MadaRngCopy[From] = new MadaRngCopy[From](_1)
+    implicit def toMadaRngStlCopy[From](_1: Expr.Of[Rng[From]]): MadaRngStlCopy[From] = new MadaRngStlCopy[From](_1)
 }
 
 
