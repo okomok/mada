@@ -21,16 +21,9 @@ case class CountExpr[A](_1: Expr.Of[Rng[A]], _2: A) extends Expr.Alias[Rng[A], L
 }
 
 case class CountIfExpr[A](override val _1: Expr.Of[Rng[A]], _2: A => Boolean) extends Expr.Method[Rng[A], Long] {
-    override protected def _default = CountIfImpl(_1.eval, _2)
-}
-
-
-object CountIfImpl {
-    import Foreach._
-
-    def apply[A](r: Rng[A], f: A => Boolean): Long = {
+    override protected def _default = {
         var c = 0L
-        r./.foreach({ (e: A) => if (f(e)) c += 1L })./
+        ForeachExpr(_1, { (e: A) => if (_2(e)) c += 1 }).eval // enables fusion.
         c
     }
 }
