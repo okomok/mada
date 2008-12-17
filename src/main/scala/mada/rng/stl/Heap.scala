@@ -176,44 +176,6 @@ object SortHeapImpl {
 }
 
 
-// isHeap
-
-object IsHeap extends IsHeap; trait IsHeap extends Predefs {
-    class MadaRngStlIsHeap[A](_1: Expr.Of[Rng[A]]) {
-        def stl_isHeap(implicit _2: A => Ordered[A]) = IsHeapExpr[A](_1, _2(_) < _).expr
-        def stl_isHeapWith(_2: (A, A) => Boolean) = IsHeapExpr(_1, _2).expr
-    }
-    implicit def toMadaRngStlIsHeap[A](_1: Expr.Of[Rng[A]]): MadaRngStlIsHeap[A] = new MadaRngStlIsHeap[A](_1)
-}
-
-case class IsHeapExpr[A](override val _1: Expr.Of[Rng[A]], _2: (A, A) => Boolean) extends Expr.Method[Rng[A], Boolean] {
-    override protected def _default = IsHeapImpl(_1.eval, _2)
-}
-
-object IsHeapImpl {
-    def apply[A](r: Rng[A], __comp: (A, A) => Boolean): Boolean = {
-        r.assertModels(Traversal.RandomAccess)
-        val (__*, __first, __last) = r.toTriple
-        apply(__*, __last, __comp)
-    }
-
-    def apply[A](__first : Pointer[A], __n: Long, __comp: (A, A) => Boolean): Boolean = {
-        var __parent = 0L
-        var __child = 1L
-        while (__child < __n) {
-            if (__comp(__first(__parent), __first(__child))) {
-                return false
-            }
-            if ((__child & 1) == 0) {
-                __parent += 1
-            }
-            __child += 1
-        }
-        true
-    }
-}
-
-
 // helper
 
 object HeapImpl {

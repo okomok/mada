@@ -7,11 +7,6 @@
 package mada.rng.stl
 
 
-import FoldLeft._
-import Outdirect._
-import Size._
-
-
 object Distance extends Distance; trait Distance extends Predefs {
     class MadaRngStlDistance[A](_1: Expr.Of[Rng[A]]) {
         def stl_distance = DistanceExpr(_1).expr
@@ -26,6 +21,10 @@ case class DistanceExpr[A](override val _1: Expr.Of[Rng[A]]) extends Expr.Method
 
 
 object DistanceImpl {
+    import FoldLeft._
+    import Outdirect._
+    import Size._
+
     def apply[A](r: Rng[A]): Long = {
         r.traversal match {
             case _: Traversal.RandomAccess => r./.size./
