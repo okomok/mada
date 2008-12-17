@@ -24,6 +24,6 @@ object DropWhileImpl {
     import stl.Find._
 
     def apply[A](r: Rng[A], f: A => Boolean): Rng[A] = {
-        r./.stl_find(!f(_: A))./ <=< r.end
+        r./.stl_findIf(!f(_: A))./ <=< r.end
     }
 }

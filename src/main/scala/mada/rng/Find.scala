@@ -25,7 +25,7 @@ object FindImpl {
 
     def apply[A](r: Rng[A], f: A => Boolean): Option[A] = {
         var acc: Option[A] = None
-        // Prefer loop to stl_find so a fusion is enabled.
+        // Prefer loop to stl_findIf so a fusion is enabled.
         r./.loop({ (e: A) => if (f(e)) { acc = Some(e); false } else true })./
         acc
     }

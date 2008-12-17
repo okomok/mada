@@ -35,13 +35,18 @@ package mada.rng.stl
 
 object Find extends Find; trait Find extends Predefs {
     class MadaRngStlFind[A](_1: Expr.Of[Rng[A]]) {
-        def stl_find(_2: A => Boolean) = FindExpr(_1, _2).expr
+        def stl_find(_2: A) = FindExpr(_1, _2).expr
+        def stl_findIf(_2: A => Boolean) = FindIfExpr(_1, _2).expr
     }
     implicit def toMadaRngStlFind[A](_1: Expr.Of[Rng[A]]): MadaRngStlFind[A] = new MadaRngStlFind[A](_1)
 }
 
 
-case class FindExpr[A](override val _1: Expr.Of[Rng[A]], _2: A => Boolean) extends Expr.Method[Rng[A], Pointer[A]] {
+case class FindExpr[A](_1: Expr.Of[Rng[A]], _2: A) extends Expr.Alias[Rng[A], Pointer[A]] {
+    override protected def _alias = FindIfExpr[A](_1, _ == _2)
+}
+
+case class FindIfExpr[A](override val _1: Expr.Of[Rng[A]], _2: A => Boolean) extends Expr.Method[Rng[A], Pointer[A]] {
     override protected def _default = FindImpl(_1.eval, _2)
 }
 

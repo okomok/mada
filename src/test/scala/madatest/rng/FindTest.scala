@@ -22,7 +22,7 @@ class FindTest {
     def testFind {
         val r = from(2, 100)
         assertEquals(r.find((_: Int) == 30).eval.get, 30)
-        assertEquals(*(r.stl_find((_: Int) == 30).eval), 30)
+        assertEquals(*(r.stl_findIf((_: Int) == 30).eval), 30)
     }
 
     def testExists {
