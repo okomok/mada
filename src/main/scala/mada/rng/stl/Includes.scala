@@ -41,7 +41,7 @@ object IncludesImpl {
             val elem1 = *(__first1); val elem2 = *(__first2)
             if (__comp(elem2, elem1)) {
                 return false
-            }  else if (__comp(elem1, elem2)) {
+            } else if (__comp(elem1, elem2)) {
               ++(__first1)
             } else {
               ++(__first1); ++(__first2)
@@ -63,7 +63,7 @@ object IncludesImpl {
             val elem1 = _1_*(__first1); val elem2 = _2_*(__first2)
             if (__comp(elem2, elem1)) {
                 return false
-            }  else if (__comp(elem1, elem2)) {
+            } else if (__comp(elem1, elem2)) {
               __first1 += 1
             } else {
               __first1 += 1; __first2 += 1
