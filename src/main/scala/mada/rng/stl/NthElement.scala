@@ -35,14 +35,19 @@ package mada.rng.stl
 
 object NthElement extends NthElement; trait NthElement extends Predefs {
     class MadaRngStlNthElement[A](_1: Expr.Of[Rng[A]]) {
-        def stl_nthElement(_2: Rng[A] => Pointer[A])(implicit _3: A => Ordered[A]) = NthElementExpr[A](_1, _2, _3(_) < _).expr
-        def stl_nthElementWith(_2: Rng[A] => Pointer[A], _3: (A, A) => Boolean) = NthElementExpr(_1, _2, _3).expr
+        def stl_nthElement(_2: Rng[A] => Pointer[A])(implicit _3: A => Ordered[A]) = NthElementExpr[A](_1, _2, _3).expr
+        def stl_nthElementWith(_2: Rng[A] => Pointer[A], _3: (A, A) => Boolean) = NthElementWithExpr(_1, _2, _3).expr
     }
     implicit def toMadaRngStlNthElement[A](_1: Expr.Of[Rng[A]]): MadaRngStlNthElement[A] = new MadaRngStlNthElement[A](_1)
 }
 
 
-case class NthElementExpr[A](override val _1: Expr.Of[Rng[A]], _2: Rng[A] => Pointer[A], _3: (A, A) => Boolean)
+case class NthElementExpr[A](_1: Expr.Of[Rng[A]], _2: Rng[A] => Pointer[A], _3: A => Ordered[A])
+        extends Expr.Alias[Rng[A], Unit] {
+    override protected def _alias = NthElementWithExpr[A](_1, _2, _3(_) < _)
+}
+
+case class NthElementWithExpr[A](override val _1: Expr.Of[Rng[A]], _2: Rng[A] => Pointer[A], _3: (A, A) => Boolean)
         extends Expr.Method[Rng[A], Unit] {
     override protected def _default = NthElementImpl(_1.eval, _2, _3)
 }
