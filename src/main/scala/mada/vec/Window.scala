@@ -18,7 +18,14 @@ object Window extends Window; trait Window extends Predefs {
 case class WindowExpr[A](override val _1: Expr.Of[Vector[A]], _2: Long, _3: Long) extends Expr.Transform[Vector[A]] {
     override protected def _default = _1 match {
         case WindowExpr(x1, x2, x3) => WindowExpr(x1, x2 + _2, x2 + _3).eval // window-window fusion
-        case _ => new WindowVector(_1.eval, _2, _3)
+        case _ => {
+            val v = _1.eval
+            if (_2 == 0 && _3 == v.size) {
+                v
+            } else {
+                new WindowVector(v, _2, _3)
+            }
+        }
     }
 }
 

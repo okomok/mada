@@ -22,7 +22,7 @@ object Vector {
     class NotReadableError[A](val vector: Vector[A]) extends Error
     class NotWritableError[A](val vector: Vector[A]) extends Error
 
-    case class OutputFunction[A](vector: Vector[A], start: Long) extends (A => Any) {
+    case class OutputImpltion[A](vector: Vector[A], start: Long) extends (A => Any) {
         private var i = start
         override def apply(e: A) = { vector(i) = e; i += 1 }
         final def index: Long = i
@@ -39,7 +39,7 @@ trait Vector[A] extends Expr.Start[Vector[A]] {
     final def toRange = (0L, size)
     final def toTriple = (this, 0L, size)
 
-    final def out(i: Long) = new Vector.OutputFunction(this, i)
+    final def out(i: Long) = new Vector.OutputImpltion(this, i)
     final def outBegin = out(0)
     final def outEnd = out(size)
 }

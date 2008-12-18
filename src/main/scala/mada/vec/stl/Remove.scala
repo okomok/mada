@@ -49,12 +49,12 @@ case class RemoveExpr[A](_1: Expr.Of[Vector[A]], _2: A) extends Expr.Alias[Vecto
 case class RemoveIfExpr[A](override val _1: Expr.Of[Vector[A]], _2: A => Boolean) extends Expr.Method[Vector[A], Long] {
     override protected def _default = {
         val (v, i, j) = _1.eval.toTriple
-        RemoveIfFunc(v, i, j, _2)
+        RemoveIfImpl(v, i, j, _2)
     }
 }
 
 
-object RemoveIfFunc {
+object RemoveIfImpl {
     import Find._
     import RemoveCopy._
     import Window._
@@ -62,7 +62,7 @@ object RemoveIfFunc {
     def apply[A](* : Vector[A], first: Long, __last: Long, __pred: A => Boolean): Long = {
         var __first = first
 
-        __first = *./.stl_findIf(__pred)./
+        __first = *./.window(__first, __last).stl_findIf(__pred)./
         if ( __first == __last ) {
             __first
         } else {

@@ -17,7 +17,7 @@ object Drop extends Drop; trait Drop extends Predefs {
 
 case class DropExpr[A](override val _1: Expr.Of[Vector[A]], _2: Long) extends Expr.Transform[Vector[A]] {
     override protected def _default = _1 match {
-        case DropExpr(x1, x2) => DropFunc(x1.eval, x2 + _2)
+        case DropExpr(x1, x2) => DropExpr(x1, x2 + _2).eval // drop-drop fusion
         case _ => {
             val v = _1.eval
             new WindowVector(v, Math.min(_2, v.size), v.size)

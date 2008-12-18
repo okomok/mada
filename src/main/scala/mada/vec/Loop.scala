@@ -20,13 +20,13 @@ case class LoopExpr[A](override val _1: Expr.Of[Vector[A]], _2: A => Boolean) ex
         case MapExpr(x1, x2) => LoopExpr(x1, _2 compose x2).eval // loop-map fusion
         case _ => {
             val (v, i, j) = _1.eval.toTriple
-            LoopFunc(v, i, j, _2)
+            LoopImpl(v, i, j, _2)
         }
     }
 }
 
 
-object LoopFunc {
+object LoopImpl {
     def apply[A](* : Vector[A], first: Long, __last: Long, __f: A => Boolean): Unit = {
         var __first = first
 
