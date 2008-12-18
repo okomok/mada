@@ -8,25 +8,27 @@ package mada.vec.stl
 
 
 object Copy extends Copy; trait Copy extends Predefs {
-    class MadaVecStlCopy[From](_1: Expr.Of[Vector[From]]) {
-        def stl_copy[To >: From](_2: Vector.Pointer[To]) = CopyExpr(_1, _2).expr
-        def stl_copyIf[To >: From](_2: Vector.Pointer[To], _3: From => Boolean) = CopyIfExpr(_1, _2, _3).expr
+    class MadaVecStlCopy[A](_1: Expr.Of[Vector[A]]) {
+        def stl_copy(_2: A => Any) = CopyExpr(_1, _2).expr
+        def stl_copyIf(_2: A => Any, _3: A => Boolean) = CopyIfExpr(_1, _2, _3).expr
     }
-    implicit def toMadaVecStlCopy[From](_1: Expr.Of[Vector[From]]): MadaVecStlCopy[From] = new MadaVecStlCopy[From](_1)
+    implicit def toMadaVecStlCopy[A](_1: Expr.Of[Vector[A]]): MadaVecStlCopy[A] = new MadaVecStlCopy[A](_1)
 }
 
 
-case class CopyExpr[From, To >: From](override val _1: Expr.Of[Vector[From]], _2: Vector.Pointer[To])
-extends Expr.Method[Vector[From], Vector.Pointer[To]] {
-    override protected def _default = {
-        ForEachExpr[From](_1, { (e: From) => _2.write(e); _2 += 1 }).eval // enables fusion.
-        _2
-    }
+case class CopyExpr[A](_1: Expr.Of[Vector[A]], _2: A => Any) extends Expr.Alias[Vector[A], Unit] {
+    override protected def _alias = ForEachExpr(_1, _2)
+}
+
+case class CopyIfExpr[A](_1: Expr.Of[Vector[A]], _2: A => Any, _3: A => Boolean) extends Expr.Alias[Vector[A], Unit] {
+    override protected def _alias = ForEachExpr(_1, { (e: A) => if (_3(e)) _2(e) })
 }
 
 
-case class CopyIfExpr[From, To >: From](_1: Expr.Of[Vector[From]], _2: Vector.Pointer[To], _3: From => Boolean)
-extends Expr.Method[Vector[From], Vector.Pointer[To]] {
+
+/*
+case class CopyIfExpr[A, A >: A](_1: Expr.Of[Vector[A]], _2: Vector.Pointer[A], _3: A => Boolean)
+extends Expr.Method[Vector[A], Vector.Pointer[A]] {
     override protected def _default = {
         val (v, i, j) = _1.eval.toTriple
         CopyIfFunc(v, i, j, _2, _3)
@@ -35,7 +37,7 @@ extends Expr.Method[Vector[From], Vector.Pointer[To]] {
 
 
 object CopyIfFunc {
-    def apply[From, To >: From](* : Vector[From], first: Long, __last: Long, __result: Vector.Pointer[To], __pred: From => Boolean): Vector.Pointer[To] = {
+    def apply[A, A >: A](* : Vector[A], first: Long, __last: Long, __result: Vector.Pointer[A], __pred: A => Boolean): Vector.Pointer[A] = {
         var __first = first
 
         var __n = __last - __first
@@ -49,4 +51,4 @@ object CopyIfFunc {
         }
         return __result
     }
-}
+}*/
