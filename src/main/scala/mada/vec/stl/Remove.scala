@@ -60,17 +60,16 @@ object RemoveIfImpl {
     import Window._
 
     def apply[A](* : Vector[A], first: Long, __last: Long, __pred: A => Boolean): Long = {
+        import *._
         var __first = first
 
-        __first = *./.window(__first, __last).stl_findIf(__pred)./
+        __first = /.window(__first, __last).stl_findIf(__pred)./
         if ( __first == __last ) {
             __first
         } else {
             var __next = __first
             __next += 1
-            val outFirst = *.out(__first)
-            *./.window(__next, __last).stl_removeCopyIf(outFirst, __pred)./
-            outFirst.index
+            /.window(__next, __last).stl_removeCopyIf(into(__first), __pred)./.index
         }
     }
 }

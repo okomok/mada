@@ -8,3 +8,5 @@ package mada.vec
 
 
 object Compatibles extends Compatibles; trait Compatibles extends Namespace
+    with ArrayCompatible
+    with RangeCompatible

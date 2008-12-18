@@ -15,6 +15,9 @@ object Foreach extends Foreach; trait Foreach extends Predefs {
 }
 
 
-case class ForeachExpr[A](_1: Expr.Of[Vector[A]], _2: A => Any) extends Expr.Alias[Vector[A], Unit] {
-    override protected def _alias = stl.ForEachExpr(_1, _2)
+case class ForeachExpr[A](override val _1: Expr.Of[Vector[A]], _2: A => Any) extends Expr.Method[Vector[A], Unit] {
+    override protected def _default = {
+        stl.ForEachExpr(_1, _2).eval
+        ()
+    }
 }

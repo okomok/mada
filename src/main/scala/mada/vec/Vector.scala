@@ -22,10 +22,10 @@ object Vector {
     class NotReadableError[A](val vector: Vector[A]) extends Error
     class NotWritableError[A](val vector: Vector[A]) extends Error
 
-    case class OutputImpltion[A](vector: Vector[A], start: Long) extends (A => Any) {
+    case class Into[A](vector: Vector[A], start: Long) extends (A => Any) {
         private var i = start
         override def apply(e: A) = { vector(i) = e; i += 1 }
-        final def index: Long = i
+        final def index = i
     }
 }
 
@@ -36,10 +36,22 @@ trait Vector[A] extends Expr.Start[Vector[A]] {
     def update(i: Long, e: A): Unit = throw new Vector.NotWritableError(this)
 
     final def vector = this
-    final def toRange = (0L, size)
+    final def toPair = (0L, size)
     final def toTriple = (this, 0L, size)
 
-    final def out(i: Long) = new Vector.OutputImpltion(this, i)
-    final def outBegin = out(0)
-    final def outEnd = out(size)
+    final def swap(i: Long, j: Long): Unit = {
+        val * = this
+        val tmp = *(i)
+        *(i) = *(j)
+        *(j) = tmp
+    }
+
+    override def equals(that: Any) = that match {
+        case that: Vector[_] => { import Equals._; /.vequals(that)./ }
+        case _ => false
+    }
+
+    final def into(i: Long) = new Vector.Into(this, i)
+    final def intoBegin = into(0)
+    final def intoEnd = into(size)
 }
