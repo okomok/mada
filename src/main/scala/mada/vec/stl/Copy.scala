@@ -19,7 +19,7 @@ object Copy extends Copy; trait Copy extends Predefs {
 case class CopyExpr[From, To >: From](override val _1: Expr.Of[Vector[From]], _2: Vector.Pointer[To])
 extends Expr.Method[Vector[From], Vector.Pointer[To]] {
     override protected def _default = {
-        ForEachExpr[From](_1, { e: From => _2.write(e); _2 += 1 }).eval // enables fusion.
+        ForEachExpr[From](_1, { (e: From) => _2.write(e); _2 += 1 }).eval // enables fusion.
         _2
     }
 }
@@ -28,12 +28,13 @@ extends Expr.Method[Vector[From], Vector.Pointer[To]] {
 case class CopyIfExpr[From, To >: From](_1: Expr.Of[Vector[From]], _2: Vector.Pointer[To], _3: From => Boolean)
 extends Expr.Method[Vector[From], Vector.Pointer[To]] {
     override protected def _default = {
-        val (__*, __first, __last) = _1.eval.toTriple
-        CopyIfImpl(__*, __first, __last, _2, _3)
+        val (v, i, j) = _1.eval.toTriple
+        CopyIfFunc(v, i, j, _2, _3)
     }
 }
 
-object CopyIfImpl {
+
+object CopyIfFunc {
     def apply[From, To >: From](* : Vector[From], first: Long, __last: Long, __result: Vector.Pointer[To], __pred: From => Boolean): Vector.Pointer[To] = {
         var __first = first
 
