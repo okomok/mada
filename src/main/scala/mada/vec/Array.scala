@@ -23,14 +23,10 @@ object ArrayToVector extends ArrayToVector; trait ArrayToVector extends Predefs 
     implicit def toMadaVecArrayToVector[A](_1: Expr.Of[Array[A]]): MadaVecArrayToVector[A] = new MadaVecArrayToVector[A](_1)
 }
 
-case class FromArrayExpr[A](_1: Expr.Of[Array[A]]) extends Expr[Array[A], Vector[A]] {
-    override protected def _eval[U](x: Expr[Vector[A], U]): U = x match {
-        case Self => _1?this
-        case Unknown => _1 match {
-            case ToArrayExpr(x1) => x1.eval
-            case _ => new ArrayVector(_1.eval)
-        }
-        case _ => dontKnow(x)
+case class FromArrayExpr[A](override val _1: Expr.Of[Array[A]]) extends Expr.Method[Array[A], Vector[A]] {
+    override protected def _default =  _1 match {
+        case ToArrayExpr(x1) => x1.eval
+        case _ => new ArrayVector(_1.eval)
     }
 }
 

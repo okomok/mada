@@ -6,7 +6,7 @@
 
 package mada.vec
 
-
+/*
 object Remove extends Remove; trait Remove extends Predefs {
     class MadaVecRemove[A](_1: Expr.Of[Vector[A]]) {
         def remove(_2: A => Boolean) = RemoveExpr(_1, _2).expr
@@ -34,3 +34,4 @@ object RemoveImpl {
         v./.window(0, v./.stl_removeIf(pred)./)./
     }
 }
+*/

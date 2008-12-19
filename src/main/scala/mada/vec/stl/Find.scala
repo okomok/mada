@@ -17,7 +17,7 @@ object Find extends Find; trait Find extends Predefs {
 
 
 case class FindExpr[A](_1: Expr.Of[Vector[A]], _2: A) extends Expr.Alias[Vector[A], Long] {
-    override protected def _alias = FindIfExpr(_1, { (e: A) => e == _2 })
+    override protected def _alias = FindIfExpr(_1, (_: A) == _2)
 }
 
 case class FindIfExpr[A](override val _1: Expr.Of[Vector[A]], _2: A => Boolean) extends Expr.Method[Vector[A], Long] {

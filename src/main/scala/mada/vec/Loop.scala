@@ -17,7 +17,14 @@ object Loop extends Loop; trait Loop extends Predefs {
 
 case class LoopExpr[A, F <: (A => Boolean)](override val _1: Expr.Of[Vector[A]], _2: F) extends Expr.Method[Vector[A], F] {
     override protected def _default = _1 match {
-        case MapExpr(x1, x2) => { LoopExpr(x1, _2 compose x2).eval; _2 } // loop-map fusion
+        case FilterExpr(x1, x2) => { // loop-filter fusion (important!)
+            LoopExpr(x1, { (e: A) => if (x2(e)) _2(e) else true }).eval
+            _2
+        }
+        case MapExpr(x1, x2) => { // loop-map fusion
+            LoopExpr(x1, _2 compose x2).eval
+            _2
+        }
         case _ => {
             val (v, i, j) = _1.eval.toTriple
             LoopImpl(v, i, j, _2)
