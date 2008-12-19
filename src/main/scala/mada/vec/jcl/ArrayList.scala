@@ -26,14 +26,10 @@ object ArrayListToVector extends ArrayListToVector; trait ArrayListToVector exte
     implicit def toMadaVecArrayListToVector[A](_1: Expr.Of[JavaArrayList[A]]): MadaVecArrayListToVector[A] = new MadaVecArrayListToVector[A](_1)
 }
 
-case class FromArrayListExpr[A](_1: Expr.Of[JavaArrayList[A]]) extends Expr[JavaArrayList[A], Vector[A]] {
-    override protected def _eval[U](x: Expr[Vector[A], U]): U = x match {
-        case Self => _1?this
-        case Unknown => _1 match {
-            case ToArrayListExpr(x1) => x1.eval
-            case _ => new ArrayListVector(_1.eval)
-        }
-        case _ => dontKnow(x)
+case class FromArrayListExpr[A](override val _1: Expr.Of[JavaArrayList[A]]) extends Expr.Method[JavaArrayList[A], Vector[A]] {
+    override protected def _default = _1 match {
+        case ToArrayListExpr(x1) => x1.eval
+        case _ => new ArrayListVector(_1.eval)
     }
 }
 

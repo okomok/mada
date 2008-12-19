@@ -20,11 +20,7 @@ case class WindowExpr[A](override val _1: Expr.Of[Vector[A]], _2: Long, _3: Long
         case WindowExpr(x1, x2, x3) => WindowExpr(x1, x2 + _2, x2 + _3).eval // window-window fusion
         case _ => {
             val v = _1.eval
-            if (_2 == 0 && _3 == v.size) {
-                v
-            } else {
-                new WindowVector(v, _2, _3)
-            }
+            if (_2 == 0 && _3 == v.size) v else new WindowVector(v, _2, _3)
         }
     }
 }

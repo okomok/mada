@@ -22,7 +22,7 @@ case class RemoveCopyExpr[A, F <: (A => Any)](_1: Expr.Of[Vector[A]], _2: F, _3:
 
 case class RemoveCopyIfExpr[A, F <: (A => Any)](override val _1: Expr.Of[Vector[A]], _2: F, _3: A => Boolean) extends Expr.Method[Vector[A], F] {
     override protected def _default = {
-        CopyIfExpr(_1, _2, { (e: A) => !_3(e) }).eval
+        CopyIfExpr(_1, _2, !_3(_: A)).eval
         _2
     }
 }

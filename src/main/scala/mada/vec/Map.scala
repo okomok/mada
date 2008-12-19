@@ -15,8 +15,7 @@ object Map extends Map; trait Map extends Predefs {
 }
 
 
-case class MapExpr[From, To](override val _1: Expr.Of[Vector[From]], _2: From => To)
-        extends Expr.Method[Vector[From], Vector[To]] {
+case class MapExpr[From, To](override val _1: Expr.Of[Vector[From]], _2: From => To) extends Expr.Method[Vector[From], Vector[To]] {
     override protected def _default = _1 match {
         case MapExpr(x1, x2) => MapExpr(x1, _2 compose x2).eval // map-map fusion
         case _ => new MapVector(_1.eval, _2)
@@ -24,7 +23,6 @@ case class MapExpr[From, To](override val _1: Expr.Of[Vector[From]], _2: From =>
 }
 
 
-class MapVector[From, To](override val * : Vector[From], f: From => To)
-        extends Vector.Adapter[From, To] with Vector.NotWritable[To] {
+class MapVector[From, To](override val * : Vector[From], f: From => To) extends Vector.Adapter[From, To] with Vector.NotWritable[To] {
     override def apply(i: Long) = f(*(i))
 }
