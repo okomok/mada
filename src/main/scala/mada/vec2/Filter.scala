@@ -7,18 +7,15 @@
 package mada.vec2
 
 
-class FilterVector[A](v: Vector[A], p: A => Boolean) extends Vector[A] {
+class FilterVector[A](v: Vector[A], p: A => Boolean) extends Adapter[A, A] with NotWritable[A] {
     // force-on-access won't be thread-safe...
-    private val * = {
+    override val * = {
+        // This seems better than copy into ArrayList wrt worst-case space.
         val w = v.force
         w.window(0, w.stlRemoveIf(p))
     }
 
-    override def size = *.size
-    override def apply(i: Long) = *(i)
-    override def update(i: Long, e: A) = *(i) = e
-
-    override def filter(_p: A => Boolean) = v.filter({(e: A) => p(e) && _p(e)})
+    override def filter(_p: A => Boolean) = *.filter({(e: A) => p(e) && _p(e)})
 
     /*
     override def loop[F <: (A => Boolean)](f: F) = {

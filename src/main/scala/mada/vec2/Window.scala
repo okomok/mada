@@ -7,7 +7,7 @@
 package mada.vec2
 
 
-class WindowVector[A](override val * : Vector[A], n: Long, m: Long) extends Vector.Adapter[A, A] {
+class WindowVector[A](override val * : Vector[A], n: Long, m: Long) extends Adapter[A, A] {
     override def size = m - n
     override def apply(i: Long) = *(n + i)
     override def update(i: Long, e: A) = *(n + i) = e

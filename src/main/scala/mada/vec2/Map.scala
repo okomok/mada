@@ -7,7 +7,7 @@
 package mada.vec2
 
 
-class MapVector[Z, A](override val * : Vector[Z], f: Z => A) extends Vector.Adapter[Z, A] with Vector.NotWritable[A] {
+class MapVector[Z, A](override val * : Vector[Z], f: Z => A) extends Adapter[Z, A] with NotWritable[A] {
     override def apply(i: Long) = f(*(i))
 
     override def map[B](_f: A => B) = *.map(_f compose f)
