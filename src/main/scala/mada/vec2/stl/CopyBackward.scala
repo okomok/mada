@@ -35,8 +35,12 @@ package mada.vec2.stl
 
 object CopyBackward {
     def apply[From, To >: From](v : Vector[From], w: Vector[To]): Long = {
-        var (__first, __last) = v.toPair
-        var (_, __result) = w.toPair
+        v.reverse.stlCopy(w.reverse.intoBegin).index
+    }
+
+    def apply[From, To >: From](v: Vector[From], __first: Long, last: Long, w: Vector[To], result: Long): Long = {
+        var __last = last
+        var __result = result
 
         var __n = __last - __first
         while (__n > 0) {

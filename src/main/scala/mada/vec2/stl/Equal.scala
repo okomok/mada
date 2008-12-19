@@ -33,26 +33,21 @@
 package mada.vec2.stl
 
 
-object Copy {
-    def apply[From, To >: From](v: Vector[From], first: Long, __last: Long, w: Vector[To], result: Long): Long = {
-        var __first = first
-        var __result = result
-
-        var __n = __last - __first
-        while (__n > 0) {
-            w(__result) = v(__first)
-            __first += 1
-            __result += 1
-            __n -= 1
-        }
-        __result
+object Equal {
+    def apply[A1, A2](v1: Vector[A1], first1: Long, __last1: Long, v2: Vector[A2], first2: Long): Boolean = {
+        apply(v1, first1, __last1, v2, first2, (_: A1) == (_: A2))
     }
-}
 
+    def apply[A1, A2](v1: Vector[A1], first1: Long, __last1: Long, v2: Vector[A2], first2: Long, __binary_pred: (A1, A2) => Boolean): Boolean = {
+        var __first1 = first1
+        var __first2 = first2
 
-object CopyIf {
-    def apply[A, F <: (A => Any)](v: Vector[A], f: F, p: A => Boolean): F = {
-        v.stlForEach({ (e: A) => if (p(e)) f(e) })
-        f
+        while (__first1 != __last1) {
+            if (!__binary_pred(v1(__first1), v2(__first2))) {
+                return false
+            }
+            __first1 += 1; __first2 += 1
+        }
+        true
     }
 }

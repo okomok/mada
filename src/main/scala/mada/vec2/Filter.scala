@@ -19,7 +19,7 @@ class FilterVector[A](v: Vector[A], p: A => Boolean) extends Adapter[A, A] with 
 
     /*
     override def loop[F <: (A => Boolean)](f: F) = {
-        v.loop({ (e: A) => if (p(e)) f(e) else true })
+        ?.loop({ (e: A) => if (p(e)) f(e) else true })
         f
     }
     */
