@@ -9,12 +9,15 @@ package mada.vec
 
 object Slice extends Slice; trait Slice extends Predefs {
     class MadaVecSlice[A](_1: Expr.Of[Vector[A]]) {
-        def slice(_2: Long, _3: Long) = SliceExpr(_1, _2, _3).expr
+        def slice(_2: Long, _3: Long) = SliceImpl(_1, _2, _3)
     }
     implicit def toMadaVecSlice[A](_1: Expr.Of[Vector[A]]): MadaVecSlice[A] = new MadaVecSlice[A](_1)
 }
 
 
-case class SliceExpr[A](_1: Expr.Of[Vector[A]], _2: Long, _3: Long) extends Expr.Alias[Vector[A], Vector[A]] {
-    override protected def _alias = TakeExpr(DropExpr(_1, _2), _3 - _2)
+object SliceImpl {
+    import Drop._
+    import Take._
+
+    def apply[A](_1: Expr.Of[Vector[A]], _2: Long, _3: Long) = _1.drop(_2).take(_3 - _2)
 }

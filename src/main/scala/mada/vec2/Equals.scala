@@ -30,24 +30,15 @@
  */
 
 
-package mada.vec
+package mada.vec2
 
 
-object Equals extends Equals; trait Equals extends Predefs {
-    class MadaVecEquals[A1](_1: Expr.Of[Vector[A1]]) {
-        def vequals[A2](_2: Expr.Of[Vector[A2]]) = EqualsIfExpr(_1, _2, (_: A1) == (_: A2)).expr
-        def vequalsIf[A2](_2: Expr.Of[Vector[A2]], _3: (A1, A2) => Boolean) = EqualsIfExpr(_1, _2, _3).expr
-    }
-    implicit def toMadaVecEquals[A1](_1: Expr.Of[Vector[A1]]): MadaVecEquals[A1] = new MadaVecEquals[A1](_1)
+object Equals {
+    def apply[A1, A2](v1: Vector[A1], v2: Vector[A2]): Boolean = EqualsIf(v1, v2, (_: A1) == (_: A2))
 }
 
 
-case class EqualsIfExpr[A1, A2](override val _1: Expr.Of[Vector[A1]], _2: Expr.Of[Vector[A2]], _3: (A1, A2) => Boolean) extends Expr.Method[Vector[A1], Boolean] {
-    override protected def _default = EqualsIfImpl(_1.eval, _2.eval, _3)
-}
-
-
-object EqualsIfImpl {
+object EqualsIf {
     def apply[A1, A2](v1: Vector[A1], v2: Vector[A2], __binary_pred: (A1, A2) => Boolean): Boolean = {
         var (__first1, __last1) = v1.toPair
         var (__first2, __last2) = v2.toPair
