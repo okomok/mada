@@ -35,7 +35,7 @@ trait Vector[A] {
     final def toPair: (Long, Long) = (0, size)
     final def toTriple: (Vector[A], Long, Long) = (this, 0, size)
 
-    override def equals(that: Any) = that match {
+    override def equals(that: Any): Boolean = that match {
         case that: Vector[_] => Equals(this, that)
         case _ => false
     }
@@ -43,12 +43,15 @@ trait Vector[A] {
     def always[B](that: Vector[B]): Vector[B] = that
     def append(that: Vector[A]): Vector[A] = new AppendVector(this, that)
     def contains(elem: Any): Boolean = exists(_ == elem)
+    def copy: Vector[A] = force.cut
+    def cut: Vector[A] = new CutVector(this)
     def cycle(n: Long): Vector[A] = new CycleVector(this, n)
     def drop(n: Long): Vector[A] = window(Math.min(n, size), size)
     def dropWhile(p: A => Boolean): Vector[A] = window(stlFindIf(!p(_: A)), size)
     def equalsWith[B](that: Vector[B])(p: (A, B) => Boolean): Boolean = Equals(this, that, p)
     def exists(p: A => Boolean): Boolean = find(p) != None
     def filter(p: A => Boolean): Vector[A] = new FilterVector(this, p)
+    def filtering(p: A => Boolean): Vector[A] = new FilteringVector(this, p)
     def find(p: A => Boolean): Option[A] = Find(this, p)
     def first: A = First(this)
     def forall(p: A => Boolean): Boolean = find(!p(_: A)) == None
@@ -66,6 +69,7 @@ trait Vector[A] {
     def map[B](f: A => B): Vector[B] = new MapVector(this, f)
     def offset(i: Long, j: Long): Vector[A] = window(i, size + j)
     def remove(p: A => Boolean): Vector[A] = filter(!p(_: A))
+    def removing(p: A => Boolean): Vector[A] = filtering(!p(_: A))
     def reverse: Vector[A] = new ReverseVector(this)
     def slice(from: Long, until: Long): Vector[A] = drop(from).take(until - from)
     def slice(from: Long): Vector[A] = slice(from, size)
