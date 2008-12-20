@@ -34,6 +34,7 @@ package mada.vec2.stl
 
 
 object Copy {
+    /*
     def apply[From, To >: From](v: Vector[From], first: Long, __last: Long, w: Vector[To], result: Long): Long = {
         var __first = first
         var __result = result
@@ -47,6 +48,7 @@ object Copy {
         }
         __result
     }
+    */
 }
 
 

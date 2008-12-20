@@ -39,7 +39,7 @@ trait Vector[A] {
     final def toTriple: (Vector[A], Long, Long) = (this, 0, size)
 
     override def equals(that: Any): Boolean = that match {
-        case that: Vector[_] => Equals(this, that)
+        case that: Vector[_] => equalsWith(this)(stl.EqualTo)
         case _ => false
     }
 
@@ -52,7 +52,7 @@ trait Vector[A] {
     def cycle(n: Long): Vector[A] = new CycleVector(this, n) // kernel
     def drop(n: Long): Vector[A] = window(Math.min(n, size), size)
     def dropWhile(p: A => Boolean): Vector[A] = window(stlFindIf(!p(_: A)), size)
-    def equalsWith[B](that: Vector[B])(p: (A, B) => Boolean): Boolean = Equals(this, that, p) // kernel
+    def equalsWith[B](that: Vector[B])(p: (A, B) => Boolean): Boolean = EqualsWith(this, that, p) // kernel
     def exists(p: A => Boolean): Boolean = find(p) != None
     def filter(p: A => Boolean): Vector[A] = new FilterVector(this, p) // kernel
     def filtering(p: A => Boolean): Vector[A] = new FilteringVector(this, p) // kernel
@@ -66,8 +66,8 @@ trait Vector[A] {
     def identity: Vector[A] = this
     def isDefinedAt(x: Long): Boolean = (x >= 0) && (x < size)
     def isEmpty: Boolean = size == 0
-    def lazy_ : Vector[A] = new LazyVector(this) // kernel
     def last: A = Last(this)
+    def lazy_ : Vector[A] = new LazyVector(this) // kernel
     def length: Long = size
     def loop[F <: (A => Boolean)](f: F): F = Loop(this, f) // kernel
     def map[B](f: A => B): Vector[B] = new MapVector(this, f) // kernel
@@ -94,10 +94,12 @@ trait Vector[A] {
     def stlAccumulate[B](z: B, op: (B, A) => B): B = stl.Accumulate(this, z, op) // kernel
     def stlCopy[F <: (A => Any)](f: F): F = stlForEach(f)
     def stlCopyIf[F <: (A => Any)](f: F, p: A => Boolean): F = stl.CopyIf(this, f, p)
-    def stlCopyBackward[B >: A](that: Vector[B]): Unit = stl.CopyBackward(this, that)
+    def stlCopyBackward[B >: A](that: Vector[B], i: Long): Long = stl.CopyBackward(this, that, i)
     def stlCount(e: A): Long = stlCountIf(_ == e)
     def stlCountIf(p: A => Boolean): Long = stl.CountIf(this, p)
     def stlDistance: Long = size
+    def stlEqual[B](that: Vector[B], i: Long): Boolean = stlEqual(that, i, stl.EqualTo)
+    def stlEqual[B](that: Vector[B], i: Long, p: (A, B) => Boolean): Boolean = stl.Equal(this, that, i, p)
     def stlFind(e: A): Long = stlFindIf(_ == e)
     def stlFindIf(p: A => Boolean): Long = stl.FindIf(this, p) // kernel
     def stlForEach[F <: (A => Any)](f: F): F = stl.ForEach(this, f)
