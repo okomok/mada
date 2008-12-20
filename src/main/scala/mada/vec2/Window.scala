@@ -7,6 +7,9 @@
 package mada.vec2
 
 
+// Note: window shall not bounds-check.
+
+
 class WindowVector[A](override val * : Vector[A], n: Long, m: Long) extends Adapter[A, A] {
     Assert(n <= m)
 
