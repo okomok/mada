@@ -8,14 +8,6 @@ package mada
 
 
 object Vector {
-    type NotReadableError[A] = vec.NotReadableError[A]
-    type NotWritableError[A] = vec.NotWritableError[A]
-
-    type Adapter[Z, A] = vec.Adapter[Z, A]
-    type NotWritable[A] = vec.NotWritable[A]
-
-    type Into[A] = vec.Into[A]
-
     def empty[A]: Vector[A] = vec.Empty.apply[A]
     def fromArray[A](u: Array[A]): Vector[A] = vec.FromArray(u)
     def fromCell[A](u: Cell[A]): Vector[A] = vec.FromCell(u)
@@ -25,9 +17,16 @@ object Vector {
     def fromString(u: String): Vector[Char] = vec.FromString(u)
     def fromValues[A](es: A*): Vector[A] = fromJclArrayList(vec.jcl.NewArrayList(es: _*))
     def single[A](u: A): Vector[A] = vec.Single(u)
+    def stlOutput[A](f: A => Any) = vec.stl.Output(f)
     def range(i: Int, j: Int): Vector[Int] = vec.IntRange(i, j)
     def range(i: Long, j: Long): Vector[Long] = vec.LongRange(i, j)
     def stringize(v: Vector[Char]): String = vec.Stringize(v)
+
+    type NotReadableError[A] = vec.NotReadableError[A]
+    type NotWritableError[A] = vec.NotWritableError[A]
+
+    type Adapter[Z, A] = vec.Adapter[Z, A]
+    type NotWritable[A] = vec.NotWritable[A]
 }
 
 
@@ -97,6 +96,7 @@ trait Vector[A] {
     def toJclArrayList: java.util.ArrayList[A] = jcl.ToArrayList(this)
     def toRandomAccessSeq: RandomAccessSeq.Mutable[A] = ToRandomAccessSeq(this)
     def window(n: Long, m: Long): Vector[A] = Window(this, n, m) // kernel
+    def writer(i: Long): (A => Unit) = Writer(this, i)
     def ++(that: Vector[A]): Vector[A] = append(that)
 
     def stlAccumulate[B](i: Long, j: Long, z: B, op: (B, A) => B): B = stl.Accumulate(this, i, j, z, op) // kernel
@@ -116,8 +116,4 @@ trait Vector[A] {
     def stlRemoveCopy[B >: A](i: Long, j: Long, w: Vector[B], k: Long, e: Any): Long = stl.RemoveCopy(this, i, j, w, k, e)
     def stlRemoveCopyIf[B >: A](i: Long, j: Long, w: Vector[B], k: Long, p: A => Boolean): Long = stl.RemoveCopyIf(this, i, j, w, k, p)
     def stlReverse(i: Long, j: Long): Unit = stl.Reverse(this, i, j)
-
-    def into(i: Long): Into[A] = new Into(this, i)
-    def intoBegin: Into[A] = into(0)
-    def intoEnd: Into[A] = into(size)
 }
