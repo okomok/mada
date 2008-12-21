@@ -24,7 +24,7 @@ object TestVectorReadWrite {
 
 object TestVectorReadOnly {
     def apply[A](expected: Array[A], actual: Vector[A]): Unit = {
-        assertEquals(expected.length, actual.size)
+        assertEquals(expected.length.toLong, actual.size)
 
         var i = 0
         while (i < expected.size) {

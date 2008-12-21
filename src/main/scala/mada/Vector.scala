@@ -41,15 +41,12 @@ trait Vector[A] {
     final def toPair: (Long, Long) = (0, size)
     final def toTriple: (Vector[A], Long, Long) = (this, 0, size)
 
-    override def equals(that: Any): Boolean = that match {
-        case that: Vector[_] => Equals(this, that)
-        case _ => false
-    }
-    override def toString: String = toJclArrayList.toString
+    override def equals(that: Any): Boolean = Equals(this, that)
+    override def toString: String = ToString(this)
 
     def always[B](that: Vector[B]): Vector[B] = Always(this, that)
-    def asVectorOf[B]: Vector[B] = AsVectorOf[A, B](this)
     def append(that: Vector[A]): Vector[A] = Append(this, that)
+    def asVectorOf[B]: Vector[B] = AsVectorOf[A, B](this)
     def bounds: Vector[A] = Bounds(this)
     def clear: Vector[A] = Clear(this)
     def contains(e: Any): Boolean = Contains(this, e)
@@ -87,7 +84,7 @@ trait Vector[A] {
     def sort(lt: (A, A) => Boolean): Vector[A] = Sort(this, lt)
     def span(p: A => Boolean): (Vector[A], Vector[A]) = Span(this, p)
     def splitAt(i: Long): (Vector[A], Vector[A]) = SplitAt(this, i)
-    def step(n: Long): Vector[A] = Step(this, n)
+    def step(n: Long, m: Long): Vector[A] = Step(this, n, m)
     def swap(i: Long, j: Long): Unit = Swap(this, i, j)
     def take(n: Long): Vector[A] = Take(this, n)
     def takeWhile(p: A => Boolean): Vector[A] = TakeWhile(this, p)
@@ -110,7 +107,7 @@ trait Vector[A] {
     def stlEqual[B](i: Long, j: Long, w: Vector[B], k: Long): Boolean = stl.Equal(this, i, j, w, k)
     def stlEqual[B](i: Long, j: Long, w: Vector[B], k: Long, p: (A, B) => Boolean): Boolean = stl.Equal(this, i, j, w, k, p)
     def stlFind(i: Long, j: Long, e: Any): Long = stl.Find(this, i, j, e)
-    def stlFindIf(i: Long, j: Long, p: A => Boolean): Long = stl.FindIf(this, i, j, p) // kernel
+    def stlFindIf(i: Long, j: Long, p: A => Boolean): Long = stl.FindIf(this, i, j, p)
     def stlForEach[F <: (A => Any)](i: Long, j: Long, f: F): F = stl.ForEach(this, i, j, f)
     def stlIsHeap(i: Long, j: Long, lt: (A, A) => Boolean): Boolean = stl.IsHeap(this, i, j, lt)
     def stlIsSorted(i: Long, j: Long, lt: (A, A) => Boolean): Boolean = stl.IsSorted(this, i, j, lt)
