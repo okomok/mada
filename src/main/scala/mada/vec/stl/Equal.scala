@@ -34,8 +34,12 @@ package mada.vec.stl
 
 
 object Equal {
-    def apply[A1, A2](v1: Vector[A1], v2: Vector[A2], first2: Long, __binary_pred: (A1, A2) => Boolean): Boolean = {
-        var (__first1, __last1) = v1.toPair
+    def apply[A1, A2](v1: Vector[A1], first1: Long, __last1: Long, v2: Vector[A2], first2: Long): Boolean = {
+        v1.stlEqual(first1, __last1, v2, first2, EqualTo)
+    }
+
+    def apply[A1, A2](v1: Vector[A1], first1: Long, __last1: Long, v2: Vector[A2], first2: Long, __binary_pred: (A1, A2) => Boolean): Boolean = {
+        var __first1 = first1
         var __first2 = first2
 
         while (__first1 != __last1) {

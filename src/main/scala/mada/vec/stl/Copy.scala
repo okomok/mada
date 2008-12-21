@@ -4,57 +4,22 @@
 // Distributed under the terms of an MIT-style license.
 
 
-/*
- *
- * Copyright (c) 1994
- * Hewlett-Packard Company
- *
- * Copyright (c) 1996,1997
- * Silicon Graphics Computer Systems, Inc.
- *
- * Copyright (c) 1997
- * Moscow Center for SPARC Technology
- *
- * Copyright (c) 1999
- * Boris Fomitchev
- *
- * This material is provided "as is", with absolutely no warranty expressed
- * or implied. Any use is at your own risk.
- *
- * Permission to use or copy this software for any purpose is hereby granted
- * without fee, provided the above notices are retained on all copies.
- * Permission to modify the code and to distribute modified code is granted,
- * provided the above notices are retained, and a notice that the code was
- * modified is included with the above copyright notice.
- *
- */
-
-
 package mada.vec.stl
 
 
 object Copy {
-    /*
-    def apply[From, To >: From](v: Vector[From], first: Long, __last: Long, w: Vector[To], result: Long): Long = {
-        var __first = first
+    def apply[A, B >: A](v : Vector[A], __first: Long, __last: Long, * : Vector[B], result: Long): Long = {
         var __result = result
-
-        var __n = __last - __first
-        while (__n > 0) {
-            w(__result) = v(__first)
-            __first += 1
-            __result += 1
-            __n -= 1
-        }
+        v.stlForEach(__first, __last, { (e: A) => *(__result) = e; __result += 1 } )
         __result
     }
-    */
 }
 
 
 object CopyIf {
-    def apply[A, F <: (A => Any)](v: Vector[A], f: F, p: A => Boolean): F = {
-        v.stlForEach({ (e: A) => if (p(e)) f(e) })
-        f
+    def apply[A, B >: A](v : Vector[A], __first: Long, __last: Long, * : Vector[B], result: Long, __pred: A => Boolean): Long = {
+        var __result = result
+        v.stlForEach(__first, __last, { (e: A) => if (__pred(e)) { *(__result) = e; __result += 1 } })
+        __result
     }
 }

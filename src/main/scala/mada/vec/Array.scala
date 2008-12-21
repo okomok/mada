@@ -7,6 +7,10 @@
 package mada.vec
 
 
+object FromArray {
+    def apply[A](u: Array[A]): Vector[A] = new ArrayVector(u)
+}
+
 class ArrayVector[A](val array: Array[A]) extends Vector[A] {
     override def size = array.length
     override def apply(i: Long) = array(i.toInt)

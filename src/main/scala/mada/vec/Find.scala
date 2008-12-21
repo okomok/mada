@@ -8,13 +8,14 @@ package mada.vec
 
 
 object Find {
-    def apply[A](* : Vector[A], p: A => Boolean): Option[A] = {
-        var (__first, __last) = (*.stlFindIf(p), *.size)
+    def apply[A](v: Vector[A], p: A => Boolean): Option[A] = {
+        val __last = v.size
 
+        var __first  = v.stlFindIf(0, __last, p)
         if (__first == __last) {
             None
         } else {
-            Some(*(__first))
+            Some(v(__first))
         }
     }
 }

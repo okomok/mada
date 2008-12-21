@@ -10,6 +10,10 @@ package mada.vec.jcl
 import java.util.ArrayList
 
 
+object FromArrayList {
+    def apply[A](u: ArrayList[A]): Vector[A] = new ArrayListVector(u)
+}
+
 class ArrayListVector[A](val arrayList: ArrayList[A]) extends Vector[A] {
     override def size = arrayList.size
     override def apply(i: Long) = arrayList.get(i.toInt)

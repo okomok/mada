@@ -7,9 +7,11 @@
 package mada.vec
 
 
-// Note: window shall not bounds-check.
-//       fromRange(0, 100).window(20, 100).window(-20, 100) is ok.
+// Note: fromRange(0, 100).window(20, 100).window(-20, 100) is ok.
 
+object Window {
+    def apply[A](v: Vector[A], n: Long, m: Long): Vector[A] = new WindowVector(v, n, m)
+}
 
 class WindowVector[A](override val * : Vector[A], n: Long, m: Long) extends Adapter[A, A] {
     Assert(n <= m)

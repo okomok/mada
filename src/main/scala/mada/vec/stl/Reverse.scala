@@ -34,11 +34,6 @@ package mada.vec.stl
 
 
 object Reverse {
-    def apply[A](v : Vector[A]): Unit = {
-        val (first, last) = v.toPair
-        apply(v, first, last)
-    }
-
     def apply[A](v: Vector[A], first: Long, last: Long): Unit = {
         var __first = first; var __last = last
 

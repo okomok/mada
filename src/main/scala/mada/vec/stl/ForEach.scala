@@ -8,8 +8,8 @@ package mada.vec.stl
 
 
 object ForEach {
-    def apply[A, F <: (A => Any)](v: Vector[A], _2: F): F = {
-        v.loop({ (e: A) => _2(e); true })
-        _2
+    def apply[A, F <: (A => Any)](v: Vector[A], __first: Long, __last: Long, __f: F): F = {
+        v.loop(__first, __last, { (e: A) => __f(e); true })
+        __f
     }
 }

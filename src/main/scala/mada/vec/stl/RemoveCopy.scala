@@ -7,9 +7,14 @@
 package mada.vec.stl
 
 
+object RemoveCopy {
+    def apply[A, B >: A](v: Vector[A], __first: Long, __last: Long, w: Vector[B], __result: Long, e: Any): Long = {
+        v.stlRemoveCopyIf(__first, __last, w, __result, _ == e)
+    }
+}
+
 object RemoveCopyIf {
-    def apply[A, F <: (A => Any)](v: Vector[A], f: F, p: A => Boolean): F = {
-        v.stlCopyIf(f, !p(_: A))
-        f
+    def apply[A, B >: A](v: Vector[A], __first: Long, __last: Long, w: Vector[B], __result: Long, __pred: A => Boolean): Long = {
+        v.stlCopyIf(__first, __last, w, __result, !__pred(_: A))
     }
 }

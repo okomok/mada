@@ -7,6 +7,10 @@
 package mada.vec
 
 
+object Cycle {
+    def apply[A](v : Vector[A], n: Long): Vector[A] = new CycleVector(v, n)
+}
+
 class CycleVector[A](v: Vector[A], n: Long) extends Vector[A] {
     override def size = v.size * n
     override def apply(i: Long) = v(positiveRemainder(i, v.size))

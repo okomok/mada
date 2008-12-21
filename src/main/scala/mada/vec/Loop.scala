@@ -8,8 +8,8 @@ package mada.vec
 
 
 object Loop {
-    def apply[A, F <: (A => Boolean)](* : Vector[A], __f: F): F = {
-        var (__first, __last) = *.toPair
+    def apply[A, F <: (A => Boolean)](* : Vector[A], first: Long, __last: Long, __f: F): F = {
+        var __first = first
 
         while (__first != __last && __f(*(__first))) {
             __first += 1

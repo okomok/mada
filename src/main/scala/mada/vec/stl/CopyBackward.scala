@@ -40,8 +40,8 @@ object CopyBackward {
     }
     */
 
-    def apply[From, To >: From](v: Vector[From], w: Vector[To], result: Long): Long = {
-        var (__first, __last) = v.toPair
+    def apply[From, To >: From](v: Vector[From], first: Long, last: Long, w: Vector[To], result: Long): Long = {
+        var __first = first; var __last = last
         var __result = result
 
         var __n = __last - __first

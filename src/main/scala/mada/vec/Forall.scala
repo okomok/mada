@@ -7,10 +7,7 @@
 package mada.vec
 
 
-object First {
-    def apply[A](v: Vector[A]): A = v(0)
-}
 
-object Last {
-    def apply[A](v: Vector[A]): A = v(v.size - 1)
+object Forall {
+    def apply[A](v: Vector[A], p: A => Boolean): Boolean = v.find(!p(_: A)) == None
 }

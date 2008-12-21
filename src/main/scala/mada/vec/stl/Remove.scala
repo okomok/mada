@@ -33,18 +33,23 @@
 package mada.vec.stl
 
 
-object RemoveIf {
-    def apply[A](* : Vector[A], __pred: A => Boolean): Long = {
-        import *._
-        var (__first, __last) = toPair
+object Remove {
+    def apply[A](v: Vector[A], first: Long, __last: Long, e: Any): Long = {
+        v.stlRemoveIf(first, __last, _ == e)
+    }
+}
 
-        __first = window(__first, __last).stlFindIf(__pred)
+object RemoveIf {
+    def apply[A](v: Vector[A], first: Long, __last: Long, __pred: A => Boolean): Long = {
+        var __first = first
+
+        __first = v.stlFindIf(__first, __last, __pred)
         if ( __first == __last ) {
             __first
         } else {
             var __next = __first
             __next += 1
-            window(__next, __last).stlRemoveCopyIf(into(__first), __pred).index
+            v.stlRemoveCopyIf(__next, __last, v, __first, __pred)
         }
     }
 }
