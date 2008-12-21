@@ -33,43 +33,18 @@
 package mada.vec.stl
 
 
-object Remove extends Remove; trait Remove extends Predefs {
-    class MadaVecStlRemove[A](_1: Expr.Of[Vector[A]]) {
-        def stl_remove(_2: A) = RemoveExpr(_1, _2).expr
-        def stl_removeIf(_2: A => Boolean) = RemoveIfExpr(_1, _2).expr
-    }
-    implicit def toMadaVecStlRemove[From](_1: Expr.Of[Vector[From]]): MadaVecStlRemove[From] = new MadaVecStlRemove[From](_1)
-}
-
-
-case class RemoveExpr[A](_1: Expr.Of[Vector[A]], _2: A) extends Expr.Alias[Vector[A], Long] {
-    override protected def _alias = RemoveIfExpr(_1, { (e: A) => e == _2 })
-}
-
-case class RemoveIfExpr[A](override val _1: Expr.Of[Vector[A]], _2: A => Boolean) extends Expr.Method[Vector[A], Long] {
-    override protected def _default = {
-        val (v, i, j) = _1.eval.toTriple
-        RemoveIfImpl(v, i, j, _2)
-    }
-}
-
-
-object RemoveIfImpl {
-    import Find._
-    import RemoveCopy._
-    import Window._
-
-    def apply[A](* : Vector[A], first: Long, __last: Long, __pred: A => Boolean): Long = {
+object RemoveIf {
+    def apply[A](* : Vector[A], __pred: A => Boolean): Long = {
         import *._
-        var __first = first
+        var (__first, __last) = toPair
 
-        __first = /.window(__first, __last).stl_findIf(__pred)./
+        __first = window(__first, __last).stlFindIf(__pred)
         if ( __first == __last ) {
             __first
         } else {
             var __next = __first
             __next += 1
-            /.window(__next, __last).stl_removeCopyIf(into(__first), __pred)./.index
+            window(__next, __last).stlRemoveCopyIf(into(__first), __pred).index
         }
     }
 }

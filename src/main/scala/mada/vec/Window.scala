@@ -7,27 +7,15 @@
 package mada.vec
 
 
-object Window extends Window; trait Window extends Predefs {
-    class MadaVecWindow[A](_1: Expr.Of[Vector[A]]) {
-        def window(_2: Long, _3: Long) = WindowExpr(_1, _2, _3).expr
-    }
-    implicit def toMadaVecWindow[A](_1: Expr.Of[Vector[A]]): MadaVecWindow[A] = new MadaVecWindow[A](_1)
-}
+// Note: window shall not bounds-check.
+//       fromRange(0, 100).window(20, 100).window(-20, 100) is ok.
 
 
-case class WindowExpr[A](override val _1: Expr.Of[Vector[A]], _2: Long, _3: Long) extends Expr.Transform[Vector[A]] {
-    override protected def _default = _1 match {
-        case WindowExpr(x1, x2, x3) => WindowExpr(x1, x2 + _2, x2 + _3).eval // window-window fusion
-        case _ => {
-            val v = _1.eval
-            if (_2 == 0 && _3 == v.size) v else new WindowVector(v, _2, _3)
-        }
-    }
-}
+class WindowVector[A](override val * : Vector[A], n: Long, m: Long) extends Adapter[A, A] {
+    Assert(n <= m)
 
-
-class WindowVector[A](override val * : Vector[A], n: Long, m: Long) extends Vector.Adapter[A, A] {
     override def size = m - n
-    override def apply(i: Long) = *(n + i)
-    override def update(i: Long, e: A) = *(n + i) = e
+    override def mapIndex(i: Long) = n + i
+
+    override def window(_n: Long, _m: Long) = *.window(n + _n, n + _m)
 }

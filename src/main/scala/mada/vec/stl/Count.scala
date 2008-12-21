@@ -7,10 +7,10 @@
 package mada.vec.stl
 
 
-object FindIf {
+object CountIf {
     def apply[A](v: Vector[A], p: A => Boolean): Long = {
-        var i = 0
-        v.loop({ (e: A) => if (p(e)) { false } else { i += 1; true } })
-        i
+        var c = 0L
+        v.foreach({ (e: A) => if (p(e)) c += 1 })
+        c
     }
 }

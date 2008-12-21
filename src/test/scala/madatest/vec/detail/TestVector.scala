@@ -7,8 +7,7 @@
 package madatest.vec.detail
 
 
-import mada.vec.From._
-import mada.vec.Vector
+import mada._
 import junit.framework.Assert._
 
 
@@ -17,8 +16,8 @@ object TestVectorReadWrite {
         TestVectorReadOnly(expected, actual)
 
         CombSort(actual)
-        val ex = CopyArray(expected); CombSort(from(ex).eval)
-        assertEquals(from(ex).eval, actual)
+        val ex = CopyArray(expected); CombSort(Vector.fromArray(ex))
+        assertEquals(Vector.fromArray(ex), actual)
     }
 }
 

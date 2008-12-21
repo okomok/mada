@@ -8,27 +8,31 @@ package mada
 
 
 object Vector {
-    type NotReadableError[A] = vec2.NotReadableError[A]
-    type NotWritableError[A] = vec2.NotWritableError[A]
+    type NotReadableError[A] = vec.NotReadableError[A]
+    type NotWritableError[A] = vec.NotWritableError[A]
 
-    type Adapter[Z, A] = vec2.Adapter[Z, A]
-    type NotWritable[A] = vec2.NotWritable[A]
+    type Adapter[Z, A] = vec.Adapter[Z, A]
+    type NotWritable[A] = vec.NotWritable[A]
 
-    type Into[A] = vec2.Into[A]
-    type Single[A] = vec2.Single[A]
+    type Into[A] = vec.Into[A]
 
-    def fromArray[A](u: Array[A]): Vector[A] = new vec2.ArrayVector(u)
-    def fromCell[A](u: Cell[A]): Vector[A] = new vec2.CellVector(u)
-    def fromJclArrayList[A](u: java.util.ArrayList[A]): Vector[A] = new vec2.jcl.ArrayListVector(u)
-    def fromSingle[A](u: Single[A]): Vector[A] = new vec2.SingleVector(u)
-    def fromString(u: String): Vector[Char] = new vec2.StringVector(u)
-
-    def stringize(v: Vector[Char]): String = vec2.Stringize(v)
+    def empty[A]: Vector[A] = new vec.EmptyVector[A]
+    def fromArray[A](u: Array[A]): Vector[A] = new vec.ArrayVector(u)
+    def fromCell[A](u: Cell[A]): Vector[A] = new vec.CellVector(u)
+    def fromIterator[A](u: Iterator[A]): Vector[A] = new vec.IteratorVector(u)
+    def fromJclArrayList[A](u: java.util.ArrayList[A]): Vector[A] = new vec.jcl.ArrayListVector(u)
+    def fromRandomAccessSeq[A](u: RandomAccessSeq[A]): Vector[A] = vec.FromRandomAccessSeq(u)
+    def fromString(u: String): Vector[Char] = new vec.StringVector(u)
+    def fromValues[A](es: A*): Vector[A] = fromJclArrayList(vec.jcl.NewArrayList(es: _*))
+    def single[A](u: A): Vector[A] = new vec.SingleVector(u)
+    def range(i: Int, j: Int): Vector[Int] = new vec.IntRangeVector(i, j)
+    def range(i: Long, j: Long): Vector[Long] = new vec.LongRangeVector(i, j)
+    def stringize(v: Vector[Char]): String = vec.Stringize(v)
 }
 
 
 trait Vector[A] {
-    import vec2._
+    import vec._
 
     def size: Long
     def apply(i: Long): A = throw new NotReadableError(this)
@@ -44,6 +48,7 @@ trait Vector[A] {
     }
 
     def always[B](that: Vector[B]): Vector[B] = that
+    def asVectorOf[B]: Vector[B] = new AsVectorOfVector[A, B](this)
     def append(that: Vector[A]): Vector[A] = new AppendVector(this, that) // kernel
     def bounds: Vector[A] = new BoundsVector(this)
     def contains(e: Any): Boolean = exists(_ == e)
@@ -53,6 +58,7 @@ trait Vector[A] {
     def drop(n: Long): Vector[A] = window(Math.min(n, size), size)
     def dropWhile(p: A => Boolean): Vector[A] = window(stlFindIf(!p(_: A)), size)
     def equalsWith[B](that: Vector[B])(p: (A, B) => Boolean): Boolean = EqualsWith(this, that, p) // kernel
+    def empty: Vector[A] = window(0, 0)
     def exists(p: A => Boolean): Boolean = find(p) != None
     def filter(p: A => Boolean): Vector[A] = new FilterVector(this, p) // kernel
     def filtering(p: A => Boolean): Vector[A] = new FilteringVector(this, p) // kernel
@@ -73,6 +79,7 @@ trait Vector[A] {
     def map[B](f: A => B): Vector[B] = new MapVector(this, f) // kernel
     def offset(i: Long, j: Long): Vector[A] = window(i, size + j)
     def partition(p: A => Boolean): (Vector[A], Vector[A]) = (filter(p), remove(p))
+    def readOnly: Vector[A] = new ReadOnlyVector(this)
     def remove(p: A => Boolean): Vector[A] = filter(!p(_: A))
     def removing(p: A => Boolean): Vector[A] = filtering(!p(_: A))
     def reverse: Vector[A] = new ReverseVector(this) // kernel
@@ -81,13 +88,15 @@ trait Vector[A] {
     def slice(from: Long): Vector[A] = slice(from, size)
     def span(p: A => Boolean): (Vector[A], Vector[A]) = Span(this, p)
     def splitAt(i: Long): (Vector[A], Vector[A]) = (window(0, i), window(i, size))
+    def step(n: Long): Vector[A] = new StepVector(this, n)
     def swap(i: Long, j: Long): Unit = Swap(this, i, j) // kernel
     def take(n: Long): Vector[A] = window(0, Math.min(n, size))
     def takeWhile(p: A => Boolean): Vector[A] = window(0, stlFindIf(!p(_: A)))
     def toArray: Array[A] = ToArray(this)
     def toCell: Cell[A] = ToCell(this)
+    def toIterator: Iterator[A] = new VectorIterator(this)
     def toJclArrayList: java.util.ArrayList[A] = jcl.ToArrayList(this)
-    def toSingle: Single[A] = ToSingle(this)
+    def toRandomAccessSeq: RandomAccessSeq.Mutable[A] = new VectorRandomAccessSeq(this)
     def window(n: Long, m: Long): Vector[A] = new WindowVector(this, n, m) // kernel
     def ++(that: Vector[A]): Vector[A] = append(that)
 

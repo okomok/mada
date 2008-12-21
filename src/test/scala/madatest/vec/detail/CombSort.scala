@@ -7,10 +7,8 @@
 package madatest.vec.detail
 
 
-
-
 object CombSort {
-    import mada.vec.Vector
+    import mada._
 
     def apply[A](* : Vector[A], f: (A, A) => Boolean): Unit = {
         import *._
@@ -48,11 +46,11 @@ object CombSort {
 
 
 class CombSortTest {
-    import mada.vec.From._
+    import mada._
     import junit.framework.Assert._
 
-    def expected = from(Array(0, 0, 4, 4, 6, 8,11,12,13,14,15,17,18,19,23)).eval
-    def example =  from(Array(0,18,14,17,19, 8,13, 6, 4,23, 0,12,15,11, 4)).eval
+    def expected = Vector.fromArray(Array(0, 0, 4, 4, 6, 8,11,12,13,14,15,17,18,19,23))
+    def example =  Vector.fromArray(Array(0,18,14,17,19, 8,13, 6, 4,23, 0,12,15,11, 4))
 
     def testTrivial: Unit ={
         val v = example

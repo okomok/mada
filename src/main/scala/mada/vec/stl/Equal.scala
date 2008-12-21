@@ -33,23 +33,17 @@
 package mada.vec.stl
 
 
-object CopyBackward {
-    /*
-    def apply[From, To >: From](v : Vector[From], w: Vector[To]): Long = {
-        v.reverse.stlCopy(w.reverse.intoBegin).index
-    }
-    */
+object Equal {
+    def apply[A1, A2](v1: Vector[A1], v2: Vector[A2], first2: Long, __binary_pred: (A1, A2) => Boolean): Boolean = {
+        var (__first1, __last1) = v1.toPair
+        var __first2 = first2
 
-    def apply[From, To >: From](v: Vector[From], w: Vector[To], result: Long): Long = {
-        var (__first, __last) = v.toPair
-        var __result = result
-
-        var __n = __last - __first
-        while (__n > 0) {
-            __result -= 1; __last -= 1
-            w(__result) = v(__last)
-            __n -= 1
+        while (__first1 != __last1) {
+            if (!__binary_pred(v1(__first1), v2(__first2))) {
+                return false
+            }
+            __first1 += 1; __first2 += 1
         }
-        __result
+        true
     }
 }
