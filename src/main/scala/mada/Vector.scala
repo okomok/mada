@@ -74,7 +74,7 @@ trait Vector[A] {
     def last: A = Last(this)
     def lazy_ : Vector[A] = Lazy(this)
     def length: Long = Length(this)
-    def loop[F <: (A => Boolean)](i: Long, j: Long, f: F): F = Loop(this, i, j, f) // kernel
+    def loop[F <: (A => Boolean)](i: Long, j: Long, f: F): F = Loop(this, i, j, f)
     def map[B](f: A => B): Vector[B] = Map(this, f)
     def offset(i: Long, j: Long): Vector[A] = Offset(this, i,j)
     def partition(p: A => Boolean): (Vector[A], Vector[A]) = Partition(this, p)
@@ -84,10 +84,11 @@ trait Vector[A] {
     def rotate(i: Long): Vector[A] = Rotate(this, i)
     def slice(n: Long, m: Long): Vector[A] = Slice(this, n, m)
     def slice(n: Long): Vector[A] = Slice(this, n)
+    def sort(lt: (A, A) => Boolean): Vector[A] = Sort(this, lt)
     def span(p: A => Boolean): (Vector[A], Vector[A]) = Span(this, p)
     def splitAt(i: Long): (Vector[A], Vector[A]) = SplitAt(this, i)
     def step(n: Long): Vector[A] = Step(this, n)
-    def swap(i: Long, j: Long): Unit = Swap(this, i, j) // kernel
+    def swap(i: Long, j: Long): Unit = Swap(this, i, j)
     def take(n: Long): Vector[A] = Take(this, n)
     def takeWhile(p: A => Boolean): Vector[A] = TakeWhile(this, p)
     def toArray: Array[A] = ToArray(this)
@@ -95,11 +96,11 @@ trait Vector[A] {
     def toIterator: Iterator[A] = ToIterator(this)
     def toJclArrayList: java.util.ArrayList[A] = jcl.ToArrayList(this)
     def toRandomAccessSeq: RandomAccessSeq.Mutable[A] = ToRandomAccessSeq(this)
-    def window(n: Long, m: Long): Vector[A] = Window(this, n, m) // kernel
+    def window(n: Long, m: Long): Vector[A] = Window(this, n, m)
     def writer(i: Long): (A => Unit) = Writer(this, i)
     def ++(that: Vector[A]): Vector[A] = append(that)
 
-    def stlAccumulate[B](i: Long, j: Long, z: B, op: (B, A) => B): B = stl.Accumulate(this, i, j, z, op) // kernel
+    def stlAccumulate[B](i: Long, j: Long, z: B, op: (B, A) => B): B = stl.Accumulate(this, i, j, z, op)
     def stlCopy[B >: A](i: Long, j: Long, w: Vector[B], k: Long): Long = stl.Copy(this, i, j, w, k)
     def stlCopyIf[B >: A](i: Long, j: Long, w: Vector[B], k: Long, p: A => Boolean): Long = stl.CopyIf(this, i, j, w, k, p)
     def stlCopyBackward[B >: A](i: Long, j: Long, that: Vector[B], k: Long): Long = stl.CopyBackward(this, i, j, that, k)
@@ -111,9 +112,20 @@ trait Vector[A] {
     def stlFind(i: Long, j: Long, e: Any): Long = stl.Find(this, i, j, e)
     def stlFindIf(i: Long, j: Long, p: A => Boolean): Long = stl.FindIf(this, i, j, p) // kernel
     def stlForEach[F <: (A => Any)](i: Long, j: Long, f: F): F = stl.ForEach(this, i, j, f)
+    def stlIsHeap(i: Long, j: Long, lt: (A, A) => Boolean): Boolean = stl.IsHeap(this, i, j, lt)
+    def stlIsSorted(i: Long, j: Long, lt: (A, A) => Boolean): Boolean = stl.IsSorted(this, i, j, lt)
+    def stlPartialSort(i: Long, j: Long, k: Long, lt: (A, A) => Boolean): Unit = stl.PartialSort(this, i, j, k, lt)
+    def stlRandomShuffle(i: Long, j: Long): Unit = stl.RandomShuffle(this, i, j)
+    def stlRandomShuffle(i: Long, j: Long, g: Long => Long): Unit = stl.RandomShuffle(this, i, j, g)
     def stlRemove(i: Long, j: Long, e: Any): Long = stl.Remove(this, i, j, e)
     def stlRemoveIf(i: Long, j: Long, p: A => Boolean): Long = stl.RemoveIf(this, i, j, p)
     def stlRemoveCopy[B >: A](i: Long, j: Long, w: Vector[B], k: Long, e: Any): Long = stl.RemoveCopy(this, i, j, w, k, e)
     def stlRemoveCopyIf[B >: A](i: Long, j: Long, w: Vector[B], k: Long, p: A => Boolean): Long = stl.RemoveCopyIf(this, i, j, w, k, p)
     def stlReverse(i: Long, j: Long): Unit = stl.Reverse(this, i, j)
+    def stlSort(i: Long, j: Long, lt: (A, A) => Boolean): Unit = stl.Sort(this, i, j, lt)
+
+    def stlMakeHeap(i: Long, j: Long, lt: (A, A) => Boolean): Unit = stl.MakeHeap(this, i, j, lt)
+    def stlPopHeap(i: Long, j: Long, lt: (A, A) => Boolean): Unit = stl.PopHeap(this, i, j, lt)
+    def stlPushHeap(i: Long, j: Long, lt: (A, A) => Boolean): Unit = stl.PushHeap(this, i, j, lt)
+    def stlSortHeap(i: Long, j: Long, lt: (A, A) => Boolean): Unit = stl.SortHeap(this, i, j, lt)
 }
