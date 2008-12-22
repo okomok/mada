@@ -28,6 +28,7 @@ object Vector {
 
     type Adapter[Z, A] = vec.Adapter[Z, A]
     type NotWritable[A] = vec.NotWritable[A]
+    type StlOutputCounter = vec.stl.OutputCounter
 }
 
 
