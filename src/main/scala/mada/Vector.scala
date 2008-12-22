@@ -9,6 +9,7 @@ package mada
 
 object Vector {
     def empty[A]: Vector[A] = vec.Empty.apply[A]
+    def flatten[A](vv: Vector[Vector[A]]): Vector[A] = vec.Flatten(vv)
     def fromArray[A](u: Array[A]): Vector[A] = vec.FromArray(u)
     def fromCell[A](u: Cell[A]): Vector[A] = vec.FromCell(u)
     def fromIterator[A](u: Iterator[A]): Vector[A] = vec.FromIterator(u)
@@ -62,6 +63,7 @@ trait Vector[A] {
     def filter(p: A => Boolean): Vector[A] = Filter(this, p)
     def find(p: A => Boolean): Option[A] = Find(this, p)
     def first: A = First(this)
+    def flatMap[B](f: A => Vector[B]): Vector[B] = FlatMap(this, f)
     def forall(p: A => Boolean): Boolean = Forall(this, p)
     def force: Vector[A] = Force(this)
     def foldLeft[B](z: B, op: (B, A) => B): B = FoldLeft(this, z, op)

@@ -8,5 +8,5 @@ package mada.vec
 
 
 object FromValues {
-    def apply[A](es: A*): Vector[A] = Vector.fromJclArrayList(jcl.NewArrayList(es: _*))
+    def apply[A](es: A*): Vector[A] = jcl.FromArrayList(jcl.NewArrayList(es: _*))
 }

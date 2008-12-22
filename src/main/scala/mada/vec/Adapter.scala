@@ -19,4 +19,5 @@ trait Adapter[Z, A] extends Vector[A] {
 
 trait NotWritable[A] extends Vector[A] {
     override def update(i: Long, e: A): Unit = throw new NotWritableError(this)
+    override def readOnly = this
 }

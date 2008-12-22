@@ -8,5 +8,10 @@ package mada.vec
 
 
 object Force {
-    def apply[A](v : Vector[A]): Vector[A] = FromArray(v.toArray)
+    def apply[A](v: Vector[A]): Vector[A] = new ForceVector(v)
+}
+
+class ForceVector[A](v: Vector[A]) extends Adapter[A, A] with NotWritable[A] {
+    override val * = FromArray(v.toArray)
+    override def force = this
 }
