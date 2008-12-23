@@ -10,7 +10,7 @@ package mada.vec
 object FoldLeft {
     def apply[A, B](v : Vector[A], z: B, op: (B, A) => B): B = {
         val (first, last) = v.toPair
-        v.stlAccumulate(first, last, z, op)
+        stl.Accumulate(v, first, last, z, op)
     }
 }
 

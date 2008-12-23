@@ -14,7 +14,8 @@ object Sort {
 class SortVector[A](v: Vector[A], lt: (A, A) => Boolean) extends Adapter[A, A] with NotWritable[A] {
     override val * = {
         val w = v.copy
-        w.stlSort(0, w.size, lt)
+        val (first, last) = w.toPair
+        stl.Sort(w, first, last, lt)
         w
     }
 }

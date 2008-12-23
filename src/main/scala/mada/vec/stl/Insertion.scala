@@ -49,7 +49,7 @@ object InsertionSort {
 object LinearInsert {
     def apply[A](* : Vector[A], __first: Long, __last: Long, __val: A, __comp: (A, A) => Boolean): Unit = {
         if (__comp(__val, *(__first))) {
-            *.stlCopyBackward(__first, __last, *, __last + 1)
+            CopyBackward(*, __first, __last, *, __last + 1)
             *(__first) = __val
         } else {
             UnguardedLinearInsert(*, __last, __val, __comp)

@@ -17,6 +17,6 @@ object Drop {
 object DropWhile {
     def apply[A](v : Vector[A], p: A => Boolean): Vector[A] = {
         val (first, last) = v.toPair
-        v.window(v.stlFindIf(first, last, !p(_: A)), last)
+        v.window(stl.FindIf(v, first, last, !p(_: A)), last)
     }
 }

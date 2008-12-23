@@ -9,7 +9,7 @@ package mada.vec.stl
 
 object Find {
     def apply[A](v: Vector[A], __first: Long, __last: Long, __val: Any): Long = {
-        v.stlFindIf(__first, __last, _ == __val)
+        FindIf(v, __first, __last, (_: A) == __val)
     }
 }
 

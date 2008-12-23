@@ -17,19 +17,19 @@ import madatest.vec.detail._
 class SortTest {
     def testTrivial: Unit = {
         val v = fromArray(example1)
-        v.stlSort(0, v.size, _ < _)
+        mada.vec.stl.Sort(v, 0, v.size, (_: Int) < (_: Int))
         assertEquals(fromArray(example1Sorted), v)
     }
 
     def testWith: Unit = {
         val v = fromArray(example1)
-        v.stlSort(0, v.size, _ > _)
+        mada.vec.stl.Sort(v, 0, v.size, (_: Int) > (_: Int))
         assertEquals(fromArray(example1ReversedSorted), v)
     }
 
     def testEmpty: Unit = {
         val v = fromArray(empty1)
-        v.stlSort(0, v.size, _ < _)
+        mada.vec.stl.Sort(v, 0, v.size, (_: Int) < (_: Int))
         TestEmpty(v)
     }
 
@@ -39,13 +39,13 @@ class SortTest {
 
     def testLongExample1: Unit = {
         val v = fromArray(longExample1)
-        v.stlSort(0, v.size, _ < _)
+        mada.vec.stl.Sort(v, 0, v.size, (_: Int) < (_: Int))
         assertEquals(Vector.range(0, 1000), v)
     }
 
     def testIntroSort: Unit = {
         val v = fromArray(longExample1)
-        mada.vec.stl.IntroSort[Int](v, 0, v.size, _ < _)
+        mada.vec.stl.IntroSort[Int](v, 0, v.size, (_: Int) < (_: Int))
         assertEquals(Vector.range(0, 1000), v)
     }
 }

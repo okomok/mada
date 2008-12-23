@@ -35,7 +35,7 @@ package mada.vec.stl
 
 object Remove {
     def apply[A](v: Vector[A], first: Long, __last: Long, e: Any): Long = {
-        v.stlRemoveIf(first, __last, _ == e)
+        RemoveIf(v, first, __last, (_: A) == e)
     }
 }
 
@@ -43,13 +43,13 @@ object RemoveIf {
     def apply[A](v: Vector[A], first: Long, __last: Long, __pred: A => Boolean): Long = {
         var __first = first
 
-        __first = v.stlFindIf(__first, __last, __pred)
+        __first = FindIf(v, __first, __last, __pred)
         if ( __first == __last ) {
             __first
         } else {
             var __next = __first
             __next += 1
-            v.stlRemoveCopyIf(__next, __last, v, __first, __pred)
+            RemoveCopyIf(v, __next, __last, v, __first, __pred)
         }
     }
 }

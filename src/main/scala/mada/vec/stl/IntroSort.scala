@@ -47,7 +47,7 @@ object IntroSort {
 
         while (__last - __first > threshold) {
             if (__depth_limit == 0) {
-                *.stlPartialSort(__first, __last, __last, __comp)
+                PartialSort(*, __first, __last, __last, __comp)
                 return
             }
             val __cut = UnguardedPartition(*, __first, __last, Median(*(__first), *(__first + (__last - __first)/2), *(__last - 1), __comp), __comp)

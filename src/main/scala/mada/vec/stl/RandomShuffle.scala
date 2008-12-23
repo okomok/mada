@@ -35,7 +35,7 @@ package mada.vec.stl
 
 object RandomShuffle {
     def apply[A](v: Vector[A], __first: Long, __last: Long): Unit = {
-        v.stlRandomShuffle(__first, __last, new DefaultRandomNumberGenerator)
+        RandomShuffle(v, __first, __last, new DefaultRandomNumberGenerator)
     }
 
     def apply[A](v: Vector[A], __first: Long, __last: Long, __rand: Long => Long): Unit = {

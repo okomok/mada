@@ -19,7 +19,6 @@ object Vector {
     def fromString(u: String): Vector[Char] = vec.FromString(u)
     def fromValues[A](es: A*): Vector[A] = vec.FromValues(es: _*)
     def single[A](u: A): Vector[A] = vec.Single(u)
-    def stlOutput[A](f: A => Any) = vec.stl.Output(f)
     def range(i: Int, j: Int): Vector[Int] = vec.IntRange(i, j)
     def range(i: Long, j: Long): Vector[Long] = vec.LongRange(i, j)
     def stringize(v: Vector[Char]): String = vec.Stringize(v)
@@ -29,7 +28,6 @@ object Vector {
 
     type Adapter[Z, A] = vec.Adapter[Z, A]
     type NotWritable[A] = vec.NotWritable[A]
-    type StlOutputCounter = vec.stl.OutputCounter
 }
 
 
@@ -102,33 +100,4 @@ trait Vector[A] {
     def window(n: Long, m: Long): Vector[A] = Window(this, n, m)
     def writer(i: Long): (A => Unit) = Writer(this, i)
     def ++(that: Vector[A]): Vector[A] = append(that)
-
-    def stlAccumulate[B](i: Long, j: Long, z: B, op: (B, A) => B): B = stl.Accumulate(this, i, j, z, op)
-    def stlCopy[B >: A](i: Long, j: Long, w: Vector[B], k: Long): Long = stl.Copy(this, i, j, w, k)
-    def stlCopyIf[B >: A](i: Long, j: Long, w: Vector[B], k: Long, p: A => Boolean): Long = stl.CopyIf(this, i, j, w, k, p)
-    def stlCopyBackward[B >: A](i: Long, j: Long, that: Vector[B], k: Long): Long = stl.CopyBackward(this, i, j, that, k)
-    def stlCount(i: Long, j: Long, e: Any): Long = stl.Count(this, i, j, e)
-    def stlCountIf(i: Long, j: Long, p: A => Boolean): Long = stl.CountIf(this, i, j, p)
-    def stlDistance(i: Long, j: Long): Long = stl.Distance(this, i, j)
-    def stlEqual[B](i: Long, j: Long, w: Vector[B], k: Long): Boolean = stl.Equal(this, i, j, w, k)
-    def stlEqual[B](i: Long, j: Long, w: Vector[B], k: Long, p: (A, B) => Boolean): Boolean = stl.Equal(this, i, j, w, k, p)
-    def stlFind(i: Long, j: Long, e: Any): Long = stl.Find(this, i, j, e)
-    def stlFindIf(i: Long, j: Long, p: A => Boolean): Long = stl.FindIf(this, i, j, p)
-    def stlForEach[F <: (A => Any)](i: Long, j: Long, f: F): F = stl.ForEach(this, i, j, f)
-    def stlIsHeap(i: Long, j: Long, lt: (A, A) => Boolean): Boolean = stl.IsHeap(this, i, j, lt)
-    def stlIsSorted(i: Long, j: Long, lt: (A, A) => Boolean): Boolean = stl.IsSorted(this, i, j, lt)
-    def stlPartialSort(i: Long, j: Long, k: Long, lt: (A, A) => Boolean): Unit = stl.PartialSort(this, i, j, k, lt)
-    def stlRandomShuffle(i: Long, j: Long): Unit = stl.RandomShuffle(this, i, j)
-    def stlRandomShuffle(i: Long, j: Long, g: Long => Long): Unit = stl.RandomShuffle(this, i, j, g)
-    def stlRemove(i: Long, j: Long, e: Any): Long = stl.Remove(this, i, j, e)
-    def stlRemoveIf(i: Long, j: Long, p: A => Boolean): Long = stl.RemoveIf(this, i, j, p)
-    def stlRemoveCopy[B >: A](i: Long, j: Long, w: Vector[B], k: Long, e: Any): Long = stl.RemoveCopy(this, i, j, w, k, e)
-    def stlRemoveCopyIf[B >: A](i: Long, j: Long, w: Vector[B], k: Long, p: A => Boolean): Long = stl.RemoveCopyIf(this, i, j, w, k, p)
-    def stlReverse(i: Long, j: Long): Unit = stl.Reverse(this, i, j)
-    def stlSort(i: Long, j: Long, lt: (A, A) => Boolean): Unit = stl.Sort(this, i, j, lt)
-
-    def stlMakeHeap(i: Long, j: Long, lt: (A, A) => Boolean): Unit = stl.MakeHeap(this, i, j, lt)
-    def stlPopHeap(i: Long, j: Long, lt: (A, A) => Boolean): Unit = stl.PopHeap(this, i, j, lt)
-    def stlPushHeap(i: Long, j: Long, lt: (A, A) => Boolean): Unit = stl.PushHeap(this, i, j, lt)
-    def stlSortHeap(i: Long, j: Long, lt: (A, A) => Boolean): Unit = stl.SortHeap(this, i, j, lt)
 }

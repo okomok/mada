@@ -36,7 +36,7 @@ class SortPerfTest {
         val e = fromJclArrayList(longExampleArrayList1).cycle(cycleCount).force
         val c: (Integer, Integer) => Boolean = _.intValue < _.intValue
         val start = java.lang.System.currentTimeMillis
-        e.stlSort(0, e.size, c)
+        vec.stl.Sort(e, 0, e.size, c)
         println(java.lang.System.currentTimeMillis - start)
     }
 

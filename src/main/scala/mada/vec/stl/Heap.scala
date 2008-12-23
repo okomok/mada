@@ -96,7 +96,7 @@ object SortHeap {
         var __last = last
 
         while (__last - __first > 1) {
-            *.stlPopHeap(__first, __last, __comp)
+            PopHeap(*, __first, __last, __comp)
             __last -= 1
         }
     }

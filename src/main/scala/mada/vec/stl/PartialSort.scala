@@ -35,7 +35,7 @@ package mada.vec.stl
 
 object PartialSort {
     def apply[A](* : Vector[A], __first: Long, __middle: Long, __last: Long, __comp: (A, A) => Boolean): Unit = {
-        *.stlMakeHeap(__first, __middle, __comp)
+        MakeHeap(*, __first, __middle, __comp)
         var __i = __middle
         while (__i < __last) {
             if (__comp(*(__i), *(__first))) {
@@ -43,6 +43,6 @@ object PartialSort {
             }
             __i += 1
         }
-        *.stlSortHeap(__first, __middle, __comp)
+        SortHeap(*, __first, __middle, __comp)
     }
 }

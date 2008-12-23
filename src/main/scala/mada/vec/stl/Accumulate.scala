@@ -10,7 +10,7 @@ package mada.vec.stl
 object Accumulate {
     def apply[A, B](v: Vector[A], __first: Long, __last: Long, init: B, __binary_op: (B, A) => B): B = {
         var __init = init
-        v.stlForEach(__first, __last, { (e: A) => __init = __binary_op(__init, e) })
+        ForEach(v, __first, __last, { (e: A) => __init = __binary_op(__init, e) })
         __init
     }
 }
