@@ -24,11 +24,7 @@ class MutableRandomAccessSeqVector[A](val seq: RandomAccessSeq.Mutable[A]) exten
     override def apply(i: Long) = seq(i.toInt)
     override def update(i: Long, e: A) = seq(i.toInt) = e
 
-    override def toArray = seq match {
-//        case _: Array[_] => seq.asInstanceOf[Array[A]] // unchecked warning
-        case _ => super.toArray
-    }
-    override def toRandomAccessSeq = seq
+    override def toRandomAccessSeq = seq // from-to fusion
 }
 
 

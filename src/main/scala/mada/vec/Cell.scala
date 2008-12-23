@@ -15,7 +15,7 @@ class CellVector[A](val cell: Cell[A]) extends Vector[A] {
     override def size = 1
     override def apply(i: Long) = cell.elem
 
-    override def toCell = cell
+    override def toCell = cell // from-to fusion
 }
 
 

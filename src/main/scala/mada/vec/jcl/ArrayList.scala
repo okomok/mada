@@ -33,9 +33,7 @@ object ToArrayList {
 object NewArrayList {
     def apply[A](es: A*): ArrayList[A] = {
         val a = new ArrayList[A](es.length)
-        for (e <- es.elements) {
-            a.add(e)
-        }
+        es.foreach(a.add(_: A))
         a
     }
 }

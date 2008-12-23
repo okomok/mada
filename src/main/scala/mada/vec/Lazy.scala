@@ -25,5 +25,5 @@ class LazyVector[A](override val * : Vector[A]) extends Adapter[A, A] with NotWr
         }
     }
 
-    override def lazy_ = this
+    override def lazy_ = this // lazy-lazy fusion
 }

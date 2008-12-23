@@ -11,15 +11,14 @@ object FromIterator {
     def apply[A](u: Iterator[A]): Vector[A] = new IteratorVector(u)
 }
 
-class IteratorVector[A](val iterator: Iterator[A]) extends Adapter[A, A] {
-    private val a = new java.util.ArrayList[A]
+class IteratorVector[A](it: Iterator[A]) extends Adapter[A, A] with NotWritable[A] {
     override val * = {
-        iterator.foreach(a.add(_: A))
+        val a = new java.util.ArrayList[A]
+        it.foreach(a.add(_: A))
         jcl.FromArrayList(a)
     }
 
-    override def toJclArrayList = a
-    override def toIterator = iterator
+    // iterator-iterator fusion is impossible, because iterator is single-pass.
 }
 
 
@@ -27,8 +26,8 @@ object ToIterator {
     def apply[A](v: Vector[A]): Iterator[A] = new VectorIterator(v)
 }
 
-class VectorIterator[A](v: Vector[A]) extends Iterator[A] {
-    private var (first, last) = v.toPair
-    override def hasNext = first != last
-    override def next = { val tmp = v(first); first += 1; tmp }
+class VectorIterator[A](* : Vector[A]) extends Iterator[A] {
+    private var (__first, __last) = *.toPair
+    override def hasNext = __first != __last
+    override def next = { val tmp = *(__first); __first += 1; tmp }
 }

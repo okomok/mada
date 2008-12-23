@@ -11,11 +11,11 @@ object FromOption {
     def apply[A](u: Option[A]): Vector[A] = new OptionVector(u)
 }
 
-class OptionVector[A](option: Option[A]) extends Vector[A] {
+class OptionVector[A](val option: Option[A]) extends Vector[A] {
     override def size = if (option.isEmpty) 0 else 1
     override def apply(i: Long) = option.get
 
-    override def toOption = option
+    override def toOption = option // from-to fusion
 }
 
 

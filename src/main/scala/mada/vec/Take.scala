@@ -8,9 +8,14 @@ package mada.vec
 
 
 object Take {
-    def apply[A](v : Vector[A], n: Long): Vector[A] = v.window(0, Math.min(n, v.size))
+    def apply[A](v : Vector[A], n: Long): Vector[A] = {
+        v.window(0, Math.min(n, v.size))
+    }
 }
 
 object TakeWhile {
-    def apply[A](v : Vector[A], p: A => Boolean): Vector[A] = v.window(0, v.stlFindIf(0, v.size, !p(_: A)))
+    def apply[A](v : Vector[A], p: A => Boolean): Vector[A] = {
+        val (first, last) = v.toPair
+        v.window(first, v.stlFindIf(first, last, !p(_: A)))
+    }
 }

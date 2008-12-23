@@ -8,9 +8,14 @@ package mada.vec
 
 
 object FoldLeft {
-    def apply[A, B](v : Vector[A], z: B, op: (B, A) => B): B = v.stlAccumulate(0, v.size, z, op)
+    def apply[A, B](v : Vector[A], z: B, op: (B, A) => B): B = {
+        val (first, last) = v.toPair
+        v.stlAccumulate(first, last, z, op)
+    }
 }
 
 object FoldRight {
-    def apply[A, B](v : Vector[A], z: B, op: (A, B) => B): B = v.reverse.foldLeft(z, { (b: B, a: A) => op(a, b) })
+    def apply[A, B](v : Vector[A], z: B, op: (A, B) => B): B = {
+        v.reverse.foldLeft(z, { (b: B, a: A) => op(a, b) })
+    }
 }

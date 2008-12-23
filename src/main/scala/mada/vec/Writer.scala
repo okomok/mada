@@ -12,6 +12,6 @@ object Writer {
 }
 
 class WriterFunction[A](* : Vector[A], start: Long) extends (A => Unit) {
-    private var __first = start
-    override def apply(e: A): Unit = { *(__first) = e; __first += 1 }
+    private var first = start
+    override def apply(e: A): Unit = { *(first) = e; first += 1 }
 }

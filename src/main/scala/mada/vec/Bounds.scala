@@ -20,4 +20,6 @@ class BoundsVector[A](override val * : Vector[A]) extends Adapter[A, A] {
         }
         i
     }
+
+    override def bounds = this // bounds-bounds fusion
 }

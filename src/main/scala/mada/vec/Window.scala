@@ -19,5 +19,5 @@ class WindowVector[A](override val * : Vector[A], n: Long, m: Long) extends Adap
     override def size = m - n
     override def mapIndex(i: Long) = n + i
 
-    override def window(_n: Long, _m: Long) = *.window(n + _n, n + _m)
+    override def window(_n: Long, _m: Long) = *.window(n + _n, n + _m) // window-window fusion
 }

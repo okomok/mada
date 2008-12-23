@@ -8,7 +8,7 @@ package mada.vec
 
 
 object Flatten {
-    def apply[A](v: Vector[Vector[A]]): Vector[A] = new FlattenVector(v)
+    def apply[A](vv: Vector[Vector[A]]): Vector[A] = new FlattenVector(vv)
 }
 
 class FlattenVector[A](vv: Vector[Vector[A]]) extends Adapter[A, A] with NotWritable[A] {

@@ -15,8 +15,6 @@ class ArrayVector[A](val array: Array[A]) extends Vector[A] {
     override def size = array.length
     override def apply(i: Long) = array(i.toInt)
     override def update(i: Long, e: A) = array(i.toInt) = e
-
-    override def toArray = array
 }
 
 

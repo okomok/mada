@@ -14,6 +14,6 @@ object Map {
 class MapVector[Z, A](override val * : Vector[Z], f: Z => A) extends Adapter[Z, A] with NotWritable[A] {
     override def apply(i: Long) = f(*(i))
 
-    override def map[B](_f: A => B) = *.map(_f compose f)
-    override def loop[F <: (A => Boolean)](i: Long, j: Long, _f: F) = { *.loop(i, j, _f compose f); _f }
+    override def map[B](_f: A => B) = *.map(_f compose f) // map-map fusion
+    override def loop[F <: (A => Boolean)](i: Long, j: Long, _f: F) = { *.loop(i, j, _f compose f); _f } // loop-map fusion
 }

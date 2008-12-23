@@ -13,5 +13,5 @@ object Reverse {
 
 class ReverseVector[A](override val * : Vector[A]) extends Adapter[A, A] {
     override def mapIndex(i: Long) = size - i - 1
-    override def reverse = *
+    override def reverse = * // reverse-reverse fusion
 }
