@@ -44,7 +44,7 @@ object RandomShuffle {
         }
         var __i = __first + 1
         while (__i != __last) {
-            v.swap(__i, __first + __rand((__i - __first) + 1))
+            IterSwap(v, __i, v, __first + __rand((__i - __first) + 1))
             __i += 1
         }
     }

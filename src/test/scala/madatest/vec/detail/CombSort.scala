@@ -32,7 +32,7 @@ object CombSort {
             var (target1, target2) = (first, first2)
             while (target2 != last) {
                 if (f(*(target2), *(target1))) {
-                    swap(target1, target2)
+                    vec.stl.IterSwap(*, target1, *, target2)
                     swapped = true
                 }
                 target1 += 1; target2 += 1

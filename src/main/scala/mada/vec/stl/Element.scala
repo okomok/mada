@@ -1,6 +1,6 @@
 
 
-// Replaceright Shunsuke Sogame 2008-2009.
+// Copyright Shunsuke Sogame 2008-2009.
 // Distributed under the terms of an MIT-style license.
 
 
@@ -33,21 +33,36 @@
 package mada.vec.stl
 
 
-object Replace {
-    def apply[A](* : Vector[A], first: Long, __last: Long, __old_value: Any, __new_value: A): Unit = {
-        ReplaceIf(*, first, __last, (_: A) == __old_value, __new_value)
+object MinElement {
+    def apply[A](* : Vector[A], first: Long, __last: Long)(implicit c: A => Ordered[A]): Unit = {
+        apply(*, first, __last, { (x: A, y: A) => c(x) < y })
     }
-}
 
-object ReplaceIf {
-    def apply[A](* : Vector[A], first: Long, __last: Long, __pred: A => Boolean, __new_value: A): Unit = {
+    def apply[A](* : Vector[A], first: Long, __last: Long, __comp: (A, A) => Boolean): Long = {
         var __first = first
 
+        if (__first == __last) {
+            return __first
+        }
+        var __result = __first
+        __first += 1
         while (__first != __last) {
-            if (__pred(*(__first))) {
-                *(__first) = __new_value
+            if (__comp(*(__first), *(__result))) {
+                __result = __first
             }
             __first += 1
         }
+        __result
     }
 }
+
+object MaxElement {
+    def apply[A](* : Vector[A], first: Long, __last: Long)(implicit c: A => Ordered[A]): Unit = {
+        apply(*, first, __last, { (x: A, y: A) => c(x) < y })
+    }
+
+    def apply[A](* : Vector[A], first: Long, __last: Long, __comp: (A, A) => Boolean): Long = {
+        MinElement(*, first, __last, { (x: A, y: A) => __comp(y, x) })
+    }
+}
+

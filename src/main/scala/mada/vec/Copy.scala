@@ -8,5 +8,5 @@ package mada.vec
 
 
 object Copy {
-    def apply[A](v: Vector[A]): Vector[A] = FromArray(v.toArray).cut
+    def apply[A](v: Vector[A]): Vector[A] = FromArray(v.toArray)
 }

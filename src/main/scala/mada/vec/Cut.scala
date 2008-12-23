@@ -11,4 +11,6 @@ object Cut {
     def apply[A](v: Vector[A]): Vector[A] = new CutVector(v)
 }
 
-class CutVector[A](override val * : Vector[A]) extends Adapter[A, A]
+class CutVector[A](override val * : Vector[A]) extends Adapter[A, A] {
+    override def cut = this // cut-cut fusion
+}

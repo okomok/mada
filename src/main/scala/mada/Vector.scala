@@ -89,7 +89,6 @@ trait Vector[A] {
     def span(p: A => Boolean): (Vector[A], Vector[A]) = Span(this, p)
     def splitAt(i: Long): (Vector[A], Vector[A]) = SplitAt(this, i)
     def step(n: Long, m: Long): Vector[A] = Step(this, n, m)
-    def swap(i: Long, j: Long): Unit = Swap(this, i, j)
     def take(n: Long): Vector[A] = Take(this, n)
     def takeWhile(p: A => Boolean): Vector[A] = TakeWhile(this, p)
     def toArray: Array[A] = ToArray(this)

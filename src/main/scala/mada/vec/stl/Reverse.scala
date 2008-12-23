@@ -39,7 +39,7 @@ object Reverse {
 
         while (__first < __last) {
             __last -= 1
-            v.swap(__first, __last)
+            IterSwap(v, __first, v, __last)
             __first += 1
         }
     }

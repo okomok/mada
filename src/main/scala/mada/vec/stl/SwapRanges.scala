@@ -1,6 +1,6 @@
 
 
-// Copyright Shunsuke Sogame 2008-2009.
+// SwapRngsright Shunsuke Sogame 2008-2009.
 // Distributed under the terms of an MIT-style license.
 
 
@@ -33,25 +33,15 @@
 package mada.vec.stl
 
 
-object UnguardedPartition {
-    def apply[A](* : Vector[A], first: Long, last: Long, __pivot: A, __comp: (A, A) => Boolean): Long = {
-        var __first = first; var __last = last
+object SwapRanges {
+    def apply[A](v1: Vector[A], first1: Long, __last1: Long, v2: Vector[A], first2: Long): Long = {
+        var __first1 = first1
+        var __first2 = first2
 
-        while (true) {
-            while (__comp(*(__first), __pivot)) {
-                __first += 1
-            }
-            __last -= 1
-            while (__comp(__pivot, *(__last))) {
-                __last -= 1
-            }
-            if (!(__first < __last)) {
-                return __first
-            }
-            IterSwap(*, __first, *, __last)
-            __first += 1
+        while (__first1 != __last1) {
+            IterSwap(v1, __first1, v2, __first2)
+            __first1 += 1; __first2 += 1
         }
-
-        throw new Error("unreachable")
+        __first2
     }
 }
