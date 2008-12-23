@@ -30,7 +30,7 @@
  */
 
 
-package mada.rng.stl
+package mada.vec.stl
 
 
 object LowerBound {
@@ -70,4 +70,3 @@ object UpperBound {
         LowerBound(*, first, __last, __val, { (x: A, y: A) => !__comp(y, x) })
     }
 }
-
