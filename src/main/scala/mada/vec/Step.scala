@@ -23,4 +23,6 @@ class StepVector[A](override val * : Vector[A], start: Long, stride: Long) exten
         }
     }
     override def mapIndex(i: Long) = start + (i * stride)
+
+    override def step(n: Long, m: Long) = *.step(start + (n * stride), stride * m) // step-step fusion
 }

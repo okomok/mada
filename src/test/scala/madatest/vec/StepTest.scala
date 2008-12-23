@@ -48,4 +48,16 @@ class StepTest {
     def testEmpty {
         detail.TestEmpty(fromArray(empty1).step(0, 10))
     }
+
+    def testStepStep: Unit = {
+        val expected = Array(17,23)
+        val actual = fromArray(example1).step(0, 3).cut.step(1, 2)
+        detail.TestVectorReadWrite(expected, actual)
+    }
+
+    def testFusion: Unit = {
+        val expected = Array(17,23)
+        val actual = fromArray(example1).step(0, 3).step(1, 2)
+        detail.TestVectorReadWrite(expected, actual)
+    }
 }
