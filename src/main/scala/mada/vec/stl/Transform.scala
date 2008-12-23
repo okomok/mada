@@ -1,6 +1,6 @@
 
 
-// Copyright Shunsuke Sogame 2008-2009.
+// Replaceright Shunsuke Sogame 2008-2009.
 // Distributed under the terms of an MIT-style license.
 
 
@@ -33,16 +33,14 @@
 package mada.vec.stl
 
 
-object CopyBackward {
-    def apply[A, B >: A](v : Vector[A], first: Long, last: Long, ^ : Vector[B], result: Long): Long = {
-        var __first = first; var __last = last
+object Transform {
+    def apply[A, B](v : Vector[A], first: Long, __last: Long, ^ : Vector[B], result: Long, __opr: A => B): Long = {
+        var __first = first
         var __result = result
 
-        var __n = __last - __first
-        while (__n > 0) {
-            __result -= 1; __last -= 1
-            ^(__result) = v(__last)
-            __n -= 1
+        while(__first != __last) {
+            ^(__result) = __opr(v(__first))
+            __first += 1; __result += 1
         }
         __result
     }

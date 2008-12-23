@@ -8,5 +8,5 @@ package mada.vec
 
 
 object Always {
-    def apply[A, B](v : Vector[A], w: Vector[B]): Vector[B] = w
+    def apply[A, B](v: Vector[A], w: Vector[B]): Vector[B] = w
 }

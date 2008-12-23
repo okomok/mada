@@ -80,6 +80,7 @@ trait Vector[A] {
     def permutation(is: Vector[Long]): Vector[A] = Permutation(this, is)
     def readOnly: Vector[A] = ReadOnly(this)
     def remove(p: A => Boolean): Vector[A] = Remove(this, p)
+    def replace(f: A => A): Vector[A] = Replace(this, f)
     def reverse: Vector[A] = Reverse(this)
     def rotate(i: Long): Vector[A] = Rotate(this, i)
     def slice(n: Long, m: Long): Vector[A] = Slice(this, n, m)

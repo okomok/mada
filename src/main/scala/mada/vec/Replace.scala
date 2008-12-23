@@ -7,10 +7,10 @@
 package mada.vec
 
 
-object Foreach {
-    def apply[A](v: Vector[A], f: A => Unit): Unit = {
+object Replace {
+    def apply[A](v: Vector[A], f: A => A): Vector[A] = {
         val (first, last) = v.toPair
-        stl.ForEach(v, first, last, f)
-        ()
+        stl.Transform(v, first, last, v, first, f)
+        v
     }
 }

@@ -1,6 +1,6 @@
 
 
-// Copyright Shunsuke Sogame 2008-2009.
+// Replaceright Shunsuke Sogame 2008-2009.
 // Distributed under the terms of an MIT-style license.
 
 
@@ -33,17 +33,16 @@
 package mada.vec.stl
 
 
-object CopyBackward {
-    def apply[A, B >: A](v : Vector[A], first: Long, last: Long, ^ : Vector[B], result: Long): Long = {
-        var __first = first; var __last = last
-        var __result = result
+object ReplaceCopy {
+    def apply[A, B >: A](v : Vector[A], __first: Long, __last: Long, ^ : Vector[B], result: Long, __old_value: Any, __new_value: A): Long = {
+        ReplaceCopyIf(v, __first, __last, ^, result, (_: A) == __old_value, __new_value)
+    }
+}
 
-        var __n = __last - __first
-        while (__n > 0) {
-            __result -= 1; __last -= 1
-            ^(__result) = v(__last)
-            __n -= 1
-        }
+object ReplaceCopyIf {
+    def apply[A, B >: A](v : Vector[A], __first: Long, __last: Long, ^ : Vector[B], result: Long, __pred: A => Boolean, __new_value: A): Long = {
+        var __result = result
+        ForEach(v, __first, __last, { (value: A) =>  ^(__result) = if (__pred(value)) __new_value else value; __result += 1 })
         __result
     }
 }

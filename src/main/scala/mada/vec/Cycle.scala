@@ -8,7 +8,7 @@ package mada.vec
 
 
 object Cycle {
-    def apply[A](v : Vector[A], n: Long): Vector[A] = new CycleVector(v, n)
+    def apply[A](v: Vector[A], n: Long): Vector[A] = new CycleVector(v, n)
 }
 
 class CycleVector[A](v: Vector[A], n: Long) extends Vector[A] {

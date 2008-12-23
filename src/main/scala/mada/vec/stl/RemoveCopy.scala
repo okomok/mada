@@ -8,13 +8,13 @@ package mada.vec.stl
 
 
 object RemoveCopy {
-    def apply[A, B >: A](v: Vector[A], __first: Long, __last: Long, w: Vector[B], __result: Long, e: Any): Long = {
-        RemoveCopyIf(v, __first, __last, w, __result, (_: A) == e)
+    def apply[A, B >: A](v : Vector[A], __first: Long, __last: Long, ^ : Vector[B], __result: Long, e: Any): Long = {
+        RemoveCopyIf(v, __first, __last, ^, __result, (_: A) == e)
     }
 }
 
 object RemoveCopyIf {
-    def apply[A, B >: A](v: Vector[A], __first: Long, __last: Long, w: Vector[B], __result: Long, __pred: A => Boolean): Long = {
-        CopyIf(v, __first, __last, w, __result, !__pred(_: A))
+    def apply[A, B >: A](v : Vector[A], __first: Long, __last: Long, ^ : Vector[B], __result: Long, __pred: A => Boolean): Long = {
+        CopyIf(v, __first, __last, ^, __result, !__pred(_: A))
     }
 }
