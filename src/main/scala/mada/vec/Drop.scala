@@ -9,14 +9,14 @@ package mada.vec
 
 object Drop {
     def apply[A](v : Vector[A], n: Long): Vector[A] = {
-        val __last = v.size
-        v.window(Math.min(n, __last), __last)
+        val m = v.size
+        v.window(Math.min(n, m), m)
     }
 }
 
 object DropWhile {
     def apply[A](v : Vector[A], p: A => Boolean): Vector[A] = {
-        val (__first, __last) = v.toPair
-        v.window(v.stlFindIf(__first, __last, !p(_: A)), __last)
+        val (first, last) = v.toPair
+        v.window(v.stlFindIf(first, last, !p(_: A)), last)
     }
 }

@@ -27,7 +27,7 @@ object ToIterator {
 }
 
 class VectorIterator[A](* : Vector[A]) extends Iterator[A] {
-    private var (__first, __last) = *.toPair
-    override def hasNext = __first != __last
-    override def next = { val tmp = *(__first); __first += 1; tmp }
+    private var (first, last) = *.toPair
+    override def hasNext = first != last
+    override def next = { val tmp = *(first); first += 1; tmp }
 }
