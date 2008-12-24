@@ -15,7 +15,7 @@ class StreamVector[A](s: Stream[A]) extends Adapter[A, A] with NotWritable[A] {
     override val * = {
         val a = new java.util.ArrayList[A]
         s.foreach(a.add(_: A))
-        jcl.FromArrayList(a)
+        Vector.fromJclArrayList(a)
     }
 
     override def force = this

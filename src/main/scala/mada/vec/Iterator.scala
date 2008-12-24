@@ -15,7 +15,7 @@ class IteratorVector[A](it: Iterator[A]) extends Adapter[A, A] with NotWritable[
     override val * = {
         val a = new java.util.ArrayList[A]
         it.foreach(a.add(_: A))
-        jcl.FromArrayList(a)
+        Vector.fromJclArrayList(a)
     }
 
     override def force = this

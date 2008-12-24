@@ -12,5 +12,5 @@ package mada.vec
 
 object FromValues {
     // Array.apply is nightmare.
-    def apply[A](es: A*): Vector[A] = jcl.FromArrayList(jcl.NewArrayList(es: _*)).readOnly
+    def apply[A](es: A*): Vector[A] = Vector.fromJclArrayList(jcl.NewArrayList(es: _*)).readOnly
 }

@@ -4,6 +4,9 @@
 // Distributed under the terms of an MIT-style license.
 
 
+// maybe moved to mada.vec
+
+
 package mada.vec.jcl
 
 

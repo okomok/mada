@@ -11,7 +11,7 @@ import mada._
 import junit.framework.Assert._
 
 
-class FlattenTest {
+class FlatTest {
     def testTrivial {
         val v1 = Vector.fromArray(Array(0,1,2))
         val v2 = Vector.fromArray(Array(3,4))
@@ -29,5 +29,10 @@ class FlattenTest {
         val v3 = Vector.fromArray(detail.Example.empty1)
         val vv = Vector.flatten(Vector.fromArray(Array(v1, v2, v3)))
         detail.TestEmpty(vv)
+    }
+
+    def testFlatMap: Unit = {
+        val v = Vector.fromArray(detail.Example.example1).flatMap(Vector.single(_: Int))
+        detail.TestVectorReadOnly(detail.Example.example1, v)
     }
 }

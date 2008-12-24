@@ -23,6 +23,7 @@ object Vector {
     def range(i: Int, j: Int): Vector[Int] = vec.IntRange(i, j)
     def range(i: Long, j: Long): Vector[Long] = vec.LongRange(i, j)
     def toString(v: Vector[Char]): String = vec.ToString(v)
+    def untokenize[A](vv: Vector[Vector[A]], sep: Vector[A]): Vector[A] = vec.Untokenize(vv, sep)
     def unzip[A, B](v: Vector[(A, B)]): (Vector[A], Vector[B]) = vec.Unzip(v)
 
     def fromJclArrayList[A](u: java.util.ArrayList[A]): Vector[A] = vec.jcl.FromArrayList(u)

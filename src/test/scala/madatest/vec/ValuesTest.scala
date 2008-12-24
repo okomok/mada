@@ -18,4 +18,9 @@ class ValuesTest {
         val ac = Vector.fromValues(5,1,3,6,9,7,10,0)
         detail.TestVectorReadOnly(ex, ac)
     }
+
+    def testEmpty() = {
+        val ac = Vector.fromValues[Int]()
+        detail.TestEmpty(ac)
+    }
 }
