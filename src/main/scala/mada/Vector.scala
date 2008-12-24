@@ -14,7 +14,6 @@ object Vector {
     def fromCell[A](u: Cell[A]): Vector[A] = vec.FromCell(u)
     def fromIterator[A](u: Iterator[A]): Vector[A] = vec.FromIterator(u)
     def fromList[A](u: List[A]): Vector[A] = vec.FromList(u)
-    def fromJclArrayList[A](u: java.util.ArrayList[A]): Vector[A] = vec.jcl.FromArrayList(u)
     def fromOption[A](u: Option[A]): Vector[A] = vec.FromOption(u)
     def fromRandomAccessSeq[A](u: RandomAccessSeq[A]): Vector[A] = vec.FromRandomAccessSeq(u)
     def fromStream[A](u: Stream[A]): Vector[A] = vec.FromStream(u)
@@ -26,11 +25,16 @@ object Vector {
     def toString(v: Vector[Char]): String = vec.ToString(v)
     def unzip[A, B](v: Vector[(A, B)]): (Vector[A], Vector[B]) = vec.Unzip(v)
 
+    def fromJclArrayList[A](u: java.util.ArrayList[A]): Vector[A] = vec.jcl.FromArrayList(u)
+
     type NotReadableError[A] = vec.NotReadableError[A]
     type NotWritableError[A] = vec.NotWritableError[A]
 
     type Adapter[Z, A] = vec.Adapter[Z, A]
     type NotWritable[A] = vec.NotWritable[A]
+
+    type IntFileVector = vec.IntFileVector
+    type LongFileVector = vec.LongFileVector
 }
 
 
