@@ -17,7 +17,7 @@ class StringVector(val string: String) extends Vector[Char] with NotWritable[Cha
 }
 
 
-object Stringize {
+object ToString {
     def apply[Char](v: Vector[Char]): String = v match {
         case v: StringVector => v.string
         case _ => {

@@ -18,6 +18,8 @@ class IteratorVector[A](it: Iterator[A]) extends Adapter[A, A] with NotWritable[
         jcl.FromArrayList(a)
     }
 
+    override def force = this
+
     // iterator-iterator fusion is impossible, because iterator is single-pass.
 }
 

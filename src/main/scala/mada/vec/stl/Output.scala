@@ -17,6 +17,7 @@ class OutputVector[A](f: A => Any) extends Vector[A] {
 }
 
 
+// maybe unneeded.
 class OutputCounter(val start: Long) extends Vector[Any] {
     def this() = this(0)
     private var c = start

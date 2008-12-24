@@ -18,4 +18,6 @@ class SortVector[A](v: Vector[A], lt: (A, A) => Boolean) extends Adapter[A, A] w
         stl.Sort(w, first, last, lt)
         w
     }
+
+    override def force = this
 }

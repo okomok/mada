@@ -13,15 +13,18 @@ object Vector {
     def fromArray[A](u: Array[A]): Vector[A] = vec.FromArray(u)
     def fromCell[A](u: Cell[A]): Vector[A] = vec.FromCell(u)
     def fromIterator[A](u: Iterator[A]): Vector[A] = vec.FromIterator(u)
+    def fromList[A](u: List[A]): Vector[A] = vec.FromList(u)
     def fromJclArrayList[A](u: java.util.ArrayList[A]): Vector[A] = vec.jcl.FromArrayList(u)
     def fromOption[A](u: Option[A]): Vector[A] = vec.FromOption(u)
     def fromRandomAccessSeq[A](u: RandomAccessSeq[A]): Vector[A] = vec.FromRandomAccessSeq(u)
+    def fromStream[A](u: Stream[A]): Vector[A] = vec.FromStream(u)
     def fromString(u: String): Vector[Char] = vec.FromString(u)
     def fromValues[A](es: A*): Vector[A] = vec.FromValues(es: _*)
     def single[A](u: A): Vector[A] = vec.Single(u)
     def range(i: Int, j: Int): Vector[Int] = vec.IntRange(i, j)
     def range(i: Long, j: Long): Vector[Long] = vec.LongRange(i, j)
-    def stringize(v: Vector[Char]): String = vec.Stringize(v)
+    def toString(v: Vector[Char]): String = vec.ToString(v)
+    def unzip[A, B](v: Vector[(A, B)]): (Vector[A], Vector[B]) = vec.Unzip(v)
 
     type NotReadableError[A] = vec.NotReadableError[A]
     type NotWritableError[A] = vec.NotWritableError[A]
@@ -43,7 +46,7 @@ trait Vector[A] {
     final def toTriple: (Vector[A], Long, Long) = (this, 0, size)
 
     override def equals(that: Any): Boolean = Equals(this, that)
-    override def toString: String = ToString(this)
+    override def toString: String = AnyToString(this)
 
     def always[B](that: Vector[B]): Vector[B] = Always(this, that)
     def append(that: Vector[A]): Vector[A] = Append(this, that)
@@ -95,9 +98,12 @@ trait Vector[A] {
     def toCell: Cell[A] = ToCell(this)
     def toIterator: Iterator[A] = ToIterator(this)
     def toJclArrayList: java.util.ArrayList[A] = jcl.ToArrayList(this)
+    def toList: List[A] = ToList(this)
     def toOption: Option[A] = ToOption(this)
     def toRandomAccessSeq: RandomAccessSeq.Mutable[A] = ToRandomAccessSeq(this)
+    def toStream: Stream[A] = ToStream(this)
     def window(n: Long, m: Long): Vector[A] = Window(this, n, m)
     def writer(i: Long): (A => Unit) = Writer(this, i)
+    def zip[B](that: Vector[B]): Vector[(A, B)] = Zip(this, that)
     def ++(that: Vector[A]): Vector[A] = append(that)
 }

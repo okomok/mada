@@ -20,6 +20,8 @@ class FilterVector[A](v: Vector[A], p: A => Boolean) extends Adapter[A, A] with 
         w.window(first, stl.RemoveIf(w, first, last, p))
     }
 
+    override def force = this
+
     // filter-filter fusion results in suboptimal.
     // override def filter(_p: A => Boolean) = *.filter({(e: A) => p(e) && _p(e)})
 }

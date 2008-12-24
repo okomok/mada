@@ -19,6 +19,8 @@ class FlattenVector[A](vv: Vector[Vector[A]]) extends Adapter[A, A] with NotWrit
         vv.foreach({ (v: Vector[A]) => v.foreach({ (e: A) => a(i) = e; i += 1 })})
         FromArray(a)
     }
+
+    override def force = this
 }
 
 
