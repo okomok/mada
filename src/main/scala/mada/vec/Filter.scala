@@ -17,7 +17,7 @@ class FilterVector[A](v: Vector[A], p: A => Boolean) extends Adapter[A, A] with 
         // This seems better than copy into ArrayList wrt worst-case space.
         val w = v.copy
         val (first, last) = w.toPair
-        w.window(first, stl.RemoveIf(w, first, last, p))
+        w.window(first, stl.RemoveIf(w, first, last, !p(_: A)))
     }
 
     override def force = this
