@@ -11,6 +11,7 @@ object Step {
     def apply[A](v: Vector[A], n: Long, m: Long): Vector[A] = new StepVector(v, n, m)
 }
 
+// `drop` could replaces `start`, but it would increase one method call.
 class StepVector[A](override val * : Vector[A], start: Long, stride: Long) extends VectorAdapter[A, A] {
     Assert(start >= 0)
     Assert(stride > 0)
