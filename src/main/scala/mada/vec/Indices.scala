@@ -10,4 +10,3 @@ package mada.vec
 object Indices {
     def apply[A](v: Vector[A]): Vector[Long] = LongRange(0, v.size)
 }
-

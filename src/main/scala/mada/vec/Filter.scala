@@ -12,7 +12,7 @@ object Filter {
 }
 
 // copy-on-access won't be thread-safe...
-class FilterVector[A](v: Vector[A], p: A => Boolean) extends Adapter[A, A] with NotWritable[A] {
+class FilterVector[A](v: Vector[A], p: A => Boolean) extends VectorAdapter[A, A] with NotWritable[A] {
     override val * = {
         // This seems better than copy into ArrayList wrt worst-case space.
         val w = v.copy

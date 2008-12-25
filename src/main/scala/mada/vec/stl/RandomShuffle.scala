@@ -51,6 +51,6 @@ object RandomShuffle {
 }
 
 class DefaultRandomNumberGenerator extends (Long => Long) {
-    private val rnd = new java.util.Random
+    private val rnd = new Random
     def apply(__n: Long) = Math.abs(rnd.nextLong % __n)
 }

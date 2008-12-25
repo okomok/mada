@@ -11,7 +11,7 @@ object Step {
     def apply[A](v: Vector[A], n: Long, m: Long): Vector[A] = new StepVector(v, n, m)
 }
 
-class StepVector[A](override val * : Vector[A], start: Long, stride: Long) extends Adapter[A, A] {
+class StepVector[A](override val * : Vector[A], start: Long, stride: Long) extends VectorAdapter[A, A] {
     Assert(start >= 0)
     Assert(stride > 0)
     override def size = {

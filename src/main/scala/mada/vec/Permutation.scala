@@ -11,7 +11,7 @@ object Permutation {
     def apply[A](es: Vector[A], is: Vector[Long]): Vector[A] = new PermutationVector(is, es)
 }
 
-class PermutationVector[A](override val * : Vector[Long], es: Vector[A]) extends Adapter[Long, A] {
+class PermutationVector[A](override val * : Vector[Long], es: Vector[A]) extends VectorAdapter[Long, A] {
     override def apply(i: Long) = es(*(i))
     override def update(i: Long, e: A) = es(*(i)) = e
 }

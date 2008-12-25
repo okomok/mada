@@ -13,7 +13,7 @@ object Bounds {
     def apply[A](v: Vector[A]): Vector[A] = new BoundsVector(v)
 }
 
-class BoundsVector[A](override val * : Vector[A]) extends Adapter[A, A] {
+class BoundsVector[A](override val * : Vector[A]) extends VectorAdapter[A, A] {
     override def mapIndex(i: Long) = {
         if (i < 0 || i >= *.size) {
             throw new IndexOutOfBoundsException(i.toString)

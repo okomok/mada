@@ -11,7 +11,7 @@ object Lazy {
     def apply[A](v: Vector[A]): Vector[A] = new LazyVector(v)
 }
 
-class LazyVector[A](override val * : Vector[A]) extends Adapter[A, A] with NotWritable[A] {
+class LazyVector[A](override val * : Vector[A]) extends VectorAdapter[A, A] with NotWritable[A] {
     private val map = new scala.collection.jcl.HashMap[Long, A]
 
     override def apply(i: Long) = {

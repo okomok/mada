@@ -11,7 +11,7 @@ object FromIterator {
     def apply[A](u: Iterator[A]): Vector[A] = new IteratorVector(u)
 }
 
-class IteratorVector[A](it: Iterator[A]) extends Adapter[A, A] with NotWritable[A] {
+class IteratorVector[A](it: Iterator[A]) extends VectorAdapter[A, A] with NotWritable[A] {
     override val * = {
         val a = new java.util.ArrayList[A]
         it.foreach(a.add(_: A))

@@ -13,7 +13,7 @@ object Window {
     def apply[A](v: Vector[A], n: Long, m: Long): Vector[A] = new WindowVector(v, n, m)
 }
 
-class WindowVector[A](override val * : Vector[A], n: Long, m: Long) extends Adapter[A, A] {
+class WindowVector[A](override val * : Vector[A], n: Long, m: Long) extends VectorAdapter[A, A] {
     Assert(n <= m)
 
     override def size = m - n

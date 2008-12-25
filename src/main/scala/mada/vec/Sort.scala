@@ -11,7 +11,7 @@ object Sort {
     def apply[A](v: Vector[A], lt: (A, A) => Boolean): Vector[A] = new SortVector(v, lt)
 }
 
-class SortVector[A](v: Vector[A], lt: (A, A) => Boolean) extends Adapter[A, A] with NotWritable[A] {
+class SortVector[A](v: Vector[A], lt: (A, A) => Boolean) extends VectorAdapter[A, A] with NotWritable[A] {
     override val * = {
         val w = v.copy
         val (first, last) = w.toPair
