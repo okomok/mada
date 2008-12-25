@@ -20,7 +20,7 @@ class IteratorVector[A](it: Iterator[A]) extends VectorAdapter[A, A] with NotWri
 
     override def force = this
 
-    // iterator-iterator fusion is impossible, because iterator is single-pass.
+    // from-to fusion is impossible, because iterator is single-pass.
 }
 
 
