@@ -97,7 +97,6 @@ trait Vector[A] {
     final def reduceLeft[B >: A](op: (B, A) => B): B = ReduceLeft(this, op)
     final def reduceRight[B >: A](op: (A, B) => B): B = ReduceRight(this, op)
     final def remove(p: A => Boolean): Vector[A] = Remove(this, p)
-    final def replace(f: A => A): Vector[A] = Replace(this, f)
     def reverse: Vector[A] = Reverse(this)
     final def rotate(i: Long): Vector[A] = Rotate(this, i)
     final def slice(n: Long, m: Long): Vector[A] = Slice(this, n, m)
