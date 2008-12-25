@@ -11,4 +11,4 @@ object Cut {
     def apply[A](v: Vector[A]): Vector[A] = new CutVector(v)
 }
 
-class CutVector[A](override val self: Vector[A]) extends VectorProxy[A]
+class CutVector[A](override val * : Vector[A]) extends VectorAdapter[A, A]

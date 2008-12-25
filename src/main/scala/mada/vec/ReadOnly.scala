@@ -11,4 +11,6 @@ object ReadOnly {
     def apply[A](v: Vector[A]): Vector[A] = new ReadOnlyVector(v)
 }
 
-class ReadOnlyVector[A](override val self: Vector[A]) extends VectorProxy[A] with NotWritable[A]
+class ReadOnlyVector[A](override val self: Vector[A]) extends VectorProxy[A] with NotWritable[A] {
+    override def readOnly = this
+}
