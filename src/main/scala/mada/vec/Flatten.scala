@@ -22,8 +22,3 @@ class FlattenVector[A](vv: Vector[Vector[A]]) extends VectorAdapter[A, A] with N
 
     override def force = this
 }
-
-
-object FlatMap {
-    def apply[A, B](v: Vector[A], f: A => Vector[B]): Vector[B] = Flatten(v.map(f))
-}
