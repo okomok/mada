@@ -19,7 +19,6 @@ trait VectorProxy[A] extends Vector[A] with Proxy {
     override def update(i: Long, e: A): Unit = self(i) = e
 
     override def bounds: Vector[A] = self.bounds
-    override def copy: Vector[A] = self.copy
     override def cycle(n: Long): Vector[A] = self.cycle(n)
     override def filter(p: A => Boolean): Vector[A] = self.filter(p)
     override def force: Vector[A] = self.force
@@ -28,12 +27,8 @@ trait VectorProxy[A] extends Vector[A] with Proxy {
     override def map[B](f: A => B): Vector[B] = self.map( f)
     override def readOnly: Vector[A] = self.readOnly
     override def reverse: Vector[A] = self.reverse
-    override def sort(lt: (A, A) => Boolean): Vector[A] = self.sort(lt)
     override def step(n: Long, m: Long): Vector[A] = self.step(n, m)
-    override def toArray: Array[A] = self.toArray
     override def toCell: Cell[A] = self.toCell
-    override def toIterator: Iterator[A] = self.toIterator
-    override def toJclArrayList: java.util.ArrayList[A] = self.toJclArrayList
     override def toOption: Option[A] = self.toOption
     override def toRandomAccessSeq: RandomAccessSeq.Mutable[A] = self.toRandomAccessSeq
     override def window(n: Long, m: Long): Vector[A] = self.window(n, m)

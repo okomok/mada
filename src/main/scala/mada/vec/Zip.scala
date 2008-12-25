@@ -13,7 +13,7 @@ object Zip {
 
 class ZipVector[A, B](v: Vector[A], w: Vector[B]) extends Vector[(A, B)] {
     override def size = v.size
-    override def apply(i: Long) = (v(i), w(i))
+    override def apply(i: Long) = (v(i), w(i)) // will be suboptimal.
     override def update(i: Long, e: (A, B)) = { v(i) = e._1; w(i) = e._2 }
 }
 
