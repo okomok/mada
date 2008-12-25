@@ -8,7 +8,7 @@ package madatest.vec
 
 
 import mada.Vector
-import mada.Vector.fromArray
+import mada.Vector.arrayVector
 import junit.framework.Assert._
 
 

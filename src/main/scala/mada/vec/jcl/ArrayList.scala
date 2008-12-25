@@ -13,7 +13,7 @@ package mada.vec.jcl
 import java.util.ArrayList
 
 
-object FromArrayList {
+object ArrayListVector {
     def apply[A](u: ArrayList[A]): Vector[A] = new ArrayListVector(u)
 }
 

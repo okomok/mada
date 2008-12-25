@@ -17,7 +17,7 @@ class FlattenVector[A](vv: Vector[Vector[A]]) extends VectorAdapter[A, A] with N
         val a = new Array[A](len.toInt)
         var i = 0
         vv.foreach({ (v: Vector[A]) => v.foreach({ (e: A) => a(i) = e; i += 1 })})
-        FromArray(a)
+        Vector.arrayVector(a)
     }
 
     override def force = this

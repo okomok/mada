@@ -8,14 +8,14 @@ package madatest.vec
 
 
 import mada._
-import mada.Vector.fromArray
+import mada.Vector.arrayVector
 import junit.framework.Assert._
 import detail.Example._
 
 
 class IteratorTest {
     def testTo: Unit = {
-        val it = fromArray(example1).toIterator
+        val it = arrayVector(example1).elements
         var i = 0
         it.foreach({ (e: Int) =>
             assertEquals(example1(i), e)

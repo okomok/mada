@@ -7,7 +7,7 @@
 package mada.vec
 
 
-object FromRandomAccessSeq {
+object RandomAccessSeqVector {
     def apply[A](u: RandomAccessSeq[A]): Vector[A] = u match {
         case _: RandomAccessSeq.Mutable[_] => new MutableRandomAccessSeqVector(u.asInstanceOf[RandomAccessSeq.Mutable[A]])
         case _ => new RandomAccessSeqVector(u)
@@ -24,11 +24,11 @@ class MutableRandomAccessSeqVector[A](val seq: RandomAccessSeq.Mutable[A]) exten
     override def apply(i: Long) = seq(i.toInt)
     override def update(i: Long, e: A) = seq(i.toInt) = e
 
-    override def toRandomAccessSeq = seq // from-to fusion
+    override def randomAccessSeq = seq // from-to fusion
 }
 
 
-object ToRandomAccessSeq {
+object VectorRandomAccessSeq {
     def apply[A](v: Vector[A]): RandomAccessSeq.Mutable[A] = new VectorRandomAccessSeq(v)
 }
 

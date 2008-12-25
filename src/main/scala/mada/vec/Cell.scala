@@ -7,7 +7,7 @@
 package mada.vec
 
 
-object FromCell {
+object CellVector {
     def apply[A](u: Cell[A]): Vector[A] = new CellVector(u)
 }
 

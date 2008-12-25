@@ -25,11 +25,11 @@ trait VectorProxy[A] extends Vector[A] with Proxy {
     override def lazy_ : Vector[A] = self.lazy_
     override def loop[F <: (A => Boolean)](i: Long, j: Long, f: F): F = self.loop(i, j, f)
     override def map[B](f: A => B): Vector[B] = self.map( f)
+    override def randomAccessSeq: RandomAccessSeq.Mutable[A] = self.randomAccessSeq
     override def readOnly: Vector[A] = self.readOnly
     override def reverse: Vector[A] = self.reverse
     override def step(n: Long, m: Long): Vector[A] = self.step(n, m)
     override def toCell: Cell[A] = self.toCell
     override def toOption: Option[A] = self.toOption
-    override def toRandomAccessSeq: RandomAccessSeq.Mutable[A] = self.toRandomAccessSeq
     override def window(n: Long, m: Long): Vector[A] = self.window(n, m)
 }

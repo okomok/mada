@@ -7,7 +7,7 @@
 package mada.vec
 
 
-object FromString {
+object StringVector {
     def apply(u: String): Vector[Char] = new StringVector(u)
 }
 

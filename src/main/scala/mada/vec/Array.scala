@@ -7,7 +7,7 @@
 package mada.vec
 
 
-object FromArray {
+object ArrayVector {
     def apply[A](u: Array[A]): Vector[A] = new ArrayVector(u)
 }
 

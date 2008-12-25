@@ -12,6 +12,6 @@ object Force {
 }
 
 class ForceVector[A](v: Vector[A]) extends VectorAdapter[A, A] with NotWritable[A] {
-    override val * = Vector.fromArray(v.toArray)
+    override val * = Vector.arrayVector(v.toArray)
     override def force = this // force-force fusion
 }

@@ -16,7 +16,7 @@ import madatest.vec.detail._
 
 class RandomShuffleTest {
     def testTrivial: Unit = {
-        val v = fromArray(example1)
+        val v = arrayVector(example1)
         mada.vec.stl.RandomShuffle(v, 0, v.size)
 //        println(v.toString)
         mada.vec.stl.Sort(v, 0, v.size)
