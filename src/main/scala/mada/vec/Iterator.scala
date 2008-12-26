@@ -8,19 +8,11 @@ package mada.vec
 
 
 object FromIterator {
-    def apply[A](u: Iterator[A]): Vector[A] = new IteratorVector(u)
-}
-
-class IteratorVector[A](it: Iterator[A]) extends VectorAdapter[A, A] with NotWritable[A] {
-    override val * = {
+    def apply[A](u: Iterator[A]): Vector[A] = {
         val a = new java.util.ArrayList[A]
-        it.foreach(a.add(_: A))
+        u.foreach(a.add(_: A))
         Vector.jclArrayListVector(a)
     }
-
-    override def force = this
-
-    // from-to fusion is impossible, because iterator is single-pass.
 }
 
 
