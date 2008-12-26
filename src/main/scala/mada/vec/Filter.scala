@@ -8,20 +8,8 @@ package mada.vec
 
 
 object Filter {
-    def apply[A](v: Vector[A], p: A => Boolean): Vector[A] = new FilterVector(v, p)
-}
-
-// copy-on-access won't be thread-safe...
-class FilterVector[A](v: Vector[A], p: A => Boolean) extends VectorAdapter[A, A] with NotWritable[A] {
-    override val * = {
-        // This seems better than copy into ArrayList wrt worst-case space.
-        val w = v.copy
-        val (first, last) = w.toPair
-        w.window(first, stl.RemoveIf(w, first, last, !p(_: A)))
+    def apply[A](v: Vector[A], p: A => Boolean): Vector[A] = {
+        val (first, last) = v.toPair
+        v.window(first, stl.RemoveIf(v, first, last, !p(_: A)))
     }
-
-    override def force = this
-
-    // filter-filter fusion results in suboptimal.
-    // override def filter(_p: A => Boolean) = *.filter({(e: A) => p(e) && _p(e)})
 }

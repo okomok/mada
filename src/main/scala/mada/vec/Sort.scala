@@ -8,16 +8,9 @@ package mada.vec
 
 
 object Sort {
-    def apply[A](v: Vector[A], lt: (A, A) => Boolean): Vector[A] = new SortVector(v, lt)
-}
-
-class SortVector[A](v: Vector[A], lt: (A, A) => Boolean) extends VectorAdapter[A, A] with NotWritable[A] {
-    override val * = {
-        val w = v.copy
-        val (first, last) = w.toPair
-        stl.Sort(w, first, last, lt)
-        w
+    def apply[A](v: Vector[A], lt: (A, A) => Boolean): Vector[A] = {
+        val (first, last) = v.toPair
+        stl.Sort(v, first, last, lt)
+        v
     }
-
-    override def force = this
 }
