@@ -69,7 +69,7 @@ trait Vector[A] {
     final def elements: Iterator[A] = iterator
     final def equalsWith[B](that: Vector[B])(p: (A, B) => Boolean): Boolean = EqualsWith(this, that, p)
     final def exists(p: A => Boolean): Boolean = Exists(this, p)
-    def filter(p: A => Boolean): Vector[A] = Filter(this, p)
+    final def filter(p: A => Boolean): Vector[A] = Filter(this, p)
     final def find(p: A => Boolean): Option[A] = Find(this, p)
     final def first: A = First(this)
     final def flatMap[B](f: A => Vector[B]): Vector[B] = FlatMap(this, f)
@@ -103,7 +103,7 @@ trait Vector[A] {
     final def rotate(i: Long): Vector[A] = Rotate(this, i)
     final def slice(n: Long, m: Long): Vector[A] = Slice(this, n, m)
     final def slice(n: Long): Vector[A] = Slice(this, n)
-    final def sort(lt: (A, A) => Boolean): Vector[A] = Sort(this, lt)
+    def sort(lt: (A, A) => Boolean): Vector[A] = Sort(this, lt)
     final def span(p: A => Boolean): (Vector[A], Vector[A]) = Span(this, p)
     final def splitAt(i: Long): (Vector[A], Vector[A]) = SplitAt(this, i)
     def step(n: Long, m: Long): Vector[A] = Step(this, n, m)

@@ -7,6 +7,9 @@
 package mada.vec
 
 
+import java.util.Arrays
+
+
 object ArrayVector {
     def apply[A](u: Array[A]): Vector[A] = new ArrayVector(u)
 }
@@ -15,6 +18,9 @@ class ArrayVector[A](val array: Array[A]) extends Vector[A] {
     override def size = array.length
     override def apply(i: Long) = array(i.toInt)
     override def update(i: Long, e: A) = array(i.toInt) = e
+
+//    This requires IntArrayVector for correct overload resolution.
+//    override def sort(lt: (A, A) => Boolean) = { Arrays.sort(array, jcl.ToComparator(lt)); this }
 }
 
 

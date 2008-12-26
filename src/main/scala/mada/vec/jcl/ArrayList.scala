@@ -4,13 +4,10 @@
 // Distributed under the terms of an MIT-style license.
 
 
-// maybe moved to mada.vec
-
-
 package mada.vec.jcl
 
 
-import java.util.ArrayList
+import java.util.{ ArrayList, Collections }
 
 
 object ArrayListVector {
@@ -21,6 +18,8 @@ class ArrayListVector[A](val arrayList: ArrayList[A]) extends Vector[A] {
     override def size = arrayList.size
     override def apply(i: Long) = arrayList.get(i.toInt)
     override def update(i: Long, e: A) = arrayList.set(i.toInt, e)
+
+    override def sort(lt: (A, A) => Boolean) = { Collections.sort(arrayList, ToComparator(lt)); this }
 }
 
 
