@@ -7,7 +7,7 @@
 package mada.vec
 
 
-object FromOption {
+object OptionVector {
     def apply[A](u: Option[A]): Vector[A] = new OptionVector(u)
 }
 
