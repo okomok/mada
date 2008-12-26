@@ -52,7 +52,6 @@ object UniqueCopy {
             }
             __first += 1
         }
-        __result += 1
-        __result
+        __result += 1; __result
     }
 }
