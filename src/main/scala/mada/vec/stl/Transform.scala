@@ -44,4 +44,16 @@ object Transform {
         }
         __result
     }
+
+    def apply[A, B, C](v1 : Vector[A], first1: Long, __last1: Long, v2 : Vector[B], first2: Long,  ^ : Vector[C], result: Long, __binary_op: (A, B) => C): Long = {
+        var __first1 = first1
+        var __first2 = first2
+        var __result = result
+
+        while(__first1 != __last1) {
+            ^(__result) = __binary_op(v1(__first1), v2(__first2))
+            __first1 += 1; __first2 += 1; __result += 1
+        }
+        __result
+    }
 }
