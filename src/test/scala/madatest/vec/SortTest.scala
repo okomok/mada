@@ -19,6 +19,11 @@ class SortTest {
         detail.TestVectorReadOnly(example1Sorted, actual)
     }
 
+    def testImplicit {
+        val actual = Vector.sort(arrayVector(example1).cut)
+        detail.TestVectorReadOnly(example1Sorted, actual)
+    }
+
     def testOptimizeArray {
         val actual = arrayVector(example1).sort(_ < _)
         detail.TestVectorReadOnly(example1Sorted, actual)
