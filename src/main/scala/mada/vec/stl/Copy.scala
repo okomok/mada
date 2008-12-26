@@ -11,14 +11,12 @@ package mada.vec.stl
 // v.foreach(w.writer(0)) would be enough if java didn't love heap.
 //
 // v.foreach(aStream.put(_)) can be written as
-// v.copy(0, v.size, stlOutput(aStream.put(_)), 0)
+// v.copy(0, v.size, Output(aStream.put(_)), 0)
 
 
 object Copy {
     def apply[A, B >: A](v : Vector[A], __first: Long, __last: Long, ^ : Vector[B], result: Long): Long = {
-        var __result = result
-        ForEach(v, __first, __last, { (e: A) => ^(__result) = e; __result += 1 } )
-        __result
+        CopyIf(v, __first, __last, ^, result, { (e: A) => true })
     }
 }
 
