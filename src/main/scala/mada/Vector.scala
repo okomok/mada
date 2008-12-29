@@ -17,7 +17,7 @@ object Vector {
     def fromValues[A](es: A*): Vector[A] = vec.FromValues(es: _*)
     def lefts[A, B](v: Vector[Either[A, B]]): Vector[A] = vec.Lefts(v)
     def rights[A, B](v: Vector[Either[A, B]]): Vector[B] = vec.Rights(v)
-    def jclArrayListVector[A](u: java.util.ArrayList[A]): Vector[A] = vec.jcl.ArrayListVector(u)
+    def jclListVector[A](u: java.util.List[A]): Vector[A] = vec.jcl.ListVector(u)
     def optionVector[A](u: Option[A]): Vector[A] = vec.OptionVector(u)
     def randomAccessSeqVector[A](u: RandomAccessSeq[A]): Vector[A] = vec.RandomAccessSeqVector(u)
     def range(i: Int, j: Int): Vector[Int] = vec.IntRange(i, j)

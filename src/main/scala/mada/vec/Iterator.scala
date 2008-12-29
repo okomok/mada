@@ -11,7 +11,7 @@ object FromIterator {
     def apply[A](u: Iterator[A]): Vector[A] = {
         val a = new java.util.ArrayList[A]
         u.foreach(a.add(_: A))
-        Vector.jclArrayListVector(a)
+        Vector.jclListVector(a)
     }
 }
 

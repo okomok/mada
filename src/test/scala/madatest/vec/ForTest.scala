@@ -30,7 +30,7 @@ class ForTest {
         val v = Vector.arrayVector(example1)
         val a = new java.util.ArrayList[Int]
         for (e <- v) a.add(e)
-        assertEquals(Vector.jclArrayListVector(a), v)
+        assertEquals(Vector.jclListVector(a), v)
     }
 
     def testFlatMap: Unit = {
