@@ -8,10 +8,10 @@ package mada.vec
 
 
 object Permutation {
-    def apply[A](es: Vector[A], is: Vector[Long]): Vector[A] = new PermutationVector(is, es)
+    def apply[A](ev: Vector[A], iv: Vector[Long]): Vector[A] = new PermutationVector(iv, ev)
 }
 
-class PermutationVector[A](override val * : Vector[Long], es: Vector[A]) extends VectorAdapter[Long, A] {
-    override def apply(i: Long) = es(*(i))
-    override def update(i: Long, e: A) = es(*(i)) = e
+class PermutationVector[A](override val * : Vector[Long], ev: Vector[A]) extends VectorAdapter[Long, A] {
+    override def apply(i: Long) = ev(*(i))
+    override def update(i: Long, e: A) = ev(*(i)) = e
 }

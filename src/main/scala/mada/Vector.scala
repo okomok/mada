@@ -10,6 +10,7 @@ package mada
 object Vector {
     def arrayVector[A](u: Array[A]): Vector[A] = vec.ArrayVector(u)
     def cellVector[A](u: Cell[A]): Vector[A] = vec.CellVector(u)
+    def concat[A](vs: Vector[A]*): Vector[A] = vec.Concat(vs: _*)
     def empty[A]: Vector[A] = vec.Empty.apply[A]
     def flatten[A](vv: Vector[Vector[A]]): Vector[A] = vec.Flatten(vv)
     def fromIterator[A](u: Iterator[A]): Vector[A] = vec.FromIterator(u)
@@ -77,8 +78,8 @@ trait Vector[A] {
     final def flatMap[B](f: A => Vector[B]): Vector[B] = FlatMap(this, f)
     final def forall(p: A => Boolean): Boolean = Forall(this, p)
     def force: Vector[A] = Force(this)
-    final def foldLeft[B](z: B, op: (B, A) => B): B = FoldLeft(this, z, op)
-    final def foldRight[B](z: B, op: (A, B) => B): B = FoldRight(this, z, op)
+    final def foldLeft[B](z: B)(op: (B, A) => B): B = FoldLeft(this, z, op)
+    final def foldRight[B](z: B)(op: (A, B) => B): B = FoldRight(this, z, op)
     final def foreach(f: A => Unit): Unit = Foreach(this, f)
     final def head: A = Head(this)
     final def identity: Vector[A] = this
@@ -95,7 +96,7 @@ trait Vector[A] {
     def map[B](f: A => B): Vector[B] = Map(this, f)
     final def offset(i: Long, j: Long): Vector[A] = Offset(this, i, j)
     final def partition(p: A => Boolean): (Vector[A], Vector[A]) = Partition(this, p)
-    final def permutation(is: Vector[Long]): Vector[A] = Permutation(this, is)
+    final def permutation(iv: Vector[Long]): Vector[A] = Permutation(this, iv)
     def randomAccessSeq: RandomAccessSeq.Mutable[A] = VectorRandomAccessSeq(this)
     def readOnly: Vector[A] = ReadOnly(this)
     final def reduceLeft[B >: A](op: (B, A) => B): B = ReduceLeft(this, op)

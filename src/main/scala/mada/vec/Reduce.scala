@@ -9,7 +9,7 @@ package mada.vec
 
 object ReduceLeft {
     def apply[A, B >: A](v: Vector[A], op: (B, A) => B): B = {
-        v.tail.foldLeft(v.head, op)
+        v.tail.foldLeft[B](v.head)(op)
     }
 }
 
