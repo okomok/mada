@@ -9,6 +9,7 @@ package mada.vec
 
 trait VectorProxy[A] extends Vector[A] with Proxy {
     override def self: Vector[A]
+
     override def equals(that: Any): Boolean = that match {
         case that: Proxy => self equals that.self
         case _ => self equals that
