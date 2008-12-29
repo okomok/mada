@@ -14,6 +14,7 @@ object Vector {
     def empty[A]: Vector[A] = vec.Empty.apply[A]
     def flatten[A](vv: Vector[Vector[A]]): Vector[A] = vec.Flatten(vv)
     def fromIterator[A](u: Iterator[A]): Vector[A] = vec.FromIterator(u)
+    def fromJclIterator[A](u: java.util.Iterator[A]): Vector[A] = vec.jcl.FromIterator(u)
     def fromValues[A](es: A*): Vector[A] = vec.FromValues(es: _*)
     def lefts[A, B](v: Vector[Either[A, B]]): Vector[A] = vec.Lefts(v)
     def rights[A, B](v: Vector[Either[A, B]]): Vector[B] = vec.Rights(v)
@@ -89,6 +90,7 @@ trait Vector[A] {
     final def isEmpty: Boolean = IsEmpty(this)
     final def isNil: Boolean = IsNil(this)
     final def iterator: Iterator[A] = VectorIterator(this)
+    final def jclListIterator: java.util.ListIterator[A] = jcl.VectorListIterator(this)
     final def last: A = Last(this)
     def lazy_ : Vector[A] = Lazy(this)
     final def length: Long = size
