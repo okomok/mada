@@ -14,6 +14,8 @@ object StringVector {
 class StringVector(val string: String) extends Vector[Char] with NotWritable[Char] {
     override def size = string.length
     override def apply(i: Long) = string.charAt(i.toInt)
+
+    override def force = this
 }
 
 
