@@ -7,11 +7,11 @@
 package mada.peg.parser
 
 
-object Append {
-    def apply[A](p: Parser[A], q: Parser[A]): Parser[A] = new AppendParser(p, q)
+object Then {
+    def apply[A](p: Parser[A], q: Parser[A]): Parser[A] = new ThenParser(p, q)
 }
 
-class AppendParser[A](p: Parser[A], q: Parser[A]) extends Parser[A] {
+class ThenParser[A](p: Parser[A], q: Parser[A]) extends Parser[A] {
     override def parse(s: Scanner[A], first: Long, last: Long): Long = {
         var cur = p.parse(s, first, last)
         if (cur == FAILED) {
