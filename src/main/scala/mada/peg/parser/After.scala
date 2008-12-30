@@ -23,4 +23,6 @@ class AfterParser[A](p: Parser[A], n: Long) extends Parser[A] {
             }
         }
     }
+
+    override def not = throw new UnsupportedOperationException("AfterParser.not")
 }

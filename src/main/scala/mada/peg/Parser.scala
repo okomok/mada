@@ -10,6 +10,7 @@ package mada.peg
 object Parser {
     val FAILED: Long = -1
 
+    def after[A](n: Long)(p: Parser[A]): Parser[A] = p.after(n)
     def any[A]: Parser[A] = parser.Any_[A]
     def begin[A]: Parser[A] = parser.Begin[A]
     def end[A]: Parser[A] = parser.End[A]
@@ -22,9 +23,8 @@ object Parser {
     def set[A](es: A*): Parser[A] = parser.Set(es: _*)
     def single[A](e: A): Parser[A] = parser.Single(e)
 
-    def ^[A](p: Parser[A]): Parser[A] = p.not
-    def ?=[A](p: Parser[A], n: Long): Parser[A] = p.after(n)
-    def ?<=[A](p: Parser[A]): Parser[A] = p.before
+    def ?=[A](p: Parser[A]): Parser[A] = p.before
+    def ?![A](p: Parser[A]): Parser[A] = p.before.not
 }
 
 
@@ -37,6 +37,7 @@ trait Parser[A] {
     def action(f: Vector[A] => Unit): Parser[A] = Action(this, f)
     def after(n: Long): Parser[A] = After(this, n)
     def before: Parser[A] = Before(this)
+    def lazyActions: Parser[A] = LazyActions(this)
     def noActions: Parser[A] = NoActions(this)
     def not: Parser[A] = Not(this)
     def plus: Parser[A] = Plus(this)
@@ -48,12 +49,14 @@ trait Parser[A] {
     def starUntil(that: Parser[A]): Parser[A] = StarUntil(this, that)
     def then(that: Parser[A]): Parser[A] = Then(this, that)
     def unmap[Z](f: Z => A): Parser[Z] = Unmap(this, f)
-    def withActions: Parser[A] = WithActions(this)
 
     final def apply(f: Vector[A] => Unit): Parser[A] = action(f)
+    final def unary_! : Parser[A] = not
     final def ~(that: Parser[A]): Parser[A] = then(that)
     final def |(that: Parser[A]): Parser[A] = or(that)
     final def * : Parser[A] = star
+    final def *?(that: Parser[A]): Parser[A] = starBefore(that)
+    final def *~(that: Parser[A]): Parser[A] = starUntil(that)
     final def + : Parser[A] = plus
     final def ? : Parser[A] = opt
 }
