@@ -8,6 +8,7 @@ package mada.peg
 
 
 object Scanner {
+    def default[A](v: Vector[A]): Scanner[A] = scanner.Default(v)
 }
 
 

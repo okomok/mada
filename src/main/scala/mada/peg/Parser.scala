@@ -59,4 +59,6 @@ trait Parser[A] {
     final def *~(that: Parser[A]): Parser[A] = starUntil(that)
     final def + : Parser[A] = plus
     final def ? : Parser[A] = opt
+
+    final def parse(v: Vector[A]): Long = Parse(this, v)
 }
