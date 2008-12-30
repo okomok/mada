@@ -34,8 +34,10 @@ trait Parser[A] {
     final val FAILED = Parser.FAILED
     def parse(s: Scanner[A], begin: Long, end: Long): Long
 
+    def action(f: Vector[A] => Unit): Parser[A] = Action(this, f)
     def after(n: Long): Parser[A] = After(this, n)
     def before: Parser[A] = Before(this)
+    def noActions: Parser[A] = NoActions(this)
     def not: Parser[A] = Not(this)
     def plus: Parser[A] = Plus(this)
     def opt: Parser[A] = Opt(this)
@@ -46,10 +48,12 @@ trait Parser[A] {
     def starUntil(that: Parser[A]): Parser[A] = StarUntil(this, that)
     def then(that: Parser[A]): Parser[A] = Then(this, that)
     def unmap[Z](f: Z => A): Parser[Z] = Unmap(this, f)
+    def withActions: Parser[A] = WithActions(this)
 
-    def ~(that: Parser[A]): Parser[A] = then(that)
-    def |(that: Parser[A]): Parser[A] = or(that)
-    def * = star
-    def + = plus
-    def ? = opt
+    final def apply(f: Vector[A] => Unit): Parser[A] = action(f)
+    final def ~(that: Parser[A]): Parser[A] = then(that)
+    final def |(that: Parser[A]): Parser[A] = or(that)
+    final def * : Parser[A] = star
+    final def + : Parser[A] = plus
+    final def ? : Parser[A] = opt
 }

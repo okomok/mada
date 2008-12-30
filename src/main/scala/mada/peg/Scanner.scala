@@ -13,4 +13,6 @@ object Scanner {
 
 trait Scanner[A] extends Vector[A] {
     def copy[B](v: Vector[B]): Scanner[B]
+    def isActionable: Boolean
+    def setActionable(b: Boolean): Unit
 }
