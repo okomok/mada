@@ -12,14 +12,20 @@ object Set {
 }
 
 class SetParser[A](es: A*) extends Parser[A] {
-    override def parse(s: Scanner[A], first: Long, last: Long): Long = {
-        var it = es.elements
+    private val set = {
+        val hs = new java.util.HashSet[A]
+        val it = es.elements
         while (it.hasNext) {
-            if (s(first) == it.next) {
-                return first + 1
-            }
+            hs.add(it.next)
         }
+        hs
+    }
 
-        FAILED
+    override def parse(s: Scanner[A], first: Long, last: Long): Long = {
+        if (first == last || !set.contains(s(first))) {
+            FAILED
+        } else {
+            first + 1
+        }
     }
 }

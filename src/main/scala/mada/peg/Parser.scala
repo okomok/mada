@@ -61,4 +61,5 @@ trait Parser[A] {
     final def ? : Parser[A] = opt
 
     final def parse(v: Vector[A]): Long = Parse(this, v)
+    final def matches(v: Vector[A]): Boolean = Matches(this, v)
 }
