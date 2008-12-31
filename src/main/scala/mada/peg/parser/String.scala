@@ -8,5 +8,5 @@ package mada.peg.parser
 
 
 object FromString {
-    def apply(str: String): Parser[Char] = Parser.fromIterator(str.elements)
+    def apply(str: String): Parser[Char] = Parser.fromVector(Vector.stringVector(str))
 }

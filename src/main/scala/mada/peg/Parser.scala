@@ -17,8 +17,8 @@ object Parser {
     def eps[A]: Parser[A] = parser.Eps[A]
     def error[A]: Parser[A] = parser.Error[A]
     def fail[A]: Parser[A] = parser.Fail[A]
-    def fromIterator[A](it: Iterator[A]): Parser[A] = parser.FromIterator(it)
     def fromString(str: String): Parser[Char] = parser.FromString(str)
+    def fromVector[A](v: Vector[A]): Parser[A] = parser.FromVector(v)
     def range[A](i: A, j: A)(implicit c: A => Ordered[A]): Parser[A] = parser.Range(i, j)(c)
     def set[A](es: A*): Parser[A] = parser.Set(es: _*)
     def single[A](e: A): Parser[A] = parser.Single(e)
@@ -31,7 +31,7 @@ object Parser {
 trait Parser[A] {
     import parser._
 
-    final val FAILED = Parser.FAILED
+    protected final val FAILED = Parser.FAILED
     def parse(s: Scanner[A], begin: Long, end: Long): Long
 
     def action(f: Vector[A] => Unit): Parser[A] = Action(this, f)
