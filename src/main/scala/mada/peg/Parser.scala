@@ -58,6 +58,7 @@ trait Parser[A] {
     final def plus: Parser[A] = Plus(this)
     final def opt: Parser[A] = Opt(this)
     final def or(that: Parser[A]): Parser[A] = Or(this, that)
+    final def prescan[Z](f: Vector[Z] => Vector[A]): Parser[Z] = Prescan(this, f)
     final def repeat(min: Long, max: Long): Parser[A] = Repeat(this, min, max)
     final def seqAnd(that: Parser[A]): Parser[A] = SeqAnd(this, that)
     final def seqOr(that: Parser[A]): Parser[A] = SeqOr(this, that)
