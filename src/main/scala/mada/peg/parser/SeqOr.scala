@@ -8,5 +8,5 @@ package mada.peg.parser
 
 
 object SeqOr {
-    def apply[A](p: Parser[A], q: Parser[A]): Parser[A] = (p seqAnd q.not) or q
+    def apply[A](p: Parser[A], q: Parser[A]): Parser[A] = (p seqAnd q.opt) or q
 }

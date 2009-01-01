@@ -28,4 +28,3 @@ class MinusParser[A](p: Parser[A], q: Parser[A]) extends Parser[A] {
 
     override def length = p.length
 }
-
