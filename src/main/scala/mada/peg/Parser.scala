@@ -37,9 +37,9 @@ object Parser {
 trait Parser[A] {
     import parser._
 
-    protected final val FAILED = Parser.FAILED
     def parse(s: Scanner[A], first: Long, last: Long): Long
     def length: Long = throw new UnsupportedOperationException("Parser.length")
+    protected final val FAILED = Parser.FAILED
 
     final def action(f: Vector[A] => Unit): Parser[A] = Action(this, f)
     final def after: Parser[A] = After(this)

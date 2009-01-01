@@ -19,4 +19,6 @@ class NotParser[A](p: Parser[A]) extends Parser[A] {
             first + p.length
         }
     }
+
+    override def length = p.length
 }

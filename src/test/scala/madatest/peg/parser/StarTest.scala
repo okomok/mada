@@ -22,4 +22,14 @@ class StarTest {
         val sample = mada.Vector.stringVector("/*hello*/")
         assertTrue((fromString("/*") ~ (any *~ fromString("*/"))).matches(sample))
     }
+
+    def testBefore2: Unit = {
+        val sample = mada.Vector.stringVector("/*hello*/")
+        assertTrue((fromString("/*") ~ __*?(fromString("*/")) ~ fromString("*/")).matches(sample) )
+    }
+
+    def testUntil2: Unit = {
+        val sample = mada.Vector.stringVector("/*hello*/")
+        assertTrue((fromString("/*") ~ __*~(fromString("*/"))).matches(sample))
+    }
 }
