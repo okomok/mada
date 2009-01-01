@@ -56,7 +56,11 @@ trait Parser[A] {
     final def noActions: Parser[A] = NoActions(this)
     final def not: Parser[A] = Not(this)
     final def plus: Parser[A] = Plus(this)
+    final def plusBefore(that: Parser[A]): Parser[A] = PlusBefore(this, that)
+    final def plusUntil(that: Parser[A]): Parser[A] = PlusUntil(this, that)
     final def opt: Parser[A] = Opt(this)
+    final def optBefore(that: Parser[A]): Parser[A] = OptBefore(this, that)
+    final def optUntil(that: Parser[A]): Parser[A] = OptUntil(this, that)
     final def or(that: Parser[A]): Parser[A] = Or(this, that)
     final def prescan[Z](f: Vector[Z] => Vector[A]): Parser[Z] = Prescan(this, f)
     final def repeat(min: Long, max: Long): Parser[A] = Repeat(this, min, max)
@@ -81,7 +85,11 @@ trait Parser[A] {
     final def *?(that: Parser[A]): Parser[A] = starBefore(that)
     final def *~(that: Parser[A]): Parser[A] = starUntil(that)
     final def + : Parser[A] = plus
+    final def +?(that: Parser[A]): Parser[A] = plusBefore(that)
+    final def +~(that: Parser[A]): Parser[A] = plusUntil(that)
     final def ? : Parser[A] = opt
+    final def ??(that: Parser[A]): Parser[A] = optBefore(that)
+    final def ?~(that: Parser[A]): Parser[A] = optUntil(that)
 
     final def parse(v: Vector[A]): Long = Parse(this, v)
     final def matches(v: Vector[A]): Boolean = Matches(this, v)

@@ -8,5 +8,13 @@ package mada.peg.parser
 
 
 object Plus {
-    def apply[A](p: Parser[A]): Parser[A] = p seqAnd (p.star)
+    def apply[A](p: Parser[A]): Parser[A] = p seqAnd p.star
+}
+
+object PlusBefore {
+    def apply[A](p: Parser[A], q: Parser[A]): Parser[A] = p seqAnd p.starBefore(q)
+}
+
+object PlusUntil {
+    def apply[A](p: Parser[A], q: Parser[A]): Parser[A] = p seqAnd p.starUntil(q)
 }
