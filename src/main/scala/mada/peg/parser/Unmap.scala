@@ -15,4 +15,6 @@ class UnmapParser[Z, A](p: Parser[A], f: Z => A) extends Parser[Z] {
     override def parse(s: Scanner[Z], first: Long, last: Long): Long = {
         p.parse(s.copy(s.map(f)), first, last)
     }
+
+    override def length = p.length
 }

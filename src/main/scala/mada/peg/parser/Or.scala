@@ -29,4 +29,8 @@ class OrParser[A](p: Parser[A], q: Parser[A]) extends Parser[A] {
             plen
         }
     }
+/*
+    override def after = p.after or q.after
+    override def not = p.not then q.not
+*/
 }

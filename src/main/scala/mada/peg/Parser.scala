@@ -29,6 +29,8 @@ object Parser {
     def ?<![A](p: Parser[A]): Parser[A] = p.after.not
     def ?=[A](p: Parser[A]): Parser[A] = p.before
     def ?![A](p: Parser[A]): Parser[A] = p.before.not
+    def ?<<=[A](p: Parser[A]): Parser[A] = p.behind
+    def ?<<![A](p: Parser[A]): Parser[A] = p.behind.not
 
     type ParserProxy[A] = parser.ParserProxy[A]
 }

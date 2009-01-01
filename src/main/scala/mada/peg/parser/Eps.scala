@@ -13,4 +13,5 @@ object Eps {
 
 class EpsParser[A] extends Parser[A] {
     override def parse(s: Scanner[A], first: Long, last: Long): Long = first
+    override def length = 0
 }
