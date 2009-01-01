@@ -7,6 +7,6 @@
 package mada.peg.parser
 
 
-object Plus {
-    def apply[A](p: Parser[A]): Parser[A] = p seqAnd (p.star)
+object SeqOr {
+    def apply[A](p: Parser[A], q: Parser[A]): Parser[A] = (p seqAnd q.not) or q
 }

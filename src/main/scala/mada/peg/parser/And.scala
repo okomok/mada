@@ -8,7 +8,25 @@ package mada.peg.parser
 
 
 object And {
-    def apply[A](p: Parser[A], q: Parser[A]): Parser[A] = p.before then q
+    def apply[A](p: Parser[A], q: Parser[A]): Parser[A] = new AndParser(p, q)
+}
+
+class AndParser[A](p: Parser[A], q: Parser[A]) extends Parser[A] {
+    override def parse(s: Scanner[A], first: Long, last: Long): Long = {
+        val pcur = p.parse(s, first, last)
+        if (pcur != FAILED) {
+            val qcur = q.parse(s, first, last) // short-circuit
+            if (pcur == qcur) {
+                pcur
+            } else {
+                FAILED
+            }
+        } else {
+            FAILED
+        }
+    }
+
+    override def length = p.length
 }
 
 
