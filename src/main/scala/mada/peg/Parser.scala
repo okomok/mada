@@ -72,7 +72,6 @@ trait Parser[A] {
     final def unmap[Z](f: Z => A): Parser[Z] = Unmap(this, f)
     final def xor(that: Parser[A]): Parser[A] = Xor(this, that)
 
-    final def apply(f: Vector[A] => Unit): Parser[A] = action(f)
     final def unary_! : Parser[A] = not
     final def &(that: Parser[A]): Parser[A] = and(that)
     final def |(that: Parser[A]): Parser[A] = or(that)
@@ -90,6 +89,7 @@ trait Parser[A] {
     final def ? : Parser[A] = opt
     final def ??(that: Parser[A]): Parser[A] = optBefore(that)
     final def ?~(that: Parser[A]): Parser[A] = optUntil(that)
+    final def ^^(f: Vector[A] => Unit): Parser[A] = action(f)
 
     final def parse(v: Vector[A]): Long = Parse(this, v)
     final def matches(v: Vector[A]): Boolean = Matches(this, v)
