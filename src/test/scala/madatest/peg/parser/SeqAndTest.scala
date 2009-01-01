@@ -12,7 +12,7 @@ import mada.peg._
 import junit.framework.Assert._
 
 
-class ThenTest {
+class SeqAndTest {
     def testTrivial: Unit = {
         val sample = mada.Vector.stringVector("/*hello*/")
         assertTrue((fromString("/*hel") ~ fromString("lo*/")).matches(sample))
