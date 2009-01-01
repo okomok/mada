@@ -8,5 +8,7 @@ package mada.peg.parser
 
 
 object Icase {
-    def apply(str: String): Parser[Char] = Parser.lower(Parser.fromString(str.toLowerCase))
+    def apply(str: String): Parser[Char] = {
+        Parser.lowerCaseScan(Parser.fromVector(Vector.lowerCase(Vector.stringVector(str))))
+    }
 }

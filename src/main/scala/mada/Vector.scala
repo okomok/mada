@@ -18,6 +18,8 @@ object Vector {
     def fromValues[A](es: A*): Vector[A] = vec.FromValues(es: _*)
     def lefts[A, B](v: Vector[Either[A, B]]): Vector[A] = vec.Lefts(v)
     def rights[A, B](v: Vector[Either[A, B]]): Vector[B] = vec.Rights(v)
+    def lowerCase(v: Vector[Char]): Vector[Char] = vec.LowerCase(v)
+    def upperCase(v: Vector[Char]): Vector[Char] = vec.UpperCase(v)
     def jclListVector[A](u: java.util.List[A]): Vector[A] = vec.jcl.ListVector(u)
     def optionVector[A](u: Option[A]): Vector[A] = vec.OptionVector(u)
     def productVector(u: Product): Vector[Any] = vec.ProductVector(u)
