@@ -9,8 +9,8 @@ package mada
 
 class Ref[A](var deref: A) {
     final def :=(x: A): A = { deref = x; deref }
-    final def apply() = deref
-    final def update(x: A) = deref = x
+    final def apply(): A = deref
+    final def update(x: A): Unit = deref = x
 }
 
 

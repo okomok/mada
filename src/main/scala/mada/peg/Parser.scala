@@ -35,6 +35,7 @@ object Parser {
     def ?<<![A](p: Parser[A]): Parser[A] = p.lookBack.not
 
     type ParserProxy[A] = parser.ParserProxy[A]
+    type Rule[A] = parser.Rule[A]
 }
 
 
