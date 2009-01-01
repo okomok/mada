@@ -27,12 +27,12 @@ object Parser {
     def __*[A]: Parser[A] = any[A].star
     def __*?[A](p: Parser[A]): Parser[A] = any[A].starBefore(p)
     def __*~[A](p: Parser[A]): Parser[A] = any[A].starUntil(p)
-    def ?=[A](p: Parser[A]): Parser[A] = p.before
-    def ?![A](p: Parser[A]): Parser[A] = p.before.not
-    def ?<=[A](p: Parser[A]): Parser[A] = p.after
-    def ?<![A](p: Parser[A]): Parser[A] = p.after.not
-    def ?<<=[A](p: Parser[A]): Parser[A] = p.behind
-    def ?<<![A](p: Parser[A]): Parser[A] = p.behind.not
+    def ?=[A](p: Parser[A]): Parser[A] = p.lookAhead
+    def ?![A](p: Parser[A]): Parser[A] = p.lookAhead.not
+    def ?<=[A](p: Parser[A]): Parser[A] = p.lookBehind
+    def ?<![A](p: Parser[A]): Parser[A] = p.lookBehind.not
+    def ?<<=[A](p: Parser[A]): Parser[A] = p.lookBack
+    def ?<<![A](p: Parser[A]): Parser[A] = p.lookBack.not
 
     type ParserProxy[A] = parser.ParserProxy[A]
 }
@@ -46,12 +46,12 @@ trait Parser[A] {
     protected final val FAILED = Parser.FAILED
 
     final def action(f: Vector[A] => Unit): Parser[A] = Action(this, f)
-    final def after: Parser[A] = After(this)
     final def and(that: Parser[A]): Parser[A] = And(this, that)
     final def andIf(pred: Vector[A] => Boolean): Parser[A] = AndIf(this, pred)
-    final def before: Parser[A] = Before(this)
-    final def behind: Parser[A] = Behind(this)
     final def lazyActions: Parser[A] = LazyActions(this)
+    final def lookAhead: Parser[A] = LookAhead(this)
+    final def lookBack: Parser[A] = LookBack(this)
+    final def lookBehind: Parser[A] = LookBehind(this)
     final def minus(that: Parser[A]) = Minus(this, that)
     final def noActions: Parser[A] = NoActions(this)
     final def not: Parser[A] = Not(this)

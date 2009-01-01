@@ -7,11 +7,11 @@
 package mada.peg.parser
 
 
-object After {
-    def apply[A](p: Parser[A]): Parser[A] = new AfterParser(p)
+object LookBehind {
+    def apply[A](p: Parser[A]): Parser[A] = new LookBehindParser(p)
 }
 
-class AfterParser[A](p: Parser[A]) extends Parser[A] {
+class LookBehindParser[A](p: Parser[A]) extends Parser[A] {
     override def parse(s: Scanner[A], first: Long, last: Long): Long = {
         val len = p.length
         if (first < len) {

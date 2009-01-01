@@ -30,7 +30,7 @@ class OrParser[A](p: Parser[A], q: Parser[A]) extends Parser[A] {
         }
     }
 /*
-    override def after = p.after or q.after
+    override def lookBehind = p.lookBehind or q.lookBehind
     override def not = p.not seqAnd q.not
 */
 }

@@ -12,7 +12,7 @@ object Opt {
 }
 
 object OptBefore {
-    def apply[A](p: Parser[A], q: Parser[A]): Parser[A] = q.before or (p seqAnd q.before)
+    def apply[A](p: Parser[A], q: Parser[A]): Parser[A] = q.lookAhead or (p seqAnd q.lookAhead)
 }
 
 object OptUntil {

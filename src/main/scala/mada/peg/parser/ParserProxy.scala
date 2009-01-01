@@ -13,7 +13,7 @@ trait ParserProxy[A] extends Parser[A] with Proxy {
     override def parse(s: Scanner[A], first: Long, last: Long): Long = self.parse(s, first, last)
     override def length: Long = self.length
 /*
-    override def after = self.after
+    override def lookBehind = self.lookBehind
     override def not = self.not
 */
 }

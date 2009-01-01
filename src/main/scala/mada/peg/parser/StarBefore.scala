@@ -8,5 +8,5 @@ package mada.peg.parser
 
 
 object StarBefore {
-    def apply[A](p: Parser[A], q: Parser[A]): Parser[A] = p.starUntil(q.before)
+    def apply[A](p: Parser[A], q: Parser[A]): Parser[A] = p.starUntil(q.lookAhead)
 }
