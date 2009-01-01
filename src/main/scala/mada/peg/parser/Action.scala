@@ -10,7 +10,7 @@ package mada.peg.parser
 // Action
 
 object Action {
-    def apply[A](p: Parser[A], f: Vector[A] => Unit): Parser[A] = apply(p, { (s: Scanner[A], i: Long, j: Long) => f(s.window(i, j)) })
+    def apply[A](p: Parser[A], f: Vector[A] => Unit): Parser[A] = apply(p, ToScannerFunction(f))
     def apply[A](p: Parser[A], f: (Scanner[A], Long, Long) => Unit): Parser[A] = new ActionParser(p, f)
 }
 

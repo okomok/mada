@@ -25,10 +25,10 @@ object Parser {
     def __*[A]: Parser[A] = any[A].star
     def __*?[A](p: Parser[A]): Parser[A] = any[A].starBefore(p)
     def __*~[A](p: Parser[A]): Parser[A] = any[A].starUntil(p)
-    def ?<=[A](p: Parser[A]): Parser[A] = p.after
-    def ?<![A](p: Parser[A]): Parser[A] = p.after.not
     def ?=[A](p: Parser[A]): Parser[A] = p.before
     def ?![A](p: Parser[A]): Parser[A] = p.before.not
+    def ?<=[A](p: Parser[A]): Parser[A] = p.after
+    def ?<![A](p: Parser[A]): Parser[A] = p.after.not
     def ?<<=[A](p: Parser[A]): Parser[A] = p.behind
     def ?<<![A](p: Parser[A]): Parser[A] = p.behind.not
 
@@ -45,6 +45,8 @@ trait Parser[A] {
 
     final def action(f: Vector[A] => Unit): Parser[A] = Action(this, f)
     final def after: Parser[A] = After(this)
+    final def and(that: Parser[A]): Parser[A] = And(this, that)
+    final def andIf(pred: Vector[A] => Boolean): Parser[A] = AndIf(this, pred)
     final def before: Parser[A] = Before(this)
     final def behind: Parser[A] = Behind(this)
     final def lazyActions: Parser[A] = LazyActions(this)
