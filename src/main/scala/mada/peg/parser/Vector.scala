@@ -23,4 +23,6 @@ class VectorParser[A1, A2](v: Vector[A1], pred: (A1, A2) => Boolean) extends Par
             FAILED
         }
     }
+
+    override def length = v.size
 }

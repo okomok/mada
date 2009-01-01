@@ -20,17 +20,5 @@ class BeforeParser[A](p: Parser[A]) extends Parser[A] {
         }
     }
 
-    override def not = new NotBeforeParser(p)
-}
-
-class NotBeforeParser[A](p: Parser[A]) extends Parser[A] {
-    override def parse(s: Scanner[A], first: Long, last: Long): Long = {
-        val cur = p.before.parse(s, first, last)
-        if (cur != FAILED) {
-            FAILED
-        } else {
-            Assert(cur == first)
-            cur
-        }
-    }
+    override def length = 0
 }

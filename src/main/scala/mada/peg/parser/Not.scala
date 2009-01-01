@@ -7,8 +7,6 @@
 package mada.peg.parser
 
 
-// one character parser
-
 object Not {
     def apply[A](p: Parser[A]): Parser[A] = new NotParser(p)
 }
@@ -18,9 +16,7 @@ class NotParser[A](p: Parser[A]) extends Parser[A] {
         if (first == last || p.parse(s, first, last) != FAILED) {
             return FAILED
         } else {
-            first + 1
+            first + p.length
         }
     }
-
-    override def not = p
 }

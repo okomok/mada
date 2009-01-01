@@ -24,4 +24,6 @@ class RangeParser[A](i: A, j: A)(implicit c: A => Ordered[A]) extends Parser[A] 
             }
         }
     }
+
+    override def length = 1
 }

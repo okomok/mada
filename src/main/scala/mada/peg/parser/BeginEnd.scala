@@ -19,6 +19,8 @@ class BeginParser[A] extends Parser[A] {
             FAILED
         }
     }
+
+    override def length = 0
 }
 
 
@@ -34,4 +36,6 @@ class EndParser[A] extends Parser[A] {
             FAILED
         }
     }
+
+    override def length = 0
 }

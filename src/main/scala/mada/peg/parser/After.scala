@@ -8,15 +8,16 @@ package mada.peg.parser
 
 
 object After {
-    def apply[A](p: Parser[A], n: Long): Parser[A] = new AfterParser(p, n)
+    def apply[A](p: Parser[A]): Parser[A] = new AfterParser(p)
 }
 
-class AfterParser[A](p: Parser[A], n: Long) extends Parser[A] {
+class AfterParser[A](p: Parser[A]) extends Parser[A] {
     override def parse(s: Scanner[A], first: Long, last: Long): Long = {
-        if (first < n) {
+        val len = p.length
+        if (first < len) {
             FAILED
         } else {
-            if (first == p.parse(s, first - n, first)) {
+            if (first == p.parse(s, first - len, first)) {
                 first
             } else {
                 FAILED
@@ -24,5 +25,5 @@ class AfterParser[A](p: Parser[A], n: Long) extends Parser[A] {
         }
     }
 
-    override def not = throw new UnsupportedOperationException("AfterParser.not")
+    override def length = 0
 }

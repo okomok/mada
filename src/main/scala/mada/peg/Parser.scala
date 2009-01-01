@@ -10,7 +10,6 @@ package mada.peg
 object Parser {
     val FAILED: Long = -1
 
-    def after[A](n: Long)(p: Parser[A]): Parser[A] = p.after(n)
     def any[A]: Parser[A] = parser.Any_[A]
     def begin[A]: Parser[A] = parser.Begin[A]
     def end[A]: Parser[A] = parser.End[A]
@@ -23,8 +22,15 @@ object Parser {
     def set[A](es: A*): Parser[A] = parser.Set(es: _*)
     def single[A](e: A): Parser[A] = parser.Single(e)
 
+    def __*[A]: Parser[A] = any[A].star
+    def __*?[A](p: Parser[A]): Parser[A] = any[A].starBefore(p)
+    def __*~[A](p: Parser[A]): Parser[A] = any[A].starUntil(p)
+    def ?<=[A](p: Parser[A]): Parser[A] = p.after
+    def ?<![A](p: Parser[A]): Parser[A] = p.after.not
     def ?=[A](p: Parser[A]): Parser[A] = p.before
     def ?![A](p: Parser[A]): Parser[A] = p.before.not
+
+    type ParserProxy[A] = parser.ParserProxy[A]
 }
 
 
@@ -32,23 +38,25 @@ trait Parser[A] {
     import parser._
 
     protected final val FAILED = Parser.FAILED
-    def parse(s: Scanner[A], begin: Long, end: Long): Long
+    def parse(s: Scanner[A], first: Long, last: Long): Long
+    def length: Long = throw new UnsupportedOperationException("Parser.length")
 
-    def action(f: Vector[A] => Unit): Parser[A] = Action(this, f)
-    def after(n: Long): Parser[A] = After(this, n)
-    def before: Parser[A] = Before(this)
-    def lazyActions: Parser[A] = LazyActions(this)
-    def noActions: Parser[A] = NoActions(this)
-    def not: Parser[A] = Not(this)
-    def plus: Parser[A] = Plus(this)
-    def opt: Parser[A] = Opt(this)
-    def or(that: Parser[A]): Parser[A] = Or(this, that)
-    def repeat(min: Long, max: Long): Parser[A] = Repeat(this, min, max)
-    def star: Parser[A] = Star(this)
-    def starBefore(that: Parser[A]): Parser[A] = StarBefore(this, that)
-    def starUntil(that: Parser[A]): Parser[A] = StarUntil(this, that)
-    def then(that: Parser[A]): Parser[A] = Then(this, that)
-    def unmap[Z](f: Z => A): Parser[Z] = Unmap(this, f)
+    final def action(f: Vector[A] => Unit): Parser[A] = Action(this, f)
+    final def after: Parser[A] = After(this)
+    final def before: Parser[A] = Before(this)
+    final def behind: Parser[A] = Behind(this)
+    final def lazyActions: Parser[A] = LazyActions(this)
+    final def noActions: Parser[A] = NoActions(this)
+    final def not: Parser[A] = Not(this)
+    final def plus: Parser[A] = Plus(this)
+    final def opt: Parser[A] = Opt(this)
+    final def or(that: Parser[A]): Parser[A] = Or(this, that)
+    final def repeat(min: Long, max: Long): Parser[A] = Repeat(this, min, max)
+    final def star: Parser[A] = Star(this)
+    final def starBefore(that: Parser[A]): Parser[A] = StarBefore(this, that)
+    final def starUntil(that: Parser[A]): Parser[A] = StarUntil(this, that)
+    final def then(that: Parser[A]): Parser[A] = Then(this, that)
+    final def unmap[Z](f: Z => A): Parser[Z] = Unmap(this, f)
 
     final def apply(f: Vector[A] => Unit): Parser[A] = action(f)
     final def unary_! : Parser[A] = not

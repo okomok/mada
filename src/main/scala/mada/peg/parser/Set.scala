@@ -28,4 +28,6 @@ class SetParser[A](es: A*) extends Parser[A] {
             first + 1
         }
     }
+
+    override def length = 1
 }

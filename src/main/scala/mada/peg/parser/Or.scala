@@ -20,4 +20,13 @@ class OrParser[A](p: Parser[A], q: Parser[A]) extends Parser[A] {
             cur
         }
     }
+
+    override def length = {
+        val plen = p.length
+        if (plen != q.length) {
+            throw new UnsupportedOperationException("OrParser.length")
+        } else {
+            plen
+        }
+    }
 }

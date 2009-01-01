@@ -13,4 +13,5 @@ object Fail {
 
 class FailParser[A] extends Parser[A] {
     override def parse(s: Scanner[A], first: Long, last: Long): Long = FAILED
+    override def length = 0
 }
