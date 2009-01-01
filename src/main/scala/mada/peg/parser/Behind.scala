@@ -13,7 +13,7 @@ object Behind {
 
 class BehindParser[A](p: Parser[A]) extends Parser[A] {
     override def parse(s: Scanner[A], first: Long, last: Long): Long = {
-        val (v, i, j) = s.window(first, last).reverse.toTriple
+        val (v, i, j) = s.window(0, first).reverse.toTriple
         if (p.parse(s.copy(v), i, j) == FAILED) {
             FAILED
         } else {

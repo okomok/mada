@@ -7,6 +7,6 @@
 package mada.peg.parser
 
 
-object Opt {
-    def apply[A](p: Parser[A]): Parser[A] = p or Parser.eps[A]
+object StarBefore {
+    def apply[A](p: Parser[A], q: Parser[A]): Parser[A] = p.starUntil(q.before)
 }
