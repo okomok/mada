@@ -15,17 +15,16 @@ import mada.peg.parser.Compatibles._
 
 
 class CalcTest {
-
     val start = new Rule[Char]
     val digit = new Rule[Char]
     val expr = new Rule[Char]
     val term = new Rule[Char]
     val factor = new Rule[Char]
 
-    start   := ( expr )
-    digit   := ( range('0', '9') )
-    expr    := ( term ~ (( '+' ~ term ^^ add | '-' ~ term ^^ sub )*) ) // Take care operator precedence.
-    term    := ( factor ~ ( '*' ~ factor ^^ mul | '/' ~ factor ^^ div ).* ) // `.` is better.
+    start   := expr
+    digit   := range('0', '9')
+    expr    := term ~ (( '+' ~ term ^^ add | '-' ~ term ^^ sub )*) // Take care operator precedence.
+    term    := factor ~ ( '*' ~ factor ^^ mul | '/' ~ factor ^^ div ).* // `.` is better.
     factor  := ( (digit+) ^^ int_ | '(' ~ expr ~ ')' | '-' ~ factor ^^ neg | '+' ~ factor )
 
     def int_(v: Vector[Char]): Unit = { }
