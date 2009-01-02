@@ -21,8 +21,15 @@ object Parser {
     def icase(str: String): Parser[Char] = parser.Icase(str)
     def lowerCaseScan(p: Parser[Char]): Parser[Char] = parser.LowerCaseScan(p)
     def range[A](i: A, j: A)(implicit c: A => Ordered[A]): Parser[A] = parser.Range(i, j)(c)
+    def rule[A]: parser.RuleParser[A] = new parser.RuleParser[A]
     def set[A](es: A*): Parser[A] = parser.Set(es: _*)
     def single[A](e: A): Parser[A] = parser.Single(e)
+
+    def rules1[A] = parser.Rules1[A]
+    def rules2[A] = parser.Rules2[A]
+    def rules3[A] = parser.Rules3[A]
+    def rules4[A] = parser.Rules4[A]
+    def rules5[A] = parser.Rules5[A]
 
     def __*[A]: Parser[A] = any[A].star
     def __*?[A](p: Parser[A]): Parser[A] = any[A].starBefore(p)
@@ -35,7 +42,6 @@ object Parser {
     def ?<<![A](p: Parser[A]): Parser[A] = p.lookBack.not
 
     type ParserProxy[A] = parser.ParserProxy[A]
-    type Rule[A] = parser.Rule[A]
 }
 
 
