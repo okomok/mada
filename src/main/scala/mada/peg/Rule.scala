@@ -18,8 +18,11 @@ object Rule {
 }
 
 
-class Rule[A] extends Ref[Parser[A]](null) with Parser[A] {
+class Rule[A] extends Parser[A] {
     override def parse(v: Vector[A], first: Long, last: Long): Long = {
         deref.parse(v, first, last)
     }
+
+    private var deref: Parser[A] = null
+    final def ::=(p: Parser[A]): Unit = deref = p
 }
