@@ -12,11 +12,11 @@ object Star {
 }
 
 class StarParser[A](p: Parser[A]) extends Parser[A] {
-    override def parse(s: Scanner[A], first: Long, last: Long): Long = {
+    override def parse(v: Vector[A], first: Long, last: Long): Long = {
         var cur = first
 
         while (true) {
-            val next = p.parse(s, cur, last)
+            val next = p.parse(v, cur, last)
             if (next == FAILED) {
                 return cur
             } else if (next == last) {

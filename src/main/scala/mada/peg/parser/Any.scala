@@ -12,7 +12,7 @@ object Any_ {
 }
 
 class AnyParser[A] extends Parser[A] {
-    override def parse(s: Scanner[A], first: Long, last: Long): Long = {
+    override def parse(v: Vector[A], first: Long, last: Long): Long = {
         if (first == last) {
             FAILED
         } else {

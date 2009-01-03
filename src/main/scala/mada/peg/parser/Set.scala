@@ -21,8 +21,8 @@ class SetParser[A](es: A*) extends Parser[A] {
         hs
     }
 
-    override def parse(s: Scanner[A], first: Long, last: Long): Long = {
-        if (first == last || !set.contains(s(first))) {
+    override def parse(v: Vector[A], first: Long, last: Long): Long = {
+        if (first == last || !set.contains(v(first))) {
             FAILED
         } else {
             first + 1

@@ -33,6 +33,9 @@ object Vector {
     def untokenize[A](vv: Vector[Vector[A]], sep: Vector[A]): Vector[A] = vec.Untokenize(vv, sep)
     def unzip[A, B](v: Vector[(A, B)]): (Vector[A], Vector[B]) = vec.Unzip(v)
 
+    def triplify[A, B](f: Vector[A] => B): ((Vector[A], Long, Long) => B) = vec.Triplify(f)
+    def untriplify[A, B](f: (Vector[A], Long, Long) => B): (Vector[A] => B) = vec.Untriplify(f)
+
     type NotReadableError[A] = vec.NotReadableError[A]
     type NotWritableError[A] = vec.NotWritableError[A]
 

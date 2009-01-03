@@ -12,10 +12,10 @@ object Or {
 }
 
 class OrParser[A](p: Parser[A], q: Parser[A]) extends Parser[A] {
-    override def parse(s: Scanner[A], first: Long, last: Long): Long = {
-        var cur = p.parse(s, first, last)
+    override def parse(v: Vector[A], first: Long, last: Long): Long = {
+        var cur = p.parse(v, first, last)
         if (cur == FAILED) {
-            q.parse(s, first, last)
+            q.parse(v, first, last)
         } else {
             cur
         }

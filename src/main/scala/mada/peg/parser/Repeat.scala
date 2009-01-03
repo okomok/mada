@@ -16,12 +16,12 @@ object Repeat {
 }
 
 class RepeatParser[A](p: Parser[A], min: Long, max: Long) extends Parser[A] {
-    override def parse(s: Scanner[A], first: Long, last: Long): Long = {
+    override def parse(v: Vector[A], first: Long, last: Long): Long = {
         var cur = first
 
         var i = 0L
         while (i < max) {
-            cur = p.parse(s, cur, last)
+            cur = p.parse(v, cur, last)
             if (cur == FAILED) {
                 if (i < min) // not enough
                     return FAILED

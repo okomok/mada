@@ -12,8 +12,8 @@ object Not {
 }
 
 class NotParser[A](p: Parser[A]) extends Parser[A] {
-    override def parse(s: Scanner[A], first: Long, last: Long): Long = {
-        if (first == last || p.parse(s, first, last) != FAILED) {
+    override def parse(v: Vector[A], first: Long, last: Long): Long = {
+        if (first == last || p.parse(v, first, last) != FAILED) {
             return FAILED
         } else {
             first + p.length

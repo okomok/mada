@@ -12,12 +12,12 @@ object SeqAnd {
 }
 
 class SeqAndParser[A](p: Parser[A], q: Parser[A]) extends Parser[A] {
-    override def parse(s: Scanner[A], first: Long, last: Long): Long = {
-        var cur = p.parse(s, first, last)
+    override def parse(v: Vector[A], first: Long, last: Long): Long = {
+        var cur = p.parse(v, first, last)
         if (cur == FAILED) {
             FAILED
         } else {
-            cur = q.parse(s, cur, last)
+            cur = q.parse(v, cur, last)
             if (cur == FAILED) {
                 FAILED
             } else {

@@ -12,11 +12,11 @@ object Range {
 }
 
 class RangeParser[A](i: A, j: A)(implicit c: A => Ordered[A]) extends Parser[A] {
-    override def parse(s: Scanner[A], first: Long, last: Long): Long = {
+    override def parse(v: Vector[A], first: Long, last: Long): Long = {
         if (first == last) {
             return FAILED
         } else {
-            val e = s(first)
+            val e = v(first)
             if (c(i) <= e && c(e) <= j) {
                 first + 1
             } else {

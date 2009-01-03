@@ -18,7 +18,7 @@ class EpsTest {
         assertFalse(eps[Int].matches(mada.Vector.fromValues(1,2,3)))
     }
 
-    def testCompile(s: Scanner[Char]): Unit = {
-        (fromString("abcd") ~ eps).parse(s, 0, 10)
+    def testCompile(v: mada.Vector[Char]): Unit = {
+        (fromString("abcd") ~ eps).parse(v, 0, 10)
     }
 }

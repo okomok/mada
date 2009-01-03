@@ -12,10 +12,10 @@ object And {
 }
 
 class AndParser[A](p: Parser[A], q: Parser[A]) extends Parser[A] {
-    override def parse(s: Scanner[A], first: Long, last: Long): Long = {
-        val pcur = p.parse(s, first, last)
+    override def parse(v: Vector[A], first: Long, last: Long): Long = {
+        val pcur = p.parse(v, first, last)
         if (pcur != FAILED) {
-            val qcur = q.parse(s, first, last) // short-circuit
+            val qcur = q.parse(v, first, last) // short-circuit
             if (pcur == qcur) {
                 pcur
             } else {
@@ -31,14 +31,14 @@ class AndParser[A](p: Parser[A], q: Parser[A]) extends Parser[A] {
 
 
 object AndIf {
-    def apply[A](p: Parser[A], pred: Vector[A] => Boolean): Parser[A] = apply(p, ToScannerFunction(pred))
-    def apply[A](p: Parser[A], pred: (Scanner[A], Long, Long) => Boolean): Parser[A] = new AndIfParser(p, pred)
+    def apply[A](p: Parser[A], pred: Vector[A] => Boolean): Parser[A] = apply(p, Vector.triplify(pred))
+    def apply[A](p: Parser[A], pred: (Vector[A], Long, Long) => Boolean): Parser[A] = new AndIfParser(p, pred)
 }
 
-class AndIfParser[A](override val self: Parser[A], pred: (Scanner[A], Long, Long) => Boolean) extends ParserProxy[A] {
-    override def parse(s: Scanner[A], first: Long, last: Long): Long = {
-        val cur = self.parse(s, first, last)
-        if (cur == FAILED || !pred(s, first, cur)) {
+class AndIfParser[A](override val self: Parser[A], pred: (Vector[A], Long, Long) => Boolean) extends ParserProxy[A] {
+    override def parse(v: Vector[A], first: Long, last: Long): Long = {
+        val cur = self.parse(v, first, last)
+        if (cur == FAILED || !pred(v, first, cur)) {
             FAILED
         } else {
             cur

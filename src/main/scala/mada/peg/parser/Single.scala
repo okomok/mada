@@ -12,8 +12,8 @@ object Single {
 }
 
 class SingleParser[A](e: A) extends Parser[A] {
-    override def parse(s: Scanner[A], first: Long, last: Long): Long = {
-        if (first == last || e != s(first)) {
+    override def parse(v: Vector[A], first: Long, last: Long): Long = {
+        if (first == last || e != v(first)) {
             FAILED
         } else {
             first + 1

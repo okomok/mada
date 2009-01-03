@@ -12,8 +12,8 @@ object LookAhead {
 }
 
 class LookAheadParser[A](p: Parser[A]) extends Parser[A] {
-    override def parse(s: Scanner[A], first: Long, last: Long): Long = {
-        if (p.parse(s, first, last) != FAILED) {
+    override def parse(v: Vector[A], first: Long, last: Long): Long = {
+        if (p.parse(v, first, last) != FAILED) {
             first
         } else {
             FAILED

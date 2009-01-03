@@ -12,7 +12,7 @@ object Begin {
 }
 
 class BeginParser[A] extends Parser[A] {
-    override def parse(s: Scanner[A], first: Long, last: Long): Long = {
+    override def parse(v: Vector[A], first: Long, last: Long): Long = {
         if (first == 0) {
             first
         } else {
@@ -29,7 +29,7 @@ object End {
 }
 
 class EndParser[A] extends Parser[A] {
-    override def parse(s: Scanner[A], first: Long, last: Long): Long = {
+    override def parse(v: Vector[A], first: Long, last: Long): Long = {
         if (first == last) {
             first
         } else {

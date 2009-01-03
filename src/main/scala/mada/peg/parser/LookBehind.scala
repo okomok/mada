@@ -12,12 +12,12 @@ object LookBehind {
 }
 
 class LookBehindParser[A](p: Parser[A]) extends Parser[A] {
-    override def parse(s: Scanner[A], first: Long, last: Long): Long = {
+    override def parse(v: Vector[A], first: Long, last: Long): Long = {
         val len = p.length
         if (first < len) {
             FAILED
         } else {
-            if (first == p.parse(s, first - len, first)) {
+            if (first == p.parse(v, first - len, first)) {
                 first
             } else {
                 FAILED

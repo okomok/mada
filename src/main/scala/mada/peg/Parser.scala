@@ -21,15 +21,8 @@ object Parser {
     def icase(str: String): Parser[Char] = parser.Icase(str)
     def lowerCaseScan(p: Parser[Char]): Parser[Char] = parser.LowerCaseScan(p)
     def range[A](i: A, j: A)(implicit c: A => Ordered[A]): Parser[A] = parser.Range(i, j)(c)
-    def rule[A]: parser.RuleParser[A] = new parser.RuleParser[A]
     def set[A](es: A*): Parser[A] = parser.Set(es: _*)
     def single[A](e: A): Parser[A] = parser.Single(e)
-
-    def rules1[A] = parser.Rules1[A]
-    def rules2[A] = parser.Rules2[A]
-    def rules3[A] = parser.Rules3[A]
-    def rules4[A] = parser.Rules4[A]
-    def rules5[A] = parser.Rules5[A]
 
     def __*[A]: Parser[A] = any[A].star
     def __*?[A](p: Parser[A]): Parser[A] = any[A].starBefore(p)
@@ -48,19 +41,17 @@ object Parser {
 trait Parser[A] {
     import parser._
 
-    def parse(s: Scanner[A], first: Long, last: Long): Long
+    def parse(v: Vector[A], first: Long, last: Long): Long
     def length: Long = throw new UnsupportedOperationException("Parser.length")
     protected final val FAILED = Parser.FAILED
 
     final def action(f: Vector[A] => Unit): Parser[A] = Action(this, f)
     final def and(that: Parser[A]): Parser[A] = And(this, that)
     final def andIf(pred: Vector[A] => Boolean): Parser[A] = AndIf(this, pred)
-    final def lazyActions: Parser[A] = LazyActions(this)
     final def lookAhead: Parser[A] = LookAhead(this)
     final def lookBack: Parser[A] = LookBack(this)
     final def lookBehind: Parser[A] = LookBehind(this)
     final def minus(that: Parser[A]) = Minus(this, that)
-    final def noActions: Parser[A] = NoActions(this)
     final def not: Parser[A] = Not(this)
     final def plus: Parser[A] = Plus(this)
     final def plusBefore(that: Parser[A]): Parser[A] = PlusBefore(this, that)

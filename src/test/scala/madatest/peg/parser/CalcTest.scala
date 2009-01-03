@@ -15,7 +15,7 @@ import mada.peg.parser.Compatibles._
 
 
 class CalcTest {
-    val (expr, term, factor, digit) = rules4[Char]
+    val (expr, term, factor, digit) = Rule.make4[Char]
 
     expr    := term ~ (( '+' ~ term ^^ add | '-' ~ term ^^ sub )*) // Take care operator precedence.
     term    := factor ~ ( '*' ~ factor ^^ mul | '/' ~ factor ^^ div ).* // `.` is better.

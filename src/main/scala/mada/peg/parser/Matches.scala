@@ -10,6 +10,6 @@ package mada.peg.parser
 object Matches {
     def apply[A](p: Parser[A], v: Vector[A]): Boolean = {
         val (first, last) = v.toPair
-        p.parse(Scanner.default(v), first, last) == last
+        p.parse(v, first, last) == last
     }
 }

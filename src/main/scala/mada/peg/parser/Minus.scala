@@ -12,12 +12,12 @@ object Minus {
 }
 
 class MinusParser[A](p: Parser[A], q: Parser[A]) extends Parser[A] {
-    override def parse(s: Scanner[A], first: Long, last: Long): Long = {
-        val pcur = p.parse(s, first, last)
+    override def parse(v: Vector[A], first: Long, last: Long): Long = {
+        val pcur = p.parse(v, first, last)
         if (pcur == FAILED) {
             FAILED
         } else {
-            val qcur = q.parse(s, first, last)
+            val qcur = q.parse(v, first, last)
             if (qcur == FAILED || qcur < pcur) {
                 pcur
             } else {

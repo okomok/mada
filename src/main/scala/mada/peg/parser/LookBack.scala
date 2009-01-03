@@ -12,9 +12,9 @@ object LookBack {
 }
 
 class LookBackParser[A](p: Parser[A]) extends Parser[A] {
-    override def parse(s: Scanner[A], first: Long, last: Long): Long = {
-        val (v, i, j) = s.window(0, first).reverse.toTriple
-        if (p.parse(s.copy(v), i, j) == FAILED) {
+    override def parse(v: Vector[A], first: Long, last: Long): Long = {
+        val (w, i, j) = v.window(0, first).reverse.toTriple
+        if (p.parse(w, i, j) == FAILED) {
             FAILED
         } else {
             first

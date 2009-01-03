@@ -10,6 +10,6 @@ package mada.peg.parser
 object Parse {
     def apply[A](p: Parser[A], v: Vector[A]): Long = {
         val (first, last) = v.toPair
-        p.parse(Scanner.default(v), first, last)
+        p.parse(v, first, last)
     }
 }

@@ -12,7 +12,7 @@ object Error {
 }
 
 class ErrorParser[A] extends Parser[A] {
-    override def parse(s: Scanner[A], first: Long, last: Long): Long = {
+    override def parse(v: Vector[A], first: Long, last: Long): Long = {
         throw new Error("ErrorParser.parse")
     }
 }
