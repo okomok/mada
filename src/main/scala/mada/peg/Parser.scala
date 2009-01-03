@@ -45,7 +45,7 @@ trait Parser[A] {
     def length: Long = throw new UnsupportedOperationException("Parser.length")
     protected final val FAILED = Parser.FAILED
 
-    final def action(f: Vector[A] => Unit): Parser[A] = Action(this, f)
+    final def action(f: Vector[A] => Any): Parser[A] = Action(this, f)
     final def and(that: Parser[A]): Parser[A] = And(this, that)
     final def andIf(pred: Vector[A] => Boolean): Parser[A] = AndIf(this, pred)
     final def lookAhead: Parser[A] = LookAhead(this)
@@ -87,7 +87,7 @@ trait Parser[A] {
     final def ? : Parser[A] = opt
     final def ??(that: Parser[A]): Parser[A] = optBefore(that)
     final def ?~(that: Parser[A]): Parser[A] = optUntil(that)
-    final def ^^(f: Vector[A] => Unit): Parser[A] = action(f)
+    final def ^^(f: Vector[A] => Any): Parser[A] = action(f)
 
     final def parse(v: Vector[A]): Long = Parse(this, v)
     final def matches(v: Vector[A]): Boolean = Matches(this, v)
