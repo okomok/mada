@@ -16,7 +16,7 @@ class Symbols[A](is: Iterator[A]*)(implicit c: A => Ordered[A]) extends Parser[A
     }
 
     private val set = {
-        val s = new TSTreeMap[A, Dummy]({ (x: A, y: A) => c(x) < y })
+        val s = new TSTreeMap[A, Dummy](vec.stl.Less(c))
         s
     }
 
@@ -27,6 +27,11 @@ class Symbols[A](is: Iterator[A]*)(implicit c: A => Ordered[A]) extends Parser[A
 // Can't contain an empty Vector key.
 class TSTreeMap[A, V](lt: (A, A) => Boolean) {
     private var root: Node = null
+
+    def get(key: Vector[A]): Option[V] = {
+        val (first, last) = key.toPair
+        get(key, first, last)
+    }
 
     def get(key: Vector[A], first: Long, last: Long): Option[V] = {
         // `first == last` is ok; it just returns `None`.

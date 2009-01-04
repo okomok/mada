@@ -7,6 +7,6 @@
 package mada.peg.parser
 
 
-object FromString {
-    def apply(str: String): Parser[Char] = Parser.fromVector(Vector.stringVector(str))
+object StringParser {
+    def apply(str: String): Parser[Char] = Parser.vectorParser(Vector.stringVector(str))
 }

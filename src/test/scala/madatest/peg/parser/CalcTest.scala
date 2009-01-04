@@ -11,7 +11,7 @@ import mada.Vector
 import mada.peg.Parser._
 import mada.peg._
 import junit.framework.Assert._
-import mada.peg.parser.Compatibles._
+import mada.peg.Compatibles._
 
 
 class CalcTest {

@@ -15,41 +15,41 @@ import junit.framework.Assert._
 class StarTest {
     def testStar: Unit = {
         val sample = mada.Vector.stringVector("aaaaaaa")
-        assertTrue((fromString("a")*).matches(sample))
+        assertTrue((stringParser("a")*).matches(sample))
     }
 
     def testStar2: Unit = {
         val sample = mada.Vector.stringVector("aaaaaaab")
-        assertTrue((fromString("a").* ~ fromString("b")).matches(sample))
+        assertTrue((stringParser("a").* ~ stringParser("b")).matches(sample))
     }
 
     def testStar3: Unit = {
         val sample = mada.Vector.stringVector("b")
-        assertTrue((fromString("a").* ~ fromString("b")).matches(sample))
+        assertTrue((stringParser("a").* ~ stringParser("b")).matches(sample))
     }
 
     def testStar4: Unit = {
         val sample = mada.Vector.stringVector("Aabababab")
-        assertTrue(  (fromString("A") ~ (fromString("a") ~ fromString("b")).* ).matches(sample)  ) // `.` is needed.
+        assertTrue(  (stringParser("A") ~ (stringParser("a") ~ stringParser("b")).* ).matches(sample)  ) // `.` is needed.
     }
 
     def testBefore: Unit = {
         val sample = mada.Vector.stringVector("/*hello*/")
-        assertTrue((fromString("/*") ~ (any *? fromString("*/")) ~ fromString("*/")).matches(sample))
+        assertTrue((stringParser("/*") ~ (any *? stringParser("*/")) ~ stringParser("*/")).matches(sample))
     }
 
     def testUntil: Unit = {
         val sample = mada.Vector.stringVector("/*hello*/")
-        assertTrue((fromString("/*") ~ (any *~ fromString("*/"))).matches(sample))
+        assertTrue((stringParser("/*") ~ (any *~ stringParser("*/"))).matches(sample))
     }
 
     def testBefore2: Unit = {
         val sample = mada.Vector.stringVector("/*hello*/")
-        assertTrue((fromString("/*") ~ __*?(fromString("*/")) ~ fromString("*/")).matches(sample) )
+        assertTrue((stringParser("/*") ~ __*?(stringParser("*/")) ~ stringParser("*/")).matches(sample) )
     }
 
     def testUntil2: Unit = {
         val sample = mada.Vector.stringVector("/*hello*/")
-        assertTrue((fromString("/*") ~ __*~(fromString("*/"))).matches(sample))
+        assertTrue((stringParser("/*") ~ __*~(stringParser("*/"))).matches(sample))
     }
 }

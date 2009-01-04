@@ -16,13 +16,13 @@ object Parser {
     def eps[A]: Parser[A] = parser.Eps[A]
     def error[A]: Parser[A] = parser.Error[A]
     def fail[A]: Parser[A] = parser.Fail[A]
-    def fromString(str: String): Parser[Char] = parser.FromString(str)
-    def fromVector[A](v: Vector[A]): Parser[A] = parser.FromVector(v)
     def icase(str: String): Parser[Char] = parser.Icase(str)
     def lowerCaseScan(p: Parser[Char]): Parser[Char] = parser.LowerCaseScan(p)
     def range[A](i: A, j: A)(implicit c: A => Ordered[A]): Parser[A] = parser.Range(i, j)(c)
     def set[A](es: A*): Parser[A] = parser.Set(es: _*)
     def single[A](e: A): Parser[A] = parser.Single(e)
+    def stringParser(str: String): Parser[Char] = parser.StringParser(str)
+    def vectorParser[A](v: Vector[A]): Parser[A] = parser.VectorParser(v)
 
     def __*[A]: Parser[A] = any[A].star
     def __*?[A](p: Parser[A]): Parser[A] = any[A].starBefore(p)
