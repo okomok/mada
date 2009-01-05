@@ -12,7 +12,7 @@ package madatest.peg
 
 import mada.peg._
 import junit.framework.Assert._
-import mada.vec.Compatibles._
+import mada.Vector.compatibles._
 import mada.peg.Compatibles._
 
 
