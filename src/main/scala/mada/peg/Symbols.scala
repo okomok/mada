@@ -12,6 +12,7 @@ package mada.peg
 
 object Symbols {
     def apply[A](vs: Vector[A]*)(implicit c: A => Ordered[A]): Parser[A] = new Symbols(vs.elements, vec.stl.Less(c))
+    def apply[A](vs: Iterator[Vector[A]], lt: (A, A) => Boolean): Parser[A] = new Symbols(vs, lt)
 }
 
 class Symbols[A](vs: Iterator[Vector[A]], lt: (A, A) => Boolean) extends Parser[A] {
