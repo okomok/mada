@@ -14,4 +14,8 @@ object Compatibles {
     implicit def product2madaVector(from: Product): Vector[Any] = Vector.productVector(from)
     implicit def randomAccessSeq2madaVector[A](from: RandomAccessSeq[A]): Vector[A] = Vector.randomAccessSeqVector(from)
     implicit def string2madaVector(from: String): Vector[Char] = Vector.stringVector(from)
+
+    implicit def madaVector2Iterable[A](from: Vector[A]): Iterable[A] = from.iterable
+    implicit def madaVector2Iterator[A](from: Vector[A]): Iterator[A] = from.iterator
+    implicit def madaVector2RandomAccessSeq[A](from: Vector[A]): RandomAccessSeq.Mutable[A] = from.randomAccessSeq
 }

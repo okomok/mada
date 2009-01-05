@@ -13,6 +13,7 @@ object Vector {
     def concat[A](vs: Vector[A]*): Vector[A] = vec.Concat(vs: _*)
     def empty[A]: Vector[A] = vec.Empty.apply[A]
     def flatten[A](vv: Vector[Vector[A]]): Vector[A] = vec.Flatten(vv)
+    def fromIterable[A](u: Iterable[A]): Vector[A] = vec.FromIterable(u)
     def fromIterator[A](u: Iterator[A]): Vector[A] = vec.FromIterator(u)
     def fromJclIterator[A](u: java.util.Iterator[A]): Vector[A] = vec.jcl.FromIterator(u)
     def fromValues[A](es: A*): Vector[A] = vec.FromValues(es: _*)

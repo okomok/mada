@@ -7,6 +7,11 @@
 package mada.vec
 
 
+object FromIterable {
+    def apply[A](u: Iterable[A]): Vector[A] = Vector.fromIterator(u.elements)
+}
+
+
 object VectorIterable {
     def apply[A](v: Vector[A]): Iterable[A] = new VectorIterable(v)
 }
