@@ -28,15 +28,10 @@ class TSTree[A, V](lt: (A, A) => Boolean) {
 
     def get(key: Vector[A], first: Long, last: Long): Option[V] = {
         if (root == null) {
-            None
-        } else {
-            val (n, _, _) = Node.search(root, key, first, last)
-            if (n == null) {
-                None
-            } else {
-                n.value
-            }
+            return None
         }
+        val (n, _, _) = Node.search(root, key, first, last)
+        if (n == null) None else n.value
     }
 
     def parse(key: Vector[A]): Long = {
@@ -46,15 +41,10 @@ class TSTree[A, V](lt: (A, A) => Boolean) {
 
     def parse(key: Vector[A], first: Long, last: Long): Long = {
         if (root == null) {
-            Parser.FAILED
-        } else {
-            val (_, n, i) = Node.search(root, key, first, last)
-            if (n == null || n.value.isEmpty) {
-                Parser.FAILED
-            } else {
-                i
-            }
+            return Parser.FAILED
         }
+        val (_, n, i) = Node.search(root, key, first, last)
+        if (n == null || n.value.isEmpty) Parser.FAILED else i
     }
 
     def put(key: Vector[A], value: V): V = {
