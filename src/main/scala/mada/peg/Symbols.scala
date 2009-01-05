@@ -11,10 +11,10 @@ package mada.peg
 
 
 object Symbols {
-    def apply[A](vs: Vector[A]*)(implicit c: A => Ordered[A]): Parser[A] = new Symbols(vs: _*)(vec.stl.Less(c))
+    def apply[A](vs: Vector[A]*)(implicit c: A => Ordered[A]): Parser[A] = new Symbols(vs.elements, vec.stl.Less(c))
 }
 
-class Symbols[A](vs: Vector[A]*)(lt: (A, A) => Boolean) extends Parser[A] {
+class Symbols[A](vs: Iterator[Vector[A]], lt: (A, A) => Boolean) extends Parser[A] {
     override def parse(v: Vector[A], first: Long, last: Long): Long = {
         tree.parse(v, first, last)
     }

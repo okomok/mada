@@ -23,8 +23,7 @@ class SymbolsTest {
     }
 
     def testLongestMatch: Unit = {
-        val i = ("abc" ~ Symbols("to", "too", "tot", "tab", "so")).parse("abctoo")
-        assertEquals(6L, i)
+        assertTrue(("abc" ~ Symbols("to", "too", "tot", "tab", "so")) matches "abctoo")
     }
 
     def testTSTree: Unit = {

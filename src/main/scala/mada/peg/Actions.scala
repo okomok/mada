@@ -8,8 +8,8 @@ package mada.peg
 
 
 object Actions {
-    def apply = new Actions(true)
-    def apply(enabled: Boolean) = new Actions(enabled)
+    def apply: Actions = new Actions(true)
+    def apply(enabled: Boolean): Actions = new Actions(enabled)
 }
 
 class Actions(var enabled: Boolean) {
