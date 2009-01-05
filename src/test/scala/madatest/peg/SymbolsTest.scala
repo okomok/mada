@@ -13,34 +13,45 @@ package madatest.peg
 import mada.peg._
 import junit.framework.Assert._
 import mada.vec.Compatibles._
+import mada.peg.Compatibles._
 
 
 class SymbolsTest {
     def testTrivial: Unit = {
-        val map = new TSTreeMap[Char, String](mada.vec.stl.Less[Char])
-        map.put("to", "to")
-        println(map.toString)
-        map.put("too", "too")
-        println(map.toString)
-        map.put("tot", "tot")
-        println(map.toString)
-        map.put("tab", "tab")
-        println(map.toString)
-        map.put("so", "so")
-        println(map.toString)
+        val i = ("abc" ~ Symbols("to", "too", "tot", "tab", "so")).parse("abcto")
+        assertEquals(5L, i)
+    }
 
-        assertEquals("so", map.get("so").get)
-        assertEquals("tab", map.get("tab").get)
-        assertEquals("to", map.get("to").get)
-        assertEquals("too", map.get("too").get)
-        assertEquals("tot", map.get("tot").get)
-        assertFalse(map.contains("")) // works.
+    def testLongestMatch: Unit = {
+        val i = ("abc" ~ Symbols("to", "too", "tot", "tab", "so")).parse("abctoo")
+        assertEquals(6L, i)
+    }
 
-        assertEquals(Parser.FAILED, map.parse("ztot"))
-        assertEquals(Parser.FAILED, map.parse("t"))
-        assertEquals(Parser.FAILED, map.parse("tzzzzz"))
-        assertEquals(Parser.FAILED, map.parse(""))
-        assertEquals(3L, map.parse("tot"))
-        assertEquals(3L, map.parse("totzzzzz"))
+    def testTSTree: Unit = {
+        val tree = new mada.peg.detail.TSTree[Char, String](mada.vec.stl.Less[Char])
+        tree.put("to", "to")
+        //println(tree.toString)
+        tree.put("too", "too")
+        //println(tree.toString)
+        tree.put("tot", "tot")
+        //println(tree.toString)
+        tree.put("tab", "tab")
+        //println(tree.toString)
+        tree.put("so", "so")
+        //println(tree.toString)
+
+        assertEquals("so", tree.get("so").get)
+        assertEquals("tab", tree.get("tab").get)
+        assertEquals("to", tree.get("to").get)
+        assertEquals("too", tree.get("too").get)
+        assertEquals("tot", tree.get("tot").get)
+        assertFalse(tree.contains("")) // works.
+
+        assertEquals(Parser.FAILED, tree.parse("ztot"))
+        assertEquals(Parser.FAILED, tree.parse("t"))
+        assertEquals(Parser.FAILED, tree.parse("tzzzzz"))
+        assertEquals(Parser.FAILED, tree.parse(""))
+        assertEquals(3L, tree.parse("tot"))
+        assertEquals(3L, tree.parse("totzzzzz"))
     }
 }
