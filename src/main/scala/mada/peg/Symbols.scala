@@ -4,9 +4,6 @@
 // Distributed under the terms of an MIT-style license.
 
 
-// See: http://www.javaworld.com/javaworld/jw-02-2001/jw-0216-ternary.html
-
-
 package mada.peg
 
 
