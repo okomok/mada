@@ -27,8 +27,16 @@ class TSTree[A, V](lt: (A, A) => Boolean) {
     }
 
     def get(key: Vector[A], first: Long, last: Long): Option[V] = {
-        val (n, _, _) = Node.search(root, key, first, last)
-        if (n == null) None else n.value
+        if (root == null) {
+            None
+        } else {
+            val (n, _, _) = Node.search(root, key, first, last)
+            if (n == null) {
+                None
+            } else {
+                n.value
+            }
+        }
     }
 
     def parse(key: Vector[A]): Long = {
@@ -37,8 +45,16 @@ class TSTree[A, V](lt: (A, A) => Boolean) {
     }
 
     def parse(key: Vector[A], first: Long, last: Long): Long = {
-        val (_, n, i) = Node.search(root, key, first, last)
-        if (n == null || n.value.isEmpty) Parser.FAILED else i
+        if (root == null) {
+            Parser.FAILED
+        } else {
+            val (_, n, i) = Node.search(root, key, first, last)
+            if (n == null || n.value.isEmpty) {
+                Parser.FAILED
+            } else {
+                i
+            }
+        }
     }
 
     def put(key: Vector[A], value: V): V = {
@@ -95,26 +111,28 @@ class TSTree[A, V](lt: (A, A) => Boolean) {
         def search(_first1: Node, key2: Vector[A], _first2: Long, last2: Long): (Node, Node, Long) = {
             Assert(_first1 != null)
             var first1 = _first1
-            var cur1: Node = null
             var first2 = _first2
 
-            if (first2 != last2) {
-                var k2 = key2(first2)
-                while (first1 != null) {
-                    if (first1 > k2) {
-                        first1 = first1.left
-                    } else if (first1 < k2) {
-                        first1 = first1.right
-                    } else {
-                        cur1 = first1
-                        first2 += 1
-                        if (first2 == last2) {
-                            return (first1, cur1, first2)
-                        }
+            if (first2 == last2) {
+                return (null, null, first2)
+            }
 
-                        k2 = key2(first2)
-                        first1 = first1.middle
+            var cur1: Node = null
+            var k2 = key2(first2)
+            while (first1 != null) {
+                if (first1 > k2) {
+                    first1 = first1.left
+                } else if (first1 < k2) {
+                    first1 = first1.right
+                } else {
+                    cur1 = first1
+                    first2 += 1
+                    if (first2 == last2) {
+                        return (first1, cur1, first2)
                     }
+
+                    k2 = key2(first2)
+                    first1 = first1.middle
                 }
             }
 

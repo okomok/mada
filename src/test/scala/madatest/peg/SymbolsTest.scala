@@ -28,6 +28,10 @@ class SymbolsTest {
 
     def testTSTree: Unit = {
         val tree = new mada.peg.detail.TSTree[Char, String](mada.vec.stl.Less[Char])
+
+        assertFalse(tree.contains("to"))
+        assertFalse(tree.contains(""))
+
         tree.put("to", "to")
         //println(tree.toString)
         tree.put("too", "too")
@@ -44,7 +48,7 @@ class SymbolsTest {
         assertEquals("to", tree.get("to").get)
         assertEquals("too", tree.get("too").get)
         assertEquals("tot", tree.get("tot").get)
-        assertFalse(tree.contains("")) // works.
+        assertFalse(tree.contains(""))
 
         assertEquals(Parser.FAILED, tree.parse("ztot"))
         assertEquals(Parser.FAILED, tree.parse("t"))
@@ -52,5 +56,13 @@ class SymbolsTest {
         assertEquals(Parser.FAILED, tree.parse(""))
         assertEquals(3L, tree.parse("tot"))
         assertEquals(3L, tree.parse("totzzzzz"))
+    }
+
+    def testBound: Unit = {
+        val tree = new mada.peg.detail.TSTree[Char, String](mada.vec.stl.Less[Char])
+
+        tree.put("t", "t")
+        assertFalse(tree.contains(""))
+        assertTrue(tree.contains("t"))
     }
 }
