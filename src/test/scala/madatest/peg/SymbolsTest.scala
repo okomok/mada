@@ -41,7 +41,7 @@ class SymbolsTest {
         tree.put("tab", "tab")
         //println(tree.toString)
         tree.put("so", "so")
-        println(tree.toString)
+        //println(tree.toString)
 
         assertEquals("so", tree.get("so").get)
         assertEquals("tab", tree.get("tab").get)
