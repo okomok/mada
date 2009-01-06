@@ -25,6 +25,7 @@ object Peg {
     def range[A](i: A, j: A)(implicit c: A => Ordered[A]): Peg[A] = Range(i, j)(c)
     def set[A](es: A*): Peg[A] = Set(es: _*)
     def single[A](e: A): Peg[A] = Single(e)
+    def switch[A](es: (Vector[A], Peg[A])*)(implicit c: A => Ordered[A]): Peg[A] = Switch(es: _*)(c)
 
     val compatibles: Compatibles = Compatibles
     def stringPeg(str: String): Peg[Char] = StringPeg(str)
@@ -115,4 +116,6 @@ trait Peg[A] {
     final def ~?<!(that: Peg[A]): Peg[A] = seqAnd(that.lookBehind.not)
     final def ~?<<=(that: Peg[A]): Peg[A] = seqAnd(that.lookBack)
     final def ~?<<!(that: Peg[A]): Peg[A] = seqAnd(that.lookBack.not)
+
+    final def inCase(v: Vector[A]): (Vector[A], Peg[A]) = (v, this)
 }
