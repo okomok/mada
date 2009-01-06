@@ -16,10 +16,10 @@ import mada.Peg._
 class SwitchTest {
     def testTrivial: Unit = {
         val g = switch("z" inCase "e", "g" inCase "ef", "wy" inCase "wx", "xyz" inCase "w")
-        assertTrue("abc" ~ g matches "abcez")
-        assertTrue("abc" ~ g  matches "abcefg")
-        assertTrue("abc" ~ g  matches "abcwxwy")
-        assertFalse("abc" ~ g matches "abcwxyz") // false cuz longest match
+        assertTrue("abc" ~ g ~ "LL"  matches "abcezLL")
+        assertTrue("abc" ~ g ~ "LL"  matches "abcefgLL")
+        assertTrue("abc" ~ g ~ "LL"  matches "abcwxwyLL")
+        assertFalse("abc" ~ g ~ "LL" matches "abcwxyzLL") // false cuz longest match
     }
 
     def testTrivial2: Unit = {
