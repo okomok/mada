@@ -24,11 +24,12 @@ object Peg {
     def set[A](es: A*): Peg[A] = Set(es: _*)
     def single[A](e: A): Peg[A] = Single(e)
 
-    def actions: Actions = Actions.apply
-    def symbols[A](vs: Vector[A]*)(implicit c: A => Ordered[A]): Peg[A] = Symbols(vs: _*)(c)
-
+    val compatibles: Compatibles = Compatibles
     def stringPeg(str: String): Peg[Char] = StringPeg(str)
     def vectorPeg[A](v: Vector[A]): Peg[A] = VectorPeg(v)
+
+    def actions: Actions = Actions.apply
+    def symbols[A](vs: Vector[A]*)(implicit c: A => Ordered[A]): Peg[A] = Symbols(vs: _*)(c)
 
     def rule[A]: Rule[A] = Rule[A]
     def rule1[A]: (Rule[A]) = Rule.make1[A]
@@ -36,8 +37,6 @@ object Peg {
     def rule3[A]: (Rule[A], Rule[A], Rule[A]) = Rule.make3[A]
     def rule4[A]: (Rule[A], Rule[A], Rule[A], Rule[A]) = Rule.make4[A]
     def rule5[A]: (Rule[A], Rule[A], Rule[A], Rule[A], Rule[A]) = Rule.make5[A]
-
-    val compatibles: Compatibles = Compatibles
 
     def __*[A]: Peg[A] = any[A].star
     def __*?[A](p: Peg[A]): Peg[A] = any[A].starBefore(p)

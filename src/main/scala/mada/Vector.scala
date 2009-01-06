@@ -25,6 +25,7 @@ object Vector {
     def untokenize[A](vv: Vector[Vector[A]], sep: Vector[A]): Vector[A] = Untokenize(vv, sep)
     def unzip[A, B](v: Vector[(A, B)]): (Vector[A], Vector[B]) = Unzip(v)
 
+    val compatibles: Compatibles = Compatibles
     def arrayVector[A](u: Array[A]): Vector[A] = ArrayVector(u)
     def cellVector[A](u: Cell[A]): Vector[A] = CellVector(u)
     def jclListVector[A](u: java.util.List[A]): Vector[A] = jcl.ListVector(u)
@@ -40,8 +41,6 @@ object Vector {
 
     def triplify[A, B](f: Vector[A] => B): ((Vector[A], Long, Long) => B) = Triplify(f)
     def untriplify[A, B](f: (Vector[A], Long, Long) => B): (Vector[A] => B) = Untriplify(f)
-
-    val compatibles: Compatibles = Compatibles
 
     type NotReadableError[A] = vec.NotReadableError[A]
     type NotWritableError[A] = vec.NotWritableError[A]
