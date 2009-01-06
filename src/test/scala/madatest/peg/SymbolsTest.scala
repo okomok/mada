@@ -29,8 +29,8 @@ class SymbolsTest {
     def testTSTree: Unit = {
         val tree = new mada.peg.TSTree[Char, String](mada.vec.stl.Less[Char])
 
-        assertFalse(tree.contains("to"))
-        assertFalse(tree.contains(""))
+        assertFalse(tree.containsKey("to"))
+        assertFalse(tree.containsKey(""))
 
         tree.put("to", "to")
         //println(tree.toString)
@@ -48,22 +48,37 @@ class SymbolsTest {
         assertEquals("to", tree.get("to").get)
         assertEquals("too", tree.get("too").get)
         assertEquals("tot", tree.get("tot").get)
-        assertFalse(tree.contains(""))
+        assertFalse(tree.containsKey(""))
 
-        assertEquals(None, tree.parse("ztot"))
-        assertEquals(None, tree.parse("t"))
-        assertEquals(None, tree.parse("tzzzzz"))
-        assertEquals(None, tree.parse(""))
-        assertEquals(3L, tree.parse("tot").get._2)
-        assertEquals(3L, tree.parse("totzzzzz").get._2)
-        assertEquals(2L, tree.parse("toazzzzz").get._2)
+        assertEquals(None, tree.parse("ztot", 0, 4))
+        assertEquals(None, tree.parse("t", 0, 1))
+        assertEquals(None, tree.parse("tzzzzz", 0, 6))
+        assertEquals(None, tree.parse("", 0, 0))
+        assertEquals(3L, tree.parse("tot", 0, 3).get._2)
+        assertEquals(3L, tree.parse("totzzzzz", 0, 8).get._2)
+        assertEquals(2L, tree.parse("toazzzzz", 0, 8).get._2)
+
+        // empty-string key
+        tree.put("", "EMPTY")
+        assertTrue(tree.containsKey(""))
+        assertEquals(0L, tree.parse("ztot", 0, 4).get._2) // 0-length match
+        assertEquals(2L, tree.parse("zzzzztot", 2, 8).get._2) // 0-length match
     }
 
     def testBound: Unit = {
         val tree = new mada.peg.TSTree[Char, String](mada.vec.stl.Less[Char])
 
         tree.put("t", "t")
-        assertFalse(tree.contains(""))
-        assertTrue(tree.contains("t"))
+        assertFalse(tree.containsKey(""))
+        assertTrue(tree.containsKey("t"))
+        assertFalse(tree.containsKey(""))
+    }
+
+    def testEmptyStringKey: Unit = {
+        val tree = new mada.peg.TSTree[Char, String](mada.vec.stl.Less[Char])
+
+        tree.put("", "EMPTY")
+        assertTrue(tree.containsKey(""))
+        assertEquals("EMPTY", tree.get("").get)
     }
 }

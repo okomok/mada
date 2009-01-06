@@ -10,20 +10,74 @@
 package mada.peg
 
 
-class TSTree[A, V](lt: (A, A) => Boolean) {
-    private var rootNode: Node = null
+class TSTree[A, V](_lt: (A, A) => Boolean) {
+    private var impl: TSTreeImpl[A, V] = null
+    private var emptyKeyValue: Option[V] = None
 
-    override def toString: String = {
-        new StringBuilder().append("<tstreemap>").append(rootNode).append("</tstreemap>").toString
+    def get(key: Vector[A]): Option[V] = {
+        if (key.isEmpty) {
+            emptyKeyValue
+        } else if (impl == null) {
+            None
+        } else {
+            val (first, last) = key.toPair
+            impl.get(key, first, last)
+        }
     }
 
-    def contains(key: Vector[A]): Boolean = {
+    def put(key: Vector[A], value: V): V = {
+        if (key.isEmpty) {
+            emptyKeyValue = Some(value)
+        } else if (impl == null) {
+            impl = new TSTreeImpl(key, value, _lt)
+        } else {
+            val (first, last) = key.toPair
+            impl.put(key, first, last, value)
+        }
+        value
+    }
+
+    def parse(key: Vector[A], first: Long, last: Long): Option[(V, Long)] = {
+        if (first == last) {
+            parseEmptyKey(first)
+        } else if (impl == null) {
+            None
+        } else { // longest-match
+            val x = impl.parse(key, first, last)
+            if (x.isEmpty) {
+                parseEmptyKey(first)
+            } else {
+                x
+            }
+        }
+    }
+
+    def containsKey(key: Vector[A]): Boolean = {
         get(key) != None
     }
 
-    def get(key: Vector[A]): Option[V] = {
-        val (first, last) = key.toPair
-        get(key, first, last)
+    override def toString: String = {
+        new StringBuilder().append("<tstree>").append(impl.rootNode).append("</tstree>").toString
+    }
+
+    private def parseEmptyKey(first: Long): Option[(V, Long)] = {
+        if (emptyKeyValue.isEmpty) {
+            None
+        } else {
+            Some((emptyKeyValue.get, first))
+        }
+    }
+}
+
+
+class TSTreeImpl[A, V](_key: Vector[A], _value: V, _lt: (A, A) => Boolean) {
+    Assert(!_key.isEmpty)
+
+    val rootNode: Node = {
+        val (first, last) = _key.toPair
+        val node = new Node(_key(first))
+        Node.copyInto(_key, first, last, node).value = Some(_value)
+        node
     }
 
     def get(key: Vector[A], first: Long, last: Long): Option[V] = {
@@ -33,15 +87,13 @@ class TSTree[A, V](lt: (A, A) => Boolean) {
         }
     }
 
-    def parse(key: Vector[A]): Option[(V, Long)] = {
-        val (first, last) = key.toPair
-        parse(key, first, last)
+    def put(key: Vector[A], first: Long, last: Long, value: V): Unit = {
+        Assert(first != last)
+        Node.copyInto(key, first, last, rootNode).value = Some(value)
     }
 
     def parse(key: Vector[A], first: Long, last: Long): Option[(V, Long)] = {
-        if (rootNode == null || first == last) {
-            return None
-        }
+        Assert(first != last)
 
         val (node, cur) = Node.search(rootNode, key, first, last)
         if (node == null || node.value.isEmpty) {
@@ -49,21 +101,6 @@ class TSTree[A, V](lt: (A, A) => Boolean) {
         } else {
             Some((node.value.get, cur))
         }
-    }
-
-    def put(key: Vector[A], value: V): V = {
-        val (first, last) = key.toPair
-        put(key, first, last, value)
-    }
-
-    def put(key: Vector[A], first: Long, last: Long, value: V): V = {
-        Assert(first != last)
-
-        if (rootNode == null) {
-            rootNode = new Node(key(first))
-        }
-        Node.copyInto(key, first, last, rootNode).value = Some(value)
-        value
     }
 
     object Node {
@@ -137,8 +174,8 @@ class TSTree[A, V](lt: (A, A) => Boolean) {
         var middle: Node = null
         var right: Node = null
 
-        def <(e: A): Boolean = lt(elem, e)
-        def >(e: A): Boolean = lt(e, elem)
+        def <(e: A): Boolean = _lt(elem, e)
+        def >(e: A): Boolean = _lt(e, elem)
 
         override def toString = {
             val sb = new StringBuilder()
