@@ -10,7 +10,6 @@ package mada
 object Peg {
     val FAILED: Long = -1
 
-    def actions: peg.Actions = peg.Actions.apply
     def any[A]: Peg[A] = peg.Any_[A]
     def begin[A]: Peg[A] = peg.Begin[A]
     def end[A]: Peg[A] = peg.End[A]
@@ -22,8 +21,11 @@ object Peg {
     def range[A](i: A, j: A)(implicit c: A => Ordered[A]): Peg[A] = peg.Range(i, j)(c)
     def set[A](es: A*): Peg[A] = peg.Set(es: _*)
     def single[A](e: A): Peg[A] = peg.Single(e)
-    def stringPeg(str: String): Peg[Char] = peg.StringPeg(str)
+
+    def actions: peg.Actions = peg.Actions.apply
     def symbols[A](vs: Vector[A]*)(implicit c: A => Ordered[A]): Peg[A] = peg.Symbols(vs: _*)(c)
+
+    def stringPeg(str: String): Peg[Char] = peg.StringPeg(str)
     def vectorPeg[A](v: Vector[A]): Peg[A] = peg.VectorPeg(v)
 
     def rule[A]: peg.Rule[A] = peg.Rule[A]
@@ -38,6 +40,7 @@ object Peg {
     def __*[A]: Peg[A] = any[A].star
     def __*?[A](p: Peg[A]): Peg[A] = any[A].starBefore(p)
     def __*~[A](p: Peg[A]): Peg[A] = any[A].starUntil(p)
+
     def ?=[A](p: Peg[A]): Peg[A] = p.lookAhead
     def ?![A](p: Peg[A]): Peg[A] = p.lookAhead.not
     def ?<=[A](p: Peg[A]): Peg[A] = p.lookBehind
@@ -60,8 +63,8 @@ trait Peg[A] {
     final def and(that: Peg[A]): Peg[A] = And(this, that)
     final def andIf(pred: Vector[A] => Boolean): Peg[A] = AndIf(this, pred)
     final def lookAhead: Peg[A] = LookAhead(this)
-    final def lookBack: Peg[A] = LookBack(this)
     final def lookBehind: Peg[A] = LookBehind(this)
+    final def lookBack: Peg[A] = LookBack(this)
     final def minus(that: Peg[A]) = Minus(this, that)
     final def not: Peg[A] = Not(this)
     final def plus: Peg[A] = Plus(this)
@@ -102,4 +105,11 @@ trait Peg[A] {
     final def ??(that: Peg[A]): Peg[A] = optBefore(that)
     final def ?~(that: Peg[A]): Peg[A] = optUntil(that)
     final def ^^(f: Vector[A] => Any): Peg[A] = action(f)
+
+    final def ~?=(p: Peg[A]): Peg[A] = seqAnd(p.lookAhead)
+    final def ~?!(p: Peg[A]): Peg[A] = seqAnd(p.lookAhead.not)
+    final def ~?<=(p: Peg[A]): Peg[A] = seqAnd(p.lookBehind)
+    final def ~?<!(p: Peg[A]): Peg[A] = seqAnd(p.lookBehind.not)
+    final def ~?<<=(p: Peg[A]): Peg[A] = seqAnd(p.lookBack)
+    final def ~?<<!(p: Peg[A]): Peg[A] = seqAnd(p.lookBack.not)
 }

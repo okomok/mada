@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.peg.parser
+package madatest.peg
 
 
 import mada.Vector
