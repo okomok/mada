@@ -28,7 +28,10 @@ object ToArray {
     def apply[A](v: Vector[A]): Array[A] = {
         val a = new Array[A](v.size.toInt)
         var i = 0
-        v.foreach({ (e: A) => a(i) = e; i += 1 })
+        for (e <- v) {
+            a(i) = e
+            i += 1
+        }
         a
     }
 }

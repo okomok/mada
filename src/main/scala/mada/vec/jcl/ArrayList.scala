@@ -13,7 +13,9 @@ import java.util.ArrayList
 object ToArrayList {
     def apply[A](v: Vector[A]): ArrayList[A] = {
         val a = new ArrayList[A](v.size.toInt)
-        v.foreach(a.add(_: A))
+        for (e <- v) {
+            a.add(e)
+        }
         a
     }
 }
@@ -22,7 +24,9 @@ object ToArrayList {
 object NewArrayList {
     def apply[A](es: A*): ArrayList[A] = {
         val a = new ArrayList[A](es.length)
-        es.foreach(a.add(_: A))
+        for (e <- es) {
+            a.add(e)
+        }
         a
     }
 }

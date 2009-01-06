@@ -24,7 +24,9 @@ object ToString {
         case v: StringVector => v.string
         case _ => {
             val sb = new StringBuilder(v.size.toInt)
-            v.foreach(sb.append(_))
+            for (e <- v) {
+                sb.append(e)
+            }
             sb.toString
         }
     }

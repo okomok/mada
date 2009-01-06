@@ -20,6 +20,8 @@ object Peg {
     def fail[A]: Peg[A] = Fail[A]
     def icase(str: String): Peg[Char] = Icase(str)
     def lowerCaseScan(p: Peg[Char]): Peg[Char] = LowerCaseScan(p)
+    def longest[A](ps: Peg[A]*) = Longest(ps: _*)
+    def shortest[A](ps: Peg[A]*) = Shortest(ps: _*)
     def range[A](i: A, j: A)(implicit c: A => Ordered[A]): Peg[A] = Range(i, j)(c)
     def set[A](es: A*): Peg[A] = Set(es: _*)
     def single[A](e: A): Peg[A] = Single(e)

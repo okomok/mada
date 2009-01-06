@@ -19,7 +19,9 @@ class Symbols[A](vs: Iterator[Vector[A]], lt: (A, A) => Boolean) extends Peg[A] 
 
     private val tree = {
         val t = new TSTree[A, Unit](lt)
-        vs.foreach(t.put(_, ()))
+        for (v <- vs) {
+            t.put(v, ())
+        }
         t
     }
 }
