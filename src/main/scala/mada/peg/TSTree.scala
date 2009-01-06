@@ -11,10 +11,10 @@ package mada.peg
 
 
 class TSTree[A, V](lt: (A, A) => Boolean) {
-    private var root: Node = null
+    private var rootNode: Node = null
 
     override def toString: String = {
-        new StringBuilder().append("<tstreemap>").append(root).append("</tstreemap>").toString
+        new StringBuilder().append("<tstreemap>").append(rootNode).append("</tstreemap>").toString
     }
 
     def contains(key: Vector[A]): Boolean = {
@@ -27,24 +27,28 @@ class TSTree[A, V](lt: (A, A) => Boolean) {
     }
 
     def get(key: Vector[A], first: Long, last: Long): Option[V] = {
-        if (root == null) {
-            return None
+        parse(key, first, last) match {
+            case Some((value, cur)) if (cur == last) => Some(value)
+            case _ => None
         }
-        val (n, _, _) = Node.search(root, key, first, last)
-        if (n == null) None else n.value
     }
 
-    def parse(key: Vector[A]): Long = {
+    def parse(key: Vector[A]): Option[(V, Long)] = {
         val (first, last) = key.toPair
         parse(key, first, last)
     }
 
-    def parse(key: Vector[A], first: Long, last: Long): Long = {
-        if (root == null) {
-            return Peg.FAILED
+    def parse(key: Vector[A], first: Long, last: Long): Option[(V, Long)] = {
+        if (rootNode == null || first == last) {
+            return None
         }
-        val (_, n, i) = Node.search(root, key, first, last)
-        if (n == null || n.value.isEmpty) Peg.FAILED else i
+
+        val (node, cur) = Node.search(rootNode, key, first, last)
+        if (node == null || node.value.isEmpty) {
+            None
+        } else {
+            Some((node.value.get, cur))
+        }
     }
 
     def put(key: Vector[A], value: V): V = {
@@ -55,10 +59,10 @@ class TSTree[A, V](lt: (A, A) => Boolean) {
     def put(key: Vector[A], first: Long, last: Long, value: V): V = {
         Assert(first != last)
 
-        if (root == null) {
-            root = new Node(key(first))
+        if (rootNode == null) {
+            rootNode = new Node(key(first))
         }
-        Node.copyInto(key, first, last, root).value = Some(value)
+        Node.copyInto(key, first, last, rootNode).value = Some(value)
         value
     }
 
@@ -98,16 +102,13 @@ class TSTree[A, V](lt: (A, A) => Boolean) {
             result
         }
 
-        def search(_first1: Node, key2: Vector[A], _first2: Long, last2: Long): (Node, Node, Long) = {
+        def search(_first1: Node, key2: Vector[A], _first2: Long, last2: Long): (Node, Long) = {
             Assert(_first1 != null)
+            Assert(_first2 != last2)
             var first1 = _first1
             var first2 = _first2
-
-            if (first2 == last2) {
-                return (null, null, first2)
-            }
-
             var cur1: Node = null
+
             var k2 = key2(first2)
             while (first1 != null) {
                 if (first1 > k2) {
@@ -118,7 +119,7 @@ class TSTree[A, V](lt: (A, A) => Boolean) {
                     cur1 = first1
                     first2 += 1
                     if (first2 == last2) {
-                        return (first1, cur1, first2)
+                        return (cur1, first2)
                     }
 
                     k2 = key2(first2)
@@ -126,7 +127,7 @@ class TSTree[A, V](lt: (A, A) => Boolean) {
                 }
             }
 
-            (first1, cur1, first2)
+            (cur1, first2)
         }
     }
 

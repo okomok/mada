@@ -16,7 +16,7 @@ import mada.Peg.compatibles._
 import mada.Peg._
 
 
-class symbolsTest {
+class SymbolsTest {
     def testTrivial: Unit = {
         val i = ("abc" ~ symbols("to", "too", "tot", "tab", "so")).parse("abcto")
         assertEquals(5L, i)
@@ -50,12 +50,13 @@ class symbolsTest {
         assertEquals("tot", tree.get("tot").get)
         assertFalse(tree.contains(""))
 
-        assertEquals(FAILED, tree.parse("ztot"))
-        assertEquals(FAILED, tree.parse("t"))
-        assertEquals(FAILED, tree.parse("tzzzzz"))
-        assertEquals(FAILED, tree.parse(""))
-        assertEquals(3L, tree.parse("tot"))
-        assertEquals(3L, tree.parse("totzzzzz"))
+        assertEquals(None, tree.parse("ztot"))
+        assertEquals(None, tree.parse("t"))
+        assertEquals(None, tree.parse("tzzzzz"))
+        assertEquals(None, tree.parse(""))
+        assertEquals(3L, tree.parse("tot").get._2)
+        assertEquals(3L, tree.parse("totzzzzz").get._2)
+        assertEquals(2L, tree.parse("toazzzzz").get._2)
     }
 
     def testBound: Unit = {

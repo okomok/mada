@@ -14,7 +14,10 @@ object Symbols {
 
 class Symbols[A](vs: Iterator[Vector[A]], lt: (A, A) => Boolean) extends Peg[A] {
     override def parse(v: Vector[A], first: Long, last: Long): Long = {
-        tree.parse(v, first, last)
+        tree.parse(v, first, last) match {
+            case Some((_, cur)) => cur
+            case _ => FAILED
+        }
     }
 
     private val tree = {
