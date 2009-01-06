@@ -139,4 +139,6 @@ trait Vector[A] {
     final def writer(i: Long): (A => Unit) = Writer(this, i)
     final def zip[B](that: Vector[B]): Vector[(A, B)] = Zip(this, that)
     final def ++(that: Vector[A]): Vector[A] = append(that)
+
+    final def -->(p: Peg[A]): (Vector[A], Peg[A]) = (this, p)
 }

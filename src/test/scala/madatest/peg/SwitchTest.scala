@@ -15,7 +15,7 @@ import mada.Peg._
 
 class SwitchTest {
     def testTrivial: Unit = {
-        val g = switch("z" inCase "e", "g" inCase "ef", "wy" inCase "wx", "xyz" inCase "w")
+        val g = switch("e" --> "z", "ef" --> "g", "wx" --> "wy", "w" --> "xyz")
         assertTrue("abc" ~ g ~ "LL"  matches "abcezLL")
         assertTrue("abc" ~ g ~ "LL"  matches "abcefgLL")
         assertTrue("abc" ~ g ~ "LL"  matches "abcwxwyLL")

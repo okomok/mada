@@ -116,6 +116,4 @@ trait Peg[A] {
     final def ~?<!(that: Peg[A]): Peg[A] = seqAnd(that.lookBehind.not)
     final def ~?<<=(that: Peg[A]): Peg[A] = seqAnd(that.lookBack)
     final def ~?<<!(that: Peg[A]): Peg[A] = seqAnd(that.lookBack.not)
-
-    final def inCase(v: Vector[A]): (Vector[A], Peg[A]) = (v, this)
 }
