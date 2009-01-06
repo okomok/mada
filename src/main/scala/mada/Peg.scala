@@ -8,34 +8,36 @@ package mada
 
 
 object Peg {
+    import peg._
+
     val FAILED: Long = -1
 
-    def any[A]: Peg[A] = peg.Any_[A]
-    def begin[A]: Peg[A] = peg.Begin[A]
-    def end[A]: Peg[A] = peg.End[A]
-    def eps[A]: Peg[A] = peg.Eps[A]
-    def error[A]: Peg[A] = peg.Error[A]
-    def fail[A]: Peg[A] = peg.Fail[A]
-    def icase(str: String): Peg[Char] = peg.Icase(str)
-    def lowerCaseScan(p: Peg[Char]): Peg[Char] = peg.LowerCaseScan(p)
-    def range[A](i: A, j: A)(implicit c: A => Ordered[A]): Peg[A] = peg.Range(i, j)(c)
-    def set[A](es: A*): Peg[A] = peg.Set(es: _*)
-    def single[A](e: A): Peg[A] = peg.Single(e)
+    def any[A]: Peg[A] = Any_[A]
+    def begin[A]: Peg[A] = Begin[A]
+    def end[A]: Peg[A] = End[A]
+    def eps[A]: Peg[A] = Eps[A]
+    def error[A]: Peg[A] = Error[A]
+    def fail[A]: Peg[A] = Fail[A]
+    def icase(str: String): Peg[Char] = Icase(str)
+    def lowerCaseScan(p: Peg[Char]): Peg[Char] = LowerCaseScan(p)
+    def range[A](i: A, j: A)(implicit c: A => Ordered[A]): Peg[A] = Range(i, j)(c)
+    def set[A](es: A*): Peg[A] = Set(es: _*)
+    def single[A](e: A): Peg[A] = Single(e)
 
-    def actions: peg.Actions = peg.Actions.apply
-    def symbols[A](vs: Vector[A]*)(implicit c: A => Ordered[A]): Peg[A] = peg.Symbols(vs: _*)(c)
+    def actions: Actions = Actions.apply
+    def symbols[A](vs: Vector[A]*)(implicit c: A => Ordered[A]): Peg[A] = Symbols(vs: _*)(c)
 
-    def stringPeg(str: String): Peg[Char] = peg.StringPeg(str)
-    def vectorPeg[A](v: Vector[A]): Peg[A] = peg.VectorPeg(v)
+    def stringPeg(str: String): Peg[Char] = StringPeg(str)
+    def vectorPeg[A](v: Vector[A]): Peg[A] = VectorPeg(v)
 
-    def rule[A]: peg.Rule[A] = peg.Rule[A]
-    def rule1[A]: (peg.Rule[A]) = peg.Rule.make1[A]
-    def rule2[A]: (peg.Rule[A], peg.Rule[A]) = peg.Rule.make2[A]
-    def rule3[A]: (peg.Rule[A], peg.Rule[A], peg.Rule[A]) = peg.Rule.make3[A]
-    def rule4[A]: (peg.Rule[A], peg.Rule[A], peg.Rule[A], peg.Rule[A]) = peg.Rule.make4[A]
-    def rule5[A]: (peg.Rule[A], peg.Rule[A], peg.Rule[A], peg.Rule[A], peg.Rule[A]) = peg.Rule.make5[A]
+    def rule[A]: Rule[A] = Rule[A]
+    def rule1[A]: (Rule[A]) = Rule.make1[A]
+    def rule2[A]: (Rule[A], Rule[A]) = Rule.make2[A]
+    def rule3[A]: (Rule[A], Rule[A], Rule[A]) = Rule.make3[A]
+    def rule4[A]: (Rule[A], Rule[A], Rule[A], Rule[A]) = Rule.make4[A]
+    def rule5[A]: (Rule[A], Rule[A], Rule[A], Rule[A], Rule[A]) = Rule.make5[A]
 
-    val compatibles: peg.Compatibles = peg.Compatibles
+    val compatibles: Compatibles = Compatibles
 
     def __*[A]: Peg[A] = any[A].star
     def __*?[A](p: Peg[A]): Peg[A] = any[A].starBefore(p)

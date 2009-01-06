@@ -8,36 +8,40 @@ package mada
 
 
 object Vector {
-    def arrayVector[A](u: Array[A]): Vector[A] = vec.ArrayVector(u)
-    def cellVector[A](u: Cell[A]): Vector[A] = vec.CellVector(u)
-    def concat[A](vs: Vector[A]*): Vector[A] = vec.Concat(vs: _*)
-    def empty[A]: Vector[A] = vec.Empty.apply[A]
-    def flatten[A](vv: Vector[Vector[A]]): Vector[A] = vec.Flatten(vv)
-    def fromIterable[A](u: Iterable[A]): Vector[A] = vec.FromIterable(u)
-    def fromIterator[A](u: Iterator[A]): Vector[A] = vec.FromIterator(u)
-    def fromJclIterator[A](u: java.util.Iterator[A]): Vector[A] = vec.jcl.FromIterator(u)
-    def fromValues[A](es: A*): Vector[A] = vec.FromValues(es: _*)
-    def lefts[A, B](v: Vector[Either[A, B]]): Vector[A] = vec.Lefts(v)
-    def rights[A, B](v: Vector[Either[A, B]]): Vector[B] = vec.Rights(v)
-    def lowerCase(v: Vector[Char]): Vector[Char] = vec.LowerCase(v)
-    def upperCase(v: Vector[Char]): Vector[Char] = vec.UpperCase(v)
-    def jclListVector[A](u: java.util.List[A]): Vector[A] = vec.jcl.ListVector(u)
-    def optionVector[A](u: Option[A]): Vector[A] = vec.OptionVector(u)
-    def productVector(u: Product): Vector[Any] = vec.ProductVector(u)
-    def randomAccessSeqVector[A](u: RandomAccessSeq[A]): Vector[A] = vec.RandomAccessSeqVector(u)
-    def range(i: Int, j: Int): Vector[Int] = vec.Range(i, j)
-    def range(i: Long, j: Long): Vector[Long] = vec.Range(i, j)
-    def single[A](u: A): Vector[A] = vec.Single(u)
-    def sort[A](v: Vector[A])(implicit c: A => Ordered[A]): Vector[A] = vec.Sort(v)(c)
-    def stringVector(u: String): Vector[Char] = vec.StringVector(u)
-    def toString(v: Vector[Char]): String = vec.ToString(v)
-    def untokenize[A](vv: Vector[Vector[A]], sep: Vector[A]): Vector[A] = vec.Untokenize(vv, sep)
-    def unzip[A, B](v: Vector[(A, B)]): (Vector[A], Vector[B]) = vec.Unzip(v)
+    import vec._
 
-    def triplify[A, B](f: Vector[A] => B): ((Vector[A], Long, Long) => B) = vec.Triplify(f)
-    def untriplify[A, B](f: (Vector[A], Long, Long) => B): (Vector[A] => B) = vec.Untriplify(f)
+    def concat[A](vs: Vector[A]*): Vector[A] = Concat(vs: _*)
+    def empty[A]: Vector[A] = Empty.apply[A]
+    def flatten[A](vv: Vector[Vector[A]]): Vector[A] = Flatten(vv)
+    def lefts[A, B](v: Vector[Either[A, B]]): Vector[A] = Lefts(v)
+    def rights[A, B](v: Vector[Either[A, B]]): Vector[B] = Rights(v)
+    def lowerCase(v: Vector[Char]): Vector[Char] = LowerCase(v)
+    def upperCase(v: Vector[Char]): Vector[Char] = UpperCase(v)
+    def range(i: Int, j: Int): Vector[Int] = Range(i, j)
+    def range(i: Long, j: Long): Vector[Long] = Range(i, j)
+    def single[A](u: A): Vector[A] = Single(u)
+    def sort[A](v: Vector[A])(implicit c: A => Ordered[A]): Vector[A] = Sort(v)(c)
+    def toString(v: Vector[Char]): String = ToString(v)
+    def untokenize[A](vv: Vector[Vector[A]], sep: Vector[A]): Vector[A] = Untokenize(vv, sep)
+    def unzip[A, B](v: Vector[(A, B)]): (Vector[A], Vector[B]) = Unzip(v)
 
-    val compatibles: vec.Compatibles = vec.Compatibles
+    def arrayVector[A](u: Array[A]): Vector[A] = ArrayVector(u)
+    def cellVector[A](u: Cell[A]): Vector[A] = CellVector(u)
+    def jclListVector[A](u: java.util.List[A]): Vector[A] = jcl.ListVector(u)
+    def optionVector[A](u: Option[A]): Vector[A] = OptionVector(u)
+    def productVector(u: Product): Vector[Any] = ProductVector(u)
+    def randomAccessSeqVector[A](u: RandomAccessSeq[A]): Vector[A] = RandomAccessSeqVector(u)
+    def stringVector(u: String): Vector[Char] = StringVector(u)
+
+    def fromIterable[A](u: Iterable[A]): Vector[A] = FromIterable(u)
+    def fromIterator[A](u: Iterator[A]): Vector[A] = FromIterator(u)
+    def fromJclIterator[A](u: java.util.Iterator[A]): Vector[A] = jcl.FromIterator(u)
+    def fromValues[A](es: A*): Vector[A] = FromValues(es: _*)
+
+    def triplify[A, B](f: Vector[A] => B): ((Vector[A], Long, Long) => B) = Triplify(f)
+    def untriplify[A, B](f: (Vector[A], Long, Long) => B): (Vector[A] => B) = Untriplify(f)
+
+    val compatibles: Compatibles = Compatibles
 
     type NotReadableError[A] = vec.NotReadableError[A]
     type NotWritableError[A] = vec.NotWritableError[A]
