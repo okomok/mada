@@ -108,10 +108,10 @@ trait Peg[A] {
     final def ?~(that: Peg[A]): Peg[A] = optUntil(that)
     final def ^^(f: Vector[A] => Any): Peg[A] = action(f)
 
-    final def ~?=(p: Peg[A]): Peg[A] = seqAnd(p.lookAhead)
-    final def ~?!(p: Peg[A]): Peg[A] = seqAnd(p.lookAhead.not)
-    final def ~?<=(p: Peg[A]): Peg[A] = seqAnd(p.lookBehind)
-    final def ~?<!(p: Peg[A]): Peg[A] = seqAnd(p.lookBehind.not)
-    final def ~?<<=(p: Peg[A]): Peg[A] = seqAnd(p.lookBack)
-    final def ~?<<!(p: Peg[A]): Peg[A] = seqAnd(p.lookBack.not)
+    final def ~?=(that: Peg[A]): Peg[A] = seqAnd(that.lookAhead)
+    final def ~?!(that: Peg[A]): Peg[A] = seqAnd(that.lookAhead.not)
+    final def ~?<=(that: Peg[A]): Peg[A] = seqAnd(that.lookBehind)
+    final def ~?<!(that: Peg[A]): Peg[A] = seqAnd(that.lookBehind.not)
+    final def ~?<<=(that: Peg[A]): Peg[A] = seqAnd(that.lookBack)
+    final def ~?<<!(that: Peg[A]): Peg[A] = seqAnd(that.lookBack.not)
 }
