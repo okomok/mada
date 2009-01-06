@@ -37,7 +37,7 @@ object Vector {
     def triplify[A, B](f: Vector[A] => B): ((Vector[A], Long, Long) => B) = vec.Triplify(f)
     def untriplify[A, B](f: (Vector[A], Long, Long) => B): (Vector[A] => B) = vec.Untriplify(f)
 
-    val compatibles: vec.Compatibles.type = vec.Compatibles
+    val compatibles: vec.Compatibles = vec.Compatibles
 
     type NotReadableError[A] = vec.NotReadableError[A]
     type NotWritableError[A] = vec.NotWritableError[A]

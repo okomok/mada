@@ -17,11 +17,11 @@ object Rule {
     def make5[A]: (Rule[A], Rule[A], Rule[A], Rule[A], Rule[A]) = (apply[A], apply[A], apply[A], apply[A], apply[A])
 }
 
-class Rule[A] extends Parser[A] {
+class Rule[A] extends Peg[A] {
     override def parse(v: Vector[A], first: Long, last: Long): Long = {
         deref.parse(v, first, last)
     }
 
-    private var deref: Parser[A] = null
-    final def ::=(p: Parser[A]): Unit = deref = p
+    private var deref: Peg[A] = null
+    final def ::=(p: Peg[A]): Unit = deref = p
 }

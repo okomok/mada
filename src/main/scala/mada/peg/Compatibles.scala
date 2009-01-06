@@ -7,8 +7,10 @@
 package mada.peg
 
 
-object Compatibles {
-    implicit def char2madaPegParser(from: Char): Parser[Char] = Parser.single(from)
-    implicit def string2madaPegParser(from: String): Parser[Char] = Parser.stringParser(from)
-    implicit def madaVector2madaPegParser[A](from: Vector[A]): Parser[A] = Parser.vectorParser(from)
+object Compatibles extends Compatibles
+
+trait Compatibles {
+    implicit def char2madaPeg(from: Char): Peg[Char] = Peg.single(from)
+    implicit def string2madaPeg(from: String): Peg[Char] = Peg.stringPeg(from)
+    implicit def madaVector2madaPeg[A](from: Vector[A]): Peg[A] = Peg.vectorPeg(from)
 }

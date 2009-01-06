@@ -18,10 +18,10 @@ class Actions(var enabled: Boolean) {
 
     def apply[A](f: A => Any)(a: A): Unit = if (isEnabled) f(a)
 
-    def disabled[A](p: Parser[A]): Parser[A] = new DisabledActionsParser(p)
-    def buffered[A](p: Parser[A]): Parser[A] = new BufferedActionsParser(p)
+    def disabled[A](p: Peg[A]): Peg[A] = new DisabledActionsPeg(p)
+    def buffered[A](p: Peg[A]): Peg[A] = new BufferedActionsPeg(p)
 
-    class DisabledActionsParser[A](override val self: Parser[A]) extends Parser.ParserProxy[A] {
+    class DisabledActionsPeg[A](override val self: Peg[A]) extends Peg.PegProxy[A] {
         override def parse(v: Vector[A], first: Long, last: Long): Long = {
             val old = isEnabled
             setEnabled(false)
@@ -33,7 +33,7 @@ class Actions(var enabled: Boolean) {
         }
     }
 
-    class BufferedActionsParser[A](override val self: Parser[A]) extends Parser.ParserProxy[A] {
+    class BufferedActionsPeg[A](override val self: Peg[A]) extends Peg.PegProxy[A] {
         override def parse(v: Vector[A], first: Long, last: Long): Long = {
             val old = isEnabled
             setEnabled(false)
