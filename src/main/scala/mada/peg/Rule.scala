@@ -24,4 +24,10 @@ class Rule[A] extends Peg[A] {
 
     private var deref: Peg[A] = null
     final def ::=(p: Peg[A]): Unit = deref = p
+
+    final def copy: Rule[A] = {
+        val r = new Rule[A]
+        r ::= deref
+        r
+    }
 }
