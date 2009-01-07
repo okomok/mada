@@ -21,6 +21,7 @@ object Peg {
     def icase(str: String): Peg[Char] = Icase(str)
     def lowerCaseScan(p: Peg[Char]): Peg[Char] = LowerCaseScan(p)
     def longest[A](ps: Peg[A]*) = Longest(ps: _*)
+    def prettyPrinter: PrettyPrinter = PrettyPrinter.apply
     def shortest[A](ps: Peg[A]*) = Shortest(ps: _*)
     def range[A](i: A, j: A)(implicit c: A => Ordered[A]): Peg[A] = Range(i, j)(c)
     def set[A](es: A*): Peg[A] = Set(es: _*)
@@ -86,6 +87,7 @@ trait Peg[A] {
     final def starBefore(that: Peg[A]): Peg[A] = StarBefore(this, that)
     final def starUntil(that: Peg[A]): Peg[A] = StarUntil(this, that)
     final def unmap[Z](f: Z => A): Peg[Z] = Unmap(this, f)
+    final def printTo(out: PrettyPrinter): Peg[A] = PrintTo(this, out)
     final def xor(that: Peg[A]): Peg[A] = Xor(this, that)
 
     final def parse(v: Vector[A]): Long = Parse(this, v)
