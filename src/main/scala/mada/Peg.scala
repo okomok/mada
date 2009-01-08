@@ -28,7 +28,7 @@ object Peg {
     def switch[A](es: (Vector[A], Peg[A])*)(implicit c: A => Ordered[A]): Peg[A] = Switch(es: _*)(c)
     def symbols[A](vs: Vector[A]*)(implicit c: A => Ordered[A]): Peg[A] = Symbols(vs: _*)(c)
 
-    val compatibles: Compatibles = Compatibles
+    object Compatibles extends Compatibles
     def stringPeg(str: String): Peg[Char] = StringPeg(str)
     def vectorPeg[A](v: Vector[A]): Peg[A] = VectorPeg(v)
 

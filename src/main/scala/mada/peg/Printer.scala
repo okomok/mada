@@ -7,7 +7,7 @@
 package mada.peg
 
 
-import Vector.compatibles._
+import Vector.Compatibles._
 
 
 object Printer {

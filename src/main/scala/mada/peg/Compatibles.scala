@@ -7,8 +7,6 @@
 package mada.peg
 
 
-object Compatibles extends Compatibles
-
 trait Compatibles {
     def madaPeg[A](from: Peg[A]): Peg[A] = from
 

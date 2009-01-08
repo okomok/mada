@@ -8,8 +8,8 @@ package madatest.peg
 
 
 import junit.framework.Assert._
-import mada.Vector.compatibles._
-import mada.Peg.compatibles._
+import mada.Vector.Compatibles._
+import mada.Peg.Compatibles._
 import mada.Peg._
 
 

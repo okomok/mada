@@ -7,8 +7,6 @@
 package mada.vec
 
 
-object Compatibles extends Compatibles
-
 trait Compatibles {
     def madaVector[A](from: Vector[A]): Vector[A] = from
 

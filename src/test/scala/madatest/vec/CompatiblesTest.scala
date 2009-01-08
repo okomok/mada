@@ -14,7 +14,7 @@ import madatest.vec.detail.Example._
 
 
 class CompatiblesTest {
-    import Vector.compatibles._
+    import Vector.Compatibles._
 
     def testCompile(x: Int): Unit = {
         takeIterator(makeVector)

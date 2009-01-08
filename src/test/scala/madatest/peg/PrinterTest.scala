@@ -10,7 +10,7 @@ package madatest.peg
 import mada.Vector
 import mada.Peg._
 import junit.framework.Assert._
-import mada.Peg.compatibles._
+import mada.Peg.Compatibles._
 
 
 class PrinterTest {
