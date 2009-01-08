@@ -44,9 +44,9 @@ object Peg {
     def ?<<![A](p: Peg[A]): Peg[A] = p.lookBack.not
 
     type Actions = peg.Actions
-    type Rule[A] = peg.Rule[A]
     type Printer = peg.Printer
     type PegProxy[A] = peg.PegProxy[A]
+    type Rule[A] = peg.Rule[A]
 
     def rule1[A]: (Rule[A]) = Rule.make1[A]
     def rule2[A]: (Rule[A], Rule[A]) = Rule.make2[A]

@@ -7,14 +7,15 @@
 package mada.peg
 
 
+import Vector.compatibles._
+
+
 object Printer {
     val defaultIndentWidth = 4
     def defaultWriter = new java.io.OutputStreamWriter(java.lang.System.out)
 }
 
 class Printer(out: java.io.Writer, indentWidth: Int) {
-    import Vector.compatibles._
-
     def this() = this(Printer.defaultWriter, Printer.defaultIndentWidth)
     def this(o: java.io.Writer) = this(o, Printer.defaultIndentWidth)
     def this(w: Int) = this(Printer.defaultWriter, w)
