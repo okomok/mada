@@ -13,15 +13,15 @@ object Longest {
 
 class LongestPeg[A](ps: Peg[A]*) extends Peg[A] {
     override def parse(v: Vector[A], first: Long, last: Long): Long = {
-        var cur = FAILED
+        var cur = FAILURE
         for (p <- ps) {
             val i = p.parse(v, first, last)
-            if (i != FAILED) {
+            if (i != FAILURE) {
                 cur = Math.max(cur, i)
             }
         }
         cur
-        // ps.foldLeft(FAILED)({ (a: Long, p: Peg[A]) => Math.max(a, p.parse(v, first, last)) })
+        // ps.foldLeft(FAILURE)({ (a: Long, p: Peg[A]) => Math.max(a, p.parse(v, first, last)) })
     }
 }
 
@@ -32,10 +32,10 @@ object Shortest {
 
 class ShortestPeg[A](ps: Peg[A]*) extends Peg[A] {
     override def parse(v: Vector[A], first: Long, last: Long): Long = {
-        var cur = FAILED
+        var cur = FAILURE
         for (p <- ps) {
             val i = p.parse(v, first, last)
-            if (i != FAILED) {
+            if (i != FAILURE) {
                 cur = Math.min(cur, i)
             }
         }

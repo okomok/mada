@@ -14,12 +14,12 @@ object SeqAnd {
 class SeqAndPeg[A](p: Peg[A], q: Peg[A]) extends Peg[A] {
     override def parse(v: Vector[A], first: Long, last: Long): Long = {
         var cur = p.parse(v, first, last)
-        if (cur == FAILED) {
-            FAILED
+        if (cur == FAILURE) {
+            FAILURE
         } else {
             cur = q.parse(v, cur, last)
-            if (cur == FAILED) {
-                FAILED
+            if (cur == FAILURE) {
+                FAILURE
             } else {
                 cur
             }

@@ -16,9 +16,9 @@ class XorPeg[A](p: Peg[A], q: Peg[A]) extends Peg[A] {
         val pcur = p.parse(v, first, last)
         val qcur = q.parse(v, first, last)
 
-        val pok = pcur != FAILED
-        if (pok && qcur != FAILED) {
-            FAILED
+        val pok = pcur != FAILURE
+        if (pok && qcur != FAILURE) {
+            FAILURE
         } else if (pok) {
             pcur
         } else {

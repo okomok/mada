@@ -23,7 +23,7 @@ class SetPeg[A](es: A*) extends Peg[A] {
 
     override def parse(v: Vector[A], first: Long, last: Long): Long = {
         if (first == last || !set.contains(v(first))) {
-            FAILED
+            FAILURE
         } else {
             first + 1
         }

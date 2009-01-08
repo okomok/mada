@@ -14,8 +14,8 @@ object LookBack {
 class LookBackPeg[A](p: Peg[A]) extends Peg[A] {
     override def parse(v: Vector[A], first: Long, last: Long): Long = {
         val (w, i, j) = v.window(0, first).reverse.toTriple
-        if (p.parse(w, i, j) == FAILED) {
-            FAILED
+        if (p.parse(w, i, j) == FAILURE) {
+            FAILURE
         } else {
             first
         }

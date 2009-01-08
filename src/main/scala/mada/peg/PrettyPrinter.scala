@@ -57,7 +57,7 @@ class PrettyPrinter(val out: java.io.Writer, val indentWidth: Int) {
 
             writeElement("peg:parsing", v.window(first, last))
             val cur = self.parse(v, first, last)
-            if (cur == FAILED) {
+            if (cur == FAILURE) {
                 writeElement("peg:parsed", "peg:failed")
             } else {
                 writeElement("peg:parsed", v.window(first, cur))

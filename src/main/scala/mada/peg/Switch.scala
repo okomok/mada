@@ -16,7 +16,7 @@ class Switch[A](es: Seq[(Vector[A], Peg[A])], lt: (A, A) => Boolean) extends Peg
     override def parse(v: Vector[A], first: Long, last: Long): Long = {
         tree.parse(v, first, last) match {
             case Some((p, cur)) => p.parse(v, cur, last)
-            case _ => FAILED
+            case _ => FAILURE
         }
     }
 

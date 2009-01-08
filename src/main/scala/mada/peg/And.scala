@@ -14,15 +14,15 @@ object And {
 class AndPeg[A](p: Peg[A], q: Peg[A]) extends Peg[A] {
     override def parse(v: Vector[A], first: Long, last: Long): Long = {
         val pcur = p.parse(v, first, last)
-        if (pcur != FAILED) {
+        if (pcur != FAILURE) {
             val qcur = q.parse(v, first, last) // short-circuit
             if (pcur == qcur) {
                 pcur
             } else {
-                FAILED
+                FAILURE
             }
         } else {
-            FAILED
+            FAILURE
         }
     }
 
@@ -38,8 +38,8 @@ object AndIf {
 class AndIfPeg[A](override val self: Peg[A], pred: (Vector[A], Long, Long) => Boolean) extends PegProxy[A] {
     override def parse(v: Vector[A], first: Long, last: Long): Long = {
         val cur = self.parse(v, first, last)
-        if (cur == FAILED || !pred(v, first, cur)) {
-            FAILED
+        if (cur == FAILURE || !pred(v, first, cur)) {
+            FAILURE
         } else {
             cur
         }

@@ -35,11 +35,11 @@ class Actions(private var enabled: Boolean) {
             val old = isEnabled
             setEnabled(false)
             try {
-                if (self.parse(v, first, last) != FAILED) {
+                if (self.parse(v, first, last) != FAILURE) {
                     setEnabled(old)
                     return self.parse(v, first, last)
                 } else {
-                    FAILED
+                    FAILURE
                 }
             } finally {
                 setEnabled(old)

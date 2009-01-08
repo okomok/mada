@@ -16,10 +16,10 @@ class StarUntilPeg[A](p: Peg[A], q: Peg[A]) extends Peg[A] {
         var cur = first
 
         var next = q.parse(v, cur, last)
-        while (next == FAILED) {
+        while (next == FAILURE) {
             next = p.parse(v, cur, last)
-            if (next == FAILED) {
-                return FAILED
+            if (next == FAILURE) {
+                return FAILURE
             } else {
                 cur = next
                 next = q.parse(v, cur, last)

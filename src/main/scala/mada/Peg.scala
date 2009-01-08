@@ -10,7 +10,7 @@ package mada
 object Peg {
     import peg._
 
-    val FAILED: Long = -1
+    val FAILURE: Long = -1
 
     def any[A]: Peg[A] = Any_[A]
     def begin[A]: Peg[A] = Begin[A]
@@ -63,7 +63,7 @@ trait Peg[A] {
 
     def parse(v: Vector[A], first: Long, last: Long): Long
     def length: Long = throw new UnsupportedOperationException("Peg.length")
-    protected final val FAILED = Peg.FAILED
+    protected final val FAILURE = Peg.FAILURE
 
     final def act(f: Vector[A] => Any): Peg[A] = Act(this, f)
     final def and(that: Peg[A]): Peg[A] = And(this, that)

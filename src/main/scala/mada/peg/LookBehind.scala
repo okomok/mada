@@ -15,12 +15,12 @@ class LookBehindPeg[A](p: Peg[A]) extends Peg[A] {
     override def parse(v: Vector[A], first: Long, last: Long): Long = {
         val len = p.length
         if (first < len) {
-            FAILED
+            FAILURE
         } else {
             if (first == p.parse(v, first - len, first)) {
                 first
             } else {
-                FAILED
+                FAILURE
             }
         }
     }

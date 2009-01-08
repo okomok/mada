@@ -12,6 +12,6 @@ object Fail {
 }
 
 class FailPeg[A] extends Peg[A] {
-    override def parse(v: Vector[A], first: Long, last: Long): Long = FAILED
+    override def parse(v: Vector[A], first: Long, last: Long): Long = FAILURE
     override def length = 0
 }

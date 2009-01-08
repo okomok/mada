@@ -14,7 +14,7 @@ object Single {
 class SinglePeg[A](e: A) extends Peg[A] {
     override def parse(v: Vector[A], first: Long, last: Long): Long = {
         if (first == last || e != v(first)) {
-            FAILED
+            FAILURE
         } else {
             first + 1
         }
