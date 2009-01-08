@@ -13,8 +13,8 @@ object Not {
 
 class NotPeg[A](p: Peg[A]) extends Peg[A] {
     override def parse(v: Vector[A], first: Long, last: Long): Long = {
-        if (first == last || p.parse(v, first, last) != FAILURE) {
-            return FAILURE
+        if (p.parse(v, first, last) != FAILURE) {
+            FAILURE
         } else {
             first + p.length
         }
