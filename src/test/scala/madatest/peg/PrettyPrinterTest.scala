@@ -19,10 +19,10 @@ class PrettyPrinterTest {
         // = new PrettyPrinter
          = { (x: String, y: mada.Peg[Char]) => y }
 
-    expr    <-- out( "expr", term ~ (( '+' ~ term | '-' ~ term )*) )
-    term    <-- out( "term", factor ~ ( '*' ~ factor | '/' ~ factor ).* )
-    factor  <-- out( "factor", (digit+) | '(' ~ expr ~ ')' | '-' ~ factor | '+' ~ factor )
-    digit   <-- range('0', '9')
+    expr    ::= out( "expr", term ~ (( '+' ~ term | '-' ~ term )*) )
+    term    ::= out( "term", factor ~ ( '*' ~ factor | '/' ~ factor ).* )
+    factor  ::= out( "factor", (digit+) | '(' ~ expr ~ ')' | '-' ~ factor | '+' ~ factor )
+    digit   ::= range('0', '9')
 
     def testTrivial: Unit = {
         assertTrue(expr.matches(Vector.stringVector("1+2")))

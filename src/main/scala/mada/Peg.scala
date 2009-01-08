@@ -66,13 +66,11 @@ trait Peg[A] {
     protected final val FAILURE = Peg.FAILURE
 
     final def act(f: Vector[A] => Any): Peg[A] = Act(this, f)
-    final def and(that: Peg[A]): Peg[A] = And(this, that)
     final def andIf(pred: Vector[A] => Boolean): Peg[A] = AndIf(this, pred)
     final def identity: Peg[A] = Identity(this)
     final def lookAhead: Peg[A] = LookAhead(this)
     final def lookBehind: Peg[A] = LookBehind(this)
     final def lookBack: Peg[A] = LookBack(this)
-    final def minus(that: Peg[A]) = Minus(this, that)
     final def named(name: String) = Named(this, name)
     final def not: Peg[A] = Not(this)
     final def plus: Peg[A] = Plus(this)
@@ -81,21 +79,25 @@ trait Peg[A] {
     final def opt: Peg[A] = Opt(this)
     final def optBefore(that: Peg[A]): Peg[A] = OptBefore(this, that)
     final def optUntil(that: Peg[A]): Peg[A] = OptUntil(this, that)
-    final def or(that: Peg[A]): Peg[A] = Or(this, that)
     final def repeat(min: Long, max: Long): Peg[A] = Repeat(this, min, max)
-    final def seqAnd(that: Peg[A]): Peg[A] = SeqAnd(this, that)
-    final def seqOr(that: Peg[A]): Peg[A] = SeqOr(this, that)
     final def star: Peg[A] = Star(this)
     final def starBefore(that: Peg[A]): Peg[A] = StarBefore(this, that)
     final def starUntil(that: Peg[A]): Peg[A] = StarUntil(this, that)
     final def unmap[Z](f: Z => A): Peg[Z] = Unmap(this, f)
     final def prescan[Z](f: Vector[Z] => Vector[A]): Peg[Z] = Prescan(this, f)
+
+    final def and(that: Peg[A]): Peg[A] = And(this, that)
+    final def or(that: Peg[A]): Peg[A] = Or(this, that)
+    final def minus(that: Peg[A]) = Minus(this, that)
     final def xor(that: Peg[A]): Peg[A] = Xor(this, that)
+
+    final def seqAnd(that: Peg[A]): Peg[A] = SeqAnd(this, that)
+    final def seqOr(that: Peg[A]): Peg[A] = SeqOr(this, that)
 
     final def parse(v: Vector[A]): Long = Parse(this, v)
     final def matches(v: Vector[A]): Boolean = Matches(this, v)
 
-    final def unary_! : Peg[A] = not
+    final def unary_~ : Peg[A] = not
     final def &(that: Peg[A]): Peg[A] = and(that)
     final def |(that: Peg[A]): Peg[A] = or(that)
     final def -(that: Peg[A]): Peg[A] = minus(that)
@@ -113,6 +115,9 @@ trait Peg[A] {
     final def ??(that: Peg[A]): Peg[A] = optBefore(that)
     final def ?~(that: Peg[A]): Peg[A] = optUntil(that)
     final def ^^(f: Vector[A] => Any): Peg[A] = act(f)
+
+    // final def unary_& : Peg[A] = lookAhead
+    final def unary_! : Peg[A] = lookAhead.not
 
     final def ~?=(that: Peg[A]): Peg[A] = seqAnd(that.lookAhead)
     final def ~?!(that: Peg[A]): Peg[A] = seqAnd(that.lookAhead.not)

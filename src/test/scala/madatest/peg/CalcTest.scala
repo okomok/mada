@@ -16,10 +16,10 @@ import mada.Peg.Compatibles._
 class CalcTest {
     val (expr, term, factor, digit) = rule4[Char]
 
-    expr    <-- term ~ (( '+' ~ term ^^ add | '-' ~ term ^^ sub )*) // Take care operator precedence.
-    term    <-- factor ~ ( '*' ~ factor ^^ mul | '/' ~ factor ^^ div ).* // `.` is better.
-    factor  <-- ( (digit+) ^^ int_ | '(' ~ expr ~ ')' | '-' ~ factor ^^ neg | '+' ~ factor )
-    digit   <-- range('0', '9')
+    expr    ::= term ~ (( '+' ~ term ^^ add | '-' ~ term ^^ sub )*) // Take care operator precedence.
+    term    ::= factor ~ ( '*' ~ factor ^^ mul | '/' ~ factor ^^ div ).* // `.` is better.
+    factor  ::= ( (digit+) ^^ int_ | '(' ~ expr ~ ')' | '-' ~ factor ^^ neg | '+' ~ factor )
+    digit   ::= range('0', '9')
 
     def int_(v: Vector[Char]): Unit = { }
     def add(v: Vector[Char]): Unit = { }
