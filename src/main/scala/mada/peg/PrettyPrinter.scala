@@ -23,16 +23,18 @@ class PrettyPrinter(val out: java.io.Writer, val indentWidth: Int) {
     private var indentLevel = 0
     private val indentString = Vector.single(' ').cycle(indentWidth)
     private def indent = indentString.cycle(indentLevel)
+    private val stack = new java.util.LinkedList[Any]
 
     def writeStartElement(tag: Any): Unit = {
+        stack.push(tag)
         out.write(Vector.toString(indent ++ "<" ++ tag.toString ++ ">\n"))
         out.flush
         indentLevel += 1
     }
 
-    def writeEndElement(tag: Any): Unit = {
+    def writeEndElement: Unit = {
         indentLevel -= 1
-        out.write(Vector.toString(indent ++ "</" ++ tag.toString ++ ">\n"))
+        out.write(Vector.toString(indent ++ "</" ++ stack.pop.toString ++ ">\n"))
         out.flush
     }
 
@@ -47,6 +49,7 @@ class PrettyPrinter(val out: java.io.Writer, val indentWidth: Int) {
     }
 
     def close: Unit = {
+        Assert(stack.isEmpty)
         out.close
     }
 
@@ -65,7 +68,7 @@ class PrettyPrinter(val out: java.io.Writer, val indentWidth: Int) {
                 writeElement("peg:parsed", v.window(first, cur))
             }
 
-            writeEndElement(self)
+            writeEndElement
             cur
         }
     }

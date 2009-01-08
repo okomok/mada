@@ -56,8 +56,20 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
         get(key) != None
     }
 
+    def print(out: PrettyPrinter): Unit = {
+        out.writeStartElement("tstree")
+        if (!emptyKeyValue.isEmpty) {
+            out.writeElement("emptykeyvalue", emptyKeyValue.get)
+        }
+        impl.rootNode.print(out)
+        out.writeEndElement
+    }
+
     override def toString: String = {
-        new StringBuilder().append("<tstree>").append(impl.rootNode).append("</tstree>").toString
+        val out = new PrettyPrinter(new java.io.StringWriter)
+        print(out)
+        out.close
+        out.out.toString
     }
 
     private def parseEmptyKey(first: Long): Option[(V, Long)] = {
@@ -112,12 +124,12 @@ class TSTreeImpl[A, V](_key: Vector[A], _value: V, _lt: (A, A) => Boolean) {
 
             var k = key(first)
             while (true) {
-                if (result > k) {
+                if (_lt(k, result.elem)) {
                     if (result.left == null) {
                         result.left = new Node(k)
                     }
                     result = result.left
-                } else if (result < k) {
+                } else if (_lt(result.elem, k)) {
                     if (result.right == null) {
                         result.right = new Node(k)
                     }
@@ -148,9 +160,9 @@ class TSTreeImpl[A, V](_key: Vector[A], _value: V, _lt: (A, A) => Boolean) {
 
             var k2 = key2(first2)
             while (first1 != null) {
-                if (first1 > k2) {
+                if (_lt(k2, first1.elem)) {
                     first1 = first1.left
-                } else if (first1 < k2) {
+                } else if (_lt(first1.elem, k2)) {
                     first1 = first1.right
                 } else {
                     cur1 = first1
@@ -168,32 +180,36 @@ class TSTreeImpl[A, V](_key: Vector[A], _value: V, _lt: (A, A) => Boolean) {
         }
     }
 
-    class Node(elem: A) {
+    class Node(val elem: A) {
         var value: Option[V] = None
         var left: Node = null
         var middle: Node = null
         var right: Node = null
 
-        def <(e: A): Boolean = _lt(elem, e)
-        def >(e: A): Boolean = _lt(e, elem)
+        def print(out: PrettyPrinter): Unit = {
+            out.writeStartElement("node")
 
-        override def toString = {
-            val sb = new StringBuilder()
-            sb.append("<node>")
-                sb.append("<elem>").append(elem).append("</elem>")
+            out.writeElement("elem", elem)
             if (!value.isEmpty) {
-                sb.append("<value>").append(value.get).append("</value>")
+                out.writeElement("value", value.get)
             }
             if (left != null) {
-                sb.append("<left>").append(left).append("</left>")
+                out.writeStartElement("left")
+                left.print(out)
+                out.writeEndElement
             }
             if (middle != null) {
-                sb.append("<middle>").append(middle).append("</middle>")
+                out.writeStartElement("middle")
+                middle.print(out)
+                out.writeEndElement
             }
             if (right != null) {
-                sb.append("<right>").append(right).append("</right>")
+                out.writeStartElement("right")
+                right.print(out)
+                out.writeEndElement
             }
-            sb.append("</node>").toString
+
+            out.writeEndElement
         }
     }
 }
