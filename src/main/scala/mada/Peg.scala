@@ -63,7 +63,7 @@ trait Peg[A] {
     def length: Long = throw new UnsupportedOperationException("Peg.length")
     protected final val FAILED = Peg.FAILED
 
-    final def action(f: Vector[A] => Any): Peg[A] = Action(this, f)
+    final def act(f: Vector[A] => Any): Peg[A] = Act(this, f)
     final def and(that: Peg[A]): Peg[A] = And(this, that)
     final def andIf(pred: Vector[A] => Boolean): Peg[A] = AndIf(this, pred)
     final def identity: Peg[A] = Identity(this)
@@ -110,7 +110,7 @@ trait Peg[A] {
     final def ? : Peg[A] = opt
     final def ??(that: Peg[A]): Peg[A] = optBefore(that)
     final def ?~(that: Peg[A]): Peg[A] = optUntil(that)
-    final def ^^(f: Vector[A] => Any): Peg[A] = action(f)
+    final def ^^(f: Vector[A] => Any): Peg[A] = act(f)
 
     final def ~?=(that: Peg[A]): Peg[A] = seqAnd(that.lookAhead)
     final def ~?!(that: Peg[A]): Peg[A] = seqAnd(that.lookAhead.not)
