@@ -20,12 +20,7 @@ class Switch[A](es: Seq[(A, Peg[A])]) extends Peg[A] {
             if (p.isEmpty) {
                 FAILURE
             } else {
-                val cur = p.get.parse(v, first, last) // from first.
-                if (cur == FAILURE) {
-                    0
-                } else {
-                    cur
-                }
+                p.get.parse(v, first + 1, last)
             }
         }
     }

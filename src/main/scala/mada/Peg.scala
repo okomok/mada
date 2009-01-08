@@ -12,6 +12,7 @@ object Peg {
 
     val FAILURE: Long = -1
 
+    def advance[A](i: Long): Peg[A] = Advance[A](i)
     def any[A]: Peg[A] = Any_[A]
     def begin[A]: Peg[A] = Begin[A]
     def end[A]: Peg[A] = End[A]
