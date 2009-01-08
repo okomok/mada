@@ -17,17 +17,10 @@ class PrintTest {
     val (expr, term, factor, digit) = rule4[Char]
     val out = prettyPrinter
 
-    expr    ::= ( term ~ (( '+' ~ term ^^ add | '-' ~ term ^^ sub )*) ).printTo(out)
-    term    ::= ( factor ~ ( '*' ~ factor ^^ mul | '/' ~ factor ^^ div ).* ).printTo(out)
-    factor  ::= ( (digit+) ^^ int_ | '(' ~ expr ~ ')' | '-' ~ factor ^^ neg | '+' ~ factor ).printTo(out)
+    expr    ::= ( term ~ (( '+' ~ term | '-' ~ term )*) ).named("expr").printed(out)
+    term    ::= ( factor ~ ( '*' ~ factor | '/' ~ factor ).* ).printed(out, "term")
+    factor  ::= ( (digit+) | '(' ~ expr ~ ')' | '-' ~ factor | '+' ~ factor ).named("factor").printed(out)
     digit   ::= range('0', '9')
-
-    def int_(v: Vector[Char]): Unit = { }
-    def add(v: Vector[Char]): Unit = { }
-    def sub(v: Vector[Char]): Unit = { }
-    def mul(v: Vector[Char]): Unit = { }
-    def div(v: Vector[Char]): Unit = { }
-    def neg(v: Vector[Char]): Unit = { }
 
     def testTrivial: Unit = {
         assertTrue(expr.matches(Vector.stringVector("1+2")))

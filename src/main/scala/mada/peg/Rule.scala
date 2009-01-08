@@ -17,15 +17,13 @@ object Rule {
     def make5[A]: (Rule[A], Rule[A], Rule[A], Rule[A], Rule[A]) = (apply[A], apply[A], apply[A], apply[A], apply[A])
 }
 
-class Rule[A] extends Peg[A] {
-    override def parse(v: Vector[A], first: Long, last: Long): Long = {
-        deref.parse(v, first, last)
-    }
+class Rule[A] extends PegProxy[A] {
+    override def self = deref
 
     private var deref: Peg[A] = null
-    final def ::=(p: Peg[A]): Unit = deref = p
+    def ::=(that: Peg[A]): Unit = deref = that
 
-    final def copy: Rule[A] = {
+    def copy: Rule[A] = {
         val r = new Rule[A]
         r ::= deref
         r

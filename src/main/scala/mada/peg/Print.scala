@@ -8,73 +8,65 @@ package mada.peg
 
 
 object PrettyPrinter {
-    def apply: PrettyPrinter = apply(new java.io.OutputStreamWriter(java.lang.System.out))
-    def apply(out: java.io.Writer): PrettyPrinter = new PrettyPrinter(out)
+    val defaultIndentWidth: Int = 4
+    def apply: PrettyPrinter = apply(defaultIndentWidth)
+    def apply(indentWidth: Int): PrettyPrinter = apply(new java.io.OutputStreamWriter(java.lang.System.out), indentWidth)
+    def apply(out: java.io.Writer): PrettyPrinter = new PrettyPrinter(out, defaultIndentWidth)
+    def apply(out: java.io.Writer, indentWidth: Int): PrettyPrinter = new PrettyPrinter(out, indentWidth)
 }
 
-class PrettyPrinter(out: java.io.Writer) {
+class PrettyPrinter(out: java.io.Writer, indentWidth: Int) {
+    import Vector.compatibles._
+
     private var indentLevel = 0
 
+    def close: Unit = {
+        out.close
+    }
+
     def writeStartElement(tag: Any): Unit = {
-        out.write(appendIndents(new StringBuilder).append('<').append(tag).append('>').toString)
-        out.write('\n')
+        out.write(Vector.toString(indent ++ "<" ++ tag.toString ++ ">\n"))
         out.flush
         indentLevel += 1
     }
 
     def writeEndElement(tag: Any): Unit = {
         indentLevel -= 1
-        out.write(appendIndents(new StringBuilder).append("</").append(tag).append('>').toString)
-        out.write('\n')
+        out.write(Vector.toString(indent ++ "</" ++ tag.toString ++ ">\n"))
         out.flush
     }
 
     def writeElement(tag: Any, chars: Any): Unit = {
-        out.write(
-            appendIndents(new StringBuilder).
-                append('<').append(tag).append('>').
-                    append(chars).
-                append("</").append(tag).append('>').
-            toString )
-        out.write('\n')
+        out.write(Vector.toString(indent ++ "<" ++ tag.toString ++ ">" ++ chars.toString ++ "</" ++ tag.toString ++ ">\n"))
         out.flush
     }
 
-    def writeCharacters(tag: Any): Unit = {
-        out.write(appendIndents(new StringBuilder()).append(tag).toString)
-        out.write('\n')
+    def writeCharacters(chars: Any): Unit = {
+        out.write(Vector.toString(indent ++ chars.toString))
         out.flush
     }
 
-    def appendIndents(sb: StringBuilder): StringBuilder = {
-        var i = 0
-        while (i < indentLevel) {
-            sb.append("    ")
-            i += 1
-        }
-        sb
-    }
-
-    def close: Unit = {
-        out.close
+    private def indent: Vector[Char] = {
+        Vector.single(' ').cycle(indentWidth).cycle(indentLevel)
     }
 }
 
 
-object PrintTo {
-    def apply[A](p: Peg[A], out: PrettyPrinter): Peg[A] = new PrintToPeg[A](p, out)
+object Printed {
+    def apply[A](p: Peg[A], out: PrettyPrinter): Peg[A] = new PrintedPeg[A](p, out)
+    def apply[A](p: Peg[A], out: PrettyPrinter, name: String): Peg[A] = apply(p.named(name), out)
 }
 
-class PrintToPeg[A](override val self: Peg[A], out: PrettyPrinter) extends PegProxy[A] {
+class PrintedPeg[A](override val self: Peg[A], out: PrettyPrinter) extends PegProxy[A] {
     override def parse(v: Vector[A], first: Long, last: Long): Long = {
         out.writeStartElement(self)
 
-        out.writeElement("parsing", v.window(first, last))
+        out.writeElement("peg:parsing", v.window(first, last))
         val cur = self.parse(v, first, last)
         if (cur == FAILED) {
-            out.writeElement("parsed", "FAILED")
+            out.writeElement("peg:parsed", "peg:failed")
         } else {
-            out.writeElement("parsed", v.window(first, cur))
+            out.writeElement("peg:parsed", v.window(first, cur))
         }
 
         out.writeEndElement(self)

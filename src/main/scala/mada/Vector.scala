@@ -97,7 +97,7 @@ trait Vector[A] {
     final def :\[B](z: B)(op: (A, B) => B): B = foldRight(z)(op)
     final def foreach(f: A => Unit): Unit = Foreach(this, f)
     final def head: A = Head(this)
-    final def identity: Vector[A] = this
+    final def identity: Vector[A] = Identity(this)
     final def indices: Vector[Long] = Indices(this)
     final def init: Vector[A] = Init(this)
     final def isDefinedAt(x: Long): Boolean = IsDefinedAt(this, x)
