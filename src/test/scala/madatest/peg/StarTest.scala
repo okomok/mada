@@ -19,36 +19,36 @@ class StarTest {
 
     def testStar2: Unit = {
         val sample = mada.Vector.stringVector("aaaaaaab")
-        assertTrue((stringPeg("a").* ~ stringPeg("b")).matches(sample))
+        assertTrue((stringPeg("a").* >> stringPeg("b")).matches(sample))
     }
 
     def testStar3: Unit = {
         val sample = mada.Vector.stringVector("b")
-        assertTrue((stringPeg("a").* ~ stringPeg("b")).matches(sample))
+        assertTrue((stringPeg("a").* >> stringPeg("b")).matches(sample))
     }
 
     def testStar4: Unit = {
         val sample = mada.Vector.stringVector("Aabababab")
-        assertTrue(  (stringPeg("A") ~ (stringPeg("a") ~ stringPeg("b")).* ).matches(sample)  ) // `.` is needed.
+        assertTrue(  (stringPeg("A") >> (stringPeg("a") >> stringPeg("b")).* ).matches(sample)  ) // `.` is needed.
     }
 
     def testBefore: Unit = {
         val sample = mada.Vector.stringVector("/*hello*/")
-        assertTrue((stringPeg("/*") ~ (any *? stringPeg("*/")) ~ stringPeg("*/")).matches(sample))
+        assertTrue((stringPeg("/*") >> (any *? stringPeg("*/")) >> stringPeg("*/")).matches(sample))
     }
 
     def testUntil: Unit = {
         val sample = mada.Vector.stringVector("/*hello*/")
-        assertTrue((stringPeg("/*") ~ (any *~ stringPeg("*/"))).matches(sample))
+        assertTrue((stringPeg("/*") >> (any *>> stringPeg("*/"))).matches(sample))
     }
 
     def testBefore2: Unit = {
         val sample = mada.Vector.stringVector("/*hello*/")
-        assertTrue((stringPeg("/*") ~ __*?(stringPeg("*/")) ~ stringPeg("*/")).matches(sample) )
+        assertTrue((stringPeg("/*") >> __*?(stringPeg("*/")) >> stringPeg("*/")).matches(sample) )
     }
 
     def testUntil2: Unit = {
         val sample = mada.Vector.stringVector("/*hello*/")
-        assertTrue((stringPeg("/*") ~ __*~(stringPeg("*/"))).matches(sample))
+        assertTrue((stringPeg("/*") >> __*>>(stringPeg("*/"))).matches(sample))
     }
 }

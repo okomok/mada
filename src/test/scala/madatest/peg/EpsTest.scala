@@ -18,6 +18,6 @@ class EpsTest {
     }
 
     def testCompile(v: mada.Vector[Char]): Unit = {
-        (stringPeg("abcd") ~ eps).parse(v, 0, 10)
+        (stringPeg("abcd") >> eps).parse(v, 0, 10)
     }
 }

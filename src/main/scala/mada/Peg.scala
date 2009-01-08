@@ -34,8 +34,9 @@ object Peg {
 
     def __*[A]: Peg[A] = any[A].star
     def __*?[A](p: Peg[A]): Peg[A] = any[A].starBefore(p)
-    def __*~[A](p: Peg[A]): Peg[A] = any[A].starUntil(p)
+    def __*>>[A](p: Peg[A]): Peg[A] = any[A].starUntil(p)
 
+    def &[A](p: Peg[A]): Peg[A] = p.lookAhead
     def ?=[A](p: Peg[A]): Peg[A] = p.lookAhead
     def ?![A](p: Peg[A]): Peg[A] = p.lookAhead.not
     def ?<=[A](p: Peg[A]): Peg[A] = p.lookBehind
@@ -97,32 +98,31 @@ trait Peg[A] {
     final def parse(v: Vector[A]): Long = Parse(this, v)
     final def matches(v: Vector[A]): Boolean = Matches(this, v)
 
+    // final def unary_& : Peg[A] = lookAhead
+    final def unary_! : Peg[A] = lookAhead.not
     final def unary_~ : Peg[A] = not
-    final def &(that: Peg[A]): Peg[A] = and(that)
+    final def A(that: Peg[A]): Peg[A] = and(that)
     final def |(that: Peg[A]): Peg[A] = or(that)
     final def -(that: Peg[A]): Peg[A] = minus(that)
     final def ^(that: Peg[A]): Peg[A] = xor(that)
-    final def &&(that: Peg[A]): Peg[A] = seqAnd(that)
+    final def >>(that: Peg[A]): Peg[A] = seqAnd(that)
     final def ||(that: Peg[A]): Peg[A] = seqOr(that)
-    final def ~(that: Peg[A]): Peg[A] = seqAnd(that)
     final def * : Peg[A] = star
     final def *?(that: Peg[A]): Peg[A] = starBefore(that)
-    final def *~(that: Peg[A]): Peg[A] = starUntil(that)
+    final def *>>(that: Peg[A]): Peg[A] = starUntil(that)
     final def + : Peg[A] = plus
     final def +?(that: Peg[A]): Peg[A] = plusBefore(that)
-    final def +~(that: Peg[A]): Peg[A] = plusUntil(that)
+    final def +>>(that: Peg[A]): Peg[A] = plusUntil(that)
     final def ? : Peg[A] = opt
     final def ??(that: Peg[A]): Peg[A] = optBefore(that)
-    final def ?~(that: Peg[A]): Peg[A] = optUntil(that)
+    final def ?>>(that: Peg[A]): Peg[A] = optUntil(that)
     final def ^^(f: Vector[A] => Any): Peg[A] = act(f)
 
-    // final def unary_& : Peg[A] = lookAhead
-    final def unary_! : Peg[A] = lookAhead.not
-
-    final def ~?=(that: Peg[A]): Peg[A] = seqAnd(that.lookAhead)
-    final def ~?!(that: Peg[A]): Peg[A] = seqAnd(that.lookAhead.not)
-    final def ~?<=(that: Peg[A]): Peg[A] = seqAnd(that.lookBehind)
-    final def ~?<!(that: Peg[A]): Peg[A] = seqAnd(that.lookBehind.not)
-    final def ~?<<=(that: Peg[A]): Peg[A] = seqAnd(that.lookBack)
-    final def ~?<<!(that: Peg[A]): Peg[A] = seqAnd(that.lookBack.not)
+    final def >>&(that: Peg[A]): Peg[A] = seqAnd(that.lookAhead)
+    final def >>?=(that: Peg[A]): Peg[A] = seqAnd(that.lookAhead)
+    final def >>?!(that: Peg[A]): Peg[A] = seqAnd(that.lookAhead.not)
+    final def >>?<=(that: Peg[A]): Peg[A] = seqAnd(that.lookBehind)
+    final def >>?<!(that: Peg[A]): Peg[A] = seqAnd(that.lookBehind.not)
+    final def >>?<<=(that: Peg[A]): Peg[A] = seqAnd(that.lookBack)
+    final def >>?<<!(that: Peg[A]): Peg[A] = seqAnd(that.lookBack.not)
 }
