@@ -13,13 +13,15 @@ import junit.framework.Assert._
 import mada.Peg.compatibles._
 
 
-class PrintTest {
+class PrinterTest {
     val (expr, term, factor, digit) = rule4[Char]
-    val out = prettyPrinter
+    val out
+        // = new Printer
+         = { (x: String, y: mada.Peg[Char]) => y }
 
-    expr    ::= ( term ~ (( '+' ~ term | '-' ~ term )*) ).named("expr").printed(out)
-    term    ::= ( factor ~ ( '*' ~ factor | '/' ~ factor ).* ).printed(out, "term")
-    factor  ::= ( (digit+) | '(' ~ expr ~ ')' | '-' ~ factor | '+' ~ factor ).named("factor").printed(out)
+    expr    ::= out( "expr", term ~ (( '+' ~ term | '-' ~ term )*) )
+    term    ::= out( "term", factor ~ ( '*' ~ factor | '/' ~ factor ).* )
+    factor  ::= out( "factor", (digit+) | '(' ~ expr ~ ')' | '-' ~ factor | '+' ~ factor )
     digit   ::= range('0', '9')
 
     def testTrivial: Unit = {

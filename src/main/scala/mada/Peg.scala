@@ -21,26 +21,16 @@ object Peg {
     def icase(str: String): Peg[Char] = Icase(str)
     def lowerCaseScan(p: Peg[Char]): Peg[Char] = LowerCaseScan(p)
     def longest[A](ps: Peg[A]*) = Longest(ps: _*)
-    def prettyPrinter: PrettyPrinter = PrettyPrinter.apply
     def shortest[A](ps: Peg[A]*) = Shortest(ps: _*)
     def range[A](i: A, j: A)(implicit c: A => Ordered[A]): Peg[A] = Range(i, j)(c)
     def set[A](es: A*): Peg[A] = Set(es: _*)
     def single[A](e: A): Peg[A] = Single(e)
     def switch[A](es: (Vector[A], Peg[A])*)(implicit c: A => Ordered[A]): Peg[A] = Switch(es: _*)(c)
+    def symbols[A](vs: Vector[A]*)(implicit c: A => Ordered[A]): Peg[A] = Symbols(vs: _*)(c)
 
     val compatibles: Compatibles = Compatibles
     def stringPeg(str: String): Peg[Char] = StringPeg(str)
     def vectorPeg[A](v: Vector[A]): Peg[A] = VectorPeg(v)
-
-    def actions: Actions = Actions.apply
-    def symbols[A](vs: Vector[A]*)(implicit c: A => Ordered[A]): Peg[A] = Symbols(vs: _*)(c)
-
-    def rule[A]: Rule[A] = Rule[A]
-    def rule1[A]: (Rule[A]) = Rule.make1[A]
-    def rule2[A]: (Rule[A], Rule[A]) = Rule.make2[A]
-    def rule3[A]: (Rule[A], Rule[A], Rule[A]) = Rule.make3[A]
-    def rule4[A]: (Rule[A], Rule[A], Rule[A], Rule[A]) = Rule.make4[A]
-    def rule5[A]: (Rule[A], Rule[A], Rule[A], Rule[A], Rule[A]) = Rule.make5[A]
 
     def __*[A]: Peg[A] = any[A].star
     def __*?[A](p: Peg[A]): Peg[A] = any[A].starBefore(p)
@@ -53,7 +43,16 @@ object Peg {
     def ?<<=[A](p: Peg[A]): Peg[A] = p.lookBack
     def ?<<![A](p: Peg[A]): Peg[A] = p.lookBack.not
 
+    type Actions = peg.Actions
+    type Rule[A] = peg.Rule[A]
+    type Printer = peg.Printer
     type PegProxy[A] = peg.PegProxy[A]
+
+    def rule1[A]: (Rule[A]) = Rule.make1[A]
+    def rule2[A]: (Rule[A], Rule[A]) = Rule.make2[A]
+    def rule3[A]: (Rule[A], Rule[A], Rule[A]) = Rule.make3[A]
+    def rule4[A]: (Rule[A], Rule[A], Rule[A], Rule[A]) = Rule.make4[A]
+    def rule5[A]: (Rule[A], Rule[A], Rule[A], Rule[A], Rule[A]) = Rule.make5[A]
 }
 
 
@@ -89,8 +88,6 @@ trait Peg[A] {
     final def starUntil(that: Peg[A]): Peg[A] = StarUntil(this, that)
     final def unmap[Z](f: Z => A): Peg[Z] = Unmap(this, f)
     final def prescan[Z](f: Vector[Z] => Vector[A]): Peg[Z] = Prescan(this, f)
-    final def printed(out: PrettyPrinter): Peg[A] = Printed(this, out)
-    final def printed(out: PrettyPrinter, name: String): Peg[A] = Printed(this, out, name)
     final def xor(that: Peg[A]): Peg[A] = Xor(this, that)
 
     final def parse(v: Vector[A]): Long = Parse(this, v)
