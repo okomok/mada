@@ -17,12 +17,7 @@ class SeqAndPeg[A](p: Peg[A], q: Peg[A]) extends Peg[A] {
         if (cur == FAILURE) {
             FAILURE
         } else {
-            cur = q.parse(v, cur, last)
-            if (cur == FAILURE) {
-                FAILURE
-            } else {
-                cur
-            }
+            q.parse(v, cur, last)
         }
     }
 

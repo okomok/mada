@@ -19,7 +19,6 @@ class Rule[A](private var p: Peg[A]) extends PegProxy[A] {
     def this() = this(null)
 
     override def self = p
-    def ::=(that: Peg[A]): Unit = { p = that }
     def <--(that: Peg[A]): Unit = { p = that }
     def copy: Rule[A] = new Rule[A](p)
 }

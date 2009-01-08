@@ -20,10 +20,10 @@ class RuleTest {
     val (start) = rule1[Char]
 
     // left-recursion using copy
-    start ::= "a"
-    start ::= (start.copy | "b")
-    start ::= (start.copy | "c")
-    start ::= start.copy.*
+    start <-- "a"
+    start <-- (start.copy | "b")
+    start <-- (start.copy | "c")
+    start <-- start.copy.*
 
     def testTrivial: Unit = {
         assertTrue(start matches "abcaabbcabc")
