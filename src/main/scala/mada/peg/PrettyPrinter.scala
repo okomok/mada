@@ -10,18 +10,19 @@ package mada.peg
 import Vector.Compatibles._
 
 
-object Printer {
+object PrettyPrinter {
     val defaultIndentWidth = 4
     def defaultWriter = new java.io.OutputStreamWriter(java.lang.System.out)
 }
 
-class Printer(out: java.io.Writer, indentWidth: Int) {
-    def this() = this(Printer.defaultWriter, Printer.defaultIndentWidth)
-    def this(o: java.io.Writer) = this(o, Printer.defaultIndentWidth)
-    def this(w: Int) = this(Printer.defaultWriter, w)
+class PrettyPrinter(val out: java.io.Writer, val indentWidth: Int) {
+    def this() = this(PrettyPrinter.defaultWriter, PrettyPrinter.defaultIndentWidth)
+    def this(o: java.io.Writer) = this(o, PrettyPrinter.defaultIndentWidth)
+    def this(w: Int) = this(PrettyPrinter.defaultWriter, w)
 
     private var indentLevel = 0
-    private def indent = Vector.single(' ').cycle(indentWidth).cycle(indentLevel)
+    private val indentString = Vector.single(' ').cycle(indentWidth)
+    private def indent = indentString.cycle(indentLevel)
 
     def writeStartElement(tag: Any): Unit = {
         out.write(Vector.toString(indent ++ "<" ++ tag.toString ++ ">\n"))
@@ -49,10 +50,10 @@ class Printer(out: java.io.Writer, indentWidth: Int) {
         out.close
     }
 
-    def apply[A](p: Peg[A]): Peg[A] = new PrinterPeg(p)
+    def apply[A](p: Peg[A]): Peg[A] = new PrettyPrinterPeg(p)
     def apply[A](name: String, p: Peg[A]): Peg[A] = apply(p.named(name))
 
-    class PrinterPeg[A](override val self: Peg[A]) extends PegProxy[A] {
+    class PrettyPrinterPeg[A](override val self: Peg[A]) extends PegProxy[A] {
         override def parse(v: Vector[A], first: Long, last: Long): Long = {
             writeStartElement(self)
 

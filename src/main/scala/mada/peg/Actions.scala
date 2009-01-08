@@ -7,7 +7,7 @@
 package mada.peg
 
 
-class Actions(var enabled: Boolean) {
+class Actions(private var enabled: Boolean) {
     def this() = this(true)
 
     def isEnabled: Boolean = enabled

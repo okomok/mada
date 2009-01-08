@@ -13,10 +13,10 @@ import junit.framework.Assert._
 import mada.Peg.Compatibles._
 
 
-class PrinterTest {
+class PrettyPrinterTest {
     val (expr, term, factor, digit) = rule4[Char]
     val out
-        // = new Printer
+        // = new PrettyPrinter
          = { (x: String, y: mada.Peg[Char]) => y }
 
     expr    ::= out( "expr", term ~ (( '+' ~ term | '-' ~ term )*) )
