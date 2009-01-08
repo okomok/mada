@@ -43,11 +43,6 @@ class PrettyPrinter(val out: java.io.Writer, val indentWidth: Int) {
         out.flush
     }
 
-    def writeCharacters(chars: Any): Unit = {
-        out.write(Vector.toString(indent ++ chars.toString))
-        out.flush
-    }
-
     def close: Unit = {
         Assert(stack.isEmpty)
         out.close
