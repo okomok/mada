@@ -8,20 +8,30 @@ package mada.peg
 
 
 object Switch {
-    def apply[A](es: (Vector[A], Peg[A])*)(c: A => Ordered[A]): Peg[A] = new Switch(es, vec.stl.Less(c))
-    def apply[A](es: Seq[(Vector[A], Peg[A])], lt: (A, A) => Boolean): Peg[A] = new Switch(es, lt)
+    def apply[A](es: (A, Peg[A])*): Peg[A] = new Switch(es)
 }
 
-class Switch[A](es: Seq[(Vector[A], Peg[A])], lt: (A, A) => Boolean) extends Peg[A] {
+class Switch[A](es: Seq[(A, Peg[A])]) extends Peg[A] {
     override def parse(v: Vector[A], first: Long, last: Long): Long = {
-        tree.parse(v, first, last) match {
-            case Some((p, cur)) => p.parse(v, cur, last)
-            case _ => FAILURE
+        if (first == last) {
+            FAILURE
+        } else {
+            val p = table.get(v(first))
+            if (p.isEmpty) {
+                FAILURE
+            } else {
+                val cur = p.get.parse(v, first, last) // from first.
+                if (cur == FAILURE) {
+                    0
+                } else {
+                    cur
+                }
+            }
         }
     }
 
-    private val tree = {
-        val t = new TSTree[A, Peg[A]](lt)
+    private val table = {
+        val t = new scala.collection.jcl.HashMap[A, Peg[A]]
         for (e <- es) {
             t.put(e._1, e._2)
         }

@@ -8,7 +8,7 @@ package mada.peg
 
 
 class MemoTable[A](val vector: Vector[A]) {
-    private val map = new scala.collection.jcl.HashMap[PairVal, Long]
+    private val table = new scala.collection.jcl.HashMap[PairVal, Long]
 
     def apply(p: Peg[A]): Peg[A] = new MemoTablePeg(p)
 
@@ -16,10 +16,10 @@ class MemoTable[A](val vector: Vector[A]) {
         override def parse(v: Vector[A], first: Long, last: Long): Long = {
             if (vector eq v) {
                 val key = PairVal(first, last)
-                val value = map.get(key)
+                val value = table.get(key)
                 if (value.isEmpty) {
                     val cur = self.parse(v, first, last)
-                    map.put(key, cur)
+                    table.put(key, cur)
                     cur
                 } else {
                     value.get

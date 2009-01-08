@@ -16,14 +16,14 @@ import mada.Peg.Compatibles._
 import mada.Peg._
 
 
-class SymbolsTest {
+class TSTreeTest {
     def testTrivial: Unit = {
-        val i = ("abc" >> symbols("to", "too", "tot", "tab", "so")).parse("abcto")
+        val i = ("abc" >> symbolSet("to", "too", "tot", "tab", "so")).parse("abcto")
         assertEquals(5L, i)
     }
 
     def testLongestMatch: Unit = {
-        assertTrue(("abc" >> symbols("to", "too", "tot", "tab", "so")) matches "abctoo")
+        assertTrue(("abc" >> symbolSet("to", "too", "tot", "tab", "so")) matches "abctoo")
     }
 
     def testTSTree: Unit = {

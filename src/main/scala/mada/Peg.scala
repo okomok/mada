@@ -25,8 +25,9 @@ object Peg {
     def range[A](i: A, j: A)(implicit c: A => Ordered[A]): Peg[A] = Range(i, j)(c)
     def set[A](es: A*): Peg[A] = Set(es: _*)
     def single[A](e: A): Peg[A] = Single(e)
-    def switch[A](es: (Vector[A], Peg[A])*)(implicit c: A => Ordered[A]): Peg[A] = Switch(es: _*)(c)
-    def symbols[A](vs: Vector[A]*)(implicit c: A => Ordered[A]): Peg[A] = Symbols(vs: _*)(c)
+
+    def symbolSet[A](vs: Vector[A]*)(implicit c: A => Ordered[A]): Peg[A] = SymbolSet(vs: _*)(c)
+    def symbolMap[A](es: (Vector[A], Peg[A])*)(implicit c: A => Ordered[A]): Peg[A] = SymbolMap(es: _*)(c)
 
     object Compatibles extends Compatibles
     def stringPeg(str: String): Peg[Char] = StringPeg(str)

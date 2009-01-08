@@ -12,14 +12,14 @@ object Lazy {
 }
 
 class LazyVector[A](override val * : Vector[A]) extends VectorAdapter[A, A] with NotWritable[A] {
-    private val map = new scala.collection.jcl.HashMap[Long, A]
+    private val table = new scala.collection.jcl.HashMap[Long, A]
 
     override val size = *.size
     override def apply(i: Long) = {
-        val o = map.get(i)
+        val o = table.get(i)
         if (o.isEmpty) {
             val e = *(i)
-            map.put(i, e)
+            table.put(i, e)
             e
         } else {
             o.get

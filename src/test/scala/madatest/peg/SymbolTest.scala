@@ -13,9 +13,9 @@ import mada.Peg.Compatibles._
 import mada.Peg._
 
 
-class SwitchTest {
+class SymbolTest {
     def testTrivial: Unit = {
-        val g = switch("e" --> "z", "ef" --> "g", "" --> "DEFAULT", "wx" --> "wy", "w" --> "xyz")
+        val g = symbolMap("e" --> "z", "ef" --> "g", "" --> "DEFAULT", "wx" --> "wy", "w" --> "xyz")
         assertTrue("abc" >> g >> "LL"  matches "abcezLL")
         assertTrue("abc" >> g >> "LL"  matches "abcefgLL")
         assertTrue("abc" >> g >> "LL"  matches "abcwxwyLL")
@@ -24,7 +24,7 @@ class SwitchTest {
     }
 
     def testTrivial2: Unit = {
-        val g = switch(mada.Vector.stringVector("e") -> stringPeg("z"), mada.Vector.stringVector("ef") -> stringPeg("g"))
+        val g = symbolMap(mada.Vector.stringVector("e") -> stringPeg("z"), mada.Vector.stringVector("ef") -> stringPeg("g"))
         assertTrue("abc" >> g  matches "abcez")
     }
 }
