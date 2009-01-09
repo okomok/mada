@@ -48,7 +48,8 @@ object Peg {
 
     type PegProxy[A] = peg.PegProxy[A]
 
-    type Actions = peg.Actions
+    type BufferedActions[A] = peg.BufferedActions[A]
+    type StackedActions[A] = peg.StackedActions[A]
     type MemoTable[A] = peg.MemoTable[A]
     type PrettyPrinter = peg.PrettyPrinter
     type Rule[A] = peg.Rule[A]

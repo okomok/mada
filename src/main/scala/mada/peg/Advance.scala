@@ -12,20 +12,16 @@ object Advance {
 }
 
 class AdvancePeg[A](i: Long) extends Peg[A] {
+    Assert(i >= 0)
+
     override def parse(v: Vector[A], first: Long, last: Long): Long = {
         val cur = first + i
-        if (0 <= cur && cur <= last) {
+        if (cur <= last) {
             cur
         } else {
             FAILURE
         }
     }
 
-    override def length = {
-        if (i < 0) {
-            throw new UnsupportedOperationException("AdvancePeg.length is negative")
-        } else {
-            i
-        }
-    }
+    override def length = i
 }
