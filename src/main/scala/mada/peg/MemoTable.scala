@@ -10,9 +10,9 @@ package mada.peg
 class MemoTable[A](val vector: Vector[A]) {
     private val table = new scala.collection.jcl.HashMap[PairVal, Long]
 
-    def apply(p: Peg[A]): Peg[A] = new MemoTablePeg(p)
+    def apply(p: Peg[A]): Peg[A] = new ApplyPeg(p)
 
-    class MemoTablePeg(override val self: Peg[A]) extends PegProxy[A] {
+    class ApplyPeg(override val self: Peg[A]) extends PegProxy[A] {
         override def parse(v: Vector[A], first: Long, last: Long): Long = {
             if (vector eq v) {
                 val key = PairVal(first, last)

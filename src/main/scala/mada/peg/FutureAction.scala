@@ -34,12 +34,13 @@ class FutureActions[A] {
 
 
 /*
+
 // push(f) >> ( symbolMap("abc" --> fire >> "def")) >> pop >> ...
 
 class StackedActions[A] {
     val stack = new java.util.ArrayDeque[(Vector[A] => Any, Long)]
 
-    def push(f: Vector[A] => Any): Peg[A] = new PushPeg(f)
+    def push(f: Vector[A] => Any): Unit = new PushPeg(f)
     def pop(f: Vector[A] => Any): Peg[A] = new PopPeg(f)
     def fire: Peg[A] = new FirePeg
 
@@ -67,4 +68,7 @@ class StackedActions[A] {
         }
         override def length = 0
     }
-}*/
+}
+*/
+
+
