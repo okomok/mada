@@ -16,6 +16,7 @@ object Peg {
     def any[A]: Peg[A] = Any_[A]
     def begin[A]: Peg[A] = Begin[A]
     def end[A]: Peg[A] = End[A]
+    def call[A](f: Unit => Any): Peg[A] = Call[A](f)
     def eps[A]: Peg[A] = Eps[A]
     def error[A]: Peg[A] = Error[A]
     def fail[A]: Peg[A] = Fail[A]
@@ -26,9 +27,6 @@ object Peg {
     def range[A](i: A, j: A)(implicit c: A => Ordered[A]): Peg[A] = Range(i, j)(c)
     def set[A](es: A*): Peg[A] = Set(es: _*)
     def single[A](e: A): Peg[A] = Single(e)
-
-    def symbolSet[A](vs: Vector[A]*)(implicit c: A => Ordered[A]): Peg[A] = SymbolSet(vs: _*)(c)
-    def symbolMap[A](es: (Vector[A], Peg[A])*)(implicit c: A => Ordered[A]): Peg[A] = SymbolMap(es: _*)(c)
 
     object Compatibles extends Compatibles
     def stringPeg(str: String): Peg[Char] = StringPeg(str)
@@ -49,7 +47,7 @@ object Peg {
     type PegProxy[A] = peg.PegProxy[A]
 
     type BufferedActions[A] = peg.BufferedActions[A]
-    type StackedActions[A] = peg.StackedActions[A]
+    type FutureActions[A] = peg.FutureActions[A]
     type MemoTable[A] = peg.MemoTable[A]
     type PrettyPrinter = peg.PrettyPrinter
     type Rule[A] = peg.Rule[A]
@@ -59,6 +57,10 @@ object Peg {
     def rule3[A]: (Rule[A], Rule[A], Rule[A]) = Rule.make3[A]
     def rule4[A]: (Rule[A], Rule[A], Rule[A], Rule[A]) = Rule.make4[A]
     def rule5[A]: (Rule[A], Rule[A], Rule[A], Rule[A], Rule[A]) = Rule.make5[A]
+
+    // Type should be public if best interface found.
+    def symbolSet[A](vs: Vector[A]*)(implicit c: A => Ordered[A]): Peg[A] = SymbolSet(vs: _*)(c)
+    def symbolMap[A](es: (Vector[A], Peg[A])*)(implicit c: A => Ordered[A]): Peg[A] = SymbolMap(es: _*)(c)
 }
 
 
