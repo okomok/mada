@@ -19,7 +19,6 @@ import mada.Vector.Compatibles._
 class RuleTest {
     val (start) = rule1[Char]
 
-    // left-recursion using copy
     start ::= "a"
     start ::= (start.copy | "b")
     start ::= (start.copy | "c")

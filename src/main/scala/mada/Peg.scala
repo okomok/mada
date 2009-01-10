@@ -47,7 +47,7 @@ object Peg {
 
     type BufferedActions[A] = peg.BufferedActions[A]
     type FutureActions[A] = peg.FutureActions[A]
-    type MemoTable[A] = peg.MemoTable[A]
+    type Memoizer[A] = peg.Memoizer[A]
     type PrettyPrinter = peg.PrettyPrinter
     type Rule[A] = peg.Rule[A]
 
