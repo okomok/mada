@@ -98,6 +98,7 @@ trait Peg[A] {
     final def act(f: Vector[A] => Any): Peg[A] = Act(this, f)
     final def andIf(pred: Vector[A] => Boolean): Peg[A] = AndIf(this, pred)
     final def identity: Peg[A] = Identity(this)
+    final def memoize: Peg[A] = Memoize(this)
     final def named(name: String) = Named(this, name)
     final def repeat(min: Long, max: Long): Peg[A] = Repeat(this, min, max)
     final def unmap[Z](f: Z => A): Peg[Z] = Unmap(this, f)

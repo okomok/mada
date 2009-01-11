@@ -67,6 +67,7 @@ trait Vector[A] {
 
     override def equals(that: Any): Boolean = Equals(this, that)
     override def hashCode: Int = HashCode(this)
+    final def refHashCode: Int = super.hashCode
     override def toString: String = AnyToString(this)
 
     final def always[B](that: Vector[B]): Vector[B] = Always(this, that)

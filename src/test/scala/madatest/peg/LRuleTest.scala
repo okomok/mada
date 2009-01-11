@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-// See: http://spirit.sourceforge.net/distrib/spirit_1_8_5/libs/spirit/doc/stored_rule.html
+// See: "Packrat Parsers Can Support Left Recursion"
 
 
 package madatest.peg
@@ -21,9 +21,10 @@ class LRuleTest {
         val v = madaVector("1-2-3")
         val expr = new mada.peg.LRule(v)
         val num = new mada.peg.LRule(v)
+        val num_ = range('0','9')
 
         num  ::= range('0', '9')
-        expr ::= ( expr.left >> "-" >> num | num )
+        expr ::= ( expr >> "-" >> num | num )
         assertEquals(5L, expr parse v)
     }
 
@@ -34,7 +35,7 @@ class LRuleTest {
         val x = new mada.peg.LRule(v)
 
         num  ::= range('0', '9')
-        x    ::= expr.left
+        x    ::= expr
         expr ::= ( x >> "-" >> num | num )
         assertEquals(5L, expr parse v)
     }
