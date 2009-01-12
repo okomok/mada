@@ -13,6 +13,8 @@ object SymbolMap {
 }
 
 class SymbolMap[A](es: Seq[(Vector[A], Peg[A])], lt: (A, A) => Boolean) extends Peg[A] {
+    def this(es: (Vector[A], Peg[A])*)(c: A => Ordered[A]) = this(es, vec.stl.Less(c))
+
     override def parse(v: Vector[A], first: Long, last: Long): Long = {
         tree.parse(v, first, last) match {
             case Some((p, cur)) => p.parse(v, cur, last)

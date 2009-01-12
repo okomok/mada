@@ -25,16 +25,18 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
         }
     }
 
-    def put(key: Vector[A], value: V): V = {
+    def put(key: Vector[A], value: V): Option[V] = {
         if (key.isEmpty) {
+            val old = emptyKeyValue
             emptyKeyValue = Some(value)
+            old
         } else if (impl == null) {
-            impl = new TSTreeImpl(key, value, _lt)
+            impl = new TSTreeImpl(key, Some(value), _lt)
+            None
         } else {
             val (first, last) = key.toPair
             impl.put(key, first, last, value)
         }
-        value
     }
 
     def parse(key: Vector[A], first: Long, last: Long): Option[(V, Long)] = {
@@ -50,6 +52,28 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
                 x
             }
         }
+    }
+
+    def remove(key: Vector[A]): Option[V] = {
+        if (key.isEmpty) {
+            val old = emptyKeyValue
+            emptyKeyValue = None
+            old
+        } else if (impl == null) {
+            None
+        } else {
+            val (first, last) = key.toPair
+            impl.remove(key, first, last)
+        }
+    }
+
+    def clear: Unit = {
+        impl = null
+        emptyKeyValue = None
+    }
+
+    def isEmpty: Boolean = {
+        impl == null && emptyKeyValue == None
     }
 
     def containsKey(key: Vector[A]): Boolean = {
@@ -82,13 +106,13 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
 }
 
 
-class TSTreeImpl[A, V](_key: Vector[A], _value: V, _lt: (A, A) => Boolean) {
+class TSTreeImpl[A, V](_key: Vector[A], _data: Option[V], _lt: (A, A) => Boolean) {
     Assert(!_key.isEmpty)
 
     val rootNode: Node = {
         val (first, last) = _key.toPair
-        val node = new Node(_key(first))
-        Node.copyInto(_key, first, last, node).value = Some(_value)
+        val node = new Node(_key(first), null)
+        Node.copyInto(_key, first, last, node).data = _data
         node
     }
 
@@ -99,19 +123,37 @@ class TSTreeImpl[A, V](_key: Vector[A], _value: V, _lt: (A, A) => Boolean) {
         }
     }
 
-    def put(key: Vector[A], first: Long, last: Long, value: V): Unit = {
+    def put(key: Vector[A], first: Long, last: Long, value: V): Option[V] = {
         Assert(first != last)
-        Node.copyInto(key, first, last, rootNode).value = Some(value)
+
+        val node = Node.copyInto(key, first, last, rootNode)
+        val old = node.data
+        node.data = Some(value)
+        old
+    }
+
+    def remove(key: Vector[A], first: Long, last: Long): Option[V] = {
+        Assert(first != last)
+
+        val (node, cur) = Node.search(rootNode, key, first, last)
+        if (node == null || cur != last) {
+            None
+        } else {
+            val old = node.data
+            node.data = None
+            Node.cutLeaf(node)
+            old
+        }
     }
 
     def parse(key: Vector[A], first: Long, last: Long): Option[(V, Long)] = {
         Assert(first != last)
 
         val (node, cur) = Node.search(rootNode, key, first, last)
-        if (node == null || node.value.isEmpty) {
+        if (node == null || node.data.isEmpty) {
             None
         } else {
-            Some((node.value.get, cur))
+            Some((node.data.get, cur))
         }
     }
 
@@ -126,12 +168,12 @@ class TSTreeImpl[A, V](_key: Vector[A], _value: V, _lt: (A, A) => Boolean) {
             while (true) {
                 if (_lt(k, result.elem)) {
                     if (result.left == null) {
-                        result.left = new Node(k)
+                        result.left = new Node(k, result)
                     }
                     result = result.left
                 } else if (_lt(result.elem, k)) {
                     if (result.right == null) {
-                        result.right = new Node(k)
+                        result.right = new Node(k, result)
                     }
                     result = result.right
                 } else {
@@ -142,7 +184,7 @@ class TSTreeImpl[A, V](_key: Vector[A], _value: V, _lt: (A, A) => Boolean) {
 
                     k = key(first)
                     if (result.middle == null) {
-                        result.middle = new Node(k)
+                        result.middle = new Node(k, result)
                     }
                     result = result.middle
                 }
@@ -178,20 +220,45 @@ class TSTreeImpl[A, V](_key: Vector[A], _value: V, _lt: (A, A) => Boolean) {
 
             (cur1, first2)
         }
+
+        def cutLeaf(node: Node): Unit = {
+            Assert(node.data.isEmpty)
+
+            if (node.isLeaf) {
+                val parent = node.parent
+                if (parent != null) {
+                    parent.cut(node)
+                }
+            }
+        }
     }
 
-    class Node(val elem: A) {
-        var value: Option[V] = None
+    class Node(val elem: A, val parent: Node) {
+        var data: Option[V] = None
         var left: Node = null
         var middle: Node = null
         var right: Node = null
+
+        def isLeaf: Boolean = {
+            left == null && middle == null && right == null
+        }
+
+        def cut(node: Node): Unit = {
+            if (node == left) {
+                left = null
+            } else if (node == middle) {
+                middle = null
+            } else if (node == right) {
+                right = null
+            }
+        }
 
         def print(out: PrettyPrinter): Unit = {
             out.writeStartElement("node")
 
             out.writeElement("elem", elem)
-            if (!value.isEmpty) {
-                out.writeElement("value", value.get)
+            if (!data.isEmpty) {
+                out.writeElement("value", data.get)
             }
             if (left != null) {
                 out.writeStartElement("left")

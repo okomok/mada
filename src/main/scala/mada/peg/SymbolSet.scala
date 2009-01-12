@@ -20,6 +20,12 @@ class SymbolSet[A](vs: Iterator[Vector[A]], lt: (A, A) => Boolean) extends Peg[A
         }
     }
 
+//    def add(v: Vector[A]): Option[Vector[A]] = tree.put(v, ())
+    def clear: Unit = { }
+    def contains(v: Vector[A]): Boolean = tree.containsKey(v)
+    def isEmpty: Boolean = tree.isEmpty
+//    def remove(v: Vector[A]): Boolean = { }
+
     private val tree = {
         val t = new TSTree[A, Unit](lt)
         for (v <- vs) {
