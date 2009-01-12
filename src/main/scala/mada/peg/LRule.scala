@@ -10,6 +10,8 @@
 package mada.peg
 
 
+/*
+
 class LRules[A] {
     type Map[K, V] = java.util.HashMap[K, V]
 
@@ -34,6 +36,8 @@ class LRules[A] {
 
     def Pos_<=(that: POSITION): Boolean = Pos.first <= that.first
 
+    def makeRule: LRule = new LRule
+
     class LRule(private var p: Peg[A]) extends PegProxy[A] {
         def this() = this(null)
 
@@ -43,7 +47,7 @@ class LRules[A] {
         def copy: LRule = new LRule(p)
 
         val memoTable = new Map[POSITION, MEMOENTRY]
-        val body = self
+        def body = self
 
         override def parse(v: Vector[A], first: Long, last: Long): Long = {
             Pos = TripleKey(v, first, last)
@@ -85,7 +89,7 @@ class LRules[A] {
             val lr = new LR(FAIL, R, null, LRStack)
             LRStack = lr
             // Memoize lr, then evaluate R.
-            val m = new MEMOENTRY(lr, P)
+            val m = new MEMOENTRY(lr, P) // ***recursion detecting****
             MEMO(R, P) = m
             val ans = EVAL(R.body)
             // Pop lr off the rule invocation stack.
@@ -98,9 +102,9 @@ class LRules[A] {
                 m.ans = ans
                 return ans
             }
-        } else {
+        } else { // memo hit
             Pos = m.pos
-            if (m.ans.isRight) { // if m.ans is LR
+            if (m.ans.isRight) { // if m.ans is LR ***recursion detected****
                 SETUP_LR(R, m.ans)
                 return m.ans.seed
             } else {
@@ -185,7 +189,58 @@ class LRules[A] {
 }
 
 
-/*
+class LRule[A](v: Vector[A]) extends Peg[A] {
+    private var p: Peg[A] = null
+    private val mp = new Peg.Memoizer(v).memoize(this)
+
+    def left: Peg[A] = mp
+    def ::=(that: Peg[A]): Unit = { p = that }
+    def <--(that: Peg[A]): Unit = { this ::= that }
+
+    private var parsing = false
+    private var position = FAILURE
+    private var recurred = false
+
+    override def parse(v: Vector[A], first: Long, last: Long): Long = {
+        if (parsing && first == position) {
+            recurred = true
+            FAILURE
+        } else {
+            parsing = true
+            position = first
+            val cur = p.parse(v, first, last)
+            mp.table.put(first, cur)
+            position = FAILURE
+            parsing = false
+            if (recurred) {
+                println("recurred:" + cur)
+                recurred = false
+                if (cur != FAILURE) {
+                    grow(v, first, last)
+                } else {
+                    cur
+                }
+            } else {
+                cur
+            }
+        }
+    }
+
+    private def grow(v: Vector[A], first: Long, last: Long): Long = {
+        var cur = first
+        while (true) {
+            val i = p.parse(v, first, last)
+            println("iteration:" + i)
+            if (i == FAILURE || i <= cur) {
+                return cur
+            }
+            cur = i
+            mp.table.put(first, cur)
+        }
+        cur
+    }
+}
+
 class LRule[A](v: Vector[A]) extends Peg[A] {
     private var p: Peg.Memoizer[A]#MemoizePeg = null
     private var q: Peg[A] = null

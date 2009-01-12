@@ -15,7 +15,7 @@ class MemoizePeg[A](override val self: Peg[A]) extends PegProxy[A] {
     val memoTable = new scala.collection.jcl.HashMap[TripleKey[A], Long]
 
     override def parse(v: Vector[A], first: Long, last: Long): Long = {
-        val key = TripleKey(v, first, last)
+        val key = new TripleKey(v, first, last)
         val value = memoTable.get(key)
         if (value.isEmpty) {
             val cur = self.parse(v, first, last)
