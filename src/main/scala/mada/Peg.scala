@@ -28,7 +28,7 @@ object Peg {
     def set[A](es: A*): Peg[A] = Set(es: _*)
     def single[A](e: A): Peg[A] = Single(e)
 
-    object Compatibles extends Compatibles
+    val Compatibles = peg.Compatibles
     def stringPeg(str: String): Peg[Char] = StringPeg(str)
     def vectorPeg[A](v: Vector[A]): Peg[A] = VectorPeg(v)
 
@@ -56,9 +56,10 @@ object Peg {
     def rule4[A]: (Rule[A], Rule[A], Rule[A], Rule[A]) = Rule.make4[A]
     def rule5[A]: (Rule[A], Rule[A], Rule[A], Rule[A], Rule[A]) = Rule.make5[A]
 
-    // Type should be public if best interface found.
-    def symbolSet[A](vs: Vector[A]*)(implicit c: A => Ordered[A]): Peg[A] = SymbolSet(vs: _*)(c)
-    def symbolMap[A](es: (Vector[A], Peg[A])*)(implicit c: A => Ordered[A]): Peg[A] = SymbolMap(es: _*)(c)
+    val SymbolSet = peg.SymbolSet
+    val SymbolMap = peg.SymbolMap
+    type SymbolSet[A] = peg.SymbolSet[A]
+    type SymbolMap[A] = peg.SymbolMap[A]
 }
 
 

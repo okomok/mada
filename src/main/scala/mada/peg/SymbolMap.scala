@@ -8,13 +8,18 @@ package mada.peg
 
 
 object SymbolMap {
-    def apply[A](es: (Vector[A], Peg[A])*)(c: A => Ordered[A]): Peg[A] = new SymbolMap(es, vec.stl.Less(c))
-    def apply[A](es: Seq[(Vector[A], Peg[A])], lt: (A, A) => Boolean): Peg[A] = new SymbolMap(es, lt)
+    def apply[A](es: (Vector[A], Peg[A])*)(implicit c: A => Ordered[A]): Peg[A] = apply(es, vec.stl.Less(c))
+
+    def apply[A](es: Seq[(Vector[A], Peg[A])], lt: (A, A) => Boolean): Peg[A] = {
+        val map = new SymbolMap(lt)
+        for (e <- es) {
+            map.put(e._1, e._2)
+        }
+        map
+    }
 }
 
-class SymbolMap[A](es: Seq[(Vector[A], Peg[A])], lt: (A, A) => Boolean) extends Peg[A] {
-    def this(es: (Vector[A], Peg[A])*)(c: A => Ordered[A]) = this(es, vec.stl.Less(c))
-
+class SymbolMap[A](lt: (A, A) => Boolean) extends Peg[A] {
     override def parse(v: Vector[A], first: Long, last: Long): Long = {
         tree.parse(v, first, last) match {
             case Some((p, cur)) => p.parse(v, cur, last)
@@ -22,11 +27,12 @@ class SymbolMap[A](es: Seq[(Vector[A], Peg[A])], lt: (A, A) => Boolean) extends 
         }
     }
 
-    private val tree = {
-        val t = new TSTree[A, Peg[A]](lt)
-        for (e <- es) {
-            t.put(e._1, e._2)
-        }
-        t
-    }
+    def clear: Unit = tree.clear
+    def containsKey(key: Vector[A]): Boolean = tree.containsKey(key)
+    def get(key: Vector[A]): Option[Peg[A]] = tree.get(key)
+    def isEmpty: Boolean = tree.isEmpty
+    def put(key: Vector[A], value: Peg[A]): Option[Peg[A]] = tree.put(key, value)
+    def remove(key: Vector[A]): Option[Peg[A]] = tree.remove(key)
+
+    private val tree = new TSTree[A, Peg[A]](lt)
 }

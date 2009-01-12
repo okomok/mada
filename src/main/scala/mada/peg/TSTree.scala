@@ -11,8 +11,8 @@ package mada.peg
 
 
 class TSTree[A, V](_lt: (A, A) => Boolean) {
-    private var impl: TSTreeImpl[A, V] = null
     private var emptyKeyValue: Option[V] = None
+    private var impl: TSTreeImpl[A, V] = null
 
     def get(key: Vector[A]): Option[V] = {
         if (key.isEmpty) {
@@ -31,7 +31,7 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
             emptyKeyValue = Some(value)
             old
         } else if (impl == null) {
-            impl = new TSTreeImpl(key, Some(value), _lt)
+            impl = new TSTreeImpl(key, value, _lt)
             None
         } else {
             val (first, last) = key.toPair
@@ -68,12 +68,12 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
     }
 
     def clear: Unit = {
-        impl = null
         emptyKeyValue = None
+        impl = null
     }
 
     def isEmpty: Boolean = {
-        impl == null && emptyKeyValue == None
+        emptyKeyValue == None && (impl == null || impl.isGarbage)
     }
 
     def containsKey(key: Vector[A]): Boolean = {
@@ -106,13 +106,13 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
 }
 
 
-class TSTreeImpl[A, V](_key: Vector[A], _data: Option[V], _lt: (A, A) => Boolean) {
+class TSTreeImpl[A, V](_key: Vector[A], value: V, _lt: (A, A) => Boolean) {
     Assert(!_key.isEmpty)
 
     val rootNode: Node = {
         val (first, last) = _key.toPair
         val node = new Node(_key(first), null)
-        Node.copyInto(_key, first, last, node).data = _data
+        Node.copyInto(_key, first, last, node).data = Some(value)
         node
     }
 
@@ -135,15 +135,11 @@ class TSTreeImpl[A, V](_key: Vector[A], _data: Option[V], _lt: (A, A) => Boolean
     def remove(key: Vector[A], first: Long, last: Long): Option[V] = {
         Assert(first != last)
 
-        val (node, cur) = Node.search(rootNode, key, first, last)
-        if (node == null || cur != last) {
-            None
-        } else {
-            val old = node.data
-            node.data = None
-            Node.cutLeaf(node)
-            old
-        }
+        val node = Node.copyInto(key, first, last, rootNode)
+        val old = node.data
+        node.data = None
+        node.collectGarbage
+        old
     }
 
     def parse(key: Vector[A], first: Long, last: Long): Option[(V, Long)] = {
@@ -156,6 +152,8 @@ class TSTreeImpl[A, V](_key: Vector[A], _data: Option[V], _lt: (A, A) => Boolean
             Some((node.data.get, cur))
         }
     }
+
+    def isGarbage: Boolean = rootNode.isGarbage
 
     object Node {
         def copyInto(key: Vector[A], _first: Long, last: Long, _result: Node): Node = {
@@ -220,17 +218,6 @@ class TSTreeImpl[A, V](_key: Vector[A], _data: Option[V], _lt: (A, A) => Boolean
 
             (cur1, first2)
         }
-
-        def cutLeaf(node: Node): Unit = {
-            Assert(node.data.isEmpty)
-
-            if (node.isLeaf) {
-                val parent = node.parent
-                if (parent != null) {
-                    parent.cut(node)
-                }
-            }
-        }
     }
 
     class Node(val elem: A, val parent: Node) {
@@ -239,17 +226,23 @@ class TSTreeImpl[A, V](_key: Vector[A], _data: Option[V], _lt: (A, A) => Boolean
         var middle: Node = null
         var right: Node = null
 
-        def isLeaf: Boolean = {
-            left == null && middle == null && right == null
+         // This is enough, assuming any leaf's data is not None.
+        def isGarbage: Boolean = {
+            data.isEmpty && left == null && middle == null && right == null
         }
 
-        def cut(node: Node): Unit = {
-            if (node == left) {
-                left = null
-            } else if (node == middle) {
-                middle = null
-            } else if (node == right) {
-                right = null
+        def collectGarbage: Unit = {
+            if (parent != null && isGarbage) {
+                if (parent.left == this) {
+                    parent.left = null
+                }
+                if (parent.middle == this) {
+                    parent.middle = null
+                }
+                if (parent.right == this) {
+                    parent.right = null
+                }
+                parent.collectGarbage
             }
         }
 

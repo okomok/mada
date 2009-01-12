@@ -7,7 +7,7 @@
 package mada.vec
 
 
-trait Compatibles {
+object Compatibles {
     def madaVector[A](from: Vector[A]): Vector[A] = from
 
     implicit def array2madaVector[A](from: Array[A]): Vector[A] = Vector.arrayVector(from)

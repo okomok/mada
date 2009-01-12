@@ -18,12 +18,12 @@ import mada.Peg._
 
 class TSTreeTest {
     def testTrivial: Unit = {
-        val i = ("abc" >> symbolSet("to", "too", "tot", "tab", "so")).parse("abcto")
+        val i = ("abc" >> SymbolSet("to", "too", "tot", "tab", "so")).parse("abcto")
         assertEquals(5L, i)
     }
 
     def testLongestMatch: Unit = {
-        assertTrue(("abc" >> symbolSet("to", "too", "tot", "tab", "so")) matches "abctoo")
+        assertTrue(("abc" >> SymbolSet("to", "too", "tot", "tab", "so")) matches "abctoo")
     }
 
     def testTSTree: Unit = {
@@ -80,5 +80,34 @@ class TSTreeTest {
         tree.put("", "EMPTY")
         assertTrue(tree.containsKey(""))
         assertEquals("EMPTY", tree.get("").get)
+    }
+
+    def testRemove: Unit = {
+        val tree = new mada.peg.TSTree[Char, String](mada.vec.stl.Less[Char])
+        tree.put("to", "to")
+        tree.put("too", "too")
+        tree.put("tot", "tot")
+        tree.put("tab", "tab")
+        tree.put("so", "so")
+
+        assertFalse(tree.remove("to").isEmpty)
+        assertFalse(tree.containsKey("to"))
+        //println(tree.toString)
+
+        // remove leaf and its parent
+        assertFalse(tree.remove("tab").isEmpty)
+        assertFalse(tree.isEmpty)
+        //println(tree.toString)
+
+        // remove leaf
+        assertFalse(tree.remove("tot").isEmpty)
+        assertFalse(tree.containsKey("tot"))
+        assertTrue(tree.remove("tot").isEmpty)
+        //println(tree.toString)
+
+        assertFalse(tree.remove("so").isEmpty)
+        assertFalse(tree.remove("too").isEmpty)
+        assertTrue(tree.isEmpty)
+        //println(tree.toString)
     }
 }

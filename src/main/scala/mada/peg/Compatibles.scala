@@ -7,7 +7,7 @@
 package mada.peg
 
 
-trait Compatibles {
+object Compatibles {
     def madaPeg[A](from: Peg[A]): Peg[A] = from
 
     implicit def char2madaPeg(from: Char): Peg[Char] = Peg.single(from)
