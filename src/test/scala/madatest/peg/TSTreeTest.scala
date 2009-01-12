@@ -124,7 +124,7 @@ class TSTreeTest {
         assertFalse(tree.remove("so").isEmpty)
         assertFalse(tree.remove("too").isEmpty)
         assertTrue(tree.isEmpty)
-        println(tree.toString)
+        //println(tree.toString)
 
         tree.clear
         assertEquals(0, tree.size)
@@ -133,6 +133,6 @@ class TSTreeTest {
         tree.put("too", "too")
         tree.put("tot", "tot")
         assertEquals(3, tree.size)
-        println(tree.toString)
+        //println(tree.toString)
     }
 }
