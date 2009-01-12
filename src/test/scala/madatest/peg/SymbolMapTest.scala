@@ -15,12 +15,12 @@ import mada.Peg._
 
 class SymbolMapTest {
     def testTrivial: Unit = {
-        val g = SymbolMap("e" --> "z", "ef" --> "g", "" --> "DEFAULT", "wx" --> "wy", "w" --> "xyz")
+        val g = SymbolMap("e" --> "z", "ef" --> "g", /* "" --> "DEFAULT", */ "wx" --> "wy", "w" --> "xyz")
         assertTrue("abc" >> g >> "LL"  matches "abcezLL")
         assertTrue("abc" >> g >> "LL"  matches "abcefgLL")
         assertTrue("abc" >> g >> "LL"  matches "abcwxwyLL")
         assertFalse("abc" >> g >> "LL" matches "abcwxyzLL") // false cuz longest match
-        assertTrue("abc" >> g >> "LL" matches "abcDEFAULTLL")
+//        assertTrue("abc" >> g >> "LL" matches "abcDEFAULTLL")
     }
 
     def testTrivial2: Unit = {

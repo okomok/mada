@@ -58,11 +58,12 @@ class TSTreeTest {
         assertEquals(3L, tree.parse("totzzzzz", 0, 8).get._2)
         assertEquals(2L, tree.parse("toazzzzz", 0, 8).get._2)
 
-        // empty-string key
+        /* empty-string key
         tree.put("", "EMPTY")
         assertTrue(tree.containsKey(""))
         assertEquals(0L, tree.parse("ztot", 0, 4).get._2) // 0-length match
         assertEquals(2L, tree.parse("zzzzztot", 2, 8).get._2) // 0-length match
+        */
     }
 
     def testBound: Unit = {
@@ -74,6 +75,7 @@ class TSTreeTest {
         assertFalse(tree.containsKey(""))
     }
 
+    /*
     def testEmptyStringKey: Unit = {
         val tree = new mada.peg.TSTree[Char, String](mada.vec.stl.Less[Char])
 
@@ -81,14 +83,28 @@ class TSTreeTest {
         assertTrue(tree.containsKey(""))
         assertEquals("EMPTY", tree.get("").get)
     }
+    */
 
     def testRemove: Unit = {
         val tree = new mada.peg.TSTree[Char, String](mada.vec.stl.Less[Char])
+
+        assertEquals(0, tree.size)
+        assertTrue(tree.isEmpty)
+        tree.toString
+        assertFalse(tree.containsKey(""))
+        assertFalse(tree.containsKey("zzz"))
+
         tree.put("to", "to")
         tree.put("too", "too")
         tree.put("tot", "tot")
+        assertEquals(3, tree.size)
+        assertFalse(tree.isEmpty)
         tree.put("tab", "tab")
         tree.put("so", "so")
+        assertEquals(5, tree.size)
+        assertFalse(tree.isEmpty)
+
+        //println(tree.clone.toString)
 
         assertFalse(tree.remove("to").isEmpty)
         assertFalse(tree.containsKey("to"))
@@ -108,6 +124,15 @@ class TSTreeTest {
         assertFalse(tree.remove("so").isEmpty)
         assertFalse(tree.remove("too").isEmpty)
         assertTrue(tree.isEmpty)
-        //println(tree.toString)
+        println(tree.toString)
+
+        tree.clear
+        assertEquals(0, tree.size)
+        assertTrue(tree.isEmpty)
+        tree.put("to", "to")
+        tree.put("too", "too")
+        tree.put("tot", "tot")
+        assertEquals(3, tree.size)
+        println(tree.toString)
     }
 }
