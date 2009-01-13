@@ -56,8 +56,10 @@ object Peg {
     def rule4[A]: (Rule[A], Rule[A], Rule[A], Rule[A]) = Rule.make4[A]
     def rule5[A]: (Rule[A], Rule[A], Rule[A], Rule[A], Rule[A]) = Rule.make5[A]
 
+    val Switch = peg.Switch
     val SymbolSet = peg.SymbolSet
     val SymbolMap = peg.SymbolMap
+    type Switch[A] = peg.Switch[A]
     type SymbolSet[A] = peg.SymbolSet[A]
     type SymbolMap[A] = peg.SymbolMap[A]
 }
