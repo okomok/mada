@@ -19,4 +19,9 @@ class RegexTest {
         val p = ("abc" >> Pattern.compile(".*b") >> "c")
         assertTrue(p matches "abcaaaaaaabc")
     }
+
+    def testTrivial2: Unit = {
+        val p = ("abc" >> Pattern.compile("ef") >> "c")
+        assertFalse(p matches "abcDefc")
+    }
 }

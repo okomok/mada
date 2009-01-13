@@ -18,7 +18,7 @@ class RegexPeg(pat: Pattern) extends Peg[Char] {
     override def parse(v: Vector[Char], first: Long, last: Long): Long = {
         import Vector.Compatibles._
         val mat = pat.matcher(v.window(first, last))
-        if (mat.find) {
+        if (mat.lookingAt) {
             first + mat.end
         } else {
             FAILURE
