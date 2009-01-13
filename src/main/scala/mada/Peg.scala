@@ -107,8 +107,9 @@ trait Peg[A] {
     final def unmap[Z](f: Z => A): Peg[Z] = Unmap(this, f)
     final def prescan[Z](f: Vector[Z] => Vector[A]): Peg[Z] = Prescan(this, f)
 
-    final def parse(v: Vector[A]): Long = Parse(this, v)
+    final def find(v: Vector[A]): Iterator[(Long, Long)] = Find(this, v)
     final def matches(v: Vector[A]): Boolean = Matches(this, v)
+    final def parse(v: Vector[A]): Long = Parse(this, v)
 
     final def unary_~ : Peg[A] = lookAhead
     final def unary_! : Peg[A] = lookAhead.not
