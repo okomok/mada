@@ -104,13 +104,14 @@ trait Peg[A] {
     final def memoize: Peg[A] = Memoize(this)
     final def named(name: String) = Named(this, name)
     final def repeat(min: Long, max: Long): Peg[A] = Repeat(this, min, max)
-    final def unmap[Z](f: Z => A): Peg[Z] = Unmap(this, f)
     final def prescan[Z](f: Vector[Z] => Vector[A]): Peg[Z] = Prescan(this, f)
+    final def unmap[Z](f: Z => A): Peg[Z] = Unmap(this, f)
 
-    final def filterFrom(v: Vector[A]): Iterator[A] = FilterFrom(this, v)
     final def find(v: Vector[A]): Option[(Long, Long)] = Find(this, v)
     final def matches(v: Vector[A]): Boolean = Matches(this, v)
     final def parse(v: Vector[A]): Long = Parse(this, v)
+
+    final def filterFrom(v: Vector[A]): Iterator[A] = FilterFrom(this, v)
     final def tokenize(v: Vector[A]): Iterator[(Long, Long)] = Tokenize(this, v)
     final def tokens(v: Vector[A]): Iterator[Vector[A]] = Tokens(this, v)
 
