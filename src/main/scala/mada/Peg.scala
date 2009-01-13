@@ -135,4 +135,6 @@ trait Peg[A] {
     final def >>?<!(that: Peg[A]): Peg[A] = seqAnd(that.lookBehind.not)
     final def >>?<<=(that: Peg[A]): Peg[A] = seqAnd(that.lookBack)
     final def >>?<<!(that: Peg[A]): Peg[A] = seqAnd(that.lookBack.not)
+
+    final def inCase[B](e: B): (B, Peg[A]) = (e, this)
 }
