@@ -8,9 +8,9 @@ package mada.peg
 
 
 object SymbolSet {
-    def apply[A](vs: Vector[A]*)(implicit c: A => Ordered[A]): Peg[A] = apply(vs.elements, vec.stl.Less(c))
+    def apply[A](vs: Vector[A]*)(implicit c: A => Ordered[A]): SymbolSet[A] = apply(vs.elements, vec.stl.Less(c))
 
-    def apply[A](vs: Iterator[Vector[A]], lt: (A, A) => Boolean): Peg[A] = {
+    def apply[A](vs: Iterator[Vector[A]], lt: (A, A) => Boolean): SymbolSet[A] = {
         val set = new SymbolSet(lt)
         for (v <- vs) {
             set.add(v)

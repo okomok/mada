@@ -8,9 +8,9 @@ package mada.peg
 
 
 object SymbolMap {
-    def apply[A](es: (Vector[A], Peg[A])*)(implicit c: A => Ordered[A]): Peg[A] = apply(es.elements, vec.stl.Less(c))
+    def apply[A](es: (Vector[A], Peg[A])*)(implicit c: A => Ordered[A]): SymbolMap[A] = apply(es.elements, vec.stl.Less(c))
 
-    def apply[A](es: Iterator[(Vector[A], Peg[A])], lt: (A, A) => Boolean): Peg[A] = {
+    def apply[A](es: Iterator[(Vector[A], Peg[A])], lt: (A, A) => Boolean): SymbolMap[A] = {
         val map = new SymbolMap(lt)
         for (e <- es) {
             map.put(e._1, e._2)

@@ -17,15 +17,6 @@ import mada.Peg._
 
 
 class TSTreeTest {
-    def testTrivial: Unit = {
-        val i = ("abc" >> SymbolSet("to", "too", "tot", "tab", "so")).parse("abcto")
-        assertEquals(5L, i)
-    }
-
-    def testLongestMatch: Unit = {
-        assertTrue(("abc" >> SymbolSet("to", "too", "tot", "tab", "so")) matches "abctoo")
-    }
-
     def testTSTree: Unit = {
         val tree = new mada.peg.TSTree[Char, String](mada.vec.stl.Less[Char])
 
@@ -134,5 +125,9 @@ class TSTreeTest {
         tree.put("tot", "tot")
         assertEquals(3, tree.size)
         //println(tree.toString)
+
+        val old = "OLD"
+        tree.put("old", old)
+        assertSame(old, tree.put("old", "NEW").get)
     }
 }
