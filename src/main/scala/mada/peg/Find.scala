@@ -8,31 +8,25 @@ package mada.peg
 
 
 object Find {
-    def apply[A](p: Peg[A], v: Vector[A]): Iterator[(Long, Long)] = new FindIterator(p, v)
-}
-
-class FindIterator[A](p: Peg[A], v: Vector[A]) extends Iterator[(Long, Long)] {
-    private var (first, last) = v.toPair
-    private var cur = findNext
-    override def hasNext = cur != Peg.FAILURE
-    override def next = {
-        if (!hasNext) {
-            throw new NoSuchElementException
+    def apply[A](p: Peg[A], v: Vector[A]): Option[(Long, Long)] = {
+        val (first, last) = v.toPair
+        val (i, j) = apply(p, v, first, last)
+        if (j == Peg.FAILURE) {
+            None
+        } else {
+            Some((i, j))
         }
-        val result = (first, cur)
-        first = cur
-        cur = findNext
-        result
     }
 
-    private def findNext: Long = {
+    def apply[A](p: Peg[A], v: Vector[A], _first: Long, last: Long): (Long, Long) = {
+        var first = _first
         while (first != last) {
             val cur = p.parse(v, first, last)
             if (cur != Peg.FAILURE) {
-                return cur
+                return (first, cur)
             }
             first += 1
         }
-        Peg.FAILURE
+        (first, Peg.FAILURE)
     }
 }

@@ -13,11 +13,11 @@ import mada.Peg.Compatibles._
 import mada.Vector.Compatibles._
 
 
-class FindTest {
+class TokenizeTest {
     def testTrivial: Unit = {
         val pe = madaPeg("abcd")
         val v = madaVector("XabcdXXabcdXX")
-        val it = pe.find(v)
+        val it = pe.tokenize(v)
         var c = 0
         while (it.hasNext) {
             val (i, j) = it.next
@@ -37,17 +37,25 @@ class FindTest {
     def testBound: Unit = {
         val pe = madaPeg("abcd")
         val v = madaVector("qqabqqab")
-        val it = pe.find(v)
+        val it = pe.tokenize(v)
         assertFalse(it.hasNext)
     }
 
     def testBound2: Unit = {
         val pe = madaPeg("abcd")
         val v = madaVector("abcd")
-        val it = pe.find(v)
+        val it = pe.tokenize(v)
         val (i, j) = it.next
         assertEquals(0L, i)
         assertEquals(4L, j)
+        assertFalse(it.hasNext)
+    }
+
+    // seems appropriate.
+    def testEmpty: Unit = {
+        val pe = madaPeg("")
+        val v = madaVector("")
+        val it = pe.tokenize(v)
         assertFalse(it.hasNext)
     }
 }

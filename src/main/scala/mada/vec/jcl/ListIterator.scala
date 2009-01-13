@@ -24,7 +24,7 @@ class VectorListIterator[A](* : Vector[A]) extends ListIterator[A] {
 
     override def next = {
         if (!hasNext) {
-            throw new NoSuchElementException
+            throw new NoSuchElementException("next")
         }
         val tmp = *(cur)
         cur += 1
@@ -35,7 +35,7 @@ class VectorListIterator[A](* : Vector[A]) extends ListIterator[A] {
 
     override def previous = {
         if (!hasPrevious) {
-            throw new NoSuchElementException
+            throw new NoSuchElementException("previous")
         }
         cur -= 1
         *(cur)
