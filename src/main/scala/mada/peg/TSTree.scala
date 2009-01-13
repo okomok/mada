@@ -20,7 +20,7 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
     override def clone: TSTree[A, V] = {
         val t = new TSTree[A, V](_lt)
         if (rootNode != null) {
-            t.rootNode = rootNode.clone_(null)
+            t.rootNode = rootNode.clone(null)
         }
         t
     }
@@ -71,7 +71,9 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
     }
 
     def put(key: Vector[A], first: Long, last: Long, value: V): Option[V] = {
-        Assert(first != last)
+        if (first == last) {
+            throw new IllegalArgumentException("An empty Vector can't be a key.")
+        }
 
         if (rootNode == null) {
             rootNode = new TSTreeNode[A, V](key(first), null)
@@ -187,13 +189,13 @@ class TSTreeNode[A, V](val elem: A, val parent: TSTreeNode[A, V]) {
     var middle: TSTreeNode[A, V] = null
     var right: TSTreeNode[A, V] = null
 
-    def clone_(parent: TSTreeNode[A, V]): TSTreeNode[A, V] = {
+    def clone(parent: TSTreeNode[A, V]): TSTreeNode[A, V] = {
         val node = new TSTreeNode[A, V](elem, parent)
-        def _clone_(child: TSTreeNode[A, V]) = if (child == null) null else child.clone_(node)
+        def _clone(child: TSTreeNode[A, V]) = if (child == null) null else child.clone(node)
         node.data = data
-        node.left = _clone_(left)
-        node.middle = _clone_(middle)
-        node.right = _clone_(right)
+        node.left = _clone(left)
+        node.middle = _clone(middle)
+        node.right = _clone(right)
         node
 
     }
