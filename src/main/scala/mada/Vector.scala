@@ -28,6 +28,8 @@ object Vector {
     val Compatibles = vec.Compatibles
     def arrayVector[A](u: Array[A]): Vector[A] = ArrayVector(u)
     def cellVector[A](u: Cell[A]): Vector[A] = CellVector(u)
+    def jclCharSequence(v: Vector[Char]): java.lang.CharSequence = jcl.VectorCharSequence(v)
+    def jclCharSequenceVector(u: java.lang.CharSequence): Vector[Char] = jcl.CharSequenceVector(u)
     def jclListVector[A](u: java.util.List[A]): Vector[A] = jcl.ListVector(u)
     def optionVector[A](u: Option[A]): Vector[A] = OptionVector(u)
     def productVector(u: Product): Vector[Any] = ProductVector(u)

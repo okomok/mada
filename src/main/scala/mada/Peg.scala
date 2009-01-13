@@ -29,6 +29,7 @@ object Peg {
     def single[A](e: A): Peg[A] = Single(e)
 
     val Compatibles = peg.Compatibles
+    def regexPeg(pat: java.util.regex.Pattern): Peg[Char] = RegexPeg(pat)
     def stringPeg(str: String): Peg[Char] = StringPeg(str)
     def vectorPeg[A](v: Vector[A]): Peg[A] = VectorPeg(v)
 
