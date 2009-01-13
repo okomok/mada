@@ -15,7 +15,7 @@ import mada.Peg._
 
 class SymbolSetTest {
     def testTrivial: Unit = {
-        val i = ("abc" >> SymbolSet("to", "too", "tot", "tab", "so")).parse("abcto")
+        val i = ("abc" >> SymbolSet("to", "too", "tot", "tab", "so")).lookingAt("abcto")
         assertEquals(5L, i)
     }
 

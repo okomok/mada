@@ -7,7 +7,7 @@
 package mada.peg
 
 
-object Parse {
+object LookingAt {
     def apply[A](p: Peg[A], v: Vector[A]): Long = {
         val (first, last) = v.toPair
         p.parse(v, first, last)

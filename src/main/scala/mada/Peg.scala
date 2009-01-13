@@ -108,8 +108,8 @@ trait Peg[A] {
     final def unmap[Z](f: Z => A): Peg[Z] = Unmap(this, f)
 
     final def find(v: Vector[A]): Option[(Long, Long)] = Find(this, v)
+    final def lookingAt(v: Vector[A]): Long = LookingAt(this, v)
     final def matches(v: Vector[A]): Boolean = Matches(this, v)
-    final def parse(v: Vector[A]): Long = Parse(this, v)
 
     final def filterFrom(v: Vector[A]): Iterator[A] = FilterFrom(this, v)
     final def tokenize(v: Vector[A]): Iterator[(Long, Long)] = Tokenize(this, v)
