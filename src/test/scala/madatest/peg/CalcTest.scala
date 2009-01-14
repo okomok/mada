@@ -14,7 +14,7 @@ import mada.Peg.Compatibles._
 
 
 class CalcTest {
-    val (expr, term, factor, digit) = rule4[Char]
+    val (expr, term, factor, digit) = Rule.make4[Char]
 
     expr    ::= term >> (( '+' >> term ^^ add | '-' >> term ^^ sub )*) // Take care operator precedence.
     term    ::= factor >> ( '*' >> factor ^^ mul | '/' >> factor ^^ div ).* // `.` is better.

@@ -14,7 +14,7 @@ import mada.Peg.Compatibles._
 
 
 class PrettyPrinterTest {
-    val (expr, term, factor, digit) = rule4[Char]
+    val (expr, term, factor, digit) = Rule.make4[Char]
     val out
         // = new PrettyPrinter
          = { (x: String, y: mada.Peg[Char]) => y }

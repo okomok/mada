@@ -43,16 +43,8 @@ object Peg {
 
     type PegProxy[A] = peg.PegProxy[A]
 
-    type ByNeedActions[A] = peg.ByNeedActions[A]
-    type RangeActions[A] = peg.RangeActions[A]
-    type PrettyPrinter = peg.PrettyPrinter
+    val Rule = peg.Rule
     type Rule[A] = peg.Rule[A]
-
-    def rule1[A]: (Rule[A]) = Rule.make1[A]
-    def rule2[A]: (Rule[A], Rule[A]) = Rule.make2[A]
-    def rule3[A]: (Rule[A], Rule[A], Rule[A]) = Rule.make3[A]
-    def rule4[A]: (Rule[A], Rule[A], Rule[A], Rule[A]) = Rule.make4[A]
-    def rule5[A]: (Rule[A], Rule[A], Rule[A], Rule[A], Rule[A]) = Rule.make5[A]
 
     val Longest = peg.Longest
     val Shortest = peg.Shortest
@@ -66,12 +58,10 @@ object Peg {
     type Switch[A] = peg.Switch[A]
     type SymbolSet[A] = peg.SymbolSet[A]
     type SymbolMap[A] = peg.SymbolMap[A]
-    def longest[A](ps: Peg[A]*): Peg[A] = peg.Longest(ps: _*)
-    def shortest[A](ps: Peg[A]*): Peg[A] = peg.Shortest(ps: _*)
-    def singleSet[A](es: A*): Peg[A] = peg.SingleSet(es :_*)
-    def switch[A](es: (A, Peg[A])*): Peg[A] = peg.Switch(es: _*)
-    def symbolSet[A](vs: Vector[A]*)(implicit c: A => Ordered[A]): Peg[A] = peg.SymbolSet(vs :_*)(c)
-    def symbolMap[A](es: (Vector[A], Peg[A])*)(implicit c: A => Ordered[A]): Peg[A] = peg.SymbolMap(es :_*)(c)
+
+    type ByNeedActions[A] = peg.ByNeedActions[A]
+    type RangeActions[A] = peg.RangeActions[A]
+    type PrettyPrinter = peg.PrettyPrinter
 }
 
 

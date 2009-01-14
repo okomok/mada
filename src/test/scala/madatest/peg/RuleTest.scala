@@ -17,7 +17,7 @@ import mada.Vector.Compatibles._
 
 
 class RuleTest {
-    val (start) = rule1[Char]
+    val (start) = Rule.make1[Char]
 
     start ::= "a"
     start ::= start.copy | "b"
