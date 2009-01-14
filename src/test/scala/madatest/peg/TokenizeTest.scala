@@ -58,4 +58,22 @@ class TokenizeTest {
         val it = pe.tokenize(v)
         assertFalse(it.hasNext)
     }
+
+    def testTokens: Unit = {
+        val pe = single('a') >> any.+?("XX")
+        val v = madaVector("XabcdXXaBCDXX")
+        val it = pe.tokens(v)
+        var c = 0
+        while (it.hasNext) {
+            val w = it.next
+            if (c == 0) {
+                assertEquals(madaVector("abcd"), w)
+            }
+            if (c == 1) {
+                assertEquals(madaVector("aBCD"), w)
+            }
+            c += 1
+        }
+        assertEquals(2, c)
+    }
 }

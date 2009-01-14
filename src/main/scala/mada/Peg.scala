@@ -22,11 +22,11 @@ object Peg {
     def fail[A]: Peg[A] = Fail[A]
     def icase(str: String): Peg[Char] = Icase(str)
     def lowerCaseScan(p: Peg[Char]): Peg[Char] = LowerCaseScan(p)
-    def longest[A](ps: Peg[A]*) = Longest(ps: _*)
-    def shortest[A](ps: Peg[A]*) = Shortest(ps: _*)
     def range[A](i: A, j: A)(implicit c: A => Ordered[A]): Peg[A] = Range(i, j)(c)
-    def set[A](es: A*): Peg[A] = Set(es: _*)
     def single[A](e: A): Peg[A] = Single(e)
+
+    def longest[A](ps: Peg[A]*): Peg[A] = Longest(ps: _*)
+    def shortest[A](ps: Peg[A]*): Peg[A] = Shortest(ps: _*)
 
     val Compatibles = peg.Compatibles
     def regexPeg(pat: java.util.regex.Pattern): Peg[Char] = RegexPeg(pat)
@@ -57,9 +57,11 @@ object Peg {
     def rule4[A]: (Rule[A], Rule[A], Rule[A], Rule[A]) = Rule.make4[A]
     def rule5[A]: (Rule[A], Rule[A], Rule[A], Rule[A], Rule[A]) = Rule.make5[A]
 
+    val SingleSet = peg.SingleSet
     val Switch = peg.Switch
     val SymbolSet = peg.SymbolSet
     val SymbolMap = peg.SymbolMap
+    type SingleSet[A] = peg.SingleSet[A]
     type Switch[A] = peg.Switch[A]
     type SymbolSet[A] = peg.SymbolSet[A]
     type SymbolMap[A] = peg.SymbolMap[A]
