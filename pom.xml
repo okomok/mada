@@ -6,7 +6,7 @@
   <version>1.0-SNAPSHOT</version>
   <inceptionYear>2008</inceptionYear>
   <properties>
-    <scala.version>2.7.1</scala.version>
+    <scala.version>2.7.2</scala.version>
   </properties>
 
   <repositories>
@@ -54,6 +54,12 @@
             </goals>
           </execution>
         </executions>
+        <configuration>
+          <args>
+            <arg>-deprecation</arg>
+            <arg>-unchecked</arg>
+          </args>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

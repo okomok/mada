@@ -34,7 +34,7 @@ package mada.vec.stl
 
 
 class DefaultRandomNumberGenerator extends (Long => Long) {
-    private val rnd = new Random
+    private val rnd = new java.util.Random
     def apply(__n: Long) = Math.abs(rnd.nextLong % __n)
 }
 

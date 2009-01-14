@@ -20,8 +20,8 @@ class RuleTest {
     val (start) = rule1[Char]
 
     start ::= "a"
-    start ::= (start.copy | "b")
-    start ::= (start.copy | "c")
+    start ::= start.copy | "b"
+    start ::= start.copy | "c"
     start ::= start.copy.*
 
     def testTrivial: Unit = {
