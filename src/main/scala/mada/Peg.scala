@@ -37,11 +37,11 @@ object Peg {
     def __*?[A](p: Peg[A]): Peg[A] = any[A].starBefore(p)
     def __*>>[A](p: Peg[A]): Peg[A] = any[A].starUntil(p)
 
-    def ?=[A](p: Peg[A]): Peg[A] = p.lookAhead
+    def ?~[A](p: Peg[A]): Peg[A] = p.lookAhead
     def ?![A](p: Peg[A]): Peg[A] = p.lookAhead.not
-    def ?<=[A](p: Peg[A]): Peg[A] = p.lookBehind
+    def ?<~[A](p: Peg[A]): Peg[A] = p.lookBehind
     def ?<![A](p: Peg[A]): Peg[A] = p.lookBehind.not
-    def ?<<=[A](p: Peg[A]): Peg[A] = p.lookBack
+    def ?<<~[A](p: Peg[A]): Peg[A] = p.lookBack
     def ?<<![A](p: Peg[A]): Peg[A] = p.lookBack.not
 
     type PegProxy[A] = peg.PegProxy[A]
@@ -136,11 +136,11 @@ trait Peg[A] {
     final def ?>>(that: Peg[A]): Peg[A] = optUntil(that)
     final def ^^(f: Vector[A] => Any): Peg[A] = act(f)
 
-    final def >>?=(that: Peg[A]): Peg[A] = seqAnd(that.lookAhead)
+    final def >>?~(that: Peg[A]): Peg[A] = seqAnd(that.lookAhead)
     final def >>?!(that: Peg[A]): Peg[A] = seqAnd(that.lookAhead.not)
-    final def >>?<=(that: Peg[A]): Peg[A] = seqAnd(that.lookBehind)
+    final def >>?<~(that: Peg[A]): Peg[A] = seqAnd(that.lookBehind)
     final def >>?<!(that: Peg[A]): Peg[A] = seqAnd(that.lookBehind.not)
-    final def >>?<<=(that: Peg[A]): Peg[A] = seqAnd(that.lookBack)
+    final def >>?<<~(that: Peg[A]): Peg[A] = seqAnd(that.lookBack)
     final def >>?<<!(that: Peg[A]): Peg[A] = seqAnd(that.lookBack.not)
 
     final def inCase(e: A): (A, Peg[A]) = (e, this)
