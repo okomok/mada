@@ -47,7 +47,7 @@ object Peg {
     type PegProxy[A] = peg.PegProxy[A]
 
     type ByNeedActions[A] = peg.ByNeedActions[A]
-    type FutureActions[A] = peg.FutureActions[A]
+    type RangeActions[A] = peg.RangeActions[A]
     type PrettyPrinter = peg.PrettyPrinter
     type Rule[A] = peg.Rule[A]
 
