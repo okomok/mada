@@ -7,11 +7,11 @@
 package mada.peg
 
 
-object Prescan {
-    def apply[Z, A](p: Peg[A], f: Vector[Z] => Vector[A]): Peg[Z] = new PrescanPeg(p, f)
+object ReadMap {
+    def apply[Z, A](p: Peg[A], f: Vector[Z] => Vector[A]): Peg[Z] = new ReadMapPeg(p, f)
 }
 
-class PrescanPeg[Z, A](p: Peg[A], f: Vector[Z] => Vector[A]) extends Peg[Z] {
+class ReadMapPeg[Z, A](p: Peg[A], f: Vector[Z] => Vector[A]) extends Peg[Z] {
     override def parse(v: Vector[Z], first: Long, last: Long): Long = {
         p.parse(f(v), first, last) // f must return one-to-one view of Vector
     }

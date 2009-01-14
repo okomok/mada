@@ -8,7 +8,7 @@ package mada.peg
 
 
 object Icase {
-    def apply(str: String): Peg[Char] = {
-        Peg.lowerCaseScan(Peg.vectorPeg(Vector.lowerCase(Vector.stringVector(str))))
+    def apply(v: Vector[Char]): Peg[Char] = {
+        Peg.lowerCaseRead(Peg.vectorPeg(Vector.lowerCase(v)))
     }
 }

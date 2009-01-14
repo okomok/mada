@@ -7,6 +7,6 @@
 package mada.peg
 
 
-object LowerCaseScan {
+object LowerCaseRead {
     def apply(p: Peg[Char]): Peg[Char] = p.unmap(java.lang.Character.toLowerCase(_))
 }

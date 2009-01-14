@@ -8,5 +8,5 @@ package mada.peg
 
 
 object Unmap {
-    def apply[Z, A](p: Peg[A], f: Z => A): Peg[Z] = p.prescan((_: Vector[Z]).map(f))
+    def apply[Z, A](p: Peg[A], f: Z => A): Peg[Z] = p.readMap((_: Vector[Z]).map(f))
 }

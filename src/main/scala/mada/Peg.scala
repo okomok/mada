@@ -20,13 +20,10 @@ object Peg {
     def eps[A]: Peg[A] = Eps[A]
     def error[A]: Peg[A] = Error[A]
     def fail[A]: Peg[A] = Fail[A]
-    def icase(str: String): Peg[Char] = Icase(str)
-    def lowerCaseScan(p: Peg[Char]): Peg[Char] = LowerCaseScan(p)
+    def icase(v: Vector[Char]): Peg[Char] = Icase(v)
+    def lowerCaseRead(p: Peg[Char]): Peg[Char] = LowerCaseRead(p)
     def range[A](i: A, j: A)(implicit c: A => Ordered[A]): Peg[A] = Range(i, j)(c)
     def single[A](e: A): Peg[A] = Single(e)
-
-    def longest[A](ps: Peg[A]*): Peg[A] = Longest(ps: _*)
-    def shortest[A](ps: Peg[A]*): Peg[A] = Shortest(ps: _*)
 
     val Compatibles = peg.Compatibles
     def regexPeg(pat: java.util.regex.Pattern): Peg[Char] = RegexPeg(pat)
@@ -57,14 +54,24 @@ object Peg {
     def rule4[A]: (Rule[A], Rule[A], Rule[A], Rule[A]) = Rule.make4[A]
     def rule5[A]: (Rule[A], Rule[A], Rule[A], Rule[A], Rule[A]) = Rule.make5[A]
 
+    val Longest = peg.Longest
+    val Shortest = peg.Shortest
     val SingleSet = peg.SingleSet
     val Switch = peg.Switch
     val SymbolSet = peg.SymbolSet
     val SymbolMap = peg.SymbolMap
+    type Longest[A] = peg.Shortest[A]
+    type Shortest[A] = peg.Shortest[A]
     type SingleSet[A] = peg.SingleSet[A]
     type Switch[A] = peg.Switch[A]
     type SymbolSet[A] = peg.SymbolSet[A]
     type SymbolMap[A] = peg.SymbolMap[A]
+    def longest[A](ps: Peg[A]*): Peg[A] = peg.Longest(ps: _*)
+    def shortest[A](ps: Peg[A]*): Peg[A] = peg.Shortest(ps: _*)
+    def singleSet[A](es: A*): Peg[A] = peg.SingleSet(es :_*)
+    def switch[A](es: (A, Peg[A])*): Peg[A] = peg.Switch(es: _*)
+    def symbolSet[A](vs: Vector[A]*)(implicit c: A => Ordered[A]): Peg[A] = peg.SymbolSet(vs :_*)(c)
+    def symbolMap[A](es: (Vector[A], Peg[A])*)(implicit c: A => Ordered[A]): Peg[A] = peg.SymbolMap(es :_*)(c)
 }
 
 
@@ -109,7 +116,7 @@ trait Peg[A] {
     final def named(name: String) = Named(this, name)
     final def repeat(min: Long, max: Long): Peg[A] = Repeat(this, min, max)
 
-    final def prescan[Z](f: Vector[Z] => Vector[A]): Peg[Z] = Prescan(this, f)
+    final def readMap[Z](f: Vector[Z] => Vector[A]): Peg[Z] = ReadMap(this, f)
     final def unmap[Z](f: Z => A): Peg[Z] = Unmap(this, f)
 
     final def find(v: Vector[A]): Option[(Long, Long)] = Find(this, v)
