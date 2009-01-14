@@ -8,19 +8,19 @@ package mada.peg
 
 
 object Tokenize {
-    def apply[A](p: Peg[A], v: Vector[A]): Iterator[(Long, Long)] = new TokenizeIterator(p, v)
+    def apply[A](p: Peg[A], v: Vector[A]): Iterator[(Vector[A], Long, Long)] = new TokenizeIterator(p, v)
 }
 
-class TokenizeIterator[A](p: Peg[A], v: Vector[A]) extends Iterator[(Long, Long)] {
+class TokenizeIterator[A](p: Peg[A], v: Vector[A]) extends Iterator[(Vector[A], Long, Long)] {
     private val (first, last) = v.toPair
-    private var i_j = Find(p, v, first, last)
-    override def hasNext = i_j._2 != Peg.FAILURE
+    private var _1_2 = Find(p, v, first, last)
+    override def hasNext = _1_2._2 != Peg.FAILURE
     override def next = {
         if (!hasNext) {
             throw new NoSuchElementException("next")
         }
-        val result = i_j
-        i_j = Find(p, v, i_j._2, last)
-        result
+        val tmp = (v, _1_2._1, _1_2._2)
+        _1_2 = Find(p, v, _1_2._2, last)
+        tmp
     }
 }

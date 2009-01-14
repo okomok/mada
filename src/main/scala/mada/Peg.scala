@@ -46,7 +46,7 @@ object Peg {
 
     type PegProxy[A] = peg.PegProxy[A]
 
-    type BufferedActions[A] = peg.BufferedActions[A]
+    type ByNeedActions[A] = peg.ByNeedActions[A]
     type FutureActions[A] = peg.FutureActions[A]
     type PrettyPrinter = peg.PrettyPrinter
     type Rule[A] = peg.Rule[A]
@@ -98,11 +98,13 @@ trait Peg[A] {
     final def lookBehind: Peg[A] = LookBehind(this)
     final def lookBack: Peg[A] = LookBack(this)
 
-    final def act(f: Vector[A] => Any): Peg[A] = Act(this, f)
+    final def action(f: Vector[A] => Any): Peg[A] = Action(this, f)
+    final def action(f: (Vector[A], Long, Long) => Any): Peg[A] = Action(this, f)
+
     final def andIf(pred: Vector[A] => Boolean): Peg[A] = AndIf(this, pred)
     final def identity: Peg[A] = Identity(this)
-    final def named(name: String) = Named(this, name)
     final def memoize: Peg[A] = Memoize(this)
+    final def named(name: String) = Named(this, name)
     final def repeat(min: Long, max: Long): Peg[A] = Repeat(this, min, max)
 
     final def prescan[Z](f: Vector[Z] => Vector[A]): Peg[Z] = Prescan(this, f)
@@ -112,7 +114,7 @@ trait Peg[A] {
     final def lookingAt(v: Vector[A]): Option[Long] = LookingAt(this, v)
     final def matches(v: Vector[A]): Boolean = Matches(this, v)
 
-    final def tokenize(v: Vector[A]): Iterator[(Long, Long)] = Tokenize(this, v)
+    final def tokenize(v: Vector[A]): Iterator[(Vector[A], Long, Long)] = Tokenize(this, v)
     final def tokens(v: Vector[A]): Iterator[Vector[A]] = Tokens(this, v)
     final def filterFrom(v: Vector[A]): Iterator[A] = FilterFrom(this, v)
 
@@ -134,7 +136,7 @@ trait Peg[A] {
     final def ? : Peg[A] = opt
     final def ??(that: Peg[A]): Peg[A] = optBefore(that)
     final def ?>>(that: Peg[A]): Peg[A] = optUntil(that)
-    final def ^^(f: Vector[A] => Any): Peg[A] = act(f)
+    final def ^^(f: Vector[A] => Any): Peg[A] = action(f)
 
     final def >>?~(that: Peg[A]): Peg[A] = seqAnd(that.lookAhead)
     final def >>?!(that: Peg[A]): Peg[A] = seqAnd(that.lookAhead.not)

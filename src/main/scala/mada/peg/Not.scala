@@ -16,7 +16,12 @@ class NotPeg[A](p: Peg[A]) extends Peg[A] {
         if (p.parse(v, first, last) != FAILURE) {
             FAILURE
         } else {
-            first + p.length
+            val cur = first + p.length
+            if (cur <= last) {
+                cur
+            } else {
+                FAILURE
+            }
         }
     }
 
