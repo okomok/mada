@@ -24,4 +24,9 @@ class RegexTest {
         val p = ("abc" >> Pattern.compile("ef") >> "c")
         assertFalse(p matches "abcDefc")
     }
+
+    def testTransparent: Unit = {
+        val p = ("abc" >> Pattern.compile("(?<=c)d(?=E)") >> "E")
+        assertTrue(p matches "abcdE")
+    }
 }

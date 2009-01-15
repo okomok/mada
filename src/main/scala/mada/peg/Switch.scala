@@ -11,7 +11,7 @@ import scala.collection.Map
 
 
 object Switch {
-    def apply[A](es: Seq[(A, Peg[A])]): SwitchPeg[A] = {
+    def apply[A](es: Seq[(A, Peg[A])]): Peg[A] = {
         val m = new scala.collection.jcl.HashMap[A, Peg[A]]
         for (e <- es) {
             m.put(e._1, e._2)
@@ -19,7 +19,7 @@ object Switch {
         apply(m)
     }
 
-    def apply[A](es: Map[A, Peg[A]]): SwitchPeg[A] = new SwitchPeg(es)
+    def apply[A](es: Map[A, Peg[A]]): Peg[A] = new SwitchPeg(es)
 }
 
 class SwitchPeg[A](es: Map[A, Peg[A]]) extends Peg[A] {

@@ -30,9 +30,9 @@ object Peg {
     def shortest[A](ps: Peg[A]*): Peg[A] = Shortest(ps)
     def shortest[A](ps: Iterable[Peg[A]]): Peg[A] = Shortest(ps)
 
-    def singles[A](es: A*) = Singles(es)
+    def singles[A](es: A*): Peg[A] = Singles(es)
     def singles[A](es: scala.collection.Set[A]): Peg[A] = Singles(es)
-    def switch[A](es: (A, Peg[A])*) = Switch(es)
+    def switch[A](es: (A, Peg[A])*): Peg[A] = Switch(es)
     def switch[A](es: scala.collection.Map[A, Peg[A]]): Peg[A] = Switch(es)
 
     val Compatibles = peg.Compatibles
@@ -55,6 +55,8 @@ object Peg {
 
     val Rule = peg.Rule
     type Rule[A] = peg.Rule[A]
+
+    type Captures[A] = peg.Captures[A]
 
     val SymbolSet = peg.SymbolSet
     val SymbolMap = peg.SymbolMap
