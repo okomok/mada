@@ -27,4 +27,11 @@ class SymbolMapTest {
         val g = SymbolMap(mada.Vector.stringVector("e") -> stringPeg("z"), mada.Vector.stringVector("ef") -> stringPeg("g"))
         assertTrue("abc" >> g  matches "abcez")
     }
+
+    def testIterator: Unit = {
+        val g = SymbolMap("e" --> "z", "ef" --> "g", "wx" --> "wy", "w" --> "xyz")
+        for (n <- g.elements) {
+            // println(n)
+        }
+    }
 }

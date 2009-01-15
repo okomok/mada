@@ -18,15 +18,25 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
     }
 
     override def clone: TSTree[A, V] = {
-        val t = new TSTree[A, V](_lt)
+        val that = new TSTree[A, V](_lt)
         if (rootNode != null) {
-            t.rootNode = rootNode.clone(null)
+            that.rootNode = rootNode.clone(null)
         }
-        t
+        that
     }
 
     def containsKey(key: Vector[A]): Boolean = {
         get(key) != None
+    }
+
+    def elements: Iterator[(Vector[A], V)] = {
+        if (rootNode == null) {
+            Iterator.empty
+        } else {
+            val it = new TSTreeNodeIterator(Vector.empty, rootNode)
+            for ((key, node) <- it if (!node.data.isEmpty))
+                yield (key, node.data.get)
+        }
     }
 
     def get(key: Vector[A]): Option[V] = {
@@ -209,9 +219,13 @@ class TSTreeNode[A, V](val elem: A, val parent: TSTreeNode[A, V]) {
         c
     }
 
+    def isLeaf: Boolean = {
+        left == null && middle == null && right == null
+    }
+
      // This is enough, assuming any leaf's data is not None.
     def isGarbage: Boolean = {
-        data.isEmpty && left == null && middle == null && right == null
+        data.isEmpty && isLeaf
     }
 
     def collectGarbage: Unit = {
@@ -254,4 +268,28 @@ class TSTreeNode[A, V](val elem: A, val parent: TSTreeNode[A, V]) {
 
         out.writeEndElement
     }
+
+    override def toString = {
+        new StringBuilder("TSTreeNode(elem: ").append(elem).append(", data: ").append(data).append(')').toString
+    }
+}
+
+
+class TSTreeNodeIterator[A, V](parentKey: Vector[A], node: TSTreeNode[A, V]) extends IteratorProxy[(Vector[A], TSTreeNode[A, V])] {
+    private val me = Iterator.single((lowerKey, node))
+    override val self = me ++ children(node.left) ++ children(node.middle) ++ children(node.right)
+
+    private def children(c: TSTreeNode[A, V]) = {
+        if (c == null) {
+            Iterator.empty
+        } else {
+            if (c eq node.middle) {
+                new TSTreeNodeIterator(lowerKey, c)
+            } else {
+                new TSTreeNodeIterator(parentKey, c)
+            }
+        }
+    }
+
+    private def lowerKey = parentKey ++ Vector.single(node.elem)
 }

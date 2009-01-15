@@ -13,13 +13,15 @@ object SymbolSet {
     def apply[A](vs: Iterator[Vector[A]], lt: (A, A) => Boolean): SymbolSet[A] = {
         val set = new SymbolSet(lt)
         for (v <- vs) {
-            set.add(v)
+            set.+=(v)
         }
         set
     }
 }
 
-class SymbolSet[A](lt: (A, A) => Boolean) extends Peg[A] {
+class SymbolSet[A] private (private val tree: TSTree[A, Unit]) extends Peg[A] with scala.collection.mutable.Set[Vector[A]] {
+    def this(lt: (A, A) => Boolean) = this(new TSTree[A, Unit](lt))
+
     override def parse(v: Vector[A], first: Long, last: Long): Long = {
         tree.parse(v, first, last) match {
             case Some((_, cur)) => cur
@@ -27,11 +29,23 @@ class SymbolSet[A](lt: (A, A) => Boolean) extends Peg[A] {
         }
     }
 
-    def add(v: Vector[A]): Boolean = tree.put(v, ()).isEmpty
-    def clear: Unit = tree.clear
-    def contains(v: Vector[A]): Boolean = tree.containsKey(v)
-    def isEmpty: Boolean = tree.isEmpty
-    def remove(v: Vector[A]): Boolean = !tree.remove(v).isEmpty
+// Collection
+    override def elements = new Iterator[Vector[A]] {
+        private val it = tree.elements
+        override def hasNext = it.hasNext
+        override def next = it.next._1 // When you should `force`?
+    }
 
-    private val tree = new TSTree[A, Unit](lt)
+// Set
+    override def contains(v: Vector[A]) = tree.containsKey(v)
+    override def hashCode = tree.hashCode
+    override def isEmpty = tree.isEmpty
+    override def size = tree.size
+    protected override def stringPrefix = "SymbolSet"
+
+// mutable.Set
+    override def +=(v: Vector[A]): Unit = tree.put(v, ())
+    override def -=(v: Vector[A]): Unit = tree.remove(v)
+    override def clear = tree.clear
+    override def clone: SymbolSet[A] = new SymbolSet(tree.clone)
 }

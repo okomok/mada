@@ -15,10 +15,10 @@ object Rule {
     def make5[A]: (Rule[A], Rule[A], Rule[A], Rule[A], Rule[A]) = (new Rule[A], new Rule[A], new Rule[A], new Rule[A], new Rule[A])
 }
 
-class Rule[A] extends PegProxy[A] {
-    private var p: Peg[A] = null
+class Rule[A] private (private var p: Peg[A]) extends PegProxy[A] {
+    def this() = this(null)
 
     override def self = p
     def ::=(that: Peg[A]): Unit = { p = that }
-    def copy: Rule[A] = { val r = new Rule[A]; r ::= p; r }
+    def copy: Rule[A] = new Rule[A](p)
 }

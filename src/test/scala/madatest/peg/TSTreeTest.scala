@@ -130,4 +130,19 @@ class TSTreeTest {
         tree.put("old", old)
         assertSame(old, tree.put("old", "NEW").get)
     }
+
+    def testIterator: Unit = {
+        val tree = new mada.peg.TSTree[Char, String](mada.vec.stl.Less[Char])
+
+        tree.put("to", "to")
+        tree.put("too", "too")
+        tree.put("tot", "tot")
+        tree.put("tab", "tab")
+        tree.put("so", "so")
+
+        for (n <- tree.elements) {
+            assertTrue(tree.containsKey(n._2))
+            //println(n)
+        }
+    }
 }

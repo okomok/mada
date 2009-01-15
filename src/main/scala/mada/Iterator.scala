@@ -34,3 +34,13 @@ object IteratorFlatten {
         }
     }
 }
+
+
+trait IteratorProxy[A] extends Iterator[A] with Proxy {
+    override def self: Iterator[A]
+
+    override def hasNext = self.hasNext
+    override def next = self.next
+
+    // TODO:
+}

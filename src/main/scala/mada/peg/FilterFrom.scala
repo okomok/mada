@@ -8,7 +8,5 @@ package mada.peg
 
 
 object FilterFrom {
-    def apply[A](p: Peg[A], v: Vector[A]): Iterator[A] = {
-        IteratorFlatten(p.tokens(v).map(_.iterator))
-    }
+    def apply[A](p: Peg[A], v: Vector[A]): Iterator[A] = Iterator.flatten(p.tokens(v).map(_.iterator))
 }

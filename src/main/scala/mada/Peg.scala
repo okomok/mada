@@ -25,6 +25,16 @@ object Peg {
     def range[A](i: A, j: A)(implicit c: A => Ordered[A]): Peg[A] = Range(i, j)(c)
     def single[A](e: A): Peg[A] = Single(e)
 
+    def longest[A](ps: Peg[A]*): Peg[A] = Longest(ps)
+    def longest[A](ps: Iterable[Peg[A]]): Peg[A] = Longest(ps)
+    def shortest[A](ps: Peg[A]*): Peg[A] = Shortest(ps)
+    def shortest[A](ps: Iterable[Peg[A]]): Peg[A] = Shortest(ps)
+
+    def singles[A](es: A*) = Singles(es)
+    def singles[A](es: scala.collection.Set[A]): Peg[A] = Singles(es)
+    def switch[A](es: (A, Peg[A])*) = Switch(es)
+    def switch[A](es: scala.collection.Map[A, Peg[A]]): Peg[A] = Switch(es)
+
     val Compatibles = peg.Compatibles
     def regexPeg(pat: java.util.regex.Pattern): Peg[Char] = RegexPeg(pat)
     def stringPeg(str: String): Peg[Char] = StringPeg(str)
@@ -46,16 +56,8 @@ object Peg {
     val Rule = peg.Rule
     type Rule[A] = peg.Rule[A]
 
-    val Longest = peg.Longest
-    val Shortest = peg.Shortest
-    val SingleSet = peg.SingleSet
-    val Switch = peg.Switch
     val SymbolSet = peg.SymbolSet
     val SymbolMap = peg.SymbolMap
-    type Longest[A] = peg.Shortest[A]
-    type Shortest[A] = peg.Shortest[A]
-    type SingleSet[A] = peg.SingleSet[A]
-    type Switch[A] = peg.Switch[A]
     type SymbolSet[A] = peg.SymbolSet[A]
     type SymbolMap[A] = peg.SymbolMap[A]
 
