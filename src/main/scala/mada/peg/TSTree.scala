@@ -19,7 +19,7 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
 
     override def clone: TSTree[A, V] = {
         val that = new TSTree[A, V](_lt)
-        if (rootNode != null) {
+        if (rootNode ne null) {
             that.rootNode = rootNode.clone(null)
         }
         that
@@ -30,7 +30,7 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
     }
 
     def elements: Iterator[(Vector[A], V)] = {
-        if (rootNode == null) {
+        if (rootNode eq null) {
             Iterator.empty
         } else {
             val it = new TSTreeNodeIterator(Vector.empty, rootNode)
@@ -45,7 +45,7 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
     }
 
     def isEmpty: Boolean = {
-        rootNode == null || rootNode.isGarbage
+        (rootNode eq null) || rootNode.isGarbage
     }
 
     def put(key: Vector[A], value: V): Option[V] = {
@@ -59,7 +59,7 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
     }
 
     def size: Int = {
-        if (rootNode == null) 0 else rootNode.size
+        if (rootNode eq null) 0 else rootNode.size
     }
 
     override def toString: String = {
@@ -70,7 +70,7 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
     }
 
     def get(key: Vector[A], first: Long, last: Long): Option[V] = {
-        if (rootNode == null || first == last) {
+        if ((rootNode eq null) || first == last) {
             return None
         }
 
@@ -85,7 +85,7 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
             throw new IllegalArgumentException("An empty Vector can't be a key.")
         }
 
-        if (rootNode == null) {
+        if (rootNode eq null) {
             rootNode = new TSTreeNode[A, V](key(first), null)
         }
 
@@ -96,7 +96,7 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
     }
 
     def remove(key: Vector[A], first: Long, last: Long): Option[V] = {
-        if (rootNode == null || first == last) {
+        if ((rootNode eq null) || first == last) {
             return None
         }
 
@@ -108,12 +108,12 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
     }
 
     def parse(key: Vector[A], first: Long, last: Long): Option[(V, Long)] = {
-        if (rootNode == null || first == last) {
+        if ((rootNode eq null) || first == last) {
             return None
         }
 
         val (node, cur) = search(rootNode, key, first, last)
-        if (node == null || node.data.isEmpty) {
+        if ((node eq null) || node.data.isEmpty) {
             None
         } else {
             Some((node.data.get, cur))
@@ -122,7 +122,7 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
 
     def print(out: PrettyPrinter): Unit = {
         out.writeStartElement("tstree")
-        if (rootNode != null) {
+        if (rootNode ne null) {
             rootNode.print(out)
         }
         out.writeEndElement
@@ -130,19 +130,19 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
 
     private def copyInto(key: Vector[A], _first: Long, last: Long, _result: TSTreeNode[A, V]): TSTreeNode[A, V] = {
         Assert(_first != last)
-        Assert(_result != null)
+        Assert(_result ne null)
         var first = _first
         var result = _result
 
         var k = key(first)
         while (true) {
             if (_lt(k, result.elem)) {
-                if (result.left == null) {
+                if (result.left eq null) {
                     result.left = new TSTreeNode(k, result)
                 }
                 result = result.left
             } else if (_lt(result.elem, k)) {
-                if (result.right == null) {
+                if (result.right eq null) {
                     result.right = new TSTreeNode(k, result)
                 }
                 result = result.right
@@ -153,7 +153,7 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
                 }
 
                 k = key(first)
-                if (result.middle == null) {
+                if (result.middle eq null) {
                     result.middle = new TSTreeNode(k, result)
                 }
                 result = result.middle
@@ -164,14 +164,14 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
     }
 
     private def search(_first1: TSTreeNode[A, V], key2: Vector[A], _first2: Long, last2: Long): (TSTreeNode[A, V], Long) = {
-        Assert(_first1 != null)
+        Assert(_first1 ne null)
         Assert(_first2 != last2)
         var first1 = _first1
         var first2 = _first2
         var cur1: TSTreeNode[A, V] = null
 
         var k2 = key2(first2)
-        while (first1 != null) {
+        while (first1 ne null) {
             if (_lt(k2, first1.elem)) {
                 first1 = first1.left
             } else if (_lt(first1.elem, k2)) {
@@ -201,26 +201,21 @@ class TSTreeNode[A, V](val elem: A, val parent: TSTreeNode[A, V]) {
 
     def clone(parent: TSTreeNode[A, V]): TSTreeNode[A, V] = {
         val node = new TSTreeNode[A, V](elem, parent)
-        def _clone(child: TSTreeNode[A, V]) = if (child == null) null else child.clone(node)
+        def _clone(c: TSTreeNode[A, V]) = if (c eq null) null else c.clone(node)
         node.data = data
         node.left = _clone(left)
         node.middle = _clone(middle)
         node.right = _clone(right)
         node
-
     }
 
     def size: Int = {
-        var c = if (data.isEmpty) 0 else 1
-        def _size(child: TSTreeNode[A, V]) = if (child == null) 0 else child.size
-        c += _size(left)
-        c += _size(middle)
-        c += _size(right)
-        c
+        def _size(c: TSTreeNode[A, V]) = if (c eq null) 0 else c.size
+        (if (data.isEmpty) 0 else 1) + _size(left) + _size(middle) + _size(right)
     }
 
     def isLeaf: Boolean = {
-        left == null && middle == null && right == null
+        (left eq null) && (middle eq null) && (right eq null)
     }
 
      // This is enough, assuming any leaf's data is not None.
@@ -229,14 +224,14 @@ class TSTreeNode[A, V](val elem: A, val parent: TSTreeNode[A, V]) {
     }
 
     def collectGarbage: Unit = {
-        if (parent != null && isGarbage) {
-            if (parent.left == this) {
+        if ((parent ne null) && isGarbage) {
+            if (parent.left eq this) {
                 parent.left = null
             }
-            if (parent.middle == this) {
+            if (parent.middle eq this) {
                 parent.middle = null
             }
-            if (parent.right == this) {
+            if (parent.right eq this) {
                 parent.right = null
             }
             parent.collectGarbage
@@ -244,28 +239,21 @@ class TSTreeNode[A, V](val elem: A, val parent: TSTreeNode[A, V]) {
     }
 
     def print(out: PrettyPrinter): Unit = {
+        def _print(c: TSTreeNode[A, V], s: String) = {
+            if (c ne null) {
+                out.writeStartElement(s)
+                c.print(out)
+                out.writeEndElement
+            }
+        }
         out.writeStartElement("node")
-
         out.writeElement("elem", elem)
         if (!data.isEmpty) {
             out.writeElement("value", data.get)
         }
-        if (left != null) {
-            out.writeStartElement("left")
-            left.print(out)
-            out.writeEndElement
-        }
-        if (middle != null) {
-            out.writeStartElement("middle")
-            middle.print(out)
-            out.writeEndElement
-        }
-        if (right != null) {
-            out.writeStartElement("right")
-            right.print(out)
-            out.writeEndElement
-        }
-
+        _print(left, "left")
+        _print(middle, "middle")
+        _print(right, "right")
         out.writeEndElement
     }
 
@@ -280,7 +268,7 @@ class TSTreeNodeIterator[A, V](parentKey: Vector[A], node: TSTreeNode[A, V]) ext
     override val self = me ++ children(node.left) ++ children(node.middle) ++ children(node.right)
 
     private def children(c: TSTreeNode[A, V]) = {
-        if (c == null) {
+        if (c eq null) {
             Iterator.empty
         } else {
             if (c eq node.middle) {
