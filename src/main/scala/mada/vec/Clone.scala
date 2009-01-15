@@ -7,6 +7,6 @@
 package mada.vec
 
 
-object Copy {
+object Clone {
     def apply[A](v: Vector[A]): Vector[A] = Vector.arrayVector(v.toArray)
 }

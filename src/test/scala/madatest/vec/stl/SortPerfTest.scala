@@ -33,7 +33,7 @@ class SortPerfTest {
 
     def testSpeed: Unit = { // 2.1 times slower without intermediate-buffer
         println("mada-sort")
-        val e = jclListVector(longExampleArrayList1).cycle(cycleCount).copy
+        val e = jclListVector(longExampleArrayList1).cycle(cycleCount).clone
         val c: (Integer, Integer) => Boolean = _.intValue < _.intValue
         val start = java.lang.System.currentTimeMillis
         mada.vec.stl.Sort(e, 0, e.size, c)

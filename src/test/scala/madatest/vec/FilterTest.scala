@@ -13,13 +13,13 @@ import junit.framework.Assert._
 
 class FilterTest {
     def testTrivial {
-        val v = Vector.range(0, 10).copy
+        val v = Vector.range(0, 10).clone
         val e = Vector.fromValues(0,2,4,6,8)
         assertEquals(e, v.filter(_ % 2 == 0))
     }
 
     def testRemove {
-        val v = Vector.range(0, 10).copy
+        val v = Vector.range(0, 10).clone
         val e = Vector.fromValues(0,2,4,6,8)
         assertEquals(e, v.remove(_ % 2 != 0))
     }

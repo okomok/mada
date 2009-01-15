@@ -20,9 +20,9 @@ class RuleTest {
     val (start) = Rule.make1[Char]
 
     start ::= "a"
-    start ::= start.copy | "b"
-    start ::= start.copy | "c"
-    start ::= start.copy.*
+    start ::= start.clone | "b"
+    start ::= start.clone | "c"
+    start ::= start.clone.*
 
     def testTrivial: Unit = {
         assertTrue(start matches "abcaabbcabc")

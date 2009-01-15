@@ -14,13 +14,13 @@ import junit.framework.Assert._
 
 class PermutationTest {
     def testTrivial: Unit = {
-        val a = Vector.range(0, 6).copy
+        val a = Vector.range(0, 6).clone
         val b = Vector.fromValues[Long](2,3,1,0,5,4) // shall be uniqued
         detail.TestVectorReadOnly(Array(2,3,1,0,5,4), a.permutation(b))
     }
 
     def testEmpty: Unit = {
-        val a = Vector.range(0, 6).copy
+        val a = Vector.range(0, 6).clone
         val b = Vector.fromValues[Long]()
         detail.TestEmpty(a.permutation(b))
     }
