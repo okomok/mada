@@ -8,5 +8,5 @@ package mada.peg
 
 
 object LowerCaseRead {
-    def apply(p: Peg[Char]): Peg[Char] = p.unmap(java.lang.Character.toLowerCase(_))
+    def apply(p: Peg[Char]): Peg[Char] = p.readMap(Vector.lowerCase(_))
 }

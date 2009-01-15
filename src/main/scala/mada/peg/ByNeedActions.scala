@@ -15,7 +15,8 @@ class ByNeedActions[A] {
     def byNeed(f: Vector[A] => Any)(v: (Vector[A], Long, Long)): Unit = byNeed(Vector.triplify(f))(v)
     def byNeed(f: (Vector[A], Long, Long) => Any)(v: (Vector[A], Long, Long)): Unit = queue.add((f, v))
 
-    def need(p: Peg[A]) = new NeedPeg(p)
+    def apply(p: Peg[A]): Peg[A] = need(p)
+    def need(p: Peg[A]): Peg[A] = new NeedPeg(p)
 
     class NeedPeg(override val self: Peg[A]) extends PegProxy[A] {
         override def parse(v: Vector[A], first: Long, last: Long): Long = {

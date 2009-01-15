@@ -12,7 +12,8 @@ package mada.peg
 class RangeActions[A] {
     val stack = new java.util.ArrayDeque[Long]
 
-    def from(p: Peg[A]): FromPeg = new FromPeg(p)
+    def apply(p: Peg[A]): Peg[A] = from(p)
+    def from(p: Peg[A]): Peg[A] = new FromPeg(p)
 
     class FromPeg(override val self: Peg[A]) extends PegProxy[A] {
         override def parse(v: Vector[A], first: Long, last: Long): Long = {
