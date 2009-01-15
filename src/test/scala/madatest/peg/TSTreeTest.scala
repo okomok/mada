@@ -145,4 +145,18 @@ class TSTreeTest {
             //println(n)
         }
     }
+
+    def testIteratorBound: Unit = {
+        val tree = new mada.peg.TSTree[Char, String](mada.vec.stl.Less[Char])
+        assertFalse(tree.elements.hasNext)
+
+        tree.put("t", "t")
+
+        var c = 0
+        for (n <- tree.elements) {
+            assertEquals(madaVector("t"), n._1)
+            c += 1
+        }
+        assertEquals(1, c)
+    }
 }
