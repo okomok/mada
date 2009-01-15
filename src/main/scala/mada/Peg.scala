@@ -56,8 +56,6 @@ object Peg {
     val Rule = peg.Rule
     type Rule[A] = peg.Rule[A]
 
-    type Captures[A] = peg.Captures[A]
-
     val SymbolSet = peg.SymbolSet
     val SymbolMap = peg.SymbolMap
     type SymbolSet[A] = peg.SymbolSet[A]
@@ -65,6 +63,7 @@ object Peg {
 
     type ByNeedActions[A] = peg.ByNeedActions[A]
     type RangeActions[A] = peg.RangeActions[A]
+    type Captures[A] = peg.Captures[A]
     type PrettyPrinter = peg.PrettyPrinter
 }
 

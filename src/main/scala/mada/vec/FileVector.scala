@@ -12,38 +12,38 @@ import java.io.{ File, RandomAccessFile }
 
 // Char
 
-class CharFileVector private (f: RandomAccessFile) extends Vector[Char] {
+class CharFileVector private (val randomAccessFile: RandomAccessFile) extends Vector[Char] {
     def this(file: File, mode: String) = this(new RandomAccessFile(file, mode))
     def this(name: String, mode: String) = this(new RandomAccessFile(name, mode))
-    def close = f.close
+    def close = randomAccessFile.close
 
-    override def size = f.length / 2
-    override def apply(i: Long) = { f.seek(i * 2); f.readChar }
-    override def update(i: Long, e: Char) = { f.seek(i * 2); f.writeChar(e) }
+    override def size = randomAccessFile.length / 2
+    override def apply(i: Long) = { randomAccessFile.seek(i * 2); randomAccessFile.readChar }
+    override def update(i: Long, e: Char) = { randomAccessFile.seek(i * 2); randomAccessFile.writeChar(e) }
 }
 
 
 // Int
 
-class IntFileVector private (f: RandomAccessFile) extends Vector[Int] {
+class IntFileVector private (val randomAccessFile: RandomAccessFile) extends Vector[Int] {
     def this(file: File, mode: String) = this(new RandomAccessFile(file, mode))
     def this(name: String, mode: String) = this(new RandomAccessFile(name, mode))
-    def close = f.close
+    def close = randomAccessFile.close
 
-    override def size = f.length / 4
-    override def apply(i: Long) = { f.seek(i * 4); f.readInt }
-    override def update(i: Long, e: Int) = { f.seek(i * 4); f.writeInt(e) }
+    override def size = randomAccessFile.length / 4
+    override def apply(i: Long) = { randomAccessFile.seek(i * 4); randomAccessFile.readInt }
+    override def update(i: Long, e: Int) = { randomAccessFile.seek(i * 4); randomAccessFile.writeInt(e) }
 }
 
 
 // Long
 
-class LongFileVector private (f: RandomAccessFile) extends Vector[Long] {
+class LongFileVector private (val randomAccessFile: RandomAccessFile) extends Vector[Long] {
     def this(file: File, mode: String) = this(new RandomAccessFile(file, mode))
     def this(name: String, mode: String) = this(new RandomAccessFile(name, mode))
-    def close = f.close
+    def close = randomAccessFile.close
 
-    override def size = f.length / 8
-    override def apply(i: Long) = { f.seek(i * 8); f.readLong }
-    override def update(i: Long, e: Long) = { f.seek(i * 8); f.writeLong(e) }
+    override def size = randomAccessFile.length / 8
+    override def apply(i: Long) = { randomAccessFile.seek(i * 8); randomAccessFile.readLong }
+    override def update(i: Long, e: Long) = { randomAccessFile.seek(i * 8); randomAccessFile.writeLong(e) }
 }
