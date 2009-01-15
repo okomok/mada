@@ -7,6 +7,7 @@
 package mada
 
 
+// unneeded.
 object IteratorFlatten {
     def apply[A](its: Iterator[Iterator[A]]): Iterator[A] = new Iterator[A] {
         private var it: Iterator[A] = Iterator.empty

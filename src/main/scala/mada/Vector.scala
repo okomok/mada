@@ -36,7 +36,6 @@ object Vector {
     def stringVector(u: String): Vector[Char] = StringVector(u)
     def jclCharSequence(v: Vector[Char]): java.lang.CharSequence = jcl.VectorCharSequence(v)
 
-    def fromIterable[A](u: Iterable[A]): Vector[A] = FromIterable(u)
     def fromIterator[A](u: Iterator[A]): Vector[A] = FromIterator(u)
     def fromJclIterator[A](u: java.util.Iterator[A]): Vector[A] = jcl.FromIterator(u)
     def fromValues[A](es: A*): Vector[A] = FromValues(es: _*)
@@ -106,12 +105,12 @@ trait Vector[A] {
     final def isDefinedAt(x: Long): Boolean = IsDefinedAt(this, x)
     final def isEmpty: Boolean = IsEmpty(this)
     final def isNil: Boolean = IsNil(this)
-    final def iterable: Iterable[A] = VectorIterable(this)
     final def iterator: Iterator[A] = VectorIterator(this)
     final def jclListIterator: java.util.ListIterator[A] = jcl.VectorListIterator(this)
     final def last: A = Last(this)
     def lazy_ : Vector[A] = Lazy(this)
     final def length: Long = size
+    final def linearAccessSeq: Seq[A] = LinearAccessSeq(this)
     def loop[F <: (A => Boolean)](i: Long, j: Long, f: F): F = Loop(this, i, j, f)
     def map[B](f: A => B): Vector[B] = Map(this, f)
     final def offset(i: Long, j: Long): Vector[A] = Offset(this, i, j)

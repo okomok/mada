@@ -33,7 +33,7 @@ class SymbolSet[A] private (private val tree: TSTree[A, Unit]) extends Peg[A] wi
     override def elements = new Iterator[Vector[A]] {
         private val it = tree.elements
         override def hasNext = it.hasNext
-        override def next = it.next._1 // When you should `force`?
+        override def next = it.next._1
     }
 
 // Set

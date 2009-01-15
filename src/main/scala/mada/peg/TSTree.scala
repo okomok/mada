@@ -35,7 +35,7 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
         } else {
             val it = new TSTreeNodeIterator(Vector.empty, rootNode)
             for ((key, node) <- it if (!node.data.isEmpty))
-                yield (key, node.data.get)
+                yield (key.force, node.data.get) // force now!
         }
     }
 
