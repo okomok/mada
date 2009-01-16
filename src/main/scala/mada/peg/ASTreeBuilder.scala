@@ -14,12 +14,12 @@ class ASTreeBuilder(val root: DefaultMutableTreeNode) {
     def this() = this(new DefaultMutableTreeNode)
     def this(x: Any) = this(new DefaultMutableTreeNode(x))
 
-    private val parents = new java.util.ArrayDeque[DefaultMutableTreeNode]
-    parents.push(root)
+    private val branches = new java.util.ArrayDeque[DefaultMutableTreeNode]
+    branches.push(root)
 
     def toTree: DefaultMutableTreeNode = {
-        val n = parents.pop
-        if ((n ne root) || !parents.isEmpty) {
+        val n = branches.pop
+        if ((n ne root) || !branches.isEmpty) {
             throw new java.lang.IllegalStateException("failed to build tree")
         }
         n
@@ -32,7 +32,7 @@ class ASTreeBuilder(val root: DefaultMutableTreeNode) {
         override def parse(v: Vector[A], first: Long, last: Long) = {
             val cur = self.parse(v, first, last)
             if (cur != FAILURE) {
-                parents.peek.add(new DefaultMutableTreeNode(f(v, first, cur), false))
+                branches.peek.add(new DefaultMutableTreeNode(f(v, first, cur), false))
             }
             cur
         }
@@ -44,12 +44,12 @@ class ASTreeBuilder(val root: DefaultMutableTreeNode) {
     class BranchPeg[A](override val self: Peg[A], f: (Vector[A], Long, Long) => Any) extends PegProxy[A] {
         override def parse(v: Vector[A], first: Long, last: Long) = {
             val b = new DefaultMutableTreeNode(self)
-            parents.push(b)
+            branches.push(b)
             val cur = self.parse(v, first, last)
-            parents.pop
+            Verify(b eq branches.pop)
             if (cur != FAILURE) {
                 b.setUserObject(f(v, first, cur))
-                parents.peek.add(b)
+                branches.peek.add(b)
             }
             cur
         }
