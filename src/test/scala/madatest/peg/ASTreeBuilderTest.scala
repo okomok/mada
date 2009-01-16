@@ -23,12 +23,12 @@ class ASTreeBuilderTest {
         val tb = new ASTreeBuilder("root")
 
         expr    ::= tb.branch(term >> ( '+' >> term | '-' >> term ).*, _ => "expr")
-        term    ::= factor >> ( '*' >> factor | '/' >> factor ).*
+        term    ::= tb.branch(factor >> ( '*' >> factor | '/' >> factor ).*, _ => "term")
         factor  ::= tb.branch((digit+) | '(' >> expr >> ')' | '-' >> factor | '+' >> factor, _ => "factor")
-        digit   ::= tb.leaf(range('0', '9'), _.toString)
+        digit   ::= tb.leaf(range('0','9'), _.toString)
 
         assertTrue(expr matches "(1+2)*(3*(4-5))")
-        printTree(tb.toTree)
+        //printTree(tb.toTree)
     }
 
     def printTree(t: TreeNode) {
