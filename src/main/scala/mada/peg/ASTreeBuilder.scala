@@ -21,11 +21,11 @@ class ASTreeBuilder[T <: DefaultMutableTreeNode](root: T) {
     branches.push(root)
 
     def toTree: T = {
-        val b = branches.pop
-        if ((b ne root) || !branches.isEmpty) {
+        val n = branches.pop
+        if ((n ne root) || !branches.isEmpty) {
             throw new java.lang.IllegalStateException("failed to build tree")
         }
-        b
+        n
     }
 
     def apply[A](p: Peg[A], f: Vector[A] => Any): Peg[A] = node(p, f)
@@ -35,13 +35,13 @@ class ASTreeBuilder[T <: DefaultMutableTreeNode](root: T) {
 
     class NodePeg[A](override val self: Peg[A], f: (Vector[A], Long, Long) => Any) extends PegProxy[A] {
         override def parse(v: Vector[A], first: Long, last: Long) = {
-            val b = newNode(self, true)
-            branches.push(b)
+            val n = newNode(true)
+            branches.push(n)
             val cur = self.parse(v, first, last)
-            Verify(b eq branches.pop)
+            Verify(n eq branches.pop)
             if (cur != FAILURE) {
-                b.setUserObject(f(v, first, cur))
-                branches.peek.add(b)
+                n.setUserObject(f(v, first, cur))
+                branches.peek.add(n)
             }
             cur
         }
@@ -50,14 +50,15 @@ class ASTreeBuilder[T <: DefaultMutableTreeNode](root: T) {
     def leaf[A](p: Peg[A], f: Vector[A] => Any): Peg[A] = leaf(p, Vector.triplify(f))
     def leaf[A](p: Peg[A], f: (Vector[A], Long, Long) => Any): Peg[A] = {
         def _add(v: Vector[A], first: Long, last: Long) = {
-            branches.peek.add(newNode(f(v, first, last), false))
+            val n = newNode(false)
+            n.setUserObject(f(v, first, last))
+            branches.peek.add(n)
         }
         p.action(_add _)
     }
 
-    private def newNode(userObject: Any, allowsChildren: Boolean): T = {
+    private def newNode(allowsChildren: Boolean): T = {
         val n = root.clone.asInstanceOf[T]
-        n.setUserObject(userObject)
         n.setAllowsChildren(allowsChildren)
         n
     }
