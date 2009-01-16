@@ -7,16 +7,25 @@
 package mada.peg
 
 
-import javax.swing.tree.DefaultMutableTreeNode
+import javax.swing.tree.{ MutableTreeNode, DefaultMutableTreeNode }
 
-
-object ASTreeBuilder {
-    def apply: ASTreeBuilder[DefaultMutableTreeNode] = new ASTreeBuilder(new DefaultMutableTreeNode)
-    def apply(userObject: Any): ASTreeBuilder[DefaultMutableTreeNode] = new ASTreeBuilder(new DefaultMutableTreeNode(userObject))
-}
 
 // MutableTreeNode.clone isn't public.
-class ASTreeBuilder[T <: DefaultMutableTreeNode](root: T) {
+
+object DefaultMutableTreeNodeCloner extends (DefaultMutableTreeNode => DefaultMutableTreeNode) {
+    override def apply(n: DefaultMutableTreeNode) = n.clone.asInstanceOf[DefaultMutableTreeNode]
+}
+
+object ASTreeBuilder {
+    def apply: ASTreeBuilder[DefaultMutableTreeNode] = {
+        new ASTreeBuilder(new DefaultMutableTreeNode, DefaultMutableTreeNodeCloner)
+    }
+    def apply(userObject: Any): ASTreeBuilder[DefaultMutableTreeNode] = {
+        new ASTreeBuilder(new DefaultMutableTreeNode(userObject), DefaultMutableTreeNodeCloner)
+    }
+}
+
+class ASTreeBuilder[T <: MutableTreeNode](root: T, cloner: T => T) {
     private val branches = new java.util.ArrayDeque[T]
     branches.push(root)
 
@@ -35,13 +44,13 @@ class ASTreeBuilder[T <: DefaultMutableTreeNode](root: T) {
 
     class NodePeg[A](override val self: Peg[A], f: (Vector[A], Long, Long) => Any) extends PegProxy[A] {
         override def parse(v: Vector[A], first: Long, last: Long) = {
-            val n = newNode(true)
+            val n = newNode
             branches.push(n)
             val cur = self.parse(v, first, last)
             Verify(n eq branches.pop)
             if (cur != FAILURE) {
                 n.setUserObject(f(v, first, cur))
-                branches.peek.add(n)
+                addNode(branches.peek, n)
             }
             cur
         }
@@ -50,16 +59,13 @@ class ASTreeBuilder[T <: DefaultMutableTreeNode](root: T) {
     def leaf[A](p: Peg[A], f: Vector[A] => Any): Peg[A] = leaf(p, Vector.triplify(f))
     def leaf[A](p: Peg[A], f: (Vector[A], Long, Long) => Any): Peg[A] = {
         def _add(v: Vector[A], first: Long, last: Long) = {
-            val n = newNode(false)
+            val n = newNode
             n.setUserObject(f(v, first, last))
-            branches.peek.add(n)
+            addNode(branches.peek, n)
         }
         p.action(_add _)
     }
 
-    private def newNode(allowsChildren: Boolean): T = {
-        val n = root.clone.asInstanceOf[T]
-        n.setAllowsChildren(allowsChildren)
-        n
-    }
+    private def newNode: T = cloner(root)
+    private def addNode(parent: T, child: T): Unit = parent.insert(child, parent.getChildCount)
 }
