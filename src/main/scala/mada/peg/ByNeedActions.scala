@@ -12,7 +12,6 @@ package mada.peg
 class ByNeedActions[A] {
     private val queue = new java.util.ArrayDeque[((Vector[A], Long, Long) => Any, (Vector[A], Long, Long))]
 
-    def byNeed(f: Vector[A] => Any)(v: (Vector[A], Long, Long)): Unit = byNeed(Vector.triplify(f))(v)
     def byNeed(f: (Vector[A], Long, Long) => Any)(v: (Vector[A], Long, Long)): Unit = queue.add((f, v))
 
     def apply(p: Peg[A]): Peg[A] = need(p)

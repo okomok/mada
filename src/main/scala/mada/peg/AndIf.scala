@@ -8,7 +8,6 @@ package mada.peg
 
 
 object AndIf {
-    def apply[A](p: Peg[A], pred: Vector[A] => Boolean): Peg[A] = apply(p, Vector.triplify(pred))
     def apply[A](p: Peg[A], pred: (Vector[A], Long, Long) => Boolean): Peg[A] = new AndIfPeg(p, pred)
 }
 

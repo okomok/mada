@@ -22,7 +22,6 @@ class RangeActions[A] {
         }
     }
 
-    def until(f: Vector[A] => Any): UntilPeg = until(Vector.triplify(f))
     def until(f: (Vector[A], Long, Long) => Any): UntilPeg = new UntilPeg(f)
 
     class UntilPeg(f: (Vector[A], Long, Long) => Any) extends Peg[A] {

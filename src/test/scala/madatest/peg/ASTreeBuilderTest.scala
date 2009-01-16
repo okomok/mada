@@ -22,10 +22,10 @@ class ASTreeBuilderTest {
         val (expr, term, factor, digit) = Rule.make4[Char]
         val tb = ASTreeBuilder("root")
 
-        expr    ::= tb(term >> ( '+' >> term | '-' >> term ).*, _ => "expr")
-        term    ::= tb(factor >> ( '*' >> factor | '/' >> factor ).*, _ => "term")
-        factor  ::= tb((digit+) | '(' >> expr >> ')' | '-' >> factor | '+' >> factor, _ => "factor")
-        digit   ::= tb.leaf(range('0','9'), _.toString)
+        expr    ::= tb(term >> ( '+' >> term | '-' >> term ).*){ case _ => "expr" }
+        term    ::= tb(factor >> ( '*' >> factor | '/' >> factor ).*){ (v,i,j) => "term" }
+        factor  ::= tb((digit+) | '(' >> expr >> ')' | '-' >> factor | '+' >> factor){ case _ => "factor" }
+        digit   ::= tb.leaf(range('0','9')){ (v: Vector[Char]) => v.toString }
 
         assertTrue(expr matches "(1+2)*(3*(4-5))")
         //printTree(tb.toTree)

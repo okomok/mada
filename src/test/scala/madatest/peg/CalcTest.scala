@@ -11,6 +11,7 @@ import mada.Vector
 import mada.Peg._
 import junit.framework.Assert._
 import mada.Peg.Compatibles._
+import mada.Vector.Compatibles._
 
 
 class CalcTest {

@@ -103,10 +103,8 @@ trait Peg[A] {
     final def lookBehind: Peg[A] = LookBehind(this)
     final def lookBack: Peg[A] = LookBack(this)
 
-    final def action(f: Vector[A] => Any): Peg[A] = Action(this, f)
-    final def action(f: (Vector[A], Long, Long) => Any): Peg[A] = Action(this, f)
-
-    final def andIf(pred: Vector[A] => Boolean): Peg[A] = AndIf(this, pred)
+    final def act(f: (Vector[A], Long, Long) => Any): Peg[A] = Act(this, f)
+    final def andIf(pred: (Vector[A], Long, Long) => Boolean): Peg[A] = AndIf(this, pred)
     final def identity: Peg[A] = Identity(this)
     final def memoize: Peg[A] = Memoize(this)
     final def named(name: String) = Named(this, name)
@@ -141,7 +139,7 @@ trait Peg[A] {
     final def ? : Peg[A] = opt
     final def ??(that: Peg[A]): Peg[A] = optBefore(that)
     final def ?>>(that: Peg[A]): Peg[A] = optUntil(that)
-    final def ^^(f: Vector[A] => Any): Peg[A] = action(f)
+    final def ^^(f: (Vector[A], Long, Long) => Any): Peg[A] = act(f)
 
     final def >>?~(that: Peg[A]): Peg[A] = seqAnd(that.lookAhead)
     final def >>?!(that: Peg[A]): Peg[A] = seqAnd(that.lookAhead.not)
