@@ -10,9 +10,9 @@ package mada.peg
 import javax.swing.tree.DefaultMutableTreeNode
 
 
-class ASTreeBuilder(val root: DefaultMutableTreeNode) {
+class ASTreeBuilder(root: DefaultMutableTreeNode) {
     def this() = this(new DefaultMutableTreeNode)
-    def this(x: Any) = this(new DefaultMutableTreeNode(x))
+    def this(userObject: Any) = this(new DefaultMutableTreeNode(userObject))
 
     private val branches = new java.util.ArrayDeque[DefaultMutableTreeNode]
     branches.push(root)
