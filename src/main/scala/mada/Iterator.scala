@@ -53,6 +53,13 @@ trait IteratorProxy[A] extends Iterator[A] with Proxy {
 }
 
 
+object IteratorCompatibles {
+    implicit def madaIterator2JclIterator[A](from: Iterator[A]): java.util.Iterator[A] = Iterator2JclIterator(from)
+    implicit def madaJclIterator2Iterator[A](from: java.util.Iterator[A]): Iterator[A] = JclIterator2Iterator(from)
+    implicit def madaIterator2JclEnumeration[A](from: java.util.Iterator[A]): java.util.Enumeration[A] = Iterator2JclEnumeration(from)
+    implicit def madaJclEnumeration2Iterator[A](from: java.util.Enumeration[A]): Iterator[A] = JclEnumeration2Iterator(from)
+}
+
 object Iterator2JclIterator {
     def apply[A](it: Iterator[A]): java.util.Iterator[A] = new java.util.Iterator[A] {
         override def hasNext = it.hasNext
@@ -68,7 +75,16 @@ object JclIterator2Iterator {
     }
 }
 
-object IteratorCompatibles {
-    implicit def madaIterator2JclIterator[A](from: Iterator[A]): java.util.Iterator[A] = Iterator2JclIterator(from)
-    implicit def madaJclIterator2Iterator[A](from: java.util.Iterator[A]): Iterator[A] = JclIterator2Iterator(from)
+object Iterator2JclEnumeration {
+    def apply[A](it: Iterator[A]): java.util.Enumeration[A] = new java.util.Enumeration[A] {
+        override def hasMoreElements = it.hasNext
+        override def nextElement = it.next
+    }
+}
+
+object JclEnumeration2Iterator {
+    def apply[A](it: java.util.Enumeration[A]): Iterator[A] = new Iterator[A] {
+        override def hasNext = it.hasMoreElements
+        override def next = it.nextElement
+    }
 }
