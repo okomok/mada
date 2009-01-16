@@ -20,7 +20,7 @@ class ASTreeBuilderTest {
 
     def testTrivial: Unit = {
         val (expr, term, factor, digit) = Rule.make4[Char]
-        val tb = new ASTreeBuilder("root")
+        val tb = ASTreeBuilder("root")
 
         expr    ::= tb(term >> ( '+' >> term | '-' >> term ).*, _ => "expr")
         term    ::= tb(factor >> ( '*' >> factor | '/' >> factor ).*, _ => "term")

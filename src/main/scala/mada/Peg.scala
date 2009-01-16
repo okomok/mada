@@ -56,12 +56,14 @@ object Peg {
     val Rule = peg.Rule
     type Rule[A] = peg.Rule[A]
 
+    val ASTreeBuilder = peg.ASTreeBuilder
+    type ASTreeBuilder[T <: javax.swing.tree.DefaultMutableTreeNode] = peg.ASTreeBuilder[T]
+
     val SymbolSet = peg.SymbolSet
     val SymbolMap = peg.SymbolMap
     type SymbolSet[A] = peg.SymbolSet[A]
     type SymbolMap[A] = peg.SymbolMap[A]
 
-    type ASTreeBuilder = peg.ASTreeBuilder
     type ByNeedActions[A] = peg.ByNeedActions[A]
     type RangeActions[A] = peg.RangeActions[A]
     type Captures[A] = peg.Captures[A]
