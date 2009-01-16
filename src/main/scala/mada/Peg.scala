@@ -61,6 +61,7 @@ object Peg {
     type SymbolSet[A] = peg.SymbolSet[A]
     type SymbolMap[A] = peg.SymbolMap[A]
 
+    type ASTreeBuilder = peg.ASTreeBuilder
     type ByNeedActions[A] = peg.ByNeedActions[A]
     type RangeActions[A] = peg.RangeActions[A]
     type Captures[A] = peg.Captures[A]

@@ -16,7 +16,7 @@ class RangeActions[A] {
     def from(p: Peg[A]): Peg[A] = new FromPeg(p)
 
     class FromPeg(override val self: Peg[A]) extends PegProxy[A] {
-        override def parse(v: Vector[A], first: Long, last: Long): Long = {
+        override def parse(v: Vector[A], first: Long, last: Long) = {
             stack.push(first)
             self.parse(v, first, last)
         }
@@ -26,7 +26,7 @@ class RangeActions[A] {
     def until(f: (Vector[A], Long, Long) => Any): UntilPeg = new UntilPeg(f)
 
     class UntilPeg(f: (Vector[A], Long, Long) => Any) extends Peg[A] {
-        override def parse(v: Vector[A], first: Long, last: Long): Long = {
+        override def parse(v: Vector[A], first: Long, last: Long) = {
             f(v, stack.pop, first)
             first
         }

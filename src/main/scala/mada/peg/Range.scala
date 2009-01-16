@@ -12,9 +12,9 @@ object Range {
 }
 
 class RangePeg[A](i: A, j: A)(implicit c: A => Ordered[A]) extends Peg[A] {
-    override def parse(v: Vector[A], first: Long, last: Long): Long = {
+    override def parse(v: Vector[A], first: Long, last: Long) = {
         if (first == last) {
-            return FAILURE
+            FAILURE
         } else {
             val e = v(first)
             if (c(i) <= e && c(e) <= j) {

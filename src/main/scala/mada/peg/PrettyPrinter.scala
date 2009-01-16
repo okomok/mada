@@ -23,7 +23,7 @@ class PrettyPrinter(val out: java.io.Writer, val indentWidth: Int) {
     private var indentLevel = 0
     private val indentString = Vector.single(' ').cycle(indentWidth)
     private def indent = indentString.cycle(indentLevel)
-    private val stack = new java.util.LinkedList[Any]
+    private val stack = new java.util.ArrayDeque[Any]
 
     def writeStartElement(tag: Any): Unit = {
         stack.push(tag)
@@ -54,7 +54,7 @@ class PrettyPrinter(val out: java.io.Writer, val indentWidth: Int) {
     def writer[A](name: String, p: Peg[A]): Peg[A] = writer(p.named(name))
 
     class WriterPeg[A](override val self: Peg[A]) extends PegProxy[A] {
-        override def parse(v: Vector[A], first: Long, last: Long): Long = {
+        override def parse(v: Vector[A], first: Long, last: Long) = {
             writeStartElement(self)
 
             writeElement("peg:parsing", v.window(first, last))

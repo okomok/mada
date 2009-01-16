@@ -12,7 +12,7 @@ object Longest {
 }
 
 class LongestPeg[A](ps: Iterable[Peg[A]]) extends Peg[A] {
-    override def parse(v: Vector[A], first: Long, last: Long): Long = {
+    override def parse(v: Vector[A], first: Long, last: Long) = {
         var cur = FAILURE
         for (p <- ps.projection) {
             val i = p.parse(v, first, last)
@@ -30,7 +30,7 @@ object Shortest {
 }
 
 class ShortestPeg[A](ps: Iterable[Peg[A]]) extends Peg[A] {
-    override def parse(v: Vector[A], first: Long, last: Long): Long = {
+    override def parse(v: Vector[A], first: Long, last: Long) = {
         var cur = FAILURE
         for (p <- ps.projection) {
             val i = p.parse(v, first, last)

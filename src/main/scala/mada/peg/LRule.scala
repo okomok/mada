@@ -49,7 +49,7 @@ class LRules[A] {
         val memoTable = new Map[POSITION, MEMOENTRY]
         def body = self
 
-        override def parse(v: Vector[A], first: Long, last: Long): Long = {
+        override def parse(v: Vector[A], first: Long, last: Long) = {
             Pos = TripleKey(v, first, last)
             APPLY_RULE(this, Pos)
             Pos.first
@@ -201,7 +201,7 @@ class LRule[A](v: Vector[A]) extends Peg[A] {
     private var position = FAILURE
     private var recurred = false
 
-    override def parse(v: Vector[A], first: Long, last: Long): Long = {
+    override def parse(v: Vector[A], first: Long, last: Long) = {
         if (parsing && first == position) {
             recurred = true
             FAILURE
@@ -252,7 +252,7 @@ class LRule[A](v: Vector[A]) extends Peg[A] {
     private var parsing = false
     private var recurred = false
 
-    override def parse(v: Vector[A], first: Long, last: Long): Long = {
+    override def parse(v: Vector[A], first: Long, last: Long) = {
         if (parsing) {
             recurred = true
             FAILURE

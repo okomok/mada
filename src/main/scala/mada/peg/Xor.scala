@@ -12,7 +12,7 @@ object Xor {
 }
 
 class XorPeg[A](p: Peg[A], q: Peg[A]) extends Peg[A] {
-    override def parse(v: Vector[A], first: Long, last: Long): Long = {
+    override def parse(v: Vector[A], first: Long, last: Long) = {
         val pcur = p.parse(v, first, last)
         val qcur = q.parse(v, first, last)
 
