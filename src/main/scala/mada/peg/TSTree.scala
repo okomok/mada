@@ -63,7 +63,7 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
     }
 
     override def toString: String = {
-        val out = new PrettyPrinter(new java.io.StringWriter)
+        val out = new Peg.PrettyPrinter(new java.io.StringWriter)
         print(out)
         out.close
         out.out.toString
@@ -120,7 +120,7 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
         }
     }
 
-    def print(out: PrettyPrinter): Unit = {
+    def print(out: Peg.PrettyPrinter): Unit = {
         out.writeStartElement("tstree")
         if (rootNode ne null) {
             rootNode.print(out)
@@ -238,7 +238,7 @@ class TSTreeNode[A, V](val elem: A, val parent: TSTreeNode[A, V]) {
         }
     }
 
-    def print(out: PrettyPrinter): Unit = {
+    def print(out: Peg.PrettyPrinter): Unit = {
         def _print(c: TSTreeNode[A, V], s: String) = {
             if (c ne null) {
                 out.writeStartElement(s)
