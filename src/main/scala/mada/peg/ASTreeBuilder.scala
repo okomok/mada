@@ -14,39 +14,41 @@ class ASTreeBuilder(val root: DefaultMutableTreeNode) {
     def this() = this(new DefaultMutableTreeNode)
     def this(x: Any) = this(new DefaultMutableTreeNode(x))
 
-    private val branches = new java.util.ArrayDeque[DefaultMutableTreeNode]
-    branches.push(root)
+    private val nodees = new java.util.ArrayDeque[DefaultMutableTreeNode]
+    nodees.push(root)
 
     def toTree: DefaultMutableTreeNode = {
-        val b = branches.pop
-        if ((b ne root) || !branches.isEmpty) {
+        val b = nodees.pop
+        if ((b ne root) || !nodees.isEmpty) {
             throw new java.lang.IllegalStateException("failed to build tree")
         }
         b
     }
 
-    def leaf[A](p: Peg[A], f: Vector[A] => Any): Peg[A] = leaf(p, Vector.triplify(f))
-    def leaf[A](p: Peg[A], f: (Vector[A], Long, Long) => Any): Peg[A] = {
-        def _add(v: Vector[A], first: Long, last: Long) = {
-            branches.peek.add(new DefaultMutableTreeNode(f(v, first, last), false))
-        }
-        p.action(_add _)
-    }
+    def apply[A](p: Peg[A], f: Vector[A] => Any): Peg[A] = node(p, f)
+    def apply[A](p: Peg[A], f: (Vector[A], Long, Long) => Any): Peg[A] = node(p, f)
+    def node[A](p: Peg[A], f: Vector[A] => Any): Peg[A] = node(p, Vector.triplify(f))
+    def node[A](p: Peg[A], f: (Vector[A], Long, Long) => Any): Peg[A] = new NodePeg(p, f)
 
-    def branch[A](p: Peg[A], f: Vector[A] => Any): Peg[A] = branch(p, Vector.triplify(f))
-    def branch[A](p: Peg[A], f: (Vector[A], Long, Long) => Any): Peg[A] = new BranchPeg(p, f)
-
-    class BranchPeg[A](override val self: Peg[A], f: (Vector[A], Long, Long) => Any) extends PegProxy[A] {
+    class NodePeg[A](override val self: Peg[A], f: (Vector[A], Long, Long) => Any) extends PegProxy[A] {
         override def parse(v: Vector[A], first: Long, last: Long) = {
             val b = new DefaultMutableTreeNode(self)
-            branches.push(b)
+            nodees.push(b)
             val cur = self.parse(v, first, last)
-            Verify(b eq branches.pop)
+            Verify(b eq nodees.pop)
             if (cur != FAILURE) {
                 b.setUserObject(f(v, first, cur))
-                branches.peek.add(b)
+                nodees.peek.add(b)
             }
             cur
         }
+    }
+
+    def leaf[A](p: Peg[A], f: Vector[A] => Any): Peg[A] = leaf(p, Vector.triplify(f))
+    def leaf[A](p: Peg[A], f: (Vector[A], Long, Long) => Any): Peg[A] = {
+        def _add(v: Vector[A], first: Long, last: Long) = {
+            nodees.peek.add(new DefaultMutableTreeNode(f(v, first, last), false))
+        }
+        p.action(_add _)
     }
 }
