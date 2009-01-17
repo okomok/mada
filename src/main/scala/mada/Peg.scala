@@ -69,7 +69,7 @@ object Peg {
     type Captures[A] = peg.Captures[A]
     type PrettyPrinter = peg.PrettyPrinter
 
-    val Try = peg.Try
+    val try_ = peg.Try
 
     val ExpectedException = peg.ExpectedException
     type ExpectedException[A] = peg.ExpectedException[A]
