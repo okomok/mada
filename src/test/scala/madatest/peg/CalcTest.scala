@@ -4,6 +4,9 @@
 // Distributed under the terms of an MIT-style license.
 
 
+// See: http://spirit.sourceforge.net/distrib/spirit_1_8_5/libs/spirit/doc/semantic_actions.html
+
+
 package madatest.peg
 
 
@@ -19,6 +22,7 @@ class CalcTest {
 
     val stack = new java.util.ArrayDeque[Int]
     import stack.{ push, pop }
+    import java.lang.Integer.parseInt
 
     expr    ::= term >>
                 ( ('+' >> term){ case _ => push(pop + pop) } |
@@ -30,10 +34,8 @@ class CalcTest {
                 ('(' >> expr >> ')') |
                 ('-' >> factor){ case _ => push(-pop) } |
                 ('+' >> factor)
-    integer ::= (digit.+){ case (v,i,j) => push(parseInt(v(i,j))) }
+    integer ::= (digit.+){ case (v,i,j) => push(parseInt(Vector.toString(v(i,j)))) }
     digit   ::= range('0','9')
-
-    def parseInt(v: Vector[Char]): Int = java.lang.Integer.parseInt(Vector.toString(v))
 
     def testTrivial: Unit = {
         assertTrue(expr matches "12345")
