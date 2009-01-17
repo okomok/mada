@@ -25,13 +25,13 @@ object ASTreeBuilder {
     }
 }
 
-class ASTreeBuilder[T <: MutableTreeNode](root: T, cloner: T => T) {
+class ASTreeBuilder[T <: MutableTreeNode](_root: T, _cloner: T => T) {
     private val branches = new java.util.ArrayDeque[T]
-    branches.push(root)
+    branches.push(_root)
 
     def toTree: T = {
-        val n = branches.pop
-        if ((n ne root) || !branches.isEmpty) {
+        val n = branches.peek
+        if ((n ne _root) || (branches.size != 1)) {
             throw new java.lang.IllegalStateException("failed to build tree")
         }
         n
@@ -63,6 +63,6 @@ class ASTreeBuilder[T <: MutableTreeNode](root: T, cloner: T => T) {
         p.act(_add _)
     }
 
-    private def newNode: T = cloner(root)
+    private def newNode: T = _cloner(_root)
     private def addNode(parent: T, child: T): Unit = parent.insert(child, parent.getChildCount)
 }

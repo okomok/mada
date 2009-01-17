@@ -21,6 +21,7 @@ class ASTreeBuilderTest {
     def testTrivial: Unit = {
         val (expr, term, factor, digit) = Rule.make4[Char]
         val tb = ASTreeBuilder("root")
+        printTree(tb.toTree) // trivial tree
 
         expr    ::= tb(term >> ( '+' >> term | '-' >> term ).*){ case _ => "expr" }
         term    ::= tb(factor >> ( '*' >> factor | '/' >> factor ).*){ (v,i,j) => "term" }
@@ -28,10 +29,12 @@ class ASTreeBuilderTest {
         digit   ::= tb.leaf(range('0','9')){ (v: Vector[Char]) => v.toString }
 
         assertTrue(expr matches "(1+2)*(3*(4-5))")
-        //printTree(tb.toTree)
+        printTree(tb.toTree)
     }
 
-    def printTree(t: TreeNode) {
+    def printTree(t: TreeNode): Unit = {
+        //return
+
         if (t.toString != null)
             println(Vector.toString(" ".cycle(indent) ++ t.toString))
         indent += 4
