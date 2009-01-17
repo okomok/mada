@@ -140,6 +140,7 @@ trait Peg[A] {
     final def ??(that: Peg[A]): Peg[A] = optBefore(that)
     final def ?>>(that: Peg[A]): Peg[A] = optUntil(that)
     final def ^^(f: (Vector[A], Long, Long) => Any): Peg[A] = act(f)
+    final def apply(f: (Vector[A], Long, Long) => Any): Peg[A] = act(f)
 
     final def >>?~(that: Peg[A]): Peg[A] = seqAnd(that.lookAhead)
     final def >>?!(that: Peg[A]): Peg[A] = seqAnd(that.lookAhead.not)

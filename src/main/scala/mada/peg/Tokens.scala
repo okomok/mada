@@ -10,6 +10,6 @@ package mada.peg
 object Tokens {
     def apply[A](p: Peg[A], v: Vector[A]): Iterator[Vector[A]] = {
         for ((v, i, j) <- p.tokenize(v))
-            yield v.window(i, j)
+            yield v(i, j)
     }
 }

@@ -17,7 +17,7 @@ import mada.Vector.Compatibles._
 class CalcTest {
     val (expr, term, factor, digit) = Rule.make4[Char]
 
-    expr    ::= term >> (( '+' >> term ^^ add | '-' >> term ^^ sub )*) // Take care operator precedence.
+    expr    ::= term >> (( ('+' >> term){ case _ => () } | '-' >> term ^^ sub )*) // Take care operator precedence.
     term    ::= factor >> ( '*' >> factor ^^ mul | '/' >> factor ^^ div ).* // `.` is better.
     factor  ::= (digit+) ^^ int_ | '(' >> expr >> ')' | '-' >> factor ^^ neg | '+' >> factor
     digit   ::= range('0', '9')

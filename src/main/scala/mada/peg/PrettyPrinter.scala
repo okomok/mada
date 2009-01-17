@@ -57,12 +57,12 @@ class PrettyPrinter(val out: java.io.Writer, val indentWidth: Int) {
         override def parse(v: Vector[A], first: Long, last: Long) = {
             writeStartElement(self)
 
-            writeElement("peg:parsing", v.window(first, last))
+            writeElement("peg:parsing", v(first, last))
             val cur = self.parse(v, first, last)
             if (cur == FAILURE) {
                 writeElement("peg:parsed", "peg:failed")
             } else {
-                writeElement("peg:parsed", v.window(first, cur))
+                writeElement("peg:parsed", v(first, cur))
             }
 
             writeEndElement
