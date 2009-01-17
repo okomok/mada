@@ -10,38 +10,38 @@ package mada
 object Vector {
     import vec._
 
-    def concat[A](vs: Vector[A]*): Vector[A] = Concat(vs: _*)
+    val asLazy = AsLazy
+    val concat = Concat
     def empty[A]: Vector[A] = Empty.apply[A]
-    def flatten[A](vv: Vector[Vector[A]]): Vector[A] = Flatten(vv)
-    def lefts[A, B](v: Vector[Either[A, B]]): Vector[A] = Lefts(v)
-    def rights[A, B](v: Vector[Either[A, B]]): Vector[B] = Rights(v)
-    def lowerCase(v: Vector[Char]): Vector[Char] = LowerCase(v)
-    def upperCase(v: Vector[Char]): Vector[Char] = UpperCase(v)
-    def range(i: Int, j: Int): Vector[Int] = Range(i, j)
-    def range(i: Long, j: Long): Vector[Long] = Range(i, j)
-    def single[A](u: A): Vector[A] = Single(u)
-    def sort[A](v: Vector[A])(implicit c: A => Ordered[A]): Vector[A] = Sort(v)(c)
+    val flatten = Flatten
+    val lefts = Lefts
+    val rights = Rights
+    val lowerCase = LowerCase
+    val upperCase = UpperCase
+    val range = Range
+    val single= Single
+    val sort = Sort
     def toString(v: Vector[Char]): String = ToString(v)
-    def untokenize[A](vv: Vector[Vector[A]], sep: Vector[A]): Vector[A] = Untokenize(vv, sep)
-    def unzip[A, B](v: Vector[(A, B)]): (Vector[A], Vector[B]) = Unzip(v)
+    val untokenize = Untokenize
+    val unzip = Unzip
 
     val Compatibles = vec.Compatibles
-    def arrayVector[A](u: Array[A]): Vector[A] = ArrayVector(u)
-    def cellVector[A](u: Cell[A]): Vector[A] = CellVector(u)
-    def jclCharSequenceVector(u: java.lang.CharSequence): Vector[Char] = jcl.CharSequenceVector(u)
-    def jclListVector[A](u: java.util.List[A]): Vector[A] = jcl.ListVector(u)
-    def optionVector[A](u: Option[A]): Vector[A] = OptionVector(u)
-    def productVector(u: Product): Vector[Any] = ProductVector(u)
-    def randomAccessSeqVector[A](u: RandomAccessSeq[A]): Vector[A] = RandomAccessSeqVector(u)
-    def stringVector(u: String): Vector[Char] = StringVector(u)
-    def jclCharSequence(v: Vector[Char]): java.lang.CharSequence = jcl.VectorCharSequence(v)
+    val arrayVector = ArrayVector
+    val cellVector = CellVector
+    val jclCharSequenceVector = jcl.CharSequenceVector
+    val jclListVector = jcl.ListVector
+    val optionVector = OptionVector
+    val productVector = ProductVector
+    val randomAccessSeqVector = RandomAccessSeqVector
+    val stringVector = StringVector
+    val jclCharSequence = jcl.VectorCharSequence
 
-    def fromIterator[A](u: Iterator[A]): Vector[A] = FromIterator(u)
-    def fromJclIterator[A](u: java.util.Iterator[A]): Vector[A] = jcl.FromIterator(u)
-    def fromValues[A](es: A*): Vector[A] = FromValues(es: _*)
+    val fromIterator = FromIterator
+    val fromJclIterator = jcl.FromIterator
+    val fromValues = FromValues
 
-    def triplify[A, B](f: Vector[A] => B): ((Vector[A], Long, Long) => B) = Triplify(f)
-    def untriplify[A, B](f: (Vector[A], Long, Long) => B): (Vector[A] => B) = Untriplify(f)
+    val triplify = Triplify
+    val untriplify = Untriplify
 
     type NotReadableError[A] = vec.NotReadableError[A]
     type NotWritableError[A] = vec.NotWritableError[A]

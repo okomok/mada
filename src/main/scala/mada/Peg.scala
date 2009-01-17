@@ -21,8 +21,8 @@ object Peg {
     def error[A]: Peg[A] = Error[A]
     def fail[A]: Peg[A] = Fail[A]
 
+    val asLazy = AsLazy
     val icase = Icase
-    val lazy_ = Lazy
     val lowerCaseRead = LowerCaseRead
     val range = Range
     val single = Single
@@ -68,8 +68,9 @@ object Peg {
     type Captures[A] = peg.Captures[A]
     type PrettyPrinter = peg.PrettyPrinter
 
-    val ExpectedException = peg.ExpectedException
-    type ExpectedException[A] = peg.ExpectedException[A]
+    val verify = peg.Verify_
+    val VerificationException = peg.VerificationException
+    type VerificationException[A] = peg.VerificationException[A]
 }
 
 
@@ -107,7 +108,6 @@ trait Peg[A] {
 
     final def act(f: (Vector[A], Long, Long) => Any): Peg[A] = Act(this, f)
     final def andIf(pred: (Vector[A], Long, Long) => Boolean): Peg[A] = AndIf(this, pred)
-    final def expected: Peg[A] = Expected(this)
     final def identity: Peg[A] = Identity(this)
     final def memoize: Peg[A] = Memoize(this)
     final def named(name: String) = Named(this, name)

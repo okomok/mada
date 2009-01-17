@@ -23,10 +23,10 @@ class TryTest {
         assertTrue(thrown)
     }
 
-    def testExpected: Unit = {
+    def testVerify: Unit = {
         var thrown = false
-        val q = "abc" >> "R".expected >> "d"
-        val p = try_ { q } catch_ { case ExpectedException(_,(v,_,_)) => thrown = true; v(3) = 'R'; q }
+        val q = "abc" >> verify("R") >> "d"
+        val p = try_ { q } catch_ { case VerificationException(_,(v,_,_)) => thrown = true; v(3) = 'R'; q }
         assertFalse(thrown)
         assertTrue(p matches madaVector("abcLd").clone)
         assertTrue(thrown)
