@@ -29,7 +29,7 @@ class ASTreeBuilder[T <: MutableTreeNode](_root: T, _cloner: T => T) {
     private val branches = new java.util.ArrayDeque[T]
     branches.push(_root)
 
-    def toTree: T = {
+    def tree: T = {
         val n = branches.peek
         if ((n ne _root) || (branches.size != 1)) {
             throw new java.lang.IllegalStateException("failed to build tree")
