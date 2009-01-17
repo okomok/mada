@@ -15,25 +15,36 @@ import mada.Vector.Compatibles._
 
 
 class CalcTest {
-    val (expr, term, factor, digit) = Rule.make4[Char]
+    val (expr, term, factor, integer, digit) = Rule.make5[Char]
 
-    expr    ::= term >> (( ('+' >> term){ case _ => () } | '-' >> term ^^ sub )*) // Take care operator precedence.
-    term    ::= factor >> ( '*' >> factor ^^ mul | '/' >> factor ^^ div ).* // `.` is better.
-    factor  ::= (digit+) ^^ int_ | '(' >> expr >> ')' | '-' >> factor ^^ neg | '+' >> factor
-    digit   ::= range('0', '9')
+    val stack = new java.util.ArrayDeque[Int]
+    import stack.{ push, pop }
 
-    def int_(v: Vector[Char]): Unit = { }
-    def add(v: Vector[Char]): Unit = { }
-    def sub(v: Vector[Char]): Unit = { }
-    def mul(v: Vector[Char]): Unit = { }
-    def div(v: Vector[Char]): Unit = { }
-    def neg(v: Vector[Char]): Unit = { }
+    expr    ::= term >>
+                ( ('+' >> term){ case _ => push(pop + pop) } |
+                  ('-' >> term){ case _ => push(pop - pop) } ).*
+    term    ::= factor >>
+                ( ('*' >> factor){ case _ => push(pop * pop) } |
+                  ('/' >> factor){ case _ => push(pop / pop) } ).*
+    factor  ::= integer |
+                ('(' >> expr >> ')') |
+                ('-' >> factor){ case _ => push(-pop) } |
+                ('+' >> factor)
+    integer ::= (digit.+){ case (v,i,j) => push(parseInt(v(i,j))) }
+    digit   ::= range('0','9')
+
+    def parseInt(v: Vector[Char]): Int = java.lang.Integer.parseInt(Vector.toString(v))
 
     def testTrivial: Unit = {
-        assertTrue(expr.matches(Vector.stringVector("12345")))
-        assertTrue(expr.matches(Vector.stringVector("1+(-1)")))
-        assertTrue(expr.matches(Vector.stringVector("(1+2)*3")))
-        assertTrue(expr.matches(Vector.stringVector("(1+2)*(3*(4+5))")))
-        assertFalse(expr.matches(Vector.stringVector("(1+2)*(3*(4+5)")))
+        assertTrue(expr matches "12345")
+        assertEquals(12345, pop)
+        assertTrue(expr matches "1+(-1)")
+        assertEquals(1+(-1), pop)
+        assertTrue(expr matches "(1+2)*3")
+        assertEquals((1+2)*3, pop)
+        assertFalse(expr matches "(1+2)*(3*(4+5)")
+        stack.clear
+        assertTrue(expr matches "(1+2)*(3*(4+5))")
+        assertEquals((1+2)*(3*(4+5)), pop)
     }
 }
