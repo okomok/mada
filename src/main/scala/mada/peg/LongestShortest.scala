@@ -8,6 +8,7 @@ package mada.peg
 
 
 object Longest {
+    def apply[A](ps: Peg[A]*): Peg[A] = apply(ps)
     def apply[A](ps: Iterable[Peg[A]]): Peg[A] = new LongestPeg(ps)
 }
 
@@ -26,6 +27,7 @@ class LongestPeg[A](ps: Iterable[Peg[A]]) extends Peg[A] {
 
 
 object Shortest {
+    def apply[A](ps: Peg[A]*): Peg[A] = apply(ps)
     def apply[A](ps: Iterable[Peg[A]]): Peg[A] = new ShortestPeg(ps)
 }
 

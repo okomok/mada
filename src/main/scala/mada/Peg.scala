@@ -20,25 +20,24 @@ object Peg {
     def eps[A]: Peg[A] = Eps[A]
     def error[A]: Peg[A] = Error[A]
     def fail[A]: Peg[A] = Fail[A]
-    def icase(v: Vector[Char]): Peg[Char] = Icase(v)
-    def lowerCaseRead(p: Peg[Char]): Peg[Char] = LowerCaseRead(p)
-    def range[A](i: A, j: A)(implicit c: A => Ordered[A]): Peg[A] = Range(i, j)(c)
-    def single[A](e: A): Peg[A] = Single(e)
 
-    def longest[A](ps: Peg[A]*): Peg[A] = Longest(ps)
-    def longest[A](ps: Iterable[Peg[A]]): Peg[A] = Longest(ps)
-    def shortest[A](ps: Peg[A]*): Peg[A] = Shortest(ps)
-    def shortest[A](ps: Iterable[Peg[A]]): Peg[A] = Shortest(ps)
+    val icase = Icase
+    val lazy_ = Lazy
+    val lowerCaseRead = LowerCaseRead
+    val range = Range
+    val single = Single
+    val try_ = Try
 
-    def singles[A](es: A*): Peg[A] = Singles(es)
-    def singles[A](es: scala.collection.Set[A]): Peg[A] = Singles(es)
-    def switch[A](es: (A, Peg[A])*): Peg[A] = Switch(es)
-    def switch[A](es: scala.collection.Map[A, Peg[A]]): Peg[A] = Switch(es)
+    val longest = Longest
+    val shortest = Shortest
+
+    val singles = Singles
+    val switch = Switch
 
     val Compatibles = peg.Compatibles
-    def regexPeg(pat: java.util.regex.Pattern): Peg[Char] = RegexPeg(pat)
-    def stringPeg(str: String): Peg[Char] = StringPeg(str)
-    def vectorPeg[A](v: Vector[A]): Peg[A] = VectorPeg(v)
+    val regexPeg = RegexPeg
+    val stringPeg = StringPeg
+    val vectorPeg = VectorPeg
 
     def __*[A]: Peg[A] = any[A].star
     def __*?[A](p: Peg[A]): Peg[A] = any[A].starBefore(p)
@@ -68,8 +67,6 @@ object Peg {
     type RangeActions[A] = peg.RangeActions[A]
     type Captures[A] = peg.Captures[A]
     type PrettyPrinter = peg.PrettyPrinter
-
-    val try_ = peg.Try
 
     val ExpectedException = peg.ExpectedException
     type ExpectedException[A] = peg.ExpectedException[A]

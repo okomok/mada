@@ -11,7 +11,7 @@ import scala.collection.Set
 
 
 object Singles {
-    def apply[A](es: Seq[A]): Peg[A] = {
+    def apply[A](es: A*): Peg[A] = {
         val s = new scala.collection.jcl.HashSet[A]
         for (e <- es) {
             s.add(e)
