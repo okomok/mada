@@ -41,12 +41,12 @@ object Vector {
     val fromJclIterator = jcl.FromIterator
     val fromValues = FromValues
 
+    val triplify = Triplify
+    val untriplify = Untriplify
     type Triple[A] = (Vector[A], Long, Long)
     type Func[A, B] = Func1[A, B]
     type Func1[A, B] = Vector[A] => B
     type Func3[A, B] = (Vector[A], Long, Long) => B
-    val triplify = Triplify
-    val untriplify = Untriplify
 
     type NotReadableError[A] = vec.NotReadableError[A]
     type NotWritableError[A] = vec.NotWritableError[A]
