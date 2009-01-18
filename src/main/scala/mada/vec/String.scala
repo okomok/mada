@@ -20,7 +20,7 @@ class StringVector(val string: String) extends Vector[Char] with NotWritable[Cha
 
 
 object Stringize {
-    def apply[Char](v: Vector[Char]): String = v match {
+    def apply(v: Vector[Char]): String = v match {
         case v: StringVector => v.string
         case _ => {
             val sb = new StringBuilder(v.size.toInt)

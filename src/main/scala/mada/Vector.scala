@@ -34,6 +34,7 @@ object Vector {
     val productVector = ProductVector
     val randomAccessSeqVector = RandomAccessSeqVector
     val stringVector = StringVector
+    val tripleVector = TripleVector
     val jclCharSequence = jcl.VectorCharSequence
 
     val fromIterator = FromIterator

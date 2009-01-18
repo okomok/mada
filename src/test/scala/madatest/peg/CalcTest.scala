@@ -34,7 +34,7 @@ class CalcTest {
                 ('(' >> expr >> ')') |
                 ('-' >> factor){ case _ => push(-pop) } |
                 ('+' >> factor)
-    integer ::= (digit.+){ case (v,i,j) => push(parseInt(Vector.stringize(v(i,j)))) }
+    integer ::= (digit.+){ (v,i,j) => push(parseInt(Vector.stringize(v,i,j))) }
     digit   ::= range('0','9')
 
     def testTrivial: Unit = {
