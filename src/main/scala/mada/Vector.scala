@@ -21,7 +21,7 @@ object Vector {
     val range = Range
     val single= Single
     val sort = Sort
-    def toString(v: Vector[Char]): String = ToString(v)
+    val stringize = Stringize
     val untokenize = Untokenize
     val unzip = Unzip
 
@@ -69,7 +69,7 @@ trait Vector[A] {
     override def equals(that: Any): Boolean = Equals(this, that)
     override def hashCode: Int = HashCode(this)
     final def refHashCode: Int = super.hashCode
-    override def toString: String = AnyToString(this)
+    override def toString: String = ToString(this)
 
     final def always[B](that: Vector[B]): Vector[B] = Always(this, that)
     final def append(that: Vector[A]): Vector[A] = Append(this, that)

@@ -23,8 +23,8 @@ class IterateTest {
         var k = 0L
         for ((v, i, j) <- p.tokenize(w)) {
             assertSame(w, v)
-            sb append Vector.toString(v(k, i))
-            sb append Vector.toString(v(i, j))
+            sb append Vector.stringize(v(k, i))
+            sb append Vector.stringize(v(i, j))
             k = j
         }
 

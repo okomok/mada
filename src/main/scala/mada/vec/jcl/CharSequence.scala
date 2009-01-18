@@ -28,5 +28,5 @@ class VectorCharSequence(v: Vector[Char]) extends CharSequence {
     override def charAt(index: Int) = v(index)
     override def length = v.size.toInt
     override def subSequence(start: Int, end: Int) = new VectorCharSequence(v.window(start, end))
-    override def toString = Vector.toString(v)
+    override def toString = Vector.stringize(v)
 }

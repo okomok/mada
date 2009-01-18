@@ -7,6 +7,6 @@
 package mada.vec
 
 
-object AnyToString {
+object ToString {
     def apply[A](v: Vector[A]): String = v.toJclArrayList.toString
 }

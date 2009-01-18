@@ -27,19 +27,19 @@ class PrettyPrinter(val out: java.io.Writer, val indentWidth: Int) {
 
     def writeStartElement(tag: Any): Unit = {
         stack.push(tag)
-        out.write(Vector.toString(indent ++ "<" ++ tag.toString ++ ">\n"))
+        out.write(Vector.stringize(indent ++ "<" ++ tag.toString ++ ">\n"))
         out.flush
         indentLevel += 1
     }
 
     def writeEndElement: Unit = {
         indentLevel -= 1
-        out.write(Vector.toString(indent ++ "</" ++ stack.pop.toString ++ ">\n"))
+        out.write(Vector.stringize(indent ++ "</" ++ stack.pop.toString ++ ">\n"))
         out.flush
     }
 
     def writeElement(tag: Any, chars: Any): Unit = {
-        out.write(Vector.toString(indent ++ "<" ++ tag.toString ++ ">" ++ chars.toString ++ "</" ++ tag.toString ++ ">\n"))
+        out.write(Vector.stringize(indent ++ "<" ++ tag.toString ++ ">" ++ chars.toString ++ "</" ++ tag.toString ++ ">\n"))
         out.flush
     }
 

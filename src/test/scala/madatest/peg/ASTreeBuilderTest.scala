@@ -36,7 +36,7 @@ class ASTreeBuilderTest {
         return
 
         if (t.toString != null)
-            println(Vector.toString(" ".cycle(indent) ++ t.toString))
+            println(Vector.stringize(" ".cycle(indent) ++ t.toString))
         indent += 4
         val enum = t.children
         while (enum.hasMoreElements) {
