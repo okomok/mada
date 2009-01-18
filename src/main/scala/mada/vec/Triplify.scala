@@ -8,13 +8,13 @@ package mada.vec
 
 
 object Triplify {
-    def apply[A, B](f: Vector[A] => B): ((Vector[A], Long, Long) => B) = {
+    def apply[A, B](f: Vector.Func1[A, B]): Vector.Func3[A, B] = {
         { (v: Vector[A], i: Long, j: Long) => f(v.window(i, j)) }
     }
 }
 
 object Untriplify {
-    def apply[A, B](f: (Vector[A], Long, Long) => B): (Vector[A] => B) = {
+    def apply[A, B](f: Vector.Func3[A, B]): Vector.Func1[A, B] = {
         { (v: Vector[A]) => f(v, 0, v.size) }
     }
 }

@@ -71,8 +71,6 @@ object Peg {
     val verify = peg.Verify_
     val VerificationException = peg.VerificationException
     type VerificationException[A] = peg.VerificationException[A]
-
-    val toTripleAction = Vector.triplify
 }
 
 
@@ -107,8 +105,8 @@ trait Peg[A] {
     final def lookBehind: Peg[A] = LookBehind(this)
     final def lookBack: Peg[A] = LookBack(this)
 
-    final def act(f: (Vector[A], Long, Long) => Any): Peg[A] = Act(this, f)
-    final def andIf(pred: (Vector[A], Long, Long) => Boolean): Peg[A] = AndIf(this, pred)
+    final def act(f: Vector.Func3[A, Any]): Peg[A] = Act(this, f)
+    final def andIf(pred: Vector.Func3[A, Boolean]): Peg[A] = AndIf(this, pred)
     final def identity: Peg[A] = Identity(this)
     final def memoize: Peg[A] = Memoize(this)
     final def named(name: String) = Named(this, name)
@@ -121,11 +119,11 @@ trait Peg[A] {
     final def lookingAt(v: Vector[A]): Option[Long] = LookingAt(this, v)
     final def matches(v: Vector[A]): Boolean = Matches(this, v)
 
-    final def tokenize(v: Vector[A]): Iterator[(Vector[A], Long, Long)] = Tokenize(this, v)
+    final def tokenize(v: Vector[A]): Iterator[Vector.Triple[A]] = Tokenize(this, v)
     final def tokens(v: Vector[A]): Iterator[Vector[A]] = Tokens(this, v)
     final def filterFrom(v: Vector[A]): Iterator[A] = FilterFrom(this, v)
 
-    final def apply(f: (Vector[A], Long, Long) => Any): Peg[A] = act(f)
+    final def apply(f: Vector.Func3[A, Any]): Peg[A] = act(f)
     final def unary_~ : Peg[A] = lookAhead
     final def unary_! : Peg[A] = lookAhead.not
     final def unary_- : Peg[A] = not

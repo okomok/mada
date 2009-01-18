@@ -22,9 +22,9 @@ class RangeActions[A] {
         }
     }
 
-    def until(f: (Vector[A], Long, Long) => Any): UntilPeg = new UntilPeg(f)
+    def until(f: Vector.Func3[A, Any]): UntilPeg = new UntilPeg(f)
 
-    class UntilPeg(f: (Vector[A], Long, Long) => Any) extends Peg[A] {
+    class UntilPeg(f: Vector.Func3[A, Any]) extends Peg[A] {
         override def parse(v: Vector[A], first: Long, last: Long) = {
             f(v, stack.pop, first)
             first

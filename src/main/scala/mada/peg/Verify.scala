@@ -21,4 +21,4 @@ class VerifyPeg[A](override val self: Peg[A]) extends PegProxy[A] {
     }
 }
 
-case class VerificationException[A](peg: Peg[A], vector: (Vector[A], Long, Long)) extends RuntimeException
+case class VerificationException[A](peg: Peg[A], vector: Vector.Triple[A]) extends RuntimeException

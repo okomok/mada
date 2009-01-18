@@ -37,10 +37,10 @@ class ASTreeBuilder[T <: MutableTreeNode](root: T, cloner: T => T) {
         n
     }
 
-    def apply[A](p: Peg[A])(f: (Vector[A], Long, Long) => Any): Peg[A] = node(p)(f)
-    def node[A](p: Peg[A])(f: (Vector[A], Long, Long) => Any): Peg[A] = new NodePeg(p, f)
+    def apply[A](p: Peg[A])(f: Vector.Func3[A, Any]): Peg[A] = node(p)(f)
+    def node[A](p: Peg[A])(f: Vector.Func3[A, Any]): Peg[A] = new NodePeg(p, f)
 
-    class NodePeg[A](override val self: Peg[A], f: (Vector[A], Long, Long) => Any) extends PegProxy[A] {
+    class NodePeg[A](override val self: Peg[A], f: Vector.Func3[A, Any]) extends PegProxy[A] {
         override def parse(v: Vector[A], first: Long, last: Long) = {
             val n = newNode
             branches.push(n)
@@ -54,7 +54,7 @@ class ASTreeBuilder[T <: MutableTreeNode](root: T, cloner: T => T) {
         }
     }
 
-    def leaf[A](p: Peg[A])(f: (Vector[A], Long, Long) => Any): Peg[A] = {
+    def leaf[A](p: Peg[A])(f: Vector.Func3[A, Any]): Peg[A] = {
         def _add(v: Vector[A], first: Long, last: Long) = {
             val n = newNode
             n.setUserObject(f(v, first, last))

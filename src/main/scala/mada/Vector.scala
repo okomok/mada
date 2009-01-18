@@ -41,6 +41,10 @@ object Vector {
     val fromJclIterator = jcl.FromIterator
     val fromValues = FromValues
 
+    type Triple[A] = (Vector[A], Long, Long)
+    type Func[A, B] = Func[A, B]
+    type Func1[A, B] = Func1[A, B]
+    type Func3[A, B] = (Vector[A], Long, Long) => B
     val triplify = Triplify
     val untriplify = Untriplify
 
@@ -65,7 +69,7 @@ trait Vector[A] {
 
     final def vector: Vector[A] = this
     final def pair: (Long, Long) = (0, size)
-    final def triple: (Vector[A], Long, Long) = VectorTriple(this)
+    final def triple: Vector.Triple[A] = VectorTriple(this)
 
     override def equals(that: Any): Boolean = Equals(this, that)
     override def hashCode: Int = HashCode(this)
