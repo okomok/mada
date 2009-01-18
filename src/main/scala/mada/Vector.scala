@@ -64,8 +64,8 @@ trait Vector[A] {
     def update(i: Long, e: A): Unit = throw new NotWritableError(this)
 
     final def vector: Vector[A] = this
-    final def toPair: (Long, Long) = (0, size)
-    final def toTriple: (Vector[A], Long, Long) = (this, 0, size)
+    final def pair: (Long, Long) = (0, size)
+    final def triple: (Vector[A], Long, Long) = VectorTriple(this)
 
     override def equals(that: Any): Boolean = Equals(this, that)
     override def hashCode: Int = HashCode(this)

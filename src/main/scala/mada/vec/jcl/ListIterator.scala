@@ -15,7 +15,7 @@ object VectorListIterator {
 }
 
 class VectorListIterator[A](* : Vector[A]) extends ListIterator[A] {
-    private val (first, last) = *.toPair
+    private val (first, last) = *.pair
     private var cur = 0
 
     override def add(e: A) = throw new UnsupportedOperationException

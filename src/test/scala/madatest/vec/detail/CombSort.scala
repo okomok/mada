@@ -12,7 +12,7 @@ object CombSort {
 
     def apply[A](* : Vector[A], f: (A, A) => Boolean): Unit = {
         import *._
-        val (first, last) = *.toPair
+        val (first, last) = *.pair
 
         var gap = last - first
         if (gap < 1L)

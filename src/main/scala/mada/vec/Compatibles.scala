@@ -22,4 +22,5 @@ object Compatibles {
     implicit def madaVector2Iterator[A](from: Vector[A]): Iterator[A] = from.iterator
     implicit def madaVector2JclCharSequence(from: Vector[Char]): java.lang.CharSequence = Vector.jclCharSequence(from)
     implicit def madaVector2RandomAccessSeq[A](from: Vector[A]): RandomAccessSeq.Mutable[A] = from.randomAccessSeq
+    implicit def madaVector2Triple[A](from: Vector[A]): (Vector[A], Long, Long) = from.triple
 }

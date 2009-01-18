@@ -15,7 +15,7 @@ object Take {
 
 object TakeWhile {
     def apply[A](v: Vector[A], p: A => Boolean): Vector[A] = {
-        val (first, last) = v.toPair
+        val (first, last) = v.pair
         v.window(first, stl.FindIf(v, first, last, !p(_: A)))
     }
 }

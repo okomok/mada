@@ -9,7 +9,7 @@ package mada.vec
 
 object Span {
     def apply[A](v: Vector[A], p: A => Boolean): (Vector[A], Vector[A]) = {
-        val (first, last) = v.toPair
+        val (first, last) = v.pair
         val middle = stl.FindIf(v, first, last, !p(_: A))
         (v.window(first, middle), v.window(middle, last))
     }

@@ -9,7 +9,7 @@ package mada.vec
 
 object Find {
     def apply[A](* : Vector[A], p: A => Boolean): Option[A] = {
-        var (first, last) = *.toPair
+        var (first, last) = *.pair
 
         first = stl.FindIf(*, first, last, p)
         if (first == last) {

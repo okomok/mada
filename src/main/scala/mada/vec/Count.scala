@@ -9,7 +9,7 @@ package mada.vec
 
 object Count {
     def apply[A](v: Vector[A], p: A => Boolean): Long = {
-        val (first, last) = v.toPair
+        val (first, last) = v.pair
         stl.CountIf(v, first, last, p)
     }
 }

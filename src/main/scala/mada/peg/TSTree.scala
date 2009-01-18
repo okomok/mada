@@ -40,7 +40,7 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
     }
 
     def get(key: Vector[A]): Option[V] = {
-        val (first, last) = key.toPair
+        val (first, last) = key.pair
         get(key, first, last)
     }
 
@@ -49,12 +49,12 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
     }
 
     def put(key: Vector[A], value: V): Option[V] = {
-        val (first, last) = key.toPair
+        val (first, last) = key.pair
         put(key, first, last, value)
     }
 
     def remove(key: Vector[A]): Option[V] = {
-        val (first, last) = key.toPair
+        val (first, last) = key.pair
         remove(key, first, last)
     }
 

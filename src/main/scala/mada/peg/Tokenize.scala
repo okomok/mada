@@ -12,7 +12,7 @@ object Tokenize {
 }
 
 class TokenizeIterator[A](p: Peg[A], v: Vector[A]) extends Iterator[(Vector[A], Long, Long)] {
-    private val (first, last) = v.toPair
+    private val (first, last) = v.pair
     private var _1_2 = Find.impl(p, v, first, last)
     override def hasNext = _1_2._2 != Peg.FAILURE
     override def next = {

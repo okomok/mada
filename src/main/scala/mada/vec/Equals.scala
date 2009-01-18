@@ -16,8 +16,8 @@ object Equals {
 
 object EqualsWith {
     def apply[A1, A2](v1: Vector[A1], v2: Vector[A2], p: (A1, A2) => Boolean): Boolean = {
-        val (first1, last1) = v1.toPair
-        val (first2, last2) = v2.toPair
+        val (first1, last1) = v1.pair
+        val (first2, last2) = v2.pair
         if (last1 - first1 != last2 - first2) {
             false
         } else {
