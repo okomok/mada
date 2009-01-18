@@ -71,6 +71,8 @@ object Peg {
     val verify = peg.Verify_
     val VerificationException = peg.VerificationException
     type VerificationException[A] = peg.VerificationException[A]
+
+    val toTripleAction = Vector.triplify
 }
 
 
