@@ -7,24 +7,24 @@
 package mada.peg
 
 
-// `from( symbolMap("abc" --> until(f) >> "def") )`
+// `start( symbolMap("abc" --> endBy(f) >> "def") )`
 
 class RangeActions[A] {
     val stack = new java.util.ArrayDeque[Long]
 
-    def apply(p: Peg[A]): Peg[A] = from(p)
-    def from(p: Peg[A]): Peg[A] = new FromPeg(p)
+    def apply(p: Peg[A]): Peg[A] = start(p)
+    def start(p: Peg[A]): Peg[A] = new StartPeg(p)
 
-    class FromPeg(override val self: Peg[A]) extends PegProxy[A] {
+    class StartPeg(override val self: Peg[A]) extends PegProxy[A] {
         override def parse(v: Vector[A], first: Long, last: Long) = {
             stack.push(first)
             self.parse(v, first, last)
         }
     }
 
-    def until(f: Vector.Func3[A, Any]): UntilPeg = new UntilPeg(f)
+    def endBy(f: Vector.Func3[A, Any]): Peg[A] = new EndByPeg(f)
 
-    class UntilPeg(f: Vector.Func3[A, Any]) extends Peg[A] {
+    class EndByPeg(f: Vector.Func3[A, Any]) extends Peg[A] {
         override def parse(v: Vector[A], first: Long, last: Long) = {
             f(v, stack.pop, first)
             first
