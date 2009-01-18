@@ -16,7 +16,7 @@ class CapturingGroups[K, A](val map: scala.collection.mutable.Map[K, Vector[A]])
     }
 
     def apply(k: K, p: Peg[A]): Peg[A] = capture(k, p)
-    def capture(k: K, p: Peg[A]): Peg[A] = p.act({ (v, m, n) => group(k) = v(m, n) })
+    def capture(k: K, p: Peg[A]): Peg[A] = p.act({ (v, i, j) => group(k) = v(i, j) })
 
     def apply(k: K): Peg[A] = backref(k)
     def backref(k: K): Peg[A] = new BackrefPeg(k)
