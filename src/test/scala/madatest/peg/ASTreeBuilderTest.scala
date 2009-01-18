@@ -19,7 +19,7 @@ class ASTreeBuilderTest {
     var indent = 0
 
     def testTrivial: Unit = {
-        val (expr, term, factor, digit) = Rule.make4[Char]
+        val (expr, term, factor, digit) = Rule.new4[Char]
         val tb = ASTreeBuilder("root")
         printTree(tb.tree) // trivial tree
 

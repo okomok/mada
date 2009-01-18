@@ -8,11 +8,11 @@ package mada.peg
 
 
 object Rule {
-    def make1[A]: (Rule[A]) = (new Rule[A])
-    def make2[A]: (Rule[A], Rule[A]) = (new Rule[A], new Rule[A])
-    def make3[A]: (Rule[A], Rule[A], Rule[A]) = (new Rule[A], new Rule[A], new Rule[A])
-    def make4[A]: (Rule[A], Rule[A], Rule[A], Rule[A]) = (new Rule[A], new Rule[A], new Rule[A], new Rule[A])
-    def make5[A]: (Rule[A], Rule[A], Rule[A], Rule[A], Rule[A]) = (new Rule[A], new Rule[A], new Rule[A], new Rule[A], new Rule[A])
+    def new1[A]: (Rule[A]) = (new Rule[A])
+    def new2[A]: (Rule[A], Rule[A]) = (new Rule[A], new Rule[A])
+    def new3[A]: (Rule[A], Rule[A], Rule[A]) = (new Rule[A], new Rule[A], new Rule[A])
+    def new4[A]: (Rule[A], Rule[A], Rule[A], Rule[A]) = (new Rule[A], new Rule[A], new Rule[A], new Rule[A])
+    def new5[A]: (Rule[A], Rule[A], Rule[A], Rule[A], Rule[A]) = (new Rule[A], new Rule[A], new Rule[A], new Rule[A], new Rule[A])
 }
 
 class Rule[A] private (private var p: Peg[A]) extends PegProxy[A] {

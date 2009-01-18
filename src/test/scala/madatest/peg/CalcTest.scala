@@ -15,10 +15,11 @@ import mada.Peg._
 import junit.framework.Assert._
 import mada.Peg.Compatibles._
 import mada.Vector.Compatibles._
+import java.util.regex.Pattern
 
 
 class CalcTest {
-    val (expr, term, factor, integer, digit) = Rule.make5[Char]
+    val (expr, term, factor, integer, digit) = Rule.new5[Char]
 
     val stack = new java.util.ArrayDeque[Int]
     import stack.{ push, pop }
@@ -35,7 +36,7 @@ class CalcTest {
                 ('-' >> factor){ case _ => push(-pop) } |
                 ('+' >> factor)
     integer ::= (digit.+){ case v => push(parseInt(Vector.stringize(v))) }
-    digit   ::= range('0','9')
+    digit   ::= Pattern.compile("[0-9]")
 
     def testTrivial: Unit = {
         assertTrue(expr matches "12345")
