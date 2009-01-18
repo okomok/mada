@@ -14,6 +14,6 @@ object Compatibles {
     implicit def string2madaPeg(from: String): Peg[Char] = Peg.stringPeg(from)
     implicit def madaVector2madaPeg[A](from: Vector[A]): Peg[A] = Peg.vectorPeg(from)
 
-    def madaPegAction[A, B](from: Vector.Func3[A, B]): Vector.Func3[A, B] = from
-    implicit def madaPegUnary2TripleAction[A, B](from: Vector.Func1[A, B]): Vector.Func3[A, B] = Vector.triplify(from)
+    def madaPegFunc[A, B](from: Vector.Func3[A, B]): Vector.Func3[A, B] = from
+    implicit def madaPegTriplify[A, B](from: Vector.Func1[A, B]): Vector.Func3[A, B] = Vector.triplify(from)
 }
