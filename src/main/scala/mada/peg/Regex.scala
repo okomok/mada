@@ -10,6 +10,11 @@ package mada.peg
 import java.util.regex.Pattern
 
 
+object Regex {
+    def apply(x: String): Peg[Char] = new RegexPeg(Pattern.compile(x))
+}
+
+
 object RegexPeg {
     def apply(pat: Pattern): Peg[Char] = new RegexPeg(pat)
 }

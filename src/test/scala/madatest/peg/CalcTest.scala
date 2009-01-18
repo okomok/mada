@@ -15,7 +15,6 @@ import mada.Peg._
 import junit.framework.Assert._
 import mada.Peg.Compatibles._
 import mada.Vector.Compatibles._
-import java.util.regex.Pattern
 
 
 class CalcTest {
@@ -36,7 +35,7 @@ class CalcTest {
                 ('-' >> factor){ case _ => push(-pop) } |
                 ('+' >> factor)
     integer ::= (digit.+){ case v => push(parseInt(Vector.stringize(v))) }
-    digit   ::= Pattern.compile("[0-9]")
+    digit   ::= regex("[0-9]")
 
     def testTrivial: Unit = {
         assertTrue(expr matches "12345")

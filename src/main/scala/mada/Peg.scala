@@ -25,6 +25,7 @@ object Peg {
     val icase = Icase
     val lowerCaseRead = LowerCaseRead
     val range = Range
+    val regex = Regex
     val single = Single
     val try_ = Try
 
