@@ -65,7 +65,7 @@ object Peg {
 
     type ByNeedActions[A] = peg.ByNeedActions[A]
     type RangeActions[A] = peg.RangeActions[A]
-    type Captures[A] = peg.Captures[A]
+    type CapturingGroups[A] = peg.CapturingGroups[A]
     type PrettyPrinter = peg.PrettyPrinter
 
     val verify = peg.Verify_

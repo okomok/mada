@@ -13,9 +13,9 @@ import mada.Peg.Compatibles._
 import mada.Peg._
 
 
-class CapturesTest {
+class CapturingGroupsTest {
     def testTrivial: Unit = {
-        val c = new Captures[Char]
+        val c = new CapturingGroups[Char]
         val p = ("abcd" >> c(10, "EFG") >> "hi" >> c(10))
         assertTrue(p matches "abcdEFGhiEFG")
     }
