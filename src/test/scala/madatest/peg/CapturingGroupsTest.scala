@@ -15,8 +15,8 @@ import mada.Peg._
 
 class CapturingGroupsTest {
     def testTrivial: Unit = {
-        val c = new CapturingGroups[Char]
-        val p = ("abcd" >> c(10, "EFG") >> "hi" >> c(10))
+        val c = new CapturingGroups[String, Char]
+        val p = ("abcd" >> c("name", "EFG") >> "hi" >> c("name"))
         assertTrue(p matches "abcdEFGhiEFG")
     }
 }
