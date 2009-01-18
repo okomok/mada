@@ -14,15 +14,15 @@ object And {
 class AndPeg[A](p: Peg[A], q: Peg[A]) extends Peg[A] {
     override def parse(v: Vector[A], first: Long, last: Long) = {
         val pcur = p.parse(v, first, last)
-        if (pcur != FAILURE) {
+        if (pcur != Peg.FAILURE) {
             val qcur = q.parse(v, first, last) // short-circuit
             if (pcur == qcur) {
                 pcur
             } else {
-                FAILURE
+                Peg.FAILURE
             }
         } else {
-            FAILURE
+            Peg.FAILURE
         }
     }
 

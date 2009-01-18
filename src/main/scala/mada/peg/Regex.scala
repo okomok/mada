@@ -23,7 +23,7 @@ class RegexPeg(pat: Pattern) extends Peg[Char] {
         if (mat.lookingAt) {
             mat.end
         } else {
-            FAILURE
+            Peg.FAILURE
         }
     }
 }

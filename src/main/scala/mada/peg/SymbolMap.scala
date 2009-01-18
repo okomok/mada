@@ -25,7 +25,7 @@ class SymbolMap[A] private (private val tree: TSTree[A, Peg[A]]) extends Peg[A] 
     override def parse(v: Vector[A], first: Long, last: Long) = {
         tree.parse(v, first, last) match {
             case Some((p, cur)) => p.parse(v, cur, last)
-            case _ => FAILURE
+            case _ => Peg.FAILURE
         }
     }
 

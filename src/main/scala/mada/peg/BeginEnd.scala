@@ -16,7 +16,7 @@ class BeginPeg[A] extends Peg[A] {
         if (first == 0) {
             first
         } else {
-            FAILURE
+            Peg.FAILURE
         }
     }
 
@@ -33,7 +33,7 @@ class EndPeg[A] extends Peg[A] {
         if (first == last) {
             first
         } else {
-            FAILURE
+            Peg.FAILURE
         }
     }
 

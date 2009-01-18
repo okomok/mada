@@ -198,24 +198,24 @@ class LRule[A](v: Vector[A]) extends Peg[A] {
     def <--(that: Peg[A]): Unit = { this ::= that }
 
     private var parsing = false
-    private var position = FAILURE
+    private var position = Peg.FAILURE
     private var recurred = false
 
     override def parse(v: Vector[A], first: Long, last: Long) = {
         if (parsing && first == position) {
             recurred = true
-            FAILURE
+            Peg.FAILURE
         } else {
             parsing = true
             position = first
             val cur = p.parse(v, first, last)
             mp.table.put(first, cur)
-            position = FAILURE
+            position = Peg.FAILURE
             parsing = false
             if (recurred) {
                 println("recurred:" + cur)
                 recurred = false
-                if (cur != FAILURE) {
+                if (cur != Peg.FAILURE) {
                     grow(v, first, last)
                 } else {
                     cur
@@ -231,7 +231,7 @@ class LRule[A](v: Vector[A]) extends Peg[A] {
         while (true) {
             val i = p.parse(v, first, last)
             println("iteration:" + i)
-            if (i == FAILURE || i <= cur) {
+            if (i == Peg.FAILURE || i <= cur) {
                 return cur
             }
             cur = i
@@ -255,14 +255,14 @@ class LRule[A](v: Vector[A]) extends Peg[A] {
     override def parse(v: Vector[A], first: Long, last: Long) = {
         if (parsing) {
             recurred = true
-            FAILURE
+            Peg.FAILURE
         } else {
             parsing = true
             val cur = p.parse(v, first, last)
             parsing = false
             if (recurred) {
                 recurred = false
-                if (cur != FAILURE) {
+                if (cur != Peg.FAILURE) {
                     growLR(v, first, last)
                 } else {
                     cur
@@ -277,7 +277,7 @@ class LRule[A](v: Vector[A]) extends Peg[A] {
         var cur = first
         while (true) {
             val i = q.parse(v, first, last)
-            if (i == FAILURE || i <= cur) {
+            if (i == Peg.FAILURE || i <= cur) {
                 return cur
             }
             cur = i

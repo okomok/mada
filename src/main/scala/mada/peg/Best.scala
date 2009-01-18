@@ -20,10 +20,10 @@ object Shortest {
 
 class BestPeg[A](ps: Iterable[Peg[A]], which: (Long, Long) => Long) extends Peg[A] {
     override def parse(v: Vector[A], first: Long, last: Long) = {
-        var cur = FAILURE
+        var cur = Peg.FAILURE
         for (p <- ps.projection) {
             val i = p.parse(v, first, last)
-            if (i != FAILURE) {
+            if (i != Peg.FAILURE) {
                 cur = which(cur, i)
             }
         }

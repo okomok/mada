@@ -17,7 +17,7 @@ class StarPeg[A](p: Peg[A]) extends Peg[A] {
 
         while (true) {
             val next = p.parse(v, cur, last)
-            if (next == FAILURE) {
+            if (next == Peg.FAILURE) {
                 return cur
             } else if (next == last) {
                 return last

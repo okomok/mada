@@ -14,7 +14,7 @@ object Act {
 class ActPeg[A](override val self: Peg[A], f: (Vector[A], Long, Long) => Any) extends PegProxy[A] {
     override def parse(v: Vector[A], first: Long, last: Long) = {
         val cur = self.parse(v, first, last)
-        if (cur != FAILURE) {
+        if (cur != Peg.FAILURE) {
             f(v, first, cur)
         }
         cur

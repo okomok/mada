@@ -14,7 +14,7 @@ object Any_ {
 class AnyPeg[A] extends Peg[A] {
     override def parse(v: Vector[A], first: Long, last: Long) = {
         if (first == last) {
-            FAILURE
+            Peg.FAILURE
         } else {
             first + 1
         }

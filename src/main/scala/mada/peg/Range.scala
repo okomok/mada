@@ -14,13 +14,13 @@ object Range {
 class RangePeg[A](i: A, j: A)(implicit c: A => Ordered[A]) extends Peg[A] {
     override def parse(v: Vector[A], first: Long, last: Long) = {
         if (first == last) {
-            FAILURE
+            Peg.FAILURE
         } else {
             val e = v(first)
             if (c(i) <= e && c(e) <= j) {
                 first + 1
             } else {
-                FAILURE
+                Peg.FAILURE
             }
         }
     }

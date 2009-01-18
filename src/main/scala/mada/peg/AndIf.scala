@@ -14,8 +14,8 @@ object AndIf {
 class AndIfPeg[A](override val self: Peg[A], pred: (Vector[A], Long, Long) => Boolean) extends PegProxy[A] {
     override def parse(v: Vector[A], first: Long, last: Long) = {
         val cur = self.parse(v, first, last)
-        if (cur == FAILURE || !pred(v, first, cur)) {
-            FAILURE
+        if (cur == Peg.FAILURE || !pred(v, first, cur)) {
+            Peg.FAILURE
         } else {
             cur
         }

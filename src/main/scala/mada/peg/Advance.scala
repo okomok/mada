@@ -19,7 +19,7 @@ class AdvancePeg[A](i: Long) extends Peg[A] {
         if (cur <= last) {
             cur
         } else {
-            FAILURE
+            Peg.FAILURE
         }
     }
 

@@ -46,7 +46,7 @@ class ASTreeBuilder[T <: MutableTreeNode](root: T, cloner: T => T) {
             branches.push(n)
             val cur = self.parse(v, first, last)
             Verify(n eq branches.pop)
-            if (cur != FAILURE) {
+            if (cur != Peg.FAILURE) {
                 n.setUserObject(f(v, first, cur))
                 addNode(branches.peek, n)
             }
