@@ -86,6 +86,7 @@ trait Vector[A] {
     final def clear: Vector[A] = Clear(this)
     override def clone: Vector[A] = Clone(this)
     final def contains(e: Any): Boolean = Contains(this, e)
+    /*final*/ def copyTo[B >: A](that: Vector[B]): Vector[A] = CopyTo(this, that)
     final def count(p: A => Boolean): Long = Count(this, p)
     final def cut: Vector[A] = Cut(this)
     def cycle(n: Long): Vector[A] = Cycle(this, n)

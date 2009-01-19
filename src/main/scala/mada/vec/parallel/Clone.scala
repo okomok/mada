@@ -10,7 +10,7 @@ package mada.vec.parallel
 object Clone {
     def apply[A](v: Vector[A], grainSize: Long): Vector[A] = {
         val out = Vector.arrayVector(new Array[A](v.size.toInt))
-        Copy(v, out, grainSize)
+        v.parallel(grainSize).copyTo(out)
         out
     }
 }
