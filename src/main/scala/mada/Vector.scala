@@ -90,7 +90,7 @@ trait Vector[A] {
     final def drop(n: Long): Vector[A] = Drop(this, n)
     final def dropWhile(p: A => Boolean): Vector[A] = DropWhile(this, p)
     final def elements: Iterator[A] = iterator
-    final def equalsWith[B](that: Vector[B])(p: (A, B) => Boolean): Boolean = EqualsWith(this, that, p)
+    /*final*/ def equalsWith[B](that: Vector[B])(p: (A, B) => Boolean): Boolean = EqualsWith(this, that, p)
     final def exists(p: A => Boolean): Boolean = Exists(this, p)
     final def filter(p: A => Boolean): Vector[A] = Filter(this, p)
     final def find(p: A => Boolean): Option[A] = Find(this, p)
@@ -102,7 +102,7 @@ trait Vector[A] {
     final def foldRight[B](z: B)(op: (A, B) => B): B = FoldRight(this, z, op)
     final def /:[B](z: B)(op: (B, A) => B): B = foldLeft(z)(op)
     final def :\[B](z: B)(op: (A, B) => B): B = foldRight(z)(op)
-    final def foreach(f: A => Unit): Unit = Foreach(this, f)
+    /*final*/ def foreach(f: A => Unit): Unit = Foreach(this, f)
     final def head: A = Head(this)
     final def identity: Vector[A] = Identity(this)
     final def indices: Vector[Long] = Indices(this)
