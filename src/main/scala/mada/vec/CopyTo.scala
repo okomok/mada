@@ -12,7 +12,6 @@ object CopyTo {
         if (v.size != w.size) {
             throw new java.lang.IllegalArgumentException("size is different")
         }
-
         val (first, last) = v.pair
         val (result, _) = w.pair
         stl.Copy(v, first, last, w, result)
