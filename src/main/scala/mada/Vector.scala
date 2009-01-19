@@ -95,7 +95,7 @@ trait Vector[A] {
     final def elements: Iterator[A] = iterator
     final def exists(p: A => Boolean): Boolean = Exists(this, p)
     final def filter(p: A => Boolean): Vector[A] = Filter(this, p)
-    final def find(p: A => Boolean): Option[A] = Find(this, p)
+    /*final*/ def find(p: A => Boolean): Option[A] = Find(this, p)
     final def first: A = First(this)
     final def flatMap[B](f: A => Vector[B]): Vector[B] = FlatMap(this, f)
     final def forall(p: A => Boolean): Boolean = Forall(this, p)
@@ -152,7 +152,7 @@ trait Vector[A] {
     final def parallel = Parallel(this)
     final def parallel(grainSize: Long) = Parallel(this, grainSize)
 
-    final def ++(that: Vector[A]): Vector[A] = append(that)
     final def apply(first: Long, last: Long): Vector[A] = window(first, last)
+    final def ++(that: Vector[A]): Vector[A] = append(that)
     final def -->(p: Peg[A]): (Vector[A], Peg[A]) = (this, p)
 }

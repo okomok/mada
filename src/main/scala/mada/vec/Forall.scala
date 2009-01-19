@@ -7,7 +7,6 @@
 package mada.vec
 
 
-
 object Forall {
-    def apply[A](v: Vector[A], p: A => Boolean): Boolean = v.find(!p(_: A)) == None
+    def apply[A](v: Vector[A], p: A => Boolean): Boolean = v.find(!p(_: A)).isEmpty
 }

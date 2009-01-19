@@ -27,11 +27,7 @@ class ArrayVector[A](val array: Array[A]) extends Vector[A] {
 object ToArray {
     def apply[A](v: Vector[A]): Array[A] = {
         val a = new Array[A](v.size.toInt)
-        var i = 0
-        for (e <- v) {
-            a(i) = e
-            i += 1
-        }
+        v.copyTo(Vector.arrayVector(a))
         a
     }
 }

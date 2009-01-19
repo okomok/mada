@@ -26,7 +26,7 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
     }
 
     def containsKey(key: Vector[A]): Boolean = {
-        get(key) != None
+        !get(key).isEmpty
     }
 
     def elements: Iterator[(Vector[A], V)] = {
