@@ -35,20 +35,17 @@ object EqualsWith {
         val (w1, w2) = w.splitAt(grainSize)
         if (v2.isEmpty) {
             Assert(w2.isEmpty)
-            breakingEqual(v, w, p)
+            breakingEquals(v, w, p)
         } else {
             val u2 = scala.actors.Futures.future {
                 impl(v2, w2, p, grainSize)
             }
-            breakingEqual(v1, w1, p) && u2()
+            breakingEquals(v1, w1, p) && u2()
         }
     }
 
-    private def breakingEqual[A, B](v: Vector[A], w: Vector[B], p: Breakable2[A, B]): Boolean = {
-        Assert(v.size == w.size)
-        val (first1, last1) = v.pair
-        val (first2, _) = w.pair
-        val x = stl.Equal(v, first1, last1, w, first2, p)
+    private def breakingEquals[A, B](v: Vector[A], w: Vector[B], p: Breakable2[A, B]): Boolean = {
+        val x = v.equalsWith(w)(p)
         if (!x) {
             p.break
         }

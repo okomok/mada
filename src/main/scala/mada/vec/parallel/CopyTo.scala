@@ -24,7 +24,7 @@ object CopyTo {
             v.copyTo(w)
         } else {
             val u2 = scala.actors.Futures.future {
-                apply(v2, w2, grainSize)
+                impl(v2, w2, grainSize)
             }
             v1.copyTo(w1); u2()
         }
