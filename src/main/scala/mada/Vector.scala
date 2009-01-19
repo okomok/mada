@@ -72,6 +72,8 @@ trait Vector[A] {
     final def triple: Vector.Triple[A] = VectorTriple(this)
 
     override def equals(that: Any): Boolean = Equals(this, that)
+    /*final*/ def equalsTo[B](that: Vector[B]): Boolean = EqualsTo(this, that)
+    /*final*/ def equalsWith[B](that: Vector[B])(p: (A, B) => Boolean): Boolean = EqualsWith(this, that, p)
     override def hashCode: Int = HashCode(this)
     final def refHashCode: Int = super.hashCode
     override def toString: String = ToString(this)
@@ -90,7 +92,6 @@ trait Vector[A] {
     final def drop(n: Long): Vector[A] = Drop(this, n)
     final def dropWhile(p: A => Boolean): Vector[A] = DropWhile(this, p)
     final def elements: Iterator[A] = iterator
-    /*final*/ def equalsWith[B](that: Vector[B])(p: (A, B) => Boolean): Boolean = EqualsWith(this, that, p)
     final def exists(p: A => Boolean): Boolean = Exists(this, p)
     final def filter(p: A => Boolean): Vector[A] = Filter(this, p)
     final def find(p: A => Boolean): Option[A] = Find(this, p)

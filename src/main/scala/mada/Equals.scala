@@ -7,7 +7,7 @@
 package mada
 
 
-// == is not type-safe.
+// useless. remove me.
 
 object Equals {
     def apply[A](x: A, y: A): Boolean = x == y

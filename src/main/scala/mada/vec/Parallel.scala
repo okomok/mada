@@ -18,6 +18,7 @@ class Parallel[A](override val self: Vector[A], grainSize: Long) extends VectorP
     import vec.parallel._
 
     override def equals(that: Any): Boolean = Equals(self, that, grainSize)
+    override def equalsTo[B](that: Vector[B]): Boolean = EqualsTo(self, that, grainSize)
     override def equalsWith[B](that: Vector[B])(p: (A, B) => Boolean): Boolean = EqualsWith(self, that, p, grainSize)
     override def clone: Vector[A] = Clone(self, grainSize)
     override def foreach(f: A => Unit): Unit = Foreach(self, f, grainSize)

@@ -10,8 +10,14 @@ package mada.vec.parallel
 
 object Equals {
     def apply[A](v: Vector[A], w: Any, grainSize: Long): Boolean = w match {
-        case w: Vector[_] => v.parallel(grainSize).equalsWith(w)(stl.EqualTo)
+        case w: Vector[_] => v.parallel(grainSize).equalsTo(w)
         case _ => false
+    }
+}
+
+object EqualsTo {
+    def apply[A, B](v: Vector[A], w: Vector[B], grainSize: Long): Boolean = {
+        v.parallel(grainSize).equalsWith(w)(stl.EqualTo)
     }
 }
 
