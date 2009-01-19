@@ -36,12 +36,12 @@ object EqualsWith {
         val (w1, w2) = w.splitAt(grainSize)
         if (v2.isEmpty) {
             Assert(w2.isEmpty)
-            breakingEqual(v1, w1, p)
+            breakingEqual(v, w, p)
         } else {
-            val u = scala.actors.Futures.future {
+            val u2 = scala.actors.Futures.future {
                 impl(v2, w2, p, grainSize)
             }
-            breakingEqual(v1, w1, p) && u()
+            breakingEqual(v1, w1, p) && u2()
         }
     }
 

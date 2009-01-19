@@ -11,13 +11,12 @@ object Foreach {
     def apply[A](v: Vector[A], f: A => Unit, grainSize: Long): Unit = {
         val (v1, v2) = v.splitAt(grainSize)
         if (v2.isEmpty) {
-            v1.foreach(f)
+            v.foreach(f)
         } else {
-            val u = scala.actors.Futures.future {
+            val u2 = scala.actors.Futures.future {
                 apply(v2, f, grainSize)
             }
-            v1.foreach(f)
-            u()
+            v1.foreach(f); u2()
         }
     }
 }
