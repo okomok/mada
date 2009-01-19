@@ -7,10 +7,6 @@
 package mada.vec
 
 
-// Note: This requires copy for random-access guarantee.
-
-
 object FromValues {
-    // Array.apply is nightmare.
-    def apply[A](es: A*): Vector[A] = Vector.jclListVector(jcl.NewArrayList(es: _*))
+    def apply[A](es: A*): Vector[A] = Vector.fromIterator(es.elements)
 }
