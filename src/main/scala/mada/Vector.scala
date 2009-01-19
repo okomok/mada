@@ -147,6 +147,9 @@ trait Vector[A] {
     final def writer(i: Long): (A => Unit) = Writer(this, i)
     final def zip[B](that: Vector[B]): Vector[(A, B)] = Zip(this, that)
 
+    final def parallel = Parallel(this)
+    final def parallel(grainSize: Long) = Parallel(this, grainSize)
+
     final def ++(that: Vector[A]): Vector[A] = append(that)
     final def apply(first: Long, last: Long): Vector[A] = window(first, last)
     final def -->(p: Peg[A]): (Vector[A], Peg[A]) = (this, p)

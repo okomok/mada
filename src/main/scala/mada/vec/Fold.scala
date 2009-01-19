@@ -16,6 +16,6 @@ object FoldLeft {
 
 object FoldRight {
     def apply[A, B](v: Vector[A], z: B, op: (A, B) => B): B = {
-        v.reverse.foldLeft(z)({ (b: B, a: A) => op(a, b) })
+        v.reverse.foldLeft(z)(stl.Flip(op))
     }
 }

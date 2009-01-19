@@ -15,6 +15,6 @@ object ReduceLeft {
 
 object ReduceRight {
     def apply[A, B >: A](v: Vector[A], op: (A, B) => B): B = {
-        v.reverse.reduceLeft({ (b: B, a: A) => op(a, b) })
+        v.reverse.reduceLeft(stl.Flip(op))
     }
 }
