@@ -7,23 +7,12 @@
 package mada.vec.parallel
 
 
-object FoldLeft {
-    def apply[A, B](v: Vector[A], z: B, op: (B, A) => B, grainSize: Long): B = {
-        val (v1, v2) = v.splitAt(grainSize)
-        if (v2.isEmpty) {
-            v1.foldLeft(z)(op)
+object Fold {
+    def apply[A](v: Vector[A], z: A, op: (A, A) => A, grainSize: Long): A = {
+        if (v.isEmpty) {
+            z
         } else {
-            val u = scala.actors.Futures.future {
-                apply(v2, z, op, grainSize)
-            }
-            v1.foldLeft(z)(op)
-            u()
+            op(z, v.parallel(grainSize).reduce(op))
         }
-    }
-}
-
-object FoldRight {
-    def apply[A, B](v: Vector[A], z: B, op: (A, B) => B, grainSize: Long): B = {
-        v.reverse.parallel(grainSize).foldLeft(z)(stl.Flip(op))
     }
 }

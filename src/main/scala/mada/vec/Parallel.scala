@@ -9,14 +9,17 @@ package mada.vec
 
 object Parallel {
     def defaultGrainSize[A](v: Vector[A]): Long = 1
-    def apply[A](v: Vector[A]): Parallel[A] = new Parallel(v, defaultGrainSize(v))
-    def apply[A](v: Vector[A], grainSize: Long): Parallel[A] = new Parallel(v, grainSize)
+    def apply[A](v: Vector[A]) = new Parallel(v, defaultGrainSize(v))
+    def apply[A](v: Vector[A], grainSize: Long) = new Parallel(v, grainSize)
 }
 
 class Parallel[A](v: Vector[A], grainSize: Long) {
-    def foldLeft[B](z: B)(op: (B, A) => B): B = parallel.FoldLeft(v, z, op, grainSize)
-    def foldRight[B](z: B)(op: (A, B) => B): B = parallel.FoldRight(v, z, op, grainSize)
-    def foreach(f: A => Unit): Unit = parallel.Foreach(v, f, grainSize)
-    def reduceLeft[B >: A](op: (B, A) => B): B = parallel.ReduceLeft(v, op, grainSize)
-    def reduceRight[B >: A](op: (A, B) => B): B = parallel.ReduceRight(v, op, grainSize)
+    import parallel._
+
+    override def equals(that: Any): Boolean = Equals(v, that, grainSize)
+    def equalsWith[B](that: Vector[B])(p: (A, B) => Boolean): Boolean = EqualsWith(v, that, p, grainSize)
+    def cloneVector: Vector[A] = Clone(v, grainSize)
+    def foreach(f: A => Unit): Unit = Foreach(v, f, grainSize)
+    def fold(z: A)(op: (A, A) => A): A = Fold(v, z, op, grainSize)
+    def reduce(op: (A, A) => A): A = Reduce(v, op, grainSize)
 }

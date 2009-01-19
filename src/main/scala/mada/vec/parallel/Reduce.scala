@@ -7,14 +7,16 @@
 package mada.vec.parallel
 
 
-object ReduceLeft {
-    def apply[A, B >: A](v: Vector[A], op: (B, A) => B, grainSize: Long): B = {
-        v.tail.parallel(grainSize).foldLeft[B](v.head)(op)
-    }
-}
-
-object ReduceRight {
-    def apply[A, B >: A](v: Vector[A], op: (A, B) => B, grainSize: Long): B = {
-        v.reverse.parallel(grainSize).reduceLeft(stl.Flip(op))
+object Reduce {
+    def apply[A](v: Vector[A], op: (A, A) => A, grainSize: Long): A = {
+        val (v1, v2) = v.splitAt(grainSize)
+        if (v2.isEmpty) {
+            v1.reduceLeft(op)
+        } else {
+            val u = scala.actors.Futures.future {
+                apply(v2, op, grainSize)
+            }
+            op(v1.reduceLeft(op), u())
+        }
     }
 }
