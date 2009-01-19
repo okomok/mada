@@ -134,6 +134,7 @@ trait Vector[A] {
     final def span(p: A => Boolean): (Vector[A], Vector[A]) = Span(this, p)
     final def splitAt(i: Long): (Vector[A], Vector[A]) = SplitAt(this, i)
     def step(n: Long, m: Long): Vector[A] = Step(this, n, m)
+    final def stream: Stream[A] = VectorStream(this)
     final def take(n: Long): Vector[A] = Take(this, n)
     final def takeWhile(p: A => Boolean): Vector[A] = TakeWhile(this, p)
     final def tail: Vector[A] = Tail(this)
