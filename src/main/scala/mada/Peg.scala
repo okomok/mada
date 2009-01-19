@@ -36,7 +36,7 @@ object Peg {
     val switch = Switch
 
     val Compatibles = peg.Compatibles
-    val regexPeg = RegexPeg
+    val regexPatternPeg = RegexPatternPeg
     val stringPeg = StringPeg
     val vectorPeg = VectorPeg
 

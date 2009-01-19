@@ -7,28 +7,6 @@
 package mada.peg
 
 
-import java.util.regex.Pattern
-
-
 object Regex {
-    def apply(x: String): Peg[Char] = new RegexPeg(Pattern.compile(x))
-}
-
-
-object RegexPeg {
-    def apply(pat: Pattern): Peg[Char] = new RegexPeg(pat)
-}
-
-class RegexPeg(pat: Pattern) extends Peg[Char] {
-    override def parse(v: Vector[Char], first: Long, last: Long): Long = {
-        import Vector.Compatibles._
-        val mat = pat.matcher(v)
-        mat.region(first.toInt, last.toInt)
-        mat.useTransparentBounds(true)
-        if (mat.lookingAt) {
-            mat.end
-        } else {
-            Peg.FAILURE
-        }
-    }
+    def apply(x: String): Peg[Char] = Peg.regexPatternPeg(java.util.regex.Pattern.compile(x))
 }
