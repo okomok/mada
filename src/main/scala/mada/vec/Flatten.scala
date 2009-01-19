@@ -9,7 +9,7 @@ package mada.vec
 
 object Flatten {
     def apply[A](vv: Vector[Vector[A]]): Vector[A] = {
-        val len = vv.foldLeft(0L)({ (c: Long, v: Vector[A]) => c + v.size })
+        val len = vv.foldLeft(0L)({ (c, v) => c + v.size })
         val a = new Array[A](len.toInt)
         var i = 0
         for (v <- vv) {

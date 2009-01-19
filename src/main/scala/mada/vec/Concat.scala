@@ -9,6 +9,6 @@ package mada.vec
 
 object Concat {
     def apply[A](vs: Vector[A]*): Vector[A] = {
-        vs.foldLeft(Vector.empty[A])({ (r: Vector[A], v: Vector[A]) => r.append(v) })
+        vs.foldLeft(Vector.empty[A])({ (r, v) => r.append(v) })
     }
 }

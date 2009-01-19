@@ -7,7 +7,6 @@
 package mada.vec.parallel
 
 
-
 object Equals {
     def apply[A](v: Vector[A], w: Any, grainSize: Long): Boolean = w match {
         case w: Vector[_] => v.parallel(grainSize).equalsTo(w)
