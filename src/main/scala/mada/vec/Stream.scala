@@ -15,7 +15,7 @@ class VectorStream[A](v: Vector[A]) extends Stream.Definite[A] {
     override def isEmpty = v.isEmpty
     override def head = {
         if (isEmpty) {
-            throw new NoSuchElementException("head of empty VectorStream")
+            throw new NoSuchElementException("empty VectorStream.head")
         } else {
             v.head
         }
@@ -43,7 +43,7 @@ class VectorStream[A](v: Vector[A]) extends Stream.Definite[A] {
     // addDefinedElems is protected.
     private lazy val _tail = {
         if (isEmpty) {
-            throw new UnsupportedOperationException("tail of empty VectorStream")
+            throw new UnsupportedOperationException("empty VectorStream.tail")
         } else {
             new VectorStream(v.tail) // needs heap-allocation.
         }

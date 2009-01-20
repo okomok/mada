@@ -14,12 +14,6 @@ object Bounds {
 }
 
 class BoundsVector[A](override val * : Vector[A]) extends VectorAdapter[A, A] {
-    override def mapIndex(i: Long) = {
-        if (i < 0 || i >= *.size) {
-            throw new IndexOutOfBoundsException(i.toString)
-        }
-        i
-    }
-
+    override def mapIndex(i: Long) = { ThrowIf.outOfBounds(*, i); i }
     override def bounds = this // bounds-bounds fusion
 }

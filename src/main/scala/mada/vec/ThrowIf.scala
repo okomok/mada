@@ -8,6 +8,18 @@ package mada.vec
 
 
 object ThrowIf {
+    def outOfBounds[A](v: Vector[A], i: Long): Unit = {
+        if (i < 0 || i >= v.size) {
+            throw new IndexOutOfBoundsException(i.toString)
+        }
+    }
+
+    def empty[A](v: Vector[A], method: String): Unit = {
+        if (v.isEmpty) {
+            throw new UnsupportedOperationException("empty Vector." + method)
+        }
+    }
+
     def differentSize[A, B](v: Vector[A], w: Vector[B]): Unit = {
         if (v.size != w.size) {
             throw new UnsupportedOperationException("size is different: " + v.size + " and " + w.size)

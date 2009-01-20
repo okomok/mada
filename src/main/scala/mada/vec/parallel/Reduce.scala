@@ -9,9 +9,7 @@ package mada.vec.parallel
 
 object Reduce {
     def apply[A](v: Vector[A], op: (A, A) => A, grainSize: Long): A = {
-        if (v.isEmpty) {
-            throw new UnsupportedOperationException("empty Vector reduce")
-        }
+        ThrowIf.empty(v, "paralell.reduce")
         v.divide(grainSize).
             parallel(1).map({ w => w.reduceLeft(op) }).
                 reduceLeft(op)
