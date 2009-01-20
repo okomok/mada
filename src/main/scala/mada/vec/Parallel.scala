@@ -14,6 +14,7 @@ object Parallel {
 }
 
 class ParallelVector[A](override val self: Vector[A], grainSize: Long) extends VectorProxy[A]  {
+    Assert(grainSize > 0)
     import vec.parallel._
 
     override def equals(that: Any) = Equals(self, that, grainSize)
@@ -23,7 +24,7 @@ class ParallelVector[A](override val self: Vector[A], grainSize: Long) extends V
     override def count(p: A => Boolean) = Count(self, p, grainSize)
     override def find(p: A => Boolean) = Find(self, p, grainSize) // forall, exists, contains
     override def foreach(f: A => Unit) = Foreach(self, f, grainSize)
-    override def map[B](f: A => B): Vector[B] = Map(self, f)
+//    override def map[B](f: A => B): Vector[B] = Map(self, f, grainSize)
 
     override def parallel = throw new UnsupportedOperationException("ParallelVector parallel")
     override def parallel(grainSize: Long) = throw new UnsupportedOperationException("ParallelVector parallel")

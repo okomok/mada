@@ -40,4 +40,27 @@ class DivideTest {
         assertEquals(1L, actual.size)
         assertEquals(actual(0), madaVector(example1))
     }
+
+    def testUndivide: Unit = {
+        val actual = Vector.undivide(madaVector(example1).divide(6))
+        assertEquals(15L, actual.size)
+        detail.TestVectorReadOnly(example1, actual)
+    }
+
+    def testUndivideBound: Unit = {
+        val actual = Vector.undivide(madaVector(example1).divide(1))
+        assertEquals(15L, actual.size)
+        detail.TestVectorReadOnly(example1, actual)
+    }
+
+    def testUndivideBoundBig: Unit = {
+        val actual = Vector.undivide(madaVector(example1).divide(1000))
+        assertEquals(15L, actual.size)
+        detail.TestVectorReadOnly(example1, actual)
+    }
+
+    def testUndivideEmpty: Unit = {
+        val actual = Vector.undivide(madaVector(empty1).divide(10))
+        detail.TestEmpty(actual)
+    }
 }
