@@ -9,9 +9,7 @@ package mada.vec.parallel
 
 object CopyTo {
     def apply[A, B >: A](v: Vector[A], w: Vector[B], grainSize: Long): Vector[A] = {
-        if (v.size != w.size) {
-            throw new UnsupportedOperationException("size is different: " + v.size + " and " + w.size)
-        }
+        ThrowsIf.differentSize(v, w)
         v.divide(grainSize).zip(w.divide(grainSize)).
             parallel(1).foreach({ case (v1, w1) => v1.copyTo(w1) })
         v

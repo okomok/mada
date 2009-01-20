@@ -90,7 +90,6 @@ trait Vector[A] {
     final def dropWhile(p: A => Boolean): Vector[A] = DropWhile(this, p)
     final def take(n: Long): Vector[A] = Take(this, n)
     final def takeWhile(p: A => Boolean): Vector[A] = TakeWhile(this, p)
-
     final def offset(i: Long, j: Long): Vector[A] = Offset(this, i, j)
     final def slice(n: Long, m: Long): Vector[A] = Slice(this, n, m)
     final def slice(n: Long): Vector[A] = Slice(this, n)

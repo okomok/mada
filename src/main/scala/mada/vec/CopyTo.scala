@@ -9,9 +9,7 @@ package mada.vec
 
 object CopyTo {
     def apply[A, B >: A](v: Vector[A], w: Vector[B]): Vector[A] = {
-        if (v.size != w.size) {
-            throw new UnsupportedOperationException("size is different: " + v.size + " and " + w.size)
-        }
+        ThrowsIf.differentSize(v, w)
         val (first, last) = v.pair
         val (result, _) = w.pair
         stl.Copy(v, first, last, w, result)
