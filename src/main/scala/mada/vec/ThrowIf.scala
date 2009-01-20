@@ -7,7 +7,7 @@
 package mada.vec
 
 
-object ThrowsIf {
+object ThrowIf {
     def differentSize[A, B](v: Vector[A], w: Vector[B]): Unit = {
         if (v.size != w.size) {
             throw new UnsupportedOperationException("size is different: " + v.size + " and " + w.size)
