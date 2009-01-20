@@ -16,10 +16,9 @@ import madatest.vec.detail._
 
 class EqualsTest {
     def testTrivial: Unit = {
-        /*
         assertTrue(example1.parallel(1000) == madaVector(example1))
         assertTrue(example1.parallel(6) equalsTo example1)
         assertTrue(example1.parallel == madaVector(example1))
-        */
+        assertFalse(example1.parallel == madaVector(example2))
     }
 }

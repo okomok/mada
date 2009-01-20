@@ -12,6 +12,8 @@ object Reduce {
         if (v.isEmpty) {
             throw new UnsupportedOperationException("empty Vector reduce")
         }
-        v.divide(grainSize).future({ w => w.reduceLeft(op) }).reduceLeft(op)
+        v.divide(grainSize).
+            parallel(1).map({ w => w.reduceLeft(op) }).
+                reduceLeft(op)
     }
 }

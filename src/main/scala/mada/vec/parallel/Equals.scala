@@ -25,22 +25,10 @@ object EqualsWith {
         if (v.size != w.size) {
             false
         } else {
-            impl(v, w, new Breakable2(p, false), grainSize)
-        }
-    }
-
-    def impl[A, B](v: Vector[A], w: Vector[B], p: Breakable2[A, B], grainSize: Long): Boolean = {
-        Assert(v.size == w.size)
-        val (v1, v2) = v.splitAt(grainSize)
-        val (w1, w2) = w.splitAt(grainSize)
-        if (v2.isEmpty) {
-            Assert(w2.isEmpty)
-            breakingEquals(v, w, p)
-        } else {
-            val u2 = scala.actors.Futures.future {
-                impl(v2, w2, p, grainSize)
-            }
-            breakingEquals(v1, w1, p) && u2()
+            val bp = new Breakable2(p, false)
+            v.divide(grainSize).zip(w.divide(grainSize)).
+                parallel(1).map({ case (v1, w1) => breakingEquals(v1, w1, bp) }).
+                    reduceLeft(_ && _)
         }
     }
 
