@@ -12,6 +12,7 @@ object Foreach {
         touch(v.divide(grainSize).parallel(1).map({ w => w.foreach(f) }))
     }
 
+    // parallel.touch needed?
     private def touch[A](v: Vector[A]): Vector[A] = {
         for (e <- v) {
             touchElem(e)

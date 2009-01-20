@@ -16,5 +16,6 @@ object Map {
                 v.divide(grainSize).map({ w => scala.actors.Futures.future(w.map(f)) }).force.map({ u => u() })
             )
         }
+        // how to terminate unneeded values?
     }
 }

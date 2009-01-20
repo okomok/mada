@@ -9,12 +9,13 @@ package mada.vec.parallel
 
 object Count {
     def apply[A](v: Vector[A], p: A => Boolean, grainSize: Long): Long = {
-        if (v.isEmpty) {
-            0
-        } else {
-            val n = new java.util.concurrent.atomic.AtomicLong(0)
-            v.parallel(grainSize).foreach({ e => if (p(e)) n.incrementAndGet })
-            n.get
-        }
+        v.divide(grainSize).
+            parallel(1).map({ w => w.count(p) }).
+                reduceLeft(_ + _)
+/* maybe faster
+        val n = new java.util.concurrent.atomic.AtomicLong(0)
+        v.parallel(grainSize).foreach({ e => if (p(e)) n.incrementAndGet })
+        n.get
+*/
     }
 }

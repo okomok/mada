@@ -7,9 +7,6 @@
 package mada.vec.parallel
 
 
-// BUGBUG
-
-
 import java.util.concurrent.atomic.AtomicReference
 
 
@@ -19,33 +16,27 @@ object Find {
             None
         } else {
             val ar = new AtomicReference[A]
-            impl(v, new Breakable1(p, true), grainSize, ar)
-            val a = ar.get
-            if (a == null) {
-                None
-            } else {
-                Some(a.asInstanceOf[A])
-            }
-        }
-    }
-
-    def impl[A](v: Vector[A], p: Breakable1[A], grainSize: Long, ar: AtomicReference[A]): Unit = {
-        val (v1, v2) = v.splitAt(grainSize)
-        if (v2.isEmpty) {
-            breakingFind(v, p, ar)
-        } else {
-            val u2 = scala.actors.Futures.future {
-                impl(v2, p, grainSize, ar)
-            }
-            breakingFind(v1, p, ar); u2()
+            val bp = new Breakable1(p, true)
+            v.divide(grainSize).
+                parallel(1).foreach({ w => breakingFind(w, bp, ar) })
+            deref(ar)
         }
     }
 
     private def breakingFind[A](v: Vector[A], p: Breakable1[A], ar: AtomicReference[A]): Unit = {
         val x = v.find(p)
         if (!x.isEmpty) {
+            ar.compareAndSet(null.asInstanceOf[A], x.get)
             p.break
-            ar.set(x.get)
+        }
+    }
+
+    private def deref[A](ar: AtomicReference[A]): Option[A] = {
+        val a = ar.get
+        if (a == null) {
+            None
+        } else {
+            Some(a.asInstanceOf[A])
         }
     }
 }
