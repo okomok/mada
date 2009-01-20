@@ -10,7 +10,7 @@ package mada.vec.parallel
 object CopyTo {
     def apply[A, B >: A](v: Vector[A], w: Vector[B], grainSize: Long): Vector[A] = {
         if (v.size != w.size) {
-            throw new java.lang.IllegalArgumentException("size is different")
+            throw new java.lang.IllegalArgumentException("size is different: " + v.size + " and " + w.size)
         }
         impl(v, w, grainSize)
         v
