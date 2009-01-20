@@ -7,6 +7,12 @@
 package mada.vec
 
 
+object Fold {
+    def apply[A](v: Vector[A], z: A, op: (A, A) => A): A = {
+        v.foldLeft(z)(op)
+    }
+}
+
 object FoldLeft {
     def apply[A, B](v: Vector[A], z: B, op: (B, A) => B): B = {
         val (first, last) = v.pair

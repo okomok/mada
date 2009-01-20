@@ -9,8 +9,8 @@ package mada.vec
 
 object Parallel {
     def defaultGrainSize[A](v: Vector[A]): Long = 1
-    def apply[A](v: Vector[A]) = new ParallelVector(v, defaultGrainSize(v))
-    def apply[A](v: Vector[A], grainSize: Long) = new ParallelVector(v, grainSize)
+    def apply[A](v: Vector[A]): Vector[A] = new ParallelVector(v, defaultGrainSize(v))
+    def apply[A](v: Vector[A], grainSize: Long): Vector[A] = new ParallelVector(v, grainSize)
 }
 
 class ParallelVector[A](override val self: Vector[A], grainSize: Long) extends VectorProxy[A]  {
@@ -23,12 +23,11 @@ class ParallelVector[A](override val self: Vector[A], grainSize: Long) extends V
     override def copyTo[B >: A](that: Vector[B]) = CopyTo(self, that, grainSize) // clone, toArray
     override def count(p: A => Boolean) = Count(self, p, grainSize)
     override def find(p: A => Boolean) = Find(self, p, grainSize) // forall, exists, contains
+    override def fold(z: A)(op: (A, A) => A): A = Fold(self, z, op, grainSize)
     override def foreach(f: A => Unit) = Foreach(self, f, grainSize)
     override def map[B](f: A => B): Vector[B] = Map(self, f, grainSize)
+    override def reduce(op: (A, A) => A): A = Reduce(self, op, grainSize)
 
-    override def parallel = throw new UnsupportedOperationException("ParallelVector parallel")
-    override def parallel(grainSize: Long) = throw new UnsupportedOperationException("ParallelVector parallel")
-
-    def fold(z: A)(op: (A, A) => A): A = Fold(self, z, op, grainSize)
-    def reduce(op: (A, A) => A): A = Reduce(self, op, grainSize)
+    override def parallel = if (grainSize == Parallel.defaultGrainSize(self)) this else super.parallel // parallel-parallel fusion
+    override def parallel(g: Long) = if (grainSize == g) this else super.parallel(g)
 }
