@@ -18,8 +18,8 @@ class ForeachTest {
     def testTrivial: Unit = {
         val ex = Array(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14)
         madaVector(ex).parallel.foreach(print(_))
-        madaVector(ex).parallel(6).foreach(print(_))
-        madaVector(ex).parallel(100).foreach(print(_))
+        //madaVector(ex).parallel(6).foreach(print(_))
+        //madaVector(ex).parallel(100).foreach(print(_))
     }
 
     def print(i: Int) = {

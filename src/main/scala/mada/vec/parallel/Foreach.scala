@@ -9,14 +9,14 @@ package mada.vec.parallel
 
 object Foreach {
     def apply[A](v: Vector[A], f: A => Unit, grainSize: Long): Unit = {
-        val (v1, v2) = v.splitAt(grainSize)
-        if (v2.isEmpty) {
-            v.foreach(f)
-        } else {
-            val u2 = scala.actors.Futures.future {
-                apply(v2, f, grainSize)
-            }
-            v1.foreach(f); u2()
-        }
+        touch(v.divide(grainSize).parallel.map({ w => w.foreach(f) }))
     }
+
+    private def touch[A](v: Vector[A]): Vector[A] = {
+        for (e <- v) {
+            touchElem(e)
+        }
+        v
+    }
+    private def touchElem[A](e: A): A = e
 }

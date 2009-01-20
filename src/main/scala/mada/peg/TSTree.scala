@@ -82,7 +82,7 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
 
     def put(key: Vector[A], first: Long, last: Long, value: V): Option[V] = {
         if (first == last) {
-            throw new IllegalArgumentException("An empty Vector can't be a key.")
+            throw new UnsupportedOperationException("An empty Vector can't be a key.")
         }
 
         if (rootNode eq null) {

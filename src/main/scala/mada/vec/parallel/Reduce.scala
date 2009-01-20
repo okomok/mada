@@ -7,11 +7,11 @@
 package mada.vec.parallel
 
 
-import scala.actors.Futures.future
-
-
 object Reduce {
     def apply[A](v: Vector[A], op: (A, A) => A, grainSize: Long): A = {
-        v.divide(grainSize).future({ w => w.reduceLeft(op) }).reduceLeft(op)
+        if (v.isEmpty) {
+            throw new UnsupportedOperationException("empty Vector reduce")
+        }
+        v.divide(grainSize).parallel.map({ w => w.reduceLeft(op) }).reduceLeft(op)
     }
 }
