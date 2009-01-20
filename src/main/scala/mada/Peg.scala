@@ -120,8 +120,8 @@ trait Peg[A] {
     final def lookingAt(v: Vector[A]): Option[Long] = LookingAt(this, v)
     final def matches(v: Vector[A]): Boolean = Matches(this, v)
 
-    final def tokenize(v: Vector[A]): Iterator[Vector.Triple[A]] = Tokenize(this, v)
-    final def tokens(v: Vector[A]): Iterator[Vector[A]] = Tokens(this, v)
+    final def tokenize(v: Vector[A]): Iterator[Vector[A]] = Tokenize(this, v)
+    final def tokenize3(v: Vector[A]): Iterator[Vector.Triple[A]] = Tokenize3(this, v)
     final def filterFrom(v: Vector[A]): Iterator[A] = FilterFrom(this, v)
 
     final def apply(f: Vector.Func3[A, Any]): Peg[A] = act(f)

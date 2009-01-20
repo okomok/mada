@@ -17,7 +17,7 @@ class TokenizeTest {
     def testTrivial: Unit = {
         val pe = madaPeg("abcd")
         val v = madaVector("XabcdXXabcdXX")
-        val it = pe.tokenize(v)
+        val it = pe.tokenize3(v)
         var c = 0
         while (it.hasNext) {
             val (_, i, j) = it.next
@@ -37,14 +37,14 @@ class TokenizeTest {
     def testBound: Unit = {
         val pe = madaPeg("abcd")
         val v = madaVector("qqabqqab")
-        val it = pe.tokenize(v)
+        val it = pe.tokenize3(v)
         assertFalse(it.hasNext)
     }
 
     def testBound2: Unit = {
         val pe = madaPeg("abcd")
         val v = madaVector("abcd")
-        val it = pe.tokenize(v)
+        val it = pe.tokenize3(v)
         val (_, i, j) = it.next
         assertEquals(0L, i)
         assertEquals(4L, j)
@@ -55,14 +55,14 @@ class TokenizeTest {
     def testEmpty: Unit = {
         val pe = madaPeg("")
         val v = madaVector("")
-        val it = pe.tokenize(v)
+        val it = pe.tokenize3(v)
         assertFalse(it.hasNext)
     }
 
     def testTokens: Unit = {
         val pe = single('a') >> any.+?("XX")
         val v = madaVector("XabcdXXaBCDXX")
-        val it = pe.tokens(v)
+        val it = pe.tokenize(v)
         var c = 0
         while (it.hasNext) {
             val w = it.next

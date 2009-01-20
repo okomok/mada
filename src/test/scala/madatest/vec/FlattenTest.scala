@@ -11,7 +11,7 @@ import mada._
 import junit.framework.Assert._
 
 
-class FlatTest {
+class FlattenTest {
     def testTrivial {
         val v1 = Vector.arrayVector(Array(0,1,2))
         val v2 = Vector.arrayVector(Array(3,4))

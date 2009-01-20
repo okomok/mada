@@ -8,18 +8,21 @@ package mada.vec
 
 
 object Flatten {
-    // use copyTo?
     def apply[A](vv: Vector[Vector[A]]): Vector[A] = {
-        val len = FlattenSize(vv)
-        val a = new Array[A](len.toInt)
-        var i = 0
+        val av = Vector.arrayVector(new Array[A](FlattenSize(vv).toInt))
+        var (i, j) = (0L, 0L)
         for (v <- vv) {
-            for (e <- v) {
-                a(i) = e
-                i += 1
-            }
+            j += v.size
+            v.copyTo(av.window(i, j))
+            i = j
         }
-        Vector.arrayVector(a)
+        av
+    }
+}
+
+object Flatten3 {
+    def apply[A](vv: Vector[Vector.Triple[A]]): Vector[A] = {
+        Vector.flatten(vv.map({ v => Vector.tripleVector(v) }))
     }
 }
 

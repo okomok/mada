@@ -14,6 +14,7 @@ object Vector {
     val concat = Concat
     def empty[A]: Vector[A] = Empty.apply[A]
     val flatten = Flatten
+    val flatten3 = Flatten3
     val lefts = Lefts
     val rights = Rights
     val lowerCase = LowerCase
@@ -24,6 +25,7 @@ object Vector {
     val stringize = Stringize
     val undivide = Undivide
     val untokenize = Untokenize
+    val untokenize3 = Untokenize3
     val unzip = Unzip
 
     val Compatibles = vec.Compatibles

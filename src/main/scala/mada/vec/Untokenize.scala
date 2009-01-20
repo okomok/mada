@@ -14,7 +14,7 @@ object Untokenize {
 }
 
 object Untokenize3 {
-    def apply[A](vv: Vector[Vector[A]], sep: Vector[A]): Vector[A] = {
-        Vector.flatten(vv.map({ v => sep.append(v) }))
+    def apply[A](vv: Vector[Vector.Triple[A]], sep: Vector[A]): Vector[A] = {
+        Vector.untokenize(vv.map({ v => Vector.tripleVector(v) }), sep)
     }
 }
