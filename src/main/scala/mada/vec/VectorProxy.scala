@@ -28,7 +28,7 @@ trait VectorProxy[A] extends Vector[A] with Proxy {
     override def randomAccessSeq: RandomAccessSeq.Mutable[A] = self.randomAccessSeq
     override def readOnly: Vector[A] = self.readOnly
     override def reverse: Vector[A] = self.reverse
-    override def step(n: Long, m: Long): Vector[A] = self.step(n, m)
+    override def step(n: Long): Vector[A] = self.step(n)
     override def sort(lt: (A, A) => Boolean): Vector[A] = self.sort(lt)
     override def toCell: Cell[A] = self.toCell
     override def toOption: Option[A] = self.toOption

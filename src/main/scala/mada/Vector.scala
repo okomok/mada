@@ -44,8 +44,7 @@ object Vector {
     val triplify = Triplify
     val untriplify = Untriplify
     type Triple[A] = (Vector[A], Long, Long)
-    type Func[A, B] = Func1[A, B]
-    type Func1[A, B] = Vector[A] => B
+    type Func[A, B] = Vector[A] => B
     type Func3[A, B] = (Vector[A], Long, Long) => B
 
     type NotReadableError[A] = vec.NotReadableError[A]
@@ -90,6 +89,8 @@ trait Vector[A] {
     /*final*/ def count(p: A => Boolean): Long = Count(this, p)
     final def cut: Vector[A] = Cut(this)
     def cycle(n: Long): Vector[A] = Cycle(this, n)
+    final def divide(n: Long): Vector[Vector[A]] = Divide(this, n)
+    final def divide3(n: Long): Vector[Vector.Triple[A]] = Divide3(this, n)
     final def drop(n: Long): Vector[A] = Drop(this, n)
     final def dropWhile(p: A => Boolean): Vector[A] = DropWhile(this, p)
     final def elements: Iterator[A] = iterator
@@ -135,7 +136,7 @@ trait Vector[A] {
     def sort(lt: (A, A) => Boolean): Vector[A] = Sort(this, lt)
     final def span(p: A => Boolean): (Vector[A], Vector[A]) = Span(this, p)
     final def splitAt(i: Long): (Vector[A], Vector[A]) = SplitAt(this, i)
-    def step(n: Long, m: Long): Vector[A] = Step(this, n, m)
+    def step(n: Long): Vector[A] = Step(this, n)
     final def stream: Stream[A] = VectorStream(this)
     final def take(n: Long): Vector[A] = Take(this, n)
     final def takeWhile(p: A => Boolean): Vector[A] = TakeWhile(this, p)
