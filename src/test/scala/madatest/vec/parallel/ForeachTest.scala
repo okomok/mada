@@ -23,7 +23,7 @@ class ForeachTest {
     }
 
     def print(i: Int) = {
-        //println(i)
+        println(i)
         ()
     }
 }
