@@ -12,9 +12,9 @@ object Memoize {
 }
 
 class MemoizePeg[A](override val self: Peg[A]) extends PegProxy[A] {
-    val memoTable = new scala.collection.jcl.HashMap[TripleKey[A], Long]
+    val memoTable = new scala.collection.jcl.HashMap[TripleKey[A], Int]
 
-    override def parse(v: Vector[A], first: Long, last: Long) = {
+    override def parse(v: Vector[A], first: Int, last: Int) = {
         val key = new TripleKey(v, first, last)
         val value = memoTable.get(key)
         if (value.isEmpty) {
@@ -33,9 +33,9 @@ class Memoizer[A](w: Vector[A]) {
     def memoize(p: Peg[A]): MemoizePeg = new MemoizePeg(p)
 
     class MemoizePeg(override val self: Peg[A]) extends PegProxy[A] {
-        val memoTable = new scala.collection.jcl.HashMap[Long, Long]
+        val memoTable = new scala.collection.jcl.HashMap[Int, Int]
 
-        override def parse(v: Vector[A], first: Long, last: Long) = {
+        override def parse(v: Vector[A], first: Int, last: Int) = {
             if (v eq w) {
                 val key = first // last too is key?
                 val value = memoTable.get(key)

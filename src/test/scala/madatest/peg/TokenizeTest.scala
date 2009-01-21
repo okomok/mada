@@ -22,12 +22,12 @@ class TokenizeTest {
         while (it.hasNext) {
             val (_, i, j) = it.next
             if (c == 0) {
-                assertEquals(1L, i)
-                assertEquals(5L, j)
+                assertEquals(1, i)
+                assertEquals(5, j)
             }
             if (c == 1) {
-                assertEquals(7L, i)
-                assertEquals(11L, j)
+                assertEquals(7, i)
+                assertEquals(11, j)
             }
             c += 1
         }
@@ -46,8 +46,8 @@ class TokenizeTest {
         val v = madaVector("abcd")
         val it = pe.tokenize3(v)
         val (_, i, j) = it.next
-        assertEquals(0L, i)
-        assertEquals(4L, j)
+        assertEquals(0, i)
+        assertEquals(4, j)
         assertFalse(it.hasNext)
     }
 

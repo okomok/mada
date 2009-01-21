@@ -20,7 +20,7 @@ class IterateTest {
         val w = madaVector("XXabcXXabcXXabcXXabc")
 
         val p = -single('X') +? ("X"|end)
-        var k = 0L
+        var k = 0
         for ((v, i, j) <- p.tokenize3(w)) {
             assertSame(w, v)
             sb append Vector.stringize(v(k, i))

@@ -46,9 +46,9 @@ object Vector {
 
     val triplify = Triplify
     val untriplify = Untriplify
-    type Triple[A] = (Vector[A], Long, Long)
+    type Triple[A] = (Vector[A], Int, Int)
     type Func[A, B] = Vector[A] => B
-    type Func3[A, B] = (Vector[A], Long, Long) => B
+    type Func3[A, B] = (Vector[A], Int, Int) => B
 
     type NotReadableError[A] = vec.NotReadableError[A]
     type NotWritableError[A] = vec.NotWritableError[A]
@@ -65,12 +65,12 @@ object Vector {
 trait Vector[A] {
     import vec._
 
-    def size: Long
-    def apply(i: Long): A = throw new NotReadableError(this)
-    def update(i: Long, e: A): Unit = throw new NotWritableError(this)
+    def size: Int
+    def apply(i: Int): A = throw new NotReadableError(this)
+    def update(i: Int, e: A): Unit = throw new NotWritableError(this)
 
     final def vector: Vector[A] = this
-    final def pair: (Long, Long) = (0, size)
+    final def pair: (Int, Int) = (0, size)
     final def triple: Vector.Triple[A] = VectorTriple(this)
 
     override def equals(that: Any): Boolean = Equals(this, that)
@@ -83,19 +83,19 @@ trait Vector[A] {
     final def break(p: A => Boolean): (Vector[A], Vector[A]) = Break(this, p)
     final def partition(p: A => Boolean): (Vector[A], Vector[A]) = Partition(this, p)
     final def span(p: A => Boolean): (Vector[A], Vector[A]) = Span(this, p)
-    final def splitAt(i: Long): (Vector[A], Vector[A]) = SplitAt(this, i)
+    final def splitAt(i: Int): (Vector[A], Vector[A]) = SplitAt(this, i)
 
-    final def divide(n: Long): Vector[Vector[A]] = Divide(this, n)
-    final def divide3(n: Long): Vector[Vector.Triple[A]] = Divide3(this, n)
+    final def divide(n: Int): Vector[Vector[A]] = Divide(this, n)
+    final def divide3(n: Int): Vector[Vector.Triple[A]] = Divide3(this, n)
 
-    final def drop(n: Long): Vector[A] = Drop(this, n)
+    final def drop(n: Int): Vector[A] = Drop(this, n)
     final def dropWhile(p: A => Boolean): Vector[A] = DropWhile(this, p)
-    final def take(n: Long): Vector[A] = Take(this, n)
+    final def take(n: Int): Vector[A] = Take(this, n)
     final def takeWhile(p: A => Boolean): Vector[A] = TakeWhile(this, p)
-    final def offset(i: Long, j: Long): Vector[A] = Offset(this, i, j)
-    final def slice(n: Long, m: Long): Vector[A] = Slice(this, n, m)
-    final def slice(n: Long): Vector[A] = Slice(this, n)
-    def window(n: Long, m: Long): Vector[A] = Window(this, n, m)
+    final def offset(i: Int, j: Int): Vector[A] = Offset(this, i, j)
+    final def slice(n: Int, m: Int): Vector[A] = Slice(this, n, m)
+    final def slice(n: Int): Vector[A] = Slice(this, n)
+    def window(n: Int, m: Int): Vector[A] = Window(this, n, m)
 
     final def elements: Iterator[A] = iterator
     final def iterator: Iterator[A] = VectorIterator(this)
@@ -119,13 +119,13 @@ trait Vector[A] {
 
     final def filter(p: A => Boolean): Vector[A] = Filter(this, p)
     final def remove(p: A => Boolean): Vector[A] = Remove(this, p)
-    def step(n: Long): Vector[A] = Step(this, n)
+    def step(n: Int): Vector[A] = Step(this, n)
 
     final def flatMap[B](f: A => Vector[B]): Vector[B] = FlatMap(this, f)
     def map[B](f: A => B): Vector[B] = Map(this, f)
 
     /*final*/ def foreach(f: A => Unit): Unit = Foreach(this, f)
-    def loop[F <: (A => Boolean)](i: Long, j: Long, f: F): F = Loop(this, i, j, f)
+    def loop[F <: (A => Boolean)](i: Int, j: Int, f: F): F = Loop(this, i, j, f)
 
     final def contains(e: Any): Boolean = Contains(this, e)
     /*final*/ def find(p: A => Boolean): Option[A] = Find(this, p)
@@ -142,21 +142,21 @@ trait Vector[A] {
     final def reduceLeft[B >: A](op: (B, A) => B): B = ReduceLeft(this, op)
     final def reduceRight[B >: A](op: (A, B) => B): B = ReduceRight(this, op)
 
-    final def isDefinedAt(x: Long): Boolean = IsDefinedAt(this, x)
+    final def isDefinedAt(x: Int): Boolean = IsDefinedAt(this, x)
     final def isEmpty: Boolean = IsEmpty(this)
 
     def parallel: Vector[A] = Parallel(this)
-    def parallel(grainSize: Long): Vector[A] = Parallel(this, grainSize)
+    def parallel(grainSize: Int): Vector[A] = Parallel(this, grainSize)
     final def unparallel: Vector[A] = Unparallel(this)
 
-    final def apply(first: Long, last: Long): Vector[A] = window(first, last)
+    final def apply(first: Int, last: Int): Vector[A] = window(first, last)
     final def ++(that: Vector[A]): Vector[A] = append(that)
     final def -->(p: Peg[A]): (Vector[A], Peg[A]) = (this, p)
 
     final def identity: Vector[A] = Identity(this)
     def reverse: Vector[A] = Reverse(this)
-    final def rotate(i: Long): Vector[A] = Rotate(this, i)
-    final def permutation(iv: Vector[Long]): Vector[A] = Permutation(this, iv)
+    final def rotate(i: Int): Vector[A] = Rotate(this, i)
+    final def permutation(iv: Vector[Int]): Vector[A] = Permutation(this, iv)
 
     final def always[B](that: Vector[B]): Vector[B] = Always(this, that)
     final def append(that: Vector[A]): Vector[A] = Append(this, that)
@@ -165,16 +165,16 @@ trait Vector[A] {
     final def clear: Vector[A] = Clear(this)
     override def clone: Vector[A] = Clone(this)
     /*final*/ def copyTo[B >: A](that: Vector[B]): Vector[A] = CopyTo(this, that)
-    /*final*/ def count(p: A => Boolean): Long = Count(this, p)
+    /*final*/ def count(p: A => Boolean): Int = Count(this, p)
     final def cut: Vector[A] = Cut(this)
-    def cycle(n: Long): Vector[A] = Cycle(this, n)
+    def cycle(n: Int): Vector[A] = Cycle(this, n)
     def force: Vector[A] = Force(this)
-    final def indices: Vector[Long] = Indices(this)
+    final def indices: Vector[Int] = Indices(this)
     def lazy_ : Vector[A] = Lazy(this)
-    final def length: Long = size
+    final def length: Int = size
     def readOnly: Vector[A] = ReadOnly(this)
     def sort(lt: (A, A) => Boolean): Vector[A] = Sort(this, lt)
     final def stream: Stream[A] = VectorStream(this)
-    final def writer(i: Long): (A => Unit) = Writer(this, i)
+    final def writer(i: Int): (A => Unit) = Writer(this, i)
     final def zip[B](that: Vector[B]): Vector[(A, B)] = Zip(this, that)
 }

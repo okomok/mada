@@ -34,13 +34,13 @@ package mada.vec.stl
 
 
 object IsHeap {
-    def apply[A](v: Vector[A], __first: Long, __last: Long, __comp: (A, A) => Boolean): Boolean = {
+    def apply[A](v: Vector[A], __first: Int, __last: Int, __comp: (A, A) => Boolean): Boolean = {
         __apply(v, __first, __comp, __last - __first)
     }
 
-    def __apply[A](* : Vector[A], __first: Long, __comp: (A, A) => Boolean, __n: Long): Boolean = {
-        var __parent = 0L
-        var __child = 1L
+    def __apply[A](* : Vector[A], __first: Int, __comp: (A, A) => Boolean, __n: Int): Boolean = {
+        var __parent = 0
+        var __child = 1
         while (__child < __n) {
             if (__comp(*(__first + __parent), *(__first + __child))) {
                 return false

@@ -12,7 +12,7 @@ object ReadMap {
 }
 
 class ReadMapPeg[Z, A](p: Peg[A], f: Vector[Z] => Vector[A]) extends Peg[Z] {
-    override def parse(v: Vector[Z], first: Long, last: Long): Long = {
+    override def parse(v: Vector[Z], first: Int, last: Int): Int = {
         p.parse(f(v), first, last) // f must return one-to-one view of Vector
     }
 

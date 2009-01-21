@@ -13,7 +13,7 @@ object VectorPeg {
 }
 
 class VectorPeg[A1, A2](w: Vector[A1], pred: (A1, A2) => Boolean) extends Peg[A2] {
-    override def parse(v: Vector[A2], first: Long, last: Long): Long = {
+    override def parse(v: Vector[A2], first: Int, last: Int): Int = {
         val vsize = w.size
         if (last - first < vsize) {
             Peg.FAILURE

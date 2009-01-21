@@ -16,7 +16,7 @@ object CharSequenceVector {
 
 class CharSequenceVector(val seq: CharSequence) extends Vector[Char] {
     override def size = seq.length
-    override def apply(i: Long) = seq.charAt(i.toInt)
+    override def apply(i: Int) = seq.charAt(i)
 }
 
 
@@ -26,7 +26,7 @@ object VectorCharSequence {
 
 class VectorCharSequence(v: Vector[Char]) extends CharSequence {
     override def charAt(index: Int) = v(index)
-    override def length = v.size.toInt
+    override def length = v.size
     override def subSequence(start: Int, end: Int) = new VectorCharSequence(v.window(start, end))
     override def toString = Vector.stringize(v)
 }

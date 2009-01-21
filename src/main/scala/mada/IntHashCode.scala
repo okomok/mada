@@ -7,6 +7,6 @@
 package mada
 
 
-object LongHashCode {
-    def apply(n: Long): Int = (n ^ (n >>> 32)).toInt
+object IntHashCode {
+    def apply(n: Int): Int = n
 }

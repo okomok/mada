@@ -34,7 +34,7 @@ package mada.vec.stl
 
 
 object Generate {
-    def apply[A](v : Vector[A], first: Long, __last: Long, __gen: Unit => A): Unit = {
+    def apply[A](v : Vector[A], first: Int, __last: Int, __gen: Unit => A): Unit = {
         var __first = first
 
         while (__first != __last) {
@@ -45,7 +45,7 @@ object Generate {
 }
 
 object GenerateN {
-    def apply[A](^ : Vector[A], first: Long, n: Long, __gen: Unit => A): Unit = {
+    def apply[A](^ : Vector[A], first: Int, n: Int, __gen: Unit => A): Unit = {
         var __first = first
         var __n = n
 

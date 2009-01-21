@@ -33,18 +33,18 @@
 package mada.vec.stl
 
 
-class DefaultRandomNumberGenerator extends (Long => Long) {
+class DefaultRandomNumberGenerator extends (Int => Int) {
     private val rnd = new java.util.Random
-    def apply(__n: Long) = Math.abs(rnd.nextLong % __n)
+    def apply(__n: Int) = Math.abs(rnd.nextInt % __n)
 }
 
 
 object RandomShuffle {
-    def apply[A](v: Vector[A], __first: Long, __last: Long): Unit = {
+    def apply[A](v: Vector[A], __first: Int, __last: Int): Unit = {
         RandomShuffle(v, __first, __last, new DefaultRandomNumberGenerator)
     }
 
-    def apply[A](v: Vector[A], __first: Long, __last: Long, __rand: Long => Long): Unit = {
+    def apply[A](v: Vector[A], __first: Int, __last: Int, __rand: Int => Int): Unit = {
         if (__first == __last) {
             return
         }
@@ -58,18 +58,18 @@ object RandomShuffle {
 
 
 object RandomSample {
-    def apply[A, B >: A](v : Vector[A], first: Long, __last: Long, ^ : Vector[B], __out_first: Long, __out_last: Long): Long = {
+    def apply[A, B >: A](v : Vector[A], first: Int, __last: Int, ^ : Vector[B], __out_first: Int, __out_last: Int): Int = {
         apply(v, first, __last, ^, __out_first, __out_last, new DefaultRandomNumberGenerator)
     }
 
-    def apply[A, B >: A](v : Vector[A], first: Long, __last: Long, ^ : Vector[B], __out_first: Long, __out_last: Long, __rand: Long => Long): Long = {
+    def apply[A, B >: A](v : Vector[A], first: Int, __last: Int, ^ : Vector[B], __out_first: Int, __out_last: Int, __rand: Int => Int): Int = {
         __apply(v, first, __last, ^, __out_first, __rand, __out_last - __out_first)
     }
 
-    def __apply[A, B >: A](v : Vector[A], first: Long, __last: Long, ^ : Vector[B], __out_ite: Long, __rand: Long => Long, __n: Long): Long = {
+    def __apply[A, B >: A](v : Vector[A], first: Int, __last: Int, ^ : Vector[B], __out_ite: Int, __rand: Int => Int, __n: Int): Int = {
         var __first = first
 
-        var __m = 0L
+        var __m = 0
         var __t = __n
         while (__first != __last && __m < __n) {
             ^(__out_ite + __m) = v(__first)
@@ -90,11 +90,11 @@ object RandomSample {
 }
 
 object RandomSampleN {
-    def apply[A, B >: A](v : Vector[A], first: Long, __last: Long, ^ : Vector[B], out_ite: Long, __n: Long): Long = {
+    def apply[A, B >: A](v : Vector[A], first: Int, __last: Int, ^ : Vector[B], out_ite: Int, __n: Int): Int = {
         apply(v, first, __last, ^, out_ite, __n, new DefaultRandomNumberGenerator)
     }
 
-    def apply[A, B >: A](v : Vector[A], first: Long, __last: Long, ^ : Vector[B], out_ite: Long, __n: Long, __rand: Long => Long): Long = {
+    def apply[A, B >: A](v : Vector[A], first: Int, __last: Int, ^ : Vector[B], out_ite: Int, __n: Int, __rand: Int => Int): Int = {
         var __first = first
         var __out_ite = out_ite
 

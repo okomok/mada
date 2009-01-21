@@ -8,7 +8,7 @@ package mada.vec
 
 
 object Drop {
-    def apply[A](v: Vector[A], n: Long): Vector[A] = {
+    def apply[A](v: Vector[A], n: Int): Vector[A] = {
         val (_, last) = v.pair
         v.window(Math.min(n, last), last)
     }

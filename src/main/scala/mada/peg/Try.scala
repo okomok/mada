@@ -14,7 +14,7 @@ object Try {
 }
 
 class TryCatchPeg[A](override val self: Peg[A], f: Throwable => Peg[A]) extends PegProxy[A] {
-    override def parse(v: Vector[A], first: Long, last: Long) = {
+    override def parse(v: Vector[A], first: Int, last: Int) = {
         try {
             self.parse(v, first, last)
         } catch {

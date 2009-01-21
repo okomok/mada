@@ -69,7 +69,7 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
         out.out.toString
     }
 
-    def get(key: Vector[A], first: Long, last: Long): Option[V] = {
+    def get(key: Vector[A], first: Int, last: Int): Option[V] = {
         if ((rootNode eq null) || first == last) {
             return None
         }
@@ -80,7 +80,7 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
         }
     }
 
-    def put(key: Vector[A], first: Long, last: Long, value: V): Option[V] = {
+    def put(key: Vector[A], first: Int, last: Int, value: V): Option[V] = {
         if (first == last) {
             throw new UnsupportedOperationException("An empty Vector can't be a key.")
         }
@@ -95,7 +95,7 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
         old
     }
 
-    def remove(key: Vector[A], first: Long, last: Long): Option[V] = {
+    def remove(key: Vector[A], first: Int, last: Int): Option[V] = {
         if ((rootNode eq null) || first == last) {
             return None
         }
@@ -107,7 +107,7 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
         old
     }
 
-    def parse(key: Vector[A], first: Long, last: Long): Option[(V, Long)] = {
+    def parse(key: Vector[A], first: Int, last: Int): Option[(V, Int)] = {
         if ((rootNode eq null) || first == last) {
             return None
         }
@@ -128,7 +128,7 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
         out.writeEndElement
     }
 
-    private def copyInto(key: Vector[A], _first: Long, last: Long, _result: TSTreeNode[A, V]): TSTreeNode[A, V] = {
+    private def copyInto(key: Vector[A], _first: Int, last: Int, _result: TSTreeNode[A, V]): TSTreeNode[A, V] = {
         Assert(_first != last)
         Assert(_result ne null)
         var first = _first
@@ -163,7 +163,7 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
         result
     }
 
-    private def search(_first1: TSTreeNode[A, V], key2: Vector[A], _first2: Long, last2: Long): (TSTreeNode[A, V], Long) = {
+    private def search(_first1: TSTreeNode[A, V], key2: Vector[A], _first2: Int, last2: Int): (TSTreeNode[A, V], Int) = {
         Assert(_first1 ne null)
         Assert(_first2 != last2)
         var first1 = _first1

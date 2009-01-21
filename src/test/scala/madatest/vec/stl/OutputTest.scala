@@ -27,13 +27,13 @@ class OutputTest {
         val v = arrayVector(example1)
         val ct = new mada.vec.stl.OutputCounter
         mada.vec.stl.Copy(v, 0, 10, ct, 999)
-        assertEquals(10L, ct.count)
+        assertEquals(10, ct.count)
     }
 
     def testCounter2: Unit = {
         val v = arrayVector(example1)
         val ct = new mada.vec.stl.OutputCounter(1000)
         mada.vec.stl.Copy(v, 0, 10, ct, 999)
-        assertEquals(1010L, ct.count)
+        assertEquals(1010, ct.count)
     }
 }

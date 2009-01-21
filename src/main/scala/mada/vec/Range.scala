@@ -17,13 +17,13 @@ object Range {
 
 class IntRangeVector(start: Int, end: Int) extends Vector[Int] {
     override def size = end - start
-    override def apply(i: Long) = (start + i).toInt
+    override def apply(i: Int) = start + i
 }
 
 
 // Long
 
 class LongRangeVector(start: Long, end: Long) extends Vector[Long] {
-    override def size = end - start
-    override def apply(i: Long) = start + i
+    override def size = (end - start).toInt
+    override def apply(i: Int) = start + i
 }

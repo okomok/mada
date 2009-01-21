@@ -16,7 +16,7 @@ import mada.Peg._
 class SymbolSetTest {
     def testTrivial: Unit = {
         val i = ("abc" >> SymbolSet("to", "too", "tot", "tab", "so")).lookingAt("abcto").get
-        assertEquals(5L, i)
+        assertEquals(5, i)
     }
 
     def testLongestMatch: Unit = {

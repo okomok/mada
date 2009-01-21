@@ -23,7 +23,7 @@ object Singles {
 }
 
 class SinglesPeg[A](es: Set[A]) extends Peg[A] {
-    override def parse(v: Vector[A], first: Long, last: Long) = {
+    override def parse(v: Vector[A], first: Int, last: Int) = {
         if (first == last || !es.contains(v(first))) {
             Peg.FAILURE
         } else {

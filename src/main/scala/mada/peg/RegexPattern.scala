@@ -15,10 +15,10 @@ object RegexPatternPeg {
 }
 
 class RegexPatternPeg(pat: Pattern) extends Peg[Char] {
-    override def parse(v: Vector[Char], first: Long, last: Long): Long = {
+    override def parse(v: Vector[Char], first: Int, last: Int): Int = {
         import Vector.Compatibles._
         val mat = pat.matcher(v)
-        mat.region(first.toInt, last.toInt)
+        mat.region(first, last)
         mat.useTransparentBounds(true)
         if (mat.lookingAt) {
             mat.end

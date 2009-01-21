@@ -34,7 +34,7 @@ package mada.vec.stl
 
 
 object Transform {
-    def apply[A, B](v : Vector[A], first: Long, __last: Long, ^ : Vector[B], result: Long, __opr: A => B): Long = {
+    def apply[A, B](v : Vector[A], first: Int, __last: Int, ^ : Vector[B], result: Int, __opr: A => B): Int = {
         var __first = first
         var __result = result
 
@@ -45,7 +45,7 @@ object Transform {
         __result
     }
 
-    def apply[A, B, C](v1 : Vector[A], first1: Long, __last1: Long, v2 : Vector[B], first2: Long,  ^ : Vector[C], result: Long, __binary_op: (A, B) => C): Long = {
+    def apply[A, B, C](v1 : Vector[A], first1: Int, __last1: Int, v2 : Vector[B], first2: Int,  ^ : Vector[C], result: Int, __binary_op: (A, B) => C): Int = {
         var __first1 = first1
         var __first2 = first2
         var __result = result

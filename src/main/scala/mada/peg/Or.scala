@@ -12,7 +12,7 @@ object Or {
 }
 
 class OrPeg[A](p: Peg[A], q: Peg[A]) extends Peg[A] {
-    override def parse(v: Vector[A], first: Long, last: Long) = {
+    override def parse(v: Vector[A], first: Int, last: Int) = {
         var cur = p.parse(v, first, last)
         if (cur == Peg.FAILURE) {
             q.parse(v, first, last)

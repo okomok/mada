@@ -34,7 +34,7 @@ package mada.vec.stl
 
 
 object InsertionSort {
-    def apply[A](* : Vector[A], __first: Long, __last: Long, __comp: (A, A) => Boolean): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: (A, A) => Boolean): Unit = {
         if (__first == __last) {
             return
         }
@@ -47,7 +47,7 @@ object InsertionSort {
 }
 
 object LinearInsert {
-    def apply[A](* : Vector[A], __first: Long, __last: Long, __val: A, __comp: (A, A) => Boolean): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __last: Int, __val: A, __comp: (A, A) => Boolean): Unit = {
         if (__comp(__val, *(__first))) {
             CopyBackward(*, __first, __last, *, __last + 1)
             *(__first) = __val
@@ -59,7 +59,7 @@ object LinearInsert {
 
 
 object UnguardedInsertionSort {
-    def apply[A](* : Vector[A], __first: Long, __last: Long, __comp: (A, A) => Boolean): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: (A, A) => Boolean): Unit = {
         var __i = __first
         while (__i != __last) {
             UnguardedLinearInsert(*, __i, *(__i), __comp)
@@ -69,7 +69,7 @@ object UnguardedInsertionSort {
 }
 
 object UnguardedLinearInsert {
-    def apply[A](* : Vector[A], last: Long, __val: A, __comp: (A, A) => Boolean): Unit = {
+    def apply[A](* : Vector[A], last: Int, __val: A, __comp: (A, A) => Boolean): Unit = {
         var __last = last
         var __next = __last
 

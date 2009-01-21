@@ -54,7 +54,7 @@ class PrettyPrinter(val out: java.io.Writer, val indentWidth: Int) {
     def writer[A](name: String, p: Peg[A]): Peg[A] = writer(p.named(name))
 
     class WriterPeg[A](override val self: Peg[A]) extends PegProxy[A] {
-        override def parse(v: Vector[A], first: Long, last: Long) = {
+        override def parse(v: Vector[A], first: Int, last: Int) = {
             writeStartElement(self)
 
             writeElement("peg:parsing", v(first, last))

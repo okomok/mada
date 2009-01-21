@@ -10,9 +10,9 @@ package mada
 object Peg {
     import peg._
 
-    final val FAILURE = -1L
+    final val FAILURE = -1
 
-    def advance[A](i: Long): Peg[A] = Advance[A](i)
+    def advance[A](i: Int): Peg[A] = Advance[A](i)
     def any[A]: Peg[A] = Any_[A]
     def begin[A]: Peg[A] = Begin[A]
     def end[A]: Peg[A] = End[A]
@@ -78,8 +78,8 @@ object Peg {
 trait Peg[A] {
     import peg._
 
-    def parse(v: Vector[A], first: Long, last: Long): Long
-    def length: Long = throw new UnsupportedOperationException("Peg.length")
+    def parse(v: Vector[A], first: Int, last: Int): Int
+    def length: Int = throw new UnsupportedOperationException("Peg.length")
 
     final def and(that: Peg[A]): Peg[A] = And(this, that)
     final def or(that: Peg[A]): Peg[A] = Or(this, that)
@@ -111,13 +111,13 @@ trait Peg[A] {
     final def identity: Peg[A] = Identity(this)
     final def memoize: Peg[A] = Memoize(this)
     final def named(name: String) = Named(this, name)
-    final def repeat(min: Long, max: Long): Peg[A] = Repeat(this, min, max)
+    final def repeat(min: Int, max: Int): Peg[A] = Repeat(this, min, max)
 
     final def readMap[Z](f: Vector[Z] => Vector[A]): Peg[Z] = ReadMap(this, f)
     final def unmap[Z](f: Z => A): Peg[Z] = Unmap(this, f)
 
-    final def find(v: Vector[A]): Option[(Long, Long)] = Find(this, v)
-    final def lookingAt(v: Vector[A]): Option[Long] = LookingAt(this, v)
+    final def find(v: Vector[A]): Option[(Int, Int)] = Find(this, v)
+    final def lookingAt(v: Vector[A]): Option[Int] = LookingAt(this, v)
     final def matches(v: Vector[A]): Boolean = Matches(this, v)
 
     final def tokenize(v: Vector[A]): Iterator[Vector[A]] = Tokenize(this, v)

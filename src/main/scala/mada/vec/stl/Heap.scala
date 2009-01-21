@@ -36,11 +36,11 @@ package mada.vec.stl
 // PushHeap
 
 object PushHeap {
-    def apply[A](* : Vector[A], __first: Long, __last: Long, __comp: (A, A) => Boolean): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: (A, A) => Boolean): Unit = {
         __apply(*, __first, (__last - __first) - 1, 0, *(__last - 1), __comp)
     }
 
-    def __apply[A](* : Vector[A], __first: Long, holeIndex: Long, __topIndex: Long, __value: A, __comp: (A, A) => Boolean): Unit = {
+    def __apply[A](* : Vector[A], __first: Int, holeIndex: Int, __topIndex: Int, __value: A, __comp: (A, A) => Boolean): Unit = {
         var __holeIndex = holeIndex
 
         var __parent = (__holeIndex - 1) / 2
@@ -57,11 +57,11 @@ object PushHeap {
 // PopHeap
 
 object PopHeap {
-    def apply[A](* : Vector[A], __first: Long, __last: Long, __comp: (A, A) => Boolean): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: (A, A) => Boolean): Unit = {
         __apply(*, __first, __last - 1, __last - 1, *(__last - 1), __comp)
     }
 
-    def __apply[A](* : Vector[A], __first: Long, __last: Long, __result: Long, __value: A, __comp: (A, A) => Boolean): Unit = {
+    def __apply[A](* : Vector[A], __first: Int, __last: Int, __result: Int, __value: A, __comp: (A, A) => Boolean): Unit = {
         *(__result) = *(__first)
         AdjustHeap(*, __first, 0, __last - __first, __value, __comp);
     }
@@ -71,7 +71,7 @@ object PopHeap {
 // MakeHeap
 
 object MakeHeap {
-    def apply[A](* : Vector[A], __first: Long, __last: Long, __comp: (A, A) => Boolean): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: (A, A) => Boolean): Unit = {
         if (__last - __first < 2) {
             return
         }
@@ -92,7 +92,7 @@ object MakeHeap {
 // SortHeap
 
 object SortHeap {
-    def apply[A](* : Vector[A], __first: Long, last: Long, __comp: (A, A) => Boolean): Unit = {
+    def apply[A](* : Vector[A], __first: Int, last: Int, __comp: (A, A) => Boolean): Unit = {
         var __last = last
 
         while (__last - __first > 1) {
@@ -106,7 +106,7 @@ object SortHeap {
 // AdjustHeap
 
 object AdjustHeap {
-    def apply[A](* : Vector[A], __first: Long, holeIndex: Long, __len: Long, __value: A, __comp: (A, A) => Boolean): Unit = {
+    def apply[A](* : Vector[A], __first: Int, holeIndex: Int, __len: Int, __value: A, __comp: (A, A) => Boolean): Unit = {
         var __holeIndex = holeIndex
 
         val __topIndex = __holeIndex;

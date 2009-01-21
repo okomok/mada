@@ -17,12 +17,12 @@ import madatest.vec.detail._
 class CountTest {
     def testTrivial: Unit = {
         val v = madaVector("a813a91ng8a89a8")
-        assertEquals(4L, v.parallel.count(_ == 'a'))
-        assertEquals(4L, v.parallel(1000).count(_ == 'a'))
-        assertEquals(4L, v.parallel(6).count(_ == 'a'))
+        assertEquals(4, v.parallel.count(_ == 'a'))
+        assertEquals(4, v.parallel(1000).count(_ == 'a'))
+        assertEquals(4, v.parallel(6).count(_ == 'a'))
 
-        assertEquals(0L, v.parallel.count(_ == 'z'))
-        assertEquals(0L, v.parallel(1000).count(_ == 'z'))
-        assertEquals(0L, v.parallel(6).count(_ == 'z'))
+        assertEquals(0, v.parallel.count(_ == 'z'))
+        assertEquals(0, v.parallel(1000).count(_ == 'z'))
+        assertEquals(0, v.parallel(6).count(_ == 'z'))
     }
 }

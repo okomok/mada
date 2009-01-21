@@ -19,7 +19,7 @@ class DivideTest {
         // 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14
         // 0,18,14,17,19, 8,13, 6, 4,23, 0,12,15,11, 4
         val actual = madaVector(example1).divide(6)
-        assertEquals(3L, actual.size)
+        assertEquals(3, actual.size)
         assertEquals(actual(0), madaVector(Array(0,18,14,17,19,8)))
         assertEquals(actual(1), madaVector(Array(13, 6, 4,23, 0,12)))
         assertEquals(actual(2), madaVector(Array(15,11, 4)))
@@ -29,7 +29,7 @@ class DivideTest {
         // 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14
         // 0,18,14,17,19, 8,13, 6, 4,23, 0,12,15,11, 4
         val actual = madaVector(example1).divide(600)
-        assertEquals(1L, actual.size)
+        assertEquals(1, actual.size)
         assertEquals(actual(0), madaVector(example1))
     }
 
@@ -37,25 +37,25 @@ class DivideTest {
         // 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14
         // 0,18,14,17,19, 8,13, 6, 4,23, 0,12,15,11, 4
         val actual = madaVector(example1).divide(15)
-        assertEquals(1L, actual.size)
+        assertEquals(1, actual.size)
         assertEquals(actual(0), madaVector(example1))
     }
 
     def testUndivide: Unit = {
         val actual = Vector.undivide(madaVector(example1).divide(6))
-        assertEquals(15L, actual.size)
+        assertEquals(15, actual.size)
         detail.TestVectorReadOnly(example1, actual)
     }
 
     def testUndivideBound: Unit = {
         val actual = Vector.undivide(madaVector(example1).divide(1))
-        assertEquals(15L, actual.size)
+        assertEquals(15, actual.size)
         detail.TestVectorReadOnly(example1, actual)
     }
 
     def testUndivideBoundBig: Unit = {
         val actual = Vector.undivide(madaVector(example1).divide(1000))
-        assertEquals(15L, actual.size)
+        assertEquals(15, actual.size)
         detail.TestVectorReadOnly(example1, actual)
     }
 

@@ -8,7 +8,7 @@ package mada.peg
 
 
 object LookingAt {
-    def apply[A](p: Peg[A], v: Vector[A]): Option[Long] = {
+    def apply[A](p: Peg[A], v: Vector[A]): Option[Int] = {
         val (first, last) = v.pair
         val cur = p.parse(v, first, last)
         if (cur == Peg.FAILURE) {

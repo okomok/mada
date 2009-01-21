@@ -8,18 +8,18 @@ package mada.peg
 
 
 object Repeat {
-    def apply[A](p: Peg[A], min: Long, max: Long): Peg[A] = {
+    def apply[A](p: Peg[A], min: Int, max: Int): Peg[A] = {
         Assert(0 <= min)
         Assert(min <= max)
         new RepeatPeg(p, min, max)
     }
 }
 
-class RepeatPeg[A](p: Peg[A], min: Long, max: Long) extends Peg[A] {
-    override def parse(v: Vector[A], first: Long, last: Long): Long = {
+class RepeatPeg[A](p: Peg[A], min: Int, max: Int) extends Peg[A] {
+    override def parse(v: Vector[A], first: Int, last: Int): Int = {
         var cur = first
 
-        var i = 0L
+        var i = 0
         while (i < max) {
             cur = p.parse(v, cur, last)
             if (cur == Peg.FAILURE) {

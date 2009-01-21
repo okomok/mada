@@ -34,16 +34,16 @@ package mada.vec.stl
 
 
 object LowerBound {
-    def apply[A](* : Vector[A], first: Long, __last: Long, __val: A)(implicit c: A => Ordered[A]): Unit = {
+    def apply[A](* : Vector[A], first: Int, __last: Int, __val: A)(implicit c: A => Ordered[A]): Unit = {
         apply(*, first, __last, __val, Less(c))
     }
 
-    def apply[A](* : Vector[A], first: Long, __last: Long, __val: A, __comp: (A, A) => Boolean): Long = {
+    def apply[A](* : Vector[A], first: Int, __last: Int, __val: A, __comp: (A, A) => Boolean): Int = {
         var __first = first
 
         var __len = __last - __first
-        var __half = 0L
-        var __middle = 0L
+        var __half = 0
+        var __middle = 0
 
         while (__len > 0) {
             __half = __len >> 1
@@ -62,11 +62,11 @@ object LowerBound {
 }
 
 object UpperBound {
-    def apply[A](* : Vector[A], first: Long, __last: Long, __val: A)(implicit c: A => Ordered[A]): Unit = {
+    def apply[A](* : Vector[A], first: Int, __last: Int, __val: A)(implicit c: A => Ordered[A]): Unit = {
         apply(*, first, __last, __val, Less(c))
     }
 
-    def apply[A](* : Vector[A], first: Long, __last: Long, __val: A, __comp: (A, A) => Boolean): Long = {
+    def apply[A](* : Vector[A], first: Int, __last: Int, __val: A, __comp: (A, A) => Boolean): Int = {
         LowerBound(*, first, __last, __val, { (x: A, y: A) => !__comp(y, x) })
     }
 }

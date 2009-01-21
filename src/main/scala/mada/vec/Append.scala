@@ -13,14 +13,14 @@ object Append {
 
 class AppendVector[A](v: Vector[A], w: Vector[A]) extends Vector[A] {
     override def size = v.size + w.size
-    override def apply(i: Long) = {
+    override def apply(i: Int) = {
         if (i < v.size) {
             v(i)
         } else {
             w(i - v.size)
         }
     }
-    override def update(i: Long, e: A) = {
+    override def update(i: Int, e: A) = {
         if (i < v.size) {
             v(i) = e
         } else {

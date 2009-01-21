@@ -27,14 +27,14 @@ class LRuleTest {
     def testTrivial: Unit = {
         num  ::= range('0','9')
         expr ::= ( expr >> "-" >> num | num )
-        assertEquals(5L, expr parse v)
+        assertEquals(5, expr parse v)
     }
 
     def testIndirect: Unit = {
         num  ::= range('0', '9')
         x    ::= expr
         expr ::= ( x >> "-" >> num | num )
-        assertEquals(5L, expr parse v)
+        assertEquals(5, expr parse v)
     }
     */
 }

@@ -8,5 +8,5 @@ package mada.vec
 
 
 object Offset {
-    def apply[A](v: Vector[A], i: Long, j: Long): Vector[A] = v.window(i, v.size + j)
+    def apply[A](v: Vector[A], i: Int, j: Int): Vector[A] = v.window(i, v.size + j)
 }

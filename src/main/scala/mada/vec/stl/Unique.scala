@@ -34,11 +34,11 @@ package mada.vec.stl
 
 
 object Unique {
-    def apply[A](v: Vector[A], first: Long, __last: Long): Long = {
+    def apply[A](v: Vector[A], first: Int, __last: Int): Int = {
         apply(v, first, __last, EqualTo)
     }
 
-    def apply[A](v: Vector[A], first: Long, __last: Long, __binary_pred: (A, A) => Boolean): Long = {
+    def apply[A](v: Vector[A], first: Int, __last: Int, __binary_pred: (A, A) => Boolean): Int = {
         var __first = first
 
         __first = AdjacentFind(v, __first, __last, __binary_pred)

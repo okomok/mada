@@ -34,14 +34,14 @@ package mada.vec.stl
 
 
 object IntroSort {
-    def apply[A](* : Vector[A], __first: Long, __last: Long, __comp: (A, A) => Boolean): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: (A, A) => Boolean): Unit = {
         if (__first != __last) {
             loop(*, __first, __last, lg(__last - __first) * 2, __comp)
             finalInsertionSort(*, __first, __last, __comp)
         }
     }
 
-    def loop[A](* : Vector[A], __first: Long, last: Long, depth_limit: Long, __comp: (A, A) => Boolean): Unit = {
+    def loop[A](* : Vector[A], __first: Int, last: Int, depth_limit: Int, __comp: (A, A) => Boolean): Unit = {
         var __last = last
         var __depth_limit = depth_limit
 
@@ -57,7 +57,7 @@ object IntroSort {
         }
     }
 
-    def finalInsertionSort[A](* : Vector[A], __first: Long, __last: Long, __comp: (A, A) => Boolean): Unit = {
+    def finalInsertionSort[A](* : Vector[A], __first: Int, __last: Int, __comp: (A, A) => Boolean): Unit = {
         if (__last - __first > threshold) {
             InsertionSort(*, __first, __first + threshold, __comp)
             UnguardedInsertionSort(*, __first + threshold, __last, __comp)
@@ -68,9 +68,9 @@ object IntroSort {
 
     val threshold = 16
 
-    def lg(n: Long): Long = {
+    def lg(n: Int): Int = {
         var __n = n
-        var __k = 0L
+        var __k = 0
         while (__n != 1) {
             __k += 1
             __n >>= 1

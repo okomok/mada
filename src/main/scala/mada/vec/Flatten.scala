@@ -9,8 +9,8 @@ package mada.vec
 
 object Flatten {
     def apply[A](vv: Vector[Vector[A]]): Vector[A] = {
-        val av = Vector.arrayVector(new Array[A](FlattenSize(vv).toInt))
-        var (i, j) = (0L, 0L)
+        val av = Vector.arrayVector(new Array[A](FlattenSize(vv)))
+        var (i, j) = (0, 0)
         for (v <- vv) {
             j += v.size
             v.copyTo(av.window(i, j))
@@ -27,5 +27,5 @@ object Flatten3 {
 }
 
 object FlattenSize {
-    def apply[A](vv: Vector[Vector[A]]): Long = vv.foldLeft(0L)({ (c, v) => c + v.size })
+    def apply[A](vv: Vector[Vector[A]]): Int = vv.foldLeft(0)({ (c, v) => c + v.size })
 }

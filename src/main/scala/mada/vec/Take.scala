@@ -8,7 +8,7 @@ package mada.vec
 
 
 object Take {
-    def apply[A](v: Vector[A], n: Long): Vector[A] = {
+    def apply[A](v: Vector[A], n: Int): Vector[A] = {
         v.window(0, Math.min(n, v.size))
     }
 }

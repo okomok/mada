@@ -16,13 +16,13 @@ object RandomAccessSeqVector {
 
 class RandomAccessSeqVector[A](val seq: RandomAccessSeq[A]) extends Vector[A] {
     override def size = seq.length
-    override def apply(i: Long) = seq(i.toInt)
+    override def apply(i: Int) = seq(i)
 }
 
 class MutableRandomAccessSeqVector[A](val seq: RandomAccessSeq.Mutable[A]) extends Vector[A] {
     override def size = seq.length
-    override def apply(i: Long) = seq(i.toInt)
-    override def update(i: Long, e: A) = seq(i.toInt) = e
+    override def apply(i: Int) = seq(i)
+    override def update(i: Int, e: A) = seq(i) = e
 
     override def randomAccessSeq = seq // from-to fusion
 }
@@ -33,7 +33,7 @@ object VectorRandomAccessSeq {
 }
 
 class VectorRandomAccessSeq[A](v: Vector[A]) extends RandomAccessSeq.Mutable[A] {
-    override def length = v.size.toInt
+    override def length = v.size
     override def apply(i: Int) = v(i)
     override def update(i: Int, e: A) = v(i) = e
 }

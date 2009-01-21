@@ -16,8 +16,8 @@ object ArrayVector {
 
 class ArrayVector[A](val array: Array[A]) extends Vector[A] {
     override def size = array.length
-    override def apply(i: Long) = array(i.toInt)
-    override def update(i: Long, e: A) = array(i.toInt) = e
+    override def apply(i: Int) = array(i)
+    override def update(i: Int, e: A) = array(i) = e
 
 //    This requires IntArrayVector for correct overload resolution.
 //    override def sort(lt: (A, A) => Boolean) = { Arrays.sort(array, jcl.ToComparator(lt)); this }
@@ -26,7 +26,7 @@ class ArrayVector[A](val array: Array[A]) extends Vector[A] {
 
 object ToArray {
     def apply[A](v: Vector[A]): Array[A] = {
-        val a = new Array[A](v.size.toInt)
+        val a = new Array[A](v.size)
         v.copyTo(Vector.arrayVector(a))
         a
     }

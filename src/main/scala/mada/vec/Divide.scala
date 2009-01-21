@@ -8,15 +8,15 @@ package mada.vec
 
 
 object Divide {
-    def apply[A](v: Vector[A], n: Long): Vector[Vector[A]] = v.divide3(n).map({ w => Vector.tripleVector(w) })
+    def apply[A](v: Vector[A], n: Int): Vector[Vector[A]] = v.divide3(n).map({ w => Vector.tripleVector(w) })
 }
 
 object Divide3 {
-    def apply[A](v: Vector[A], n: Long): Vector[Vector.Triple[A]] = new Divide3Vector(v, n)
+    def apply[A](v: Vector[A], n: Int): Vector[Vector.Triple[A]] = new Divide3Vector(v, n)
 }
 
-class Divide3Vector[A](v: Vector[A], stride: Long) extends Vector[Vector.Triple[A]] with NotWritable[Vector.Triple[A]] {
+class Divide3Vector[A](v: Vector[A], stride: Int) extends Vector[Vector.Triple[A]] with NotWritable[Vector.Triple[A]] {
     Assert(stride > 0)
     override def size = StepCount(v.size, 0, stride)
-    override def apply(i: Long) = (v, i * stride, Math.min((i + 1) * stride, v.size))
+    override def apply(i: Int) = (v, i * stride, Math.min((i + 1) * stride, v.size))
 }

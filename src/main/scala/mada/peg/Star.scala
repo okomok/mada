@@ -12,7 +12,7 @@ object Star {
 }
 
 class StarPeg[A](p: Peg[A]) extends Peg[A] {
-    override def parse(v: Vector[A], first: Long, last: Long): Long = {
+    override def parse(v: Vector[A], first: Int, last: Int): Int = {
         var cur = first
 
         while (true) {

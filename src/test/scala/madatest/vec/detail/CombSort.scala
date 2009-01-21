@@ -15,15 +15,15 @@ object CombSort {
         val (first, last) = *.pair
 
         var gap = last - first
-        if (gap < 1L)
+        if (gap < 1)
             return
 
         var first2 = last
         var swapped = false
         do {
-            var newgap = (gap * 10L + 3L) / 13L
-            if (newgap < 1L)
-                newgap = 1L
+            var newgap = (gap * 10 + 3) / 13
+            if (newgap < 1)
+                newgap = 1
 
             first2 += (newgap - gap) // paren is needed in scala 2.7.1
             gap = newgap
@@ -37,7 +37,7 @@ object CombSort {
                 }
                 target1 += 1; target2 += 1
             }
-        } while ((gap > 1L) || swapped)
+        } while ((gap > 1) || swapped)
     }
 
     def apply[A <% Ordered[A]](v: Vector[A]): Unit = apply(v, (_: A) < (_: A))

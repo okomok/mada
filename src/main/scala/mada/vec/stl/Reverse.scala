@@ -34,7 +34,7 @@ package mada.vec.stl
 
 
 object Reverse {
-    def apply[A](v: Vector[A], first: Long, last: Long): Unit = {
+    def apply[A](v: Vector[A], first: Int, last: Int): Unit = {
         var __first = first; var __last = last
 
         while (__first < __last) {

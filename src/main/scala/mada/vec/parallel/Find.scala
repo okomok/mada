@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicReference
 
 
 object Find {
-    def apply[A, B](v: Vector[A], p: A => Boolean, grainSize: Long): Option[A] = {
+    def apply[A, B](v: Vector[A], p: A => Boolean, grainSize: Int): Option[A] = {
         if (v.isEmpty) {
             None
         } else {

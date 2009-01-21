@@ -34,11 +34,11 @@ package mada.vec.stl
 
 
 object UniqueCopy {
-    def apply[A, B >: A](v : Vector[A], first: Long, __last: Long, ^ : Vector[B], result: Long): Long = {
+    def apply[A, B >: A](v : Vector[A], first: Int, __last: Int, ^ : Vector[B], result: Int): Int = {
         apply(v, first, __last, ^, result, EqualTo)
     }
 
-    def apply[A, B >: A](v : Vector[A], first: Long, __last: Long, ^ : Vector[B], result: Long, __binary_pred: (A, B) => Boolean): Long = {
+    def apply[A, B >: A](v : Vector[A], first: Int, __last: Int, ^ : Vector[B], result: Int, __binary_pred: (A, B) => Boolean): Int = {
         var __first = first
         var __result = result
 

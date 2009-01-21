@@ -8,12 +8,12 @@ package mada.vec
 
 
 object Div {
-    def apply(a: Long, b: Long): (Long, Long) = {
+    def apply(a: Int, b: Int): (Int, Int) = {
         (a / b, positiveRemainder(a, b))
     }
 
     // Don't use heap.
-    def positiveRemainder(a: Long, b: Long): Long = {
+    def positiveRemainder(a: Int, b: Int): Int = {
         Assert(b > 0)
         val rem = a % b
         if (rem < 0) {

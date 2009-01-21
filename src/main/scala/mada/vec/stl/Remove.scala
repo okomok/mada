@@ -34,13 +34,13 @@ package mada.vec.stl
 
 
 object Remove {
-    def apply[A](v: Vector[A], first: Long, __last: Long, e: Any): Long = {
+    def apply[A](v: Vector[A], first: Int, __last: Int, e: Any): Int = {
         RemoveIf(v, first, __last, (_: A) == e)
     }
 }
 
 object RemoveIf {
-    def apply[A](v: Vector[A], first: Long, __last: Long, __pred: A => Boolean): Long = {
+    def apply[A](v: Vector[A], first: Int, __last: Int, __pred: A => Boolean): Int = {
         var __first = first
 
         __first = FindIf(v, __first, __last, __pred)

@@ -13,6 +13,6 @@ object Single {
 
 class SingleVector[A](var single: A) extends Vector[A] {
     override def size = 1
-    override def apply(i: Long) = single
-    override def update(i: Long, e: A) = single = e
+    override def apply(i: Int) = single
+    override def update(i: Int, e: A) = single = e
 }

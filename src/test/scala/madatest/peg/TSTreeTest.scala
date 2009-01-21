@@ -45,15 +45,15 @@ class TSTreeTest {
         assertEquals(None, tree.parse("t", 0, 1))
         assertEquals(None, tree.parse("tzzzzz", 0, 6))
         assertEquals(None, tree.parse("", 0, 0))
-        assertEquals(3L, tree.parse("tot", 0, 3).get._2)
-        assertEquals(3L, tree.parse("totzzzzz", 0, 8).get._2)
-        assertEquals(2L, tree.parse("toazzzzz", 0, 8).get._2)
+        assertEquals(3, tree.parse("tot", 0, 3).get._2)
+        assertEquals(3, tree.parse("totzzzzz", 0, 8).get._2)
+        assertEquals(2, tree.parse("toazzzzz", 0, 8).get._2)
 
         /* empty-string key
         tree.put("", "EMPTY")
         assertTrue(tree.containsKey(""))
-        assertEquals(0L, tree.parse("ztot", 0, 4).get._2) // 0-length match
-        assertEquals(2L, tree.parse("zzzzztot", 2, 8).get._2) // 0-length match
+        assertEquals(0, tree.parse("ztot", 0, 4).get._2) // 0-length match
+        assertEquals(2, tree.parse("zzzzztot", 2, 8).get._2) // 0-length match
         */
     }
 

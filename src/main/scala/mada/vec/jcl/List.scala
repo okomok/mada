@@ -16,8 +16,8 @@ object ListVector {
 
 class ListVector[A](list: List[A]) extends Vector[A] {
     override def size = list.size
-    override def apply(i: Long) = list.get(i.toInt)
-    override def update(i: Long, e: A) = list.set(i.toInt, e)
+    override def apply(i: Int) = list.get(i)
+    override def update(i: Int, e: A) = list.set(i, e)
 
     override def sort(lt: (A, A) => Boolean) = { Collections.sort(list, ToComparator(lt)); this }
 }

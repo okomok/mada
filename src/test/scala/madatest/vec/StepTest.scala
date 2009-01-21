@@ -42,7 +42,7 @@ class StepTest {
     def testBigStride {
         val v = arrayVector(example1).drop(2).step(99)
         assertEquals(14, v(0))
-        assertEquals(1L, v.size)
+        assertEquals(1, v.size)
     }
 
     def testEmpty {

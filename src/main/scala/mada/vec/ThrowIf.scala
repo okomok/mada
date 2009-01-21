@@ -8,7 +8,7 @@ package mada.vec
 
 
 object ThrowIf {
-    def outOfBounds[A](v: Vector[A], i: Long): Unit = {
+    def outOfBounds[A](v: Vector[A], i: Int): Unit = {
         if (i < 0 || i >= v.size) {
             throw new IndexOutOfBoundsException(i.toString)
         }
@@ -26,7 +26,7 @@ object ThrowIf {
         }
     }
 
-    def invalidGrainSize(grainSize: Long): Unit = {
+    def invalidGrainSize(grainSize: Int): Unit = {
         if (grainSize <= 0) {
             throw new java.lang.IllegalArgumentException("grain size must be positive")
         }

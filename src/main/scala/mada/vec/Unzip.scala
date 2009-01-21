@@ -13,10 +13,10 @@ object Unzip {
 
 class UnzipVector1[A, B](v: Vector[(A, B)]) extends Vector[A] {
     override def size = v.size
-    override def apply(i: Long) = v(i)._1
+    override def apply(i: Int) = v(i)._1
 }
 
 class UnzipVector2[A, B](v: Vector[(A, B)]) extends Vector[B] {
     override def size = v.size
-    override def apply(i: Long) = v(i)._2
+    override def apply(i: Int) = v(i)._2
 }

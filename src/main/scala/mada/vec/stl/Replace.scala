@@ -34,13 +34,13 @@ package mada.vec.stl
 
 
 object Replace {
-    def apply[A](* : Vector[A], first: Long, __last: Long, __old_value: Any, __new_value: A): Unit = {
+    def apply[A](* : Vector[A], first: Int, __last: Int, __old_value: Any, __new_value: A): Unit = {
         ReplaceIf(*, first, __last, (_: A) == __old_value, __new_value)
     }
 }
 
 object ReplaceIf {
-    def apply[A](* : Vector[A], first: Long, __last: Long, __pred: A => Boolean, __new_value: A): Unit = {
+    def apply[A](* : Vector[A], first: Int, __last: Int, __pred: A => Boolean, __new_value: A): Unit = {
         var __first = first
 
         while (__first != __last) {

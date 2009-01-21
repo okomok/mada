@@ -8,10 +8,10 @@ package mada.vec
 
 
 object Writer {
-    def apply[A](v: Vector[A], i: Long): (A => Unit) = new WriterFunction(v, i)
+    def apply[A](v: Vector[A], i: Int): (A => Unit) = new WriterFunction(v, i)
 }
 
-class WriterFunction[A](* : Vector[A], start: Long) extends (A => Unit) {
+class WriterFunction[A](* : Vector[A], start: Int) extends (A => Unit) {
     private var first = start
     override def apply(e: A): Unit = { *(first) = e; first += 1 }
 }

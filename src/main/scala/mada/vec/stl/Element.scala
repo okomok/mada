@@ -34,11 +34,11 @@ package mada.vec.stl
 
 
 object MinElement {
-    def apply[A](* : Vector[A], first: Long, __last: Long)(implicit c: A => Ordered[A]): Unit = {
+    def apply[A](* : Vector[A], first: Int, __last: Int)(implicit c: A => Ordered[A]): Unit = {
         apply(*, first, __last, Less(c))
     }
 
-    def apply[A](* : Vector[A], first: Long, __last: Long, __comp: (A, A) => Boolean): Long = {
+    def apply[A](* : Vector[A], first: Int, __last: Int, __comp: (A, A) => Boolean): Int = {
         var __first = first
 
         if (__first == __last) {
@@ -57,11 +57,11 @@ object MinElement {
 }
 
 object MaxElement {
-    def apply[A](* : Vector[A], first: Long, __last: Long)(implicit c: A => Ordered[A]): Unit = {
+    def apply[A](* : Vector[A], first: Int, __last: Int)(implicit c: A => Ordered[A]): Unit = {
         apply(*, first, __last, Less(c))
     }
 
-    def apply[A](* : Vector[A], first: Long, __last: Long, __comp: (A, A) => Boolean): Long = {
+    def apply[A](* : Vector[A], first: Int, __last: Int, __comp: (A, A) => Boolean): Int = {
         MinElement(*, first, __last, { (x: A, y: A) => __comp(y, x) })
     }
 }

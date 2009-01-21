@@ -13,5 +13,5 @@ object ProductVector {
 
 class ProductVector(product: Product) extends Vector[Any] {
     override def size = product.productArity
-    override def apply(i: Long) = product.productElement(i.toInt)
+    override def apply(i: Int) = product.productElement(i)
 }

@@ -8,5 +8,5 @@ package mada.vec
 
 
 object Rotate {
-    def apply[A](v: Vector[A], i: Long): Vector[A] = v.window(i, v.size) ++ v.window(0, i)
+    def apply[A](v: Vector[A], i: Int): Vector[A] = v.window(i, v.size) ++ v.window(0, i)
 }

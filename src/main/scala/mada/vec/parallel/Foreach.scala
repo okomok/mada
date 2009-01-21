@@ -8,7 +8,7 @@ package mada.vec.parallel
 
 
 object Foreach {
-    def apply[A](v: Vector[A], f: A => Unit, grainSize: Long): Unit = {
+    def apply[A](v: Vector[A], f: A => Unit, grainSize: Int): Unit = {
         touch(v.divide(grainSize).parallel(1).map({ w => w.foreach(f) }))
     }
 

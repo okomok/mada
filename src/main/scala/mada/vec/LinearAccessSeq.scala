@@ -16,5 +16,5 @@ object LinearAccessSeq {
 class VectorLinearAccessSeq[A](v: Vector[A]) extends Seq[A] {
     override def apply(i: Int) = v(i)
     override def elements = v.elements
-    override val length = v.size.toInt
+    override val length = v.size
 }

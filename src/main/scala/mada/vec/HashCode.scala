@@ -10,7 +10,7 @@ package mada.vec
 object HashCode {
     def apply[A](v: Vector[A]): Int = {
         val n = v.size
-        val nh = LongHashCode(n)
+        val nh = IntHashCode(n)
 
         if (n == 0) {
             nh

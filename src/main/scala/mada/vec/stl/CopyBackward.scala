@@ -34,7 +34,7 @@ package mada.vec.stl
 
 
 object CopyBackward {
-    def apply[A, B >: A](v : Vector[A], __first: Long, last: Long, ^ : Vector[B], result: Long): Long = {
+    def apply[A, B >: A](v : Vector[A], __first: Int, last: Int, ^ : Vector[B], result: Int): Int = {
         var __last = last
         var __result = result
 

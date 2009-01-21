@@ -34,7 +34,7 @@ package mada.vec.stl
 
 
 object Fill {
-    def apply[A](* : Vector[A], first: Long, __last: Long, __val: A): Unit = {
+    def apply[A](* : Vector[A], first: Int, __last: Int, __val: A): Unit = {
         var __first = first
 
         var __n = __last - __first

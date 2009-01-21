@@ -8,7 +8,7 @@ package mada.vec
 
 
 object Loop {
-    def apply[A, F <: (A => Boolean)](* : Vector[A], first: Long, __last: Long, __f: F): F = {
+    def apply[A, F <: (A => Boolean)](* : Vector[A], first: Int, __last: Int, __f: F): F = {
         var __first = first
 
         while (__first != __last && __f(*(__first))) {

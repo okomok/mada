@@ -12,6 +12,6 @@ object AsVectorOf {
 }
 
 class AsVectorOfVector[A, B](override val * : Vector[A]) extends VectorAdapter[A, B] {
-    override def apply(i: Long) = *(i).asInstanceOf[B]
-    override def update(i: Long, e: B) = *(i) = e.asInstanceOf[A]
+    override def apply(i: Int) = *(i).asInstanceOf[B]
+    override def update(i: Int, e: B) = *(i) = e.asInstanceOf[A]
 }

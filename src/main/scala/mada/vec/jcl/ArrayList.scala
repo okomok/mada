@@ -12,7 +12,7 @@ import java.util.ArrayList
 
 object ToArrayList {
     def apply[A](v: Vector[A]): ArrayList[A] = {
-        val a = new ArrayList[A](v.size.toInt) // this is capacity.
+        val a = new ArrayList[A](v.size) // this is capacity.
         for (e <- v) {
             a.add(e)
         }

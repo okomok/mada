@@ -8,18 +8,18 @@ package mada.vec
 
 
 object Step {
-    def apply[A](v: Vector[A], stride: Long): Vector[A] = new StepVector(v, stride)
+    def apply[A](v: Vector[A], stride: Int): Vector[A] = new StepVector(v, stride)
 }
 
-class StepVector[A](override val * : Vector[A], stride: Long) extends VectorAdapter[A, A] {
+class StepVector[A](override val * : Vector[A], stride: Int) extends VectorAdapter[A, A] {
     Assert(stride > 0)
     override def size = StepCount(*.size, 0, stride)
-    override def mapIndex(i: Long) = i * stride
-    override def step(n: Long) = *.step(stride * n) // step-step fusion
+    override def mapIndex(i: Int) = i * stride
+    override def step(n: Int) = *.step(stride * n) // step-step fusion
 }
 
 object StepCount {
-    def apply(size: Long, start: Long, stride: Long): Long = {
+    def apply(size: Int, start: Int, stride: Int): Int = {
         if (size == 0) {
             0
         } else {

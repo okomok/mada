@@ -34,7 +34,7 @@ package mada.vec.stl
 
 
 object UnguardedPartition {
-    def apply[A](* : Vector[A], first: Long, last: Long, __pivot: A, __comp: (A, A) => Boolean): Long = {
+    def apply[A](* : Vector[A], first: Int, last: Int, __pivot: A, __comp: (A, A) => Boolean): Int = {
         var __first = first; var __last = last
 
         while (true) {

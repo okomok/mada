@@ -13,15 +13,15 @@ object Output {
 
 class OutputVector[A](f: A => Any) extends Vector[A] {
     override def size = throw new UnsupportedOperationException("OutputVector.size")
-    override def update(i: Long, e: A) = f(e)
+    override def update(i: Int, e: A) = f(e)
 }
 
 
 // maybe unneeded.
-class OutputCounter(val start: Long) extends Vector[Any] {
+class OutputCounter(val start: Int) extends Vector[Any] {
     def this() = this(0)
     private var c = start
     override def size = throw new UnsupportedOperationException("OutputCounter.size")
-    override def update(i: Long, e: Any) = c += 1
+    override def update(i: Int, e: Any) = c += 1
     def count = c
 }

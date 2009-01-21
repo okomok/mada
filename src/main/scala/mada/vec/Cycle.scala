@@ -8,12 +8,12 @@ package mada.vec
 
 
 object Cycle {
-    def apply[A](v: Vector[A], n: Long): Vector[A] = new CycleVector(v, n)
+    def apply[A](v: Vector[A], n: Int): Vector[A] = new CycleVector(v, n)
 }
 
-class CycleVector[A](v: Vector[A], n: Long) extends Vector[A] {
+class CycleVector[A](v: Vector[A], n: Int) extends Vector[A] {
     override def size = v.size * n
-    override def apply(i: Long) = v(Div.positiveRemainder(i, v.size))
+    override def apply(i: Int) = v(Div.positiveRemainder(i, v.size))
 
-    override def cycle(_n: Long) = v.cycle(n * _n)
+    override def cycle(_n: Int) = v.cycle(n * _n)
 }

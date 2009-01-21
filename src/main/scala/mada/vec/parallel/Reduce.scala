@@ -8,7 +8,7 @@ package mada.vec.parallel
 
 
 object Reduce {
-    def apply[A](v: Vector[A], op: (A, A) => A, grainSize: Long): A = {
+    def apply[A](v: Vector[A], op: (A, A) => A, grainSize: Int): A = {
         ThrowIf.empty(v, "paralell.reduce")
         v.divide(grainSize).
             parallel(1).map({ w => w.reduceLeft(op) }).

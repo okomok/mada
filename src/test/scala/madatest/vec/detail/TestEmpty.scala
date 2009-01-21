@@ -13,6 +13,6 @@ import junit.framework.Assert._
 
 object TestEmpty {
     def apply[A](v: Vector[A]) {
-        assertEquals(0L, v.size)
+        assertEquals(0, v.size)
     }
 }

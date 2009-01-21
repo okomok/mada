@@ -30,7 +30,7 @@ class VectorStream[A](v: Vector[A]) extends Stream.Definite[A] {
     }
 
     // optimizations
-    override def length = v.size.toInt
+    override def length = v.size
     override def elements = v.elements
     override def init = new VectorStream(v.init)
     override def apply(n: Int) = v(n)

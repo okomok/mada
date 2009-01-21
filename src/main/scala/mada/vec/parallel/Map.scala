@@ -11,10 +11,10 @@ import scala.actors.Futures
 
 
 object Map {
-    def apply[Z, A](v: Vector[Z], f: Z => A, grainSize: Long): Vector[A] = new MapVector(v, f, grainSize)
+    def apply[Z, A](v: Vector[Z], f: Z => A, grainSize: Int): Vector[A] = new MapVector(v, f, grainSize)
 }
 
-class MapVector[Z, A](v: Vector[Z], f: Z => A, grainSize: Long) extends VectorProxy[A] with NotWritable[A] {
+class MapVector[Z, A](v: Vector[Z], f: Z => A, grainSize: Int) extends VectorProxy[A] with NotWritable[A] {
     override lazy val self = make.parallel(grainSize)
 
     override def map[B](_f: A => B) = v.parallel(grainSize).map(_f compose f) // map-map fusion

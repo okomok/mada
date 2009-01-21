@@ -12,7 +12,7 @@ object Minus {
 }
 
 class MinusPeg[A](p: Peg[A], q: Peg[A]) extends Peg[A] {
-    override def parse(v: Vector[A], first: Long, last: Long) = {
+    override def parse(v: Vector[A], first: Int, last: Int) = {
         val pcur = p.parse(v, first, last)
         if (pcur == Peg.FAILURE) {
             Peg.FAILURE
