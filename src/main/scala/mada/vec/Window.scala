@@ -19,7 +19,7 @@ class WindowVector[A](override val * : Vector[A], n: Int, m: Int) extends Vector
     override def size = m - n
     override def mapIndex(i: Int) = n + i
 
-    override val triple = (*, n, m) // triple-window fusion
+    override def triple = (*, n, m) // triple-window fusion
     override def window(_n: Int, _m: Int) = *.window(n + _n, n + _m) // window-window fusion
 /*
     override def sort(lt: (A, A) => Boolean) = * match {
