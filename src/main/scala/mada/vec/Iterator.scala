@@ -22,8 +22,8 @@ object VectorIterator {
     def apply[A](v: Vector[A]): Iterator[A] = new VectorIterator(v)
 }
 
-class VectorIterator[A](* : Vector[A]) extends Iterator[A] {
-    private var (first, last) = *.pair
+class VectorIterator[A](v: Vector[A]) extends Iterator[A] {
+    private var (x, first, last) = v.triple
     override def hasNext = first != last
-    override def next = { val tmp = *(first); first += 1; tmp }
+    override def next = { val tmp = x(first); first += 1; tmp }
 }

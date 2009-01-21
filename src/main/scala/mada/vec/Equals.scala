@@ -22,12 +22,12 @@ object EqualsTo {
 
 object EqualsWith {
     def apply[A1, A2](v1: Vector[A1], v2: Vector[A2], p: (A1, A2) => Boolean): Boolean = {
-        val (first1, last1) = v1.pair
-        val (first2, last2) = v2.pair
+        val (x1, first1, last1) = v1.triple
+        val (x2, first2, last2) = v2.triple
         if (last1 - first1 != last2 - first2) {
             false
         } else {
-            stl.Equal(v1, first1, last1, v2, first2, p)
+            stl.Equal(x1, first1, last1, x2, first2, p)
         }
     }
 }

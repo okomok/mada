@@ -13,8 +13,8 @@ object Sort {
     }
 
     def apply[A](v: Vector[A], lt: (A, A) => Boolean): Vector[A] = {
-        val (first, last) = v.pair
-        stl.Sort(v, first, last, lt)
+        val (x, first, last) = v.triple
+        stl.Sort(x, first, last, lt)
         v
     }
 }

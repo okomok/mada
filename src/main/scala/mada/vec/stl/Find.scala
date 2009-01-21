@@ -15,7 +15,7 @@ object Find {
 
 object FindIf {
     def apply[A](v: Vector[A], __first: Int, __last: Int, __pred: A => Boolean): Int = {
-        var __i = 0
+        var __i = __first
         v.loop(__first, __last, { (e: A) => if (__pred(e)) { false } else { __i += 1; true } })
         __i
     }

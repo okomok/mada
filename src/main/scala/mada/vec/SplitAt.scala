@@ -9,8 +9,8 @@ package mada.vec
 
 object SplitAt {
     def apply[A](v: Vector[A], n: Int): (Vector[A], Vector[A]) = {
-        val (first, last) = v.pair
-        val middle = Math.min(n, last)
-        (v.window(first, middle), v.window(middle, last))
+        val (x, first, last) = v.triple
+        val middle = Math.min(first + n, last)
+        (x.window(first, middle), x.window(middle, last))
     }
 }

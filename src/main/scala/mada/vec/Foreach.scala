@@ -9,8 +9,8 @@ package mada.vec
 
 object Foreach {
     def apply[A](v: Vector[A], f: A => Unit): Unit = {
-        val (first, last) = v.pair
-        stl.ForEach(v, first, last, f)
+        val (x, first, last) = v.triple
+        stl.ForEach(x, first, last, f)
         ()
     }
 }

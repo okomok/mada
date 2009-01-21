@@ -9,8 +9,8 @@ package mada.peg
 
 object LookingAt {
     def apply[A](p: Peg[A], v: Vector[A]): Option[Int] = {
-        val (first, last) = v.pair
-        val cur = p.parse(v, first, last)
+        val (x, first, last) = v.triple
+        val cur = p.parse(x, first, last)
         if (cur == Peg.FAILURE) {
             None
         } else {

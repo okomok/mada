@@ -40,8 +40,8 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
     }
 
     def get(key: Vector[A]): Option[V] = {
-        val (first, last) = key.pair
-        get(key, first, last)
+        val (x, first, last) = key.triple
+        get(x, first, last)
     }
 
     def isEmpty: Boolean = {
@@ -49,13 +49,13 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
     }
 
     def put(key: Vector[A], value: V): Option[V] = {
-        val (first, last) = key.pair
-        put(key, first, last, value)
+        val (x, first, last) = key.triple
+        put(x, first, last, value)
     }
 
     def remove(key: Vector[A]): Option[V] = {
-        val (first, last) = key.pair
-        remove(key, first, last)
+        val (x, first, last) = key.triple
+        remove(x, first, last)
     }
 
     def size: Int = {

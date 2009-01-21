@@ -10,9 +10,8 @@ package madatest.vec.detail
 object CombSort {
     import mada._
 
-    def apply[A](* : Vector[A], f: (A, A) => Boolean): Unit = {
-        import *._
-        val (first, last) = *.pair
+    def apply[A](v: Vector[A], f: (A, A) => Boolean): Unit = {
+        val (x, first, last) = v.triple
 
         var gap = last - first
         if (gap < 1)
@@ -31,8 +30,8 @@ object CombSort {
 
             var (target1, target2) = (first, first2)
             while (target2 != last) {
-                if (f(*(target2), *(target1))) {
-                    vec.stl.IterSwap(*, target1, *, target2)
+                if (f(x(target2), x(target1))) {
+                    vec.stl.IterSwap(x, target1, x, target2)
                     swapped = true
                 }
                 target1 += 1; target2 += 1

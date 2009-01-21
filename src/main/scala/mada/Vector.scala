@@ -74,7 +74,6 @@ trait Vector[A] {
     def update(i: Int, e: A): Unit = throw new NotWritableError(this)
 
     final def vector: Vector[A] = this
-    final def pair: (Int, Int) = (0, size)
     def triple: Vector.Triple[A] = VectorTriple(this)
 
     override def equals(that: Any): Boolean = Equals(this, that)

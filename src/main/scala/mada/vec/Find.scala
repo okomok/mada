@@ -9,13 +9,13 @@ package mada.vec
 
 object Find {
     def apply[A](* : Vector[A], p: A => Boolean): Option[A] = {
-        var (first, last) = *.pair
+        var (x, first, last) = *.triple
 
-        first = stl.FindIf(*, first, last, p)
+        first = stl.FindIf(x, first, last, p)
         if (first == last) {
             None
         } else {
-            Some(*(first))
+            Some(x(first))
         }
     }
 }

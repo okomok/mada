@@ -14,9 +14,9 @@ object VectorListIterator {
     def apply[A](v: Vector[A]): ListIterator[A] = new VectorListIterator(v)
 }
 
-class VectorListIterator[A](* : Vector[A]) extends ListIterator[A] {
-    private val (first, last) = *.pair
-    private var cur = 0
+class VectorListIterator[A](v: Vector[A]) extends ListIterator[A] {
+    private val (x, first, last) = v.triple
+    private var cur = first
 
     override def add(e: A) = throw new UnsupportedOperationException
     override def hasNext = cur != last
@@ -26,7 +26,7 @@ class VectorListIterator[A](* : Vector[A]) extends ListIterator[A] {
         if (!hasNext) {
             throw new NoSuchElementException("next")
         }
-        val tmp = *(cur)
+        val tmp = x(cur)
         cur += 1
         tmp
     }
@@ -38,10 +38,10 @@ class VectorListIterator[A](* : Vector[A]) extends ListIterator[A] {
             throw new NoSuchElementException("previous")
         }
         cur -= 1
-        *(cur)
+        x(cur)
     }
 
     override def previousIndex = cur - 1
-    override def remove = throw new UnsupportedOperationException
-    override def set(e: A) = throw new UnsupportedOperationException
+    override def remove = throw new UnsupportedOperationException("VectorListIterator.remove")
+    override def set(e: A) = throw new UnsupportedOperationException("VectorListIterator.set")
 }
