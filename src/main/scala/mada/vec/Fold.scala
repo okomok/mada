@@ -15,8 +15,8 @@ object Fold {
 
 object FoldLeft {
     def apply[A, B](v: Vector[A], z: B, op: (B, A) => B): B = {
-        val (x, first, last) = v.triple
-        stl.Accumulate(x, first, last, z, op)
+        val (x, i, j) = v.triple
+        stl.Accumulate(x, i, j, z, op)
     }
 }
 

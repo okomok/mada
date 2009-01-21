@@ -9,7 +9,7 @@ package mada.vec
 
 object Count {
     def apply[A](v: Vector[A], p: A => Boolean): Int = {
-        val (x, first, last) = v.triple
-        stl.CountIf(x, first, last, p)
+        val (x, i, j) = v.triple
+        stl.CountIf(x, i, j, p)
     }
 }

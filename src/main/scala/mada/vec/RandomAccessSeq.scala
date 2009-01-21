@@ -24,7 +24,7 @@ class MutableRandomAccessSeqVector[A](val seq: RandomAccessSeq.Mutable[A]) exten
     override def apply(i: Int) = seq(i)
     override def update(i: Int, e: A) = seq(i) = e
 
-    override def randomAccessSeq = seq // from-to fusion
+    override def randomAccessSeq = seq // conversion fusion
 }
 
 

@@ -23,7 +23,7 @@ object VectorIterator {
 }
 
 class VectorIterator[A](v: Vector[A]) extends Iterator[A] {
-    private var (x, first, last) = v.triple
-    override def hasNext = first != last
-    override def next = { val tmp = x(first); first += 1; tmp }
+    private var (x, i, j) = v.triple
+    override def hasNext = i != j
+    override def next = { val tmp = x(i); i += 1; tmp }
 }

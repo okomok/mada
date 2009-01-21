@@ -8,14 +8,13 @@ package mada.vec
 
 
 object Find {
-    def apply[A](* : Vector[A], p: A => Boolean): Option[A] = {
-        var (x, first, last) = *.triple
-
-        first = stl.FindIf(x, first, last, p)
-        if (first == last) {
+    def apply[A](v: Vector[A], p: A => Boolean): Option[A] = {
+        var (x, i, j) = v.triple
+        i = stl.FindIf(x, i, j, p)
+        if (i == j) {
             None
         } else {
-            Some(x(first))
+            Some(x(i))
         }
     }
 }

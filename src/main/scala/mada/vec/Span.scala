@@ -9,8 +9,8 @@ package mada.vec
 
 object Span {
     def apply[A](v: Vector[A], p: A => Boolean): (Vector[A], Vector[A]) = {
-        val (x, first, last) = v.triple
-        val middle = stl.FindIf(x, first, last, !p(_: A))
-        (x.window(first, middle), x.window(middle, last))
+        val (x, i, j) = v.triple
+        val middle = stl.FindIf(x, i, j, !p(_: A))
+        (x.window(i, middle), x.window(middle, j))
     }
 }

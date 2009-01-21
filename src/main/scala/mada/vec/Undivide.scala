@@ -8,21 +8,25 @@ package mada.vec
 
 
 object Undivide {
-    def apply[A](vv: Vector[Vector[A]]): Vector[A] = {
-        if (vv.isEmpty) {
-            Vector.empty[A]
-        } else {
-            new UndivideVector(vv)
+    def apply[A](vv: Vector[Vector[A]]): Vector[A] = Vector.undivide3(Vector.triples(vv))
+}
+
+object Undivide3 {
+    def apply[A](vv: Vector[Vector.Triple[A]]): Vector[A] = vv match {
+        case vv: Divide3Vector[_] => vv.dividend // undivide3-divide3 fusion
+        case _ => {
+            if (vv.isEmpty) {
+                Vector.empty[A]
+            } else {
+                new Undivide3Vector(vv)
+            }
         }
     }
 }
 
-object Undivide3 {
-    def apply[A](vv: Vector[Vector.Triple[A]]): Vector[A] = Vector.undivide(Vector.triplesVector(vv))
-}
-
-class UndivideVector[A](vv: Vector[Vector[A]]) extends Vector[A] {
+class Undivide3Vector[A](_vv: Vector[Vector.Triple[A]]) extends Vector[A] {
     import Div._
+    private val vv = Vector.triplesVector(_vv)
 
     override def size = (vv.first.size * (vv.size - 1)) + vv.last.size
     override def apply(i: Int) = {

@@ -42,25 +42,31 @@ class DivideTest {
     }
 
     def testUndivide: Unit = {
-        val actual = Vector.undivide(madaVector(example1).divide(6))
+        val actual = Vector.undivide(madaVector(example1).divide(6).cut)
         assertEquals(15, actual.size)
         detail.TestVectorReadOnly(example1, actual)
     }
 
     def testUndivideBound: Unit = {
-        val actual = Vector.undivide(madaVector(example1).divide(1))
+        val actual = Vector.undivide(madaVector(example1).divide(1).cut)
         assertEquals(15, actual.size)
         detail.TestVectorReadOnly(example1, actual)
     }
 
     def testUndivideBoundBig: Unit = {
-        val actual = Vector.undivide(madaVector(example1).divide(1000))
+        val actual = Vector.undivide(madaVector(example1).divide(1000).cut)
         assertEquals(15, actual.size)
         detail.TestVectorReadOnly(example1, actual)
     }
 
     def testUndivideEmpty: Unit = {
-        val actual = Vector.undivide(madaVector(empty1).divide(10))
+        val actual = Vector.undivide(madaVector(empty1).divide(10).cut)
         detail.TestEmpty(actual)
+    }
+
+    def testUndivideFusion: Unit = {
+        val actual = Vector.undivide(madaVector(example1).divide(1000))
+        assertEquals(15, actual.size)
+        detail.TestVectorReadOnly(example1, actual)
     }
 }

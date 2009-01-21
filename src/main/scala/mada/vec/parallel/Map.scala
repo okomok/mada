@@ -31,8 +31,8 @@ class MapVector[Z, A](v: Vector[Z], f: Z => A, grainSize: Int) extends VectorPro
     }
 
     private def _wait(pv: Vector[A]): Vector[A] = {
-        val (x, first, last) = pv.triple
-        stl.ForEach(x, first, last, { (_: A) => () })
+        val (x, i, j) = pv.triple
+        stl.ForEach(x, i, j, { (_: A) => () }) // assuming parallel.loop is impossible.
         pv
     }
 }

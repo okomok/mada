@@ -15,12 +15,12 @@ object VectorListIterator {
 }
 
 class VectorListIterator[A](v: Vector[A]) extends ListIterator[A] {
-    private val (x, first, last) = v.triple
-    private var cur = first
+    private val (x, i, j) = v.triple
+    private var cur = i
 
     override def add(e: A) = throw new UnsupportedOperationException
-    override def hasNext = cur != last
-    override def hasPrevious = cur != first
+    override def hasNext = cur != j
+    override def hasPrevious = cur != i
 
     override def next = {
         if (!hasNext) {

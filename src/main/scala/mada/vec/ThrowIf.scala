@@ -25,4 +25,10 @@ object ThrowIf {
             throw new UnsupportedOperationException("Vector." + method + " of different size Vectors: " + v.size + " and " + w.size)
         }
     }
+
+    def nonpositive(i: Int, what: String): Unit = {
+        if (i <= 0) {
+            throw new java.lang.IllegalArgumentException("nonpositive " + what)
+        }
+    }
 }

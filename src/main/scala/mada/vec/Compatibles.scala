@@ -25,6 +25,6 @@ object Compatibles {
     implicit def madaVector2Triple[A](from: Vector[A]): Vector.Triple[A] = from.triple
 /*
     implicit def triples2madaVector[A](from: Vector[Vector.Triple[A]]): Vector[Vector[A]] = Vector.triplesVector(from)
-    implicit def madaVector2Triples[A](from: Vector[Vector[A]]): Vector[Vector.Triple[A]] = Vector.vectorTriples(from)
+    implicit def madaVector2Triples[A](from: Vector[Vector[A]]): Vector[Vector.Triple[A]] = Vector.triples(from)
 */
 }

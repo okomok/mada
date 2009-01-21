@@ -15,7 +15,7 @@ class OptionVector[A](val option: Option[A]) extends Vector[A] {
     override def size = if (option.isEmpty) 0 else 1
     override def apply(i: Int) = option.get
 
-    override def toOption = option // from-to fusion
+    override def toOption = option // conversion fusion
 }
 
 

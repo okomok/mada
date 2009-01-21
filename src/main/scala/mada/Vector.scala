@@ -51,8 +51,8 @@ object Vector {
     type Func[A, B] = Vector[A] => B
     type Func3[A, B] = (Vector[A], Int, Int) => B
 
+    val triples = VectorTriples
     val triplesVector = TriplesVector
-    val vectorTriples = VectorTriples
 
     type NotReadableError[A] = vec.NotReadableError[A]
     type NotWritableError[A] = vec.NotWritableError[A]
