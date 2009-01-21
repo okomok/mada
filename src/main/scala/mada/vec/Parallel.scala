@@ -17,7 +17,10 @@ object Parallel {
 
 class ParallelVector[A](override val self: Vector[A], grainSize: Int) extends VectorProxy[A]  {
     Assert(!IsParallelVector(self))
-    ThrowIf.invalidGrainSize(grainSize)
+    if (grainSize <= 0) {
+        throw new java.lang.IllegalArgumentException("nonpositive grain size: " + grainSize)
+    }
+
     import vec.parallel._
 
     override def equals(that: Any) = Equals(self, that, grainSize)

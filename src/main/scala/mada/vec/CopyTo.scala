@@ -9,7 +9,7 @@ package mada.vec
 
 object CopyTo {
     def apply[A, B >: A](v: Vector[A], w: Vector[B]): Vector[A] = {
-        ThrowIf.differentSize(v, w)
+        ThrowIf.differentSize(v, w, "copyTo")
         val (first, last) = v.pair
         val (result, _) = w.pair
         stl.Copy(v, first, last, w, result)

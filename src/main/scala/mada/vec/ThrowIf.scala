@@ -20,15 +20,9 @@ object ThrowIf {
         }
     }
 
-    def differentSize[A, B](v: Vector[A], w: Vector[B]): Unit = {
+    def differentSize[A, B](v: Vector[A], w: Vector[B], method: String): Unit = {
         if (v.size != w.size) {
-            throw new UnsupportedOperationException("size is different: " + v.size + " and " + w.size)
-        }
-    }
-
-    def invalidGrainSize(grainSize: Int): Unit = {
-        if (grainSize <= 0) {
-            throw new java.lang.IllegalArgumentException("grain size must be positive")
+            throw new UnsupportedOperationException("Vector." + method + " of different size Vectors: " + v.size + " and " + w.size)
         }
     }
 }
