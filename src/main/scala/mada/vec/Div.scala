@@ -7,19 +7,19 @@
 package mada.vec
 
 
-object Div {
-    def apply(a: Int, b: Int): (Int, Int) = {
-        (a / b, positiveRemainder(a, b))
+// Java guarantees positive remainder?
+
+object Div { // doesn't return a tuple to need heap-allocation.
+    def quotient(a: Int, b: Int): Int = {
+        Assert(b > 0)
+        val q = a / b
+        val r = a % b
+        if (r < 0) q - 1 else q
     }
 
-    // Don't use heap.
-    def positiveRemainder(a: Int, b: Int): Int = {
+    def remainder(a: Int, b: Int): Int = {
         Assert(b > 0)
-        val rem = a % b
-        if (rem < 0) {
-            rem + b
-        } else {
-            rem
-        }
+        val r = a % b
+        if (r < 0) r + b else r
     }
 }

@@ -18,13 +18,15 @@ object Undivide {
 }
 
 class UndivideVector[A](vv: Vector[Vector[A]]) extends Vector[A] {
+    import Div._
+
     override def size = (vv.first.size * (vv.size - 1)) + vv.last.size
     override def apply(i: Int) = {
-        val (q, r) = Div(i, vv.first.size)
-        vv(q)(r)
+        val s = vv.first.size
+        vv(quotient(i, s))(remainder(i, s))
     }
     override def update(i: Int, e: A) = {
-        val (q, r) = Div(i, vv.first.size)
-        vv(q)(r) = e
+        val s = vv.first.size
+        vv(quotient(i, s))(remainder(i, s)) = e
     }
 }
