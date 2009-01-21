@@ -7,11 +7,11 @@
 package mada.vec
 
 
-object Lazy {
-    def apply[A](v: Vector[A]): Vector[A] = new LazyVector(v)
+object LazyValues {
+    def apply[A](v: Vector[A]): Vector[A] = new LazyValuesVector(v)
 }
 
-class LazyVector[A](override val * : Vector[A]) extends VectorAdapter[A, A] with NotWritable[A] {
+class LazyValuesVector[A](override val * : Vector[A]) extends VectorAdapter[A, A] with NotWritable[A] {
     private val table = new scala.collection.jcl.HashMap[Int, A]
 
     override val size = *.size
@@ -26,5 +26,5 @@ class LazyVector[A](override val * : Vector[A]) extends VectorAdapter[A, A] with
         }
     }
 
-    override def lazy_ = this // lazy-lazy fusion
+    override def lazyValues = this // lazyValues-lazyValues fusion
 }

@@ -173,7 +173,7 @@ trait Vector[A] {
     def cycle(n: Int): Vector[A] = Cycle(this, n)
     def force: Vector[A] = Force(this)
     final def indices: Vector[Int] = Indices(this)
-    def lazy_ : Vector[A] = Lazy(this)
+    def lazyValues : Vector[A] = LazyValues(this)
     final def length: Int = size
     def readOnly: Vector[A] = ReadOnly(this)
     def sort(lt: (A, A) => Boolean): Vector[A] = Sort(this, lt)

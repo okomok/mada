@@ -22,7 +22,7 @@ trait VectorProxy[A] extends Vector[A] with Proxy {
     override def bounds: Vector[A] = self.bounds
     override def cycle(n: Int): Vector[A] = self.cycle(n)
     override def force: Vector[A] = self.force
-    override def lazy_ : Vector[A] = self.lazy_
+    override def lazyValues : Vector[A] = self.lazyValues
     override def loop[F <: (A => Boolean)](i: Int, j: Int, f: F): F = self.loop(i, j, f)
     override def map[B](f: A => B): Vector[B] = self.map( f)
     override def randomAccessSeq: RandomAccessSeq.Mutable[A] = self.randomAccessSeq
