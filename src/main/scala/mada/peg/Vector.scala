@@ -13,12 +13,12 @@ object VectorPeg {
 }
 
 class VectorPeg[A1, A2](w: Vector[A1], pred: (A1, A2) => Boolean) extends Peg[A2] {
-    override def parse(v: Vector[A2], first: Int, last: Int): Int = {
+    override def parse(v: Vector[A2], start: Int, end: Int): Int = {
         val vsize = w.size
-        if (last - first < vsize) {
+        if (end - start < vsize) {
             Peg.FAILURE
-        } else if (vec.stl.Equal(w, 0, vsize, v, first, pred)) {
-            first + vsize
+        } else if (vec.stl.Equal(w, 0, vsize, v, start, pred)) {
+            start + vsize
         } else {
             Peg.FAILURE
         }

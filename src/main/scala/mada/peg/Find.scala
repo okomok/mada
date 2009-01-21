@@ -9,8 +9,8 @@ package mada.peg
 
 object Find {
     def apply[A](p: Peg[A], v: Vector[A]): Option[(Int, Int)] = {
-        val (x, first, last) = v.triple
-        val (i, j) = impl(p, x, first, last)
+        val (x, start, end) = v.triple
+        val (i, j) = impl(p, x, start, end)
         if (j == Peg.FAILURE) {
             None
         } else {
@@ -18,15 +18,15 @@ object Find {
         }
     }
 
-    def impl[A](p: Peg[A], v: Vector[A], _first: Int, last: Int): (Int, Int) = {
-        var first = _first
-        while (first != last) {
-            val cur = p.parse(v, first, last)
+    def impl[A](p: Peg[A], v: Vector[A], _first: Int, end: Int): (Int, Int) = {
+        var start = _first
+        while (start != end) {
+            val cur = p.parse(v, start, end)
             if (cur != Peg.FAILURE) {
-                return (first, cur)
+                return (start, cur)
             }
-            first += 1
+            start += 1
         }
-        (first, Peg.FAILURE)
+        (start, Peg.FAILURE)
     }
 }

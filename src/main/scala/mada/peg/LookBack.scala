@@ -12,12 +12,12 @@ object LookBack {
 }
 
 class LookBackPeg[A](p: Peg[A]) extends Peg[A] {
-    override def parse(v: Vector[A], first: Int, last: Int) = {
-        val (x, i, j) = v(0, first).reverse.triple
+    override def parse(v: Vector[A], start: Int, end: Int) = {
+        val (x, i, j) = v(0, start).reverse.triple
         if (p.parse(x, i, j) == Peg.FAILURE) {
             Peg.FAILURE
         } else {
-            first
+            start
         }
     }
 

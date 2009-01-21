@@ -40,8 +40,8 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
     }
 
     def get(key: Vector[A]): Option[V] = {
-        val (x, first, last) = key.triple
-        get(x, first, last)
+        val (x, i, j) = key.triple
+        get(x, i, j)
     }
 
     def isEmpty: Boolean = {
@@ -49,13 +49,13 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
     }
 
     def put(key: Vector[A], value: V): Option[V] = {
-        val (x, first, last) = key.triple
-        put(x, first, last, value)
+        val (x, i, j) = key.triple
+        put(x, i, j, value)
     }
 
     def remove(key: Vector[A]): Option[V] = {
-        val (x, first, last) = key.triple
-        remove(x, first, last)
+        val (x, i, j) = key.triple
+        remove(x, i, j)
     }
 
     def size: Int = {
@@ -69,50 +69,50 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
         out.out.toString
     }
 
-    def get(key: Vector[A], first: Int, last: Int): Option[V] = {
-        if ((rootNode eq null) || first == last) {
+    def get(key: Vector[A], start: Int, end: Int): Option[V] = {
+        if ((rootNode eq null) || start == end) {
             return None
         }
 
-        parse(key, first, last) match {
-            case Some((value, cur)) if (cur == last) => Some(value)
+        parse(key, start, end) match {
+            case Some((value, cur)) if (cur == end) => Some(value)
             case _ => None
         }
     }
 
-    def put(key: Vector[A], first: Int, last: Int, value: V): Option[V] = {
-        if (first == last) {
+    def put(key: Vector[A], start: Int, end: Int, value: V): Option[V] = {
+        if (start == end) {
             throw new UnsupportedOperationException("An empty Vector can't be a key.")
         }
 
         if (rootNode eq null) {
-            rootNode = new TSTreeNode[A, V](key(first), null)
+            rootNode = new TSTreeNode[A, V](key(start), null)
         }
 
-        val node = copyInto(key, first, last, rootNode)
+        val node = copyInto(key, start, end, rootNode)
         val old = node.data
         node.data = Some(value)
         old
     }
 
-    def remove(key: Vector[A], first: Int, last: Int): Option[V] = {
-        if ((rootNode eq null) || first == last) {
+    def remove(key: Vector[A], start: Int, end: Int): Option[V] = {
+        if ((rootNode eq null) || start == end) {
             return None
         }
 
-        val node = copyInto(key, first, last, rootNode)
+        val node = copyInto(key, start, end, rootNode)
         val old = node.data
         node.data = None
         node.collectGarbage
         old
     }
 
-    def parse(key: Vector[A], first: Int, last: Int): Option[(V, Int)] = {
-        if ((rootNode eq null) || first == last) {
+    def parse(key: Vector[A], start: Int, end: Int): Option[(V, Int)] = {
+        if ((rootNode eq null) || start == end) {
             return None
         }
 
-        val (node, cur) = search(rootNode, key, first, last)
+        val (node, cur) = search(rootNode, key, start, end)
         if ((node eq null) || node.data.isEmpty) {
             None
         } else {

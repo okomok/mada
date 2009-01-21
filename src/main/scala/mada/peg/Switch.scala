@@ -23,15 +23,15 @@ object Switch {
 }
 
 class SwitchPeg[A](es: Map[A, Peg[A]]) extends Peg[A] {
-    override def parse(v: Vector[A], first: Int, last: Int) = {
-        if (first == last) {
+    override def parse(v: Vector[A], start: Int, end: Int) = {
+        if (start == end) {
             Peg.FAILURE
         } else {
-            val p = es.get(v(first))
+            val p = es.get(v(start))
             if (p.isEmpty) {
                 Peg.FAILURE
             } else {
-                p.get.parse(v, first + 1, last)
+                p.get.parse(v, start + 1, end)
             }
         }
     }

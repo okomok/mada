@@ -14,9 +14,9 @@ object Advance {
 class AdvancePeg[A](i: Int) extends Peg[A] {
     Assert(i >= 0)
 
-    override def parse(v: Vector[A], first: Int, last: Int) = {
-        val cur = first + i
-        if (cur <= last) {
+    override def parse(v: Vector[A], start: Int, end: Int) = {
+        val cur = start + i
+        if (cur <= end) {
             cur
         } else {
             Peg.FAILURE

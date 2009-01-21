@@ -12,12 +12,12 @@ object Not {
 }
 
 class NotPeg[A](p: Peg[A]) extends Peg[A] {
-    override def parse(v: Vector[A], first: Int, last: Int) = {
-        if (p.parse(v, first, last) != Peg.FAILURE) {
+    override def parse(v: Vector[A], start: Int, end: Int) = {
+        if (p.parse(v, start, end) != Peg.FAILURE) {
             Peg.FAILURE
         } else {
-            val cur = first + p.length
-            if (cur <= last) {
+            val cur = start + p.length
+            if (cur <= end) {
                 cur
             } else {
                 Peg.FAILURE

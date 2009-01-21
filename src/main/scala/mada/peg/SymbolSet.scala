@@ -22,8 +22,8 @@ object SymbolSet {
 class SymbolSet[A] private (private val tree: TSTree[A, Unit]) extends Peg[A] with scala.collection.mutable.Set[Vector[A]] {
     def this(lt: (A, A) => Boolean) = this(new TSTree[A, Unit](lt))
 
-    override def parse(v: Vector[A], first: Int, last: Int) = {
-        tree.parse(v, first, last) match {
+    override def parse(v: Vector[A], start: Int, end: Int) = {
+        tree.parse(v, start, end) match {
             case Some((_, cur)) => cur
             case _ => Peg.FAILURE
         }

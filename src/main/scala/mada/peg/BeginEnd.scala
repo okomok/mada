@@ -12,9 +12,9 @@ object Begin {
 }
 
 class BeginPeg[A] extends Peg[A] {
-    override def parse(v: Vector[A], first: Int, last: Int) = {
-        if (first == 0) {
-            first
+    override def parse(v: Vector[A], start: Int, end: Int) = {
+        if (start == 0) {
+            start
         } else {
             Peg.FAILURE
         }
@@ -29,9 +29,9 @@ object End {
 }
 
 class EndPeg[A] extends Peg[A] {
-    override def parse(v: Vector[A], first: Int, last: Int) = {
-        if (first == last) {
-            first
+    override def parse(v: Vector[A], start: Int, end: Int) = {
+        if (start == end) {
+            start
         } else {
             Peg.FAILURE
         }

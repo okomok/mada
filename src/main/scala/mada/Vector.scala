@@ -152,7 +152,7 @@ trait Vector[A] {
     def parallel(grainSize: Int): Vector[A] = Parallel(this, grainSize)
     final def unparallel: Vector[A] = Unparallel(this)
 
-    final def apply(first: Int, last: Int): Vector[A] = window(first, last)
+    final def apply(n: Int, m: Int): Vector[A] = window(n, m)
     final def ++(that: Vector[A]): Vector[A] = append(that)
     final def -->(p: Peg[A]): (Vector[A], Peg[A]) = (this, p)
 

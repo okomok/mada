@@ -12,10 +12,10 @@ object Verify_ {
 }
 
 class VerifyPeg[A](override val self: Peg[A]) extends PegProxy[A] {
-    override def parse(v: Vector[A], first: Int, last: Int) = {
-        val cur = self.parse(v, first, last)
+    override def parse(v: Vector[A], start: Int, end: Int) = {
+        val cur = self.parse(v, start, end)
         if (cur == Peg.FAILURE) {
-            throw new VerificationException(self, (v, first, last))
+            throw new VerificationException(self, (v, start, end))
         }
         cur
     }

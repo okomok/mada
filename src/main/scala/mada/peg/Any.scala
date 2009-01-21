@@ -12,11 +12,11 @@ object Any_ {
 }
 
 class AnyPeg[A] extends Peg[A] {
-    override def parse(v: Vector[A], first: Int, last: Int) = {
-        if (first == last) {
+    override def parse(v: Vector[A], start: Int, end: Int) = {
+        if (start == end) {
             Peg.FAILURE
         } else {
-            first + 1
+            start + 1
         }
     }
 

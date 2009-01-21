@@ -12,15 +12,15 @@ object Star {
 }
 
 class StarPeg[A](p: Peg[A]) extends Peg[A] {
-    override def parse(v: Vector[A], first: Int, last: Int): Int = {
-        var cur = first
+    override def parse(v: Vector[A], start: Int, end: Int): Int = {
+        var cur = start
 
         while (true) {
-            val next = p.parse(v, cur, last)
+            val next = p.parse(v, cur, end)
             if (next == Peg.FAILURE) {
                 return cur
-            } else if (next == last) {
-                return last
+            } else if (next == end) {
+                return end
             } else {
                 // Assert("StarPeg must advance; `end/eol` are the usual suspects", cur != next) // dynamic parsers can't be assert.
                 cur = next

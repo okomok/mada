@@ -22,9 +22,9 @@ object SymbolMap {
 class SymbolMap[A] private (private val tree: TSTree[A, Peg[A]]) extends Peg[A] with scala.collection.mutable.Map[Vector[A], Peg[A]] {
     def this(lt: (A, A) => Boolean) = this(new TSTree[A, Peg[A]](lt))
 
-    override def parse(v: Vector[A], first: Int, last: Int) = {
-        tree.parse(v, first, last) match {
-            case Some((p, cur)) => p.parse(v, cur, last)
+    override def parse(v: Vector[A], start: Int, end: Int) = {
+        tree.parse(v, start, end) match {
+            case Some((p, cur)) => p.parse(v, cur, end)
             case _ => Peg.FAILURE
         }
     }

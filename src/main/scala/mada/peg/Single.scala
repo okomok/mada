@@ -12,11 +12,11 @@ object Single {
 }
 
 class SinglePeg[A](e: A) extends Peg[A] {
-    override def parse(v: Vector[A], first: Int, last: Int) = {
-        if (first == last || e != v(first)) {
+    override def parse(v: Vector[A], start: Int, end: Int) = {
+        if (start == end || e != v(start)) {
             Peg.FAILURE
         } else {
-            first + 1
+            start + 1
         }
     }
 

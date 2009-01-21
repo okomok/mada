@@ -9,7 +9,7 @@ package mada.peg
 
 object Matches {
     def apply[A](p: Peg[A], v: Vector[A]): Boolean = {
-        val (x, first, last) = v.triple
-        p.parse(x, first, last) == last
+        val (x, start, end) = v.triple
+        p.parse(x, start, end) == end
     }
 }

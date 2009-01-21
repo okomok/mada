@@ -12,9 +12,9 @@ object LookAhead {
 }
 
 class LookAheadPeg[A](p: Peg[A]) extends Peg[A] {
-    override def parse(v: Vector[A], first: Int, last: Int) = {
-        if (p.parse(v, first, last) != Peg.FAILURE) {
-            first
+    override def parse(v: Vector[A], start: Int, end: Int) = {
+        if (p.parse(v, start, end) != Peg.FAILURE) {
+            start
         } else {
             Peg.FAILURE
         }

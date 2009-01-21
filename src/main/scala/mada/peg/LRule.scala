@@ -34,7 +34,7 @@ class LRules[A] {
     private var Pos: POSITION = null
     private var LRStack: LR = null
 
-    def Pos_<=(that: POSITION): Boolean = Pos.first <= that.first
+    def Pos_<=(that: POSITION): Boolean = Pos.start <= that.start
 
     def makeRule: LRule = new LRule
 
@@ -49,15 +49,15 @@ class LRules[A] {
         val memoTable = new Map[POSITION, MEMOENTRY]
         def body = self
 
-        override def parse(v: Vector[A], first: Long, last: Long) = {
-            Pos = TripleKey(v, first, last)
+        override def parse(v: Vector[A], start: Long, end: Long) = {
+            Pos = TripleKey(v, start, end)
             APPLY_RULE(this, Pos)
-            Pos.first
+            Pos.start
         }
     }
 
     def EVAL(B: Peg[A]): AST = {
-        if (B.parse(Pos.v, Pos.first, Pos.last) == Peg.FAILURE) {
+        if (B.parse(Pos.v, Pos.start, Pos.end) == Peg.FAILURE) {
             FAIL
         } else {
             SUCCESS
@@ -201,22 +201,22 @@ class LRule[A](v: Vector[A]) extends Peg[A] {
     private var position = Peg.FAILURE
     private var recurred = false
 
-    override def parse(v: Vector[A], first: Long, last: Long) = {
-        if (parsing && first == position) {
+    override def parse(v: Vector[A], start: Long, end: Long) = {
+        if (parsing && start == position) {
             recurred = true
             Peg.FAILURE
         } else {
             parsing = true
-            position = first
-            val cur = p.parse(v, first, last)
-            mp.table.put(first, cur)
+            position = start
+            val cur = p.parse(v, start, end)
+            mp.table.put(start, cur)
             position = Peg.FAILURE
             parsing = false
             if (recurred) {
                 println("recurred:" + cur)
                 recurred = false
                 if (cur != Peg.FAILURE) {
-                    grow(v, first, last)
+                    grow(v, start, end)
                 } else {
                     cur
                 }
@@ -226,16 +226,16 @@ class LRule[A](v: Vector[A]) extends Peg[A] {
         }
     }
 
-    private def grow(v: Vector[A], first: Long, last: Long): Long = {
-        var cur = first
+    private def grow(v: Vector[A], start: Long, end: Long): Long = {
+        var cur = start
         while (true) {
-            val i = p.parse(v, first, last)
+            val i = p.parse(v, start, end)
             println("iteration:" + i)
             if (i == Peg.FAILURE || i <= cur) {
                 return cur
             }
             cur = i
-            mp.table.put(first, cur)
+            mp.table.put(start, cur)
         }
         cur
     }
@@ -252,18 +252,18 @@ class LRule[A](v: Vector[A]) extends Peg[A] {
     private var parsing = false
     private var recurred = false
 
-    override def parse(v: Vector[A], first: Long, last: Long) = {
+    override def parse(v: Vector[A], start: Long, end: Long) = {
         if (parsing) {
             recurred = true
             Peg.FAILURE
         } else {
             parsing = true
-            val cur = p.parse(v, first, last)
+            val cur = p.parse(v, start, end)
             parsing = false
             if (recurred) {
                 recurred = false
                 if (cur != Peg.FAILURE) {
-                    growLR(v, first, last)
+                    growLR(v, start, end)
                 } else {
                     cur
                 }
@@ -273,15 +273,15 @@ class LRule[A](v: Vector[A]) extends Peg[A] {
         }
     }
 
-    private def growLR(v: Vector[A], first: Long, last: Long): Long = {
-        var cur = first
+    private def growLR(v: Vector[A], start: Long, end: Long): Long = {
+        var cur = start
         while (true) {
-            val i = q.parse(v, first, last)
+            val i = q.parse(v, start, end)
             if (i == Peg.FAILURE || i <= cur) {
                 return cur
             }
             cur = i
-            p.table.put(first, cur)
+            p.table.put(start, cur)
         }
         cur
     }

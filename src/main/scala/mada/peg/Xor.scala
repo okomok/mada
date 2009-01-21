@@ -12,9 +12,9 @@ object Xor {
 }
 
 class XorPeg[A](p: Peg[A], q: Peg[A]) extends Peg[A] {
-    override def parse(v: Vector[A], first: Int, last: Int) = {
-        val pcur = p.parse(v, first, last)
-        val qcur = q.parse(v, first, last)
+    override def parse(v: Vector[A], start: Int, end: Int) = {
+        val pcur = p.parse(v, start, end)
+        val qcur = q.parse(v, start, end)
 
         val pok = pcur != Peg.FAILURE
         if (pok && qcur != Peg.FAILURE) {

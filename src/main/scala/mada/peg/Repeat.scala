@@ -16,12 +16,12 @@ object Repeat {
 }
 
 class RepeatPeg[A](p: Peg[A], min: Int, max: Int) extends Peg[A] {
-    override def parse(v: Vector[A], first: Int, last: Int): Int = {
-        var cur = first
+    override def parse(v: Vector[A], start: Int, end: Int): Int = {
+        var cur = start
 
         var i = 0
         while (i < max) {
-            cur = p.parse(v, cur, last)
+            cur = p.parse(v, cur, end)
             if (cur == Peg.FAILURE) {
                 if (i < min) // not enough
                     return Peg.FAILURE

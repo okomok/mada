@@ -12,7 +12,7 @@ object Error {
 }
 
 class ErrorPeg[A] extends Peg[A] {
-    override def parse(v: Vector[A], first: Int, last: Int) = {
+    override def parse(v: Vector[A], start: Int, end: Int) = {
         throw new Error("ErrorPeg.parse")
     }
 }

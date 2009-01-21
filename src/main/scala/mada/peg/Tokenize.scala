@@ -18,15 +18,15 @@ object Tokenize3 {
 }
 
 class Tokenize3Iterator[A](p: Peg[A], v: Vector[A]) extends Iterator[Vector.Triple[A]] {
-    private val (x, first, last) = v.triple
-    private var _1_2 = Find.impl(p, x, first, last)
+    private val (x, start, end) = v.triple
+    private var _1_2 = Find.impl(p, x, start, end)
     override def hasNext = _1_2._2 != Peg.FAILURE
     override def next = {
         if (!hasNext) {
             throw new NoSuchElementException("next")
         }
         val tmp = (x, _1_2._1, _1_2._2)
-        _1_2 = Find.impl(p, x, _1_2._2, last)
+        _1_2 = Find.impl(p, x, _1_2._2, end)
         tmp
     }
 }

@@ -12,6 +12,6 @@ object Eps {
 }
 
 class EpsPeg[A] extends Peg[A] {
-    override def parse(v: Vector[A], first: Int, last: Int) = first
+    override def parse(v: Vector[A], start: Int, end: Int) = start
     override def length = 0
 }

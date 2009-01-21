@@ -14,11 +14,11 @@ object Memoize {
 class MemoizePeg[A](override val self: Peg[A]) extends PegProxy[A] {
     val memoTable = new scala.collection.jcl.HashMap[TripleKey[A], Int]
 
-    override def parse(v: Vector[A], first: Int, last: Int) = {
-        val key = new TripleKey(v, first, last)
+    override def parse(v: Vector[A], start: Int, end: Int) = {
+        val key = new TripleKey(v, start, end)
         val value = memoTable.get(key)
         if (value.isEmpty) {
-            val cur = self.parse(v, first, last)
+            val cur = self.parse(v, start, end)
             memoTable.put(key, cur)
             cur
         } else {
@@ -35,19 +35,19 @@ class Memoizer[A](w: Vector[A]) {
     class MemoizePeg(override val self: Peg[A]) extends PegProxy[A] {
         val memoTable = new scala.collection.jcl.HashMap[Int, Int]
 
-        override def parse(v: Vector[A], first: Int, last: Int) = {
+        override def parse(v: Vector[A], start: Int, end: Int) = {
             if (v eq w) {
-                val key = first // last too is key?
+                val key = start // end too is key?
                 val value = memoTable.get(key)
                 if (value.isEmpty) {
-                    val cur = self.parse(v, first, last)
+                    val cur = self.parse(v, start, end)
                     memoTable.put(key, cur)
                     cur
                 } else {
                     value.get
                 }
             } else {
-                self.parse(v, first, last)
+                self.parse(v, start, end)
             }
         }
     }
