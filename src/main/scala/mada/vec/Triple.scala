@@ -16,10 +16,18 @@ object VectorTriple {
 }
 
 
-object TriplesVectors {
-    def apply[A](vv: Vector[Vector.Triple[A]]): Vector[Vector[A]] = vv.map({ v => Vector.tripleVector(v) })
+object TriplesVector {
+    def apply[A](vv: Vector[Vector.Triple[A]]): Vector[Vector[A]] = new TriplesVector(vv)
 }
 
-object VectorsTriples {
-    def apply[A](vv: Vector[Vector[A]]): Vector[Vector.Triple[A]] = vv.map({ v => v.triple })
+class TriplesVector[A](val triples: Vector[Vector.Triple[A]]) extends VectorProxy[Vector[A]] with NotWritable[Vector[A]] {
+    override val self = triples.map({ v => Vector.tripleVector(v) })
 }
+
+object VectorTriples {
+    def apply[A](vv: Vector[Vector[A]]): Vector[Vector.Triple[A]] = vv match {
+        case vv: TriplesVector[_] => vv.triples // from-to fusion
+        case _ => vv.map({ v => v.triple })
+    }
+}
+

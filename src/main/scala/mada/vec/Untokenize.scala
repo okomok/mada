@@ -15,6 +15,6 @@ object Untokenize {
 
 object Untokenize3 {
     def apply[A](vv: Vector[Vector.Triple[A]], sep: Vector[A]): Vector[A] = {
-        Vector.untokenize(Vector.triplesVectors(vv), sep)
+        Vector.untokenize(Vector.triplesVector(vv), sep)
     }
 }

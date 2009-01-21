@@ -51,8 +51,8 @@ object Vector {
     type Func[A, B] = Vector[A] => B
     type Func3[A, B] = (Vector[A], Int, Int) => B
 
-    val triplesVectors = TriplesVectors
-    val vectorsTriples = VectorsTriples
+    val triplesVector = TriplesVector
+    val vectorTriples = VectorTriples
 
     type NotReadableError[A] = vec.NotReadableError[A]
     type NotWritableError[A] = vec.NotWritableError[A]
@@ -75,7 +75,7 @@ trait Vector[A] {
 
     final def vector: Vector[A] = this
     final def pair: (Int, Int) = (0, size)
-    final def triple: Vector.Triple[A] = VectorTriple(this)
+    def triple: Vector.Triple[A] = VectorTriple(this)
 
     override def equals(that: Any): Boolean = Equals(this, that)
     /*final*/ def equalsTo[B](that: Vector[B]): Boolean = EqualsTo(this, that)
