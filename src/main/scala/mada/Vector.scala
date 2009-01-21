@@ -77,8 +77,8 @@ trait Vector[A] {
     def triple: Vector.Triple[A] = VectorTriple(this)
 
     override def equals(that: Any): Boolean = Equals(this, that)
-    /*final*/ def equalsTo[B](that: Vector[B]): Boolean = EqualsTo(this, that)
-    /*final*/ def equalsWith[B](that: Vector[B])(p: (A, B) => Boolean): Boolean = EqualsWith(this, that, p)
+    def equalsTo[B](that: Vector[B]): Boolean = EqualsTo(this, that)
+    def equalsWith[B](that: Vector[B])(p: (A, B) => Boolean): Boolean = EqualsWith(this, that, p)
     override def hashCode: Int = HashCode(this)
     final def refHashCode: Int = super.hashCode
     override def toString: String = ToString(this)
@@ -107,13 +107,13 @@ trait Vector[A] {
     def randomAccessSeq: RandomAccessSeq.Mutable[A] = VectorRandomAccessSeq(this)
 
     final def toArray: Array[A] = ToArray(this)
-    def toCell: Cell[A] = ToCell(this)
     final def toJclArrayList: java.util.ArrayList[A] = jcl.ToArrayList(this)
     final def toList: List[A] = ToList(this)
-    def toOption: Option[A] = ToOption(this)
 
     final def first: A = First(this)
+    def firstOption: Option[A] = FirstOption(this)
     final def last: A = Last(this)
+    def lastOption: Option[A] = LastOption(this)
     final def init: Vector[A] = Init(this)
 
     final def head: A = Head(this)
@@ -127,21 +127,21 @@ trait Vector[A] {
     final def flatMap[B](f: A => Vector[B]): Vector[B] = FlatMap(this, f)
     def map[B](f: A => B): Vector[B] = Map(this, f)
 
-    /*final*/ def foreach(f: A => Unit): Unit = Foreach(this, f)
+    def foreach(f: A => Unit): Unit = Foreach(this, f)
     def loop[F <: (A => Boolean)](i: Int, j: Int, f: F): F = Loop(this, i, j, f)
 
     final def contains(e: Any): Boolean = Contains(this, e)
-    /*final*/ def find(p: A => Boolean): Option[A] = Find(this, p)
+    def find(p: A => Boolean): Option[A] = Find(this, p)
     final def forall(p: A => Boolean): Boolean = Forall(this, p)
     final def exists(p: A => Boolean): Boolean = Exists(this, p)
 
-    /*final*/ def fold(z: A)(op: (A, A) => A): A = Fold(this, z, op)
+    def fold(z: A)(op: (A, A) => A): A = Fold(this, z, op)
     final def foldLeft[B](z: B)(op: (B, A) => B): B = FoldLeft(this, z, op)
     final def foldRight[B](z: B)(op: (A, B) => B): B = FoldRight(this, z, op)
     final def /:[B](z: B)(op: (B, A) => B): B = foldLeft(z)(op)
     final def :\[B](z: B)(op: (A, B) => B): B = foldRight(z)(op)
 
-    /*final*/ def reduce(op: (A, A) => A): A = Reduce(this, op)
+    def reduce(op: (A, A) => A): A = Reduce(this, op)
     final def reduceLeft[B >: A](op: (B, A) => B): B = ReduceLeft(this, op)
     final def reduceRight[B >: A](op: (A, B) => B): B = ReduceRight(this, op)
 
@@ -167,8 +167,8 @@ trait Vector[A] {
     def bounds: Vector[A] = Bounds(this)
     final def clear: Vector[A] = Clear(this)
     override def clone: Vector[A] = Clone(this)
-    /*final*/ def copyTo[B >: A](that: Vector[B]): Vector[A] = CopyTo(this, that)
-    /*final*/ def count(p: A => Boolean): Int = Count(this, p)
+    def copyTo[B >: A](that: Vector[B]): Vector[A] = CopyTo(this, that)
+    def count(p: A => Boolean): Int = Count(this, p)
     final def cut: Vector[A] = Cut(this)
     def cycle(n: Int): Vector[A] = Cycle(this, n)
     def force: Vector[A] = Force(this)

@@ -11,9 +11,9 @@ object StringVector {
     def apply(u: String): Vector[Char] = new StringVector(u)
 }
 
-class StringVector(val string: String) extends Vector[Char] with NotWritable[Char] {
-    override def size = string.length
-    override def apply(i: Int) = string.charAt(i)
+class StringVector(val from: String) extends Vector[Char] with NotWritable[Char] {
+    override def size = from.length
+    override def apply(i: Int) = from.charAt(i)
 
     override def force = this
 }
@@ -21,7 +21,7 @@ class StringVector(val string: String) extends Vector[Char] with NotWritable[Cha
 
 object Stringize {
     def apply(v: Vector[Char]): String = v match {
-        case v: StringVector => v.string // stringize-stringVector fusion
+        case v: StringVector => v.from // conversion fusion
         case _ => {
             val sb = new StringBuilder(v.size)
             for (e <- v) {
