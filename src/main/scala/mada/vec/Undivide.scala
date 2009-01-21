@@ -24,17 +24,21 @@ object Undivide3 {
     }
 }
 
-class Undivide3Vector[A](_vv: Vector[Vector.Triple[A]]) extends Vector[A] {
-    import Div._
-    private val vv = Vector.triplesVector(_vv)
-
-    override def size = (vv.first.size * (vv.size - 1)) + vv.last.size
+class Undivide3Vector[A](vv: Vector[Vector.Triple[A]]) extends Vector[A] {
+    override def size = (quotient * divisor) + remainder
     override def apply(i: Int) = {
-        val s = vv.first.size
-        vv(quotient(i, s))(remainder(i, s))
+        val d = divisor
+        val (v, k, _) = local(i, d)
+        v(k + Div.remainder(i, d))
     }
     override def update(i: Int, e: A) = {
-        val s = vv.first.size
-        vv(quotient(i, s))(remainder(i, s)) = e
+        val d = divisor
+        val (v, k, _) = local(i, d)
+        v(k + Div.remainder(i, d)) = e
     }
+
+    private def local(i: Int, d: Int): Vector.Triple[A] = vv(Div.quotient(i, d))
+    private def quotient: Int = vv.size - 1
+    private def divisor: Int = { val (_, i, j) = vv.first; j - i }
+    private def remainder: Int = { val (_, i, j) = vv.last; j - i }
 }

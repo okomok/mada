@@ -17,10 +17,9 @@ trait VectorProxy[A] extends Vector[A] with Proxy {
     override def equalsTo[B](that: Vector[B]): Boolean = self.equalsTo(that)
     override def equalsWith[B](that: Vector[B])(p: (A, B) => Boolean): Boolean = self.equalsWith(that)(p)
 
-
     override def size: Int = self.size
-    override def apply(i: Int): A = self(i)
-    override def update(i: Int, e: A): Unit = self(i) = e
+    override def apply(i: Int): A = self.apply(i)
+    override def update(i: Int, e: A): Unit = self.update(i, e)
 
     override def bounds: Vector[A] = self.bounds
     override def copyTo[B >: A](that: Vector[B]): Vector[A] = self.copyTo(that)
