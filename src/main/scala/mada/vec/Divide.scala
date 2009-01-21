@@ -8,7 +8,7 @@ package mada.vec
 
 
 object Divide {
-    def apply[A](v: Vector[A], n: Int): Vector[Vector[A]] = v.divide3(n).map({ w => Vector.tripleVector(w) })
+    def apply[A](v: Vector[A], n: Int): Vector[Vector[A]] = Vector.triplesVectors(v.divide3(n))
 }
 
 object Divide3 {

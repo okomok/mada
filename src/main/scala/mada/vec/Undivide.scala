@@ -17,6 +17,10 @@ object Undivide {
     }
 }
 
+object Undivide3 {
+    def apply[A](vv: Vector[Vector.Triple[A]]): Vector[A] = Vector.undivide(Vector.triplesVectors(vv))
+}
+
 class UndivideVector[A](vv: Vector[Vector[A]]) extends Vector[A] {
     import Div._
 

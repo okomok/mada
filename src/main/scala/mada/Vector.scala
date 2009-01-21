@@ -24,6 +24,7 @@ object Vector {
     val sort = Sort
     val stringize = Stringize
     val undivide = Undivide
+    val undivide3 = Undivide3
     val untokenize = Untokenize
     val untokenize3 = Untokenize3
     val unzip = Unzip
@@ -49,6 +50,9 @@ object Vector {
     type Triple[A] = (Vector[A], Int, Int)
     type Func[A, B] = Vector[A] => B
     type Func3[A, B] = (Vector[A], Int, Int) => B
+
+    val triplesVectors = TriplesVectors
+    val vectorsTriples = VectorsTriples
 
     type NotReadableError[A] = vec.NotReadableError[A]
     type NotWritableError[A] = vec.NotWritableError[A]

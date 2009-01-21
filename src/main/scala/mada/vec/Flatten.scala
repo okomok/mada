@@ -21,9 +21,7 @@ object Flatten {
 }
 
 object Flatten3 {
-    def apply[A](vv: Vector[Vector.Triple[A]]): Vector[A] = {
-        Vector.flatten(vv.map({ v => Vector.tripleVector(v) }))
-    }
+    def apply[A](vv: Vector[Vector.Triple[A]]): Vector[A] = Vector.flatten(Vector.triplesVectors(vv))
 }
 
 object FlattenSize {
