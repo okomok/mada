@@ -44,6 +44,7 @@ class ParallelTest {
         }
         */
         val s = w.toString
+        ()
         //println(s)
     }
 /*
