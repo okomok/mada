@@ -120,7 +120,7 @@ trait Vector[A] {
     final def tail: Vector[A] = Tail(this)
     final def isNil: Boolean = IsNil(this)
 
-    final def filter(p: A => Boolean): Vector[A] = Filter(this, p)
+    def filter(p: A => Boolean): Vector[A] = Filter(this, p)
     final def remove(p: A => Boolean): Vector[A] = Remove(this, p)
     def step(n: Int): Vector[A] = Step(this, n)
 

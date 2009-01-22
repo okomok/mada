@@ -8,8 +8,20 @@ package mada.vec
 
 
 object Filter {
-    def apply[A](v: Vector[A], p: A => Boolean): Vector[A] = {
+    def apply[A](v: Vector[A], p: A => Boolean): Vector[A] = new FilterVector(v, p)
+}
+
+class FilterVector[A](v: Vector[A], p: A => Boolean) extends VectorProxy[A] {
+    override val self = {
         val (x, i, j) = v.triple
         x.window(i, stl.RemoveIf(x, i, j, !p(_: A)))
     }
+
+    override def filter(_p: A => Boolean) = v.filter({ e => p(e) && _p(e) }) // filter-filter fusion
+}
+
+trait Filterable {
+    def filter(p: A => Boolean): Vector[A]
+    final def remove(p: A => Boolean): Vector[A] = filter({ e => !p(e) })
+    final def partition[A](p: A => Boolean): (Vector[A], Vector[A]) = (filter(p), remove(p))
 }

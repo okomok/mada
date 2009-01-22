@@ -25,6 +25,7 @@ trait VectorProxy[A] extends Vector[A] with Proxy {
     override def copyTo[B >: A](that: Vector[B]): Vector[A] = self.copyTo(that)
     override def count(p: A => Boolean): Int = self.count(p)
     override def cycle(n: Int): Vector[A] = self.cycle(n)
+    override def filter(p: A => Boolean): Vector[A] = self.filter(p)
     override def find(p: A => Boolean): Option[A] = self.find(p)
     override def firstOption: Option[A] = self.firstOption
     override def fold(z: A)(op: (A, A) => A): A = self.fold(z)(op)

@@ -25,6 +25,7 @@ class ParallelVector[A](override val self: Vector[A], grainSize: Int) extends Ve
     override def equalsWith[B](that: Vector[B])(p: (A, B) => Boolean) = EqualsWith(self, that, p, grainSize)
     override def copyTo[B >: A](that: Vector[B]) = CopyTo(self, that, grainSize) // clone, toArray
     override def count(p: A => Boolean) = Count(self, p, grainSize)
+    override def filter(p: A => Boolean) = Filter(self, p, grainSize) // remove
     override def find(p: A => Boolean) = Find(self, p, grainSize) // forall, exists, contains
     override def fold(z: A)(op: (A, A) => A): A = Fold(self, z, op, grainSize)
     override def foreach(f: A => Unit) = Foreach(self, f, grainSize)
