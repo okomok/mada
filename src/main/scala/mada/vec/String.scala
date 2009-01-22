@@ -11,7 +11,7 @@ object StringVector {
     def apply(from: String): Vector[Char] = new StringVector(from)
 }
 
-class StringVector(val from: String) extends Vector[Char] with NotWritable[Char] {
+class StringVector(val from: String) extends Vector[Char] {
     override def size = from.length
     override def apply(i: Int) = from.charAt(i)
 
