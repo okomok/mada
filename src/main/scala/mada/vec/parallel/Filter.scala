@@ -13,7 +13,7 @@ object Filter {
 
 class FilterVector[A](v: Vector[A], p: A => Boolean, grainSize: Int) extends VectorProxy[A] {
     Assert(!IsParallelVector(v))
-    override val self = {
+    override lazy val self = {
         Vector.flatten(
             v.divide(grainSize).parallel(1).map({ w => w.filter(p) })
         )

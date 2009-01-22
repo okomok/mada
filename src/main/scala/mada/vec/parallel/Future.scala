@@ -10,6 +10,7 @@ package mada.vec.parallel
 // See: http://www.nabble.com/Actors-Break-Futures-td13813999.html
 // A nested parallels doesn't work:
 //    parallel.flatMap{ case i => ...parallel.map(f) }
+// Also note lazy val results in deadlock.
 
 object Future {
     def apply[T](body: => T) = JavaFutures.future(body) // ActorsFutures.future(body)

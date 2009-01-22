@@ -13,7 +13,7 @@ object Map {
 
 class MapVector[Z, A](v: Vector[Z], f: Z => A, grainSize: Int) extends VectorProxy[A] with NotWritable[A] {
     Assert(!IsParallelVector(v))
-    override val self = {
+    override lazy val self = {
         if (grainSize == 1) {
             v.map({ e => Future(f(e)) }).force.map({ u => u() })
         } else {
