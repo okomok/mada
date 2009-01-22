@@ -9,14 +9,14 @@ package mada.vec
 
 object Head {
     def apply[A](v: Vector[A]): A = {
-        Assert(!v.isNil)
+        ThrowIf.empty(v, "head")
         v(0)
     }
 }
 
 object Tail {
     def apply[A](v: Vector[A]): Vector[A] = {
-        Assert(!v.isNil)
+        ThrowIf.empty(v, "tail")
         v.window(1, v.size)
     }
 }

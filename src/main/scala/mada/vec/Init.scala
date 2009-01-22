@@ -9,7 +9,7 @@ package mada.vec
 
 object Init {
     def apply[A](v: Vector[A]): Vector[A] = {
-        Assert(!v.isEmpty)
+        ThrowIf.empty(v, "init")
         v.window(0, v.size - 1)
     }
 }
