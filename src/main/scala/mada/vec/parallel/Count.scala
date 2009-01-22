@@ -10,7 +10,7 @@ package mada.vec.parallel
 object Count {
     def apply[A](v: Vector[A], p: A => Boolean, grainSize: Int): Int = {
         val n = new java.util.concurrent.atomic.AtomicInteger(0)
-        v.parallel(grainSize).foreach({ e => if (p(e)) n.incrementAndGet })
+        v.parallel(grainSize).pareach({ e => if (p(e)) n.incrementAndGet })
         n.get
 /*
         v.divide(grainSize).

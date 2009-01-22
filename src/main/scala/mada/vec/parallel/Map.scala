@@ -15,15 +15,8 @@ object Map {
 }
 
 class MapVector[Z, A](v: Vector[Z], f: Z => A, grainSize: Int) extends VectorProxy[A] with NotWritable[A] {
-    Assert(!v.isParallel)
-    override lazy val self = make.parallel(grainSize)
-
-    override def find(p: A => Boolean) = v.parallel(grainSize).find(p compose f).map(f) // find-map fusion
-    override def force = _wait(self) // force-map fusion
-    override def lazyValues = self // lazyValues-map fusion
-    override def map[B](_f: A => B) = v.parallel(grainSize).map(_f compose f) // map-map fusion
-
-    private def make: Vector[A] = {
+    Assert(!IsParallelVector(v))
+    override lazy val self = {
         if (grainSize == 1) {
             v.map({ e => Futures.future(f(e)) }).force.map({ u => u() })
         } else {
@@ -33,9 +26,14 @@ class MapVector[Z, A](v: Vector[Z], f: Z => A, grainSize: Int) extends VectorPro
         }
     }
 
-    private def _wait(pv: Vector[A]): Vector[A] = {
-        val (x, i, j) = pv.triple
-        stl.ForEach(x, i, j, { (_: A) => () }) // assuming parallel.loop is impossible.
-        pv
+    override def force = _wait(self) // force-map fusion
+    override def lazyValues = self // lazyValues-map fusion
+    override def map[B](_f: A => B) = v.parallel(grainSize).map(_f compose f) // map-map fusion
+    override def seek(p: A => Boolean) = v.parallel(grainSize).seek(p compose f).map(f) // seek-map fusion
+
+    private def _wait(v: Vector[A]): Vector[A] = {
+        Assert(!IsParallelVector(v))
+        v.foreach({ (_: A) => () })
+        v
     }
 }

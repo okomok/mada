@@ -12,6 +12,6 @@ object Reduce {
         ThrowIf.empty(v, "paralell.reduce")
         v.divide(grainSize).
             parallel(1).map({ w => w.reduceLeft(op) }).
-                unparallel.reduceLeft(op)
+                reduceLeft(op)
     }
 }

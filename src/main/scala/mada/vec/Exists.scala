@@ -8,5 +8,5 @@ package mada.vec
 
 
 object Exists {
-    def apply[A](v: Vector[A], p: A => Boolean): Boolean = v.find(p) != None
+    def apply[A](v: Vector[A], p: A => Boolean): Boolean = v.seek(p) != None
 }

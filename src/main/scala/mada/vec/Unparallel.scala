@@ -6,7 +6,7 @@
 
 package mada.vec
 
-
+/*
 object Unparallel {
     def apply[A](v: Vector[A]): Vector[A] = if (v.isParallel) new UnparallelVector(v) else v
 }
@@ -23,7 +23,5 @@ class UnparallelVector[A](override val self: Vector[A]) extends VectorProxy[A]  
     override def foreach(f: A => Unit) = Foreach(self, f)
     override def map[B](f: A => B): Vector[B] = Map(self, f)
     override def reduce(op: (A, A) => A): A = Reduce(self, op)
+}*/
 
-    override def unparallel = this // unparallel-unparallel fusion
-    override def isParallel = false
-}

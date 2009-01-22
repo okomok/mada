@@ -11,7 +11,7 @@ object CopyTo {
     def apply[A, B >: A](v: Vector[A], w: Vector[B], grainSize: Int): Vector[A] = {
         ThrowIf.differentSize(v, w, "parallel.copyTo")
         v.divide(grainSize).zip(w.divide(grainSize)).
-            parallel(1).foreach({ case (v1, w1) => v1.copyTo(w1) })
+            parallel(1).pareach({ case (v1, w1) => v1.copyTo(w1) })
         v
     }
 }

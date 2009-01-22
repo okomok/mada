@@ -7,7 +7,7 @@
 package mada.vec.parallel
 
 
-object Foreach {
+object Pareach {
     def apply[A](v: Vector[A], f: A => Unit, grainSize: Int): Unit = {
         v.parallel(grainSize).map(f).force
     }

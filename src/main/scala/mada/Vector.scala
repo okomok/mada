@@ -131,7 +131,9 @@ trait Vector[A] {
     def loop[F <: (A => Boolean)](i: Int, j: Int, f: F): F = Loop(this, i, j, f)
     def count(p: A => Boolean): Int = Count(this, p)
     def foreach(f: A => Unit): Unit = Foreach(this, f)
-    def find(p: A => Boolean): Option[A] = Find(this, p)
+    def pareach(f: A => Unit): Unit = Pareach(this, f)
+    final def find(p: A => Boolean): Option[A] = Find(this, p)
+    def seek(p: A => Boolean): Option[A] = Seek(this, p)
     final def contains(e: Any): Boolean = Contains(this, e)
     final def forall(p: A => Boolean): Boolean = Forall(this, p)
     final def exists(p: A => Boolean): Boolean = Exists(this, p)
@@ -151,8 +153,8 @@ trait Vector[A] {
 
     def parallel: Vector[A] = Parallel(this)
     def parallel(grainSize: Int): Vector[A] = Parallel(this, grainSize)
-    def unparallel: Vector[A] = Unparallel(this)
-    def isParallel: Boolean = false
+    def parallely: Vector[A] = Parallely(this)
+    def parallely(grainSize: Int): Vector[A] = Parallely(this, grainSize)
 
     final def append(that: Vector[A]): Vector[A] = Append(this, that)
     def cycle(n: Int): Vector[A] = Cycle(this, n)

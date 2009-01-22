@@ -7,6 +7,6 @@
 package mada.vec
 
 
-object Forall {
-    def apply[A](v: Vector[A], p: A => Boolean): Boolean = v.seek(!p(_: A)).isEmpty
+object Pareach {
+    def apply[A](v: Vector[A], f: A => Unit): Unit = v.foreach(f)
 }

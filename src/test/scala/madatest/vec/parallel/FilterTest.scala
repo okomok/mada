@@ -24,4 +24,10 @@ class FilterTest {
         val e = Vector.fromValues(0,2,4,6,8)
         assertEquals(e, v.parallel.remove(_ % 2 != 0))
     }
+
+    def testFusion {
+        val v = Vector.range(0, 10).clone
+        val e = Vector.fromValues(0,4,6,8)
+        assertEquals(e, v.parallel.remove(_ % 2 != 0).filter(_ != 2))
+    }
 }

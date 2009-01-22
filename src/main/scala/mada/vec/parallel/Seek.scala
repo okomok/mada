@@ -10,7 +10,7 @@ package mada.vec.parallel
 import java.util.concurrent.atomic.AtomicReference
 
 
-object Find {
+object Seek {
     def apply[A, B](v: Vector[A], p: A => Boolean, grainSize: Int): Option[A] = {
         if (v.isEmpty) {
             None
@@ -18,13 +18,13 @@ object Find {
             val ar = new AtomicReference[A]
             val bp = new Breakable1(p, true)
             v.divide(grainSize).
-                parallel(1).foreach({ w => breakingFind(w, bp, ar) })
+                parallel(1).pareach({ w => breakingSeek(w, bp, ar) })
             deref(ar)
         }
     }
 
-    private def breakingFind[A](v: Vector[A], p: Breakable1[A], ar: AtomicReference[A]): Unit = {
-        val x = v.find(p)
+    private def breakingSeek[A](v: Vector[A], p: Breakable1[A], ar: AtomicReference[A]): Unit = {
+        val x = v.seek(p)
         if (!x.isEmpty) {
             ar.compareAndSet(null.asInstanceOf[A], x.get)
             p.break
