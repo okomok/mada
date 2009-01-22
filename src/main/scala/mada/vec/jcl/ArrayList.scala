@@ -13,7 +13,7 @@ import java.util.ArrayList
 object ToArrayList {
     def apply[A](from: Vector[A]): ArrayList[A] = {
         val a = new ArrayList[A](from.size) // this is capacity.
-        for (e <- from) {
+        for (e <- from.unparallel) {
             a.add(e)
         }
         a

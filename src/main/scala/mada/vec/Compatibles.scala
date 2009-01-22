@@ -13,6 +13,7 @@ object Compatibles {
     implicit def array2madaVector[A](from: Array[A]): Vector[A] = Vector.arrayVector(from)
     implicit def cell2madaVector[A](from: Cell[A]): Vector[A] = Vector.cellVector(from)
     implicit def jclCharSequence2madaVector(from: java.lang.CharSequence): Vector[Char] = Vector.jclCharSequenceVector(from)
+    implicit def jclList2madaVector[A](from: java.util.List[A]): Vector[A] = Vector.jclListVector(from)
     implicit def option2madaVector[A](from: Option[A]): Vector[A] = Vector.optionVector(from)
     implicit def product2madaVector(from: Product): Vector[Any] = Vector.productVector(from)
     implicit def randomAccessSeq2madaVector[A](from: RandomAccessSeq[A]): Vector[A] = Vector.randomAccessSeqVector(from)

@@ -15,6 +15,7 @@ object Map {
 }
 
 class MapVector[Z, A](v: Vector[Z], f: Z => A, grainSize: Int) extends VectorProxy[A] with NotWritable[A] {
+    Assert(!v.isParallel)
     override lazy val self = make.parallel(grainSize)
 
     override def find(p: A => Boolean) = v.parallel(grainSize).find(p compose f).map(f) // find-map fusion

@@ -24,7 +24,7 @@ object Stringize {
         case from: StringVector => from.from // conversion fusion
         case _ => {
             val sb = new StringBuilder(from.size)
-            for (e <- from) {
+            for (e <- from.unparallel) {
                 sb.append(e)
             }
             sb.toString

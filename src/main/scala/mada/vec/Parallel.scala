@@ -9,14 +9,12 @@ package mada.vec
 
 object Parallel {
     def defaultGrainSize[A](v: Vector[A]): Int = 1
-    def isDefaultGrainSize[A](v: Vector[A], g: Int): Boolean = g == defaultGrainSize(v)
-
-    def apply[A](v: Vector[A]): Vector[A] = new ParallelVector(v, defaultGrainSize(v))
+    def apply[A](v: Vector[A]): Vector[A] = apply(v, defaultGrainSize(v))
     def apply[A](v: Vector[A], g: Int): Vector[A] = new ParallelVector(v, g)
 }
 
-class ParallelVector[A](override val self: Vector[A], grainSize: Int) extends VectorProxy[A]  {
-    Assert(!IsParallelVector(self))
+class ParallelVector[A](override val self: Vector[A], val grainSize: Int) extends VectorProxy[A]  {
+    Assert(!self.isParallel)
     ThrowIf.nonpositive(grainSize, "grain size")
     import vec.parallel._
 
@@ -30,13 +28,8 @@ class ParallelVector[A](override val self: Vector[A], grainSize: Int) extends Ve
     override def map[B](f: A => B): Vector[B] = Map(self, f, grainSize)
     override def reduce(op: (A, A) => A): A = Reduce(self, op, grainSize)
 
-    override def parallel = if (Parallel.isDefaultGrainSize(self, grainSize)) this else self.parallel // parallel-parallel fusion
-    override def parallel(g: Int) = if (grainSize == g) this else self.parallel(g)
-}
-
-object IsParallelVector {
-    def apply[A](v: Vector[A]): Boolean = v match {
-        case v: ParallelVector[_] => true
-        case _ => false
-    }
+    override def parallel = if (grainSize == Parallel.defaultGrainSize(self)) this else self.parallel // parallel-parallel fusion
+    override def parallel(g: Int) = if (grainSize == g) this else self.parallel(g) // parallel-parallel fusion
+    override def unparallel = self // unparallel-parallel fusion
+    override def isParallel = true
 }

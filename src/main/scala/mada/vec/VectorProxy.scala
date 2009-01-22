@@ -29,9 +29,7 @@ trait VectorProxy[A] extends Vector[A] with Proxy {
     override def force: Vector[A] = self.force
     override def lazyValues : Vector[A] = self.lazyValues
     override def loop[F <: (A => Boolean)](i: Int, j: Int, f: F): F = self.loop(i, j, f)
-    override def map[B](f: A => B): Vector[B] = self.map( f)
-    override def parallel: Vector[A] = self.parallel
-    override def parallel(g: Int): Vector[A] = self.parallel(g)
+    override def map[B](f: A => B): Vector[B] = self.map(f)
     override def randomAccessSeq: RandomAccessSeq.Mutable[A] = self.randomAccessSeq
     override def readOnly: Vector[A] = self.readOnly
     override def reduce(op: (A, A) => A): A = self.reduce(op)
@@ -40,4 +38,9 @@ trait VectorProxy[A] extends Vector[A] with Proxy {
     override def sort(lt: (A, A) => Boolean): Vector[A] = self.sort(lt)
     override def triple: Vector.Triple[A] = self.triple
     override def window(n: Int, m: Int): Vector[A] = self.window(n, m)
+
+    override def parallel: Vector[A] = self.parallel
+    override def parallel(g: Int): Vector[A] = self.parallel(g)
+    override def unparallel: Vector[A] = self.unparallel
+    override def isParallel: Boolean = self.isParallel
 }

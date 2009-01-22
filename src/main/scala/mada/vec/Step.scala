@@ -12,9 +12,7 @@ object Step {
 }
 
 class StepVector[A](override val * : Vector[A], stride: Int) extends VectorAdapter[A, A] {
-    if (stride <= 0) {
-        throw new java.lang.IllegalArgumentException("nonpositive step stride: " + stride)
-    }
+    ThrowIf.nonpositive(stride, "step stride")
     override def size = StepCount(*.size, 0, stride)
     override def mapIndex(i: Int) = i * stride
     override def step(n: Int) = *.step(stride * n) // step-step fusion

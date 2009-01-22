@@ -7,11 +7,13 @@
 package mada.vec
 
 
+// TODO: take triples.
+
 object Flatten {
     def apply[A](vv: Vector[Vector[A]]): Vector[A] = {
         val av = Vector.arrayVector(new Array[A](FlattenSize(vv)))
         var (i, j) = (0, 0)
-        for (v <- vv) {
+        for (v <- vv.unparallel) {
             j += v.size
             v.copyTo(av.window(i, j))
             i = j

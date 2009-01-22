@@ -15,7 +15,7 @@ object EqualsWith {
             val bp = new Breakable2(p, false)
             v.divide(grainSize).zip(w.divide(grainSize)).
                 parallel(1).map({ case (v1, w1) => breakingEquals(v1, w1, bp) }).
-                    reduceLeft(_ && _)
+                    unparallel.reduceLeft(_ && _)
         }
     }
 

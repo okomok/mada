@@ -151,7 +151,8 @@ trait Vector[A] {
 
     def parallel: Vector[A] = Parallel(this)
     def parallel(grainSize: Int): Vector[A] = Parallel(this, grainSize)
-    final def unparallel: Vector[A] = Unparallel(this)
+    def unparallel: Vector[A] = Unparallel(this)
+    def isParallel: Boolean = false
 
     final def append(that: Vector[A]): Vector[A] = Append(this, that)
     def cycle(n: Int): Vector[A] = Cycle(this, n)

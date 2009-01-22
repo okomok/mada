@@ -7,12 +7,14 @@
 package mada.vec
 
 
+// This is mutating algorithm.
+
 object Filter {
     def apply[A](v: Vector[A], p: A => Boolean): Vector[A] = new FilterVector(v, p)
 }
 
 class FilterVector[A](v: Vector[A], p: A => Boolean) extends VectorProxy[A] {
-    override val self = {
+    override lazy val self = {
         val (x, i, j) = v.triple
         x.window(i, stl.RemoveIf(x, i, j, !p(_: A)))
     }
