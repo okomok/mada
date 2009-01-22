@@ -29,28 +29,53 @@ class ParallelTest {
         assertFalse(uupv.isInstanceOf[vec.ParallelVector[_]])
     }
 */
-    def testFor: Unit = {
+    def foo(x: Any): Unit = {
+        //println(x)
+        ()
+    }
+
+    def untestFor: Unit = {
+        val w = for {
+            i <- Vector.range(1, 10).parallely
+            j <- Vector.range(1, i).parallely
+            if (i + j >= 5)
+        } yield (i + j)
+
+        val s = w.toString
+        foo(s)
+
+        ()
+    }
+
+    def testParaPara: Unit = {
         // java.lang.AssertionError: assertion failed: receive from channel belonging to other actor
         // http://www.nabble.com/Actors-Break-Futures-td13813999.html
 
-        val w = for {
-            i <- Vector.range(1, 10).parallely
-            j <- Vector.range(1, i).parallel.parallely
-            if (i + j >= 5)
-        } yield (i + j)
-        /*
-        val w = Vector.range(1, 10).parallel.flatMap {
+        for (i <- (0 until 100)) {
+            //println(i)
+
+        val z = Vector.range(1, 10).parallel.flatMap {
             case i => Vector.range(1, i).parallel.filter{ j => i+j >= 5 }.parallel.map{ case j => (i, j) }
         }
-        */
-        val s = w.toString
-        ()
-        //println(s)
-    }
 /*
-    (1 until n)
-        .flatMap {
-            case i => (1 until i).filter{ j => isPrime(i+j) }.map{ case j => (i, j) }
-        }
+        println("testParaPara")
+        val w = for {
+            i <- Vector.range(1, 10).parallel//.parallely//.parallel
+            j <- Vector.range(1, i).parallel//.parallely
+            if (i + j >= 5)
+        } yield (i + j)
+        println("end testParaPara")
 */
+        ()
+        }
+        ()
+    }
+
+    def testForeach: Unit = {
+        for {
+            i <- Vector.range(1, 10).parallely
+            j <- Vector.range(1, i).parallely
+            if (i + j >= 5)
+        } foo (i + j)
+    }
 }

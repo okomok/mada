@@ -7,6 +7,8 @@
 package mada.vec
 
 
+// TODO: parallely.parallely?
+
 object Parallely {
     def apply[A](v: Vector[A]): Vector[A] = apply(v, Parallel.defaultGrainSize(v))
     def apply[A](v: Vector[A], g: Int): Vector[A] = new Parallely(v, g)

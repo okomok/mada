@@ -7,21 +7,18 @@
 package mada.vec.parallel
 
 
-import scala.actors.Futures
-
-
 object Map {
     def apply[Z, A](v: Vector[Z], f: Z => A, grainSize: Int): Vector[A] = new MapVector(v, f, grainSize)
 }
 
 class MapVector[Z, A](v: Vector[Z], f: Z => A, grainSize: Int) extends VectorProxy[A] with NotWritable[A] {
     Assert(!IsParallelVector(v))
-    override lazy val self = {
+    override val self = {
         if (grainSize == 1) {
-            v.map({ e => Futures.future(f(e)) }).force.map({ u => u() })
+            v.map({ e => Future(f(e)) }).force.map({ u => u() })
         } else {
             Vector.undivide(
-                v.divide(grainSize).map({ w => Futures.future(w.map(f)) }).force.map({ u => u() })
+                v.divide(grainSize).map({ w => Future(w.map(f)) }).force.map({ u => u() })
             )
         }
     }

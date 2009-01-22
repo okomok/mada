@@ -121,7 +121,9 @@ trait Vector[A] {
     final def isNil: Boolean = IsNil(this)
 
     def filter(p: A => Boolean): Vector[A] = Filter(this, p)
+    def mutatingFilter(p: A => Boolean): Vector[A] = MutatingFilter(this, p)
     final def remove(p: A => Boolean): Vector[A] = Remove(this, p)
+    final def mutatingRemove(p: A => Boolean): Vector[A] = MutatingRemove(this, p)
     final def partition(p: A => Boolean): (Vector[A], Vector[A]) = Partition(this, p)
 
     def map[B](f: A => B): Vector[B] = Map(this, f)

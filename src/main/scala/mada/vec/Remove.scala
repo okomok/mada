@@ -8,5 +8,9 @@ package mada.vec
 
 
 object Remove {
-    def apply[A](v: Vector[A], p: A => Boolean): Vector[A] = v.filter(!p(_: A))
+    def apply[A](v: Vector[A], p: A => Boolean): Vector[A] = v.filter({ e => !p(e) })
+}
+
+object MutatingRemove {
+    def apply[A](v: Vector[A], p: A => Boolean): Vector[A] = v.mutatingFilter({ e => !p(e) })
 }

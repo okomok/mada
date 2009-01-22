@@ -28,13 +28,26 @@ class ParallelVector[A](override val self: Vector[A], grainSize: Int) extends Ve
     override def reduce(op: (A, A) => A): A = Reduce(self, op, grainSize)
     override def seek(p: A => Boolean) = Seek(self, p, grainSize) // forall, exists, contains
 
-    override def parallel = if (grainSize == Parallel.defaultGrainSize(self)) this else self.parallel // parallel-parallel fusion
-    override def parallel(g: Int) = if (grainSize == g) this else self.parallel(g) // parallel-parallel fusion
+    override def parallel = {
+        if (grainSize == Parallel.defaultGrainSize(self)) {
+            this
+        } else {
+            self.parallel // parallel-parallel fusion
+        }
+    }
+    override def parallel(g: Int) = {
+        if (grainSize == g) {
+            this
+        } else {
+            self.parallel(g) // parallel-parallel fusion
+        }
+    }
 }
 
 object IsParallelVector {
     def apply[A](v: Vector[A]): Boolean = v match {
         case v: ParallelVector[_] => true
+        case v: Parallely[_] => true
         case _ => false
     }
 }

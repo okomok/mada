@@ -7,15 +7,13 @@
 package mada.vec.parallel
 
 
-// This is mutating algorithm.
-
 object Filter {
     def apply[A](v: Vector[A], p: A => Boolean, grainSize: Int): Vector[A] = new FilterVector(v, p, grainSize)
 }
 
 class FilterVector[A](v: Vector[A], p: A => Boolean, grainSize: Int) extends VectorProxy[A] {
     Assert(!IsParallelVector(v))
-    override lazy val self = {
+    override val self = {
         Vector.flatten(
             v.divide(grainSize).parallel(1).map({ w => w.filter(p) })
         )
