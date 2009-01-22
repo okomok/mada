@@ -20,13 +20,6 @@ class MapTest {
         assertEquals(e, v.parallel(500).map(_ + 1))
     }
 
-    def testFor: Unit = {
-        val v = Vector.range(0, 10)
-        val e = Vector.range(1, 11)
-        val w = for (a <- v.parallel) yield a + 1
-        assertEquals(e, w)
-    }
-
     def testFusion: Unit = {
         val v = Vector.range(0, 10)
         val e = Vector.range(2, 12)

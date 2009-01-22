@@ -7,14 +7,14 @@
 package mada.vec
 
 
-// v ++ v ++ ... is not conforming RandomAccess, so `force` or the following is needed.
+// from ++ from ++ ... is not conforming RandomAccess, so `force` or the following is needed.
 
 object LinearAccessSeq {
-    def apply[A](v: Vector[A]): Seq[A] = new VectorLinearAccessSeq(v)
+    def apply[A](from: Vector[A]): Seq[A] = new VectorLinearAccessSeq(from)
 }
 
-class VectorLinearAccessSeq[A](v: Vector[A]) extends Seq[A] {
-    override def apply(i: Int) = v(i)
-    override def elements = v.elements
-    override val length = v.size
+class VectorLinearAccessSeq[A](from: Vector[A]) extends Seq[A] {
+    override def apply(i: Int) = from(i)
+    override def elements = from.elements
+    override val length = from.size
 }
