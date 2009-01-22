@@ -13,7 +13,7 @@ object Undivide {
 
 object Undivide3 {
     def apply[A](vv: Vector[Vector.Triple[A]]): Vector[A] = vv match {
-        case vv: Divide3Vector[_] => vv.from // undivide3-divide3 fusion
+        case vv: Divide3Vector[_] => vv.dividend // undivide3-divide3 fusion
         case _ => {
             if (vv.isEmpty) {
                 Vector.empty[A]
