@@ -35,7 +35,7 @@ class ParallelTest {
 
         val w = for {
             i <- Vector.range(1, 10).parallely
-            j <- Vector.range(1, i).parallely
+            j <- Vector.range(1, i).parallel.parallely
             if (i + j >= 5)
         } yield (i + j)
         /*

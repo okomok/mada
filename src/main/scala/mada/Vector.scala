@@ -153,8 +153,8 @@ trait Vector[A] {
 
     def parallel: Vector[A] = Parallel(this)
     def parallel(grainSize: Int): Vector[A] = Parallel(this, grainSize)
-    def parallely: Vector[A] = Parallely(this)
-    def parallely(grainSize: Int): Vector[A] = Parallely(this, grainSize)
+    final def parallely: Vector[A] = Parallely(this)
+    final def parallely(grainSize: Int): Vector[A] = Parallely(this, grainSize)
 
     final def append(that: Vector[A]): Vector[A] = Append(this, that)
     def cycle(n: Int): Vector[A] = Cycle(this, n)
