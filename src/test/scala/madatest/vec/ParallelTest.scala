@@ -18,6 +18,17 @@ class ParallelTest {
         assertEquals(e, v.parallel(4).parallel(3).parallel(1).map(_ + 1))
     }
 
+    def testUnparallel: Unit = {
+        val v = Vector.range(0, 10)
+        val e = Vector.range(1, 11)
+        val pv = v.parallel(4).parallel(3)
+        assertTrue(pv.isInstanceOf[vec.ParallelVector[_]])
+        val upv = pv.unparallel
+        assertFalse(upv.isInstanceOf[vec.ParallelVector[_]])
+        val uupv = pv.unparallel.unparallel
+        assertFalse(uupv.isInstanceOf[vec.ParallelVector[_]])
+    }
+
     def testFor: Unit = {
         val v = Vector.range(0, 10)
         val e = Vector.range(1, 11)
