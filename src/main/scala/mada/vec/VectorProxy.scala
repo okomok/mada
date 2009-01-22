@@ -9,13 +9,7 @@ package mada.vec
 
 trait VectorProxy[A] extends Vector[A] with Proxy {
     override def self: Vector[A]
-
-    override def equals(that: Any): Boolean = that match {
-        case that: Proxy => self equals that.self
-        case _ => self equals that
-    }
-    override def equalsTo[B](that: Vector[B]): Boolean = self.equalsTo(that)
-    override def equalsWith[B](that: Vector[B])(p: (A, B) => Boolean): Boolean = self.equalsWith(that)(p)
+    final override def equals(that: Any): Boolean = Equals(this, that)
 
     override def size: Int = self.size
     override def apply(i: Int): A = self.apply(i)
@@ -25,6 +19,7 @@ trait VectorProxy[A] extends Vector[A] with Proxy {
     override def copyTo[B >: A](that: Vector[B]): Vector[A] = self.copyTo(that)
     override def count(p: A => Boolean): Int = self.count(p)
     override def cycle(n: Int): Vector[A] = self.cycle(n)
+    override def equalsWith[B](that: Vector[B])(p: (A, B) => Boolean): Boolean = self.equalsWith(that)(p)
     override def filter(p: A => Boolean): Vector[A] = self.filter(p)
     override def find(p: A => Boolean): Option[A] = self.find(p)
     override def firstOption: Option[A] = self.firstOption
