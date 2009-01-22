@@ -13,7 +13,7 @@ object Window {
 
 class WindowVector[A](override val * : Vector[A], n: Int, m: Int) extends VectorAdapter[A, A] {
     if (n > m) {
-        throw new java.lang.IllegalArgumentException("start is greater than end: Vector.window(" + n + ", " + m + ")")
+        throw new java.lang.IllegalArgumentException("negative size: Vector.window(" + n + ", " + m + ")")
     }
 
     override def size = m - n

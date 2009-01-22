@@ -11,9 +11,9 @@ import java.util.ArrayList
 
 
 object ToArrayList {
-    def apply[A](v: Vector[A]): ArrayList[A] = {
-        val a = new ArrayList[A](v.size) // this is capacity.
-        for (e <- v) {
+    def apply[A](from: Vector[A]): ArrayList[A] = {
+        val a = new ArrayList[A](from.size) // this is capacity.
+        for (e <- from) {
             a.add(e)
         }
         a
