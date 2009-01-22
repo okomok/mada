@@ -17,9 +17,10 @@ object Map {
 class MapVector[Z, A](v: Vector[Z], f: Z => A, grainSize: Int) extends VectorProxy[A] with NotWritable[A] {
     override lazy val self = make.parallel(grainSize)
 
-    override def force = _wait(self) // force-map fusion
-    override def map[B](_f: A => B) = v.parallel(grainSize).map(_f compose f) // map-map fusion
     override def find(p: A => Boolean) = v.parallel(grainSize).find(p compose f).map(f) // find-map fusion
+    override def force = _wait(self) // force-map fusion
+    override def lazyValues = self // lazyValues-map fusion
+    override def map[B](_f: A => B) = v.parallel(grainSize).map(_f compose f) // map-map fusion
 
     private def make: Vector[A] = {
         if (grainSize == 1) {
