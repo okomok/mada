@@ -8,23 +8,24 @@ package mada.vec
 
 
 object RandomAccessSeqVector {
-    def apply[A](u: RandomAccessSeq[A]): Vector[A] = u match {
-        case _: RandomAccessSeq.Mutable[_] => new MutableRandomAccessSeqVector(u.asInstanceOf[RandomAccessSeq.Mutable[A]])
-        case _ => new RandomAccessSeqVector(u)
+    def apply[A](from: RandomAccessSeq[A]): Vector[A] = from match {
+        case from: VectorRandomAccessSeq[_] => from.f.asInstanceOf[Vector[A]] // conversion fusion
+        case _: RandomAccessSeq.Mutable[_] => new MutableRandomAccessSeqVector(from.asInstanceOf[RandomAccessSeq.Mutable[A]])
+        case _ => new RandomAccessSeqVector(from)
     }
 }
 
-class RandomAccessSeqVector[A](val seq: RandomAccessSeq[A]) extends Vector[A] {
-    override def size = seq.length
-    override def apply(i: Int) = seq(i)
+class RandomAccessSeqVector[A](from: RandomAccessSeq[A]) extends Vector[A] {
+    override def size = from.length
+    override def apply(i: Int) = from(i)
 }
 
-class MutableRandomAccessSeqVector[A](val seq: RandomAccessSeq.Mutable[A]) extends Vector[A] {
-    override def size = seq.length
-    override def apply(i: Int) = seq(i)
-    override def update(i: Int, e: A) = seq(i) = e
+class MutableRandomAccessSeqVector[A](from: RandomAccessSeq.Mutable[A]) extends Vector[A] {
+    override def size = from.length
+    override def apply(i: Int) = from(i)
+    override def update(i: Int, e: A) = from(i) = e
 
-    override def randomAccessSeq = seq // conversion fusion
+    override def randomAccessSeq = from // conversion fusion
 }
 
 
@@ -32,8 +33,8 @@ object VectorRandomAccessSeq {
     def apply[A](v: Vector[A]): RandomAccessSeq.Mutable[A] = new VectorRandomAccessSeq(v)
 }
 
-class VectorRandomAccessSeq[A](v: Vector[A]) extends RandomAccessSeq.Mutable[A] {
-    override def length = v.size
-    override def apply(i: Int) = v(i)
-    override def update(i: Int, e: A) = v(i) = e
+class VectorRandomAccessSeq[A](val f: Vector[A]) extends RandomAccessSeq.Mutable[A] {
+    override def length = f.size
+    override def apply(i: Int) = f(i)
+    override def update(i: Int, e: A) = f(i) = e
 }

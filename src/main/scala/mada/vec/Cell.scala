@@ -8,10 +8,10 @@ package mada.vec
 
 
 object CellVector {
-    def apply[A](u: Cell[A]): Vector[A] = new CellVector(u)
+    def apply[A](from: Cell[A]): Vector[A] = new CellVector(from)
 }
 
-class CellVector[A](val cell: Cell[A]) extends Vector[A] {
+class CellVector[A](from: Cell[A]) extends Vector[A] {
     override def size = 1
-    override def apply(i: Int) = cell.elem
+    override def apply(i: Int) = from.elem
 }

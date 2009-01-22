@@ -11,13 +11,13 @@ import java.util.{ List, Collections }
 
 
 object ListVector {
-    def apply[A](u: List[A]): Vector[A] = new ListVector(u)
+    def apply[A](from: List[A]): Vector[A] = new ListVector(from)
 }
 
-class ListVector[A](list: List[A]) extends Vector[A] {
-    override def size = list.size
-    override def apply(i: Int) = list.get(i)
-    override def update(i: Int, e: A) = list.set(i, e)
+class ListVector[A](val from: List[A]) extends Vector[A] {
+    override def size = from.size
+    override def apply(i: Int) = from.get(i)
+    override def update(i: Int, e: A) = from.set(i, e)
 
-    override def sort(lt: (A, A) => Boolean) = { Collections.sort(list, ToComparator(lt)); this }
+    override def sort(lt: (A, A) => Boolean) = { Collections.sort(from, ToComparator(lt)); this }
 }

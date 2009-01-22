@@ -11,22 +11,28 @@ import java.lang.CharSequence
 
 
 object CharSequenceVector {
-    def apply[A](u: CharSequence): Vector[Char] = new CharSequenceVector(u)
+    def apply[A](from: CharSequence): Vector[Char] = from match {
+        case from: VectorCharSequence => from.f // conversion fusion
+        case _ => new CharSequenceVector(from)
+    }
 }
 
-class CharSequenceVector(val seq: CharSequence) extends Vector[Char] {
-    override def size = seq.length
-    override def apply(i: Int) = seq.charAt(i)
+class CharSequenceVector(val from: CharSequence) extends Vector[Char] {
+    override def size = from.length
+    override def apply(i: Int) = from.charAt(i)
 }
 
 
 object VectorCharSequence {
-    def apply(v: Vector[Char]): CharSequence = new VectorCharSequence(v)
+    def apply(v: Vector[Char]): CharSequence = v match {
+        case from: CharSequenceVector => from.from // conversion fusion
+        case _ => new VectorCharSequence(v)
+    }
 }
 
-class VectorCharSequence(v: Vector[Char]) extends CharSequence {
-    override def charAt(index: Int) = v(index)
-    override def length = v.size
-    override def subSequence(start: Int, end: Int) = new VectorCharSequence(v.window(start, end))
-    override def toString = Vector.stringize(v)
+class VectorCharSequence(val f: Vector[Char]) extends CharSequence {
+    override def charAt(index: Int) = f(index)
+    override def length = f.size
+    override def subSequence(start: Int, end: Int) = new VectorCharSequence(f.window(start, end))
+    override def toString = Vector.stringize(f)
 }

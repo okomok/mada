@@ -8,7 +8,7 @@ package mada.vec
 
 
 object StringVector {
-    def apply(u: String): Vector[Char] = new StringVector(u)
+    def apply(from: String): Vector[Char] = new StringVector(from)
 }
 
 class StringVector(val from: String) extends Vector[Char] with NotWritable[Char] {
@@ -20,11 +20,11 @@ class StringVector(val from: String) extends Vector[Char] with NotWritable[Char]
 
 
 object Stringize {
-    def apply(v: Vector[Char]): String = v match {
-        case v: StringVector => v.from // conversion fusion
+    def apply(from: Vector[Char]): String = from match {
+        case from: StringVector => from.from // conversion fusion
         case _ => {
-            val sb = new StringBuilder(v.size)
-            for (e <- v) {
+            val sb = new StringBuilder(from.size)
+            for (e <- from) {
                 sb.append(e)
             }
             sb.toString

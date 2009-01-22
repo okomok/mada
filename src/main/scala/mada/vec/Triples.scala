@@ -8,9 +8,9 @@ package mada.vec
 
 
 object TriplesVector {
-    def apply[A](vv: Vector[Vector.Triple[A]]): Vector[Vector[A]] = vv match {
-        case vv: VectorTriples[_] => vv.from // conversion fusion
-        case _ => new TriplesVector(vv)
+    def apply[A](from: Vector[Vector.Triple[A]]): Vector[Vector[A]] = from match {
+        case from: VectorTriples[_] => from.from // conversion fusion
+        case _ => new TriplesVector(from)
     }
 }
 
@@ -20,9 +20,9 @@ class TriplesVector[A](val from: Vector[Vector.Triple[A]]) extends VectorProxy[V
 
 
 object VectorTriples {
-    def apply[A](vv: Vector[Vector[A]]): Vector[Vector.Triple[A]] = vv match {
-        case vv: TriplesVector[_] => vv.from // conversion fusion
-        case _ => new VectorTriples(vv)
+    def apply[A](from: Vector[Vector[A]]): Vector[Vector.Triple[A]] = from match {
+        case from: TriplesVector[_] => from.from // conversion fusion
+        case _ => new VectorTriples(from)
     }
 }
 

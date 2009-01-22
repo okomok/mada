@@ -11,10 +11,10 @@ import java.util.Iterator
 
 
 object FromIterator {
-    def apply[A](u: Iterator[A]): Vector[A] = {
+    def apply[A](from: Iterator[A]): Vector[A] = {
         val a = new java.util.ArrayList[A]
-        while (u.hasNext) {
-            a.add(u.next)
+        while (from.hasNext) {
+            a.add(from.next)
         }
         Vector.jclListVector(a)
     }
