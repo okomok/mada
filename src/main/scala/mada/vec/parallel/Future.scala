@@ -14,7 +14,10 @@ package mada.vec.parallel
 // Also note lazy val results in deadlock.
 
 object Future {
-    def apply[T](body: => T) = JavaFutures.future(body) // ActorsFutures.future(body)
+    val usingActors = true
+    def apply[T](body: => T) =
+        // JavaFutures.future(body)
+        ActorsFutures.future(body)
 }
 
 object ActorsFutures {
