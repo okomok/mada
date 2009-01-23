@@ -14,7 +14,7 @@ object Parallel {
 }
 
 class ParallelVector[A](override val self: Vector[A], grainSize: Int) extends VectorProxy[A] {
-    Assert(!IsParallelVector(self))
+    Assert(!self.isParallel)
     ThrowIf.nonpositive(grainSize, "grain size")
     import vec.parallel._
 
@@ -42,6 +42,7 @@ class ParallelVector[A](override val self: Vector[A], grainSize: Int) extends Ve
             self.parallel(g) // parallel-parallel fusion
         }
     }
+    override def isParallel = true
 }
 
 object IsParallelVector {

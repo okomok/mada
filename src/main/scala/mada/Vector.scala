@@ -155,6 +155,8 @@ trait Vector[A] {
 
     def parallel: Vector[A] = Parallel(this)
     def parallel(grainSize: Int): Vector[A] = Parallel(this, grainSize)
+    def unparallel: Vector[A] = Unparallel(this)
+    def isParallel: Boolean = IsParallel(this)
     final def parallely: Vector[A] = Parallely(this)
     final def parallely(grainSize: Int): Vector[A] = Parallely(this, grainSize)
 

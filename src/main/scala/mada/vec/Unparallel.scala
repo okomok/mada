@@ -6,11 +6,11 @@
 
 package mada.vec
 
-/*
-object Unparallel {
-    def apply[A](v: Vector[A]): Vector[A] = if (v.isParallel) new UnparallelVector(v) else v
-}
 
+object Unparallel {
+    def apply[A](v: Vector[A]): Vector[A] = v
+}
+/*
 class UnparallelVector[A](override val self: Vector[A]) extends VectorProxy[A]  {
     Assert(self.isParallel)
 

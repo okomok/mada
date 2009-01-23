@@ -12,8 +12,10 @@ object Map {
 }
 
 class MapVector[Z, A](v: Vector[Z], f: Z => A, grainSize: Int) extends VectorProxy[A] with NotWritable[A] {
-    Assert(!IsParallelVector(v))
-    override lazy val self = {
+    Assert(!v.isParallel)
+
+    override lazy val self = unparallel.parallel(grainSize)
+    override lazy val unparallel = {
         if (grainSize == 1) {
             v.map({ e => Future(f(e)) }).force.map({ u => u() })
         } else {
@@ -29,8 +31,8 @@ class MapVector[Z, A](v: Vector[Z], f: Z => A, grainSize: Int) extends VectorPro
     override def seek(p: A => Boolean) = v.parallel(grainSize).seek(p compose f).map(f) // seek-map fusion
 
     private def _wait(v: Vector[A]): Vector[A] = {
-        Assert(!IsParallelVector(v))
-        v.foreach({ (_: A) => () })
+        Assert(v.isParallel)
+        v.foreach({ e => () })
         v
     }
 }

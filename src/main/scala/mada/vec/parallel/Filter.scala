@@ -12,10 +12,13 @@ object Filter {
 }
 
 class FilterVector[A](v: Vector[A], p: A => Boolean, grainSize: Int) extends VectorProxy[A] {
-    Assert(!IsParallelVector(v))
-    override lazy val self = {
+    Assert(!v.isParallel)
+
+    override lazy val self = unparallel.parallel(grainSize)
+    override lazy val unparallel = {
         Vector.flatten(
-            v.divide(grainSize).parallel(1).map({ w => w.filter(p) })
+            v.divide(grainSize).parallel(1).map({ w => w.filter(p) }).
+                unparallel
         )
     }
 

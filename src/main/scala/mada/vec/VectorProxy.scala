@@ -43,4 +43,6 @@ trait VectorProxy[A] extends Vector[A] with Proxy {
 
     override def parallel: Vector[A] = self.parallel
     override def parallel(g: Int): Vector[A] = self.parallel(g)
+    override def unparallel: Vector[A] = self.unparallel
+    override def isParallel: Boolean = self.isParallel
 }

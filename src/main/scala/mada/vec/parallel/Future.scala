@@ -28,9 +28,9 @@ object JavaFutures {
 
     def future[T](body: => T) = this.synchronized {
         new {
-            private val c = new Callable[T] { override def call: T = body }
+            private val c = new Callable[T] { override def call(): T = body }
             private val u = exe.submit(c)
-            def apply: T = u.get
+            def apply(): T = u.get
         }
     }
 }
