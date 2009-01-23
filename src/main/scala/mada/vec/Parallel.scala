@@ -44,11 +44,3 @@ class ParallelVector[A](override val self: Vector[A], grainSize: Int) extends Ve
     }
     override def isParallel = true
 }
-
-object IsParallelVector {
-    def apply[A](v: Vector[A]): Boolean = v match {
-        case v: ParallelVector[_] => true
-        case v: Parallely[_] => true
-        case _ => false
-    }
-}

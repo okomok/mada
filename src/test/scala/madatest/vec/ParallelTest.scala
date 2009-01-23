@@ -48,15 +48,4 @@ class ParallelTest {
         }
         ()
     }
-
-    def testForeach: Unit = {
-        if (vec.parallel.Future.usingActors)
-            return
-
-        for {
-            i <- Vector.range(1, 10).parallely
-            j <- Vector.range(1, i).parallely
-            if (i + j >= 5)
-        } foo (i + j)
-    }
 }
