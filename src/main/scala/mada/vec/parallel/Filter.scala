@@ -22,5 +22,6 @@ class FilterVector[A](v: Vector[A], p: A => Boolean, grainSize: Int) extends Vec
         )
     }
 
-    override def filter(_p: A => Boolean) = v.parallel(grainSize).filter({ e => p(e) && _p(e) }) // filter-filter fusion
+    // `unparallel` is not so cheap to short-cut.
+    // override def filter(_p: A => Boolean) = v.parallel(grainSize).filter({ e => p(e) && _p(e) }) // filter-filter fusion
 }
