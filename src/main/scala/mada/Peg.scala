@@ -21,13 +21,13 @@ object Peg {
     def error[A]: Peg[A] = Error[A]
     def fail[A]: Peg[A] = Fail[A]
 
-    val asLazy = AsLazy
     val icase = Icase
     val lowerCaseRead = LowerCaseRead
     val range = Range
     val regex = Regex
     val single = Single
-    val try_ = Try
+    val `lazy` = Lazy
+    val `try` = Try
 
     val longest = Longest
     val shortest = Shortest

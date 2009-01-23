@@ -7,10 +7,10 @@
 package mada.peg
 
 
-object AsLazy {
-    def apply[A](p: => Peg[A]): Peg[A] = new AsLazyPeg(p)
+object Lazy {
+    def apply[A](p: => Peg[A]): Peg[A] = new LazyPeg(p)
 }
 
-class AsLazyPeg[A](p: => Peg[A]) extends PegProxy[A] {
+class LazyPeg[A](p: => Peg[A]) extends PegProxy[A] {
     override lazy val self = p
 }

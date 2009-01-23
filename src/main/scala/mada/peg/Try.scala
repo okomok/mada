@@ -9,7 +9,7 @@ package mada.peg
 
 object Try {
     def apply[A](p: Peg[A]) = new {
-        def catch_(f: Throwable => Peg[A]) = new TryCatchPeg(p, f)
+        def `catch`(f: Throwable => Peg[A]) = new TryCatchPeg(p, f)
     }
 }
 

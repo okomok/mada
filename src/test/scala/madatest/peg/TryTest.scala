@@ -17,7 +17,7 @@ import mada.Peg._
 class TryTest {
     def testTrivial: Unit = {
         var thrown = false
-        val p = try_ { "abc" >> error >> "d" } catch_ { case _: Error => thrown = true; "abcd" }
+        val p = `try` { "abc" >> error >> "d" } `catch` { case _: Error => thrown = true; "abcd" }
         assertFalse(thrown)
         assertTrue(p matches "abcd")
         assertTrue(thrown)
@@ -26,7 +26,7 @@ class TryTest {
     def testVerify: Unit = {
         var thrown = false
         val q = "abc" >> verify("R") >> "d"
-        val p = try_ { q } catch_ { case VerificationException(_,(v,_,_)) => thrown = true; v(3) = 'R'; q }
+        val p = `try` { q } `catch` { case VerificationException(_,(v,_,_)) => thrown = true; v(3) = 'R'; q }
         assertFalse(thrown)
         assertTrue(p matches madaVector("abcLd").clone)
         assertTrue(thrown)

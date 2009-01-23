@@ -10,7 +10,6 @@ package mada
 object Vector {
     import vec._
 
-    val asLazy = AsLazy
     val concat = Concat
     def empty[A]: Vector[A] = Empty.apply[A]
     val flatten = Flatten
@@ -28,6 +27,7 @@ object Vector {
     val untokenize = Untokenize
     val untokenize3 = Untokenize3
     val unzip = Unzip
+    val `lazy` = Lazy
 
     val Compatibles = vec.Compatibles
     val arrayVector = ArrayVector
