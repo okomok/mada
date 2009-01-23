@@ -7,8 +7,6 @@
 package mada.vec
 
 
-// TODO: take triples.
-
 object Flatten {
     def apply[A](vv: Vector[Vector[A]]): Vector[A] = {
         val av = Vector.arrayVector(new Array[A](FlattenSize(vv)))
