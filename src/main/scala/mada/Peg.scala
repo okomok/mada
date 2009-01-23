@@ -27,6 +27,7 @@ object Peg {
     val regex = Regex
     val single = Single
     val `lazy` = Lazy
+    val `synchronized` = Synchronized
     val `try` = Try
 
     val longest = Longest

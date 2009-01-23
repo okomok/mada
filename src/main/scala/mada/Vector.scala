@@ -28,6 +28,7 @@ object Vector {
     val untokenize3 = Untokenize3
     val unzip = Unzip
     val `lazy` = Lazy
+    val `synchronized` = Synchronized
 
     val Compatibles = vec.Compatibles
     val arrayVector = ArrayVector
