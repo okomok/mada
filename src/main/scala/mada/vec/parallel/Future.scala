@@ -8,6 +8,7 @@ package mada.vec.parallel
 
 
 // See: http://www.nabble.com/Actors-Break-Futures-td13813999.html
+//      http://www.nabble.com/Proxies%3A-Smalltalk-is-to--doesNotUnderstand%3A-as-Scala-is-to-----td15147719.html
 // A nested parallels doesn't work:
 //    parallel.flatMap{ case i => ...parallel.map(f) }
 // Also note lazy val results in deadlock.
@@ -29,7 +30,7 @@ object JavaFutures {
         new {
             private val c = new Callable[T] { override def call: T = body }
             private val u = exe.submit(c)
-            def apply(): T = u.get
+            def apply: T = u.get
         }
     }
 }
