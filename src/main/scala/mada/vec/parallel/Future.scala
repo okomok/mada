@@ -7,7 +7,6 @@
 package mada.vec.parallel
 
 
-
 object Future {
     val usingActors = false
     def apply[T](body: => T) = Futures.future(body)
