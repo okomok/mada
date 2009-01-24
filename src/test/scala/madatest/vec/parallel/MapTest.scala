@@ -37,5 +37,8 @@ class MapTest {
         assertEquals(e, v.parallel.map(_ + 1).map(_ + 1))
         assertEquals(e, v.parallel(4).map(_ + 1).map(_ + 1))
         assertEquals(e, v.parallel(500).map(_ + 1).map(_ + 1))
+
+        assertEquals(e.reduce(_ + _), v.parallel.map(_ + 1).map(_ + 1).reduce(_ + _))
+        assertEquals(7, v.parallel.map(_ + 1).map(_ + 1).seek(_ == 7).get)
     }
 }

@@ -23,9 +23,4 @@ class FilterVector[A](v: Vector[A], p: A => Boolean, grainSize: Int) extends Vec
     override lazy val self = unparallel.parallel(grainSize)
 
     override def filter(_p: A => Boolean) = v.parallel(grainSize).filter({ e => p(e) && _p(e) }) // filter-filter fusion
-    override def reduce(op: (A, A) => A) = { // reduce-filter fusion (Notice filter isn't projection.)
-        v.divide(grainSize).
-            parallel(1).map({ w => w.filter(p).reduce(op) }).
-                unparallel.reduce(op)
-    }
 }
