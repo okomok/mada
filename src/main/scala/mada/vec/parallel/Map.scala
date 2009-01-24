@@ -14,18 +14,18 @@ object Map {
 class MapVector[Z, A](v: Vector[Z], f: Z => A, grainSize: Int) extends VectorProxy[A] with NotWritable[A] {
     Assert(!v.isParallel)
 
-    override val unparallel = {
+    override lazy val unparallel = {
         Vector.undivide(
             v.divide(grainSize).map({ w => Future(w.map(f).force) }).force.map({ u => u() })
         )
     }
-    override val self = unparallel.parallel(grainSize)
+    override lazy val self = unparallel.parallel(grainSize)
 
     override def force = _wait(self) // force-map fusion
     override def lazyValues = self // lazyValues-map fusion
-    // `unparallel` is not so cheap to short-cut.
-    // override def map[B](_f: A => B) = v.parallel(grainSize).map(_f compose f) // map-map fusion
-    // override def seek(p: A => Boolean) = v.parallel(grainSize).seek(p compose f).map(f) // seek-map fusion
+    override def map[B](_f: A => B) = v.parallel(grainSize).map(_f compose f) // map-map fusion
+    override def reduce(op: (A, A) => A) = v.map(f).parallel(grainSize).reduce(op) // reduce-map fusion
+    override def seek(p: A => Boolean) = v.parallel(grainSize).seek(p compose f).map(f) // seek-map fusion
 
     private def _wait(v: Vector[A]): Vector[A] = {
         Assert(v.isParallel)
