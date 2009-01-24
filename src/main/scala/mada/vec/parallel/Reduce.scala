@@ -11,7 +11,7 @@ object Reduce {
     def apply[A](v: Vector[A], op: (A, A) => A, grainSize: Int): A = {
         ThrowIf.empty(v, "paralell.reduce")
         v.divide(grainSize).
-            parallel(1).map({ w => w.reduceLeft(op) }).
-                unparallel.reduceLeft(op)
+            parallel(1).map({ w => w.reduce(op) }).
+                unparallel.reduce(op)
     }
 }

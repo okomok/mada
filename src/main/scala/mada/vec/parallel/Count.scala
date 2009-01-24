@@ -15,7 +15,7 @@ object Count {
 /*
         v.divide(grainSize).
             parallel(1).map({ w => w.count(p) }).
-                reduceLeft(_ + _)
+                reduce(_ + _)
 */
     }
 }
