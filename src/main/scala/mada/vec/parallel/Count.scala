@@ -14,10 +14,5 @@ object Count {
         val n = new java.util.concurrent.atomic.AtomicInteger(0)
         v.parallel(grainSize).pareach({ e => if (p(e)) n.incrementAndGet })
         n.get
-/*
-        v.divide(grainSize).
-            parallel(1).map({ w => w.count(p) }).
-                reduce(_ + _)
-*/
     }
 }
