@@ -12,6 +12,8 @@ import java.util.concurrent.atomic.AtomicReference
 
 object Seek {
     def apply[A, B](v: Vector[A], p: A => Boolean, grainSize: Int): Option[A] = {
+        Assert(!v.isParallel)
+
         if (v.isEmpty) {
             None
         } else {

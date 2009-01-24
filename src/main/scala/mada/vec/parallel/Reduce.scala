@@ -9,7 +9,9 @@ package mada.vec.parallel
 
 object Reduce {
     def apply[A](v: Vector[A], op: (A, A) => A, grainSize: Int): A = {
+        Assert(!v.isParallel)
         ThrowIf.empty(v, "paralell.reduce")
+
         v.divide(grainSize).
             parallel(1).map({ w => w.reduce(op) }).
                 unparallel.reduce(op)

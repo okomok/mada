@@ -9,6 +9,8 @@ package mada.vec.parallel
 
 object Fold {
     def apply[A](v: Vector[A], z: A, op: (A, A) => A, grainSize: Int): A = {
+        Assert(!v.isParallel)
+
         if (v.isEmpty) {
             z
         } else {

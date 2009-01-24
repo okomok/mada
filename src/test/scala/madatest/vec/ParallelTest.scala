@@ -38,9 +38,11 @@ class ParallelTest {
         if (vec.parallel.Future.usingActors)
             return
 
+        // return
         // java.lang.AssertionError: assertion failed: receive from channel belonging to other actor
         // http://www.nabble.com/Actors-Break-Futures-td13813999.html
         for (i <- (0 until 100)) {
+            // println(i)
             val z = Vector.range(1, 10).parallel.flatMap {
                 case i => Vector.range(1, i).parallel.filter{ j => i+j >= 5 }.parallel.map{ case j => (i, j) }
             }

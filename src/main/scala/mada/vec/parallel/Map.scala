@@ -14,16 +14,12 @@ object Map {
 class MapVector[Z, A](v: Vector[Z], f: Z => A, grainSize: Int) extends VectorProxy[A] with NotWritable[A] {
     Assert(!v.isParallel)
 
-    override lazy val self = unparallel.parallel(grainSize)
-    override lazy val unparallel = {
-        if (grainSize == 1) {
-            v.map({ e => Future(f(e)) }).force.map({ u => u() })
-        } else {
-            Vector.undivide(
-                v.divide(grainSize).map({ w => Future(w.map(f)) }).force.map({ u => u() })
-            )
-        }
+    override val unparallel = {
+        Vector.undivide(
+            v.divide(grainSize).map({ w => Future(w.map(f).force) }).force.map({ u => u() })
+        )
     }
+    override val self = unparallel.parallel(grainSize)
 
     override def force = _wait(self) // force-map fusion
     override def lazyValues = self // lazyValues-map fusion

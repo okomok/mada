@@ -9,6 +9,8 @@ package mada.vec.parallel
 
 object EqualsWith {
     def apply[A, B](v: Vector[A], w: Vector[B], p: (A, B) => Boolean, grainSize: Int): Boolean = {
+        Assert(!v.isParallel)
+
         if (v.size != w.size) {
             false
         } else {
