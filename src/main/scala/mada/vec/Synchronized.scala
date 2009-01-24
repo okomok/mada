@@ -11,8 +11,8 @@ object Synchronized {
     def apply[A](v: Vector[A]) = new SynchronizedVector(v)
 }
 
-class SynchronizedVector[A](override val self: Vector[A]) extends VectorProxy[A] {
-    override def size: Int = self.synchronized { self.size }
-    override def apply(i: Int): A = self.synchronized { self.apply(i) }
-    override def update(i: Int, e: A): Unit = self.synchronized { self.update(i, e) }
+class SynchronizedVector[A](override val * : Vector[A]) extends VectorAdapter[A, A] {
+    override def size: Int = *.synchronized { *.size }
+    override def apply(i: Int): A = *.synchronized { *.apply(i) }
+    override def update(i: Int, e: A): Unit = *.synchronized { *.update(i, e) }
 }

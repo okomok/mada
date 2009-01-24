@@ -28,7 +28,7 @@ object ThrowIf {
 
     def nonpositive(i: Int, what: String): Unit = {
         if (i <= 0) {
-            throw new java.lang.IllegalArgumentException("nonpositive " + what)
+            throw new java.lang.IllegalArgumentException("nonpositive " + what + ": " + i)
         }
     }
 }

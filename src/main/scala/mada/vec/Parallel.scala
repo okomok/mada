@@ -8,8 +8,9 @@ package mada.vec
 
 
 object Parallel {
-    def defaultGrainSize[A](v: Vector[A]): Int = 1
-    def apply[A](v: Vector[A]): Vector[A] = apply(v, defaultGrainSize(v))
+    import vec.parallel._
+
+    def apply[A](v: Vector[A]): Vector[A] = apply(v, DefaultGrainSize(v))
     def apply[A](v: Vector[A], g: Int): Vector[A] = new ParallelVector(v, g)
 }
 
@@ -29,7 +30,7 @@ class ParallelVector[A](override val self: Vector[A], grainSize: Int) extends Ve
     override def seek(p: A => Boolean) = Seek(self, p, grainSize) // forall, exists, contains
 
     override def parallel = {
-        if (grainSize == Parallel.defaultGrainSize(self)) {
+        if (grainSize == DefaultGrainSize(self)) {
             this
         } else {
             self.parallel // parallel-parallel fusion

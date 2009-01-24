@@ -10,15 +10,14 @@ package mada.vec.parallel
 
 object Future {
     val usingActors = false
-    def apply[T](body: => T) =
-        JavaFutures.future(body)
-        // ActorsFutures.future(body)
+    def apply[T](body: => T) = Futures.future(body)
 }
 
-object JavaFutures {
+object Futures {
     import java.util.concurrent._
 
-    private val exe = Executors.newCachedThreadPool()
+    val corePoolSize = 2 * java.lang.Runtime.getRuntime.availableProcessors
+    val exe = Executors.newScheduledThreadPool(corePoolSize)
 
     def future[T](body: => T) = new {
         private val c = new Callable[T] { override def call(): T = body }
@@ -27,7 +26,8 @@ object JavaFutures {
     }
 }
 
-// Actors doesn't support nested futures:
+// See: http://www.nabble.com/Actors-and-futures-td14926230.html
+//   Actors doesn't support nested futures:
 //   val f = future { Thread.sleep(1000); "Scala" }
 //   val f2 = future { f().length * 2 }
 //   --> assertion: receive from channel belonging to other actor
