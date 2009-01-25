@@ -11,8 +11,8 @@ object Count {
     def apply[A](v: Vector[A], p: A => Boolean, grainSize: Int): Int = {
         Assert(!v.isParallel)
 
-        val n = new java.util.concurrent.atomic.AtomicInteger(0)
-        v.parallel(grainSize).pareach({ e => if (p(e)) n.incrementAndGet })
-        n.get
+        v.divide(grainSize).
+            parallel.map({ w => w.count(p) }).
+                unparallel.reduce(_ + _)
     }
 }

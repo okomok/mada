@@ -1,0 +1,35 @@
+
+
+// Copyright Shunsuke Sogame 2008-2009.
+// Distributed under the terms of an MIT-style license.
+
+
+package madatest
+
+
+trait Benchmark extends scala.testing.Benchmark {
+    def testTime: Unit = {
+        println(toString + " benchmark")
+        multiplier = grainCount
+        for (t <- runBenchmark(runCount)) {
+            println("    " + t + "ms")
+        }
+    }
+
+    def runCount: Int = 5
+    def grainCount: Int = 100
+
+    def longCalc: Unit = {
+        var i = 0
+        while (i < 1000) {
+            i += 1
+        }
+    }
+}
+
+trait NoBenchmark {
+    def run: Unit
+    def runCount: Int = 5
+    def grainCount: Int = 100
+    def longCalc: Unit = { }
+}
