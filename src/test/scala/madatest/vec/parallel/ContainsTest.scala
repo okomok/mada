@@ -40,14 +40,14 @@ class ContainsTest {
 
 class ContainsNoThreadsTest extends NoBenchmark {
     override def run = {
-        val a = longExample1.contains(405)
+        val a = longSample1.contains(405)
         ()
     }
 }
 
 class ContainsParallelTest extends NoBenchmark {
     override def run = {
-        val a = longExample1.parallel.contains(405)
+        val a = longSample1.parallel.contains(405)
         ()
     }
 }

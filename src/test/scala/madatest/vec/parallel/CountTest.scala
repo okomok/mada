@@ -30,24 +30,26 @@ class CountTest {
 
 class CountNoThreadsTest extends NoBenchmark {
     override def run = {
-        val a = longExample1.count({e => longCalc; e % 2 == 0})
-        ()
-    }
-}
-
-class CountParallelPareachTest extends NoBenchmark {
-    override def run = {
-        val n = new java.util.concurrent.atomic.AtomicInteger(0)
-        longExample1.parallel(mada.vec.parallel.DefaultGrainSize(longExample1)).pareach({ e => longCalc; if (e % 2 == 0) n.incrementAndGet })
-        n.get
+        val a = longSample1.count({e => longCalc; e % 2 == 0})
         ()
     }
 }
 
 class CountParallelCountTest extends NoBenchmark {
     override def run = {
-        val a = longExample1.parallel.count({e => longCalc; e % 2 == 0})
-        //val a = longExample1.divide(mada.vec.parallel.DefaultGrainSize(longExample1)).parallel.map({ w => w.count(_ % 2 == 0) }).unparallel.reduce(_ + _)
+        val a = longSample1.parallel.count({e => e % 2 == 0})
+        //val a = longSample1.divide(mada.vec.parallel.DefaultGrainSize(longSample1)).parallel.map({ w => w.count(_ % 2 == 0) }).unparallel.reduce(_ + _)
         ()
     }
 }
+
+// too slow.
+class CountParallelPareachTest extends NoBenchmark {
+    override def run = {
+        val n = new java.util.concurrent.atomic.AtomicInteger(0)
+        longSample1.parallel(mada.vec.parallel.DefaultGrainSize(longSample1)).pareach({ e => if (e % 2 == 0) n.incrementAndGet })
+        n.get
+        ()
+    }
+}
+

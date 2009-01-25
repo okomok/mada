@@ -31,16 +31,16 @@ class ParallelVector[A](override val self: Vector[A], grainSize: Int) extends Ve
 
     override def parallel = {
         if (grainSize == DefaultGrainSize(self)) {
-            this
+            this // parallel-parallel fusion
         } else {
-            self.parallel // parallel-parallel fusion
+            self.parallel
         }
     }
     override def parallel(g: Int) = {
         if (grainSize == g) {
-            this
+            this // parallel-parallel fusion
         } else {
-            self.parallel(g) // parallel-parallel fusion
+            self.parallel(g)
         }
     }
     override def isParallel = true

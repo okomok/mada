@@ -15,9 +15,13 @@ class MapVector[Z, A](v: Vector[Z], f: Z => A, grainSize: Int) extends VectorPro
     Assert(!v.isParallel)
 
     override lazy val unparallel = {
-        Vector.undivide(
-            v.divide(grainSize).map({ w => Future(w.map(f).force) }).force.map({ u => u() })
-        )
+        if (grainSize == 1) {
+            v.map({ e => Future(f(e)) }).force.map({ u => u() })
+        } else {
+            Vector.undivide(
+                v.divide(grainSize).map({ w => Future(w.map(f).force) }).force.map({ u => u() })
+            )
+        }
     }
     override lazy val self = unparallel.parallel(grainSize)
 
