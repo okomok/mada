@@ -20,7 +20,7 @@ object Sort {
         v.parallel(grainSize)
     }
 
-    private def partition[A](v: Vector[A], lt: (A, A) => Boolean, grainSize: Int): Vector[() => Unit] = {
+    def partition[A](v: Vector[A], lt: (A, A) => Boolean, grainSize: Int): Vector[() => Unit] = {
         val fs = new ArrayList[() => Unit]
         val (x, i, j) = v.triple
         loop(fs, grainSize, x, i, j, lg(j - i) * 2, lt)
@@ -28,7 +28,7 @@ object Sort {
     }
 
     // See: stl.IntroSort
-    private def loop[A](fs: ArrayList[() => Unit], grainSize: Int, * : Vector[A], __first: Int, last: Int, depth_limit: Int, __comp: (A, A) => Boolean): Unit = {
+    def loop[A](fs: ArrayList[() => Unit], grainSize: Int, * : Vector[A], __first: Int, last: Int, depth_limit: Int, __comp: (A, A) => Boolean): Unit = {
         var __last = last
         var __depth_limit = depth_limit
 

@@ -44,3 +44,21 @@ class SortTest {
         detail.TestVectorReadOnly(example1Sorted, actual)
     }
 }
+
+class SortParallelPerfTest extends NoBenchmark {
+    override def run = {
+        longSample1.clone.parallel.cut.sort(_ < _)
+    }
+}
+
+class SortNonParallelPerfTest extends NoBenchmark {
+    override def run = {
+        longSample1.clone.cut.cut.sort(_ < _)
+    }
+}
+
+class SortParallelPartitionTest extends NoBenchmark {
+    override def run = {
+        mada.vec.parallel.Sort.partition(longSample1.clone, (_: Int) < (_: Int), mada.vec.parallel.DefaultGrainSize(longSample1))
+    }
+}

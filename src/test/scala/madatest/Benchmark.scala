@@ -17,7 +17,7 @@ trait Benchmark extends scala.testing.Benchmark {
     }
 
     def runCount: Int = 5
-    def grainCount: Int = 100
+    def grainCount: Int = 10
 
     def longCalc: Unit = {
         var i = 0
