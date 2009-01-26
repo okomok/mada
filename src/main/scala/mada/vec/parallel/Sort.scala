@@ -10,7 +10,7 @@ package mada.vec.parallel
 import java.util.ArrayList
 
 
-object Sort {
+object SortWith {
     import stl.IntroSort.lg
     import stl.{ UnguardedPartition, Median }
 
@@ -34,7 +34,7 @@ object Sort {
 
         while (__last - __first > grainSize) {
             if (__depth_limit == 0) {
-                fs.add({ () => *.window(__first, __last).sort(__comp) })
+                fs.add({ () => *.window(__first, __last).sortWith(__comp) })
                 return
             }
             val __cut = UnguardedPartition(*, __first, __last, Median(*(__first), *(__first + (__last - __first)/2), *(__last - 1), __comp), __comp)
@@ -42,6 +42,6 @@ object Sort {
             loop(fs, grainSize, *, __cut, __last, __depth_limit, __comp)
             __last = __cut
         }
-        fs.add({ () => *.window(__first, __last).sort(__comp) })
+        fs.add({ () => *.window(__first, __last).sortWith(__comp) })
     }
 }

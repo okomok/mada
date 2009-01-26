@@ -22,10 +22,10 @@ class WindowVector[A](override val * : Vector[A], n: Int, m: Int) extends Vector
     override def triple = (*, n, m) // triple-window fusion
     override def window(_n: Int, _m: Int) = *.window(n + _n, n + _m) // window-window fusion
 /*
-    override def sort(lt: (A, A) => Boolean) = * match {
+    override def sortWith(lt: (A, A) => Boolean) = * match {
         import java.util.Arrays
         case av: ArrayVector[_] => { Arrays.sort(av.array, n, m, jcl.ToComparator(lt)); this }
-        case _ => super.sort(lt)
+        case _ => super.sortWith(lt)
     }
 */
 }

@@ -20,7 +20,6 @@ object Vector {
     val upperCase = UpperCase
     val range = Range
     val single= Single
-    val sort = Sort
     val stringize = Stringize
     val undivide = Undivide
     val undivide3 = Undivide3
@@ -159,13 +158,15 @@ trait Vector[A] {
     def unparallel: Vector[A] = Unparallel(this)
     def isParallel: Boolean = IsParallel(this)
 
+    def sortWith(lt: (A, A) => Boolean): Vector[A] = SortWith(this, lt)
+    final def sort(implicit c: A => Ordered[A]): Vector[A] = Sort(this, c)
+
     final def append(that: Vector[A]): Vector[A] = Append(this, that)
     def cycle(n: Int): Vector[A] = Cycle(this, n)
     final def indices: Vector[Int] = Indices(this)
     def lazyValues : Vector[A] = LazyValues(this)
     def reverse: Vector[A] = Reverse(this)
     final def rotate(i: Int): Vector[A] = Rotate(this, i)
-    def sort(lt: (A, A) => Boolean): Vector[A] = Sort(this, lt)
     def step(n: Int): Vector[A] = Step(this, n)
     final def permutation(iv: Vector[Int]): Vector[A] = Permutation(this, iv)
     final def zip[B](that: Vector[B]): Vector[(A, B)] = Zip(this, that)

@@ -37,7 +37,7 @@ trait VectorProxy[A] extends Vector[A] with Proxy {
     override def reverse: Vector[A] = self.reverse
     override def seek(p: A => Boolean): Option[A] = self.seek(p)
     override def step(n: Int): Vector[A] = self.step(n)
-    override def sort(lt: (A, A) => Boolean): Vector[A] = self.sort(lt)
+    override def sortWith(lt: (A, A) => Boolean): Vector[A] = self.sortWith(lt)
     override def triple: Vector.Triple[A] = self.triple
     override def window(n: Int, m: Int): Vector[A] = self.window(n, m)
 
