@@ -26,6 +26,7 @@ class ParallelVector[A](override val self: Vector[A], grainSize: Int) extends Ve
     override def map[B](f: A => B): Vector[B] = Map(self, f, grainSize)
     override def pareach(f: A => Unit) = Pareach(self, f, grainSize)
     override def reduce(op: (A, A) => A): A = Reduce(self, op, grainSize)
+    override def reducer(op: (A, A) => A): Vector[A] = Reducer(self, op, grainSize)
     override def seek(p: A => Boolean) = Seek(self, p, grainSize) // forall, exists, contains
     override def sortWith(lt: (A, A) => Boolean) = SortWith(self, lt, grainSize)
 

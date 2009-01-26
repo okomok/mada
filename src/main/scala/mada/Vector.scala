@@ -173,7 +173,9 @@ trait Vector[A] {
     final def rotate(i: Int): Vector[A] = Rotate(this, i)
     def step(n: Int): Vector[A] = Step(this, n)
     final def permutation(iv: Vector[Int]): Vector[A] = Permutation(this, iv)
+
     final def zip[B](that: Vector[B]): Vector[(A, B)] = Zip(this, that)
+    final def zipWith[B, C](that: Vector[B])(f: (A, B) => C): Vector[C] = ZipWith(this, that, f)
 
     def copyTo[B >: A](that: Vector[B]): Vector[A] = CopyTo(this, that)
     def force: Vector[A] = Force(this)
