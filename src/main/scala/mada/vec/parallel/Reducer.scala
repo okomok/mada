@@ -12,12 +12,15 @@ object Reducer {
         Assert(!v.isParallel)
         ThrowIf.empty(v, "paralell.reducer")
 
-        val rights = v.divide(grainSize).parallel(1).map({ w => w.reducer(op) }).unparallel
-        val lefts = rights.map({ w => w.last }).init.reducer(op)
+        val rss = v.divide(grainSize).parallel(1).map({ w => w.reducer(op) }).unparallel
+        if (rss.size == 1) {
+            return rss.head
+        }
 
-        rights.head ++
+        val ls = rss.init.map({ w => w.last }).reducer(op)
+        rss.head ++
             Vector.undivide(
-                lefts.zipWith(rights.tail)({ (l, rs) => rs.map({ r => op(l, r) }) })
+                (ls zip rss.tail).parallel(1).map({ case (l, rs) => rs.map({ r => op(l, r) }) })
             )
     }
 }

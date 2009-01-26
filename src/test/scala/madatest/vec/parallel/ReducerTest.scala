@@ -7,6 +7,7 @@
 package madatest.vec.parallel
 
 
+import mada.Vector
 import mada.Vector._
 import mada.Vector.Compatibles._
 import junit.framework.Assert._
@@ -21,5 +22,13 @@ class ReducerTest {
     }
 
     def testBound: Unit = {
+        val v = Vector.single(11)
+        assertEquals(Vector.single(11), v.parallel.reducer(_ + _))
+        assertEquals(v.reducer(_ + _), v.parallel.reducer(_ + _))
+    }
+
+    def testBound2: Unit = {
+        val v = madaVector(Array(1,2,3,4))
+        assertEquals(v.reducer(_ + _), v.parallel(2).reducer(_ + _))
     }
 }

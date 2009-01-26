@@ -30,7 +30,8 @@ object FolderLeft {
             i += 1; acc = op(acc, e)
             a(i) = acc
         }
-        Vector.arrayVector(a)
+        Vector.arrayVector(a).
+            readOnly // consistent with parallels.
     }
 }
 

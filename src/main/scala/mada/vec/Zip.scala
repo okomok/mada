@@ -19,9 +19,11 @@ class ZipVector[A, B](v: Vector[A], w: Vector[B]) extends Vector[(A, B)] {
 }
 
 
+/*
 object ZipWith {
     def apply[A, B, C](v: Vector[A], w: Vector[B], f: (A, B) => C): Vector[C] = {
         ThrowIf.differentSize(v, w, "zipWith")
         (v zip w).map({ case (a, b) => f(a, b) })
     }
 }
+*/

@@ -11,7 +11,7 @@ object Filter {
     def apply[A](v: Vector[A], p: A => Boolean): Vector[A] = new FilterVector(v, p)
 }
 
-class FilterVector[A](v: Vector[A], p: A => Boolean) extends VectorProxy[A] {
+class FilterVector[A](v: Vector[A], p: A => Boolean) extends VectorProxy[A] with NotWritable[A] {
     override lazy val self = v.clone.mutatingFilter(p)
 
     override def filter(_p: A => Boolean) = v.filter({ e => p(e) && _p(e) }) // filter-filter fusion
