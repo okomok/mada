@@ -8,7 +8,7 @@ package mada
 
 
 /**
- * Contains utility methods operating on Pegs.
+ * Contains utility methods operating on type <code>Peg</code>.
  */
 object Peg {
     import peg._
@@ -78,7 +78,7 @@ object Peg {
      * Matches a regular expression.
      * @see java.util.regex
      */
-    def regex[A](str: String) = Regex(str)
+    def regex(str: String): Peg[Char] = Regex(str)
 
     /**
      * Matches specified one element.
@@ -177,68 +177,68 @@ object Peg {
 
 
     /**
-     * Alias of peg.PegProxy. Prefer this to that.
+     * Alias of <code>peg.PegProxy</code>
      */
     type PegProxy[A] = peg.PegProxy[A]
 
     /**
-     * Alias of peg.Rule. Prefer this to that.
+     * Alias of <code>peg.Rule</code>
      */
     val Rule = peg.Rule
 
     /**
-     * Alias of peg.Rule. Prefer this to that.
+     * Alias of <code>peg.Rule</code>
      */
     type Rule[A] = peg.Rule[A]
 
     /**
-     * Alias of peg.ASTreeBuilder.
+     * Alias of <code>peg.ASTreeBuilder</code>
      */
     val ASTreeBuilder = peg.ASTreeBuilder
 
     /**
-     * Alias of peg.ASTreeBuilder.
+     * Alias of <code>peg.ASTreeBuilder</code>
      */
     type ASTreeBuilder[T <: javax.swing.tree.DefaultMutableTreeNode] = peg.ASTreeBuilder[T]
 
 
     /**
-     * Alias of peg.SymbolSet
+     * Alias of <code>peg.SymbolSet</code>
      */
     val SymbolSet = peg.SymbolSet
 
     /**
-     * Alias of peg.SymbolMap
+     * Alias of <code>peg.SymbolMap</code>
      */
     val SymbolMap = peg.SymbolMap
 
     /**
-     * Alias of peg.SymbolSet
+     * Alias of <code>peg.SymbolSet</code>
      */
     type SymbolSet[A] = peg.SymbolSet[A]
 
     /**
-     * Alias of peg.SymbolMap
+     * Alias of <code>peg.SymbolMap</code>
      */
     type SymbolMap[A] = peg.SymbolMap[A]
 
     /**
-     * Alias of peg.ByNeedActions
+     * Alias of <code>peg.ByNeedActions</code>
      */
     type ByNeedActions[A] = peg.ByNeedActions[A]
 
     /**
-     * Alias of peg.RangeActions
+     * Alias of <code>peg.RangeActions</code>
      */
     type RangeActions[A] = peg.RangeActions[A]
 
     /**
-     * Alias of peg.CapturingGroups
+     * Alias of <code>peg.CapturingGroups</code>
      */
     type CapturingGroups[K, A] = peg.CapturingGroups[K, A]
 
     /**
-     * Alias of peg.PrettyPrinter
+     * Alias of <code>peg.PrettyPrinter</code>
      */
     type PrettyPrinter = peg.PrettyPrinter
 
@@ -249,12 +249,12 @@ object Peg {
     def verify[A](p: Peg[A]): Peg[A] = Verify_(p)
 
     /**
-     * Alias of peg.VerificationException
+     * Alias of <code>peg.VerificationException</code>
      */
     val VerificationException = peg.VerificationException
 
     /**
-     * Alias of peg.VerificationException
+     * Alias of <code>peg.VerificationException</code>
      */
     type VerificationException[A] = peg.VerificationException[A]
 }

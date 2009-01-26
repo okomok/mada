@@ -6,7 +6,9 @@
 
 package mada
 
-
+/**
+ * Contains utility methods operating on type <code>Vector</code>.
+ */
 object Vector {
     import vec._
 
@@ -19,7 +21,6 @@ object Vector {
     def lowerCase(v: Vector[Char]): Vector[Char] = LowerCase(v)
     def upperCase(v: Vector[Char]): Vector[Char] = UpperCase(v)
     def range(i: Int, j: Int): Vector[Int] = Range(i, j)
-    def range(i: Long, j: Long): Vector[Long] = Range(i, j)
     def single[A](e: A): Vector[A] = Single(e)
     def stringize(v: Vector[Char]): String = Stringize(v)
     def undivide[A](vv: Vector[Vector[A]]): Vector[A] = Undivide(vv)
@@ -66,14 +67,41 @@ object Vector {
     type LongFileVector = vec.LongFileVector
 }
 
-
+/**
+ * Sequences that guarantees O(1) element access and O(1) length computation.
+ * A vector can be writable but structurally-unmodifiable so that synchronization is unneeded.
+ * Unless otherwise specified, these methods return projections.
+ */
 trait Vector[A] {
     import vec._
 
+    /**
+     * @return  the number of elements in this vector.
+     */
     def size: Int
+
+    /**
+     * @param   i index of element to return.
+     * @pre     this vector is readable.
+     * @pre     <code>isDefinedAt(i)</code>.
+     * @return  the element at the specified position in this vector.
+     */
     def apply(i: Int): A = throw new NotReadableError(this)
+
+    /**
+     * Replaces the element at the specified position in this vector with
+     * the specified element.
+     *
+     * @param   i index of element to replace.
+     * @param   e element to be stored at the specified position.
+     * @pre     this vector is writable.
+     * @pre     <code>isDefinedAt(i)</code>.
+     */
     def update(i: Int, e: A): Unit = throw new NotWritableError(this)
 
+    /**
+     * @return  this vector.
+     */
     final def vector: Vector[A] = this
 
     def equalsWith[B](that: Vector[B])(p: (A, B) => Boolean): Boolean = EqualsWith(this, that, p)
@@ -86,39 +114,146 @@ trait Vector[A] {
     final def divide(n: Int): Vector[Vector[A]] = Divide(this, n)
     final def divide3(n: Int): Vector[Vector.Triple[A]] = Divide3(this, n)
 
+
+    /**
+     * Returns a subsequence with specified region.
+     * <code>n < 0</code> or <code>m > this.size</code> is allowed if its behavior is defined.
+     *
+     * @pre     <code>n <= m</code>
+     * @return  a subsequence with specified region.
+     * @see     apply
+     */
     def window(n: Int, m: Int): Vector[A] = Window(this, n, m)
+
+    /**
+     * @return  <code>this(Math.min(n, this.size), this.size)</code>.
+     */
     final def drop(n: Int): Vector[A] = Drop(this, n)
+
+    /**
+     * @return  <code>this(0, Math.min(n, this.size))</code>.
+     */
     final def take(n: Int): Vector[A] = Take(this, n)
+
     final def dropWhile(p: A => Boolean): Vector[A] = DropWhile(this, p)
     final def takeWhile(p: A => Boolean): Vector[A] = TakeWhile(this, p)
+
+    /**
+     * @return  <code>this(i, this.size + j)</code>.
+     */
     final def offset(i: Int, j: Int): Vector[A] = Offset(this, i, j)
-    final def slice(n: Int, m: Int): Vector[A] = Slice(this, n, m)
+
+    /**
+     * @return  <code>this.slice(n, this.size)</code>.
+     */
     final def slice(n: Int): Vector[A] = Slice(this, n)
+
+    /**
+     * @return  <code>this.drop(n).take(m - n)</code>.
+     */
+    final def slice(n: Int, m: Int): Vector[A] = Slice(this, n, m)
+
+    /**
+     * @return  <code>(this(0, m), this(m, this.size))</code>, where <code>val m = Math.min(i, this.size)</code>.
+     */
     final def splitAt(i: Int): (Vector[A], Vector[A]) = SplitAt(this, i)
+
     final def span(p: A => Boolean): (Vector[A], Vector[A]) = Span(this, p)
     final def break(p: A => Boolean): (Vector[A], Vector[A]) = Break(this, p)
 
+    /**
+     * @return  an <code>Iterator</code> of this vector.
+     */
     final def elements: Iterator[A] = iterator
+
+    /**
+     * Alias of <code>this.elements</code>
+     */
     final def iterator: Iterator[A] = VectorIterator(this)
+
+    /**
+     * @return  a <code>java.util.Iterator</code> of this vector.
+     */
     final def jclListIterator: java.util.ListIterator[A] = jcl.VectorListIterator(this)
+
     final def linearAccessSeq: Seq[A] = LinearAccessSeq(this)
+
+   /**
+     * @return  a <code>RandomAccessSeq.Mutable</code> projection of this vector.
+     */
     def randomAccessSeq: RandomAccessSeq.Mutable[A] = VectorRandomAccessSeq(this)
+
+   /**
+     * @return  a <code>Stream</code> of this vector.
+     */
     final def stream: Stream[A] = VectorStream(this)
+
+   /**
+     * @return  a <code>Vector.Triple</code> of this vector.
+     */
     def triple: Vector.Triple[A] = VectorTriple(this)
 
+    /**
+     * @return  a new <code>Array</code> which enumerates all elements of this vector.
+     */
     final def toArray: Array[A] = ToArray(this)
+
+    /**
+     * @return  a new <code>java.util.ArrayList</code> which enumerates all elements of this vector.
+     */
     final def toJclArrayList: java.util.ArrayList[A] = jcl.ToArrayList(this)
+
+    /**
+     * @return  a <code>List</code> which enumerates all elements of this vector.
+     */
     final def toList: List[A] = ToList(this)
+
+    /**
+     * @return  a string representation of this vector.
+     */
     override def toString: String = ToString(this)
 
+    /**
+     * @return  the first element of this vector.
+     * @pre     <code>!this.isEmpty</code>
+     */
     final def first: A = First(this)
+
+    /**
+     * @return  the last element of this vector.
+     * @pre     <code>!this.isEmpty</code>
+     */
     final def last: A = Last(this)
+
+    /**
+     * @return  the vector without its last element.
+     */
     final def init: Vector[A] = Init(this)
+
+    /**
+     * @return  the first element as an option.
+     */
     def firstOption: Option[A] = FirstOption(this)
+
+    /**
+     * @return  the last element as an option.
+     */
     def lastOption: Option[A] = LastOption(this)
 
+    /**
+     * Alias of <code>this.first</code>
+     */
     final def head: A = Head(this)
+
+    /**
+     * @return  the vector without its first element.
+     * @pre     <code>!this.isEmpty</code>
+     */
     final def tail: Vector[A] = Tail(this)
+
+    /**
+     * Alias of <code>this.isEmpty</code>
+     */
     final def isNil: Boolean = IsNil(this)
 
     def filter(p: A => Boolean): Vector[A] = Filter(this, p)
@@ -177,24 +312,74 @@ trait Vector[A] {
     final def permutation(iv: Vector[Int]): Vector[A] = Permutation(this, iv)
     final def zip[B](that: Vector[B]): Vector[(A, B)] = Zip(this, that)
 
+    /**
+     * Copies all the elements into another.
+     *
+     * @pre     <code>this.size == that.size</code>.
+     * @pre     <code>that</code> is writable.
+     * @return  this vector.
+     */
     def copyTo[B >: A](that: Vector[B]): Vector[A] = CopyTo(this, that)
+
+    /**
+     * Converts to a strict collection.
+     *
+     * @return  non-writable vector.
+     */
     def force: Vector[A] = Force(this)
+
+    /**
+     * Returns a shallow copy of this vector. (The elements themselves are not copied.)
+     *
+     * @return  a writable clone of this vector.
+     */
     override def clone: Vector[A] = Clone(this)
 
     def bounds: Vector[A] = Bounds(this)
     def readOnly: Vector[A] = ReadOnly(this)
 
+    /**
+     * Always returns <code>that</code>.
+     *
+     * @return  <code>that</code>.
+     */
     final def always[B](that: Vector[B]): Vector[B] = Always(this, that)
+
     final def clear: Vector[A] = Clear(this)
     final def cut: Vector[A] = Cut(this)
     final def identity: Vector[A] = Identity(this)
 
+    /**
+     * Alias of <code>this.size</code>
+     */
     final def length: Int = size
+
     final def writer(i: Int): (A => Unit) = Writer(this, i)
 
+    /**
+     * Alias of <code>this.window</code>
+     */
     final def apply(n: Int, m: Int): Vector[A] = window(n, m)
+
+    /**
+     * Alias of <code>this.append</code>
+     */
     final def ++(that: Vector[A]): Vector[A] = append(that)
+
+    /**
+     * Alias of <code>this.foldLeft</code>
+     */
     final def /:[B](z: B)(op: (B, A) => B): B = foldLeft(z)(op)
+
+    /**
+     * Alias of <code>this.foldRight</code>
+     */
     final def :\[B](z: B)(op: (A, B) => B): B = foldRight(z)(op)
+
+    /**
+     * Returns an set entry tuple, which is useful for <code>Peg.switch</code>.
+     *
+     * @return  <code>(this, p)</code>
+     */
     final def -->(p: Peg[A]): (Vector[A], Peg[A]) = (this, p)
 }

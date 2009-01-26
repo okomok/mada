@@ -14,7 +14,7 @@ import junit.framework.Assert._
 class RangeTest {
     def testTrivial = {
         assertEquals(Vector.range(2, 5), Vector.range(2, 5))
-        assertEquals(Vector.range(2L, 5L), Vector.range(2L, 5L))
+//        assertEquals(Vector.range(2L, 5L), Vector.range(2L, 5L)) // rejected.
     }
 
     def testMe {
