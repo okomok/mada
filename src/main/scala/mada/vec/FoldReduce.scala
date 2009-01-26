@@ -7,13 +7,13 @@
 package mada.vec
 
 
-object Fold {
+private[mada] object Fold {
     def apply[A](v: Vector[A], z: A, op: (A, A) => A): A = {
         (Vector.single(z) ++ v).reduce(op)
     }
 }
 
-object Reduce {
+private[mada] object Reduce {
     def apply[A](v: Vector[A], op: (A, A) => A): A = {
         ThrowIf.empty(v, "reduce")
         v.reduceLeft(op)
@@ -21,13 +21,13 @@ object Reduce {
 }
 
 
-object Folder {
+private[mada] object Folder {
     def apply[A](v: Vector[A], z: A, op: (A, A) => A): Vector[A] = {
         (Vector.single(z) ++ v).reducer(op)
     }
 }
 
-object Reducer {
+private[mada] object Reducer {
     def apply[A](v: Vector[A], op: (A, A) => A): Vector[A] = {
         ThrowIf.empty(v, "reducer")
         v.reducerLeft(op)

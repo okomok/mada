@@ -7,19 +7,19 @@
 package mada.vec
 
 
-object First {
+private[mada] object First {
     def apply[A](v: Vector[A]): A = v(0)
 }
 
-object FirstOption {
+private[mada] object FirstOption {
     def apply[A](v: Vector[A]): Option[A] = if (v.isEmpty) None else Some(v.first)
 }
 
 
-object Last {
+private[mada] object Last {
     def apply[A](v: Vector[A]): A = v(v.size - 1)
 }
 
-object LastOption {
+private[mada] object LastOption {
     def apply[A](v: Vector[A]): Option[A] = if (v.isEmpty) None else Some(v.last)
 }

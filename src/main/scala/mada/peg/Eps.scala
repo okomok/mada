@@ -7,11 +7,11 @@
 package mada.peg
 
 
-object Eps {
+private[mada] object Eps {
     def apply[A]: Peg[A] = new EpsPeg[A]
 }
 
-class EpsPeg[A] extends Peg[A] {
+private[mada] class EpsPeg[A] extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = start
     override def length = 0
 }

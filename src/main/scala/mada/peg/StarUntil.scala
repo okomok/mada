@@ -7,11 +7,11 @@
 package mada.peg
 
 
-object StarUntil {
+private[mada] object StarUntil {
     def apply[A](p: Peg[A], q: Peg[A]): Peg[A] = new StarUntilPeg(p, q)
 }
 
-class StarUntilPeg[A](p: Peg[A], q: Peg[A]) extends Peg[A] {
+private[mada] class StarUntilPeg[A](p: Peg[A], q: Peg[A]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int): Int = {
         var cur = start
 

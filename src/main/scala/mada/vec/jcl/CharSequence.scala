@@ -10,27 +10,27 @@ package mada.vec.jcl
 import java.lang.CharSequence
 
 
-object CharSequenceVector {
+private[mada] object CharSequenceVector {
     def apply[A](from: CharSequence): Vector[Char] = from match {
         case from: VectorCharSequence => from.f // conversion fusion
         case _ => new CharSequenceVector(from)
     }
 }
 
-class CharSequenceVector(val from: CharSequence) extends Vector[Char] {
+private[mada] class CharSequenceVector(val from: CharSequence) extends Vector[Char] {
     override def size = from.length
     override def apply(i: Int) = from.charAt(i)
 }
 
 
-object VectorCharSequence {
+private[mada] object VectorCharSequence {
     def apply(v: Vector[Char]): CharSequence = v match {
         case from: CharSequenceVector => from.from // conversion fusion
         case _ => new VectorCharSequence(v)
     }
 }
 
-class VectorCharSequence(val f: Vector[Char]) extends CharSequence {
+private[mada] class VectorCharSequence(val f: Vector[Char]) extends CharSequence {
     override def charAt(index: Int) = f(index)
     override def length = f.size
     override def subSequence(start: Int, end: Int) = new VectorCharSequence(f.window(start, end))

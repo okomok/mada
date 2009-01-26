@@ -7,11 +7,11 @@
 package mada.peg
 
 
-object Range {
+private[mada] object Range {
     def apply[A](i: A, j: A)(implicit c: A => Ordered[A]): Peg[A] = new RangePeg(i, j)(c)
 }
 
-class RangePeg[A](i: A, j: A)(implicit c: A => Ordered[A]) extends Peg[A] {
+private[mada] class RangePeg[A](i: A, j: A)(implicit c: A => Ordered[A]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
         if (start == end) {
             Peg.FAILURE

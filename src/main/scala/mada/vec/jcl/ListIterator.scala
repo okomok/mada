@@ -10,11 +10,11 @@ package mada.vec.jcl
 import java.util.ListIterator
 
 
-object VectorListIterator {
+private[mada] object VectorListIterator {
     def apply[A](v: Vector[A]): ListIterator[A] = new VectorListIterator(v)
 }
 
-class VectorListIterator[A](v: Vector[A]) extends ListIterator[A] {
+private[mada] class VectorListIterator[A](v: Vector[A]) extends ListIterator[A] {
     private val (x, i, j) = v.triple
     private var cur = i
 

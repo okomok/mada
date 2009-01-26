@@ -7,6 +7,6 @@
 package mada.vec
 
 
-object Always {
+private[mada] object Always {
     def apply[A, B](v: Vector[A], w: Vector[B]): Vector[B] = w
 }

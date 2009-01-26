@@ -7,6 +7,6 @@
 package mada.peg
 
 
-object Unmap {
+private[mada] object Unmap {
     def apply[Z, A](p: Peg[A], f: Z => A): Peg[Z] = p.readMap((_: Vector[Z]).map(f))
 }

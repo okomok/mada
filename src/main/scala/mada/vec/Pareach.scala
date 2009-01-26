@@ -7,6 +7,6 @@
 package mada.vec
 
 
-object Pareach {
+private[mada] object Pareach {
     def apply[A](v: Vector[A], f: A => Unit): Unit = v.foreach(f)
 }

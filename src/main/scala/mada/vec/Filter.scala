@@ -7,22 +7,22 @@
 package mada.vec
 
 
-object Filter {
+private[mada] object Filter {
     def apply[A](v: Vector[A], p: A => Boolean): Vector[A] = new FilterVector(v, p)
 }
 
-class FilterVector[A](v: Vector[A], p: A => Boolean) extends VectorProxy[A] with NotWritable[A] {
+private[mada] class FilterVector[A](v: Vector[A], p: A => Boolean) extends VectorProxy[A] with NotWritable[A] {
     override lazy val self = v.clone.mutatingFilter(p)
 
     override def filter(_p: A => Boolean) = v.filter({ e => p(e) && _p(e) }) // filter-filter fusion
 }
 
 
-object MutatingFilter {
+private[mada] object MutatingFilter {
     def apply[A](v: Vector[A], p: A => Boolean): Vector[A] = new MutatingFilterVector(v, p)
 }
 
-class MutatingFilterVector[A](v: Vector[A], p: A => Boolean) extends VectorProxy[A] {
+private[mada] class MutatingFilterVector[A](v: Vector[A], p: A => Boolean) extends VectorProxy[A] {
     override lazy val self = {
         val (x, i, j) = v.triple
         x.window(i, stl.RemoveIf(x, i, j, !p(_: A)))

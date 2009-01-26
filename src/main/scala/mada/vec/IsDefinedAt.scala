@@ -7,6 +7,6 @@
 package mada.vec
 
 
-object IsDefinedAt {
+private[mada] object IsDefinedAt {
     def apply[A](v: Vector[A], x: Int): Boolean = (x >= 0) && (x < v.size)
 }

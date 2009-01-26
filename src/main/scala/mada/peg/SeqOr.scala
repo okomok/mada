@@ -7,6 +7,6 @@
 package mada.peg
 
 
-object SeqOr {
+private[mada] object SeqOr {
     def apply[A](p: Peg[A], q: Peg[A]): Peg[A] = (p seqAnd q.opt) or q
 }

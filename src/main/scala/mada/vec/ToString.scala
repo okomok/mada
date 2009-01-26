@@ -7,7 +7,7 @@
 package mada.vec
 
 
-object ToString {
+private[mada] object ToString {
     def apply[A](from: Vector[A]): String = from.toJclArrayList.toString
 
 /* nightmare

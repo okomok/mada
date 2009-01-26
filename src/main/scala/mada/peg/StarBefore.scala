@@ -7,6 +7,6 @@
 package mada.peg
 
 
-object StarBefore {
+private[mada] object StarBefore {
     def apply[A](p: Peg[A], q: Peg[A]): Peg[A] = p.starUntil(q.lookAhead)
 }

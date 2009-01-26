@@ -7,6 +7,6 @@
 package mada.vec
 
 
-object IsParallel {
+private[mada] object IsParallel {
     def apply[A](v: Vector[A]): Boolean = false
 }

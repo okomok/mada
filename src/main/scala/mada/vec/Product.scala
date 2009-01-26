@@ -7,11 +7,11 @@
 package mada.vec
 
 
-object ProductVector {
+private[mada] object ProductVector {
     def apply[A](from: Product): Vector[Any] = new ProductVector(from)
 }
 
-class ProductVector(from: Product) extends Vector[Any] {
+private[mada] class ProductVector(from: Product) extends Vector[Any] {
     override def size = from.productArity
     override def apply(i: Int) = from.productElement(i)
 }

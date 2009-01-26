@@ -7,7 +7,7 @@
 package mada.vec
 
 
-object HashCode {
+private[mada] object HashCode {
     def apply[A](v: Vector[A]): Int = {
         val n = v.size
         val nh = IntHashCode(n)

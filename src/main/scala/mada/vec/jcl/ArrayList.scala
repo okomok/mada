@@ -10,21 +10,10 @@ package mada.vec.jcl
 import java.util.ArrayList
 
 
-object ToArrayList {
+private[mada] object ToArrayList {
     def apply[A](from: Vector[A]): ArrayList[A] = {
         val a = new ArrayList[A](from.size) // this is capacity.
         for (e <- from) {
-            a.add(e)
-        }
-        a
-    }
-}
-
-
-object NewArrayList {
-    def apply[A](es: A*): ArrayList[A] = {
-        val a = new ArrayList[A](es.length)
-        for (e <- es) {
             a.add(e)
         }
         a

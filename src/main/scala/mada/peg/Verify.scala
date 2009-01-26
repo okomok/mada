@@ -7,11 +7,11 @@
 package mada.peg
 
 
-object Verify_ {
+private[mada] object Verify_ {
     def apply[A](p: Peg[A]): Peg[A] = new VerifyPeg(p)
 }
 
-class VerifyPeg[A](override val self: Peg[A]) extends PegProxy[A] {
+private[mada] class VerifyPeg[A](override val self: Peg[A]) extends PegProxy[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
         val cur = self.parse(v, start, end)
         if (cur == Peg.FAILURE) {

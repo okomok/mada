@@ -7,11 +7,11 @@
 package mada.vec
 
 
-object Reverse {
+private[mada] object Reverse {
     def apply[A](v: Vector[A]): Vector[A] = new ReverseVector(v)
 }
 
-class ReverseVector[A](override val * : Vector[A]) extends VectorAdapter[A, A] {
+private[mada] class ReverseVector[A](override val * : Vector[A]) extends VectorAdapter[A, A] {
     override def mapIndex(i: Int) = size - i - 1
     override def reverse = * // reverse-reverse fusion
 }

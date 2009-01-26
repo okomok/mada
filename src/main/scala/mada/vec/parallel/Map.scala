@@ -7,11 +7,11 @@
 package mada.vec.parallel
 
 
-object Map {
+private[mada] object Map {
     def apply[Z, A](v: Vector[Z], f: Z => A, grainSize: Int): Vector[A] = new MapVector(v, f, grainSize)
 }
 
-class MapVector[Z, A](v: Vector[Z], f: Z => A, grainSize: Int) extends VectorProxy[A] with NotWritable[A] {
+private[mada] class MapVector[Z, A](v: Vector[Z], f: Z => A, grainSize: Int) extends VectorProxy[A] with NotWritable[A] {
     Assert(!v.isParallel)
 
     override lazy val unparallel = {

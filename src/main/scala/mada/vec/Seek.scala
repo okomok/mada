@@ -7,6 +7,6 @@
 package mada.vec
 
 
-object Seek {
+private[mada] object Seek {
     def apply[A](v: Vector[A], p: A => Boolean): Option[A] = v.find(p)
 }

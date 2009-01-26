@@ -7,11 +7,11 @@
 package mada.peg
 
 
-object Begin {
+private[mada] object Begin {
     def apply[A]: Peg[A] = new BeginPeg[A]
 }
 
-class BeginPeg[A] extends Peg[A] {
+private[mada] class BeginPeg[A] extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
         if (start == 0) {
             start
@@ -24,11 +24,11 @@ class BeginPeg[A] extends Peg[A] {
 }
 
 
-object End {
+private[mada] object End {
     def apply[A]: Peg[A] = new EndPeg[A]
 }
 
-class EndPeg[A] extends Peg[A] {
+private[mada] class EndPeg[A] extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
         if (start == end) {
             start

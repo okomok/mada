@@ -7,11 +7,11 @@
 package mada.vec
 
 
-object StringVector {
+private[mada] object StringVector {
     def apply(from: String): Vector[Char] = new StringVector(from)
 }
 
-class StringVector(val from: String) extends Vector[Char] {
+private[mada] class StringVector(val from: String) extends Vector[Char] {
     override def size = from.length
     override def apply(i: Int) = from.charAt(i)
 
@@ -19,7 +19,7 @@ class StringVector(val from: String) extends Vector[Char] {
 }
 
 
-object Stringize {
+private[mada] object Stringize {
     def apply(from: Vector[Char]): String = from match {
         case from: StringVector => from.from // conversion fusion
         case _ => {

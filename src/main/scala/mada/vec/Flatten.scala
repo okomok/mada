@@ -7,7 +7,7 @@
 package mada.vec
 
 
-object Flatten {
+private[mada] object Flatten {
     def apply[A](vv: Vector[Vector[A]]): Vector[A] = {
         val av = Vector.arrayVector(new Array[A](FlattenSize(vv)))
         var (i, j) = (0, 0)
@@ -20,10 +20,10 @@ object Flatten {
     }
 }
 
-object Flatten3 {
+private[mada] object Flatten3 {
     def apply[A](vv: Vector[Vector.Triple[A]]): Vector[A] = Vector.flatten(Vector.triplesVector(vv))
 }
 
-object FlattenSize {
+private[mada] object FlattenSize {
     def apply[A](vv: Vector[Vector[A]]): Int = vv.foldLeft(0)({ (c, v) => c + v.size })
 }

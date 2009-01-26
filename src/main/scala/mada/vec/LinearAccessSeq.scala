@@ -9,11 +9,11 @@ package mada.vec
 
 // from ++ from ++ ... is not conforming RandomAccess, so `force` or the following is needed.
 
-object LinearAccessSeq {
+private[mada] object LinearAccessSeq {
     def apply[A](from: Vector[A]): Seq[A] = new VectorLinearAccessSeq(from)
 }
 
-class VectorLinearAccessSeq[A](from: Vector[A]) extends Seq[A] {
+private[mada] class VectorLinearAccessSeq[A](from: Vector[A]) extends Seq[A] {
     override def apply(i: Int) = from(i)
     override def elements = from.elements
     override val length = from.size

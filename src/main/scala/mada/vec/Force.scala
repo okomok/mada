@@ -7,11 +7,11 @@
 package mada.vec
 
 
-object Force {
+private[mada] object Force {
     def apply[A](v: Vector[A]): Vector[A] = new ForceVector(v)
 }
 
-class ForceVector[A](v: Vector[A]) extends VectorAdapter[A, A] with NotWritable[A] {
+private[mada] class ForceVector[A](v: Vector[A]) extends VectorAdapter[A, A] with NotWritable[A] {
     override val * = Vector.arrayVector(v.toArray)
     override def force = this // force-force fusion
 }

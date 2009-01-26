@@ -7,6 +7,6 @@
 package mada.vec
 
 
-object Rotate {
+private[mada] object Rotate {
     def apply[A](v: Vector[A], i: Int): Vector[A] = v.window(i, v.size) ++ v.window(0, i)
 }

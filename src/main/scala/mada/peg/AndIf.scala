@@ -7,11 +7,11 @@
 package mada.peg
 
 
-object AndIf {
+private[mada] object AndIf {
     def apply[A](p: Peg[A], pred: Vector.Func3[A, Boolean]): Peg[A] = new AndIfPeg(p, pred)
 }
 
-class AndIfPeg[A](override val self: Peg[A], pred: Vector.Func3[A, Boolean]) extends PegProxy[A] {
+private[mada] class AndIfPeg[A](override val self: Peg[A], pred: Vector.Func3[A, Boolean]) extends PegProxy[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
         val cur = self.parse(v, start, end)
         if (cur == Peg.FAILURE || !pred(v, start, cur)) {

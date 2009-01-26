@@ -7,6 +7,6 @@
 package mada.vec
 
 
-object Forall {
+private[mada] object Forall {
     def apply[A](v: Vector[A], p: A => Boolean): Boolean = v.seek(!p(_: A)).isEmpty
 }

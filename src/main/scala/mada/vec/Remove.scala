@@ -7,10 +7,10 @@
 package mada.vec
 
 
-object Remove {
+private[mada] object Remove {
     def apply[A](v: Vector[A], p: A => Boolean): Vector[A] = v.filter({ e => !p(e) })
 }
 
-object MutatingRemove {
+private[mada] object MutatingRemove {
     def apply[A](v: Vector[A], p: A => Boolean): Vector[A] = v.mutatingFilter({ e => !p(e) })
 }

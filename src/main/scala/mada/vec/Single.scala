@@ -7,11 +7,11 @@
 package mada.vec
 
 
-object Single {
+private[mada] object Single {
     def apply[A](from: A): Vector[A] = new SingleVector(from)
 }
 
-class SingleVector[A](private var from: A) extends Vector[A] {
+private[mada] class SingleVector[A](private var from: A) extends Vector[A] {
     override def size = 1
     override def apply(i: Int) = from
     override def update(i: Int, e: A) = from = e

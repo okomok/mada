@@ -7,6 +7,6 @@
 package mada.peg
 
 
-object Regex {
+private[mada] object Regex {
     def apply(x: String): Peg[Char] = Peg.regexPatternPeg(java.util.regex.Pattern.compile(x))
 }

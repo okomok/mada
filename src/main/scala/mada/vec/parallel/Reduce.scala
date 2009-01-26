@@ -7,7 +7,7 @@
 package mada.vec.parallel
 
 
-object Reduce {
+private[mada] object Reduce {
     def apply[A](v: Vector[A], op: (A, A) => A, grainSize: Int): A = {
         Assert(!v.isParallel)
         ThrowIf.empty(v, "paralell.reduce")

@@ -10,49 +10,50 @@ package mada
 object Vector {
     import vec._
 
-    val concat = Concat
+    def concat[A](vs: Vector[A]*): Vector[A] = Concat(vs: _*)
     def empty[A]: Vector[A] = Empty.apply[A]
-    val flatten = Flatten
-    val flatten3 = Flatten3
-    val lefts = Lefts
-    val rights = Rights
-    val lowerCase = LowerCase
-    val upperCase = UpperCase
-    val range = Range
-    val single= Single
-    val stringize = Stringize
-    val undivide = Undivide
-    val undivide3 = Undivide3
-    val untokenize = Untokenize
-    val untokenize3 = Untokenize3
-    val unzip = Unzip
-    val `lazy` = Lazy
-    val `synchronized` = Synchronized
+    def flatten[A](vv: Vector[Vector[A]]): Vector[A] = Flatten(vv)
+    def flatten3[A](vv: Vector[Vector.Triple[A]]): Vector[A] = Flatten3(vv)
+    def lefts[A, B](v: Vector[Either[A, B]]): Vector[A] = Lefts(v)
+    def rights[A, B](v: Vector[Either[A, B]]): Vector[B] = Rights(v)
+    def lowerCase(v: Vector[Char]): Vector[Char] = LowerCase(v)
+    def upperCase(v: Vector[Char]): Vector[Char] = UpperCase(v)
+    def range(i: Int, j: Int): Vector[Int] = Range(i, j)
+    def range(i: Long, j: Long): Vector[Long] = Range(i, j)
+    def single[A](e: A): Vector[A] = Single(e)
+    def stringize(v: Vector[Char]): String = Stringize(v)
+    def undivide[A](vv: Vector[Vector[A]]): Vector[A] = Undivide(vv)
+    def undivide3[A](vv: Vector[Vector.Triple[A]]): Vector[A] = Undivide3(vv)
+    def untokenize[A](vv: Vector[Vector[A]], sep: Vector[A]): Vector[A] = Untokenize(vv, sep)
+    def untokenize3[A](vv: Vector[Vector.Triple[A]], sep: Vector[A]): Vector[A] = Untokenize3(vv, sep)
+    def unzip[A, B](v: Vector[(A, B)]): (Vector[A], Vector[B]) = Unzip(v)
+    def `lazy`[A](v: Vector[A]) = Lazy(v)
+    def `synchronized`[A](v: Vector[A]) = Synchronized(v)
 
     val Compatibles = vec.Compatibles
-    val arrayVector = ArrayVector
-    val cellVector = CellVector
-    val jclCharSequenceVector = jcl.CharSequenceVector
-    val jclListVector = jcl.ListVector
-    val optionVector = OptionVector
-    val productVector = ProductVector
-    val randomAccessSeqVector = RandomAccessSeqVector
-    val stringVector = StringVector
-    val tripleVector = TripleVector
-    val jclCharSequence = jcl.VectorCharSequence
+    def arrayVector[A](from: Array[A]): Vector[A] = ArrayVector(from)
+    def cellVector[A](from: Cell[A]): Vector[A] = CellVector(from)
+    def jclCharSequenceVector(from: java.lang.CharSequence): Vector[Char] = jcl.CharSequenceVector(from)
+    def jclListVector[A](from: java.util.List[A]): Vector[A] = jcl.ListVector(from)
+    def optionVector[A](from: Option[A]): Vector[A] = OptionVector(from)
+    def productVector(from: Product): Vector[Any] = ProductVector(from)
+    def randomAccessSeqVector[A](from: RandomAccessSeq[A]): Vector[A] = RandomAccessSeqVector(from)
+    def stringVector(from: String): Vector[Char] = StringVector(from)
+    def tripleVector[A](from: Vector.Triple[A]): Vector[A] = TripleVector(from)
+    def jclCharSequence(from: Vector[Char]): java.lang.CharSequence = jcl.VectorCharSequence(from)
 
-    val fromIterator = FromIterator
-    val fromJclIterator = jcl.FromIterator
-    val fromValues = FromValues
+    def fromIterator[A](from: Iterator[A]): Vector[A] = FromIterator(from)
+    def fromJclIterator[A](from: java.util.Iterator[A]): Vector[A] = jcl.FromIterator(from)
+    def fromValues[A](from: A*): Vector[A] = FromValues(from: _*)
 
-    val triplify = Triplify
-    val untriplify = Untriplify
+    def triplify[A, B](f: Func[A, B]): Func3[A, B] = Triplify(f)
+    def untriplify[A, B](f: Func3[A, B]): Func[A, B] = Untriplify(f)
     type Triple[A] = (Vector[A], Int, Int)
     type Func[A, B] = Vector[A] => B
     type Func3[A, B] = (Vector[A], Int, Int) => B
 
-    val triples = VectorTriples
-    val triplesVector = TriplesVector
+    def triples[A](from: Vector[Vector[A]]): Vector[Vector.Triple[A]] = VectorTriples(from)
+    def triplesVector[A](from: Vector[Vector.Triple[A]]): Vector[Vector[A]] = TriplesVector(from)
 
     type NotReadableError[A] = vec.NotReadableError[A]
     type NotWritableError[A] = vec.NotWritableError[A]
@@ -161,6 +162,7 @@ trait Vector[A] {
     def parallel(grainSize: Int): Vector[A] = Parallel(this, grainSize)
     def unparallel: Vector[A] = Unparallel(this)
     def isParallel: Boolean = IsParallel(this)
+    def defaultGrainSize: Int = DefaultGrainSize(this)
 
     def sortWith(lt: (A, A) => Boolean): Vector[A] = SortWith(this, lt)
     final def sort(implicit c: A => Ordered[A]): Vector[A] = Sort(this, c)

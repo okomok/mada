@@ -7,12 +7,12 @@
 package mada.vec.parallel
 
 
-object Future {
+private[mada] object Future {
     val usingActors = false
     def apply[T](body: => T) = Futures.future(body)
 }
 
-object Futures {
+private[mada] object Futures {
     import java.util.concurrent._
 
     val corePoolSize = 2 * java.lang.Runtime.getRuntime.availableProcessors
@@ -46,6 +46,6 @@ object Futures {
 //   val f2 = future { f().length * 2 }
 //   --> assertion: receive from channel belonging to other actor
 //       or `lazy val` may incur deadlock.
-object ActorsFutures {
+private[mada] object ActorsFutures {
     def future[T](body: => T) = scala.actors.Futures.future(body)
 }

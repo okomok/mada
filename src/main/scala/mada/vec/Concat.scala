@@ -7,7 +7,7 @@
 package mada.vec
 
 
-object Concat {
+private[mada] object Concat {
     def apply[A](vs: Vector[A]*): Vector[A] = {
         vs.foldLeft(Vector.empty[A])({ (r, v) => r.append(v) })
     }

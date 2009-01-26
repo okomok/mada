@@ -7,18 +7,18 @@
 package mada.peg
 
 
-object Longest {
+private[mada] object Longest {
     def apply[A](ps: Peg[A]*): Peg[A] = apply(ps)
     def apply[A](ps: Iterable[Peg[A]]): Peg[A] = new BestPeg(ps, Math.max)
 }
 
-object Shortest {
+private[mada] object Shortest {
     def apply[A](ps: Peg[A]*): Peg[A] = apply(ps)
     def apply[A](ps: Iterable[Peg[A]]): Peg[A] = new BestPeg(ps, Math.min)
 }
 
 
-class BestPeg[A](ps: Iterable[Peg[A]], which: (Int, Int) => Int) extends Peg[A] {
+private[mada] class BestPeg[A](ps: Iterable[Peg[A]], which: (Int, Int) => Int) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
         var cur = Peg.FAILURE
         for (p <- ps.projection) {

@@ -59,6 +59,6 @@ class SortNonParallelPerfTest extends NoBenchmark {
 
 class SortParallelPartitionTest extends NoBenchmark {
     override def run = {
-        mada.vec.parallel.SortWith.partition(longSample1.clone, (_: Int) < (_: Int), mada.vec.parallel.DefaultGrainSize(longSample1))
+        // mada.vec.parallel.SortWith.partition(longSample1.clone, (_: Int) < (_: Int), mada.vec.parallel.DefaultGrainSize(longSample1))
     }
 }

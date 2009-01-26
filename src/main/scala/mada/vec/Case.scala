@@ -7,10 +7,10 @@
 package mada.vec
 
 
-object LowerCase {
+private[mada] object LowerCase {
     def apply(v: Vector[Char]): Vector[Char] = v.map(java.lang.Character.toLowerCase(_))
 }
 
-object UpperCase {
+private[mada] object UpperCase {
     def apply(v: Vector[Char]): Vector[Char] = v.map(java.lang.Character.toUpperCase(_))
 }

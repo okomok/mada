@@ -7,14 +7,14 @@
 package mada.vec
 
 
-object Parallel {
+private[mada] object Parallel {
     import vec.parallel._
 
-    def apply[A](v: Vector[A]): Vector[A] = apply(v, DefaultGrainSize(v))
+    def apply[A](v: Vector[A]): Vector[A] = apply(v, v.defaultGrainSize)
     def apply[A](v: Vector[A], g: Int): Vector[A] = new ParallelVector(v, g)
 }
 
-class ParallelVector[A](override val self: Vector[A], grainSize: Int) extends VectorProxy[A] {
+private[mada] class ParallelVector[A](override val self: Vector[A], grainSize: Int) extends VectorProxy[A] {
     Assert(!self.isParallel)
     ThrowIf.nonpositive(grainSize, "grain size")
     import vec.parallel._
@@ -31,7 +31,7 @@ class ParallelVector[A](override val self: Vector[A], grainSize: Int) extends Ve
     override def sortWith(lt: (A, A) => Boolean) = SortWith(self, lt, grainSize)
 
     override def parallel = {
-        if (grainSize == DefaultGrainSize(self)) {
+        if (grainSize == self.defaultGrainSize) {
             this // parallel-parallel fusion
         } else {
             self.parallel

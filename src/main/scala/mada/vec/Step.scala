@@ -7,18 +7,18 @@
 package mada.vec
 
 
-object Step {
+private[mada] object Step {
     def apply[A](v: Vector[A], stride: Int): Vector[A] = new StepVector(v, stride)
 }
 
-class StepVector[A](override val * : Vector[A], stride: Int) extends VectorAdapter[A, A] {
+private[mada] class StepVector[A](override val * : Vector[A], stride: Int) extends VectorAdapter[A, A] {
     ThrowIf.nonpositive(stride, "step stride")
     override def size = StepCount(*.size, 0, stride)
     override def mapIndex(i: Int) = i * stride
     override def step(n: Int) = *.step(stride * n) // step-step fusion
 }
 
-object StepCount {
+private[mada] object StepCount {
     def apply(size: Int, start: Int, stride: Int): Int = {
         if (size == 0) {
             0

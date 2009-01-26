@@ -7,6 +7,6 @@
 package mada.peg
 
 
-object FilterFrom {
+private[mada] object FilterFrom {
     def apply[A](p: Peg[A], v: Vector[A]): Iterator[A] = Iterator.flatten(p.tokenize(v).map(_.iterator))
 }

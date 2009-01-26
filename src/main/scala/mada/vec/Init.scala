@@ -7,7 +7,7 @@
 package mada.vec
 
 
-object Init {
+private[mada] object Init {
     def apply[A](v: Vector[A]): Vector[A] = {
         ThrowIf.empty(v, "init")
         v.window(0, v.size - 1)

@@ -12,7 +12,7 @@ import java.io.{ File, RandomAccessFile }
 
 // Char
 
-class CharFileVector private (val randomAccessFile: RandomAccessFile) extends Vector[Char] {
+private[mada] class CharFileVector private (val randomAccessFile: RandomAccessFile) extends Vector[Char] {
     def this(file: File, mode: String) = this(new RandomAccessFile(file, mode))
     def this(name: String, mode: String) = this(new RandomAccessFile(name, mode))
     def close = randomAccessFile.close
@@ -25,7 +25,7 @@ class CharFileVector private (val randomAccessFile: RandomAccessFile) extends Ve
 
 // Int
 
-class IntFileVector private (val randomAccessFile: RandomAccessFile) extends Vector[Int] {
+private[mada] class IntFileVector private (val randomAccessFile: RandomAccessFile) extends Vector[Int] {
     def this(file: File, mode: String) = this(new RandomAccessFile(file, mode))
     def this(name: String, mode: String) = this(new RandomAccessFile(name, mode))
     def close = randomAccessFile.close
@@ -38,7 +38,7 @@ class IntFileVector private (val randomAccessFile: RandomAccessFile) extends Vec
 
 // Long
 
-class LongFileVector private (val randomAccessFile: RandomAccessFile) extends Vector[Long] {
+private[mada] class LongFileVector private (val randomAccessFile: RandomAccessFile) extends Vector[Long] {
     def this(file: File, mode: String) = this(new RandomAccessFile(file, mode))
     def this(name: String, mode: String) = this(new RandomAccessFile(name, mode))
     def close = randomAccessFile.close

@@ -7,11 +7,11 @@
 package mada.peg
 
 
-object Memoize {
+private[mada] object Memoize {
     def apply[A](p: Peg[A]): Peg[A] = new MemoizePeg(p)
 }
 
-class MemoizePeg[A](override val self: Peg[A]) extends PegProxy[A] {
+private[mada] class MemoizePeg[A](override val self: Peg[A]) extends PegProxy[A] {
     val memoTable = new scala.collection.jcl.HashMap[TripleKey[A], Int]
 
     override def parse(v: Vector[A], start: Int, end: Int) = {
@@ -28,7 +28,7 @@ class MemoizePeg[A](override val self: Peg[A]) extends PegProxy[A] {
 }
 
 /*
-class Memoizer[A](w: Vector[A]) {
+private[mada] class Memoizer[A](w: Vector[A]) {
     def apply(p: Peg[A]): Peg[A] = memoize(p)
     def memoize(p: Peg[A]): MemoizePeg = new MemoizePeg(p)
 

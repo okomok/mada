@@ -7,7 +7,7 @@
 package mada.vec
 
 
-object Loop {
+private[mada] object Loop {
     def apply[A, F <: (A => Boolean)](* : Vector[A], first: Int, __last: Int, __f: F): F = {
         var __first = first
 

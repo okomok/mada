@@ -7,13 +7,13 @@
 package mada.vec
 
 
-object Untokenize {
+private[mada] object Untokenize {
     def apply[A](vv: Vector[Vector[A]], sep: Vector[A]): Vector[A] = {
         Vector.flatten(vv.map({ v => sep.append(v) }))
     }
 }
 
-object Untokenize3 {
+private[mada] object Untokenize3 {
     def apply[A](vv: Vector[Vector.Triple[A]], sep: Vector[A]): Vector[A] = {
         Vector.untokenize(Vector.triplesVector(vv), sep)
     }

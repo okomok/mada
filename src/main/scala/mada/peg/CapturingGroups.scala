@@ -21,7 +21,7 @@ class CapturingGroups[K, A](val map: scala.collection.mutable.Map[K, Vector[A]])
     def apply(k: K): Peg[A] = backref(k)
     def backref(k: K): Peg[A] = new BackrefPeg(k)
 
-    class BackrefPeg(k: K) extends PegProxy[A] {
+    private class BackrefPeg(k: K) extends PegProxy[A] {
         override def self = Peg.vectorPeg(group(k))
     }
 }

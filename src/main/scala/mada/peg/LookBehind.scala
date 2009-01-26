@@ -7,11 +7,11 @@
 package mada.peg
 
 
-object LookBehind {
+private[mada] object LookBehind {
     def apply[A](p: Peg[A]): Peg[A] = new LookBehindPeg(p)
 }
 
-class LookBehindPeg[A](p: Peg[A]) extends Peg[A] {
+private[mada] class LookBehindPeg[A](p: Peg[A]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
         val len = p.length
         if (start < len) {

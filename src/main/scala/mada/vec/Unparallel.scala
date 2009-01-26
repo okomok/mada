@@ -7,6 +7,6 @@
 package mada.vec
 
 
-object Unparallel {
+private[mada] object Unparallel {
     def apply[A](v: Vector[A]): Vector[A] = v
 }

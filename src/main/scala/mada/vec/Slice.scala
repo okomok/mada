@@ -7,7 +7,7 @@
 package mada.vec
 
 
-object Slice {
+private[mada] object Slice {
     def apply[A](v: Vector[A], n: Int): Vector[A] = v.slice(n, v.size)
     def apply[A](v: Vector[A], n: Int, m: Int): Vector[A] = v.drop(n).take(m - n)
 }

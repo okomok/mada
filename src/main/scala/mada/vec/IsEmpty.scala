@@ -7,6 +7,6 @@
 package mada.vec
 
 
-object IsEmpty {
+private[mada] object IsEmpty {
     def apply[A](v: Vector[A]): Boolean = v.size == 0
 }

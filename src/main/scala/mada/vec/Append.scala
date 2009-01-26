@@ -7,11 +7,11 @@
 package mada.vec
 
 
-object Append {
+private[mada] object Append {
     def apply[A](v: Vector[A], w: Vector[A]): Vector[A] = new AppendVector(v, w)
 }
 
-class AppendVector[A](v: Vector[A], w: Vector[A]) extends Vector[A] {
+private[mada] class AppendVector[A](v: Vector[A], w: Vector[A]) extends Vector[A] {
     override def size = v.size + w.size
     override def apply(i: Int) = {
         if (i < v.size) {

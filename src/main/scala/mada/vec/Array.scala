@@ -10,11 +10,11 @@ package mada.vec
 import java.util.Arrays
 
 
-object ArrayVector {
+private[mada] object ArrayVector {
     def apply[A](from: Array[A]): Vector[A] = new ArrayVector(from)
 }
 
-class ArrayVector[A](from: Array[A]) extends Vector[A] {
+private[mada] class ArrayVector[A](from: Array[A]) extends Vector[A] {
     override def size = from.length
     override def apply(i: Int) = from(i)
     override def update(i: Int, e: A) = from(i) = e
@@ -24,7 +24,7 @@ class ArrayVector[A](from: Array[A]) extends Vector[A] {
 }
 
 
-object ToArray {
+private[mada] object ToArray {
     def apply[A](from: Vector[A]): Array[A] = {
         val a = new Array[A](from.size)
         from.copyTo(Vector.arrayVector(a))

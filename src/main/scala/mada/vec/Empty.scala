@@ -7,10 +7,10 @@
 package mada.vec
 
 
-object Empty {
+private[mada] object Empty {
     def apply[A] = new EmptyVector[A]
 }
 
-class EmptyVector[A] extends Vector[A] {
+private[mada] class EmptyVector[A] extends Vector[A] {
     override def size = 0
 }

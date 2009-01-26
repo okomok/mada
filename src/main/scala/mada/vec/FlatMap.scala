@@ -7,6 +7,6 @@
 package mada.vec
 
 
-object FlatMap {
+private[mada] object FlatMap {
     def apply[A, B](v: Vector[A], f: A => Vector[B]): Vector[B] = Vector.flatten(v.map(f))
 }

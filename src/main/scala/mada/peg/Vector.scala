@@ -7,12 +7,12 @@
 package mada.peg
 
 
-object VectorPeg {
+private[mada] object VectorPeg {
     def apply[A1](w: Vector[A1]): Peg[A1] = apply[A1, A1](w, vec.stl.EqualTo)
     def apply[A1, A2](w: Vector[A1], pred: (A1, A2) => Boolean): Peg[A2] = new VectorPeg(w, pred)
 }
 
-class VectorPeg[A1, A2](w: Vector[A1], pred: (A1, A2) => Boolean) extends Peg[A2] {
+private[mada] class VectorPeg[A1, A2](w: Vector[A1], pred: (A1, A2) => Boolean) extends Peg[A2] {
     override def parse(v: Vector[A2], start: Int, end: Int): Int = {
         val vsize = w.size
         if (end - start < vsize) {

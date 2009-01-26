@@ -10,7 +10,7 @@ package mada.vec.parallel
 import java.util.concurrent.atomic.AtomicReference
 
 
-object Seek {
+private[mada] object Seek {
     def apply[A, B](v: Vector[A], p: A => Boolean, grainSize: Int): Option[A] = {
         Assert(!v.isParallel)
 

@@ -7,17 +7,17 @@
 package mada.peg
 
 
-object Tokenize {
+private[mada] object Tokenize {
     def apply[A](p: Peg[A], v: Vector[A]): Iterator[Vector[A]] = {
         p.tokenize3(v).map({ w => Vector.tripleVector(w) })
     }
 }
 
-object Tokenize3 {
+private[mada] object Tokenize3 {
     def apply[A](p: Peg[A], v: Vector[A]): Iterator[Vector.Triple[A]] = new Tokenize3Iterator(p, v)
 }
 
-class Tokenize3Iterator[A](p: Peg[A], v: Vector[A]) extends Iterator[Vector.Triple[A]] {
+private[mada] class Tokenize3Iterator[A](p: Peg[A], v: Vector[A]) extends Iterator[Vector.Triple[A]] {
     private val (x, i, j) = v.triple
     private var (k, l) = Find.impl(p, x, i, j)
     override def hasNext = l != Peg.FAILURE

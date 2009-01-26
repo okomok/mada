@@ -7,14 +7,14 @@
 package mada.peg
 
 
-object Opt {
+private[mada] object Opt {
     def apply[A](p: Peg[A]): Peg[A] = p or Peg.eps[A]
 }
 
-object OptBefore {
+private[mada] object OptBefore {
     def apply[A](p: Peg[A], q: Peg[A]): Peg[A] = q.lookAhead or (p seqAnd q.lookAhead)
 }
 
-object OptUntil {
+private[mada] object OptUntil {
     def apply[A](p: Peg[A], q: Peg[A]): Peg[A] = q or (p seqAnd q)
 }

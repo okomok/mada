@@ -9,7 +9,7 @@ package madatest.vec.jcl
 
 import mada.Vector
 import mada.Vector.jclListVector
-import mada.vec.jcl.NewArrayList
+import madatest.vec.detail.NewArrayList
 import junit.framework.Assert._
 
 

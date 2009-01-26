@@ -9,11 +9,11 @@ package mada.vec
 
 // unneeded if NVI were known in the java world.
 
-object Bounds {
+private[mada] object Bounds {
     def apply[A](v: Vector[A]): Vector[A] = new BoundsVector(v)
 }
 
-class BoundsVector[A](override val * : Vector[A]) extends VectorAdapter[A, A] {
+private[mada] class BoundsVector[A](override val * : Vector[A]) extends VectorAdapter[A, A] {
     override def mapIndex(i: Int) = { ThrowIf.outOfBounds(*, i); i }
     override def bounds = this // bounds-bounds fusion
 }

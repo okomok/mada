@@ -7,16 +7,16 @@
 package mada.vec
 
 
-object Unzip {
+private[mada] object Unzip {
     def apply[A, B](v: Vector[(A, B)]): (Vector[A], Vector[B]) = (new UnzipVector1(v), new UnzipVector2(v))
 }
 
-class UnzipVector1[A, B](v: Vector[(A, B)]) extends Vector[A] {
+private[mada] class UnzipVector1[A, B](v: Vector[(A, B)]) extends Vector[A] {
     override def size = v.size
     override def apply(i: Int) = v(i)._1
 }
 
-class UnzipVector2[A, B](v: Vector[(A, B)]) extends Vector[B] {
+private[mada] class UnzipVector2[A, B](v: Vector[(A, B)]) extends Vector[B] {
     override def size = v.size
     override def apply(i: Int) = v(i)._2
 }

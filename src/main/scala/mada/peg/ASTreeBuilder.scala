@@ -40,7 +40,7 @@ class ASTreeBuilder[T <: MutableTreeNode](root: T, cloner: T => T) {
     def apply[A](p: Peg[A])(f: Vector.Func3[A, Any]): Peg[A] = node(p)(f)
     def node[A](p: Peg[A])(f: Vector.Func3[A, Any]): Peg[A] = new NodePeg(p, f)
 
-    class NodePeg[A](override val self: Peg[A], f: Vector.Func3[A, Any]) extends PegProxy[A] {
+    private class NodePeg[A](override val self: Peg[A], f: Vector.Func3[A, Any]) extends PegProxy[A] {
         override def parse(v: Vector[A], start: Int, end: Int) = {
             val n = newNode
             branches.push(n)

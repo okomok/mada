@@ -7,11 +7,11 @@
 package mada.vec
 
 
-object VectorStream {
+private[mada] object VectorStream {
     def apply[A](v: Vector[A]): Stream[A] = new VectorStream(v)
 }
 
-class VectorStream[A](v: Vector[A]) extends Stream.Definite[A] {
+private[mada] class VectorStream[A](v: Vector[A]) extends Stream.Definite[A] {
     override def isEmpty = v.isEmpty
     override def head = {
         if (isEmpty) {

@@ -10,7 +10,7 @@ package mada.peg
 import scala.collection.Map
 
 
-object Switch {
+private[mada] object Switch {
     def apply[A](es: (A, Peg[A])*): Peg[A] = {
         val m = new scala.collection.jcl.HashMap[A, Peg[A]]
         for (e <- es) {
@@ -22,7 +22,7 @@ object Switch {
     def apply[A](es: Map[A, Peg[A]]): Peg[A] = new SwitchPeg(es)
 }
 
-class SwitchPeg[A](es: Map[A, Peg[A]]) extends Peg[A] {
+private[mada] class SwitchPeg[A](es: Map[A, Peg[A]]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
         if (start == end) {
             Peg.FAILURE

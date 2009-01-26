@@ -7,11 +7,11 @@
 package mada.peg
 
 
-object SeqAnd {
+private[mada] object SeqAnd {
     def apply[A](p: Peg[A], q: Peg[A]): Peg[A] = new SeqAndPeg(p, q)
 }
 
-class SeqAndPeg[A](p: Peg[A], q: Peg[A]) extends Peg[A] {
+private[mada] class SeqAndPeg[A](p: Peg[A], q: Peg[A]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
         var cur = p.parse(v, start, end)
         if (cur == Peg.FAILURE) {

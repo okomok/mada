@@ -47,7 +47,7 @@ class CountParallelCountTest extends NoBenchmark {
 class CountParallelPareachTest extends NoBenchmark {
     override def run = {
         val n = new java.util.concurrent.atomic.AtomicInteger(0)
-        longSample1.parallel(mada.vec.parallel.DefaultGrainSize(longSample1)).pareach({ e => if (e % 2 == 0) n.incrementAndGet })
+        longSample1.parallel(longSample1.defaultGrainSize).pareach({ e => if (e % 2 == 0) n.incrementAndGet })
         n.get
         ()
     }

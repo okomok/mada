@@ -7,14 +7,14 @@
 package mada.vec
 
 
-object Head {
+private[mada] object Head {
     def apply[A](v: Vector[A]): A = {
         ThrowIf.empty(v, "head")
         v(0)
     }
 }
 
-object Tail {
+private[mada] object Tail {
     def apply[A](v: Vector[A]): Vector[A] = {
         ThrowIf.empty(v, "tail")
         v.window(1, v.size)
@@ -22,6 +22,6 @@ object Tail {
 }
 
 
-object IsNil {
+private[mada] object IsNil {
     def apply[A](v: Vector[A]): Boolean = v.isEmpty
 }

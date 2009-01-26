@@ -35,12 +35,6 @@ class ParallelTest {
     }
 
     def testParaPara: Unit = {
-        if (vec.parallel.Future.usingActors)
-            return
-
-        // return
-        // java.lang.AssertionError: assertion failed: receive from channel belonging to other actor
-        // http://www.nabble.com/Actors-Break-Futures-td13813999.html
         for (i <- (0 until 100)) {
             // println(i)
             val z = Vector.range(1, 10).parallel.flatMap {
@@ -51,3 +45,6 @@ class ParallelTest {
         ()
     }
 }
+        // java.lang.AssertionError: assertion failed: receive from channel belonging to other actor
+        // http://www.nabble.com/Actors-Break-Futures-td13813999.html
+

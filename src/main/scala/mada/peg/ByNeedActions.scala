@@ -17,7 +17,7 @@ class ByNeedActions[A] {
     def apply(p: Peg[A]): Peg[A] = need(p)
     def need(p: Peg[A]): Peg[A] = new NeedPeg(p)
 
-    class NeedPeg(override val self: Peg[A]) extends PegProxy[A] {
+    private class NeedPeg(override val self: Peg[A]) extends PegProxy[A] {
         override def parse(v: Vector[A], start: Int, end: Int) = {
             val cur = self.parse(v, start, end)
             if (cur != Peg.FAILURE) {

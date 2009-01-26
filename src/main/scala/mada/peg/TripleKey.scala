@@ -9,7 +9,7 @@ package mada.peg
 
 // This may be a problem.
 
-case class TripleKey[A](v: Vector[A], start: Int, end: Int) {
+private[mada] case class TripleKey[A](v: Vector[A], start: Int, end: Int) {
     override def equals(that: Any) = that match {
         case that: TripleKey[_] => (v eq that.v) && (start == that.start) && (end == that.end)
         case _ => false

@@ -7,6 +7,6 @@
 package mada.vec
 
 
-object Clear {
+private[mada] object Clear {
     def apply[A](v: Vector[A]): Vector[A] = v.window(0, 0)
 }

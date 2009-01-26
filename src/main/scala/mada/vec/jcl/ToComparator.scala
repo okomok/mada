@@ -10,7 +10,7 @@ package mada.vec.jcl
 import java.util.Comparator
 
 
-object ToComparator {
+private[mada] object ToComparator {
     def apply[A](lt: (A, A) => Boolean): Comparator[A] = new Comparator[A] {
         override def compare(x: A, y: A): Int = {
             if (lt(x, y)) {

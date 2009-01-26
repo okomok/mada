@@ -7,11 +7,11 @@
 package mada.vec
 
 
-object Zip {
+private[mada] object Zip {
     def apply[A, B](v: Vector[A], w: Vector[B]): Vector[(A, B)] = new ZipVector(v, w)
 }
 
-class ZipVector[A, B](v: Vector[A], w: Vector[B]) extends Vector[(A, B)] {
+private[mada] class ZipVector[A, B](v: Vector[A], w: Vector[B]) extends Vector[(A, B)] {
     ThrowIf.differentSize(v, w, "zip")
     override def size = v.size
     override def apply(i: Int) = (v(i), w(i))
@@ -20,7 +20,7 @@ class ZipVector[A, B](v: Vector[A], w: Vector[B]) extends Vector[(A, B)] {
 
 
 /*
-object ZipWith {
+private[mada] object ZipWith {
     def apply[A, B, C](v: Vector[A], w: Vector[B], f: (A, B) => C): Vector[C] = {
         ThrowIf.differentSize(v, w, "zipWith")
         (v zip w).map({ case (a, b) => f(a, b) })

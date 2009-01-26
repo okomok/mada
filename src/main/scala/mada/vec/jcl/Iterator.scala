@@ -10,7 +10,7 @@ package mada.vec.jcl
 import java.util.Iterator
 
 
-object FromIterator {
+private[mada] object FromIterator {
     def apply[A](from: Iterator[A]): Vector[A] = {
         val a = new java.util.ArrayList[A]
         while (from.hasNext) {

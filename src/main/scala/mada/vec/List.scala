@@ -10,6 +10,6 @@ package mada.vec
 import java.util.Arrays
 
 
-object ToList {
+private[mada] object ToList {
     def apply[A](from: Vector[A]): List[A] = from.iterator.toList
 }

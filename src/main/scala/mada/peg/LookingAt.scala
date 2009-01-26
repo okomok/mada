@@ -7,7 +7,7 @@
 package mada.peg
 
 
-object LookingAt {
+private[mada] object LookingAt {
     def apply[A](p: Peg[A], v: Vector[A]): Option[Int] = {
         val (x, start, end) = v.triple
         val cur = p.parse(x, start, end)

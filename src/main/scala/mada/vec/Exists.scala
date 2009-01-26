@@ -7,6 +7,6 @@
 package mada.vec
 
 
-object Exists {
+private[mada] object Exists {
     def apply[A](v: Vector[A], p: A => Boolean): Boolean = v.seek(p) != None
 }

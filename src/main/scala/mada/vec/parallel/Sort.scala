@@ -10,7 +10,7 @@ package mada.vec.parallel
 import java.util.ArrayList
 
 
-object SortWith {
+private[mada] object SortWith {
     import stl.IntroSort.lg
     import stl.{ UnguardedPartition, Median }
 

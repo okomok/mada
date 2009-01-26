@@ -7,11 +7,11 @@
 package mada.vec
 
 
-object Permutation {
+private[mada] object Permutation {
     def apply[A](ev: Vector[A], iv: Vector[Int]): Vector[A] = new PermutationVector(iv, ev)
 }
 
-class PermutationVector[A](override val * : Vector[Int], ev: Vector[A]) extends VectorAdapter[Int, A] {
+private[mada] class PermutationVector[A](override val * : Vector[Int], ev: Vector[A]) extends VectorAdapter[Int, A] {
     override def apply(i: Int) = ev(*(i))
     override def update(i: Int, e: A) = ev(*(i)) = e
 }

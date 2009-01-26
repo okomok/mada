@@ -7,11 +7,11 @@
 package mada.vec
 
 
-object Window {
+private[mada] object Window {
     def apply[A](v: Vector[A], n: Int, m: Int): Vector[A] = new WindowVector(v, n, m)
 }
 
-class WindowVector[A](override val * : Vector[A], n: Int, m: Int) extends VectorAdapter[A, A] {
+private[mada] class WindowVector[A](override val * : Vector[A], n: Int, m: Int) extends VectorAdapter[A, A] {
     if (n > m) {
         throw new java.lang.IllegalArgumentException("negative size: Vector.window(" + n + ", " + m + ")")
     }

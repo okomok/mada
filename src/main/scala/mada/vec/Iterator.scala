@@ -7,7 +7,7 @@
 package mada.vec
 
 
-object FromIterator {
+private[mada] object FromIterator {
     def apply[A](from: Iterator[A]): Vector[A] = {
         val a = new java.util.ArrayList[A]
         for (e <- from) {
@@ -18,11 +18,11 @@ object FromIterator {
 }
 
 
-object VectorIterator {
+private[mada] object VectorIterator {
     def apply[A](from: Vector[A]): Iterator[A] = new VectorIterator(from)
 }
 
-class VectorIterator[A](from: Vector[A]) extends Iterator[A] {
+private[mada] class VectorIterator[A](from: Vector[A]) extends Iterator[A] {
     private var (x, i, j) = from.triple
     override def hasNext = i != j
     override def next = { val tmp = x(i); i += 1; tmp }

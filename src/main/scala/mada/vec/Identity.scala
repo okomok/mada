@@ -7,8 +7,8 @@
 package mada.vec
 
 
-object Identity {
+private[mada] object Identity {
     def apply[A](v: Vector[A]): Vector[A] = new IdentityVector(v)
 }
 
-class IdentityVector[A](override val self: Vector[A]) extends VectorProxy[A]
+private[mada] class IdentityVector[A](override val self: Vector[A]) extends VectorProxy[A]

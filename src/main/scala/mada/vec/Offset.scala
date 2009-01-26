@@ -7,6 +7,6 @@
 package mada.vec
 
 
-object Offset {
+private[mada] object Offset {
     def apply[A](v: Vector[A], i: Int, j: Int): Vector[A] = v.window(i, v.size + j)
 }

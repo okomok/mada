@@ -10,11 +10,11 @@ package mada.peg
 import java.util.regex.Pattern
 
 
-object RegexPatternPeg {
+private[mada] object RegexPatternPeg {
     def apply(pat: Pattern): Peg[Char] = new RegexPatternPeg(pat)
 }
 
-class RegexPatternPeg(pat: Pattern) extends Peg[Char] {
+private[mada] class RegexPatternPeg(pat: Pattern) extends Peg[Char] {
     override def parse(v: Vector[Char], start: Int, end: Int): Int = {
         import Vector.Compatibles._
         val mat = pat.matcher(v)

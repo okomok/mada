@@ -7,11 +7,11 @@
 package mada.peg
 
 
-object Not {
+private[mada] object Not {
     def apply[A](p: Peg[A]): Peg[A] = new NotPeg(p)
 }
 
-class NotPeg[A](p: Peg[A]) extends Peg[A] {
+private[mada] class NotPeg[A](p: Peg[A]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
         if (p.parse(v, start, end) != Peg.FAILURE) {
             Peg.FAILURE

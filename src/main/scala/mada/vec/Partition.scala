@@ -7,6 +7,6 @@
 package mada.vec
 
 
-object Partition {
+private[mada] object Partition {
     def apply[A](v: Vector[A], p: A => Boolean): (Vector[A], Vector[A]) = (v.filter(p), v.remove(p))
 }

@@ -7,6 +7,6 @@
 package mada.peg
 
 
-object Call {
+private[mada] object Call {
     def apply[A](f: Unit => Any): Peg[A] = Peg.eps[A].act({ (_, _, _) => f() })
 }

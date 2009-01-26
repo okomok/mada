@@ -7,14 +7,14 @@
 package mada.peg
 
 
-object Plus {
+private[mada] object Plus {
     def apply[A](p: Peg[A]): Peg[A] = p seqAnd p.star
 }
 
-object PlusBefore {
+private[mada] object PlusBefore {
     def apply[A](p: Peg[A], q: Peg[A]): Peg[A] = p seqAnd p.starBefore(q)
 }
 
-object PlusUntil {
+private[mada] object PlusUntil {
     def apply[A](p: Peg[A], q: Peg[A]): Peg[A] = p seqAnd p.starUntil(q)
 }

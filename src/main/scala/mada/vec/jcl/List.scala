@@ -10,11 +10,11 @@ package mada.vec.jcl
 import java.util.{ List, Collections }
 
 
-object ListVector {
+private[mada] object ListVector {
     def apply[A](from: List[A]): Vector[A] = new ListVector(from)
 }
 
-class ListVector[A](val from: List[A]) extends Vector[A] {
+private[mada] class ListVector[A](val from: List[A]) extends Vector[A] {
     override def size = from.size
     override def apply(i: Int) = from.get(i)
     override def update(i: Int, e: A) = from.set(i, e)

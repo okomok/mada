@@ -10,7 +10,7 @@ package mada.peg
 import scala.collection.Set
 
 
-object Singles {
+private[mada] object Singles {
     def apply[A](es: A*): Peg[A] = {
         val s = new scala.collection.jcl.HashSet[A]
         for (e <- es) {
@@ -22,7 +22,7 @@ object Singles {
     def apply[A](es: Set[A]): Peg[A] = new SinglesPeg(es)
 }
 
-class SinglesPeg[A](es: Set[A]) extends Peg[A] {
+private[mada] class SinglesPeg[A](es: Set[A]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
         if (start == end || !es.contains(v(start))) {
             Peg.FAILURE

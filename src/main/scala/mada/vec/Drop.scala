@@ -7,14 +7,14 @@
 package mada.vec
 
 
-object Drop {
+private[mada] object Drop {
     def apply[A](v: Vector[A], n: Int): Vector[A] = {
         val (x, i, j) = v.triple
         x.window(Math.min(i + n, j), j)
     }
 }
 
-object DropWhile {
+private[mada] object DropWhile {
     def apply[A](v: Vector[A], p: A => Boolean): Vector[A] = {
         val (x, i, j) = v.triple
         x.window(stl.FindIf(x, i, j, !p(_: A)), j)

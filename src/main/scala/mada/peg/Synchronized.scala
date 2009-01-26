@@ -7,11 +7,11 @@
 package mada.peg
 
 
-object Synchronized {
+private[mada] object Synchronized {
     def apply[A](p: Peg[A]) = new SynchronizedPeg(p)
 }
 
-class SynchronizedPeg[A](p: Peg[A]) extends Peg[A] {
+private[mada] class SynchronizedPeg[A](p: Peg[A]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = p.synchronized { p.parse(v, start, end) }
     override def length = p.synchronized { p.length }
 }

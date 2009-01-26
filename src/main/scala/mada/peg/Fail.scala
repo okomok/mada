@@ -7,10 +7,10 @@
 package mada.peg
 
 
-object Fail {
+private[mada] object Fail {
     def apply[A]: Peg[A] = new FailPeg[A]
 }
 
-class FailPeg[A] extends Peg[A] {
+private[mada] class FailPeg[A] extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = Peg.FAILURE
 }

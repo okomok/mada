@@ -7,7 +7,7 @@
 package mada.vec.parallel
 
 
-object CopyTo {
+private[mada] object CopyTo {
     def apply[A, B >: A](v: Vector[A], w: Vector[B], grainSize: Int): Vector[A] = {
         Assert(!v.isParallel)
         ThrowIf.differentSize(v, w, "parallel.copyTo")

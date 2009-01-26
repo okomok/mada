@@ -7,10 +7,10 @@
 package mada.peg
 
 
-object Named {
+private[mada] object Named {
     def apply[A](p: Peg[A], name: String): Peg[A] = new NamedPeg(p, name)
 }
 
-class NamedPeg[A](override val self: Peg[A], name: String) extends PegProxy[A] {
+private[mada] class NamedPeg[A](override val self: Peg[A], name: String) extends PegProxy[A] {
     override def toString = name
 }

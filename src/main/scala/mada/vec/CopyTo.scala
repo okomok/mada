@@ -7,7 +7,7 @@
 package mada.vec
 
 
-object CopyTo {
+private[mada] object CopyTo {
     def apply[A, B >: A](v: Vector[A], w: Vector[B]): Vector[A] = {
         ThrowIf.differentSize(v, w, "copyTo")
         val (x, i, j) = v.triple

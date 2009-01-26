@@ -7,6 +7,6 @@
 package mada.vec
 
 
-object FromValues {
+private[mada] object FromValues {
     def apply[A](es: A*): Vector[A] = Vector.fromIterator(es.elements)
 }

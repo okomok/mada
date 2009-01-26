@@ -7,7 +7,7 @@
 package mada.peg
 
 
-object Repeat {
+private[mada] object Repeat {
     def apply[A](p: Peg[A], min: Int, max: Int): Peg[A] = {
         Assert(0 <= min)
         Assert(min <= max)
@@ -15,7 +15,7 @@ object Repeat {
     }
 }
 
-class RepeatPeg[A](p: Peg[A], min: Int, max: Int) extends Peg[A] {
+private[mada] class RepeatPeg[A](p: Peg[A], min: Int, max: Int) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int): Int = {
         var cur = start
 

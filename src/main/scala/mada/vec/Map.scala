@@ -7,11 +7,11 @@
 package mada.vec
 
 
-object Map {
+private[mada] object Map {
     def apply[Z, A](v: Vector[Z], f: Z => A): Vector[A] = new MapVector(v, f)
 }
 
-class MapVector[Z, A](override val * : Vector[Z], f: Z => A) extends VectorAdapter[Z, A] with NotWritable[A] {
+private[mada] class MapVector[Z, A](override val * : Vector[Z], f: Z => A) extends VectorAdapter[Z, A] with NotWritable[A] {
     override def apply(i: Int) = f(*(i))
 
     override def map[B](_f: A => B) = *.map(_f compose f) // map-map fusion

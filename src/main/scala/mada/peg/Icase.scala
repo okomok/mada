@@ -7,7 +7,7 @@
 package mada.peg
 
 
-object Icase {
+private[mada] object Icase {
     def apply(v: Vector[Char]): Peg[Char] = {
         Peg.lowerCaseRead(Peg.vectorPeg(Vector.lowerCase(v)))
     }

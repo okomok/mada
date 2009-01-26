@@ -7,8 +7,8 @@
 package mada.peg
 
 
-object Identity {
+private[mada] object Identity {
     def apply[A](p: Peg[A]): Peg[A] = new IdentityPeg(p)
 }
 
-class IdentityPeg[A](override val self: Peg[A]) extends PegProxy[A]
+private[mada] class IdentityPeg[A](override val self: Peg[A]) extends PegProxy[A]

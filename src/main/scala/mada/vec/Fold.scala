@@ -7,21 +7,21 @@
 package mada.vec
 
 
-object FoldLeft {
+private[mada] object FoldLeft {
     def apply[A, B](v: Vector[A], z: B, op: (B, A) => B): B = {
         val (x, i, j) = v.triple
         stl.Accumulate(x, i, j, z, op)
     }
 }
 
-object FoldRight {
+private[mada] object FoldRight {
     def apply[A, B](v: Vector[A], z: B, op: (A, B) => B): B = {
         v.reverse.foldLeft(z)(stl.Flip(op))
     }
 }
 
 
-object FolderLeft {
+private[mada] object FolderLeft {
     def apply[A, B](v: Vector[A], z: B, op: (B, A) => B): Vector[B] = {
         val a = new Array[B](v.size + 1)
         var i = 0; var acc = z
@@ -35,7 +35,7 @@ object FolderLeft {
     }
 }
 
-object FolderRight {
+private[mada] object FolderRight {
     def apply[A, B](v: Vector[A], z: B, op: (A, B) => B): Vector[B] = {
         v.reverse.folderLeft(z)(stl.Flip(op))
     }

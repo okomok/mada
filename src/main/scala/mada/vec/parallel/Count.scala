@@ -7,7 +7,7 @@
 package mada.vec.parallel
 
 
-object Count {
+private[mada] object Count {
     def apply[A](v: Vector[A], p: A => Boolean, grainSize: Int): Int = {
         Assert(!v.isParallel)
 

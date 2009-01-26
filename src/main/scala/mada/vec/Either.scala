@@ -7,10 +7,10 @@
 package mada.vec
 
 
-object Lefts {
+private[mada] object Lefts {
     def apply[A, B](v: Vector[Either[A, B]]): Vector[A] = v.filter(_.isLeft).map(_.left.get)
 }
 
-object Rights {
+private[mada] object Rights {
     def apply[A, B](v: Vector[Either[A, B]]): Vector[B] = v.filter(_.isRight).map(_.right.get)
 }

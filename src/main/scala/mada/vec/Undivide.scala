@@ -7,11 +7,11 @@
 package mada.vec
 
 
-object Undivide {
+private[mada] object Undivide {
     def apply[A](vv: Vector[Vector[A]]): Vector[A] = Vector.undivide3(Vector.triples(vv))
 }
 
-object Undivide3 {
+private[mada] object Undivide3 {
     def apply[A](vv: Vector[Vector.Triple[A]]): Vector[A] = vv match {
         case vv: Divide3Vector[_] => vv.dividend // undivide3-divide3 fusion
         case _ => {
@@ -24,7 +24,7 @@ object Undivide3 {
     }
 }
 
-class Undivide3Vector[A](vv: Vector[Vector.Triple[A]]) extends Vector[A] {
+private[mada] class Undivide3Vector[A](vv: Vector[Vector.Triple[A]]) extends Vector[A] {
     override def size = (quotient * divisor) + remainder
     override def apply(i: Int) = {
         val d = divisor
