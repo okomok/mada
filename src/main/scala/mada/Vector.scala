@@ -140,15 +140,19 @@ trait Vector[A] {
     final def forall(p: A => Boolean): Boolean = Forall(this, p)
     final def exists(p: A => Boolean): Boolean = Exists(this, p)
 
-    def fold(z: A)(op: (A, A) => A): A = Fold(this, z, op)
+    def reduce(op: (A, A) => A): A = Reduce(this, op)
+    def reducer(op: (A, A) => A): Vector[A] = Reducer(this, op)
+    final def fold(z: A)(op: (A, A) => A): A = Fold(this, z, op)
+    final def folder(z: A)(op: (A, A) => A): Vector[A] = Folder(this, z, op)
+
     final def foldLeft[B](z: B)(op: (B, A) => B): B = FoldLeft(this, z, op)
     final def foldRight[B](z: B)(op: (A, B) => B): B = FoldRight(this, z, op)
-    final def /:[B](z: B)(op: (B, A) => B): B = foldLeft(z)(op)
-    final def :\[B](z: B)(op: (A, B) => B): B = foldRight(z)(op)
-
-    def reduce(op: (A, A) => A): A = Reduce(this, op)
     final def reduceLeft[B >: A](op: (B, A) => B): B = ReduceLeft(this, op)
     final def reduceRight[B >: A](op: (A, B) => B): B = ReduceRight(this, op)
+    final def folderLeft[B](z: B)(op: (B, A) => B): Vector[B] = FolderLeft(this, z, op)
+    final def folderRight[B](z: B)(op: (A, B) => B): Vector[B] = FolderRight(this, z, op)
+    final def reducerLeft[B >: A](op: (B, A) => B): Vector[B] = ReducerLeft(this, op)
+    final def reducerRight[B >: A](op: (A, B) => B): Vector[B] = ReducerRight(this, op)
 
     final def isDefinedAt(x: Int): Boolean = IsDefinedAt(this, x)
     final def isEmpty: Boolean = IsEmpty(this)
@@ -188,5 +192,7 @@ trait Vector[A] {
 
     final def apply(n: Int, m: Int): Vector[A] = window(n, m)
     final def ++(that: Vector[A]): Vector[A] = append(that)
+    final def /:[B](z: B)(op: (B, A) => B): B = foldLeft(z)(op)
+    final def :\[B](z: B)(op: (A, B) => B): B = foldRight(z)(op)
     final def -->(p: Peg[A]): (Vector[A], Peg[A]) = (this, p)
 }

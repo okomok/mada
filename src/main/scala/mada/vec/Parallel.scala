@@ -23,7 +23,6 @@ class ParallelVector[A](override val self: Vector[A], grainSize: Int) extends Ve
     override def copyTo[B >: A](that: Vector[B]) = CopyTo(self, that, grainSize) // clone, toArray
     override def count(p: A => Boolean) = Count(self, p, grainSize)
     override def filter(p: A => Boolean) = Filter(self, p, grainSize) // remove
-    override def fold(z: A)(op: (A, A) => A): A = Fold(self, z, op, grainSize)
     override def map[B](f: A => B): Vector[B] = Map(self, f, grainSize)
     override def pareach(f: A => Unit) = Pareach(self, f, grainSize)
     override def reduce(op: (A, A) => A): A = Reduce(self, op, grainSize)

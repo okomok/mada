@@ -23,10 +23,9 @@ trait VectorProxy[A] extends Vector[A] with Proxy {
     override def filter(p: A => Boolean): Vector[A] = self.filter(p)
     override def mutatingFilter(p: A => Boolean): Vector[A] = self.mutatingFilter(p)
     override def firstOption: Option[A] = self.firstOption
-    override def fold(z: A)(op: (A, A) => A): A = self.fold(z)(op)
+    override def lastOption: Option[A] = self.lastOption
     override def force: Vector[A] = self.force
     override def foreach(f: A => Unit): Unit = self.foreach(f)
-    override def lastOption: Option[A] = self.lastOption
     override def lazyValues : Vector[A] = self.lazyValues
     override def loop[F <: (A => Boolean)](i: Int, j: Int, f: F): F = self.loop(i, j, f)
     override def map[B](f: A => B): Vector[B] = self.map(f)
@@ -34,6 +33,7 @@ trait VectorProxy[A] extends Vector[A] with Proxy {
     override def randomAccessSeq: RandomAccessSeq.Mutable[A] = self.randomAccessSeq
     override def readOnly: Vector[A] = self.readOnly
     override def reduce(op: (A, A) => A): A = self.reduce(op)
+    override def reducer(op: (A, A) => A): Vector[A] = self.reducer(op)
     override def reverse: Vector[A] = self.reverse
     override def seek(p: A => Boolean): Option[A] = self.seek(p)
     override def step(n: Int): Vector[A] = self.step(n)

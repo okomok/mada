@@ -7,13 +7,6 @@
 package mada.vec
 
 
-object Reduce {
-    def apply[A](v: Vector[A], op: (A, A) => A): A = {
-        ThrowIf.empty(v, "reduce")
-        v.reduceLeft(op)
-    }
-}
-
 object ReduceLeft {
     def apply[A, B >: A](v: Vector[A], op: (B, A) => B): B = {
         ThrowIf.empty(v, "reduceLeft")
@@ -25,5 +18,20 @@ object ReduceRight {
     def apply[A, B >: A](v: Vector[A], op: (A, B) => B): B = {
         ThrowIf.empty(v, "reduceRight")
         v.reverse.reduceLeft(stl.Flip(op))
+    }
+}
+
+
+object ReducerLeft {
+    def apply[A, B >: A](v: Vector[A], op: (B, A) => B): Vector[B] = {
+        ThrowIf.empty(v, "reducerLeft")
+        v.tail.folderLeft[B](v.head)(op)
+    }
+}
+
+object ReducerRight {
+    def apply[A, B >: A](v: Vector[A], op: (A, B) => B): Vector[B] = {
+        ThrowIf.empty(v, "reducerRight")
+        v.reverse.reducerLeft(stl.Flip(op))
     }
 }
