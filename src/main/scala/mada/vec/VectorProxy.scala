@@ -7,6 +7,10 @@
 package mada.vec
 
 
+/**
+ * Implements a proxy for vectors.
+ * It forwards all calls to a different vector object.
+ */
 trait VectorProxy[A] extends Vector[A] with Proxy {
     override def self: Vector[A]
     final override def equals(that: Any): Boolean = Equals(this, that) // works around Proxy.equals.

@@ -7,5 +7,12 @@
 package mada.vec
 
 
-private[mada] class NotReadableError[A](val vector: Vector[A]) extends Error
-private[mada] class NotWritableError[A](val vector: Vector[A]) extends Error
+/**
+ * Thrown if vector is not readable.
+ */
+class NotReadableError[A](val vector: Vector[A]) extends Error
+
+/**
+ * Thrown if vector is not writable.
+ */
+class NotWritableError[A](val vector: Vector[A]) extends Error

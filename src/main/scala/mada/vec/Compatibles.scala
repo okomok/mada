@@ -7,7 +7,16 @@
 package mada.vec
 
 
+/**
+ * Provides implicit conversions around vectors.
+ * These implicit conversion methods shall not called explicitly.
+ * Note that any implicit conversion is efficient with regard to memory allocation,
+ * whereas inefficent conversions must be called explicitly, e.g. <code>Vector.fromIterator</code>.
+ */
 object Compatibles {
+    /**
+     * Triggers implicit conversion "explicitly". Also works as the ambiguity buster.
+     */
     def madaVector[A](from: Vector[A]): Vector[A] = from
 
     implicit def array2madaVector[A](from: Array[A]): Vector[A] = Vector.arrayVector(from)

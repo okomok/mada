@@ -261,19 +261,23 @@ object Peg {
 
 
 /**
- * The PEG parser combinator. PEG operations are always possessive unlike regular expression default behavior.
+ * The PEG parser combinator.
+ * Note PEG operations are always possessive unlike regular expression default behavior.
  */
 trait Peg[A] {
     import peg._
 
     /**
-     * Parses input Vector with specified region.
+     * Parses specified region of input Vector.
+     * This apparently legacy interface is designed so that heap-allocation is removal.
+     *
      * @return next position if parsing succeeds, FAILURE otherwise
      */
     def parse(v: Vector[A], first: Int, last: Int): Int
 
     /**
      * Returns length when parsing is fixed-length and succeeds, undefined otherwise.
+     *
      * @return next position if parsing succeeds, FAILURE otherwise
      */
     def length: Int = throw new UnsupportedOperationException("Peg.length")

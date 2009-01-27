@@ -7,7 +7,14 @@
 package mada.vec
 
 
+/**
+ * Trivial mixin to define a non-writable vector type.
+ */
 trait NotWritable[A] extends Vector[A] {
+    /**
+     * Throws <code>NotWritableError</code>.
+     */
     override def update(i: Int, e: A): Unit = throw new NotWritableError(this)
+
     override def readOnly = this
 }
