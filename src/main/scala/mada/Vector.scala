@@ -13,6 +13,16 @@ object Vector {
     import vec._
 
     /**
+     * Thrown if vector is not readable.
+     */
+    class NotReadableException[A](val vector: Vector[A]) extends RuntimeException
+
+    /**
+     * Thrown if vector is not writable.
+     */
+    class NotWritableException[A](val vector: Vector[A]) extends RuntimeException
+
+    /**
      * Concatenate all argument sequences into a single vector.
      *
      * @param   vs the given argument sequences
@@ -217,16 +227,6 @@ object Vector {
     def triplesVector[A](from: Vector[Vector.Triple[A]]): Vector[Vector[A]] = TriplesVector(from)
 
     /**
-     * Alias of <code>vec.NotReadableError</code>
-     */
-    type NotReadableError[A] = vec.NotReadableError[A]
-
-    /**
-     * Alias of <code>vec.NotWritableError</code>
-     */
-    type NotWritableError[A] = vec.NotWritableError[A]
-
-    /**
      * Alias of <code>vec.VectorAdapter</code>
      */
     type VectorAdapter[Z, A] = vec.VectorAdapter[Z, A]
@@ -271,7 +271,7 @@ trait Vector[A] extends PartialFunction[Int, A] {
      * @pre     <code>this.isDefinedAt(i)</code>.
      * @return  the element at the specified position in this vector.
      */
-    override def apply(i: Int): A = throw new NotReadableError(this)
+    override def apply(i: Int): A = throw new Vector.NotReadableException(this)
 
     /**
      * Replaces the element at the specified position in this vector with
@@ -282,7 +282,7 @@ trait Vector[A] extends PartialFunction[Int, A] {
      * @pre     this vector is writable.
      * @pre     <code>this.isDefinedAt(i)</code>.
      */
-    def update(i: Int, e: A): Unit = throw new NotWritableError(this)
+    def update(i: Int, e: A): Unit = throw new Vector.NotWritableException(this)
 
     /**
      * @return  <code>0 <= i && i < this.size</code>

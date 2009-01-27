@@ -12,9 +12,9 @@ package mada.vec
  */
 trait NotWritable[A] extends Vector[A] {
     /**
-     * Throws <code>NotWritableError</code>.
+     * Throws <code>NotWritableException</code>.
      */
-    override def update(i: Int, e: A): Unit = throw new NotWritableError(this)
+    override def update(i: Int, e: A): Unit = throw new Vector.NotWritableException(this)
 
     override def readOnly = this
 }
