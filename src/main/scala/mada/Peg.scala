@@ -246,7 +246,7 @@ object Peg {
     /**
      * Throws VerificationException if p doesn't match.
      */
-    def verify[A](p: Peg[A]): Peg[A] = Verify_(p)
+    def verify[A](p: Peg[A]): Peg[A] = Verify(p)
 
     /**
      * Alias of <code>peg.VerificationException</code>

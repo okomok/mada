@@ -7,7 +7,7 @@
 package mada.peg
 
 
-private[mada] object Verify_ {
+private[mada] object Verify {
     def apply[A](p: Peg[A]): Peg[A] = new VerifyPeg(p)
 }
 
