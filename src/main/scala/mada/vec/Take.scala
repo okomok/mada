@@ -16,6 +16,6 @@ private[mada] object Take {
 private[mada] object TakeWhile {
     def apply[A](v: Vector[A], p: A => Boolean): Vector[A] = {
         val (x, i, j) = v.triple
-        x.window(i, stl.FindIf(x, i, j, !p(_: A)))
+        x.window(i, stl.FindIf(x, i, j, Functions.not(p)))
     }
 }

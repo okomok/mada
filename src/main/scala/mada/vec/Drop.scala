@@ -17,6 +17,6 @@ private[mada] object Drop {
 private[mada] object DropWhile {
     def apply[A](v: Vector[A], p: A => Boolean): Vector[A] = {
         val (x, i, j) = v.triple
-        x.window(stl.FindIf(x, i, j, !p(_: A)), j)
+        x.window(stl.FindIf(x, i, j, Functions.not(p)), j)
     }
 }

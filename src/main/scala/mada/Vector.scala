@@ -409,7 +409,7 @@ trait Vector[A] extends PartialFunction[Int, A] {
     final def span(p: A => Boolean): (Vector[A], Vector[A]) = Span(this, p)
 
     /**
-     * @return  <code>this.span{ e => !p(e) }</code>.
+     * @return  <code>this.span(Functions.not(p))</code>.
      */
     final def break(p: A => Boolean): (Vector[A], Vector[A]) = Break(this, p)
 
@@ -529,12 +529,12 @@ trait Vector[A] extends PartialFunction[Int, A] {
     def mutatingFilter(p: A => Boolean): Vector[A] = MutatingFilter(this, p)
 
     /**
-     * @return  <code>this.filter{ e => !p(e) }</code>.
+     * @return  <code>this.filter(Functions.not(p))</code>.
      */
     final def remove(p: A => Boolean): Vector[A] = Remove(this, p)
 
     /**
-     * @return  <code>this.mutatingFilter{ e => !p(e) }</code>.
+     * @return  <code>this.mutatingFilter(Functions.not(p))</code>.
      */
     final def mutatingRemove(p: A => Boolean): Vector[A] = MutatingRemove(this, p)
 

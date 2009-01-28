@@ -8,5 +8,5 @@ package mada.vec
 
 
 private[mada] object Break {
-    def apply[A](v: Vector[A], p: A => Boolean): (Vector[A], Vector[A]) = v.span(!p(_: A))
+    def apply[A](v: Vector[A], p: A => Boolean): (Vector[A], Vector[A]) = v.span(Functions.not(p))
 }

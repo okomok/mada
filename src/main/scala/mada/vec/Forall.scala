@@ -8,5 +8,5 @@ package mada.vec
 
 
 private[mada] object Forall {
-    def apply[A](v: Vector[A], p: A => Boolean): Boolean = v.seek(!p(_: A)).isEmpty
+    def apply[A](v: Vector[A], p: A => Boolean): Boolean = v.seek(Functions.not(p)).isEmpty
 }
