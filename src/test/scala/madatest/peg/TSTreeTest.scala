@@ -18,7 +18,7 @@ import mada.Peg._
 
 class TSTreeTest {
     def testTSTree: Unit = {
-        val tree = new mada.peg.TSTree[Char, String](mada.vec.stl.Less[Char])
+        val tree = new mada.peg.TSTree[Char, String](mada.Functions.less[Char])
 
         assertFalse(tree.containsKey("to"))
         assertFalse(tree.containsKey(""))
@@ -58,7 +58,7 @@ class TSTreeTest {
     }
 
     def testBound: Unit = {
-        val tree = new mada.peg.TSTree[Char, String](mada.vec.stl.Less[Char])
+        val tree = new mada.peg.TSTree[Char, String](mada.Functions.less[Char])
 
         tree.put("t", "t")
         assertFalse(tree.containsKey(""))
@@ -68,7 +68,7 @@ class TSTreeTest {
 
     /*
     def testEmptyStringKey: Unit = {
-        val tree = new mada.peg.TSTree[Char, String](mada.vec.stl.Less[Char])
+        val tree = new mada.peg.TSTree[Char, String](mada.Functions.less[Char])
 
         tree.put("", "EMPTY")
         assertTrue(tree.containsKey(""))
@@ -77,7 +77,7 @@ class TSTreeTest {
     */
 
     def testRemove: Unit = {
-        val tree = new mada.peg.TSTree[Char, String](mada.vec.stl.Less[Char])
+        val tree = new mada.peg.TSTree[Char, String](mada.Functions.less[Char])
 
         assertEquals(0, tree.size)
         assertTrue(tree.isEmpty)
@@ -132,7 +132,7 @@ class TSTreeTest {
     }
 
     def testIterator: Unit = {
-        val tree = new mada.peg.TSTree[Char, String](mada.vec.stl.Less[Char])
+        val tree = new mada.peg.TSTree[Char, String](mada.Functions.less[Char])
 
         tree.put("to", "to")
         tree.put("too", "too")
@@ -147,7 +147,7 @@ class TSTreeTest {
     }
 
     def testIteratorBound: Unit = {
-        val tree = new mada.peg.TSTree[Char, String](mada.vec.stl.Less[Char])
+        val tree = new mada.peg.TSTree[Char, String](mada.Functions.less[Char])
         assertFalse(tree.elements.hasNext)
 
         tree.put("t", "t")

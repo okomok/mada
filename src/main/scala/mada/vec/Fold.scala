@@ -16,7 +16,7 @@ private[mada] object FoldLeft {
 
 private[mada] object FoldRight {
     def apply[A, B](v: Vector[A], z: B, op: (A, B) => B): B = {
-        v.reverse.foldLeft(z)(stl.Flip(op))
+        v.reverse.foldLeft(z)(Functions.flip(op))
     }
 }
 
@@ -37,6 +37,6 @@ private[mada] object FolderLeft {
 
 private[mada] object FolderRight {
     def apply[A, B](v: Vector[A], z: B, op: (A, B) => B): Vector[B] = {
-        v.reverse.folderLeft(z)(stl.Flip(op))
+        v.reverse.folderLeft(z)(Functions.flip(op))
     }
 }

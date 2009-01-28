@@ -35,7 +35,7 @@ package mada.vec.stl
 
 object LowerBound {
     def apply[A](* : Vector[A], first: Int, __last: Int, __val: A)(implicit c: A => Ordered[A]): Unit = {
-        apply(*, first, __last, __val, Less(c))
+        apply(*, first, __last, __val, Functions.less(c))
     }
 
     def apply[A](* : Vector[A], first: Int, __last: Int, __val: A, __comp: (A, A) => Boolean): Int = {
@@ -63,7 +63,7 @@ object LowerBound {
 
 object UpperBound {
     def apply[A](* : Vector[A], first: Int, __last: Int, __val: A)(implicit c: A => Ordered[A]): Unit = {
-        apply(*, first, __last, __val, Less(c))
+        apply(*, first, __last, __val, Functions.less(c))
     }
 
     def apply[A](* : Vector[A], first: Int, __last: Int, __val: A, __comp: (A, A) => Boolean): Int = {

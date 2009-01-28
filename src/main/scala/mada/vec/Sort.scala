@@ -9,7 +9,7 @@ package mada.vec
 
 private[mada] object Sort {
     def apply[A](v: Vector[A], c: A => Ordered[A]): Vector[A] = {
-        v.sortWith(stl.Less(c))
+        v.sortWith(Functions.less(c))
     }
 }
 

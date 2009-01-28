@@ -35,7 +35,7 @@ package mada.vec.stl
 
 object Equal {
     def apply[A1, A2](v1: Vector[A1], first1: Int, __last1: Int, v2: Vector[A2], first2: Int): Boolean = {
-        Equal(v1, first1, __last1, v2, first2, EqualTo)
+        Equal(v1, first1, __last1, v2, first2, Functions.equal)
     }
 
     def apply[A1, A2](v1: Vector[A1], first1: Int, __last1: Int, v2: Vector[A2], first2: Int, __binary_pred: (A1, A2) => Boolean): Boolean = {

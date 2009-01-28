@@ -9,7 +9,7 @@ package mada.vec.stl
 
 object Sort {
     def apply[A](v: Vector[A], __first: Int, __last: Int)(implicit c: A => Ordered[A]): Unit = {
-        apply(v, __first, __last, Less(c))
+        apply(v, __first, __last, Functions.less(c))
     }
 
     def apply[A](v: Vector[A], __first: Int, __last: Int, __comp: (A, A) => Boolean): Unit = {

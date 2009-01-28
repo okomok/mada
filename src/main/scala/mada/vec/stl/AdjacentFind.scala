@@ -35,7 +35,7 @@ package mada.vec.stl
 
 object AdjacentFind {
     def apply[A](* : Vector[A], first: Int, __last: Int): Int = {
-        apply(*, first, __last, EqualTo)
+        apply(*, first, __last, Functions.equal)
     }
 
     def apply[A](* : Vector[A], first: Int, __last: Int, __binary_pred: (A, A) => Boolean): Int = {

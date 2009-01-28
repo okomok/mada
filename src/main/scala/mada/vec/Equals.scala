@@ -16,7 +16,7 @@ private[mada] object Equals {
 
 private[mada] object EqualsTo {
     def apply[A1, A2](v1: Vector[A1], v2: Vector[A2]): Boolean = {
-        v1.equalsWith(v2)(stl.EqualTo)
+        v1.equalsWith(v2)(Functions.equal)
     }
 }
 
