@@ -257,7 +257,7 @@ object Vector {
  * A vector is optionally writable but structurally-unmodifiable so that synchronization is unneeded.
  * Note that these methods return projections unless otherwise specified.
  */
-trait Vector[A] extends PartialFunction[Int, A] {
+trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     import vec._
 
     /**
@@ -316,11 +316,7 @@ trait Vector[A] extends PartialFunction[Int, A] {
     override def equals(that: Any): Boolean = Equals(this, that)
 
     override def hashCode: Int = HashCode_(this)
-
-    /**
-     * @return <code>super.hashCode</code>
-     */
-    final def refHashCode: Int = super.hashCode
+    override def hashCodeOfRef: Int = super.hashCode
 
     /**
      * Divides this vector into vector of vectors.

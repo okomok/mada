@@ -8,16 +8,31 @@ package mada
 
 
 /**
- * Contains utility methods for hash-code.
+ * Contains utility methods for hash code. Requires no heap-allocations.
  */
 object HashCode {
     /**
-     * Hash-code of <code>Int</code>
+     * Hash code of <code>Int</code>
      */
-    def ofInt(n: Int): Int = n
+    def ofInt(x: Int): Int = x
 
     /**
-     * Hash-code of <code>Long</code>
+     * Hash code of <code>Long</code>
      */
-    def ofLong(n: Long): Int = (n ^ (n >>> 32)).toInt
+    def ofLong(x: Long): Int = (x ^ (x >>> 32)).toInt
+
+    /**
+     * Hash code of reference (value semantics ignored.)
+     */
+    def ofRef(x: OfRef): Int = x.hashCodeOfRef
+
+    /**
+     * Required for <code>ofRef</code>.
+     */
+    trait OfRef {
+        /**
+         * Shall return <code>super.hashCode</code> in subclass.
+         */
+        def hashCodeOfRef: Int
+    }
 }

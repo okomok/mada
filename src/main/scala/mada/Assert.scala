@@ -57,7 +57,7 @@ object Assert {
     def check[A](expect: A => Boolean, e: A): A = { Assert(expect(e)); e }
 
     /**
-     * @return  <code>this(msg, expect(e); e</code>
+     * @return  <code>this(msg, expect(e)); e</code>
      */
     def check[A](msg: => Any, expect: A => Boolean, e: A): A = { Assert(msg, expect(e)); e }
 }

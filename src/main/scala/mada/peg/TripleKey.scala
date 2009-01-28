@@ -15,6 +15,6 @@ private[mada] case class TripleKey[A](v: Vector[A], start: Int, end: Int) {
         case _ => false
     }
     override def hashCode = {
-        v.refHashCode + HashCode.ofInt(start) * 7 + HashCode.ofInt(end) * 41
+        HashCode.ofRef(v) + HashCode.ofInt(start) * 7 + HashCode.ofInt(end) * 41
     }
 }
