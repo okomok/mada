@@ -34,6 +34,10 @@ package mada.stl
 
 
 private[mada] object PartialSort {
+    def apply[A](* : Vector[A], __first: Int, __middle: Int, __last: Int)(implicit c: A => Ordered[A]): Unit = {
+        apply(*, __first, __middle, __last, Functions.less(c))
+    }
+
     def apply[A](* : Vector[A], __first: Int, __middle: Int, __last: Int, __comp: (A, A) => Boolean): Unit = {
         MakeHeap(*, __first, __middle, __comp)
         var __i = __middle

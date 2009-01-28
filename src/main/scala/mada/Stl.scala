@@ -45,6 +45,9 @@ object Stl {
     def maxElement[A](v: Vector[A], first: Int, last: Int)(implicit c: A => Ordered[A]): Int = MaxElement(v, first, last)(c)
     def maxElement[A](v: Vector[A], first: Int, last: Int, comp: (A, A) => Boolean): Int = MaxElement(v, first, last, comp)
 
+    def median[A](x: A, y: A, z: A)(implicit c: A => Ordered[A]): A = Median(x, y, z)(c)
+    def median[A](x: A, y: A, z: A, comp: (A, A) => Boolean): A = Median(x, y, z, comp)
+
     def equal[A1, A2](v1: Vector[A1], first1: Int, last1: Int, v2: Vector[A2], first2: Int): Boolean = Equal(v1, first1, last1, v2, first2)
     def equal[A1, A2](v1: Vector[A1], first1: Int, last1: Int, v2: Vector[A2], first2: Int, binary_pred: (A1, A2) => Boolean): Boolean = Equal(v1, first1, last1, v2, first2, binary_pred)
 
@@ -57,6 +60,9 @@ object Stl {
 
     def generate[A](v : Vector[A], first: Int, last: Int, gen: Unit => A): Unit = Generate(v, first, last, gen)
     def generateN[A](^ : Vector[A], first: Int, n: Int, gen: Unit => A): Unit = GenerateN(^, first, n, gen)
+
+    def partialSort[A](v: Vector[A], first: Int, middle: Int, last: Int)(implicit c: A => Ordered[A]): Unit = PartialSort(v, first, middle, last)(c)
+    def partialSort[A](v: Vector[A], first: Int, middle: Int, last: Int, comp: (A, A) => Boolean): Unit = PartialSort(v, first, middle, last, comp)
 
     def pushHeap[A](v: Vector[A], first: Int, last: Int, comp: (A, A) => Boolean): Unit = PushHeap(v, first, last, comp)
     def popHeap[A](v: Vector[A], first: Int, last: Int, comp: (A, A) => Boolean): Unit = PopHeap(v, first, last, comp)
