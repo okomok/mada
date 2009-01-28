@@ -23,6 +23,6 @@ object Booleans {
         class MadaBooleans(_1: Boolean) {
             def implies(_2: => Boolean) = Booleans.implies(_1, _2)
         }
-        implicit def Boolean2MadaBooleans(_1: Boolean): MadaBooleans = new MadaBooleans(_1)
+        implicit def boolean2MadaBooleans(_1: Boolean): MadaBooleans = new MadaBooleans(_1)
     }
 }

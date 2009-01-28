@@ -19,7 +19,7 @@ object Functions {
     }
 
     /**
-     * Represents Any.eq
+     * Represents AnyRef.eq
      */
     val refEqual: Function2[AnyRef, AnyRef, Boolean] = new Function2[AnyRef, AnyRef, Boolean] {
         override def apply(v1: AnyRef, v2: AnyRef) = v1 eq v2
