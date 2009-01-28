@@ -8,16 +8,16 @@ package mada
 
 
 /**
- vPort of <a href="http://www.sgi.com/tech/stl/">STL</a> algorithms.
- vMaily used to implement <code>mada.Vector</code>.<p/>
+ *Port of <a href="http://www.sgi.com/tech/stl/">STL</a> algorithms.
+ *Maily used to implement <code>mada.Vector</code>.<p/>
  *
- v<code>mada.Stl</code> supports only <code>Vector</code> as RandomAccessIterator.
- v(Java is heap-friendly, so ForwardIterator algorithms were too slow.)
- vAlso notice that InputIterator is conceptually equivalent to <code>scala.Iterator</code>.
- vThese algorithms (ironically) take region arguments as STL does to eliminate intermediate vector objects.
+ *<code>mada.Stl</code> supports only <code>Vector</code> as RandomAccessIterator.
+ *(Java is heap-friendly, so ForwardIterator algorithms were too slow.)
+ *Also notice that InputIterator is conceptually equivalent to <code>scala.Iterator</code>.
+ *These algorithms (ironically) take region arguments as STL does to eliminate intermediate vector objects.
  *
- v@see <a href="http://www.sgi.com/tech/stl/">STL</a>
- v@see <a href="http://www.stanford.edu/group/coursework/docsTech/jgl/">JGL</a>
+ *@see <a href="http://www.sgi.com/tech/stl/">STL</a>
+ *@see <a href="http://www.stanford.edu/group/coursework/docsTech/jgl/">JGL</a>
  */
 object Stl {
     import stl._
@@ -27,9 +27,9 @@ object Stl {
     def adjacentFind[A](v: Vector[A], first: Int, last: Int): Int = AdjacentFind(v, first, last)
     def adjacentFind[A](v: Vector[A], first: Int, last: Int, binary_pred: (A, A) => Boolean): Int = AdjacentFind(v, first, last, binary_pred)
 
-    def lowerBound[A](v: Vector[A], first: Int, last: Int, value: A)(implicit c: A => Ordered[A]): Unit = LowerBound(v, first, last, value)(c)
+    def lowerBound[A](v: Vector[A], first: Int, last: Int, value: A)(implicit c: A => Ordered[A]): Int = LowerBound(v, first, last, value)(c)
     def lowerBound[A](v: Vector[A], first: Int, last: Int, value: A, comp: (A, A) => Boolean): Int = LowerBound(v, first, last, value, comp)
-    def upperBound[A](v: Vector[A], first: Int, last: Int, value: A)(implicit c: A => Ordered[A]): Unit = UpperBound(v, first, last, value)(c)
+    def upperBound[A](v: Vector[A], first: Int, last: Int, value: A)(implicit c: A => Ordered[A]): Int = UpperBound(v, first, last, value)(c)
     def upperBound[A](v: Vector[A], first: Int, last: Int, value: A, comp: (A, A) => Boolean): Int = UpperBound(v, first, last, value, comp)
 
     def copy[A, B >: A](v : Vector[A], first: Int, last: Int, ^ : Vector[B], result: Int): Int = Copy(v, first, last, ^, result)
@@ -40,14 +40,13 @@ object Stl {
     def count[A](v: Vector[A], first: Int, last: Int, e: Any): Int = Count(v, first, last, e)
     def countIf[A](v: Vector[A], first: Int, last: Int, pred: A => Boolean): Int = CountIf(v, first, last, pred)
 
-    def minElement[A](v: Vector[A], first: Int, last: Int)(implicit c: A => Ordered[A]): Unit = MinElement(v, first, last)(c)
+    def minElement[A](v: Vector[A], first: Int, last: Int)(implicit c: A => Ordered[A]): Int = MinElement(v, first, last)(c)
     def minElement[A](v: Vector[A], first: Int, last: Int, comp: (A, A) => Boolean): Int = MinElement(v, first, last, comp)
-    def maxElement[A](v: Vector[A], first: Int, last: Int)(implicit c: A => Ordered[A]): Unit = MaxElement(v, first, last)(c)
+    def maxElement[A](v: Vector[A], first: Int, last: Int)(implicit c: A => Ordered[A]): Int = MaxElement(v, first, last)(c)
     def maxElement[A](v: Vector[A], first: Int, last: Int, comp: (A, A) => Boolean): Int = MaxElement(v, first, last, comp)
 
     def equal[A1, A2](v1: Vector[A1], first1: Int, last1: Int, v2: Vector[A2], first2: Int): Boolean = Equal(v1, first1, last1, v2, first2)
     def equal[A1, A2](v1: Vector[A1], first1: Int, last1: Int, v2: Vector[A2], first2: Int, binary_pred: (A1, A2) => Boolean): Boolean = Equal(v1, first1, last1, v2, first2, binary_pred)
-
 
     def fill[A](v: Vector[A], first: Int, last: Int, value: A): Unit = Fill(v, first, last, value)
 
@@ -105,6 +104,13 @@ object Stl {
     def uniqueCopy[A, B >: A](v : Vector[A], first: Int, last: Int, ^ : Vector[B], result: Int): Int = UniqueCopy(v, first, last, ^, result)
     def uniqueCopy[A, B >: A](v : Vector[A], first: Int, last: Int, ^ : Vector[B], result: Int, binary_pred: (A, B) => Boolean): Int = UniqueCopy(v, first, last, ^, result, binary_pred)
 
+    /**
+     * Creates an output vector. Calls of <code>Vector#update</code> are forwarded to <code>f</code>.
+     */
     def output[A](f: A => Any): Vector[A] = Output(f)
+
+    /**
+     * Alias of <code>stl.OutputCounter</code>
+     */
     type OutputCounter = stl.OutputCounter
 }
