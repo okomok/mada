@@ -17,9 +17,8 @@ import madatest.vec.detail._
 class OutputTest {
     def testTrivial: Unit = {
         val v = arrayVector(example1)
-        val ct = new mada.Stl.OutputCounter()
         var count = 0
-        mada.Stl.copy(v, 0, 10, mada.Stl.output({ (e: Any) => count += 1 }), 999)
+        mada.Stl.copy(v, 0, 10, mada.Stl.outputWith({ (e: Any) => count += 1 }), 999)
         assertEquals(10, count)
     }
 

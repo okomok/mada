@@ -10,7 +10,7 @@ package mada.stl
 /**
  * Counts calls of <code>Vector#update</code>.
  */
-class OutputCounter(val start: Int) extends Vector[Any] {
+class OutputCounter(val start: Int) extends OutputVector[Any] {
     /**
      * Starts from count <code>0</code>.
      */
@@ -19,14 +19,9 @@ class OutputCounter(val start: Int) extends Vector[Any] {
     private var c = start
 
     /**
-     * Throws <code>UnsupportedOperationException</code>.
-     */
-    override def size = throw new UnsupportedOperationException("OutputCounter.size")
-
-    /**
      * Increments counter.
      */
-    override def update(i: Int, e: Any) = c += 1
+    override def output(e: Any) = c += 1
 
     /**
      * Returns the result of counting.

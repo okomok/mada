@@ -122,12 +122,17 @@ object Stl {
     def uniqueCopy[A, B >: A](v : Vector[A], first: Int, last: Int, ^ : Vector[B], result: Int, binary_pred: (A, B) => Boolean): Int = UniqueCopy(v, first, last, ^, result, binary_pred)
 
     /**
-     * Creates an output vector. Calls of <code>Vector#update</code> are forwarded to <code>f</code>.
+     * Alias of <code>stl.OutputVector</code>
      */
-    def output[A](f: A => Any): Vector[A] = Output(f)
+    type OutputVector[A] = stl.OutputVector[A]
 
     /**
      * Alias of <code>stl.OutputCounter</code>
      */
     type OutputCounter = stl.OutputCounter
+
+    /**
+     * Creates <code>OutputVector</code> in which <code>output(e)</code> calls <code>f(e)</code>.
+     */
+    def outputWith[A](f: A => Any): Vector[A] = OutputWith(f)
 }

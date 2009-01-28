@@ -24,7 +24,7 @@ Mada is a library.
         <developer>
             <id>mb</id>
             <name>Shunsuke Sogame</name>
-            <email>pstade.mb@gmail.com</email>
+            <email>okomok@gmail.com</email>
         </developer>
     </developers>
 
@@ -37,6 +37,12 @@ Mada is a library.
             <id>scala-tools.org</id>
             <name>Scala-Tools Maven2 Repository</name>
             <url>http://scala-tools.org/repo-releases</url>
+        </repository>
+        <repository>
+            <id>scala-tools.org.snapshots</id>
+                <name>Scala Tools Maven2 Repository</name>
+                <url>http://scala-tools.org/repo-snapshots</url>
+                <snapshots />
         </repository>
     </repositories>
 
