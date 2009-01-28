@@ -8,9 +8,12 @@ package mada.peg
 
 
 /**
- * Emulates capturing groups of regular expressions.
+ * Provides capturing groups of regular expressions.
  */
 class CapturingGroups[K, A](val group: scala.collection.mutable.Map[K, Vector[A]]) {
+    /**
+     * Constructs from a hash-map.
+     */
     def this() = this(new scala.collection.jcl.HashMap[K, Vector[A]])
 
     /**
