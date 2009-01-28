@@ -7,9 +7,18 @@
 package mada.peg
 
 
+/**
+ * Contains utility methods operating on type <code>SymbolSet</code>.
+ */
 object SymbolSet {
+    /**
+     * @return  <code>this(vs.elements, Functions.less(c))</code>
+     */
     def apply[A](vs: Vector[A]*)(implicit c: A => Ordered[A]): SymbolSet[A] = apply(vs.elements, Functions.less(c))
 
+    /**
+     * Constructs <code>SymbolSet</code> containing <code>vs</code> as elements.
+     */
     def apply[A](vs: Iterator[Vector[A]], lt: (A, A) => Boolean): SymbolSet[A] = {
         val set = new SymbolSet(lt)
         for (v <- vs) {
@@ -19,9 +28,19 @@ object SymbolSet {
     }
 }
 
+
+/**
+ * A <code>Peg</code> to optimize the form <code>k1|k2|k3|...</code> using ternary search tree.
+ */
 class SymbolSet[A] private (private val tree: TSTree[A, Unit]) extends Peg[A] with scala.collection.mutable.Set[Vector[A]] {
+    /**
+     * Constructs <code>SymbolSet</code> using <code>lt</code> as comparator.
+     */
     def this(lt: (A, A) => Boolean) = this(new TSTree[A, Unit](lt))
 
+    /**
+     * Succeeds if any element of this set matches.
+     */
     override def parse(v: Vector[A], start: Int, end: Int) = {
         tree.parse(v, start, end) match {
             case Some((_, cur)) => cur

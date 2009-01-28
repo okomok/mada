@@ -4,12 +4,15 @@
 // Distributed under the terms of an MIT-style license.
 
 
-// See: http://www.javaworld.com/javaworld/jw-02-2001/jw-0216-ternary.html
-
-
 package mada.peg
 
 
+/**
+ * Ternary search tree implementation internally used in <code>mada.Peg</code>.
+ * Should not be used directly.
+ *
+ * @see <a href="http://www.javaworld.com/javaworld/jw-02-2001/jw-0216-ternary.html">Plant your data in a ternary search tree</a>
+ */
 class TSTree[A, V](_lt: (A, A) => Boolean) {
     private var rootNode: TSTreeNode[A, V] = null
 
@@ -193,7 +196,7 @@ class TSTree[A, V](_lt: (A, A) => Boolean) {
 }
 
 
-class TSTreeNode[A, V](val elem: A, val parent: TSTreeNode[A, V]) {
+private[mada] class TSTreeNode[A, V](val elem: A, val parent: TSTreeNode[A, V]) {
     var data: Option[V] = None
     var left: TSTreeNode[A, V] = null
     var middle: TSTreeNode[A, V] = null
@@ -263,7 +266,7 @@ class TSTreeNode[A, V](val elem: A, val parent: TSTreeNode[A, V]) {
 }
 
 
-class TSTreeNodeIterator[A, V](parentKey: Vector[A], node: TSTreeNode[A, V]) extends Iterators.IteratorProxy[(Vector[A], TSTreeNode[A, V])] {
+private[mada] class TSTreeNodeIterator[A, V](parentKey: Vector[A], node: TSTreeNode[A, V]) extends Iterators.IteratorProxy[(Vector[A], TSTreeNode[A, V])] {
     private val me = Iterator.single((lowerKey, node))
     override val self = me ++ children(node.left) ++ children(node.middle) ++ children(node.right)
 

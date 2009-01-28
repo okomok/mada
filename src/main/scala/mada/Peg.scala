@@ -201,7 +201,6 @@ object Peg {
      */
     type ASTreeBuilder[T <: javax.swing.tree.DefaultMutableTreeNode] = peg.ASTreeBuilder[T]
 
-
     /**
      * Alias of <code>peg.SymbolSet</code>
      */

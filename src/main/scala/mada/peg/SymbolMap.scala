@@ -7,6 +7,9 @@
 package mada.peg
 
 
+/**
+ * Contains utility methods operating on type <code>SymbolMap</code>.
+ */
 object SymbolMap {
     def apply[A](es: (Vector[A], Peg[A])*)(implicit c: A => Ordered[A]): SymbolMap[A] = apply(es.elements, Functions.less(c))
 
@@ -19,9 +22,19 @@ object SymbolMap {
     }
 }
 
+
+/**
+ * A <code>Peg</code> to optimize the form <code>(k1 >> p1)|(k2 >> p2)|(k3 >> p3)|...</code> using ternary search tree.
+ */
 class SymbolMap[A] private (private val tree: TSTree[A, Peg[A]]) extends Peg[A] with scala.collection.mutable.Map[Vector[A], Peg[A]] {
+    /**
+     * Constructs <code>SymbolMap</code> using <code>lt</code> as comparator.
+     */
     def this(lt: (A, A) => Boolean) = this(new TSTree[A, Peg[A]](lt))
 
+    /**
+     * Succeeds if any element of this set matches then its corresponding <code>Peg</code> matches.
+     */
     override def parse(v: Vector[A], start: Int, end: Int) = {
         tree.parse(v, start, end) match {
             case Some((p, cur)) => p.parse(v, cur, end)

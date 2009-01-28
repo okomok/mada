@@ -7,6 +7,10 @@
 package mada.peg
 
 
+/**
+ * Implements a proxy for pegs.
+ * It forwards all calls to a different vector object.
+ */
 trait PegProxy[A] extends Peg[A] with Proxy {
     override def self: Peg[A]
 
