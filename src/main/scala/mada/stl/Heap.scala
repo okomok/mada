@@ -36,6 +36,10 @@ package mada.stl
 // PushHeap
 
 private[mada] object PushHeap {
+    def apply[A](* : Vector[A], __first: Int, __last: Int)(implicit c: A => Ordered[A]): Unit = {
+        apply(*, __first, __last, Functions.less(c))
+    }
+
     def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: (A, A) => Boolean): Unit = {
         __apply(*, __first, (__last - __first) - 1, 0, *(__last - 1), __comp)
     }
@@ -57,6 +61,10 @@ private[mada] object PushHeap {
 // PopHeap
 
 private[mada] object PopHeap {
+    def apply[A](* : Vector[A], __first: Int, __last: Int)(implicit c: A => Ordered[A]): Unit = {
+        apply(*, __first, __last, Functions.less(c))
+    }
+
     def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: (A, A) => Boolean): Unit = {
         __apply(*, __first, __last - 1, __last - 1, *(__last - 1), __comp)
     }
@@ -71,6 +79,10 @@ private[mada] object PopHeap {
 // MakeHeap
 
 private[mada] object MakeHeap {
+    def apply[A](* : Vector[A], __first: Int, __last: Int)(implicit c: A => Ordered[A]): Unit = {
+        apply(*, __first, __last, Functions.less(c))
+    }
+
     def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: (A, A) => Boolean): Unit = {
         if (__last - __first < 2) {
             return
@@ -92,6 +104,10 @@ private[mada] object MakeHeap {
 // SortHeap
 
 private[mada] object SortHeap {
+    def apply[A](* : Vector[A], __first: Int, __last: Int)(implicit c: A => Ordered[A]): Unit = {
+        apply(*, __first, __last, Functions.less(c))
+    }
+
     def apply[A](* : Vector[A], __first: Int, last: Int, __comp: (A, A) => Boolean): Unit = {
         var __last = last
 

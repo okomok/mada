@@ -34,6 +34,10 @@ package mada.stl
 
 
 private[mada] object IsHeap {
+    def apply[A](v: Vector[A], __first: Int, __last: Int)(implicit c: A => Ordered[A]): Boolean = {
+        apply(v, __first, __last, Functions.less(c))
+    }
+
     def apply[A](v: Vector[A], __first: Int, __last: Int, __comp: (A, A) => Boolean): Boolean = {
         __apply(v, __first, __comp, __last - __first)
     }

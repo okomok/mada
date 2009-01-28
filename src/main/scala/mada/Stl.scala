@@ -12,7 +12,7 @@ package mada
  *Maily used to implement <code>mada.Vector</code>.<p/>
  *
  *<code>mada.Stl</code> supports only <code>Vector</code> as RandomAccessIterator.
- *(Java is heap-friendly, so ForwardIterator algorithms were too slow.)
+ *(Java is heap-friendly, so ForwardIterator algorithms would be too slow.)
  *Also notice that InputIterator is conceptually equivalent to <code>scala.Iterator</code>.
  *These algorithms (ironically) take region arguments as STL does to eliminate intermediate vector objects.
  *
@@ -64,10 +64,19 @@ object Stl {
     def partialSort[A](v: Vector[A], first: Int, middle: Int, last: Int)(implicit c: A => Ordered[A]): Unit = PartialSort(v, first, middle, last)(c)
     def partialSort[A](v: Vector[A], first: Int, middle: Int, last: Int, comp: (A, A) => Boolean): Unit = PartialSort(v, first, middle, last, comp)
 
+    def pushHeap[A](v: Vector[A], first: Int, last: Int)(implicit c: A => Ordered[A]): Unit = PushHeap(v, first, last)(c)
     def pushHeap[A](v: Vector[A], first: Int, last: Int, comp: (A, A) => Boolean): Unit = PushHeap(v, first, last, comp)
+
+    def popHeap[A](v: Vector[A], first: Int, last: Int)(implicit c: A => Ordered[A]): Unit = PopHeap(v, first, last)(c)
     def popHeap[A](v: Vector[A], first: Int, last: Int, comp: (A, A) => Boolean): Unit = PopHeap(v, first, last, comp)
+
+    def makeHeap[A](v: Vector[A], first: Int, last: Int)(implicit c: A => Ordered[A]): Unit = MakeHeap(v, first, last)(c)
     def makeHeap[A](v: Vector[A], first: Int, last: Int, comp: (A, A) => Boolean): Unit = MakeHeap(v, first, last, comp)
+
+    def sortHeap[A](v: Vector[A], first: Int, last: Int)(implicit c: A => Ordered[A]): Unit = SortHeap(v, first, last)(c)
     def sortHeap[A](v: Vector[A], first: Int, last: Int, comp: (A, A) => Boolean): Unit = SortHeap(v, first, last, comp)
+
+    def isHeap[A](v: Vector[A], first: Int, last: Int)(implicit c: A => Ordered[A]): Unit = IsHeap(v, first, last)(c)
     def isHeap[A](v: Vector[A], first: Int, last: Int, comp: (A, A) => Boolean): Boolean = IsHeap(v, first, last, comp)
 
     def iterSwap[A](v1: Vector[A], i1: Int, v2: Vector[A], i2: Int): Unit = IterSwap(v1, i1, v2, i2)
@@ -97,6 +106,8 @@ object Stl {
 
     def sort[A](v: Vector[A], first: Int, last: Int)(implicit c: A => Ordered[A]): Unit = Sort(v, first, last)(c)
     def sort[A](v: Vector[A], first: Int, last: Int, comp: (A, A) => Boolean): Unit = Sort(v, first, last, comp)
+
+    def isSorted[A](v: Vector[A], first: Int, last: Int)(implicit c: A => Ordered[A]): Boolean = IsSorted(v, first, last)(c)
     def isSorted[A](v: Vector[A], first: Int, last: Int, comp: (A, A) => Boolean): Boolean = IsSorted(v, first, last, comp)
 
     def swapRanges[A](v1: Vector[A], first1: Int, last1: Int, v2: Vector[A], first2: Int): Int = SwapRanges(v1, first1, last1, v2, first2)
