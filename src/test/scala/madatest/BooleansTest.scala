@@ -7,11 +7,11 @@
 package madatest
 
 
-import mada.Implies._
+import mada.Booleans.Infix._
 import junit.framework.Assert._
 
 
-class ImpliesTest {
+class BooleansTest {
     def neverEvaluated: Boolean = {
         fail("impossible")
         false
