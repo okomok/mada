@@ -8,7 +8,7 @@ package mada
 
 
 /**
- * Contains utility types and methods operating on <code>Function</code>.
+ * Contains utility methods operating on <code>Function</code>.
  */
 object Functions {
     /**
