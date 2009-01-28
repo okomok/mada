@@ -7,10 +7,10 @@
 package mada.vec
 
 
-private[mada] object HashCode {
+private[mada] object HashCode_ {
     def apply[A](v: Vector[A]): Int = {
         val n = v.size
-        val nh = IntHashCode(n)
+        val nh = HashCode.ofInt(n)
 
         if (n == 0) {
             nh

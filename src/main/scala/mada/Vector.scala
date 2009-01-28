@@ -315,7 +315,7 @@ trait Vector[A] extends PartialFunction[Int, A] {
      */
     override def equals(that: Any): Boolean = Equals(this, that)
 
-    override def hashCode: Int = HashCode(this)
+    override def hashCode: Int = HashCode_(this)
 
     /**
      * @return <code>super.hashCode</code>
