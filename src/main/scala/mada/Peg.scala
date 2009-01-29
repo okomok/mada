@@ -307,6 +307,7 @@ trait Peg[A] {
     final def lookBack: Peg[A] = LookBack(this)
 
     final def act(f: Vector.Func[A, Any]): Peg[A] = Act(this, f)
+    final def act3(f: Vector.Func3[A, Any]): Peg[A] = Act3(this, f)
     final def andIf(pred: Vector.Func[A, Boolean]): Peg[A] = AndIf(this, pred)
     final def identity: Peg[A] = Identity(this)
     final def memoize: Peg[A] = Memoize(this)

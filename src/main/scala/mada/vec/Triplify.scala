@@ -9,7 +9,7 @@ package mada.vec
 
 private[mada] object Triplify {
     def apply[A, B](f: Vector.Func[A, B]): Vector.Func3[A, B] = {
-        { (v: Vector[A], i: Int, j: Int) => f(v(i, j)) }
+        { (v: Vector[A], start: Int, end: Int) => f(v(start, end)) }
     }
 }
 
