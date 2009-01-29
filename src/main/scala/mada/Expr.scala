@@ -14,60 +14,26 @@ object Expr {
 
     type Terminal[A] = Expr[Nothing, A]
 
-    trait ConstantOf[A] extends Terminal[A] {
-        protected def _of: A
-        override protected def _eval[B](x: Expr[A, B]): B = x match {
-            case Self => _of
-            case _ => dontKnow(x)
-        }
-    }
+    type ConstantOf[A] = expr.ConstantOf[A]
 
-    trait Method[Z, A] extends Expr[Z, A] {
-        protected def _1: Of[Z]
-        protected def _default: A
-        override protected def _eval[B](x: Expr[A, B]): B = x match {
-            case Self => _1?this
-            case Unknown => _default
-            case _ => dontKnow(x)
-        }
-    }
+    type Method[Z, A] = expr.Method[Z, A]
 
-    type Transform[A] = Method[A, A]
+    type Transform[A] = expr.Method[A, A]
 
-    trait Alias[Z, A] extends Expr[Z, A] {
-        protected def _alias: Of[A]
-        override protected def _eval[B](x: Expr[A, B]): B = x match {
-            case Self => _alias.eval
-            case _ => _alias.eval(x)
-        }
-    }
+    type Alias[Z, A] = expr.Alias[Z, A]
 
+    val Constant = expr.Constant
+    type Constant[A] = expr.Constant[A]
 
-    case class Constant[A](_1: A) extends ConstantOf[A] {
-        override protected val _of = _1
-    }
+    val Cut = expr.Cut
+    type Cut[A] = expr.Cut[A]
 
-    case class Cut[A](_1: Of[A]) extends Alias[Nothing, A] {
-        override protected def _alias = _1
-    }
-
-    case class Lazy[A](_1: Of[A]) extends Terminal[A] {
-        private val e = new LazyRef[A]
-        override protected def _eval[B](x: Expr[A, B]): B = x match {
-            case Self => { e := _1.eval; e.deref } // Self only
-            case _ => dontKnow(x)
-        }
-    }
-
+    val Lazy = expr.Lazy
+    type Lazy[A] = expr.Lazy[A]
 
     def apply[A](from: A) = Constant(from).expr
 
-
-    trait Start[X] { self: X =>
-        def toExpr = Expr(self)
-        def / = toExpr
-    }
-
+    type Start[A] = expr.Start[A]
 
     case object NoSelfCaseError extends Error
     case object NoUnknownCaseError extends Error
