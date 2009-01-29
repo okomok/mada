@@ -7,12 +7,22 @@
 package mada.peg
 
 
-// `startAt( symbolMap("abc" --> endBy(f) >> "def") )`
+// `startAt( SymbolMap("abc" --> endWith(f) >> "def") )`
 
+/**
+ * Associates actions where Peg can't be placed.
+ */
 class RangeActions[A] {
     private val stack = new java.util.ArrayDeque[Int]
 
+    /**
+     * Alias of <code>startAt</code>
+     */
     def apply(p: Peg[A]): Peg[A] = startAt(p)
+
+    /**
+     * Marks starting point of actions.
+     */
     def startAt(p: Peg[A]): Peg[A] = new StartAtPeg(p)
 
     private class StartAtPeg(override val self: Peg[A]) extends PegProxy[A] {
@@ -22,11 +32,14 @@ class RangeActions[A] {
         }
     }
 
-    def endBy(f: Vector.Func3[A, Any]): Peg[A] = new EndByPeg(f)
+    /**
+     * Triggers the action.
+     */
+    def endWith(f: Vector.Func[A, Any]): Peg[A] = new EndWithPeg(f)
 
-    private class EndByPeg(f: Vector.Func3[A, Any]) extends Peg[A] {
+    private class EndWithPeg(f: Vector.Func[A, Any]) extends Peg[A] {
         override def parse(v: Vector[A], start: Int, end: Int) = {
-            f(v, stack.pop, start)
+            f(v(stack.pop, start))
             start
         }
         override def length = 0
