@@ -17,6 +17,6 @@ private[mada] class DivideVector[A](val dividend: Vector[A], stride: Int) extend
     override def end = StepCount(dividend.start, dividend.end, stride)
     override def apply(i: Int) = {
         val cur = dividend.start + i * stride
-        new SubVector(dividend, cur, Math.min(cur + stride, dividend.end))
+        new Region(dividend, cur, Math.min(cur + stride, dividend.end))
     }
 }

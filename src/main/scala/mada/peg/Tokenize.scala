@@ -18,7 +18,7 @@ private[mada] class TokenizeIterator[A](p: Peg[A], v: Vector[A]) extends Iterato
         if (!hasNext) {
             throw new NoSuchElementException("next")
         }
-        val tmp = new Vector.SubVector(v, k, l)
+        val tmp = new Vector.Region(v, k, l)
         k_l(Find.impl(p, v, l, v.end))
         tmp
     }

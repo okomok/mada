@@ -44,7 +44,7 @@ trait VectorProxy[A] extends Vector[A] with Proxy {
     override def seek(p: A => Boolean): Option[A] = self.seek(p)
     override def step(n: Int): Vector[A] = self.step(n)
     override def sortWith(lt: (A, A) => Boolean): Vector[A] = self.sortWith(lt)
-    override def subVector(_start: Int, _end: Int): Vector[A] = self.subVector(_start, _end)
+    override def region(_start: Int, _end: Int): Vector[A] = self.region(_start, _end)
 
     override def parallel: Vector[A] = self.parallel
     override def parallel(g: Int): Vector[A] = self.parallel(g)

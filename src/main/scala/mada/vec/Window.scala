@@ -8,5 +8,5 @@ package mada.vec
 
 
 private[mada] object Window {
-    def apply[A](v: Vector[A], n: Int, m: Int): Vector[A] = v.subVector(v.start + n, v.start + m)
+    def apply[A](v: Vector[A], n: Int, m: Int): Vector[A] = v.region(v.start + n, v.start + m)
 }

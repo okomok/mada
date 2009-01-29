@@ -11,7 +11,7 @@ import mada.Peg._
 import junit.framework.Assert._
 import mada.Peg.Compatibles._
 import mada.Vector.Compatibles._
-import mada.Vector.SubVector
+import mada.Vector.Region
 
 
 class TokenizeTest {
@@ -21,7 +21,7 @@ class TokenizeTest {
         val it = pe.tokenize(v)
         var c = 0
         while (it.hasNext) {
-            val SubVector(_, i, j) = it.next
+            val Region(_, i, j) = it.next
             if (c == 0) {
                 assertEquals(1, i)
                 assertEquals(5, j)
@@ -46,7 +46,7 @@ class TokenizeTest {
         val pe = madaPeg("abcd")
         val v = madaVector("abcd")
         val it = pe.tokenize(v)
-        val SubVector(_, i, j) = it.next
+        val Region(_, i, j) = it.next
         assertEquals(0, i)
         assertEquals(4, j)
         assertFalse(it.hasNext)

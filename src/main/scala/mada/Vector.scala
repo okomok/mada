@@ -91,6 +91,9 @@ object Vector {
      */
     def undivide[A](vv: Vector[Vector[A]]): Vector[A] = Undivide(vv)
 
+    /**
+     * @return  flatten(vv.map({ v => sep.append(v) }))
+     */
     def untokenize[A](vv: Vector[Vector[A]], sep: Vector[A]): Vector[A] = Untokenize(vv, sep)
 
     /**
@@ -219,14 +222,14 @@ object Vector {
     type NotWritable[A] = vec.NotWritable[A]
 
     /**
-     * Alias of <code>vec.SubVector</code>
+     * Alias of <code>vec.Region</code>
      */
-    val SubVector = vec.SubVector
+    val Region = vec.Region
 
     /**
-     * Alias of <code>vec.SubVector</code>
+     * Alias of <code>vec.Region</code>
      */
-    type SubVector[A] = vec.SubVector[A]
+    type Region[A] = vec.Region[A]
 
     /**
      * Alias of <code>vec.IntFileVector</code>
@@ -314,7 +317,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     final def equalsTo[B](that: Vector[B]): Boolean = EqualsTo(this, that)
 
     /**
-     * @return <code>this.equalsWith(that){ (a, b) => a == b }</code>.
+     * @return <code>this.equalsWith(that)(Functions.equal)</code>.
      */
     override def equals(that: Any): Boolean = Equals(this, that)
 
@@ -326,20 +329,16 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * Each vector size is <code>n</code> except for the last one.
      *
      * @param   n divisor
-     * @return  <code>[this(0, n), this(n, 2*n), this(2*n, 3*n),...]</code>.
+     * @return  <code>[this(this.start, n), this(this.start + n, 2*n), this(this.start + 2*n, 3*n),...]</code>.
      * @see     Vector.undivide
      */
     final def divide(n: Int): Vector[Vector[A]] = Divide(this, n)
 
-
     /**
-     * Returns a subsequence with specified region.
-     *
-     * @pre     <code>_start <= _end</code>
-     * @return  a subsequence with specified region.
-     * @see     apply
+     * @return  <code>Region(this, _start, _end)</code>.
+     * @see     apply as alias.
      */
-    def subVector(_start: Int, _end: Int): Vector[A] = SubVector(this, _start, _end)
+    def region(_start: Int, _end: Int): Vector[A] = Region(this, _start, _end)
 
     /**
      * @return  <code>this(this.start + n, this.start + m)</code>
@@ -392,7 +391,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     final def slice(n: Int, m: Int): Vector[A] = Slice(this, n, m)
 
     /**
-     * @return  <code>(this(0, m), this(m, this.size))</code>, where <code>val m = Math.min(i, this.size)</code>.
+     * @return  <code>(this(this.start, m), this(m, this.size))</code>, where <code>val m = Math.min(i, this.end)</code>.
      */
     final def splitAt(i: Int): (Vector[A], Vector[A]) = SplitAt(this, i)
 
@@ -646,12 +645,12 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     /**
      * Returns the prefix sum of this vector.
      *
-     * @return  <code>[z, op(z, this(0)), op(op(z, this(0)), this(1)),...]</code>
+     * @return  <code>[z, op(z, this(this.start)), op(op(z, this(this.start)), this(this.start + 1)),...]</code>
      */
     final def folderLeft[B](z: B)(op: (B, A) => B): Vector[B] = FolderLeft(this, z, op)
 
     /**
-     * @return  <code>this.reverse.folderLeft(z){ (b, a) => op(a, b) }</code>
+     * @return  <code>this.reverse.folderLeft(z)(Functions.flip(op))</code>
      */
     final def folderRight[B](z: B)(op: (A, B) => B): Vector[B] = FolderRight(this, z, op)
 
@@ -663,7 +662,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
 
     /**
      * @pre     <code>!isEmpty</code>
-     * @return  <code>this.reverse.reducerLeft{ (b, a) => op(a, b) }</code>
+     * @return  <code>this.reverse.reducerLeft(Functions.flip(op))</code>
      */
     final def reducerRight[B >: A](op: (A, B) => B): Vector[B] = ReducerRight(this, op)
 
@@ -683,7 +682,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     def sortWith(lt: (A, A) => Boolean): Vector[A] = SortWith(this, lt)
 
     /**
-     * @return  <code>this.sortWith{ ... }</code>.
+     * @return  <code>this.sortWith(Functions.less(c))</code>.
      */
     final def sort(implicit c: A => Ordered[A]): Vector[A] = Sort(this, c)
 
@@ -695,7 +694,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     /**
      * Returns a non-writable circular vector from this vector.
      *
-     * @return  <code>[this(0),...,this(this.size-1),this(0),...,this(this.size-1),...n times...]</code>
+     * @return  <code>[this(this.start),...,this(this.end - 1),this(this.start),...,this(this.end - 1),...n times...]</code>
      */
     def cycle(n: Int): Vector[A] = Cycle(this, n)
 
@@ -729,7 +728,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     /**
      * Reorders with specified Int vector <code>iv</code>.
      *
-     * @return  <code>[this(iv(0)), this(iv(1)), this(iv(2)), ...]</code>.
+     * @return  <code>[this(iv(iv.start)), this(iv(iv.start + 1)), this(iv(iv.start + 2)), ...]</code>.
      */
     final def permutation(iv: Vector[Int]): Vector[A] = Permutation(this, iv)
 
@@ -739,7 +738,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * the element at the same position in the latter.
      *
      * @pre     <code>this.size == that.size</code>
-     * @return  <code>[(this(0), that(0)), (this(1), that(1)), (this(2), that(2)), ...]</code>.
+     * @return  <code>[(this(this.start), that(that.start)), (this(this.start + 1), that(that.start) + 1), (this(this.start + 2), that(that.start + 2)), ...]</code>.
      */
     final def zip[B](that: Vector[B]): Vector[(A, B)] = Zip(this, that)
 
@@ -803,9 +802,9 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     final def writer(i: Int): (A => Unit) = Writer(this, i)
 
     /**
-     * Alias of <code>this.subVector</code>
+     * Alias of <code>this.region</code>
      */
-    final def apply(_start: Int, _end: Int): Vector[A] = subVector(_start, _end)
+    final def apply(_start: Int, _end: Int): Vector[A] = region(_start, _end)
 
     /**
      * Alias of <code>this.append</code>

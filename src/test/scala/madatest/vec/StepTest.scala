@@ -32,8 +32,8 @@ class StepTest {
         //  0  1  2  3  4  5  6  7  8  9 10 11 12 13 14
         // 14,17,19, 8,13, 6, 4,23, 0
         val expected = Array(14, 8, 4)
-//        println("subvector:" + Vector.SubVector(arrayVector(example1), 2, 11).toString)
-        val actual = Vector.SubVector(arrayVector(example1), 2, 11).step(3)
+//        println("subvector:" + Vector.Region(arrayVector(example1), 2, 11).toString)
+        val actual = Vector.Region(arrayVector(example1), 2, 11).step(3)
 //        println(actual)
         detail.TestVectorReadWrite(expected, actual)
     }
