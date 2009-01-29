@@ -301,6 +301,16 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     final def isEmpty: Boolean = IsEmpty(this)
 
     /**
+     * @return  <code>this(this.start + n)</code>.
+     */
+    final def nth(n: Int) = Nth(this, n)
+
+    /**
+     * @return  <code>this(this.start + n) = e</code>.
+     */
+    final def nth(n: Int, e: A) = Nth(this, n, e)
+
+    /**
      * @return  this vector.
      */
     final def vector: Vector[A] = this
@@ -376,12 +386,12 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     final def takeWhile(p: A => Boolean): Vector[A] = TakeWhile(this, p)
 
     /**
-     * @return  <code>this(i, this.size + j)</code>.
+     * @return  <code>this(this.start + i, this.end + j)</code>.
      */
     final def offset(i: Int, j: Int): Vector[A] = Offset(this, i, j)
 
     /**
-     * @return  <code>this.slice(n, this.size)</code>.
+     * @return  <code>this.slice(n, this.end)</code>.
      */
     final def slice(n: Int): Vector[A] = Slice(this, n)
 
@@ -391,7 +401,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     final def slice(n: Int, m: Int): Vector[A] = Slice(this, n, m)
 
     /**
-     * @return  <code>(this(this.start, m), this(m, this.size))</code>, where <code>val m = Math.min(i, this.end)</code>.
+     * @return  <code>(this(this.start, m), this(m, this.end))</code>, where <code>val m = Math.min(i, this.end)</code>.
      */
     final def splitAt(i: Int): (Vector[A], Vector[A]) = SplitAt(this, i)
 
@@ -699,7 +709,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     def cycle(n: Int): Vector[A] = Cycle(this, n)
 
     /**
-     * @return  <code>Vector.range(0, this.size)</code>
+     * @return  <code>Vector.range(this.start, this.end)</code>
      */
     final def indices: Vector[Int] = Indices(this)
 
@@ -714,14 +724,14 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     def reverse: Vector[A] = Reverse(this)
 
     /**
-     * @return  <code>this(i, this.size) ++ this(0, i)</code>.
+     * @return  <code>this(i, this.end) ++ this(this.start, i)</code>.
      */
     final def rotate(i: Int): Vector[A] = Rotate(this, i)
 
     /**
      * Returns steps with specified stride <code>n</code>.
      *
-     * @return  <code>[this(0), this(n), this(2*n), ...]</code>.
+     * @return  <code>[this(this.start), this(this.start + n), this(this.start + 2*n), ...]</code>.
      */
     def step(n: Int): Vector[A] = Step(this, n)
 
@@ -772,6 +782,10 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      */
     override def clone: Vector[A] = Clone(this)
 
+    /**
+     * Creates a vector which throws if index access <code>i</code> is <code>(i < this.start || i >= this.end)</code>.
+     * Note this condition is highly restricted than <code>isDefinedAt</code>.
+     */
     def bounds: Vector[A] = Bounds(this)
 
     /**

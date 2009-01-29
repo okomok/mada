@@ -37,6 +37,6 @@ private[mada] object VectorRandomAccessSeq {
 
 private[mada] class VectorRandomAccessSeq[A](val f: Vector[A]) extends RandomAccessSeq.Mutable[A] {
     override def length = f.size
-    override def apply(i: Int) = f(i)
-    override def update(i: Int, e: A) = f(i) = e
+    override def apply(i: Int) = f.nth(i)
+    override def update(i: Int, e: A) = f.nth(i, e)
 }

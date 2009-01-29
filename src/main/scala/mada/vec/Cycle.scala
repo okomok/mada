@@ -14,7 +14,7 @@ private[mada] object Cycle {
 private[mada] class CycleVector[A](v: Vector[A], n: Int) extends Vector[A] {
     override def start = 0
     override def end = v.size * n
-    override def apply(i: Int) = v(v.start + Div.remainder(i, v.size))
+    override def apply(i: Int) = v.nth(Div.remainder(i, v.size))
 
     override def cycle(_n: Int) = v.cycle(n * _n) // cycle-cycle fusion
 }

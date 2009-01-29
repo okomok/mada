@@ -26,12 +26,12 @@ private[mada] class UndivideVector[A](vv: Vector[Vector[A]]) extends Vector[A] {
     override def apply(i: Int) = {
         val d = divisor
         val v = local(i, d)
-        v(v.start + Div.remainder(i, d))
+        v.nth(Div.remainder(i, d))
     }
     override def update(i: Int, e: A) = {
         val d = divisor
         val v = local(i, d)
-        v(v.start + Div.remainder(i, d)) = e
+        v.nth(Div.remainder(i, d), e)
     }
 
     private def local(i: Int, d: Int): Vector[A] = vv(Div.quotient(i, d))

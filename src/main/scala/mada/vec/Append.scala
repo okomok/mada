@@ -16,16 +16,16 @@ private[mada] class AppendVector[A](v: Vector[A], w: Vector[A]) extends Vector[A
     override def end = v.size + w.size
     override def apply(i: Int) = {
         if (i < v.size) {
-            v(v.start + i)
+            v.nth(i)
         } else {
-            w(w.start + i - v.size)
+            w.nth(i - v.size)
         }
     }
     override def update(i: Int, e: A) = {
         if (i < v.size) {
-            v(v.start + i) = e
+            v.nth(i, e)
         } else {
-            w(w.start + i - v.size) = e
+            w.nth(i - v.size, e)
         }
     }
 }

@@ -15,6 +15,6 @@ private[mada] class ZipVector[A, B](v: Vector[A], w: Vector[B]) extends Vector[(
     ThrowIf.differentSize(v, w, "zip")
     override def start = 0
     override def end = v.size
-    override def apply(i: Int) = (v(v.start + i), w(w.start + i))
-    override def update(i: Int, e: (A, B)) = { v(v.start + i) = e._1; w(w.start + i) = e._2 }
+    override def apply(i: Int) = (v.nth(i), w.nth(i))
+    override def update(i: Int, e: (A, B)) = { v.nth(i, e._1); w.nth(i, e._2) }
 }

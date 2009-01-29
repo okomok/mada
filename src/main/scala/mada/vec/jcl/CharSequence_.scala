@@ -32,7 +32,7 @@ private[mada] object VectorCharSequence {
 }
 
 private[mada] class VectorCharSequence(val f: Vector[Char]) extends CharSequence {
-    override def charAt(index: Int) = f(f.start + index)
+    override def charAt(index: Int) = f.nth(index)
     override def length = f.size
     override def subSequence(start: Int, end: Int) = new VectorCharSequence(f.window(start, end))
     override def toString = Vector.stringize(f)
