@@ -11,8 +11,8 @@ private[mada] object Reverse {
     def apply[A](v: Vector[A]): Vector[A] = new ReverseVector(v)
 }
 
-private[mada] class ReverseVector[A](override val * : Vector[A]) extends VectorAdapter[A, A] {
-    override def mapIndex(i: Int) = *.end - (i - *.start) - 1
+private[mada] class ReverseVector[A](override val underlying: Vector[A]) extends VectorAdapter[A, A] {
+    override def mapIndex(i: Int) = underlying.end - (i - underlying.start) - 1
 
-    override def reverse = * // reverse-reverse fusion
+    override def reverse = underlying // reverse-reverse fusion
 }

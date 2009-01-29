@@ -13,7 +13,7 @@ private[mada] object Bounds {
     def apply[A](v: Vector[A]): Vector[A] = new BoundsVector(v)
 }
 
-private[mada] class BoundsVector[A](override val * : Vector[A]) extends VectorAdapter[A, A] {
-    override def mapIndex(i: Int) = { ThrowIf.outOfBounds(*, i); i }
+private[mada] class BoundsVector[A](override val underlying: Vector[A]) extends VectorAdapter[A, A] {
+    override def mapIndex(i: Int) = { ThrowIf.outOfBounds(underlying, i); i }
     override def bounds = this // bounds-bounds fusion
 }

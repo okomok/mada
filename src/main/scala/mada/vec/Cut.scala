@@ -11,6 +11,6 @@ private[mada] object Cut {
     def apply[A](v: Vector[A]): Vector[A] = new CutVector(v)
 }
 
-private[mada] class CutVector[A](override val * : Vector[A]) extends VectorAdapter[A, A] {
+private[mada] class CutVector[A](override val underlying: Vector[A]) extends VectorAdapter[A, A] {
     // cut-cut fusion too should be "cut".
 }

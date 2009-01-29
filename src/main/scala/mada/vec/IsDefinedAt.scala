@@ -8,5 +8,5 @@ package mada.vec
 
 
 private[mada] object IsDefinedAt {
-    def apply[A](v: Vector[A], x: Int): Boolean = (x >= v.start) && (x < v.end)
+    def apply[A](v: Vector[A], x: Int): Boolean = (v.start <= x) && (x < v.end)
 }

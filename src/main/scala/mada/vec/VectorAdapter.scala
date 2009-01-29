@@ -14,37 +14,32 @@ package mada.vec
 trait VectorAdapter[Z, A] extends Vector[A] {
 
     /**
-     * Underlying vector, overridden by subclasses.
+     * Underlying vector, overridden in subclasses.
      */
-    def * : Vector[Z]
+    def underlying: Vector[Z]
 
     /**
-     * @return  <code>i</code>, possibly overridden by subclasses.
+     * @return  <code>i</code>, possibly overridden in subclasses.
      */
     def mapIndex(i: Int) = i
 
     /**
-     * @return  <code>*.start</code>, possibly overridden by subclasses.
+     * @return  <code>underlying.start</code>, possibly overridden in subclasses.
      */
-    override def start = *.start
+    override def start = underlying.start
 
     /**
-     * @return  <code>*.end</code>, possibly overridden by subclasses.
+     * @return  <code>underlying.end</code>, possibly overridden in subclasses.
      */
-    override def end = *.end
+    override def end = underlying.end
 
     /**
-     * @return  <code>*(mapIndex(i)).asInstanceOf[A]</code>, possibly overridden by subclasses.
+     * @return  <code>underlying(mapIndex(i)).asInstanceOf[A]</code>, possibly overridden in subclasses.
      */
-    override def apply(i: Int): A = *(mapIndex(i)).asInstanceOf[A]
+    override def apply(i: Int): A = underlying(mapIndex(i)).asInstanceOf[A]
 
     /**
-     * @return  <code>*(mapIndex(i)) = e.asInstanceOf[Z]</code>, possibly overridden by subclasses.
+     * @return  <code>underlying(mapIndex(i)) = e.asInstanceOf[Z]</code>, possibly overridden in subclasses.
      */
-    override def update(i: Int, e: A): Unit = *(mapIndex(i)) = e.asInstanceOf[Z]
-
-    /**
-     * @return  <code>*</code>.
-     */
-    final def base = *
+    override def update(i: Int, e: A): Unit = underlying(mapIndex(i)) = e.asInstanceOf[Z]
 }

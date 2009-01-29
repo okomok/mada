@@ -10,8 +10,7 @@ package mada.vec
 /**
  * Represents subvector.
  */
-case class SubVector[A](self: Vector[A], override val start: Int, override val end: Int) extends VectorAdapter[A, A] {
-    override def * = self
-
-    override def subVector(_start: Int, _end: Int) = self.subVector(_start, _end) // subVector-subVector fusion
+case class SubVector[A](override val underlying: Vector[A], override val start: Int, override val end: Int) extends VectorAdapter[A, A] {
+    override def isDefinedAt(x: Int) = underlying.isDefinedAt(x)
+    override def subVector(_start: Int, _end: Int) = underlying.subVector(_start, _end) // subVector-subVector fusion
 }

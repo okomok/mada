@@ -249,12 +249,12 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     import vec._
 
     /**
-     * @return  start index of this vector.
+     * @return  start index of this vector, which is NOT guaranteed to be <code>0</code>.
      */
     def start: Int
 
     /**
-     * @return  end index of this vector.
+     * @return  end index of this vector, which is NOT guaranteed to be <code>this.size</code>.
      */
     def end: Int
 
@@ -278,19 +278,19 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     def update(i: Int, e: A): Unit = throw new Vector.NotWritableException(this)
 
     /**
+     * @return  <code>(this.start <= x) && (x < this.end)</code>, possibly overridden in subclasses.
+     */
+    override def isDefinedAt(x: Int): Boolean = IsDefinedAt(this, x)
+
+    /**
      * @return  <code>end - start</code>
      */
-    final def size = end - start
+    final def size: Int = end - start
 
     /**
      * Alias of <code>this.size</code>
      */
     final def length: Int = size
-
-    /**
-     * @return  <code>0 <= i && i < this.size</code>
-     */
-    override def isDefinedAt(x: Int): Boolean = IsDefinedAt(this, x)
 
     /**
      * @return  <code>this.size == 0</code>
