@@ -227,9 +227,9 @@ object Peg {
     type ByNeedActions[A] = peg.ByNeedActions[A]
 
     /**
-     * Alias of <code>peg.RangeActions</code>
+     * Alias of <code>peg.RegionActions</code>
      */
-    type RangeActions[A] = peg.RangeActions[A]
+    type RegionActions[A] = peg.RegionActions[A]
 
     /**
      * Alias of <code>peg.CapturingGroups</code>
@@ -239,8 +239,12 @@ object Peg {
     /**
      * Alias of <code>peg.PrettyPrinter</code>
      */
-    type PrettyPrinter = peg.PrettyPrinter
+    val PrettyPrinter = peg.PrettyPrinter
 
+    /**
+     * Alias of <code>peg.PrettyPrinter</code>
+     */
+    type PrettyPrinter = peg.PrettyPrinter
 
     /**
      * Throws VerificationException if p doesn't match.
