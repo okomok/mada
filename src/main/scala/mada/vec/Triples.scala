@@ -6,7 +6,7 @@
 
 package mada.vec
 
-
+/*
 private[mada] object TriplesVector {
     def apply[A](from: Vector[Vector.Triple[A]]): Vector[Vector[A]] = from match {
         case from: VectorTriples[_] => from.from // conversion fusion
@@ -29,3 +29,5 @@ private[mada] object VectorTriples {
 private[mada] class VectorTriples[A](val from: Vector[Vector[A]]) extends VectorProxy[Vector.Triple[A]] with NotWritable[Vector.Triple[A]] {
     override val self = from.map({ v => v.triple })
 }
+*/
+

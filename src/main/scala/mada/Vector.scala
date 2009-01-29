@@ -45,11 +45,6 @@ object Vector {
     def flatten[A](vv: Vector[Vector[A]]): Vector[A] = Flatten(vv)
 
     /**
-     * @return  <code>flatten(triplesVector(vv))</code>.
-     */
-    def flatten3[A](vv: Vector[Vector.Triple[A]]): Vector[A] = Flatten3(vv)
-
-    /**
      * @return  <code>v.filter(_.isLeft).map(_.left.get)</code>.
      */
     def lefts[A, B](v: Vector[Either[A, B]]): Vector[A] = Lefts(v)
@@ -96,15 +91,7 @@ object Vector {
      */
     def undivide[A](vv: Vector[Vector[A]]): Vector[A] = Undivide(vv)
 
-    /**
-     * Reverts <code>Vector[A]#divide3</code>.
-     *
-     * @return  <code>undivide(triplesVector(vv))</code>.
-     */
-    def undivide3[A](vv: Vector[Vector.Triple[A]]): Vector[A] = Undivide3(vv)
-
     def untokenize[A](vv: Vector[Vector[A]], sep: Vector[A]): Vector[A] = Untokenize(vv, sep)
-    def untokenize3[A](vv: Vector[Vector.Triple[A]], sep: Vector[A]): Vector[A] = Untokenize3(vv, sep)
 
     /**
      * Reverts <code>Vector[A]#zip</code>.
@@ -217,16 +204,6 @@ object Vector {
     type Func3[A, B] = (Vector[A], Int, Int) => B
 
     /**
-     * Converts <code>Vector[Vector[A]]</code> to <code>Vector[Vector.Triple[A]]</code>.
-     */
-    def triples[A](from: Vector[Vector[A]]): Vector[Vector.Triple[A]] = VectorTriples(from)
-
-    /**
-     * Converts <code>Vector[Vector.Triple[A]]</code> to <code>Vector[Vector[A]]</code>.
-     */
-    def triplesVector[A](from: Vector[Vector.Triple[A]]): Vector[Vector[A]] = TriplesVector(from)
-
-    /**
      * Alias of <code>vec.VectorAdapter</code>
      */
     type VectorAdapter[Z, A] = vec.VectorAdapter[Z, A]
@@ -242,6 +219,16 @@ object Vector {
     type NotWritable[A] = vec.NotWritable[A]
 
     /**
+     * Alias of <code>vec.SubVector</code>
+     */
+    val SubVector = vec.SubVector
+
+    /**
+     * Alias of <code>vec.SubVector</code>
+     */
+    type SubVector[A] = vec.SubVector[A]
+
+    /**
      * Alias of <code>vec.IntFileVector</code>
      */
     type IntFileVector = vec.IntFileVector
@@ -252,6 +239,7 @@ object Vector {
     type LongFileVector = vec.LongFileVector
 }
 
+
 /**
  * Sequences that guarantees O(1) element access and O(1) length computation.
  * A vector is optionally writable but structurally-unmodifiable so that synchronization is unneeded.
@@ -261,9 +249,14 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     import vec._
 
     /**
-     * @return  the number of elements in this vector.
+     * @return  start index of this vector.
      */
-    def size: Int
+    def start: Int
+
+    /**
+     * @return  end index of this vector.
+     */
+    def end: Int
 
     /**
      * @param   i index of element to return.
@@ -283,6 +276,16 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * @pre     <code>this.isDefinedAt(i)</code>.
      */
     def update(i: Int, e: A): Unit = throw new Vector.NotWritableException(this)
+
+    /**
+     * @return  <code>end - start</code>
+     */
+    final def size = end - start
+
+    /**
+     * Alias of <code>this.size</code>
+     */
+    final def length: Int = size
 
     /**
      * @return  <code>0 <= i && i < this.size</code>
@@ -328,21 +331,20 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      */
     final def divide(n: Int): Vector[Vector[A]] = Divide(this, n)
 
-    /**
-     * @return <code>Vector.triples(this.divide(n))</code>
-     * @see     Vector.undivide3
-     */
-    final def divide3(n: Int): Vector[Vector.Triple[A]] = Divide3(this, n)
 
     /**
      * Returns a subsequence with specified region.
-     * <code>n < 0</code> or <code>m > this.size</code> is allowed if its behavior is defined.
      *
-     * @pre     <code>n <= m</code>
+     * @pre     <code>_start <= _end</code>
      * @return  a subsequence with specified region.
      * @see     apply
      */
-    def window(n: Int, m: Int): Vector[A] = Window(this, n, m)
+    def subVector(_start: Int, _end: Int): Vector[A] = SubVector(this, _start, _end)
+
+    /**
+     * @return  <code>this(this.start + n, this.start + m)</code>
+     */
+    final def window(n: Int, m: Int): Vector[A] = Window(this, n, m)
 
     /**
      * @return <code>Vector.randomAccessSeqVector(this.randomAccessSeq.projection.drop(n))</code>
@@ -436,11 +438,6 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * @return  a <code>Stream</code> of this vector.
      */
     final def stream: Stream[A] = VectorStream(this)
-
-   /**
-     * @return  a <code>Vector.Triple</code> of this vector.
-     */
-    def triple: Vector.Triple[A] = VectorTriple(this)
 
     /**
      * @return  a new <code>Array</code> which enumerates all elements of this vector.
@@ -803,18 +800,12 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      */
     final def identity: Vector[A] = Identity(this)
 
-    /**
-     * Alias of <code>this.size</code>
-     */
-    final def length: Int = size
-
-
     final def writer(i: Int): (A => Unit) = Writer(this, i)
 
     /**
-     * Alias of <code>this.window</code>
+     * Alias of <code>this.subVector</code>
      */
-    final def apply(n: Int, m: Int): Vector[A] = window(n, m)
+    final def apply(_start: Int, _end: Int): Vector[A] = subVector(_start, _end)
 
     /**
      * Alias of <code>this.append</code>

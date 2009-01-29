@@ -13,17 +13,19 @@ private[mada] object Step {
 
 private[mada] class StepVector[A](override val * : Vector[A], stride: Int) extends VectorAdapter[A, A] {
     ThrowIf.nonpositive(stride, "step stride")
-    override def size = StepCount(*.size, 0, stride)
-    override def mapIndex(i: Int) = i * stride
+    override def start = 0
+    override def end = StepCount(*.start, *.end, stride)
+    override def mapIndex(i: Int) = *.start + i * stride
     override def step(n: Int) = *.step(stride * n) // step-step fusion
 }
 
 private[mada] object StepCount {
-    def apply(size: Int, start: Int, stride: Int): Int = {
-        if (size == 0) {
+    def apply(start: Int, end: Int, stride: Int): Int = {
+     //   println(start + ", " + end)
+        if (start == end) {
             0
         } else {
-            val i = (size - start - 1) / stride
+            val i = (end - start - 1) / stride
             if (i < 0) 0 else i + 1
         }
     }

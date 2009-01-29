@@ -22,12 +22,10 @@ private[mada] object EqualsTo {
 
 private[mada] object EqualsWith {
     def apply[A1, A2](v1: Vector[A1], v2: Vector[A2], p: (A1, A2) => Boolean): Boolean = {
-        val (x1, i1, j1) = v1.triple
-        val (x2, i2, j2) = v2.triple
-        if (j1 - i1 != j2 - i2) {
+        if (v1.size != v2.size) {
             false
         } else {
-            stl.Equal(x1, i1, j1, x2, i2, p)
+            stl.Equal(v1, v1.start, v1.end, v2, v2.start, p)
         }
     }
 }

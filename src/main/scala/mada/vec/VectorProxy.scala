@@ -15,7 +15,8 @@ trait VectorProxy[A] extends Vector[A] with Proxy {
     override def self: Vector[A]
     final override def equals(that: Any): Boolean = Equals(this, that) // works around Proxy.equals.
 
-    override def size: Int = self.size
+    override def start: Int = self.start
+    override def end: Int = self.end
     override def apply(i: Int): A = self.apply(i)
     override def update(i: Int, e: A): Unit = self.update(i, e)
 
@@ -42,8 +43,7 @@ trait VectorProxy[A] extends Vector[A] with Proxy {
     override def seek(p: A => Boolean): Option[A] = self.seek(p)
     override def step(n: Int): Vector[A] = self.step(n)
     override def sortWith(lt: (A, A) => Boolean): Vector[A] = self.sortWith(lt)
-    override def triple: Vector.Triple[A] = self.triple
-    override def window(n: Int, m: Int): Vector[A] = self.window(n, m)
+    override def subVector(_start: Int, _end: Int): Vector[A] = self.subVector(_start, _end)
 
     override def parallel: Vector[A] = self.parallel
     override def parallel(g: Int): Vector[A] = self.parallel(g)

@@ -12,5 +12,6 @@ private[mada] object Empty {
 }
 
 private[mada] class EmptyVector[A] extends Vector[A] {
-    override def size = 0
+    override def start = 0
+    override def end = 0
 }

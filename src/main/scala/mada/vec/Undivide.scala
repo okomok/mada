@@ -8,37 +8,34 @@ package mada.vec
 
 
 private[mada] object Undivide {
-    def apply[A](vv: Vector[Vector[A]]): Vector[A] = Vector.undivide3(Vector.triples(vv))
-}
-
-private[mada] object Undivide3 {
-    def apply[A](vv: Vector[Vector.Triple[A]]): Vector[A] = vv match {
-        case vv: Divide3Vector[_] => vv.dividend // undivide3-divide3 fusion
+    def apply[A](vv: Vector[Vector[A]]): Vector[A] = vv match {
+        case vv: DivideVector[_] => vv.dividend // undivide-divide fusion
         case _ => {
             if (vv.isEmpty) {
                 Vector.empty[A]
             } else {
-                new Undivide3Vector(vv)
+                new UndivideVector(vv)
             }
         }
     }
 }
 
-private[mada] class Undivide3Vector[A](vv: Vector[Vector.Triple[A]]) extends Vector[A] {
-    override def size = (quotient * divisor) + remainder
+private[mada] class UndivideVector[A](vv: Vector[Vector[A]]) extends Vector[A] {
+    override def start = 0
+    override def end = (quotient * divisor) + remainder
     override def apply(i: Int) = {
         val d = divisor
-        val (v, k, _) = local(i, d)
-        v(k + Div.remainder(i, d))
+        val v = local(i, d)
+        v(v.start + Div.remainder(i, d))
     }
     override def update(i: Int, e: A) = {
         val d = divisor
-        val (v, k, _) = local(i, d)
-        v(k + Div.remainder(i, d)) = e
+        val v = local(i, d)
+        v(v.start + Div.remainder(i, d)) = e
     }
 
-    private def local(i: Int, d: Int): Vector.Triple[A] = vv(Div.quotient(i, d))
+    private def local(i: Int, d: Int): Vector[A] = vv(Div.quotient(i, d))
     private def quotient: Int = vv.size - 1
-    private def divisor: Int = { val (_, i, j) = vv.first; j - i }
-    private def remainder: Int = { val (_, i, j) = vv.last; j - i }
+    private def divisor: Int = vv.first.size
+    private def remainder: Int = vv.last.size
 }

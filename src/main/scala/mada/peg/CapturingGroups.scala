@@ -10,7 +10,7 @@ package mada.peg
 /**
  * Provides capturing groups of regular expressions.
  */
-class CapturingGroups[K, A](val group: scala.collection.mutable.Map[K, Vector[A]]) {
+class CapturingGroups[K, A](val groups: scala.collection.mutable.Map[K, Vector[A]]) {
     /**
      * Constructs from a hash-map.
      */
@@ -24,7 +24,7 @@ class CapturingGroups[K, A](val group: scala.collection.mutable.Map[K, Vector[A]
     /**
      * Captures matched region.
      */
-    def capture(k: K, p: Peg[A]): Peg[A] = p.act({ (v, i, j) => group(k) = v(i, j) })
+    def capture(k: K, p: Peg[A]): Peg[A] = p.act({ v => groups(k) = v })
 
     /**
      * Alias of <code>backref</code>
@@ -37,6 +37,6 @@ class CapturingGroups[K, A](val group: scala.collection.mutable.Map[K, Vector[A]
     def backref(k: K): Peg[A] = new BackrefPeg(k)
 
     private class BackrefPeg(k: K) extends PegProxy[A] {
-        override def self = Peg.vectorPeg(group(k))
+        override def self = Peg.vectorPeg(groups(k))
     }
 }

@@ -15,7 +15,8 @@ private[mada] object ListVector {
 }
 
 private[mada] class ListVector[A](val from: List[A]) extends Vector[A] {
-    override def size = from.size
+    override def start = 0
+    override def end = from.size
     override def apply(i: Int) = from.get(i)
     override def update(i: Int, e: A) = from.set(i, e)
 

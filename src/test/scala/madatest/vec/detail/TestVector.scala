@@ -26,10 +26,13 @@ object TestVectorReadOnly {
     def apply[A](expected: Array[A], actual: Vector[A]): Unit = {
         assertEquals(expected.length, actual.size)
 
+        var first = actual.start
         var i = 0
         while (i < expected.size) {
-            assertEquals(expected(i), actual(i))
+            assertEquals(expected(i), actual(first))
             i += 1
+            first += 1
         }
+        assertEquals(actual.end, first)
     }
 }

@@ -10,13 +10,13 @@ package mada.stl
 /**
  * Counts calls of <code>Vector#update</code>.
  */
-class OutputCounter(val start: Int) extends OutputVector[Any] {
+class OutputCounter(val from: Int) extends OutputVector[Any] {
     /**
      * Starts from count <code>0</code>.
      */
     def this() = this(0)
 
-    private var c = start
+    private var c = from
 
     /**
      * Increments counter.

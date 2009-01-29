@@ -12,7 +12,8 @@ private[mada] object Synchronized {
 }
 
 private[mada] class SynchronizedVector[A](override val * : Vector[A]) extends VectorAdapter[A, A] {
-    override def size: Int = *.synchronized { *.size }
-    override def apply(i: Int): A = *.synchronized { *.apply(i) }
-    override def update(i: Int, e: A): Unit = *.synchronized { *.update(i, e) }
+    override def start = *.synchronized { *.start }
+    override def end = *.synchronized { *.end }
+    override def apply(i: Int): A = *.synchronized { *.apply(start + i) }
+    override def update(i: Int, e: A): Unit = *.synchronized { *.update(start + i, e) }
 }

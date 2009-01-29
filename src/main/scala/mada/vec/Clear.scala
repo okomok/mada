@@ -8,5 +8,5 @@ package mada.vec
 
 
 private[mada] object Clear {
-    def apply[A](v: Vector[A]): Vector[A] = v.window(0, 0)
+    def apply[A](v: Vector[A]): Vector[A] = v(v.start, v.start)
 }

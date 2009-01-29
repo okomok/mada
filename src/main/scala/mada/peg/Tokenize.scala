@@ -8,25 +8,18 @@ package mada.peg
 
 
 private[mada] object Tokenize {
-    def apply[A](p: Peg[A], v: Vector[A]): Iterator[Vector[A]] = {
-        p.tokenize3(v).map({ w => Vector.tripleVector(w) })
-    }
+    def apply[A](p: Peg[A], v: Vector[A]): Iterator[Vector[A]] = new TokenizeIterator(p, v)
 }
 
-private[mada] object Tokenize3 {
-    def apply[A](p: Peg[A], v: Vector[A]): Iterator[Vector.Triple[A]] = new Tokenize3Iterator(p, v)
-}
-
-private[mada] class Tokenize3Iterator[A](p: Peg[A], v: Vector[A]) extends Iterator[Vector.Triple[A]] {
-    private val (x, i, j) = v.triple
-    private var (k, l) = Find.impl(p, x, i, j)
+private[mada] class TokenizeIterator[A](p: Peg[A], v: Vector[A]) extends Iterator[Vector[A]] {
+    private var (k, l) = Find.impl(p, v, v.start, v.end)
     override def hasNext = l != Peg.FAILURE
     override def next = {
         if (!hasNext) {
             throw new NoSuchElementException("next")
         }
-        val tmp = (x, k, l)
-        k_l(Find.impl(p, x, l, j))
+        val tmp = new Vector.SubVector(v, k, l)
+        k_l(Find.impl(p, v, l, v.end))
         tmp
     }
 

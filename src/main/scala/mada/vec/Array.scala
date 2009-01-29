@@ -15,7 +15,8 @@ private[mada] object ArrayVector {
 }
 
 private[mada] class ArrayVector[A](from: Array[A]) extends Vector[A] {
-    override def size = from.length
+    override def start = 0
+    override def end = from.length
     override def apply(i: Int) = from(i)
     override def update(i: Int, e: A) = from(i) = e
 

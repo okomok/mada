@@ -10,14 +10,14 @@ package mada.vec
 private[mada] object Head {
     def apply[A](v: Vector[A]): A = {
         ThrowIf.empty(v, "head")
-        v(0)
+        v(v.start)
     }
 }
 
 private[mada] object Tail {
     def apply[A](v: Vector[A]): Vector[A] = {
         ThrowIf.empty(v, "tail")
-        v.window(1, v.size)
+        v(v.start + 1, v.end)
     }
 }
 

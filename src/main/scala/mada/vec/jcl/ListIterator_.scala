@@ -15,18 +15,17 @@ private[mada] object VectorListIterator {
 }
 
 private[mada] class VectorListIterator[A](v: Vector[A]) extends ListIterator[A] {
-    private val (x, i, j) = v.triple
-    private var cur = i
+    private var cur = v.start
 
     override def add(e: A) = throw new UnsupportedOperationException
-    override def hasNext = cur != j
-    override def hasPrevious = cur != i
+    override def hasNext = cur != v.end
+    override def hasPrevious = cur != v.start
 
     override def next = {
         if (!hasNext) {
             throw new NoSuchElementException("next")
         }
-        val tmp = x(cur)
+        val tmp = v(cur)
         cur += 1
         tmp
     }
@@ -38,7 +37,7 @@ private[mada] class VectorListIterator[A](v: Vector[A]) extends ListIterator[A] 
             throw new NoSuchElementException("previous")
         }
         cur -= 1
-        x(cur)
+        v(cur)
     }
 
     override def previousIndex = cur - 1

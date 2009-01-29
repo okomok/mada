@@ -8,14 +8,14 @@ package mada.peg
 
 
 private[mada] object Act {
-    def apply[A](p: Peg[A], f: Vector.Func3[A, Any]): Peg[A] = new ActPeg(p, f)
+    def apply[A](p: Peg[A], f: Vector.Func[A, Any]): Peg[A] = new ActPeg(p, f)
 }
 
-private[mada] class ActPeg[A](override val self: Peg[A], f: Vector.Func3[A, Any]) extends PegProxy[A] {
+private[mada] class ActPeg[A](override val self: Peg[A], f: Vector.Func[A, Any]) extends PegProxy[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
         val cur = self.parse(v, start, end)
         if (cur != Peg.FAILURE) {
-            f(v, start, cur)
+            f(v(start, cur))
         }
         cur
     }

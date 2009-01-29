@@ -8,15 +8,15 @@ package mada.vec
 
 
 private[mada] object Divide {
-    def apply[A](v: Vector[A], n: Int): Vector[Vector[A]] = Vector.triplesVector(v.divide3(n))
+    def apply[A](v: Vector[A], n: Int): Vector[Vector[A]] = new DivideVector(v, n)
 }
 
-private[mada] object Divide3 {
-    def apply[A](v: Vector[A], n: Int): Vector[Vector.Triple[A]] = new Divide3Vector(v, n)
-}
-
-private[mada] class Divide3Vector[A](val dividend: Vector[A], stride: Int) extends Vector[Vector.Triple[A]] {
+private[mada] class DivideVector[A](val dividend: Vector[A], stride: Int) extends Vector[Vector[A]] {
     ThrowIf.nonpositive(stride, "stride")
-    override def size = StepCount(dividend.size, 0, stride)
-    override def apply(i: Int) = (dividend, i * stride, Math.min((i + 1) * stride, dividend.size))
+    override def start = 0
+    override def end = StepCount(dividend.start, dividend.end, stride)
+    override def apply(i: Int) = {
+        val cur = dividend.start + i * stride
+        new SubVector(dividend, cur, Math.min(cur + stride, dividend.end))
+    }
 }

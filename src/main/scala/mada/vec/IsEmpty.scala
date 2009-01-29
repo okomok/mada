@@ -8,5 +8,5 @@ package mada.vec
 
 
 private[mada] object IsEmpty {
-    def apply[A](v: Vector[A]): Boolean = v.size == 0
+    def apply[A](v: Vector[A]): Boolean = v.start == v.end
 }

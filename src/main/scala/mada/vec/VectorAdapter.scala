@@ -24,9 +24,14 @@ trait VectorAdapter[Z, A] extends Vector[A] {
     def mapIndex(i: Int) = i
 
     /**
-     * @return  <code>*.size</code>, possibly overridden by subclasses.
+     * @return  <code>*.start</code>, possibly overridden by subclasses.
      */
-    override def size = *.size
+    override def start = *.start
+
+    /**
+     * @return  <code>*.end</code>, possibly overridden by subclasses.
+     */
+    override def end = *.end
 
     /**
      * @return  <code>*(mapIndex(i)).asInstanceOf[A]</code>, possibly overridden by subclasses.

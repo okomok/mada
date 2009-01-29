@@ -13,7 +13,7 @@ private[mada] object Begin {
 
 private[mada] class BeginPeg[A] extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
-        if (start == 0) {
+        if (start == v.start) {
             start
         } else {
             Peg.FAILURE

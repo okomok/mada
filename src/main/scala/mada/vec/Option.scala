@@ -12,7 +12,8 @@ private[mada] object OptionVector {
 }
 
 private[mada] class OptionVector[A](from: Option[A]) extends Vector[A] {
-    override def size = if (from.isEmpty) 0 else 1
+    override def start = 0
+    override def end = if (from.isEmpty) 0 else 1
     override def apply(i: Int) = from.get
 
     override def firstOption = from // conversion fusion

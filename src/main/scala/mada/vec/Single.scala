@@ -12,7 +12,8 @@ private[mada] object Single {
 }
 
 private[mada] class SingleVector[A](private var from: A) extends Vector[A] {
-    override def size = 1
+    override def start = 0
+    override def end = 1
     override def apply(i: Int) = from
     override def update(i: Int, e: A) = from = e
 }

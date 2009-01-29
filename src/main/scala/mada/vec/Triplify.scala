@@ -9,12 +9,12 @@ package mada.vec
 
 private[mada] object Triplify {
     def apply[A, B](f: Vector.Func[A, B]): Vector.Func3[A, B] = {
-        { (v: Vector[A], i: Int, j: Int) => f(v.window(i, j)) }
+        { (v: Vector[A], i: Int, j: Int) => f(v(i, j)) }
     }
 }
 
 private[mada] object Untriplify {
     def apply[A, B](f: Vector.Func3[A, B]): Vector.Func[A, B] = {
-        { (v: Vector[A]) => f(v, 0, v.size) }
+        { (v: Vector[A]) => f(v, v.start, v.end) }
     }
 }

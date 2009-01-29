@@ -12,6 +12,7 @@ private[mada] object CellVector {
 }
 
 private[mada] class CellVector[A](from: Cell[A]) extends Vector[A] {
-    override def size = 1
+    override def start = 0
+    override def end = 1
     override def apply(i: Int) = from.elem
 }

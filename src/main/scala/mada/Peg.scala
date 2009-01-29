@@ -16,7 +16,7 @@ object Peg {
     /**
      * Specifies parsing failure.
      */
-    final val FAILURE = -1
+    final val FAILURE = Math.MAX_INT
 
     /**
      * Matches if it succeeds to advance.
@@ -306,8 +306,8 @@ trait Peg[A] {
     final def lookBehind: Peg[A] = LookBehind(this)
     final def lookBack: Peg[A] = LookBack(this)
 
-    final def act(f: Vector.Func3[A, Any]): Peg[A] = Act(this, f)
-    final def andIf(pred: Vector.Func3[A, Boolean]): Peg[A] = AndIf(this, pred)
+    final def act(f: Vector.Func[A, Any]): Peg[A] = Act(this, f)
+    final def andIf(pred: Vector.Func[A, Boolean]): Peg[A] = AndIf(this, pred)
     final def identity: Peg[A] = Identity(this)
     final def memoize: Peg[A] = Memoize(this)
     final def named(name: String) = Named(this, name)
@@ -321,10 +321,9 @@ trait Peg[A] {
     final def matches(v: Vector[A]): Boolean = Matches(this, v)
 
     final def tokenize(v: Vector[A]): Iterator[Vector[A]] = Tokenize(this, v)
-    final def tokenize3(v: Vector[A]): Iterator[Vector.Triple[A]] = Tokenize3(this, v)
     final def filterFrom(v: Vector[A]): Iterator[A] = FilterFrom(this, v)
 
-    final def apply(f: Vector.Func3[A, Any]): Peg[A] = act(f)
+    final def apply(f: Vector.Func[A, Any]): Peg[A] = act(f)
     final def unary_~ : Peg[A] = lookAhead
     final def unary_! : Peg[A] = lookAhead.not
     final def unary_- : Peg[A] = not

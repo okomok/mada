@@ -15,8 +15,7 @@ private[mada] object Sort {
 
 private[mada] object SortWith {
     def apply[A](v: Vector[A], lt: (A, A) => Boolean): Vector[A] = {
-        val (x, i, j) = v.triple
-        stl.Sort(x, i, j, lt)
+        stl.Sort(v, v.start, v.end, lt)
         v
     }
 }

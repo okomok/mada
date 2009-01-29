@@ -9,7 +9,7 @@ package mada.vec
 
 private[mada] object ThrowIf {
     def outOfBounds[A](v: Vector[A], i: Int): Unit = {
-        if (i < 0 || i >= v.size) {
+        if (i < v.start || i >= v.end) {
             throw new IndexOutOfBoundsException(i.toString)
         }
     }

@@ -9,13 +9,12 @@ package mada.vec
 
 private[mada] object Take {
     def apply[A](v: Vector[A], n: Int): Vector[A] = {
-        v.window(0, Math.min(n, v.size))
+        v(v.start, Math.min(v.start + n, v.end))
     }
 }
 
 private[mada] object TakeWhile {
     def apply[A](v: Vector[A], p: A => Boolean): Vector[A] = {
-        val (x, i, j) = v.triple
-        x.window(i, stl.FindIf(x, i, j, Functions.not(p)))
+        v(v.start, stl.FindIf(v, v.start, v.end, Functions.not(p)))
     }
 }

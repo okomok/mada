@@ -22,8 +22,7 @@ private[mada] object SortWith {
 
     def partition[A](v: Vector[A], lt: (A, A) => Boolean, grainSize: Int): Vector[() => Unit] = {
         val fs = new ArrayList[() => Unit]
-        val (x, i, j) = v.triple
-        loop(fs, grainSize, x, i, j, lg(j - i) * 2, lt)
+        loop(fs, grainSize, v, v.start, v.end, lg(v.size) * 2, lt)
         Vector.jclListVector(fs)
     }
 
@@ -34,7 +33,7 @@ private[mada] object SortWith {
 
         while (__last - __first > grainSize) {
             if (__depth_limit == 0) {
-                fs.add({ () => *.window(__first, __last).sortWith(__comp) })
+                fs.add({ () => *(__first, __last).sortWith(__comp) })
                 return
             }
             val __cut = UnguardedPartition(*, __first, __last, Median(*(__first), *(__first + (__last - __first)/2), *(__last - 1), __comp), __comp)
@@ -42,6 +41,6 @@ private[mada] object SortWith {
             loop(fs, grainSize, *, __cut, __last, __depth_limit, __comp)
             __last = __cut
         }
-        fs.add({ () => *.window(__first, __last).sortWith(__comp) })
+        fs.add({ () => *(__first, __last).sortWith(__comp) })
     }
 }

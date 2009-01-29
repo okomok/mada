@@ -11,7 +11,6 @@ private[mada] object Range {
     def apply(start: Int, end: Int): Vector[Int] = new RangeVector(start, end)
 }
 
-private[mada] class RangeVector(start: Int, end: Int) extends Vector[Int] {
-    override def size = end - start
-    override def apply(i: Int) = start + i
+private[mada] class RangeVector(override val start: Int, override val end: Int) extends Vector[Int] {
+    override def apply(i: Int) = i
 }

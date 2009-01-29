@@ -10,6 +10,6 @@ package mada.vec
 private[mada] object Init {
     def apply[A](v: Vector[A]): Vector[A] = {
         ThrowIf.empty(v, "init")
-        v.window(0, v.size - 1)
+        v(v.start, v.end - 1)
     }
 }

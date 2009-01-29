@@ -21,7 +21,7 @@ class IterateTest {
 
         val p = -single('X') +? ("X"|end)
         var k = 0
-        for ((v, i, j) <- p.tokenize3(w)) {
+        for (Vector.SubVector(v, i, j) <- p.tokenize(w)) {
             assertSame(w, v)
             sb append Vector.stringize(v(k, i))
             sb append Vector.stringize(v(i, j))

@@ -9,8 +9,7 @@ package mada.peg
 
 private[mada] object Find {
     def apply[A](p: Peg[A], v: Vector[A]): Option[(Int, Int)] = {
-        val (x, start, end) = v.triple
-        val (i, j) = impl(p, x, start, end)
+        val (i, j) = impl(p, v, v.start, v.end)
         if (j == Peg.FAILURE) {
             None
         } else {

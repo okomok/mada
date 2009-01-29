@@ -12,9 +12,3 @@ private[mada] object Untokenize {
         Vector.flatten(vv.map({ v => sep.append(v) }))
     }
 }
-
-private[mada] object Untokenize3 {
-    def apply[A](vv: Vector[Vector.Triple[A]], sep: Vector[A]): Vector[A] = {
-        Vector.untokenize(Vector.triplesVector(vv), sep)
-    }
-}

@@ -11,16 +11,17 @@ import mada.Peg._
 import junit.framework.Assert._
 import mada.Peg.Compatibles._
 import mada.Vector.Compatibles._
+import mada.Vector.SubVector
 
 
 class TokenizeTest {
     def testTrivial: Unit = {
         val pe = madaPeg("abcd")
         val v = madaVector("XabcdXXabcdXX")
-        val it = pe.tokenize3(v)
+        val it = pe.tokenize(v)
         var c = 0
         while (it.hasNext) {
-            val (_, i, j) = it.next
+            val SubVector(_, i, j) = it.next
             if (c == 0) {
                 assertEquals(1, i)
                 assertEquals(5, j)
@@ -37,15 +38,15 @@ class TokenizeTest {
     def testBound: Unit = {
         val pe = madaPeg("abcd")
         val v = madaVector("qqabqqab")
-        val it = pe.tokenize3(v)
+        val it = pe.tokenize(v)
         assertFalse(it.hasNext)
     }
 
     def testBound2: Unit = {
         val pe = madaPeg("abcd")
         val v = madaVector("abcd")
-        val it = pe.tokenize3(v)
-        val (_, i, j) = it.next
+        val it = pe.tokenize(v)
+        val SubVector(_, i, j) = it.next
         assertEquals(0, i)
         assertEquals(4, j)
         assertFalse(it.hasNext)
@@ -55,7 +56,7 @@ class TokenizeTest {
     def testEmpty: Unit = {
         val pe = madaPeg("")
         val v = madaVector("")
-        val it = pe.tokenize3(v)
+        val it = pe.tokenize(v)
         assertFalse(it.hasNext)
     }
 

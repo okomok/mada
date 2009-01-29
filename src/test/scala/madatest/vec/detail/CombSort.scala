@@ -11,7 +11,7 @@ object CombSort {
     import mada._
 
     def apply[A](v: Vector[A], f: (A, A) => Boolean): Unit = {
-        val (x, first, last) = v.triple
+        val (first, last) = (v.start, v.end)
 
         var gap = last - first
         if (gap < 1)
@@ -30,8 +30,8 @@ object CombSort {
 
             var (target1, target2) = (first, first2)
             while (target2 != last) {
-                if (f(x(target2), x(target1))) {
-                    Stl.iterSwap(x, target1, x, target2)
+                if (f(v(target2), v(target1))) {
+                    Stl.iterSwap(v, target1, v, target2)
                     swapped = true
                 }
                 target1 += 1; target2 += 1

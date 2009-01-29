@@ -12,6 +12,7 @@ private[mada] object ProductVector {
 }
 
 private[mada] class ProductVector(from: Product) extends Vector[Any] {
-    override def size = from.productArity
+    override def start = 0
+    override def end = from.productArity
     override def apply(i: Int) = from.productElement(i)
 }

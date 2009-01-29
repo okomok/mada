@@ -17,9 +17,14 @@ trait OutputVector[A] extends Vector[A] {
     def output(e: A): Unit
 
     /**
-     * Throws <code>UnsupportedOperationException</code>.
+     * @return  a meaningless index.
      */
-    override def size = throw new UnsupportedOperationException("OutputVector.size")
+    override def start = Math.MAX_INT
+
+    /**
+     * @return  a meaningless index.
+     */
+    override def end = Math.MAX_INT
 
     /**
      * Throws <code>UnsupportedOperationException</code>.

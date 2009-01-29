@@ -10,18 +10,14 @@ package mada.vec
 private[mada] object Flatten {
     def apply[A](vv: Vector[Vector[A]]): Vector[A] = {
         val av = Vector.arrayVector(new Array[A](FlattenSize(vv)))
-        var (i, j) = (0, 0)
+        var (i, j) = (av.start, av.start)
         for (v <- vv) {
             j += v.size
-            v.copyTo(av.window(i, j))
+            v.copyTo(av(i, j))
             i = j
         }
         av
     }
-}
-
-private[mada] object Flatten3 {
-    def apply[A](vv: Vector[Vector.Triple[A]]): Vector[A] = Vector.flatten(Vector.triplesVector(vv))
 }
 
 private[mada] object FlattenSize {

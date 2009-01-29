@@ -16,12 +16,14 @@ private[mada] object RandomAccessSeqVector {
 }
 
 private[mada] class RandomAccessSeqVector[A](from: RandomAccessSeq[A]) extends Vector[A] {
-    override def size = from.length
+    override def start = 0
+    override def end = from.length
     override def apply(i: Int) = from(i)
 }
 
 private[mada] class MutableRandomAccessSeqVector[A](from: RandomAccessSeq.Mutable[A]) extends Vector[A] {
-    override def size = from.length
+    override def start = 0
+    override def end = from.length
     override def apply(i: Int) = from(i)
     override def update(i: Int, e: A) = from(i) = e
 

@@ -14,7 +14,6 @@ private[mada] object LazyValues {
 private[mada] class LazyValuesVector[A](override val * : Vector[A]) extends VectorAdapter[A, A] with NotWritable[A] {
     private val table = new scala.collection.jcl.HashMap[Int, A]
 
-    override val size = *.size
     override def apply(i: Int) = {
         val o = table.get(i)
         if (o.isEmpty) {

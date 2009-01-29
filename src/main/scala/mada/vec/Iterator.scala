@@ -23,7 +23,7 @@ private[mada] object VectorIterator {
 }
 
 private[mada] class VectorIterator[A](from: Vector[A]) extends Iterator[A] {
-    private var (x, i, j) = from.triple
-    override def hasNext = i != j
-    override def next = { val tmp = x(i); i += 1; tmp }
+    private var i = from.start
+    override def hasNext = i != from.end
+    override def next = { val tmp = from(i); i += 1; tmp }
 }

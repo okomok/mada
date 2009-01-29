@@ -12,7 +12,8 @@ private[mada] object StringVector {
 }
 
 private[mada] class StringVector(val from: String) extends Vector[Char] {
-    override def size = from.length
+    override def start = 0
+    override def end = from.length
     override def apply(i: Int) = from.charAt(i)
 
     override def force = this

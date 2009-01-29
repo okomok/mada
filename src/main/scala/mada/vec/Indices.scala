@@ -8,5 +8,5 @@ package mada.vec
 
 
 private[mada] object Indices {
-    def apply[A](v: Vector[A]): Vector[Int] = Vector.range(0, v.size)
+    def apply[A](v: Vector[A]): Vector[Int] = Vector.range(v.start, v.end)
 }

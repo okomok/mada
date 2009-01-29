@@ -23,10 +23,10 @@ class ASTreeBuilderTest {
         val tb = ASTreeBuilder("root")
         printTree(tb.tree) // trivial tree
 
-        expr    ::= tb(term >> ( '+' >> term | '-' >> term ).*){ case _ => "expr" }
-        term    ::= tb(factor >> ( '*' >> factor | '/' >> factor ).*){ (v,i,j) => "term" }
-        factor  ::= tb((digit+) | '(' >> expr >> ')' | '-' >> factor | '+' >> factor){ case _ => "factor" }
-        digit   ::= tb.leaf(range('0','9')){ (v: Vector[Char]) => v.toString }
+        expr    ::= tb(term >> ( '+' >> term | '-' >> term ).*){ _ => "expr" }
+        term    ::= tb(factor >> ( '*' >> factor | '/' >> factor ).*){ _ => "term" }
+        factor  ::= tb((digit+) | '(' >> expr >> ')' | '-' >> factor | '+' >> factor){ _ => "factor" }
+        digit   ::= tb.leaf(range('0','9')){ v => v.toString }
 
         assertTrue(expr matches "(1+2)*(3*(4-5))")
         printTree(tb.tree)

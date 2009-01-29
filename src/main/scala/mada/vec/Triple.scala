@@ -8,9 +8,9 @@ package mada.vec
 
 
 private[mada] object TripleVector {
-    def apply[A](v: Vector.Triple[A]): Vector[A] = v._1.window(v._2, v._3)
+    def apply[A](v: Vector.Triple[A]): Vector[A] = v._1(v._2, v._3)
 }
 
 private[mada] object VectorTriple {
-    def apply[A](v: Vector[A]): Vector.Triple[A] = (v, 0, v.size)
+    def apply[A](v: Vector[A]): Vector.Triple[A] = (v, v.start, v.end)
 }
