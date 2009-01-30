@@ -24,8 +24,7 @@ private[mada] object StepCount {
         if (start == end) {
             0
         } else {
-            val i = (end - start - 1) / stride
-            if (i < 0) 0 else i + 1
+            ((end - start - 1) / stride) + 1
         }
     }
 }
