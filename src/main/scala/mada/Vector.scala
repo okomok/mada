@@ -330,7 +330,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     override def hashCodeOfRef: Int = super.hashCode
 
     /**
-     * Divides this vector into vector of vectors.
+     * Divides this vector into vector of Regions.
      * Each vector size is <code>n</code> except for the last one.
      *
      * @param   n divisor
@@ -671,17 +671,36 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      */
     final def reducerRight[B >: A](op: (A, B) => B): Vector[B] = ReducerRight(this, op)
 
+    /**
+     * @return  <code>this.parallel(this.defaultGrainSize)</code>
+     */
     def parallel: Vector[A] = Parallel(this)
+
+    /**
+     * Requests a vector to perform parallel methods.
+     */
     def parallel(grainSize: Int): Vector[A] = Parallel(this, grainSize)
+
+    /**
+     * Reverts <code>this.parallel</code>.
+     */
     def unparallel: Vector[A] = Unparallel(this)
+
+    /**
+     * Is this vector methods possibly performing in parallel?
+     */
     def isParallel: Boolean = IsParallel(this)
+
+    /**
+     * Specifies the default grain size, which is used to divide this vector in parallel methods.
+     */
     def defaultGrainSize: Int = DefaultGrainSize(this)
 
     /**
      * Sort this vector according to the comparison function <code>lt</code>.
      * Note this vector is mutated.
      *
-     * @param   lt the comparison function
+     * @param   lt the "less-than" comparison function
      * @return  this vector sorted according to the comparison function <code>lt</code>.
      */
     def sortWith(lt: (A, A) => Boolean): Vector[A] = SortWith(this, lt)

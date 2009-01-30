@@ -11,8 +11,14 @@ package mada.peg
  * Contains utility methods operating on type <code>SymbolMap</code>.
  */
 object SymbolMap {
+    /**
+     * @return  <code>this(es.elements, Functions.less(c))</code>.
+     */
     def apply[A](es: (Vector[A], Peg[A])*)(implicit c: A => Ordered[A]): SymbolMap[A] = apply(es.elements, Functions.less(c))
 
+    /**
+     * Constructs <code>SymbolMet</code> containing <code>es</code> as key-and-value entries.
+     */
     def apply[A](es: Iterator[(Vector[A], Peg[A])], lt: (A, A) => Boolean): SymbolMap[A] = {
         val map = new SymbolMap(lt)
         for (e <- es) {
@@ -24,11 +30,11 @@ object SymbolMap {
 
 
 /**
- * A <code>Peg</code> to optimize the form <code>(k1 >> p1)|(k2 >> p2)|(k3 >> p3)|...</code> using ternary search tree.
+ * A <code>Peg</code> to optimize the form <code>(k1 >> p1)|(k2 >> p2)|(k3 >> p3)|...</code> using "less-than" comparator and ternary search tree.
  */
 class SymbolMap[A] private (private val tree: TSTree[A, Peg[A]]) extends Peg[A] with scala.collection.mutable.Map[Vector[A], Peg[A]] {
     /**
-     * Constructs <code>SymbolMap</code> using <code>lt</code> as comparator.
+     * Constructs <code>SymbolMap</code> using <code>lt</code> as "less-than" comparator.
      */
     def this(lt: (A, A) => Boolean) = this(new TSTree[A, Peg[A]](lt))
 

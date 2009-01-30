@@ -12,7 +12,7 @@ package mada.peg
  */
 object SymbolSet {
     /**
-     * @return  <code>this(vs.elements, Functions.less(c))</code>
+     * @return  <code>this(vs.elements, Functions.less(c))</code>.
      */
     def apply[A](vs: Vector[A]*)(implicit c: A => Ordered[A]): SymbolSet[A] = apply(vs.elements, Functions.less(c))
 
@@ -30,11 +30,11 @@ object SymbolSet {
 
 
 /**
- * A <code>Peg</code> to optimize the form <code>k1|k2|k3|...</code> using ternary search tree.
+ * A <code>Peg</code> to optimize the form <code>k1|k2|k3|...</code> using "less-than" comparator and ternary search tree.
  */
 class SymbolSet[A] private (private val tree: TSTree[A, Unit]) extends Peg[A] with scala.collection.mutable.Set[Vector[A]] {
     /**
-     * Constructs <code>SymbolSet</code> using <code>lt</code> as comparator.
+     * Constructs <code>SymbolSet</code> using <code>lt</code> as "less-than" comparator.
      */
     def this(lt: (A, A) => Boolean) = this(new TSTree[A, Unit](lt))
 
