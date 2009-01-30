@@ -47,6 +47,13 @@ object Functions {
     }
 
     /**
+     * Returns argument as is.
+     */
+    def identity[T1]: Function1[T1, T1] = new Function1[T1, T1] {
+        override def apply(v1: T1) = v1
+    }
+
+    /**
      * Negates the predicate.
      */
     def not1[T1, R](f: Function1[T1, Boolean]): Function1[T1, Boolean] = new Function1[T1, Boolean] {

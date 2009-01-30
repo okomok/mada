@@ -12,6 +12,111 @@ package mada
  */
 object Iterators {
     /**
+     * @return  <code>equalWith(it, jt)(Functions.equal)
+     */
+     def equal[A, B](it: Iterator[A], jt: Iterator[B]): Boolean = {
+         equalWith(it, jt)(Functions.equal)
+     }
+
+    /**
+     * Returns <code>true</code> iif elements and length are the same.
+     */
+    def equalWith[A, B](it: Iterator[A], jt: Iterator[B])(p: (A, B) => Boolean): Boolean = {
+        while (it.hasNext && jt.hasNext) {
+            if (!p(it.next, jt.next)) {
+                return false
+            }
+        }
+        !it.hasNext && !jt.hasNext
+    }
+
+    /**
+     * Returns the length.
+     */
+    def length[A, B](it: Iterator[A]): Int = {
+        var l = 0
+        while (it.hasNext) {
+            l += 1
+            it.next
+        }
+        l
+    }
+
+    /**
+     * The unfolding
+     */
+    def unfoldRight[A, B](z: A)(op: A => Option[(B, A)]): Iterator[B] = new Iterator[B] {
+        private var acc = op(z)
+        override def hasNext = !acc.isEmpty
+        override def next = {
+            val tmp = acc.get
+            acc = op(tmp._2)
+            tmp._1
+        }
+    }
+
+    /**
+     * An infinite iterator of repeated applications of <code></code> to <code>z</code>.
+     */
+    def iterate[A](z: A)(op: A => A): Iterator[A] = new Iterator[A] {
+        private var acc = z
+        override def hasNext = true
+        override def next = {
+            val tmp = acc
+            acc = op(acc)
+            tmp
+        }
+    } // unfoldRight(z)({ x => Some(x, op(x)) }) always needs heap-allocation of Option.
+
+    /**
+     * An infinite iterator, with <code>e</code> the value of every element.
+     */
+    def repeat[A](e: A): Iterator[A] = iterate(e)(Functions.identity[A])
+
+    /**
+     * An infinite repetition of <code>it</code>.
+     */
+    def cycle[A](it: Iterator[A]): Iterator[A] = {
+        val buf = new java.util.ArrayList[A]
+        var firstTime = true
+        val f = { (u: Unit) =>
+            if (firstTime) {
+                firstTime = false
+                withSideEffect(it)({ e => buf.add(e) })
+            } else {
+                jclIteratorIterator(buf.iterator)
+            }
+        }
+        repeat(()).flatMap(f)
+    }
+
+    /**
+     * Iterates with side-effect <code>f</code>.
+     */
+    def withSideEffect[A](it: Iterator[A])(f: A => Any): Iterator[A] = new Iterator[A] {
+        override def hasNext = it.hasNext
+        override def next = {
+            val e = it.next
+            f(e)
+            e
+        }
+    }
+
+    /**
+     * Provides infix operators using implicit conversions.
+     */
+    val Infix = new {
+        class MadaIterators[A](_1: Iterator[A]) {
+            def equal[B](_2: Iterator[B]) = Iterators.equal(_1, _2)
+            def equalWith[B](_2: Iterator[B])(_3: (A, B) => Boolean) = Iterators.equalWith(_1, _2)(_3)
+            def length = Iterators.length(_1)
+            def cycle = Iterators.cycle(_1)
+            def withSideEffect(_2: A => Any) = Iterators.withSideEffect(_1)(_2)
+        }
+        implicit def iterator2MadaIterators[A](_1: Iterator[A]): MadaIterators[A] = new MadaIterators(_1)
+    }
+
+    /**
      * Implements a proxy for iterator objects.
      */
     trait IteratorProxy[A] extends Iterator[A] with Proxy {
