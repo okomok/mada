@@ -8,10 +8,13 @@ package mada.vec
 
 
 private[mada] object Permutation {
-    def apply[A](ev: Vector[A], iv: Vector[Int]): Vector[A] = new PermutationVector(iv, ev)
+    def apply[A](v: Vector[A], f: Int => Int): Vector[A] = new PermutationVector(v, f)
 }
 
-private[mada] class PermutationVector[A](override val underlying: Vector[Int], ev: Vector[A]) extends VectorAdapter[Int, A] {
-    override def apply(i: Int) = ev(underlying(i))
-    override def update(i: Int, e: A) = ev(underlying(i)) = e
+private[mada] class PermutationVector[A](v: Vector[A], f: Int => Int) extends VectorAdapter[A, A] {
+    override val underlying = v.nth
+
+    override def apply(i: Int) = underlying(f(i))
+    override def update(i: Int, e: A) = underlying(f(i)) = e
+    override def isDefinedAt(i: Int) = underlying.isDefinedAt(f(i))
 }

@@ -314,21 +314,6 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     final def isEmpty: Boolean = IsEmpty(this)
 
     /**
-     * @return  <code>this(this.start + n)</code>.
-     */
-    final def nth(n: Int) = Nth(this, n)
-
-    /**
-     * @return  <code>this(this.start + n) = e</code>.
-     */
-    final def nth(n: Int, e: A) = Nth(this, n, e)
-
-    /**
-     * @return  <code>this.isDefinedAt(this.start + i)</code>.
-     */
-    final def isDefinedAtNth(i: Int): Boolean = IsDefinedAtNth(this, i)
-
-    /**
      * @return  this vector.
      */
     final def vector: Vector[A] = this
@@ -762,11 +747,6 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     def lazyValues : Vector[A] = LazyValues(this)
 
     /**
-     * @return  <code>Vector.randomAccessSeqVector(this.randomAccessSeq.projection.reverse)</code>
-     */
-    def reverse: Vector[A] = Reverse(this)
-
-    /**
      * @return  <code>this(i, this.end) ++ this(this.start, i)</code>.
      */
     final def rotate(i: Int): Vector[A] = Rotate(this, i)
@@ -779,11 +759,19 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     def step(n: Int): Vector[A] = Step(this, n)
 
     /**
-     * Reorders with specified Int vector <code>iv</code>.
-     *
-     * @return  <code>[this(iv(iv.start)), this(iv(iv.start + 1)), this(iv(iv.start + 2)), ...]</code>.
+     * Reorders using "0-to-size" index mapping <code>f</code>.
      */
-    final def permutation(iv: Vector[Int]): Vector[A] = Permutation(this, iv)
+    final def permutation(f: Int => Int): Vector[A] = Permutation(this, f)
+
+    /**
+     * Turns this vector into "0-to-size" indexing vector.
+     */
+    def nth = Nth(this)
+
+    /**
+     * Reverses order of elements.
+     */
+    def reverse: Vector[A] = Reverse(this)
 
     /**
      * Returns a vector formed from this vector and the specified vector
@@ -826,8 +814,8 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     override def clone: Vector[A] = Clone(this)
 
     /**
-     * Creates a vector which throws if index access <code>i</code> is <code>(i < this.start || i >= this.end)</code>.
-     * Note this condition is highly restricted than <code>isDefinedAt</code>.
+     * Creates a vector whose <code>isDefinedAt(i)</code> returns true
+     * iif <code>this.start <= i && i < this.end</code>.
      */
     def bounds: Vector[A] = Bounds(this)
 

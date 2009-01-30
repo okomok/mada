@@ -57,13 +57,6 @@ class DivideTest {
         assertEquals(15, actual.size)
         detail.TestVectorReadWrite(example1, actual)
     }
-
-    def testUndivideRegion: Unit = {
-        val actual = Vector.undivide(madaVector(example1).clone.divide(6).cut.region(1, 2))
-        assertEquals(6, actual.size)
-        detail.TestVectorReadWrite(Array(13, 6, 4,23, 0,12), actual)
-    }
-
     def testUndivideBound: Unit = {
         val actual = Vector.undivide(madaVector(example1).divide(1).cut)
         assertEquals(15, actual.size)
@@ -85,5 +78,12 @@ class DivideTest {
         val actual = Vector.undivide(madaVector(example1).divide(1000))
         assertEquals(15, actual.size)
         detail.TestVectorReadOnly(example1, actual)
+    }
+
+    def testUndivideRegion: Unit = {
+        val dv =madaVector(example1).clone.divide(6).cut.region(1, 2)
+        val actual = Vector.undivide(dv)
+        assertEquals(6, actual.size)
+        detail.TestVectorReadWrite(Array(13, 6, 4,23, 0,12), actual)
     }
 }

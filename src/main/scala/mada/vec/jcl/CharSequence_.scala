@@ -12,7 +12,7 @@ import java.lang.CharSequence
 
 private[mada] object CharSequenceVector {
     def apply[A](from: CharSequence): Vector[Char] = from match {
-        case from: VectorCharSequence => from.f // conversion fusion
+        case from: VectorCharSequence => from.v // conversion fusion
         case _ => new CharSequenceVector(from)
     }
 }
@@ -31,9 +31,10 @@ private[mada] object VectorCharSequence {
     }
 }
 
-private[mada] class VectorCharSequence(val f: Vector[Char]) extends CharSequence {
-    override def charAt(index: Int) = f.nth(index)
-    override def length = f.size
-    override def subSequence(start: Int, end: Int) = new VectorCharSequence(f.window(start, end))
-    override def toString = Vector.stringize(f)
+private[mada] class VectorCharSequence(val v: Vector[Char]) extends CharSequence {
+    private val vn = v.nth
+    override def charAt(index: Int) = vn(index)
+    override def length = vn.size
+    override def subSequence(start: Int, end: Int) = new VectorCharSequence(vn(start, end))
+    override def toString = Vector.stringize(vn)
 }

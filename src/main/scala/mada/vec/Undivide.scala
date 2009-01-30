@@ -21,26 +21,31 @@ private[mada] object Undivide {
 }
 
 private[mada] class UndivideVector[A](vv: Vector[Vector[A]]) extends Vector[A] {
+    Assert(!vv.isEmpty)
+
+    private val vvn = vv.nth
+
     override def start = 0
     override def end = (quotient * divisor) + remainder
 
     override def apply(i: Int) = {
         val d = divisor
-        vv.nth(Div.quotient(i, d)).
-            nth(Div.remainder(i, d))
+        Nth.read( // called directly to avoid heap-allocations.
+            vvn(Div.quotient(i, d)), Div.remainder(i, d) )
     }
     override def update(i: Int, e: A) = {
         val d = divisor
-        vv.nth(Div.quotient(i, d)).
-            nth(Div.remainder(i, d), e)
+        Nth.write(
+            vvn(Div.quotient(i, d)), Div.remainder(i, d), e )
     }
     override def isDefinedAt(i: Int) = {
         val d = divisor
-        vv.isDefinedAtNth(Div.quotient(i, d)) &&
-            vv.nth(Div.quotient(i, d)).isDefinedAtNth(Div.remainder(i, d))
+        vvn.isDefinedAt(Div.quotient(i, d)) &&
+        Nth.isDefinedAt(
+            vvn(Div.quotient(i, d)), Div.remainder(i, d) )
     }
 
-    private def quotient: Int = vv.size - 1
-    private def divisor: Int = vv.first.size
-    private def remainder: Int = vv.last.size
+    private def quotient: Int = vvn.size - 1
+    private def divisor: Int = vvn.first.size
+    private def remainder: Int = vvn.last.size
 }

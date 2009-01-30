@@ -12,10 +12,12 @@ private[mada] object Cycle {
 }
 
 private[mada] class CycleVector[A](v: Vector[A], n: Int) extends Vector[A] {
+    private val vn = v.nth
+
     override def start = 0
     override def end = v.size * n
 
-    override def apply(i: Int) = v.nth(Div.remainder(i, v.size))
+    override def apply(i: Int) = vn(Div.remainder(i, v.size))
     // isDefinedAt is restrictive because v.size affects.
 
     override def cycle(_n: Int) = v.cycle(n * _n) // cycle-cycle fusion

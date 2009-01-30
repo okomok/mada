@@ -11,13 +11,13 @@ private[mada] object Step {
     def apply[A](v: Vector[A], stride: Int): Vector[A] = new StepVector(v, stride)
 }
 
-private[mada] class StepVector[A](override val underlying: Vector[A], stride: Int) extends VectorAdapter[A, A] {
+private[mada] class StepVector[A](v: Vector[A], stride: Int) extends VectorProxy[A] {
     ThrowIf.nonpositive(stride, "step stride")
-    override def start = 0
-    override def end = StepCount(underlying.start, underlying.end, stride)
-    override def mapIndex(i: Int) = underlying.start + i * stride
+    override val self = {
+        v.permutation({ i => i * stride }).nth(0, StepCount(v.start, v.end, stride))
+    }
 
-    override def step(n: Int) = underlying.step(stride * n) // step-step fusion
+    override def step(n: Int) = v.step(stride * n) // step-step fusion
 }
 
 private[mada] object StepCount {

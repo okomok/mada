@@ -12,28 +12,31 @@ private[mada] object Append {
 }
 
 private[mada] class AppendVector[A](v: Vector[A], w: Vector[A]) extends Vector[A] {
+    private val vn = v.nth
+    private val wn = w.nth
+
     override def start = 0
-    override def end = v.size + w.size
+    override def end = vn.size + wn.size
 
     override def apply(i: Int) = {
-        if (i < v.size) {
-            v.nth(i)
+        if (i < vn.size) {
+            vn(i)
         } else {
-            w.nth(i - v.size)
+            wn(i - vn.size)
         }
     }
     override def update(i: Int, e: A) = {
-        if (i < v.size) {
-            v.nth(i, e)
+        if (i < vn.size) {
+            vn(i) = e
         } else {
-            w.nth(i - v.size, e)
+            wn(i - vn.size) = e
         }
     }
     override def isDefinedAt(i: Int) = {
-        if (i < v.size) {
-            v.isDefinedAtNth(i)
+        if (i < vn.size) {
+            vn.isDefinedAt(i)
         } else {
-            w.isDefinedAtNth(i - v.size)
+            wn.isDefinedAt(i - vn.size)
         }
     }
 }

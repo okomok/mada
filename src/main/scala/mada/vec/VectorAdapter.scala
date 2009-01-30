@@ -12,39 +12,33 @@ package mada.vec
  * Unlike <code>VectorProxy</code>, method calls are not forwarded to underlying vector.
  */
 trait VectorAdapter[Z, A] extends Vector[A] {
-
     /**
      * Underlying vector, overridden in subclasses.
      */
     def underlying: Vector[Z]
 
     /**
-     * @return  <code>i</code>, possibly overridden in subclasses.
-     */
-    def mapIndex(i: Int) = i
-
-    /**
-     * @return  <code>underlying.start</code>, possibly overridden in subclasses.
+     * @return  <code>underlying.start</code>.
      */
     override def start = underlying.start
 
     /**
-     * @return  <code>underlying.end</code>, possibly overridden in subclasses.
+     * @return  <code>underlying.end</code>.
      */
     override def end = underlying.end
 
     /**
-     * @return  <code>underlying(mapIndex(i)).asInstanceOf[A]</code>, possibly overridden in subclasses.
+     * @return  <code>underlying(i).asInstanceOf[A]</code>.
      */
-    override def apply(i: Int): A = underlying(mapIndex(i)).asInstanceOf[A]
+    override def apply(i: Int): A = underlying(i).asInstanceOf[A]
 
     /**
-     * @return  <code>underlying(mapIndex(i)) = e.asInstanceOf[Z]</code>, possibly overridden in subclasses.
+     * @return  <code>underlying(i) = e.asInstanceOf[Z]</code>.
      */
-    override def update(i: Int, e: A): Unit = underlying(mapIndex(i)) = e.asInstanceOf[Z]
+    override def update(i: Int, e: A): Unit = underlying(i) = e.asInstanceOf[Z]
 
     /**
-     * @return  <code>underlying.isDefinedAt(mapIndex(i))</code>, possibly overridden in subclasses.
+     * @return  <code>underlying.isDefinedAt(i)</code>.
      */
-    override def isDefinedAt(i: Int): Boolean = underlying.isDefinedAt(mapIndex(i))
+    override def isDefinedAt(i: Int): Boolean = underlying.isDefinedAt(i)
 }

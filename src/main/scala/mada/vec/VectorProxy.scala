@@ -35,6 +35,7 @@ trait VectorProxy[A] extends Vector[A] with Proxy {
     override def lazyValues : Vector[A] = self.lazyValues
     override def loop[F <: (A => Boolean)](i: Int, j: Int, f: F): F = self.loop(i, j, f)
     override def map[B](f: A => B): Vector[B] = self.map(f)
+    override def nth: Vector[A] = self.nth
     override def pareach(f: A => Unit): Unit = self.pareach(f)
     override def randomAccessSeq: RandomAccessSeq.Mutable[A] = self.randomAccessSeq
     override def readOnly: Vector[A] = self.readOnly
