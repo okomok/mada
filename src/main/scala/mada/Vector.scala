@@ -779,7 +779,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * the element at the same position in the latter.
      *  If one of the two vectors is longer than the other, its remaining elements are ignored.
      *
-     * @return  <code>[(this(this.start), that(that.start)), (this(this.start + 1), that(that.start) + 1), (this(this.start + 2), that(that.start + 2)), ...]</code>.
+     * @return  <code>[(this(this.start), that(that.start)), (this(this.start + 1), that(that.start + 1)), (this(this.start + 2), that(that.start + 2)), ...]</code>.
      */
     final def zip[B](that: Vector[B]): Vector[(A, B)] = Zip(this, that)
 
