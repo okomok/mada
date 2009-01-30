@@ -157,11 +157,6 @@ object Vector {
     def stringVector(from: String): Vector[Char] = StringVector(from)
 
     /**
-     * Converts a <code>Triple</code> to vector.
-     */
-    def tripleVector[A](from: Vector.Triple[A]): Vector[A] = TripleVector(from)
-
-    /**
      * Converts a vector to <code>java.lang.CharSequence</code>.
      */
     def jclCharSequence(from: Vector[Char]): java.lang.CharSequence = jcl.VectorCharSequence(from)
