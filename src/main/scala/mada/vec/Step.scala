@@ -13,10 +13,7 @@ private[mada] object Step {
 
 private[mada] class StepVector[A](v: Vector[A], stride: Int) extends VectorProxy[A] {
     ThrowIf.nonpositive(stride, "step stride")
-    override val self = {
-        v.permutation({ i => i * stride }).nth(0, StepCount(v.start, v.end, stride))
-    }
-
+    override val self = v.permutation({ i => i * stride }).nth(0, StepCount(v.start, v.end, stride))
     override def step(n: Int) = v.step(stride * n) // step-step fusion
 }
 

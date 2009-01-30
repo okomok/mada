@@ -730,13 +730,6 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     final def append(that: Vector[A]): Vector[A] = Append(this, that)
 
     /**
-     * Returns a non-writable circular vector from this vector.
-     *
-     * @return  <code>[this(this.start),...,this(this.end - 1),this(this.start),...,this(this.end - 1),...n times...]</code>
-     */
-    def cycle(n: Int): Vector[A] = Cycle(this, n)
-
-    /**
      * @return  <code>Vector.range(this.start, this.end)</code>
      */
     final def indices: Vector[Int] = Indices(this)
@@ -745,6 +738,28 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * Returns a vector whose elements are lazy.
      */
     def lazyValues : Vector[A] = LazyValues(this)
+
+    /**
+     * Reorders using "0-to-size" index mapping <code>f</code>.
+     */
+    final def permutation(f: Int => Int): Vector[A] = Permutation(this, f)
+
+    /**
+     * Returns a non-writable circular vector from this vector.
+     *
+     * @return  <code>[this(this.start),...,this(this.end - 1),this(this.start),...,this(this.end - 1),...n times...]</code>
+     */
+    def cycle(n: Int): Vector[A] = Cycle(this, n)
+
+    /**
+     * Turns this vector into "0-to-size" indexing vector.
+     */
+    def nth = Nth(this)
+
+    /**
+     * Reverses order of elements.
+     */
+    def reverse: Vector[A] = Reverse(this)
 
     /**
      * @return  <code>this(i, this.end) ++ this(this.start, i)</code>.
@@ -757,21 +772,6 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * @return  <code>[this(this.start), this(this.start + n), this(this.start + 2*n), ...]</code>.
      */
     def step(n: Int): Vector[A] = Step(this, n)
-
-    /**
-     * Reorders using "0-to-size" index mapping <code>f</code>.
-     */
-    final def permutation(f: Int => Int): Vector[A] = Permutation(this, f)
-
-    /**
-     * Turns this vector into "0-to-size" indexing vector.
-     */
-    def nth = Nth(this)
-
-    /**
-     * Reverses order of elements.
-     */
-    def reverse: Vector[A] = Reverse(this)
 
     /**
      * Returns a vector formed from this vector and the specified vector

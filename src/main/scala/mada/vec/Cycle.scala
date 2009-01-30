@@ -11,14 +11,7 @@ private[mada] object Cycle {
     def apply[A](v: Vector[A], n: Int): Vector[A] = new CycleVector(v, n)
 }
 
-private[mada] class CycleVector[A](v: Vector[A], n: Int) extends Vector[A] {
-    private val vn = v.nth
-
-    override def start = 0
-    override def end = v.size * n
-
-    override def apply(i: Int) = vn(Div.remainder(i, v.size))
-    // isDefinedAt is restrictive because v.size affects.
-
+private[mada] class CycleVector[A](v: Vector[A], n: Int) extends VectorProxy[A] with NotWritable[A] {
+    override val self = v.permutation({ i => Div.remainder(i, v.size) }).nth(0, v.size * n)
     override def cycle(_n: Int) = v.cycle(n * _n) // cycle-cycle fusion
 }
