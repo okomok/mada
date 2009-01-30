@@ -235,6 +235,11 @@ object Vector {
      * Alias of <code>vec.LongFileVector</code>
      */
     type LongFileVector = vec.LongFileVector
+
+    /**
+     * Alias of <code>vec.Writer</code>
+     */
+    type Writer[A] = vec.Writer[A]
 }
 
 
@@ -550,8 +555,14 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      */
     final def flatMap[B](f: A => Vector[B]): Vector[B] = FlatMap(this, f)
 
+    /**
+     * Casts element to type <code>B</code>.
+     */
     final def asVectorOf[B]: Vector[B] = AsVectorOf[A, B](this)
 
+    /**
+     * Equivalent to <code>this.foreach</code>, but loop is breakable by <code>f</code> returning <code>false</code>.
+     */
     def loop[F <: (A => Boolean)](i: Int, j: Int, f: F): F = Loop(this, i, j, f)
 
     /**
@@ -827,7 +838,15 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      */
     final def identity: Vector[A] = Identity(this)
 
-    final def writer(i: Int): (A => Unit) = Writer(this, i)
+    /**
+     * @return  <code>this.writer(this.start)</code>
+     */
+    final def writer: Writer[A] = Writer(this)
+
+    /**
+     * @return  <code>new Writer(this, i)</code>
+     */
+    final def writer(i: Int): Writer[A] = Writer(this, i)
 
     /**
      * Alias of <code>this.region</code>

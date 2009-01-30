@@ -19,20 +19,20 @@ trait OutputVector[A] extends Vector[A] {
     /**
      * @return  a meaningless index.
      */
-    override def start = Math.MAX_INT
+    final override def start = Math.MAX_INT
 
     /**
      * @return  a meaningless index.
      */
-    override def end = Math.MAX_INT
+    final override def end = start
 
     /**
      * Throws <code>UnsupportedOperationException</code>.
      */
-    override def apply(i: Int) = throw new UnsupportedOperationException("OutputVector.apply")
+    final override def apply(i: Int) = throw new UnsupportedOperationException("OutputVector.apply")
 
     /**
      * @return  <code>output(e)</code>; <code>i</code> is ignored.
      */
-    override def update(i: Int, e: A) = output(e)
+    final override def update(i: Int, e: A) = output(e)
 }
