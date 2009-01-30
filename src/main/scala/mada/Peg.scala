@@ -16,7 +16,7 @@ object Peg {
     /**
      * Specifies parsing failure.
      */
-    final val FAILURE = Math.MAX_INT
+    final val FAILURE = Vector.NULL_INDEX
 
     /**
      * Matches if it succeeds to advance.

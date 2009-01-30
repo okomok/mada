@@ -13,6 +13,11 @@ object Vector {
     import vec._
 
     /**
+     * @return  <code>Math.MIN_INT</code>, which is the reserved index by <code>mada.Vector</code>.
+     */
+    final val NULL_INDEX = Math.MIN_INT
+
+    /**
      * Thrown if vector is not readable.
      */
     class NotReadableException[A](val vector: Vector[A]) extends RuntimeException
