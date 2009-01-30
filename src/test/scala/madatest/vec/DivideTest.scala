@@ -16,8 +16,8 @@ import madatest.vec.detail.Example._
 
 class DivideTest {
     def testTrivial: Unit = {
-        // 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14
-        // 0,18,14,17,19, 8,13, 6, 4,23, 0,12,15,11, 4
+        // 0  1  2  3  4  5    6  7  8  9 10 11   12 13 14
+        // 0,18,14,17,19, 8,  13, 6, 4,23, 0,12,  15,11, 4
         val actual = madaVector(example1).divide(6)
         assertEquals(3, actual.size)
         assertEquals(actual(0), madaVector(Array(0,18,14,17,19,8)))
@@ -33,6 +33,17 @@ class DivideTest {
         assertEquals(actual(0), madaVector(example1))
     }
 
+    def testRegion: Unit = {
+        // 0  1  2   3    4  5  6  7    8  9 10
+        // 14,17,19, 8,  13, 6, 4,23,   0,12,15
+        val actual = madaVector(example1).clone.region(2, 13).divide(4)
+        assertEquals(3, actual.size)
+        detail.TestVectorReadWrite(Array(14,17,19, 8), actual.nth(0))
+        detail.TestVectorReadWrite(Array(13, 6, 4,23), actual.nth(1))
+        detail.TestVectorReadWrite(Array( 0,12,15), actual.nth(2))
+    }
+
+
     def testBound: Unit = {
         // 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14
         // 0,18,14,17,19, 8,13, 6, 4,23, 0,12,15,11, 4
@@ -42,9 +53,15 @@ class DivideTest {
     }
 
     def testUndivide: Unit = {
-        val actual = Vector.undivide(madaVector(example1).divide(6).cut)
+        val actual = Vector.undivide(madaVector(example1).clone.divide(6).cut)
         assertEquals(15, actual.size)
-        detail.TestVectorReadOnly(example1, actual)
+        detail.TestVectorReadWrite(example1, actual)
+    }
+
+    def testUndivideRegion: Unit = {
+        val actual = Vector.undivide(madaVector(example1).clone.divide(6).cut.region(1, 2))
+        assertEquals(6, actual.size)
+        detail.TestVectorReadWrite(Array(13, 6, 4,23, 0,12), actual)
     }
 
     def testUndivideBound: Unit = {
