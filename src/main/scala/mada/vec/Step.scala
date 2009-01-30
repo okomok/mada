@@ -16,6 +16,7 @@ private[mada] class StepVector[A](override val underlying: Vector[A], stride: In
     override def start = 0
     override def end = StepCount(underlying.start, underlying.end, stride)
     override def mapIndex(i: Int) = underlying.start + i * stride
+
     override def step(n: Int) = underlying.step(stride * n) // step-step fusion
 }
 

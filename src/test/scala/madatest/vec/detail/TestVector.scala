@@ -29,6 +29,7 @@ object TestVectorReadOnly {
         var first = actual.start
         var i = 0
         while (i < expected.size) {
+            assertTrue(actual.isDefinedAt(first))
             assertEquals(expected(i), actual(first))
             i += 1
             first += 1

@@ -19,4 +19,5 @@ private[mada] class DivideVector[A](val dividend: Vector[A], stride: Int) extend
         val cur = dividend.start + i * stride
         new Region(dividend, cur, Math.min(cur + stride, dividend.end))
     }
+    // isDefinedAt is restrictive because dividend.end affects.
 }

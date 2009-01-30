@@ -14,6 +14,7 @@ private[mada] object Append {
 private[mada] class AppendVector[A](v: Vector[A], w: Vector[A]) extends Vector[A] {
     override def start = 0
     override def end = v.size + w.size
+
     override def apply(i: Int) = {
         if (i < v.size) {
             v.nth(i)
@@ -26,6 +27,13 @@ private[mada] class AppendVector[A](v: Vector[A], w: Vector[A]) extends Vector[A
             v.nth(i, e)
         } else {
             w.nth(i - v.size, e)
+        }
+    }
+    override def isDefinedAt(i: Int) = {
+        if (i < v.size) {
+            v.isDefinedAtNth(i)
+        } else {
+            w.isDefinedAtNth(i - v.size)
         }
     }
 }

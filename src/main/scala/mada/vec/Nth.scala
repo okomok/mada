@@ -9,12 +9,16 @@ package mada.vec
 
 private[mada] object Nth {
     def apply[A](v: Vector[A], n: Int): A = {
-        ThrowIf.outOfSize(v, n)
         v(v.start + n)
     }
 
     def apply[A](v: Vector[A], n: Int, e: A): Unit = {
-        ThrowIf.outOfSize(v, n)
         v(v.start + n) = e
+    }
+}
+
+private[mada] object IsDefinedAtNth {
+    def apply[A](v: Vector[A], i: Int): Boolean = {
+        v.isDefinedAt(v.start + i)
     }
 }

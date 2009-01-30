@@ -6,6 +6,7 @@
 
 package mada
 
+
 /**
  * Contains utility types and methods operating on type <code>Vector</code>.
  */
@@ -31,7 +32,7 @@ object Vector {
      * Concatenate all argument sequences into a single vector.
      *
      * @param   vs the given argument sequences
-     * @return  the vector created from the concatenated arguments
+     * @return  the projection vector created from the concatenated arguments
      */
     def concat[A](vs: Vector[A]*): Vector[A] = Concat(vs: _*)
 
@@ -46,6 +47,7 @@ object Vector {
      *
      * @param   vv The vector which returns on each call to next
      *             a new vector whose elements are to be concatenated to the result.
+     * @return  the newly created writable vector (not a projection into <code>vv</code>).
      */
     def flatten[A](vv: Vector[Vector[A]]): Vector[A] = Flatten(vv)
 
@@ -250,8 +252,12 @@ object Vector {
 
 /**
  * Sequences that guarantees O(1) element access and O(1) length computation.
- * A vector is optionally writable but structurally-unmodifiable so that synchronization is unneeded.
- * Note that these methods return projections unless otherwise specified.
+ * A vector is optionally writable but structurally-unmodifiable so that synchronization is unneeded.<p/>
+ *
+ * In vector, an index works like a "key" or "pointer"; it is not guaranteed to start from <code>0</code>.
+ * At the setout, you have to extract an index by using the <code>start</code> method.<p/>
+ *
+ * Unless otherwise specified, these methods return projections to keep readability and writability.
  */
 trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     import vec._
@@ -271,6 +277,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * @pre     this vector is readable.
      * @pre     <code>this.isDefinedAt(i)</code>.
      * @return  the element at the specified position in this vector.
+     * @throws  <code>Vector.NotReadableException</code> if not overridden.
      */
     override def apply(i: Int): A = throw new Vector.NotReadableException(this)
 
@@ -282,13 +289,14 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * @param   e element to be stored at the specified position.
      * @pre     this vector is writable.
      * @pre     <code>this.isDefinedAt(i)</code>.
+     * @throws  <code>Vector.NotWritableException</code> if not overridden.
      */
     def update(i: Int, e: A): Unit = throw new Vector.NotWritableException(this)
 
     /**
      * @return  <code>(this.start <= x) && (x < this.end)</code>, possibly overridden in subclasses.
      */
-    override def isDefinedAt(x: Int): Boolean = IsDefinedAt(this, x)
+    override def isDefinedAt(i: Int): Boolean = IsDefinedAt(this, i)
 
     /**
      * @return  <code>end - start</code>
@@ -314,6 +322,11 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * @return  <code>this(this.start + n) = e</code>.
      */
     final def nth(n: Int, e: A) = Nth(this, n, e)
+
+    /**
+     * @return  <code>this.isDefinedAt(this.start + i)</code>.
+     */
+    final def isDefinedAtNth(i: Int): Boolean = IsDefinedAtNth(this, i)
 
     /**
      * @return  this vector.
@@ -520,7 +533,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * predicate <code>p</code>. The order of the elements is preserved.
      *
      * @param   p the predicate used to filter the vector.
-     * @return  the elements of this vector satisfying <code>p</code>.
+     * @return  the non-writable elements of this vector satisfying <code>p</code>.
      */
     def filter(p: A => Boolean): Vector[A] = Filter(this, p)
 
@@ -776,8 +789,8 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * Returns a vector formed from this vector and the specified vector
      * <code>that</code> by associating each element of the former with
      * the element at the same position in the latter.
+     *  If one of the two vectors is longer than the other, its remaining elements are ignored.
      *
-     * @pre     <code>this.size == that.size</code>
      * @return  <code>[(this(this.start), that(that.start)), (this(this.start + 1), that(that.start) + 1), (this(this.start + 2), that(that.start + 2)), ...]</code>.
      */
     final def zip[B](that: Vector[B]): Vector[(A, B)] = Zip(this, that)

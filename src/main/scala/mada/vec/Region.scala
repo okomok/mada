@@ -14,6 +14,5 @@ package mada.vec
  * @pre     <code>start <= end</code>
  */
 case class Region[A](override val underlying: Vector[A], override val start: Int, override val end: Int) extends VectorAdapter[A, A] {
-    override def isDefinedAt(x: Int) = underlying.isDefinedAt(x)
     override def region(_start: Int, _end: Int) = underlying.region(_start, _end) // region-region fusion
 }

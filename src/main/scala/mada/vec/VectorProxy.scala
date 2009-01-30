@@ -19,7 +19,7 @@ trait VectorProxy[A] extends Vector[A] with Proxy {
     override def end: Int = self.end
     override def apply(i: Int): A = self.apply(i)
     override def update(i: Int, e: A): Unit = self.update(i, e)
-    override def isDefinedAt(x: Int): Boolean = self.isDefinedAt(x)
+    override def isDefinedAt(i: Int): Boolean = self.isDefinedAt(i)
 
     override def bounds: Vector[A] = self.bounds
     override def copyTo[B >: A](that: Vector[B]): Vector[A] = self.copyTo(that)

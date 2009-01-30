@@ -42,4 +42,9 @@ trait VectorAdapter[Z, A] extends Vector[A] {
      * @return  <code>underlying(mapIndex(i)) = e.asInstanceOf[Z]</code>, possibly overridden in subclasses.
      */
     override def update(i: Int, e: A): Unit = underlying(mapIndex(i)) = e.asInstanceOf[Z]
+
+    /**
+     * @return  <code>underlying.isDefinedAt(mapIndex(i))</code>, possibly overridden in subclasses.
+     */
+    override def isDefinedAt(i: Int): Boolean = underlying.isDefinedAt(mapIndex(i))
 }

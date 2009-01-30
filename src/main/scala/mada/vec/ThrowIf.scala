@@ -15,12 +15,6 @@ private[mada] object ThrowIf {
 
     }
 
-    def outOfSize[A](v: Vector[A], n: Int): Unit = {
-        if (n < 0 || n >= v.size) {
-            throw new IndexOutOfBoundsException(n.toString)
-        }
-    }
-
     def empty[A](v: Vector[A], method: String): Unit = {
         if (v.isEmpty) {
             throw new UnsupportedOperationException("empty Vector." + method)
