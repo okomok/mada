@@ -13,17 +13,17 @@ private[mada] object Fold {
     }
 }
 
-private[mada] object Reduce {
-    def apply[A](v: Vector[A], op: (A, A) => A): A = {
-        ThrowIf.empty(v, "reduce")
-        v.reduceLeft(op)
+private[mada] object Folder {
+    def apply[A](v: Vector[A], z: A, op: (A, A) => A): Vector[A] = {
+        (Vector.single(z) ++ v).reducer(op)
     }
 }
 
 
-private[mada] object Folder {
-    def apply[A](v: Vector[A], z: A, op: (A, A) => A): Vector[A] = {
-        (Vector.single(z) ++ v).reducer(op)
+private[mada] object Reduce {
+    def apply[A](v: Vector[A], op: (A, A) => A): A = {
+        ThrowIf.empty(v, "reduce")
+        v.reduceLeft(op)
     }
 }
 

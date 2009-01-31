@@ -21,18 +21,19 @@ private[mada] class RandomAccessSeqVector[A](from: RandomAccessSeq[A]) extends V
     override def apply(i: Int) = from(i)
 }
 
-private[mada] class MutableRandomAccessSeqVector[A](from: RandomAccessSeq.Mutable[A]) extends Vector[A] {
+private[mada] case class MutableRandomAccessSeqVector[A](from: RandomAccessSeq.Mutable[A]) extends Vector[A] {
     override def start = 0
     override def end = from.length
     override def apply(i: Int) = from(i)
     override def update(i: Int, e: A) = from(i) = e
-
-    override def randomAccessSeq = from // conversion fusion
 }
 
 
 private[mada] object VectorRandomAccessSeq {
-    def apply[A](v: Vector[A]): RandomAccessSeq.Mutable[A] = new VectorRandomAccessSeq(v)
+    def apply[A](v: Vector[A]): RandomAccessSeq.Mutable[A] = v match {
+        case MutableRandomAccessSeqVector(_from) => _from // conversion fusion
+        case _ => new VectorRandomAccessSeq(v)
+    }
 }
 
 private[mada] class VectorRandomAccessSeq[A](val v: Vector[A]) extends RandomAccessSeq.Mutable[A] {

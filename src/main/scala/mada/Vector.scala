@@ -442,12 +442,12 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
 
     final def linearAccessSeq: Seq[A] = LinearAccessSeq(this)
 
-   /**
+    /**
      * @return  a <code>RandomAccessSeq.Mutable</code> projection of this vector.
      */
-    def randomAccessSeq: RandomAccessSeq.Mutable[A] = VectorRandomAccessSeq(this)
+    final def randomAccessSeq: RandomAccessSeq.Mutable[A] = VectorRandomAccessSeq(this)
 
-   /**
+    /**
      * @return  a <code>Stream</code> of this vector.
      */
     final def stream: Stream[A] = VectorStream(this)
@@ -491,12 +491,12 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     /**
      * Alias of <code>this.randomAccessSeq.firstOption</code>
      */
-    def firstOption: Option[A] = FirstOption(this)
+    final def firstOption: Option[A] = FirstOption(this)
 
     /**
      * Alias of <code>this.randomAccessSeq.lastOption</code>
      */
-    def lastOption: Option[A] = LastOption(this)
+    final def lastOption: Option[A] = LastOption(this)
 
     /**
      * Alias of <code>this.first</code>
@@ -557,7 +557,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     /**
      * @return  <code>Vector.flatten(this.map(f))</code>.
      */
-    final def flatMap[B](f: A => Vector[B]): Vector[B] = FlatMap(this, f)
+    def flatMap[B](f: A => Vector[B]): Vector[B] = FlatMap(this, f)
 
     /**
      * Casts element to type <code>B</code>.
@@ -620,6 +620,18 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
 
     /**
      * @pre     <code>op</code> is associative.
+     * @return  <code>this.foldLeft(z)(op)</code>
+     */
+    def fold(z: A)(op: (A, A) => A): A = Fold(this, z, op)
+
+    /**
+     * @pre     <code>op</code> is associative.
+     * @return  <code>this.folderLeft(op)</code>
+     */
+    def folder(z: A)(op: (A, A) => A): Vector[A] = Folder(this, z, op)
+
+    /**
+     * @pre     <code>op</code> is associative.
      * @return  <code>this.reduceLeft(op)</code>
      */
     def reduce(op: (A, A) => A): A = Reduce(this, op)
@@ -629,18 +641,6 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * @return  <code>this.reduceerLeft(op)</code>
      */
     def reducer(op: (A, A) => A): Vector[A] = Reducer(this, op)
-
-    /**
-     * @pre     <code>op</code> is associative.
-     * @return  <code>this.foldLeft(z)(op)</code>
-     */
-    final def fold(z: A)(op: (A, A) => A): A = Fold(this, z, op)
-
-    /**
-     * @pre     <code>op</code> is associative.
-     * @return  <code>this.folderLeft(op)</code>
-     */
-    final def folder(z: A)(op: (A, A) => A): Vector[A] = Folder(this, z, op)
 
     /**
      * Alias of <code>this.elements.foldLeft</code>.
@@ -687,27 +687,32 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     final def reducerRight[B >: A](op: (A, B) => B): Vector[B] = ReducerRight(this, op)
 
     /**
+     * Is this vector methods possibly performing in parallel?
+     */
+    def isParallel: Boolean = false
+
+    /**
      * @return  <code>this.parallel(this.defaultGrainSize)</code>
      */
-    def parallel: Vector[A] = Parallel(this)
+    final def parallel: Vector[A] = Parallel(this)
 
     /**
      * Requests a vector to perform parallel methods.
      */
-    def parallel(grainSize: Int): Vector[A] = Parallel(this, grainSize)
+    final def parallel(grainSize: Int): Vector[A] = Parallel(this, grainSize)
 
     /**
      * Reverts <code>this.parallel</code>.
      */
-    def unparallel: Vector[A] = Unparallel(this)
+    def unparallel: Vector[A] = this
 
     /**
-     * Is this vector methods possibly performing in parallel?
+     * Specifies the grain size, which is used to divide this vector in parallel methods.
      */
-    def isParallel: Boolean = IsParallel(this)
+    def grainSize: Int = size
 
     /**
-     * Specifies the default grain size, which is used to divide this vector in parallel methods.
+     * Specifies the default grain size.
      */
     def defaultGrainSize: Int = DefaultGrainSize(this)
 
@@ -728,7 +733,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     /**
      * @return  <code>Vector.randomAccessSeqVector(this.randomAccessSeq.projection ++ that)</code>
      */
-    final def append(that: Vector[A]): Vector[A] = Append(this, that)
+    def append(that: Vector[A]): Vector[A] = Append(this, that)
 
     /**
      * @return  <code>Vector.range(this.start, this.end)</code>
@@ -743,7 +748,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     /**
      * Reorders using "0-to-size" index mapping <code>f</code>.
      */
-    final def permutation(f: Int => Int): Vector[A] = Permutation(this, f)
+    def permutation(f: Int => Int): Vector[A] = Permutation(this, f)
 
     /**
      * Returns a non-writable circular vector from this vector.
@@ -756,7 +761,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * Turns this vector into "0-to-size" indexing vector.
      */
     def nth: Vector[A] = _nth
-    private lazy val _nth = Nth(this)
+    private lazy val _nth: Vector[A] = Nth(this)
 
     /**
      * Reverses order of elements.
@@ -783,7 +788,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      *
      * @return  <code>[(this(this.start), that(that.start)), (this(this.start + 1), that(that.start + 1)), (this(this.start + 2), that(that.start + 2)), ...]</code>.
      */
-    final def zip[B](that: Vector[B]): Vector[(A, B)] = Zip(this, that)
+    def zip[B](that: Vector[B]): Vector[(A, B)] = Zip(this, that)
 
     /**
      * Returns this vector after applying <code>f</code>.
@@ -844,7 +849,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     /**
      * @return  an alias of this vector.
      */
-    final def identity: Vector[A] = Identity(this)
+    def identity: Vector[A] = Identity(this)
 
     /**
      * @return  <code>this.writer(this.start)</code>

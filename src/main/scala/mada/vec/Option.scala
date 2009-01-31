@@ -7,15 +7,22 @@
 package mada.vec
 
 
-private[mada] object OptionVector {
-    def apply[A](from: Option[A]): Vector[A] = new OptionVector(from)
-}
-
-private[mada] class OptionVector[A](from: Option[A]) extends Vector[A] {
+private[mada] case class OptionVector[A](from: Option[A]) extends Vector[A] {
     override def start = 0
     override def end = if (from.isEmpty) 0 else 1
     override def apply(i: Int) = from.get
+}
 
-    override def firstOption = from // conversion fusion
-    override def lastOption = from // conversion fusion
+private[mada] object FirstOption {
+    def apply[A](v: Vector[A]): Option[A] = v match {
+        case OptionVector(_from) => _from // conversion fusion
+        case _ => if (v.isEmpty) None else Some(v.first)
+    }
+}
+
+private[mada] object LastOption {
+    def apply[A](v: Vector[A]): Option[A] = v match {
+        case OptionVector(_from) => _from // conversion fusion
+        case _ => if (v.isEmpty) None else Some(v.last)
+    }
 }

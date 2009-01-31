@@ -14,13 +14,6 @@ private[mada] object First {
     }
 }
 
-private[mada] object FirstOption {
-    def apply[A](v: Vector[A]): Option[A] = {
-        if (v.isEmpty) None else Some(v.first)
-    }
-}
-
-
 private[mada] object Last {
     def apply[A](v: Vector[A]): A = {
         ThrowIf.empty(v, "last")
@@ -28,8 +21,3 @@ private[mada] object Last {
     }
 }
 
-private[mada] object LastOption {
-    def apply[A](v: Vector[A]): Option[A] = {
-        if (v.isEmpty) None else Some(v.last)
-    }
-}
