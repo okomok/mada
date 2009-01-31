@@ -56,7 +56,7 @@ object Iterators {
     }
 
     /**
-     * An infinite iterator of repeated applications of <code></code> to <code>z</code>.
+     * An infinite iterator of repeated applications of <code>op</code> to <code>z</code>.
      */
     def iterate[A](z: A)(op: A => A): Iterator[A] = new Iterator[A] {
         private var acc = z
