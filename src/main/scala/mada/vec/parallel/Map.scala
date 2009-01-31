@@ -25,15 +25,8 @@ private[mada] class MapVector[Z, A](v: Vector[Z], f: Z => A, grainSize: Int) ext
     }
     override lazy val self = unparallel.parallel(grainSize)
 
-    override def force = _wait(self) // force-map fusion
     override def lazyValues = self // lazyValues-map fusion
     override def map[B](_f: A => B) = v.parallel(grainSize).map(_f compose f) // map-map fusion
     override def reduce(op: (A, A) => A) = v.map(f).parallel(grainSize).reduce(op) // reduce-map fusion
     override def seek(p: A => Boolean) = v.parallel(grainSize).seek(p compose f).map(f) // seek-map fusion
-
-    private def _wait(v: Vector[A]): Vector[A] = {
-        Assert(v.isParallel)
-        v.foreach({ e => () })
-        v
-    }
 }

@@ -702,6 +702,11 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     final def parallel(grainSize: Int): Vector[A] = Parallel(this, grainSize)
 
     /**
+     * Waits for parallel element calculations over.
+     */
+    final def join: Unit = Join(this)
+
+    /**
      * Reverts <code>this.parallel</code>.
      */
     def unparallel: Vector[A] = this
