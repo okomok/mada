@@ -577,7 +577,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     /**
      * Alias of <code>this.elements.foreach</code>.
      */
-    def foreach(f: A => Unit): Unit = Foreach(this, f)
+    final def foreach(f: A => Unit): Unit = Foreach(this, f)
 
     /**
      * Apply a function <code>f</code> to all elements of this vector.
