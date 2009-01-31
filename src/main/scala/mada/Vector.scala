@@ -255,7 +255,8 @@ object Vector {
  * A vector is optionally writable but structurally-unmodifiable so that synchronization is unneeded.<p/>
  *
  * In vector, an index works like a "key" or "pointer"; it is not guaranteed to start from <code>0</code>.
- * At the setout, you have to extract an index by using the <code>start</code> method.<p/>
+ * You have to use the <code>nth</code> method if you need "0-to-size" indexing, or extract an index by using
+ * the <code>start</code> method.<p/>
  *
  * Unless otherwise specified, these methods return projections to keep readability and writability.
  */
@@ -754,7 +755,8 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     /**
      * Turns this vector into "0-to-size" indexing vector.
      */
-    def nth = Nth(this)
+    def nth: Vector[A] = _nth
+    private lazy val _nth = Nth(this)
 
     /**
      * Reverses order of elements.

@@ -12,13 +12,10 @@ private[mada] object Zip {
 }
 
 private[mada] class ZipVector[A, B](v: Vector[A], w: Vector[B]) extends Vector[(A, B)] {
-    private val vn = v.nth
-    private val wn = w.nth
-
     override def start = 0
-    override def end = Math.min(v.size, w.size)
+    override def end = Math.min(v.nth.size, w.nth.size)
 
-    override def apply(i: Int) = (vn(i), wn(i))
-    override def update(i: Int, e: (A, B)) = { vn(i) = e._1; wn(i) = e._2 }
-    override def isDefinedAt(i: Int) = vn.isDefinedAt(i) && wn.isDefinedAt(i)
+    override def apply(i: Int) = (v.nth(i), w.nth(i))
+    override def update(i: Int, e: (A, B)) = { v.nth(i) = e._1; w.nth(i) = e._2 }
+    override def isDefinedAt(i: Int) = v.nth.isDefinedAt(i) && w.nth.isDefinedAt(i)
 }

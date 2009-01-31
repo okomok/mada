@@ -33,6 +33,6 @@ class NthTest {
         assertEquals(3, a.nth.nth(0))
         assertEquals(4, a.nth.nth(1))
         assertEquals(5, a.nth.nth(2))
-        assertEquals(6, a.nth.nth(3))
+        assertEquals(6, a.nth.nth.nth.nth(3))
     }
 }
