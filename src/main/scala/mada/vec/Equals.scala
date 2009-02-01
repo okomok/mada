@@ -14,12 +14,6 @@ private[mada] object Equals {
     }
 }
 
-private[mada] object EqualsTo {
-    def apply[A1, A2](v1: Vector[A1], v2: Vector[A2]): Boolean = {
-        v1.equalsWith(v2)(Functions.equal)
-    }
-}
-
 private[mada] object EqualsWith {
     def apply[A1, A2](v1: Vector[A1], v2: Vector[A2], p: (A1, A2) => Boolean): Boolean = {
         if (v1.size != v2.size) {

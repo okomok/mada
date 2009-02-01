@@ -12,24 +12,38 @@ package mada
  */
 object Functions {
     /**
-     * Represents Any.==
+     * Represents <code>(_: Any) == (_: Any)</code>
      */
     val equal: Function2[Any, Any, Boolean] = new Function2[Any, Any, Boolean] {
         override def apply(v1: Any, v2: Any) = v1 == v2
     }
 
     /**
-     * Represents AnyRef.eq
+     * Represents <code>(_: AnyRef) eq (_: AnyRef)</code>
      */
     val refEqual: Function2[AnyRef, AnyRef, Boolean] = new Function2[AnyRef, AnyRef, Boolean] {
         override def apply(v1: AnyRef, v2: AnyRef) = v1 eq v2
     }
 
     /**
-     * Represents T1.==(T2)
+     * Represents <code>(_: T1) == (_: T2)</code>
      */
     def safeEqual[T1, T2]: Function2[T1, T2, Boolean] = new Function2[T1, T2, Boolean] {
         override def apply(v1: T1, v2: T2) = v1 == v2
+    }
+
+    /**
+     * Represents <code>v1 == (_: Any)</code>
+     */
+    def equalTo(v1: Any): Function1[Any, Boolean] = new Function1[Any, Boolean] {
+        override def apply(v2: Any) = v1 == v2
+    }
+
+    /**
+     * Represents <code>v1 eq (_: AnyRef)</code>
+     */
+    def refEqualTo(v1: AnyRef): Function1[AnyRef, Boolean] = new Function1[AnyRef, Boolean] {
+        override def apply(v2: AnyRef) = v1 eq v2
     }
 
     /**

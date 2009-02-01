@@ -272,14 +272,14 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     def start: Int
 
     /**
-     * @return  end index of this vector, which is NOT guaranteed to be <code>this.size</code>.
+     * @return  end index of this vector, which is NOT guaranteed to be <code>size</code>.
      */
     def end: Int
 
     /**
      * @param   i index of element to return.
      * @pre     this vector is readable.
-     * @pre     <code>this.isDefinedAt(i)</code>.
+     * @pre     <code>isDefinedAt(i)</code>.
      * @return  the element at the specified position in this vector.
      * @throws  <code>Vector.NotReadableException</code> if not overridden.
      */
@@ -292,37 +292,46 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * @param   i index of element to replace.
      * @param   e element to be stored at the specified position.
      * @pre     this vector is writable.
-     * @pre     <code>this.isDefinedAt(i)</code>.
+     * @pre     <code>isDefinedAt(i)</code>.
      * @throws  <code>Vector.NotWritableException</code> if not overridden.
      */
     def update(i: Int, e: A): Unit = throw new Vector.NotWritableException(this)
 
     /**
-     * @return  <code>(this.start <= x) && (x < this.end)</code>, possibly overridden in subclasses.
+     * @return  <code>(start <= i) && (i < end)</code>, possibly overridden in subclasses.
      */
-    override def isDefinedAt(i: Int): Boolean = IsDefinedAt(this, i)
+    override def isDefinedAt(i: Int): Boolean = (start <= i) && (i < end)
 
 
 // value semantics
 
     /**
      * Compares each element using predicate <code>p</code>.
-     * Returns <code>false</code> if <code>this.size != that.size</code>.
+     * Returns <code>false</code> if <code>size != that.size</code>.
      */
     def equalsWith[B](that: Vector[B])(p: (A, B) => Boolean): Boolean = EqualsWith(this, that, p)
 
     /**
-     * Type-safe alias of <code>Any.equals</code>
-     */
-    final def equalsTo[B](that: Vector[B]): Boolean = EqualsTo(this, that)
-
-    /**
-     * @return <code>this.equalsWith(that)(Functions.equal)</code>.
+     * @return  <code>equalsWith(that)(Functions.equal)</code>.
      */
     override def equals(that: Any): Boolean = Equals(this, that)
 
+    /**
+     * @return  <code>equalsWith(that)(Functions.equal)</code>.
+     */
+    final def equalsTo[B](that: Vector[B]): Boolean = equalsWith(that)(Functions.equal)
+
+    /**
+     * Generates hash code as value semantics.
+     */
     override def hashCode: Int = HashCode_(this)
+
     override def hashCodeOfRef: Int = super.hashCode
+
+
+// toString
+
+    override def toString: String = ToString(this)
 
 
 // regions
@@ -334,25 +343,45 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     def region(_start: Int, _end: Int): Vector[A] = Region(this, _start, _end)
 
     /**
-     * @pre     <code>!this.isEmpty</code>
-     * @return  the vector without its last element.
+     * @pre     <code>!isEmpty</code>
+     * @return  <code>this(start, end - 1)</code>.
      */
-    final def init: Vector[A] = Init(this)
+    final def init: Vector[A] = this(start, end - 1)
 
     /**
-     * @return  <code>this(this.start + n, this.start + m)</code>
+     * @return  <code>this(start, start)</code>
      */
-    final def window(n: Int, m: Int): Vector[A] = Window(this, n, m)
+    final def clear: Vector[A] = this(start, start)
 
     /**
-     * @return <code>Vector.randomAccessSeqVector(this.randomAccessSeq.projection.drop(n))</code>
+     * @return  <code>this(start + n, start + m)</code>.
      */
-    final def drop(n: Int): Vector[A] = Drop(this, n)
+    final def window(n: Int, m: Int): Vector[A] = this(start + n, start + m)
 
     /**
-     * @return <code>Vector.randomAccessSeqVector(this.randomAccessSeq.projection.take(n))</code>
+     * @return  <code>this(start + i, end + j)</code>.
      */
-    final def take(n: Int): Vector[A] = Take(this, n)
+    final def offset(i: Int, j: Int): Vector[A] = this(start + i, end + j)
+
+    /**
+     * @return  <code>slice(n, end)</code>.
+     */
+    final def slice(n: Int): Vector[A] = slice(n, end)
+
+    /**
+     * @return <code>drop(n).take(m - n)</code>.
+     */
+    final def slice(n: Int, m: Int): Vector[A] = drop(n).take(m - n)
+
+    /**
+     * @return <code>this(Math.min(start + n, end), end)</code>.
+     */
+    final def drop(n: Int): Vector[A] = this(Math.min(start + n, end), end)
+
+    /**
+     * @return <code>this(start, Math.min(start + n, end))</code>.
+     */
+    final def take(n: Int): Vector[A] = this(start, Math.min(start + n, end))
 
     /**
      * Returns the longest suffix of this vector whose first element
@@ -374,21 +403,6 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      */
     final def takeWhile(p: A => Boolean): Vector[A] = TakeWhile(this, p)
 
-    /**
-     * @return  <code>this(this.start + i, this.end + j)</code>.
-     */
-    final def offset(i: Int, j: Int): Vector[A] = Offset(this, i, j)
-
-    /**
-     * @return  <code>this.slice(n, this.end)</code>.
-     */
-    final def slice(n: Int): Vector[A] = Slice(this, n)
-
-    /**
-     * @return <code>Vector.randomAccessSeqVector(this.randomAccessSeq.projection.slice(n, m))</code>
-     */
-    final def slice(n: Int, m: Int): Vector[A] = Slice(this, n, m)
-
 
 // division
 
@@ -397,13 +411,13 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * Each vector size is <code>n</code> except for the last one.
      *
      * @param   n divisor
-     * @return  <code>[this(this.start, n), this(this.start + n, 2*n), this(this.start + 2*n, 3*n),...]</code>.
+     * @return  <code>[this(start, n), this(start + n, 2*n), this(start + 2*n, 3*n),...]</code>.
      * @see     Vector.undivide
      */
     final def divide(n: Int): Vector[Vector[A]] = Divide(this, n)
 
     /**
-     * @return  <code>(this(this.start, m), this(m, this.end))</code>, where <code>val m = Math.min(i, this.end)</code>.
+     * @return  <code>(this(start, m), this(m, end))</code>, where <code>val m = Math.min(i, end)</code>.
      */
     final def splitAt(i: Int): (Vector[A], Vector[A]) = SplitAt(this, i)
 
@@ -418,30 +432,30 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     final def span(p: A => Boolean): (Vector[A], Vector[A]) = Span(this, p)
 
     /**
-     * @return  <code>this.span(Functions.not(p))</code>.
+     * @return  <code>span(Functions.not(p))</code>.
      */
-    final def break(p: A => Boolean): (Vector[A], Vector[A]) = Break(this, p)
+    final def break(p: A => Boolean): (Vector[A], Vector[A]) = span(Functions.not(p))
 
 
 // first and last
 
     /**
-     * Alias of <code>this.randomAccessSeq.first</code>
+     * Alias of <code>this(start)</code>
      */
-    final def first: A = First(this)
+     final def first: A = { throwIfEmpty("first"); this(start) }
 
     /**
-     * Alias of <code>this.randomAccessSeq.last</code>
+     * Alias of <code>this(end - 1)</code>
      */
-    final def last: A = Last(this)
+    final def last: A = { throwIfEmpty("last"); this(end - 1) }
 
     /**
-     * Alias of <code>this.randomAccessSeq.firstOption</code>
+     * Alias of <code>randomAccessSeq.firstOption</code>
      */
     final def firstOption: Option[A] = FirstOption(this)
 
     /**
-     * Alias of <code>this.randomAccessSeq.lastOption</code>
+     * Alias of <code>randomAccessSeq.lastOption</code>
      */
     final def lastOption: Option[A] = LastOption(this)
 
@@ -449,20 +463,19 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
 // as list
 
     /**
-     * Alias of <code>this.first</code>
+     * Alias of <code>first</code>
      */
-    final def head: A = Head(this)
+    final def head: A = { throwIfEmpty("head"); first }
 
     /**
-     * @pre     <code>!this.isEmpty</code>
-     * @return  the vector without its first element.
+     * @return  <code>this(start + 1, end)</code>
      */
-    final def tail: Vector[A] = Tail(this)
+    final def tail: Vector[A] = { throwIfEmpty("tail"); this(start + 1, end) }
 
     /**
-     * Alias of <code>this.isEmpty</code>
+     * Alias of <code>isEmpty</code>
      */
-    final def isNil: Boolean = IsNil(this)
+    final def isNil: Boolean = isEmpty
 
 
 // filter
@@ -479,7 +492,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     /**
      * Returns all the elements of this vector that satisfy the
      * predicate <code>p</code>. The order of the elements is preserved.
-     * Unlike <code>this.filter</code>, this requires no intermediate buffer,
+     * Unlike <code>filter</code>, this requires no intermediate buffer,
      * but the state of this vector is unpredictable after calling this.
      *
      * @param   p the predicate used to filter the vector.
@@ -488,32 +501,32 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     def mutatingFilter(p: A => Boolean): Vector[A] = MutatingFilter(this, p)
 
     /**
-     * @return  <code>this.filter(Functions.not(p))</code>.
+     * @return  <code>filter(Functions.not(p))</code>.
      */
-    final def remove(p: A => Boolean): Vector[A] = Remove(this, p)
+    final def remove(p: A => Boolean): Vector[A] = filter(Functions.not(p))
 
     /**
-     * @return  <code>this.mutatingFilter(Functions.not(p))</code>.
+     * @return  <code>mutatingFilter(Functions.not(p))</code>.
      */
-    final def mutatingRemove(p: A => Boolean): Vector[A] = MutatingRemove(this, p)
+    final def mutatingRemove(p: A => Boolean): Vector[A] = mutatingFilter(Functions.not(p))
 
     /**
-     * @return  <code>(this.filter(p), this.remove(p))</code>.
+     * @return  <code>(filter(p), remove(p))</code>.
      */
-    final def partition(p: A => Boolean): (Vector[A], Vector[A]) = Partition(this, p)
+    final def partition(p: A => Boolean): (Vector[A], Vector[A]) = (filter(p), remove(p))
 
 
 // map
 
     /**
-     * @return  <code>Vector.randomAccessSeqVector(this.randomAccessSeq.projection.map(f))</code>
+     * @return  <code>Vector.randomAccessSeqVector(randomAccessSeq.projection.map(f))</code>
      */
     def map[B](f: A => B): Vector[B] = Map(this, f)
 
     /**
-     * @return  <code>Vector.flatten(this.map(f))</code>.
+     * @return  <code>Vector.flatten(map(f))</code>.
      */
-    def flatMap[B](f: A => Vector[B]): Vector[B] = FlatMap(this, f)
+    def flatMap[B](f: A => Vector[B]): Vector[B] = Vector.flatten(map(f))
 
     /**
      * Casts element to type <code>B</code>.
@@ -524,11 +537,12 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
 // foreach
 
     /**
-     * Equivalent to <code>this.foreach</code>, but loop is breakable by <code>f</code> returning <code>false</code>.
+     * Equivalent to <code>foreach</code>, but loop is breakable by <code>f</code> returning <code>false</code>.
      */
     def loop[F <: (A => Boolean)](i: Int, j: Int, f: F): F = Loop(this, i, j, f)
+
     /**
-     * Alias of <code>this.elements.foreach</code>.
+     * Alias of <code>elements.foreach</code>.
      */
     final def foreach(f: A => Unit): Unit = Foreach(this, f)
 
@@ -539,13 +553,13 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      *
      * @param   f a function that is applied to every element.
      */
-    def pareach(f: A => Unit): Unit = Pareach(this, f)
+    def pareach(f: A => Unit): Unit = foreach(f)
 
 
 // search
 
     /**
-     * Alias of <code>this.elements.find</code>.
+     * Alias of <code>elements.find</code>.
      */
     final def find(p: A => Boolean): Option[A] = Find(this, p)
 
@@ -557,98 +571,72 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * @return  the element in the iterable object satisfying
      *          <code>p</code>, or <code>None</code> if none exists.
      */
-    def seek(p: A => Boolean): Option[A] = Seek(this, p)
+    def seek(p: A => Boolean): Option[A] = find(p)
 
     /**
-     * Alias of <code>this.randomAccessSeq.count</code>
+     * Alias of <code>randomAccessSeq.count</code>
      */
     def count(p: A => Boolean): Int = Count(this, p)
 
     /**
-     * Alias of <code>this.elements.contains</code>.
+     * Alias of <code>exists(Funtions.equalTo(e))</code>.
      */
-    final def contains(e: Any): Boolean = Contains(this, e)
+    final def contains(e: Any): Boolean = exists(Functions.equalTo(e))
 
     /**
-     * Alias of <code>this.elements.forall</code>.
+     * Alias of <code>seek(Functions.not(p)).isEmpty</code>.
      */
-    final def forall(p: A => Boolean): Boolean = Forall(this, p)
+    final def forall(p: A => Boolean): Boolean = seek(Functions.not(p)).isEmpty
 
     /**
-     * Alias of <code>this.elements.exists</code>.
+     * Alias of <code>!seek(p).isEmpty</code>.
      */
-    final def exists(p: A => Boolean): Boolean = Exists(this, p)
+    final def exists(p: A => Boolean): Boolean = !seek(p).isEmpty
 
 
 // folding
 
     /**
-     * @pre     <code>op</code> is associative.
-     * @return  <code>this.foldLeft(z)(op)</code>
-     */
-    def fold(z: A)(op: (A, A) => A): A = Fold(this, z, op)
-
-    /**
-     * @pre     <code>op</code> is associative.
-     * @return  <code>this.folderLeft(op)</code>
-     */
-    def folder(z: A)(op: (A, A) => A): Vector[A] = Folder(this, z, op)
-
-    /**
-     * @pre     <code>op</code> is associative.
-     * @return  <code>this.reduceLeft(op)</code>
-     */
-    def reduce(op: (A, A) => A): A = Reduce(this, op)
-
-    /**
-     * @pre     <code>op</code> is associative.
-     * @return  <code>this.reduceerLeft(op)</code>
-     */
-    def reducer(op: (A, A) => A): Vector[A] = Reducer(this, op)
-
-    /**
-     * Alias of <code>this.elements.foldLeft</code>.
+     * Alias of <code>elements.foldLeft</code>.
      */
     final def foldLeft[B](z: B)(op: (B, A) => B): B = FoldLeft(this, z, op)
 
     /**
-     * Alias of <code>this.elements.foldRight</code>.
+     * Alias of <code>elements.foldRight</code>.
      */
-    final def foldRight[B](z: B)(op: (A, B) => B): B = FoldRight(this, z, op)
+    final def foldRight[B](z: B)(op: (A, B) => B): B = reverse.foldLeft(z)(Functions.flip(op))
 
     /**
-     * Alias of <code>this.elements.reduceLeft</code>.
+     * Alias of <code>tail.foldLeft[B](head)(op)</code>.
      */
-    final def reduceLeft[B >: A](op: (B, A) => B): B = ReduceLeft(this, op)
+    final def reduceLeft[B >: A](op: (B, A) => B): B = tail.foldLeft[B](head)(op)
 
     /**
-     * Alias of <code>this.elements.reduceRight</code>.
+     * Alias of <code>reverse.reduceLeft(Functions.flip(op))</code>.
      */
-    final def reduceRight[B >: A](op: (A, B) => B): B = ReduceRight(this, op)
+    final def reduceRight[B >: A](op: (A, B) => B): B = reverse.reduceLeft(Functions.flip(op))
 
     /**
      * Returns the prefix sum of this vector.
      *
-     * @return  <code>[z, op(z, this(this.start)), op(op(z, this(this.start)), this(this.start + 1)),...]</code>
+     * @return  <code>[z, op(z, this(start)), op(op(z, this(start)), this(start + 1)),...]</code>
      */
     final def folderLeft[B](z: B)(op: (B, A) => B): Vector[B] = FolderLeft(this, z, op)
 
     /**
-     * @return  <code>this.reverse.folderLeft(z)(Functions.flip(op))</code>
+     * @return  <code>reverse.folderLeft(z)(Functions.flip(op))</code>
      */
-    final def folderRight[B](z: B)(op: (A, B) => B): Vector[B] = FolderRight(this, z, op)
+    final def folderRight[B](z: B)(op: (A, B) => B): Vector[B] = reverse.folderLeft(z)(Functions.flip(op))
 
     /**
-     * @pre     <code>!isEmpty</code>
-     * @return  <code>this.tail.folderLeft(this.head)</code>
+     * @return  <code>tail.folderLeft(head)</code>
      */
-    final def reducerLeft[B >: A](op: (B, A) => B): Vector[B] = ReducerLeft(this, op)
+    final def reducerLeft[B >: A](op: (B, A) => B): Vector[B] = tail.folderLeft[B](head)(op)
 
     /**
-     * @pre     <code>!isEmpty</code>
-     * @return  <code>this.reverse.reducerLeft(Functions.flip(op))</code>
+     * @return  <code>reverse.reducerLeft(Functions.flip(op))</code>
      */
-    final def reducerRight[B >: A](op: (A, B) => B): Vector[B] = ReducerRight(this, op)
+    final def reducerRight[B >: A](op: (A, B) => B): Vector[B] = reverse.reducerLeft(Functions.flip(op))
 
 
 // sort
@@ -663,15 +651,15 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     def sortWith(lt: (A, A) => Boolean): Vector[A] = SortWith(this, lt)
 
     /**
-     * @return  <code>this.sortWith(Functions.less(c))</code>.
+     * @return  <code>sortWith(Functions.less(c))</code>.
      */
-    final def sort(implicit c: A => Ordered[A]): Vector[A] = Sort(this, c)
+    final def sort(implicit c: A => Ordered[A]): Vector[A] = sortWith(Functions.less(c))
 
 
 // concatenation
 
     /**
-     * @return  <code>Vector.randomAccessSeqVector(this.randomAccessSeq.projection ++ that)</code>
+     * @return  <code>Vector.randomAccessSeqVector(randomAccessSeq.projection ++ that)</code>
      */
     def append(that: Vector[A]): Vector[A] = Append(this, that)
 
@@ -686,7 +674,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     /**
      * Returns a non-writable circular vector from this vector.
      *
-     * @return  <code>[this(this.start),...,this(this.end - 1),this(this.start),...,this(this.end - 1),...n times...]</code>
+     * @return  <code>[this(start),...,this(end - 1),this(start),...,this(end - 1),...n times...]</code>
      */
     def cycle(n: Int): Vector[A] = Cycle(this, n)
 
@@ -702,16 +690,19 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     def reverse: Vector[A] = Reverse(this)
 
     /**
-     * @return  <code>this(i, this.end) ++ this(this.start, i)</code>.
-     */
-    final def rotate(i: Int): Vector[A] = Rotate(this, i)
-
-    /**
      * Returns steps with specified stride <code>n</code>.
      *
-     * @return  <code>[this(this.start), this(this.start + n), this(this.start + 2*n), ...]</code>.
+     * @return  <code>[this(start), this(start + n), this(start + 2*n), ...]</code>.
      */
     def step(n: Int): Vector[A] = Step(this, n)
+
+    /**
+     * @return  <code>this(i, end) ++ this(start, i)</code>.
+     */
+    final def rotate(i: Int): Vector[A] = this(start + i, end) ++ this(start, start + i)
+
+
+// zip
 
     /**
      * Returns a vector formed from this vector and the specified vector
@@ -719,7 +710,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * the element at the same position in the latter.
      *  If one of the two vectors is longer than the other, its remaining elements are ignored.
      *
-     * @return  <code>[(this(this.start), that(that.start)), (this(this.start + 1), that(that.start + 1)), (this(this.start + 2), that(that.start + 2)), ...]</code>.
+     * @return  <code>[(this(start), that(that.start)), (this(start + 1), that(that.start + 1)), (this(start + 2), that(that.start + 2)), ...]</code>.
      */
     def zip[B](that: Vector[B]): Vector[(A, B)] = Zip(this, that)
 
@@ -740,7 +731,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
 
     /**
      * Creates a vector whose <code>isDefinedAt(i)</code> returns true
-     * iif <code>this.start <= i && i < this.end</code>.
+     * iif <code>start <= i && i < end</code>.
      */
     def bounds: Vector[A] = Bounds(this)
 
@@ -765,7 +756,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     /**
      * Copies all the elements into another.
      *
-     * @pre     <code>this.size == that.size</code>.
+     * @pre     <code>size == that.size</code>.
      * @pre     <code>that</code> is writable.
      * @return  this vector.
      */
@@ -779,7 +770,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     override def clone: Vector[A] = Clone(this)
 
     /**
-     * @return  <code>this.writer(this.start)</code>
+     * @return  <code>writer(start)</code>
      */
     final def writer: Writer[A] = Writer(this)
 
@@ -792,12 +783,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
 // parallel support
 
     /**
-     * Is this vector methods possibly performing in parallel?
-     */
-    def isParallel: Boolean = false
-
-    /**
-     * @return  <code>this.parallel(this.defaultGrainSize)</code>
+     * @return  <code>parallel(defaultGrainSize)</code>
      */
     final def parallel: Vector[A] = Parallel(this)
 
@@ -807,12 +793,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     final def parallel(grainSize: Int): Vector[A] = Parallel(this, grainSize)
 
     /**
-     * Waits for parallel element calculations over.
-     */
-    final def join: Unit = Join(this)
-
-    /**
-     * Reverts <code>this.parallel</code>.
+     * Reverts <code>parallel</code>.
      */
     def unparallel: Vector[A] = this
 
@@ -825,6 +806,43 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * Specifies the default grain size.
      */
     def defaultGrainSize: Int = DefaultGrainSize(this)
+
+    /**
+     * Is this vector methods possibly performing in parallel?
+     */
+    def isParallel: Boolean = false
+
+    /**
+     * Waits for parallel element calculations over.
+     */
+    final def join: Unit = Join(this)
+
+
+// parallel folding
+
+    /**
+     * @pre     <code>op</code> is associative.
+     * @return  <code>foldLeft(z)(op)</code>
+     */
+    def fold(z: A)(op: (A, A) => A): A = foldLeft(z)(op)
+
+    /**
+     * @pre     <code>op</code> is associative.
+     * @return  <code>folderLeft(z)(op)</code>
+     */
+    def folder(z: A)(op: (A, A) => A): Vector[A] = folderLeft(z)(op)
+
+    /**
+     * @pre     <code>op</code> is associative.
+     * @return  <code>reduceLeft(op)</code>
+     */
+    def reduce(op: (A, A) => A): A = reduceLeft(op)
+
+    /**
+     * @pre     <code>op</code> is associative.
+     * @return  <code>reducerLeft(op)</code>
+     */
+    def reducer(op: (A, A) => A): Vector[A] = reducerLeft(op)
 
 
 // conversions
@@ -867,11 +885,6 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      */
     final def toList: List[A] = ToList(this)
 
-    /**
-     * @return  a string representation of this vector.
-     */
-    override def toString: String = ToString(this)
-
 
 // trivials
 
@@ -896,17 +909,12 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     final def always[B](that: Vector[B]): Vector[B] = that
 
     /**
-     * @return  <code>this(this.start, this.start)</code>
-     */
-    final def clear: Vector[A] = this(start, start)
-
-    /**
      * @return  <code>f(this); this</code>.
      */
     final def sideEffect(f: Vector[A] => Any): Vector[A] = { f(this); this }
 
     /**
-     * @return  <code>Vector.range(this.start, this.end)</code>.
+     * @return  <code>Vector.range(start, end)</code>.
      */
     final def indices: Vector[Int] = Vector.range(start, end)
 
@@ -921,32 +929,37 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
 // aliases
 
     /**
-     * Alias of <code>this.size</code>
+     * Alias of <code>size</code>
      */
     final def length: Int = size
 
     /**
-     * Alias of <code>this.iterator</code>
+     * Alias of <code>iterator</code>
      */
     final def elements: Iterator[A] = iterator
 
     /**
-     * Alias of <code>this.region</code>
+     * Alias of <code>region</code>
      */
     final def apply(_start: Int, _end: Int): Vector[A] = region(_start, _end)
 
     /**
-     * Alias of <code>this.append</code>
+     * Alias of <code>append</code>
      */
     final def ++(that: Vector[A]): Vector[A] = append(that)
 
     /**
-     * Alias of <code>this.foldLeft</code>
+     * Alias of <code>foldLeft</code>
      */
     final def /:[B](z: B)(op: (B, A) => B): B = foldLeft(z)(op)
 
     /**
-     * Alias of <code>this.foldRight</code>
+     * Alias of <code>foldRight</code>
      */
     final def :\[B](z: B)(op: (A, B) => B): B = foldRight(z)(op)
+
+
+// implementation helpers
+
+    private def throwIfEmpty(method: String) = ThrowIf.empty(this, method)
 }
