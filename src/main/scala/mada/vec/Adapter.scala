@@ -120,7 +120,7 @@ object Adapter {
         // map
         override def map[B](f: A => B): Vector[B]
         override def flatMap[B](f: A => Vector[B]): Vector[B] = affectParallel(underlying.flatMap(f))
-        override def asVectorOf[B]: Vector[B] = underlying.asVectorOf[B]
+        override def asVectorOf[B]: Vector[B] = affectParallel(underlying.asVectorOf[B])
         // foreach
         override def loop[F <: (A => Boolean)](i: Int, j: Int, f: F): F = underlying.loop(i, j, f)
         override def pareach(f: A => Unit): Unit
@@ -179,10 +179,7 @@ object Adapter {
         override def reduce(op: (A, A) => A): A
         override def reducer(op: (A, A) => A): Vector[A]
         // implementation helpers
-        protected def affectParallel[B](that: Vector[B]): Vector[B] = {
-            Assert(!underlying.isParallel)
-            that.parallel(grainSize)
-        }
+        protected def affectParallel[B](that: Vector[B]): Vector[B] = that.parallel(grainSize)
     }
 }
 

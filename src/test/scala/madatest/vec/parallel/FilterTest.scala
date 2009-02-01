@@ -29,6 +29,11 @@ class FilterTest {
         val v = Vector.range(0, 10)
         val e = Vector.fromValues(0,4,6,8)
         assertEquals(e, v.parallel.remove(_ % 2 != 0).filter(_ != 2))
-        assertEquals(e.reduce(_ + _), v.parallel.remove(_ % 2 != 0).filter(_ != 2).reduce(_ + _))
+        assertEquals(e.reduce(_ + _), checkParallel(v.parallel.remove(_ % 2 != 0).filter(_ != 2)).reduce(_ + _))
+    }
+
+    def checkParallel[A](v: Vector[A]): Vector[A] = {
+        assertTrue(v.isParallel)
+        v
     }
 }
