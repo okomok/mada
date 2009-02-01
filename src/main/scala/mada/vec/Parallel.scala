@@ -21,12 +21,11 @@ private[mada] object Parallel {
     }
 }
 
-private[mada] class ParallelVector[A](override val underlying: Vector[A], override val grainSize: Int) extends Adapter.Algorithm[A] {
+private[mada] class ParallelVector[A](override val underlying: Vector[A], override val grainSize: Int) extends Adapter.ParallelAlgorithm[A] {
     Assert(!underlying.isParallel)
     ThrowIf.nonpositive(grainSize, "grain size")
     import vec.parallel._
 
-    override def isParallel = true
     override def equalsWith[B](that: Vector[B])(p: (A, B) => Boolean) = EqualsWith(underlying, that, p, grainSize)
     override def copyTo[B >: A](that: Vector[B]) = CopyTo(underlying, that, grainSize) // clone, toArray
     override def count(p: A => Boolean) = Count(underlying, p, grainSize)
