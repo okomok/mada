@@ -26,45 +26,23 @@ private[mada] class ParallelVector[A](override val underlying: Vector[A], overri
     ThrowIf.nonpositive(grainSize, "grain size")
     import vec.parallel._
 
+    // value semantics
     override def equalsWith[B](that: Vector[B])(p: (A, B) => Boolean) = EqualsWith(underlying, that, p, grainSize)
-    override def copyTo[B >: A](that: Vector[B]) = CopyTo(underlying, that, grainSize) // clone, toArray
-    override def count(p: A => Boolean) = Count(underlying, p, grainSize)
-    override def filter(p: A => Boolean) = Filter(underlying, p, grainSize) // remove
+    // filter
+    override def filter(p: A => Boolean) = Filter(underlying, p, grainSize)
+    // map
     override def map[B](f: A => B): Vector[B] = Map(underlying, f, grainSize)
+    // search
+    override def seek(p: A => Boolean) = Seek(underlying, p, grainSize)
+    override def count(p: A => Boolean) = Count(underlying, p, grainSize)
+    // foreach
     override def pareach(f: A => Unit) = Pareach(underlying, f, grainSize)
+    // copy
+    override def copyTo[B >: A](that: Vector[B]) = CopyTo(underlying, that, grainSize)
+    // parallel folding
     override def fold(z: A)(op: (A, A) => A) = Fold(underlying, z, op, grainSize)
     override def folder(z: A)(op: (A, A) => A) = Folder(underlying, z, op, grainSize)
     override def reduce(op: (A, A) => A): A = Reduce(underlying, op, grainSize)
     override def reducer(op: (A, A) => A): Vector[A] = Reducer(underlying, op, grainSize)
-    override def seek(p: A => Boolean) = Seek(underlying, p, grainSize) // forall, exists, contains
     override def sortWith(lt: (A, A) => Boolean) = SortWith(underlying, lt, grainSize)
-
-    override def append(that: Vector[A]) = {
-        val x = underlying append that.unparallel
-        if (that.isParallel) {
-            x.parallel(Math.min(grainSize, that.grainSize))
-        } else {
-            x
-        }
-    }
-    override def cycle(n: Int) = affect(underlying.cycle(n))
-    override def identity = affect(underlying.identity)
-    override def flatMap[B](f: A => Vector[B]) = affect(super.flatMap(f))
-    override def force = affect(underlying.force)
-    override def nth = affect(underlying.nth)
-    override def permutation(f: Int => Int) = affect(underlying.permutation(f))
-    override def readOnly = affect(underlying.readOnly)
-    override def region(_start: Int, _end: Int) = affect(underlying.region(_start, _end))
-    override def reverse = affect(underlying.reverse)
-    override def step(n: Int) = affect(underlying.step(n))
-    override def zip[B](that: Vector[B]) = {
-        val x = underlying zip that.unparallel
-        if (that.isParallel) {
-            x.parallel(Math.min(grainSize, that.grainSize))
-        } else {
-            x
-        }
-    }
-
-    private def affect[B](that: Vector[B]): Vector[B] = that.parallel(grainSize)
 }

@@ -103,68 +103,23 @@ object Adapter {
     }
 
 
-    /**
-     * Installs hook into vector-to-vector methods.
-     */
-    abstract class Projector[A](override val self: Vector[A]) extends Proxy[A] {
-        /**
-         * Called just before vector-to-vector methods return.
-         */
-        def project[C](that: Vector[C]): Vector[C]
-
-        override def append(that: Vector[A]): Vector[A] = project(self.append(that))
-        override def bounds: Vector[A] = project(self.bounds)
-        override def copyTo[B >: A](that: Vector[B]): Vector[A] = project(self.copyTo(that))
-        override def cycle(n: Int): Vector[A] = project(self.cycle(n))
-        override def filter(p: A => Boolean): Vector[A] = project(self.filter(p))
-        override def flatMap[B](f: A => Vector[B]): Vector[B] = project(self.flatMap(f))
-        override def mutatingFilter(p: A => Boolean): Vector[A] = project(self.mutatingFilter(p))
-        override def force: Vector[A] = project(self.force)
-        override def identity: Vector[A] = project(self.identity)
-        override def lazyValues : Vector[A] = project(self.lazyValues)
-        override def map[B](f: A => B): Vector[B] = project(self.map(f))
-        override def nth: Vector[A] = project(self.nth)
-        override def permutation(f: Int => Int): Vector[A] = project(self.permutation(f))
-        override def readOnly: Vector[A] = project(self.readOnly)
-        override def region(_start: Int, _end: Int): Vector[A] = project(self.region(_start, _end))
-        override def reverse: Vector[A] = project(self.reverse)
-        override def sortWith(lt: (A, A) => Boolean): Vector[A] = project(self.sortWith(lt))
-        override def step(n: Int): Vector[A] = project(self.step(n))
-        override def zip[B](that: Vector[B]): Vector[(A, B)] = project(self.zip(that))
-
-        override def folder(z: A)(op: (A, A) => A): Vector[A] = project(self.folder(z)(op))
-        override def reducer(op: (A, A) => A): Vector[A] = project(self.reducer(op))
-    }
-
-
     private[mada] trait ParallelAlgorithm[A] extends Adapter[A, A] {
         // value semantics
         override def equalsWith[B](that: Vector[B])(p: (A, B) => Boolean): Boolean
         override def hashCode: Int = underlying.hashCode
         // regions
-        override def region(_start: Int, _end: Int): Vector[A] = underlying.region(_start, _end)
-        override def init: Vector[A] = underlying.init
-        override def clear: Vector[A] = underlying.clear
-        override def window(n: Int, m: Int): Vector[A] = underlying.window(n, m)
-        override def offset(i: Int, j: Int): Vector[A] = underlying.offset(i, j)
-        override def slice(n: Int): Vector[A] = underlying.slice(n)
-        override def slice(n: Int, m: Int): Vector[A] = underlying.slice(n, m)
-        override def drop(n: Int): Vector[A] = underlying.drop(n)
-        override def take(n: Int): Vector[A] = underlying.take(n)
-        override def dropWhile(p: A => Boolean): Vector[A] = underlying.dropWhile(p)
-        override def takeWhile(p: A => Boolean): Vector[A] = underlying.takeWhile(p)
+        override def region(_start: Int, _end: Int): Vector[A] = affectParallel(underlying.region(_start, _end))
         // division
         override def divide(n: Int): Vector[Vector[A]] = underlying.divide(n)
         override def splitAt(i: Int): (Vector[A], Vector[A]) = underlying.splitAt(i)
         override def span(p: A => Boolean): (Vector[A], Vector[A]) = underlying.span(p)
         override def break(p: A => Boolean): (Vector[A], Vector[A]) = underlying.break(p)
-        // as list
-        override def tail: Vector[A] = underlying.tail
         // filter
         override def filter(p: A => Boolean): Vector[A] = underlying.filter(p)
         override def mutatingFilter(p: A => Boolean): Vector[A] = underlying.mutatingFilter(p)
         // map
         override def map[B](f: A => B): Vector[B]
+        override def flatMap[B](f: A => Vector[B]): Vector[B] = affectParallel(underlying.flatMap(f))
         override def asVectorOf[B]: Vector[B] = underlying.asVectorOf[B]
         // foreach
         override def loop[F <: (A => Boolean)](i: Int, j: Int, f: F): F = underlying.loop(i, j, f)
@@ -180,22 +135,36 @@ object Adapter {
         // sort
         override def sortWith(lt: (A, A) => Boolean): Vector[A] = underlying.sortWith(lt)
         // concatenation
-        override def append(that: Vector[A]): Vector[A] = underlying.append(that)
+        override def append(that: Vector[A]): Vector[A] = {
+            val x = underlying.append(that.unparallel)
+            if (that.isParallel) {
+                x.parallel(Math.min(grainSize, that.grainSize))
+            } else {
+                x
+            }
+        }
         // permutation
-        override def permutation(f: Int => Int): Vector[A] = underlying.permutation(f)
-        override def cycle(n: Int): Vector[A] = underlying.cycle(n)
-        override def nth: Vector[A] = underlying.nth
-        override def reverse: Vector[A] = underlying.reverse
-        override def step(n: Int): Vector[A] = underlying.step(n)
-        override def rotate(i: Int): Vector[A] = underlying.rotate(i)
+        override def permutation(f: Int => Int): Vector[A] = affectParallel(underlying.permutation(f))
+        override def cycle(n: Int): Vector[A] = affectParallel(underlying.cycle(n))
+        override def nth: Vector[A] = affectParallel(underlying.nth)
+        override def reverse: Vector[A] = affectParallel(underlying.reverse)
+        override def step(n: Int): Vector[A] = affectParallel(underlying.step(n))
+        override def rotate(i: Int): Vector[A] = affectParallel(underlying.rotate(i))
         // zip
-        override def zip[B](that: Vector[B]): Vector[(A, B)] = underlying.zip(that)
+        override def zip[B](that: Vector[B]): Vector[(A, B)] = {
+            val x = underlying.zip(that.unparallel)
+            if (that.isParallel) {
+                x.parallel(Math.min(grainSize, that.grainSize))
+            } else {
+                x
+            }
+        }
         // attributes
-        override def force: Vector[A] = underlying.force
-        override def lazyValues : Vector[A] = underlying.lazyValues
-        override def bounds: Vector[A] = underlying.bounds
-        override def readOnly: Vector[A] = underlying.readOnly
-        override def identity: Vector[A] = underlying.identity
+        override def force: Vector[A] = affectParallel(underlying.force)
+        override def lazyValues : Vector[A] = affectParallel(underlying.lazyValues)
+        override def bounds: Vector[A] = affectParallel(underlying.bounds)
+        override def readOnly: Vector[A] = affectParallel(underlying.readOnly)
+        override def identity: Vector[A] = affectParallel(underlying.identity)
         // copy
         override def copyTo[B >: A](that: Vector[B]): Vector[A]
         // parallel support
@@ -209,6 +178,11 @@ object Adapter {
         override def folder(z: A)(op: (A, A) => A): Vector[A]
         override def reduce(op: (A, A) => A): A
         override def reducer(op: (A, A) => A): Vector[A]
+        // implementation helpers
+        protected def affectParallel[B](that: Vector[B]): Vector[B] = {
+            Assert(!underlying.isParallel)
+            that.parallel(grainSize)
+        }
     }
 }
 
