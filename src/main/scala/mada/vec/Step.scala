@@ -11,7 +11,7 @@ private[mada] object Step {
     def apply[A](v: Vector[A], stride: Int): Vector[A] = new StepVector(v, stride)
 }
 
-private[mada] class StepVector[A](v: Vector[A], stride: Int) extends VectorProxy[A] {
+private[mada] class StepVector[A](v: Vector[A], stride: Int) extends Adapter.Proxy[A] {
     ThrowIf.nonpositive(stride, "step stride")
     // This can't keep writability.
     // override val self = Vector.range(0, StepCount(v.start, v.end, stride)).map({ i => v.nth(i * stride) })

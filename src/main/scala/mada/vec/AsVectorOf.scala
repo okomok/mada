@@ -11,7 +11,7 @@ private[mada] object AsVectorOf {
     def apply[A, B](v: Vector[A]): Vector[B] = new AsVectorOfVector[A, B](v)
 }
 
-private[mada] class AsVectorOfVector[A, B](override val underlying: Vector[A]) extends VectorAdapter[A, B] {
+private[mada] class AsVectorOfVector[A, B](override val underlying: Vector[A]) extends Adapter[A, B] {
     override def apply(i: Int) = underlying(i).asInstanceOf[B]
     override def update(i: Int, e: B) = underlying(i) = e.asInstanceOf[A]
 }

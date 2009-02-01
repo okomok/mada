@@ -11,7 +11,7 @@ private[mada] object Permutation {
     def apply[A](v: Vector[A], f: Int => Int): Vector[A] = new PermutationVector(v, f)
 }
 
-private[mada] class PermutationVector[A](v: Vector[A], f: Int => Int) extends VectorAdapter[A, A] {
+private[mada] class PermutationVector[A](v: Vector[A], f: Int => Int) extends Adapter[A, A] {
     override val underlying = v.nth
 
     override def apply(i: Int) = underlying(f(i))

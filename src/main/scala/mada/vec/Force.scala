@@ -11,7 +11,7 @@ private[mada] object Force {
     def apply[A](v: Vector[A]): Vector[A] = new ForceVector(v)
 }
 
-private[mada] class ForceVector[A](v: Vector[A]) extends VectorAdapter[A, A] with NotWritable[A] {
+private[mada] class ForceVector[A](v: Vector[A]) extends Adapter[A, A] with NotWritable[A] {
     override val underlying = Vector.arrayVector(v.toArray)
     override def force = this // force-force fusion
 }

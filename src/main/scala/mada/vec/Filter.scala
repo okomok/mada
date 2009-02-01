@@ -11,7 +11,7 @@ private[mada] object Filter {
     def apply[A](v: Vector[A], p: A => Boolean): Vector[A] = new FilterVector(v, p)
 }
 
-private[mada] class FilterVector[A](v: Vector[A], p: A => Boolean) extends VectorProxy[A] with NotWritable[A] {
+private[mada] class FilterVector[A](v: Vector[A], p: A => Boolean) extends Adapter.Proxy[A] with NotWritable[A] {
     override lazy val self = v.clone.mutatingFilter(p)
     override def filter(_p: A => Boolean) = v.filter({ e => p(e) && _p(e) }) // filter-filter fusion
 }
@@ -21,7 +21,7 @@ private[mada] object MutatingFilter {
     def apply[A](v: Vector[A], p: A => Boolean): Vector[A] = new MutatingFilterVector(v, p)
 }
 
-private[mada] class MutatingFilterVector[A](v: Vector[A], p: A => Boolean) extends VectorProxy[A] {
+private[mada] class MutatingFilterVector[A](v: Vector[A], p: A => Boolean) extends Adapter.Proxy[A] {
     override lazy val self = {
         v(v.start, stl.RemoveIf(v, v.start, v.end, Functions.not(p)))
     }

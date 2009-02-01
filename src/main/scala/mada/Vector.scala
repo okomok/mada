@@ -209,14 +209,14 @@ object Vector {
     type Func3[A, B] = (Vector[A], Int, Int) => B
 
     /**
-     * Alias of <code>vec.VectorAdapter</code>
+     * Alias of <code>vec.Adapter</code>
      */
-    type VectorAdapter[Z, A] = vec.VectorAdapter[Z, A]
+    val Adapter = vec.Adapter
 
     /**
-     * Alias of <code>vec.VectorProxy</code>
+     * Alias of <code>vec.Adapter</code>
      */
-    type VectorProxy[A] = vec.VectorProxy[A]
+    type Adapter[Z, A] = vec.Adapter[Z, A]
 
     /**
      * Alias of <code>vec.NotWritable</code>

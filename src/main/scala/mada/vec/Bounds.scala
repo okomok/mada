@@ -11,7 +11,7 @@ private[mada] object Bounds {
     def apply[A](v: Vector[A]): Vector[A] = new BoundsVector(v)
 }
 
-private[mada] class BoundsVector[A](override val underlying: Vector[A]) extends VectorAdapter[A, A] {
-    override def isDefinedAt(i: Int) = underlying.start <= i && i < underlying.end
+private[mada] class BoundsVector[A](override val self: Vector[A]) extends Adapter.Proxy[A] {
+    override def isDefinedAt(i: Int) = self.start <= i && i < self.end
     override def bounds = this // bounds-bounds fusion
 }
