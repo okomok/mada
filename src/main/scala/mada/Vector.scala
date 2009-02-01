@@ -263,6 +263,9 @@ object Vector {
 trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     import vec._
 
+
+// kernel interface
+
     /**
      * @return  start index of this vector, which is NOT guaranteed to be <code>0</code>.
      */
@@ -299,25 +302,8 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      */
     override def isDefinedAt(i: Int): Boolean = IsDefinedAt(this, i)
 
-    /**
-     * @return  <code>end - start</code>
-     */
-    final def size: Int = end - start
 
-    /**
-     * Alias of <code>this.size</code>
-     */
-    final def length: Int = size
-
-    /**
-     * @return  <code>this.size == 0</code>
-     */
-    final def isEmpty: Boolean = IsEmpty(this)
-
-    /**
-     * @return  this vector.
-     */
-    final def vector: Vector[A] = this
+// value semantics
 
     /**
      * Compares each element using predicate <code>p</code>.
@@ -338,21 +324,20 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     override def hashCode: Int = HashCode_(this)
     override def hashCodeOfRef: Int = super.hashCode
 
-    /**
-     * Divides this vector into vector of Regions.
-     * Each vector size is <code>n</code> except for the last one.
-     *
-     * @param   n divisor
-     * @return  <code>[this(this.start, n), this(this.start + n, 2*n), this(this.start + 2*n, 3*n),...]</code>.
-     * @see     Vector.undivide
-     */
-    final def divide(n: Int): Vector[Vector[A]] = Divide(this, n)
+
+// regions
 
     /**
      * @return  <code>Region(this, _start, _end)</code>.
      * @see     apply as alias.
      */
     def region(_start: Int, _end: Int): Vector[A] = Region(this, _start, _end)
+
+    /**
+     * @pre     <code>!this.isEmpty</code>
+     * @return  the vector without its last element.
+     */
+    final def init: Vector[A] = Init(this)
 
     /**
      * @return  <code>this(this.start + n, this.start + m)</code>
@@ -404,6 +389,19 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      */
     final def slice(n: Int, m: Int): Vector[A] = Slice(this, n, m)
 
+
+// division
+
+    /**
+     * Divides this vector into vector of Regions.
+     * Each vector size is <code>n</code> except for the last one.
+     *
+     * @param   n divisor
+     * @return  <code>[this(this.start, n), this(this.start + n, 2*n), this(this.start + 2*n, 3*n),...]</code>.
+     * @see     Vector.undivide
+     */
+    final def divide(n: Int): Vector[Vector[A]] = Divide(this, n)
+
     /**
      * @return  <code>(this(this.start, m), this(m, this.end))</code>, where <code>val m = Math.min(i, this.end)</code>.
      */
@@ -424,53 +422,8 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      */
     final def break(p: A => Boolean): (Vector[A], Vector[A]) = Break(this, p)
 
-    /**
-     * @return  an <code>Iterator</code> of this vector.
-     */
-    final def elements: Iterator[A] = iterator
 
-    /**
-     * Alias of <code>this.elements</code>
-     */
-    final def iterator: Iterator[A] = VectorIterator(this)
-
-    /**
-     * @return  a <code>java.util.Iterator</code> of this vector.
-     */
-    final def jclListIterator: java.util.ListIterator[A] = jcl.VectorListIterator(this)
-
-
-    final def linearAccessSeq: Seq[A] = LinearAccessSeq(this)
-
-    /**
-     * @return  a <code>RandomAccessSeq.Mutable</code> projection of this vector.
-     */
-    final def randomAccessSeq: RandomAccessSeq.Mutable[A] = VectorRandomAccessSeq(this)
-
-    /**
-     * @return  a <code>Stream</code> of this vector.
-     */
-    final def stream: Stream[A] = VectorStream(this)
-
-    /**
-     * @return  a new <code>Array</code> which enumerates all elements of this vector.
-     */
-    final def toArray: Array[A] = ToArray(this)
-
-    /**
-     * @return  a new <code>java.util.ArrayList</code> which enumerates all elements of this vector.
-     */
-    final def toJclArrayList: java.util.ArrayList[A] = jcl.ToArrayList(this)
-
-    /**
-     * @return  a <code>List</code> which enumerates all elements of this vector.
-     */
-    final def toList: List[A] = ToList(this)
-
-    /**
-     * @return  a string representation of this vector.
-     */
-    override def toString: String = ToString(this)
+// first and last
 
     /**
      * Alias of <code>this.randomAccessSeq.first</code>
@@ -483,12 +436,6 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     final def last: A = Last(this)
 
     /**
-     * @pre     <code>!this.isEmpty</code>
-     * @return  the vector without its last element.
-     */
-    final def init: Vector[A] = Init(this)
-
-    /**
      * Alias of <code>this.randomAccessSeq.firstOption</code>
      */
     final def firstOption: Option[A] = FirstOption(this)
@@ -497,6 +444,9 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * Alias of <code>this.randomAccessSeq.lastOption</code>
      */
     final def lastOption: Option[A] = LastOption(this)
+
+
+// as list
 
     /**
      * Alias of <code>this.first</code>
@@ -513,6 +463,9 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * Alias of <code>this.isEmpty</code>
      */
     final def isNil: Boolean = IsNil(this)
+
+
+// filter
 
     /**
      * Returns all the elements of this vector that satisfy the
@@ -549,6 +502,9 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      */
     final def partition(p: A => Boolean): (Vector[A], Vector[A]) = Partition(this, p)
 
+
+// map
+
     /**
      * @return  <code>Vector.randomAccessSeqVector(this.randomAccessSeq.projection.map(f))</code>
      */
@@ -564,16 +520,13 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      */
     final def asVectorOf[B]: Vector[B] = AsVectorOf[A, B](this)
 
+
+// foreach
+
     /**
      * Equivalent to <code>this.foreach</code>, but loop is breakable by <code>f</code> returning <code>false</code>.
      */
     def loop[F <: (A => Boolean)](i: Int, j: Int, f: F): F = Loop(this, i, j, f)
-
-    /**
-     * Alias of <code>this.randomAccessSeq.count</code>
-     */
-    def count(p: A => Boolean): Int = Count(this, p)
-
     /**
      * Alias of <code>this.elements.foreach</code>.
      */
@@ -587,6 +540,9 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * @param   f a function that is applied to every element.
      */
     def pareach(f: A => Unit): Unit = Pareach(this, f)
+
+
+// search
 
     /**
      * Alias of <code>this.elements.find</code>.
@@ -604,6 +560,11 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     def seek(p: A => Boolean): Option[A] = Seek(this, p)
 
     /**
+     * Alias of <code>this.randomAccessSeq.count</code>
+     */
+    def count(p: A => Boolean): Int = Count(this, p)
+
+    /**
      * Alias of <code>this.elements.contains</code>.
      */
     final def contains(e: Any): Boolean = Contains(this, e)
@@ -617,6 +578,9 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * Alias of <code>this.elements.exists</code>.
      */
     final def exists(p: A => Boolean): Boolean = Exists(this, p)
+
+
+// folding
 
     /**
      * @pre     <code>op</code> is associative.
@@ -686,40 +650,8 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      */
     final def reducerRight[B >: A](op: (A, B) => B): Vector[B] = ReducerRight(this, op)
 
-    /**
-     * Is this vector methods possibly performing in parallel?
-     */
-    def isParallel: Boolean = false
 
-    /**
-     * @return  <code>this.parallel(this.defaultGrainSize)</code>
-     */
-    final def parallel: Vector[A] = Parallel(this)
-
-    /**
-     * Requests a vector to perform parallel methods.
-     */
-    final def parallel(grainSize: Int): Vector[A] = Parallel(this, grainSize)
-
-    /**
-     * Waits for parallel element calculations over.
-     */
-    final def join: Unit = Join(this)
-
-    /**
-     * Reverts <code>this.parallel</code>.
-     */
-    def unparallel: Vector[A] = this
-
-    /**
-     * Specifies the grain size, which is used to divide this vector in parallel methods.
-     */
-    def grainSize: Int = size
-
-    /**
-     * Specifies the default grain size.
-     */
-    def defaultGrainSize: Int = DefaultGrainSize(this)
+// sort
 
     /**
      * Sort this vector according to the comparison function <code>lt</code>.
@@ -735,20 +667,16 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      */
     final def sort(implicit c: A => Ordered[A]): Vector[A] = Sort(this, c)
 
+
+// concatenation
+
     /**
      * @return  <code>Vector.randomAccessSeqVector(this.randomAccessSeq.projection ++ that)</code>
      */
     def append(that: Vector[A]): Vector[A] = Append(this, that)
 
-    /**
-     * @return  <code>Vector.range(this.start, this.end)</code>
-     */
-    final def indices: Vector[Int] = Indices(this)
 
-    /**
-     * Returns a vector whose elements are lazy.
-     */
-    def lazyValues : Vector[A] = LazyValues(this)
+// permutation
 
     /**
      * Reorders using "0-to-size" index mapping <code>f</code>.
@@ -795,21 +723,8 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      */
     def zip[B](that: Vector[B]): Vector[(A, B)] = Zip(this, that)
 
-    /**
-     * Returns this vector after applying <code>f</code>.
-     *
-     * @return  this vector.
-     */
-    final def sideEffect(f: Vector[A] => Any): Vector[A] = SideEffect(this, f)
 
-    /**
-     * Copies all the elements into another.
-     *
-     * @pre     <code>this.size == that.size</code>.
-     * @pre     <code>that</code> is writable.
-     * @return  this vector.
-     */
-    def copyTo[B >: A](that: Vector[B]): Vector[A] = CopyTo(this, that)
+// modifying attributes
 
     /**
      * Converts to a strict collection.
@@ -819,11 +734,9 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     def force: Vector[A] = Force(this)
 
     /**
-     * Returns a shallow copy of this vector. (The elements themselves are not copied.)
-     *
-     * @return  a writable clone of this vector.
+     * Returns a vector whose elements are lazy.
      */
-    override def clone: Vector[A] = Clone(this)
+    def lazyValues : Vector[A] = LazyValues(this)
 
     /**
      * Creates a vector whose <code>isDefinedAt(i)</code> returns true
@@ -837,24 +750,33 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     def readOnly: Vector[A] = ReadOnly(this)
 
     /**
-     * @return  <code>that</code>.
+     * @return  an alias of this vector.
      */
-    final def always[B](that: Vector[B]): Vector[B] = Always(this, that)
-
-    /**
-     * @return  an empty vector.
-     */
-    final def clear: Vector[A] = Clear(this)
+    def identity: Vector[A] = Identity(this)
 
     /**
      * @return  an alias of this vector, but any override is turned off.
      */
     final def cut: Vector[A] = Cut(this)
 
+
+// copy
+
     /**
-     * @return  an alias of this vector.
+     * Copies all the elements into another.
+     *
+     * @pre     <code>this.size == that.size</code>.
+     * @pre     <code>that</code> is writable.
+     * @return  this vector.
      */
-    def identity: Vector[A] = Identity(this)
+    def copyTo[B >: A](that: Vector[B]): Vector[A] = CopyTo(this, that)
+
+    /**
+     * Returns a shallow copy of this vector. (The elements themselves are not copied.)
+     *
+     * @return  a writable clone of this vector.
+     */
+    override def clone: Vector[A] = Clone(this)
 
     /**
      * @return  <code>this.writer(this.start)</code>
@@ -865,6 +787,148 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * @return  <code>new Writer(this, i)</code>
      */
     final def writer(i: Int): Writer[A] = Writer(this, i)
+
+
+// parallel support
+
+    /**
+     * Is this vector methods possibly performing in parallel?
+     */
+    def isParallel: Boolean = false
+
+    /**
+     * @return  <code>this.parallel(this.defaultGrainSize)</code>
+     */
+    final def parallel: Vector[A] = Parallel(this)
+
+    /**
+     * Requests a vector to perform parallel methods.
+     */
+    final def parallel(grainSize: Int): Vector[A] = Parallel(this, grainSize)
+
+    /**
+     * Waits for parallel element calculations over.
+     */
+    final def join: Unit = Join(this)
+
+    /**
+     * Reverts <code>this.parallel</code>.
+     */
+    def unparallel: Vector[A] = this
+
+    /**
+     * Specifies the grain size, which is used to divide this vector in parallel methods.
+     */
+    def grainSize: Int = size
+
+    /**
+     * Specifies the default grain size.
+     */
+    def defaultGrainSize: Int = DefaultGrainSize(this)
+
+
+// conversions
+
+    /**
+     * @return  an <code>Iterator</code> of this vector.
+     */
+    final def iterator: Iterator[A] = VectorIterator(this)
+
+    /**
+     * @return  a <code>java.util.Iterator</code> of this vector.
+     */
+    final def jclListIterator: java.util.ListIterator[A] = jcl.VectorListIterator(this)
+
+
+    final def linearAccessSeq: Seq[A] = LinearAccessSeq(this)
+
+    /**
+     * @return  a <code>RandomAccessSeq.Mutable</code> projection of this vector.
+     */
+    final def randomAccessSeq: RandomAccessSeq.Mutable[A] = VectorRandomAccessSeq(this)
+
+    /**
+     * @return  a <code>Stream</code> of this vector.
+     */
+    final def stream: Stream[A] = VectorStream(this)
+
+    /**
+     * @return  a new <code>Array</code> which enumerates all elements of this vector.
+     */
+    final def toArray: Array[A] = ToArray(this)
+
+    /**
+     * @return  a new <code>java.util.ArrayList</code> which enumerates all elements of this vector.
+     */
+    final def toJclArrayList: java.util.ArrayList[A] = jcl.ToArrayList(this)
+
+    /**
+     * @return  a <code>List</code> which enumerates all elements of this vector.
+     */
+    final def toList: List[A] = ToList(this)
+
+    /**
+     * @return  a string representation of this vector.
+     */
+    override def toString: String = ToString(this)
+
+
+// trivials
+
+    /**
+     * @return  <code>this</code>.
+     */
+    final def vector: Vector[A] = this
+
+    /**
+     * @return  <code>start == end</code>.
+     */
+    final def isEmpty: Boolean = start == end
+
+    /**
+     * @return  <code>end - start</code>.
+     */
+    final def size: Int = end - start
+
+    /**
+     * @return  <code>that</code>.
+     */
+    final def always[B](that: Vector[B]): Vector[B] = that
+
+    /**
+     * @return  <code>this(this.start, this.start)</code>
+     */
+    final def clear: Vector[A] = this(start, start)
+
+    /**
+     * @return  <code>f(this); this</code>.
+     */
+    final def sideEffect(f: Vector[A] => Any): Vector[A] = { f(this); this }
+
+    /**
+     * @return  <code>Vector.range(this.start, this.end)</code>.
+     */
+    final def indices: Vector[Int] = Vector.range(start, end)
+
+    /**
+     * Returns a set entry as pair, which is useful for <code>Peg.switch</code>.
+     *
+     * @return  <code>(this, p)</code>
+     */
+    final def -->(p: Peg[A]): (Vector[A], Peg[A]) = (this, p)
+
+
+// aliases
+
+    /**
+     * Alias of <code>this.size</code>
+     */
+    final def length: Int = size
+
+    /**
+     * Alias of <code>this.iterator</code>
+     */
+    final def elements: Iterator[A] = iterator
 
     /**
      * Alias of <code>this.region</code>
@@ -885,11 +949,4 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * Alias of <code>this.foldRight</code>
      */
     final def :\[B](z: B)(op: (A, B) => B): B = foldRight(z)(op)
-
-    /**
-     * Returns a set entry tuple, which is useful for <code>Peg.switch</code>.
-     *
-     * @return  <code>(this, p)</code>
-     */
-    final def -->(p: Peg[A]): (Vector[A], Peg[A]) = (this, p)
 }
