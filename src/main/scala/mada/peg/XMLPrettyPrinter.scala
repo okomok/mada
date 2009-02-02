@@ -80,6 +80,14 @@ private[mada] class XMLPrettyPrinter(val out: java.io.Writer, val indentWidth: I
         out.flush
     }
 
+    /**
+     * @return  <code>out.close</code>.
+     */
+    override def close: Unit = {
+        Assert(stack.isEmpty)
+        out.close
+    }
+
     override def write[A](p: Peg[A]): Peg[A] = new ElementPeg(p)
 
     private class ElementPeg[A](override val self: Peg[A]) extends PegProxy[A] {
@@ -98,13 +106,4 @@ private[mada] class XMLPrettyPrinter(val out: java.io.Writer, val indentWidth: I
             cur
         }
     }
-
-    /**
-     * @return  <code>out.close</code>.
-     */
-    override def close: Unit = {
-        Assert(stack.isEmpty)
-        out.close
-    }
-
 }

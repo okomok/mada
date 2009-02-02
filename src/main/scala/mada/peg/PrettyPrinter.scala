@@ -23,24 +23,30 @@ object PrettyPrinter {
      * Returns a <code>PrettyPrinter</code> which outputs nothing.
      */
     val trash: PrettyPrinter = new PrettyPrinter {
+        override def close = ()
         override def write[A](p: Peg[A]) = p
-        override def close = { }
     }
 }
+
 
 /**
  * Prints matched input information.
  */
 trait PrettyPrinter {
     /**
+     * Closes output resource.
+     */
+    def close: Unit
+
+    /**
      * Outputs matched inputs.
      */
     def write[A](p: Peg[A]): Peg[A]
 
     /**
-     * Closes output resource.
+     * @return  <code>write(p.named(name))</code>.
      */
-    def close: Unit
+    final def write[A](name: String, p: Peg[A]): Peg[A] = write(p.named(name))
 
     /**
      * Alias of <code>write</code>
@@ -48,7 +54,7 @@ trait PrettyPrinter {
     final def apply[A](p: Peg[A]): Peg[A] = write(p)
 
     /**
-     * @return  <code>apply(p.named(name))</code>.
+     * Alias of <code>write</code>
      */
-    final def apply[A](name: String, p: Peg[A]): Peg[A] = apply(p.named(name))
+    final def apply[A](name: String, p: Peg[A]): Peg[A] = write(name, p)
 }
