@@ -41,23 +41,22 @@ object Assert {
     }
 
     /**
-     * Alias of this.apply; <code>cond</code> is evaluated.
+     * Alias of <code>apply</code>; <code>cond</code> is evaluated.
      */
     def verify(cond: Boolean) = Assert(cond)
 
     /**
-     * Alias of this.apply; <code>cond</code> is evaluated.
+     * Alias of <code>apply</code>; <code>cond</code> is evaluated.
      */
     def verify(msg: => Any, cond: Boolean) = Assert(msg, cond)
 
+    /**
+     * @return  <code>this(expect(e)); e</code>.
+     */
+    def ensure[A](e: A, expect: A => Boolean): A = { Assert(expect(e)); e }
 
     /**
-     * @return  <code>this(expect(e)); e</code>
+     * @return  <code>this(msg, expect(e)); e</code>.
      */
-    def check[A](expect: A => Boolean, e: A): A = { Assert(expect(e)); e }
-
-    /**
-     * @return  <code>this(msg, expect(e)); e</code>
-     */
-    def check[A](msg: => Any, expect: A => Boolean, e: A): A = { Assert(msg, expect(e)); e }
+    def ensure[A](msg: => Any, e: A, expect: A => Boolean): A = { Assert(msg, expect(e)); e }
 }

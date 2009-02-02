@@ -24,7 +24,7 @@ object Strings {
     def elements(str: String): Iterator[Char] = str.elements
 
     /**
-     * Alias of this.elements
+     * Alias of <code>elements</code>
      */
     def iterator(str: String): Iterator[Char] = str.elements
 }

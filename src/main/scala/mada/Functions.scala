@@ -53,7 +53,7 @@ object Functions {
     }
 
     /**
-     * Representds <code>{ (v1: T1, v2: T1) => c(v1) < v2 }</code>.
+     * Represents <code>{ (v1: T1, v2: T1) => c(v1) < v2 }</code>.
      */
     def less[T1](implicit c: T1 => Ordered[T1]): Compare[T1] = new Compare[T1] {
         override def apply(v1: T1, v2: T1) = c(v1) < v2
