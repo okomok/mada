@@ -14,19 +14,23 @@ object Proxies {
 
 
     /**
-     * Supports pattern matching of <code>ProxyOf</code>.
-     */
-    object ProxyOf {
-        def unapply[A](that: ProxyOf[A]): Option[A] = Some(that.self)
-    }
-
-    /**
      * Typed proxy
      */
     trait ProxyOf[A] extends Proxy {
         override def self: A
     }
 
+
+    /**
+     * Supports pattern matching of <code>Mutable</code>.
+     */
+    object Mutable {
+        def unapply[A](that: Mutable[A]): Option[A] = if (that.isEmptyProxy) None else Some(that.self)
+
+        object Null {
+            def unapply[A](that: Mutable[A]): Boolean = that.isEmptyProxy
+        }
+    }
 
     /**
      * Mutable proxy

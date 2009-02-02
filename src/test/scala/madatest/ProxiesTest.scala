@@ -36,24 +36,24 @@ class ProxiesRefTest {
     def testExtract: Unit = {
         val s = "abc"
         val r = new Ref(s)
-        val ProxyOf(p) = r
+        val Mutable(p) = r
         assertSame(p, s)
 
         r match {
-            case ProxyOf(p) => assertSame(s, p)
+            case Mutable.Null() => fail("doh")
+            case Mutable(p) => assertSame(s, p)
             case _ => fail("doh")
         }
         ()
     }
-/* rejected
+
     def testExtractNull: Unit = {
         val r = new Ref[String]
-        var failed = false
         r match {
-            case Ref(p) => fail("doh")
-            case _ => failed = true
+            case Mutable(p) => fail("doh")
+            case Mutable.Null() => ()
+            case _ => fail("doh")
         }
-        assertTrue(failed)
     }
-*/
+
 }
