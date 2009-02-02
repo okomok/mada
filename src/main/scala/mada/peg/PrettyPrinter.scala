@@ -16,6 +16,7 @@ import Vector.Compatibles._
 object PrettyPrinter {
     /**
      * Returns a <code>PrettyPrinter</code> which outputs XML.
+     * You must call <code>close</code>.
      */
     def xml: PrettyPrinter = new XMLPrettyPrinter
 

@@ -33,6 +33,8 @@ private[mada] object XMLPrettyPrinter {
  * @param   indentWidth indent width
  */
 private[mada] class XMLPrettyPrinter(val out: java.io.Writer, val indentWidth: Int) extends PrettyPrinter {
+    out.write("<?xml version=\"1.0\" encoding=\"UTF-16\" standalone=\"yes\"?>\n")
+
     /**
      * @return  <code>this(XMLPrettyPrinter.defaultWriter, XMLPrettyPrinter.defaultIndentWidth)</code>.
      */
@@ -94,12 +96,12 @@ private[mada] class XMLPrettyPrinter(val out: java.io.Writer, val indentWidth: I
         override def parse(v: Vector[A], start: Int, end: Int) = {
             writeStartElement(self)
 
-            writeElement("peg:parsing", v(start, end))
+            writeElement("Peg.parsing", v(start, end))
             val cur = self.parse(v, start, end)
             if (cur == Peg.FAILURE) {
-                writeElement("peg:parsed", "peg:failed")
+                writeElement("Peg.parsed", "Peg.FAILURE")
             } else {
-                writeElement("peg:parsed", v(start, cur))
+                writeElement("Peg.parsed", v(start, cur))
             }
 
             writeEndElement
