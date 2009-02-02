@@ -8,27 +8,30 @@ package mada.peg
 
 
 /**
- * A <code>Peg</code> to support recursive pegs
+ * A <code>Peg</code> to support recursive grammars.
  */
-class Rule[A] private (private var p: Peg[A]) extends PegProxy[A] {
-    /**
-     * Creates a <code>Rule</code> in which <code>self</code> is <code>null</code>.
-     */
-    def this() = this(null)
+class Rule[A] extends PegProxy[A] with Proxies.Mutable[Peg[A]] {
+    private var p: Peg[A] = null
 
-    /**
-     * @return  a <code>Peg</code> assigned using <code>::=</code>;
-     *          <code>null</code> in case <code>::=<code> is not called yet.
-     */
     override def self = p
+    override def :=(that: Peg[A]) = p = that
 
     /**
-     * Assigns <code>that</code>.
+     * Alias of <code>:=</code>
      */
-    def ::=(that: Peg[A]): Unit = { p = that }
+    final def ::=(that: Peg[A]): Unit = this := that
 
     /**
-     * @return  <code>new Rule[A](self)</code>.
+     * Alias of <code>:=</code>
      */
-    override def clone: Rule[A] = new Rule[A](p)
+    final def <--(that: Peg[A]): Unit = this := that
+
+    /**
+     * Returns a shallow copy. (The <code>self</code> is not copied.)
+     */
+    override def clone: Rule[A] = {
+        val that = new Rule[A]
+        that := self
+        that
+    }
 }

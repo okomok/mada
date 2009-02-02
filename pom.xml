@@ -14,8 +14,8 @@ Mada is a library.
 
     <licenses>
         <license>
-            <name>MIT-style license</name>
-            <url>http://en.wikipedia.org/wiki/MIT_License</url>
+            <name>MIT license</name>
+            <url>http://www.opensource.org/licenses/mit-license.html</url>
             <distribution>repo</distribution>
         </license>
     </licenses>
