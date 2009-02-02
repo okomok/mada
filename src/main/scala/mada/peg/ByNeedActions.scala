@@ -25,7 +25,7 @@ class ByNeedActions[A] {
     /**
      * Alias of <code>need</code>
      */
-    def apply(p: Peg[A]): Peg[A] = need(p)
+    final def apply(p: Peg[A]): Peg[A] = need(p)
 
     /**
      * Creates a <code>Peg</code> which triggers queued actions.

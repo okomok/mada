@@ -16,8 +16,8 @@ import mada.Peg.Compatibles._
 class PrettyPrinterTest {
     val expr, term, factor, digit = new Rule[Char]
     val out
-        // = new PrettyPrinter
-         = { (x: String, y: mada.Peg[Char]) => y }
+//         = PrettyPrinter.xml
+         = PrettyPrinter.trash
 
     expr    ::= out( "expr", term >> (( '+' >> term | '-' >> term )*) )
     term    ::= out( "term", factor >> ( '*' >> factor | '/' >> factor ).* )

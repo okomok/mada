@@ -64,7 +64,7 @@ class ASTreeBuilder[T <: MutableTreeNode](root: T, cloner: T => T) {
     /**
      * Alias of <code>node</code>
      */
-    def apply[A](p: Peg[A])(f: Vector.Func[A, Any]): Peg[A] = node(p)(f)
+    final def apply[A](p: Peg[A])(f: Vector.Func[A, Any]): Peg[A] = node(p)(f)
 
     /**
      * Creates a Peg which appends a tree node using <code>f</code>.

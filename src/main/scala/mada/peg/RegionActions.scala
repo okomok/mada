@@ -18,7 +18,7 @@ class RegionActions[A] {
     /**
      * Alias of <code>startAt</code>
      */
-    def apply(p: Peg[A]): Peg[A] = startAt(p)
+    final def apply(p: Peg[A]): Peg[A] = startAt(p)
 
     /**
      * Marks starting point of actions.

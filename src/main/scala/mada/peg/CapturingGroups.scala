@@ -19,7 +19,7 @@ class CapturingGroups[K, A](val groups: scala.collection.mutable.Map[K, Vector[A
     /**
      * Alias of <code>capture</code>
      */
-    def apply(k: K, p: Peg[A]): Peg[A] = capture(k, p)
+    final def apply(k: K, p: Peg[A]): Peg[A] = capture(k, p)
 
     /**
      * Captures matched region.
@@ -29,7 +29,7 @@ class CapturingGroups[K, A](val groups: scala.collection.mutable.Map[K, Vector[A
     /**
      * Alias of <code>backref</code>
      */
-    def apply(k: K): Peg[A] = backref(k)
+    final def apply(k: K): Peg[A] = backref(k)
 
     /**
      * Back-reference
