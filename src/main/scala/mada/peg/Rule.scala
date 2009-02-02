@@ -8,37 +8,6 @@ package mada.peg
 
 
 /**
- * Contains utility methods operating on type <code>Rule</code>.
- */
-object Rule {
-    /**
-     * @return  (new Rule[A])
-     */
-    def new1[A]: (Rule[A]) = (new Rule[A])
-
-    /**
-     * @return  (new Rule[A], new Rule[A])
-     */
-    def new2[A]: (Rule[A], Rule[A]) = (new Rule[A], new Rule[A])
-
-    /**
-     * @return  (new Rule[A], new Rule[A], new Rule[A])
-     */
-    def new3[A]: (Rule[A], Rule[A], Rule[A]) = (new Rule[A], new Rule[A], new Rule[A])
-
-    /**
-     * @return  (new Rule[A], new Rule[A], new Rule[A], new Rule[A])
-     */
-    def new4[A]: (Rule[A], Rule[A], Rule[A], Rule[A]) = (new Rule[A], new Rule[A], new Rule[A], new Rule[A])
-
-    /**
-     * @return  (new Rule[A], new Rule[A], new Rule[A], new Rule[A], new Rule[A])
-     */
-    def new5[A]: (Rule[A], Rule[A], Rule[A], Rule[A], Rule[A]) = (new Rule[A], new Rule[A], new Rule[A], new Rule[A], new Rule[A])
-}
-
-
-/**
  * A <code>Peg</code> to support recursive pegs
  */
 class Rule[A] private (private var p: Peg[A]) extends PegProxy[A] {

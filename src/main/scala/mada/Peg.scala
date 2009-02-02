@@ -184,11 +184,6 @@ object Peg {
     /**
      * Alias of <code>peg.Rule</code>
      */
-    val Rule = peg.Rule
-
-    /**
-     * Alias of <code>peg.Rule</code>
-     */
     type Rule[A] = peg.Rule[A]
 
     /**

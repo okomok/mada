@@ -313,7 +313,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
 
     /**
      * Vector has value semantics <code>==</code>.
-     * 
+     *
      * @return  <code>equalsWith(that)(Functions.equal)</code>.
      */
     override def equals(that: Any): Boolean = Equals(this, that)
@@ -444,7 +444,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     /**
      * Alias of <code>this(start)</code>
      */
-     final def first: A = { throwIfEmpty("first"); this(start) }
+    final def first: A = { throwIfEmpty("first"); this(start) }
 
     /**
      * Alias of <code>this(end - 1)</code>
@@ -539,7 +539,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
 // foreach
 
     /**
-     * Equivalent to <code>foreach</code>, but loop is breakable by <code>f</code> returning <code>false</code>.
+     * Similar to <code>foreach</code>, but loop is breakable by <code>f</code> returning <code>false</code>.
      */
     def loop[F <: (A => Boolean)](i: Int, j: Int, f: F): F = Loop(this, i, j, f)
 
@@ -729,7 +729,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     /**
      * Returns a vector whose elements are lazy.
      */
-    def lazyValues : Vector[A] = LazyValues(this)
+    def lazyValues: Vector[A] = LazyValues(this)
 
     /**
      * Creates a vector whose <code>isDefinedAt(i)</code> returns true
