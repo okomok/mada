@@ -12,49 +12,77 @@ package mada
  */
 object Proxies {
 
+
+    /**
+     * Supports pattern matching of <code>ProxyOf</code>.
+     */
+    object ProxyOf {
+        def unapply[A](that: ProxyOf[A]): Option[A] = Some(that.self)
+    }
+
+    /**
+     * Typed proxy
+     */
+    trait ProxyOf[A] extends Proxy {
+        override def self: A
+    }
+
+
     /**
      * Mutable proxy
      */
-    trait Mutable[A] extends Proxy {
-        override def self: A
+    trait Mutable[A] extends ProxyOf[A] {
+        /**
+         * Assigns <code>that</code> to <code>self</code>.
+         */
+        def :=(that: => A): Unit
 
         /**
-         * Mutates <code>self</code>.
+         * Is <code>self</code> inaccessible?
          */
-        def :=(that: A): Unit
+        def isEmptyProxy: Boolean
+
+        /**
+         * Alias of <code>:=</code>
+         */
+        final def ::=(that: => A): Unit = this := that
+
+        /**
+         * Alias of <code>:=</code>
+         */
+        final def <--(that: => A): Unit = this := that
+
+        /**
+         * Returns a vector of this proxy.
+         */
+        final def vectorOfProxy: Vector[A] = new Vector[A] {
+            override def start = 0
+            override def end = if (Mutable.this.isEmptyProxy) 0 else 1
+            override def apply(i: Int) = Mutable.this.self
+            override def update(i: Int, e: A) = Mutable.this := e
+        }
     }
 
 
     /**
-     * Supports pattern matching of <code>Ref</code>.
+     * Trivial mutable proxy
      */
-    object Ref {
-        def apply[A](that: A): Ref[A] = new Ref[A](that)
-        def unapply[A](that: Ref[A]): Option[A] = Some(that.self)
-    }
+    class Ref[A](private var x: Option[A]) extends Mutable[A] {
+        def this() = this(None)
+        def this(that: A) = this(Some(that))
 
-    /**
-     * A trivial <code>Mutable</code> proxy
-     */
-    class Ref[A](private var r: A) extends Mutable[A] {
-        override def self = r
-        override def :=(that: A) = r = that
+        override def self = x.get
+        override def :=(that: => A) = x = Some(that)
+        override def isEmptyProxy = x.isEmpty
     }
 
 
     /**
-     * Supports pattern matching of <code>LazyRef</code>.
+     * Lazy proxy mixin; second time assignment is not evaluated.
      */
-    object LazyRef {
-        def unapply[A](that: LazyRef[A]): Option[A] = Some(that.self)
-    }
-
-    /**
-     * A lazy <code>Mutable</code> proxy; second time assignment is ignored.
-     */
-    class LazyRef[A] extends Mutable[A] {
-        private var r = new java.util.concurrent.atomic.AtomicReference[A]
-        override def self = r.get
-        override def :=(that: A) = r.compareAndSet(null.asInstanceOf[A], that)
+    trait Lazy[A] extends Mutable[A] {
+        abstract override def self = synchronized { super.self }
+        abstract override def :=(that: => A) = synchronized { if (super.isEmptyProxy) super.:=(that) }
+        abstract override def isEmptyProxy = synchronized { super.isEmptyProxy }
     }
 }

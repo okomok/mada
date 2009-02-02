@@ -11,9 +11,7 @@ package mada.peg
  * Implements a proxy for pegs.
  * It forwards all calls to a different vector object.
  */
-trait PegProxy[A] extends Peg[A] with Proxy {
-    override def self: Peg[A]
-
+trait PegProxy[A] extends Peg[A] with Proxies.ProxyOf[Peg[A]] {
     override def parse(v: Vector[A], start: Int, end: Int) = self.parse(v, start, end)
     override def length = self.length
 }

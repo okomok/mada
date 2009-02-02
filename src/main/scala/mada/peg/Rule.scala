@@ -14,17 +14,8 @@ class Rule[A] extends PegProxy[A] with Proxies.Mutable[Peg[A]] {
     private var p: Peg[A] = null
 
     override def self = p
-    override def :=(that: Peg[A]) = p = that
-
-    /**
-     * Alias of <code>:=</code>
-     */
-    final def ::=(that: Peg[A]): Unit = this := that
-
-    /**
-     * Alias of <code>:=</code>
-     */
-    final def <--(that: Peg[A]): Unit = this := that
+    override def :=(that: => Peg[A]) = p = that
+    override def isEmptyProxy = p eq null
 
     /**
      * Returns a shallow copy. (The <code>self</code> is not copied.)

@@ -11,7 +11,7 @@ import junit.framework.Assert._
 
 
 class ProxiesRefTest {
-    import mada.Proxies.Ref
+    import mada.Proxies._
 
     def assign(v: Ref[Int]) {
         v := 12
@@ -35,12 +35,12 @@ class ProxiesRefTest {
 
     def testExtract: Unit = {
         val s = "abc"
-        val r = Ref(s)
-        val Ref(p) = r
+        val r = new Ref(s)
+        val ProxyOf(p) = r
         assertSame(p, s)
 
         r match {
-            case Ref(p) => assertSame(s, p)
+            case ProxyOf(p) => assertSame(s, p)
             case _ => fail("doh")
         }
         ()

@@ -22,10 +22,8 @@ object Adapter {
      * Implements a proxy for vectors.
      * It forwards all calls to a different vector object.
      */
-    trait Proxy[A] extends Transform[A] with scala.Proxy {
+    trait Proxy[A] extends Transform[A] with Proxies.ProxyOf[Vector[A]] {
         final override def underlying = self
-        // scala.Proxy
-        override def self: Vector[A]
         // value semantics
         override def equalsWith[B](that: Vector[B])(p: Functions.Predicate2[A, B]): Boolean = underlying.equalsWith(that)(p)
         override def equals(that: Any): Boolean = Equals(this, that) // works around scala.Proxy#equals.

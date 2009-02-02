@@ -119,9 +119,7 @@ object Iterators {
     /**
      * Implements a proxy for iterator objects.
      */
-    trait IteratorProxy[A] extends Iterator[A] with Proxy {
-        override def self: Iterator[A]
-
+    trait IteratorProxy[A] extends Iterator[A] with Proxies.ProxyOf[Iterator[A]] {
         override def hasNext = self.hasNext
         override def next = self.next
         override def take(n: Int): Iterator[A] = self.take(n)
