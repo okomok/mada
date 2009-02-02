@@ -38,7 +38,7 @@ private[mada] object IsSorted {
         apply(*, first, __last, Functions.less(c))
     }
 
-    def apply[A](* : Vector[A], first: Int, __last: Int, __comp: (A, A) => Boolean): Boolean = {
+    def apply[A](* : Vector[A], first: Int, __last: Int, __comp: Functions.Compare[A]): Boolean = {
         var __first = first
 
         if (__first == __last) {

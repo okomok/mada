@@ -21,7 +21,7 @@ object Iterators {
     /**
      * Returns <code>true</code> iif elements and length are the same.
      */
-    def equalWith[A, B](it: Iterator[A], jt: Iterator[B])(p: (A, B) => Boolean): Boolean = {
+    def equalWith[A, B](it: Iterator[A], jt: Iterator[B])(p: Functions.Predicate2[A, B]): Boolean = {
         while (it.hasNext && jt.hasNext) {
             if (!p(it.next, jt.next)) {
                 return false
@@ -108,7 +108,7 @@ object Iterators {
     val Infix = new {
         class MadaIterators[A](_1: Iterator[A]) {
             def equal[B](_2: Iterator[B]) = Iterators.equal(_1, _2)
-            def equalWith[B](_2: Iterator[B])(_3: (A, B) => Boolean) = Iterators.equalWith(_1, _2)(_3)
+            def equalWith[B](_2: Iterator[B])(_3: Functions.Predicate2[A, B]) = Iterators.equalWith(_1, _2)(_3)
             def length = Iterators.length(_1)
             def cycle = Iterators.cycle(_1)
             def withSideEffect(_2: A => Any) = Iterators.withSideEffect(_1)(_2)

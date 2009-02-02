@@ -40,11 +40,11 @@ private[mada] object PushHeap {
         apply(*, __first, __last, Functions.less(c))
     }
 
-    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: (A, A) => Boolean): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Functions.Compare[A]): Unit = {
         __apply(*, __first, (__last - __first) - 1, 0, *(__last - 1), __comp)
     }
 
-    def __apply[A](* : Vector[A], __first: Int, holeIndex: Int, __topIndex: Int, __value: A, __comp: (A, A) => Boolean): Unit = {
+    def __apply[A](* : Vector[A], __first: Int, holeIndex: Int, __topIndex: Int, __value: A, __comp: Functions.Compare[A]): Unit = {
         var __holeIndex = holeIndex
 
         var __parent = (__holeIndex - 1) / 2
@@ -65,11 +65,11 @@ private[mada] object PopHeap {
         apply(*, __first, __last, Functions.less(c))
     }
 
-    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: (A, A) => Boolean): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Functions.Compare[A]): Unit = {
         __apply(*, __first, __last - 1, __last - 1, *(__last - 1), __comp)
     }
 
-    def __apply[A](* : Vector[A], __first: Int, __last: Int, __result: Int, __value: A, __comp: (A, A) => Boolean): Unit = {
+    def __apply[A](* : Vector[A], __first: Int, __last: Int, __result: Int, __value: A, __comp: Functions.Compare[A]): Unit = {
         *(__result) = *(__first)
         AdjustHeap(*, __first, 0, __last - __first, __value, __comp);
     }
@@ -83,7 +83,7 @@ private[mada] object MakeHeap {
         apply(*, __first, __last, Functions.less(c))
     }
 
-    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: (A, A) => Boolean): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Functions.Compare[A]): Unit = {
         if (__last - __first < 2) {
             return
         }
@@ -108,7 +108,7 @@ private[mada] object SortHeap {
         apply(*, __first, __last, Functions.less(c))
     }
 
-    def apply[A](* : Vector[A], __first: Int, last: Int, __comp: (A, A) => Boolean): Unit = {
+    def apply[A](* : Vector[A], __first: Int, last: Int, __comp: Functions.Compare[A]): Unit = {
         var __last = last
 
         while (__last - __first > 1) {
@@ -122,7 +122,7 @@ private[mada] object SortHeap {
 // AdjustHeap
 
 private[mada] object AdjustHeap {
-    def apply[A](* : Vector[A], __first: Int, holeIndex: Int, __len: Int, __value: A, __comp: (A, A) => Boolean): Unit = {
+    def apply[A](* : Vector[A], __first: Int, holeIndex: Int, __len: Int, __value: A, __comp: Functions.Compare[A]): Unit = {
         var __holeIndex = holeIndex
 
         val __topIndex = __holeIndex;

@@ -38,7 +38,7 @@ private[mada] object Median {
         apply(__a, __b, __c, Functions.less(c))
     }
 
-    def apply[A](__a: A, __b: A, __c: A, __comp: (A, A) => Boolean): A = {
+    def apply[A](__a: A, __b: A, __c: A, __comp: Functions.Compare[A]): A = {
         if (__comp(__a, __b)) {
             if (__comp(__b, __c)) {
                 __b

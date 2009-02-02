@@ -14,20 +14,20 @@ private[mada] object SortWith {
     import stl.IntroSort.lg
     import stl.{ UnguardedPartition, Median }
 
-    def apply[A](v: Vector[A], lt: (A, A) => Boolean, grainSize: Int): Vector[A] = {
+    def apply[A](v: Vector[A], lt: Functions.Compare[A], grainSize: Int): Vector[A] = {
         Assert(!v.isParallel)
         partition(v, lt, grainSize).parallel(1).pareach({ f => f() })
         v.parallel(grainSize)
     }
 
-    def partition[A](v: Vector[A], lt: (A, A) => Boolean, grainSize: Int): Vector[() => Unit] = {
+    def partition[A](v: Vector[A], lt: Functions.Compare[A], grainSize: Int): Vector[() => Unit] = {
         val fs = new ArrayList[() => Unit]
         loop(fs, grainSize, v, v.start, v.end, lg(v.size) * 2, lt)
         Vector.jclListVector(fs)
     }
 
     // See: stl.IntroSort
-    def loop[A](fs: ArrayList[() => Unit], grainSize: Int, * : Vector[A], __first: Int, last: Int, depth_limit: Int, __comp: (A, A) => Boolean): Unit = {
+    def loop[A](fs: ArrayList[() => Unit], grainSize: Int, * : Vector[A], __first: Int, last: Int, depth_limit: Int, __comp: Functions.Compare[A]): Unit = {
         var __last = last
         var __depth_limit = depth_limit
 

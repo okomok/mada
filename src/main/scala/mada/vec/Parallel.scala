@@ -27,7 +27,7 @@ private[mada] class ParallelVector[A](override val underlying: Vector[A], overri
     import vec.parallel._
 
     // value semantics
-    override def equalsWith[B](that: Vector[B])(p: (A, B) => Boolean) = EqualsWith(underlying, that, p, grainSize)
+    override def equalsWith[B](that: Vector[B])(p: Functions.Predicate2[A, B]) = EqualsWith(underlying, that, p, grainSize)
     // filter
     override def filter(p: A => Boolean) = Filter(underlying, p, grainSize)
     // map
@@ -44,5 +44,5 @@ private[mada] class ParallelVector[A](override val underlying: Vector[A], overri
     override def folder(z: A)(op: (A, A) => A) = Folder(underlying, z, op, grainSize)
     override def reduce(op: (A, A) => A): A = Reduce(underlying, op, grainSize)
     override def reducer(op: (A, A) => A): Vector[A] = Reducer(underlying, op, grainSize)
-    override def sortWith(lt: (A, A) => Boolean) = SortWith(underlying, lt, grainSize)
+    override def sortWith(lt: Functions.Compare[A]) = SortWith(underlying, lt, grainSize)
 }

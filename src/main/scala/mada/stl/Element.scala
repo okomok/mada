@@ -38,7 +38,7 @@ private[mada] object MinElement {
         apply(*, first, __last, Functions.less(c))
     }
 
-    def apply[A](* : Vector[A], first: Int, __last: Int, __comp: (A, A) => Boolean): Int = {
+    def apply[A](* : Vector[A], first: Int, __last: Int, __comp: Functions.Compare[A]): Int = {
         var __first = first
 
         if (__first == __last) {
@@ -61,7 +61,7 @@ private[mada] object MaxElement {
         apply(*, first, __last, Functions.less(c))
     }
 
-    def apply[A](* : Vector[A], first: Int, __last: Int, __comp: (A, A) => Boolean): Int = {
+    def apply[A](* : Vector[A], first: Int, __last: Int, __comp: Functions.Compare[A]): Int = {
         MinElement(*, first, __last, { (x: A, y: A) => __comp(y, x) })
     }
 }

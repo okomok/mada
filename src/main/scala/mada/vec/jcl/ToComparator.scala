@@ -11,7 +11,7 @@ import java.util.Comparator
 
 
 private[mada] object ToComparator {
-    def apply[A](lt: (A, A) => Boolean): Comparator[A] = new Comparator[A] {
+    def apply[A](lt: Functions.Compare[A]): Comparator[A] = new Comparator[A] {
         override def compare(x: A, y: A): Int = {
             if (lt(x, y)) {
                 -1

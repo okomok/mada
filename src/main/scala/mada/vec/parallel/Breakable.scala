@@ -16,7 +16,7 @@ private[mada] class Breakable1[A](p: A => Boolean, ret: Boolean) extends (A => B
     final def break = breaker.set(true)
 }
 
-private[mada] class Breakable2[A, B](p: (A, B) => Boolean, ret: Boolean) extends ((A, B) => Boolean) {
+private[mada] class Breakable2[A, B](p: Functions.Predicate2[A, B], ret: Boolean) extends (Functions.Predicate2[A, B]) {
     private val breaker = new AtomicBoolean(false)
     override def apply(a: A, b: B) = if (breaker.get) ret else p(a, b)
     final def break = breaker.set(true)

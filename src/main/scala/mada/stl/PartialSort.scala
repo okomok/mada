@@ -38,7 +38,7 @@ private[mada] object PartialSort {
         apply(*, __first, __middle, __last, Functions.less(c))
     }
 
-    def apply[A](* : Vector[A], __first: Int, __middle: Int, __last: Int, __comp: (A, A) => Boolean): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __middle: Int, __last: Int, __comp: Functions.Compare[A]): Unit = {
         MakeHeap(*, __first, __middle, __comp)
         var __i = __middle
         while (__i < __last) {

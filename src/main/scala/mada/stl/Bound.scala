@@ -38,7 +38,7 @@ private[mada] object LowerBound {
         apply(*, first, __last, __val, Functions.less(c))
     }
 
-    def apply[A](* : Vector[A], first: Int, __last: Int, __val: A, __comp: (A, A) => Boolean): Int = {
+    def apply[A](* : Vector[A], first: Int, __last: Int, __val: A, __comp: Functions.Compare[A]): Int = {
         var __first = first
 
         var __len = __last - __first
@@ -66,7 +66,7 @@ private[mada] object UpperBound {
         apply(*, first, __last, __val, Functions.less(c))
     }
 
-    def apply[A](* : Vector[A], first: Int, __last: Int, __val: A, __comp: (A, A) => Boolean): Int = {
+    def apply[A](* : Vector[A], first: Int, __last: Int, __val: A, __comp: Functions.Compare[A]): Int = {
         LowerBound(*, first, __last, __val, { (x: A, y: A) => !__comp(y, x) })
     }
 }

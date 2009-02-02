@@ -19,7 +19,7 @@ object SymbolSet {
     /**
      * Constructs <code>SymbolSet</code> containing <code>vs</code> as elements.
      */
-    def apply[A](vs: Iterator[Vector[A]], lt: (A, A) => Boolean): SymbolSet[A] = {
+    def apply[A](vs: Iterator[Vector[A]], lt: Functions.Compare[A]): SymbolSet[A] = {
         val set = new SymbolSet(lt)
         for (v <- vs) {
             set.+=(v)
@@ -36,7 +36,7 @@ class SymbolSet[A] private (private val tree: TSTree[A, Unit]) extends Peg[A] wi
     /**
      * Constructs <code>SymbolSet</code> using <code>lt</code> as "less-than" comparator.
      */
-    def this(lt: (A, A) => Boolean) = this(new TSTree[A, Unit](lt))
+    def this(lt: Functions.Compare[A]) = this(new TSTree[A, Unit](lt))
 
     /**
      * Succeeds if any element of this set matches.

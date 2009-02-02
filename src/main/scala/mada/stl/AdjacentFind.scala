@@ -38,7 +38,7 @@ private[mada] object AdjacentFind {
         apply(*, first, __last, Functions.equal)
     }
 
-    def apply[A](* : Vector[A], first: Int, __last: Int, __binary_pred: (A, A) => Boolean): Int = {
+    def apply[A](* : Vector[A], first: Int, __last: Int, __binary_pred: Functions.Compare[A]): Int = {
         var __first = first
 
         if (__first == __last) {

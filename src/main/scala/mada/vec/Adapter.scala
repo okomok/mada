@@ -27,7 +27,7 @@ object Adapter {
         // scala.Proxy
         override def self: Vector[A]
         // value semantics
-        override def equalsWith[B](that: Vector[B])(p: (A, B) => Boolean): Boolean = underlying.equalsWith(that)(p)
+        override def equalsWith[B](that: Vector[B])(p: Functions.Predicate2[A, B]): Boolean = underlying.equalsWith(that)(p)
         override def equals(that: Any): Boolean = Equals(this, that) // works around scala.Proxy#equals.
         override def hashCode: Int = underlying.hashCode
         // toString
@@ -73,7 +73,7 @@ object Adapter {
         override def reducerLeft[B >: A](op: (B, A) => B): Vector[B] = underlying.reducerLeft(op)
         override def reducerRight[B >: A](op: (A, B) => B): Vector[B] = underlying.reducerRight(op)
         // sort
-        override def sortWith(lt: (A, A) => Boolean): Vector[A] = underlying.sortWith(lt)
+        override def sortWith(lt: Functions.Compare[A]): Vector[A] = underlying.sortWith(lt)
         override def sort(implicit c: A => Ordered[A]): Vector[A] = underlying.sort(c)
         // concatenation
         override def append(that: Vector[A]): Vector[A] = underlying.append(that)
@@ -111,7 +111,7 @@ object Adapter {
 
     private[mada] trait ParallelAlgorithm[A] extends Transform[A] {
         // value semantics
-        override def equalsWith[B](that: Vector[B])(p: (A, B) => Boolean): Boolean
+        override def equalsWith[B](that: Vector[B])(p: Functions.Predicate2[A, B]): Boolean
         override def hashCode: Int = underlying.hashCode
         // regions
         override def region(_start: Int, _end: Int): Vector[A] = affectParallel(underlying.region(_start, _end))
@@ -139,7 +139,7 @@ object Adapter {
         override def reducerLeft[B >: A](op: (B, A) => B): Vector[B] = underlying.reducerLeft(op)
         override def reducerRight[B >: A](op: (A, B) => B): Vector[B] = underlying.reducerRight(op)
         // sort
-        override def sortWith(lt: (A, A) => Boolean): Vector[A] = underlying.sortWith(lt)
+        override def sortWith(lt: Functions.Compare[A]): Vector[A] = underlying.sortWith(lt)
         // concatenation
         override def append(that: Vector[A]): Vector[A] = {
             val x = underlying.append(that.unparallel)

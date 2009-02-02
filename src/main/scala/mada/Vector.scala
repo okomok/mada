@@ -309,7 +309,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * Compares each element using predicate <code>p</code>.
      * Returns <code>false</code> if <code>size != that.size</code>.
      */
-    def equalsWith[B](that: Vector[B])(p: (A, B) => Boolean): Boolean = EqualsWith(this, that, p)
+    def equalsWith[B](that: Vector[B])(p: Functions.Predicate2[A, B]): Boolean = EqualsWith(this, that, p)
 
     /**
      * Vector has value semantics <code>==</code>.
@@ -651,7 +651,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * @param   lt the "less-than" comparison function
      * @return  this vector sorted according to the comparison function <code>lt</code>.
      */
-    def sortWith(lt: (A, A) => Boolean): Vector[A] = SortWith(this, lt)
+    def sortWith(lt: Functions.Compare[A]): Vector[A] = SortWith(this, lt)
 
     /**
      * @return  <code>sortWith(Functions.less(c))</code>.

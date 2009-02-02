@@ -12,7 +12,7 @@ private[mada] object Sort {
         apply(v, __first, __last, Functions.less(c))
     }
 
-    def apply[A](v: Vector[A], __first: Int, __last: Int, __comp: (A, A) => Boolean): Unit = {
+    def apply[A](v: Vector[A], __first: Int, __last: Int, __comp: Functions.Compare[A]): Unit = {
         IntroSort(v, __first, __last, __comp)
     }
 }
