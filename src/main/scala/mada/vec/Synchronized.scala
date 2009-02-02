@@ -11,7 +11,7 @@ private[mada] object Synchronized {
     def apply[A](v: Vector[A]) = new SynchronizedVector(v)
 }
 
-private[mada] class SynchronizedVector[A](override val underlying: Vector[A]) extends Adapter[A, A] {
+private[mada] class SynchronizedVector[A](override val underlying: Vector[A]) extends Adapter.Transform[A] {
     override def start = underlying.synchronized { underlying.start }
     override def end = underlying.synchronized { underlying.end }
     override def apply(i: Int): A = underlying.synchronized { underlying.apply(start + i) }

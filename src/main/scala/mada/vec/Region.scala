@@ -13,7 +13,7 @@ package mada.vec
  *
  * @pre <code>start <= end</code>
  */
-case class Region[A](override val underlying: Vector[A], override val start: Int, override val end: Int) extends Adapter[A, A] {
+case class Region[A](override val underlying: Vector[A], override val start: Int, override val end: Int) extends Adapter.Transform[A] {
     override def region(_start: Int, _end: Int) = { // region-region fusion
         if (_start == start && _end == end) {
             this

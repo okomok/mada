@@ -8,13 +8,6 @@ package mada.vec
 
 
 private[mada] object ThrowIf {
-    def outOfBounds[A](v: Vector[A], i: Int): Unit = {
-        if (i < v.start || i >= v.end) {
-            throw new IndexOutOfBoundsException(i.toString)
-        }
-
-    }
-
     def empty[A](v: Vector[A], method: String): Unit = {
         if (v.isEmpty) {
             throw new UnsupportedOperationException("empty Vector." + method)

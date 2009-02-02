@@ -13,10 +13,16 @@ package mada.vec
 object Adapter {
 
     /**
+     * Alias of <code>Adapter[A, A]</code>
+     */
+    type Transform[A] = Adapter[A, A]
+
+
+    /**
      * Implements a proxy for vectors.
      * It forwards all calls to a different vector object.
      */
-    trait Proxy[A] extends Adapter[A, A] with scala.Proxy {
+    trait Proxy[A] extends Transform[A] with scala.Proxy {
         final override def underlying = self
         // scala.Proxy
         override def self: Vector[A]
@@ -103,7 +109,7 @@ object Adapter {
     }
 
 
-    private[mada] trait ParallelAlgorithm[A] extends Adapter[A, A] {
+    private[mada] trait ParallelAlgorithm[A] extends Transform[A] {
         // value semantics
         override def equalsWith[B](that: Vector[B])(p: (A, B) => Boolean): Boolean
         override def hashCode: Int = underlying.hashCode
