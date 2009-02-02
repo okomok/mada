@@ -25,16 +25,16 @@ class CalcTest {
     import java.lang.Integer.parseInt
 
     expr    ::= term >>
-                ( ('+' >> term){ case _ => push(pop + pop) } |
-                  ('-' >> term){ case _ => push(pop - pop) } ).*
+                ( ('+' >> term){ _ => push(pop + pop) } |
+                  ('-' >> term){ _ => push(pop - pop) } ).*
     term    ::= factor >>
-                ( ('*' >> factor){ case _ => push(pop * pop) } |
-                  ('/' >> factor){ case _ => push(pop / pop) } ).*
+                ( ('*' >> factor){ _ => push(pop * pop) } |
+                  ('/' >> factor){ _ => push(pop / pop) } ).*
     factor  ::= integer |
                 ('(' >> expr >> ')') |
-                ('-' >> factor){ case _ => push(-pop) } |
+                ('-' >> factor){ _ => push(-pop) } |
                 ('+' >> factor)
-    integer ::= (digit.+){ case v => push(parseInt(Vector.stringize(v))) }
+    integer ::= (digit.+){ v => push(parseInt(Vector.stringize(v))) }
     digit   ::= regex("[0-9]")
 
     def testTrivial: Unit = {
