@@ -11,31 +11,51 @@ package mada
  * Contains utility methods operating on <code>Function</code>.
  */
 object Functions {
+
+
+// type aliases
+
+    /**
+     * Alias of <code>Function1[T1, Boolean]</code>
+     */
+    type Predicate1[T1] = Function1[T1, Boolean]
+
+    /**
+     * Alias of <code>Function2[T1, T2, Boolean]</code>
+     */
+    type Predicate2[T1, T2] = Function2[T1, T2, Boolean]
+
+    /**
+     * Alias of <code>Function3[T1, T2, T3, Boolean]</code>
+     */
+    type Predicate3[T1, T2, T3] = Function3[T1, T2, T3, Boolean]
+
+    /**
+     * Alias of <code>Predicate2[T1, T1]</code>
+     */
+    type Compare[T1] = Predicate2[T1, T1]
+
+
+// higher order functions
+
     /**
      * Represents <code>{ (v1: Any, v2: Any) => v1 == v2 }</code>.
      */
-    val equal: Function2[Any, Any, Boolean] = new Function2[Any, Any, Boolean] {
+    val equal: Compare[Any] = new Compare[Any] {
         override def apply(v1: Any, v2: Any) = v1 == v2
     }
 
     /**
-     * Represents <code>(_: T1) == (_: T2)</code>.
+     * Represents <code>{ (v2: Any) => v1 == v2 }</code>.
      */
-    def safeEqual[T1, T2]: Function2[T1, T2, Boolean] = new Function2[T1, T2, Boolean] {
-        override def apply(v1: T1, v2: T2) = v1 == v2
-    }
-
-    /**
-     * Represents <code>v1 == (_: Any)</code>.
-     */
-    def equalTo(v1: Any): Function1[Any, Boolean] = new Function1[Any, Boolean] {
+    def equalTo(v1: Any): Predicate1[Any] = new Predicate1[Any] {
         override def apply(v2: Any) = v1 == v2
     }
 
     /**
-     * Representds <code>{ (v1, v2) => c(v1) < v2 }</code>.
+     * Representds <code>{ (v1: T1, v2: T1) => c(v1) < v2 }</code>.
      */
-    def less[T1](implicit c: T1 => Ordered[T1]): Function2[T1, T1, Boolean] = new Function2[T1, T1, Boolean] {
+    def less[T1](implicit c: T1 => Ordered[T1]): Compare[T1] = new Compare[T1] {
         override def apply(v1: T1, v2: T1) = c(v1) < v2
     }
 
@@ -52,6 +72,9 @@ object Functions {
     def identity[T1]: Function1[T1, T1] = new Function1[T1, T1] {
         override def apply(v1: T1) = v1
     }
+
+
+// not
 
     /**
      * Negates the predicate.
@@ -90,6 +113,8 @@ object Functions {
     def not[T1, T2, T3, R](f: Function3[T1, T2, T3, Boolean]): Function3[T1, T2, T3, Boolean] = not3(f)
 
 
+// ref
+
     /**
      * Contains utility methods operating on <code>Function</code> and references.
      */
@@ -108,15 +133,19 @@ object Functions {
             override def apply(v2: AnyRef) = v1 eq v2
         }
     }
+
+
+// typed
+
+    /**
+     * Contains utility methods operating on <code>Function</code> and typed references.
+     */
+    object typed {
+        /**
+         * Represents <code>{ (v1: T1, v2: T2) => v1 == v2 }</code>.
+         */
+        def equal[T1, T2]: Function2[T1, T2, Boolean] = new Function2[T1, T2, Boolean] {
+            override def apply(v1: T1, v2: T2) = v1 == v2
+        }
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
