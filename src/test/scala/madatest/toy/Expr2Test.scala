@@ -70,7 +70,7 @@ object Expr {
     }
 
     case class Lazy[A](_1: Expr.Of[A]) extends Terminal[A] {
-        private val e = new mada.Proxies.Ref[A] with mada.Proxies.Lazy[A]
+        private val e = new mada.Proxies.LazyRef[A]
         override protected def _eval[B](x: Expr[A, B]): B = x match {
             case Self => { e := _1.eval(x); e.self } // Self only
             case _ => dontKnow(x)

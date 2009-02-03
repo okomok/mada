@@ -82,11 +82,17 @@ object Proxies {
 
 
     /**
-     * Lazy proxy mixin; second time assignment is not evaluated.
+     * Trivial lazy mutable proxy; second time assignment is not evaluated.
      */
-    trait Lazy[A] extends Mutable[A] {
-        abstract override def self = synchronized { super.self }
-        abstract override def :=(that: => A) = synchronized { if (super.isEmptyProxy) super.:=(that) }
-        abstract override def isEmptyProxy = synchronized { super.isEmptyProxy }
+    class LazyRef[A] extends Mutable[A] {
+        private val r = new java.util.concurrent.atomic.AtomicReference[ByName]
+
+        override lazy val self = r.get.apply
+        override def :=(that: => A) = { r.compareAndSet(null, new ByName(that)) }
+        override def isEmptyProxy = r.get == null
+
+        private class ByName(that: => A) {
+            def apply: A = that
+        }
     }
 }
