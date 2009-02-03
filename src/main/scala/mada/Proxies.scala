@@ -14,7 +14,7 @@ object Proxies {
 
 
     /**
-     * Typed proxy
+     * Typed proxy just changing return type of <code>self</code>.
      */
     trait ProxyOf[A] extends Proxy {
         override def self: A
@@ -25,9 +25,15 @@ object Proxies {
      * Supports pattern matching of <code>Mutable</code>.
      */
     object Mutable {
+        /**
+         * @return  <code>if (that.isEmptyProxy) None else Some(that.self)</code>.
+         */
         def unapply[A](that: Mutable[A]): Option[A] = if (that.isEmptyProxy) None else Some(that.self)
 
         object Empty {
+            /**
+             * @return  <code>that.isEmptyProxy</code>.
+             */
             def unapply[A](that: Mutable[A]): Boolean = that.isEmptyProxy
         }
     }
@@ -75,14 +81,10 @@ object Proxies {
      * Trivial lazy mutable proxy; second time assignment is not evaluated.
      */
     class LazyVar[A] extends Mutable[A] {
-        private val r = new java.util.concurrent.atomic.AtomicReference[ByName]
+        private val r = new java.util.concurrent.atomic.AtomicReference[Function0[A]]
 
         override lazy val self = r.get.apply
-        override def :=(that: => A) = { r.compareAndSet(null, new ByName(that)) }
+        override def :=(that: => A) = { r.compareAndSet(null, Functions.byName(that)) }
         override def isEmptyProxy = null == r.get
-
-        private class ByName(that: => A) {
-            def apply: A = that
-        }
     }
 }

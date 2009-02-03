@@ -219,6 +219,11 @@ object Vector {
     type Adapter[Z, A] = vec.Adapter[Z, A]
 
     /**
+     * Alias of <code>vec.Adapter.Proxy</code>
+     */
+    type VectorProxy[A] = Adapter.Proxy[A]
+
+    /**
      * Alias of <code>vec.NotWritable</code>
      */
     type NotWritable[A] = vec.NotWritable[A]
@@ -442,12 +447,12 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
 // first and last
 
     /**
-     * Alias of <code>this(start)</code>
+     * @return  <code>this(start)</code>.
      */
     final def first: A = { throwIfEmpty("first"); this(start) }
 
     /**
-     * Alias of <code>this(end - 1)</code>
+     * @return  <code>this(end - 1)</code>.
      */
     final def last: A = { throwIfEmpty("last"); this(end - 1) }
 
@@ -562,7 +567,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
 // search
 
     /**
-     * Alias of <code>elements.find</code>.
+     * Alias of <code>elements.find</code>
      */
     final def find(p: A => Boolean): Option[A] = Find(this, p)
 
@@ -582,17 +587,17 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     def count(p: A => Boolean): Int = Count(this, p)
 
     /**
-     * Alias of <code>exists(Funtions.equalTo(e))</code>.
+     * @return  <code>exists(Funtions.equalTo(e))</code>.
      */
     final def contains(e: Any): Boolean = exists(Functions.equalTo(e))
 
     /**
-     * Alias of <code>seek(Functions.not(p)).isEmpty</code>.
+     * @return  <code>seek(Functions.not(p)).isEmpty</code>.
      */
     final def forall(p: A => Boolean): Boolean = seek(Functions.not(p)).isEmpty
 
     /**
-     * Alias of <code>!seek(p).isEmpty</code>.
+     * @return  <code>!seek(p).isEmpty</code>.
      */
     final def exists(p: A => Boolean): Boolean = !seek(p).isEmpty
 
@@ -600,44 +605,44 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
 // folding
 
     /**
-     * Alias of <code>elements.foldLeft</code>.
+     * Alias of <code>elements.foldLeft</code>
      */
     final def foldLeft[B](z: B)(op: (B, A) => B): B = FoldLeft(this, z, op)
 
     /**
-     * Alias of <code>elements.foldRight</code>.
+     * Alias of <code>elements.foldRight</code>
      */
     final def foldRight[B](z: B)(op: (A, B) => B): B = reverse.foldLeft(z)(Functions.flip(op))
 
     /**
-     * Alias of <code>tail.foldLeft[B](head)(op)</code>.
+     * @return  <code>tail.foldLeft[B](head)(op)</code>.
      */
     final def reduceLeft[B >: A](op: (B, A) => B): B = tail.foldLeft[B](head)(op)
 
     /**
-     * Alias of <code>reverse.reduceLeft(Functions.flip(op))</code>.
+     * @return  <code>reverse.reduceLeft(Functions.flip(op))</code>.
      */
     final def reduceRight[B >: A](op: (A, B) => B): B = reverse.reduceLeft(Functions.flip(op))
 
     /**
      * Returns the prefix sum of this vector.
      *
-     * @return  <code>[z, op(z, this(start)), op(op(z, this(start)), this(start + 1)),...]</code>
+     * @return  <code>[z, op(z, this(start)), op(op(z, this(start)), this(start + 1)),...]</code>.
      */
     def folderLeft[B](z: B)(op: (B, A) => B): Vector[B] = FolderLeft(this, z, op)
 
     /**
-     * @return  <code>reverse.folderLeft(z)(Functions.flip(op))</code>
+     * @return  <code>reverse.folderLeft(z)(Functions.flip(op))</code>.
      */
     def folderRight[B](z: B)(op: (A, B) => B): Vector[B] = reverse.folderLeft(z)(Functions.flip(op))
 
     /**
-     * @return  <code>tail.folderLeft(head)</code>
+     * @return  <code>tail.folderLeft(head)</code>.
      */
     def reducerLeft[B >: A](op: (B, A) => B): Vector[B] = tail.folderLeft[B](head)(op)
 
     /**
-     * @return  <code>reverse.reducerLeft(Functions.flip(op))</code>
+     * @return  <code>reverse.reducerLeft(Functions.flip(op))</code>.
      */
     def reducerRight[B >: A](op: (A, B) => B): Vector[B] = reverse.reducerLeft(Functions.flip(op))
 

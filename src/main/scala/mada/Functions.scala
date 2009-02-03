@@ -36,7 +36,7 @@ object Functions {
     type Compare[-T1] = Predicate2[T1, T1]
 
 
-// higher order functions
+// comparators
 
     /**
      * Represents <code>{ (v1: Any, v2: Any) => v1 == v2 }</code>.
@@ -60,6 +60,16 @@ object Functions {
     }
 
     /**
+     * Represents <code>{ (v1: T1, v2: T1) => c(v1) > v2 }</code>.
+     */
+    def greater[T1](implicit c: T1 => Ordered[T1]): Compare[T1] = new Compare[T1] {
+        override def apply(v1: T1, v2: T1) = c(v1) > v2
+    }
+
+
+// utilities
+
+    /**
      * A function fliping two arguments
      */
     def flip[T1, T2, R](f: Function2[T1, T2, R]): Function2[T2, T1, R] = new Function2[T2, T1, R] {
@@ -71,6 +81,21 @@ object Functions {
      */
     def identity[T1]: Function1[T1, T1] = new Function1[T1, T1] {
         override def apply(v1: T1) = v1
+    }
+
+    /**
+     * Converts by-name-parameter to a function returing <code>v</code>.
+     */
+    def byName[R](v: => R): Function0[R] = new Function0[R] {
+        override def apply() = v
+    }
+
+    /**
+     * Converts by-name-parameter to a function returing lazy <code>v</code>.
+     */
+    def byLazy[R](v: => R): Function0[R] = new Function0[R] {
+        private lazy val _v = v
+        override def apply() = _v
     }
 
 
@@ -113,21 +138,21 @@ object Functions {
     def not[T1, T2, T3, R](f: Function3[T1, T2, T3, Boolean]): Function3[T1, T2, T3, Boolean] = not3(f)
 
 
-// ref
+// Ref
 
     /**
      * Contains utility methods operating on <code>Function</code> and references.
      */
-    object ref {
+    object Ref {
         /**
-         * Represents <code>(_: AnyRef) eq (_: AnyRef)</code>.
+         * Represents <code>{ (v1: AnyRef, v2: AnyRef) => v1 eq v2 }</code>.
          */
         val equal: Function2[AnyRef, AnyRef, Boolean] = new Function2[AnyRef, AnyRef, Boolean] {
             override def apply(v1: AnyRef, v2: AnyRef) = v1 eq v2
         }
 
         /**
-         * Represents <code>v1 eq (_: AnyRef)</code>.
+         * Represents <code>{ (v2: AnyRef) => v1 eq v2 }</code>.
          */
         def equalTo(v1: AnyRef): Function1[AnyRef, Boolean] = new Function1[AnyRef, Boolean] {
             override def apply(v2: AnyRef) = v1 eq v2
@@ -135,12 +160,12 @@ object Functions {
     }
 
 
-// typed
+// Typed
 
     /**
      * Contains utility methods operating on <code>Function</code> and typed references.
      */
-    object typed {
+    object Typed {
         /**
          * Represents <code>{ (v1: T1, v2: T2) => v1 == v2 }</code>.
          */
