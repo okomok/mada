@@ -27,7 +27,7 @@ object Proxies {
     object Mutable {
         def unapply[A](that: Mutable[A]): Option[A] = if (that.isEmptyProxy) None else Some(that.self)
 
-        object Null {
+        object Empty {
             def unapply[A](that: Mutable[A]): Boolean = that.isEmptyProxy
         }
     }
@@ -47,16 +47,6 @@ object Proxies {
         def isEmptyProxy: Boolean
 
         /**
-         * Alias of <code>:=</code>
-         */
-        final def ::=(that: => A): Unit = this := that
-
-        /**
-         * Alias of <code>:=</code>
-         */
-        final def <--(that: => A): Unit = this := that
-
-        /**
          * Returns a vector of this proxy.
          */
         final def vectorOfProxy: Vector[A] = new Vector[A] {
@@ -71,7 +61,7 @@ object Proxies {
     /**
      * Trivial mutable proxy
      */
-    class Ref[A](private var x: Option[A]) extends Mutable[A] {
+    class Var[A](private var x: Option[A]) extends Mutable[A] {
         def this() = this(None)
         def this(that: A) = this(Some(that))
 
@@ -84,12 +74,12 @@ object Proxies {
     /**
      * Trivial lazy mutable proxy; second time assignment is not evaluated.
      */
-    class LazyRef[A] extends Mutable[A] {
+    class LazyVar[A] extends Mutable[A] {
         private val r = new java.util.concurrent.atomic.AtomicReference[ByName]
 
         override lazy val self = r.get.apply
         override def :=(that: => A) = { r.compareAndSet(null, new ByName(that)) }
-        override def isEmptyProxy = r.get == null
+        override def isEmptyProxy = null == r.get
 
         private class ByName(that: => A) {
             def apply: A = that

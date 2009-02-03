@@ -10,16 +10,16 @@ package madatest
 import junit.framework.Assert._
 
 
-class ProxiesRefTest {
+class ProxiesVarTest {
     import mada.Proxies._
 
-    def assign(v: Ref[Int]) {
+    def assign(v: Var[Int]) {
         v := 12
     }
 
     def testTrivial {
         var x = 10
-        val v = new Ref(x)
+        val v = new Var(x)
         assign(v)
         x = v.self
         assertTrue(x == 12)
@@ -27,7 +27,7 @@ class ProxiesRefTest {
 
     def testTrivial2 {
         var x = 10
-        val v = new Ref(x)
+        val v = new Var(x)
         assign(v)
         x = v.self
         assertTrue(x == 12)
@@ -35,23 +35,23 @@ class ProxiesRefTest {
 
     def testExtract: Unit = {
         val s = "abc"
-        val r = new Ref(s)
+        val r = new Var(s)
         val Mutable(p) = r
         assertSame(p, s)
 
         r match {
-            case Mutable.Null() => fail("doh")
+            case Mutable.Empty() => fail("doh")
             case Mutable(p) => assertSame(s, p)
             case _ => fail("doh")
         }
         ()
     }
 
-    def testExtractNull: Unit = {
-        val r = new Ref[String]
+    def testExtractEmpty: Unit = {
+        val r = new Var[String]
         r match {
             case Mutable(p) => fail("doh")
-            case Mutable.Null() => ()
+            case Mutable.Empty() => ()
             case _ => fail("doh")
         }
     }
