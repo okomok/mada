@@ -13,10 +13,16 @@ package mada
 object Vector {
     import vec._
 
+
+// constants
+
     /**
      * @return  <code>Math.MIN_INT</code>, which is the reserved index by <code>mada.Vector</code>.
      */
     final val NULL_INDEX = 0x80000000
+
+
+// exceptions
 
     /**
      * Thrown if vector is not readable.
@@ -27,6 +33,9 @@ object Vector {
      * Thrown if vector is not writable.
      */
     class NotWritableException[A](val vector: Vector[A]) extends RuntimeException
+
+
+// constructors
 
     /**
      * Concatenate all argument sequences into a single vector.
@@ -118,10 +127,18 @@ object Vector {
      */
     def `synchronized`[A](v: Vector[A]) = Synchronized(v)
 
+
+// compatibles
+
     /**
      * Alias of <code>vec.Compatibles</code>
      */
     val Compatibles = vec.Compatibles
+
+    /**
+     * @return  <code>to</code>.
+     */
+    def apply[A](to: Vector[A]): Vector[A] = to
 
     /**
      * Converts an <code>Array</code> to vector.
@@ -168,6 +185,9 @@ object Vector {
      */
     def jclCharSequence(from: Vector[Char]): java.lang.CharSequence = jcl.VectorCharSequence(from)
 
+
+// incompatibles
+
     /**
      * Converts an <code>Iterator</code> to vector.
      */
@@ -183,6 +203,9 @@ object Vector {
      */
     def fromValues[A](from: A*): Vector[A] = FromValues(from: _*)
 
+
+// triplify
+
     /**
      * Converts a <code>Func</code> to <code>Func3</code>.
      */
@@ -192,6 +215,9 @@ object Vector {
      * Converts a <code>Func3</code> to <code>Func</code>.
      */
     def untriplify[A, B](f: Func3[A, B]): Func[A, B] = Untriplify(f)
+
+
+// aliases
 
     /**
      * Alias of <code>(Vector[A], Int, Int)</code>

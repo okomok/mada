@@ -7,37 +7,93 @@
 package madatest.toy.implicitscope
 
 
-object Foo {
-    var found = false
-    implicit def toBar(f: Foo): Bar = {
-        found = true
-        new Bar
+package my {
+
+    object Foo {
+        var found = false
+        implicit def toBar[A](f: Foo[A]): Bar[A] = {
+            found = true
+            new Bar[A]
+        }
+
+        implicit def fromBar[A](b: Bar[A]): Foo[A] = {
+            found = true
+            new Foo[A]
+        }
+
+        val Strong = foo.Strong
+
     }
 
-    implicit def fromBar(b: Bar): Foo = {
-        found = true
-        new Foo
+    package foo {
+        object Strong {
+            var found = false
+
+            implicit def toBar[A](f: Foo[A]): Bar[A] = {
+                found = true
+                new Bar[A]
+            }
+
+            implicit def fromBar[A](b: Bar[A]): Foo[A] = {
+                found = true
+                new Foo[A]
+            }
+        }
     }
+
+    class Foo[A] {
+        implicit def toBuz: Buz = {
+            Foo.found = true
+            new Buz
+        }
+    }
+
+    class Bar[A]
+
+    class Buz
+
 }
-
-class Foo
-
-class Bar
 
 
 class ImplicitScopeTest {
+
+    import my._
+
     def testTo: Unit = {
         Foo.found = false
-        useBar(new Foo)
+        useBar(new Foo[Int])
         junit.framework.Assert.assertTrue(Foo.found)
     }
 
     def testFrom: Unit = {
         Foo.found = false
-        useFoo(new Bar)
+        useFoo(new Bar[Int])
         junit.framework.Assert.assertTrue(Foo.found)
     }
 
-    def useBar(b: Bar): Unit = ()
-    def useFoo(f: Foo): Unit = ()
+
+    def testToStrong: Unit = {
+        import my.Foo.Strong._ // hmm, maybe should fail to compile...
+        my.Foo.Strong.found = false
+        useBar(new Foo[Int])
+        junit.framework.Assert.assertTrue(my.Foo.Strong.found)
+    }
+
+    def testFromStrong: Unit = {
+        import my.Foo.Strong._
+        my.Foo.Strong.found = false
+        useFoo(new Bar[Int])
+        junit.framework.Assert.assertTrue(my.Foo.Strong.found)
+    }
+
+/*
+    def testMethod: Unit = {
+        Foo[A].found = false
+        useBuz(new Foo[A])
+        junit.framework.Assert.assertTrue(Foo[A].found)
+    }
+*/
+    def useBar[A](b: Bar[A]): Unit = ()
+    def useFoo[A](f: Foo[A]): Unit = ()
+    def useBuz(b: Buz): Unit = ()
 }

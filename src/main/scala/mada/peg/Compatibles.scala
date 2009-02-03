@@ -13,9 +13,9 @@ package mada.peg
  */
 object Compatibles {
     /**
-     * Triggers implicit conversion "explicitly". Also works as the ambiguity buster.
+     * @return  <code>to</code>.
      */
-    def madaPeg[A](from: Peg[A]): Peg[A] = from
+    def madaPeg[A](to: Peg[A]): Peg[A] = to
 
     implicit def char2madaPeg(from: Char): Peg[Char] = Peg.single(from)
     implicit def regexPattern2madaPeg(from: java.util.regex.Pattern): Peg[Char] = Peg.regexPatternPeg(from)

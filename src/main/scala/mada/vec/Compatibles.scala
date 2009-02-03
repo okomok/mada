@@ -15,9 +15,9 @@ package mada.vec
  */
 object Compatibles {
     /**
-     * Triggers implicit conversion "explicitly". Also works as the ambiguity buster.
+     * @return  <code>to</code>.
      */
-    def madaVector[A](from: Vector[A]): Vector[A] = from
+    def madaVector[A](to: Vector[A]): Vector[A] = to
 
     implicit def array2madaVector[A](from: Array[A]): Vector[A] = Vector.arrayVector(from)
     implicit def cell2madaVector[A](from: Cell[A]): Vector[A] = Vector.cellVector(from)

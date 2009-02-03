@@ -144,9 +144,14 @@ object Peg {
 
 
     /**
-     * Alias of peg.Compatibles. Prefer this to that.
+     * Alias of <code>peg.Compatibles</code>
      */
     val Compatibles = peg.Compatibles
+
+    /**
+     * @return  <code>to</code>.
+     */
+    def apply[A](to: Peg[A]): Peg[A] = to
 
     /**
      * Converts a regex.Pattern to Peg.
