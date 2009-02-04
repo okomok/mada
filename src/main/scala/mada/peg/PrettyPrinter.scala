@@ -12,10 +12,28 @@ package mada.peg
  */
 object PrettyPrinter {
     /**
-     * Returns a <code>PrettyPrinter</code> which outputs XML.
-     * You must call <code>close</code>.
+     * @return  <code>xml(new java.io.OutputStreamWriter, 4)</code>
      */
     def xml: PrettyPrinter = new XMLPrettyPrinter
+
+    /**
+     * @return  <code>xml(out, 4)</code>
+     */
+    def xml(out: java.io.Writer): PrettyPrinter = new XMLPrettyPrinter(out)
+
+    /**
+     * @return  <code>xml(new java.io.OutputStreamWriter, indentWidth)</code>
+     */
+    def xml(indentWidth: Int): PrettyPrinter = new XMLPrettyPrinter(indentWidth)
+
+    /**
+     * Creates a <code>PrettyPrinter</code> which outputs XML.
+     * You must call <code>close</code>.
+     *
+     * @param   out where xml printed
+     * @param   indentWidth indent width
+     */
+    def xml(out: java.io.Writer, indentWidth: Int): PrettyPrinter = new XMLPrettyPrinter(out, indentWidth)
 
     /**
      * Returns a <code>PrettyPrinter</code> which outputs nothing.
