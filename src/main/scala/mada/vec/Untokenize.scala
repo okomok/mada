@@ -9,6 +9,6 @@ package mada.vec
 
 private[mada] object Untokenize {
     def apply[A](vv: Vector[Vector[A]], sep: Vector[A]): Vector[A] = {
-        Vectors.flatten(vv.map({ v => sep.append(v) }))
+        Vector.flatten(vv.map({ v => sep.append(v) }))
     }
 }

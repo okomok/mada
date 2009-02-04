@@ -13,8 +13,8 @@ import junit.framework.Assert._
 
 class ToStringTest {
     def testTrivial: Unit = {
-        assertEquals(0, "[a, b, c, d, e]".compareTo(mada.Vectors.from("abcde").toString))
-        assertEquals(0, "[a]".compareTo(mada.Vectors.from("a").toString))
-        assertEquals(0, "[]".compareTo(mada.Vectors.from("").toString))
+        assertEquals(0, "[a, b, c, d, e]".compareTo(mada.Vector.from("abcde").toString))
+        assertEquals(0, "[a]".compareTo(mada.Vector.from("a").toString))
+        assertEquals(0, "[]".compareTo(mada.Vector.from("").toString))
     }
 }

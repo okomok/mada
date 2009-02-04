@@ -13,14 +13,14 @@ import junit.framework.Assert._
 
 class ParallelTest {
     def testFusion: Unit = {
-        val v = Vectors.range(0, 10)
-        val e = Vectors.range(1, 11)
+        val v = Vector.range(0, 10)
+        val e = Vector.range(1, 11)
         assertEquals(e, v.parallel(4).parallel(3).parallel(1).map(_ + 1))
     }
 
     def testUnparallel: Unit = {
-        val v = Vectors.range(0, 10)
-        val e = Vectors.range(1, 11)
+        val v = Vector.range(0, 10)
+        val e = Vector.range(1, 11)
         val pv = v.parallel(4).parallel(3)
         assertTrue(pv.isParallel)
         val upv = pv.unparallel
@@ -37,8 +37,8 @@ class ParallelTest {
     def testParaPara: Unit = {
         for (i <- (0 until 100)) {
             // println(i)
-            val z = Vectors.range(1, 10).parallel.flatMap {
-                case i => Vectors.range(1, i).parallel.filter{ j => i+j >= 5 }.parallel.map{ case j => (i, j) }
+            val z = Vector.range(1, 10).parallel.flatMap {
+                case i => Vector.range(1, i).parallel.filter{ j => i+j >= 5 }.parallel.map{ case j => (i, j) }
             }
             ()
         }

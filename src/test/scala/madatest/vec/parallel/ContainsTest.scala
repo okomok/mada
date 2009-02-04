@@ -7,7 +7,7 @@
 package madatest.vec.parallel
 
 
-import mada.Vectors._
+import mada.Vector._
 
 import junit.framework.Assert._
 import madatest.vec.detail.Example._
@@ -16,7 +16,7 @@ import madatest.vec.detail._
 
 class ContainsTest {
     def testTrivial: Unit = {
-        val v = mada.Vectors.from("abc1d3ef5g4qu67")
+        val v = mada.Vector.from("abc1d3ef5g4qu67")
 
         assertTrue(v.parallel.contains('a'))
         assertTrue(v.parallel.contains('e'))

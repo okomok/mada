@@ -8,7 +8,7 @@ package madatest.vec
 
 
 import mada._
-import mada.Vectors.fromArray
+import mada.Vector.fromArray
 import junit.framework.Assert._
 import detail.Example._
 
@@ -24,7 +24,7 @@ class IteratorTest {
     }
 
     def testFrom: Unit = {
-        val ac = Vectors.fromIterator(example1.elements)
+        val ac = Vector.fromIterator(example1.elements)
         detail.TestVectorReadOnly(example1, ac)
     }
 }

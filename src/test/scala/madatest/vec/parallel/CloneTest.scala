@@ -7,7 +7,7 @@
 package madatest.vec.parallel
 
 
-import mada.Vectors._
+import mada.Vector._
 
 import junit.framework.Assert._
 import madatest.vec.detail.Example._
@@ -16,7 +16,7 @@ import madatest.vec.detail._
 
 class CloneTest {
     def testTrivial: Unit = {
-        val actual = mada.Vectors.from(example1).parallel.clone
+        val actual = mada.Vector.from(example1).parallel.clone
         detail.TestVectorReadWrite(example1, actual)
     }
 }

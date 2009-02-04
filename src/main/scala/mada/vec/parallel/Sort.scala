@@ -23,7 +23,7 @@ private[mada] object SortWith {
     def partition[A](v: Vector[A], lt: Functions.Compare[A], grainSize: Int): Vector[() => Unit] = {
         val fs = new ArrayList[() => Unit]
         loop(fs, grainSize, v, v.start, v.end, lg(v.size) * 2, lt)
-        Vectors.fromJclList(fs)
+        Vector.fromJclList(fs)
     }
 
     // See: stl.IntroSort

@@ -7,14 +7,14 @@
 package madatest.peg
 
 
-import mada.Pegs._
+import mada.Peg._
 import junit.framework.Assert._
 
 
 class EpsTest {
     def testTrivial: Unit = {
-        assertTrue(eps[Int].matches(mada.Vectors.empty[Int]))
-        assertFalse(eps[Int].matches(mada.Vectors.fromValues(1,2,3)))
+        assertTrue(eps[Int].matches(mada.Vector.empty[Int]))
+        assertFalse(eps[Int].matches(mada.Vector.fromValues(1,2,3)))
     }
 
     def testCompile(v: mada.Vector[Char]): Unit = {

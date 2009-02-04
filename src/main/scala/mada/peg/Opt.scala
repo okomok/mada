@@ -8,7 +8,7 @@ package mada.peg
 
 
 private[mada] object Opt {
-    def apply[A](p: Peg[A]): Peg[A] = p or Pegs.eps[A]
+    def apply[A](p: Peg[A]): Peg[A] = p or Peg.eps[A]
 }
 
 private[mada] object OptBefore {

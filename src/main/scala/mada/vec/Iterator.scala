@@ -13,7 +13,7 @@ private[mada] object FromIterator {
         for (e <- from) {
             a.add(e)
         }
-        Vectors.fromJclList(a)
+        Vector.fromJclList(a)
     }
 }
 

@@ -12,8 +12,8 @@ package madatest.peg
 
 import junit.framework.Assert._
 
-import mada.Pegs.Compatibles._
-import mada.Pegs._
+import mada.Peg.Compatibles._
+import mada.Peg._
 
 
 class TSTreeTest {
@@ -154,7 +154,7 @@ class TSTreeTest {
 
         var c = 0
         for (n <- tree.elements) {
-            assertEquals(mada.Vectors.from("t"), n._1)
+            assertEquals(mada.Vector.from("t"), n._1)
             c += 1
         }
         assertEquals(1, c)

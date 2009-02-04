@@ -9,8 +9,8 @@ package madatest.peg
 
 import junit.framework.Assert._
 
-import mada.Pegs.Compatibles._
-import mada.Pegs._
+import mada.Peg.Compatibles._
+import mada.Peg._
 
 
 class SwitchTest {

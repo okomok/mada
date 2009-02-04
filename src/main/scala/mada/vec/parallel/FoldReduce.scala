@@ -10,14 +10,14 @@ package mada.vec.parallel
 private[mada] object Fold {
     def apply[A](v: Vector[A], z: A, op: (A, A) => A, grainSize: Int): A = {
         Assert(!v.isParallel)
-        (Vectors.single(z) ++ v).parallel(grainSize).reduce(op)
+        (Vector.single(z) ++ v).parallel(grainSize).reduce(op)
     }
 }
 
 private[mada] object Folder {
     def apply[A](v: Vector[A], z: A, op: (A, A) => A, grainSize: Int): Vector[A] = {
         Assert(!v.isParallel)
-        (Vectors.single(z) ++ v).parallel(grainSize).reducer(op)
+        (Vector.single(z) ++ v).parallel(grainSize).reducer(op)
     }
 }
 
@@ -46,7 +46,7 @@ private[mada] object Reducer {
 
         val ls = rss.init.map({ w => w.last }).reducer(op)
         (rss.head ++
-            Vectors.undivide(
+            Vector.undivide(
                 (ls zip rss.tail).parallel(1).map({ case (l, rs) => rs.map({ r => op(l, r) }) })
             )).
                 parallel(grainSize)

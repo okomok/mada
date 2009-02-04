@@ -13,20 +13,20 @@ import junit.framework.Assert._
 
 class FilterTest {
     def testTrivial {
-        val v = Vectors.range(0, 10).clone
-        val e = Vectors.fromValues(0,2,4,6,8)
+        val v = Vector.range(0, 10).clone
+        val e = Vector.fromValues(0,2,4,6,8)
         assertEquals(e, v.filter(_ % 2 == 0))
     }
 
     def testRemove {
-        val v = Vectors.range(0, 10).clone
-        val e = Vectors.fromValues(0,2,4,6,8)
+        val v = Vector.range(0, 10).clone
+        val e = Vector.fromValues(0,2,4,6,8)
         assertEquals(e, v.remove(_ % 2 != 0))
     }
 
     def testFusion {
-        val v = Vectors.range(0, 10).clone
-        val e = Vectors.fromValues(0,4,6,8)
+        val v = Vector.range(0, 10).clone
+        val e = Vector.fromValues(0,4,6,8)
         assertEquals(e, v.remove(_ % 2 != 0).filter(_ != 2))
     }
 }

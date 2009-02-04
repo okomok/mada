@@ -13,12 +13,12 @@ private[mada] object Tokenize {
 
 private[mada] class TokenizeIterator[A](p: Peg[A], v: Vector[A]) extends Iterator[Vector[A]] {
     private var (k, l) = Find.impl(p, v, v.start, v.end)
-    override def hasNext = l != Pegs.FAILURE
+    override def hasNext = l != Peg.FAILURE
     override def next = {
         if (!hasNext) {
             throw new NoSuchElementException("next")
         }
-        val tmp = new Vectors.Region(v, k, l)
+        val tmp = new Vector.Region(v, k, l)
         k_l(Find.impl(p, v, l, v.end))
         tmp
     }

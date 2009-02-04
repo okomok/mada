@@ -7,8 +7,8 @@
 package madatest.stl
 
 
-import mada.Vectors._
-import mada.Vectors
+import mada.Vector._
+import mada.Vector
 import junit.framework.Assert._
 import madatest.vec.detail.Example._
 import madatest.vec.detail._

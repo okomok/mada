@@ -16,9 +16,9 @@ private[mada] class XorPeg[A](p: Peg[A], q: Peg[A]) extends Peg[A] {
         val pcur = p.parse(v, start, end)
         val qcur = q.parse(v, start, end)
 
-        val pok = pcur != Pegs.FAILURE
-        if (pok && qcur != Pegs.FAILURE) {
-            Pegs.FAILURE
+        val pok = pcur != Peg.FAILURE
+        if (pok && qcur != Peg.FAILURE) {
+            Peg.FAILURE
         } else if (pok) {
             pcur
         } else {

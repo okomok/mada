@@ -7,17 +7,17 @@
 package madatest.peg
 
 
-import mada.Pegs._
+import mada.Peg._
 import junit.framework.Assert._
-import mada.Pegs.Compatibles._
+import mada.Peg.Compatibles._
 
-import mada.Vectors.Region
+import mada.Vector.Region
 
 
 class TokenizeTest {
     def testTrivial: Unit = {
-        val pe = mada.Pegs.from("abcd")
-        val v = mada.Vectors.from("XabcdXXabcdXX")
+        val pe = mada.Peg.from("abcd")
+        val v = mada.Vector.from("XabcdXXabcdXX")
         val it = pe.tokenize(v)
         var c = 0
         while (it.hasNext) {
@@ -36,15 +36,15 @@ class TokenizeTest {
     }
 
     def testBound: Unit = {
-        val pe = mada.Pegs.from("abcd")
-        val v = mada.Vectors.from("qqabqqab")
+        val pe = mada.Peg.from("abcd")
+        val v = mada.Vector.from("qqabqqab")
         val it = pe.tokenize(v)
         assertFalse(it.hasNext)
     }
 
     def testBound2: Unit = {
-        val pe = mada.Pegs.from("abcd")
-        val v = mada.Vectors.from("abcd")
+        val pe = mada.Peg.from("abcd")
+        val v = mada.Vector.from("abcd")
         val it = pe.tokenize(v)
         val Region(_, i, j) = it.next
         assertEquals(0, i)
@@ -54,24 +54,24 @@ class TokenizeTest {
 
     // seems appropriate.
     def testEmpty: Unit = {
-        val pe = mada.Pegs.from("")
-        val v = mada.Vectors.from("")
+        val pe = mada.Peg.from("")
+        val v = mada.Vector.from("")
         val it = pe.tokenize(v)
         assertFalse(it.hasNext)
     }
 
     def testTokens: Unit = {
         val pe = single('a') >> any.+?("XX")
-        val v = mada.Vectors.from("XabcdXXaBCDXX")
+        val v = mada.Vector.from("XabcdXXaBCDXX")
         val it = pe.tokenize(v)
         var c = 0
         while (it.hasNext) {
             val w = it.next
             if (c == 0) {
-                assertEquals(mada.Vectors.from("abcd"), w)
+                assertEquals(mada.Vector.from("abcd"), w)
             }
             if (c == 1) {
-                assertEquals(mada.Vectors.from("aBCD"), w)
+                assertEquals(mada.Vector.from("aBCD"), w)
             }
             c += 1
         }

@@ -10,10 +10,10 @@
 package madatest.peg
 
 
-import mada.Vectors
-import mada.Pegs._
+import mada.Vector
+import mada.Peg._
 import junit.framework.Assert._
-import mada.Pegs.Compatibles._
+import mada.Peg.Compatibles._
 
 
 
@@ -34,7 +34,7 @@ class CalcTest {
                 ('(' >> expr >> ')') |
                 ('-' >> factor){ _ => push(-pop) } |
                 ('+' >> factor)
-    integer ::= (digit.+){ v => push(parseInt(Vectors.stringize(v))) }
+    integer ::= (digit.+){ v => push(parseInt(Vector.stringize(v))) }
     digit   ::= regex("[0-9]")
 
     def testTrivial: Unit = {

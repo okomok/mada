@@ -8,26 +8,26 @@ package madatest.peg
 
 
 import junit.framework.Assert._
-import mada.Vectors
+import mada.Vector
 
-import mada.Pegs.Compatibles._
-import mada.Pegs._
+import mada.Peg.Compatibles._
+import mada.Peg._
 
 
 class IterateTest {
     def testTrivial: Unit = {
         val sb = new StringBuilder
-        val w = mada.Vectors.from("XXabcXXabcXXabcXXabc")
+        val w = mada.Vector.from("XXabcXXabcXXabcXXabc")
 
         val p = -single('X') +? ("X"|end)
         var k = 0
-        for (Vectors.Region(v, i, j) <- p.tokenize(w)) {
+        for (Vector.Region(v, i, j) <- p.tokenize(w)) {
             assertSame(w, v)
-            sb append Vectors.stringize(v(k, i))
-            sb append Vectors.stringize(v(i, j))
+            sb append Vector.stringize(v(k, i))
+            sb append Vector.stringize(v(i, j))
             k = j
         }
 
-        assertEquals(w, mada.Vectors.from(sb.toString))
+        assertEquals(w, mada.Vector.from(sb.toString))
     }
 }

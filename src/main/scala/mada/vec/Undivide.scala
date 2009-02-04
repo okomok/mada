@@ -12,7 +12,7 @@ private[mada] object Undivide {
         case vv: DivideVector[_] => vv.dividend // undivide-divide fusion
         case _ => {
             if (vv.isEmpty) {
-                Vectors.empty[A]
+                Vector.empty[A]
             } else {
                 new UndivideVector(vv)
             }

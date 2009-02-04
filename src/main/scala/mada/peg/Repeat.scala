@@ -22,9 +22,9 @@ private[mada] class RepeatPeg[A](p: Peg[A], min: Int, max: Int) extends Peg[A] {
         var i = 0
         while (i < max) {
             cur = p.parse(v, cur, end)
-            if (cur == Pegs.FAILURE) {
+            if (cur == Peg.FAILURE) {
                 if (i < min) // not enough
-                    return Pegs.FAILURE
+                    return Peg.FAILURE
                 else
                     return cur
             }

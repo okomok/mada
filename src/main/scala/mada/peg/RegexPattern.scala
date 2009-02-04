@@ -22,7 +22,7 @@ private[mada] class RegexPatternPeg(pat: Pattern) extends Peg[Char] {
         if (mat.lookingAt) {
             mat.end
         } else {
-            Pegs.FAILURE
+            Peg.FAILURE
         }
     }
 }

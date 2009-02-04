@@ -35,5 +35,5 @@ private[mada] class VectorCharSequence(val v: Vector[Char]) extends CharSequence
     override def charAt(index: Int) = v.nth(index)
     override def length = v.nth.size
     override def subSequence(start: Int, end: Int) = new VectorCharSequence(v.nth(start, end))
-    override def toString = Vectors.stringize(v.nth)
+    override def toString = Vector.stringize(v.nth)
 }

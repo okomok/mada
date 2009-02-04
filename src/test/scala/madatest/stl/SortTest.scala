@@ -7,8 +7,8 @@
 package madatest.stl
 
 
-import mada.Vectors._
-import mada.Vectors
+import mada.Vector._
+import mada.Vector
 import junit.framework.Assert._
 import madatest.vec.detail.Example._
 import madatest.vec.detail._
@@ -40,13 +40,13 @@ class SortTest {
     def testLongExample1: Unit = {
         val v = fromArray(longExample1)
         mada.Stl.sort(v, 0, v.size, (_: Int) < (_: Int))
-        assertEquals(Vectors.range(0, 1000), v)
+        assertEquals(Vector.range(0, 1000), v)
     }
 /*
     def testIntroSort: Unit = {
         val v = fromArray(longExample1)
         mada.Stl.IntroSort[Int](v, 0, v.size, (_: Int) < (_: Int))
-        assertEquals(Vectors.range(0, 1000), v)
+        assertEquals(Vector.range(0, 1000), v)
     }
 */
 }

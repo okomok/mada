@@ -13,10 +13,10 @@ private[mada] object LookAhead {
 
 private[mada] class LookAheadPeg[A](p: Peg[A]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
-        if (p.parse(v, start, end) != Pegs.FAILURE) {
+        if (p.parse(v, start, end) != Peg.FAILURE) {
             start
         } else {
-            Pegs.FAILURE
+            Peg.FAILURE
         }
     }
 

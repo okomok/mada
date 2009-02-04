@@ -36,7 +36,7 @@ class TSTree[A, V](_lt: Functions.Compare[A]) {
         if (rootNode eq null) {
             Iterator.empty
         } else {
-            val it = new TSTreeNodeIterator(Vectors.empty, rootNode)
+            val it = new TSTreeNodeIterator(Vector.empty, rootNode)
             for ((key, node) <- it if (!node.data.isEmpty))
                 yield (key.force, node.data.get) // force now!
         }
@@ -279,5 +279,5 @@ private[mada] class TSTreeNodeIterator[A, V](parentKey: Vector[A], node: TSTreeN
         }
     }
 
-    private def lowerKey = parentKey ++ Vectors.single(node.elem)
+    private def lowerKey = parentKey ++ Vector.single(node.elem)
 }

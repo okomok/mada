@@ -8,30 +8,276 @@ package mada
 
 
 /**
- * Contains implicit conversions around <code>Peg</code>.
+ * Contains utility methods operating on <code>Peg</code>.
  */
-object Peg {
-    import Pegs._
+object Peg extends peg.Compatibles {
+    import peg._
+
+
+// constants
 
     /**
-     * @return  <code>Pegs.single(from)</code>.
+     * @return  <code>Vector.NULL_INDEX</code> specifying the parsing failure.
      */
-    implicit def char2madaPeg(from: Char): Peg[Char] = single(from)
+    final val FAILURE = Vector.NULL_INDEX
+
+
+// constructors
 
     /**
-     * @return  <code>Pegs.fromRegexPattern(from)</code>.
+     * Triggers implicit conversions explicitly.
+     *
+     * @return  <code>to</code>.
      */
-    implicit def regexPattern2madaPeg(from: java.util.regex.Pattern): Peg[Char] = fromRegexPattern(from)
+    def from[A](to: Peg[A]): Peg[A] = to
 
     /**
-     * @return  <code>Pegs.fromString(from)</code>.
+     * Matches if it succeeds to advance.
+     * @param i the increment count
      */
-    implicit def string2madaPeg(from: String): Peg[Char] = fromString(from)
+    def advance[A](i: Int): Peg[A] = Advance[A](i)
 
     /**
-     * @return  <code>Pegs.fromVector(from)</code>.
+     * Matches any one element.
      */
-    implicit def madaVector2madaPeg[A](from: Vector[A]): Peg[A] = fromVector(from)
+    def any[A]: Peg[A] = Any_[A]
+
+    /**
+     * Matches the beginning of input.
+     */
+    def begin[A]: Peg[A] = Begin[A]
+
+    /**
+     * Matches the end of input.
+     */
+    def end[A]: Peg[A] = End[A]
+
+    /**
+     * Matches an empty input while calling function.
+     */
+    def call[A](f: Unit => Any): Peg[A] = Call[A](f)
+
+    /**
+     * Matches an empty input, a.k.a epsilon.
+     */
+    def eps[A]: Peg[A] = Eps[A]
+
+    /**
+     * Always throws an Error.
+     */
+    def error[A]: Peg[A] = Error[A]
+
+    /**
+     * Doesn't match any input.
+     */
+    def fail[A]: Peg[A] = Fail[A]
+
+    /**
+     * Matches in case-insensitive.
+     */
+    def icase(v: Vector[Char]): Peg[Char] = Icase(v)
+
+    /**
+     * Reads input as lower cases, then tries to match.
+     */
+    def lowerCaseRead(p: Peg[Char]): Peg[Char] = LowerCaseRead(p)
+
+    /**
+     * Matches range values.
+     */
+    def range[A](i: A, j: A)(implicit c: A => Ordered[A]): Peg[A] = Range(i, j)(c)
+
+    /**
+     * Matches a regular expression.
+     * @see java.util.regex
+     */
+    def regex(str: String): Peg[Char] = Regex(str)
+
+    /**
+     * Matches specified one element.
+     */
+    def single[A](e: A): Peg[A] = Single(e)
+
+    /**
+     * Constructs a lazy Peg object.
+     */
+    def `lazy`[A](p: => Peg[A]): Peg[A] = Lazy(p)
+
+    /**
+     * Constructs a synchronized Peg object. This will be unused.
+     */
+    def `synchronized`[A](p: Peg[A]): Peg[A] = Synchronized(p)
+
+    /**
+     * Constructs a pseudo try-catch expression in Peg.
+     */
+    def `try`[A](p: Peg[A]) = Try(p)
+
+
+    /**
+     * Chooses the longest match.
+     */
+    def longest[A](ps: Peg[A]*): Peg[A] = Longest(ps)
+
+    /**
+     * Chooses the longest match.
+     */
+    def longest[A](ps: Iterable[Peg[A]]): Peg[A] = Longest(ps)
+
+    /**
+     * Chooses the shortest match.
+     */
+    def shortest[A](ps: Peg[A]*): Peg[A] = Shortest(ps)
+
+    /**
+     * Chooses the longest match.
+     */
+    def shortest[A](ps: Iterable[Peg[A]]): Peg[A] = Shortest(ps)
+
+    /**
+     * Matches any element of set.
+     */
+    def singles[A](es: A*): Peg[A] = Singles(es: _*)
+
+    /**
+     * Matches any element of set.
+     */
+    def singles[A](es: Set[A]): Peg[A] = Singles(es)
+
+    /**
+     * Matches a key, then tries to match its value.
+     */
+    def switch[A](es: (A, Peg[A])*): Peg[A] = Switch(es: _*)
+
+    /**
+     * Matches a key, then tries to match its value.
+     */
+    def switch[A](es: Map[A, Peg[A]]): Peg[A] = Switch(es)
+
+
+// alias compatibles
+
+    /**
+     * Alias of <code>madaPegCompatibles</code>
+     */
+    val Compatibles: Compatibles = madaPegCompatibles
+
+    /**
+     * Alias of <code>madaPegFromSingle(from)</code>
+     */
+    def fromChar(from: Char): Peg[Char] = madaPegFromChar(from)
+
+    /**
+     * Alias of <code>madaPegFromRegexPattern(from)</code>
+     */
+    def fromRegexPattern(from: java.util.regex.Pattern): Peg[Char] = madaPegFromRegexPattern(from)
+
+    /**
+     * Alias of <code>madaPegFromString(from)</code>
+     */
+    def fromString(from: String): Peg[Char] = madaPegFromString(from)
+
+    /**
+     * Alias of <code>madaPegFromVector(from)</code>
+     */
+    def fromVector[A](from: Vector[A]): Peg[A] = madaPegFromVector(from)
+
+
+// alias methods
+
+    def __*[A]: Peg[A] = any[A].star
+    def __*?[A](p: Peg[A]): Peg[A] = any[A].starBefore(p)
+    def __*>>[A](p: Peg[A]): Peg[A] = any[A].starUntil(p)
+
+    def ?~[A](p: Peg[A]): Peg[A] = p.lookAhead
+    def ?![A](p: Peg[A]): Peg[A] = p.lookAhead.not
+    def ?<~[A](p: Peg[A]): Peg[A] = p.lookBehind
+    def ?<![A](p: Peg[A]): Peg[A] = p.lookBehind.not
+    def ?<<~[A](p: Peg[A]): Peg[A] = p.lookBack
+    def ?<<![A](p: Peg[A]): Peg[A] = p.lookBack.not
+
+
+// aliases
+
+    /**
+     * Alias of <code>peg.PegProxy</code>
+     */
+    type PegProxy[A] = peg.PegProxy[A]
+
+    /**
+     * Alias of <code>peg.Rule</code>
+     */
+    type Rule[A] = peg.Rule[A]
+
+    /**
+     * Alias of <code>peg.ASTreeBuilder</code>
+     */
+    val ASTreeBuilder = peg.ASTreeBuilder
+
+    /**
+     * Alias of <code>peg.ASTreeBuilder</code>
+     */
+    type ASTreeBuilder[T <: javax.swing.tree.DefaultMutableTreeNode] = peg.ASTreeBuilder[T]
+
+    /**
+     * Alias of <code>peg.SymbolSet</code>
+     */
+    val SymbolSet = peg.SymbolSet
+
+    /**
+     * Alias of <code>peg.SymbolMap</code>
+     */
+    val SymbolMap = peg.SymbolMap
+
+    /**
+     * Alias of <code>peg.SymbolSet</code>
+     */
+    type SymbolSet[A] = peg.SymbolSet[A]
+
+    /**
+     * Alias of <code>peg.SymbolMap</code>
+     */
+    type SymbolMap[A] = peg.SymbolMap[A]
+
+    /**
+     * Alias of <code>peg.ByNeedActions</code>
+     */
+    type ByNeedActions[A] = peg.ByNeedActions[A]
+
+    /**
+     * Alias of <code>peg.RegionActions</code>
+     */
+    type RegionActions[A] = peg.RegionActions[A]
+
+    /**
+     * Alias of <code>peg.CapturingGroups</code>
+     */
+    type CapturingGroups[K, A] = peg.CapturingGroups[K, A]
+
+    /**
+     * Alias of <code>peg.PrettyPrinter</code>
+     */
+    val PrettyPrinter = peg.PrettyPrinter
+
+    /**
+     * Alias of <code>peg.PrettyPrinter</code>
+     */
+    type PrettyPrinter = peg.PrettyPrinter
+
+    /**
+     * Throws VerificationException if p doesn't match.
+     */
+    def verify[A](p: Peg[A]): Peg[A] = Verify(p)
+
+    /**
+     * Alias of <code>peg.VerificationException</code>
+     */
+    val VerificationException = peg.VerificationException
+
+    /**
+     * Alias of <code>peg.VerificationException</code>
+     */
+    type VerificationException[A] = peg.VerificationException[A]
 }
 
 
@@ -43,7 +289,7 @@ trait Peg[A] {
     import peg._
 
     /**
-     * Parses specified region of input Vectors.
+     * Parses specified region of input Vector.
      * This apparently legacy interface is designed so that heap-allocation is removal.
      *
      * @return next position if parsing succeeds, FAILURE otherwise
@@ -55,7 +301,7 @@ trait Peg[A] {
      *
      * @return next position if parsing succeeds, FAILURE otherwise
      */
-    def length: Int = throw new UnsupportedOperationException("Pegs.length")
+    def length: Int = throw new UnsupportedOperationException("Peg.length")
 
     final def and(that: Peg[A]): Peg[A] = And(this, that)
     final def or(that: Peg[A]): Peg[A] = Or(this, that)
@@ -82,9 +328,9 @@ trait Peg[A] {
     final def lookBehind: Peg[A] = LookBehind(this)
     final def lookBack: Peg[A] = LookBack(this)
 
-    final def act(f: Vectors.Func[A, Any]): Peg[A] = Act(this, f)
-    final def act3(f: Vectors.Func3[A, Any]): Peg[A] = Act3(this, f)
-    final def andIf(pred: Vectors.Func[A, Boolean]): Peg[A] = AndIf(this, pred)
+    final def act(f: Vector.Func[A, Any]): Peg[A] = Act(this, f)
+    final def act3(f: Vector.Func3[A, Any]): Peg[A] = Act3(this, f)
+    final def andIf(pred: Vector.Func[A, Boolean]): Peg[A] = AndIf(this, pred)
     final def identity: Peg[A] = Identity(this)
     final def memoize: Peg[A] = Memoize(this)
     final def named(name: String) = Named(this, name)
@@ -100,7 +346,7 @@ trait Peg[A] {
     final def tokenize(v: Vector[A]): Iterator[Vector[A]] = Tokenize(this, v)
     final def filterFrom(v: Vector[A]): Iterator[A] = FilterFrom(this, v)
 
-    final def apply(f: Vectors.Func[A, Any]): Peg[A] = act(f)
+    final def apply(f: Vector.Func[A, Any]): Peg[A] = act(f)
     final def unary_~ : Peg[A] = lookAhead
     final def unary_! : Peg[A] = lookAhead.not
     final def unary_- : Peg[A] = not

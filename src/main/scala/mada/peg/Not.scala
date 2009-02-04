@@ -13,14 +13,14 @@ private[mada] object Not {
 
 private[mada] class NotPeg[A](p: Peg[A]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
-        if (p.parse(v, start, end) != Pegs.FAILURE) {
-            Pegs.FAILURE
+        if (p.parse(v, start, end) != Peg.FAILURE) {
+            Peg.FAILURE
         } else {
             val cur = start + p.length
             if (cur <= end) {
                 cur
             } else {
-                Pegs.FAILURE
+                Peg.FAILURE
             }
         }
     }

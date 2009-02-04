@@ -9,6 +9,6 @@ package mada.peg
 
 private[mada] object Icase {
     def apply(v: Vector[Char]): Peg[Char] = {
-        Pegs.lowerCaseRead(Pegs.fromVector(Vectors.lowerCase(v)))
+        Peg.lowerCaseRead(Peg.fromVector(Vector.lowerCase(v)))
     }
 }

@@ -14,7 +14,7 @@ private[mada] object Or {
 private[mada] class OrPeg[A](p: Peg[A], q: Peg[A]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
         var cur = p.parse(v, start, end)
-        if (cur == Pegs.FAILURE) {
+        if (cur == Peg.FAILURE) {
             q.parse(v, start, end)
         } else {
             cur

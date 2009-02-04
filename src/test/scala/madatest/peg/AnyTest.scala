@@ -7,14 +7,14 @@
 package madatest.peg
 
 
-import mada.Pegs._
+import mada.Peg._
 import junit.framework.Assert._
 
 
 class AnyTest {
     def testTrivial: Unit = {
-        val sample = mada.Vectors.fromString("/")
+        val sample = mada.Vector.fromString("/")
         assertTrue(any[Char].matches(sample))
-        assertFalse(any[Char].matches(mada.Vectors.empty))
+        assertFalse(any[Char].matches(mada.Vector.empty))
     }
 }

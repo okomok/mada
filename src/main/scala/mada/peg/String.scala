@@ -8,5 +8,5 @@ package mada.peg
 
 
 private[mada] object FromString {
-    def apply(str: String): Peg[Char] = Pegs.fromVector(Vectors.fromString(str))
+    def apply(str: String): Peg[Char] = Peg.fromVector(Vector.fromString(str))
 }

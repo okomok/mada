@@ -10,13 +10,13 @@ package mada.vec
 private[mada] object ThrowIf {
     def empty[A](v: Vector[A], method: String): Unit = {
         if (v.isEmpty) {
-            throw new UnsupportedOperationException("empty Vectors." + method)
+            throw new UnsupportedOperationException("empty Vector." + method)
         }
     }
 
     def differentSize[A, B](v: Vector[A], w: Vector[B], method: String): Unit = {
         if (v.size != w.size) {
-            throw new UnsupportedOperationException("Vectors." + method + " of different size Vectors: " + v.size + " and " + w.size)
+            throw new UnsupportedOperationException("Vector." + method + " of different size Vectors: " + v.size + " and " + w.size)
         }
     }
 

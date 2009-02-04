@@ -8,5 +8,5 @@ package mada.peg
 
 
 private[mada] object Regex {
-    def apply(x: String): Peg[Char] = Pegs.fromRegexPattern(java.util.regex.Pattern.compile(x))
+    def apply(x: String): Peg[Char] = Peg.fromRegexPattern(java.util.regex.Pattern.compile(x))
 }

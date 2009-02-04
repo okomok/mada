@@ -7,17 +7,17 @@
 package madatest.peg
 
 
-import mada.Pegs._
+import mada.Peg._
 import junit.framework.Assert._
-import mada.Pegs.Compatibles._
+import mada.Peg.Compatibles._
 
 
 
 class FilterFromTest {
     def testTrivial: Unit = {
-        val pe = mada.Pegs.from("abcd")
-        val v = mada.Vectors.from("XabcdXXabcdXX")
+        val pe = mada.Peg.from("abcd")
+        val v = mada.Vector.from("XabcdXXabcdXX")
         val it = pe.filterFrom(v)
-        assertEquals(mada.Vectors.from("abcdabcd"), mada.Vectors.fromIterator(it))
+        assertEquals(mada.Vector.from("abcdabcd"), mada.Vector.fromIterator(it))
     }
 }

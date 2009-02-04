@@ -17,14 +17,14 @@ trait OutputVector[A] extends Vector[A] {
     def output(e: A): Unit
 
     /**
-     * @return  <code>Vectors.NULL_INDEX</code>.
+     * @return  <code>Vector.NULL_INDEX</code>.
      */
-    final override def start = Vectors.NULL_INDEX
+    final override def start = Vector.NULL_INDEX
 
     /**
-     * @return  <code>Vectors.nullIndex</code>.
+     * @return  <code>Vector.nullIndex</code>.
      */
-    final override def end = Vectors.NULL_INDEX
+    final override def end = Vector.NULL_INDEX
 
     /**
      * Throws <code>UnsupportedOperationException</code>.

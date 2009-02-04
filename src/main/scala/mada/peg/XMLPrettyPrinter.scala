@@ -48,7 +48,7 @@ private[mada] class XMLPrettyPrinter(val out: java.io.Writer, val indentWidth: I
     def this(w: Int) = this(XMLPrettyPrinter.defaultWriter, w)
 
     private var indentLevel = 0
-    private val indentString = Vectors.single(' ').cycle(indentWidth)
+    private val indentString = Vector.single(' ').cycle(indentWidth)
     private def indent = indentString.cycle(indentLevel)
     private val stack = new java.util.ArrayDeque[Any]
 
@@ -57,7 +57,7 @@ private[mada] class XMLPrettyPrinter(val out: java.io.Writer, val indentWidth: I
      */
     private[mada] def writeStartElement(tag: Any): Unit = {
         stack.push(tag)
-        out.write(Vectors.stringize(indent ++ "<" ++ tag.toString ++ ">\n"))
+        out.write(Vector.stringize(indent ++ "<" ++ tag.toString ++ ">\n"))
         out.flush
         indentLevel += 1
     }
@@ -67,7 +67,7 @@ private[mada] class XMLPrettyPrinter(val out: java.io.Writer, val indentWidth: I
      */
     private[mada] def writeEndElement: Unit = {
         indentLevel -= 1
-        out.write(Vectors.stringize(indent ++ "</" ++ stack.pop.toString ++ ">\n"))
+        out.write(Vector.stringize(indent ++ "</" ++ stack.pop.toString ++ ">\n"))
         out.flush
     }
 
@@ -75,7 +75,7 @@ private[mada] class XMLPrettyPrinter(val out: java.io.Writer, val indentWidth: I
      * Writes element without new line.
      */
     private[mada] def writeElement(tag: Any, chars: Any): Unit = {
-        out.write(Vectors.stringize(indent ++ "<" ++ tag.toString ++ ">" ++ chars.toString ++ "</" ++ tag.toString ++ ">\n"))
+        out.write(Vector.stringize(indent ++ "<" ++ tag.toString ++ ">" ++ chars.toString ++ "</" ++ tag.toString ++ ">\n"))
         out.flush
     }
 
@@ -93,12 +93,12 @@ private[mada] class XMLPrettyPrinter(val out: java.io.Writer, val indentWidth: I
         override def parse(v: Vector[A], start: Int, end: Int) = {
             writeStartElement(self)
 
-            writeElement("Pegs.parsing", v(start, end))
+            writeElement("Peg.parsing", v(start, end))
             val cur = self.parse(v, start, end)
-            if (cur == Pegs.FAILURE) {
-                writeElement("Pegs.parsed", "Pegs.FAILURE")
+            if (cur == Peg.FAILURE) {
+                writeElement("Peg.parsed", "Peg.FAILURE")
             } else {
-                writeElement("Pegs.parsed", v(start, cur))
+                writeElement("Peg.parsed", v(start, cur))
             }
 
             writeEndElement

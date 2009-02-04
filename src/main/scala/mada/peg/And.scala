@@ -14,15 +14,15 @@ private[mada] object And {
 private[mada] class AndPeg[A](p: Peg[A], q: Peg[A]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
         val pcur = p.parse(v, start, end)
-        if (pcur != Pegs.FAILURE) {
+        if (pcur != Peg.FAILURE) {
             val qcur = q.parse(v, start, end) // short-circuit
             if (pcur == qcur) {
                 pcur
             } else {
-                Pegs.FAILURE
+                Peg.FAILURE
             }
         } else {
-            Pegs.FAILURE
+            Peg.FAILURE
         }
     }
 

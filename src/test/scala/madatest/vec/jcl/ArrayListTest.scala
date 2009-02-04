@@ -7,8 +7,8 @@
 package madatest.vec.jcl
 
 
-import mada.Vectors
-import mada.Vectors.fromJclList
+import mada.Vector
+import mada.Vector.fromJclList
 import madatest.vec.detail.NewArrayList
 import junit.framework.Assert._
 

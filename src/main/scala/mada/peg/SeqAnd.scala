@@ -14,8 +14,8 @@ private[mada] object SeqAnd {
 private[mada] class SeqAndPeg[A](p: Peg[A], q: Peg[A]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
         var cur = p.parse(v, start, end)
-        if (cur == Pegs.FAILURE) {
-            Pegs.FAILURE
+        if (cur == Peg.FAILURE) {
+            Peg.FAILURE
         } else {
             q.parse(v, cur, end)
         }

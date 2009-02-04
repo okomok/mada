@@ -8,7 +8,7 @@ package madatest.vec
 
 
 import mada._
-import mada.Vectors.fromArray
+import mada.Vector.fromArray
 import junit.framework.Assert._
 import detail.Example._
 
@@ -32,8 +32,8 @@ class StepTest {
         //  0  1  2  3  4  5  6  7  8  9 10 11 12 13 14
         // 14,17,19, 8,13, 6, 4,23, 0
         val expected = Array(14, 8, 4)
-//        println("subvector:" + Vectors.Region(fromArray(example1), 2, 11).toString)
-        val actual = Vectors.Region(fromArray(example1), 2, 11).step(3)
+//        println("subvector:" + Vector.Region(fromArray(example1), 2, 11).toString)
+        val actual = Vector.Region(fromArray(example1), 2, 11).step(3)
 //        println(actual)
         detail.TestVectorReadWrite(expected, actual)
     }

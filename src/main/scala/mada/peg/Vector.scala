@@ -16,11 +16,11 @@ private[mada] class VectorPeg[A1, A2](w: Vector[A1], pred: (A1, A2) => Boolean) 
     override def parse(v: Vector[A2], start: Int, end: Int): Int = {
         val wsize = w.size
         if (end - start < wsize) {
-            Pegs.FAILURE
+            Peg.FAILURE
         } else if (Stl.equal(w, w.start, w.end, v, start, pred)) {
             start + wsize
         } else {
-            Pegs.FAILURE
+            Peg.FAILURE
         }
     }
 

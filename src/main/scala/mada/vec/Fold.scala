@@ -22,7 +22,7 @@ private[mada] object FolderLeft {
             i += 1; acc = op(acc, e)
             a(i) = acc
         }
-        Vectors.fromArray(a).
+        Vector.fromArray(a).
             readOnly // consistent with parallels.
     }
 }
