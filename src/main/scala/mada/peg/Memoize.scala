@@ -7,37 +7,31 @@
 package mada.peg
 
 
-private[mada] object Memoize {
-    def apply[A](p: Peg[A]): Peg[A] = new MemoizePeg(p)
-}
+/**
+ * Provides memoization functionality.
+ * Parsing different input vectors is not memoized.
+ *
+ * @param   input the target vector of this memoization
+ */
+class Memoizer[A](val input: Vector[A]) {
+    /**
+     * Alias of <code>memoize</code>
+     */
+    final def apply(p: Peg[A]): Peg[A] = memoize(p)
 
-private[mada] class MemoizePeg[A](override val self: Peg[A]) extends PegProxy[A] {
-    val memoTable = new scala.collection.jcl.HashMap[TripleKey[A], Int]
+    /**
+     * A peg to return the memoized result when input region is the same.
+     */
+    def memoize(p: Peg[A]): Peg[A] = new MemoizePeg(p)
 
-    override def parse(v: Vector[A], start: Int, end: Int) = {
-        val key = new TripleKey(v, start, end)
-        val value = memoTable.get(key)
-        if (value.isEmpty) {
-            val cur = self.parse(v, start, end)
-            memoTable.put(key, cur)
-            cur
-        } else {
-            value.get
-        }
-    }
-}
+    private class MemoizePeg(override val self: Peg[A]) extends PegProxy[A] {
+        import Products.RangeVal
 
-/*
-private[mada] class Memoizer[A](w: Vector[A]) {
-    def apply(p: Peg[A]): Peg[A] = memoize(p)
-    def memoize(p: Peg[A]): MemoizePeg = new MemoizePeg(p)
-
-    class MemoizePeg(override val self: Peg[A]) extends PegProxy[A] {
-        val memoTable = new scala.collection.jcl.HashMap[Int, Int]
+        val memoTable = new scala.collection.jcl.HashMap[RangeVal, Int]
 
         override def parse(v: Vector[A], start: Int, end: Int) = {
-            if (v eq w) {
-                val key = start // end too is key?
+            if (v eq input) {
+                val key = RangeVal(start, end)
                 val value = memoTable.get(key)
                 if (value.isEmpty) {
                     val cur = self.parse(v, start, end)
@@ -52,5 +46,3 @@ private[mada] class Memoizer[A](w: Vector[A]) {
         }
     }
 }
-*/
-

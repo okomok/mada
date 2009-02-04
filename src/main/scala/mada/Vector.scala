@@ -207,6 +207,11 @@ object Vector extends vec.Compatibles {
     def toLinearAccessSeq[A](from: Vector[A]): Seq[A] = madaVectorToLinearAccessSeq(from)
 
     /**
+     * Alias of <code>madaVectorToProduct</code>
+     */
+    def toProduct[A](from: Vector[A]): Product = madaVectorToProduct(from)
+
+    /**
      * Alias of <code>madaVectorToStream</code>
      */
     def toStream[A](from: Vector[A]): Stream[A] = madaVectorToStream(from)

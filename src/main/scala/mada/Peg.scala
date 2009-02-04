@@ -255,6 +255,11 @@ object Peg extends peg.Compatibles {
     type CapturingGroups[K, A] = peg.CapturingGroups[K, A]
 
     /**
+     * Alias of <code>peg.Memoizer</code>
+     */
+    type Memoizer[A] = peg.Memoizer[A]
+
+    /**
      * Alias of <code>peg.PrettyPrinter</code>
      */
     val PrettyPrinter = peg.PrettyPrinter
@@ -332,7 +337,6 @@ trait Peg[A] {
     final def act3(f: Vector.Func3[A, Any]): Peg[A] = Act3(this, f)
     final def andIf(pred: Vector.Func[A, Boolean]): Peg[A] = AndIf(this, pred)
     final def identity: Peg[A] = Identity(this)
-    final def memoize: Peg[A] = Memoize(this)
     final def named(name: String) = Named(this, name)
     final def repeat(min: Int, max: Int): Peg[A] = Repeat(this, min, max)
 

@@ -87,6 +87,10 @@ trait Compatibles {
      * Converts a vector to <code>Seq</code>.
      */
     implicit def madaVectorToLinearAccessSeq[A](from: Vector[A]): Seq[A] = ToLinearAccessSeq(from)
+    /**
+     * Converts a vector to <code>Product</code>.
+     */
+    implicit def madaVectorToProduct[A](from: Vector[A]): Product = ToProduct(from)
 
     /**
      * Converts a vector to <code>Stream</code>.
