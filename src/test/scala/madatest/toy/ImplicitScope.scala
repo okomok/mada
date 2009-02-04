@@ -9,7 +9,7 @@ package madatest.toy.implicitscope
 
 package my {
 
-    object Foo {
+    trait FooCompatibles {
         var found = false
         implicit def toBar[A](f: Foo[A]): Bar[A] = {
             found = true
@@ -21,8 +21,11 @@ package my {
             new Foo[A]
         }
 
-        val Strong = foo.Strong
+        val Compatibles = this
+    }
 
+    object Foo extends FooCompatibles {
+        val Strong = foo.Strong
     }
 
     package foo {
@@ -58,6 +61,8 @@ package my {
 class ImplicitScopeTest {
 
     import my._
+    import my.Foo.Compatibles._
+
 
     def testTo: Unit = {
         Foo.found = false

@@ -12,19 +12,22 @@ package mada
  */
 object Strings {
     /**
+     * @return  <code>str.elements</code>. Note "abc".elements needs implicit conversion to <code>RichString</code>.
+     */
+    def toIterator(str: String): Iterator[Char] = str.elements
+
+    /**
+     * Alias of <code>toIterator</code>
+     */
+    def elements(str: String): Iterator[Char] = toIterator(str)
+
+    /**
      * Provides implicit conversions around <code>String</code>.
      */
-    val Compatibles = new {
-        implicit def string2iterator(str: String): Iterator[Char] = iterator(str)
+    object Compatibles {
+        /**
+         * @return  <code>toIterator(str)</code>.
+         */
+        implicit def string2iterator(str: String): Iterator[Char] = toIterator(str)
     }
-
-    /**
-     * Converts to <code>Iterator</code>. Note "abc".elements needs implicit conversion to <code>RichString</code>.
-     */
-    def elements(str: String): Iterator[Char] = str.elements
-
-    /**
-     * Alias of <code>elements</code>
-     */
-    def iterator(str: String): Iterator[Char] = str.elements
 }
