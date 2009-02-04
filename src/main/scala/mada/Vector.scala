@@ -149,11 +149,6 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     final override def hashCodeOfRef: Int = super.hashCode
 
 
-// toString
-
-    override def toString: String = ToString(this)
-
-
 // regions
 
     /**
@@ -667,6 +662,8 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
 
 
 // conversions
+
+    override def toString: String = ToString(this)
 
     /**
      * @return  <code>Vectors.toArray(this)</code>.

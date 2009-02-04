@@ -209,17 +209,17 @@ object Vectors {
 // incompatibles(from)
 
     /**
-     * Converts an <code>Iterator</code> to vector.
+     * Converts an <code>Iterator</code> to vector. (not projection)
      */
     def fromIterator[A](from: Iterator[A]): Vector[A] = FromIterator(from)
 
     /**
-     * Converts a <code>java.util.Iterator</code> to vector.
+     * Converts a <code>java.util.Iterator</code> to vector. (not projection)
      */
     def fromJclIterator[A](from: java.util.Iterator[A]): Vector[A] = jcl.FromIterator(from)
 
     /**
-     * Converts values to vector.
+     * Converts values to vector. (not projection)
      */
     def fromValues[A](from: A*): Vector[A] = FromValues(from: _*)
 
@@ -227,22 +227,22 @@ object Vectors {
 // incompatibles(to)
 
     /**
-     * Converts a vector of <code>Char</code> to <code>String</code>.
+     * Converts a vector of <code>Char</code> to <code>String</code>. (not projection)
      */
     def stringize(from: Vector[Char]): String = Stringize(from)
 
     /**
-     * Converts a vector to <code>List</code>.
+     * Converts a vector to <code>List</code>. (not projection)
      */
     def toList[A](from: Vector[A]): List[A] = ToList(from)
 
     /**
-     * Converts a vector to <code>Array</code>.
+     * Converts a vector to <code>Array</code>. (not projection)
      */
     def toArray[A](from: Vector[A]): Array[A] = ToArray(from)
 
     /**
-     * Converts a vector to <code>java.util.ArrayList</code>.
+     * Converts a vector to <code>java.util.ArrayList</code>. (not projection)
      */
     def toJclArrayList[A](from: Vector[A]): java.util.ArrayList[A] = jcl.ToArrayList(from)
 
