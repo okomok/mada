@@ -7,15 +7,14 @@
 package madatest.vec
 
 
-import mada.Vector
-import mada.Vector.arrayVector
+import mada.Vectors
+import mada.Vectors.fromArray
 import junit.framework.Assert._
+import mada.Vector
 import madatest.vec.detail.Example._
 
 
 class CompatiblesTest {
-    import Vector.Compatibles._
-
     def testCompile(x: Int): Unit = {
         takeIterator(makeVector)
         takeVector(Array(1,2,3))

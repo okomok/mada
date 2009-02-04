@@ -11,5 +11,5 @@ import java.util.Arrays
 
 
 private[mada] object ToList {
-    def apply[A](from: Vector[A]): List[A] = from.iterator.toList
+    def apply[A](from: Vector[A]): List[A] = from.toIterator.toList
 }

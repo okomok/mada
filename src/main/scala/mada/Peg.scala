@@ -16,7 +16,7 @@ object Peg {
     /**
      * Specifies parsing failure.
      */
-    final val FAILURE = Vector.NULL_INDEX
+    final val FAILURE = Vectors.NULL_INDEX
 
     /**
      * Matches if it succeeds to advance.
@@ -271,7 +271,7 @@ trait Peg[A] {
     import peg._
 
     /**
-     * Parses specified region of input Vector.
+     * Parses specified region of input Vectors.
      * This apparently legacy interface is designed so that heap-allocation is removal.
      *
      * @return next position if parsing succeeds, FAILURE otherwise
@@ -310,9 +310,9 @@ trait Peg[A] {
     final def lookBehind: Peg[A] = LookBehind(this)
     final def lookBack: Peg[A] = LookBack(this)
 
-    final def act(f: Vector.Func[A, Any]): Peg[A] = Act(this, f)
-    final def act3(f: Vector.Func3[A, Any]): Peg[A] = Act3(this, f)
-    final def andIf(pred: Vector.Func[A, Boolean]): Peg[A] = AndIf(this, pred)
+    final def act(f: Vectors.Func[A, Any]): Peg[A] = Act(this, f)
+    final def act3(f: Vectors.Func3[A, Any]): Peg[A] = Act3(this, f)
+    final def andIf(pred: Vectors.Func[A, Boolean]): Peg[A] = AndIf(this, pred)
     final def identity: Peg[A] = Identity(this)
     final def memoize: Peg[A] = Memoize(this)
     final def named(name: String) = Named(this, name)
@@ -328,7 +328,7 @@ trait Peg[A] {
     final def tokenize(v: Vector[A]): Iterator[Vector[A]] = Tokenize(this, v)
     final def filterFrom(v: Vector[A]): Iterator[A] = FilterFrom(this, v)
 
-    final def apply(f: Vector.Func[A, Any]): Peg[A] = act(f)
+    final def apply(f: Vectors.Func[A, Any]): Peg[A] = act(f)
     final def unary_~ : Peg[A] = lookAhead
     final def unary_! : Peg[A] = lookAhead.not
     final def unary_- : Peg[A] = not

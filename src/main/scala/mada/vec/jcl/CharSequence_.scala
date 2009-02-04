@@ -10,7 +10,7 @@ package mada.vec.jcl
 import java.lang.CharSequence
 
 
-private[mada] object CharSequenceVector {
+private[mada] object FromCharSequence {
     def apply[A](from: CharSequence): Vector[Char] = from match {
         case from: VectorCharSequence => from.v // conversion fusion
         case _ => new CharSequenceVector(from)
@@ -24,7 +24,7 @@ private[mada] class CharSequenceVector(val from: CharSequence) extends Vector[Ch
 }
 
 
-private[mada] object VectorCharSequence {
+private[mada] object ToCharSequence {
     def apply(v: Vector[Char]): CharSequence = v match {
         case from: CharSequenceVector => from.from // conversion fusion
         case _ => new VectorCharSequence(v)
@@ -35,5 +35,5 @@ private[mada] class VectorCharSequence(val v: Vector[Char]) extends CharSequence
     override def charAt(index: Int) = v.nth(index)
     override def length = v.nth.size
     override def subSequence(start: Int, end: Int) = new VectorCharSequence(v.nth(start, end))
-    override def toString = Vector.stringize(v.nth)
+    override def toString = Vectors.stringize(v.nth)
 }

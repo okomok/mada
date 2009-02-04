@@ -7,7 +7,7 @@
 package madatest.peg
 
 
-import mada.Vector
+import mada.Vectors
 import mada.Peg._
 import junit.framework.Assert._
 import mada.Peg.Compatibles._
@@ -25,6 +25,6 @@ class PrettyPrinterTest {
     digit   ::= range('0', '9')
 
     def testTrivial: Unit = {
-        assertTrue(expr.matches(Vector.stringVector("1+2")))
+        assertTrue(expr.matches(Vectors.fromString("1+2")))
     }
 }

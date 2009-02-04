@@ -8,5 +8,5 @@ package mada.vec
 
 
 private[mada] object FromValues {
-    def apply[A](es: A*): Vector[A] = Vector.fromIterator(es.elements)
+    def apply[A](es: A*): Vector[A] = Vectors.fromIterator(es.elements)
 }

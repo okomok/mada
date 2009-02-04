@@ -18,7 +18,7 @@ private[mada] class MapVector[Z, A](v: Vector[Z], f: Z => A, grainSize: Int) ext
         if (grainSize == 1) {
             v.map({ e => Future(f(e)) }).force.map({ u => u() })
         } else {
-            Vector.undivide(
+            Vectors.undivide(
                 v.divide(grainSize).map({ w => Future(w.map(f).force) }).force.map({ u => u() })
             )
         }

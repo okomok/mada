@@ -10,14 +10,14 @@ package madatest.peg
 import mada.Peg._
 import junit.framework.Assert._
 import mada.Peg.Compatibles._
-import mada.Vector.Compatibles._
-import mada.Vector.Region
+
+import mada.Vectors.Region
 
 
 class TokenizeTest {
     def testTrivial: Unit = {
         val pe = madaPeg("abcd")
-        val v = madaVector("XabcdXXabcdXX")
+        val v = mada.Vectors.from("XabcdXXabcdXX")
         val it = pe.tokenize(v)
         var c = 0
         while (it.hasNext) {
@@ -37,14 +37,14 @@ class TokenizeTest {
 
     def testBound: Unit = {
         val pe = madaPeg("abcd")
-        val v = madaVector("qqabqqab")
+        val v = mada.Vectors.from("qqabqqab")
         val it = pe.tokenize(v)
         assertFalse(it.hasNext)
     }
 
     def testBound2: Unit = {
         val pe = madaPeg("abcd")
-        val v = madaVector("abcd")
+        val v = mada.Vectors.from("abcd")
         val it = pe.tokenize(v)
         val Region(_, i, j) = it.next
         assertEquals(0, i)
@@ -55,23 +55,23 @@ class TokenizeTest {
     // seems appropriate.
     def testEmpty: Unit = {
         val pe = madaPeg("")
-        val v = madaVector("")
+        val v = mada.Vectors.from("")
         val it = pe.tokenize(v)
         assertFalse(it.hasNext)
     }
 
     def testTokens: Unit = {
         val pe = single('a') >> any.+?("XX")
-        val v = madaVector("XabcdXXaBCDXX")
+        val v = mada.Vectors.from("XabcdXXaBCDXX")
         val it = pe.tokenize(v)
         var c = 0
         while (it.hasNext) {
             val w = it.next
             if (c == 0) {
-                assertEquals(madaVector("abcd"), w)
+                assertEquals(mada.Vectors.from("abcd"), w)
             }
             if (c == 1) {
-                assertEquals(madaVector("aBCD"), w)
+                assertEquals(mada.Vectors.from("aBCD"), w)
             }
             c += 1
         }

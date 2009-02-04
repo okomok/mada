@@ -17,19 +17,19 @@ trait OutputVector[A] extends Vector[A] {
     def output(e: A): Unit
 
     /**
-     * @return  <code>Vector.NULL_INDEX</code>.
+     * @return  <code>Vectors.NULL_INDEX</code>.
      */
-    final override def start = Vector.NULL_INDEX
+    final override def start = Vectors.NULL_INDEX
 
     /**
-     * @return  <code>Vector.nullIndex</code>.
+     * @return  <code>Vectors.nullIndex</code>.
      */
-    final override def end = Vector.NULL_INDEX
+    final override def end = Vectors.NULL_INDEX
 
     /**
      * Throws <code>UnsupportedOperationException</code>.
      */
-    final override def apply(i: Int) = throw new UnsupportedOperationException("OutputVector.apply")
+    final override def apply(i: Int) = throw new UnsupportedOperationException("OutputVectors.apply")
 
     /**
      * @return  <code>output(e)</code>; <code>i</code> is ignored.

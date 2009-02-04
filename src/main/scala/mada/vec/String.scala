@@ -7,7 +7,7 @@
 package mada.vec
 
 
-private[mada] object StringVector {
+private[mada] object FromString {
     def apply(from: String): Vector[Char] = new StringVector(from)
 }
 

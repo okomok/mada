@@ -7,7 +7,7 @@
 package mada.vec
 
 
-private[mada] object CellVector {
+private[mada] object FromCell {
     def apply[A](from: Cell[A]): Vector[A] = new CellVector(from)
 }
 

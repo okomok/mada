@@ -10,7 +10,7 @@ package mada.vec
 import java.util.Arrays
 
 
-private[mada] object ArrayVector {
+private[mada] object FromArray {
     def apply[A](from: Array[A]): Vector[A] = new ArrayVector(from)
 }
 
@@ -20,7 +20,7 @@ private[mada] class ArrayVector[A](from: Array[A]) extends Vector[A] {
     override def apply(i: Int) = from(i)
     override def update(i: Int, e: A) = from(i) = e
 
-//    This requires IntArrayVector for correct overload resolution.
+//    This requires IntFromArray for correct overload resolution.
 //    override def sortWith(lt: Functions.Compare[A]) = { Arrays.sort(from, jcl.ToComparator(lt)); this }
 }
 
@@ -28,7 +28,7 @@ private[mada] class ArrayVector[A](from: Array[A]) extends Vector[A] {
 private[mada] object ToArray {
     def apply[A](from: Vector[A]): Array[A] = {
         val a = new Array[A](from.size)
-        from.copyTo(Vector.arrayVector(a))
+        from.copyTo(Vectors.fromArray(a))
         a
     }
 }

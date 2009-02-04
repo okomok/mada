@@ -7,11 +7,11 @@
 package madatest.peg
 
 
-import mada.Vector
+import mada.Vectors
 import mada.Peg._
 import junit.framework.Assert._
 import mada.Peg.Compatibles._
-import mada.Vector.Compatibles._
+
 import javax.swing.tree.TreeNode
 
 
@@ -36,7 +36,7 @@ class ASTreeBuilderTest {
         return
 
         if (t.toString != null)
-            println(Vector.stringize(Vector(" ").cycle(indent) ++ t.toString))
+            println(Vectors.stringize(Vectors.from(" ").cycle(indent) ++ t.toString))
         indent += 4
         val enum = t.children
         while (enum.hasMoreElements) {

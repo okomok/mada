@@ -9,7 +9,7 @@ package mada.vec
 
 private[mada] object Flatten {
     def apply[A](vv: Vector[Vector[A]]): Vector[A] = {
-        val av = Vector.arrayVector(new Array[A](FlattenSize(vv)))
+        val av = Vectors.fromArray(new Array[A](FlattenSize(vv)))
         var (i, j) = (av.start, av.start)
         for (v <- vv) {
             j += v.size

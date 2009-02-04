@@ -7,20 +7,20 @@
 package madatest.vec
 
 
-import mada.Vector
-import mada.Vector.arrayVector
+import mada.Vectors
+import mada.Vectors.fromArray
 import junit.framework.Assert._
 
 
 class ValuesTest {
     def testTrivial() = {
         val ex = Array(5,1,3,6,9,7,10,0)
-        val ac = Vector.fromValues(5,1,3,6,9,7,10,0)
+        val ac = Vectors.fromValues(5,1,3,6,9,7,10,0)
         detail.TestVectorReadOnly(ex, ac)
     }
 
     def testEmpty() = {
-        val ac = Vector.fromValues[Int]()
+        val ac = Vectors.fromValues[Int]()
         detail.TestEmpty(ac)
     }
 }

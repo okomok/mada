@@ -7,14 +7,14 @@
 package madatest.vec
 
 
-import mada.Vector
-import mada.Vector.arrayVector
+import mada.Vectors
+import mada.Vectors.fromArray
 import junit.framework.Assert._
 
 
 class NthTest {
     def testTrivial: Unit = {
-        val a = Vector.range(3, 10)
+        val a = Vectors.range(3, 10)
         assertEquals(3, a(3))
         assertEquals(3, a.nth(0))
         assertEquals(4, a.nth(1))
@@ -23,12 +23,12 @@ class NthTest {
     }
 
     def testNthRegion: Unit = {
-        val a = Vector.range(3, 10).region(5, 7)
+        val a = Vectors.range(3, 10).region(5, 7)
         assertEquals(a, a.nth)
     }
 
     def testFusion: Unit = {
-        val a = Vector.range(3, 10)
+        val a = Vectors.range(3, 10)
         assertEquals(3, a(3))
         assertEquals(3, a.nth.nth(0))
         assertEquals(4, a.nth.nth(1))

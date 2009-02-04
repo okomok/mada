@@ -7,9 +7,6 @@
 package mada.peg
 
 
-import Vector.Compatibles._
-
-
 /**
  * Contains utility methods operating on type <code>PrettyPrinter</code>.
  */

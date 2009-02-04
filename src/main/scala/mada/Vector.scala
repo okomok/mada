@@ -8,276 +8,63 @@ package mada
 
 
 /**
- * Contains utility types and methods operating on type <code>Vector</code>.
+ * Contains implicit conversions around <code>Vector</code>.
  */
 object Vector {
-    import vec._
-
-
-// constants
+    /**
+     * @return  <code>Vectors.fromArray(from)</code>.
+     */
+    implicit def array2madaVector[A](from: Array[A]): Vector[A] = Vectors.fromArray(from)
 
     /**
-     * @return  <code>Math.MIN_INT</code>, which is the reserved index by <code>mada.Vector</code>.
+     * @return  <code>Vectors.fromCell(from)</code>.
      */
-    final val NULL_INDEX = 0x80000000
-
-
-// exceptions
+    implicit def cell2madaVector[A](from: Cell[A]): Vector[A] = Vectors.fromCell(from)
 
     /**
-     * Thrown if vector is not readable.
+     * @return  <code>Vectors.fromJclCharSequence(from)</code>.
      */
-    class NotReadableException[A](val vector: Vector[A]) extends RuntimeException
+    implicit def JclCharSequence2madaVector(from: java.lang.CharSequence): Vector[Char] = Vectors.fromJclCharSequence(from)
 
     /**
-     * Thrown if vector is not writable.
+     * @return  <code>Vectors.fromJclList(from)</code>.
      */
-    class NotWritableException[A](val vector: Vector[A]) extends RuntimeException
-
-
-// constructors
+    implicit def jclList2madaVector[A](from: java.util.List[A]): Vector[A] = Vectors.fromJclList(from)
 
     /**
-     * Concatenate all argument sequences into a single vector.
-     *
-     * @param   vs the given argument sequences
-     * @return  the projection vector created from the concatenated arguments
+     * @return  <code>Vectors.fromOption(from)</code>.
      */
-    def concat[A](vs: Vector[A]*): Vector[A] = Concat(vs: _*)
+    implicit def option2madaVector[A](from: Option[A]): Vector[A] = Vectors.fromOption(from)
 
     /**
-     * @return  an empty vector.
+     * @return  <code>Vectors.fromProduct(from)</code>.
      */
-    def empty[A]: Vector[A] = Empty.apply[A]
+    implicit def product2madaVector(from: Product): Vector[Any] = Vectors.fromProduct(from)
 
     /**
-     * Create a vector that is the concantenation of all vectors
-     * returned by a given vector of vectors.
-     *
-     * @param   vv The vector which returns on each call to next
-     *             a new vector whose elements are to be concatenated to the result.
-     * @return  the newly created writable vector (not a projection into <code>vv</code>).
+     * @return  <code>Vectors.fromRandomAccessSeq(from)</code>.
      */
-    def flatten[A](vv: Vector[Vector[A]]): Vector[A] = Flatten(vv)
+    implicit def randomAccessSeq2madaVector[A](from: RandomAccessSeq[A]): Vector[A] = Vectors.fromRandomAccessSeq(from)
 
     /**
-     * @return  <code>v.filter(_.isLeft).map(_.left.get)</code>.
+     * @return  <code>Vectors.fromString(from)</code>.
      */
-    def lefts[A, B](v: Vector[Either[A, B]]): Vector[A] = Lefts(v)
+    implicit def string2madaVector(from: String): Vector[Char] = Vectors.fromString(from)
 
     /**
-     * @return  <code>v.filter(_.isRight).map(_.right.get)</code>.
+     * @return  <code>Vectors.toIterator(from)</code>.
      */
-    def rights[A, B](v: Vector[Either[A, B]]): Vector[B] = Rights(v)
+    implicit def madaVector2Iterator[A](from: Vector[A]): Iterator[A] = Vectors.toIterator(from)
 
     /**
-     * Converts to lower case letters.
+     * @return  <code>Vectors.toJclCharSequence(from)</code>.
      */
-    def lowerCase(v: Vector[Char]): Vector[Char] = LowerCase(v)
+    implicit def madaVector2JclCharSequence(from: Vector[Char]): java.lang.CharSequence = Vectors.toJclCharSequence(from)
 
     /**
-     * Converts to upper case letters.
+     * @return  <code>Vectors.toRandomAccessSeq(from)</code>.
      */
-    def upperCase(v: Vector[Char]): Vector[Char] = UpperCase(v)
-
-    /**
-     * Creates a vector containing of successive integers.
-     *
-     * @param   i the value of the first element of the vector
-     * @param   j the value of the last element of the vector plus 1
-     * @return  the sorted vector of all integers in range [i, j).
-     */
-    def range(i: Int, j: Int): Vector[Int] = Range(i, j)
-
-    /**
-     * @param   e the element
-     * @return  the writable vector with one single element.
-     */
-    def single[A](e: A): Vector[A] = Single(e)
-
-    /**
-     * Converts characters to <code>String</code>.
-     */
-    def stringize(v: Vector[Char]): String = Stringize(v)
-
-    /**
-     * Reverts <code>Vector[A]#divide</code>.
-     *
-     * @pre     each vector is the same size except for the last one.
-     */
-    def undivide[A](vv: Vector[Vector[A]]): Vector[A] = Undivide(vv)
-
-    /**
-     * @return  flatten(vv.map({ v => sep.append(v) }))
-     */
-    def untokenize[A](vv: Vector[Vector[A]], sep: Vector[A]): Vector[A] = Untokenize(vv, sep)
-
-    /**
-     * Reverts <code>Vector[A]#zip</code>.
-     */
-    def unzip[A, B](v: Vector[(A, B)]): (Vector[A], Vector[B]) = Unzip(v)
-
-    /**
-     * Creates a <code>lazy</code> vector.
-     */
-    def `lazy`[A](v: => Vector[A]) = Lazy(v)
-
-    /**
-     * Creates a <code>synchronized</code> vector.
-     */
-    def `synchronized`[A](v: Vector[A]) = Synchronized(v)
-
-
-// compatibles
-
-    /**
-     * Alias of <code>vec.Compatibles</code>
-     */
-    val Compatibles = vec.Compatibles
-
-    /**
-     * @return  <code>to</code>.
-     */
-    def apply[A](to: Vector[A]): Vector[A] = to
-
-    /**
-     * Converts an <code>Array</code> to vector.
-     */
-    def arrayVector[A](from: Array[A]): Vector[A] = ArrayVector(from)
-
-    /**
-     * Converts a <code>Cell</code> to vector.
-     */
-    def cellVector[A](from: Cell[A]): Vector[A] = CellVector(from)
-
-    /**
-     * Converts a <code>java.lang.CharSequence</code> to vector.
-     */
-    def jclCharSequenceVector(from: java.lang.CharSequence): Vector[Char] = jcl.CharSequenceVector(from)
-
-    /**
-     * Converts a <code>java.util.List</code> to vector.
-     */
-    def jclListVector[A](from: java.util.List[A]): Vector[A] = jcl.ListVector(from)
-
-    /**
-     * Converts an <code>Option</code> to vector.
-     */
-    def optionVector[A](from: Option[A]): Vector[A] = OptionVector(from)
-
-    /**
-     * Converts a <code>Product</code> to vector.
-     */
-    def productVector(from: Product): Vector[Any] = ProductVector(from)
-
-    /**
-     * Converts a <code>RandomAccessSeq</code> to vector.
-     */
-    def randomAccessSeqVector[A](from: RandomAccessSeq[A]): Vector[A] = RandomAccessSeqVector(from)
-
-    /**
-     * Converts a <code>String</code> to vector.
-     */
-    def stringVector(from: String): Vector[Char] = StringVector(from)
-
-    /**
-     * Converts a vector to <code>java.lang.CharSequence</code>.
-     */
-    def jclCharSequence(from: Vector[Char]): java.lang.CharSequence = jcl.VectorCharSequence(from)
-
-
-// incompatibles
-
-    /**
-     * Converts an <code>Iterator</code> to vector.
-     */
-    def fromIterator[A](from: Iterator[A]): Vector[A] = FromIterator(from)
-
-    /**
-     * Converts a <code>java.util.Iterator</code> to vector.
-     */
-    def fromJclIterator[A](from: java.util.Iterator[A]): Vector[A] = jcl.FromIterator(from)
-
-    /**
-     * Converts values to vector.
-     */
-    def fromValues[A](from: A*): Vector[A] = FromValues(from: _*)
-
-
-// triplify
-
-    /**
-     * Converts a <code>Func</code> to <code>Func3</code>.
-     */
-    def triplify[A, B](f: Func[A, B]): Func3[A, B] = Triplify(f)
-
-    /**
-     * Converts a <code>Func3</code> to <code>Func</code>.
-     */
-    def untriplify[A, B](f: Func3[A, B]): Func[A, B] = Untriplify(f)
-
-
-// aliases
-
-    /**
-     * Alias of <code>(Vector[A], Int, Int)</code>
-     */
-    type Triple[A] = (Vector[A], Int, Int)
-
-    /**
-     * Alias of <code>Vector[A] => B</code>
-     */
-    type Func[A, B] = Vector[A] => B
-
-    /**
-     * Alias of <code>(Vector[A], Int, Int) => B</code>
-     */
-    type Func3[A, B] = (Vector[A], Int, Int) => B
-
-    /**
-     * Alias of <code>vec.Adapter</code>
-     */
-    val Adapter = vec.Adapter
-
-    /**
-     * Alias of <code>vec.Adapter</code>
-     */
-    type Adapter[Z, A] = vec.Adapter[Z, A]
-
-    /**
-     * Alias of <code>vec.Adapter.Proxy</code>
-     */
-    type VectorProxy[A] = Adapter.Proxy[A]
-
-    /**
-     * Alias of <code>vec.NotWritable</code>
-     */
-    type NotWritable[A] = vec.NotWritable[A]
-
-    /**
-     * Alias of <code>vec.Region</code>
-     */
-    val Region = vec.Region
-
-    /**
-     * Alias of <code>vec.Region</code>
-     */
-    type Region[A] = vec.Region[A]
-
-    /**
-     * Alias of <code>vec.IntFileVector</code>
-     */
-    type IntFileVector = vec.IntFileVector
-
-    /**
-     * Alias of <code>vec.LongFileVector</code>
-     */
-    type LongFileVector = vec.LongFileVector
-
-    /**
-     * Alias of <code>vec.Writer</code>
-     */
-    type Writer[A] = vec.Writer[A]
+    implicit def madaVector2RandomAccessSeq[A](from: Vector[A]): RandomAccessSeq.Mutable[A] = Vectors.toRandomAccessSeq(from)
 }
 
 
@@ -312,9 +99,9 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * @pre     this vector is readable.
      * @pre     <code>isDefinedAt(i)</code>
      * @return  the element at the specified position in this vector.
-     * @throws  Vector.NotReadableException if not overridden.
+     * @throws  Vectors.NotReadableException if not overridden.
      */
-    override def apply(i: Int): A = throw new Vector.NotReadableException(this)
+    override def apply(i: Int): A = throw new Vectors.NotReadableException(this)
 
     /**
      * Replaces the element at the specified position in this vector with
@@ -324,9 +111,9 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * @param   e element to be stored at the specified position.
      * @pre     this vector is writable.
      * @pre     <code>isDefinedAt(i)</code>
-     * @throws  Vector.NotWritableException if not overridden.
+     * @throws  Vectors.NotWritableException if not overridden.
      */
-    def update(i: Int, e: A): Unit = throw new Vector.NotWritableException(this)
+    def update(i: Int, e: A): Unit = throw new Vectors.NotWritableException(this)
 
     /**
      * @return  <code>(start <= i) && (i < end)</code>, possibly overridden in subclasses.
@@ -445,7 +232,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      *
      * @param   n divisor
      * @return  <code>[this(start, n), this(start + n, 2*n), this(start + 2*n, 3*n),...]</code>.
-     * @see     Vector.undivide
+     * @see     Vectors.undivide
      */
     def divide(n: Int): Vector[Vector[A]] = Divide(this, n)
 
@@ -558,9 +345,9 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     def map[B](f: A => B): Vector[B] = Map(this, f)
 
     /**
-     * @return  <code>Vector.flatten(map(f))</code>.
+     * @return  <code>Vectors.flatten(map(f))</code>.
      */
-    def flatMap[B](f: A => Vector[B]): Vector[B] = Vector.flatten(map(f))
+    def flatMap[B](f: A => Vector[B]): Vector[B] = Vectors.flatten(map(f))
 
     /**
      * Casts element to type <code>B</code>.
@@ -693,7 +480,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
 // concatenation
 
     /**
-     * @return  <code>Vector.randomAccessSeqVector(randomAccessSeq.projection ++ that)</code>
+     * @return  <code>Vectors.fromRandomAccessSeq(randomAccessSeq.projection ++ that)</code>
      */
     def append(that: Vector[A]): Vector[A] = Append(this, that)
 
@@ -882,42 +669,39 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
 // conversions
 
     /**
-     * @return  an <code>Iterator</code> of this vector.
+     * @return  <code>Vectors.toArray(this)</code>.
      */
-    final def iterator: Iterator[A] = VectorIterator(this)
+    final def toArray: Array[A] = Vectors.toArray(this)
 
     /**
-     * @return  a <code>java.util.Iterator</code> of this vector.
+     * Alias of <code>elements</code>
      */
-    final def jclListIterator: java.util.ListIterator[A] = jcl.VectorListIterator(this)
-
-
-    final def linearAccessSeq: Seq[A] = LinearAccessSeq(this)
+    final def toIterator: Iterator[A] = Vectors.toIterator(this)
 
     /**
-     * @return  a <code>RandomAccessSeq.Mutable</code> projection of this vector.
+     * @return  <code>Vectors.toJclArrayList(this)</code>.
      */
-    final def randomAccessSeq: RandomAccessSeq.Mutable[A] = VectorRandomAccessSeq(this)
+    final def toJclArrayList: java.util.ArrayList[A] = Vectors.toJclArrayList(this)
 
     /**
-     * @return  a <code>Stream</code> of this vector.
+     * @return  <code>Vectors.toIterator</code>.
      */
-    final def stream: Stream[A] = VectorStream(this)
+    final def toLinearAccessSeq: Seq[A] = Vectors.toLinearAccessSeq(this)
 
     /**
-     * @return  a new <code>Array</code> which enumerates all elements of this vector.
+     * @return  <code>Vectors.toList(this)</code>.
      */
-    final def toArray: Array[A] = ToArray(this)
+    final def toList: List[A] = Vectors.toList(this)
 
     /**
-     * @return  a new <code>java.util.ArrayList</code> which enumerates all elements of this vector.
+     * @return  <code>Vectors.toRandomAccessSeq(this)</code>.
      */
-    final def toJclArrayList: java.util.ArrayList[A] = jcl.ToArrayList(this)
+    final def toRandomAccessSeq: RandomAccessSeq.Mutable[A] = Vectors.toRandomAccessSeq(this)
 
     /**
-     * @return  a <code>List</code> which enumerates all elements of this vector.
+     * @return  <code>Vectors.toStream(this)</code>.
      */
-    final def toList: List[A] = ToList(this)
+    final def toStream: Stream[A] = Vectors.toStream(this)
 
 
 // trivials
@@ -948,9 +732,9 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     final def sideEffect(f: Vector[A] => Any): Vector[A] = { f(this); this }
 
     /**
-     * @return  <code>Vector.range(start, end)</code>.
+     * @return  <code>Vectors.range(start, end)</code>.
      */
-    final def indices: Vector[Int] = Vector.range(start, end)
+    final def indices: Vector[Int] = Vectors.range(start, end)
 
     /**
      * Returns a set entry as pair, which is useful for <code>Peg.switch</code>.
@@ -968,9 +752,9 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     final def length: Int = size
 
     /**
-     * Alias of <code>iterator</code>
+     * Alias of <code>toIterator</code>
      */
-    final def elements: Iterator[A] = iterator
+    final def elements: Iterator[A] = toIterator
 
     /**
      * Alias of <code>region</code>

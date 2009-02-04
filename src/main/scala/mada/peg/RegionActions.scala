@@ -35,9 +35,9 @@ class RegionActions[A] {
     /**
      * Triggers the action.
      */
-    def endWith(f: Vector.Func[A, Any]): Peg[A] = new EndWithPeg(f)
+    def endWith(f: Vectors.Func[A, Any]): Peg[A] = new EndWithPeg(f)
 
-    private class EndWithPeg(f: Vector.Func[A, Any]) extends Peg[A] {
+    private class EndWithPeg(f: Vectors.Func[A, Any]) extends Peg[A] {
         override def parse(v: Vector[A], start: Int, end: Int) = {
             f(v(stack.pop, start))
             start

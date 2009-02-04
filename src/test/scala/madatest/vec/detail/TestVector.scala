@@ -16,8 +16,8 @@ object TestVectorReadWrite {
         TestVectorReadOnly(expected, actual)
 
         CombSort(actual)
-        val ex = CopyArray(expected); CombSort(Vector.arrayVector(ex))
-        assertEquals(Vector.arrayVector(ex), actual)
+        val ex = CopyArray(expected); CombSort(Vectors.fromArray(ex))
+        assertEquals(Vectors.fromArray(ex), actual)
     }
 }
 

@@ -10,7 +10,7 @@ package mada.vec.jcl
 import java.util.ListIterator
 
 
-private[mada] object VectorListIterator {
+private[mada] object ToListIterator {
     def apply[A](v: Vector[A]): ListIterator[A] = new VectorListIterator(v)
 }
 
@@ -41,6 +41,6 @@ private[mada] class VectorListIterator[A](v: Vector[A]) extends ListIterator[A] 
     }
 
     override def previousIndex = cur - 1
-    override def remove = throw new UnsupportedOperationException("VectorListIterator.remove")
-    override def set(e: A) = throw new UnsupportedOperationException("VectorListIterator.set")
+    override def remove = throw new UnsupportedOperationException("ToListIterator.remove")
+    override def set(e: A) = throw new UnsupportedOperationException("ToListIterator.set")
 }

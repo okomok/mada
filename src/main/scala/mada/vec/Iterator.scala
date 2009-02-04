@@ -13,12 +13,12 @@ private[mada] object FromIterator {
         for (e <- from) {
             a.add(e)
         }
-        Vector.jclListVector(a)
+        Vectors.fromJclList(a)
     }
 }
 
 
-private[mada] object VectorIterator {
+private[mada] object ToIterator {
     def apply[A](from: Vector[A]): Iterator[A] = new VectorIterator(from)
 }
 

@@ -9,7 +9,7 @@ package mada.vec
 
 // from ++ from ++ ... is not conforming RandomAccess, so `force` or the following is needed.
 
-private[mada] object LinearAccessSeq {
+private[mada] object ToLinearAccessSeq {
     def apply[A](from: Vector[A]): Seq[A] = new VectorLinearAccessSeq(from)
 }
 

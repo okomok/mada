@@ -48,8 +48,8 @@ class CombSortTest {
     import mada._
     import junit.framework.Assert._
 
-    def expected = Vector.arrayVector(Array(0, 0, 4, 4, 6, 8,11,12,13,14,15,17,18,19,23))
-    def example =  Vector.arrayVector(Array(0,18,14,17,19, 8,13, 6, 4,23, 0,12,15,11, 4))
+    def expected = Vectors.fromArray(Array(0, 0, 4, 4, 6, 8,11,12,13,14,15,17,18,19,23))
+    def example =  Vectors.fromArray(Array(0,18,14,17,19, 8,13, 6, 4,23, 0,12,15,11, 4))
 
     def testTrivial: Unit ={
         val v = example

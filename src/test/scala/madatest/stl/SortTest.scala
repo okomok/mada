@@ -7,8 +7,8 @@
 package madatest.stl
 
 
-import mada.Vector._
-import mada.Vector
+import mada.Vectors._
+import mada.Vectors
 import junit.framework.Assert._
 import madatest.vec.detail.Example._
 import madatest.vec.detail._
@@ -16,19 +16,19 @@ import madatest.vec.detail._
 
 class SortTest {
     def testTrivial: Unit = {
-        val v = arrayVector(example1)
+        val v = fromArray(example1)
         mada.Stl.sort(v, 0, v.size, (_: Int) < (_: Int))
-        assertEquals(arrayVector(example1Sorted), v)
+        assertEquals(fromArray(example1Sorted), v)
     }
 
     def testWith: Unit = {
-        val v = arrayVector(example1)
+        val v = fromArray(example1)
         mada.Stl.sort(v, 0, v.size, (_: Int) > (_: Int))
-        assertEquals(arrayVector(example1ReversedSorted), v)
+        assertEquals(fromArray(example1ReversedSorted), v)
     }
 
     def testEmpty: Unit = {
-        val v = arrayVector(empty1)
+        val v = fromArray(empty1)
         mada.Stl.sort(v, 0, v.size, (_: Int) < (_: Int))
         TestEmpty(v)
     }
@@ -38,15 +38,15 @@ class SortTest {
     )
 
     def testLongExample1: Unit = {
-        val v = arrayVector(longExample1)
+        val v = fromArray(longExample1)
         mada.Stl.sort(v, 0, v.size, (_: Int) < (_: Int))
-        assertEquals(Vector.range(0, 1000), v)
+        assertEquals(Vectors.range(0, 1000), v)
     }
 /*
     def testIntroSort: Unit = {
-        val v = arrayVector(longExample1)
+        val v = fromArray(longExample1)
         mada.Stl.IntroSort[Int](v, 0, v.size, (_: Int) < (_: Int))
-        assertEquals(Vector.range(0, 1000), v)
+        assertEquals(Vectors.range(0, 1000), v)
     }
 */
 }

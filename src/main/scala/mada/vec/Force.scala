@@ -12,6 +12,6 @@ private[mada] object Force {
 }
 
 private[mada] class ForceVector[A](v: Vector[A]) extends Adapter.Transform[A] with NotWritable[A] {
-    override val underlying = Vector.arrayVector(v.toArray)
+    override val underlying = Vectors.fromArray(v.toArray)
     override def force = this // force-force fusion
 }

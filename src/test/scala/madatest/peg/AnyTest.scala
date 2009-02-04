@@ -13,8 +13,8 @@ import junit.framework.Assert._
 
 class AnyTest {
     def testTrivial: Unit = {
-        val sample = mada.Vector.stringVector("/")
+        val sample = mada.Vectors.fromString("/")
         assertTrue(any[Char].matches(sample))
-        assertFalse(any[Char].matches(mada.Vector.empty))
+        assertFalse(any[Char].matches(mada.Vectors.empty))
     }
 }

@@ -7,7 +7,7 @@
 package mada.vec
 
 
-private[mada] object VectorStream {
+private[mada] object ToStream {
     def apply[A](v: Vector[A]): Stream[A] = new VectorStream(v)
 }
 
@@ -15,7 +15,7 @@ private[mada] class VectorStream[A](v: Vector[A]) extends Stream.Definite[A] {
     override def isEmpty = v.isEmpty
     override def head = {
         if (isEmpty) {
-            throw new NoSuchElementException("empty VectorStream.head")
+            throw new NoSuchElementException("empty ToStream.head")
         } else {
             v.head
         }
@@ -43,7 +43,7 @@ private[mada] class VectorStream[A](v: Vector[A]) extends Stream.Definite[A] {
     // addDefinedElems is protected.
     private lazy val _tail = {
         if (isEmpty) {
-            throw new UnsupportedOperationException("empty VectorStream.tail")
+            throw new UnsupportedOperationException("empty ToStream.tail")
         } else {
             new VectorStream(v.tail) // needs heap-allocation.
         }

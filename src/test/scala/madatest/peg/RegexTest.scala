@@ -8,7 +8,7 @@ package madatest.peg
 
 
 import junit.framework.Assert._
-import mada.Vector.Compatibles._
+
 import mada.Peg.Compatibles._
 import mada.Peg._
 import java.util.regex.Pattern

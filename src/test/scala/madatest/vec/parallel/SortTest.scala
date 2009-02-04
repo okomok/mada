@@ -7,15 +7,15 @@
 package madatest.vec.parallel
 
 
-import mada.Vector
-import mada.Vector._
+import mada.Vectors
+import mada.Vectors._
 import junit.framework.Assert._
 import madatest.vec.detail.Example._
 
 
 class SortTest {
     def testTrivial {
-        val actual = arrayVector(example1).cut.parallel.sortWith(_ < _)
+        val actual = fromArray(example1).cut.parallel.sortWith(_ < _)
         detail.TestVectorReadOnly(example1Sorted, actual)
     }
 
@@ -25,22 +25,22 @@ class SortTest {
     }
 
     def testImplicit: Unit = {
-        val actual = arrayVector(example1).cut.parallel.sort
+        val actual = fromArray(example1).cut.parallel.sort
         detail.TestVectorReadOnly(example1Sorted, actual)
     }
 
     def testOptimizeArray {
-        val actual = arrayVector(example1).parallel.sortWith(_ < _)
+        val actual = fromArray(example1).parallel.sortWith(_ < _)
         detail.TestVectorReadOnly(example1Sorted, actual)
     }
 
     def testOptimizeArrayWindow {
-        val actual = arrayVector(example1).window(0, 0).window(0, example1.length).parallel.sortWith(_ < _)
+        val actual = fromArray(example1).window(0, 0).window(0, example1.length).parallel.sortWith(_ < _)
         detail.TestVectorReadOnly(example1Sorted, actual)
     }
 
     def testOptimizeArrayList {
-        val actual = jclListVector(arrayVector(example1).toJclArrayList).parallel.sortWith(_ < _)
+        val actual = fromJclList(fromArray(example1).toJclArrayList).parallel.sortWith(_ < _)
         detail.TestVectorReadOnly(example1Sorted, actual)
     }
 }

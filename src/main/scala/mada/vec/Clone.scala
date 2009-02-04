@@ -8,5 +8,5 @@ package mada.vec
 
 
 private[mada] object Clone {
-    def apply[A](v: Vector[A]): Vector[A] = Vector.arrayVector(v.toArray)
+    def apply[A](v: Vector[A]): Vector[A] = Vectors.fromArray(v.toArray)
 }

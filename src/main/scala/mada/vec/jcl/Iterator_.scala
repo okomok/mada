@@ -16,6 +16,6 @@ private[mada] object FromIterator {
         while (from.hasNext) {
             a.add(from.next)
         }
-        Vector.jclListVector(a)
+        Vectors.fromJclList(a)
     }
 }
