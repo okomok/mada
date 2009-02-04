@@ -30,9 +30,9 @@ private[mada] case class MutableRandomAccessSeqVector[A](from: RandomAccessSeq.M
 
 
 private[mada] object ToRandomAccessSeq {
-    def apply[A](v: Vector[A]): RandomAccessSeq.Mutable[A] = v match {
+    def apply[A](from: Vector[A]): RandomAccessSeq.Mutable[A] = from match {
         case MutableRandomAccessSeqVector(_from) => _from // conversion fusion
-        case _ => new VectorRandomAccessSeq(v)
+        case _ => new VectorRandomAccessSeq(from)
     }
 }
 

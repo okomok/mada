@@ -39,4 +39,10 @@ class AsValueTest {
         }
         ()
     }
+
+    def testNestedMatching: Unit = {
+        val a = Vector.range(4, 10)
+        val Vector.Region(Vector(4,5,6,7,8,9), 5, 9) = a(5, 9)
+        ()
+    }
 }

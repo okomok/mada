@@ -66,6 +66,21 @@ object Functions {
         override def apply(v1: T1, v2: T1) = c(v1) > v2
     }
 
+    /**
+     * Converts "less-than" predicate to <code>java.util.Comparator</code>.
+     */
+    def toComparator[A](lt: Compare[A]): java.util.Comparator[A] = new java.util.Comparator[A] {
+        override def compare(x: A, y: A) = {
+            if (lt(x, y)) {
+                -1
+            } else if (lt(y, x)) {
+                1
+            } else {
+                0
+            }
+        }
+    }
+
 
 // utilities
 
