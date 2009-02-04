@@ -19,10 +19,20 @@ object Booleans {
     /**
      * Provides infix operators using implicit conversions.
      */
-    val Infix = new {
-        class MadaBooleans(_1: Boolean) {
+    object Infix {
+        /**
+         * Intermediate class for infix operators.
+         */
+        sealed class MadaBooleans(_1: Boolean) {
+            /**
+             * @return  <code>Booleans.implies(_2)</code>.
+             */
             def implies(_2: => Boolean) = Booleans.implies(_1, _2)
         }
-        implicit def boolean2MadaBooleans(_1: Boolean): MadaBooleans = new MadaBooleans(_1)
+
+        /**
+         * @return  <code>new MadaBooleans(_1)</code>.
+         */
+        implicit def madaBooleanToMadaBooleans(_1: Boolean): MadaBooleans = new MadaBooleans(_1)
     }
 }

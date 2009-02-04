@@ -14,7 +14,7 @@ trait Compatibles {
     /**
      * Alias of <code>this</code>
      */
-    val madaPegCompatibles: Compatibles = this
+    final val madaPegCompatibles: Compatibles = this
 
     /**
      * Converts a character to <code>Peg</code>.

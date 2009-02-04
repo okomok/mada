@@ -15,7 +15,7 @@ trait Compatibles {
     /**
      * Alias of <code>this</code>
      */
-    val madaVectorCompatibles: Compatibles = this
+    final val madaVectorCompatibles: Compatibles = this
 
 
 // compatibles(from)

@@ -11,6 +11,10 @@ package mada
  * Contains utility methods operating on <code>Iterator</code>.
  */
 object Iterators {
+
+
+// algorithms
+
     /**
      * @return  <code>equalWith(it, jt)(Functions.equal)
      */
@@ -84,7 +88,7 @@ object Iterators {
                 firstTime = false
                 withSideEffect(it)({ e => buf.add(e) })
             } else {
-                jclIteratorIterator(buf.iterator)
+                fromJclIterator(buf.iterator)
             }
         }
         repeat(()).flatMap(f)
@@ -102,19 +106,51 @@ object Iterators {
         }
     }
 
+
+// infix operators
+
     /**
      * Provides infix operators using implicit conversions.
      */
-    val Infix = new {
-        class MadaIterators[A](_1: Iterator[A]) {
+    object Infix {
+        /**
+         * Intermediate class for infix operators.
+         */
+        sealed class MadaIterators[A](_1: Iterator[A]) {
+            /**
+             * @return  <code>Iterators.equal(_2)</code>.
+             */
             def equal[B](_2: Iterator[B]) = Iterators.equal(_1, _2)
+
+            /**
+             * @return  <code>Iterators.equalWith(_1, _2)(_3)</code>.
+             */
             def equalWith[B](_2: Iterator[B])(_3: Functions.Predicate2[A, B]) = Iterators.equalWith(_1, _2)(_3)
+
+            /**
+             * @return  <code>Iterators.length(_1)</code>.
+             */
             def length = Iterators.length(_1)
+
+            /**
+             * @return  <code>Iterators.cycle(_1)</code>.
+             */
             def cycle = Iterators.cycle(_1)
+
+            /**
+             * @return  <code>Iterators.withSideEffect(_1)(_2)</code>.
+             */
             def withSideEffect(_2: A => Any) = Iterators.withSideEffect(_1)(_2)
         }
-        implicit def iterator2MadaIterators[A](_1: Iterator[A]): MadaIterators[A] = new MadaIterators(_1)
+
+        /**
+         * @return  <code>new MadaIterators(_1)</code>.
+         */
+        implicit def madaIteratorToMadaIterators[A](_1: Iterator[A]): MadaIterators[A] = new MadaIterators(_1)
     }
+
+
+// proxy
 
     /**
      * Implements a proxy for iterator objects.
@@ -162,46 +198,69 @@ object Iterators {
         override def addString(buf: StringBuilder, start: String, sep: String, end: String): StringBuilder = self.addString(buf, start, sep, end)
     }
 
+
+// compatibles
+
+  // from
+
+    /**
+     * Alias of <code>Compatibles.madaIteratorFromJclEnumeration</code>
+     */
+    def fromJclEnumeration[A](from: java.util.Enumeration[A]): Iterator[A] = Compatibles.madaIteratorFromJclEnumeration(from)
+
+    /**
+     * Alias of <code>Compatibles.madaIteratorFromJclIterator</code>
+     */
+    def fromJclIterator[A](from: java.util.Iterator[A]): Iterator[A] = Compatibles.madaIteratorFromJclIterator(from)
+
+  // to
+
+    /**
+     * Alias of <code>Compatibles.madaIteratorToJclEnumeration</code>
+     */
+    def toJclEnumeration[A](from: Iterator[A]): java.util.Enumeration[A] = Compatibles.madaIteratorToJclEnumeration(from)
+
+    /**
+     * Alias of <code>Compatibles.madaIteratorToJclIterator</code>
+     */
+    def toJclIterator[A](from: Iterator[A]): java.util.Iterator[A] = Compatibles.madaIteratorToJclIterator(from)
+
+
     /**
      * Provides implicit convertions around <code>Iterator</code>.
      */
-    val Compatibles = new {
-        implicit def madaIterator2JclIterator[A](from: Iterator[A]): java.util.Iterator[A] = jclIterator(from)
-        implicit def madaJclIterator2Iterator[A](from: java.util.Iterator[A]): Iterator[A] = jclIteratorIterator(from)
-        implicit def madaIterator2JclEnumeration[A](from: java.util.Iterator[A]): java.util.Enumeration[A] = jclEnumeration(from)
-        implicit def madaJclEnumeration2Iterator[A](from: java.util.Enumeration[A]): Iterator[A] = jclEnumerationIterator(from)
-    }
+    object Compatibles {
+        /**
+         * Converts to <code>java.util.Enumeration</code>.
+         */
+        implicit def madaIteratorToJclEnumeration[A](from: Iterator[A]): java.util.Enumeration[A] = new java.util.Enumeration[A] {
+            override def hasMoreElements = from.hasNext
+            override def nextElement = from.next
+        }
 
-    /**
-     * Converts to <code>java.util.Iterator</code>.
-     */
-    def jclIterator[A](it: Iterator[A]): java.util.Iterator[A] = new java.util.Iterator[A] {
-        override def hasNext = it.hasNext
-        override def next = it.next
-        override def remove = throw new UnsupportedOperationException
-    }
+        /**
+         * Converts to <code>java.util.Iterator</code>.
+         */
+        implicit def madaIteratorToJclIterator[A](from: Iterator[A]): java.util.Iterator[A] = new java.util.Iterator[A] {
+            override def hasNext = from.hasNext
+            override def next = from.next
+            override def remove = throw new UnsupportedOperationException
+        }
 
-    /**
-     * Converts from <code>java.util.Iterator</code>.
-     */
-    def jclIteratorIterator[A](it: java.util.Iterator[A]): Iterator[A] = new Iterator[A] {
-        override def hasNext = it.hasNext
-        override def next = it.next
-    }
+        /**
+         * Converts from <code>java.util.Enumeration</code>.
+         */
+        implicit def madaIteratorFromJclEnumeration[A](from: java.util.Enumeration[A]): Iterator[A] = new Iterator[A] {
+            override def hasNext = from.hasMoreElements
+            override def next = from.nextElement
+        }
 
-    /**
-     * Converts to <code>java.util.Enumeration</code>.
-     */
-    def jclEnumeration[A](it: Iterator[A]): java.util.Enumeration[A] = new java.util.Enumeration[A] {
-        override def hasMoreElements = it.hasNext
-        override def nextElement = it.next
-    }
-
-    /**
-     * Converts from <code>java.util.Enumeration</code>.
-     */
-    def jclEnumerationIterator[A](it: java.util.Enumeration[A]): Iterator[A] = new Iterator[A] {
-        override def hasNext = it.hasMoreElements
-        override def next = it.nextElement
+        /**
+         * Converts from <code>java.util.Iterator</code>.
+         */
+        implicit def madaIteratorFromJclIterator[A](from: java.util.Iterator[A]): Iterator[A] = new Iterator[A] {
+            override def hasNext = from.hasNext
+            override def next = from.next
+        }
     }
 }
