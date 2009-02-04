@@ -7,6 +7,6 @@
 package mada.peg
 
 
-private[mada] object StringPeg {
-    def apply(str: String): Peg[Char] = Peg.vectorPeg(Vectors.fromString(str))
+private[mada] object FromString {
+    def apply(str: String): Peg[Char] = Pegs.fromVector(Vectors.fromString(str))
 }

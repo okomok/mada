@@ -16,7 +16,7 @@ private[mada] class BeginPeg[A] extends Peg[A] {
         if (start == v.start) {
             start
         } else {
-            Peg.FAILURE
+            Pegs.FAILURE
         }
     }
 
@@ -33,7 +33,7 @@ private[mada] class EndPeg[A] extends Peg[A] {
         if (start == end) {
             start
         } else {
-            Peg.FAILURE
+            Pegs.FAILURE
         }
     }
 

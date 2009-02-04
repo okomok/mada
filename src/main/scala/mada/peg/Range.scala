@@ -14,13 +14,13 @@ private[mada] object Range {
 private[mada] class RangePeg[A](i: A, j: A)(implicit c: A => Ordered[A]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
         if (start == end) {
-            Peg.FAILURE
+            Pegs.FAILURE
         } else {
             val e = v(start)
             if (c(i) <= e && c(e) <= j) {
                 start + 1
             } else {
-                Peg.FAILURE
+                Pegs.FAILURE
             }
         }
     }

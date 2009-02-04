@@ -25,7 +25,7 @@ private[mada] object Singles {
 private[mada] class SinglesPeg[A](es: Set[A]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
         if (start == end || !es.contains(v(start))) {
-            Peg.FAILURE
+            Pegs.FAILURE
         } else {
             start + 1
         }

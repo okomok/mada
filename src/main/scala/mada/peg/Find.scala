@@ -10,7 +10,7 @@ package mada.peg
 private[mada] object Find {
     def apply[A](p: Peg[A], v: Vector[A]): Option[(Int, Int)] = {
         val (i, j) = impl(p, v, v.start, v.end)
-        if (j == Peg.FAILURE) {
+        if (j == Pegs.FAILURE) {
             None
         } else {
             Some((i, j))
@@ -21,11 +21,11 @@ private[mada] object Find {
         var start = _first
         while (start != end) {
             val cur = p.parse(v, start, end)
-            if (cur != Peg.FAILURE) {
+            if (cur != Pegs.FAILURE) {
                 return (start, cur)
             }
             start += 1
         }
-        (start, Peg.FAILURE)
+        (start, Pegs.FAILURE)
     }
 }

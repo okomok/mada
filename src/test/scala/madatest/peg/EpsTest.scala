@@ -7,7 +7,7 @@
 package madatest.peg
 
 
-import mada.Peg._
+import mada.Pegs._
 import junit.framework.Assert._
 
 
@@ -18,6 +18,6 @@ class EpsTest {
     }
 
     def testCompile(v: mada.Vector[Char]): Unit = {
-        (stringPeg("abcd") >> eps).parse(v, 0, 10)
+        (fromString("abcd") >> eps).parse(v, 0, 10)
     }
 }

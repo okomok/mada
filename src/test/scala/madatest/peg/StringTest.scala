@@ -7,14 +7,14 @@
 package madatest.peg
 
 
-import mada.Peg._
+import mada.Pegs._
 import junit.framework.Assert._
 
 
 class StringTest {
     def testTrivial: Unit = {
         val sample = mada.Vectors.fromString("/*hello*/")
-        assertTrue(stringPeg("/*hello*/").matches(sample))
-        assertFalse(stringPeg("/*hello*").matches(sample))
+        assertTrue(fromString("/*hello*/").matches(sample))
+        assertFalse(fromString("/*hello*").matches(sample))
     }
 }

@@ -14,7 +14,7 @@ private[mada] object Any_ {
 private[mada] class AnyPeg[A] extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
         if (start == end) {
-            Peg.FAILURE
+            Pegs.FAILURE
         } else {
             start + 1
         }

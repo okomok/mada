@@ -15,12 +15,12 @@ private[mada] class LookBehindPeg[A](p: Peg[A]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
         val len = p.length
         if (start < len) {
-            Peg.FAILURE
+            Pegs.FAILURE
         } else {
             if (start == p.parse(v, start - len, start)) {
                 start
             } else {
-                Peg.FAILURE
+                Pegs.FAILURE
             }
         }
     }

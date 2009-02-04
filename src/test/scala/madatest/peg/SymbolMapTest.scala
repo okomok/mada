@@ -9,8 +9,8 @@ package madatest.peg
 
 import junit.framework.Assert._
 
-import mada.Peg.Compatibles._
-import mada.Peg._
+import mada.Pegs.Compatibles._
+import mada.Pegs._
 import mada.Vectors._
 import mada.Vectors.Compatibles._
 
@@ -26,7 +26,7 @@ class SymbolMapTest {
     }
 
     def testTrivial2: Unit = {
-        val g = SymbolMap(mada.Vectors.fromString("e") -> stringPeg("z"), mada.Vectors.fromString("ef") -> stringPeg("g"))
+        val g = SymbolMap(mada.Vectors.fromString("e") -> mada.Pegs.fromString("z"), mada.Vectors.fromString("ef") -> mada.Pegs.fromString("g"))
         assertTrue("abc" >> g  matches "abcez")
     }
 

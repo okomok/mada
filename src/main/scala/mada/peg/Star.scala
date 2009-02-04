@@ -17,7 +17,7 @@ private[mada] class StarPeg[A](p: Peg[A]) extends Peg[A] {
 
         while (true) {
             val next = p.parse(v, cur, end)
-            if (next == Peg.FAILURE) {
+            if (next == Pegs.FAILURE) {
                 return cur
             } else if (next == end) {
                 return end

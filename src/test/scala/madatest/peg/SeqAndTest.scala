@@ -7,14 +7,14 @@
 package madatest.peg
 
 
-import mada.Peg._
+import mada.Pegs._
 import junit.framework.Assert._
 
 
 class SeqAndTest {
     def testTrivial: Unit = {
         val sample = mada.Vectors.fromString("/*hello*/")
-        assertTrue((stringPeg("/*hel") >> stringPeg("lo*/")).matches(sample))
-        assertFalse((stringPeg("/*hel") >> stringPeg("lo*")).matches(sample))
+        assertTrue((fromString("/*hel") >> fromString("lo*/")).matches(sample))
+        assertFalse((fromString("/*hel") >> fromString("lo*")).matches(sample))
     }
 }

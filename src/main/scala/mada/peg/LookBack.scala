@@ -14,8 +14,8 @@ private[mada] object LookBack {
 private[mada] class LookBackPeg[A](p: Peg[A]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
         val x = v(v.start, start).reverse
-        if (p.parse(x, x.start, x.end) == Peg.FAILURE) {
-            Peg.FAILURE
+        if (p.parse(x, x.start, x.end) == Pegs.FAILURE) {
+            Pegs.FAILURE
         } else {
             start
         }

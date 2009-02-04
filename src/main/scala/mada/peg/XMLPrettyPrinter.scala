@@ -93,12 +93,12 @@ private[mada] class XMLPrettyPrinter(val out: java.io.Writer, val indentWidth: I
         override def parse(v: Vector[A], start: Int, end: Int) = {
             writeStartElement(self)
 
-            writeElement("Peg.parsing", v(start, end))
+            writeElement("Pegs.parsing", v(start, end))
             val cur = self.parse(v, start, end)
-            if (cur == Peg.FAILURE) {
-                writeElement("Peg.parsed", "Peg.FAILURE")
+            if (cur == Pegs.FAILURE) {
+                writeElement("Pegs.parsed", "Pegs.FAILURE")
             } else {
-                writeElement("Peg.parsed", v(start, cur))
+                writeElement("Pegs.parsed", v(start, cur))
             }
 
             writeEndElement

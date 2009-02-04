@@ -8,5 +8,5 @@ package mada.peg
 
 
 private[mada] object Call {
-    def apply[A](f: Unit => Any): Peg[A] = Peg.eps[A].act({ _ => f() })
+    def apply[A](f: Unit => Any): Peg[A] = Pegs.eps[A].act({ _ => f() })
 }

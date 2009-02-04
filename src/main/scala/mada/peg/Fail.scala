@@ -12,5 +12,5 @@ private[mada] object Fail {
 }
 
 private[mada] class FailPeg[A] extends Peg[A] {
-    override def parse(v: Vector[A], start: Int, end: Int) = Peg.FAILURE
+    override def parse(v: Vector[A], start: Int, end: Int) = Pegs.FAILURE
 }

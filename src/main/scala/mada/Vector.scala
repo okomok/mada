@@ -11,60 +11,62 @@ package mada
  * Contains implicit conversions around <code>Vector</code>.
  */
 object Vector {
+    import Vectors._
+
     /**
      * @return  <code>Vectors.fromArray(from)</code>.
      */
-    implicit def array2madaVector[A](from: Array[A]): Vector[A] = Vectors.fromArray(from)
+    implicit def array2madaVector[A](from: Array[A]): Vector[A] = fromArray(from)
 
     /**
      * @return  <code>Vectors.fromCell(from)</code>.
      */
-    implicit def cell2madaVector[A](from: Cell[A]): Vector[A] = Vectors.fromCell(from)
+    implicit def cell2madaVector[A](from: Cell[A]): Vector[A] = fromCell(from)
 
     /**
      * @return  <code>Vectors.fromJclCharSequence(from)</code>.
      */
-    implicit def JclCharSequence2madaVector(from: java.lang.CharSequence): Vector[Char] = Vectors.fromJclCharSequence(from)
+    implicit def JclCharSequence2madaVector(from: java.lang.CharSequence): Vector[Char] = fromJclCharSequence(from)
 
     /**
      * @return  <code>Vectors.fromJclList(from)</code>.
      */
-    implicit def jclList2madaVector[A](from: java.util.List[A]): Vector[A] = Vectors.fromJclList(from)
+    implicit def jclList2madaVector[A](from: java.util.List[A]): Vector[A] = fromJclList(from)
 
     /**
      * @return  <code>Vectors.fromOption(from)</code>.
      */
-    implicit def option2madaVector[A](from: Option[A]): Vector[A] = Vectors.fromOption(from)
+    implicit def option2madaVector[A](from: Option[A]): Vector[A] = fromOption(from)
 
     /**
      * @return  <code>Vectors.fromProduct(from)</code>.
      */
-    implicit def product2madaVector(from: Product): Vector[Any] = Vectors.fromProduct(from)
+    implicit def product2madaVector(from: Product): Vector[Any] = fromProduct(from)
 
     /**
      * @return  <code>Vectors.fromRandomAccessSeq(from)</code>.
      */
-    implicit def randomAccessSeq2madaVector[A](from: RandomAccessSeq[A]): Vector[A] = Vectors.fromRandomAccessSeq(from)
+    implicit def randomAccessSeq2madaVector[A](from: RandomAccessSeq[A]): Vector[A] = fromRandomAccessSeq(from)
 
     /**
      * @return  <code>Vectors.fromString(from)</code>.
      */
-    implicit def string2madaVector(from: String): Vector[Char] = Vectors.fromString(from)
+    implicit def string2madaVector(from: String): Vector[Char] = fromString(from)
 
     /**
      * @return  <code>Vectors.toIterator(from)</code>.
      */
-    implicit def madaVector2Iterator[A](from: Vector[A]): Iterator[A] = Vectors.toIterator(from)
+    implicit def madaVector2Iterator[A](from: Vector[A]): Iterator[A] = toIterator(from)
 
     /**
      * @return  <code>Vectors.toJclCharSequence(from)</code>.
      */
-    implicit def madaVector2JclCharSequence(from: Vector[Char]): java.lang.CharSequence = Vectors.toJclCharSequence(from)
+    implicit def madaVector2JclCharSequence(from: Vector[Char]): java.lang.CharSequence = toJclCharSequence(from)
 
     /**
      * @return  <code>Vectors.toRandomAccessSeq(from)</code>.
      */
-    implicit def madaVector2RandomAccessSeq[A](from: Vector[A]): RandomAccessSeq.Mutable[A] = Vectors.toRandomAccessSeq(from)
+    implicit def madaVector2RandomAccessSeq[A](from: Vector[A]): RandomAccessSeq.Mutable[A] = toRandomAccessSeq(from)
 }
 
 
@@ -734,7 +736,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     final def indices: Vector[Int] = Vectors.range(start, end)
 
     /**
-     * Returns a set entry as pair, which is useful for <code>Peg.switch</code>.
+     * Returns a set entry as pair, which is useful for <code>Pegs.switch</code>.
      *
      * @return  <code>(this, p)</code>
      */

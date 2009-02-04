@@ -18,7 +18,7 @@ private[mada] object Act3 {
 private[mada] class Act3Peg[A](override val self: Peg[A], f: Vectors.Func3[A, Any]) extends PegProxy[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
         val cur = self.parse(v, start, end)
-        if (cur != Peg.FAILURE) {
+        if (cur != Pegs.FAILURE) {
             f(v, start, cur)
         }
         cur

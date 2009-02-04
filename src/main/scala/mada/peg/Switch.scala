@@ -25,11 +25,11 @@ private[mada] object Switch {
 private[mada] class SwitchPeg[A](es: Map[A, Peg[A]]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
         if (start == end) {
-            Peg.FAILURE
+            Pegs.FAILURE
         } else {
             val p = es.get(v(start))
             if (p.isEmpty) {
-                Peg.FAILURE
+                Pegs.FAILURE
             } else {
                 p.get.parse(v, start + 1, end)
             }

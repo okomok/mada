@@ -10,7 +10,7 @@ package mada.peg
 import java.util.regex.Pattern
 
 
-private[mada] object RegexPatternPeg {
+private[mada] object FromRegexPattern {
     def apply(pat: Pattern): Peg[Char] = new RegexPatternPeg(pat)
 }
 
@@ -22,7 +22,7 @@ private[mada] class RegexPatternPeg(pat: Pattern) extends Peg[Char] {
         if (mat.lookingAt) {
             mat.end
         } else {
-            Peg.FAILURE
+            Pegs.FAILURE
         }
     }
 }

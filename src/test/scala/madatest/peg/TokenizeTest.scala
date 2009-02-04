@@ -7,16 +7,16 @@
 package madatest.peg
 
 
-import mada.Peg._
+import mada.Pegs._
 import junit.framework.Assert._
-import mada.Peg.Compatibles._
+import mada.Pegs.Compatibles._
 
 import mada.Vectors.Region
 
 
 class TokenizeTest {
     def testTrivial: Unit = {
-        val pe = madaPeg("abcd")
+        val pe = mada.Pegs.from("abcd")
         val v = mada.Vectors.from("XabcdXXabcdXX")
         val it = pe.tokenize(v)
         var c = 0
@@ -36,14 +36,14 @@ class TokenizeTest {
     }
 
     def testBound: Unit = {
-        val pe = madaPeg("abcd")
+        val pe = mada.Pegs.from("abcd")
         val v = mada.Vectors.from("qqabqqab")
         val it = pe.tokenize(v)
         assertFalse(it.hasNext)
     }
 
     def testBound2: Unit = {
-        val pe = madaPeg("abcd")
+        val pe = mada.Pegs.from("abcd")
         val v = mada.Vectors.from("abcd")
         val it = pe.tokenize(v)
         val Region(_, i, j) = it.next
@@ -54,7 +54,7 @@ class TokenizeTest {
 
     // seems appropriate.
     def testEmpty: Unit = {
-        val pe = madaPeg("")
+        val pe = mada.Pegs.from("")
         val v = mada.Vectors.from("")
         val it = pe.tokenize(v)
         assertFalse(it.hasNext)
