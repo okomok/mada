@@ -19,12 +19,12 @@ class PrettyPrinterTest {
 //         = PrettyPrinter.xml
          = PrettyPrinter.trash
 
-    expr    ::= out( "expr", term >> (( '+' >> term | '-' >> term )*) )
-    term    ::= out( "term", factor >> ( '*' >> factor | '/' >> factor ).* )
-    factor  ::= out( "factor", (digit+) | '(' >> expr >> ')' | '-' >> factor | '+' >> factor )
-    digit   ::= range('0', '9')
+    expr    <-- out("expr")   { term >> (( '+' >> term | '-' >> term )*) }
+    term    <-- out("term")   { factor >> ( '*' >> factor | '/' >> factor ).* }
+    factor  <-- out("factor") { (digit+) | '(' >> expr >> ')' | '-' >> factor | '+' >> factor }
+    digit   <-- range('0', '9')
 
     def testTrivial: Unit = {
-        assertTrue(expr.matches(Vector.fromString("1+2")))
+        assertTrue(expr matches "1+2")
     }
 }
