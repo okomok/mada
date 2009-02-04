@@ -35,6 +35,19 @@ object Vector extends vec.Compatibles {
     class NotWritableException[A](val vector: Vector[A]) extends RuntimeException
 
 
+// pattern matching
+
+    /**
+     * Alias of <code>fromValues</code>
+     */
+    def apply[A](from: A*): Vector[A] = fromValues(from: _*)
+
+    /**
+     * Supports pattern matching.
+     */
+    def unapplySeq[A](from: Vector[A]): Option[Seq[A]] = Some(toRandomAccessSeq(from))
+
+
 // constructors
 
     /**

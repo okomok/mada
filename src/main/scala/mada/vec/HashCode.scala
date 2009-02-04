@@ -7,19 +7,16 @@
 package mada.vec
 
 
+// See: http://java.sun.com/javase/6/docs/api/java/util/List.html#hashCode()
+
 private[mada] object HashCode_ {
     def apply[A](v: Vector[A]): Int = {
-        val n = v.size
-        val nh = HashCode.ofInt(n)
-
-        if (n == 0) {
-            nh
-        } else if (n == 1) {
-            nh + v.first.hashCode * 7
-        } else if (n == 2) {
-            nh + v.first.hashCode * 7 + v.last.hashCode * 41
-        } else {
-            nh + v.first.hashCode * 7 + v.last.hashCode * 41 + v(n/2).hashCode * 53
+        var code = 1
+        var start = v.start; val end = v.end
+        while (start != end) {
+            code = 31 * code + v(start).hashCode
+            start += 1
         }
+        code
     }
 }

@@ -25,13 +25,11 @@ class Memoizer[A](val input: Vector[A]) {
     def memoize(p: Peg[A]): Peg[A] = new MemoizePeg(p)
 
     private class MemoizePeg(override val self: Peg[A]) extends PegProxy[A] {
-        import Products.RangeVal
-
-        val memoTable = new scala.collection.jcl.HashMap[RangeVal, Int]
+        val memoTable = new scala.collection.jcl.HashMap[Pair[Int, Int], Int]
 
         override def parse(v: Vector[A], start: Int, end: Int) = {
             if (v eq input) {
-                val key = RangeVal(start, end)
+                val key = Pair(start, end)
                 val value = memoTable.get(key)
                 if (value.isEmpty) {
                     val cur = self.parse(v, start, end)
