@@ -8,7 +8,7 @@ package mada.vec
 
 
 /**
- * Contains utility types and methods operating on <code>Vector</code>.
+ * Contains implicit conversions around <code>Vector</code>.
  */
 trait Compatibles {
 
