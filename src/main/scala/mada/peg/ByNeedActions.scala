@@ -7,18 +7,18 @@
 package mada.peg
 
 
-// `need( "abc" act { byNeed(f) } >> "def" )`
+// `need("abc"{byNeed(f)} >> "def")`
 
 /**
  * Suppresses actions until outer <code>Peg</code> is matched.
  */
 class ByNeedActions[A] {
-    private val queue = new java.util.ArrayDeque[(Vector.Func[A, Any], Vector[A])]
+    private val queue = new java.util.ArrayDeque[(Peg.Action[A], Vector[A])]
 
     /**
      * Creates action which is delayed until <code>need</code> is applied.
      */
-    def byNeed(f: Vector.Func[A, Any]): Function1[Vector[A], Unit] = new Function1[Vector[A], Unit] {
+    def byNeed(f: Peg.Action[A]): Peg.Action[A] = new Peg.Action[A] {
         override def apply(v: Vector[A]) = queue.add((f, v))
     }
 

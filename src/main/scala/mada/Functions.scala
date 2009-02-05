@@ -13,6 +13,14 @@ package mada
 object Functions {
 
 
+// unit
+
+    /**
+     * Alias of <code>()</code>
+     */
+    val `unit`: Unit = ()
+
+
 // type aliases
 
     /**

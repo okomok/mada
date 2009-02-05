@@ -12,7 +12,7 @@ package mada.peg
  */
 object PrettyPrinter {
     /**
-     * @return  <code>xml(new java.io.OutputStreamWriter, 4)</code>
+     * @return  <code>xml(new java.io.OutputStreamWriter(java.lang.System.out), 4)</code>
      */
     def xml: PrettyPrinter = new XMLPrettyPrinter
 
@@ -22,7 +22,7 @@ object PrettyPrinter {
     def xml(out: java.io.Writer): PrettyPrinter = new XMLPrettyPrinter(out)
 
     /**
-     * @return  <code>xml(new java.io.OutputStreamWriter, indentWidth)</code>
+     * @return  <code>xml(new java.io.OutputStreamWriter(java.lang.System.out), indentWidth)</code>
      */
     def xml(indentWidth: Int): PrettyPrinter = new XMLPrettyPrinter(indentWidth)
 

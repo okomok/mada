@@ -210,6 +210,16 @@ object Peg extends peg.Compatibles {
     type Rule[A] = peg.Rule[A]
 
     /**
+     * Alias of <code>Vector.Func[A, Any]</code>
+     */
+    type Action[A] = Vector.Func[A, Any]
+
+    /**
+     * Alias of <code>Vector.Func3[A, Any]</code>
+     */
+    type Action3[A] = Vector.Func3[A, Any]
+
+    /**
      * Alias of <code>peg.ASTreeBuilder</code>
      */
     val ASTreeBuilder = peg.ASTreeBuilder
@@ -248,6 +258,11 @@ object Peg extends peg.Compatibles {
      * Alias of <code>peg.RegionActions</code>
      */
     type RegionActions[A] = peg.RegionActions[A]
+
+    /**
+     * Alias of <code>peg.StackActions</code>
+     */
+    type StackActions[A, B] = peg.StackActions[A, B]
 
     /**
      * Alias of <code>peg.CapturingGroups</code>
@@ -333,8 +348,8 @@ trait Peg[A] {
     final def lookBehind: Peg[A] = LookBehind(this)
     final def lookBack: Peg[A] = LookBack(this)
 
-    final def act(f: Vector.Func[A, Any]): Peg[A] = Act(this, f)
-    final def act3(f: Vector.Func3[A, Any]): Peg[A] = Act3(this, f)
+    final def act(f: Peg.Action[A]): Peg[A] = Act(this, f)
+    final def act3(f: Peg.Action3[A]): Peg[A] = Act3(this, f)
     final def andIf(pred: Vector.Func[A, Boolean]): Peg[A] = AndIf(this, pred)
     final def identity: Peg[A] = Identity(this)
     final def named(name: String) = Named(this, name)
@@ -350,7 +365,7 @@ trait Peg[A] {
     final def tokenize(v: Vector[A]): Iterator[Vector[A]] = Tokenize(this, v)
     final def filterFrom(v: Vector[A]): Iterator[A] = FilterFrom(this, v)
 
-    final def apply(f: Vector.Func[A, Any]): Peg[A] = act(f)
+    final def apply(f: Peg.Action[A]): Peg[A] = act(f)
     final def unary_~ : Peg[A] = lookAhead
     final def unary_! : Peg[A] = lookAhead.not
     final def unary_- : Peg[A] = not
