@@ -21,7 +21,7 @@ private[mada] object Parallel {
     }
 }
 
-private[mada] class ParallelVector[A](override val underlying: Vector[A], override val grainSize: Int) extends Adapter.ParallelAlgorithm[A] {
+private[mada] class ParallelVector[A](override val underlying: Vector[A], override val grainSize: Int) extends parallel.Algorithm[A] {
     Assert(!underlying.isParallel)
     ThrowIf.nonpositive(grainSize, "grain size")
     import vec.parallel._

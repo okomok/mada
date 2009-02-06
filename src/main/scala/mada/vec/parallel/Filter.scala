@@ -11,7 +11,7 @@ private[mada] object Filter {
     def apply[A](v: Vector[A], p: A => Boolean, grainSize: Int): Vector[A] = new FilterVector(v, p, grainSize)
 }
 
-private[mada] class FilterVector[A](v: Vector[A], p: A => Boolean, grainSize: Int) extends Adapter.Proxy[A] with NotWritable[A]  {
+private[mada] class FilterVector[A](v: Vector[A], p: A => Boolean, grainSize: Int) extends VectorProxy[A] with NotWritable[A]  {
     Assert(!v.isParallel)
 
     override lazy val unparallel = {

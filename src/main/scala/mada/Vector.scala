@@ -83,22 +83,22 @@ object Vector extends vec.Compatibles {
     /**
      * @return  <code>v.filter(_.isLeft).map(_.left.get)</code>.
      */
-    def lefts[A, B](v: Vector[Either[A, B]]): Vector[A] = Lefts(v)
+    def lefts[A, B](v: Vector[Either[A, B]]): Vector[A] = v.filter(_.isLeft).map(_.left.get)
 
     /**
      * @return  <code>v.filter(_.isRight).map(_.right.get)</code>.
      */
-    def rights[A, B](v: Vector[Either[A, B]]): Vector[B] = Rights(v)
+    def rights[A, B](v: Vector[Either[A, B]]): Vector[B] = v.filter(_.isRight).map(_.right.get)
 
     /**
      * Converts to lower case letters.
      */
-    def lowerCase(v: Vector[Char]): Vector[Char] = LowerCase(v)
+    def lowerCase(v: Vector[Char]): Vector[Char] = v.map(java.lang.Character.toLowerCase(_))
 
     /**
      * Converts to upper case letters.
      */
-    def upperCase(v: Vector[Char]): Vector[Char] = UpperCase(v)
+    def upperCase(v: Vector[Char]): Vector[Char] = v.map(java.lang.Character.toUpperCase(_))
 
     /**
      * Creates a vector containing of successive integers.
@@ -247,7 +247,7 @@ object Vector extends vec.Compatibles {
     /**
      * Converts values to vector. (not projection)
      */
-    def fromValues[A](from: A*): Vector[A] = FromValues(from: _*)
+    def fromValues[A](from: A*): Vector[A] = fromIterator(from.elements)
 
   // to
 
@@ -259,7 +259,7 @@ object Vector extends vec.Compatibles {
     /**
      * Converts a vector to <code>List</code>. (not projection)
      */
-    def toList[A](from: Vector[A]): List[A] = ToList(from)
+    def toList[A](from: Vector[A]): List[A] = from.toIterator.toList
 
     /**
      * Converts a vector to <code>Array</code>. (not projection)
@@ -288,11 +288,6 @@ object Vector extends vec.Compatibles {
 // aliases
 
     /**
-     * Alias of <code>(Vector[A], Int, Int)</code>
-     */
-    type Triple[A] = (Vector[A], Int, Int)
-
-    /**
      * Alias of <code>Vector[A] => B</code>
      */
     type Func[A, B] = Vector[A] => B
@@ -315,7 +310,7 @@ object Vector extends vec.Compatibles {
     /**
      * Alias of <code>vec.Adapter.Proxy</code>
      */
-    type VectorProxy[A] = Adapter.Proxy[A]
+    type VectorProxy[A] = vec.VectorProxy[A]
 
     /**
      * Alias of <code>vec.NotWritable</code>

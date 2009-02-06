@@ -46,12 +46,12 @@ object Peg extends peg.Compatibles {
     /**
      * Matches the beginning of input.
      */
-    def begin[A]: Peg[A] = Begin[A]
+    def begin[A]: Peg[A] = where3 { (v, _, _) => v.start }
 
     /**
      * Matches the end of input.
      */
-    def end[A]: Peg[A] = End[A]
+    def end[A]: Peg[A] = where3 { (v, _, _) => v.end }
 
     /**
      * @return  <code>eps[A] act { _ => f() }</code>.
@@ -61,7 +61,7 @@ object Peg extends peg.Compatibles {
     /**
      * Epsilon; Matches an empty input.
      */
-    def eps[A]: Peg[A] = Eps[A]
+    def eps[A]: Peg[A] = where3 { (_, i, _) => i }
 
     /**
      * Always throws an Error.
@@ -71,7 +71,7 @@ object Peg extends peg.Compatibles {
     /**
      * Doesn't match any input.
      */
-    def fail[A]: Peg[A] = Fail[A]
+    def fail[A]: Peg[A] = where3 { (_, _, _) => Vector.NULL_INDEX }
 
     /**
      * Mathches case-insensitively.
@@ -98,6 +98,16 @@ object Peg extends peg.Compatibles {
      * Matches specified one element.
      */
     def single[A](e: A): Peg[A] = Single(e)
+
+    /**
+     * Matches specified position.
+     */
+    def where[A](f: Vector.Func[A, Int]): Peg[A] = Where(f)
+
+    /**
+     * Matches specified position. (no heap allocations)
+     */
+    def where3[A](f: Vector.Func3[A, Int]): Peg[A] = Where3(f)
 
 
 // pseudo
@@ -484,7 +494,7 @@ trait Peg[A] {
     final def act(f: Peg.Action[A]): Peg[A] = Act(this, f)
 
     /**
-     * Associates semantic action. (no heap allocation)
+     * Associates semantic action. (no heap allocations)
      */
     final def act3(f: Peg.Action3[A]): Peg[A] = Act3(this, f)
 

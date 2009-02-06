@@ -11,6 +11,6 @@ private[mada] object Lazy {
     def apply[A](v: => Vector[A]): Vector[A] = new LazyVector(v)
 }
 
-private[mada] class LazyVector[A](v: => Vector[A]) extends Adapter.Proxy[A] {
+private[mada] class LazyVector[A](v: => Vector[A]) extends VectorProxy[A] {
     override lazy val self = v
 }
