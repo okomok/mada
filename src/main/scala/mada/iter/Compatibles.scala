@@ -11,12 +11,6 @@ package mada.iter
  * Provides implicit convertions around <code>Iterator</code>.
  */
 trait Compatibles {
-
-    /**
-     * @return  <code>this</code>.
-     */
-    final val madaIteratorCompatibles = this
-
     /**
      * Converts to <code>java.util.Enumeration</code>.
      */

@@ -146,9 +146,9 @@ object Vector extends vec.Compatibles {
 // alias compatibles
 
     /**
-     * Alias of <code>madaVectorCompatibles</code>
+     * @return  <code>this</code>.
      */
-    val Compatibles: Compatibles = madaVectorCompatibles
+    val Compatibles: vec.Compatibles = this
 
   // from
 

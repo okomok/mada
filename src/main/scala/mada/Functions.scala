@@ -18,7 +18,7 @@ object Functions {
     /**
      * Alias of <code>()</code>
      */
-    val `unit`: Unit = ()
+    val void: Unit = ()
 
 
 // type aliases

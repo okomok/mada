@@ -12,11 +12,6 @@ package mada.vec
  */
 trait Compatibles {
 
-    /**
-     * Alias of <code>this</code>
-     */
-    final val madaVectorCompatibles: Compatibles = this
-
 
 // compatibles(from)
 

@@ -13,11 +13,6 @@ package stack {
      */
     trait Compatibles {
         /**
-         * @return  <code>this</code>.
-         */
-        val madaStackCompatibles = this
-
-        /**
          * Converts <code>java.util.Deque</code> to <code>Stack</code>.
          */
         implicit def madaStackFromJclDeque[A](from: java.util.Deque[A]) = new Stack[A] {
@@ -49,9 +44,9 @@ package stack {
  */
 object Stack extends stack.Compatibles {
     /**
-     * Alias of <code>madaStackCompatibles</code>
+     * @return  <code>this</code>.
      */
-    val Compatibles = madaStackCompatibles
+    val Compatibles: stack.Compatibles = this
 
     /**
      * Triggers implicit conversions explicitly.

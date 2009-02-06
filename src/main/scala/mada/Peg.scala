@@ -17,9 +17,9 @@ object Peg extends peg.Compatibles {
 // constants
 
     /**
-     * @return  <code>Vector.NULL_INDEX</code> specifying the parsing failure.
+     * Alias of <code>Vector.NULL_INDEX</code> specifying the parsing failure.
      */
-    final val FAILURE = Vector.NULL_INDEX
+    final val FAILURE = 0x80000000
 
 
 // constructors
@@ -89,6 +89,7 @@ object Peg extends peg.Compatibles {
 
     /**
      * Matches a regular expression.
+     *
      * @see java.util.regex
      */
     def regex(str: String): Peg[Char] = Regex(str)
@@ -97,6 +98,9 @@ object Peg extends peg.Compatibles {
      * Matches specified one element.
      */
     def single[A](e: A): Peg[A] = Single(e)
+
+
+// pseudo
 
     /**
      * Constructs a lazy Peg object.
@@ -113,6 +117,8 @@ object Peg extends peg.Compatibles {
      */
     def `try`[A](p: Peg[A]) = Try(p)
 
+
+// best
 
     /**
      * Chooses the longest match.
@@ -133,6 +139,9 @@ object Peg extends peg.Compatibles {
      * Chooses the longest match.
      */
     def shortest[A](ps: Iterable[Peg[A]]): Peg[A] = Shortest(ps)
+
+
+// set
 
     /**
      * Matches any element of set.
@@ -158,48 +167,88 @@ object Peg extends peg.Compatibles {
 // alias compatibles
 
     /**
-     * Alias of <code>madaPegCompatibles</code>
+     * @return  <code>this</code>.
      */
-    val Compatibles: Compatibles = madaPegCompatibles
+    val Compatibles: peg.Compatibles = this
+
+  // from
 
     /**
-     * Alias of <code>madaPegFromSingle(from)</code>
+     * Alias of <code>madaPegFromSingle</code>
      */
     def fromChar(from: Char): Peg[Char] = madaPegFromChar(from)
 
     /**
-     * Alias of <code>madaPegFromRegex(from)</code>
+     * Alias of <code>madaPegFromRegex</code>
      */
     def fromRegex(from: scala.util.matching.Regex): Peg[Char] = madaPegFromRegex(from)
 
     /**
-     * Alias of <code>madaPegFromRegexPattern(from)</code>
+     * Alias of <code>madaPegFromRegexPattern</code>
      */
     def fromRegexPattern(from: java.util.regex.Pattern): Peg[Char] = madaPegFromRegexPattern(from)
 
     /**
-     * Alias of <code>madaPegFromString(from)</code>
+     * Alias of <code>madaPegFromString</code>
      */
     def fromString(from: String): Peg[Char] = madaPegFromString(from)
 
     /**
-     * Alias of <code>madaPegFromVector(from)</code>
+     * Alias of <code>madaPegFromVector)</code>
      */
     def fromVector[A](from: Vector[A]): Peg[A] = madaPegFromVector(from)
 
 
 // alias methods
 
-    def __*[A]: Peg[A] = any[A].star
+  // any
+
+    /**
+     * @return  <code>any[A].*</code>.
+     */
+    def __*[A]: Peg[A] = any[A].*
+
+    /**
+     * @return  <code>any[A].starBefore(p)</code>.
+     */
     def __*?[A](p: Peg[A]): Peg[A] = any[A].starBefore(p)
+
+    /**
+     * @return  <code>any[A].starUntil(p)</code>.
+     */
     def __*>>[A](p: Peg[A]): Peg[A] = any[A].starUntil(p)
 
-    def ?~[A](p: Peg[A]): Peg[A] = p.lookAhead
-    def ?![A](p: Peg[A]): Peg[A] = p.lookAhead.not
+  // look
+
+    /**
+     * @return  <code>~p</code>.
+     */
+    def ?~[A](p: Peg[A]): Peg[A] = ~p
+
+    /**
+     * @return  <code>!p</code>.
+     */
+    def ?![A](p: Peg[A]): Peg[A] = !p
+
+    /**
+     * @return  <code>p.lookBehind</code>.
+     */
     def ?<~[A](p: Peg[A]): Peg[A] = p.lookBehind
-    def ?<![A](p: Peg[A]): Peg[A] = p.lookBehind.not
+
+    /**
+     * @return  <code>p.lookBehind.negate</code>.
+     */
+    def ?<![A](p: Peg[A]): Peg[A] = p.lookBehind.negate
+
+    /**
+     * @return  <code>p.lookBack</code>.
+     */
     def ?<<~[A](p: Peg[A]): Peg[A] = p.lookBack
-    def ?<<![A](p: Peg[A]): Peg[A] = p.lookBack.not
+
+    /**
+     * @return  <code>p.lookBack.negate</code>.
+     */
+    def ?<<![A](p: Peg[A]): Peg[A] = p.lookBack.negate
 
 
 // aliases
@@ -307,7 +356,17 @@ object Peg extends peg.Compatibles {
 
 
 /**
- * The PEG parser combinator.
+ * The PEG parser combinator:
+ * <ul>
+ * <li/>Sequence: <code>e1 >> e2</code>
+ * <li/>Ordered choice: <code>e1 | e2</code>
+ * <li/>Zero-or-more: <code>e.*</code>
+ * <li/>One-or-more: <code>e.+</code>
+ * <li/>Optional: <code>e.?</code>
+ * <li/>And-predicate: <code>~e</code> (not <code>&e</code>)
+ * <li/>Not-predicate: <code>!e</code>
+ * </ul><p/>
+ *
  * Note PEG operations are always possessive unlike regular expression default behavior.
  */
 trait Peg[A] {
@@ -317,85 +376,363 @@ trait Peg[A] {
      * Parses specified region of input Vector.
      * This apparently legacy interface is designed so that heap-allocation is removal.
      *
-     * @return next position if parsing succeeds, FAILURE otherwise
+     * @return  next position if parsing succeeds, <code>Peg.FAILURE</code> otherwise.
      */
     def parse(v: Vector[A], first: Int, last: Int): Int
 
     /**
-     * Returns length when parsing is fixed-length and succeeds, undefined otherwise.
+     * Returns the matched length.
      *
-     * @return next position if parsing succeeds, FAILURE otherwise
+     * @throws  UnsupportedOperationException if length is not fixed.
      */
     def length: Int = throw new UnsupportedOperationException("Peg.length")
 
+
+// set
+
+    /**
+     * Matches <code>this</code> and <code>that</code>.
+     *
+     * @see     & as alias.
+     */
     final def and(that: Peg[A]): Peg[A] = And(this, that)
+
+    /**
+     * Ordered choice
+     *
+     * @see     | as alias.
+     */
     final def or(that: Peg[A]): Peg[A] = Or(this, that)
+
+    /**
+     * Matches <code>this</code> but not <code>that</code>.
+     *
+     * @see     - as alias.
+     */
     final def minus(that: Peg[A]) = Minus(this, that)
+
+    /**
+     * Matches <code>this</code> or <code>that</code>, but not both.
+     *
+     * @see     ^ as alias.
+     */
     final def xor(that: Peg[A]): Peg[A] = Xor(this, that)
-    final def not: Peg[A] = Not(this)
 
+    /**
+     * Matches if this peg not match, then advances <code>length</code>.
+     * Doesn't work unless this peg has fixed length.
+     *
+     * @see     unary_- as alias.
+     */
+    final def negate: Peg[A] = Negate(this)
+
+
+// sequencing
+
+    /**
+     * Sequence
+     *
+     * @see     >> as alias.
+     */
     final def seqAnd(that: Peg[A]): Peg[A] = SeqAnd(this, that)
-    final def seqOr(that: Peg[A]): Peg[A] = SeqOr(this, that)
 
+    /**
+     * @return  <code>(this >> that.?) | that</code>.
+     * @see     || as alias.
+     */
+    final def seqOr(that: Peg[A]): Peg[A] = (this >> that.?) | that
+
+
+// star
+
+    /**
+     * Zero-or-more; possessive.
+     *
+     * @see     * as alias.
+     */
     final def star: Peg[A] = Star(this)
-    final def starBefore(that: Peg[A]): Peg[A] = StarBefore(this, that)
+
+    /**
+     * @return  <code>this starUntil ~that</code>.
+     */
+    final def starBefore(that: Peg[A]): Peg[A] = this starUntil ~that
+
+    /**
+     * Matches everything up to and including <code>that</code>.
+     */
     final def starUntil(that: Peg[A]): Peg[A] = StarUntil(this, that)
 
-    final def plus: Peg[A] = Plus(this)
-    final def plusBefore(that: Peg[A]): Peg[A] = PlusBefore(this, that)
-    final def plusUntil(that: Peg[A]): Peg[A] = PlusUntil(this, that)
 
-    final def opt: Peg[A] = Opt(this)
-    final def optBefore(that: Peg[A]): Peg[A] = OptBefore(this, that)
-    final def optUntil(that: Peg[A]): Peg[A] = OptUntil(this, that)
+// plus
 
+    /**
+     * One-or-more
+     *
+     * @see + as alias.
+     */
+    final def plus: Peg[A] = this >> this.*
+
+    /**
+     * @return  <code>this >> (this starBefore that)</code>.
+     */
+    final def plusBefore(that: Peg[A]): Peg[A] = this >> (this starBefore that)
+
+    /**
+     * @return  <code>this >> (starUntil that)</code>.
+     */
+    final def plusUntil(that: Peg[A]): Peg[A] = this >> (this starUntil that)
+
+
+// optional
+
+    /**
+     * Optional
+     *
+     * @see ? as alias.
+     */
+    final def opt: Peg[A] = this | Peg.eps[A]
+
+    /**
+     * @return  <code>~that | (this >> ~that)</code>.
+     */
+    final def optBefore(that: Peg[A]): Peg[A] = ~that | (this >> ~that)
+
+    /**
+     * @return  <code>that >> (this >> that)</code>.
+     */
+    final def optUntil(that: Peg[A]): Peg[A] = that | (this >> that)
+
+
+// assertions
+
+    /**
+     * And-predicate; look-ahead zero-width assertion
+     *
+     * @see unary_~ as alias.
+     */
     final def lookAhead: Peg[A] = LookAhead(this)
+
+    /**
+     * Look-behind zero-width assertion
+     */
     final def lookBehind: Peg[A] = LookBehind(this)
+
+    /**
+     * Look-back zero-width assertion; looking over input as reversed.
+     */
     final def lookBack: Peg[A] = LookBack(this)
 
+
+// action
+
+    /**
+     * Associates semantic action.
+     *
+     * @see apply as alias.
+     */
     final def act(f: Peg.Action[A]): Peg[A] = Act(this, f)
+
+    /**
+     * Associates semantic action. (no heap allocation)
+     */
     final def act3(f: Peg.Action3[A]): Peg[A] = Act3(this, f)
-    final def andIf(pred: Vector.Func[A, Boolean]): Peg[A] = AndIf(this, pred)
+
+
+// utilities
+
+    /**
+     * Matches if <code>p</code> too returns true.
+     */
+    final def andIf(p: Vector.Func[A, Boolean]): Peg[A] = AndIf(this, p)
+
+    /**
+     * Returns an alias of this peg.
+     */
     final def identity: Peg[A] = Identity(this)
+
+    /**
+     * Overrides <code>toString</code> to return <code>name</code>.
+     */
     final def named(name: String) = Named(this, name)
+
+    /**
+     * Repeats at least <code>min</code> times and at most <code>max</code> times.
+     */
     final def repeat(min: Int, max: Int): Peg[A] = Repeat(this, min, max)
 
+    /**
+     * Temporarily converts input using one-to-one projection <code>f</code>.
+     *
+     * @pre     <code>v.size == f(v).size</code> for any <code>v</code>.
+     */
     final def readMap[Z](f: Vector[Z] => Vector[A]): Peg[Z] = ReadMap(this, f)
-    final def unmap[Z](f: Z => A): Peg[Z] = Unmap(this, f)
 
-    final def find(v: Vector[A]): Option[(Int, Int)] = Find(this, v)
+    /**
+     * @return  <code>readMap{ v => v.map(f) }</code>.
+     */
+    final def unmap[Z](f: Z => A): Peg[Z] = readMap({ v => v.map(f) })
+
+
+// algorithms
+
+    /**
+     * Finds <code>Vector.Region</code> which peg matches.
+     */
+    final def find(v: Vector[A]): Option[Vector[A]] = Find(this, v)
+
+    /**
+     * Returns position where parsing succeeds.
+     */
     final def lookingAt(v: Vector[A]): Option[Int] = LookingAt(this, v)
+
+    /**
+     * Returns true iif input is fully matched.
+     */
     final def matches(v: Vector[A]): Boolean = Matches(this, v)
 
+    /**
+     * Tokenizes using this peg.
+     */
     final def tokenize(v: Vector[A]): Iterator[Vector[A]] = Tokenize(this, v)
+
+    /**
+     * Filters input using this peg.
+     */
     final def filterFrom(v: Vector[A]): Iterator[A] = FilterFrom(this, v)
 
+
+// aliases
+
+    /**
+     * Alias of <code>act</code>
+     */
     final def apply(f: Peg.Action[A]): Peg[A] = act(f)
+
+    /**
+     * And-predicate; alias of <code>lookAhead</code>
+     */
     final def unary_~ : Peg[A] = lookAhead
-    final def unary_! : Peg[A] = lookAhead.not
-    final def unary_- : Peg[A] = not
+
+    /**
+     * Not-predicate; alias of <code>lookAhead.negate</code>
+     */
+    final def unary_! : Peg[A] = lookAhead.negate
+
+    /**
+     * Alias of <code>negate</code>
+     */
+    final def unary_- : Peg[A] = negate
+
+    /**
+     * Alias of <code>and</code>
+     */
     final def &(that: Peg[A]): Peg[A] = and(that)
+
+    /**
+     * Ordered choice; alias of <code>or</code>
+     */
     final def |(that: Peg[A]): Peg[A] = or(that)
+
+    /**
+     * Alias of <code>minus</code>
+     */
     final def -(that: Peg[A]): Peg[A] = minus(that)
+
+    /**
+     * Alias of <code>xor</code>
+     */
     final def ^(that: Peg[A]): Peg[A] = xor(that)
+
+    /**
+     * Sequence; alias of <code>seqAnd</code>
+     */
     final def >>(that: Peg[A]): Peg[A] = seqAnd(that)
+
+    /**
+     * Alias of <code>seqOr</code>
+     */
     final def ||(that: Peg[A]): Peg[A] = seqOr(that)
+
+    /**
+     * Zero-or-more; alias of <code>star</code>
+     */
     final def * : Peg[A] = star
+
+    /**
+     * Alias of <code>starBefore</code>
+     */
     final def *?(that: Peg[A]): Peg[A] = starBefore(that)
+
+    /**
+     * Alias of <code>starUntil</code>
+     */
     final def *>>(that: Peg[A]): Peg[A] = starUntil(that)
+
+    /**
+     * One-or-more; alias of <code>plus</code>
+     */
     final def + : Peg[A] = plus
+
+    /**
+     * Alias of <code>plusBefore</code>
+     */
     final def +?(that: Peg[A]): Peg[A] = plusBefore(that)
+
+    /**
+     * Alias of <code>plusUntil</code>
+     */
     final def +>>(that: Peg[A]): Peg[A] = plusUntil(that)
+
+    /**
+     * Optional; alias of <code>opt</code>
+     */
     final def ? : Peg[A] = opt
+
+    /**
+     * Alias of <code>optBefore</code>
+     */
     final def ??(that: Peg[A]): Peg[A] = optBefore(that)
+
+    /**
+     * Alias of <code>optUntil</code>
+     */
     final def ?>>(that: Peg[A]): Peg[A] = optUntil(that)
 
-    final def >>?~(that: Peg[A]): Peg[A] = seqAnd(that.lookAhead)
-    final def >>?!(that: Peg[A]): Peg[A] = seqAnd(that.lookAhead.not)
-    final def >>?<~(that: Peg[A]): Peg[A] = seqAnd(that.lookBehind)
-    final def >>?<!(that: Peg[A]): Peg[A] = seqAnd(that.lookBehind.not)
-    final def >>?<<~(that: Peg[A]): Peg[A] = seqAnd(that.lookBack)
-    final def >>?<<!(that: Peg[A]): Peg[A] = seqAnd(that.lookBack.not)
+    /**
+     * @return  <code>this >> ~that</code>.
+     */
+    final def >>?~(that: Peg[A]): Peg[A] = this >> ~that
 
+    /**
+     * @return  <code>this >> !that</code>.
+     */
+    final def >>?!(that: Peg[A]): Peg[A] = this >> !that
+
+    /**
+     * @return  <code>this >> that.lookBehind</code>.
+     */
+    final def >>?<~(that: Peg[A]): Peg[A] = this >> that.lookBehind
+
+    /**
+     * @return  <code>this >> that.lookBehind.negate</code>.
+     */
+    final def >>?<!(that: Peg[A]): Peg[A] = this >> that.lookBehind.negate
+
+    /**
+     * @return  <code>this >> that.lookBack</code>.
+     */
+    final def >>?<<~(that: Peg[A]): Peg[A] = this >> that.lookBack
+
+    /**
+     * @return  <code>this >> that.lookBack.negate</code>.
+     */
+    final def >>?<<!(that: Peg[A]): Peg[A] = this >> that.lookBack.negate
+
+
+// misc
+
+    /**
+     * @return  <code>(e, this)</code>.
+     */
     final def inCase(e: A): (A, Peg[A]) = (e, this)
 }

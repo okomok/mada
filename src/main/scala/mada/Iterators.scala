@@ -128,9 +128,9 @@ object Iterators extends iter.Compatibles {
     type IteratorProxy[A] = iter.IteratorProxy[A]
 
     /**
-     * Alias of <code>madaIteratorCompatibles</code>
+     * Alias of <code>this</code>
      */
-    val Compatibles = madaIteratorCompatibles
+    val Compatibles: iter.Compatibles = this
 
     /**
      * Alias of <code>iter.Infix</code>

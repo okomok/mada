@@ -29,8 +29,4 @@ private[mada] class OrPeg[A](p: Peg[A], q: Peg[A]) extends Peg[A] {
             plen
         }
     }
-/*
-    override def lookBehind = p.lookBehind or q.lookBehind
-    override def not = p.not seqAnd q.not
-*/
 }

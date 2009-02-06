@@ -8,12 +8,12 @@ package mada.peg
 
 
 private[mada] object Find {
-    def apply[A](p: Peg[A], v: Vector[A]): Option[(Int, Int)] = {
+    def apply[A](p: Peg[A], v: Vector[A]): Option[Vector[A]] = {
         val (i, j) = impl(p, v, v.start, v.end)
         if (j == Peg.FAILURE) {
             None
         } else {
-            Some((i, j))
+            Some(v(i, j))
         }
     }
 
