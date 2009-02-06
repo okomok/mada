@@ -16,7 +16,7 @@ private[mada] class NegatePeg[A](p: Peg[A]) extends Peg[A] {
         if (p.parse(v, start, end) != Peg.FAILURE) {
             Peg.FAILURE
         } else {
-            val cur = start + p.length
+            val cur = start + p.width
             if (cur <= end) {
                 cur
             } else {
@@ -25,5 +25,5 @@ private[mada] class NegatePeg[A](p: Peg[A]) extends Peg[A] {
         }
     }
 
-    override def length = p.length
+    override def width = p.width
 }

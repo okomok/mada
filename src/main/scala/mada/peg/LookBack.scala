@@ -21,5 +21,5 @@ private[mada] class LookBackPeg[A](p: Peg[A]) extends Peg[A] {
         }
     }
 
-    override def length = 0
+    override def width = 0
 }

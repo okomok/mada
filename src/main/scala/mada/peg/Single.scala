@@ -20,5 +20,5 @@ private[mada] class SinglePeg[A](e: A) extends Peg[A] {
         }
     }
 
-    override def length = 1
+    override def width = 1
 }

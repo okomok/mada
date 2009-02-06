@@ -42,6 +42,6 @@ class RegionActions[A] {
             f(v(stack.pop, start))
             start
         }
-        override def length = 0
+        override def width = 0
     }
 }

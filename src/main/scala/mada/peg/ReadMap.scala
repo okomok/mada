@@ -16,5 +16,5 @@ private[mada] class ReadMapPeg[Z, A](p: Peg[A], f: Vector[Z] => Vector[A]) exten
         p.parse(f(v), start, end) // f must return one-to-one view of Vector
     }
 
-    override def length = p.length
+    override def width = p.width
 }

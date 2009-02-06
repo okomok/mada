@@ -13,7 +13,7 @@ private[mada] object LookBehind {
 
 private[mada] class LookBehindPeg[A](p: Peg[A]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
-        val len = p.length
+        val len = p.width
         if (start - len < v.start) {
             Peg.FAILURE
         } else {
@@ -25,5 +25,5 @@ private[mada] class LookBehindPeg[A](p: Peg[A]) extends Peg[A] {
         }
     }
 
-    override def length = 0
+    override def width = 0
 }

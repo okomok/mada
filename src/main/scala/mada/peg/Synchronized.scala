@@ -13,5 +13,5 @@ private[mada] object Synchronized {
 
 private[mada] class SynchronizedPeg[A](p: Peg[A]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = p.synchronized { p.parse(v, start, end) }
-    override def length = p.synchronized { p.length }
+    override def width = p.synchronized { p.width }
 }

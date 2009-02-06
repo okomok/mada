@@ -21,5 +21,5 @@ private[mada] class SeqAndPeg[A](p: Peg[A], q: Peg[A]) extends Peg[A] {
         }
     }
 
-    override def length = p.length + q.length
+    override def width = p.width + q.width
 }

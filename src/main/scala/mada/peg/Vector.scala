@@ -24,5 +24,5 @@ private[mada] class VectorPeg[A1, A2](w: Vector[A1], pred: (A1, A2) => Boolean) 
         }
     }
 
-    override def length = w.size
+    override def width = w.size
 }

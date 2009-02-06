@@ -13,5 +13,5 @@ private[mada] object Eps {
 
 private[mada] class EpsPeg[A] extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = start
-    override def length = 0
+    override def width = 0
 }

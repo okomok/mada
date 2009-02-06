@@ -33,9 +33,10 @@ object Peg extends peg.Compatibles {
 
     /**
      * Matches if it succeeds to advance.
+     *
      * @param i the increment count
      */
-    def advance[A](i: Int): Peg[A] = Advance[A](i)
+    def advance[A](n: Int): Peg[A] = Advance[A](n)
 
     /**
      * Matches any one element.
@@ -53,12 +54,12 @@ object Peg extends peg.Compatibles {
     def end[A]: Peg[A] = End[A]
 
     /**
-     * Matches an empty input while calling function.
+     * @return  <code>eps[A] act { _ => f() }</code>.
      */
-    def call[A](f: Unit => Any): Peg[A] = Call[A](f)
+    def call[A](f: Unit => Any): Peg[A] = eps[A] act { _ => f() }
 
     /**
-     * Matches an empty input, a.k.a epsilon.
+     * Epsilon; Matches an empty input.
      */
     def eps[A]: Peg[A] = Eps[A]
 
@@ -73,14 +74,14 @@ object Peg extends peg.Compatibles {
     def fail[A]: Peg[A] = Fail[A]
 
     /**
-     * Matches in case-insensitive.
+     * Mathches case-insensitively.
      */
-    def icase(v: Vector[Char]): Peg[Char] = Icase(v)
+    def icase(v: Vector[Char]): Peg[Char] = lowerCaseRead(fromVector(Vector.lowerCase(v)))
 
     /**
      * Reads input as lower cases, then tries to match.
      */
-    def lowerCaseRead(p: Peg[Char]): Peg[Char] = LowerCaseRead(p)
+    def lowerCaseRead(p: Peg[Char]): Peg[Char] = p readMap { v => Vector.lowerCase(v) }
 
     /**
      * Matches range values.
@@ -88,11 +89,10 @@ object Peg extends peg.Compatibles {
     def range[A](i: A, j: A)(implicit c: A => Ordered[A]): Peg[A] = Range(i, j)(c)
 
     /**
-     * Matches a regular expression.
-     *
-     * @see java.util.regex
+     * @return  <code>fromRegexPattern(java.util.regex.Pattern.compile(str))</code>.
+     * @see     java.util.regex
      */
-    def regex(str: String): Peg[Char] = Regex(str)
+    def regex(str: String): Peg[Char] = fromRegexPattern(java.util.regex.Pattern.compile(str))
 
     /**
      * Matches specified one element.
@@ -381,11 +381,11 @@ trait Peg[A] {
     def parse(v: Vector[A], first: Int, last: Int): Int
 
     /**
-     * Returns the matched length.
+     * Returns the matched width.
      *
-     * @throws  UnsupportedOperationException if length is not fixed.
+     * @throws  UnsupportedOperationException if width is not fixed.
      */
-    def length: Int = throw new UnsupportedOperationException("Peg.length")
+    def width: Int = throw new UnsupportedOperationException("Peg.width")
 
 
 // set
@@ -419,8 +419,8 @@ trait Peg[A] {
     final def xor(that: Peg[A]): Peg[A] = Xor(this, that)
 
     /**
-     * Matches if this peg not match, then advances <code>length</code>.
-     * Doesn't work unless this peg has fixed length.
+     * Matches if this peg not match, then advances <code>width</code>.
+     * Doesn't work unless this peg has fixed width.
      *
      * @see     unary_- as alias.
      */
@@ -451,6 +451,7 @@ trait Peg[A] {
      * @see     * as alias.
      */
     final def star: Peg[A] = Star(this)
+                        // = this starUntil !this (if speed and actions are unneeded.)
 
     /**
      * @return  <code>this starUntil ~that</code>.
@@ -468,7 +469,8 @@ trait Peg[A] {
     /**
      * One-or-more
      *
-     * @see + as alias.
+     * @return  <code>this >> this.*</code>.
+     * @see     + as alias.
      */
     final def plus: Peg[A] = this >> this.*
 
@@ -488,19 +490,20 @@ trait Peg[A] {
     /**
      * Optional
      *
-     * @see ? as alias.
+     * @return  <code>this | Peg.eps[A]</code>.
+     * @see     ? as alias.
      */
     final def opt: Peg[A] = this | Peg.eps[A]
 
     /**
-     * @return  <code>~that | (this >> ~that)</code>.
+     * @return  <code>(this >> ~that) | ~that </code>.
      */
-    final def optBefore(that: Peg[A]): Peg[A] = ~that | (this >> ~that)
+    final def optBefore(that: Peg[A]): Peg[A] = (this >> ~that) | ~that
 
     /**
-     * @return  <code>that >> (this >> that)</code>.
+     * @return  <code>(this >> that) | that</code>.
      */
-    final def optUntil(that: Peg[A]): Peg[A] = that | (this >> that)
+    final def optUntil(that: Peg[A]): Peg[A] = (this >> that) | that
 
 
 // assertions
@@ -508,7 +511,7 @@ trait Peg[A] {
     /**
      * And-predicate; look-ahead zero-width assertion
      *
-     * @see unary_~ as alias.
+     * @see     unary_~ as alias.
      */
     final def lookAhead: Peg[A] = LookAhead(this)
 
@@ -528,7 +531,7 @@ trait Peg[A] {
     /**
      * Associates semantic action.
      *
-     * @see apply as alias.
+     * @see     apply as alias.
      */
     final def act(f: Peg.Action[A]): Peg[A] = Act(this, f)
 
@@ -576,7 +579,7 @@ trait Peg[A] {
 // algorithms
 
     /**
-     * Finds <code>Vector.Region</code> which peg matches.
+     * Finds <code>Vector.Region</code> which this peg matches.
      */
     final def find(v: Vector[A]): Option[Vector[A]] = Find(this, v)
 
@@ -699,31 +702,43 @@ trait Peg[A] {
     final def ?>>(that: Peg[A]): Peg[A] = optUntil(that)
 
     /**
+     * Zero-width positive lookahead
+     *
      * @return  <code>this >> ~that</code>.
      */
     final def >>?~(that: Peg[A]): Peg[A] = this >> ~that
 
     /**
+     * Zero-width negative lookahead
+     *
      * @return  <code>this >> !that</code>.
      */
     final def >>?!(that: Peg[A]): Peg[A] = this >> !that
 
     /**
+     * Zero-width positive lookbehind
+     *
      * @return  <code>this >> that.lookBehind</code>.
      */
     final def >>?<~(that: Peg[A]): Peg[A] = this >> that.lookBehind
 
     /**
+     * Zero-width negative lookbehind
+     *
      * @return  <code>this >> that.lookBehind.negate</code>.
      */
     final def >>?<!(that: Peg[A]): Peg[A] = this >> that.lookBehind.negate
 
     /**
+     * Zero-width positive lookback
+     *
      * @return  <code>this >> that.lookBack</code>.
      */
     final def >>?<<~(that: Peg[A]): Peg[A] = this >> that.lookBack
 
     /**
+     * Zero-width negative lookback
+     *
      * @return  <code>this >> that.lookBack.negate</code>.
      */
     final def >>?<<!(that: Peg[A]): Peg[A] = this >> that.lookBack.negate

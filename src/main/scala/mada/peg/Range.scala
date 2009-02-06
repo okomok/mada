@@ -25,5 +25,5 @@ private[mada] class RangePeg[A](i: A, j: A)(implicit c: A => Ordered[A]) extends
         }
     }
 
-    override def length = 1
+    override def width = 1
 }

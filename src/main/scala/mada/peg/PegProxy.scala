@@ -13,5 +13,5 @@ package mada.peg
  */
 trait PegProxy[A] extends Peg[A] with Proxies.ProxyOf[Peg[A]] {
     override def parse(v: Vector[A], start: Int, end: Int) = self.parse(v, start, end)
-    override def length = self.length
+    override def width = self.width
 }

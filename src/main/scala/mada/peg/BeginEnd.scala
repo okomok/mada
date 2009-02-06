@@ -20,7 +20,7 @@ private[mada] class BeginPeg[A] extends Peg[A] {
         }
     }
 
-    override def length = 0
+    override def width = 0
 }
 
 
@@ -37,5 +37,5 @@ private[mada] class EndPeg[A] extends Peg[A] {
         }
     }
 
-    override def length = 0
+    override def width = 0
 }
