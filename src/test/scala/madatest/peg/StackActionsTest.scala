@@ -19,32 +19,31 @@ import mada.Peg.Compatibles._
 class StackActionsTest {
     val expr, term, factor, integer, digit = new Rule[Char]
 
-    val u = new StackActions[Char, Int]
-    import java.lang.Integer.parseInt
+    val U = new StackActions[Char, Int]
 
     expr    ::= term >>
-                ( ('+' >> term){ u{ (_, x, y) => x + y } } |
-                  ('-' >> term){ u{ (_, x, y) => x - y } } ).*
+                ( ('+' >> term){U{ (_, x, y) => x + y }} |
+                  ('-' >> term){U{ (_, x, y) => x - y }} ).*
     term    ::= factor >>
-                ( ('*' >> factor){ u{ (_, x, y) => x * y } } |
-                  ('/' >> factor){ u{ (_, x, y) => x / y } } ).*
+                ( ('*' >> factor){U{ (_, x, y) => x * y }} |
+                  ('/' >> factor){U{ (_, x, y) => x / y }} ).*
     factor  ::= integer |
                 ('(' >> expr >> ')') |
-                ('-' >> factor){ u{ (_, x) => -x } } |
+                ('-' >> factor){U{ (_, x) => -x }} |
                 ('+' >> factor)
-    integer ::= (digit.+){ u{ v => parseInt(Vector.stringize(v)) } }
+    integer ::= (digit.+){U{ v => Vector.stringize(v).toInt }}
     digit   ::= regex("[0-9]")
 
     def testTrivial: Unit = {
         assertTrue(expr matches "12345")
-        assertEquals(12345, u.stack.pop)
+        assertEquals(12345, U.stack.pop)
         assertTrue(expr matches "1+(-1)")
-        assertEquals(1+(-1), u.stack.pop)
+        assertEquals(1+(-1), U.stack.pop)
         assertTrue(expr matches "(1+2)*3")
-        assertEquals((1+2)*3, u.stack.pop)
+        assertEquals((1+2)*3, U.stack.pop)
         assertFalse(expr matches "(1+2)*(3*(4+5)")
-        u.stack.clear
+        U.stack.clear
         assertTrue(expr matches "(1+2)*(3*(4+5))")
-        assertEquals((1+2)*(3*(4+5)), u.stack.pop)
+        assertEquals((1+2)*(3*(4+5)), U.stack.pop)
     }
 }

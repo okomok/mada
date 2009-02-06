@@ -22,7 +22,6 @@ class CalcTest {
 
     val stack = new java.util.ArrayDeque[Int]
     import stack.{ push, pop }
-    import java.lang.Integer.parseInt
 
     expr    ::= term >>
                 ( ('+' >> term){ _ => push(pop + pop) } |
@@ -34,7 +33,7 @@ class CalcTest {
                 ('(' >> expr >> ')') |
                 ('-' >> factor){ _ => push(-pop) } |
                 ('+' >> factor)
-    integer ::= (digit.+){ v => push(parseInt(Vector.stringize(v))) }
+    integer ::= (digit.+){ v => push(Vector.stringize(v).toInt) }
     digit   ::= regex("[0-9]")
 
     def testTrivial: Unit = {
