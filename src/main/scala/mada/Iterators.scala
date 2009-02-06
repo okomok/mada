@@ -46,6 +46,16 @@ object Iterators extends iter.Compatibles {
         l
     }
 
+
+// constructors
+
+    /**
+     * Triggers implicit conversions explicitly.
+     *
+     * @return  <code>to</code>.
+     */
+    def from[A](to: Iterator[A]): Iterator[A] = to
+
     /**
      * The unfolding
      */
@@ -76,6 +86,9 @@ object Iterators extends iter.Compatibles {
      * An infinite iterator, with <code>e</code> the value of every element.
      */
     def repeat[A](e: A): Iterator[A] = iterate(e)(Functions.identity[A])
+
+
+// projections
 
     /**
      * An infinite repetition of <code>it</code>.
