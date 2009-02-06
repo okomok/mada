@@ -107,99 +107,25 @@ object Iterators {
     }
 
 
-// infix operators
+// aliases
 
     /**
-     * Provides infix operators using implicit conversions.
+     * Alias of <code>iter.IteratorProxy</code>
      */
-    object Infix {
-        /**
-         * Intermediate class for infix operators.
-         */
-        sealed class MadaIterators[A](_1: Iterator[A]) {
-            /**
-             * @return  <code>Iterators.equal(_2)</code>.
-             */
-            def equal[B](_2: Iterator[B]) = Iterators.equal(_1, _2)
-
-            /**
-             * @return  <code>Iterators.equalWith(_1, _2)(_3)</code>.
-             */
-            def equalWith[B](_2: Iterator[B])(_3: Functions.Predicate2[A, B]) = Iterators.equalWith(_1, _2)(_3)
-
-            /**
-             * @return  <code>Iterators.length(_1)</code>.
-             */
-            def length = Iterators.length(_1)
-
-            /**
-             * @return  <code>Iterators.cycle(_1)</code>.
-             */
-            def cycle = Iterators.cycle(_1)
-
-            /**
-             * @return  <code>Iterators.withSideEffect(_1)(_2)</code>.
-             */
-            def withSideEffect(_2: A => Any) = Iterators.withSideEffect(_1)(_2)
-        }
-
-        /**
-         * @return  <code>new MadaIterators(_1)</code>.
-         */
-        implicit def madaIteratorToMadaIterators[A](_1: Iterator[A]): MadaIterators[A] = new MadaIterators(_1)
-    }
-
-
-// proxy
+    type IteratorProxy[A] = iter.IteratorProxy[A]
 
     /**
-     * Implements a proxy for iterator objects.
+     * Alias of <code>iter.Infix</code>
      */
-    trait IteratorProxy[A] extends Iterator[A] with Proxies.ProxyOf[Iterator[A]] {
-        override def hasNext = self.hasNext
-        override def next = self.next
-        override def take(n: Int): Iterator[A] = self.take(n)
-        override def drop(n: Int): Iterator[A] = self.drop(n)
-        override def slice(from: Int, until: Int): Iterator[A] = self.slice(from, until)
-        override def map[B](f: A => B): Iterator[B] = self.map(f)
-        override def ++[B >: A](that: => Iterator[B]) = self.++(that)
-        override def flatMap[B](f: A => Iterator[B]): Iterator[B] = self.flatMap(f)
-        override def filter(p: A => Boolean): Iterator[A] = self.filter(p)
-        override def takeWhile(p: A => Boolean): Iterator[A] = self.takeWhile(p)
-        override def dropWhile(p: A => Boolean): Iterator[A] = self.dropWhile(p)
-        override def zip[B](that: Iterator[B]) = self.zip(that)
-        override def zipWithIndex = self.zipWithIndex
-        override def foreach(f: A => Unit) = self.foreach(f)
-        override def forall(p: A => Boolean): Boolean = self.forall(p)
-        override def exists(p: A => Boolean): Boolean = self.exists(p)
-        override def contains(elem: Any): Boolean = self.contains(elem)
-        override def find(p: A => Boolean): Option[A] = self.find(p)
-        override def findIndexOf(p: A => Boolean): Int = self.findIndexOf(p)
-        override def indexOf[B >: A](elem: B): Int = self.indexOf(elem)
-        override def foldLeft[B](z: B)(op: (B, A) => B): B = self.foldLeft(z)(op)
-        override def foldRight[B](z: B)(op: (A, B) => B): B = self.foldRight(z)(op)
-        override def /:[B](z: B)(op: (B, A) => B): B = self./:(z)(op)
-        override def :\[B](z: B)(op: (A, B) => B): B = self.:\(z)(op)
-        override def reduceLeft[B >: A](op: (B, A) => B): B = self.reduceLeft(op)
-        override def reduceRight[B >: A](op: (A, B) => B): B = self.reduceRight(op)
-        override def buffered: BufferedIterator[A] = self.buffered
-        override def counted = self.counted
-        override def duplicate: (Iterator[A], Iterator[A]) = self.duplicate
-        override def copyToArray[B >: A](xs: Array[B], start: Int) = self.copyToArray(xs, start)
-        override def readInto[B >: A](xs: Array[B], start: Int, sz: Int) = self.readInto(xs, start, sz)
-        override def readInto[B >: A](xs: Array[B], start: Int) = self.readInto(xs, start)
-        override def readInto[B >: A](xs: Array[B]) = self.readInto(xs)
-        override def copyToBuffer[B >: A](dest: scala.collection.mutable.Buffer[B]) = self.copyToBuffer(dest)
-        override def toList: List[A] = self.toList
-        override def collect: Seq[A] = self.collect
-        override def mkString(start: String, sep: String, end: String): String = self.mkString(start, sep, end)
-        override def mkString(sep: String): String = self.mkString(sep)
-        override def mkString: String = self.mkString
-        override def addString(buf: StringBuilder, start: String, sep: String, end: String): StringBuilder = self.addString(buf, start, sep, end)
-    }
+    val Compatibles = iter.Compatibles
+
+    /**
+     * Alias of <code>iter.Infix</code>
+     */
+    val Infix = iter.Infix
 
 
-// compatibles
+// alias compatibles
 
   // from
 
@@ -213,6 +139,11 @@ object Iterators {
      */
     def fromJclIterator[A](from: java.util.Iterator[A]): Iterator[A] = Compatibles.madaIteratorFromJclIterator(from)
 
+    /**
+     * Alias of <code>Compatibles.madaIteratorFromObjectInput</code>
+     */
+    def fromObjectInput(from: java.io.ObjectInput): Iterator[AnyRef] = Compatibles.madaIteratorFromObjectInput(from)
+
   // to
 
     /**
@@ -224,43 +155,4 @@ object Iterators {
      * Alias of <code>Compatibles.madaIteratorToJclIterator</code>
      */
     def toJclIterator[A](from: Iterator[A]): java.util.Iterator[A] = Compatibles.madaIteratorToJclIterator(from)
-
-
-    /**
-     * Provides implicit convertions around <code>Iterator</code>.
-     */
-    object Compatibles {
-        /**
-         * Converts to <code>java.util.Enumeration</code>.
-         */
-        implicit def madaIteratorToJclEnumeration[A](from: Iterator[A]): java.util.Enumeration[A] = new java.util.Enumeration[A] {
-            override def hasMoreElements = from.hasNext
-            override def nextElement = from.next
-        }
-
-        /**
-         * Converts to <code>java.util.Iterator</code>.
-         */
-        implicit def madaIteratorToJclIterator[A](from: Iterator[A]): java.util.Iterator[A] = new java.util.Iterator[A] {
-            override def hasNext = from.hasNext
-            override def next = from.next
-            override def remove = throw new UnsupportedOperationException
-        }
-
-        /**
-         * Converts from <code>java.util.Enumeration</code>.
-         */
-        implicit def madaIteratorFromJclEnumeration[A](from: java.util.Enumeration[A]): Iterator[A] = new Iterator[A] {
-            override def hasNext = from.hasMoreElements
-            override def next = from.nextElement
-        }
-
-        /**
-         * Converts from <code>java.util.Iterator</code>.
-         */
-        implicit def madaIteratorFromJclIterator[A](from: java.util.Iterator[A]): Iterator[A] = new Iterator[A] {
-            override def hasNext = from.hasNext
-            override def next = from.next
-        }
-    }
 }
