@@ -14,6 +14,7 @@ import junit.framework.Assert._
 
 import mada.Peg.Compatibles._
 import mada.Peg._
+import mada.Vector.Compatibles._
 
 
 class TSTreeTest {
@@ -41,13 +42,13 @@ class TSTreeTest {
         assertEquals("tot", tree.get("tot").get)
         assertFalse(tree.containsKey(""))
 
-        assertEquals(None, tree.parse("ztot", 0, 4))
-        assertEquals(None, tree.parse("t", 0, 1))
-        assertEquals(None, tree.parse("tzzzzz", 0, 6))
-        assertEquals(None, tree.parse("", 0, 0))
-        assertEquals(3, tree.parse("tot", 0, 3).get._2)
-        assertEquals(3, tree.parse("totzzzzz", 0, 8).get._2)
-        assertEquals(2, tree.parse("toazzzzz", 0, 8).get._2)
+        assertEquals(None, tree.parse("ztot".nth, 0, 4))
+        assertEquals(None, tree.parse("t".nth, 0, 1))
+        assertEquals(None, tree.parse("tzzzzz".nth, 0, 6))
+        assertEquals(None, tree.parse("".nth, 0, 0))
+        assertEquals(3, tree.parse("tot".nth, 0, 3).get._2)
+        assertEquals(3, tree.parse("totzzzzz".nth, 0, 8).get._2)
+        assertEquals(2, tree.parse("toazzzzz".nth, 0, 8).get._2)
 
         /* empty-string key
         tree.put("", "EMPTY")

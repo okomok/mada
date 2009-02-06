@@ -17,10 +17,10 @@ private[mada] object FromRegexPattern {
 private[mada] class RegexPatternPeg(pat: Pattern) extends Peg[Char] {
     override def parse(v: Vector[Char], start: Int, end: Int): Int = {
         val mat = pat.matcher(v)
-        mat.region(start, end)
+        mat.region(start - v.start, end - v.start)
         mat.useTransparentBounds(true)
         if (mat.lookingAt) {
-            mat.end
+            v.start + mat.end
         } else {
             Peg.FAILURE
         }

@@ -34,7 +34,7 @@ class CalcTest {
                 ('-' >> factor){ _ => push(-pop) } |
                 ('+' >> factor)
     integer ::= (digit.+){ v => push(Vector.stringize(v).toInt) }
-    digit   ::= regex("[0-9]")
+    digit   ::= "[0-9]".r
 
     def testTrivial: Unit = {
         assertTrue(expr matches "12345")

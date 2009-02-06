@@ -11,11 +11,12 @@ import junit.framework.Assert._
 
 import mada.Peg.Compatibles._
 import mada.Peg._
+import mada.Vector.Compatibles._
 
 
 class SymbolSetTest {
     def testTrivial: Unit = {
-        val i = ("abc" >> SymbolSet("to", "too", "tot", "tab", "so")).lookingAt("abcto").get
+        val i = ("abc" >> SymbolSet("to", "too", "tot", "tab", "so")).lookingAt("abcto".nth).get
         assertEquals(5, i)
     }
 

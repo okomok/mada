@@ -17,7 +17,7 @@ import mada.Peg._
 class IterateTest {
     def testTrivial: Unit = {
         val sb = new StringBuilder
-        val w = mada.Vector.from("XXabcXXabcXXabcXXabc")
+        val w = mada.Vector.from("XXabcXXabcXXabcXXabc").nth
 
         val p = -single('X') +? ("X"|end)
         var k = 0

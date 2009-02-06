@@ -168,6 +168,11 @@ object Peg extends peg.Compatibles {
     def fromChar(from: Char): Peg[Char] = madaPegFromChar(from)
 
     /**
+     * Alias of <code>madaPegFromRegex(from)</code>
+     */
+    def fromRegex(from: scala.util.matching.Regex): Peg[Char] = madaPegFromRegex(from)
+
+    /**
      * Alias of <code>madaPegFromRegexPattern(from)</code>
      */
     def fromRegexPattern(from: java.util.regex.Pattern): Peg[Char] = madaPegFromRegexPattern(from)
