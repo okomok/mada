@@ -41,7 +41,7 @@ object Peg extends peg.Compatibles {
     /**
      * Matches any one element.
      */
-    def any[A]: Peg[A] = Any_[A]
+    def any[A]: Peg[A] = advance(1)
 
     /**
      * Matches the beginning of input.
@@ -61,7 +61,7 @@ object Peg extends peg.Compatibles {
     /**
      * Epsilon; Matches an empty input.
      */
-    def eps[A]: Peg[A] = where3 { (_, i, _) => i }
+    def eps[A]: Peg[A] = advance(0)
 
     /**
      * Always throws an Error.
