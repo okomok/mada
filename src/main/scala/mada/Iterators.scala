@@ -10,7 +10,7 @@ package mada
 /**
  * Contains utility methods operating on <code>Iterator</code>.
  */
-object Iterators {
+object Iterators extends iter.Compatibles {
 
 
 // algorithms
@@ -115,9 +115,9 @@ object Iterators {
     type IteratorProxy[A] = iter.IteratorProxy[A]
 
     /**
-     * Alias of <code>iter.Infix</code>
+     * Alias of <code>madaIteratorCompatibles</code>
      */
-    val Compatibles = iter.Compatibles
+    val Compatibles = madaIteratorCompatibles
 
     /**
      * Alias of <code>iter.Infix</code>
@@ -130,29 +130,29 @@ object Iterators {
   // from
 
     /**
-     * Alias of <code>Compatibles.madaIteratorFromJclEnumeration</code>
+     * Alias of <code>madaIteratorFromJclEnumeration</code>
      */
-    def fromJclEnumeration[A](from: java.util.Enumeration[A]): Iterator[A] = Compatibles.madaIteratorFromJclEnumeration(from)
+    def fromJclEnumeration[A](from: java.util.Enumeration[A]): Iterator[A] = madaIteratorFromJclEnumeration(from)
 
     /**
-     * Alias of <code>Compatibles.madaIteratorFromJclIterator</code>
+     * Alias of <code>madaIteratorFromJclIterator</code>
      */
-    def fromJclIterator[A](from: java.util.Iterator[A]): Iterator[A] = Compatibles.madaIteratorFromJclIterator(from)
+    def fromJclIterator[A](from: java.util.Iterator[A]): Iterator[A] = madaIteratorFromJclIterator(from)
 
     /**
-     * Alias of <code>Compatibles.madaIteratorFromObjectInput</code>
+     * Alias of <code>madaIteratorFromObjectInput</code>
      */
-    def fromObjectInput(from: java.io.ObjectInput): Iterator[AnyRef] = Compatibles.madaIteratorFromObjectInput(from)
+    def fromObjectInput(from: java.io.ObjectInput): Iterator[AnyRef] = madaIteratorFromObjectInput(from)
 
   // to
 
     /**
-     * Alias of <code>Compatibles.madaIteratorToJclEnumeration</code>
+     * Alias of <code>madaIteratorToJclEnumeration</code>
      */
-    def toJclEnumeration[A](from: Iterator[A]): java.util.Enumeration[A] = Compatibles.madaIteratorToJclEnumeration(from)
+    def toJclEnumeration[A](from: Iterator[A]): java.util.Enumeration[A] = madaIteratorToJclEnumeration(from)
 
     /**
-     * Alias of <code>Compatibles.madaIteratorToJclIterator</code>
+     * Alias of <code>madaIteratorToJclIterator</code>
      */
-    def toJclIterator[A](from: Iterator[A]): java.util.Iterator[A] = Compatibles.madaIteratorToJclIterator(from)
+    def toJclIterator[A](from: Iterator[A]): java.util.Iterator[A] = madaIteratorToJclIterator(from)
 }
