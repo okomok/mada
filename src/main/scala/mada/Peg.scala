@@ -199,58 +199,6 @@ object Peg extends peg.Compatibles {
     def fromVector[A](from: Vector[A]): Peg[A] = madaPegFromVector(from)
 
 
-// alias methods
-
-  // any
-
-    /**
-     * @return  <code>any[A].*</code>.
-     */
-    def __*[A]: Peg[A] = any[A].*
-
-    /**
-     * @return  <code>any[A].starBefore(p)</code>.
-     */
-    def __*?[A](p: Peg[A]): Peg[A] = any[A].starBefore(p)
-
-    /**
-     * @return  <code>any[A].starUntil(p)</code>.
-     */
-    def __*>>[A](p: Peg[A]): Peg[A] = any[A].starUntil(p)
-
-  // look
-
-    /**
-     * @return  <code>~p</code>.
-     */
-    def ?~[A](p: Peg[A]): Peg[A] = ~p
-
-    /**
-     * @return  <code>!p</code>.
-     */
-    def ?![A](p: Peg[A]): Peg[A] = !p
-
-    /**
-     * @return  <code>p.lookBehind</code>.
-     */
-    def ?<~[A](p: Peg[A]): Peg[A] = p.lookBehind
-
-    /**
-     * @return  <code>p.lookBehind.negate</code>.
-     */
-    def ?<![A](p: Peg[A]): Peg[A] = p.lookBehind.negate
-
-    /**
-     * @return  <code>p.lookBack</code>.
-     */
-    def ?<<~[A](p: Peg[A]): Peg[A] = p.lookBack
-
-    /**
-     * @return  <code>p.lookBack.negate</code>.
-     */
-    def ?<<![A](p: Peg[A]): Peg[A] = p.lookBack.negate
-
-
 // aliases
 
     /**
@@ -363,8 +311,8 @@ object Peg extends peg.Compatibles {
  * <li/>Zero-or-more: <code>e.*</code>
  * <li/>One-or-more: <code>e.+</code>
  * <li/>Optional: <code>e.?</code>
- * <li/>And-predicate: <code>~e</code> (not <code>&e</code>)
- * <li/>Not-predicate: <code>!e</code>
+ * <li/>And-predicate: <code>~e</code> (positive lookahead)
+ * <li/>Not-predicate: <code>!e</code> (negative lookahead)
  * </ul><p/>
  *
  * Note PEG operations are always possessive unlike regular expression default behavior.
@@ -573,7 +521,7 @@ trait Peg[A] {
     /**
      * @return  <code>readMap{ v => v.map(f) }</code>.
      */
-    final def unmap[Z](f: Z => A): Peg[Z] = readMap({ v => v.map(f) })
+    final def unmap[Z](f: Z => A): Peg[Z] = readMap{ v => v.map(f) }
 
 
 // algorithms
@@ -669,7 +617,7 @@ trait Peg[A] {
     /**
      * Alias of <code>starUntil</code>
      */
-    final def *>>(that: Peg[A]): Peg[A] = starUntil(that)
+    final def *?>>(that: Peg[A]): Peg[A] = starUntil(that)
 
     /**
      * One-or-more; alias of <code>plus</code>
@@ -684,7 +632,7 @@ trait Peg[A] {
     /**
      * Alias of <code>plusUntil</code>
      */
-    final def +>>(that: Peg[A]): Peg[A] = plusUntil(that)
+    final def +?>>(that: Peg[A]): Peg[A] = plusUntil(that)
 
     /**
      * Optional; alias of <code>opt</code>
@@ -699,49 +647,27 @@ trait Peg[A] {
     /**
      * Alias of <code>optUntil</code>
      */
-    final def ?>>(that: Peg[A]): Peg[A] = optUntil(that)
+    final def ??>>(that: Peg[A]): Peg[A] = optUntil(that)
 
     /**
-     * Zero-width positive lookahead
-     *
-     * @return  <code>this >> ~that</code>.
+     * Alias of <code>lookBehind</code>
      */
-    final def >>?~(that: Peg[A]): Peg[A] = this >> ~that
+    final def <-~ : Peg[A] = lookBehind
 
     /**
-     * Zero-width negative lookahead
-     *
-     * @return  <code>this >> !that</code>.
+     * Alias of <code>lookBehind.negate</code>
      */
-    final def >>?!(that: Peg[A]): Peg[A] = this >> !that
+    final def <-! : Peg[A] = lookBehind.negate
 
     /**
-     * Zero-width positive lookbehind
-     *
-     * @return  <code>this >> that.lookBehind</code>.
+     * Alias of <code>lookBack</code>
      */
-    final def >>?<~(that: Peg[A]): Peg[A] = this >> that.lookBehind
+    final def <<~ :  Peg[A] = lookBack
 
     /**
-     * Zero-width negative lookbehind
-     *
-     * @return  <code>this >> that.lookBehind.negate</code>.
+     * Alias of <code>lookBack.negate</code>
      */
-    final def >>?<!(that: Peg[A]): Peg[A] = this >> that.lookBehind.negate
-
-    /**
-     * Zero-width positive lookback
-     *
-     * @return  <code>this >> that.lookBack</code>.
-     */
-    final def >>?<<~(that: Peg[A]): Peg[A] = this >> that.lookBack
-
-    /**
-     * Zero-width negative lookback
-     *
-     * @return  <code>this >> that.lookBack.negate</code>.
-     */
-    final def >>?<<!(that: Peg[A]): Peg[A] = this >> that.lookBack.negate
+    final def <<! :  Peg[A] = lookBack.negate
 
 
 // misc
