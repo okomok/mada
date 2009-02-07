@@ -7,6 +7,8 @@
 package mada.vec
 
 
+// Equivalent to iterator_range.
+
 /**
  * Replaces <code>start</code> and <code>end</code> of <code>underlying</code> vector.
  * Note that a larger vector than <code>underlying</code> is ALLOWED as far as <code>isDefinedAt</code> says ok.

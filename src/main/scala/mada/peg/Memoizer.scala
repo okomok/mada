@@ -9,7 +9,7 @@ package mada.peg
 
 /**
  * Provides memoization functionality.
- * Parsing different input vectors is not memoized.
+ * Results of parsing different vectors are not memoized.
  *
  * @param   input the target vector of this memoization
  */
@@ -25,10 +25,10 @@ class Memoizer[A](val input: Vector[A]) {
     def memoize(p: Peg[A]): Peg[A] = new MemoizePeg(p)
 
     private class MemoizePeg(override val self: Peg[A]) extends PegProxy[A] {
-        val memoTable = new scala.collection.jcl.HashMap[Pair[Int, Int], Int]
+        private val memoTable = new scala.collection.jcl.HashMap[Pair[Int, Int], Int]
 
         override def parse(v: Vector[A], start: Int, end: Int) = {
-            if (v eq input) {
+            if (regionBase(v) eq regionBase(input)) {
                 val key = Pair(start, end)
                 val value = memoTable.get(key)
                 if (value.isEmpty) {
@@ -42,5 +42,10 @@ class Memoizer[A](val input: Vector[A]) {
                 self.parse(v, start, end)
             }
         }
+    }
+
+    private def regionBase[A](v: Vector[A]): Vector[A] = v match {
+        case Vector.Region(w, _, _) => w
+        case _ => v
     }
 }
