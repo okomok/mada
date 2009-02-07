@@ -46,12 +46,12 @@ object Peg extends peg.Compatibles {
     /**
      * Matches the beginning of input.
      */
-    def begin[A]: Peg[A] = where3 { (v, _, _) => v.start }
+    def begin[A]: Peg[A] = if3 { (v, i, _) => i == v.start }
 
     /**
      * Matches the end of input.
      */
-    def end[A]: Peg[A] = where3 { (v, _, _) => v.end }
+    def end[A]: Peg[A] = if3 { (v, i, _) => i == v.end }
 
     /**
      * @return  <code>eps[A] act { _ => f() }</code>.
@@ -61,7 +61,7 @@ object Peg extends peg.Compatibles {
     /**
      * Epsilon; Matches an empty input.
      */
-    def eps[A]: Peg[A] = advance(0)
+    def eps[A]: Peg[A] = if3 { (_, _, _) => true }
 
     /**
      * Always throws an Error.
@@ -71,7 +71,7 @@ object Peg extends peg.Compatibles {
     /**
      * Doesn't match any input.
      */
-    def fail[A]: Peg[A] = where3 { (_, _, _) => Vector.NULL_INDEX }
+    def fail[A]: Peg[A] = if3 { (_, _, _) => false }
 
     /**
      * Mathches case-insensitively.
@@ -100,14 +100,14 @@ object Peg extends peg.Compatibles {
     def single[A](e: A): Peg[A] = Single(e)
 
     /**
-     * Matches specified position.
+     * Zero-width match if region meets condition <code>p</code>
      */
-    def where[A](f: Vector.Func[A, Int]): Peg[A] = Where(f)
+    def `if`[A](p: Vector.Pred[A]): Peg[A] = If(p)
 
     /**
-     * Matches specified position. (no heap allocations)
+     * Zero-width match if region meets condition <code>p</code> (no heap allocations)
      */
-    def where3[A](f: Vector.Func3[A, Int]): Peg[A] = Where3(f)
+    def if3[A](p: Vector.Pred3[A]): Peg[A] = If3(p)
 
 
 // pseudo

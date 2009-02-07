@@ -298,6 +298,16 @@ object Vector extends vec.Compatibles {
     type Func3[A, B] = (Vector[A], Int, Int) => B
 
     /**
+     * Alias of <code>Func[A, Boolean]</code>
+     */
+    type Pred[A] = Func[A, Boolean]
+
+    /**
+     * Alias of <code>Func3[A, Boolean]</code>
+     */
+    type Pred3[A] = Func3[A, Boolean]
+
+    /**
      * Alias of <code>vec.Adapter</code>
      */
     val Adapter = vec.Adapter
