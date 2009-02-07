@@ -8,15 +8,15 @@ package mada.peg
 
 
 /**
- * Helper for stack evaluations.
+ * Helper for self evaluations.
  */
-class StackActions[A, B](val stack: Stack[B]) {
+class StackActions[A, B](override val self: Stack[B]) extends Stack.StackProxy[B] {
 
 
 // constructors
 
     /**
-     * Constructs from an empty <code>stack</code>.
+     * Constructs from an empty <code>self</code>.
      */
     def this() = this(new java.util.ArrayDeque[B])
 
@@ -51,40 +51,40 @@ class StackActions[A, B](val stack: Stack[B]) {
      */
     def eval0(f: Function1[Vector[A], B]): Peg.Action[A] = new Peg.Action[A] {
         override def apply(v: Vector[A]) = {
-            stack.push(f(v))
+            self.push(f(v))
         }
     }
 
     /**
-     * Evaluates stack elements.
+     * Evaluates self elements.
      */
     def eval1(f: Function2[Vector[A], B, B]): Peg.Action[A] = new Peg.Action[A] {
         override def apply(v: Vector[A]) = {
-            val e1 = stack.pop
-            stack.push(f(v, e1))
+            val e1 = self.pop
+            self.push(f(v, e1))
         }
     }
 
     /**
-     * Evaluates stack elements.
+     * Evaluates self elements.
      */
     def eval2(f: Function3[Vector[A], B, B, B]): Peg.Action[A] = new Peg.Action[A] {
         override def apply(v: Vector[A]) = {
-            val e1 = stack.pop
-            val e2 = stack.pop
-            stack.push(f(v, e2, e1))
+            val e1 = self.pop
+            val e2 = self.pop
+            self.push(f(v, e2, e1))
         }
     }
 
     /**
-     * Evaluates stack elements.
+     * Evaluates self elements.
      */
     def eval3(f: Function4[Vector[A], B, B, B, B]): Peg.Action[A] = new Peg.Action[A] {
         override def apply(v: Vector[A]) = {
-            val e1 = stack.pop
-            val e2 = stack.pop
-            val e3 = stack.pop
-            stack.push(f(v, e3, e2, e1))
+            val e1 = self.pop
+            val e2 = self.pop
+            val e3 = self.pop
+            self.push(f(v, e3, e2, e1))
         }
     }
 }

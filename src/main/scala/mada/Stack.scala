@@ -12,9 +12,9 @@ package mada
  */
 object Stack extends stack.Compatibles {
     /**
-     * @return  <code>this</code>.
+     * Alias of <code>stack.StackProxy</code>
      */
-    val Compatibles: stack.Compatibles = this
+    type StackProxy[A] = stack.StackProxy[A]
 
     /**
      * Triggers implicit conversions explicitly.
@@ -22,6 +22,11 @@ object Stack extends stack.Compatibles {
      * @return  <code>to</code>.
      */
     def from[A](to: Stack[A]) = to
+
+    /**
+     * @return  <code>this</code>.
+     */
+    val Compatibles: stack.Compatibles = this
 
     /**
      * Alias of <code>madaStackFromJclDeque</code>

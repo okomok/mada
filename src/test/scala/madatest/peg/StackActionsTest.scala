@@ -36,14 +36,14 @@ class StackActionsTest {
 
     def testTrivial: Unit = {
         assertTrue(expr matches "12345")
-        assertEquals(12345, U.stack.pop)
+        assertEquals(12345, U.pop)
         assertTrue(expr matches "1+(-1)")
-        assertEquals(1+(-1), U.stack.pop)
+        assertEquals(1+(-1), U.pop)
         assertTrue(expr matches "(1+2)*3")
-        assertEquals((1+2)*3, U.stack.pop)
+        assertEquals((1+2)*3, U.pop)
         assertFalse(expr matches "(1+2)*(3*(4+5)")
-        U.stack.clear
+        U.clear
         assertTrue(expr matches "(1+2)*(3*(4+5))")
-        assertEquals((1+2)*(3*(4+5)), U.stack.pop)
+        assertEquals((1+2)*(3*(4+5)), U.pop)
     }
 }
