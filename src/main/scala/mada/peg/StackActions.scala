@@ -16,7 +16,7 @@ class StackActions[A, B](override val self: Stack[B]) extends Stack.StackProxy[B
 // constructors
 
     /**
-     * Constructs from an empty <code>self</code>.
+     * Constructs from an empty <code>Stack</code>.
      */
     def this() = this(new java.util.ArrayDeque[B])
 
