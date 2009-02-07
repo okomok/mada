@@ -8,8 +8,7 @@ package mada.stack
 
 
 /**
- * Implements a proxy for stack.
- * It forwards all calls to a different stack object.
+ * Implements a proxy for stack objects.
  */
 trait StackProxy[A] extends Stack[A] with Proxies.ProxyOf[Stack[A]] {
     override def push(e: A) = self.push(e)
