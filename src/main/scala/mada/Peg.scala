@@ -464,6 +464,24 @@ trait Peg[A] {
     final def optUntil(that: Peg[A]): Peg[A] = (this >> that) | that
 
 
+// repeat
+
+    /**
+     * Repeats exactly <code>n</code> times.
+     */
+    final def repeat(n: Int): Peg[A] = Repeat(this, n, n)
+
+    /**
+     * Repeats at least <code>n</code> times.
+     */
+    final def repeat(n: Int, u: Unit): Peg[A] = Repeat(this, n, Math.MAX_INT)
+
+    /**
+     * Repeats at least <code>n</code> but not more than <code>m</code> times.
+     */
+    final def repeat(n: Int, m: Int): Peg[A] = Repeat(this, n, m)
+
+
 // assertions
 
     /**
@@ -520,21 +538,6 @@ trait Peg[A] {
      * Overrides <code>toString</code> to return <code>name</code>.
      */
     final def named(name: String) = Named(this, name)
-
-    /**
-     * Repeats exactly <code>n</code> times.
-     */
-    final def repeat(n: Int): Peg[A] = Repeat(this, n, n)
-
-    /**
-     * Repeats at least <code>n</code> times.
-     */
-    final def repeat(n: Int, u: Unit): Peg[A] = Repeat(this, n, Math.MAX_INT)
-
-    /**
-     * Repeats at least <code>n</code> but not more than <code>m</code> times.
-     */
-    final def repeat(n: Int, m: Int): Peg[A] = Repeat(this, n, m)
 
     /**
      * Temporarily converts input using one-to-one projection <code>f</code>.

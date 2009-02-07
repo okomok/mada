@@ -26,10 +26,12 @@ class RepeatTest {
 
     def testExactly: Unit = {
         assertTrue(Peg.from("abc").repeat(4) matches "abcabcabcabc")
+        assertTrue(Peg.from("abc").repeat(4) >> "abc" matches "abcabcabcabcabc")
 
         assertFalse(Peg.from("abc").repeat(4) matches "")
         assertFalse(Peg.from("abc").repeat(4) matches "abcabcabc")
         assertFalse(Peg.from("abc").repeat(4) matches "abcabcabcabcabc")
+
     }
 
     def testAtLeast: Unit = {
