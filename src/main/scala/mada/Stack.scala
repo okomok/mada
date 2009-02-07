@@ -7,38 +7,6 @@
 package mada
 
 
-package stack {
-    /**
-     * Contains implicit conversions around <code>Stack</code>.
-     */
-    trait Compatibles {
-        /**
-         * Converts <code>java.util.Deque</code> to <code>Stack</code>.
-         */
-        implicit def madaStackFromJclDeque[A](from: java.util.Deque[A]) = new Stack[A] {
-            override def push(e: A) = from.push(e)
-            override def pop = from.pop
-            override def peek = from.peek
-            override def size = from.size
-            override def isEmpty = from.isEmpty
-            override def clear = from.clear
-        }
-
-        /**
-         * Converts <code>scala.collection.mutable.Stack</code> to <code>Stack</code>.
-         */
-        implicit def madaStackFromSclStack[A](from: scala.collection.mutable.Stack[A]) = new Stack[A] {
-            override def push(e: A) = from.push(e)
-            override def pop = from.pop
-            override def peek = from.top
-            override def size = from.length
-            override def isEmpty = from.isEmpty
-            override def clear = from.clear
-        }
-    }
-} // package stack
-
-
 /**
  * Contains utility methods operating on <code>Stack</code>.
  */
@@ -61,9 +29,14 @@ object Stack extends stack.Compatibles {
     def fromJclDeque[A](from: java.util.Deque[A]) = madaStackFromJclDeque(from)
 
     /**
-     * Alias of <code>madaStackFromSclDeque</code>
+     * Alias of <code>madaStackFromSclStack</code>
      */
     def fromSclStack[A](from: scala.collection.mutable.Stack[A]) = madaStackFromSclStack(from)
+
+    /**
+     * Alias of <code>madaStackFromSclArrayStack</code>
+     */
+    def fromSclArrayStack[A](from: scala.collection.mutable.ArrayStack[A]) = madaStackFromSclArrayStack(from)
 }
 
 
