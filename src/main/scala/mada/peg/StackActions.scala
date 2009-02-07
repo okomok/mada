@@ -16,7 +16,7 @@ class StackActions[A, B](override val self: Stack[B]) extends Stack.StackProxy[B
 // constructors
 
     /**
-     * Constructs from an empty <code>Stack</code>.
+     * Constructs from an empty stack.
      */
     def this() = this(new java.util.ArrayDeque[B])
 
@@ -56,7 +56,7 @@ class StackActions[A, B](override val self: Stack[B]) extends Stack.StackProxy[B
     }
 
     /**
-     * Evaluates self elements.
+     * Evaluates stack elements.
      */
     def eval1(f: Function2[Vector[A], B, B]): Peg.Action[A] = new Peg.Action[A] {
         override def apply(v: Vector[A]) = {
@@ -66,7 +66,7 @@ class StackActions[A, B](override val self: Stack[B]) extends Stack.StackProxy[B
     }
 
     /**
-     * Evaluates self elements.
+     * Evaluates stack elements.
      */
     def eval2(f: Function3[Vector[A], B, B, B]): Peg.Action[A] = new Peg.Action[A] {
         override def apply(v: Vector[A]) = {
@@ -77,7 +77,7 @@ class StackActions[A, B](override val self: Stack[B]) extends Stack.StackProxy[B
     }
 
     /**
-     * Evaluates self elements.
+     * Evaluates stack elements.
      */
     def eval3(f: Function4[Vector[A], B, B, B, B]): Peg.Action[A] = new Peg.Action[A] {
         override def apply(v: Vector[A]) = {
