@@ -8,9 +8,14 @@ package mada.peg
 
 
 private[mada] object Try {
-    def apply[A](p: Peg[A]) = new {
-        def `catch`(f: Throwable => Peg[A]) = new TryCatchPeg(p, f)
-    }
+    def apply[A](p: Peg[A]): Catch[A] = new Catch(p)
+}
+
+/**
+ * Intermediate class for pseudo try-catch expression.
+ */
+sealed class Catch[A](p: Peg[A]) {
+    def `catch`(f: Throwable => Peg[A]): Peg[A] = new TryCatchPeg(p, f)
 }
 
 private[mada] class TryCatchPeg[A](override val self: Peg[A], f: Throwable => Peg[A]) extends PegProxy[A] {

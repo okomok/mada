@@ -7,11 +7,11 @@
 package mada.peg
 
 
-private[mada] object If3 {
-    def apply[A](p: Vector.Pred3[A]): Peg[A] = new If3Peg[A](p)
+private[mada] object LookAround3 {
+    def apply[A](p: Vector.Pred3[A]): Peg[A] = new LookAround3Peg[A](p)
 }
 
-private[mada] class If3Peg[A](p: Vector.Pred3[A]) extends Peg[A] {
+private[mada] class LookAround3Peg[A](p: Vector.Pred3[A]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
         if (p(v, start, end)) {
             start

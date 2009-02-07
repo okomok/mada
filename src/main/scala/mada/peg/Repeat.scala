@@ -33,7 +33,7 @@ private[mada] class RepeatPeg[A](p: Peg[A], n: Int, m: Int) extends Peg[A] {
 
     override def width = {
         if (n == m) {
-            n
+            p.width * n
         } else {
             throw new Peg.NotConstantWidth("Peg.repeat")
         }

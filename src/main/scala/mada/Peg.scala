@@ -54,12 +54,12 @@ object Peg extends peg.Compatibles {
     /**
      * Matches the beginning of input.
      */
-    def begin[A]: Peg[A] = if3 { (v, i, _) => i == v.start }
+    def begin[A]: Peg[A] = lookAround3 { (v, i, _) => i == v.start }
 
     /**
      * Matches the end of input.
      */
-    def end[A]: Peg[A] = if3 { (v, i, _) => i == v.end }
+    def end[A]: Peg[A] = lookAround3 { (v, i, _) => i == v.end }
 
     /**
      * @return  <code>eps[A] act { _ => f() }</code>.
@@ -69,7 +69,7 @@ object Peg extends peg.Compatibles {
     /**
      * Epsilon; Matches an empty input.
      */
-    def eps[A]: Peg[A] = if3 { (_, _, _) => true }
+    def eps[A]: Peg[A] = lookAround3 { (_, _, _) => true }
 
     /**
      * Always throws an Error.
@@ -79,7 +79,7 @@ object Peg extends peg.Compatibles {
     /**
      * Doesn't match any input.
      */
-    def fail[A]: Peg[A] = if3 { (_, _, _) => false }
+    def fail[A]: Peg[A] = lookAround3 { (_, _, _) => false }
 
     /**
      * Mathches case-insensitively.
@@ -110,12 +110,12 @@ object Peg extends peg.Compatibles {
     /**
      * Zero-width assertion if region meets condition <code>pred</code>
      */
-    def `if`[A](pred: Vector.Pred[A]): Peg[A] = If3(Vector.triplify(pred))
+    def lookAround[A](pred: Vector.Pred[A]): Peg[A] = LookAround3(Vector.triplify(pred))
 
     /**
      * Zero-width assertion if region meets condition <code>pred</code> (no heap allocations)
      */
-    def if3[A](pred: Vector.Pred3[A]): Peg[A] = If3(pred)
+    def lookAround3[A](pred: Vector.Pred3[A]): Peg[A] = LookAround3(pred)
 
 
 // pseudo
@@ -133,7 +133,7 @@ object Peg extends peg.Compatibles {
     /**
      * Constructs a pseudo try-catch expression in Peg.
      */
-    def `try`[A](p: Peg[A]) = Try(p)
+    def `try`[A](p: Peg[A]): Catch[A] = Try(p)
 
 
 // best
