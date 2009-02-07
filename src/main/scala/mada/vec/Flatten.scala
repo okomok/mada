@@ -8,18 +8,13 @@ package mada.vec
 
 
 private[mada] object Flatten {
-    def apply[A](vv: Vector[Vector[A]]): Vector[A] = {
-        val av = Vector.fromArray(new Array[A](FlattenSize(vv)))
-        var (i, j) = (av.start, av.start)
-        for (v <- vv) {
-            j += v.size
-            v.copyTo(av(i, j))
-            i = j
+    def apply[A](vs: Iterator[Vector[A]]): Vector[A] = {
+        val ar = new java.util.ArrayList[A]
+        for (v <- vs) {
+            for (e <- v) {
+                ar.add(e)
+            }
         }
-        av
+        Vector.fromJclList(ar)
     }
-}
-
-private[mada] object FlattenSize {
-    def apply[A](vv: Vector[Vector[A]]): Int = vv.foldLeft(0)({ (c, v) => c + v.size })
 }

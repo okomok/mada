@@ -24,7 +24,7 @@ private[mada] class OrPeg[A](p: Peg[A], q: Peg[A]) extends Peg[A] {
     override def width = {
         val plen = p.width
         if (plen != q.width) {
-            throw new UnsupportedOperationException("OrPeg.width")
+            throw new Peg.NotConstantWidth("Peg.or")
         } else {
             plen
         }

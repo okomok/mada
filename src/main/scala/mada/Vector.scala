@@ -74,11 +74,11 @@ object Vector extends vec.Compatibles {
      * Create a vector that is the concantenation of all vectors
      * returned by a given vector of vectors.
      *
-     * @param   vv The vector which returns on each call to next
+     * @param   vs The iterator which returns on each call to next
      *             a new vector whose elements are to be concatenated to the result.
-     * @return  the newly created writable vector (not a projection into <code>vv</code>).
+     * @return  the newly created writable vector (not a projection into <code>vs</code>).
      */
-    def flatten[A](vv: Vector[Vector[A]]): Vector[A] = Flatten(vv)
+    def flatten[A](vs: Iterator[Vector[A]]): Vector[A] = Flatten(vs)
 
     /**
      * @return  <code>v.filter(_.isLeft).map(_.left.get)</code>.
@@ -125,7 +125,7 @@ object Vector extends vec.Compatibles {
     /**
      * @return  flatten(vv.map({ v => sep.append(v) }))
      */
-    def untokenize[A](vv: Vector[Vector[A]], sep: Vector[A]): Vector[A] = Untokenize(vv, sep)
+    def untokenize[A](vs: Iterator[Vector[A]], sep: Vector[A]): Vector[A] = Untokenize(vs, sep)
 
     /**
      * Reverts <code>Vector[A]#zip</code>.
@@ -628,7 +628,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     /**
      * @return  <code>Vector.flatten(map(f))</code>.
      */
-    def flatMap[B](f: A => Vector[B]): Vector[B] = Vector.flatten(map(f))
+    def flatMap[B](f: A => Vector[B]): Vector[B] = Vector.flatten(map(f).elements)
 
     /**
      * Casts element to type <code>B</code>.

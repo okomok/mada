@@ -22,6 +22,14 @@ object Peg extends peg.Compatibles {
     final val FAILURE = 0x80000000
 
 
+// exceptions
+
+    /**
+     * Thrown if <code>width</code> is required but not constant.
+     */
+    class NotConstantWidth(msg: String) extends UnsupportedOperationException(msg)
+
+
 // constructors
 
     /**
@@ -34,7 +42,7 @@ object Peg extends peg.Compatibles {
     /**
      * Matches if it succeeds to advance.
      *
-     * @param i the increment count
+     * @param   i the increment count
      */
     def advance[A](n: Int): Peg[A] = Advance[A](n)
 
@@ -100,12 +108,12 @@ object Peg extends peg.Compatibles {
     def single[A](e: A): Peg[A] = Single(e)
 
     /**
-     * Zero-width match if region meets condition <code>pred</code>
+     * Zero-width assertion if region meets condition <code>pred</code>
      */
     def `if`[A](pred: Vector.Pred[A]): Peg[A] = If3(Vector.triplify(pred))
 
     /**
-     * Zero-width match if region meets condition <code>pred</code> (no heap allocations)
+     * Zero-width assertion if region meets condition <code>pred</code> (no heap allocations)
      */
     def if3[A](pred: Vector.Pred3[A]): Peg[A] = If3(pred)
 
@@ -325,7 +333,11 @@ object Peg extends peg.Compatibles {
  * <li/>Not-predicate: <code>!e</code> (negative lookahead)
  * </ul><p/>
  *
- * Note PEG operations are always possessive unlike regular expression default behavior.
+ * Note:
+ * <ul>
+ * <li/>PEG parsing are always "possessive". You may need <code>starBefore</code> etc.
+ * <li/><code>java.util.regex</code> is trivially compatible to <code>mada.Peg</code>.
+ * </ul>
  */
 trait Peg[A] {
     import peg._
@@ -341,9 +353,9 @@ trait Peg[A] {
     /**
      * Returns the matched width.
      *
-     * @throws  UnsupportedOperationException if width is not fixed.
+     * @throws  NotConstantWidth if this peg doesn't have constant width.
      */
-    def width: Int = throw new UnsupportedOperationException("Peg.width")
+    def width: Int = throw new Peg.NotConstantWidth("Peg")
 
 
 // set
@@ -378,7 +390,7 @@ trait Peg[A] {
 
     /**
      * Matches if this peg not match, then advances <code>width</code>.
-     * Doesn't work unless this peg has fixed width.
+     * Doesn't work unless this peg has constant width.
      *
      * @see     unary_- as alias.
      */
@@ -438,7 +450,7 @@ trait Peg[A] {
     final def plusBefore(that: Peg[A]): Peg[A] = this >> (this starBefore that)
 
     /**
-     * @return  <code>this >> (starUntil that)</code>.
+     * @return  <code>this >> (this starUntil that)</code>.
      */
     final def plusUntil(that: Peg[A]): Peg[A] = this >> (this starUntil that)
 
@@ -485,7 +497,7 @@ trait Peg[A] {
 // assertions
 
     /**
-     * And-predicate; look-ahead zero-width assertion
+     * And-predicate; lookahead zero-width assertion
      *
      * @see     unary_~ as alias.
      */
@@ -520,14 +532,14 @@ trait Peg[A] {
 // utilities
 
     /**
-     * Matches if matched region meets condition <code>p</code>.
+     * Matches if matched region meets condition <code>pred</code>.
      */
-    final def andIf(p: Vector.Pred[A]): Peg[A] = AndIf3(this, Vector.triplify(p))
+    final def andIf(pred: Vector.Pred[A]): Peg[A] = AndIf3(this, Vector.triplify(pred))
 
     /**
-     * Matches if matched region meets condition <code>p</code>. (no heap allocations)
+     * Matches if matched region meets condition <code>pred</code>. (no heap allocations)
      */
-    final def andIf3(p: Vector.Pred3[A]): Peg[A] = AndIf3(this, p)
+    final def andIf3(pred: Vector.Pred3[A]): Peg[A] = AndIf3(this, pred)
 
     /**
      * Returns an alias of this peg.

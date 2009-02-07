@@ -18,7 +18,7 @@ class FlattenTest {
         val v3 = Vector.fromArray(detail.Example.empty1)
         val v4 = Vector.fromArray(Array(5,6))
         val v5 = Vector.fromArray(Array(7,8,9,10))
-        val vv = Vector.flatten(Vector.fromArray(Array(v1, v2, v3, v4, v5)))
+        val vv = Vector.flatten(Vector.fromArray(Array(v1, v2, v3, v4, v5)).elements)
         val e = Vector.range(0, 11)
         assertEquals(e, vv)
     }
@@ -27,7 +27,7 @@ class FlattenTest {
         val v1 = Vector.fromArray(detail.Example.empty1)
         val v2 = Vector.fromArray(detail.Example.empty1)
         val v3 = Vector.fromArray(detail.Example.empty1)
-        val vv = Vector.flatten(Vector.fromArray(Array(v1, v2, v3)))
+        val vv = Vector.flatten(Vector.fromArray(Array(v1, v2, v3)).elements)
         detail.TestEmpty(vv)
     }
 

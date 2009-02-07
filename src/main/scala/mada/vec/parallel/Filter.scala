@@ -17,7 +17,7 @@ private[mada] class FilterVector[A](v: Vector[A], p: A => Boolean, grainSize: In
     override lazy val unparallel = {
         Vector.flatten(
             v.divide(grainSize).parallel(1).map({ w => w.filter(p) }).
-                unparallel
+                unparallel.elements
         )
     }
     override lazy val self = unparallel.parallel(grainSize)
