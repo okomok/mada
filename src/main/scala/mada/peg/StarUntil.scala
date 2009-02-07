@@ -14,18 +14,15 @@ private[mada] object StarUntil {
 private[mada] class StarUntilPeg[A](p: Peg[A], q: Peg[A]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int): Int = {
         var cur = start
-
         var next = q.parse(v, cur, end)
         while (next == Peg.FAILURE) {
             next = p.parse(v, cur, end)
             if (next == Peg.FAILURE) {
                 return Peg.FAILURE
-            } else {
-                cur = next
-                next = q.parse(v, cur, end)
             }
+            cur = next
+            next = q.parse(v, cur, end)
         }
-
         next
     }
 }

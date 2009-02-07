@@ -7,10 +7,6 @@
 package mada.peg
 
 
-private[mada] object Act {
-    def apply[A](p: Peg[A], f: Peg.Action[A]): Peg[A] = new Act3Peg(p, Vector.triplify(f))
-}
-
 private[mada] object Act3 {
     def apply[A](p: Peg[A], f: Peg.Action3[A]): Peg[A] = new Act3Peg(p, f)
 }

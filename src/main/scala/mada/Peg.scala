@@ -100,14 +100,14 @@ object Peg extends peg.Compatibles {
     def single[A](e: A): Peg[A] = Single(e)
 
     /**
-     * Zero-width match if region meets condition <code>p</code>
+     * Zero-width match if region meets condition <code>pred</code>
      */
-    def `if`[A](p: Vector.Pred[A]): Peg[A] = If(p)
+    def `if`[A](pred: Vector.Pred[A]): Peg[A] = If3(Vector.triplify(pred))
 
     /**
-     * Zero-width match if region meets condition <code>p</code> (no heap allocations)
+     * Zero-width match if region meets condition <code>pred</code> (no heap allocations)
      */
-    def if3[A](p: Vector.Pred3[A]): Peg[A] = If3(p)
+    def if3[A](pred: Vector.Pred3[A]): Peg[A] = If3(pred)
 
 
 // pseudo
@@ -491,7 +491,7 @@ trait Peg[A] {
      *
      * @see     apply as alias.
      */
-    final def act(f: Peg.Action[A]): Peg[A] = Act(this, f)
+    final def act(f: Peg.Action[A]): Peg[A] = Act3(this, Vector.triplify(f))
 
     /**
      * Associates semantic action. (no heap allocations)
@@ -502,9 +502,14 @@ trait Peg[A] {
 // utilities
 
     /**
-     * Matches if <code>p</code> too returns true.
+     * Matches if matched region meets condition <code>p</code>.
      */
-    final def andIf(p: Vector.Func[A, Boolean]): Peg[A] = AndIf(this, p)
+    final def andIf(p: Vector.Pred[A]): Peg[A] = AndIf3(this, Vector.triplify(p))
+
+    /**
+     * Matches if matched region meets condition <code>p</code>. (no heap allocations)
+     */
+    final def andIf3(p: Vector.Pred3[A]): Peg[A] = AndIf3(this, p)
 
     /**
      * Returns an alias of this peg.
@@ -517,9 +522,19 @@ trait Peg[A] {
     final def named(name: String) = Named(this, name)
 
     /**
-     * Repeats at least <code>min</code> times and at most <code>max</code> times.
+     * Repeats exactly <code>n</code> times.
      */
-    final def repeat(min: Int, max: Int): Peg[A] = Repeat(this, min, max)
+    final def repeat(n: Int): Peg[A] = Repeat(this, n, n)
+
+    /**
+     * Repeats at least <code>n</code> times.
+     */
+    final def repeat(n: Int, u: Unit): Peg[A] = Repeat(this, n, Math.MAX_INT)
+
+    /**
+     * Repeats at least <code>n</code> but not more than <code>m</code> times.
+     */
+    final def repeat(n: Int, m: Int): Peg[A] = Repeat(this, n, m)
 
     /**
      * Temporarily converts input using one-to-one projection <code>f</code>.

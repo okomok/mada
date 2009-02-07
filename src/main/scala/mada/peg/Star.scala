@@ -14,19 +14,14 @@ private[mada] object Star {
 private[mada] class StarPeg[A](p: Peg[A]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int): Int = {
         var cur = start
-
-        while (true) {
+        while (cur != end) {
             val next = p.parse(v, cur, end)
             if (next == Peg.FAILURE) {
                 return cur
-            } else if (next == end) {
-                return end
-            } else {
-                // Assert("StarPeg must advance; `end/eol` are the usual suspects", cur != next) // dynamic parsers can't be assert.
-                cur = next
             }
+            // Assert("StarPeg must advance; `end/eol` are the usual suspects", cur != next) // dynamic parsers can't be assert.
+            cur = next
         }
-
         cur
     }
 }

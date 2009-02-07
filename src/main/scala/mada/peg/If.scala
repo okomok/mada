@@ -7,10 +7,6 @@
 package mada.peg
 
 
-private[mada] object If {
-    def apply[A](p: Vector.Pred[A]): Peg[A] = If3(Vector.triplify(p))
-}
-
 private[mada] object If3 {
     def apply[A](p: Vector.Pred3[A]): Peg[A] = new If3Peg[A](p)
 }
