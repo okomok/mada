@@ -17,7 +17,7 @@ object Peg extends peg.Compatibles {
 // constants
 
     /**
-     * Alias of <code>Vector.NULL_INDEX</code> specifying the parsing failure.
+     * Alias of <code>Vector.SINGULAR</code> specifying the parsing failure.
      */
     final val FAILURE = 0x80000000
 

@@ -19,7 +19,7 @@ object Vector extends vec.Compatibles {
     /**
      * @return  <code>Math.MIN_INT</code>, which is the reserved index by <code>mada.Vector</code>.
      */
-    final val NULL_INDEX = 0x80000000
+    final val SINGULAR = 0x80000000
 
 
 // exceptions

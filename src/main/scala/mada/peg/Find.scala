@@ -17,8 +17,8 @@ private[mada] object Find {
         }
     }
 
-    def impl[A](p: Peg[A], v: Vector[A], _first: Int, end: Int): (Int, Int) = {
-        var start = _first
+    def impl[A](p: Peg[A], v: Vector[A], _start: Int, end: Int): (Int, Int) = {
+        var start = _start
         while (start != end) {
             val cur = p.parse(v, start, end)
             if (cur != Peg.FAILURE) {
