@@ -133,7 +133,7 @@ object Peg extends peg.Compatibles {
     /**
      * Constructs a pseudo try-catch expression in Peg.
      */
-    def `try`[A](p: Peg[A]): Catch[A] = Try(p)
+    def `try`[A](p: Peg[A]): Try[A] = Try(p)
 
 
 // best
@@ -338,9 +338,8 @@ object Peg extends peg.Compatibles {
  * <li/>Not-predicate: <code>!e</code> (negative lookahead)
  * </ul><p/>
  *
- * Note:
  * <ul>
- * <li/>PEG parsing are always "possessive". You may need <code>starBefore</code> etc.
+ * <li/>PEG parsing is "possessive". You may need <code>starBefore</code> etc.
  * <li/><code>java.util.regex</code> is trivially compatible to <code>mada.Peg</code>.
  * </ul>
  */

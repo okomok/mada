@@ -31,4 +31,15 @@ class TryTest {
         assertTrue(p matches mada.Vector.from("abcLd").clone)
         assertTrue(thrown)
     }
+
+    def testFinally: Unit = {
+        var thrown = false
+        var final_ = false
+        val p = `try` { "abc" >> error >> "d" } `catch` { case _: Error => thrown = true; "abcd" } `finally` { case _ => final_ = true }
+        assertFalse(thrown)
+        assertFalse(final_)
+        assertTrue(p matches "abcd")
+        assertTrue(thrown)
+        assertTrue(final_)
+    }
 }
