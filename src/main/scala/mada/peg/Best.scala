@@ -8,12 +8,10 @@ package mada.peg
 
 
 private[mada] object Longest {
-    def apply[A](ps: Peg[A]*): Peg[A] = apply(ps)
     def apply[A](ps: Iterable[Peg[A]]): Peg[A] = new BestPeg(ps, Math.max)
 }
 
 private[mada] object Shortest {
-    def apply[A](ps: Peg[A]*): Peg[A] = apply(ps)
     def apply[A](ps: Iterable[Peg[A]]): Peg[A] = new BestPeg(ps, Math.min)
 }
 

@@ -87,9 +87,31 @@ object Peg extends peg.Compatibles {
     def icase(v: Vector[Char]): Peg[Char] = lowerCaseRead(fromVector(Vector.lowerCase(v)))
 
     /**
+     * Zero-width assertion if region meets condition <code>pred</code>
+     */
+    def lookAround[A](pred: Vector.Pred[A]): Peg[A] = LookAround3(Vector.triplify(pred))
+
+    /**
+     * Zero-width assertion if region meets condition <code>pred</code> (no heap allocations)
+     */
+    def lookAround3[A](pred: Vector.Pred3[A]): Peg[A] = LookAround3(pred)
+
+    /**
      * Reads input as lower cases, then tries to match.
      */
     def lowerCaseRead(p: Peg[Char]): Peg[Char] = p readMap { v => Vector.lowerCase(v) }
+
+    /**
+     * @return  <code>joint(ps.elements)</code>.
+     */
+    def joint[A](ps: Peg[A]*): Peg[A] = joint(ps.elements)
+
+    /**
+     * Goes sequence as long as possible.
+     *
+     * @return  <code>e1 >> (e2 >> (e3 >> (e4).?).?).?</code>.
+     */
+    def joint[A](ps: Iterator[Peg[A]]): Peg[A] = ps.foldRight(Peg.eps[A]){ (l, r) => l >> r.? }
 
     /**
      * Matches range values.
@@ -106,16 +128,6 @@ object Peg extends peg.Compatibles {
      * Matches specified one element.
      */
     def single[A](e: A): Peg[A] = Single(e)
-
-    /**
-     * Zero-width assertion if region meets condition <code>pred</code>
-     */
-    def lookAround[A](pred: Vector.Pred[A]): Peg[A] = LookAround3(Vector.triplify(pred))
-
-    /**
-     * Zero-width assertion if region meets condition <code>pred</code> (no heap allocations)
-     */
-    def lookAround3[A](pred: Vector.Pred3[A]): Peg[A] = LookAround3(pred)
 
 
 // pseudo
