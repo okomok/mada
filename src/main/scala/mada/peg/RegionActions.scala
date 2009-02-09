@@ -20,12 +20,11 @@ class RegionActions[A] {
      */
     val startAt: Peg[A] = new StartAtPeg
 
-    private class StartAtPeg extends Peg[A] {
+    private class StartAtPeg extends Peg[A] with ZeroWidth[A] {
         override def parse(v: Vector[A], start: Int, end: Int) = {
             stack.push(start)
             start
         }
-        override def width = 0
     }
 
     /**
@@ -33,11 +32,10 @@ class RegionActions[A] {
      */
     def endWith(f: Peg.Action[A]): Peg[A] = new EndWithPeg(f)
 
-    private class EndWithPeg(f: Peg.Action[A]) extends Peg[A] {
+    private class EndWithPeg(f: Peg.Action[A]) extends Peg[A] with ZeroWidth[A] {
         override def parse(v: Vector[A], start: Int, end: Int) = {
             f(v(stack.pop, start))
             start
         }
-        override def width = 0
     }
 }

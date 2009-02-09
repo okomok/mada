@@ -11,7 +11,7 @@ private[mada] object LookAhead {
     def apply[A](p: Peg[A]): Peg[A] = new LookAheadPeg(p)
 }
 
-private[mada] class LookAheadPeg[A](p: Peg[A]) extends Peg[A] {
+private[mada] class LookAheadPeg[A](p: Peg[A]) extends Peg[A] with ZeroWidth[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
         if (p.parse(v, start, end) != Peg.FAILURE) {
             start
@@ -19,6 +19,4 @@ private[mada] class LookAheadPeg[A](p: Peg[A]) extends Peg[A] {
             Peg.FAILURE
         }
     }
-
-    override def width = 0
 }

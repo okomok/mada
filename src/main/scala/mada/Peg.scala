@@ -220,6 +220,11 @@ object Peg extends peg.Compatibles {
 // aliases
 
     /**
+     * Alias of <code>peg.ZeroWidth</code>
+     */
+    type ZeroWidth[A] = peg.ZeroWidth[A]
+
+    /**
      * Alias of <code>peg.PegProxy</code>
      */
     type PegProxy[A] = peg.PegProxy[A]
