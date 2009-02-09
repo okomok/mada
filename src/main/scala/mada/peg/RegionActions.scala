@@ -7,7 +7,7 @@
 package mada.peg
 
 
-// `startAt( SymbolMap("abc" --> endWith(f) >> "def") )`
+// `startAt >> SymbolMap("abc" --> endWith(f) >> "def")`
 
 /**
  * Associates actions where Peg can't be placed.
@@ -16,20 +16,16 @@ class RegionActions[A] {
     private val stack = new java.util.ArrayDeque[Int]
 
     /**
-     * Alias of <code>startAt</code>
-     */
-    final def apply(p: Peg[A]): Peg[A] = startAt(p)
-
-    /**
      * Marks starting point of actions.
      */
-    def startAt(p: Peg[A]): Peg[A] = new StartAtPeg(p)
+    val startAt: Peg[A] = new StartAtPeg
 
-    private class StartAtPeg(override val self: Peg[A]) extends PegProxy[A] {
+    private class StartAtPeg extends Peg[A] {
         override def parse(v: Vector[A], start: Int, end: Int) = {
             stack.push(start)
-            self.parse(v, start, end)
+            start
         }
+        override def width = 0
     }
 
     /**
