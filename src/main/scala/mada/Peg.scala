@@ -102,18 +102,6 @@ object Peg extends peg.Compatibles {
     def lowerCaseRead(p: Peg[Char]): Peg[Char] = p readMap { v => Vector.lowerCase(v) }
 
     /**
-     * @return  <code>joint(ps.elements)</code>.
-     */
-    def joint[A](ps: Peg[A]*): Peg[A] = joint(ps.elements)
-
-    /**
-     * Goes sequence as long as possible.
-     *
-     * @return  <code>e1 >> (e2 >> (e3 >> (e4).?).?).?</code>.
-     */
-    def joint[A](ps: Iterator[Peg[A]]): Peg[A] = ps.foldRight(Peg.eps[A]){ (l, r) => l >> r.? }
-
-    /**
      * Matches range values.
      */
     def range[A](i: A, j: A)(implicit c: A => Ordered[A]): Peg[A] = Range(i, j)(c)
@@ -428,6 +416,12 @@ trait Peg[A] {
      */
     final def seqOr(that: Peg[A]): Peg[A] = (this >> that.?) | that
 
+    /**
+     * Goes sequence as long as possible.
+     *
+     * @return  <code>that >> this.?</code>.
+     */
+    final def seqOpt_:(that: Peg[A]): Peg[A] = that >> this.?
 
 // star
 
@@ -659,6 +653,11 @@ trait Peg[A] {
      * Alias of <code>seqOr</code>
      */
     final def ||(that: Peg[A]): Peg[A] = seqOr(that)
+
+    /**
+     * Alias of <code>seqOpt_:</code>
+     */
+    final def >?>:(that: Peg[A]): Peg[A] = seqOpt_:(that)
 
     /**
      * Zero-or-more; alias of <code>star</code>

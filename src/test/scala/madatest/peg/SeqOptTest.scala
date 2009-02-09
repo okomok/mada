@@ -11,9 +11,9 @@ import mada.Peg
 import junit.framework.Assert._
 
 
-class JointTest {
+class SeqOptTest {
     def testTrivial: Unit = {
-        val p = Peg.joint("abc", "de", "fghi", "jk")
+        val p = "abc" >?>: "de" >?>: "fghi" >?>: Peg.from("jk")
         assertTrue(p matches "abc")
         assertTrue(p matches "abcde")
         assertTrue(p matches "abcdefghi")
@@ -28,11 +28,5 @@ class JointTest {
         assertFalse(p matches "abcfghi")
         assertFalse(p matches "abjk")
         assertFalse(p matches "")
-    }
-
-    def testBound: Unit = {
-        val p = Peg.joint[Char](Iterator.empty)
-        assertTrue(p matches "")
-        assertFalse(p matches "a")
     }
 }
