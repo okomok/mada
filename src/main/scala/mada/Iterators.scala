@@ -168,4 +168,31 @@ object Iterators extends iter.Compatibles {
      * Alias of <code>madaIteratorToJclIterator</code>
      */
     def toJclIterator[A](from: Iterator[A]): java.util.Iterator[A] = madaIteratorToJclIterator(from)
+
+
+// incompatibles
+
+  // to
+
+    /**
+     * Converts to a hash-set.
+     */
+    def toHashSet[A](from: Iterator[A]): scala.collection.Set[A] = {
+        val to = new scala.collection.jcl.HashSet[A]
+        for (e <- from) {
+            to.add(e)
+        }
+        to
+    }
+
+    /**
+     * Converts to a hash-map.
+     */
+    def toHashMap[K, V](from: Iterator[(K, V)]): scala.collection.Map[K, V] = {
+        val to = new scala.collection.jcl.HashMap[K, V]
+        for (e <- from) {
+            to.put(e._1, e._2)
+        }
+        to
+    }
 }

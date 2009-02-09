@@ -164,22 +164,22 @@ object Peg extends peg.Compatibles {
     /**
      * Matches any element of set.
      */
-    def singles[A](es: A*): Peg[A] = Singles(es: _*)
+    def multiple[A](es: A*): Peg[A] = Multiple(Iterators.toHashSet(es.elements))
 
     /**
      * Matches any element of set.
      */
-    def singles[A](es: Set[A]): Peg[A] = Singles(es)
+    def multiple[A](es: scala.collection.Set[A]): Peg[A] = Multiple(es)
 
     /**
      * Matches a key, then tries to match its value.
      */
-    def switch[A](es: (A, Peg[A])*): Peg[A] = Switch(es: _*)
+    def switch[A](es: (A, Peg[A])*): Peg[A] = Switch(Iterators.toHashMap(es.elements))
 
     /**
      * Matches a key, then tries to match its value.
      */
-    def switch[A](es: Map[A, Peg[A]]): Peg[A] = Switch(es)
+    def switch[A](es: scala.collection.Map[A, Peg[A]]): Peg[A] = Switch(es)
 
 
 // alias compatibles

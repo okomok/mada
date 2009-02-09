@@ -10,19 +10,11 @@ package mada.peg
 import scala.collection.Set
 
 
-private[mada] object Singles {
-    def apply[A](es: A*): Peg[A] = {
-        val s = new scala.collection.jcl.HashSet[A]
-        for (e <- es) {
-            s.add(e)
-        }
-        apply(s)
-    }
-
-    def apply[A](es: Set[A]): Peg[A] = new SinglesPeg(es)
+private[mada] object Multiple {
+    def apply[A](es: Set[A]): Peg[A] = new MultiplePeg(es)
 }
 
-private[mada] class SinglesPeg[A](es: Set[A]) extends Peg[A] {
+private[mada] class MultiplePeg[A](es: Set[A]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
         if (start == end || !es.contains(v(start))) {
             Peg.FAILURE

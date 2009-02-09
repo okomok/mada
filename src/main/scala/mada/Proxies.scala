@@ -67,13 +67,18 @@ object Proxies {
     /**
      * Trivial mutable proxy
      */
-    class Var[A](private var x: Option[A]) extends Mutable[A] {
+    class Var[A] private (private var x: Option[A]) extends Mutable[A] {
         def this() = this(None)
         def this(that: A) = this(Some(that))
 
         override def self = x.get
         override def :=(that: => A) = x = Some(that)
         override def isEmptyProxy = x.isEmpty
+
+        /**
+         * Returns a shallow copy. (The <code>self</code> is not copied.)
+         */
+        override def clone: Var[A] = new Var(x)
     }
 
 
@@ -86,5 +91,16 @@ object Proxies {
         override lazy val self = r.get.apply
         override def :=(that: => A) = { r.compareAndSet(null, Functions.byName(that)) }
         override def isEmptyProxy = null == r.get
+
+        /**
+         * Returns a shallow copy. (The <code>self</code> is not copied.)
+         */
+        override def clone: LazyVar[A] = {
+            val v = new LazyVar[A]
+            if (!isEmptyProxy) {
+                v := self
+            }
+            v
+        }
     }
 }

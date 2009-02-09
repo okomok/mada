@@ -11,14 +11,6 @@ import scala.collection.Map
 
 
 private[mada] object Switch {
-    def apply[A](es: (A, Peg[A])*): Peg[A] = {
-        val m = new scala.collection.jcl.HashMap[A, Peg[A]]
-        for (e <- es) {
-            m.put(e._1, e._2)
-        }
-        apply(m)
-    }
-
     def apply[A](es: Map[A, Peg[A]]): Peg[A] = new SwitchPeg(es)
 }
 

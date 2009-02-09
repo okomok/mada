@@ -10,8 +10,8 @@ package mada.peg
 /**
  * A <code>Peg</code> to support recursive grammars.
  */
-class Rule[A] extends PegProxy[A] with Proxies.Mutable[Peg[A]] {
-    private var p: Peg[A] = null
+class Rule[A] private (private var p: Peg[A]) extends PegProxy[A] with Proxies.Mutable[Peg[A]] {
+    def this() = this(null)
 
     override def self = p
     override def :=(that: => Peg[A]) = p = that
@@ -30,9 +30,5 @@ class Rule[A] extends PegProxy[A] with Proxies.Mutable[Peg[A]] {
     /**
      * Returns a shallow copy. (The <code>self</code> is not copied.)
      */
-    override def clone: Rule[A] = {
-        val that = new Rule[A]
-        that := self
-        that
-    }
+    override def clone: Rule[A] = new Rule(p)
 }
