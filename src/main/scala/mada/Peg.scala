@@ -359,10 +359,18 @@ trait Peg[A] {
      *
      * @throws  NotConstantWidth if this peg doesn't have constant width.
      */
-    def width: Int = throw new Peg.NotConstantWidth("Peg")
+    def width: Int = throw new Peg.NotConstantWidth("Peg.unknown")
 
 
 // set
+
+    /**
+     * Matches if this peg not match, then advances <code>width</code>.
+     * Doesn't work unless this peg has constant width.
+     *
+     * @see     unary_- as alias.
+     */
+    final def negate: Peg[A] = Negate(this)
 
     /**
      * Matches <code>this</code> and <code>that</code>.
@@ -392,15 +400,6 @@ trait Peg[A] {
      */
     final def xor(that: Peg[A]): Peg[A] = Xor(this, that)
 
-    /**
-     * Matches if this peg not match, then advances <code>width</code>.
-     * Doesn't work unless this peg has constant width.
-     *
-     * @see     unary_- as alias.
-     */
-    final def negate: Peg[A] = Negate(this)
-
-
 // sequencing
 
     /**
@@ -412,16 +411,25 @@ trait Peg[A] {
 
     /**
      * @return  <code>(this >> that.?) | that</code>.
-     * @see     || as alias.
+     * @see     >|> as alias.
      */
     final def seqOr(that: Peg[A]): Peg[A] = (this >> that.?) | that
+
+    /**
+     * Equivalent to <code>!this | this >> that</code>, but parses <code>this</code> once.
+     *
+     * @see     >=> as alias.
+     */
+    final def seqImply(that: Peg[A]): Peg[A] = SeqImply(this, that)
 
     /**
      * Goes sequence as long as possible.
      *
      * @return  <code>that >> this.?</code>.
+     * @see     >?>: as alias.
      */
     final def seqOpt_:(that: Peg[A]): Peg[A] = that >> this.?
+
 
 // star
 
@@ -435,11 +443,14 @@ trait Peg[A] {
 
     /**
      * @return  <code>this starUntil ~that</code>.
+     * @see     *? as alias
      */
     final def starBefore(that: Peg[A]): Peg[A] = this starUntil ~that
 
     /**
      * Matches everything up to and including <code>that</code>.
+     *
+     * @see     *?>> as alias
      */
     final def starUntil(that: Peg[A]): Peg[A] = StarUntil(this, that)
 
@@ -456,11 +467,13 @@ trait Peg[A] {
 
     /**
      * @return  <code>this >> (this starBefore that)</code>.
+     * @see     +? as alias.
      */
     final def plusBefore(that: Peg[A]): Peg[A] = this >> (this starBefore that)
 
     /**
      * @return  <code>this >> (this starUntil that)</code>.
+     * @see     +?>> as alias.
      */
     final def plusUntil(that: Peg[A]): Peg[A] = this >> (this starUntil that)
 
@@ -477,11 +490,13 @@ trait Peg[A] {
 
     /**
      * @return  <code>(this >> ~that) | ~that </code>.
+     * @see     ?? as alias.
      */
     final def optBefore(that: Peg[A]): Peg[A] = (this >> ~that) | ~that
 
     /**
      * @return  <code>(this >> that) | that</code>.
+     * @see     ??>> as alias.
      */
     final def optUntil(that: Peg[A]): Peg[A] = (this >> that) | that
 
@@ -515,11 +530,13 @@ trait Peg[A] {
 
     /**
      * Look-behind zero-width assertion
+     * @see     <-~ as alias.
      */
     final def lookBehind: Peg[A] = LookBehind(this)
 
     /**
      * Look-back zero-width assertion; looking over input as reversed.
+     * @see     <<~ as alias.
      */
     final def lookBack: Peg[A] = LookBack(this)
 
@@ -652,7 +669,12 @@ trait Peg[A] {
     /**
      * Alias of <code>seqOr</code>
      */
-    final def ||(that: Peg[A]): Peg[A] = seqOr(that)
+    final def >|>(that: Peg[A]): Peg[A] = seqOr(that)
+
+    /**
+     * Alias of <code>seqImply</code>
+     */
+    final def >=>(that: Peg[A]): Peg[A] = seqImply(that)
 
     /**
      * Alias of <code>seqOpt_:</code>

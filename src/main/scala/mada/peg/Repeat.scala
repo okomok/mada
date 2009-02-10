@@ -20,7 +20,7 @@ private[mada] class RepeatPeg[A](p: Peg[A], n: Int, m: Int) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int): Int = {
         var cur = start
         var i = 0
-        while (i < m) {
+        while (i != m) {
             val next = p.parse(v, cur, end)
             if (next == Peg.FAILURE) {
                 return if (i < n) Peg.FAILURE else cur
