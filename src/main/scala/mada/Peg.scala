@@ -344,7 +344,7 @@ object Peg extends peg.Compatibles {
  * </ul><p/>
  *
  * <ul>
- * <li/>PEG parsing is "possessive". You may need <code>starBefore</code> etc.
+ * <li/>PEG parsing is "possessive". You may need <code>*.before</code> etc.
  * <li/><code>java.util.regex</code> is trivially compatible to <code>mada.Peg</code>.
  * </ul>
  */
@@ -385,7 +385,7 @@ trait Peg[A] {
     final def or(that: Peg[A]): Peg[A] = Or(this, that)
 
     /**
-     * Matches <code>this</code> but not <code>that</code>.
+     * Matches <code>this</code>, but not <code>that</code>.
      *
      * @see     - as alias.
      */

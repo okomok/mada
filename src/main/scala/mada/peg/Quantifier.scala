@@ -12,26 +12,14 @@ package mada.peg
  */
 trait Quantifier[A] extends Peg[A] {
     /**
-     * Stops excluding <code>that</code>.
-     *
-     * @see     ~? as alias.
-     */
-    def before(that: Peg[A]): Peg[A]
-
-    /**
      * Stops including <code>that</code>.
      *
-     * @see     >? as alias.
+     * @see     >>> as alias.
      */
     def until(that: Peg[A]): Peg[A]
 
     /**
-     * Alias of <code>before</code>
-     */
-    final def ~?(that: Peg[A]) = before(that)
-
-    /**
      * Alias of <code>until</code>
      */
-    final def >?(that: Peg[A]) = until(that)
+    final def >>>(that: Peg[A]) = until(that)
 }

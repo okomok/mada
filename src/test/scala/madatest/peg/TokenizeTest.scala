@@ -61,7 +61,7 @@ class TokenizeTest {
     }
 
     def testTokens: Unit = {
-        val pe = single('a') >> (any.+ before "XX")
+        val pe = single('a') >> (any.+ until ~"XX")
         val v = mada.Vector.from("XabcdXXaBCDXX")
         val it = pe.tokenize(v.nth)
         var c = 0
