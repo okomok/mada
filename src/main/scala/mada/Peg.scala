@@ -370,15 +370,8 @@ trait Peg[A] {
 // set
 
     /**
-     * Matches if this peg not match, then advances <code>width</code>.
-     * Doesn't work unless this peg has constant width.
-     *
-     * @see     unary_- as alias.
-     */
-    final def negate: Peg[A] = Negate(this)
-
-    /**
      * Matches <code>this</code> and <code>that</code>.
+     * <code>that</code> parses sub-region which <code>this</code> matches.
      *
      * @see     & as alias.
      */
@@ -405,6 +398,15 @@ trait Peg[A] {
      */
     final def xor(that: Peg[A]): Peg[A] = Xor(this, that)
 
+    /**
+     * Matches if this peg not match, then advances <code>width</code>.
+     * Doesn't work unless this peg has constant width.
+     *
+     * @see     unary_- as alias.
+     */
+    final def negate: Peg[A] = Negate(this)
+
+
 // sequencing
 
     /**
@@ -423,7 +425,7 @@ trait Peg[A] {
     /**
      * Equivalent to <code>!this | this >> that</code>, but parses <code>this</code> once.
      *
-     * @see     >=> as alias.
+     * @see     >-> as alias.
      */
     final def seqImply(that: Peg[A]): Peg[A] = SeqImply(this, that)
 
@@ -441,6 +443,7 @@ trait Peg[A] {
     /**
      * Zero-or-more
      *
+     * @pre     <code>this</code> is not instance of <code>ZeroWidth</code>.
      * @see     * as alias.
      */
     final def star: Quantifier[A] = { throwIfZeroWidth("star"); repeat(0, ()) }
@@ -448,6 +451,7 @@ trait Peg[A] {
     /**
      * One-or-more
      *
+     * @pre     <code>this</code> is not instance of <code>ZeroWidth</code>.
      * @see     + as alias.
      */
     final def plus: Quantifier[A] = { throwIfZeroWidth("plus"); repeat(1, ()) }
@@ -630,7 +634,7 @@ trait Peg[A] {
     /**
      * Alias of <code>seqImply</code>
      */
-    final def >=>(that: Peg[A]): Peg[A] = seqImply(that)
+    final def >->(that: Peg[A]): Peg[A] = seqImply(that)
 
     /**
      * Alias of <code>seqOpt_:</code>
@@ -682,6 +686,7 @@ trait Peg[A] {
 
 
 // implementation helpers
+
     private def throwIfZeroWidth(method: String): Unit = {
         if (IsZeroWidth(this)) {
             throw new IllegalArgumentException(method + " doesn't allow zero-width")
