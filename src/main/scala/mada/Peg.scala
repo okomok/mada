@@ -54,12 +54,12 @@ object Peg extends peg.Compatibles {
     /**
      * Matches the beginning of input.
      */
-    def begin[A]: Peg[A] = lookAround3 { (v, i, _) => i == v.start }
+    def begin[A]: Peg[A] = lookaround3 { (v, i, _) => i == v.start }
 
     /**
      * Matches the end of input.
      */
-    def end[A]: Peg[A] = lookAround3 { (v, i, _) => i == v.end }
+    def end[A]: Peg[A] = lookaround3 { (v, i, _) => i == v.end }
 
     /**
      * @return  <code>eps[A] act { _ => f() }</code>.
@@ -69,7 +69,7 @@ object Peg extends peg.Compatibles {
     /**
      * Epsilon; Matches an empty input.
      */
-    def eps[A]: Peg[A] = lookAround3 { (_, _, _) => true }
+    def eps[A]: Peg[A] = lookaround3 { (_, _, _) => true }
 
     /**
      * Always throws an Error.
@@ -79,7 +79,7 @@ object Peg extends peg.Compatibles {
     /**
      * Doesn't match any input.
      */
-    def fail[A]: Peg[A] = lookAround3 { (_, _, _) => false }
+    def fail[A]: Peg[A] = lookaround3 { (_, _, _) => false }
 
     /**
      * Mathches case-insensitively.
@@ -89,12 +89,12 @@ object Peg extends peg.Compatibles {
     /**
      * Zero-width assertion if region meets condition <code>pred</code>
      */
-    def lookAround[A](pred: Vector.Pred[A]): Peg[A] = LookAround3(Vector.triplify(pred))
+    def lookaround[A](pred: Vector.Pred[A]): Peg[A] = Lookaround3(Vector.triplify(pred))
 
     /**
      * Zero-width assertion if region meets condition <code>pred</code> (no heap allocations)
      */
-    def lookAround3[A](pred: Vector.Pred3[A]): Peg[A] = LookAround3(pred)
+    def lookaround3[A](pred: Vector.Pred3[A]): Peg[A] = Lookaround3(pred)
 
     /**
      * Reads input as lower cases, then tries to match.
@@ -126,7 +126,7 @@ object Peg extends peg.Compatibles {
     def `lazy`[A](p: => Peg[A]): Peg[A] = Lazy(p)
 
     /**
-     * Constructs a synchronized Peg object. This will be unused.
+     * Constructs a synchronized Peg object.
      */
     def `synchronized`[A](p: Peg[A]): Peg[A] = Synchronized(p)
 
@@ -483,7 +483,6 @@ trait Peg[A] {
     /**
      * Optional
      *
-     * @return  <code>this | Peg.eps[A]</code>.
      * @see     ? as alias.
      */
     final def opt: Peg[A] = this | Peg.eps[A]
@@ -526,19 +525,19 @@ trait Peg[A] {
      *
      * @see     unary_~ as alias.
      */
-    final def lookAhead: Peg[A] = LookAhead(this)
+    final def lookahead: Peg[A] = Lookahead(this)
 
     /**
-     * Look-behind zero-width assertion
+     * Lookbehind zero-width assertion
      * @see     <-~ as alias.
      */
-    final def lookBehind: Peg[A] = LookBehind(this)
+    final def lookbehind: Peg[A] = Lookbehind(this)
 
     /**
-     * Look-back zero-width assertion; looking over input as reversed.
+     * Lookback zero-width assertion; looking over input as reversed.
      * @see     <<~ as alias.
      */
-    final def lookBack: Peg[A] = LookBack(this)
+    final def lookback: Peg[A] = Lookback(this)
 
 
 // action
@@ -627,14 +626,14 @@ trait Peg[A] {
     final def apply(f: Peg.Action[A]): Peg[A] = act(f)
 
     /**
-     * And-predicate; alias of <code>lookAhead</code>
+     * And-predicate; alias of <code>lookahead</code>
      */
-    final def unary_~ : Peg[A] = lookAhead
+    final def unary_~ : Peg[A] = lookahead
 
     /**
-     * Not-predicate; alias of <code>lookAhead.negate</code>
+     * Not-predicate; alias of <code>lookahead.negate</code>
      */
-    final def unary_! : Peg[A] = lookAhead.negate
+    final def unary_! : Peg[A] = lookahead.negate
 
     /**
      * Alias of <code>negate</code>
@@ -727,24 +726,24 @@ trait Peg[A] {
     final def ??>>(that: Peg[A]): Peg[A] = optUntil(that)
 
     /**
-     * Alias of <code>lookBehind</code>
+     * Alias of <code>lookbehind</code>
      */
-    final def <-~ : Peg[A] = lookBehind
+    final def <-~ : Peg[A] = lookbehind
 
     /**
-     * Alias of <code>lookBehind.negate</code>
+     * Alias of <code>lookbehind.negate</code>
      */
-    final def <-! : Peg[A] = lookBehind.negate
+    final def <-! : Peg[A] = lookbehind.negate
 
     /**
-     * Alias of <code>lookBack</code>
+     * Alias of <code>lookback</code>
      */
-    final def <<~ :  Peg[A] = lookBack
+    final def <<~ :  Peg[A] = lookback
 
     /**
-     * Alias of <code>lookBack.negate</code>
+     * Alias of <code>lookback.negate</code>
      */
-    final def <<! :  Peg[A] = lookBack.negate
+    final def <<! :  Peg[A] = lookback.negate
 
 
 // misc

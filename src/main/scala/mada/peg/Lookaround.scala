@@ -7,13 +7,13 @@
 package mada.peg
 
 
-private[mada] object LookAhead {
-    def apply[A](p: Peg[A]): Peg[A] = new LookAheadPeg(p)
+private[mada] object Lookaround3 {
+    def apply[A](p: Vector.Pred3[A]): Peg[A] = new Lookaround3Peg[A](p)
 }
 
-private[mada] class LookAheadPeg[A](p: Peg[A]) extends Peg[A] with ZeroWidth[A] {
+private[mada] class Lookaround3Peg[A](p: Vector.Pred3[A]) extends Peg[A] with ZeroWidth[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
-        if (p.parse(v, start, end) != Peg.FAILURE) {
+        if (p(v, start, end)) {
             start
         } else {
             Peg.FAILURE
