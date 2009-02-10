@@ -21,8 +21,8 @@ class LookTest {
     }
 
     def testBehind: Unit = {
-        assertTrue("abc" >> "abc".<-~ >> "def" matches "abcdef")
-        assertTrue("abc" >> "xxx".<-! >> "def" matches "abcdef")
+        assertTrue("abc" >> "abc".<=~ >> "def" matches "abcdef")
+        assertTrue("abc" >> "xxx".<=! >> "def" matches "abcdef")
     }
 
     def testBack: Unit = {

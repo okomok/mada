@@ -34,21 +34,21 @@ class StarTest {
 
     def testBefore: Unit = {
         val sample = mada.Vector.fromString("/*hello*/")
-        assertTrue((fromString("/*") >> (any *? fromString("*/")) >> fromString("*/")).matches(sample))
+        assertTrue((fromString("/*") >> (any.* before fromString("*/")) >> fromString("*/")).matches(sample))
     }
 
     def testUntil: Unit = {
         val sample = mada.Vector.fromString("/*hello*/")
-        assertTrue((fromString("/*") >> (any *?>> fromString("*/"))).matches(sample))
+        assertTrue((fromString("/*") >> (any.* until fromString("*/"))).matches(sample))
     }
 
     def testBefore2: Unit = {
         val sample = mada.Vector.fromString("/*hello*/")
-        assertTrue((fromString("/*") >> any.*?(fromString("*/")) >> fromString("*/")).matches(sample) )
+        assertTrue((fromString("/*") >> any.*.before(fromString("*/")) >> fromString("*/")).matches(sample) )
     }
 
     def testUntil2: Unit = {
         val sample = mada.Vector.fromString("/*hello*/")
-        assertTrue((fromString("/*") >> any.*?>>(fromString("*/"))).matches(sample))
+        assertTrue((fromString("/*") >> any.*.until(fromString("*/"))).matches(sample))
     }
 }

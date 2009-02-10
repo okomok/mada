@@ -19,7 +19,7 @@ class IterateTest {
         val sb = new StringBuilder
         val w = mada.Vector.from("XXabcXXabcXXabcXXabc").nth
 
-        val p = -single('X') +? ("X"|end)
+        val p = (-single('X')).+.before("X"|end)
         var k = 0
         for (Vector.Region(v, i, j) <- p.tokenize(w)) {
             assertSame(w, v)

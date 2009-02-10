@@ -225,6 +225,11 @@ object Peg extends peg.Compatibles {
     type ZeroWidth[A] = peg.ZeroWidth[A]
 
     /**
+     * Alias of <code>peg.Quantifier</code>
+     */
+    type Quantifier[A] = peg.Quantifier[A]
+
+    /**
      * Alias of <code>peg.PegProxy</code>
      */
     type PegProxy[A] = peg.PegProxy[A]
@@ -431,91 +436,43 @@ trait Peg[A] {
     final def seqOpt_:(that: Peg[A]): Peg[A] = that >> this.?
 
 
-// star
+// quantifiers
 
     /**
-     * Zero-or-more; possessive.
+     * Zero-or-more
      *
      * @see     * as alias.
      */
-    final def star: Peg[A] = Star(this)
-                        // = this starUntil !this (if speed and actions are unneeded.)
-
-    /**
-     * @return  <code>this starUntil ~that</code>.
-     * @see     *? as alias
-     */
-    final def starBefore(that: Peg[A]): Peg[A] = this starUntil ~that
-
-    /**
-     * Matches everything up to and including <code>that</code>.
-     *
-     * @see     *?>> as alias
-     */
-    final def starUntil(that: Peg[A]): Peg[A] = StarUntil(this, that)
-
-
-// plus
+    final def star: Quantifier[A] = { throwIfZeroWidth("star"); repeat(0, ()) }
 
     /**
      * One-or-more
      *
-     * @return  <code>this >> this.*</code>.
      * @see     + as alias.
      */
-    final def plus: Peg[A] = this >> this.*
-
-    /**
-     * @return  <code>this >> (this starBefore that)</code>.
-     * @see     +? as alias.
-     */
-    final def plusBefore(that: Peg[A]): Peg[A] = this >> (this starBefore that)
-
-    /**
-     * @return  <code>this >> (this starUntil that)</code>.
-     * @see     +?>> as alias.
-     */
-    final def plusUntil(that: Peg[A]): Peg[A] = this >> (this starUntil that)
-
-
-// optional
+    final def plus: Quantifier[A] = { throwIfZeroWidth("plus"); repeat(1, ()) }
 
     /**
      * Optional
      *
      * @see     ? as alias.
      */
-    final def opt: Peg[A] = this | Peg.eps[A]
-
-    /**
-     * @return  <code>(this >> ~that) | ~that </code>.
-     * @see     ?? as alias.
-     */
-    final def optBefore(that: Peg[A]): Peg[A] = (this >> ~that) | ~that
-
-    /**
-     * @return  <code>(this >> that) | that</code>.
-     * @see     ??>> as alias.
-     */
-    final def optUntil(that: Peg[A]): Peg[A] = (this >> that) | that
-
-
-// repeat
+    final def opt: Quantifier[A] = repeat(0, 1)
 
     /**
      * Repeats exactly <code>n</code> times.
      */
-    final def repeat(n: Int): Peg[A] = Repeat(this, n, n)
+    final def repeat(n: Int): Quantifier[A] = Repeat(this, n, n)
 
     /**
      * Repeats at least <code>n</code> times.
      */
-    final def repeat(n: Int, u: Unit): Peg[A] = Repeat(this, n, Math.MAX_INT)
+    final def repeat(n: Int, u: Unit): Quantifier[A] = Repeat(this, n, Math.MAX_INT)
 
     /**
      * Repeats at least <code>n</code> but not more than <code>m</code> times.
      */
-    final def repeat(n: Int, m: Int): Peg[A] = Repeat(this, n, m)
+    final def repeat(n: Int, m: Int): Quantifier[A] = Repeat(this, n, m)
 
 
 // assertions
@@ -529,7 +486,7 @@ trait Peg[A] {
 
     /**
      * Lookbehind zero-width assertion
-     * @see     <-~ as alias.
+     * @see     <=~ as alias.
      */
     final def lookbehind: Peg[A] = Lookbehind(this)
 
@@ -683,57 +640,27 @@ trait Peg[A] {
     /**
      * Zero-or-more; alias of <code>star</code>
      */
-    final def * : Peg[A] = star
-
-    /**
-     * Alias of <code>starBefore</code>
-     */
-    final def *?(that: Peg[A]): Peg[A] = starBefore(that)
-
-    /**
-     * Alias of <code>starUntil</code>
-     */
-    final def *?>>(that: Peg[A]): Peg[A] = starUntil(that)
+    final def * : Quantifier[A] = star
 
     /**
      * One-or-more; alias of <code>plus</code>
      */
-    final def + : Peg[A] = plus
-
-    /**
-     * Alias of <code>plusBefore</code>
-     */
-    final def +?(that: Peg[A]): Peg[A] = plusBefore(that)
-
-    /**
-     * Alias of <code>plusUntil</code>
-     */
-    final def +?>>(that: Peg[A]): Peg[A] = plusUntil(that)
+    final def + : Quantifier[A] = plus
 
     /**
      * Optional; alias of <code>opt</code>
      */
-    final def ? : Peg[A] = opt
-
-    /**
-     * Alias of <code>optBefore</code>
-     */
-    final def ??(that: Peg[A]): Peg[A] = optBefore(that)
-
-    /**
-     * Alias of <code>optUntil</code>
-     */
-    final def ??>>(that: Peg[A]): Peg[A] = optUntil(that)
+    final def ? : Quantifier[A] = opt
 
     /**
      * Alias of <code>lookbehind</code>
      */
-    final def <-~ : Peg[A] = lookbehind
+    final def <=~ : Peg[A] = lookbehind
 
     /**
      * Alias of <code>lookbehind.negate</code>
      */
-    final def <-! : Peg[A] = lookbehind.negate
+    final def <=! : Peg[A] = lookbehind.negate
 
     /**
      * Alias of <code>lookback</code>
@@ -752,4 +679,12 @@ trait Peg[A] {
      * @return  <code>(e, this)</code>.
      */
     final def inCase(e: A): (A, Peg[A]) = (e, this)
+
+
+// implementation helpers
+    private def throwIfZeroWidth(method: String): Unit = {
+        if (IsZeroWidth(this)) {
+            throw new IllegalArgumentException(method + " doesn't allow zero-width")
+        }
+    }
 }
