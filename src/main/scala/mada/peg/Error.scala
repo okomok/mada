@@ -13,6 +13,6 @@ private[mada] object Error {
 
 private[mada] class ErrorPeg[A] extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
-        throw new Error("ErrorPeg.parse")
+        throw new java.lang.AssertionError("Peg.error")
     }
 }

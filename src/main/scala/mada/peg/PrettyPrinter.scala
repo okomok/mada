@@ -28,7 +28,7 @@ object PrettyPrinter {
 
     /**
      * Creates a <code>PrettyPrinter</code> which outputs XML.
-     * You must call <code>close</code>.
+     * You must call <code>close</code> later.
      *
      * @param   out where xml printed
      * @param   indentWidth indent width
@@ -43,6 +43,7 @@ object PrettyPrinter {
         override def print[A](p: Peg[A]) = p
     }
 }
+
 
 /**
  * Prints matched input information.
