@@ -81,7 +81,11 @@ class IteratorsTest {
     }
 
     def testStepEmpty: Unit = {
-        val it = Iterators.step(Iterator.empty, 3)
-        assertTrue(Iterators.isEmpty(it))
+        val it0 = Iterators.step(Iterator.empty, 0)
+        assertTrue(Iterators.isEmpty(it0))
+        val it1 = Iterators.step(Iterator.empty, 1)
+        assertTrue(Iterators.isEmpty(it1))
+        val it2 = Iterators.step(Iterator.empty, 2)
+        assertTrue(Iterators.isEmpty(it2))
     }
 }
