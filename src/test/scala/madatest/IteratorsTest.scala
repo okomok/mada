@@ -53,4 +53,35 @@ class IteratorsTest {
         val it = Iterator.fromValues(1,2,3).cycle.take(10)
         assertTrue(Iterators.equal(it, Iterator.fromValues(1,2,3,1,2,3,1,2,3,1)))
     }
+
+    def testStep0: Unit = {
+        // Unlike Vector, 0 is allowed.
+        val it = Iterators.step(Iterator.fromValues(1,2,3,4,5,6), 0)
+        assertTrue(Iterators.equal(it.take(5), Iterator.fromValues(1,1,1,1,1)))
+    }
+
+    def testStep1: Unit = {
+        val it = Iterators.step(Iterator.fromValues(1,2,3,4,5,6), 1)
+        assertTrue(Iterators.equal(it, Iterator.fromValues(1,2,3,4,5,6)))
+    }
+
+    def testStep2: Unit = {
+        val it = Iterators.step(Iterator.fromValues(1,2,3,4,5,6), 2)
+        assertTrue(Iterators.equal(it, Iterator.fromValues(1,3,5)))
+    }
+
+    def testStep3: Unit = {
+        val it = Iterators.step(Iterator.fromValues(1,2,3,4,5,6), 3)
+        assertTrue(Iterators.equal(it, Iterator.fromValues(1,4)))
+    }
+
+    def testStepFusion: Unit = {
+        val it = Iterators.step(Iterators.step(Iterator.fromValues(1,2,3,4,5,6,7,8,9,10,11), 3), 2)
+        assertTrue(Iterators.equal(it, Iterator.fromValues(1,6,11)))
+    }
+
+    def testStepEmpty: Unit = {
+        val it = Iterators.step(Iterator.empty, 3)
+        assertTrue(Iterators.isEmpty(it))
+    }
 }

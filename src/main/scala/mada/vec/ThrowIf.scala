@@ -22,7 +22,7 @@ private[mada] object ThrowIf {
 
     def nonpositive(i: Int, what: String): Unit = {
         if (i <= 0) {
-            throw new java.lang.IllegalArgumentException("nonpositive " + what + ": " + i)
+            throw new IllegalArgumentException("nonpositive " + what + ": " + i)
         }
     }
 }

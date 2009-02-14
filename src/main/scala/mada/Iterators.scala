@@ -11,40 +11,30 @@ package mada
  * Contains utility methods operating on <code>Iterator</code>.
  */
 object Iterators extends iter.Compatibles {
+    import iter._
 
 
 // algorithms
 
     /**
-     * @return  <code>equalWith(it, jt)(Functions.equal)
+     * @return  <code>equalWith(it, jt)(Functions.equal)</code>
      */
-     def equal[A, B](it: Iterator[A], jt: Iterator[B]): Boolean = {
-         equalWith(it, jt)(Functions.equal)
-     }
+     def equal[A, B](it: Iterator[A], jt: Iterator[B]): Boolean = equalWith(it, jt)(Functions.equal)
 
     /**
      * Returns <code>true</code> iif elements and length are the same.
      */
-    def equalWith[A, B](it: Iterator[A], jt: Iterator[B])(p: Functions.Predicate2[A, B]): Boolean = {
-        while (it.hasNext && jt.hasNext) {
-            if (!p(it.next, jt.next)) {
-                return false
-            }
-        }
-        !it.hasNext && !jt.hasNext
-    }
+    def equalWith[A, B](it: Iterator[A], jt: Iterator[B])(p: Functions.Predicate2[A, B]): Boolean = EqualWith(it, jt)(p)
 
     /**
-     * Returns the length.
+     * Returns the length. Note <code>it</code> is exhausted.
      */
-    def length[A, B](it: Iterator[A]): Int = {
-        var l = 0
-        while (it.hasNext) {
-            l += 1
-            it.next
-        }
-        l
-    }
+    def length[A](it: Iterator[A]): Int = Length(it)
+
+    /**
+     * @return  <code>!it.hasNext</code>.
+     */
+    def isEmpty[A](it: Iterator[A]): Boolean = !it.hasNext
 
 
 // constructors
@@ -59,28 +49,12 @@ object Iterators extends iter.Compatibles {
     /**
      * The unfolding
      */
-    def unfoldRight[A, B](z: A)(op: A => Option[(B, A)]): Iterator[B] = new Iterator[B] {
-        private var acc = op(z)
-        override def hasNext = !acc.isEmpty
-        override def next = {
-            val tmp = acc.get
-            acc = op(tmp._2)
-            tmp._1
-        }
-    }
+    def unfoldRight[A, B](z: A)(op: A => Option[(B, A)]): Iterator[B] = UnfoldRight(z)(op)
 
     /**
      * An infinite iterator of repeated applications of <code>op</code> to <code>z</code>.
      */
-    def iterate[A](z: A)(op: A => A): Iterator[A] = new Iterator[A] {
-        private var acc = z
-        override def hasNext = true
-        override def next = {
-            val tmp = acc
-            acc = op(acc)
-            tmp
-        }
-    } // unfoldRight(z)({ x => Some(x, op(x)) }) always needs heap-allocation of Option.
+    def iterate[A](z: A)(op: A => A): Iterator[A] = Iterate(z)(op)
 
     /**
      * An infinite iterator, with <code>e</code> the value of every element.
@@ -93,31 +67,17 @@ object Iterators extends iter.Compatibles {
     /**
      * An infinite repetition of <code>it</code>.
      */
-    def cycle[A](it: Iterator[A]): Iterator[A] = {
-        val buf = new java.util.ArrayList[A]
-        var firstTime = true
-        val f = { (u: Unit) =>
-            if (firstTime) {
-                firstTime = false
-                withSideEffect(it)({ e => buf.add(e) })
-            } else {
-                fromJclIterator(buf.iterator)
-            }
-        }
-        repeat(()).flatMap(f)
-    }
+    def cycle[A](it: Iterator[A]): Iterator[A] = Cycle(it)
+
+    /**
+     * Returns <code>[e<sub>0</sub>, e<sub>n</sub>, e<sub>2n</sub>,...]</code>.
+     */
+    def step[A](it: Iterator[A], n: Int): Iterator[A] = Step(it, n)
 
     /**
      * Iterates with side-effect <code>f</code>.
      */
-    def withSideEffect[A](it: Iterator[A])(f: A => Any): Iterator[A] = new Iterator[A] {
-        override def hasNext = it.hasNext
-        override def next = {
-            val e = it.next
-            f(e)
-            e
-        }
-    }
+    def withSideEffect[A](it: Iterator[A])(f: A => Any): Iterator[A] = WithSideEffect(it)(f)
 
 
 // aliases
@@ -177,22 +137,10 @@ object Iterators extends iter.Compatibles {
     /**
      * Converts to a hash-set.
      */
-    def toHashSet[A](from: Iterator[A]): scala.collection.Set[A] = {
-        val to = new scala.collection.jcl.HashSet[A]
-        for (e <- from) {
-            to.add(e)
-        }
-        to
-    }
+    def toHashSet[A](from: Iterator[A]): scala.collection.Set[A] = ToHashSet(from)
 
     /**
      * Converts to a hash-map.
      */
-    def toHashMap[K, V](from: Iterator[(K, V)]): scala.collection.Map[K, V] = {
-        val to = new scala.collection.jcl.HashMap[K, V]
-        for (e <- from) {
-            to.put(e._1, e._2)
-        }
-        to
-    }
+    def toHashMap[K, V](from: Iterator[(K, V)]): scala.collection.Map[K, V] = ToHashMap(from)
 }
