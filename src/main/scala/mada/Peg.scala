@@ -669,12 +669,12 @@ trait Peg[A] {
     /**
      * Alias of <code>lookback</code>
      */
-    final def <<~ :  Peg[A] = lookback
+    final def <<~ : Peg[A] = lookback
 
     /**
      * Alias of <code>lookback.negate</code>
      */
-    final def <<! :  Peg[A] = lookback.negate
+    final def <<! : Peg[A] = lookback.negate
 
 
 // misc

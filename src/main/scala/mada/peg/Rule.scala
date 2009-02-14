@@ -8,9 +8,15 @@ package mada.peg
 
 
 /**
- * A <code>Peg</code> to support recursive grammars.
+ * Mutable <code>Peg</code> which is assignable in run-time.
+ * As a result, this is used to define recursive grammars.
+ *
+ * @param   p   assigned to <code>self</code>
  */
-class Rule[A] private (private var p: Peg[A]) extends PegProxy[A] with Proxies.Mutable[Peg[A]] {
+class Rule[A](private var p: Peg[A]) extends PegProxy[A] with Proxies.Mutable[Peg[A]] {
+    /**
+     * @return   <code>this(null)</code>.
+     */
     def this() = this(null)
 
     override def self = p
