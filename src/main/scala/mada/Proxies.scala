@@ -53,6 +53,15 @@ object Proxies {
         def isEmptyProxy: Boolean
 
         /**
+         * Swaps <code>self</code> and <code>that.self</code>.
+         */
+        final def swapProxy(that: Mutable[A]): Unit = {
+            val tmp = self
+            this := that.self
+            that := tmp
+        }
+
+        /**
          * Returns a vector of this proxy.
          */
         final def vectorOfProxy: Vector[A] = new Vector[A] {
