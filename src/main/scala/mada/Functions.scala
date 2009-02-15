@@ -75,25 +75,24 @@ object Functions {
     }
 
     /**
+     * Converts from <code>java.util.Comparator</code> "less-than" predicate.
+     */
+    def fromComparator[A](from: java.util.Comparator[A]): Compare[A] = new Compare[A] {
+        override def apply(x: A, y: A) = from.compare(x, y) < 0
+    }
+
+    /**
      * Converts "less-than" predicate to <code>java.util.Comparator</code>.
      */
-    def toComparator[A](lt: Compare[A]): java.util.Comparator[A] = new java.util.Comparator[A] {
-        override def compare(x: A, y: A) = {
-            if (lt(x, y)) {
-                -1
-            } else if (lt(y, x)) {
-                1
-            } else {
-                0
-            }
-        }
+    def toComparator[A](from: Compare[A]): java.util.Comparator[A] = new java.util.Comparator[A] {
+        override def compare(x: A, y: A) = if (from(x, y)) -1 else if (from(y, x)) 1 else 0
     }
 
 
 // utilities
 
     /**
-     * A function fliping two arguments
+     * A function flipping two arguments
      */
     def flip[T1, T2, R](f: Function2[T1, T2, R]): Function2[T2, T1, R] = new Function2[T2, T1, R] {
         override def apply(v2: T2, v1: T1) = f(v1, v2)
