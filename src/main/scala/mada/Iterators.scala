@@ -19,22 +19,22 @@ object Iterators extends iter.Compatibles {
     /**
      * @return  <code>equalWith(it, jt)(Functions.equal)</code>
      */
-     def equal[A, B](it: Iterator[A], jt: Iterator[B]): Boolean = equalWith(it, jt)(Functions.equal)
+    def equal[A, B](it: Iterator[A], jt: Iterator[B]): Boolean = EqualWith(it, jt)(Functions.equal)
 
     /**
-     * Returns <code>true</code> iif elements and length are the same.
+     * @return  <code>true</code> iif elements and length are the same.
      */
     def equalWith[A, B](it: Iterator[A], jt: Iterator[B])(p: Functions.Predicate2[A, B]): Boolean = EqualWith(it, jt)(p)
-
-    /**
-     * Returns the length. Note <code>it</code> is exhausted.
-     */
-    def length[A](it: Iterator[A]): Int = Length(it)
 
     /**
      * @return  <code>!it.hasNext</code>.
      */
     def isEmpty[A](it: Iterator[A]): Boolean = !it.hasNext
+
+    /**
+     * Returns the length. Note <code>it</code> is exhausted.
+     */
+    def length[A](it: Iterator[A]): Int = Length(it)
 
 
 // constructors

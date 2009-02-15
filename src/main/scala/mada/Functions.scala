@@ -103,7 +103,7 @@ object Functions {
     def byName[R](v: => R): Function0[R] = { () => v }
 
     /**
-     * Converts by-name-parameter to a function returning lazy <code>v</code>.
+     * Converts by-name-parameter to a function returning <code>lazy v</code>.
      */
     def byLazy[R](v: => R): Function0[R] = new Function0[R] {
         private lazy val _v = v

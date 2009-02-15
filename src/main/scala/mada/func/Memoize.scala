@@ -10,8 +10,9 @@ package mada.func
 import scala.collection.mutable.Map
 
 
+// See: http://citeseer.ist.psu.edu/51062.html
+
 private[mada] object Memoize {
-    // See: http://citeseer.ist.psu.edu/51062.html
     def apply[T, R](g: Functions.Transform[Function1[T, R]])(m: Map[T, R]): Function1[T, R] = Functions.fix(new MemoizeWrap(g, m).curry)
 }
 
