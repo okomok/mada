@@ -16,6 +16,16 @@ object Infix {
      */
     sealed class MadaIterators[A](_1: Iterator[A]) {
         /**
+         * @return  <code>Iterators.cut(_1)</code>.
+         */
+        def cut = Iterators.cut(_1)
+
+        /**
+         * @return  <code>Iterators.cycle(_1)</code>.
+         */
+        def cycle = Iterators.cycle(_1)
+
+        /**
          * @return  <code>Iterators.equal(_2)</code>.
          */
         def equal[B](_2: Iterator[B]) = Iterators.equal(_1, _2)
@@ -26,14 +36,24 @@ object Infix {
         def equalWith[B](_2: Iterator[B])(_3: Functions.Predicate2[A, B]) = Iterators.equalWith(_1, _2)(_3)
 
         /**
+         * @return  <code>Iterators.isEmpty(_1)</code>.
+         */
+        def isEmpty = Iterators.isEmpty(_1)
+
+        /**
          * @return  <code>Iterators.length(_1)</code>.
          */
         def length = Iterators.length(_1)
 
         /**
-         * @return  <code>Iterators.cycle(_1)</code>.
+         * @return  <code>Iterators.step(_1, _2)</code>.
          */
-        def cycle = Iterators.cycle(_1)
+        def step(_2: Int) = Iterators.step(_1, _2)
+
+        /**
+         * @return  <code>Iterators.toHashSet(_1)</code>.
+         */
+        def toHashSet = Iterators.toHashSet(_1)
 
         /**
          * @return  <code>Iterators.withSideEffect(_1)(_2)</code>.

@@ -60,7 +60,7 @@ object Vector extends vec.Compatibles {
     /**
      * Concatenate all argument sequences into a single vector.
      *
-     * @param   vs the given argument sequences
+     * @param   vs  the given argument sequences
      * @return  the projection vector created from the concatenated arguments
      */
     def concat[A](vs: Vector[A]*): Vector[A] = Concat(vs: _*)
@@ -74,8 +74,8 @@ object Vector extends vec.Compatibles {
      * Create a vector that is the concantenation of all vectors
      * returned by a given vector of vectors.
      *
-     * @param   vs The iterator which returns on each call to next
-     *             a new vector whose elements are to be concatenated to the result.
+     * @param   vs  The iterator which returns on each call to next
+     *              a new vector whose elements are to be concatenated to the result.
      * @return  the newly created writable vector (not a projection into <code>vs</code>).
      */
     def flatten[A](vs: Iterator[Vector[A]]): Vector[A] = Flatten(vs)
@@ -103,14 +103,14 @@ object Vector extends vec.Compatibles {
     /**
      * Creates a vector containing of successive integers.
      *
-     * @param   i the value of the first element of the vector
-     * @param   j the value of the last element of the vector plus 1
+     * @param   i   the value of the first element of the vector
+     * @param   j   the value of the last element of the vector plus 1
      * @return  the sorted vector of all integers in range [i, j).
      */
     def range(i: Int, j: Int): Vector[Int] = Range(i, j)
 
     /**
-     * @param   e the element
+     * @param   e   the element
      * @return  the writable vector with one single element.
      */
     def single[A](e: A): Vector[A] = Single(e)
@@ -381,7 +381,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     def end: Int
 
     /**
-     * @param   i index of element to return.
+     * @param   i   index of element to return.
      * @pre     this vector is readable.
      * @pre     <code>isDefinedAt(i)</code>
      * @return  the element at the specified position in this vector.
@@ -393,8 +393,8 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * Replaces the element at the specified position in this vector with
      * the specified element.
      *
-     * @param   i index of element to replace.
-     * @param   e element to be stored at the specified position.
+     * @param   i   index of element to replace.
+     * @param   e   element to be stored at the specified position.
      * @pre     this vector is writable.
      * @pre     <code>isDefinedAt(i)</code>
      * @throws  Vector.NotWritableException if not overridden.
@@ -498,7 +498,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * Returns the longest prefix of this vector whose elements satisfy
      * the predicate <code>p</code>.
      *
-     * @param   p the test predicate.
+     * @param   p  the test predicate.
      * @return  the longest prefix of this vector whose elements satisfy
      *          the predicate <code>p</code>.
      */
@@ -511,7 +511,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * Divides this vector into vector of Regions.
      * Each vector size is <code>n</code> except for the last one.
      *
-     * @param   n divisor
+     * @param   n   divisor
      * @return  <code>[this(start, n), this(start + n, 2*n), this(start + 2*n, 3*n),...]</code>.
      * @see     Vector.undivide
      */
@@ -526,7 +526,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * Returns the longest prefix of the vector whose elements all satisfy
      * the given predicate, and the rest of the vector.
      *
-     * @param   p the test predicate
+     * @param   p   the test predicate
      * @return  a pair consisting of the longest prefix of the vector whose
      *          elements all satisfy <code>p</code>, and the rest of the vector.
      */
@@ -585,7 +585,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * Returns all the elements of this vector that satisfy the
      * predicate <code>p</code>. The order of the elements is preserved.
      *
-     * @param   p the predicate used to filter the vector.
+     * @param   p   the predicate used to filter the vector.
      * @return  the non-writable elements of this vector satisfying <code>p</code>.
      */
     def filter(p: A => Boolean): Vector[A] = Filter(this, p)
@@ -596,7 +596,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * Unlike <code>filter</code>, this requires no intermediate buffer,
      * but the state of this vector is unpredictable after calling this.
      *
-     * @param   p the predicate used to filter the vector.
+     * @param   p   the predicate used to filter the vector.
      * @return  the elements of this vector satisfying <code>p</code>.
      */
     def mutatingFilter(p: A => Boolean): Vector[A] = MutatingFilter(this, p)
@@ -653,7 +653,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * <code>f</code> may be called in any order, and
      * there is no guarantee <code>f</code> calls are single-threaded.
      *
-     * @param   f a function that is applied to every element.
+     * @param   f   a function that is applied to every element.
      */
     def pareach(f: A => Unit): Unit = foreach(f)
 
@@ -669,7 +669,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * Find and return the element of this vector satisfying a
      * predicate, if any. No guarantee the element is the first one.
      *
-     * @param   p the predicate
+     * @param   p   the predicate
      * @return  the element in the iterable object satisfying
      *          <code>p</code>, or <code>None</code> if none exists.
      */
@@ -747,7 +747,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * Sort this vector according to the comparison function <code>lt</code>.
      * Note this vector is mutated.
      *
-     * @param   lt the "less-than" comparison function
+     * @param   lt  the "less-than" comparison function
      * @return  this vector sorted according to the comparison function <code>lt</code>.
      */
     def sortWith(lt: Functions.Compare[A]): Vector[A] = SortWith(this, lt)

@@ -11,7 +11,7 @@ package mada.peg
  * Provides memoization functionality.
  * Results of parsing different vectors are not memoized.
  *
- * @param   input the target vector of this memoization
+ * @param   input   the target vector of this memoization
  */
 class Memoizer[A](val input: Vector[A]) {
     /**

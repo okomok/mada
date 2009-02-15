@@ -41,8 +41,8 @@ object ASTreeBuilder {
  * Builds <code>MutableTreeNode</code> while parsing.
  * <code>cloner</code> is needed because <code>MutableTreeNode.clone</code> isn't public for some reason.
  *
- * @param   root the root node of this tree
- * @param   cloner a function returns shallow-copy of <code>T</code> object
+ * @param   root    the root node of this tree
+ * @param   cloner  a function returns shallow-copy of <code>T</code> object
  */
 class ASTreeBuilder[T <: MutableTreeNode](root: T, cloner: T => T) {
     private val branches = new java.util.ArrayDeque[T]

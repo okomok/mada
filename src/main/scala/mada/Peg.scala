@@ -42,7 +42,7 @@ object Peg extends peg.Compatibles {
     /**
      * Matches if it succeeds to advance.
      *
-     * @param   i the increment count
+     * @param   i   the increment count
      */
     def advance[A](n: Int): Peg[A] = Advance[A](n)
 

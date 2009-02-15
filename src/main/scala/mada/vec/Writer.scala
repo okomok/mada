@@ -16,7 +16,7 @@ private[mada] object Writer {
  * A function which writes into <code>out</code> from <code>start</code>.
  * Considered as unrestrictive <code>Vector#copyTo</code>.
  *
- * @param   start the initial value of internal index.
+ * @param   start   the initial value of internal index.
  */
 class Writer[A](val out: Vector[A], val start: Int) extends (A => Unit) {
     private var i = start

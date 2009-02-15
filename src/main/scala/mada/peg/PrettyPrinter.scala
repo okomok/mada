@@ -30,7 +30,7 @@ object PrettyPrinter {
      * Creates a <code>PrettyPrinter</code> which outputs XML.
      * You must call <code>close</code> later.
      *
-     * @param   out where xml printed
+     * @param   out         where xml printed
      * @param   indentWidth indent width
      */
     def xml(out: java.io.Writer, indentWidth: Int): PrettyPrinter = new XMLPrettyPrinter(out, indentWidth)

@@ -65,7 +65,7 @@ object Iterators extends iter.Compatibles {
 // projections
 
     /**
-     * An infinite repetition of <code>it</code>.
+     * Disables overrides.
      */
     def cut[A](it: Iterator[A]): Iterator[A] = Cut(it)
 

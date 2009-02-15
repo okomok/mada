@@ -26,7 +26,7 @@ private[mada] object XMLPrettyPrinter {
 /**
  * A quick-and-dirty printer for pegs; mainly used for debugging.
  *
- * @param   out where strings are printed
+ * @param   out         where strings are printed
  * @param   indentWidth indent width
  */
 private[mada] class XMLPrettyPrinter(val out: java.io.Writer, val indentWidth: Int) extends PrettyPrinter {
