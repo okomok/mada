@@ -11,9 +11,10 @@ package mada
  * Contains utility methods operating on <code>Function</code>.
  */
 object Functions {
+    import func._
 
 
-// unit
+// void
 
     /**
      * Alias of <code>()</code>
@@ -22,6 +23,11 @@ object Functions {
 
 
 // type aliases
+
+    /**
+     * Alias of <code>T => T</code>
+     */
+    type Transform[T] = T => T
 
     /**
      * Alias of <code>Function1[T1, Boolean]</code>
@@ -39,47 +45,37 @@ object Functions {
     type Predicate3[-T1, -T2, -T3] = Function3[T1, T2, T3, Boolean]
 
     /**
-     * Alias of <code>Predicate2[T1, T1]</code>
+     * Alias of <code>Predicate2[T, T]</code>
      */
-    type Compare[-T1] = Predicate2[T1, T1]
+    type Compare[-T] = Predicate2[T, T]
 
 
 // comparators
 
     /**
-     * Represents <code>{ (v1: Any, v2: Any) => v1 == v2 }</code>.
+     * @return  <code>{ (x, y) => x == y }</code>.
      */
-    val equal: Compare[Any] = new Compare[Any] {
-        override def apply(v1: Any, v2: Any) = v1 == v2
-    }
+    val equal: Compare[Any] = { (x, y) => x == y }
 
     /**
-     * Represents <code>{ (v2: Any) => v1 == v2 }</code>.
+     * @return  <code>{ y => x == y }</code>.
      */
-    def equalTo(v1: Any): Predicate1[Any] = new Predicate1[Any] {
-        override def apply(v2: Any) = v1 == v2
-    }
+    def equalTo(x: Any): Predicate1[Any] = { y => x == y }
 
     /**
-     * Represents <code>{ (v1: T1, v2: T1) => c(v1) < v2 }</code>.
+     * @return  <code>{ (x, y) => c(x) < y }</code>.
      */
-    def less[T1](implicit c: T1 => Ordered[T1]): Compare[T1] = new Compare[T1] {
-        override def apply(v1: T1, v2: T1) = c(v1) < v2
-    }
+    def less[T](implicit c: T => Ordered[T]): Compare[T] = { (x, y) => c(x) < y }
 
     /**
-     * Represents <code>{ (v1: T1, v2: T1) => c(v1) > v2 }</code>.
+     * @return  <code>{ (x, y) => c(x) > y }</code>.
      */
-    def greater[T1](implicit c: T1 => Ordered[T1]): Compare[T1] = new Compare[T1] {
-        override def apply(v1: T1, v2: T1) = c(v1) > v2
-    }
+    def greater[T](implicit c: T => Ordered[T]): Compare[T] = { (x, y) => c(x) > y }
 
     /**
      * Converts from <code>java.util.Comparator</code> "less-than" predicate.
      */
-    def fromComparator[A](from: java.util.Comparator[A]): Compare[A] = new Compare[A] {
-        override def apply(x: A, y: A) = from.compare(x, y) < 0
-    }
+    def fromComparator[A](from: java.util.Comparator[A]): Compare[A] = { (x, y) => from.compare(x, y) < 0 }
 
     /**
      * Converts "less-than" predicate to <code>java.util.Comparator</code>.
@@ -94,23 +90,17 @@ object Functions {
     /**
      * A function flipping two arguments
      */
-    def flip[T1, T2, R](f: Function2[T1, T2, R]): Function2[T2, T1, R] = new Function2[T2, T1, R] {
-        override def apply(v2: T2, v1: T1) = f(v1, v2)
-    }
+    def flip[T1, T2, R](f: Function2[T1, T2, R]): Function2[T2, T1, R] = { (v2, v1) => f(v1, v2) }
 
     /**
      * A function returning argument as is
      */
-    def identity[T1]: Function1[T1, T1] = new Function1[T1, T1] {
-        override def apply(v1: T1) = v1
-    }
+    def identity[T]: Transform[T] = { v => v }
 
     /**
      * Converts by-name-parameter to a function returing <code>v</code>.
      */
-    def byName[R](v: => R): Function0[R] = new Function0[R] {
-        override def apply() = v
-    }
+    def byName[R](v: => R): Function0[R] = { () => v }
 
     /**
      * Converts by-name-parameter to a function returing lazy <code>v</code>.
@@ -120,44 +110,49 @@ object Functions {
         override def apply() = _v
     }
 
+    /**
+     * Fixed point combinator
+     */
+    def fix[T, R](g: Transform[Function1[T, R]]): Function1[T, R] = { v => fixImpl(g)(v) }
+    private def fixImpl[T, R](g: Transform[Function1[T, R]])(v: T): R = g(fixImpl(g))(v)
+
+    /**
+     * Memoizes <code>g</code> using hash map.
+     */
+    def memoize[T, R](g: Transform[Function1[T, R]]): Function1[T, R] = Memoize(g)
+
 
 // not
 
     /**
      * Negates the predicate.
      */
-    def not1[T1, R](f: Predicate1[T1]): Predicate1[T1] = new Predicate1[T1] {
-        override def apply(v1: T1) = !f(v1)
-    }
+    def not1[T1](f: Predicate1[T1]): Predicate1[T1] = { v1 => !f(v1) }
 
     /**
      * Negates the predicate.
      */
-    def not2[T1, T2, R](f: Predicate2[T1, T2]): Predicate2[T1, T2] = new Predicate2[T1, T2] {
-        override def apply(v1: T1, v2: T2) = !f(v1, v2)
-    }
+    def not2[T1, T2](f: Predicate2[T1, T2]): Predicate2[T1, T2] = { (v1, v2) => !f(v1, v2) }
 
     /**
      * Negates the predicate.
      */
-    def not3[T1, T2, T3, R](f: Predicate3[T1, T2, T3]): Predicate3[T1, T2, T3] = new Predicate3[T1, T2, T3] {
-        override def apply(v1: T1, v2: T2, v3: T3) = !f(v1, v2, v3)
-    }
+    def not3[T1, T2, T3](f: Predicate3[T1, T2, T3]): Predicate3[T1, T2, T3] = { (v1, v2, v3) => !f(v1, v2, v3) }
 
     /**
-     * @return <code>not1(f)</code>.
+     * Alias of <code>not1</code>
      */
-    def not[T1, R](f: Predicate1[T1]): Predicate1[T1] = not1(f)
+    def not[T1](f: Predicate1[T1]): Predicate1[T1] = not1(f)
 
     /**
-     * @return <code>not2(f)</code>.
+     * Alias of <code>not2</code>
      */
-    def not[T1, T2, R](f: Predicate2[T1, T2]): Predicate2[T1, T2] = not2(f)
+    def not[T1, T2](f: Predicate2[T1, T2]): Predicate2[T1, T2] = not2(f)
 
     /**
-     * @return <code>not3(f)</code>.
+     * Alias of <code>not3</code>
      */
-    def not[T1, T2, T3, R](f: Predicate3[T1, T2, T3]): Predicate3[T1, T2, T3] = not3(f)
+    def not[T1, T2, T3](f: Predicate3[T1, T2, T3]): Predicate3[T1, T2, T3] = not3(f)
 
 
 // empty
@@ -165,23 +160,17 @@ object Functions {
     /**
      * A function to do nothing
      */
-    val empty1: Function1[Any, Unit] = new Function1[Any, Unit] {
-        override def apply(v1: Any) = ()
-    }
+    val empty1: Function1[Any, Unit] = { v1 => () }
 
     /**
      * A function to do nothing
      */
-    val empty2: Function2[Any, Any, Unit] = new Function2[Any, Any, Unit] {
-        override def apply(v1: Any, v2: Any) = ()
-    }
+    val empty2: Function2[Any, Any, Unit] = { (v1, v2) => () }
 
     /**
      * A function to do nothing
      */
-    val empty3: Function3[Any, Any, Any, Unit] = new Function3[Any, Any, Any, Unit] {
-        override def apply(v1: Any, v2: Any, v3: Any) = ()
-    }
+    val empty3: Function3[Any, Any, Any, Unit] = { (v1, v2, v3) => () }
 
 
 // Ref
@@ -191,18 +180,14 @@ object Functions {
      */
     object Ref {
         /**
-         * Represents <code>{ (v1: AnyRef, v2: AnyRef) => v1 eq v2 }</code>.
+         * @return  <code>{ (v1, v2) => v1 eq v2 }</code>.
          */
-        val equal: Function2[AnyRef, AnyRef, Boolean] = new Function2[AnyRef, AnyRef, Boolean] {
-            override def apply(v1: AnyRef, v2: AnyRef) = v1 eq v2
-        }
+        val equal: Function2[AnyRef, AnyRef, Boolean] = { (v1, v2) => v1 eq v2 }
 
         /**
-         * Represents <code>{ (v2: AnyRef) => v1 eq v2 }</code>.
+         * @return  <code>{ v2 => v1 eq v2 }</code>.
          */
-        def equalTo(v1: AnyRef): Function1[AnyRef, Boolean] = new Function1[AnyRef, Boolean] {
-            override def apply(v2: AnyRef) = v1 eq v2
-        }
+        def equalTo(v1: AnyRef): Function1[AnyRef, Boolean] = { v2 => v1 eq v2 }
     }
 
 
@@ -213,10 +198,8 @@ object Functions {
      */
     object Typed {
         /**
-         * Represents <code>{ (v1: T1, v2: T2) => v1 == v2 }</code>.
+         * @return  <code>{ (v1, v2) => v1 == v2 }</code>.
          */
-        def equal[T1, T2]: Function2[T1, T2, Boolean] = new Function2[T1, T2, Boolean] {
-            override def apply(v1: T1, v2: T2) = v1 == v2
-        }
+        def equal[T1, T2]: Function2[T1, T2, Boolean] = { (v1, v2) => v1 == v2 }
     }
 }
