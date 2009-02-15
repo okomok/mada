@@ -25,9 +25,9 @@ object Functions {
 // type aliases
 
     /**
-     * Alias of <code>T => T</code>
+     * Alias of <code>Function1[T, T]</code>
      */
-    type Transform[T] = T => T
+    type Transform[T] = Function1[T, T]
 
     /**
      * Alias of <code>Function1[T1, Boolean]</code>
@@ -98,12 +98,12 @@ object Functions {
     def identity[T]: Transform[T] = { v => v }
 
     /**
-     * Converts by-name-parameter to a function returing <code>v</code>.
+     * Converts by-name-parameter to a function returning <code>v</code>.
      */
     def byName[R](v: => R): Function0[R] = { () => v }
 
     /**
-     * Converts by-name-parameter to a function returing lazy <code>v</code>.
+     * Converts by-name-parameter to a function returning lazy <code>v</code>.
      */
     def byLazy[R](v: => R): Function0[R] = new Function0[R] {
         private lazy val _v = v
@@ -153,6 +153,57 @@ object Functions {
      * Alias of <code>not3</code>
      */
     def not[T1, T2, T3](f: Predicate3[T1, T2, T3]): Predicate3[T1, T2, T3] = not3(f)
+
+
+// fuse
+
+    /**
+     * @return  <code>{ v => f(1._1)) }</code>.
+     */
+    def fuse1[T1, R](f: Function1[T1, R]): Function1[Tuple1[T1], R] = { v => f(v._1) }
+
+    /**
+     * @return  <code>{ v => f(v._1, v._2) }</code>.
+     */
+    def fuse2[T1, T2, R](f: Function2[T1, T2, R]): Function1[Tuple2[T1, T2], R] = { v => f(v._1, v._2) }
+
+    /**
+     * @return  <code>{ v => f(v._1, v._2, v._3) }</code>.
+     */
+    def fuse3[T1, T2, T3, R](f: Function3[T1, T2, T3, R]): Function1[Tuple3[T1, T2, T3], R] = { v => f(v._1, v._2, v._3) }
+
+    /**
+     * Alias of <code>fuse1</code>
+     */
+    def fuse[T1, R](f: Function1[T1, R]): Function1[Tuple1[T1], R] = fuse1(f)
+
+    /**
+     * Alias of <code>fuse2</code>
+     */
+    def fuse[T1, T2, R](f: Function2[T1, T2, R]): Function1[Tuple2[T1, T2], R] = fuse2(f)
+
+    /**
+     * Alias of <code>fuse3</code>
+     */
+    def fuse[T1, T2, T3, R](f: Function3[T1, T2, T3, R]): Function1[Tuple3[T1, T2, T3], R] = fuse3(f)
+
+
+// unfuse
+
+    /**
+     * @return  <code>{ v1 => f(Tuple1(v1)) }</code>.
+     */
+    def unfuse1[T1, R](f: Function1[Tuple1[T1], R]): Function1[T1, R] = { v1 => f(Tuple1(v1)) }
+
+    /**
+     * @return  <code>{ (v1, v2) => f(Tuple2(v1, v2)) }</code>.
+     */
+    def unfuse2[T1, T2, R](f: Function1[Tuple2[T1, T2], R]): Function2[T1, T2, R] = { (v1, v2) => f(Tuple2(v1, v2)) }
+
+    /**
+     * @return  <code>{ (v1, v2, v3) => f(Tuple3(v1, v2, v3)) }</code>.
+     */
+    def unfuse3[T1, T2, T3, R](f: Function1[Tuple3[T1, T2, T3], R]): Function3[T1, T2, T3, R] = { (v1, v2, v3) => f(Tuple3(v1, v2, v3)) }
 
 
 // empty
