@@ -11,4 +11,7 @@ private[mada] object Cut {
     def apply[A](it: Iterator[A]): Iterator[A] = new CutIterator(it)
 }
 
-private[mada] class CutIterator[A](override val self: Iterator[A]) extends IteratorProxy[A]
+private[mada] class CutIterator[A](it: Iterator[A]) extends Iterator[A] {
+    override def hasNext = it.hasNext
+    override def next = it.next
+}
