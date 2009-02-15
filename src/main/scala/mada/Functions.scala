@@ -119,7 +119,12 @@ object Functions {
     /**
      * Memoizes <code>g</code> using hash map.
      */
-    def memoize[T, R](g: Transform[Function1[T, R]]): Function1[T, R] = Memoize(g)
+    def memoize[T, R](g: Transform[Function1[T, R]]): Function1[T, R] = Memoize(g)(new scala.collection.jcl.HashMap[T, R])
+
+    /**
+     * Memoizes <code>g</code> using <code>m</code> as memo table.
+     */
+    def memoizeBy[T, R](g: Transform[Function1[T, R]])(m: scala.collection.mutable.Map[T, R]): Function1[T, R] = Memoize(g)(m)
 
 
 // not

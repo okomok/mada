@@ -7,20 +7,20 @@
 package mada.func
 
 
-// See: http://citeseer.ist.psu.edu/51062.html
+import scala.collection.mutable.Map
+
 
 private[mada] object Memoize {
-    def apply[T, R](g: Functions.Transform[Function1[T, R]]): Function1[T, R] = Functions.fix(new MemoizeWrap(g).curry)
+    // See: http://citeseer.ist.psu.edu/51062.html
+    def apply[T, R](g: Functions.Transform[Function1[T, R]])(m: Map[T, R]): Function1[T, R] = Functions.fix(new MemoizeWrap(g, m).curry)
 }
 
-private[mada] class MemoizeWrap[T, R](g: Functions.Transform[Function1[T, R]]) extends Function2[Function1[T, R], T, R] {
-    private val memoTable = new scala.collection.jcl.HashMap[T, R]
-
+private[mada] class MemoizeWrap[T, R](g: Functions.Transform[Function1[T, R]], m: Map[T, R]) extends Function2[Function1[T, R], T, R] {
     override def apply(fixed: Function1[T, R], v: T) = {
-        val r = memoTable.get(v)
+        val r = m.get(v)
         if (r.isEmpty) {
             val tmp = g(fixed)(v)
-            memoTable.put(v, tmp)
+            m.put(v, tmp)
             tmp
         } else {
             r.get
