@@ -77,7 +77,12 @@ class IteratorsTest {
 
     def testStepFusion: Unit = {
         val it = Iterators.step(Iterators.step(Iterator.fromValues(1,2,3,4,5,6,7,8,9,10,11), 3), 2)
-        assertTrue(Iterators.equal(it, Iterator.fromValues(1,6,11)))
+        assertTrue(Iterators.equal(it, Iterator.fromValues(1,7)))
+    }
+
+    def testStepFusion2: Unit = {
+        val it = Iterators.step(Iterators.step(Iterator.fromValues(1,2,3,4,5,6,7,8,9,10,11), 3), 2)
+        assertTrue(Iterators.equal(it, Iterators.step(Iterators.cut(Iterators.step(Iterator.fromValues(1,2,3,4,5,6,7,8,9,10,11), 3)), 2)))
     }
 
     def testStepEmpty: Unit = {

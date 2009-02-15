@@ -14,7 +14,7 @@ private[mada] object Step {
         }
 
         it match {
-            case it: StepIterator[_] => Iterators.step(it.it, it.n + n) // step-step fusion
+            case it: StepIterator[_] => Iterators.step(it.it, it.n * n) // step-step fusion
             case _ => {
                 if (n == 0) {
                     new NonStepIterator(it)

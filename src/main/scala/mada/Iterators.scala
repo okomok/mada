@@ -67,6 +67,11 @@ object Iterators extends iter.Compatibles {
     /**
      * An infinite repetition of <code>it</code>.
      */
+    def cut[A](it: Iterator[A]): Iterator[A] = Cut(it)
+
+    /**
+     * An infinite repetition of <code>it</code>.
+     */
     def cycle[A](it: Iterator[A]): Iterator[A] = Cycle(it)
 
     /**
