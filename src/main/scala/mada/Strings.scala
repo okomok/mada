@@ -26,8 +26,8 @@ object Strings {
      */
     object Compatibles {
         /**
-         * @return  <code>toIterator(str)</code>.
+         * Alias of <code>toIterator</code>
          */
-        implicit def string2iterator(str: String): Iterator[Char] = toIterator(str)
+        implicit def madaStringsToIterator(str: String): Iterator[Char] = toIterator(str)
     }
 }

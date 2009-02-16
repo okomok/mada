@@ -35,7 +35,7 @@ package mada.stl
 
 private[mada] object IsSorted {
     def apply[A](* : Vector[A], first: Int, __last: Int)(implicit c: A => Ordered[A]): Boolean = {
-        apply(*, first, __last, Functions.less(c))
+        apply(*, first, __last, Less.fromView(c))
     }
 
     def apply[A](* : Vector[A], first: Int, __last: Int, __comp: Functions.Compare[A]): Boolean = {

@@ -21,7 +21,7 @@ private[mada] class ArrayVector[A](from: Array[A]) extends Vector[A] {
     override def update(i: Int, e: A) = from(i) = e
 
 //    This requires IntFromArray for correct overload resolution.
-//    override def sortWith(lt: Functions.Compare[A]) = { Arrays.sort(from, Functions.toComparator(lt)); this }
+//    override def sortWith(lt: Functions.Compare[A]) = { Arrays.sort(from, Less.fromViewComparator(lt)); this }
 }
 
 

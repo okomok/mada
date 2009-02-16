@@ -35,7 +35,7 @@ package mada.stl
 
 private[mada] object Median {
     def apply[A](__a: A, __b: A, __c: A)(implicit c: A => Ordered[A]): A = {
-        apply(__a, __b, __c, Functions.less(c))
+        apply(__a, __b, __c, Less.fromView(c))
     }
 
     def apply[A](__a: A, __b: A, __c: A, __comp: Functions.Compare[A]): A = {

@@ -9,7 +9,7 @@ package mada.stl
 
 private[mada] object Sort {
     def apply[A](v: Vector[A], __first: Int, __last: Int)(implicit c: A => Ordered[A]): Unit = {
-        apply(v, __first, __last, Functions.less(c))
+        apply(v, __first, __last, Less.fromView(c))
     }
 
     def apply[A](v: Vector[A], __first: Int, __last: Int, __comp: Functions.Compare[A]): Unit = {
