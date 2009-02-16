@@ -36,7 +36,7 @@ package mada.stl
 // PushHeap
 
 private[mada] object PushHeap {
-    def apply[A](* : Vector[A], __first: Int, __last: Int)(implicit c: A => Ordered[A]): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __last: Int)(implicit c: Functions.OrderedView[A]): Unit = {
         apply(*, __first, __last, Less(c))
     }
 
@@ -61,7 +61,7 @@ private[mada] object PushHeap {
 // PopHeap
 
 private[mada] object PopHeap {
-    def apply[A](* : Vector[A], __first: Int, __last: Int)(implicit c: A => Ordered[A]): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __last: Int)(implicit c: Functions.OrderedView[A]): Unit = {
         apply(*, __first, __last, Less(c))
     }
 
@@ -79,7 +79,7 @@ private[mada] object PopHeap {
 // MakeHeap
 
 private[mada] object MakeHeap {
-    def apply[A](* : Vector[A], __first: Int, __last: Int)(implicit c: A => Ordered[A]): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __last: Int)(implicit c: Functions.OrderedView[A]): Unit = {
         apply(*, __first, __last, Less(c))
     }
 
@@ -104,7 +104,7 @@ private[mada] object MakeHeap {
 // SortHeap
 
 private[mada] object SortHeap {
-    def apply[A](* : Vector[A], __first: Int, __last: Int)(implicit c: A => Ordered[A]): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __last: Int)(implicit c: Functions.OrderedView[A]): Unit = {
         apply(*, __first, __last, Less(c))
     }
 

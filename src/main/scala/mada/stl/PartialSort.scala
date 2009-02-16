@@ -34,7 +34,7 @@ package mada.stl
 
 
 private[mada] object PartialSort {
-    def apply[A](* : Vector[A], __first: Int, __middle: Int, __last: Int)(implicit c: A => Ordered[A]): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __middle: Int, __last: Int)(implicit c: Functions.OrderedView[A]): Unit = {
         apply(*, __first, __middle, __last, Less(c))
     }
 

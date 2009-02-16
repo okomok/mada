@@ -285,6 +285,19 @@ object Vector extends vec.Compatibles {
     def untriplify[A, B](f: Func3[A, B]): Func[A, B] = Untriplify(f)
 
 
+// Ordered view
+
+    /**
+     * Returns lexicographical <code>Ordered</code> view.
+     */
+    def orderedView[A](implicit c: Functions.OrderedView[A]): Functions.OrderedView[Vector[A]] = OrderedViewWith(Less(c))
+
+    /**
+     * Returns lexicographical <code>Ordered</code> view.
+     */
+    def orderedViewWith[A](lt: Functions.Compare[A]): Functions.OrderedView[Vector[A]] = OrderedViewWith(lt)
+
+
 // aliases
 
     /**
@@ -755,7 +768,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     /**
      * @return  <code>sortWith(Less(c))</code>.
      */
-    def sort(implicit c: A => Ordered[A]): Vector[A] = sortWith(Less(c))
+    def sort(implicit c: Functions.OrderedView[A]): Vector[A] = sortWith(Less(c))
 
 
 // concatenation

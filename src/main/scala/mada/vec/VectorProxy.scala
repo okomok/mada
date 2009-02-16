@@ -61,7 +61,7 @@ trait VectorProxy[A] extends Adapter.Transform[A] with Proxies.ProxyOf[Vector[A]
     override def reducerRight[B >: A](op: (A, B) => B): Vector[B] = underlying.reducerRight(op)
     // sort
     override def sortWith(lt: Functions.Compare[A]): Vector[A] = underlying.sortWith(lt)
-    override def sort(implicit c: A => Ordered[A]): Vector[A] = underlying.sort(c)
+    override def sort(implicit c: Functions.OrderedView[A]): Vector[A] = underlying.sort(c)
     // concatenation
     override def append(that: Vector[A]): Vector[A] = underlying.append(that)
     // permutation

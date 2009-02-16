@@ -49,6 +49,11 @@ object Functions {
      */
     type Compare[-T] = Predicate2[T, T]
 
+    /**
+     * Alias of <code>Function1[T, Ordered[T]]</code>
+     */
+    type OrderedView[T] = Function1[T, Ordered[T]]
+
 
 // equal
 

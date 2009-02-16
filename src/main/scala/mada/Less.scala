@@ -11,7 +11,7 @@ package mada
  * Contains utility methods operating on "less-than" predicate.
  */
 object Less {
-    import Functions.Compare
+    import Functions.{ Compare, OrderedView }
     import java.util.Comparator
 
     private def compareToInt[A](x: A, lt: Compare[A], y: A): Int = {
@@ -26,14 +26,14 @@ object Less {
     def from[A](to: Compare[A]) = to
 
     /**
-     * Converts from <code>Ordered view</code>.
+     * Converts from <code>Ordered</code> view.
      */
-    def fromOrderedView[A](from: A => Ordered[A]): Compare[A] = { (x, y) => from(x) < y }
+    def fromOrderedView[A](from: OrderedView[A]): Compare[A] = { (x, y) => from(x) < y }
 
     /**
-     * Converts to <code>Ordered view</code>.
+     * Converts to <code>Ordered</code> view.
      */
-    def toOrderedView[A](from: Compare[A]): A => Ordered[A] = { x => new Ordered[A] {
+    def toOrderedView[A](from: Compare[A]): OrderedView[A] = { x => new Ordered[A] {
         override def compare(y: A) = compareToInt(x, from, y)
     } }
 
@@ -50,9 +50,9 @@ object Less {
     }
 
     /**
-     * Alias of <code>fromOrderedView</code> with <code>implicit</code>
+     * Alias of <code>fromOrderedView</code>
      */
-    def apply[A](implicit from: A => Ordered[A]): Compare[A] = fromOrderedView(from)
+    def apply[A](implicit from: OrderedView[A]): Compare[A] = fromOrderedView(from)
 
     /**
      * Contains implicit conversions.
@@ -61,12 +61,12 @@ object Less {
         /**
          * Alias of <code>fromOrderedView</code>
          */
-        implicit def madaLessFromOrderedView[A](from: A => Ordered[A]): Compare[A] = fromOrderedView(from)
+        implicit def madaLessFromOrderedView[A](from: OrderedView[A]): Compare[A] = fromOrderedView(from)
 
         /**
          * Alias of <code>toOrderedView</code>
          */
-        implicit def madaLessToOrderedView[A](from: Compare[A]): A => Ordered[A] = toOrderedView(from)
+        implicit def madaLessToOrderedView[A](from: Compare[A]): OrderedView[A] = toOrderedView(from)
 
         /**
          * Alias of <code>fromComparator</code>

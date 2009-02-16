@@ -33,27 +33,24 @@
 package mada.stl
 
 
-private[mada] object IsHeap {
-    def apply[A](v: Vector[A], __first: Int, __last: Int)(implicit c: Functions.OrderedView[A]): Boolean = {
-        apply(v, __first, __last, Less(c))
+private[mada] object LexicographicalCompare {
+    def apply[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int)(implicit c: Functions.OrderedView[A]): Boolean = {
+        apply(v1, first1, __last1, v2, first2, __last2, Less(c))
     }
 
-    def apply[A](v: Vector[A], __first: Int, __last: Int, __comp: Functions.Compare[A]): Boolean = {
-        __apply(v, __first, __comp, __last - __first)
-    }
+    def apply[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int, __comp: Functions.Compare[A]): Boolean = {
+        var __first1 = first1
+        var __first2 = first2
 
-    def __apply[A](* : Vector[A], __first: Int, __comp: Functions.Compare[A], __n: Int): Boolean = {
-        var __parent = 0
-        var __child = 1
-        while (__child < __n) {
-            if (__comp(*(__first + __parent), *(__first + __child))) {
+        while ((__first1 != __last1) && (__first2 != __last2)) {
+            if (__comp(v1(__first1), v2(__first2))) {
+                return true
+            }
+            if (__comp(v2(__first2), v1(__first1))) {
                 return false
             }
-            if ((__child & 1) == 0) {
-                __parent += 1
-            }
-            __child += 1
+            __first1 += 1; __first2 += 1
         }
-        true
+        return (__first1 == __last1) && (__first2 != __last2)
     }
 }

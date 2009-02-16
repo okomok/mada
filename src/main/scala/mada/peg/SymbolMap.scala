@@ -14,7 +14,7 @@ object SymbolMap {
     /**
      * @return  <code>this(es.elements, Less(c))</code>.
      */
-    def apply[A](es: (Vector[A], Peg[A])*)(implicit c: A => Ordered[A]): SymbolMap[A] = apply(es.elements, Less(c))
+    def apply[A](es: (Vector[A], Peg[A])*)(implicit c: Functions.OrderedView[A]): SymbolMap[A] = apply(es.elements, Less(c))
 
     /**
      * Constructs <code>SymbolMet</code> containing <code>es</code> as key-and-value entries.
