@@ -258,4 +258,27 @@ object Functions {
          */
         def equal[T1, T2]: Function2[T1, T2, Boolean] = { (v1, v2) => v1 == v2 }
     }
+
+
+// Bird
+
+    /**
+     * Contains combinator birds.
+     */
+    object Bird {
+        /**
+         * S combinator
+         */
+        def S[X, Y, Z](x: Z => Y => X)(y: Z => Y)(z: Z): X = x(z)(y(z))
+
+        /**
+         * K combinator
+         */
+        def K[X, Y](x: X)(y: Y): X = x
+
+        /**
+         * I combinator
+         */
+        def I[X](x: X): X = x
+    }
 }
