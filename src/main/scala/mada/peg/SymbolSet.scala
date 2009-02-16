@@ -12,9 +12,9 @@ package mada.peg
  */
 object SymbolSet {
     /**
-     * @return  <code>this(vs.elements, Less.fromView(c))</code>.
+     * @return  <code>this(vs.elements, Less(c))</code>.
      */
-    def apply[A](vs: Vector[A]*)(implicit c: A => Ordered[A]): SymbolSet[A] = apply(vs.elements, Less.fromView(c))
+    def apply[A](vs: Vector[A]*)(implicit c: A => Ordered[A]): SymbolSet[A] = apply(vs.elements, Less(c))
 
     /**
      * Constructs <code>SymbolSet</code> containing <code>vs</code> as elements.

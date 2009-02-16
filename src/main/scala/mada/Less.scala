@@ -28,12 +28,12 @@ object Less {
     /**
      * Converts from <code>Ordered view</code>.
      */
-    def fromView[A](implicit from: A => Ordered[A]): Compare[A] = { (x, y) => from(x) < y }
+    def fromOrderedView[A](from: A => Ordered[A]): Compare[A] = { (x, y) => from(x) < y }
 
     /**
      * Converts to <code>Ordered view</code>.
      */
-    def toView[A](from: Compare[A]): A => Ordered[A] = { x => new Ordered[A] {
+    def toOrderedView[A](from: Compare[A]): A => Ordered[A] = { x => new Ordered[A] {
         override def compare(y: A) = compareToInt(x, from, y)
     } }
 
@@ -50,18 +50,23 @@ object Less {
     }
 
     /**
+     * Alias of <code>fromOrderedView</code> with <code>implicit</code>
+     */
+    def apply[A](implicit from: A => Ordered[A]): Compare[A] = fromOrderedView(from)
+
+    /**
      * Contains implicit conversions.
      */
     object Compatibles {
         /**
-         * Alias of <code>fromView</code>
+         * Alias of <code>fromOrderedView</code>
          */
-        implicit def madaLessFromView[A](from: A => Ordered[A]): Compare[A] = fromView(from)
+        implicit def madaLessFromOrderedView[A](from: A => Ordered[A]): Compare[A] = fromOrderedView(from)
 
         /**
-         * Alias of <code>toView</code>
+         * Alias of <code>toOrderedView</code>
          */
-        implicit def madaLessToView[A](from: Compare[A]): A => Ordered[A] = toView(from)
+        implicit def madaLessToOrderedView[A](from: Compare[A]): A => Ordered[A] = toOrderedView(from)
 
         /**
          * Alias of <code>fromComparator</code>
