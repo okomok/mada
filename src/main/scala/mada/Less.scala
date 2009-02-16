@@ -14,7 +14,7 @@ object Less {
     import Functions.{ Compare, OrderedView }
     import java.util.Comparator
 
-    private def compareToInt[A](x: A, lt: Compare[A], y: A): Int = {
+    private def compare3way[A](x: A, lt: Compare[A], y: A): Int = {
         if (lt(x, y)) -1 else if (lt(y, x)) 1 else 0
     }
 
@@ -34,7 +34,7 @@ object Less {
      * Converts to <code>Ordered</code> view.
      */
     def toOrderedView[A](from: Compare[A]): OrderedView[A] = { x => new Ordered[A] {
-        override def compare(y: A) = compareToInt(x, from, y)
+        override def compare(y: A) = compare3way(x, from, y)
     } }
 
     /**
@@ -46,7 +46,7 @@ object Less {
      * Converts to <code>java.util.Comparator</code>.
      */
     def toComparator[A](from: Compare[A]): Comparator[A] = new Comparator[A] {
-        override def compare(x: A, y: A) = compareToInt(x, from, y)
+        override def compare(x: A, y: A) = compare3way(x, from, y)
     }
 
     /**

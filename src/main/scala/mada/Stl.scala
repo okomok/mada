@@ -64,6 +64,8 @@ object Stl {
 
     def lexicographicalCompare[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int)(implicit c: OrderedView[A]): Boolean = LexicographicalCompare(v1, first1, __last1, v2, first2, __last2)(c)
     def lexicographicalCompare[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int, __comp: Compare[A]): Boolean = LexicographicalCompare(v1, first1, __last1, v2, first2, __last2, __comp)
+    def lexicographicalCompare3way[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int)(implicit c: OrderedView[A]): Int = LexicographicalCompare3way(v1, first1, __last1, v2, first2, __last2)(c)
+    def lexicographicalCompare3way[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int, __comp: Compare[A]): Int = LexicographicalCompare3way(v1, first1, __last1, v2, first2, __last2, __comp)
 
     def partialSort[A](v: Vector[A], first: Int, middle: Int, last: Int)(implicit c: OrderedView[A]): Unit = PartialSort(v, first, middle, last)(c)
     def partialSort[A](v: Vector[A], first: Int, middle: Int, last: Int, comp: Compare[A]): Unit = PartialSort(v, first, middle, last, comp)
