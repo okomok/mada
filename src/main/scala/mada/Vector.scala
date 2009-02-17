@@ -285,17 +285,27 @@ object Vector extends vec.Compatibles {
     def untriplify[A, B](f: Func3[A, B]): Func[A, B] = Untriplify(f)
 
 
-// Ordered view
+// comparison
+
+    /**
+     * Returns lexicographical strict weak ordering.
+     */
+    def compare[A](implicit c: Compare.OrderedView[A]): Compare.Type[Vector[A]] = CompareWith(Compare(c))
+
+    /**
+     * Returns lexicographical strict weak ordering.
+     */
+    def compareWith[A](lt: Compare.Type[A]): Compare.Type[Vector[A]] = CompareWith(lt)
 
     /**
      * Returns lexicographical <code>Ordered</code> view.
      */
-    def orderedView[A](implicit c: Compare.OrderedView[A]): Compare.OrderedView[Vector[A]] = OrderedViewWith(Compare(c))
+    def orderedView[A](implicit c: Compare.OrderedView[A]): Compare.OrderedView[Vector[A]] = Compare.toOrderedView(compare(c))
 
     /**
      * Returns lexicographical <code>Ordered</code> view.
      */
-    def orderedViewWith[A](lt: Compare.Type[A]): Compare.OrderedView[Vector[A]] = OrderedViewWith(lt)
+    def orderedViewWith[A](lt: Compare.Type[A]): Compare.OrderedView[Vector[A]] = Compare.toOrderedView(compareWith(lt))
 
 
 // aliases
