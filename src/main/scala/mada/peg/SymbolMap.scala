@@ -30,11 +30,13 @@ object SymbolMap {
 
 
 /**
- * A <code>Peg</code> to optimize the form <code>(k1 >> p1)|(k2 >> p2)|(k3 >> p3)|...</code> using "less-than" comparator and ternary search tree.
+ * A <code>Peg</code> to optimize the form <code>(k1 >> p1)|(k2 >> p2)|(k3 >> p3)|...</code> using ternary search tree.
  */
 class SymbolMap[A] private (private val tree: TSTree[A, Peg[A]]) extends Peg[A] with scala.collection.mutable.Map[Vector[A], Peg[A]] {
     /**
-     * Constructs <code>SymbolMap</code> using <code>lt</code> as "less-than" comparator.
+     * Constructs <code>SymbolMap</code>.
+     *
+     * @param   lt  strict weak ordering
      */
     def this(lt: Functions.Compare[A]) = this(new TSTree[A, Peg[A]](lt))
 

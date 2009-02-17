@@ -757,18 +757,18 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
 // sort
 
     /**
-     * Sort this vector according to the comparison function <code>lt</code>.
-     * Note this vector is mutated.
-     *
-     * @param   lt  the "less-than" comparison function
-     * @return  this vector sorted according to the comparison function <code>lt</code>.
-     */
-    def sortWith(lt: Functions.Compare[A]): Vector[A] = SortWith(this, lt)
-
-    /**
      * @return  <code>sortWith(Less(c))</code>.
      */
     def sort(implicit c: Functions.OrderedView[A]): Vector[A] = sortWith(Less(c))
+
+    /**
+     * Sort this vector according to the comparison function <code>lt</code>.
+     * Note this vector is mutated.
+     *
+     * @param   lt  strict weak ordering
+     * @return  this vector sorted according to <code>lt</code>.
+     */
+    def sortWith(lt: Functions.Compare[A]): Vector[A] = SortWith(this, lt)
 
 
 // concatenation

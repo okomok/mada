@@ -8,15 +8,12 @@ package mada
 
 
 /**
- * Contains utility methods operating on "less-than" predicate.
+ * Contains utility methods operating on strict weak ordering.
  */
 object Less {
+    import less._
     import Functions.{ Compare, OrderedView }
     import java.util.Comparator
-
-    private def compare3way[A](x: A, lt: Compare[A], y: A): Int = {
-        if (lt(x, y)) -1 else if (lt(y, x)) 1 else 0
-    }
 
     /**
      * Triggers implicit conversions explicitly.
@@ -28,26 +25,32 @@ object Less {
     /**
      * Converts from <code>Ordered</code> view.
      */
-    def fromOrderedView[A](from: OrderedView[A]): Compare[A] = { (x, y) => from(x) < y }
+    def fromOrderedView[A](from: OrderedView[A]): Compare[A] = FromOrderedView(from)
 
     /**
      * Converts to <code>Ordered</code> view.
      */
-    def toOrderedView[A](from: Compare[A]): OrderedView[A] = { x => new Ordered[A] {
-        override def compare(y: A) = compare3way(x, from, y)
-    } }
+    def toOrderedView[A](from: Compare[A]): OrderedView[A] = ToOrderedView(from)
+
+    /**
+     * Converts from <code>Ordering</code>.
+     */
+    def fromOrdering[A](from: Ordering[A]): Compare[A] = FromOrdering(from)
+
+    /**
+     * Converts to <code>Ordering</code>.
+     */
+    def toOrdering[A](from: Compare[A]): Ordering[A] = ToOrdering(from)
 
     /**
      * Converts from <code>java.util.Comparator</code>.
      */
-    def fromComparator[A](from: Comparator[A]): Compare[A] = { (x, y) => from.compare(x, y) < 0 }
+    def fromComparator[A](from: Comparator[A]): Compare[A] = FromComparator(from)
 
     /**
      * Converts to <code>java.util.Comparator</code>.
      */
-    def toComparator[A](from: Compare[A]): Comparator[A] = new Comparator[A] {
-        override def compare(x: A, y: A) = compare3way(x, from, y)
-    }
+    def toComparator[A](from: Compare[A]): Comparator[A] = ToComparator(from)
 
     /**
      * Alias of <code>fromOrderedView</code>
@@ -55,27 +58,7 @@ object Less {
     def apply[A](implicit from: OrderedView[A]): Compare[A] = fromOrderedView(from)
 
     /**
-     * Contains implicit conversions.
+     * Alias of <code>less.Compatibles</code>
      */
-    object Compatibles {
-        /**
-         * Alias of <code>fromOrderedView</code>
-         */
-        implicit def madaLessFromOrderedView[A](from: OrderedView[A]): Compare[A] = fromOrderedView(from)
-
-        /**
-         * Alias of <code>toOrderedView</code>
-         */
-        implicit def madaLessToOrderedView[A](from: Compare[A]): OrderedView[A] = toOrderedView(from)
-
-        /**
-         * Alias of <code>fromComparator</code>
-         */
-        implicit def madaLessFromComparator[A](from: Comparator[A]): Compare[A] = fromComparator(from)
-
-        /**
-         * Alias of <code>toComparator</code>
-         */
-        implicit def madaLessToComparator[A](from: Compare[A]): Comparator[A] = toComparator(from)
-    }
+    val Compatibles = less.Compatibles
 }
