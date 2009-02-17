@@ -7,8 +7,6 @@
 package mada.peg
 
 
-// `startAt >> SymbolMap("abc" --> endWith(f) >> "def")`
-
 /**
  * Associates actions where Peg can't be placed.
  */
@@ -26,6 +24,11 @@ class RegionActions[A] {
             start
         }
     }
+
+    /**
+     * Alias of <code>endWith</code>
+     */
+    final def apply(f: Peg.Action[A]): Peg[A] = endWith(f)
 
     /**
      * Triggers the action.
