@@ -34,14 +34,14 @@ package mada.stl
 
 
 private[mada] object IntroSort {
-    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Functions.Compare[A]): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Compare.Type[A]): Unit = {
         if (__first != __last) {
             loop(*, __first, __last, lg(__last - __first) * 2, __comp)
             finalInsertionSort(*, __first, __last, __comp)
         }
     }
 
-    def loop[A](* : Vector[A], __first: Int, last: Int, depth_limit: Int, __comp: Functions.Compare[A]): Unit = {
+    def loop[A](* : Vector[A], __first: Int, last: Int, depth_limit: Int, __comp: Compare.Type[A]): Unit = {
         var __last = last
         var __depth_limit = depth_limit
 
@@ -57,7 +57,7 @@ private[mada] object IntroSort {
         }
     }
 
-    def finalInsertionSort[A](* : Vector[A], __first: Int, __last: Int, __comp: Functions.Compare[A]): Unit = {
+    def finalInsertionSort[A](* : Vector[A], __first: Int, __last: Int, __comp: Compare.Type[A]): Unit = {
         if (__last - __first > threshold) {
             InsertionSort(*, __first, __first + threshold, __comp)
             UnguardedInsertionSort(*, __first + threshold, __last, __comp)

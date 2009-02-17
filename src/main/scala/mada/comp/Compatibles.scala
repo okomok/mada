@@ -4,44 +4,43 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.less
+package mada.comp
 
 
 /**
  * Contains implicit conversions for strict weak ordering.
  */
 object Compatibles {
-    import Functions.{ Compare, OrderedView }
     import java.util.Comparator
-    import Less._
+    import Compare._
 
     /**
      * Alias of <code>fromOrderedView</code>
      */
-    implicit def madaLessFromOrderedView[A](from: OrderedView[A]): Compare[A] = fromOrderedView(from)
+    implicit def madaCompareFromOrderedView[A](from: OrderedView[A]): Type[A] = fromOrderedView(from)
 
     /**
      * Alias of <code>toOrderedView</code>
      */
-    implicit def madaLessToOrderedView[A](from: Compare[A]): OrderedView[A] = toOrderedView(from)
+    implicit def madaCompareToOrderedView[A](from: Type[A]): OrderedView[A] = toOrderedView(from)
 
     /**
      * Alias of <code>fromOrdering</code>
      */
-    implicit def madaLessFromOrdering[A](from: Ordering[A]): Compare[A] = fromOrdering(from)
+    implicit def madaCompareFromOrdering[A](from: Ordering[A]): Type[A] = fromOrdering(from)
 
     /**
      * Alias of <code>toOrdering</code>
      */
-    implicit def madaLessToOrdering[A](from: Compare[A]): Ordering[A] = toOrdering(from)
+    implicit def madaCompareToOrdering[A](from: Type[A]): Ordering[A] = toOrdering(from)
 
     /**
      * Alias of <code>fromComparator</code>
      */
-    implicit def madaLessFromComparator[A](from: Comparator[A]): Compare[A] = fromComparator(from)
+    implicit def madaCompareFromComparator[A](from: Comparator[A]): Type[A] = fromComparator(from)
 
     /**
      * Alias of <code>toComparator</code>
      */
-    implicit def madaLessToComparator[A](from: Compare[A]): Comparator[A] = toComparator(from)
+    implicit def madaCompareToComparator[A](from: Type[A]): Comparator[A] = toComparator(from)
 }

@@ -20,8 +20,8 @@ private[mada] class ListVector[A](val from: List[A]) extends Vector[A] {
     override def apply(i: Int) = from.get(i)
     override def update(i: Int, e: A) = from.set(i, e)
 
-    override def sortWith(lt: Functions.Compare[A]) = {
-        Collections.sort(from, Less.toComparator(lt))
+    override def sortWith(lt: Compare.Type[A]) = {
+        Collections.sort(from, Compare.toComparator(lt))
         this
     }
 }

@@ -8,7 +8,7 @@ package mada.vec
 
 
 private[mada] object OrderedViewWith {
-    def apply[A](lt: Functions.Compare[A]): Functions.OrderedView[Vector[A]] = {
+    def apply[A](lt: Compare.Type[A]): Compare.OrderedView[Vector[A]] = {
         v => new Ordered[Vector[A]] {
             override def compare(w: Vector[A]) = Stl.lexicographicalCompare3way(v, v.start, v.end, w, w.start, w.end, lt)
         }

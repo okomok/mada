@@ -12,14 +12,14 @@ package mada.peg
  */
 object SymbolMap {
     /**
-     * @return  <code>this(es.elements, Less(c))</code>.
+     * @return  <code>this(es.elements, Compare(c))</code>.
      */
-    def apply[A](es: (Vector[A], Peg[A])*)(implicit c: Functions.OrderedView[A]): SymbolMap[A] = apply(es.elements, Less(c))
+    def apply[A](es: (Vector[A], Peg[A])*)(implicit c: Compare.OrderedView[A]): SymbolMap[A] = apply(es.elements, Compare(c))
 
     /**
      * Constructs <code>SymbolMet</code> containing <code>es</code> as key-and-value entries.
      */
-    def apply[A](es: Iterator[(Vector[A], Peg[A])], lt: Functions.Compare[A]): SymbolMap[A] = {
+    def apply[A](es: Iterator[(Vector[A], Peg[A])], lt: Compare.Type[A]): SymbolMap[A] = {
         val map = new SymbolMap(lt)
         for (e <- es) {
             map.put(e._1, e._2)
@@ -38,7 +38,7 @@ class SymbolMap[A] private (private val tree: TSTree[A, Peg[A]]) extends Peg[A] 
      *
      * @param   lt  strict weak ordering
      */
-    def this(lt: Functions.Compare[A]) = this(new TSTree[A, Peg[A]](lt))
+    def this(lt: Compare.Type[A]) = this(new TSTree[A, Peg[A]](lt))
 
     /**
      * Succeeds if any element of this set matches then its corresponding <code>Peg</code> matches.

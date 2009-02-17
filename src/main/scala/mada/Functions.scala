@@ -44,23 +44,13 @@ object Functions {
      */
     type Predicate3[-T1, -T2, -T3] = Function3[T1, T2, T3, Boolean]
 
-    /**
-     * Alias of <code>Predicate2[T, T]</code>
-     */
-    type Compare[-T] = Predicate2[T, T]
-
-    /**
-     * Alias of <code>Function1[T, Ordered[T]]</code>
-     */
-    type OrderedView[T] = Function1[T, Ordered[T]]
-
 
 // equal
 
     /**
      * @return  <code>{ (x, y) => x == y }</code>.
      */
-    val equal: Compare[Any] = { (x, y) => x == y }
+    val equal: Compare.Type[Any] = { (x, y) => x == y }
 
     /**
      * @return  <code>{ y => x == y }</code>.
@@ -73,7 +63,7 @@ object Functions {
     /**
      * @return  <code>{ (x, y) => c(x) > y }</code>.
      */
-    def greater[T](implicit c: T => Ordered[T]): Compare[T] = { (x, y) => c(x) > y }
+    def greater[T](implicit c: T => Ordered[T]): Compare.Type[T] = { (x, y) => c(x) > y }
 
 
 // utilities

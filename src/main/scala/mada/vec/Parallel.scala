@@ -44,5 +44,5 @@ private[mada] class ParallelVector[A](override val underlying: Vector[A], overri
     override def folder(z: A)(op: (A, A) => A) = Folder(underlying, z, op, grainSize)
     override def reduce(op: (A, A) => A): A = Reduce(underlying, op, grainSize)
     override def reducer(op: (A, A) => A): Vector[A] = Reducer(underlying, op, grainSize)
-    override def sortWith(lt: Functions.Compare[A]) = SortWith(underlying, lt, grainSize)
+    override def sortWith(lt: Compare.Type[A]) = SortWith(underlying, lt, grainSize)
 }

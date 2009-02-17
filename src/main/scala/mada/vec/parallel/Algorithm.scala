@@ -37,7 +37,7 @@ private[mada] trait Algorithm[A] extends Adapter.Transform[A] {
     override def reducerLeft[B >: A](op: (B, A) => B): Vector[B] = underlying.reducerLeft(op)
     override def reducerRight[B >: A](op: (A, B) => B): Vector[B] = underlying.reducerRight(op)
     // sort
-    override def sortWith(lt: Functions.Compare[A]): Vector[A] = underlying.sortWith(lt)
+    override def sortWith(lt: Compare.Type[A]): Vector[A] = underlying.sortWith(lt)
     // concatenation
     override def append(that: Vector[A]): Vector[A] = {
         val x = underlying.append(that.unparallel)

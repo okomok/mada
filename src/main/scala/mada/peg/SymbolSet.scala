@@ -12,14 +12,14 @@ package mada.peg
  */
 object SymbolSet {
     /**
-     * @return  <code>this(vs.elements, Less(c))</code>.
+     * @return  <code>this(vs.elements, Compare(c))</code>.
      */
-    def apply[A](vs: Vector[A]*)(implicit c: Functions.OrderedView[A]): SymbolSet[A] = apply(vs.elements, Less(c))
+    def apply[A](vs: Vector[A]*)(implicit c: Compare.OrderedView[A]): SymbolSet[A] = apply(vs.elements, Compare(c))
 
     /**
      * Constructs <code>SymbolSet</code> containing <code>vs</code> as elements.
      */
-    def apply[A](vs: Iterator[Vector[A]], lt: Functions.Compare[A]): SymbolSet[A] = {
+    def apply[A](vs: Iterator[Vector[A]], lt: Compare.Type[A]): SymbolSet[A] = {
         val set = new SymbolSet(lt)
         for (v <- vs) {
             set.+=(v)
@@ -38,7 +38,7 @@ class SymbolSet[A] private (private val tree: TSTree[A, Unit]) extends Peg[A] wi
      *
      * @param   lt  strict weak ordering
      */
-    def this(lt: Functions.Compare[A]) = this(new TSTree[A, Unit](lt))
+    def this(lt: Compare.Type[A]) = this(new TSTree[A, Unit](lt))
 
     /**
      * Succeeds if any element of this set matches.

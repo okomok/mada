@@ -4,25 +4,22 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.less
-
-
-import Functions.Compare
+package mada.comp
 
 
 private[mada] object FromOrdering {
-    def apply[A](from: Ordering[A]): Compare[A] = new OrderingLess(from)
+    def apply[A](from: Ordering[A]): Compare.Type[A] = new OrderingCompare(from)
 }
 
-private[mada] class OrderingLess[A](from: Ordering[A]) extends Compare[A] {
+private[mada] class OrderingCompare[A](from: Ordering[A]) extends Compare.Type[A] {
     override def apply(x: A, y: A) = from.lt(x, y)
 }
 
 
 private[mada] object ToOrdering {
-    def apply[A](from: Compare[A]): Ordering[A] = new LessOrdering(from)
+    def apply[A](from: Compare.Type[A]): Ordering[A] = new CompareOrdering(from)
 }
 
-private[mada] class LessOrdering[A](from: Compare[A]) extends Ordering[A] {
+private[mada] class CompareOrdering[A](from: Compare.Type[A]) extends Ordering[A] {
     override def compare(x: A, y: A) = Compare3way(x, from, y)
 }

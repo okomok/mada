@@ -290,12 +290,12 @@ object Vector extends vec.Compatibles {
     /**
      * Returns lexicographical <code>Ordered</code> view.
      */
-    def orderedView[A](implicit c: Functions.OrderedView[A]): Functions.OrderedView[Vector[A]] = OrderedViewWith(Less(c))
+    def orderedView[A](implicit c: Compare.OrderedView[A]): Compare.OrderedView[Vector[A]] = OrderedViewWith(Compare(c))
 
     /**
      * Returns lexicographical <code>Ordered</code> view.
      */
-    def orderedViewWith[A](lt: Functions.Compare[A]): Functions.OrderedView[Vector[A]] = OrderedViewWith(lt)
+    def orderedViewWith[A](lt: Compare.Type[A]): Compare.OrderedView[Vector[A]] = OrderedViewWith(lt)
 
 
 // aliases
@@ -757,9 +757,9 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
 // sort
 
     /**
-     * @return  <code>sortWith(Less(c))</code>.
+     * @return  <code>sortWith(Compare(c))</code>.
      */
-    def sort(implicit c: Functions.OrderedView[A]): Vector[A] = sortWith(Less(c))
+    def sort(implicit c: Compare.OrderedView[A]): Vector[A] = sortWith(Compare(c))
 
     /**
      * Sort this vector according to the comparison function <code>lt</code>.
@@ -768,7 +768,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * @param   lt  strict weak ordering
      * @return  this vector sorted according to <code>lt</code>.
      */
-    def sortWith(lt: Functions.Compare[A]): Vector[A] = SortWith(this, lt)
+    def sortWith(lt: Compare.Type[A]): Vector[A] = SortWith(this, lt)
 
 
 // concatenation
