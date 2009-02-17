@@ -13,17 +13,6 @@ private[mada] object LazyValues {
 
 private[mada] class LazyValuesVector[A](override val underlying: Vector[A]) extends Adapter.Transform[A] with NotWritable[A] {
     private val table = new scala.collection.jcl.HashMap[Int, A]
-
-    override def apply(i: Int) = {
-        val o = table.get(i)
-        if (o.isEmpty) {
-            val e = underlying(i)
-            table.put(i, e)
-            e
-        } else {
-            o.get
-        }
-    }
-
+    override def apply(i: Int) = Maps.lazyGet(table)(i){ underlying(i) }
     override def lazyValues = this // lazyValues-lazyValues fusion
 }

@@ -17,14 +17,5 @@ private[mada] object Memoize {
 }
 
 private[mada] class MemoizeWrap[T, R](g: Functions.Transform[Function1[T, R]], m: Map[T, R]) extends Function2[Function1[T, R], T, R] {
-    override def apply(fixed: Function1[T, R], v: T) = {
-        val r = m.get(v)
-        if (r.isEmpty) {
-            val tmp = g(fixed)(v)
-            m.put(v, tmp)
-            tmp
-        } else {
-            r.get
-        }
-    }
+    override def apply(fixed: Function1[T, R], v: T) = Maps.lazyGet(m)(v){ g(fixed)(v) }
 }

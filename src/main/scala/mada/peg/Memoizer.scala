@@ -29,15 +29,7 @@ class Memoizer[A](val input: Vector[A]) {
 
         override def parse(v: Vector[A], start: Int, end: Int) = {
             if (regionBase(v) eq regionBase(input)) {
-                val key = Pair(start, end)
-                val value = memoTable.get(key)
-                if (value.isEmpty) {
-                    val cur = self.parse(v, start, end)
-                    memoTable.put(key, cur)
-                    cur
-                } else {
-                    value.get
-                }
+                Maps.lazyGet(memoTable)(Pair(start, end)){ self.parse(v, start, end) }
             } else {
                 self.parse(v, start, end)
             }
