@@ -21,7 +21,7 @@ private[mada] class FilterIterator[A](val it: Iterator[A], val p: A => Boolean) 
     override def hasNext = !e.isEmptyProxy
     override def next = {
         val tmp = e.self
-        e.setEmpty
+        e.setEmptyProxy
         satisfyPredicate
         tmp
     }

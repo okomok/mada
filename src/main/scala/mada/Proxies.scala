@@ -53,6 +53,11 @@ object Proxies {
         def isEmptyProxy: Boolean
 
         /**
+         * Makes <code>self</code> empty.
+         */
+        def setEmptyProxy: Unit
+
+        /**
          * Swaps <code>self</code> and <code>that.self</code>.
          */
         final def swapProxy(that: Mutable[A]): Unit = {
@@ -80,21 +85,20 @@ object Proxies {
         private var x = new java.util.ArrayList[A](1)
         x.add(null.asInstanceOf[A])
 
+        /**
+         * @return  <code>this(); this := that</code>.
+         */
         def this(that: A) = { this(); set(that) }
 
         override def self = x.get(0)
         override def :=(that: => A) = set(that)
         override def isEmptyProxy = null == x.get(0)
+        override def setEmptyProxy = set(null.asInstanceOf[A])
 
         /**
          * Alias of <code>:=</code> (not by-name parameter)
          */
-        final def set(that: A) = x.set(0, that)
-
-        /**
-         * Makes <code>this</code> the empty proxy.
-         */
-        final def setEmpty = set(null.asInstanceOf[A])
+        final def set(that: A): Unit = x.set(0, that)
 
         /**
          * Returns a shallow copy. (The <code>self</code> is not copied.)
@@ -112,6 +116,7 @@ object Proxies {
         override lazy val self = r.get.apply
         override def :=(that: => A) = { r.compareAndSet(null, Functions.byName(that)) }
         override def isEmptyProxy = null == r.get
+        override def setEmptyProxy = r.set(null)
 
         /**
          * Returns a shallow copy. (The <code>self</code> is not copied.)
