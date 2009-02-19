@@ -36,6 +36,11 @@ object Infix {
         def equalWith[B](_2: Iterator[B])(_3: Functions.Predicate2[A, B]) = Iterators.equalWith(_1, _2)(_3)
 
         /**
+         * @return  <code>Iterators.filter(_1)(_2)</code>.
+         */
+        def filter_(_2: A => Boolean) = Iterators.filter(_1)(_2)
+
+        /**
          * @return  <code>Iterators.isEmpty(_1)</code>.
          */
         def isEmpty = Iterators.isEmpty(_1)
@@ -49,6 +54,11 @@ object Infix {
          * @return  <code>Iterators.step(_1, _2)</code>.
          */
         def step(_2: Int) = Iterators.step(_1, _2)
+
+        /**
+         * @return  <code>Iterators.takeWhile(_1)(_2)</code>.
+         */
+        def takeWhile_(_2: A => Boolean) = Iterators.takeWhile(_1)(_2)
 
         /**
          * @return  <code>Iterators.toHashSet(_1)</code>.

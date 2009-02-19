@@ -36,6 +36,11 @@ object Iterators extends iter.Compatibles {
      */
     def length[A](it: Iterator[A]): Int = Length(it)
 
+    /**
+     * @return  <code>it.reduceLeft{ (b, a) => which(b, a) }</code>.
+     */
+    def best[A](it: Iterator[A], which: (A, A) => A): A = it.reduceLeft{ (b, a) => which(b, a) }
+
 
 // constructors
 
@@ -75,9 +80,19 @@ object Iterators extends iter.Compatibles {
     def cycle[A](it: Iterator[A]): Iterator[A] = Cycle(it)
 
     /**
+     * Lightweight filter
+     */
+    def filter[A](it: Iterator[A])(p: A => Boolean): Iterator[A] = Filter(it)(p)
+
+    /**
      * Returns <code>[e<sub>0</sub>, e<sub>n</sub>, e<sub>2n</sub>,...]</code>.
      */
     def step[A](it: Iterator[A], n: Int): Iterator[A] = Step(it, n)
+
+    /**
+     * Lightweight takeWhile
+     */
+    def takeWhile[A](it: Iterator[A])(p: A => Boolean): Iterator[A] = TakeWhile(it)(p)
 
     /**
      * Iterates with side-effect <code>f</code>.
@@ -140,12 +155,17 @@ object Iterators extends iter.Compatibles {
   // to
 
     /**
-     * Converts to a hash-set.
+     * Converts to string.
+     */
+    def stringize[A](it: Iterator[Char]): String = Stringize(it)
+
+    /**
+     * Converts to hash-set.
      */
     def toHashSet[A](from: Iterator[A]): scala.collection.Set[A] = ToHashSet(from)
 
     /**
-     * Converts to a hash-map.
+     * Converts to hash-map.
      */
     def toHashMap[K, V](from: Iterator[(K, V)]): scala.collection.Map[K, V] = ToHashMap(from)
 }

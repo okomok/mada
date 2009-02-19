@@ -8,6 +8,7 @@ package madatest
 
 
 import mada.Iterators
+import mada.Vector
 import junit.framework.Assert._
 
 
@@ -54,6 +55,12 @@ class IteratorsTest {
         assertTrue(Iterators.equal(it, Iterator.fromValues(1,2,3,1,2,3,1,2,3,1)))
     }
 
+    def testStringize: Unit = {
+        assertEquals(Vector.from("abcde"), Vector.from( Iterators.stringize(Iterator.fromValues('a','b','c','d','e')) ) )
+        assertTrue(Iterators.stringize(Iterator.empty).isEmpty)
+    }
+
+  // step
     def testStep0: Unit = {
         // Unlike Vector, 0 is allowed.
         val it = Iterators.step(Iterator.fromValues(1,2,3,4,5,6), 0)
@@ -92,5 +99,88 @@ class IteratorsTest {
         assertTrue(Iterators.isEmpty(it1))
         val it2 = Iterators.step(Iterator.empty, 2)
         assertTrue(Iterators.isEmpty(it2))
+    }
+
+  // filter
+    def testFilter1: Unit = {
+        val it = Iterators.filter(Iterator.fromValues(1,2,3,4,5,6))(_ % 2 == 0)
+        assertTrue(Iterators.equal(it, Iterator.fromValues(2,4,6)))
+    }
+
+    def testFilter2: Unit = {
+        val it = Iterators.filter(Iterator.fromValues(1,2,3,4,5,6,7))(_ % 2 == 0)
+        assertTrue(Iterators.equal(it, Iterator.fromValues(2,4,6)))
+    }
+
+    def testFilter3: Unit = {
+        val it = Iterators.filter(Iterator.fromValues(2,3,4,5,6))(_ % 2 == 0)
+        assertTrue(Iterators.equal(it, Iterator.fromValues(2,4,6)))
+    }
+
+    def testFilter4: Unit = {
+        val it = Iterators.filter(Iterator.fromValues(2,3,4,5,6,7))(_ % 2 == 0)
+        assertTrue(Iterators.equal(it, Iterator.fromValues(2,4,6)))
+    }
+
+    def testFilter5: Unit = {
+        val it = Iterators.filter(Iterator.fromValues(2,3,4,5,6,6,6,6))(_ % 2 == 0)
+        assertTrue(Iterators.equal(it, Iterator.fromValues(2,4,6,6,6,6)))
+    }
+
+    def testFilter6: Unit = {
+        val it = Iterators.filter(Iterator.fromValues(2,3,4,5,6,7,7,7,7))(_ % 2 == 0)
+        assertTrue(Iterators.equal(it, Iterator.fromValues(2,4,6)))
+    }
+
+    def testFilterEmpty1: Unit = {
+        val it = Iterators.filter(Iterator.fromValues(1,1))(_ % 2 == 0)
+        assertTrue(Iterators.equal(it, Iterator.empty))
+    }
+
+    def testFilterEmpty2: Unit = {
+        val it = Iterators.filter(Iterator.empty)(_ => true)
+        assertTrue(Iterators.equal(it, Iterator.empty))
+    }
+
+    def testFilterEmpty3: Unit = {
+        val it = Iterators.filter(Iterator.empty)(_ => false)
+        assertTrue(Iterators.equal(it, Iterator.empty))
+    }
+
+    def testFusion: Unit = {
+        import Iterators.Infix._
+        val it = Iterator.fromValues(1,2,3,4,5,6) filter_ (_ % 2 == 0) filter_ (_ % 3 == 0)
+        assertTrue(Iterators.equal(it, Iterator.fromValues(6)))
+    }
+
+  // takeWhile
+    def testTakeWhile1: Unit = {
+        val it = Iterators.takeWhile(Iterator.fromValues(2,4,6,5,5,6))(_ % 2 == 0)
+        assertTrue(Iterators.equal(it, Iterator.fromValues(2,4,6)))
+    }
+
+    def testTakeWhile2: Unit = {
+        val it = Iterators.takeWhile(Iterator.fromValues(2,4,6,1,2,3,4,5,6,7))(_ % 2 == 0)
+        assertTrue(Iterators.equal(it, Iterator.fromValues(2,4,6)))
+    }
+
+    def testTakeWhile3: Unit = {
+        val it = Iterators.takeWhile(Iterator.fromValues(2,3,4,5,6,7,7,7,7))(_ % 2 == 0)
+        assertTrue(Iterators.equal(it, Iterator.fromValues(2)))
+    }
+
+    def testTakeWhileEmpty1: Unit = {
+        val it = Iterators.takeWhile(Iterator.fromValues(1,1))(_ % 2 == 0)
+        assertTrue(Iterators.equal(it, Iterator.empty))
+    }
+
+    def testTakeWhileEmpty2: Unit = {
+        val it = Iterators.takeWhile(Iterator.empty)(_ => true)
+        assertTrue(Iterators.equal(it, Iterator.empty))
+    }
+
+    def testTakeWhileEmpty3: Unit = {
+        val it = Iterators.takeWhile(Iterator.empty)(_ => false)
+        assertTrue(Iterators.equal(it, Iterator.empty))
     }
 }
