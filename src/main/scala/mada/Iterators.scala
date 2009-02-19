@@ -32,7 +32,7 @@ object Iterators extends iter.Compatibles {
     def isEmpty[A](it: Iterator[A]): Boolean = !it.hasNext
 
     /**
-     * Returns the length. Note <code>it</code> is exhausted.
+     * Returns the length. Note iterator is exhausted.
      */
     def length[A](it: Iterator[A]): Int = Length(it)
 
