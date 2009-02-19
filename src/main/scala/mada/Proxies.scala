@@ -81,29 +81,26 @@ object Proxies {
     /**
      * Trivial mutable proxy (lightweight <code>Option</code>)
      */
-    class Var[A] extends Mutable[A] {
-        private var x = new java.util.ArrayList[A](1)
-        x.add(null.asInstanceOf[A])
-
+    class Var[A](private var x: A) extends Mutable[A] {
         /**
-         * @return  <code>this(); this := that</code>.
+         * Constructs an empty proxy.
          */
-        def this(that: A) = { this(); set(that) }
+        def this() = this(null.asInstanceOf[A])
 
-        override def self = x.get(0)
-        override def :=(that: => A) = set(that)
-        override def isEmptyProxy = null == x.get(0)
-        override def setEmptyProxy = set(null.asInstanceOf[A])
+        override def self = x
+        override def :=(that: => A) = x = that
+        override def isEmptyProxy = null == x
+        override def setEmptyProxy = x = null.asInstanceOf[A]
 
         /**
          * Alias of <code>:=</code> (not by-name parameter)
          */
-        final def set(that: A): Unit = x.set(0, that)
+        final def set(that: A): Unit = x = that
 
         /**
          * Returns a shallow copy. (The <code>self</code> is not copied.)
          */
-        override def clone: Var[A] = new Var(self)
+        override def clone: Var[A] = new Var(x)
     }
 
 
