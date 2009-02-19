@@ -678,7 +678,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      *
      * @param   f   a function that is applied to every element.
      */
-    def pareach(f: A => Unit): Unit = foreach(f)
+    def each(f: A => Unit): Unit = foreach(f)
 
 
 // search

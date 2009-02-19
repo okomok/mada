@@ -44,10 +44,10 @@ class CountParallelCountTest extends NoBenchmark {
 }
 
 // too slow.
-class CountParallelPareachTest extends NoBenchmark {
+class CountParallelEachTest extends NoBenchmark {
     override def run = {
         val n = new java.util.concurrent.atomic.AtomicInteger(0)
-        longSample1.parallel(longSample1.defaultGrainSize).pareach({ e => if (e % 2 == 0) n.incrementAndGet })
+        longSample1.parallel(longSample1.defaultGrainSize).each({ e => if (e % 2 == 0) n.incrementAndGet })
         n.get
         ()
     }

@@ -36,7 +36,7 @@ private[mada] class ParallelVector[A](override val underlying: Vector[A], overri
     override def seek(p: A => Boolean) = Seek(underlying, p, grainSize)
     override def count(p: A => Boolean) = Count(underlying, p, grainSize)
     // foreach
-    override def pareach(f: A => Unit) = Pareach(underlying, f, grainSize)
+    override def each(f: A => Unit) = Each(underlying, f, grainSize)
     // copy
     override def copyTo[B >: A](that: Vector[B]) = CopyTo(underlying, that, grainSize)
     // parallel folding

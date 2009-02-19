@@ -27,7 +27,7 @@ private[mada] trait Algorithm[A] extends Adapter.Transform[A] {
     override def asVectorOf[B]: Vector[B] = affectParallel(underlying.asVectorOf[B])
     // foreach
     override def loop[F <: (A => Boolean)](i: Int, j: Int, f: F): F = underlying.loop(i, j, f)
-    override def pareach(f: A => Unit): Unit
+    override def each(f: A => Unit): Unit
     // search
     override def seek(p: A => Boolean): Option[A]
     override def count(p: A => Boolean): Int

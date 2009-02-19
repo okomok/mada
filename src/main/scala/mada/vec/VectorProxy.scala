@@ -50,7 +50,7 @@ trait VectorProxy[A] extends Adapter.Transform[A] with Proxies.ProxyOf[Vector[A]
     override def asVectorOf[B]: Vector[B] = underlying.asVectorOf[B]
     // foreach
     override def loop[F <: (A => Boolean)](i: Int, j: Int, f: F): F = underlying.loop(i, j, f)
-    override def pareach(f: A => Unit): Unit = underlying.pareach(f)
+    override def each(f: A => Unit): Unit = underlying.each(f)
     // search
     override def seek(p: A => Boolean): Option[A] = underlying.seek(p)
     override def count(p: A => Boolean): Int = underlying.count(p)
