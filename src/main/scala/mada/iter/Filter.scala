@@ -15,24 +15,24 @@ private[mada] object Filter {
 }
 
 private[mada] class FilterIterator[A](val it: Iterator[A], val p: A => Boolean) extends Iterator[A] {
-    private var e: Option[A] = None
+    private var e = new Proxies.Var[A]
     satisfyPredicate
 
-    override def hasNext = !e.isEmpty
+    override def hasNext = !e.isEmptyProxy
     override def next = {
-        val tmp = e.get
-        e = None
+        val tmp = e.self
+        e.setEmpty
         satisfyPredicate
         tmp
     }
 
     private def satisfyPredicate: Unit = {
-        Assert(e.isEmpty)
+        Assert(e.isEmptyProxy)
 
         while (it.hasNext) {
             val x = it.next
             if (p(x)) {
-                e = Some(x)
+                e.set(x)
                 return
             }
         }

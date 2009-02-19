@@ -26,12 +26,12 @@ class Rule[A](private var p: Peg[A]) extends PegProxy[A] with Proxies.Mutable[Pe
     /**
      * Alias of <code>:=</code>
      */
-    final def ::=(that: Peg[A]): Unit = this := that
+    final def ::=(that: Peg[A]): Unit = p = that
 
     /**
      * Alias of <code>:=</code>
      */
-    final def <--(that: Peg[A]): Unit = this := that
+    final def <--(that: Peg[A]): Unit = p = that
 
     /**
      * Returns a shallow copy. (The <code>self</code> is not copied.)

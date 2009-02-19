@@ -12,20 +12,20 @@ private[mada] object TakeWhile {
 }
 
 private[mada] class TakeWhileIterator[A](it: Iterator[A], p: A => Boolean) extends Iterator[A] {
-    private var e: Option[A] = None
+    private var e = new Proxies.Var[A]
     if (it.hasNext) {
         unsatisfyPredicate
     }
 
-    override def hasNext = !e.isEmpty
+    override def hasNext = !e.isEmptyProxy
     override def next = {
-        val tmp = e.get
+        val tmp = e.self
         unsatisfyPredicate
         tmp
     }
 
     private def unsatisfyPredicate: Unit = {
         val x = it.next
-        e = if (p(x)) Some(x) else None
+        if (p(x)) e.set(x) else e.setEmpty
     }
 }

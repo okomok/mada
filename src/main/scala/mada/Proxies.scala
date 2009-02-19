@@ -74,20 +74,32 @@ object Proxies {
 
 
     /**
-     * Trivial mutable proxy
+     * Trivial mutable proxy (lightweight <code>Option</code>)
      */
-    class Var[A] private (private var x: Option[A]) extends Mutable[A] {
-        def this() = this(None)
-        def this(that: A) = this(Some(that))
+    class Var[A] extends Mutable[A] {
+        private var x = new java.util.ArrayList[A](1)
+        x.add(null.asInstanceOf[A])
 
-        override def self = x.get
-        override def :=(that: => A) = x = Some(that)
-        override def isEmptyProxy = x.isEmpty
+        def this(that: A) = { this(); set(that) }
+
+        override def self = x.get(0)
+        override def :=(that: => A) = set(that)
+        override def isEmptyProxy = null == x.get(0)
+
+        /**
+         * Alias of <code>:=</code> (not by-name parameter)
+         */
+        final def set(that: A) = x.set(0, that)
+
+        /**
+         * Makes <code>this</code> the empty proxy.
+         */
+        final def setEmpty = set(null.asInstanceOf[A])
 
         /**
          * Returns a shallow copy. (The <code>self</code> is not copied.)
          */
-        override def clone: Var[A] = new Var(x)
+        override def clone: Var[A] = new Var(self)
     }
 
 
@@ -105,11 +117,11 @@ object Proxies {
          * Returns a shallow copy. (The <code>self</code> is not copied.)
          */
         override def clone: LazyVar[A] = {
-            val v = new LazyVar[A]
+            val that = new LazyVar[A]
             if (!isEmptyProxy) {
-                v := self
+                that := self
             }
-            v
+            that
         }
     }
 }
