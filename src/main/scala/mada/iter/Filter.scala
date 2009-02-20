@@ -18,16 +18,16 @@ private[mada] class FilterIterator[A](val it: Iterator[A], val p: A => Boolean) 
     private var e = new Proxies.Var[A]
     satisfyPredicate
 
-    override def hasNext = !e.isEmptyProxy
+    override def hasNext = !e.proxyIsEmpty
     override def next = {
         val tmp = e.self
-        e.setEmptyProxy
+        e.proxySetEmpty
         satisfyPredicate
         tmp
     }
 
     private def satisfyPredicate: Unit = {
-        Assert(e.isEmptyProxy)
+        Assert(e.proxyIsEmpty)
 
         while (it.hasNext) {
             val x = it.next

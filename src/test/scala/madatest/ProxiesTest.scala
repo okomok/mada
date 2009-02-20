@@ -59,7 +59,7 @@ class ProxiesVarTest {
     def testSwap: Unit = {
         val v = new Var[Int](3)
         val w = new Var[Int](5)
-        v swapProxy w
+        v proxySwap w
         assertEquals(5, v.self)
         assertEquals(3, w.self)
     }

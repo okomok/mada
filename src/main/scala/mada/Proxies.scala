@@ -26,15 +26,15 @@ object Proxies {
      */
     object Mutable {
         /**
-         * @return  <code>if (that.isEmptyProxy) None else Some(that.self)</code>.
+         * @return  <code>if (that.proxyIsEmpty) None else Some(that.self)</code>.
          */
-        def unapply[A](that: Mutable[A]): Option[A] = if (that.isEmptyProxy) None else Some(that.self)
+        def unapply[A](that: Mutable[A]): Option[A] = if (that.proxyIsEmpty) None else Some(that.self)
 
         object Empty {
             /**
-             * @return  <code>that.isEmptyProxy</code>.
+             * @return  <code>that.proxyIsEmpty</code>.
              */
-            def unapply[A](that: Mutable[A]): Boolean = that.isEmptyProxy
+            def unapply[A](that: Mutable[A]): Boolean = that.proxyIsEmpty
         }
     }
 
@@ -48,19 +48,19 @@ object Proxies {
         def :=(that: => A): Unit
 
         /**
-         * Is <code>self</code> inaccessible?
+         * Is <code>self</code> empty?
          */
-        def isEmptyProxy: Boolean
+        def proxyIsEmpty: Boolean
 
         /**
          * Makes <code>self</code> empty.
          */
-        def setEmptyProxy: Unit
+        def proxySetEmpty: Unit
 
         /**
          * Swaps <code>self</code> and <code>that.self</code>.
          */
-        final def swapProxy(that: Mutable[A]): Unit = {
+        final def proxySwap(that: Mutable[A]): Unit = {
             val tmp = self
             this := that.self
             that := tmp
@@ -69,9 +69,9 @@ object Proxies {
         /**
          * Returns a vector of this proxy.
          */
-        final def vectorOfProxy: Vector[A] = new Vector[A] {
+        final def proxyToVector: Vector[A] = new Vector[A] {
             override def start = 0
-            override def end = if (Mutable.this.isEmptyProxy) 0 else 1
+            override def end = if (Mutable.this.proxyIsEmpty) 0 else 1
             override def apply(i: Int) = Mutable.this.self
             override def update(i: Int, e: A) = Mutable.this := e
         }
@@ -89,11 +89,11 @@ object Proxies {
 
         override def self = x
         override def :=(that: => A) = x = that
-        override def isEmptyProxy = null == x
-        override def setEmptyProxy = x = null.asInstanceOf[A]
+        override def proxyIsEmpty = null == x
+        override def proxySetEmpty = x = null.asInstanceOf[A]
 
         /**
-         * Alias of <code>:=</code> (not by-name parameter)
+         * Alias of <code>:=</code> (not by-name parameter to be efficient.)
          */
         final def set(that: A): Unit = x = that
 
@@ -112,15 +112,15 @@ object Proxies {
 
         override lazy val self = r.get.apply
         override def :=(that: => A) = { r.compareAndSet(null, Functions.byName(that)) }
-        override def isEmptyProxy = null == r.get
-        override def setEmptyProxy = r.set(null)
+        override def proxyIsEmpty = null == r.get
+        override def proxySetEmpty = r.set(null)
 
         /**
          * Returns a shallow copy. (The <code>self</code> is not copied.)
          */
         override def clone: LazyVar[A] = {
             val that = new LazyVar[A]
-            if (!isEmptyProxy) {
+            if (!proxyIsEmpty) {
                 that := self
             }
             that

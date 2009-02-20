@@ -17,7 +17,7 @@ private[mada] class TakeWhileIterator[A](it: Iterator[A], p: A => Boolean) exten
         unsatisfyPredicate
     }
 
-    override def hasNext = !e.isEmptyProxy
+    override def hasNext = !e.proxyIsEmpty
     override def next = {
         val tmp = e.self
         unsatisfyPredicate
@@ -26,6 +26,6 @@ private[mada] class TakeWhileIterator[A](it: Iterator[A], p: A => Boolean) exten
 
     private def unsatisfyPredicate: Unit = {
         val x = it.next
-        if (p(x)) e.set(x) else e.setEmptyProxy
+        if (p(x)) e.set(x) else e.proxySetEmpty
     }
 }
