@@ -33,6 +33,25 @@ class ProxiesVarTest {
         assertTrue(x == 12)
     }
 
+    def testTrivial3 {
+        val v = new Var(12)
+        assertEquals(12, v.self)
+        assertTrue(!v.isNull)
+
+        v := 13
+        assertEquals(13, v.self)
+        assertTrue(!v.isNull)
+        v.resign
+        assertTrue(v.isNull)
+
+        v assign 14
+        assertEquals(14, v.self)
+        assertTrue(!v.isNull)
+        v := Null
+        assertTrue(v.isNull)
+    }
+
+
     def testExtract: Unit = {
         val s = "abc"
         val r = new Var(s)
@@ -40,7 +59,7 @@ class ProxiesVarTest {
         assertSame(p, s)
 
         r match {
-            case Mutable.Empty() => fail("doh")
+            case Null() => fail("doh")
             case Mutable(p) => assertSame(s, p)
             case _ => fail("doh")
         }
@@ -51,7 +70,7 @@ class ProxiesVarTest {
         val r = new Var[String]
         r match {
             case Mutable(p) => fail("doh")
-            case Mutable.Empty() => ()
+            case Null() => ()
             case _ => fail("doh")
         }
     }

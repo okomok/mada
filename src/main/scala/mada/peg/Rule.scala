@@ -20,17 +20,17 @@ class Rule[A](private var p: Peg[A]) extends PegProxy[A] with Proxies.Mutable[Pe
     def this() = this(null)
 
     override def self = p
-    override def :=(that: => Peg[A]) = p = that
-    override def proxyIsEmpty = p eq null
-    override def proxySetEmpty = p = null
+    override def assign(that: => Peg[A]) = p = that
+    override def resign = p = null
+    override def isNull = p eq null
 
     /**
-     * Alias of <code>:=</code>
+     * Alias of <code>assign</code>
      */
     final def ::=(that: Peg[A]): Unit = p = that
 
     /**
-     * Alias of <code>:=</code>
+     * Alias of <code>assign</code>
      */
     final def <--(that: Peg[A]): Unit = p = that
 

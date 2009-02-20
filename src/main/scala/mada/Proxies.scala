@@ -22,20 +22,25 @@ object Proxies {
 
 
     /**
+     * Supports pattern matching of null proxy.
+     * Also this can be used to set proxy to empty
+     */
+    object Null {
+        /**
+         * @return  <code>that.isNull</code>.
+         */
+        def unapply[A](that: Mutable[A]): Boolean = that.isNull
+    }
+
+
+    /**
      * Supports pattern matching of <code>Mutable</code>.
      */
     object Mutable {
         /**
-         * @return  <code>if (that.proxyIsEmpty) None else Some(that.self)</code>.
+         * @return  <code>if (that.isNull) None else Some(that.self)</code>.
          */
-        def unapply[A](that: Mutable[A]): Option[A] = if (that.proxyIsEmpty) None else Some(that.self)
-
-        object Empty {
-            /**
-             * @return  <code>that.proxyIsEmpty</code>.
-             */
-            def unapply[A](that: Mutable[A]): Boolean = that.proxyIsEmpty
-        }
+        def unapply[A](that: Mutable[A]): Option[A] = if (that.isNull) None else Some(that.self)
     }
 
     /**
@@ -45,17 +50,27 @@ object Proxies {
         /**
          * Assigns <code>that</code> to <code>self</code>.
          */
-        def :=(that: => A): Unit
-
-        /**
-         * Is <code>self</code> empty?
-         */
-        def proxyIsEmpty: Boolean
+        def assign(that: => A): Unit
 
         /**
          * Makes <code>self</code> empty.
          */
-        def proxySetEmpty: Unit
+        def resign: Unit
+
+        /**
+         * Is <code>self</code> empty?
+         */
+        def isNull: Boolean
+
+        /**
+         * Alias of <code>assign</code>
+         */
+        final def :=(that: => A): Unit = assign(that)
+
+        /**
+         * Alias of <code>resign</code>
+         */
+        final def :=(that: Null.type): Unit = resign
 
         /**
          * Swaps <code>self</code> and <code>that.self</code>.
@@ -71,7 +86,7 @@ object Proxies {
          */
         final def proxyToVector: Vector[A] = new Vector[A] {
             override def start = 0
-            override def end = if (Mutable.this.proxyIsEmpty) 0 else 1
+            override def end = if (Mutable.this.isNull) 0 else 1
             override def apply(i: Int) = Mutable.this.self
             override def update(i: Int, e: A) = Mutable.this := e
         }
@@ -88,9 +103,9 @@ object Proxies {
         def this() = this(null.asInstanceOf[A])
 
         override def self = x
-        override def :=(that: => A) = x = that
-        override def proxyIsEmpty = null == x
-        override def proxySetEmpty = x = null.asInstanceOf[A]
+        override def assign(that: => A) = x = that
+        override def resign = x = null.asInstanceOf[A]
+        override def isNull = null == x
 
         /**
          * Alias of <code>:=</code> (not by-name parameter to be efficient.)
@@ -111,16 +126,16 @@ object Proxies {
         private val r = new java.util.concurrent.atomic.AtomicReference[Function0[A]]
 
         override lazy val self = r.get.apply
-        override def :=(that: => A) = { r.compareAndSet(null, Functions.byName(that)) }
-        override def proxyIsEmpty = null == r.get
-        override def proxySetEmpty = r.set(null)
+        override def assign(that: => A) = { r.compareAndSet(null, Functions.byName(that)) }
+        override def resign = r.set(null)
+        override def isNull = null == r.get
 
         /**
          * Returns a shallow copy. (The <code>self</code> is not copied.)
          */
         override def clone: LazyVar[A] = {
             val that = new LazyVar[A]
-            if (!proxyIsEmpty) {
+            if (!isNull) {
                 that := self
             }
             that
