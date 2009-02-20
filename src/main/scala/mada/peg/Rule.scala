@@ -15,7 +15,7 @@ package mada.peg
  */
 class Rule[A](private var p: Peg[A]) extends PegProxy[A] with Proxies.Mutable[Peg[A]] {
     /**
-     * Constructs an empty proxy.
+     * Constructs null proxy.
      */
     def this() = this(null)
 

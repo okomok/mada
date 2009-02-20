@@ -23,7 +23,7 @@ object Proxies {
 
     /**
      * Supports pattern matching of null proxy.
-     * Also this can be used to set proxy to empty
+     * Also this can be used to set proxy to null.
      */
     object Null {
         /**
@@ -53,12 +53,12 @@ object Proxies {
         def assign(that: => A): Unit
 
         /**
-         * Makes <code>self</code> empty.
+         * Makes <code>self</code> null.
          */
         def resign: Unit
 
         /**
-         * Is <code>self</code> empty?
+         * Is <code>self</code> null?
          */
         def isNull: Boolean
 
@@ -98,7 +98,7 @@ object Proxies {
      */
     class Var[A](private var x: A) extends Mutable[A] {
         /**
-         * Constructs an empty proxy.
+         * Constructs null proxy.
          */
         def this() = this(null.asInstanceOf[A])
 
