@@ -160,7 +160,7 @@ object Iterators extends iter.Compatibles {
   // to
 
     /**
-     * Converts to Iterable.
+     * Converts to Iterable. <code>from</code> is evaluated every <code>Iterable#elements</code> call.
      */
     def toIterable[A](from: => Iterator[A]): Iterable.Projection[A] = ToIterable(from)
 
