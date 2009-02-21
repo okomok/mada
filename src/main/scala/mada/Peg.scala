@@ -141,22 +141,22 @@ object Peg extends peg.Compatibles {
     /**
      * Chooses the longest match.
      */
-    def longest[A](ps: Peg[A]*): Peg[A] = Longest(ps)
+    def longest[A](ps: Peg[A]*): Peg[A] = Longest(ps.elements)
 
     /**
      * Chooses the longest match.
      */
-    def longest[A](ps: Iterable[Peg[A]]): Peg[A] = Longest(ps)
+    def longest[A](ps: => Iterator[Peg[A]]): Peg[A] = Longest(ps)
 
     /**
      * Chooses the shortest match.
      */
-    def shortest[A](ps: Peg[A]*): Peg[A] = Shortest(ps)
+    def shortest[A](ps: Peg[A]*): Peg[A] = Shortest(ps.elements)
 
     /**
-     * Chooses the longest match.
+     * Chooses the shortest match.
      */
-    def shortest[A](ps: Iterable[Peg[A]]): Peg[A] = Shortest(ps)
+    def shortest[A](ps: => Iterator[Peg[A]]): Peg[A] = Shortest(ps)
 
 
 // set

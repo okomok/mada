@@ -9,8 +9,8 @@ package mada.iter
 
 
 private[mada] object Cycle {
-    def apply[A](it: Iterable[A]): Iterator[A] = {
-        Iterators.repeat(()).flatMap{ (u: Unit) => it.elements }
+    def apply[A](it: => Iterator[A]): Iterator[A] = {
+        Iterators.repeat(()).flatMap{ (u: Unit) => it }
     }
 }
 

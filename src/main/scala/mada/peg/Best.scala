@@ -8,17 +8,17 @@ package mada.peg
 
 
 private[mada] object Longest {
-    def apply[A](ps: Iterable[Peg[A]]): Peg[A] = new BestPeg(ps, Math.max)
+    def apply[A](ps: => Iterator[Peg[A]]): Peg[A] = new BestPeg(ps, Math.max)
 }
 
 private[mada] object Shortest {
-    def apply[A](ps: Iterable[Peg[A]]): Peg[A] = new BestPeg(ps, Math.min)
+    def apply[A](ps: => Iterator[Peg[A]]): Peg[A] = new BestPeg(ps, Math.min)
 }
 
 
-private[mada] class BestPeg[A](ps: Iterable[Peg[A]], which: (Int, Int) => Int) extends Peg[A] {
+private[mada] class BestPeg[A](ps: => Iterator[Peg[A]], which: (Int, Int) => Int) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
-        val curs = ps.elements.map{ p => p.parse(v, start, end) }.filter{ i => i != Peg.FAILURE }
+        val curs = ps.map{ p => p.parse(v, start, end) }.filter{ i => i != Peg.FAILURE }
         if (Iterators.isEmpty(curs)) Peg.FAILURE else Iterators.best(curs, which)
     }
 }
