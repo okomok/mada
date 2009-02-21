@@ -8,16 +8,26 @@ package mada
 
 
 /**
- *Port of <a href="http://www.sgi.com/tech/stl/">STL</a> algorithms.
- *Maily used to implement <code>mada.Vector</code>.<p/>
+ * Port of <a href="http://www.sgi.com/tech/stl/">STL</a> algorithms.
+ * Maily used to implement <code>mada.Vector</code>.<p/>
  *
- *<code>mada.Stl</code> supports only <code>Vector</code> as RandomAccessIterator.
- *(Java is heap-friendly, so ForwardIterator algorithms would be too slow.)
- *Also notice that InputIterator is conceptually equivalent to <code>scala.Iterator</code>.
- *These algorithms (ironically) take region arguments as STL does to eliminate intermediate vector objects.
+ * <code>mada.Stl</code> supports only <code>Vector</code> as RandomAccessIterator.
+ * (Java is heap-friendly, so ForwardIterator algorithms would be too slow.)
+ * These algorithms (ironically) take region arguments as STL does to eliminate intermediate vector objects.<p/>
  *
- *@see <a href="http://www.sgi.com/tech/stl/">STL</a>
- *@see <a href="http://www.stanford.edu/group/coursework/docsTech/jgl/">JGL</a>
+ * Scala vs STL:
+ * <ul>
+ * <li/><code>Iterator</code>: SinglePassRange
+ * <li/><code>Iterable</code>: SinglePassRange/Forward"Begin"Iterator/non-projection methods
+ * <li/><code>Collection</code>: maybe unneeded.
+ * <li/><code>Seq</code>: maybe unneeded.
+ * <li/><code>List</code>: ForwardRange
+ * <li/><code>Stream</code>: ForwardRange
+ * <li/><code>RandomAccessSeq</code>: RandomAccessRange
+ * </ul>
+ *
+ * @see <a href="http://www.sgi.com/tech/stl/">STL</a>
+ * @see <a href="http://www.stanford.edu/group/coursework/docsTech/jgl/">JGL</a>
  */
 object Stl {
     import stl._
