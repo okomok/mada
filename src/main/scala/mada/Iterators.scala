@@ -75,11 +75,6 @@ object Iterators extends iter.Compatibles {
     def cut[A](it: Iterator[A]): Iterator[A] = Cut(it)
 
     /**
-     * An infinite repetition of <code>it</code>.
-     */
-    def cycle[A](it: Iterator[A]): Iterator[A] = Cycle(it)
-
-    /**
      * Lightweight filter
      */
     def filter[A](it: Iterator[A])(p: A => Boolean): Iterator[A] = Filter(it)(p)
@@ -98,6 +93,11 @@ object Iterators extends iter.Compatibles {
      * Iterates with side-effect <code>f</code>.
      */
     def withSideEffect[A](it: Iterator[A])(f: A => Any): Iterator[A] = WithSideEffect(it)(f)
+
+    /**
+     * An infinite repetition of <code>it</code>.
+     */
+    def cycle[A](it: Iterable[A]): Iterator[A] = Cycle(it)
 
 
 // aliases
@@ -121,6 +121,11 @@ object Iterators extends iter.Compatibles {
     val Compatibles: iter.Compatibles = this
 
   // from
+
+    /**
+     * Alias of <code>madaIteratorFromIterable</code>
+     */
+    def fromIterable[A](from: Iterable[A]): Iterator[A] = madaIteratorFromIterable(from)
 
     /**
      * Alias of <code>madaIteratorFromJclEnumeration</code>
@@ -153,6 +158,11 @@ object Iterators extends iter.Compatibles {
 // incompatibles
 
   // to
+
+    /**
+     * Converts to Iterable.
+     */
+    def toIterable[A](from: => Iterator[A]): Iterable.Projection[A] = ToIterable(from)
 
     /**
      * Converts to string.

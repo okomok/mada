@@ -29,6 +29,11 @@ trait Compatibles {
     }
 
     /**
+     * Converts from <code>Iterable</code>.
+     */
+    implicit def madaIteratorFromIterable[A](from: Iterable[A]): Iterator[A] = from.elements
+
+    /**
      * Converts from <code>java.util.Enumeration</code>.
      */
     implicit def madaIteratorFromJclEnumeration[A](from: java.util.Enumeration[A]): Iterator[A] = new Iterator[A] {

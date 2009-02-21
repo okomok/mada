@@ -41,7 +41,7 @@ class IteratorsTest {
     }
 
     def testCycle: Unit = {
-        val it = Iterators.cycle(Iterator.fromValues(1,2,3)).take(10)
+        val it = Iterators.cycle(Iterators.toIterable(Iterator.fromValues(1,2,3))).take(10)
         assertTrue(Iterators.equal(it, Iterator.fromValues(1,2,3,1,2,3,1,2,3,1)))
     }
 
@@ -51,8 +51,8 @@ class IteratorsTest {
         assertTrue(Iterator.fromValues(1,2,3) equal Iterator.fromValues(1,2,3))
         assertEquals(3, Iterator.fromValues(1,2,3).length)
 
-        val it = Iterator.fromValues(1,2,3).cycle.take(10)
-        assertTrue(Iterators.equal(it, Iterator.fromValues(1,2,3,1,2,3,1,2,3,1)))
+//        val it = Iterator.fromValues(1,2,3).cycle.take(10)
+//        assertTrue(Iterators.equal(it, Iterator.fromValues(1,2,3,1,2,3,1,2,3,1)))
     }
 
     def testStringize: Unit = {

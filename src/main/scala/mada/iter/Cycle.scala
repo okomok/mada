@@ -7,6 +7,14 @@
 package mada.iter
 
 
+
+private[mada] object Cycle {
+    def apply[A](it: Iterable[A]): Iterator[A] = {
+        Iterators.repeat(()).flatMap{ (u: Unit) => it.elements }
+    }
+}
+
+/*
 private[mada] object Cycle {
     def apply[A](it: Iterator[A]): Iterator[A] = {
         val buf = new java.util.ArrayList[A]
@@ -22,3 +30,4 @@ private[mada] object Cycle {
         Iterators.repeat(()).flatMap(f)
     }
 }
+*/

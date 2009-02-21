@@ -21,11 +21,6 @@ object Infix {
         def cut = Iterators.cut(_1)
 
         /**
-         * @return  <code>Iterators.cycle(_1)</code>.
-         */
-        def cycle = Iterators.cycle(_1)
-
-        /**
          * @return  <code>Iterators.equal(_2)</code>.
          */
         def equal[B](_2: Iterator[B]) = Iterators.equal(_1, _2)
