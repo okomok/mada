@@ -141,22 +141,22 @@ object Peg extends peg.Compatibles {
     /**
      * Chooses the longest match.
      */
-    def longest[A](ps: Peg[A]*): Peg[A] = Longest(ps.elements)
+    def longest[A](ps: Peg[A]*): Peg[A] = Longest(ps)
 
     /**
      * Chooses the longest match.
      */
-    def longest[A](ps: => Iterator[Peg[A]]): Peg[A] = Longest(ps)
+    def longest[A](ps: Iterable[Peg[A]]): Peg[A] = Longest(ps)
 
     /**
      * Chooses the shortest match.
      */
-    def shortest[A](ps: Peg[A]*): Peg[A] = Shortest(ps.elements)
+    def shortest[A](ps: Peg[A]*): Peg[A] = Shortest(ps)
 
     /**
      * Chooses the shortest match.
      */
-    def shortest[A](ps: => Iterator[Peg[A]]): Peg[A] = Shortest(ps)
+    def shortest[A](ps: Iterable[Peg[A]]): Peg[A] = Shortest(ps)
 
 
 // set
@@ -190,11 +190,15 @@ object Peg extends peg.Compatibles {
     val Compatibles: peg.Compatibles = this
 
   // from
-
     /**
-     * Alias of <code>madaPegFromSingle</code>
+     * Alias of <code>madaPegFromChar</code>
      */
     def fromChar(from: Char): Peg[Char] = madaPegFromChar(from)
+
+    /**
+     * Alias of <code>madaPegFromIterable</code>
+     */
+    def fromIterable[A](from: Iterable[A]): Peg[A] = madaPegFromIterable(from)
 
     /**
      * Alias of <code>madaPegFromRegex</code>
@@ -212,9 +216,20 @@ object Peg extends peg.Compatibles {
     def fromString(from: String): Peg[Char] = madaPegFromString(from)
 
     /**
-     * Alias of <code>madaPegFromVector)</code>
+     * Alias of <code>madaPegFromVector</code>
      */
     def fromVector[A](from: Vector[A]): Peg[A] = madaPegFromVector(from)
+
+  // with
+    /**
+     * Tries to match <code>from</code> using the predicate.
+     */
+    def fromIterableWith[A](from: Iterable[A])(pred: (A, A) => Boolean): Peg[A] = FromIterable(from, pred)
+
+    /**
+     * Tries to match <code>from</code> using the predicate.
+     */
+    def fromVectorWith[A](from: Vector[A])(pred: (A, A) => Boolean): Peg[A] = FromVector(from, pred)
 
 
 // aliases

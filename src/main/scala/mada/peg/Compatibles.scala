@@ -17,6 +17,11 @@ trait Compatibles {
     implicit def madaPegFromChar(from: Char): Peg[Char] = Single(from)
 
     /**
+     * Converts a <code>Iterable</code> to <code>Peg</code>.
+     */
+    implicit def madaPegFromIterable[A](from: Iterable[A]): Peg[A] = FromIterable(from)
+
+    /**
      * Converts a <code>Regex</code> to <code>Peg</code>.
      */
     implicit def madaPegFromRegex(from: scala.util.matching.Regex): Peg[Char] = FromRegexPattern(from.pattern)

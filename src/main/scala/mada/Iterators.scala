@@ -97,7 +97,7 @@ object Iterators extends iter.Compatibles {
     /**
      * An infinite repetition of <code>it</code>.
      */
-    def cycle[A](it: => Iterator[A]): Iterator[A] = Cycle(it)
+    def cycle[A](it: Iterable[A]): Iterable.Projection[A] = Cycle(it)
 
 
 // aliases
@@ -121,7 +121,6 @@ object Iterators extends iter.Compatibles {
     val Compatibles: iter.Compatibles = this
 
   // from
-
     /**
      * Alias of <code>madaIteratorFromIterable</code>
      */
@@ -143,7 +142,6 @@ object Iterators extends iter.Compatibles {
     def fromObjectInput(from: java.io.ObjectInput): Iterator[AnyRef] = madaIteratorFromObjectInput(from)
 
   // to
-
     /**
      * Alias of <code>madaIteratorToJclEnumeration</code>
      */
@@ -158,12 +156,6 @@ object Iterators extends iter.Compatibles {
 // incompatibles
 
   // to
-
-    /**
-     * Converts to Iterable. <code>from</code> is evaluated every <code>Iterable#elements</code> call.
-     */
-    def toIterable[A](from: => Iterator[A]): Iterable.Projection[A] = ToIterable(from)
-
     /**
      * Converts to string.
      */
@@ -178,4 +170,9 @@ object Iterators extends iter.Compatibles {
      * Converts to hash-map.
      */
     def toHashMap[K, V](from: Iterator[(K, V)]): scala.collection.Map[K, V] = ToHashMap(from)
+
+    /**
+     * Converts to Iterable. <code>from</code> is evaluated every <code>Iterable#elements</code> call.
+     */
+    def toIterable[A](from: => Iterator[A]): Iterable.Projection[A] = ToIterable(from)
 }

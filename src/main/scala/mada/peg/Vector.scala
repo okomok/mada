@@ -8,21 +8,21 @@ package mada.peg
 
 
 private[mada] object FromVector {
-    def apply[A1](w: Vector[A1]): Peg[A1] = apply[A1, A1](w, Functions.equal)
-    def apply[A1, A2](w: Vector[A1], pred: (A1, A2) => Boolean): Peg[A2] = new VectorPeg(w, pred)
+    def apply[A](from: Vector[A]): Peg[A] = apply(from, Functions.equal)
+    def apply[A](from: Vector[A], pred: (A, A) => Boolean): Peg[A] = new VectorPeg(from, pred)
 }
 
-private[mada] class VectorPeg[A1, A2](w: Vector[A1], pred: (A1, A2) => Boolean) extends Peg[A2] {
-    override def parse(v: Vector[A2], start: Int, end: Int): Int = {
-        val wsize = w.size
+private[mada] class VectorPeg[A](from: Vector[A], pred: (A, A) => Boolean) extends Peg[A] {
+    override def parse(v: Vector[A], start: Int, end: Int): Int = {
+        val wsize = from.size
         if (end - start < wsize) {
             Peg.FAILURE
-        } else if (Stl.equal(w, w.start, w.end, v, start, pred)) {
+        } else if (Stl.equal(from, from.start, from.end, v, start, pred)) {
             start + wsize
         } else {
             Peg.FAILURE
         }
     }
 
-    override def width = w.size
+    override def width = from.size
 }

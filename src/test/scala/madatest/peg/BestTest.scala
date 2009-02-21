@@ -26,7 +26,7 @@ class BestTest {
     }
 
     def testEmpty: Unit = {
-        val p2 = Peg.longest[Char](Iterator.empty)
+        val p2 = Peg.longest(mada.Iterators.toIterable[Char](Iterator.empty))
         assertFalse("123" >> p2 >> "cdefgLL"  matches "123abcdefgLL")
 
         val p1 = Peg.shortest("K", "B")

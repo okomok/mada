@@ -41,7 +41,7 @@ class IteratorsTest {
     }
 
     def testCycle: Unit = {
-        val it = Iterators.cycle(Iterator.fromValues(1,2,3)).take(10)
+        val it = Iterators.cycle(Iterators.toIterable(Iterator.fromValues(1,2,3))).elements.take(10)
         assertTrue(Iterators.equal(it, Iterator.fromValues(1,2,3,1,2,3,1,2,3,1)))
     }
 
