@@ -10,7 +10,7 @@ package mada
 /**
  * Contains utility methods operating on <code>Stack</code>.
  */
-object Stack extends stack.Compatibles {
+object Stack extends stack.Conversions with stack.Compatibles {
     /**
      * Alias of <code>stack.StackProxy</code>
      */
@@ -27,21 +27,6 @@ object Stack extends stack.Compatibles {
      * @return  <code>this</code>.
      */
     val Compatibles: stack.Compatibles = this
-
-    /**
-     * Alias of <code>madaStackFromJclDeque</code>
-     */
-    def fromJclDeque[A](from: java.util.Deque[A]) = madaStackFromJclDeque(from)
-
-    /**
-     * Alias of <code>madaStackFromSclStack</code>
-     */
-    def fromSclStack[A](from: scala.collection.mutable.Stack[A]) = madaStackFromSclStack(from)
-
-    /**
-     * Alias of <code>madaStackFromSclArrayStack</code>
-     */
-    def fromSclArrayStack[A](from: scala.collection.mutable.ArrayStack[A]) = madaStackFromSclArrayStack(from)
 }
 
 

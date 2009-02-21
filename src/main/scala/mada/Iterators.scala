@@ -10,7 +10,7 @@ package mada
 /**
  * Contains utility methods operating on <code>Iterator</code>.
  */
-object Iterators extends iter.Compatibles {
+object Iterators extends iter.Conversions with iter.Compatibles {
     import iter._
 
 
@@ -103,6 +103,11 @@ object Iterators extends iter.Compatibles {
 // aliases
 
     /**
+     * @return  <code>this</code>.
+     */
+    val Compatibles: iter.Compatibles = this
+
+    /**
      * Alias of <code>iter.IteratorProxy</code>
      */
     type IteratorProxy[A] = iter.IteratorProxy[A]
@@ -111,68 +116,4 @@ object Iterators extends iter.Compatibles {
      * Alias of <code>iter.Infix</code>
      */
     val Infix = iter.Infix
-
-
-// alias compatibles
-
-    /**
-     * @return  <code>this</code>.
-     */
-    val Compatibles: iter.Compatibles = this
-
-  // from
-    /**
-     * Alias of <code>madaIteratorFromIterable</code>
-     */
-    def fromIterable[A](from: Iterable[A]): Iterator[A] = madaIteratorFromIterable(from)
-
-    /**
-     * Alias of <code>madaIteratorFromJclEnumeration</code>
-     */
-    def fromJclEnumeration[A](from: java.util.Enumeration[A]): Iterator[A] = madaIteratorFromJclEnumeration(from)
-
-    /**
-     * Alias of <code>madaIteratorFromJclIterator</code>
-     */
-    def fromJclIterator[A](from: java.util.Iterator[A]): Iterator[A] = madaIteratorFromJclIterator(from)
-
-    /**
-     * Alias of <code>madaIteratorFromObjectInput</code>
-     */
-    def fromObjectInput(from: java.io.ObjectInput): Iterator[AnyRef] = madaIteratorFromObjectInput(from)
-
-  // to
-    /**
-     * Alias of <code>madaIteratorToJclEnumeration</code>
-     */
-    def toJclEnumeration[A](from: Iterator[A]): java.util.Enumeration[A] = madaIteratorToJclEnumeration(from)
-
-    /**
-     * Alias of <code>madaIteratorToJclIterator</code>
-     */
-    def toJclIterator[A](from: Iterator[A]): java.util.Iterator[A] = madaIteratorToJclIterator(from)
-
-
-// incompatibles
-
-  // to
-    /**
-     * Converts to string.
-     */
-    def stringize[A](it: Iterator[Char]): String = Stringize(it)
-
-    /**
-     * Converts to hash-set.
-     */
-    def toHashSet[A](from: Iterator[A]): scala.collection.Set[A] = ToHashSet(from)
-
-    /**
-     * Converts to hash-map.
-     */
-    def toHashMap[K, V](from: Iterator[(K, V)]): scala.collection.Map[K, V] = ToHashMap(from)
-
-    /**
-     * Converts to Iterable. <code>from</code> is evaluated every <code>Iterable#elements</code> call.
-     */
-    def toIterable[A](from: => Iterator[A]): Iterable.Projection[A] = ToIterable(from)
 }
