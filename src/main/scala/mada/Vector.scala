@@ -10,7 +10,7 @@ package mada
 /**
  * Contains utility types and methods operating on <code>Vector</code>.
  */
-object Vector extends vec.Compatibles {
+object Vector extends vec.Conversions with vec.Compatibles {
     import vec._
 
 
@@ -143,135 +143,6 @@ object Vector extends vec.Compatibles {
     def `synchronized`[A](v: Vector[A]) = Synchronized(v)
 
 
-// alias compatibles
-
-    /**
-     * @return  <code>this</code>.
-     */
-    val Compatibles: vec.Compatibles = this
-
-  // from
-
-    /**
-     * Alias of <code>madaVectorFromArray</code>
-     */
-    def fromArray[A](from: Array[A]): Vector[A] = madaVectorFromArray(from)
-
-    /**
-     * Alias of <code>madaVectorFromCell</code>
-     */
-    def fromCell[A](from: Cell[A]): Vector[A] = madaVectorFromCell(from)
-
-    /**
-     * Alias of <code>madaVectorFromJclCharSequence</code>
-     */
-    def fromJclCharSequence(from: java.lang.CharSequence): Vector[Char] = madaVectorFromJclCharSequence(from)
-
-    /**
-     * Alias of <code>madaVectorFromJclList</code>
-     */
-    def fromJclList[A](from: java.util.List[A]): Vector[A] = madaVectorFromJclList(from)
-
-    /**
-     * Alias of <code>madaVectorFromOption</code>
-     */
-    def fromOption[A](from: Option[A]): Vector[A] = madaVectorFromOption(from)
-
-    /**
-     * Alias of <code>madaVectorFromProduct</code>
-     */
-    def fromProduct(from: Product): Vector[Any] = madaVectorFromProduct(from)
-
-    /**
-     * Alias of <code>madaVectorFromRandomAccessSeq</code>
-     */
-    def fromRandomAccessSeq[A](from: RandomAccessSeq[A]): Vector[A] = madaVectorFromRandomAccessSeq(from)
-
-    /**
-     * Alias of <code>madaVectorFromString</code>
-     */
-    def fromString(from: String): Vector[Char] = madaVectorFromString(from)
-
-  // to
-
-    /**
-     * Alias of <code>madaVectorToJclCharSequence</code>
-     */
-    def toJclCharSequence(from: Vector[Char]): java.lang.CharSequence = madaVectorToJclCharSequence(from)
-
-    /**
-     * Alias of <code>ToIterator</code>
-     */
-    def toIterator[A](from: Vector[A]): Iterator[A] = ToIterator(from)
-
-    /**
-     * Alias of <code>madaVectorToRandomAccessSeq</code>
-     */
-    def toRandomAccessSeq[A](from: Vector[A]): RandomAccessSeq.Mutable[A] = madaVectorToRandomAccessSeq(from)
-
-    /**
-     * Alias of <code>madaVectorToJclListIterator</code>
-     */
-    def toJclListIterator[A](from: Vector[A]): java.util.ListIterator[A] = madaVectorToJclListIterator(from)
-
-    /**
-     * Alias of <code>madaVectorToLinearAccessSeq</code>
-     */
-    def toLinearAccessSeq[A](from: Vector[A]): Seq[A] = madaVectorToLinearAccessSeq(from)
-
-    /**
-     * Alias of <code>madaVectorToProduct</code>
-     */
-    def toProduct[A](from: Vector[A]): Product = madaVectorToProduct(from)
-
-    /**
-     * Alias of <code>madaVectorToStream</code>
-     */
-    def toStream[A](from: Vector[A]): Stream[A] = madaVectorToStream(from)
-
-
-// incompatibles
-
-  // from
-
-    /**
-     * Converts an <code>Iterator</code> to vector. (not projection)
-     */
-    def fromIterator[A](from: Iterator[A]): Vector[A] = FromIterator(from)
-
-    /**
-     * Converts a <code>java.util.Iterator</code> to vector. (not projection)
-     */
-    def fromJclIterator[A](from: java.util.Iterator[A]): Vector[A] = jcl.FromIterator(from)
-
-    /**
-     * Converts values to vector. (not projection)
-     */
-    def fromValues[A](from: A*): Vector[A] = fromIterator(from.elements)
-
-  // to
-
-    /**
-     * Converts a vector of <code>Char</code> to <code>String</code>. (not projection)
-     */
-    def stringize(from: Vector[Char]): String = Stringize(from)
-
-    /**
-     * Converts a vector to <code>List</code>. (not projection)
-     */
-    def toList[A](from: Vector[A]): List[A] = from.toIterator.toList
-
-    /**
-     * Converts a vector to <code>Array</code>. (not projection)
-     */
-    def toArray[A](from: Vector[A]): Array[A] = ToArray(from)
-
-    /**
-     * Converts a vector to <code>java.util.ArrayList</code>. (not projection)
-     */
-    def toJclArrayList[A](from: Vector[A]): java.util.ArrayList[A] = jcl.ToArrayList(from)
-
-
 // triplify
 
     /**
@@ -309,6 +180,11 @@ object Vector extends vec.Compatibles {
 
 
 // aliases
+
+    /**
+     * @return  <code>this</code>.
+     */
+    val Compatibles: vec.Compatibles = this
 
     /**
      * Alias of <code>Vector[A] => B</code>

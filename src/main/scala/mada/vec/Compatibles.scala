@@ -11,84 +11,22 @@ package mada.vec
  * Contains implicit conversions around <code>Vector</code>.
  */
 trait Compatibles {
-
-
-// compatibles(from)
-
-    /**
-     * Converts an <code>Array</code> to vector.
-     */
-    implicit def madaVectorFromArray[A](from: Array[A]): Vector[A] = FromArray(from)
-
-    /**
-     * Converts a <code>Cell</code> to vector.
-     */
-    implicit def madaVectorFromCell[A](from: Cell[A]): Vector[A] = FromCell(from)
-
-    /**
-     * Converts a <code>java.lang.CharSequence</code> to vector.
-     */
-    implicit def madaVectorFromJclCharSequence(from: java.lang.CharSequence): Vector[Char] = jcl.FromCharSequence(from)
-
-    /**
-     * Converts a <code>java.util.List</code> to vector.
-     */
-    implicit def madaVectorFromJclList[A](from: java.util.List[A]): Vector[A] = jcl.FromList(from)
-
-    /**
-     * Converts an <code>Option</code> to vector.
-     */
-    implicit def madaVectorFromOption[A](from: Option[A]): Vector[A] = FromOption(from)
-
-    /**
-     * Converts a <code>Product</code> to vector.
-     */
-    implicit def madaVectorFromProduct(from: Product): Vector[Any] = FromProduct(from)
-
-    /**
-     * Converts a <code>RandomAccessSeq</code> to vector.
-     */
-    implicit def madaVectorFromRandomAccessSeq[A](from: RandomAccessSeq[A]): Vector[A] = FromRandomAccessSeq(from)
-
-    /**
-     * Converts a <code>String</code> to vector.
-     */
-    implicit def madaVectorFromString(from: String): Vector[Char] = FromString(from)
-
-
-// compatibles(to)
-
-    /**
-     * Converts a vector to <code>java.lang.CharSequence</code>.
-     */
-    implicit def madaVectorToJclCharSequence(from: Vector[Char]): java.lang.CharSequence = jcl.ToCharSequence(from)
-
-    /**
-     * Converts a vector to <code>Iterator</code>.
-     */
-    implicit def madaVectorToIterator[A](from: Vector[A]): Iterator[A] = ToIterator(from)
-
-    /**
-     * Converts a vector to <code>RandomAccessSeq.Mutable</code>.
-     */
-    implicit def madaVectorToRandomAccessSeq[A](from: Vector[A]): RandomAccessSeq.Mutable[A] = ToRandomAccessSeq(from)
-
-    /**
-     * Converts a vector to <code>java.util.ListIterator</code>.
-     */
-    implicit def madaVectorToJclListIterator[A](from: Vector[A]): java.util.ListIterator[A] = jcl.ToListIterator(from)
-
-    /**
-     * Converts a vector to <code>Seq</code>.
-     */
-    implicit def madaVectorToLinearAccessSeq[A](from: Vector[A]): Seq[A] = ToLinearAccessSeq(from)
-    /**
-     * Converts a vector to <code>Product</code>.
-     */
-    implicit def madaVectorToProduct[A](from: Vector[A]): Product = ToProduct(from)
-
-    /**
-     * Converts a vector to <code>Stream</code>.
-     */
-    implicit def madaVectorToStream[A](from: Vector[A]): Stream[A] = ToStream(from)
+    private val madaVector = new Conversions { }
+// from
+    implicit def madaVectorFromArray[A](from: Array[A]): Vector[A] = madaVector.fromArray(from)
+    implicit def madaVectorFromCell[A](from: Cell[A]): Vector[A] = madaVector.fromCell(from)
+    implicit def madaVectorFromJclCharSequence(from: java.lang.CharSequence): Vector[Char] = madaVector.fromJclCharSequence(from)
+    implicit def madaVectorFromJclList[A](from: java.util.List[A]): Vector[A] = madaVector.fromJclList(from)
+    implicit def madaVectorFromOption[A](from: Option[A]): Vector[A] = madaVector.fromOption(from)
+    implicit def madaVectorFromProduct(from: Product): Vector[Any] = madaVector.fromProduct(from)
+    implicit def madaVectorFromRandomAccessSeq[A](from: RandomAccessSeq[A]): Vector[A] = madaVector.fromRandomAccessSeq(from)
+    implicit def madaVectorFromString(from: String): Vector[Char] = madaVector.fromString(from)
+// to
+    implicit def madaVectorToJclCharSequence(from: Vector[Char]): java.lang.CharSequence = madaVector.toJclCharSequence(from)
+    implicit def madaVectorToIterator[A](from: Vector[A]): Iterator[A] = madaVector.toIterator(from)
+    implicit def madaVectorToRandomAccessSeq[A](from: Vector[A]): RandomAccessSeq.Mutable[A] = madaVector.toRandomAccessSeq(from)
+    implicit def madaVectorToJclListIterator[A](from: Vector[A]): java.util.ListIterator[A] = madaVector.toJclListIterator(from)
+    implicit def madaVectorToLinearAccessSeq[A](from: Vector[A]): Seq[A] = madaVector.toLinearAccessSeq(from)
+    implicit def madaVectorToProduct[A](from: Vector[A]): Product = madaVector.toProduct(from)
+    implicit def madaVectorToStream[A](from: Vector[A]): Stream[A] = madaVector.toStream(from)
 }

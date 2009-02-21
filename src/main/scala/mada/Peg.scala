@@ -10,7 +10,7 @@ package mada
 /**
  * Contains utility methods operating on <code>Peg</code>.
  */
-object Peg extends peg.Compatibles {
+object Peg extends peg.Conversions with peg.Compatibles {
     import peg._
 
 
@@ -182,57 +182,12 @@ object Peg extends peg.Compatibles {
     def switch[A](es: scala.collection.Map[A, Peg[A]]): Peg[A] = Switch(es)
 
 
-// alias compatibles
+// aliases
 
     /**
      * @return  <code>this</code>.
      */
     val Compatibles: peg.Compatibles = this
-
-  // from
-    /**
-     * Alias of <code>madaPegFromChar</code>
-     */
-    def fromChar(from: Char): Peg[Char] = madaPegFromChar(from)
-
-    /**
-     * Alias of <code>madaPegFromIterable</code>
-     */
-    def fromIterable[A](from: Iterable[A]): Peg[A] = madaPegFromIterable(from)
-
-    /**
-     * Alias of <code>madaPegFromRegex</code>
-     */
-    def fromRegex(from: scala.util.matching.Regex): Peg[Char] = madaPegFromRegex(from)
-
-    /**
-     * Alias of <code>madaPegFromRegexPattern</code>
-     */
-    def fromRegexPattern(from: java.util.regex.Pattern): Peg[Char] = madaPegFromRegexPattern(from)
-
-    /**
-     * Alias of <code>madaPegFromString</code>
-     */
-    def fromString(from: String): Peg[Char] = madaPegFromString(from)
-
-    /**
-     * Alias of <code>madaPegFromVector</code>
-     */
-    def fromVector[A](from: Vector[A]): Peg[A] = madaPegFromVector(from)
-
-  // with
-    /**
-     * Tries to match <code>from</code> using the predicate.
-     */
-    def fromIterableWith[A](from: Iterable[A])(pred: (A, A) => Boolean): Peg[A] = FromIterable(from, pred)
-
-    /**
-     * Tries to match <code>from</code> using the predicate.
-     */
-    def fromVectorWith[A](from: Vector[A])(pred: (A, A) => Boolean): Peg[A] = FromVector(from, pred)
-
-
-// aliases
 
     /**
      * Alias of <code>peg.ZeroWidth</code>

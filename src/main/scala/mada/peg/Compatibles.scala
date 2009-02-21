@@ -11,33 +11,12 @@ package mada.peg
  * Contains implicit conversions around <code>Peg</code>.
  */
 trait Compatibles {
-    /**
-     * Converts a character to <code>Peg</code>.
-     */
-    implicit def madaPegFromChar(from: Char): Peg[Char] = Single(from)
+    private val madaPeg = new Conversions { }
 
-    /**
-     * Converts a <code>Iterable</code> to <code>Peg</code>.
-     */
-    implicit def madaPegFromIterable[A](from: Iterable[A]): Peg[A] = FromIterable(from)
-
-    /**
-     * Converts a <code>Regex</code> to <code>Peg</code>.
-     */
-    implicit def madaPegFromRegex(from: scala.util.matching.Regex): Peg[Char] = FromRegexPattern(from.pattern)
-
-    /**
-     * Converts a <code>regex.Pattern</code> to <code>Peg</code>.
-     */
-    implicit def madaPegFromRegexPattern(from: java.util.regex.Pattern): Peg[Char] = FromRegexPattern(from)
-
-    /**
-     * Converts a <code>String</code> to <code>Peg</code>.
-     */
-    implicit def madaPegFromString(from: String): Peg[Char] = FromString(from)
-
-    /**
-     * Converts a <code>Vector</code> to <code>Peg</code>.
-     */
-    implicit def madaPegFromVector[A](from: Vector[A]): Peg[A] = FromVector(from)
+    implicit def madaPegFromChar(from: Char): Peg[Char] = madaPeg.fromChar(from)
+    implicit def madaPegFromIterable[A](from: Iterable[A]): Peg[A] = madaPeg.fromIterable(from)
+    implicit def madaPegFromRegex(from: scala.util.matching.Regex): Peg[Char] = madaPeg.fromRegexPattern(from.pattern)
+    implicit def madaPegFromRegexPattern(from: java.util.regex.Pattern): Peg[Char] = madaPeg.fromRegexPattern(from)
+    implicit def madaPegFromString(from: String): Peg[Char] = madaPeg.fromString(from)
+    implicit def madaPegFromVector[A](from: Vector[A]): Peg[A] = madaPeg.fromVector(from)
 }
