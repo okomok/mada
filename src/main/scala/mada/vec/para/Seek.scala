@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.vec.parallel
+package mada.vec.para
 
 
 import java.util.concurrent.atomic.AtomicReference

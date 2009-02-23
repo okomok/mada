@@ -13,13 +13,13 @@ package mada.vec
  */
 trait VectorProxy[A] extends Adapter.Transform[A] with Proxies.ProxyOf[Vector[A]] {
     final override def underlying = self
-    // value semantics
+  // value semantics
     override def equalsWith[B](that: Vector[B])(p: Functions.Predicate2[A, B]): Boolean = underlying.equalsWith(that)(p)
     override def equals(that: Any): Boolean = Equals(this, that) // works around scala.Proxy#equals.
     override def hashCode: Int = underlying.hashCode
-    // toString
+  // toString
     override def toString: String = underlying.toString
-    // regions
+  // regions
     override def region(_start: Int, _end: Int): Vector[A] = underlying.region(_start, _end)
     override def init: Vector[A] = underlying.init
     override def clear: Vector[A] = underlying.clear
@@ -31,64 +31,65 @@ trait VectorProxy[A] extends Adapter.Transform[A] with Proxies.ProxyOf[Vector[A]
     override def take(n: Int): Vector[A] = underlying.take(n)
     override def dropWhile(p: A => Boolean): Vector[A] = underlying.dropWhile(p)
     override def takeWhile(p: A => Boolean): Vector[A] = underlying.takeWhile(p)
-    // division
+  // division
     override def divide(n: Int): Vector[Vector[A]] = underlying.divide(n)
     override def splitAt(i: Int): (Vector[A], Vector[A]) = underlying.splitAt(i)
     override def span(p: A => Boolean): (Vector[A], Vector[A]) = underlying.span(p)
     override def break(p: A => Boolean): (Vector[A], Vector[A]) = underlying.break(p)
-    // as list
+  // as list
     override def tail: Vector[A] = underlying.tail
-    // filter
+  // filter
     override def filter(p: A => Boolean): Vector[A] = underlying.filter(p)
     override def mutatingFilter(p: A => Boolean): Vector[A] = underlying.mutatingFilter(p)
     override def remove(p: A => Boolean): Vector[A] = underlying.remove(p)
     override def mutatingRemove(p: A => Boolean): Vector[A] = underlying.mutatingRemove(p)
     override def partition(p: A => Boolean): (Vector[A], Vector[A]) = underlying.partition(p)
-    // map
+  // map
     override def map[B](f: A => B): Vector[B] = underlying.map(f)
     override def flatMap[B](f: A => Vector[B]): Vector[B] = underlying.flatMap(f)
     override def asVectorOf[B]: Vector[B] = underlying.asVectorOf[B]
-    // foreach
+  // loop
     override def loop[F <: (A => Boolean)](i: Int, j: Int, f: F): F = underlying.loop(i, j, f)
     override def each(f: A => Unit): Unit = underlying.each(f)
-    // search
+  // search
     override def seek(p: A => Boolean): Option[A] = underlying.seek(p)
     override def count(p: A => Boolean): Int = underlying.count(p)
-    // folding
+  // folding
     override def folderLeft[B](z: B)(op: (B, A) => B): Vector[B] = underlying.folderLeft(z)(op)
     override def folderRight[B](z: B)(op: (A, B) => B): Vector[B] = underlying.folderRight(z)(op)
     override def reducerLeft[B >: A](op: (B, A) => B): Vector[B] = underlying.reducerLeft(op)
     override def reducerRight[B >: A](op: (A, B) => B): Vector[B] = underlying.reducerRight(op)
-    // sort
+  // sort
     override def sortWith(lt: Compare.Type[A]): Vector[A] = underlying.sortWith(lt)
     override def sort(implicit c: Compare.OrderedView[A]): Vector[A] = underlying.sort(c)
-    // concatenation
+  // concatenation
     override def append(that: Vector[A]): Vector[A] = underlying.append(that)
-    // permutation
+  // permutation
     override def permutation(f: Int => Int): Vector[A] = underlying.permutation(f)
     override def cycle(n: Int): Vector[A] = underlying.cycle(n)
     override def nth: Vector[A] = underlying.nth
     override def reverse: Vector[A] = underlying.reverse
     override def step(n: Int): Vector[A] = underlying.step(n)
     override def rotate(i: Int): Vector[A] = underlying.rotate(i)
-    // zip
+  // zip
     override def zip[B](that: Vector[B]): Vector[(A, B)] = underlying.zip(that)
-    // attributes
+  // attributes
     override def force: Vector[A] = underlying.force
     override def lazyValues : Vector[A] = underlying.lazyValues
     override def bounds: Vector[A] = underlying.bounds
     override def readOnly: Vector[A] = underlying.readOnly
     override def identity: Vector[A] = underlying.identity
-    // copy
+  // copy
     override def copyTo[B >: A](that: Vector[B]): Vector[A] = underlying.copyTo(that)
     override def clone: Vector[A] = underlying.clone
-    // parallel support
+  // parallel support
+    override def parallel(_grainSize: Int): Vector[A] = underlying.parallel(_grainSize)
     override def unparallel: Vector[A] = underlying.unparallel
     override def grainSize: Int = underlying.grainSize
     override def defaultGrainSize: Int = underlying.defaultGrainSize
     override def isParallel: Boolean = underlying.isParallel
     override def join: Unit = underlying.join
-    // parallel folding
+  // associative folding
     override def fold(z: A)(op: (A, A) => A): A = underlying.fold(z)(op)
     override def folder(z: A)(op: (A, A) => A): Vector[A] = underlying.folder(z)(op)
     override def reduce(op: (A, A) => A): A = underlying.reduce(op)

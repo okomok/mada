@@ -535,7 +535,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     def asVectorOf[B]: Vector[B] = AsVectorOf[A, B](this)
 
 
-// foreach
+// loop
 
     /**
      * Similar to <code>foreach</code>, but loop is breakable by <code>f</code> returning <code>false</code>.
@@ -786,12 +786,12 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     /**
      * @return  <code>parallel(defaultGrainSize)</code>
      */
-    final def parallel: Vector[A] = Parallel(this)
+    final def parallel: Vector[A] = parallel(defaultGrainSize)
 
     /**
      * Requests a vector to perform parallel methods.
      */
-    final def parallel(grainSize: Int): Vector[A] = Parallel(this, grainSize)
+    def parallel(grainSize: Int): Vector[A] = Parallel(this, grainSize)
 
     /**
      * Reverts <code>parallel</code>.
@@ -816,10 +816,10 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     /**
      * Waits for parallel element calculations over.
      */
-    def join: Unit = Join(this)
+    def join: Unit = ()
 
 
-// parallel folding
+// associative folding
 
     /**
      * @pre     <code>op</code> is associative.
