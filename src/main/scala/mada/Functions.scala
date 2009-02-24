@@ -11,7 +11,6 @@ package mada
  * Contains utility methods operating on <code>Function</code>.
  */
 object Functions {
-    import func._
 
 
 // void
@@ -100,12 +99,16 @@ object Functions {
     /**
      * Memoizes <code>g</code> using hash map.
      */
-    def memoize[T, R](g: Transform[Function1[T, R]]): Function1[T, R] = Memoize(g)(new scala.collection.jcl.HashMap[T, R])
+    def memoize[T, R](g: Transform[Function1[T, R]]): Function1[T, R] = memoizeBy(g)(new scala.collection.jcl.HashMap[T, R])
 
     /**
      * Memoizes <code>g</code> using <code>m</code> as memo table.
      */
-    def memoizeBy[T, R](g: Transform[Function1[T, R]])(m: scala.collection.mutable.Map[T, R]): Function1[T, R] = Memoize(g)(m)
+    def memoizeBy[T, R](g: Transform[Function1[T, R]])(m: Maps.Mutable[T, R]): Function1[T, R] = {
+        // See: http://citeseer.ist.psu.edu/51062.html
+        val wrap = { (fixed: Function1[T, R], v: T) => Maps.lazyGet(m)(v){ g(fixed)(v) } }
+        fix(wrap.curry)
+    }
 
 
 // not

@@ -32,7 +32,7 @@ object SymbolMap {
 /**
  * A <code>Peg</code> to optimize the form <code>(k1 >> p1)|(k2 >> p2)|(k3 >> p3)|...</code> using ternary search tree.
  */
-class SymbolMap[A] private (private val tree: TSTree[A, Peg[A]]) extends Peg[A] with scala.collection.mutable.Map[Vector[A], Peg[A]] {
+class SymbolMap[A] private (private val tree: TSTree[A, Peg[A]]) extends Peg[A] with Maps.Mutable[Vector[A], Peg[A]] {
     /**
      * Constructs <code>SymbolMap</code>.
      *
