@@ -70,14 +70,14 @@ object Iterators extends iter.Conversions with iter.Compatibles {
 // projections
 
     /**
-     * Disables overrides.
-     */
-    def seal[A](it: Iterator[A]): Iterator[A] = Seal(it)
-
-    /**
      * Lightweight filter
      */
     def filter[A](it: Iterator[A])(p: A => Boolean): Iterator[A] = Filter(it)(p)
+
+    /**
+     * Disables overrides.
+     */
+    def seal[A](it: Iterator[A]): Iterator[A] = Seal(it)
 
     /**
      * Returns <code>[e<sub>0</sub>, e<sub>n</sub>, e<sub>2n</sub>,...]</code>.
