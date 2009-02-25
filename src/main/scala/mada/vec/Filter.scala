@@ -18,12 +18,5 @@ private[mada] class FilterVector[A](v: Vector[A], p: A => Boolean) extends Vecto
 
 
 private[mada] object MutatingFilter {
-    def apply[A](v: Vector[A], p: A => Boolean): Vector[A] = new MutatingFilterVector(v, p)
-}
-
-private[mada] class MutatingFilterVector[A](v: Vector[A], p: A => Boolean) extends VectorProxy[A] {
-    override lazy val self = {
-        v(v.start, stl.RemoveIf(v, v.start, v.end, Functions.not(p)))
-    }
-    override def mutatingFilter(_p: A => Boolean) = v.mutatingFilter({ e => p(e) && _p(e) }) // mutatingFilter-mutatingFilter fusion
+    def apply[A](v: Vector[A], p: A => Boolean): Vector[A] = v(v.start, stl.RemoveIf(v, v.start, v.end, Functions.not(p)))
 }

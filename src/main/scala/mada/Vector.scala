@@ -521,6 +521,8 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     /**
      * Returns the vector resulting from applying the given function <code>f</code>
      * to each element of this vector.
+     *
+     * @pre <code>f</code> has no side effects.
      */
     def map[B](f: A => B): Vector[B] = Map(this, f)
 

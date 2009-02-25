@@ -28,10 +28,10 @@ private[mada] class ParallelVector[A](override val underlying: Vector[A], overri
     override def break(p: A => Boolean): (Vector[A], Vector[A]) = affectParallel2(unparallel.break(p))
   // filter
     override def filter(p: A => Boolean) = para.Filter(unparallel, p, grainSize)
-    override def mutatingFilter(p: A => Boolean): Vector[A] = affectParallel(unparallel.mutatingFilter(p))
+    override def mutatingFilter(p: A => Boolean): Vector[A] = para.MutatingFilter(unparallel, p, grainSize)
   // map
     override def map[B](f: A => B): Vector[B] = para.Map(unparallel, f, grainSize)
-    override def flatMap[B](f: A => Vector[B]): Vector[B] = affectParallel(unparallel.flatMap(f))
+    override def flatMap[B](f: A => Vector[B]): Vector[B] = affectParallel(super.flatMap(f))
     override def asVectorOf[B]: Vector[B] = affectParallel(unparallel.asVectorOf[B])
   // loop
     override def loop[F <: (A => Boolean)](i: Int, j: Int, f: F): F = unparallel.loop(i, j, f)
@@ -72,7 +72,7 @@ private[mada] class ParallelVector[A](override val underlying: Vector[A], overri
     override def unparallel: Vector[A] = underlying
     override def defaultGrainSize: Int = unparallel.defaultGrainSize
     override def isParallel: Boolean = true
-    override def join: Unit = underlying.foreach({ e => () })
+    override def join: Unit = unparallel.foreach({ e => () })
   // associative folding
     override def fold(z: A)(op: (A, A) => A) = para.Fold(unparallel, z, op, grainSize)
     override def folder(z: A)(op: (A, A) => A) = para.Folder(unparallel, z, op, grainSize)
