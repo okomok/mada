@@ -15,7 +15,7 @@ private[mada] object FromRegexPattern {
 }
 
 private[mada] class RegexPatternPeg(pat: Pattern) extends Peg[Char] {
-    override def parse(v: Vector[Char], start: Int, end: Int): Int = {
+    override def parse(v: Vector[Char], start: Int, end: Int) = {
         val mat = pat.matcher(v)
         mat.region(start - v.start, end - v.start)
         mat.useTransparentBounds(true)

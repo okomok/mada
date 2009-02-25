@@ -13,7 +13,7 @@ private[mada] object FromVector {
 }
 
 private[mada] class VectorPeg[A](from: Vector[A], pred: (A, A) => Boolean) extends Peg[A] {
-    override def parse(v: Vector[A], start: Int, end: Int): Int = {
+    override def parse(v: Vector[A], start: Int, end: Int) = {
         val wsize = from.size
         if (end - start < wsize) {
             Peg.FAILURE

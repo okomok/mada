@@ -12,7 +12,7 @@ private[mada] object ReadMap {
 }
 
 private[mada] class ReadMapPeg[Z, A](p: Peg[A], f: Vector[Z] => Vector[A]) extends Peg[Z] {
-    override def parse(v: Vector[Z], start: Int, end: Int): Int = {
+    override def parse(v: Vector[Z], start: Int, end: Int) = {
         p.parse(f(v), start, end) // f must return one-to-one view of Vector
     }
 
