@@ -16,7 +16,7 @@ private[mada] object EqualsWith {
         } else {
             val bp = new Breakable2(p, false)
             (v.divide(grainSize) zip w.divide(grainSize)).
-                parallel(1).map({ case (v1, w1) => breakingEquals(v1, w1, bp) }).
+                parallel(1).map{ case (v1, w1) => breakingEquals(v1, w1, bp) }.
                     unparallel.reduce(_ && _)
         }
     }

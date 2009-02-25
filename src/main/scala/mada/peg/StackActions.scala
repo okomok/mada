@@ -8,7 +8,7 @@ package mada.peg
 
 
 /**
- * Helper for self evaluations.
+ * Helper for stack evaluations.
  */
 class StackActions[A, B](override val self: Stack[B]) extends Stack.StackProxy[B] {
 

@@ -7,7 +7,7 @@
 package mada.iter
 
 
-// unfoldRight(z)({ x => Some(x, op(x)) }) always needs heap-allocation of Option.
+// unfoldRight(z){ x => Some(x, op(x)) } always needs heap-allocation of Option.
 
 private[mada] object Iterate {
     def apply[A](z: A)(op: A => A): Iterator[A] = new IterateIterator(z, op)

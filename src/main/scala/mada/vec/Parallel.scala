@@ -72,7 +72,7 @@ private[mada] class ParallelVector[A](override val underlying: Vector[A], overri
     override def unparallel: Vector[A] = underlying
     override def defaultGrainSize: Int = unparallel.defaultGrainSize
     override def isParallel: Boolean = true
-    override def join: Unit = unparallel.foreach({ e => () })
+    override def join: Unit = unparallel.foreach{ e => () }
   // associative folding
     override def fold(z: A)(op: (A, A) => A) = para.Fold(unparallel, z, op, grainSize)
     override def folder(z: A)(op: (A, A) => A) = para.Folder(unparallel, z, op, grainSize)

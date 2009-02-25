@@ -13,7 +13,7 @@ private[mada] object ToString {
 /* nightmare
     def apply[A](from: Vector[A]): String = {
         Vector.stringize(wrap(
-            Vector.untokenize(from.map({ (e: A) => Vector.fromString(e.toString) }), Vector.fromString(", "))
+            Vector.untokenize(from.map{ (e: A) => Vector.fromString(e.toString) }, Vector.fromString(", "))
         ))
     }
     private def wrap(from: Vector[Char]) = Vector.fromString("[").append(from.drop(2)).append(Vector.fromString("]"))

@@ -12,7 +12,7 @@ private[mada] object Count {
         Assert(!v.isParallel)
 
         v.divide(grainSize).
-            parallel(1).map({ w => w.count(p) }).
+            parallel(1).map{ w => w.count(p) }.
                 unparallel.reduce(_ + _)
     }
 }

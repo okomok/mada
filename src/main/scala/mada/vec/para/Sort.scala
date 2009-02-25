@@ -16,7 +16,7 @@ private[mada] object SortWith {
 
     def apply[A](v: Vector[A], lt: Compare.Type[A], grainSize: Int): Vector[A] = {
         Assert(!v.isParallel)
-        partition(v, lt, grainSize).parallel(1).each({ f => f() })
+        partition(v, lt, grainSize).parallel(1).each{ f => f() }
         v.parallel(grainSize)
     }
 

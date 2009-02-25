@@ -24,7 +24,7 @@ class CapturingGroups[K, A](val map: Maps.Mutable[K, Vector[A]]) {
     /**
      * Captures matched region.
      */
-    def capture(k: K, p: Peg[A]): Peg[A] = p.act({ v => map(k) = v })
+    def capture(k: K, p: Peg[A]): Peg[A] = p.act{ v => map(k) = v }
 
     /**
      * Alias of <code>backref</code>

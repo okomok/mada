@@ -123,7 +123,7 @@ object Vector extends vec.Conversions with vec.Compatibles {
     def undivide[A](vv: Vector[Vector[A]]): Vector[A] = Undivide(vv)
 
     /**
-     * @return  flatten(vv.map({ v => sep.append(v) }))
+     * @return  flatten(vv.map{ v => sep.append(v) })
      */
     def untokenize[A](vs: Iterator[Vector[A]], sep: Vector[A]): Vector[A] = Untokenize(vs, sep)
 

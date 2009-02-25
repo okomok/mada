@@ -9,6 +9,6 @@ package mada.vec
 
 private[mada] object Unzip {
     def apply[A, B](v: Vector[(A, B)]): (Vector[A], Vector[B]) = {
-        (v.map({ ab => ab._1 }), v.map({ ab => ab._2 }))
+        (v.map{ ab => ab._1 }, v.map{ ab => ab._2 })
     }
 }
