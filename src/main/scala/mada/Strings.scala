@@ -10,24 +10,14 @@ package mada
 /**
  * Contains utility methods operating on <code>String</code>.
  */
-object Strings {
-    /**
-     * @return  <code>str.elements</code>. Note "abc".elements needs implicit conversion to <code>RichString</code>.
-     */
-    def toIterator(str: String): Iterator[Char] = str.elements
-
+object Strings extends str.Conversions with str.Compatibles {
     /**
      * Alias of <code>toIterator</code>
      */
-    def elements(str: String): Iterator[Char] = toIterator(str)
+    def elements(s: String): Iterator[Char] = toIterator(s)
 
     /**
-     * Provides implicit conversions around <code>String</code>.
+     * @return  <code>this</code>.
      */
-    object Compatibles {
-        /**
-         * Alias of <code>toIterator</code>
-         */
-        implicit def madaStringsToIterator(str: String): Iterator[Char] = toIterator(str)
-    }
+    val Compatibles: str.Compatibles = this
 }

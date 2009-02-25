@@ -8,7 +8,7 @@ package mada.iter
 
 
 /**
- * Contains implicit convertions around <code>Iterator</code>.
+ * Contains implicit conversions around <code>Iterator</code>.
  */
 trait Compatibles {
     import Iterators._

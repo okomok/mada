@@ -18,7 +18,7 @@ package mada
  * Scala vs STL:
  * <ul>
  * <li/><code>Iterator</code>: SinglePassRange
- * <li/><code>Iterable</code>: SinglePassRange/Forward"Begin"Iterator/non-projection methods ...maybe unneeded.
+ * <li/><code>Iterable</code>: SinglePassRange/Forward"Begin"Iterator/non-projection methods
  * <li/><code>Collection</code>: ...maybe unneeded.
  * <li/><code>Seq</code>: ...maybe unneeded.
  * <li/><code>List</code>: ForwardRange

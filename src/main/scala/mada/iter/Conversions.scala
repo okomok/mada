@@ -8,9 +8,10 @@ package mada.iter
 
 
 /**
- * Contains explicit convertions around <code>Iterator</code>.
+ * Contains explicit conversions around <code>Iterator</code>.
  */
 trait Conversions {
+
 
 // compatibles
 
@@ -55,6 +56,7 @@ trait Conversions {
         override def next = from.next
         override def remove = throw new UnsupportedOperationException
     }
+
 
 // incompatibles
 
