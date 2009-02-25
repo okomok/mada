@@ -65,7 +65,7 @@ object Expr {
         }
     }
 
-    case class Cut[A](_1: Expr.Of[A]) extends Terminal[A] {
+    case class Seal[A](_1: Expr.Of[A]) extends Terminal[A] {
         override protected def _eval[B](x: Expr[A, B]): B = _1.eval(x)
     }
 
@@ -98,7 +98,7 @@ trait Expr[Z, A] {
     protected def dontKnow[B](x: Expr[A, B]): B = x.eval(x.Default)
 
     final def expr = this
-    final def cut = Expr.Cut(this).expr
+    final def seal = Expr.Seal(this).expr
     final def lazy_ = Expr.Lazy(this).expr
 }
 

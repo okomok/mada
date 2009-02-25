@@ -15,7 +15,7 @@ import madatest.vec.detail.Example._
 
 class SortTest {
     def testTrivial {
-        val actual = fromArray(example1).cut.parallel.sortWith(_ < _)
+        val actual = fromArray(example1).seal.parallel.sortWith(_ < _)
         detail.TestVectorReadOnly(example1Sorted, actual)
     }
 
@@ -25,7 +25,7 @@ class SortTest {
     }
 
     def testImplicit: Unit = {
-        val actual = fromArray(example1).cut.parallel.sort
+        val actual = fromArray(example1).seal.parallel.sort
         detail.TestVectorReadOnly(example1Sorted, actual)
     }
 
@@ -47,13 +47,13 @@ class SortTest {
 
 class SortParallelPerfTest extends NoBenchmark {
     override def run = {
-        longSample1.clone.parallel.cut.sortWith(_ < _)
+        longSample1.clone.parallel.seal.sortWith(_ < _)
     }
 }
 
 class SortNonParallelPerfTest extends NoBenchmark {
     override def run = {
-        longSample1.clone.cut.cut.sortWith(_ < _)
+        longSample1.clone.seal.seal.sortWith(_ < _)
     }
 }
 

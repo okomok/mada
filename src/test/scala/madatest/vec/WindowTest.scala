@@ -18,7 +18,7 @@ class WindowTest {
     }
 
     def testNontrivial = {
-        val ac = Vector.range(0, 10).window(3, 9).cut.window(-2, 5)
+        val ac = Vector.range(0, 10).window(3, 9).seal.window(-2, 5)
         assertEquals(Vector.range(1, 8), ac)
     }
 

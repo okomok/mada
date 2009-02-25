@@ -61,16 +61,6 @@ object Expr {
     type Constant[A] = expr.Constant[A]
 
     /**
-     * Alias of <code>expr.Cut</code>
-     */
-    val Cut = expr.Cut
-
-    /**
-     * Alias of <code>expr.Cut</code>
-     */
-    type Cut[A] = expr.Cut[A]
-
-    /**
      * Alias of <code>expr.Lazy</code>
      */
     val Lazy = expr.Lazy
@@ -79,6 +69,16 @@ object Expr {
      * Alias of <code>expr.Lazy</code>
      */
     type Lazy[A] = expr.Lazy[A]
+
+    /**
+     * Alias of <code>expr.Seal</code>
+     */
+    val Seal = expr.Seal
+
+    /**
+     * Alias of <code>expr.Seal</code>
+     */
+    type Seal[A] = expr.Seal[A]
 
     /**
      * @return  <code>Constant(from).expr<code>
@@ -150,14 +150,14 @@ trait Expr[Z, A] {
     final def expr = this
 
     /**
-     * @return  <code>Expr.cut(this).expr</code>.
-     */
-    final def xcut = Expr.Cut(this).expr
-
-    /**
      * @return  <code>Expr.Lazy(this).expr</code>.
      */
     final def xlazy = Expr.Lazy(this).expr
+
+    /**
+     * @return  <code>Expr.Seal(this).expr</code>.
+     */
+    final def xseal = Expr.Seal(this).expr
 
     /**
      * Alias of <code>eval</code>
@@ -170,7 +170,7 @@ trait Expr[Z, A] {
     final def ?[B](x: Expr[A, B]) = eval(x)
 
     /**
-     * Alias of <code>xcut</code>
+     * Alias of <code>xseal</code>
      */
-    final def ! = xcut
+    final def ! = xseal
 }

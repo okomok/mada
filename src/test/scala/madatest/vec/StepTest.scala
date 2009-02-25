@@ -61,7 +61,7 @@ class StepTest {
 
     def testStepStep: Unit = {
         val expected = Array(17,23)
-        val actual = fromArray(example1).step(3).cut.drop(1).step(2)
+        val actual = fromArray(example1).step(3).seal.drop(1).step(2)
         detail.TestVectorReadWrite(expected, actual)
     }
 

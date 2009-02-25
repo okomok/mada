@@ -751,7 +751,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     /**
      * @return  an alias of this vector, but any override is turned off.
      */
-    final def cut: Vector[A] = Cut(this)
+    final def seal: Vector[A] = Seal(this)
 
 
 // copy

@@ -15,12 +15,12 @@ import madatest.vec.detail.Example._
 
 class SortTest {
     def testTrivial {
-        val actual = fromArray(example1).cut.sortWith(_ < _)
+        val actual = fromArray(example1).seal.sortWith(_ < _)
         detail.TestVectorReadOnly(example1Sorted, actual)
     }
 
     def testImplicit {
-        val actual = fromArray(example1).cut.sort
+        val actual = fromArray(example1).seal.sort
         detail.TestVectorReadOnly(example1Sorted, actual)
     }
 

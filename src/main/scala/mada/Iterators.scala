@@ -72,7 +72,7 @@ object Iterators extends iter.Conversions with iter.Compatibles {
     /**
      * Disables overrides.
      */
-    def cut[A](it: Iterator[A]): Iterator[A] = Cut(it)
+    def seal[A](it: Iterator[A]): Iterator[A] = Seal(it)
 
     /**
      * Lightweight filter

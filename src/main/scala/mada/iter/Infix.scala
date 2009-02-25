@@ -16,9 +16,9 @@ object Infix {
      */
     sealed class MadaIterators[A](_1: Iterator[A]) {
         /**
-         * @return  <code>Iterators.cut(_1)</code>.
+         * @return  <code>Iterators.seal(_1)</code>.
          */
-        def cut = Iterators.cut(_1)
+        def seal = Iterators.seal(_1)
 
         /**
          * @return  <code>Iterators.equal(_2)</code>.

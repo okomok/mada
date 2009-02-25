@@ -7,6 +7,6 @@
 package mada.expr
 
 
-case class Cut[A](_1: Expr.Of[A]) extends Alias[Nothing, A] {
+case class Seal[A](_1: Expr.Of[A]) extends Alias[Nothing, A] {
     override protected def _alias = _1
 }

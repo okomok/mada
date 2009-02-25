@@ -7,11 +7,11 @@
 package mada.iter
 
 
-private[mada] object Cut {
-    def apply[A](it: Iterator[A]): Iterator[A] = new CutIterator(it)
+private[mada] object Seal {
+    def apply[A](it: Iterator[A]): Iterator[A] = new SealIterator(it)
 }
 
-private[mada] class CutIterator[A](it: Iterator[A]) extends Iterator[A] {
+private[mada] sealed class SealIterator[A](it: Iterator[A]) extends Iterator[A] {
     override def hasNext = it.hasNext
     override def next = it.next
 }

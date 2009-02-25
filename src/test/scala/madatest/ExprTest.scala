@@ -81,7 +81,7 @@ class ExprV2Test {
         x.deforsed = false
         x.eval
         assertTrue(x.deforsed)
-        val y = MapExpr(MapExpr(Expr(aList), { (e: Int) => "wow" }).xcut, { (e: String) => 10 })
+        val y = MapExpr(MapExpr(Expr(aList), { (e: Int) => "wow" }).xseal, { (e: String) => 10 })
         y.deforsed = false
         assertFalse(y.deforsed)
     }
