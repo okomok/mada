@@ -343,6 +343,16 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     def region(_start: Int, _end: Int): Vector[A] = Region(this, _start, _end)
 
     /**
+     * @return  <code>true</code> iif <code>this</code> and <code>that</code> traverse in the same vector object.
+     */
+    def isRegionOf[B](that: Vector[B]): Boolean = IsRegionOf(this, that)
+
+    /**
+     * @return  <code>(this isRegionOf that) && (start == that.start) && (end == that.end)</code>.
+     */
+    def shallowEquals[B](that: Vector[B]): Boolean = (this isRegionOf that) && (start == that.start) && (end == that.end)
+
+    /**
      * @pre     <code>!isEmpty</code>
      * @return  <code>this(start, end - 1)</code>.
      */

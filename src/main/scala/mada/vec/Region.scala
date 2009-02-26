@@ -24,3 +24,13 @@ case class Region[A](override val underlying: Vector[A], override val start: Int
         }
     }
 }
+
+
+private[mada] object IsRegionOf {
+    def apply[A, B](v: Vector[A], w: Vector[B]): Boolean = regionBase(v) eq regionBase(w)
+
+    private def regionBase[A](v: Vector[A]): Vector[A] = v match {
+        case Region(w, _, _) => w
+        case _ => v
+    }
+}

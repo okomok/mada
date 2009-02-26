@@ -8,18 +8,18 @@ package mada.vec
 
 
 private[mada] object Equals {
-    def apply[A1](v1: Vector[A1], v2: Any): Boolean = v2 match {
-        case v2: Vector[_] => v1.equalsTo(v2)
+    def apply[A](v: Vector[A], w: Any): Boolean = w match {
+        case w: Vector[_] => v.equalsTo(w)
         case _ => false
     }
 }
 
 private[mada] object EqualsWith {
-    def apply[A1, A2](v1: Vector[A1], v2: Vector[A2], p: (A1, A2) => Boolean): Boolean = {
-        if (v1.size != v2.size) {
+    def apply[A, B](v: Vector[A], w: Vector[B], p: (A, B) => Boolean): Boolean = {
+        if (v.size != w.size) {
             false
         } else {
-            stl.Equal(v1, v1.start, v1.end, v2, v2.start, p)
+            stl.Equal(v, v.start, v.end, w, w.start, p)
         }
     }
 }

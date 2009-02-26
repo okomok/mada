@@ -31,6 +31,7 @@ class LookTest {
         assertTrue("abc" >> "abc".<<! >> "defg" matches "abcdefg")
 
         assertTrue("abc" >> ("d".<=~ >> "cb" >> ~"a").<<~ >> "defg" matches "abcdefg")
+        assertTrue("abc" >> ("de".<<~ >> "cb" >> ~"a").<<~ >> "defg" matches "abcdefg")
         assertTrue("abc" >> regex("(?<=d)cb(?=a)").<<~ >> "defg" matches "abcdefg")
     }
 }
