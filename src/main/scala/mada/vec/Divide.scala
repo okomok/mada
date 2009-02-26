@@ -14,7 +14,7 @@ private[mada] object Divide {
 private[mada] class DivideVector[A](val dividend: Vector[A], stride: Int) extends Vector[Vector[A]] {
     ThrowIf.nonpositive(stride, "stride")
     override def start = 0
-    override def end = StepCount(dividend.start, dividend.end, stride)
+    override def end = Step.count(dividend.start, dividend.end, stride)
     override def apply(i: Int) = {
         val cur = dividend.start + i * stride
         new Region(dividend, cur, Math.min(cur + stride, dividend.end))
