@@ -1,10 +1,6 @@
-## Mada
+### Mada
 
-Mada is a set of Scala object.
-
-
-### Objects
-
+Mada is a set of Scala objects:
 
 - Functions
 
@@ -27,17 +23,4 @@ Mada is a set of Scala object.
     Random access sequence
 
 
-### Functions
-
-
-### Iterators
-
-
-### Peg
-
-
-### Stl
-
-
-### Vector
-
+Shunsuke Sogame <<okomok@gmail.com>>
