@@ -26,10 +26,11 @@ class LookTest {
 
     def testBack: Unit = {
         assertTrue("abc" >> "cba".<<~ >> "defg" matches "abcdefg")
+        assertTrue("abc" >> ("cba" >> end).<<~ >> "defg" matches "abcdefg")
         assertTrue("abc" >> any.*.<<~ >> "defg" matches "abcdefg")
         assertTrue("abc" >> "abc".<<! >> "defg" matches "abcdefg")
 
-        assertTrue("abc" >> ('d'.<=~ >> "cb" >> ~"a").<<~ >> "defg" matches "abcdefg")
+        assertTrue("abc" >> ("d".<=~ >> "cb" >> ~"a").<<~ >> "defg" matches "abcdefg")
         assertTrue("abc" >> regex("(?<=d)cb(?=a)").<<~ >> "defg" matches "abcdefg")
     }
 }
