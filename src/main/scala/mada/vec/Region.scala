@@ -16,6 +16,14 @@ package mada.vec
  * @pre <code>start <= end</code>
  */
 case class Region[A](override val underlying: Vector[A], override val start: Int, override val end: Int) extends Adapter.Transform[A] {
+    if (start > end) {
+        throw new IllegalArgumentException("invalid region: " + (start, end))
+    }
+
+    /**
+     * Rewrites region of region into flat region.
+     * <code>Vector.seal</code> can work around this rewriting.
+     */
     override def region(_start: Int, _end: Int) = { // region-region fusion
         if (_start == start && _end == end) {
             this
@@ -23,14 +31,9 @@ case class Region[A](override val underlying: Vector[A], override val start: Int
             underlying.region(_start, _end)
         }
     }
-}
 
-
-private[mada] object IsRegionOf {
-    def apply[A, B](v: Vector[A], w: Vector[B]): Boolean = regionBase(v) eq regionBase(w)
-
-    private def regionBase[A](v: Vector[A]): Vector[A] = v match {
-        case Region(w, _, _) => w
-        case _ => v
-    }
+    /**
+     * @return  <code>underlying</code>.
+     */
+    override def regionBase = underlying
 }

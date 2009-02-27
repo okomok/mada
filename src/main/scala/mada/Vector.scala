@@ -116,7 +116,7 @@ object Vector extends vec.Conversions with vec.Compatibles {
     def single[A](e: A): Vector[A] = Single(e)
 
     /**
-     * Reverts <code>Vector[A]#divide</code>.
+     * Reverts <code>divide</code>.
      *
      * @pre     each vector is the same size except for the last one.
      */
@@ -128,7 +128,7 @@ object Vector extends vec.Conversions with vec.Compatibles {
     def untokenize[A](vs: Iterator[Vector[A]], sep: Vector[A]): Vector[A] = Untokenize(vs, sep)
 
     /**
-     * Reverts <code>Vector[A]#zip</code>.
+     * Reverts <code>zip</code>.
      */
     def unzip[A, B](v: Vector[(A, B)]): (Vector[A], Vector[B]) = Unzip(v)
 
@@ -343,20 +343,20 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     def region(_start: Int, _end: Int): Vector[A] = Region(this, _start, _end)
 
     /**
-     * @return  <code>true</code> iif <code>this</code> and <code>that</code> traverse in the same vector object.
+     * @return  <code>this</code>.
      */
-    def isRegionOf[B](that: Vector[B]): Boolean = IsRegionOf(this, that)
+    def regionBase: Vector[A] = this
 
     /**
-     * @return  <code>(this isRegionOf that) && (start == that.start) && (end == that.end)</code>.
+     * @return  <code>(this.regionBase eq that.regionBase) && (start == that.start) && (end == that.end)</code>.
      */
-    def shallowEquals[B](that: Vector[B]): Boolean = (this isRegionOf that) && (start == that.start) && (end == that.end)
+    final def shallowEquals[B](that: Vector[B]): Boolean = (this.regionBase eq that.regionBase) && (start == that.start) && (end == that.end)
 
     /**
      * @pre     <code>!isEmpty</code>
      * @return  <code>this(start, end - 1)</code>.
      */
-    def init: Vector[A] = this(start, end - 1)
+    def init: Vector[A] = { throwIfEmpty("init"); this(start, end - 1) }
 
     /**
      * @return  <code>this(start, start)</code>

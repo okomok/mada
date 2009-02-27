@@ -28,7 +28,7 @@ class Memoizer[A](val input: Vector[A]) {
         private val memoTable = new scala.collection.jcl.HashMap[Pair[Int, Int], Int]
 
         override def parse(v: Vector[A], start: Int, end: Int) = {
-            if (v isRegionOf input) {
+            if (v.regionBase eq input.regionBase) {
                 Maps.lazyGet(memoTable)(Pair(start, end)){ self.parse(v, start, end) }
             } else {
                 self.parse(v, start, end)

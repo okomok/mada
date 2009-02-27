@@ -15,12 +15,13 @@ trait VectorProxy[A] extends Adapter.Transform[A] with Proxies.ProxyOf[Vector[A]
     final override def underlying = self
   // value semantics
     override def equalsWith[B](that: Vector[B])(p: Functions.Predicate2[A, B]): Boolean = underlying.equalsWith(that)(p)
-    override def equals(that: Any): Boolean = Equals(this, that) // works around scala.Proxy#equals.
+    override def equals(that: Any): Boolean = Equals(this, that) // works around scala.Proxy.equals.
     override def hashCode: Int = underlying.hashCode
   // toString
     override def toString: String = underlying.toString
   // regions
     override def region(_start: Int, _end: Int): Vector[A] = underlying.region(_start, _end)
+    override def regionBase: Vector[A] = underlying.regionBase
     override def init: Vector[A] = underlying.init
     override def clear: Vector[A] = underlying.clear
     override def window(n: Int, m: Int): Vector[A] = underlying.window(n, m)
