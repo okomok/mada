@@ -20,7 +20,7 @@ class Memoizer[A](val input: Vector[A]) {
     final def apply(p: Peg[A]): Peg[A] = memoize(p)
 
     /**
-     * A peg to return the memoized result when input region is the same.
+     * A peg to return the memoized result when input vector is the same.
      */
     def memoize(p: Peg[A]): Peg[A] = new MemoizePeg(p)
 

@@ -348,9 +348,9 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     def regionBase: Vector[A] = this
 
     /**
-     * @return  <code>(this.regionBase eq that.regionBase) && (start == that.start) && (end == that.end)</code>.
+     * @return  <code>(regionBase eq that.regionBase) && (start == that.start) && (end == that.end)</code>.
      */
-    final def shallowEquals[B](that: Vector[B]): Boolean = (this.regionBase eq that.regionBase) && (start == that.start) && (end == that.end)
+    final def shallowEquals[B](that: Vector[B]): Boolean = (regionBase eq that.regionBase) && (start == that.start) && (end == that.end)
 
     /**
      * @pre     <code>!isEmpty</code>
