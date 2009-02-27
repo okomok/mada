@@ -70,11 +70,11 @@ class AssertTest extends TestCase {
     }
 
     def testCheck: Unit = {
-        assertEquals(12, Assert.ensure(12, 10 < (_: Int)))
+        assertEquals(12, Assert.ensure(12)(10 < (_: Int)))
 
         var thrown = false
         try {
-            Assert.ensure("fail", 12, 10 > (_: Int))
+            Assert.ensure("fail", 12)(10 > (_: Int))
         } catch {
             case e: java.lang.AssertionError => thrown = true
         }
@@ -82,4 +82,3 @@ class AssertTest extends TestCase {
     }
 }
 */
-
