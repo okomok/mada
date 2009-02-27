@@ -23,7 +23,7 @@ private[mada] object MutatingFilter {
         Assert(!v.isParallel)
 
         Vector.flatten(
-            v.divide(grainSize).parallel(1).map{ w => w.mutatingFilter(p) }.
+            v.parallelRegions(grainSize).map{ w => w.mutatingFilter(p) }.
                 unparallel.toIterator
         ).
             parallel(grainSize)

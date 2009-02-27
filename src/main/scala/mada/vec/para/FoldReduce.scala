@@ -27,9 +27,8 @@ private[mada] object Reduce {
         Assert(!v.isParallel)
         ThrowIf.empty(v, "paralell.reduce")
 
-        v.divide(grainSize).
-            parallel(1).map{ w => w.reduce(op) }.
-                unparallel.reduce(op)
+        v.parallelRegions(grainSize).map{ w => w.reduce(op) }.
+            unparallel.reduce(op)
     }
 }
 
@@ -38,7 +37,7 @@ private[mada] object Reducer {
         Assert(!v.isParallel)
         ThrowIf.empty(v, "paralell.reducer")
 
-        val rss = v.divide(grainSize).parallel(1).map{ w => w.reducer(op) }.unparallel
+        val rss = v.parallelRegions(grainSize).map{ w => w.reducer(op) }.unparallel
         if (rss.size == 1) {
             return rss.head.
                 parallel(grainSize)

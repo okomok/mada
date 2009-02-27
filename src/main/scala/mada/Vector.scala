@@ -838,6 +838,11 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      */
     def join: Unit = ()
 
+    /**
+     * @return  <code>divide(grainSize).parallel(1)</code>.
+     */
+    final def parallelRegions(grainSize: Int): Vector[Vector[A]] = divide(grainSize).parallel(1)
+
 
 // associative folding
 

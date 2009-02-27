@@ -19,8 +19,7 @@ private[mada] object Seek {
         } else {
             val ar = new AtomicReference[A]
             val bp = new Breakable1(p, true)
-            v.divide(grainSize).
-                parallel(1).each{ w => breakingSeek(w, bp, ar) }
+            v.parallelRegions(grainSize).each{ w => breakingSeek(w, bp, ar) }
             deref(ar)
         }
     }
