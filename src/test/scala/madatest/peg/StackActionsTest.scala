@@ -31,8 +31,8 @@ class StackActionsTest {
                 ('(' >> expr >> ')') |
                 ('-' >> factor){S{ (_, x) => -x }} |
                 ('+' >> factor)
-    integer ::= (digit.+){S{ v => Vector.stringize(v).toInt }}
-    digit   ::= regex("[0-9]")
+    integer ::= (digit.+){S{ v => Vector.parse.toInt(v) }}
+    digit   ::= "[0-9]".r
 
     def testTrivial: Unit = {
         assertTrue(expr matches "12345")

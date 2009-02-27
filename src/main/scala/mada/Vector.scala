@@ -91,16 +91,6 @@ object Vector extends vec.Conversions with vec.Compatibles {
     def rights[A, B](v: Vector[Either[A, B]]): Vector[B] = v.filter(_.isRight).map(_.right.get)
 
     /**
-     * Converts to lower case letters.
-     */
-    def lowerCase(v: Vector[Char]): Vector[Char] = v.map(java.lang.Character.toLowerCase(_))
-
-    /**
-     * Converts to upper case letters.
-     */
-    def upperCase(v: Vector[Char]): Vector[Char] = v.map(java.lang.Character.toUpperCase(_))
-
-    /**
      * Creates a vector containing of successive integers.
      *
      * @param   i   the value of the first element of the vector
@@ -177,6 +167,24 @@ object Vector extends vec.Conversions with vec.Compatibles {
      * Returns lexicographical <code>Ordered</code> view.
      */
     def orderedViewWith[A](lt: Compare.Type[A]): Compare.OrderedView[Vector[A]] = Compare.toOrderedView(compareWith(lt))
+
+
+// Char vector
+
+    /**
+     * Alias of <code>vec.Parse</code>
+     */
+    val parse = vec.Parse
+
+    /**
+     * Converts to lower case letters.
+     */
+    def lowerCase(v: Vector[Char]): Vector[Char] = v.map(java.lang.Character.toLowerCase(_))
+
+    /**
+     * Converts to upper case letters.
+     */
+    def upperCase(v: Vector[Char]): Vector[Char] = v.map(java.lang.Character.toUpperCase(_))
 
 
 // aliases
