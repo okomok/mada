@@ -8,7 +8,6 @@ package mada.vec.para
 
 
 private[mada] object Future {
-    val usingActors = false
     def apply[T](body: => T) = Futures.future(body)
 }
 
@@ -24,7 +23,7 @@ private[mada] object Futures {
         try {
             new Future(body)
         } catch {
-            case e: RejectedExecutionException => new Present(body)
+            case e: RejectedExecutionException => Functions.byLazy(body)
         }
     }
 
@@ -33,15 +32,11 @@ private[mada] object Futures {
         private val u = exe.synchronized { exe.submit(c) }
         override def apply(): T = u.get
     }
-
-    class Present[T](body: => T) extends (() => T) {
-        private lazy val get = body
-        override def apply(): T = get
-    }
 }
 
+/*
 // See: http://www.nabble.com/Actors-and-futures-td14926230.html
-//   Actors too doesn't support nested futures:
+//   Actors don't support nested futures:
 //   val f = future { Thread.sleep(1000); "Scala" }
 //   val f2 = future { f().length * 2 }
 //   --> assertion: receive from channel belonging to other actor
@@ -49,3 +44,4 @@ private[mada] object Futures {
 private[mada] object ActorsFutures {
     def future[T](body: => T) = scala.actors.Futures.future(body)
 }
+*/
