@@ -172,9 +172,9 @@ object Vector extends vec.Conversions with vec.Compatibles {
 // Char vector
 
     /**
-     * Alias of <code>vec.Parse</code>
+     * Alias of <code>vec.Lexical</code>
      */
-    val parse = vec.Parse
+    val lexical = vec.Lexical
 
     /**
      * Converts to lower case letters.

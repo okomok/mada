@@ -10,7 +10,7 @@ package mada.vec
 /**
  * Contains explicit conversions around char vector.
  */
-trait ParseConversions {
+trait LexicalConversions {
     import Vector.stringize
 
 // from
@@ -33,8 +33,8 @@ trait ParseConversions {
 /**
  * Contains implicit conversions around char vector.
  */
-trait ParseCompatibles {
-    import Parse._
+trait LexicalCompatibles {
+    import Lexical._
 
 // from
     implicit def madaCharVectorFromBoolean(from: Boolean): Vector[Char] = fromAny(from)
@@ -58,9 +58,16 @@ trait ParseCompatibles {
 /**
  * Contains utility methods parsing on char Vector.
  */
-object Parse extends ParseConversions with ParseCompatibles {
+object Lexical extends LexicalConversions with LexicalCompatibles {
+    /**
+     * Triggers implicit conversions explicitly.
+     *
+     * @return  <code>to</code>.
+     */
+    def from(to: Vector[Char]): Vector[Char] = to
+
     /**
      * @return  <code>this</code>.
      */
-    val Compatibles: ParseCompatibles = this
+    val Compatibles: LexicalCompatibles = this
 }
