@@ -8,9 +8,9 @@ package mada.peg
 
 
 /**
- * Adds reluctant methods for quantifiers.
+ * Adds reluctant methods for quantified peg.
  */
-trait Quantifier[A] extends Peg[A] {
+trait Quantified[A] extends Peg[A] {
     /**
      * Stops including <code>that</code>.
      *

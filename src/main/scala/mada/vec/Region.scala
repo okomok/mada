@@ -17,7 +17,7 @@ package mada.vec
  */
 case class Region[A](override val underlying: Vector[A], override val start: Int, override val end: Int) extends Adapter.Transform[A] {
     if (start > end) {
-        throw new IllegalArgumentException("invalid region: " + (start, end))
+        throw new IllegalArgumentException("Region" + (start, end))
     }
 
     /**

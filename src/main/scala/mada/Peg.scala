@@ -195,9 +195,9 @@ object Peg extends peg.Conversions with peg.Compatibles {
     type ZeroWidth[A] = peg.ZeroWidth[A]
 
     /**
-     * Alias of <code>peg.Quantifier</code>
+     * Alias of <code>peg.Quantified</code>
      */
-    type Quantifier[A] = peg.Quantifier[A]
+    type Quantified[A] = peg.Quantified[A]
 
     /**
      * Alias of <code>peg.PegProxy</code>
@@ -416,7 +416,7 @@ trait Peg[A] {
      * @pre     <code>this</code> is not instance of <code>ZeroWidth</code>.
      * @see     * as alias.
      */
-    final def star: Quantifier[A] = { throwIfZeroWidth("star"); repeat(0, ()) }
+    final def star: Quantified[A] = { throwIfZeroWidth("star"); repeat(0, ()) }
 
     /**
      * One-or-more
@@ -424,29 +424,29 @@ trait Peg[A] {
      * @pre     <code>this</code> is not instance of <code>ZeroWidth</code>.
      * @see     + as alias.
      */
-    final def plus: Quantifier[A] = { throwIfZeroWidth("plus"); repeat(1, ()) }
+    final def plus: Quantified[A] = { throwIfZeroWidth("plus"); repeat(1, ()) }
 
     /**
      * Optional
      *
      * @see     ? as alias.
      */
-    final def opt: Quantifier[A] = repeat(0, 1)
+    final def opt: Quantified[A] = repeat(0, 1)
 
     /**
      * Repeats exactly <code>n</code> times.
      */
-    final def repeat(n: Int): Quantifier[A] = Repeat(this, n, n)
+    final def repeat(n: Int): Quantified[A] = Repeat(this, n, n)
 
     /**
      * Repeats at least <code>n</code> times.
      */
-    final def repeat(n: Int, u: Unit): Quantifier[A] = Repeat(this, n, Math.MAX_INT)
+    final def repeat(n: Int, u: Unit): Quantified[A] = Repeat(this, n, Math.MAX_INT)
 
     /**
      * Repeats at least <code>n</code> but not more than <code>m</code> times.
      */
-    final def repeat(n: Int, m: Int): Quantifier[A] = Repeat(this, n, m)
+    final def repeat(n: Int, m: Int): Quantified[A] = Repeat(this, n, m)
 
 
 // assertions
@@ -614,17 +614,17 @@ trait Peg[A] {
     /**
      * Zero-or-more; alias of <code>star</code>
      */
-    final def * : Quantifier[A] = star
+    final def * : Quantified[A] = star
 
     /**
      * One-or-more; alias of <code>plus</code>
      */
-    final def + : Quantifier[A] = plus
+    final def + : Quantified[A] = plus
 
     /**
      * Optional; alias of <code>opt</code>
      */
-    final def ? : Quantifier[A] = opt
+    final def ? : Quantified[A] = opt
 
     /**
      * Alias of <code>lookbehind</code>

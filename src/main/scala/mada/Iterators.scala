@@ -47,7 +47,7 @@ object Iterators extends iter.Conversions with iter.Compatibles {
     /**
      * @return  <code>Iterator.empty</code>.
      */
-    def emptyOf[A]: Iterator[A] = Iterator.empty
+    def empty[A]: Iterator[A] = Iterator.empty
 
     /**
      * Triggers implicit conversions explicitly.

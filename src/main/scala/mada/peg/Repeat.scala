@@ -8,7 +8,7 @@ package mada.peg
 
 
 private[mada] object Repeat {
-    def apply[A](p: Peg[A], n: Int, m: Int): Quantifier[A] = {
+    def apply[A](p: Peg[A], n: Int, m: Int): Quantified[A] = {
         if (n < 0 || n > m) {
             throw new IllegalArgumentException("repeat" + (n, m))
         }
@@ -17,7 +17,7 @@ private[mada] object Repeat {
 }
 
 
-private[mada] class RepeatPeg[A](p: Peg[A], n: Int, m: Int) extends PegProxy[A] with Quantifier[A] {
+private[mada] class RepeatPeg[A](p: Peg[A], n: Int, m: Int) extends PegProxy[A] with Quantified[A] {
     private val prefix = new RepeatExactlyPeg(p, n)
     override val self = prefix >> new RepeatAtMostPeg(p, m - n)
     override def until(that: Peg[A]) = prefix >> new RepeatAtMostUntilPeg(p, m - n, that)

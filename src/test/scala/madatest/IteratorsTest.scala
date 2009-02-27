@@ -196,7 +196,7 @@ class IteratorsTest {
     }
 
     def testFolderLeftEmpty: Unit = {
-        val it = Iterators.folderLeft(Iterators.emptyOf[Int], 64)(_ / _)
+        val it = Iterators.folderLeft(Iterators.empty[Int], 64)(_ / _)
         assertTrue(Iterators.equal(it, Iterator.fromValues(64)))
     }
 
