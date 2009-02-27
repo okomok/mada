@@ -638,7 +638,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     final def reduceRight[B >: A](op: (A, B) => B): B = reverse.reduceLeft(Functions.flip(op))
 
     /**
-     * Returns the prefix sum of this vector.
+     * Returns the prefix sum of this vector. (a.k.a. scanl)
      *
      * @return  <code>[z, op(z, this(start)), op(op(z, this(start)), this(start + 1)),...]</code>.
      */

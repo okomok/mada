@@ -45,6 +45,11 @@ object Iterators extends iter.Conversions with iter.Compatibles {
 // constructors
 
     /**
+     * @return  <code>Iterator.empty</code>.
+     */
+    def emptyOf[A]: Iterator[A] = Iterator.empty
+
+    /**
      * Triggers implicit conversions explicitly.
      *
      * @return  <code>to</code>.
@@ -73,6 +78,16 @@ object Iterators extends iter.Conversions with iter.Compatibles {
      * Lightweight filter
      */
     def filter[A](it: Iterator[A])(p: A => Boolean): Iterator[A] = Filter(it)(p)
+
+    /**
+     * Returns the prefix sum. (a.k.a. scanl)
+     */
+    def folderLeft[A, B](it: Iterator[A], z: B)(op: (B, A) => B): Iterator[B] = FolderLeft(it, z, op)
+
+    /**
+     * @return  <code>folderLeft[A, B](it, it.next)(op)</code>.
+     */
+    def reducerLeft[A, B >: A](it: Iterator[A])(op: (B, A) => B): Iterator[B] = folderLeft[A, B](it, it.next)(op)
 
     /**
      * Disables overrides.

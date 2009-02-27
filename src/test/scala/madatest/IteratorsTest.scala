@@ -183,4 +183,25 @@ class IteratorsTest {
         val it = Iterators.takeWhile(Iterator.empty)(_ => false)
         assertTrue(Iterators.equal(it, Iterator.empty))
     }
+
+  // folder/reducer
+    def testFolderLeft: Unit = {
+        val it = Iterators.folderLeft(Iterator.fromValues(4,2,4), 64)(_ / _)
+        assertTrue(Iterators.equal(it, Iterator.fromValues(64,16,8,2)))
+    }
+
+    def testReducerLeft: Unit = {
+        val it = Iterators.reducerLeft(Iterator.fromValues(1,2,3,4))(_ + _)
+        assertTrue(Iterators.equal(it, Iterator.fromValues(1,3,6,10)))
+    }
+
+    def testFolderLeftEmpty: Unit = {
+        val it = Iterators.folderLeft(Iterators.emptyOf[Int], 64)(_ / _)
+        assertTrue(Iterators.equal(it, Iterator.fromValues(64)))
+    }
+
+    def testReducerLeftOne: Unit = {
+        val it = Iterators.reducerLeft(Iterator.fromValues(1))(_ + _)
+        assertTrue(Iterators.equal(it, Iterator.fromValues(1)))
+    }
 }
