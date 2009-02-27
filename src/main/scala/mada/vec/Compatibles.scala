@@ -22,6 +22,7 @@ trait Compatibles {
     implicit def madaVectorFromProduct(from: Product): Vector[Any] = fromProduct(from)
     implicit def madaVectorFromRandomAccessSeq[A](from: RandomAccessSeq[A]): Vector[A] = fromRandomAccessSeq(from)
     implicit def madaVectorFromString(from: String): Vector[Char] = fromString(from)
+
 // to
     implicit def madaVectorToJclCharSequence(from: Vector[Char]): java.lang.CharSequence = toJclCharSequence(from)
     implicit def madaVectorToIterator[A](from: Vector[A]): Iterator[A] = toIterator(from)

@@ -11,6 +11,7 @@ package mada.vec
  * Contains explicit conversions around <code>Vector</code>.
  */
 trait Conversions {
+
 // compatibles
   // from
     def fromArray[A](from: Array[A]): Vector[A] = FromArray(from)
@@ -29,6 +30,7 @@ trait Conversions {
     def toLinearAccessSeq[A](from: Vector[A]): Seq[A] = ToLinearAccessSeq(from)
     def toProduct[A](from: Vector[A]): Product = ToProduct(from)
     def toStream[A](from: Vector[A]): Stream[A] = ToStream(from)
+
 // incompatibles
   // from
     def fromIterator[A](from: Iterator[A]): Vector[A] = FromIterator(from)
