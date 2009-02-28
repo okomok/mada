@@ -64,7 +64,7 @@ object Peg extends peg.Conversions with peg.Compatibles {
     /**
      * @return  <code>eps[A] act { _ => f() }</code>.
      */
-    def call[A](f: Unit => Any): Peg[A] = eps[A] act { _ => f() }
+    def call[A](f: Unit => Unit): Peg[A] = eps[A] act { _ => f() }
 
     /**
      * Epsilon; Matches an empty input.
@@ -210,14 +210,14 @@ object Peg extends peg.Conversions with peg.Compatibles {
     type Rule[A] = peg.Rule[A]
 
     /**
-     * Alias of <code>Vector.Func[A, Any]</code>
+     * Alias of <code>Vector.Func[A, Unit]</code>
      */
-    type Action[A] = Vector.Func[A, Any]
+    type Action[A] = Vector.Func[A, Unit]
 
     /**
-     * Alias of <code>Vector.Func3[A, Any]</code>
+     * Alias of <code>Vector.Func3[A, Unit]</code>
      */
-    type Action3[A] = Vector.Func3[A, Any]
+    type Action3[A] = Vector.Func3[A, Unit]
 
     /**
      * Alias of <code>peg.ASTreeBuilder</code>

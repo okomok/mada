@@ -73,7 +73,7 @@ object Infix {
         /**
          * @return  <code>Iterators.withSideEffect(_1)(_2)</code>.
          */
-        def withSideEffect(_2: A => Any) = Iterators.withSideEffect(_1)(_2)
+        def withSideEffect(_2: A => Unit) = Iterators.withSideEffect(_1)(_2)
     }
 
     /**

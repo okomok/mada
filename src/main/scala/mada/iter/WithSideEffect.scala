@@ -8,10 +8,10 @@ package mada.iter
 
 
 private[mada] object WithSideEffect {
-    def apply[A](it: Iterator[A])(f: A => Any): Iterator[A] = new WithSideEffectIterator(it, f)
+    def apply[A](it: Iterator[A])(f: A => Unit): Iterator[A] = new WithSideEffectIterator(it, f)
 }
 
-private[mada] class WithSideEffectIterator[A](it: Iterator[A], f: A => Any) extends Iterator[A] {
+private[mada] class WithSideEffectIterator[A](it: Iterator[A], f: A => Unit) extends Iterator[A] {
     override def hasNext = it.hasNext
     override def next = {
         val e = it.next

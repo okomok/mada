@@ -936,7 +936,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     /**
      * @return  <code>f(this); this</code>.
      */
-    final def sideEffect(f: Vector[A] => Any): Vector[A] = { f(this); this }
+    final def sideEffect(f: Vector[A] => Unit): Vector[A] = { f(this); this }
 
     /**
      * @return  <code>Vector.range(start, end)</code>.

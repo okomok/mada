@@ -107,7 +107,7 @@ object Iterators extends iter.Conversions with iter.Compatibles {
     /**
      * Iterates with side-effect <code>f</code>.
      */
-    def withSideEffect[A](it: Iterator[A])(f: A => Any): Iterator[A] = WithSideEffect(it)(f)
+    def withSideEffect[A](it: Iterator[A])(f: A => Unit): Iterator[A] = WithSideEffect(it)(f)
 
     /**
      * An infinite repetition of <code>it</code>.
