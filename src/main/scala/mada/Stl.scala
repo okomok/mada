@@ -9,7 +9,7 @@ package mada
 
 /**
  * Port of <a href="http://www.sgi.com/tech/stl/">STL</a> algorithms.
- * Maily used to implement <code>mada.Vector</code>.<p/>
+ * Mainly used to implement <code>mada.Vector</code>.<p/>
  *
  * <code>mada.Stl</code> supports only <code>Vector</code> as RandomAccessIterator.
  * (Java is heap-friendly, so ForwardIterator algorithms would be too slow.)
@@ -18,7 +18,7 @@ package mada
  * Scala vs STL:
  * <ul>
  * <li/><code>Iterator</code>: SinglePassRange
- * <li/><code>Iterable</code>: SinglePassRange/Forward"Begin"Iterator/non-projection methods
+ * <li/><code>Iterable</code>: SinglePassRange+Forward"Begin"Iterator
  * <li/><code>Collection</code>: ...maybe unneeded.
  * <li/><code>Seq</code>: ...maybe unneeded.
  * <li/><code>List</code>: ForwardRange
