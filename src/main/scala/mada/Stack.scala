@@ -14,6 +14,11 @@ object Stack extends stack.Conversions with stack.Compatibles {
     /**
      * Alias of <code>stack.StackProxy</code>
      */
+    type Forwarder[A] = stack.StackProxy[A]
+
+    /**
+     * Alias of <code>stack.StackProxy</code>
+     */
     type StackProxy[A] = stack.StackProxy[A]
 
     /**

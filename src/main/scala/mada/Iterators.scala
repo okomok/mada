@@ -125,6 +125,11 @@ object Iterators extends iter.Conversions with iter.Compatibles {
     /**
      * Alias of <code>iter.IteratorProxy</code>
      */
+    type Forwarder[A] = iter.IteratorProxy[A]
+
+    /**
+     * Alias of <code>iter.IteratorProxy</code>
+     */
     type IteratorProxy[A] = iter.IteratorProxy[A]
 
     /**

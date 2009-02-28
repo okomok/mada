@@ -202,6 +202,11 @@ object Peg extends peg.Conversions with peg.Compatibles {
     /**
      * Alias of <code>peg.PegProxy</code>
      */
+    type Forwarder[A] = peg.PegProxy[A]
+
+    /**
+     * Alias of <code>peg.PegProxy</code>
+     */
     type PegProxy[A] = peg.PegProxy[A]
 
     /**

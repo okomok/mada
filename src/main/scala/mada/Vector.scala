@@ -225,7 +225,12 @@ object Vector extends vec.Conversions with vec.Compatibles {
     type Adapter[Z, A] = vec.Adapter[Z, A]
 
     /**
-     * Alias of <code>vec.Adapter.Proxy</code>
+     * Alias of <code>vec.VectorProxy</code>
+     */
+    type Forwarder[A] = vec.VectorProxy[A]
+
+    /**
+     * Alias of <code>vec.VectorProxy</code>
      */
     type VectorProxy[A] = vec.VectorProxy[A]
 
