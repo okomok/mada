@@ -2,6 +2,10 @@
 
 Mada is a set of Scala objects:
 
+- Compare
+
+    Strict weak ordering
+
 - Functions
 
     Utility methods for functions
@@ -20,7 +24,7 @@ Mada is a set of Scala objects:
 
 - Vector
 
-    Random access sequence
+    Structurally-unmodifiable writable array
 
 
 Shunsuke Sogame <<okomok@gmail.com>>
