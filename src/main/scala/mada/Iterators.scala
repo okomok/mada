@@ -45,14 +45,9 @@ object Iterators extends iter.Conversions with iter.Compatibles {
 // constructors
 
     /**
-     * Alias of <code>Iterator.fromValues</code>
+     * @return  <code>from.projection</code>
      */
-    def apply[A](from: A*): Iterator[A] = from.elements
-
-    /**
-     * Alias of <code>Iterator.empty</code>
-     */
-    def empty[A]: Iterator[A] = Iterator.empty
+    def apply[A](from: A*): Iterable.Projection[A] = from.projection
 
     /**
      * Triggers implicit conversions explicitly.
