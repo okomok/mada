@@ -45,9 +45,9 @@ object Iterators extends iter.Conversions with iter.Compatibles {
 // constructors
 
     /**
-     * @return  <code>from.projection</code>
+     * @return  <code>from.projection</code>.
      */
-    def apply[A](from: A*): Iterable.Projection[A] = from.projection
+    def apply[A](from: A*): Seq.Projection[A] = from.projection // requires no copies unlike Vector.
 
     /**
      * Triggers implicit conversions explicitly.
