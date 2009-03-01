@@ -45,7 +45,12 @@ object Iterators extends iter.Conversions with iter.Compatibles {
 // constructors
 
     /**
-     * @return  <code>Iterator.empty</code>.
+     * Alias of <code>Iterator.fromValues</code>
+     */
+    def apply[A](from: A*): Iterator[A] = from.elements
+
+    /**
+     * Alias of <code>Iterator.empty</code>
      */
     def empty[A]: Iterator[A] = Iterator.empty
 
@@ -65,6 +70,16 @@ object Iterators extends iter.Conversions with iter.Compatibles {
      * An infinite iterator of repeated applications of <code>op</code> to <code>z</code>.
      */
     def iterate[A](z: A)(op: A => A): Iterator[A] = Iterate(z)(op)
+
+    /**
+     * Alias of <code>Iterator.range</code>
+     */
+    def range(i: Int, j: Int): Iterator[Int] = Iterator.range(i, j)
+
+    /**
+     * Alias of <code>Iterator.from</code>
+     */
+    def range(i: Int, u: Unit): Iterator[Int] = iterate(i){ k => k + 1 }
 
     /**
      * An infinite iterator, with <code>e</code> the value of every element.
