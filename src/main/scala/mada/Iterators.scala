@@ -67,19 +67,9 @@ object Iterators extends iter.Conversions with iter.Compatibles {
     def iterate[A](z: A)(op: A => A): Iterator[A] = Iterate(z)(op)
 
     /**
-     * Alias of <code>Iterator.range</code>
+     * @return  <code>toIterable(iterate(e)(Functions.identity[A]))</code>.
      */
-    def range(i: Int, j: Int): Iterator[Int] = Iterator.range(i, j)
-
-    /**
-     * Alias of <code>Iterator.from</code>
-     */
-    def range(i: Int, u: Unit): Iterator[Int] = iterate(i){ k => k + 1 }
-
-    /**
-     * An infinite iterator, with <code>e</code> the value of every element.
-     */
-    def repeat[A](e: A): Iterator[A] = iterate(e)(Functions.identity[A])
+    def repeat[A](e: A): Iterable.Projection[A] = { val it = iterate(e)(Functions.identity[A]); toIterable(it) }
 
 
 // projections
@@ -122,7 +112,7 @@ object Iterators extends iter.Conversions with iter.Compatibles {
     /**
      * An infinite repetition of <code>it</code>.
      */
-    def cycle[A](it: Iterable[A]): Iterable.Projection[A] = Cycle(it)
+    def cycle[A](it: Iterable[A]): Iterable.Projection[A] = repeat(()).flatMap{ (u: Unit) => it }
 
 
 // aliases

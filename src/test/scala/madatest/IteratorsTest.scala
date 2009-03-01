@@ -36,6 +36,7 @@ class IteratorsTest {
     }
 
     def testRepeat: Unit = {
+        import Iterators.Compatibles._
         val it = Iterators.repeat(3).take(10)
         assertTrue(Iterators.equal(it, Iterator.fromValues(3,3,3,3,3,3,3,3,3,3)))
     }

@@ -100,6 +100,11 @@ object Vector extends vec.Conversions with vec.Compatibles {
     def range(i: Int, j: Int): Vector[Int] = Range(i, j)
 
     /**
+     * @return  <code>range(i, Math.MAX_INT)</code>.
+     */
+    def range(i: Int, u: Unit): Vector[Int] = Range(i, Math.MAX_INT)
+
+    /**
      * @param   e   the element
      * @return  the writable vector with one single element.
      */
