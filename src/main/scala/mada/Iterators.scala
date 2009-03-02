@@ -32,7 +32,7 @@ object Iterators extends iter.Conversions with iter.Compatibles {
     def isEmpty[A](it: Iterator[A]): Boolean = !it.hasNext
 
     /**
-     * Returns the length. Note iterator is exhausted.
+     * Returns the length. Note that iterator is exhausted.
      */
     def length[A](it: Iterator[A]): Int = Length(it)
 
@@ -47,7 +47,7 @@ object Iterators extends iter.Conversions with iter.Compatibles {
     /**
      * @return  <code>from.projection</code>.
      */
-    def apply[A](from: A*): Seq.Projection[A] = from.projection // requires no copies unlike Vector.
+    def apply[A](from: A*): Iterable.Projection[A] = from.projection // requires no copies unlike Vector.
 
     /**
      * Triggers implicit conversions explicitly.
@@ -57,19 +57,19 @@ object Iterators extends iter.Conversions with iter.Compatibles {
     def from[A](to: Iterator[A]): Iterator[A] = to
 
     /**
-     * The unfolding
+     * The unfolding (op can have side-effects.)
      */
     def unfoldRight[A, B](z: A)(op: A => Option[(B, A)]): Iterator[B] = UnfoldRight(z)(op)
 
     /**
-     * An infinite iterator of repeated applications of <code>op</code> to <code>z</code>.
+     * @return  <code>unfoldRight(z){ x => Some(x, op(x)) }</code>.
      */
     def iterate[A](z: A)(op: A => A): Iterator[A] = Iterate(z)(op)
 
     /**
-     * @return  <code>toIterable(iterate(e)(Functions.identity[A]))</code>.
+     * @return  <code>toIterable(iterate(e){ x => x })</code>.
      */
-    def repeat[A](e: A): Iterable.Projection[A] = { val it = iterate(e)(Functions.identity[A]); toIterable(it) }
+    def repeat[A](e: A): Iterable.Projection[A] = { val it = iterate(e){ x => x }; toIterable(it) }
 
 
 // projections
