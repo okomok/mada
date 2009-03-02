@@ -64,5 +64,4 @@ trait Conversions {
     def stringize[A](it: Iterator[Char]): String = Stringize(it)
     def toHashMap[K, V](from: Iterator[(K, V)]): scala.collection.Map[K, V] = ToHashMap(from)
     def toHashSet[A](from: Iterator[A]): scala.collection.Set[A] = ToHashSet(from)
-    def toIterable[A](from: => Iterator[A]): Iterable.Projection[A] = ToIterable(from)
 }

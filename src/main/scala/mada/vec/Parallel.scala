@@ -64,7 +64,8 @@ private[mada] class ParallelVector[A](override val underlying: Vector[A], overri
     override def readOnly: Vector[A] = affectParallel(unparallel.readOnly)
     override def identity: Vector[A] = affectParallel(unparallel.identity)
   // copy
-    override def copyTo[B >: A](that: Vector[B]) = para.CopyTo(unparallel, that, grainSize)
+    override def copyTo[B >: A](that: Vector[B]): Vector[A] = para.CopyTo(unparallel, that, grainSize)
+    override def clone: Vector[A] = affectParallel(super.clone)
   // parallel support
     override def parallel(_grainSize: Int): Vector[A] = { // parallel-parallel fusion
       if (_grainSize == grainSize) this else unparallel.parallel(_grainSize)

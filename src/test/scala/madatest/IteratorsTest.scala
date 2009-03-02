@@ -36,12 +36,12 @@ class IteratorsTest {
     }
 
     def testRepeat: Unit = {
-        val it = Iterators.repeat(3).elements.take(10) // elements suppress a warning.
+        val it = Iterators.repeat(3).take(10)
         assertTrue(Iterators.equal(it, Iterator.fromValues(3,3,3,3,3,3,3,3,3,3)))
     }
 
     def testCycle: Unit = {
-        val it = Iterators.cycle(Iterators.toIterable(Iterator.fromValues(1,2,3))).elements.take(10)
+        val it = Iterators.cycle(Iterator.fromValues(1,2,3)).take(10)
         assertTrue(Iterators.equal(it, Iterator.fromValues(1,2,3,1,2,3,1,2,3,1)))
     }
 

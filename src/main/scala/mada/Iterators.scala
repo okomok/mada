@@ -45,9 +45,9 @@ object Iterators extends iter.Conversions with iter.Compatibles {
 // constructors
 
     /**
-     * @return  <code>from.projection</code>.
+     * Alias of <code>fromValues</code>.
      */
-    def apply[A](from: A*): Iterable.Projection[A] = from.projection // requires no copies unlike Vector.
+    def apply[A](from: A*): Iterator[A] = from.elements
 
     /**
      * Triggers implicit conversions explicitly.
@@ -67,9 +67,9 @@ object Iterators extends iter.Conversions with iter.Compatibles {
     def iterate[A](z: A)(op: A => A): Iterator[A] = Iterate(z)(op)
 
     /**
-     * @return  <code>toIterable(iterate(e){ x => x })</code>.
+     * @return  <code>iterate(e){ x => x })</code>.
      */
-    def repeat[A](e: A): Iterable.Projection[A] = { val it = iterate(e){ x => x }; toIterable(it) }
+    def repeat[A](e: A): Iterator[A] = iterate(e){ x => x }
 
 
 // projections
@@ -110,9 +110,17 @@ object Iterators extends iter.Conversions with iter.Compatibles {
     def withSideEffect[A](it: Iterator[A])(f: A => Unit): Iterator[A] = WithSideEffect(it)(f)
 
     /**
-     * An infinite repetition of <code>it</code>.
+     * An infinite repetition of <code>it</code> by-name.
      */
-    def cycle[A](it: Iterable[A]): Iterable.Projection[A] = repeat(()).flatMap{ (u: Unit) => it }
+    def cycle[A](it: => Iterator[A]): Iterator[A] = repeat(()).flatMap{ (u: Unit) => it }
+
+
+// Iterable conversion
+
+    /**
+     * Converts to <code>Iterable</code>. <code>from</code> is evaluated every <code>elements</code> call.
+     */
+    def toIterable[A](from: => Iterator[A]): Iterable.Projection[A] = ToIterable(from)
 
 
 // aliases

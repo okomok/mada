@@ -798,7 +798,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      *
      * @return  a writable clone of this vector.
      */
-    override def clone: Vector[A] = Clone(this)
+    override def clone: Vector[A] = Vector.fromArray(toArray)
 
     /**
      * @return  <code>writer(start)</code>
