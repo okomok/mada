@@ -57,6 +57,13 @@ object Iterators extends iter.Conversions with iter.Compatibles {
     def from[A](to: Iterator[A]): Iterator[A] = to
 
     /**
+     * Returns lazy iterator.
+     */
+    def `lazy`[A](it: => Iterator[A]): Iterator[A] = new IteratorProxy[A] {
+        override lazy val self = it
+    }
+
+    /**
      * The unfolding (op can have side-effects.)
      */
     def unfoldRight[A, B](z: A)(op: A => Option[(B, A)]): Iterator[B] = UnfoldRight(z)(op)
