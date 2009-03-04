@@ -465,12 +465,14 @@ trait Peg[A] {
 
     /**
      * Lookbehind zero-width assertion
+     *
      * @see     <=~ as alias.
      */
     final def lookbehind: Peg[A] = Lookbehind(this)
 
     /**
      * Lookback zero-width assertion; looking over input as reversed.
+     *
      * @see     <<~ as alias.
      */
     final def lookback: Peg[A] = Lookback(this)
