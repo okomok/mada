@@ -30,6 +30,7 @@ trait Conversions {
     def toLinearAccessSeq[A](from: Vector[A]): Seq[A] = ToLinearAccessSeq(from)
     def toProduct[A](from: Vector[A]): Product = ToProduct(from)
     def toStream[A](from: Vector[A]): Stream[A] = ToStream(from)
+    def toOrdered[A](from: Vector[A])(implicit c: Compare.OrderedView[A]): Ordered[Vector[A]] = ToOrdered(from, c)
 
 // incompatibles
   // from

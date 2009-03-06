@@ -20,7 +20,7 @@ class OrderedTest {
         val v5 = Vector.from("b")
         val v6 = Vector.from("abd")
         val vv = Vector(v1, v2, v3, v4, v5, v6)
-        vv.sort(Vector.orderedView[Char])
+        vv.sort//(Vector.orderedView[Char])
         val ww = Vector(v2, v1, v3, v6, v4, v5)
         assertEquals(ww, vv)
     }

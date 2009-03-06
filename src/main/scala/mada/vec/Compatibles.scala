@@ -31,4 +31,5 @@ trait Compatibles {
     implicit def madaVectorToLinearAccessSeq[A](from: Vector[A]): Seq[A] = toLinearAccessSeq(from)
     implicit def madaVectorToProduct[A](from: Vector[A]): Product = toProduct(from)
     implicit def madaVectorToStream[A](from: Vector[A]): Stream[A] = toStream(from)
+    implicit def madaVectorToOrdered[A](from: Vector[A])(implicit c: A => Ordered[A]): Ordered[Vector[A]] = toOrdered(from)(c)
 }
