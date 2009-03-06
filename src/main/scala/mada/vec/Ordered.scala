@@ -8,5 +8,5 @@ package mada.vec
 
 
 private[mada] object ToOrdered {
-    def apply[A](from: Vector[A], c: Compare.OrderedView[A]): Ordered[Vector[A]] = Vector.orderedView(c)(from)
+    def apply[A](from: Vector[A], c: Compare.GetOrdered[A]): Ordered[Vector[A]] = Vector.orderedView(c)(from)
 }

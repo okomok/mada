@@ -8,10 +8,10 @@ package mada.peg
 
 
 private[mada] object Range {
-    def apply[A](i: A, j: A)(implicit c: Compare.OrderedView[A]): Peg[A] = new RangePeg(i, j)(c)
+    def apply[A](i: A, j: A)(implicit c: Compare.GetOrdered[A]): Peg[A] = new RangePeg(i, j)(c)
 }
 
-private[mada] class RangePeg[A](i: A, j: A)(implicit c: Compare.OrderedView[A]) extends Peg[A] {
+private[mada] class RangePeg[A](i: A, j: A)(implicit c: Compare.GetOrdered[A]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
         if (start == end) {
             Peg.FAILURE

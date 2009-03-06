@@ -31,16 +31,16 @@ package mada
  */
 object Stl {
     import stl._
-    import Compare.OrderedView
+    import Compare.GetOrdered
 
     def accumulate[A, B](v: Vector[A], first: Int, last: Int, init: B, binary_op: (B, A) => B): B = Accumulate(v, first, last, init, binary_op)
 
     def adjacentFind[A](v: Vector[A], first: Int, last: Int): Int = AdjacentFind(v, first, last)
     def adjacentFind[A](v: Vector[A], first: Int, last: Int, binary_pred: Compare.Type[A]): Int = AdjacentFind(v, first, last, binary_pred)
 
-    def lowerBound[A](v: Vector[A], first: Int, last: Int, value: A)(implicit c: OrderedView[A]): Int = LowerBound(v, first, last, value)(c)
+    def lowerBound[A](v: Vector[A], first: Int, last: Int, value: A)(implicit c: GetOrdered[A]): Int = LowerBound(v, first, last, value)(c)
     def lowerBound[A](v: Vector[A], first: Int, last: Int, value: A, comp: Compare.Type[A]): Int = LowerBound(v, first, last, value, comp)
-    def upperBound[A](v: Vector[A], first: Int, last: Int, value: A)(implicit c: OrderedView[A]): Int = UpperBound(v, first, last, value)(c)
+    def upperBound[A](v: Vector[A], first: Int, last: Int, value: A)(implicit c: GetOrdered[A]): Int = UpperBound(v, first, last, value)(c)
     def upperBound[A](v: Vector[A], first: Int, last: Int, value: A, comp: Compare.Type[A]): Int = UpperBound(v, first, last, value, comp)
 
     def copy[A, B >: A](v : Vector[A], first: Int, last: Int, ^ : Vector[B], result: Int): Int = Copy(v, first, last, ^, result)
@@ -51,12 +51,12 @@ object Stl {
     def count[A](v: Vector[A], first: Int, last: Int, e: Any): Int = Count(v, first, last, e)
     def countIf[A](v: Vector[A], first: Int, last: Int, pred: A => Boolean): Int = CountIf(v, first, last, pred)
 
-    def minElement[A](v: Vector[A], first: Int, last: Int)(implicit c: OrderedView[A]): Int = MinElement(v, first, last)(c)
+    def minElement[A](v: Vector[A], first: Int, last: Int)(implicit c: GetOrdered[A]): Int = MinElement(v, first, last)(c)
     def minElement[A](v: Vector[A], first: Int, last: Int, comp: Compare.Type[A]): Int = MinElement(v, first, last, comp)
-    def maxElement[A](v: Vector[A], first: Int, last: Int)(implicit c: OrderedView[A]): Int = MaxElement(v, first, last)(c)
+    def maxElement[A](v: Vector[A], first: Int, last: Int)(implicit c: GetOrdered[A]): Int = MaxElement(v, first, last)(c)
     def maxElement[A](v: Vector[A], first: Int, last: Int, comp: Compare.Type[A]): Int = MaxElement(v, first, last, comp)
 
-    def median[A](x: A, y: A, z: A)(implicit c: OrderedView[A]): A = Median(x, y, z)(c)
+    def median[A](x: A, y: A, z: A)(implicit c: GetOrdered[A]): A = Median(x, y, z)(c)
     def median[A](x: A, y: A, z: A, comp: Compare.Type[A]): A = Median(x, y, z, comp)
 
     def equal[A1, A2](v1: Vector[A1], first1: Int, last1: Int, v2: Vector[A2], first2: Int): Boolean = Equal(v1, first1, last1, v2, first2)
@@ -72,27 +72,27 @@ object Stl {
     def generate[A](v : Vector[A], first: Int, last: Int, gen: Unit => A): Unit = Generate(v, first, last, gen)
     def generateN[A](^ : Vector[A], first: Int, n: Int, gen: Unit => A): Unit = GenerateN(^, first, n, gen)
 
-    def lexicographicalCompare[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int)(implicit c: OrderedView[A]): Boolean = LexicographicalCompare(v1, first1, __last1, v2, first2, __last2)(c)
+    def lexicographicalCompare[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int)(implicit c: GetOrdered[A]): Boolean = LexicographicalCompare(v1, first1, __last1, v2, first2, __last2)(c)
     def lexicographicalCompare[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int, __comp: Compare.Type[A]): Boolean = LexicographicalCompare(v1, first1, __last1, v2, first2, __last2, __comp)
-    def lexicographicalCompare3way[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int)(implicit c: OrderedView[A]): Int = LexicographicalCompare3way(v1, first1, __last1, v2, first2, __last2)(c)
+    def lexicographicalCompare3way[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int)(implicit c: GetOrdered[A]): Int = LexicographicalCompare3way(v1, first1, __last1, v2, first2, __last2)(c)
     def lexicographicalCompare3way[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int, __comp: Compare.Type[A]): Int = LexicographicalCompare3way(v1, first1, __last1, v2, first2, __last2, __comp)
 
-    def partialSort[A](v: Vector[A], first: Int, middle: Int, last: Int)(implicit c: OrderedView[A]): Unit = PartialSort(v, first, middle, last)(c)
+    def partialSort[A](v: Vector[A], first: Int, middle: Int, last: Int)(implicit c: GetOrdered[A]): Unit = PartialSort(v, first, middle, last)(c)
     def partialSort[A](v: Vector[A], first: Int, middle: Int, last: Int, comp: Compare.Type[A]): Unit = PartialSort(v, first, middle, last, comp)
 
-    def pushHeap[A](v: Vector[A], first: Int, last: Int)(implicit c: OrderedView[A]): Unit = PushHeap(v, first, last)(c)
+    def pushHeap[A](v: Vector[A], first: Int, last: Int)(implicit c: GetOrdered[A]): Unit = PushHeap(v, first, last)(c)
     def pushHeap[A](v: Vector[A], first: Int, last: Int, comp: Compare.Type[A]): Unit = PushHeap(v, first, last, comp)
 
-    def popHeap[A](v: Vector[A], first: Int, last: Int)(implicit c: OrderedView[A]): Unit = PopHeap(v, first, last)(c)
+    def popHeap[A](v: Vector[A], first: Int, last: Int)(implicit c: GetOrdered[A]): Unit = PopHeap(v, first, last)(c)
     def popHeap[A](v: Vector[A], first: Int, last: Int, comp: Compare.Type[A]): Unit = PopHeap(v, first, last, comp)
 
-    def makeHeap[A](v: Vector[A], first: Int, last: Int)(implicit c: OrderedView[A]): Unit = MakeHeap(v, first, last)(c)
+    def makeHeap[A](v: Vector[A], first: Int, last: Int)(implicit c: GetOrdered[A]): Unit = MakeHeap(v, first, last)(c)
     def makeHeap[A](v: Vector[A], first: Int, last: Int, comp: Compare.Type[A]): Unit = MakeHeap(v, first, last, comp)
 
-    def sortHeap[A](v: Vector[A], first: Int, last: Int)(implicit c: OrderedView[A]): Unit = SortHeap(v, first, last)(c)
+    def sortHeap[A](v: Vector[A], first: Int, last: Int)(implicit c: GetOrdered[A]): Unit = SortHeap(v, first, last)(c)
     def sortHeap[A](v: Vector[A], first: Int, last: Int, comp: Compare.Type[A]): Unit = SortHeap(v, first, last, comp)
 
-    def isHeap[A](v: Vector[A], first: Int, last: Int)(implicit c: OrderedView[A]): Unit = IsHeap(v, first, last)(c)
+    def isHeap[A](v: Vector[A], first: Int, last: Int)(implicit c: GetOrdered[A]): Unit = IsHeap(v, first, last)(c)
     def isHeap[A](v: Vector[A], first: Int, last: Int, comp: Compare.Type[A]): Boolean = IsHeap(v, first, last, comp)
 
     def iterSwap[A](v1: Vector[A], i1: Int, v2: Vector[A], i2: Int): Unit = IterSwap(v1, i1, v2, i2)
@@ -120,10 +120,10 @@ object Stl {
 
     def reverse[A](v: Vector[A], first: Int, last: Int): Unit = Reverse(v, first, last)
 
-    def sort[A](v: Vector[A], first: Int, last: Int)(implicit c: OrderedView[A]): Unit = Sort(v, first, last)(c)
+    def sort[A](v: Vector[A], first: Int, last: Int)(implicit c: GetOrdered[A]): Unit = Sort(v, first, last)(c)
     def sort[A](v: Vector[A], first: Int, last: Int, comp: Compare.Type[A]): Unit = Sort(v, first, last, comp)
 
-    def isSorted[A](v: Vector[A], first: Int, last: Int)(implicit c: OrderedView[A]): Boolean = IsSorted(v, first, last)(c)
+    def isSorted[A](v: Vector[A], first: Int, last: Int)(implicit c: GetOrdered[A]): Boolean = IsSorted(v, first, last)(c)
     def isSorted[A](v: Vector[A], first: Int, last: Int, comp: Compare.Type[A]): Boolean = IsSorted(v, first, last, comp)
 
     def swapRanges[A](v1: Vector[A], first1: Int, last1: Int, v2: Vector[A], first2: Int): Int = SwapRanges(v1, first1, last1, v2, first2)

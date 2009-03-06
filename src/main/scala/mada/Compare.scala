@@ -17,9 +17,9 @@ object Compare extends comp.Conversions {
     type Type[-T] = Functions.Predicate2[T, T]
 
     /**
-     * Alias of <code>Function1[T, Ordered[T]]</code>
+     * Alias of <code>T => Ordered[T]</code>
      */
-    type OrderedView[T] = Function1[T, Ordered[T]]
+    type GetOrdered[T] = Function1[T, Ordered[T]]
 
     /**
      * Triggers implicit conversions explicitly.
@@ -29,9 +29,9 @@ object Compare extends comp.Conversions {
     def from[A](to: Type[A]) = to
 
     /**
-     * Alias of <code>fromOrderedView</code>
+     * Alias of <code>fromGetOrdered</code>
      */
-    def apply[A](implicit from: OrderedView[A]): Type[A] = fromOrderedView(from)
+    def apply[A](implicit from: GetOrdered[A]): Type[A] = fromGetOrdered(from)
 
     /**
      * Alias of <code>comp.Compatibles</code>

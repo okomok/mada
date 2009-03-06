@@ -14,7 +14,7 @@ object SymbolSet {
     /**
      * @return  <code>this(vs.elements)(Compare(c))</code>.
      */
-    def apply[A](vs: Vector[A]*)(implicit c: Compare.OrderedView[A]): SymbolSet[A] = apply(vs.elements)(Compare(c))
+    def apply[A](vs: Vector[A]*)(implicit c: Compare.GetOrdered[A]): SymbolSet[A] = apply(vs.elements)(Compare(c))
 
     /**
      * Constructs <code>SymbolSet</code> containing <code>vs</code> as elements.
