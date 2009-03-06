@@ -17,7 +17,7 @@ object Compare extends comp.Conversions {
     type Type[-T] = Functions.Predicate2[T, T]
 
     /**
-     * Alias of <code>T => Ordered[T]</code>
+     * Alias of <code>Function1[T, Ordered[T]]</code>
      */
     type GetOrdered[T] = Function1[T, Ordered[T]]
 
