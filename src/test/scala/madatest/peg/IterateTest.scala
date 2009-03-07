@@ -21,7 +21,7 @@ class IterateTest {
 
         val p = (-single('X')).+ until ~("X"|end)
         var k = 0
-        for (Vector.Region(v, i, j) <- p.tokenize(w)) {
+        for (Vector.Region(v, i, j) <- p.split(w)) {
             assertSame(w, v)
             sb append Vector.stringize(v(k, i))
             sb append Vector.stringize(v(i, j))

@@ -120,7 +120,7 @@ object Vector extends vec.Conversions with vec.Compatibles {
     /**
      * @return  flatten(vv.map{ v => sep.append(v) })
      */
-    def untokenize[A](vs: Iterator[Vector[A]], sep: Vector[A]): Vector[A] = Untokenize(vs, sep)
+    def unsplit[A](vs: Iterator[Vector[A]], sep: Vector[A]): Vector[A] = Unsplit(vs, sep)
 
     /**
      * Reverts <code>zip</code>.
