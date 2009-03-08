@@ -245,6 +245,16 @@ object Vector extends vec.Conversions with vec.Compatibles {
     type NotWritable[A] = vec.NotWritable[A]
 
     /**
+     * Alias of <code>vec.Project</code>
+     */
+    val Project = vec.Project
+
+    /**
+     * Alias of <code>vec.Project</code>
+     */
+    type Project = vec.Project
+
+    /**
      * Alias of <code>vec.Region</code>
      */
     val Region = vec.Region
@@ -775,6 +785,11 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * @return  an alias of this vector.
      */
     def identity: Vector[A] = Identity(this)
+
+    /**
+     * Applies <code>p</code> to every vector-to-vector method.
+     */
+    final def projective(p: Project): Vector[A] = Projective(this, p)
 
     /**
      * @return  an alias of this vector, but any override is turned off.
