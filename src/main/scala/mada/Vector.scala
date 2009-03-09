@@ -797,7 +797,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     /**
      * Runtime mixin; <code>mx</code> is applied to every vector-to-vector method.
      */
-    final def mixin(mx: Mixin): Vector[A] = NewMixin(this, mx)
+    def mixin(mx: Mixin): Vector[A] = NewMixin(this, mx)
 
     /**
      * Reverts <code>mixin</code>.
