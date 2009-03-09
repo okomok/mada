@@ -245,14 +245,14 @@ object Vector extends vec.Conversions with vec.Compatibles {
     type NotWritable[A] = vec.NotWritable[A]
 
     /**
-     * Alias of <code>vec.Project</code>
+     * Alias of <code>vec.Mixin</code>
      */
-    val Project = vec.Project
+    val Mixin = vec.Mixin
 
     /**
-     * Alias of <code>vec.Project</code>
+     * Alias of <code>vec.Mixin</code>
      */
-    type Project = vec.Project
+    type Mixin = vec.Mixin
 
     /**
      * Alias of <code>vec.Region</code>
@@ -787,14 +787,22 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     def identity: Vector[A] = Identity(this)
 
     /**
-     * Applies <code>p</code> to every vector-to-vector method.
-     */
-    final def projective(p: Project): Vector[A] = Projective(this, p)
-
-    /**
      * @return  an alias of this vector, but any override is turned off.
      */
     final def seal: Vector[A] = Seal(this)
+
+
+// mixin
+
+    /**
+     * Runtime mixin; <code>mx</code> is applied to every vector-to-vector method.
+     */
+    final def mixin(mx: Mixin): Vector[A] = NewMixin(this, mx)
+
+    /**
+     * Reverts <code>mixin</code>.
+     */
+    def unmixin: Vector[A] = this
 
 
 // copy

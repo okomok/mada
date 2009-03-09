@@ -80,6 +80,8 @@ trait VectorProxy[A] extends Adapter.Transform[A] with Proxies.ProxyOf[Vector[A]
     override def bounds: Vector[A] = underlying.bounds
     override def readOnly: Vector[A] = underlying.readOnly
     override def identity: Vector[A] = underlying.identity
+  // mixin
+    override def unmixin: Vector[A] = underlying.unmixin
   // copy
     override def copyTo[B >: A](that: Vector[B]): Vector[A] = underlying.copyTo(that)
     override def clone: Vector[A] = underlying.clone
