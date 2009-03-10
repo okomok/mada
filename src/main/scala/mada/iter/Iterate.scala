@@ -10,7 +10,8 @@ package mada.iter
 // unfoldRight(z){ x => Some(x, op(x)) } always needs heap-allocation of Option.
 
 private[mada] object Iterate {
-    def apply[A](z: A)(op: A => A): Iterator[A] = new IterateIterator(z, op)
+    def apply[A](z: A, op: A => A): Iterable[A] = Iterables.makeByName(impl(z, op))
+    def impl[A](z: A, op: A => A): Iterator[A] = new IterateIterator(z, op)
 }
 
 private[mada] class IterateIterator[A](z: A, op: A => A) extends Iterator[A] {

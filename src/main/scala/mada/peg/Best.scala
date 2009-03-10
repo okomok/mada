@@ -18,7 +18,7 @@ private[mada] object Shortest {
 
 private[mada] class BestPeg[A](ps: Iterable[Peg[A]], which: (Int, Int) => Int) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
-        val curs = ps.elements.map{ p => p.parse(v, start, end) }.filter{ i => i != Peg.FAILURE }
-        if (Iterators.isEmpty(curs)) Peg.FAILURE else Iterators.best(curs, which)
+        val curs = ps.projection.map{ p => p.parse(v, start, end) }.filter{ i => i != Peg.FAILURE }
+        if (curs.isEmpty) Peg.FAILURE else Iterables.best(curs)(which)
     }
 }

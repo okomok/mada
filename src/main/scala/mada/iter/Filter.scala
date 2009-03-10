@@ -8,8 +8,10 @@ package mada.iter
 
 
 private[mada] object Filter {
-    def apply[A](it: Iterator[A])(p: A => Boolean): Iterator[A] = it match {
-        case it: FilterIterator[_] => Iterators.filter(it.it){ e => it.p(e) && p(e) } // filter-filter fusion
+    def apply[A](it: Iterable[A], p: A => Boolean): Iterable[A] = Iterables.makeByName(impl(it.elements, p))
+
+    def impl[A](it: Iterator[A], p: A => Boolean): Iterator[A] = it match {
+    //    case it: FilterIterator[_] => Iterables.filter(it.it){ e => it.p(e) && p(e) } // filter-filter fusion
         case _ => new FilterIterator(it, p)
     }
 }

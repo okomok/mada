@@ -164,7 +164,7 @@ object Peg extends peg.Conversions with peg.Compatibles {
     /**
      * Matches any element of set.
      */
-    def multiple[A](es: A*): Peg[A] = Multiple(Iterators.toHashSet(es.elements))
+    def multiple[A](es: A*): Peg[A] = Multiple(Iterables.toHashSet(es))
 
     /**
      * Matches any element of set.
@@ -174,7 +174,7 @@ object Peg extends peg.Conversions with peg.Compatibles {
     /**
      * Matches a key, then tries to match its value.
      */
-    def switch[A](es: (A, Peg[A])*): Peg[A] = Switch(Iterators.toHashMap(es.elements))
+    def switch[A](es: (A, Peg[A])*): Peg[A] = Switch(Iterables.toHashMap(es))
 
     /**
      * Matches a key, then tries to match its value.

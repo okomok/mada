@@ -8,7 +8,8 @@ package mada.iter
 
 
 private[mada] object TakeWhile {
-    def apply[A](it: Iterator[A])(p: A => Boolean): Iterator[A] = new TakeWhileIterator(it, p)
+    def apply[A](it: Iterable[A], p: A => Boolean): Iterable[A] = Iterables.makeByName(impl(it.elements, p))
+    def impl[A](it: Iterator[A], p: A => Boolean): Iterator[A] = new TakeWhileIterator(it, p)
 }
 
 private[mada] class TakeWhileIterator[A](it: Iterator[A], p: A => Boolean) extends Iterator[A] {

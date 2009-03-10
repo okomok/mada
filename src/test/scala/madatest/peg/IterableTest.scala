@@ -14,7 +14,7 @@ import junit.framework.Assert._
 
 class IterableTest {
     def testTrivial: Unit = {
-        val p = Peg.from(Iterators.toIterable(Iterator.fromValues('a','b','c')))
+        val p = Peg.from(Iterables('a','b','c'))
         assertTrue("123" >> p >> "XYZ" matches "123abcXYZ")
         assertTrue("123" >> p matches "123abc")
         assertFalse("123" >> p matches "123ab")
@@ -23,7 +23,7 @@ class IterableTest {
     }
 
     def testEmpty: Unit = {
-        val p = Peg.from(Iterators.toIterable[Char](Iterator.empty))
+        val p = Peg.from(Iterables.emptyOf[Char])
         assertTrue("123" >> p >> "XYZ" matches "123XYZ")
         assertFalse("123" >> p >> "XYZ" matches "123aXYZ")
     }

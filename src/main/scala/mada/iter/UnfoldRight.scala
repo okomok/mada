@@ -8,7 +8,8 @@ package mada.iter
 
 
 private[mada] object UnfoldRight {
-    def apply[A, B](z: A)(op: A => Option[(B, A)]): Iterator[B] = new UnfoldRightIterator(z, op)
+    def apply[A, B](z: A, op: A => Option[(B, A)]): Iterable[B] = Iterables.makeByName(impl(z, op))
+    def impl[A, B](z: A, op: A => Option[(B, A)]): Iterator[B] = new UnfoldRightIterator(z, op)
 }
 
 private[mada] class UnfoldRightIterator[A, B](z: A, op: A => Option[(B, A)]) extends Iterator[B] {

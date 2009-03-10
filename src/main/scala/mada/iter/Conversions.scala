@@ -16,8 +16,6 @@ trait Conversions {
 // compatibles
 
   // from
-    def fromIterable[A](from: Iterable[A]): Iterator[A] = from.elements
-
     def fromJclEnumeration[A](from: java.util.Enumeration[A]): Iterator[A] = new Iterator[A] {
         override def hasNext = from.hasMoreElements
         override def next = from.nextElement
@@ -29,7 +27,7 @@ trait Conversions {
     }
 
     def fromObjectInput(in: java.io.ObjectInput): Iterator[AnyRef] = new Iterator[AnyRef] {
-        private var cur: Option[AnyRef] = readNext // Note null too is a valid data.
+        private var cur: Option[AnyRef] = readNext // Note that null too is a valid data.
 
         override def hasNext = !cur.isEmpty
         override def next = {
@@ -61,7 +59,7 @@ trait Conversions {
 // incompatibles
 
   // to
-    def stringize[A](it: Iterator[Char]): String = Stringize(it)
-    def toHashMap[K, V](from: Iterator[(K, V)]): scala.collection.Map[K, V] = ToHashMap(from)
-    def toHashSet[A](from: Iterator[A]): scala.collection.Set[A] = ToHashSet(from)
+    def stringize[A](it: Iterable[Char]): String = Stringize(it)
+    def toHashMap[K, V](from: Iterable[(K, V)]): scala.collection.Map[K, V] = ToHashMap(from)
+    def toHashSet[A](from: Iterable[A]): scala.collection.Set[A] = ToHashSet(from)
 }

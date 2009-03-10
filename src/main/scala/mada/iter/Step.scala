@@ -8,13 +8,15 @@ package mada.iter
 
 
 private[mada] object Step {
-    def apply[A](it: Iterator[A], n: Int): Iterator[A] = {
+    def apply[A](it: Iterable[A], n: Int): Iterable[A] = Iterables.makeByName(impl(it.elements, n))
+
+    def impl[A](it: Iterator[A], n: Int): Iterator[A] = {
         if (n < 0) {
-            throw new IllegalArgumentException("Iterators.step requires nonnegative stride")
+            throw new IllegalArgumentException("Iterables.step requires nonnegative stride")
         }
 
         it match {
-            case it: StepIterator[_] => Iterators.step(it.it, it.n * n) // step-step fusion
+    //        case it: StepIterator[_] => Iterables.step(it.it, it.n * n) // step-step fusion
             case _ => {
                 if (n == 0) {
                     new NonStepIterator(it)

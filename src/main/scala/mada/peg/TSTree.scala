@@ -263,7 +263,7 @@ private[mada] class TSTreeNode[A, V](val elem: A, val parent: TSTreeNode[A, V]) 
 }
 
 
-private[mada] class TSTreeNodeIterator[A, V](parentKey: Vector[A], node: TSTreeNode[A, V]) extends Iterators.IteratorProxy[(Vector[A], TSTreeNode[A, V])] {
+private[mada] class TSTreeNodeIterator[A, V](parentKey: Vector[A], node: TSTreeNode[A, V]) extends Iterables.IteratorProxy[(Vector[A], TSTreeNode[A, V])] {
     private val me = Iterator.single((lowerKey, node))
     override val self = me ++ children(node.left) ++ children(node.middle) ++ children(node.right)
 

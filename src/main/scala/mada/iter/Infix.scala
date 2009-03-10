@@ -14,70 +14,65 @@ object Infix {
     /**
      * Intermediate class for infix operators.
      */
-    sealed class MadaIterators[A](_1: Iterator[A]) {
+    sealed class MadaIterables[A](_1: Iterable[A]) {
         /**
-         * @return  <code>Iterators.equal(_2)</code>.
+         * @return  <code>Iterables.equal(_2)</code>.
          */
-        def equal[B](_2: Iterator[B]) = Iterators.equal(_1, _2)
+        def equal[B](_2: Iterable[B]) = Iterables.equal(_1, _2)
 
         /**
-         * @return  <code>Iterators.equalBy(_1, _2)(_3)</code>.
+         * @return  <code>Iterables.equalBy(_1, _2)(_3)</code>.
          */
-        def equalBy[B](_2: Iterator[B])(_3: Functions.Predicate2[A, B]) = Iterators.equalBy(_1, _2)(_3)
+        def equalBy[B](_2: Iterable[B])(_3: Functions.Predicate2[A, B]) = Iterables.equalBy(_1, _2)(_3)
 
         /**
-         * @return  <code>Iterators.filter(_1)(_2)</code>.
+         * @return  <code>Iterables.filter(_1)(_2)</code>.
          */
-        def filter_(_2: A => Boolean) = Iterators.filter(_1)(_2)
+        def filter_(_2: A => Boolean) = Iterables.filter(_1)(_2)
 
         /**
-         * @return  <code>Iterators.folderLeft(_1, _2)(_3)</code>.
+         * @return  <code>Iterables.folderLeft(_1, _2)(_3)</code>.
          */
-        def folderLeft[B](_2: B)(_3: (B, A) => B) = Iterators.folderLeft(_1, _2)(_3)
+        def folderLeft[B](_2: B)(_3: (B, A) => B) = Iterables.folderLeft(_1, _2)(_3)
 
         /**
-         * @return  <code>Iterators.reducerLeft(_1)(_2)</code>.
+         * @return  <code>Iterables.reducerLeft(_1)(_2)</code>.
          */
-        def reducerLeft[B >: A](_2: (B, A) => B) = Iterators.reducerLeft[A, B](_1)(_2)
+        def reducerLeft[B >: A](_2: (B, A) => B) = Iterables.reducerLeft[A, B](_1)(_2)
 
         /**
-         * @return  <code>Iterators.isEmpty(_1)</code>.
+         * @return  <code>Iterables.length(_1)</code>.
          */
-        def isEmpty = Iterators.isEmpty(_1)
+        def length = Iterables.length(_1)
 
         /**
-         * @return  <code>Iterators.length(_1)</code>.
+         * @return  <code>Iterables.seal(_1)</code>.
          */
-        def length = Iterators.length(_1)
+        def seal = Iterables.seal(_1)
 
         /**
-         * @return  <code>Iterators.seal(_1)</code>.
+         * @return  <code>Iterables.step(_1, _2)</code>.
          */
-        def seal = Iterators.seal(_1)
+        def step(_2: Int) = Iterables.step(_1, _2)
 
         /**
-         * @return  <code>Iterators.step(_1, _2)</code>.
+         * @return  <code>Iterables.takeWhile(_1)(_2)</code>.
          */
-        def step(_2: Int) = Iterators.step(_1, _2)
+        def takeWhile_(_2: A => Boolean) = Iterables.takeWhile(_1)(_2)
 
         /**
-         * @return  <code>Iterators.takeWhile(_1)(_2)</code>.
+         * @return  <code>Iterables.toHashSet(_1)</code>.
          */
-        def takeWhile_(_2: A => Boolean) = Iterators.takeWhile(_1)(_2)
+        def toHashSet = Iterables.toHashSet(_1)
 
         /**
-         * @return  <code>Iterators.toHashSet(_1)</code>.
+         * @return  <code>Iterables.withSideEffect(_1)(_2)</code>.
          */
-        def toHashSet = Iterators.toHashSet(_1)
-
-        /**
-         * @return  <code>Iterators.withSideEffect(_1)(_2)</code>.
-         */
-        def withSideEffect(_2: A => Unit) = Iterators.withSideEffect(_1)(_2)
+        def withSideEffect(_2: A => Unit) = Iterables.withSideEffect(_1)(_2)
     }
 
     /**
-     * @return  <code>new MadaIterators(_1)</code>.
+     * @return  <code>new MadaIterables(_1)</code>.
      */
-    implicit def madaIteratorToMadaIterators[A](_1: Iterator[A]): MadaIterators[A] = new MadaIterators(_1)
+    implicit def madaIteratorToMadaIterables[A](_1: Iterable[A]): MadaIterables[A] = new MadaIterables(_1)
 }

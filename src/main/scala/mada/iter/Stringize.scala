@@ -8,9 +8,9 @@ package mada.iter
 
 
 private[mada] object Stringize {
-    def apply[A](it: Iterator[Char]): String = {
+    def apply[A](from: Iterable[Char]): String = {
         val sb = new StringBuilder
-        for (ch <- it) {
+        for (ch <- from.projection) {
             sb.append(ch)
         }
         sb.toString

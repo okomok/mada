@@ -8,9 +8,9 @@ package mada.iter
 
 
 private[mada] object ToHashSet {
-    def apply[A](from: Iterator[A]): scala.collection.Set[A] = {
+    def apply[A](from: Iterable[A]): scala.collection.Set[A] = {
         val to = new scala.collection.jcl.HashSet[A]
-        for (e <- from) {
+        for (e <- from.projection) {
             to.add(e)
         }
         to
