@@ -8,8 +8,8 @@ package mada.iter
 
 
 private[mada] object WithSideEffect {
-    def apply[A](it: Iterable[A], f: A => Unit): Iterable[A] = Iterables.makeByName(impl(it.elements, f))
-    def impl[A](it: Iterator[A], f: A => Unit): Iterator[A] = new WithSideEffectIterator(it, f)
+    def apply[A](it: Iterable[A], f: A => Unit): Iterable[A] = Iterables.makeByName(iimpl(it.elements, f))
+    def iimpl[A](it: Iterator[A], f: A => Unit): Iterator[A] = new WithSideEffectIterator(it, f)
 }
 
 private[mada] class WithSideEffectIterator[A](it: Iterator[A], f: A => Unit) extends Iterator[A] {

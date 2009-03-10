@@ -8,7 +8,7 @@ package mada.vec
 
 
 private[mada] object Unsplit {
-    def apply[A](vs: Iterator[Vector[A]], sep: Vector[A]): Vector[A] = {
-        Vector.flatten(vs.map{ v => sep.append(v) })
+    def apply[A](vs: Iterable[Vector[A]], sep: Vector[A]): Vector[A] = {
+        Vector.flatten(vs.projection.map{ v => sep.append(v) })
     }
 }

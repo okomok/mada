@@ -8,8 +8,8 @@ package mada.iter
 
 
 private[mada] object FolderLeft {
-    def apply[A, B](it: Iterable[A], z: B, op: (B, A) => B): Iterable[B] = Iterables.makeByName(impl(it.elements, z, op))
-    def impl[A, B](it: Iterator[A], z: B, op: (B, A) => B): Iterator[B] = new FolderLeftIterator(it, z, op)
+    def apply[A, B](it: Iterable[A], z: B, op: (B, A) => B): Iterable[B] = Iterables.makeByName(iimpl(it.elements, z, op))
+    def iimpl[A, B](it: Iterator[A], z: B, op: (B, A) => B): Iterator[B] = new FolderLeftIterator(it, z, op)
 }
 
 private[mada] class FolderLeftIterator[A, B](it: Iterator[A], private var z: B, op: (B, A) => B) extends Iterator[B] {

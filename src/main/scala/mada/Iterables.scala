@@ -97,6 +97,11 @@ object Iterables extends iter.Conversions with iter.Compatibles {
     def filter[A](it: Iterable[A])(p: A => Boolean): Iterable[A] = Filter(it, p)
 
     /**
+     * Flattens an iterable of iterables.
+     */
+    def flatten[A](its: Iterable[Iterable[A]]): Iterable[A] = Flatten(its)
+
+    /**
      * Returns the prefix sum. (a.k.a. scanl)
      */
     def folderLeft[A, B](it: Iterable[A], z: B)(op: (B, A) => B): Iterable[B] = FolderLeft(it, z, op)
@@ -115,6 +120,11 @@ object Iterables extends iter.Conversions with iter.Compatibles {
      * Returns <code>[e<sub>0</sub>, e<sub>n</sub>, e<sub>2n</sub>,...]</code>.
      */
     def step[A](it: Iterable[A], n: Int): Iterable[A] = Step(it, n)
+
+    /**
+     * Works around 2.7.3 deprecated warning.
+     */
+    def take[A](it: Iterable[A], n: Int): Iterable[A] = makeByName(it.elements.take(n))
 
     /**
      * Lightweight takeWhile

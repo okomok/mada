@@ -7,14 +7,13 @@
 package mada.vec.jcl
 
 
-import java.util.ListIterator
-
-
-private[mada] object ToListIterator {
-    def apply[A](v: Vector[A]): ListIterator[A] = new VectorListIterator(v)
+private[mada] object IterableFromVector {
+    def apply[A](v: Vector[A]): java.lang.Iterable[A] = new java.lang.Iterable[A] {
+        override def iterator = new VectorListIterator(v)
+    }
 }
 
-private[mada] class VectorListIterator[A](v: Vector[A]) extends ListIterator[A] {
+private[mada] class VectorListIterator[A](v: Vector[A]) extends java.util.ListIterator[A] {
     private var cur = v.start
 
     override def add(e: A) = throw new UnsupportedOperationException
@@ -43,4 +42,17 @@ private[mada] class VectorListIterator[A](v: Vector[A]) extends ListIterator[A] 
     override def previousIndex = cur - 1
     override def remove = throw new UnsupportedOperationException("ToListIterator.remove")
     override def set(e: A) = throw new UnsupportedOperationException("ToListIterator.set")
+}
+
+
+private[mada] object IterableToVector {
+    def apply[A](from: java.lang.Iterable[A]): Vector[A] = iimpl(from.iterator)
+
+    def iimpl[A](from: java.util.Iterator[A]): Vector[A] = {
+        val a = new java.util.ArrayList[A]
+        while (from.hasNext) {
+            a.add(from.next)
+        }
+        Vector.fromJclList(a)
+    }
 }

@@ -8,29 +8,33 @@ package mada.iter
 
 
 private[mada] object Step {
-    def apply[A](it: Iterable[A], n: Int): Iterable[A] = Iterables.makeByName(impl(it.elements, n))
-
-    def impl[A](it: Iterator[A], n: Int): Iterator[A] = {
+    def apply[A](it: Iterable[A], n: Int): Iterable[A] = {
         if (n < 0) {
             throw new IllegalArgumentException("Iterables.step requires nonnegative stride")
         }
 
         it match {
-    //        case it: StepIterator[_] => Iterables.step(it.it, it.n * n) // step-step fusion
-            case _ => {
-                if (n == 0) {
-                    new NonStepIterator(it)
-                } else if (n == 1) {
-                    it
-                } else {
-                    new StepIterator(it, n)
-                }
-            }
+            case it: StepIterable[_] => Iterables.step(it.it, it.n * n) // step-step fusion
+            case _ => new StepIterable(it, n)
         }
     }
 }
 
-private[mada] class StepIterator[A](var it: Iterator[A], val n: Int) extends Iterator[A] {
+
+private[mada] class StepIterable[A](val it: Iterable[A], val n: Int) extends Iterable.Projection[A] {
+    override def elements = {
+        if (n == 0) {
+            new NonStepIterator(it.elements)
+        } else if (n == 1) {
+            it.elements
+        } else {
+            new StepIterator(it.elements, n)
+        }
+    }
+}
+
+
+private[mada] class StepIterator[A](private var it: Iterator[A], n: Int) extends Iterator[A] {
     Assert(n >= 2)
 
     override def hasNext = it.hasNext

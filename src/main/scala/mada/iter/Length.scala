@@ -8,9 +8,9 @@ package mada.iter
 
 
 private[mada] object Length {
-    def apply[A](it: Iterable[A]): Int = impl(it.elements)
+    def apply[A](it: Iterable[A]): Int = iimpl(it.elements)
 
-    def impl[A](it: Iterator[A]): Int = {
+    def iimpl[A](it: Iterator[A]): Int = {
         var l = 0
         while (it.hasNext) {
             l += 1

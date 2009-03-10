@@ -21,27 +21,8 @@ trait Conversions {
         override def next = from.nextElement
     }
 
-    def fromJclIterator[A](from: java.util.Iterator[A]): Iterator[A] = new Iterator[A] {
-        override def hasNext = from.hasNext
-        override def next = from.next
-    }
-
-    def fromObjectInput(in: java.io.ObjectInput): Iterator[AnyRef] = new Iterator[AnyRef] {
-        private var cur: Option[AnyRef] = readNext // Note that null too is a valid data.
-
-        override def hasNext = !cur.isEmpty
-        override def next = {
-            val tmp = cur.get
-            cur = readNext
-            tmp
-        }
-
-        private def readNext = try {
-            Some(in.readObject)
-        } catch {
-            case _: java.io.EOFException => None
-        }
-    }
+    def fromJclIterable[A](from: java.lang.Iterable[A]): Iterable[A] = jcl.IterableToIterable(from)
+    def fromObjectInput(from: java.io.ObjectInput): Iterable[AnyRef] = jcl.ObjectInputToIterable(from)
 
   // to
     def toJclEnumeration[A](from: Iterator[A]): java.util.Enumeration[A] = new java.util.Enumeration[A] {
@@ -49,11 +30,7 @@ trait Conversions {
         override def nextElement = from.next
     }
 
-    def toJclIterator[A](from: Iterator[A]): java.util.Iterator[A] = new java.util.Iterator[A] {
-        override def hasNext = from.hasNext
-        override def next = from.next
-        override def remove = throw new UnsupportedOperationException
-    }
+    def toJclIterable[A](from: Iterable[A]): java.lang.Iterable[A] = jcl.IterableFromIterable(from)
 
 
 // incompatibles

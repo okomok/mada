@@ -548,12 +548,12 @@ trait Peg[A] {
     /**
      * Splits input using this peg.
      */
-    final def split(v: Vector[A]): Iterator[Vector[A]] = Split(this, v)
+    final def split(v: Vector[A]): Iterable[Vector[A]] = Split(this, v)
 
     /**
      * Filters input using this peg.
      */
-    final def filterFrom(v: Vector[A]): Iterator[A] = FilterFrom(this, v)
+    final def filterFrom(v: Vector[A]): Iterable[A] = FilterFrom(this, v)
 
 
 // aliases

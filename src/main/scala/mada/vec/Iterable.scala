@@ -7,10 +7,10 @@
 package mada.vec
 
 
-private[mada] object FromIterator {
-    def apply[A](from: Iterator[A]): Vector[A] = {
+private[mada] object FromIterable {
+    def apply[A](from: Iterable[A]): Vector[A] = {
         val a = new java.util.ArrayList[A]
-        for (e <- from) {
+        for (e <- from.projection) {
             a.add(e)
         }
         Vector.fromJclList(a)
@@ -18,8 +18,9 @@ private[mada] object FromIterator {
 }
 
 
-private[mada] object ToIterator {
-    def apply[A](from: Vector[A]): Iterator[A] = new VectorIterator(from)
+private[mada] object ToIterable {
+    def apply[A](from: Vector[A]): Iterable[A] = Iterables.makeByName(iimpl(from))
+    def iimpl[A](from: Vector[A]): Iterator[A] = new VectorIterator(from)
 }
 
 private[mada] class VectorIterator[A](from: Vector[A]) extends Iterator[A] {

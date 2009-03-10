@@ -12,9 +12,9 @@ package mada
  */
 object Strings extends str.Conversions with str.Compatibles {
     /**
-     * Alias of <code>toIterator</code>
+     * @return  <code>stringWrapper(s).elements</code>.
      */
-    def elements(s: String): Iterator[Char] = toIterator(s)
+    def elements(s: String): Iterator[Char] = stringWrapper(s).elements
 
     /**
      * @return  <code>this</code>.

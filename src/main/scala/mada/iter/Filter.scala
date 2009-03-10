@@ -8,15 +8,19 @@ package mada.iter
 
 
 private[mada] object Filter {
-    def apply[A](it: Iterable[A], p: A => Boolean): Iterable[A] = Iterables.makeByName(impl(it.elements, p))
-
-    def impl[A](it: Iterator[A], p: A => Boolean): Iterator[A] = it match {
-    //    case it: FilterIterator[_] => Iterables.filter(it.it){ e => it.p(e) && p(e) } // filter-filter fusion
-        case _ => new FilterIterator(it, p)
+    def apply[A](it: Iterable[A], p: A => Boolean): Iterable[A] = it match {
+        case it: FilterIterable[_] => Iterables.filter(it.it){ e => it.p(e) && p(e) } // filter-filter fusion
+        case _ => new FilterIterable(it, p)
     }
 }
 
-private[mada] class FilterIterator[A](val it: Iterator[A], val p: A => Boolean) extends Iterator[A] {
+
+private[mada] class FilterIterable[A](val it: Iterable[A], val p: A => Boolean) extends Iterable.Projection[A] {
+    override def elements = new FilterIterator(it.elements, p)
+}
+
+
+private[mada] class FilterIterator[A](it: Iterator[A], p: A => Boolean) extends Iterator[A] {
     private var e = new Proxies.Var[A]
     satisfyPredicate
 

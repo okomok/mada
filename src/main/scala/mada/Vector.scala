@@ -78,7 +78,7 @@ object Vector extends vec.Conversions with vec.Compatibles {
      *              a new vector whose elements are to be concatenated to the result.
      * @return  the newly created writable vector (not a projection into <code>vs</code>).
      */
-    def flatten[A](vs: Iterator[Vector[A]]): Vector[A] = Flatten(vs)
+    def flatten[A](vs: Iterable[Vector[A]]): Vector[A] = Flatten(vs)
 
     /**
      * @return  <code>v.filter(_.isLeft).map(_.left.get)</code>.
@@ -120,7 +120,7 @@ object Vector extends vec.Conversions with vec.Compatibles {
     /**
      * @return  flatten(vv.map{ v => sep.append(v) })
      */
-    def unsplit[A](vs: Iterator[Vector[A]], sep: Vector[A]): Vector[A] = Unsplit(vs, sep)
+    def unsplit[A](vs: Iterable[Vector[A]], sep: Vector[A]): Vector[A] = Unsplit(vs, sep)
 
     /**
      * Reverts <code>zip</code>.
@@ -562,7 +562,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     /**
      * @return  <code>Vector.flatten(map(f))</code>.
      */
-    def flatMap[B](f: A => Vector[B]): Vector[B] = Vector.flatten(map(f).elements)
+    def flatMap[B](f: A => Vector[B]): Vector[B] = Vector.flatten(map(f).toIterable)
 
     /**
      * Casts element to type <code>B</code>.
@@ -909,9 +909,9 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     final def toArray: Array[A] = Vector.toArray(this)
 
     /**
-     * Alias of <code>elements</code>
+     * @return  <code>Vector.toIterable(this)</code>.
      */
-    final def toIterator: Iterator[A] = Vector.toIterator(this)
+    final def toIterable: Iterable[A] = Vector.toIterable(this)
 
     /**
      * @return  <code>Vector.toJclArrayList(this)</code>.
@@ -987,9 +987,9 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     final def length: Int = size
 
     /**
-     * Alias of <code>toIterator</code>
+     * Alias of <code>toIterable.elements</code>
      */
-    final def elements: Iterator[A] = toIterator
+    final def elements: Iterator[A] = toIterable.elements
 
     /**
      * Alias of <code>region</code>

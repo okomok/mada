@@ -12,16 +12,16 @@ package mada.peg
  */
 object SymbolMap {
     /**
-     * @return  <code>this(es.elements)(Compare(c))</code>.
+     * @return  <code>this(es)(Compare(c))</code>.
      */
-    def apply[A](es: (Vector[A], Peg[A])*)(implicit c: Compare.GetOrdered[A]): SymbolMap[A] = apply(es.elements)(Compare(c))
+    def apply[A](es: (Vector[A], Peg[A])*)(implicit c: Compare.GetOrdered[A]): SymbolMap[A] = apply(es)(Compare(c))
 
     /**
      * Constructs <code>SymbolMet</code> containing <code>es</code> as key-and-value entries.
      */
-    def apply[A](es: Iterator[(Vector[A], Peg[A])])(lt: Compare.Type[A]): SymbolMap[A] = {
+    def apply[A](es: Iterable[(Vector[A], Peg[A])])(lt: Compare.Type[A]): SymbolMap[A] = {
         val map = new SymbolMap(lt)
-        for (e <- es) {
+        for (e <- es.projection) {
             map.put(e._1, e._2)
         }
         map

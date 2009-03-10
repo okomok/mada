@@ -12,7 +12,7 @@ import mada.Vector
 import junit.framework.Assert._
 
 
-class IteratorsTest {
+class IterablesTest {
     def testEquals: Unit = {
         assertFalse(Iterables.equal(Iterable.empty, Iterables(1,2,3)))
         assertFalse(Iterables.equal(Iterables(1,2), Iterables(1,2,3)))
@@ -31,17 +31,17 @@ class IteratorsTest {
     }
 
     def testIterate: Unit = {
-        val it = Iterables.iterate(10){ b => b-1 }.take(10)
+        val it = Iterables.take(Iterables.iterate(10){ b => b-1 }, 10)
         assertTrue(Iterables.equal(it, Iterables(10,9,8,7,6,5,4,3,2,1)))
     }
 
     def testRepeat: Unit = {
-        val it = Iterables.repeat(3).take(10)
+        val it = Iterables.take(Iterables.repeat(3), 10)
         assertTrue(Iterables.equal(it, Iterables(3,3,3,3,3,3,3,3,3,3)))
     }
 
     def testCycle: Unit = {
-        val it = Iterables.cycle(Iterables(1,2,3)).take(10)
+        val it = Iterables.take(Iterables.cycle(Iterables(1,2,3)), 10)
         assertTrue(Iterables.equal(it, Iterables(1,2,3,1,2,3,1,2,3,1)))
     }
 
@@ -64,7 +64,7 @@ class IteratorsTest {
     def testStep0: Unit = {
         // Unlike Vector, 0 is allowed.
         val it = Iterables.step(Iterables(1,2,3,4,5,6), 0)
-        assertTrue(Iterables.equal(it.take(5), Iterables(1,1,1,1,1)))
+        assertTrue(Iterables.equal(Iterables.take(it, 5), Iterables(1,1,1,1,1)))
     }
 
     def testStep1: Unit = {

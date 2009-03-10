@@ -10,7 +10,7 @@ package mada.vec.jcl
 import java.util.{ List, Collections }
 
 
-private[mada] object FromList {
+private[mada] object ListToVector {
     def apply[A](from: List[A]): Vector[A] = new ListVector(from)
 }
 

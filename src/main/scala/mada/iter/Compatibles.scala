@@ -12,13 +12,11 @@ package mada.iter
  */
 trait Compatibles {
     import Iterables._
-    /*
 // from
-    implicit def madaIteratorToJclEnumeration[A](from: Iterator[A]): java.util.Enumeration[A] = toJclEnumeration(from)
-    implicit def madaIteratorToJclIterator[A](from: Iterator[A]): java.util.Iterator[A] = toJclIterator(from)
+  //  implicit def madaIteratorToJclEnumeration[A](from: Iterator[A]): java.util.Enumeration[A] = toJclEnumeration(from)
+    implicit def madaIterableToJclIterable[A](from: Iterable[A]): java.lang.Iterable[A] = toJclIterable(from)
 // to
-    implicit def madaIteratorFromJclEnumeration[A](from: java.util.Enumeration[A]): Iterator[A] = fromJclEnumeration(from)
-    implicit def madaIteratorFromJclIterator[A](from: java.util.Iterator[A]): Iterator[A] = fromJclIterator(from)
-    implicit def madaIteratorFromObjectInput(from: java.io.ObjectInput): Iterator[AnyRef] = fromObjectInput(from)
-    */
+  //  implicit def madaIteratorFromJclEnumeration[A](from: java.util.Enumeration[A]): Iterator[A] = fromJclEnumeration(from)
+    implicit def madaIterableFromJclIterable[A](from: java.lang.Iterable[A]): Iterable[A] = fromJclIterable(from)
+    implicit def madaIterableFromObjectInput(from: java.io.ObjectInput): Iterable[AnyRef] = fromObjectInput(from)
 }

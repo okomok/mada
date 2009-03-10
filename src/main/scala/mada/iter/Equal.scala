@@ -9,10 +9,10 @@ package mada.iter
 
 private[mada] object EqualBy {
     def apply[A, B](it: Iterable[A], jt: Iterable[B], p: Functions.Predicate2[A, B]): Boolean = {
-        impl(it.elements, jt.elements, p)
+        iimpl(it.elements, jt.elements, p)
     }
 
-    def impl[A, B](it: Iterator[A], jt: Iterator[B], p: Functions.Predicate2[A, B]): Boolean = {
+    def iimpl[A, B](it: Iterator[A], jt: Iterator[B], p: Functions.Predicate2[A, B]): Boolean = {
         while (it.hasNext && jt.hasNext) {
             if (!p(it.next, jt.next)) {
                 return false

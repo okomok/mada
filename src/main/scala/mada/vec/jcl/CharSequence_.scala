@@ -10,7 +10,7 @@ package mada.vec.jcl
 import java.lang.CharSequence
 
 
-private[mada] object FromCharSequence {
+private[mada] object CharSequenceToVector {
     def apply[A](from: CharSequence): Vector[Char] = from match {
         case from: VectorCharSequence => from.v // conversion fusion
         case _ => new CharSequenceVector(from)
@@ -24,7 +24,7 @@ private[mada] class CharSequenceVector(val from: CharSequence) extends Vector[Ch
 }
 
 
-private[mada] object ToCharSequence {
+private[mada] object CharSequenceFromVector {
     def apply(v: Vector[Char]): CharSequence = v match {
         case from: CharSequenceVector => from.from // conversion fusion
         case _ => new VectorCharSequence(v)

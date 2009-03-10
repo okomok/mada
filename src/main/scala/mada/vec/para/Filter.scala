@@ -25,7 +25,7 @@ private[mada] object MutatingFilter {
         Vector.flatten(
             v.parallelRegions(grainSize).map{ w => w.mutatingFilter(p) }.
                 unparallel.
-                    toIterator // works around a compiler bug of 2.7.3.
+                    toIterable // works around a compiler bug of 2.7.3.
         ).
             parallel(grainSize)
     }

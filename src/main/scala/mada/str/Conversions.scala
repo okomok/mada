@@ -11,6 +11,6 @@ package mada.str
  * Contains explicit conversions around <code>String</code>.
  */
 trait Conversions {
-    def toIterator(s: String): Iterator[Char] = stringWrapper(s).elements
+    def toIterable(s: String): Iterable[Char] = Iterables.makeByName(stringWrapper(s).elements)
     def toRandomAccessSeq(s: String): RandomAccessSeq[Char] = stringWrapper(s)
 }

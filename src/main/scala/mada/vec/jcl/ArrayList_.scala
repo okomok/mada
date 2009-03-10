@@ -10,7 +10,7 @@ package mada.vec.jcl
 import java.util.ArrayList
 
 
-private[mada] object ToArrayList {
+private[mada] object ArrayListFromVector {
     def apply[A](from: Vector[A]): ArrayList[A] = {
         val a = new ArrayList[A](from.size) // this is capacity.
         for (e <- from) {

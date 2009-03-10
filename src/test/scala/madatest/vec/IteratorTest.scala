@@ -24,7 +24,7 @@ class IteratorTest {
     }
 
     def testFrom: Unit = {
-        val ac = Vector.fromIterator(example1.elements)
+        val ac = Vector.fromIterable(Iterables.makeByName(example1.elements))
         detail.TestVectorReadOnly(example1, ac)
     }
 }

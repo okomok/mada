@@ -13,5 +13,5 @@ package mada.str
 trait Compatibles {
     import Strings._
 
-    implicit def madaStringsToIterator(s: String): Iterator[Char] = toIterator(s)
+    implicit def madaStringsToIterable(s: String): Iterable[Char] = toIterable(s)
 }

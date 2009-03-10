@@ -12,16 +12,16 @@ package mada.peg
  */
 object SymbolSet {
     /**
-     * @return  <code>this(vs.elements)(Compare(c))</code>.
+     * @return  <code>this(vs)(Compare(c))</code>.
      */
-    def apply[A](vs: Vector[A]*)(implicit c: Compare.GetOrdered[A]): SymbolSet[A] = apply(vs.elements)(Compare(c))
+    def apply[A](vs: Vector[A]*)(implicit c: Compare.GetOrdered[A]): SymbolSet[A] = apply(vs)(Compare(c))
 
     /**
      * Constructs <code>SymbolSet</code> containing <code>vs</code> as elements.
      */
-    def apply[A](vs: Iterator[Vector[A]])(lt: Compare.Type[A]): SymbolSet[A] = {
+    def apply[A](vs: Iterable[Vector[A]])(lt: Compare.Type[A]): SymbolSet[A] = {
         val set = new SymbolSet(lt)
-        for (v <- vs) {
+        for (v <- vs.projection) {
             set.+=(v)
         }
         set
