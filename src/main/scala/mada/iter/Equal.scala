@@ -7,7 +7,7 @@
 package mada.iter
 
 
-private[mada] object EqualWith {
+private[mada] object EqualBy {
     def apply[A, B](it: Iterator[A], jt: Iterator[B])(p: Functions.Predicate2[A, B]): Boolean = {
         while (it.hasNext && jt.hasNext) {
             if (!p(it.next, jt.next)) {

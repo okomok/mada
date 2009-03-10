@@ -14,7 +14,7 @@ private[mada] object Equals {
     }
 }
 
-private[mada] object EqualsWith {
+private[mada] object EqualsBy {
     def apply[A, B](v: Vector[A], w: Vector[B], p: (A, B) => Boolean): Boolean = {
         if (v.size != w.size) {
             false

@@ -10,7 +10,7 @@ package mada.vec.para
 import java.util.ArrayList
 
 
-private[mada] object SortWith {
+private[mada] object SortBy {
     import stl.IntroSort.lg
     import stl.{ UnguardedPartition, Median }
 
@@ -33,7 +33,7 @@ private[mada] object SortWith {
 
         while (__last - __first > grainSize) {
             if (__depth_limit == 0) {
-                fs.add({ () => *(__first, __last).sortWith(__comp) })
+                fs.add({ () => *(__first, __last).sortBy(__comp) })
                 return
             }
             val __cut = UnguardedPartition(*, __first, __last, Median(*(__first), *(__first + (__last - __first)/2), *(__last - 1), __comp), __comp)
@@ -41,6 +41,6 @@ private[mada] object SortWith {
             loop(fs, grainSize, *, __cut, __last, __depth_limit, __comp)
             __last = __cut
         }
-        fs.add({ () => *(__first, __last).sortWith(__comp) })
+        fs.add({ () => *(__first, __last).sortBy(__comp) })
     }
 }

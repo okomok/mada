@@ -18,7 +18,7 @@ class OutputTest {
     def testTrivial: Unit = {
         val v = fromArray(example1)
         var count = 0
-        mada.Stl.copy(v, 0, 10, mada.Stl.outputWith({ (e: Any) => count += 1 }), 999)
+        mada.Stl.copy(v, 0, 10, mada.Stl.outputBy({ (e: Any) => count += 1 }), 999)
         assertEquals(10, count)
     }
 

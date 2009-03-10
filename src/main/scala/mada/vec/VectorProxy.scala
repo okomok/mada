@@ -14,7 +14,7 @@ package mada.vec
 trait VectorProxy[A] extends Adapter.Transform[A] with Proxies.ProxyOf[Vector[A]] {
     final override def underlying = self
   // value semantics
-    override def equalsWith[B](that: Vector[B])(p: Functions.Predicate2[A, B]): Boolean = underlying.equalsWith(that)(p)
+    override def equalsBy[B](that: Vector[B])(p: Functions.Predicate2[A, B]): Boolean = underlying.equalsBy(that)(p)
     override def equals(that: Any): Boolean = Equals(this, that) // works around scala.Proxy.equals.
     override def hashCode: Int = underlying.hashCode
   // toString
@@ -61,8 +61,8 @@ trait VectorProxy[A] extends Adapter.Transform[A] with Proxies.ProxyOf[Vector[A]
     override def reducerLeft[B >: A](op: (B, A) => B): Vector[B] = underlying.reducerLeft(op)
     override def reducerRight[B >: A](op: (A, B) => B): Vector[B] = underlying.reducerRight(op)
   // sort
-    override def sortWith(lt: Compare.Type[A]): Vector[A] = underlying.sortWith(lt)
     override def sort(implicit c: Compare.GetOrdered[A]): Vector[A] = underlying.sort(c)
+    override def sortBy(lt: Compare.Type[A]): Vector[A] = underlying.sortBy(lt)
   // concatenation
     override def append(that: Vector[A]): Vector[A] = underlying.append(that)
   // permutation

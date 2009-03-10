@@ -7,10 +7,10 @@
 package mada.stl
 
 
-private[mada] object OutputWith {
-    def apply[A](f: A => Unit): Vector[A] = new OutputWith(f)
+private[mada] object OutputBy {
+    def apply[A](f: A => Unit): Vector[A] = new OutputBy(f)
 }
 
-private[mada] class OutputWith[A](f: A => Unit) extends OutputVector[A] {
+private[mada] class OutputBy[A](f: A => Unit) extends OutputVector[A] {
     override def output(e: A) = f(e)
 }

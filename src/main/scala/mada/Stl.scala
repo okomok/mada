@@ -150,5 +150,5 @@ object Stl {
     /**
      * Creates <code>OutputVector</code> in which <code>output(e)</code> calls <code>f(e)</code>.
      */
-    def outputWith[A](f: A => Unit): Vector[A] = OutputWith(f)
+    def outputBy[A](f: A => Unit): Vector[A] = OutputBy(f)
 }

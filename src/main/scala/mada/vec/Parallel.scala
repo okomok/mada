@@ -17,7 +17,7 @@ private[mada] object Parallel {
 
 private[mada] class ParallelVector[A](override val underlying: Vector[A], override val grainSize: Int) extends Adapter.Transform[A] {
   // value semantics
-    override def equalsWith[B](that: Vector[B])(p: Functions.Predicate2[A, B]) = para.EqualsWith(unparallel, that, p, grainSize)
+    override def equalsBy[B](that: Vector[B])(p: Functions.Predicate2[A, B]) = para.EqualsBy(unparallel, that, p, grainSize)
     override def hashCode: Int = unparallel.hashCode
   // regions
     override def region(_start: Int, _end: Int): Vector[A] = affectParallel(unparallel.region(_start, _end))
@@ -45,7 +45,7 @@ private[mada] class ParallelVector[A](override val underlying: Vector[A], overri
     override def reducerLeft[B >: A](op: (B, A) => B): Vector[B] = affectParallel(unparallel.reducerLeft(op))
     override def reducerRight[B >: A](op: (A, B) => B): Vector[B] = affectParallel(unparallel.reducerRight(op))
   // sort
-    override def sortWith(lt: Compare.Type[A]) = para.SortWith(unparallel, lt, grainSize)
+    override def sortBy(lt: Compare.Type[A]) = para.SortBy(unparallel, lt, grainSize)
   // concatenation
     override def append(that: Vector[A]): Vector[A] = affectParallel(unparallel.append(that.unparallel))
   // permutation

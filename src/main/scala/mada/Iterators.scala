@@ -17,14 +17,14 @@ object Iterators extends iter.Conversions with iter.Compatibles {
 // algorithms
 
     /**
-     * @return  <code>equalWith(it, jt)(Functions.equal)</code>
+     * @return  <code>equalBy(it, jt)(Functions.equal)</code>
      */
-    def equal[A, B](it: Iterator[A], jt: Iterator[B]): Boolean = EqualWith(it, jt)(Functions.equal)
+    def equal[A, B](it: Iterator[A], jt: Iterator[B]): Boolean = EqualBy(it, jt)(Functions.equal)
 
     /**
      * @return  <code>true</code> iif elements and length are the same.
      */
-    def equalWith[A, B](it: Iterator[A], jt: Iterator[B])(p: Functions.Predicate2[A, B]): Boolean = EqualWith(it, jt)(p)
+    def equalBy[A, B](it: Iterator[A], jt: Iterator[B])(p: Functions.Predicate2[A, B]): Boolean = EqualBy(it, jt)(p)
 
     /**
      * @return  <code>!it.hasNext</code>.

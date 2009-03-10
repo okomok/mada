@@ -21,9 +21,9 @@ object Infix {
         def equal[B](_2: Iterator[B]) = Iterators.equal(_1, _2)
 
         /**
-         * @return  <code>Iterators.equalWith(_1, _2)(_3)</code>.
+         * @return  <code>Iterators.equalBy(_1, _2)(_3)</code>.
          */
-        def equalWith[B](_2: Iterator[B])(_3: Functions.Predicate2[A, B]) = Iterators.equalWith(_1, _2)(_3)
+        def equalBy[B](_2: Iterator[B])(_3: Functions.Predicate2[A, B]) = Iterators.equalBy(_1, _2)(_3)
 
         /**
          * @return  <code>Iterators.filter(_1)(_2)</code>.

@@ -156,12 +156,12 @@ object Vector extends vec.Conversions with vec.Compatibles {
     /**
      * Returns lexicographical strict weak ordering.
      */
-    def compare[A](implicit c: Compare.GetOrdered[A]): Compare.Type[Vector[A]] = CompareWith(Compare(c))
+    def compare[A](implicit c: Compare.GetOrdered[A]): Compare.Type[Vector[A]] = CompareBy(Compare(c))
 
     /**
      * Returns lexicographical strict weak ordering.
      */
-    def compareWith[A](lt: Compare.Type[A]): Compare.Type[Vector[A]] = CompareWith(lt)
+    def compareBy[A](lt: Compare.Type[A]): Compare.Type[Vector[A]] = CompareBy(lt)
 
     /**
      * Returns lexicographical <code>Ordered</code> view.
@@ -171,7 +171,7 @@ object Vector extends vec.Conversions with vec.Compatibles {
     /**
      * Returns lexicographical <code>Ordered</code> view.
      */
-    def orderedViewWith[A](lt: Compare.Type[A]): Compare.GetOrdered[Vector[A]] = Compare.toGetOrdered(compareWith(lt))
+    def orderedViewBy[A](lt: Compare.Type[A]): Compare.GetOrdered[Vector[A]] = Compare.toGetOrdered(compareBy(lt))
 
 
 // Char vector
@@ -340,19 +340,19 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * Compares each element using predicate <code>p</code>.
      * Returns <code>false</code> if <code>size != that.size</code>.
      */
-    def equalsWith[B](that: Vector[B])(p: Functions.Predicate2[A, B]): Boolean = EqualsWith(this, that, p)
+    def equalsBy[B](that: Vector[B])(p: Functions.Predicate2[A, B]): Boolean = EqualsBy(this, that, p)
 
     /**
      * Vector has value semantics <code>==</code>.
      *
-     * @return  <code>equalsWith(that)(Functions.equal)</code>.
+     * @return  <code>equalsBy(that)(Functions.equal)</code>.
      */
     override def equals(that: Any): Boolean = Equals(this, that)
 
     /**
-     * @return  <code>equalsWith(that)(Functions.equal)</code>.
+     * @return  <code>equalsBy(that)(Functions.equal)</code>.
      */
-    final def equalsTo[B](that: Vector[B]): Boolean = equalsWith(that)(Functions.equal)
+    final def equalsTo[B](that: Vector[B]): Boolean = equalsBy(that)(Functions.equal)
 
     /**
      * Generates hash code as value semantics.
@@ -683,9 +683,9 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
 // sort
 
     /**
-     * @return  <code>sortWith(Compare(c))</code>.
+     * @return  <code>sortBy(Compare(c))</code>.
      */
-    def sort(implicit c: Compare.GetOrdered[A]): Vector[A] = sortWith(Compare(c))
+    def sort(implicit c: Compare.GetOrdered[A]): Vector[A] = sortBy(Compare(c))
 
     /**
      * Sort this vector according to the comparison function <code>lt</code>.
@@ -694,7 +694,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * @param   lt  strict weak ordering
      * @return  this vector sorted according to <code>lt</code>.
      */
-    def sortWith(lt: Compare.Type[A]): Vector[A] = SortWith(this, lt)
+    def sortBy(lt: Compare.Type[A]): Vector[A] = SortBy(this, lt)
 
 
 // concatenation

@@ -21,15 +21,15 @@ trait Conversions {
     /**
      * Tries to match <code>from</code> using the predicate.
      */
-    def fromIterableWith[A](from: Iterable[A])(pred: (A, A) => Boolean): Peg[A] = FromIterable(from, pred)
+    def fromIterableBy[A](from: Iterable[A])(pred: (A, A) => Boolean): Peg[A] = FromIterable(from, pred)
 
     /**
      * Tries to match <code>from</code> using the predicate.
      */
-    def fromStringWith(from: String)(pred: (Char, Char) => Boolean): Peg[Char] = FromVector(Vector.fromString(from), pred)
+    def fromStringBy(from: String)(pred: (Char, Char) => Boolean): Peg[Char] = FromVector(Vector.fromString(from), pred)
 
     /**
      * Tries to match <code>from</code> using the predicate.
      */
-    def fromVectorWith[A](from: Vector[A])(pred: (A, A) => Boolean): Peg[A] = FromVector(from, pred)
+    def fromVectorBy[A](from: Vector[A])(pred: (A, A) => Boolean): Peg[A] = FromVector(from, pred)
 }

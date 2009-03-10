@@ -7,7 +7,7 @@
 package mada.vec
 
 
-private[mada] object CompareWith {
+private[mada] object CompareBy {
     def apply[A](_lt: Compare.Type[A]): Compare.Type[Vector[A]] = {
         val ord = new Ordering[Vector[A]] {
             override def compare(v: Vector[A], w: Vector[A]) = Stl.lexicographicalCompare3way(v, v.start, v.end, w, w.start, w.end, _lt)

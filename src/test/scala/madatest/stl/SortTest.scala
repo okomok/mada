@@ -21,7 +21,7 @@ class SortTest {
         assertEquals(fromArray(example1Sorted), v)
     }
 
-    def testWith: Unit = {
+    def testBy: Unit = {
         val v = fromArray(example1)
         mada.Stl.sort(v, 0, v.size, (_: Int) > (_: Int))
         assertEquals(fromArray(example1ReversedSorted), v)

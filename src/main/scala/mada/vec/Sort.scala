@@ -7,7 +7,7 @@
 package mada.vec
 
 
-private[mada] object SortWith {
+private[mada] object SortBy {
     def apply[A](v: Vector[A], lt: Compare.Type[A]): Vector[A] = {
         stl.Sort(v, v.start, v.end, lt)
         v
