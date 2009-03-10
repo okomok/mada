@@ -15,6 +15,18 @@ object Adapter {
      * Alias of <code>Adapter[A, A]</code>
      */
     type Transform[A] = Adapter[A, A]
+
+    /**
+     * Trivial mixin to define a non-writable vector type.
+     */
+    trait NotWritable[A] extends Vector[A] {
+        /**
+         * Throws <code>NotWritableException</code>.
+         */
+        override def update(i: Int, e: A): Unit = throw new Vector.NotWritableException(this)
+
+        override def readOnly = this
+    }
 }
 
 /**

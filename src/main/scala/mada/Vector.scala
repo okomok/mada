@@ -240,11 +240,6 @@ object Vector extends vec.Conversions with vec.Compatibles {
     type VectorProxy[A] = vec.VectorProxy[A]
 
     /**
-     * Alias of <code>vec.NotWritable</code>
-     */
-    type NotWritable[A] = vec.NotWritable[A]
-
-    /**
      * Alias of <code>vec.Mixin</code>
      */
     val Mixin = vec.Mixin
