@@ -7,10 +7,13 @@
 package mada
 
 
+import comp._
+
+
 /**
  * Contains utility methods operating on strict weak ordering.
  */
-object Compare extends comp.Conversions {
+object Compare extends Conversions {
     /**
      * Alias of <code>Functions.Predicate2[T, T]</code>
      */

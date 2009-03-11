@@ -7,10 +7,13 @@
 package mada
 
 
+import str._
+
+
 /**
  * Contains utility methods operating on <code>String</code>.
  */
-object Strings extends str.Conversions with str.Compatibles {
+object Strings extends Conversions with Compatibles {
     /**
      * @return  <code>stringWrapper(s).elements</code>.
      */

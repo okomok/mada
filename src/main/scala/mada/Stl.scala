@@ -7,6 +7,9 @@
 package mada
 
 
+import stl._
+
+
 /**
  * Port of <a href="http://www.sgi.com/tech/stl/">STL</a> algorithms.
  * Mainly used to implement <code>mada.Vector</code>.<p/>
@@ -30,7 +33,6 @@ package mada
  * @see <a href="http://www.stanford.edu/group/coursework/docsTech/jgl/">JGL</a>
  */
 object Stl {
-    import stl._
     import Compare.GetOrdered
 
     def accumulate[A, B](v: Vector[A], first: Int, last: Int, init: B, binary_op: (B, A) => B): B = Accumulate(v, first, last, init, binary_op)

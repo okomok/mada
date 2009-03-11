@@ -7,11 +7,13 @@
 package mada
 
 
+import iter._
+
+
 /**
  * Contains utility methods operating on <code>Iterable</code>.
  */
-object Iterables extends iter.Conversions with iter.Compatibles with iter.Operators {
-    import iter._
+object Iterables extends Conversions with Compatibles with Operators {
 
 
 // algorithms

@@ -7,10 +7,13 @@
 package mada
 
 
+import bool._
+
+
 /**
  * Contains utility methods operating on <code>Boolean</code>.
  */
-object Booleans extends bool.Operators {
+object Booleans extends Operators {
     /**
      * @return  <code>!pre || post</code>.
      */

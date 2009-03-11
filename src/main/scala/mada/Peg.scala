@@ -7,11 +7,13 @@
 package mada
 
 
+import peg._
+
+
 /**
  * Contains utility methods operating on <code>Peg</code>.
  */
-object Peg extends peg.Conversions with peg.Compatibles with peg.Operators {
-    import peg._
+object Peg extends Conversions with Compatibles with Operators {
 
 
 // constants
@@ -324,7 +326,9 @@ object Peg extends peg.Conversions with peg.Compatibles with peg.Operators {
  * </ul>
  */
 trait Peg[A] {
-    import peg._
+
+
+// kernel interface
 
     /**
      * Parses specified region of input Vector.

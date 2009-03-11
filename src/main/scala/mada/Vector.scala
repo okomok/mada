@@ -7,11 +7,13 @@
 package mada
 
 
+import vec._
+
+
 /**
  * Contains utility types and methods operating on <code>Vector</code>.
  */
-object Vector extends vec.Conversions with vec.Compatibles with vec.Operators {
-    import vec._
+object Vector extends Conversions with Compatibles with Operators {
 
 
 // constants
@@ -287,7 +289,6 @@ object Vector extends vec.Conversions with vec.Compatibles with vec.Operators {
  * Unless otherwise specified, these methods return projections to keep readability and writability.
  */
 trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
-    import vec._
 
 
 // kernel interface
