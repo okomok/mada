@@ -66,6 +66,11 @@ object Infix {
         def toHashSet = Iterables.toHashSet(_1)
 
         /**
+         * @return  <code>Iterables.stringFrom(_1)</code>.
+         */
+        def toString_ = Iterables.stringFrom(_1)
+
+        /**
          * @return  <code>Iterables.withSideEffect(_1)(_2)</code>.
          */
         def withSideEffect(_2: A => Unit) = Iterables.withSideEffect(_1)(_2)
@@ -75,4 +80,20 @@ object Infix {
      * @return  <code>new MadaIterables(_1)</code>.
      */
     implicit def madaIteratorToMadaIterables[A](_1: Iterable[A]): MadaIterables[A] = new MadaIterables(_1)
+
+
+    /**
+     * Intermediate class for infix operators.
+     */
+    sealed class MadaIterablesOfIterable[A](_1: Iterable[Iterable[A]]) {
+        /**
+         * @return  <code>Iterables.flatten(_1)</code>.
+         */
+        def flatten = Iterables.flatten(_1)
+    }
+
+    /**
+     * @return  <code>new MadaIterablesOfIterable(_1)</code>.
+     */
+    implicit def madaIteratorToMadaIterablesOfIterable[A](_1: Iterable[Iterable[A]]): MadaIterablesOfIterable[A] = new MadaIterablesOfIterable(_1)
 }

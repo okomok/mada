@@ -51,8 +51,8 @@ class IterablesTest {
         assertTrue(Iterables(1,2,3) equal Iterables(1,2,3))
         assertEquals(3, Iterables(1,2,3).length)
 
-//        val it = Iterables(1,2,3).cycle.take(10)
-//        assertTrue(Iterables.equal(it, Iterables(1,2,3,1,2,3,1,2,3,1)))
+        val its = Iterables(Iterables(1,2,3), Iterables(4,5,6), Iterables(7,8,9))
+        assertTrue((1 until 10) equal its.flatten)
     }
 
     def testStringize: Unit = {
@@ -203,5 +203,10 @@ class IterablesTest {
     def testReducerLeftOne: Unit = {
         val it = Iterables.reducerLeft(Iterables(1))(_ + _)
         assertTrue(Iterables.equal(it, Iterables(1)))
+    }
+
+  // string
+    def testStringFrom: Unit = {
+        assertEquals(Iterables.stringFrom(Iterables(1,2,3,4)), Vector(1,2,3,4).toString)
     }
 }
