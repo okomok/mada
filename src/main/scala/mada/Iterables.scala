@@ -40,7 +40,7 @@ object Iterables extends iter.Conversions with iter.Compatibles {
 // constructors
 
     /**
-     * @return  <code>from</code>.
+     * Alias of <code>fromValues</code>
      */
     def apply[A](from: A*): Iterable[A] = from
 
@@ -48,6 +48,11 @@ object Iterables extends iter.Conversions with iter.Compatibles {
      * @return  <code>Iterable.empty</code>.
      */
     def emptyOf[A]: Iterable[A] = Iterable.empty
+
+    /**
+     * @return  <code>from</code>.
+     */
+    def fromValues[A](from: A*): Iterable[A] = from
 
     /**
      * Constructs <code>Iterable</code> from <code>Iterator</code>.
@@ -74,7 +79,7 @@ object Iterables extends iter.Conversions with iter.Compatibles {
     }
 
     /**
-     * The unfolding (op can have side-effects.)
+     * The unfolding
      */
     def unfoldRight[A, B](z: A)(op: A => Option[(B, A)]): Iterable[B] = UnfoldRight(z, op)
 
@@ -90,7 +95,7 @@ object Iterables extends iter.Conversions with iter.Compatibles {
 
 
 // Enumeration
-
+/*
     /**
      * Converts <code>Iterator</code> to <code>Enumeration</code>.
      */
@@ -100,6 +105,7 @@ object Iterables extends iter.Conversions with iter.Compatibles {
      * Converts <code>Enumeration</code> to <code>Iterator</code>.
      */
     def iteratorFromEnumeration[A](en: java.util.Enumeration[A]): Iterator[A] = jcl.EnumerationToIterator(en)
+*/
 
 
 // projections
