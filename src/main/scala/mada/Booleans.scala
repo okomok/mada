@@ -10,14 +10,14 @@ package mada
 /**
  * Contains utility methods operating on <code>Boolean</code>.
  */
-object Booleans {
+object Booleans extends bool.Operators {
     /**
      * @return  <code>!pre || post</code>.
      */
     def implies(pre: Boolean, post: => Boolean): Boolean = !pre || post
 
     /**
-     * Alias of <code>bool.Infix</code>
+     * @return  <code>this</code>
      */
-    val Infix = bool.Infix
+    val Operators: bool.Operators = this
 }

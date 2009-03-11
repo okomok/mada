@@ -7,7 +7,7 @@
 package madatest
 
 
-import mada.Booleans.Infix._
+import mada.Booleans.Operators._
 import junit.framework.Assert._
 
 

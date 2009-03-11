@@ -10,7 +10,7 @@ package mada
 /**
  * Contains utility methods operating on <code>Iterable</code>.
  */
-object Iterables extends iter.Conversions with iter.Compatibles {
+object Iterables extends iter.Conversions with iter.Compatibles with iter.Operators {
     import iter._
 
 
@@ -174,6 +174,11 @@ object Iterables extends iter.Conversions with iter.Compatibles {
     val Compatibles: iter.Compatibles = this
 
     /**
+     * @return  <code>this</code>.
+     */
+    val Operators: iter.Operators = this
+
+    /**
      * Alias of <code>IterableProxy</code>
      */
     type Forwarder[A] = IterableProxy[A]
@@ -187,9 +192,4 @@ object Iterables extends iter.Conversions with iter.Compatibles {
      * Alias of <code>iter.IteratorProxy</code>
      */
     type IteratorProxy[A] = iter.IteratorProxy[A]
-
-    /**
-     * Alias of <code>iter.Infix</code>
-     */
-    val Infix = iter.Infix
 }

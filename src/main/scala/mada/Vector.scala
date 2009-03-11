@@ -10,7 +10,7 @@ package mada
 /**
  * Contains utility types and methods operating on <code>Vector</code>.
  */
-object Vector extends vec.Conversions with vec.Compatibles {
+object Vector extends vec.Conversions with vec.Compatibles with vec.Operators {
     import vec._
 
 
@@ -120,7 +120,7 @@ object Vector extends vec.Conversions with vec.Compatibles {
     /**
      * @return  flatten(vv.map{ v => sep.append(v) })
      */
-    def unsplit[A](vs: Iterable[Vector[A]], sep: Vector[A]): Vector[A] = Unsplit(vs, sep)
+    def unsplit[A](vs: Iterable[Vector[A]])(sep: Vector[A]): Vector[A] = Unsplit(vs, sep)
 
     /**
      * Reverts <code>zip</code>.
@@ -131,11 +131,6 @@ object Vector extends vec.Conversions with vec.Compatibles {
      * Creates a <code>lazy</code> vector.
      */
     def `lazy`[A](v: => Vector[A]) = Lazy(v)
-
-    /**
-     * Creates a <code>synchronized</code> vector.
-     */
-    def `synchronized`[A](v: Vector[A]) = Synchronized(v)
 
 
 // triplify
@@ -198,6 +193,11 @@ object Vector extends vec.Conversions with vec.Compatibles {
      * @return  <code>this</code>.
      */
     val Compatibles: vec.Compatibles = this
+
+    /**
+     * @return  <code>this</code>.
+     */
+    val Operators: vec.Operators = this
 
     /**
      * Alias of <code>Vector[A] => B</code>

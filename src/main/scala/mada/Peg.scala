@@ -10,7 +10,7 @@ package mada
 /**
  * Contains utility methods operating on <code>Peg</code>.
  */
-object Peg extends peg.Conversions with peg.Compatibles {
+object Peg extends peg.Conversions with peg.Compatibles with peg.Operators {
     import peg._
 
 
@@ -126,11 +126,6 @@ object Peg extends peg.Conversions with peg.Compatibles {
     def `lazy`[A](p: => Peg[A]): Peg[A] = Lazy(p)
 
     /**
-     * Constructs a synchronized Peg object.
-     */
-    def `synchronized`[A](p: Peg[A]): Peg[A] = Synchronized(p)
-
-    /**
      * Constructs a pseudo try-catch expression in Peg.
      */
     def `try`[A](p: Peg[A]): Try[A] = Try(p)
@@ -188,6 +183,11 @@ object Peg extends peg.Conversions with peg.Compatibles {
      * @return  <code>this</code>.
      */
     val Compatibles: peg.Compatibles = this
+
+    /**
+     * @return  <code>this</code>.
+     */
+    val Operators: peg.Operators = this
 
     /**
      * Alias of <code>peg.ZeroWidth</code>

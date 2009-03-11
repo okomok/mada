@@ -45,8 +45,19 @@ class IterablesTest {
         assertTrue(Iterables.equal(it, Iterables(1,2,3,1,2,3,1,2,3,1)))
     }
 
-    def testInfix: Unit = {
-        import Iterables.Infix._
+    def testOperators: Unit = {
+        import Iterables._
+
+        assertTrue(Iterables(1,2,3) equal Iterables(1,2,3))
+        assertEquals(3, Iterables(1,2,3).length)
+
+        val its = Iterables(Iterables(1,2,3), Iterables(4,5,6), Iterables(7,8,9))
+        assertTrue((1 until 10) equal its.flatten)
+    }
+
+    def testOperators2: Unit = {
+        import Iterables._
+        import Iterables.Operators._
 
         assertTrue(Iterables(1,2,3) equal Iterables(1,2,3))
         assertEquals(3, Iterables(1,2,3).length)
@@ -148,7 +159,7 @@ class IterablesTest {
     }
 
     def testFusion: Unit = {
-        import Iterables.Infix._
+        import Iterables.Operators._
         val it = Iterables(1,2,3,4,5,6) filter_ (_ % 2 == 0) filter_ (_ % 3 == 0)
         assertTrue(Iterables.equal(it, Iterables(6)))
     }
