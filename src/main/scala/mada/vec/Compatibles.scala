@@ -27,7 +27,6 @@ trait Compatibles {
     implicit def madaVectorToJclCharSequence(from: Vector[Char]): java.lang.CharSequence = toJclCharSequence(from)
     implicit def madaVectorToIterable[A](from: Vector[A]): Iterable[A] = toIterable(from)
 //    implicit def madaVectorToRandomAccessSeq[A](from: Vector[A]): RandomAccessSeq.Mutable[A] = toRandomAccessSeq(from)
-//    implicit def madaVectorToLinearAccessSeq[A](from: Vector[A]): Seq[A] = toLinearAccessSeq(from)
     implicit def madaVectorToProduct[A](from: Vector[A]): Product = toProduct(from)
 //    implicit def madaVectorToStream[A](from: Vector[A]): Stream[A] = toStream(from)
     implicit def madaVectorToOrdered[A](from: Vector[A])(implicit c: Compare.GetOrdered[A]): Ordered[Vector[A]] = toOrdered(from)(c)

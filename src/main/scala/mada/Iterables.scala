@@ -89,6 +89,19 @@ object Iterables extends iter.Conversions with iter.Compatibles {
     def repeat[A](e: A): Iterable[A] = iterate(e){ x => x }
 
 
+// Enumeration
+
+    /**
+     * Converts <code>Iterator</code> to <code>Enumeration</code>.
+     */
+    def iteratorToEnumeration[A](it: Iterator[A]): java.util.Enumeration[A] = jcl.EnumerationFromIterator(it)
+
+    /**
+     * Converts <code>Enumeration</code> to <code>Iterator</code>.
+     */
+    def iteratorFromEnumeration[A](en: java.util.Enumeration[A]): Iterator[A] = jcl.EnumerationToIterator(en)
+
+
 // projections
 
     /**
