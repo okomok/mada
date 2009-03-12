@@ -8,7 +8,7 @@ package mada.iter
 
 
 private[mada] object Seal {
-    def apply[A](it: Iterable[A]): Iterable[A] = Iterables.makeByName(iimpl(it.elements))
+    def apply[A](it: Iterable[A]): Iterable[A] = Iterables.byName(iimpl(it.elements))
     def iimpl[A](it: Iterator[A]): Iterator[A] = new SealIterator(it)
 }
 

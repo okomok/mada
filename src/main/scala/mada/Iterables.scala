@@ -59,12 +59,12 @@ object Iterables extends Conversions with Compatibles with Operators {
     /**
      * Constructs <code>Iterable</code> from <code>Iterator</code>.
      */
-    def make[A](it: Iterator[A]): Iterable[A] = Make(it)
+    def by[A](it: Iterator[A]): Iterable[A] = By(it)
 
     /**
      * Constructs <code>Iterable</code> from <code>Iterator</code> by name.
      */
-    def makeByName[A](it: => Iterator[A]): Iterable[A] = MakeByName(it)
+    def byName[A](it: => Iterator[A]): Iterable[A] = ByName(it)
 
     /**
      * Triggers implicit conversions explicitly.
@@ -145,7 +145,7 @@ object Iterables extends Conversions with Compatibles with Operators {
     /**
      * Works around 2.7.3 deprecated warning.
      */
-    def take[A](it: Iterable[A], n: Int): Iterable[A] = makeByName(it.elements.take(n))
+    def take[A](it: Iterable[A], n: Int): Iterable[A] = byName(it.elements.take(n))
 
     /**
      * Lightweight takeWhile
@@ -163,9 +163,9 @@ object Iterables extends Conversions with Compatibles with Operators {
     def cycle[A](it: Iterable[A]): Iterable[A] = repeat(()).flatMap{ (u: Unit) => it }
 
     /**
-     * @return  <code>make(it.elements)</code>.
+     * @return  <code>by(it.elements)</code>.
      */
-    def singlePass[A](it: Iterable[A]): Iterable[A] = make(it.elements)
+    def singlePass[A](it: Iterable[A]): Iterable[A] = by(it.elements)
 
 
 // aliases

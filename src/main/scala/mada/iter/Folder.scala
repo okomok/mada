@@ -8,7 +8,7 @@ package mada.iter
 
 
 private[mada] object FolderLeft {
-    def apply[A, B](it: Iterable[A], z: B, op: (B, A) => B): Iterable[B] = Iterables.makeByName(iimpl(it.elements, z, op))
+    def apply[A, B](it: Iterable[A], z: B, op: (B, A) => B): Iterable[B] = Iterables.byName(iimpl(it.elements, z, op))
     def iimpl[A, B](it: Iterator[A], z: B, op: (B, A) => B): Iterator[B] = new FolderLeftIterator(it, z, op)
 }
 

@@ -8,7 +8,7 @@ package mada.iter.jcl
 
 
 private[mada] object IterableToIterable {
-    def apply[A](from: java.lang.Iterable[A]): Iterable[A] = Iterables.makeByName(iimpl(from.iterator))
+    def apply[A](from: java.lang.Iterable[A]): Iterable[A] = Iterables.byName(iimpl(from.iterator))
 
     def iimpl[A](from: java.util.Iterator[A]): Iterator[A] = new Iterator[A] {
         override def hasNext = from.hasNext

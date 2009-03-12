@@ -8,7 +8,7 @@ package mada.iter.jcl
 
 
 private[mada] object ObjectInputToIterable {
-    def apply[A](from: java.io.ObjectInput): Iterable[AnyRef] = Iterables.make(iimpl(from)) // single-pass
+    def apply[A](from: java.io.ObjectInput): Iterable[AnyRef] = Iterables.by(iimpl(from)) // single-pass
 
     def iimpl[A](in: java.io.ObjectInput): Iterator[AnyRef] = new Iterator[AnyRef] {
         private var cur: Option[AnyRef] = readNext // Note that null is a valid data.

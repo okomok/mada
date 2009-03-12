@@ -19,7 +19,7 @@ private[mada] object FromIterable {
 
 
 private[mada] object ToIterable {
-    def apply[A](from: Vector[A]): Iterable[A] = Iterables.makeByName(iimpl(from))
+    def apply[A](from: Vector[A]): Iterable[A] = Iterables.byName(iimpl(from))
     def iimpl[A](from: Vector[A]): Iterator[A] = new VectorIterator(from)
 }
 

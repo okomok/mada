@@ -8,7 +8,7 @@ package mada.peg
 
 
 private[mada] object Split {
-    def apply[A](p: Peg[A], v: Vector[A]): Iterable[Vector[A]] = Iterables.makeByName(iimpl(p, v))
+    def apply[A](p: Peg[A], v: Vector[A]): Iterable[Vector[A]] = Iterables.byName(iimpl(p, v))
     def iimpl[A](p: Peg[A], v: Vector[A]): Iterator[Vector[A]] = new SplitIterator(p, v)
 }
 
