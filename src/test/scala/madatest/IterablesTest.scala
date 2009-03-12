@@ -235,4 +235,25 @@ class IterablesTest {
         assertTrue(Iterables.equal(rit, Iterables('a','b','c')))
         assertTrue(Iterables.equal(rit, Iterables('a','b','c'))) // traverse again.
     }
+
+  // unique
+    def testUnique: Unit = {
+        val it = Iterables(5,4,4,4,3,2,2,2,2,2,1)
+        val jt = Iterables.unique(it)
+        assertTrue(Iterables.equal(jt, Iterables(5,4,3,2,1)))
+        assertTrue(Iterables.equal(jt, Iterables(5,4,3,2,1))) // traverse again.
+    }
+
+    def testUnique0: Unit = {
+        val it = Iterables.emptyOf[Int]
+        val jt = Iterables.unique(it)
+        assertTrue(it.isEmpty)
+    }
+
+    def testUnique1: Unit = {
+        val it = Iterables(9)
+        val jt = Iterables.unique(it)
+        assertTrue(Iterables.equal(jt, Iterables(9)))
+        assertTrue(Iterables.equal(jt, Iterables(9))) // traverse again.
+    }
 }

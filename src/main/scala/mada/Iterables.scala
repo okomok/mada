@@ -153,6 +153,16 @@ object Iterables extends Conversions with Compatibles with Operators {
     def takeWhile[A](it: Iterable[A])(p: A => Boolean): Iterable[A] = TakeWhile(it, p)
 
     /**
+     * @return  <code>uniqueBy(it)(Functions.equal)</code>.
+     */
+    def unique[A](it: Iterable[A]): Iterable[A] = Unique(it, Functions.equal)
+
+    /**
+     * Removes the duplicate consecutive elements.
+     */
+    def uniqueBy[A](it: Iterable[A])(p: (A, A) => Boolean): Iterable[A] = Unique(it, p)
+
+    /**
      * Iterates with side-effect <code>f</code>.
      */
     def withSideEffect[A](it: Iterable[A])(f: A => Unit): Iterable[A] = WithSideEffect(it, f)
