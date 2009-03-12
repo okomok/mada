@@ -14,7 +14,8 @@ trait Conversions {
 // compatibles
   // from
     def fromJclIterable[A](from: java.lang.Iterable[A]): Iterable[A] = jcl.IterableToIterable(from)
-    def fromObjectInput(from: java.io.ObjectInput): Iterable[AnyRef] = jcl.ObjectInputToIterable(from)
+    def fromJioObjectInput(from: java.io.ObjectInput): Iterable[AnyRef] = jio.ObjectInputToIterable(from)
+    def fromJioReader(from: java.io.Reader): Iterable[Char] = jio.ReaderToIterable(from)
   // to
     def toJclIterable[A](from: Iterable[A]): java.lang.Iterable[A] = jcl.IterableFromIterable(from)
 

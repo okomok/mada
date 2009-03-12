@@ -41,6 +41,7 @@ trait Operators {
     sealed class MadaVectorChar(_1: Vector[Char]) {
         def lowerCase = Vector.lowerCase(_1)
         def upperCase = Vector.upperCase(_1)
+        def stringize = Vector.stringize(_1)
     }
     implicit def madaVectorChar(_1: Vector[Char]): MadaVectorChar = new MadaVectorChar(_1)
 }

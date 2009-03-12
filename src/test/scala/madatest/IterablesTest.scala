@@ -226,4 +226,13 @@ class IterablesTest {
     def testStringFrom: Unit = {
         assertEquals(Iterables.stringFrom(Iterables(1,2,3,4)), Vector(1,2,3,4).toString)
     }
+
+  // jio
+    def testJioReader: Unit = {
+        import Iterables.Compatibles._
+        val arr = mada.Vector('a','b','c').toArray
+        val rit: Iterable[Char] = new java.io.CharArrayReader(arr)
+        assertTrue(Iterables.equal(rit, Iterables('a','b','c')))
+        assertTrue(Iterables.equal(rit, Iterables('a','b','c'))) // traverse again.
+    }
 }

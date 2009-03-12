@@ -13,8 +13,9 @@ package mada.iter
 trait Compatibles {
     import Iterables._
 // from
-    implicit def madaIterableToJclIterable[A](from: Iterable[A]): java.lang.Iterable[A] = toJclIterable(from)
-// to
     implicit def madaIterableFromJclIterable[A](from: java.lang.Iterable[A]): Iterable[A] = fromJclIterable(from)
-    implicit def madaIterableFromObjectInput(from: java.io.ObjectInput): Iterable[AnyRef] = fromObjectInput(from)
+    implicit def madaIterableFromJioObjectInput(from: java.io.ObjectInput): Iterable[AnyRef] = fromJioObjectInput(from)
+    implicit def madaIterableFromJioReader(from: java.io.Reader): Iterable[Char] = fromJioReader(from)
+// to
+    implicit def madaIterableToJclIterable[A](from: Iterable[A]): java.lang.Iterable[A] = toJclIterable(from)
 }
