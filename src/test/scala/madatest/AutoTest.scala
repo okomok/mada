@@ -11,34 +11,21 @@ import mada.Auto
 import junit.framework.Assert._
 
 
-class MyFile extends Auto {
+object MyFile {
+    implicit object myAuto extends Auto[MyFile] {
+        override def dispose(x: MyFile) = x.disposed = true
+    }
+}
+
+class MyFile {
     var disposed = false
-    override def dispose = { disposed = true }
     def read: Unit = { }
 }
 
-class YourFile {
-    var disposed = false
-    def read: Unit = { }
-}
 
 class AutoTest {
     def testTrivial: Unit = {
         val file = new MyFile
-        assertFalse(file.disposed)
-        // Predef.identity is coming.
-        Auto(file){ f =>
-            f.read
-        }
-        assertTrue(file.disposed)
-    }
-
-    implicit def yourFile2Auto(f: YourFile): Auto = new Auto {
-        override def dispose = { f.disposed = true }
-    }
-
-    def testConversion: Unit = {
-        val file = new YourFile
         assertFalse(file.disposed)
         Auto(file){ f =>
             f.read
@@ -61,5 +48,11 @@ class AutoTest {
         }
         assertTrue(thrown)
         assertTrue(file.disposed)
+    }
+
+    def testEligibles: Unit = {
+        Auto(new java.io.StringReader("abc")){ r =>
+            ()
+        }
     }
 }

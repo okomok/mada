@@ -13,7 +13,7 @@ import vec._
 /**
  * Contains utility types and methods operating on <code>Vector</code>.
  */
-object Vector extends Conversions with Compatibles with Operators {
+object Vector extends Conversions with Compatibles with Eligibles with Operators {
 
 
 // constants
