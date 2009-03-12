@@ -23,6 +23,8 @@ trait Operators {
         def takeWhile_(_2: A => Boolean) = Iterables.takeWhile(_1)(_2)
         def toHashSet = Iterables.toHashSet(_1)
         def toString_ = Iterables.stringFrom(_1)
+        def unique = Iterables.unique(_1)
+        def uniqueBy(_2: (A, A) => Boolean) = Iterables.uniqueBy(_1)(_2)
         def withSideEffect(_2: A => Unit) = Iterables.withSideEffect(_1)(_2)
     }
     implicit def madaIterables[A](_1: Iterable[A]): MadaIterables[A] = new MadaIterables(_1)
