@@ -12,7 +12,7 @@ package auto {
     trait Eligibles {
         import Auto.Closeable
 
-        implicit object fromCloseable extends Auto[Closeable] {
+        implicit object ofCloseable extends Auto[Closeable] {
             def dispose(e: Closeable) = e.close
         }
     }
