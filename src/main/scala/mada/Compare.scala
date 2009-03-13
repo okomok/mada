@@ -11,13 +11,13 @@ import cmp._
 
 
 /**
- * Contains utility methods operating on strict weak ordering.
+ * Contains utility methods operating on <code>Compare</code>.
  */
-object Compare extends Conversions {
+object Compare extends Conversions with Compatibles {
     /**
-     * Alias of <code>Functions.Predicate2[T, T]</code>
+     * Alias of <code>Function2[T, T, Boolean]</code>
      */
-    type Type[-T] = Functions.Predicate2[T, T]
+    type Predicate[-T] = Function2[T, T, Boolean]
 
     /**
      * Alias of <code>Function1[T, Ordered[T]]</code>
@@ -25,21 +25,26 @@ object Compare extends Conversions {
     type GetOrdered[T] = Function1[T, Ordered[T]]
 
     /**
+     * Alias of <code>java.util.Comparator[T]</code>
+     */
+    type Comparator[T] = java.util.Comparator[T]
+
+    /**
      * Triggers implicit conversions explicitly.
      *
      * @return  <code>to</code>.
      */
-    def from[A](to: Type[A]) = to
+    def from[A](to: Compare[A]) = to
 
     /**
      * Alias of <code>fromGetOrdered</code>
      */
-    def apply[A](implicit from: GetOrdered[A]): Type[A] = fromGetOrdered(from)
+    def getOrderedToPredicate[A](from: GetOrdered[A]): Predicate[A] = fromGetOrdered(from)
 
     /**
-     * Alias of <code>comp.Compatibles</code>
+     * @return  <code>this</code>.
      */
-    val Compatibles = cmp.Compatibles
+    val Compatibles: cmp.Compatibles = this
 }
 
 
@@ -48,19 +53,14 @@ object Compare extends Conversions {
  */
 trait Compare[-A] extends Function2[A, A, Boolean] {
     /**
-     * Alias of <code>lt</code>
-     */
-    final def apply(x: A, y: A): Boolean
-
-    /**
      * @return  <code>true</code> iif x precedes y.
      */
-    def lt(x: A, y: A): Boolean
+    def apply(x: A, y: A): Boolean
 
     /**
      * Can be overridden for optimization.
      *
-     * @return  <code>!apply(x, y) && !apply(y, x)</code>.
+     * @return  <code>if (apply(x, y)) -1 else if (apply(y, x)) 1 else 0</code>.
      */
-    def equiv(x: A, y: A): Boolean = !lt(x, y) && !lt(y, x)
+    def threeWay(x: A, y: A): Int = if (apply(x, y)) -1 else if (apply(y, x)) 1 else 0
 }

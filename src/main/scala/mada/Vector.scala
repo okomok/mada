@@ -153,12 +153,12 @@ object Vector extends Conversions with Compatibles with Eligibles with Operators
     /**
      * Returns lexicographical strict weak ordering.
      */
-    def compare[A](implicit c: Compare.GetOrdered[A]): Compare.Type[Vector[A]] = CompareBy(Compare(c))
+    def compare[A](implicit c: Compare.GetOrdered[A]): Compare.Predicate[Vector[A]] = CompareBy(Compare.fromGetOrdered(c))
 
     /**
      * Returns lexicographical strict weak ordering.
      */
-    def compareBy[A](lt: Compare.Type[A]): Compare.Type[Vector[A]] = CompareBy(lt)
+    def compareBy[A](lt: Compare.Predicate[A]): Compare.Predicate[Vector[A]] = CompareBy(lt)
 
     /**
      * Returns lexicographical <code>Ordered</code> view.
@@ -168,7 +168,7 @@ object Vector extends Conversions with Compatibles with Eligibles with Operators
     /**
      * Returns lexicographical <code>Ordered</code> view.
      */
-    def orderedViewBy[A](lt: Compare.Type[A]): Compare.GetOrdered[Vector[A]] = Compare.toGetOrdered(compareBy(lt))
+    def orderedViewBy[A](lt: Compare.Predicate[A]): Compare.GetOrdered[Vector[A]] = Compare.toGetOrdered(compareBy(lt))
 
 
 // Char vector
@@ -679,9 +679,9 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
 // sort
 
     /**
-     * @return  <code>sortBy(Compare(c))</code>.
+     * @return  <code>sortBy(Compare.fromGetOrdered(c))</code>.
      */
-    def sort(implicit c: Compare.GetOrdered[A]): Vector[A] = sortBy(Compare(c))
+    def sort(implicit c: Compare.GetOrdered[A]): Vector[A] = sortBy(Compare.fromGetOrdered(c))
 
     /**
      * Sort this vector according to the comparison function <code>lt</code>.
@@ -690,7 +690,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * @param   lt  strict weak ordering
      * @return  this vector sorted according to <code>lt</code>.
      */
-    def sortBy(lt: Compare.Type[A]): Vector[A] = SortBy(this, lt)
+    def sortBy(lt: Compare.Predicate[A]): Vector[A] = SortBy(this, lt)
 
 
 // concatenation

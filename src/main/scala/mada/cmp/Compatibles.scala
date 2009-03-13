@@ -10,15 +10,15 @@ package mada.cmp
 /**
  * Contains implicit conversions for strict weak ordering.
  */
-object Compatibles {
-    import java.util.Comparator
+trait Compatibles {
     import Compare._
-
-    implicit def madaCompareFromGetOrdered[A](from: GetOrdered[A]): Type[A] = fromGetOrdered(from)
-    implicit def madaCompareFromOrdering[A](from: Ordering[A]): Type[A] = fromOrdering(from)
-    implicit def madaCompareFromComparator[A](from: Comparator[A]): Type[A] = fromComparator(from)
-
-    implicit def madaCompareToGetOrdered[A](from: Type[A]): GetOrdered[A] = toGetOrdered(from)
-    implicit def madaCompareToOrdering[A](from: Type[A]): Ordering[A] = toOrdering(from)
-    implicit def madaCompareToComparator[A](from: Type[A]): Comparator[A] = toComparator(from)
+// from
+    implicit def madaCompareFromPredicate[A](from: Predicate[A]): Compare[A] = fromPredicate(from)
+    implicit def madaCompareFromGetOrdered[A](implicit from: GetOrdered[A]): Compare[A] = fromGetOrdered(from)
+    implicit def madaCompareFromOrdering[A](from: Ordering[A]): Compare[A] = fromOrdering(from)
+    implicit def madaCompareFromComparator[A](from: Comparator[A]): Compare[A] = fromComparator(from)
+// to
+    implicit def madaCompareToGetOrdered[A](implicit from: Compare[A]): GetOrdered[A] = toGetOrdered(from)
+    implicit def madaCompareToOrdering[A](implicit from: Compare[A]): Ordering[A] = toOrdering(from)
+    implicit def madaCompareToComparator[A](implicit from: Compare[A]): Comparator[A] = toComparator(from)
 }

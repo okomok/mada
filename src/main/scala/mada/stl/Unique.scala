@@ -38,7 +38,7 @@ private[mada] object Unique {
         apply(v, first, __last, Functions.equal)
     }
 
-    def apply[A](v: Vector[A], first: Int, __last: Int, __binary_pred: Compare.Type[A]): Int = {
+    def apply[A](v: Vector[A], first: Int, __last: Int, __binary_pred: Compare.Predicate[A]): Int = {
         var __first = first
 
         __first = AdjacentFind(v, __first, __last, __binary_pred)

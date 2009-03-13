@@ -37,14 +37,14 @@ package mada.stl
 
 private[mada] object PushHeap {
     def apply[A](* : Vector[A], __first: Int, __last: Int)(implicit c: Compare.GetOrdered[A]): Unit = {
-        apply(*, __first, __last, Compare(c))
+        apply(*, __first, __last, Compare.fromGetOrdered(c))
     }
 
-    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Compare.Type[A]): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Compare.Predicate[A]): Unit = {
         __apply(*, __first, (__last - __first) - 1, 0, *(__last - 1), __comp)
     }
 
-    def __apply[A](* : Vector[A], __first: Int, holeIndex: Int, __topIndex: Int, __value: A, __comp: Compare.Type[A]): Unit = {
+    def __apply[A](* : Vector[A], __first: Int, holeIndex: Int, __topIndex: Int, __value: A, __comp: Compare.Predicate[A]): Unit = {
         var __holeIndex = holeIndex
 
         var __parent = (__holeIndex - 1) / 2
@@ -62,14 +62,14 @@ private[mada] object PushHeap {
 
 private[mada] object PopHeap {
     def apply[A](* : Vector[A], __first: Int, __last: Int)(implicit c: Compare.GetOrdered[A]): Unit = {
-        apply(*, __first, __last, Compare(c))
+        apply(*, __first, __last, Compare.fromGetOrdered(c))
     }
 
-    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Compare.Type[A]): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Compare.Predicate[A]): Unit = {
         __apply(*, __first, __last - 1, __last - 1, *(__last - 1), __comp)
     }
 
-    def __apply[A](* : Vector[A], __first: Int, __last: Int, __result: Int, __value: A, __comp: Compare.Type[A]): Unit = {
+    def __apply[A](* : Vector[A], __first: Int, __last: Int, __result: Int, __value: A, __comp: Compare.Predicate[A]): Unit = {
         *(__result) = *(__first)
         AdjustHeap(*, __first, 0, __last - __first, __value, __comp);
     }
@@ -80,10 +80,10 @@ private[mada] object PopHeap {
 
 private[mada] object MakeHeap {
     def apply[A](* : Vector[A], __first: Int, __last: Int)(implicit c: Compare.GetOrdered[A]): Unit = {
-        apply(*, __first, __last, Compare(c))
+        apply(*, __first, __last, Compare.fromGetOrdered(c))
     }
 
-    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Compare.Type[A]): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Compare.Predicate[A]): Unit = {
         if (__last - __first < 2) {
             return
         }
@@ -105,10 +105,10 @@ private[mada] object MakeHeap {
 
 private[mada] object SortHeap {
     def apply[A](* : Vector[A], __first: Int, __last: Int)(implicit c: Compare.GetOrdered[A]): Unit = {
-        apply(*, __first, __last, Compare(c))
+        apply(*, __first, __last, Compare.fromGetOrdered(c))
     }
 
-    def apply[A](* : Vector[A], __first: Int, last: Int, __comp: Compare.Type[A]): Unit = {
+    def apply[A](* : Vector[A], __first: Int, last: Int, __comp: Compare.Predicate[A]): Unit = {
         var __last = last
 
         while (__last - __first > 1) {
@@ -122,7 +122,7 @@ private[mada] object SortHeap {
 // AdjustHeap
 
 private[mada] object AdjustHeap {
-    def apply[A](* : Vector[A], __first: Int, holeIndex: Int, __len: Int, __value: A, __comp: Compare.Type[A]): Unit = {
+    def apply[A](* : Vector[A], __first: Int, holeIndex: Int, __len: Int, __value: A, __comp: Compare.Predicate[A]): Unit = {
         var __holeIndex = holeIndex
 
         val __topIndex = __holeIndex;

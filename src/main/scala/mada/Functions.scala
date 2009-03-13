@@ -49,20 +49,12 @@ object Functions {
     /**
      * @return  <code>{ (x, y) => x == y }</code>.
      */
-    val equal: Compare.Type[Any] = { (x, y) => x == y }
+    val equal: Compare.Predicate[Any] = { (x, y) => x == y }
 
     /**
      * @return  <code>{ y => x == y }</code>.
      */
     def equalTo(x: Any): Predicate1[Any] = { y => x == y }
-
-
-// todo:
-
-    /**
-     * @return  <code>{ (x, y) => c(x) > y }</code>.
-     */
-    def greater[T](implicit c: T => Ordered[T]): Compare.Type[T] = { (x, y) => c(x) > y }
 
 
 // utilities

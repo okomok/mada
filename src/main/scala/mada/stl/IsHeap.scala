@@ -35,14 +35,14 @@ package mada.stl
 
 private[mada] object IsHeap {
     def apply[A](v: Vector[A], __first: Int, __last: Int)(implicit c: Compare.GetOrdered[A]): Boolean = {
-        apply(v, __first, __last, Compare(c))
+        apply(v, __first, __last, Compare.fromGetOrdered(c))
     }
 
-    def apply[A](v: Vector[A], __first: Int, __last: Int, __comp: Compare.Type[A]): Boolean = {
+    def apply[A](v: Vector[A], __first: Int, __last: Int, __comp: Compare.Predicate[A]): Boolean = {
         __apply(v, __first, __comp, __last - __first)
     }
 
-    def __apply[A](* : Vector[A], __first: Int, __comp: Compare.Type[A], __n: Int): Boolean = {
+    def __apply[A](* : Vector[A], __first: Int, __comp: Compare.Predicate[A], __n: Int): Boolean = {
         var __parent = 0
         var __child = 1
         while (__child < __n) {

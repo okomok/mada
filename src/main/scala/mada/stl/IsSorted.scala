@@ -35,10 +35,10 @@ package mada.stl
 
 private[mada] object IsSorted {
     def apply[A](* : Vector[A], first: Int, __last: Int)(implicit c: Compare.GetOrdered[A]): Boolean = {
-        apply(*, first, __last, Compare(c))
+        apply(*, first, __last, Compare.fromGetOrdered(c))
     }
 
-    def apply[A](* : Vector[A], first: Int, __last: Int, __comp: Compare.Type[A]): Boolean = {
+    def apply[A](* : Vector[A], first: Int, __last: Int, __comp: Compare.Predicate[A]): Boolean = {
         var __first = first
 
         if (__first == __last) {

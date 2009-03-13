@@ -35,10 +35,10 @@ package mada.stl
 
 private[mada] object Median {
     def apply[A](__a: A, __b: A, __c: A)(implicit c: Compare.GetOrdered[A]): A = {
-        apply(__a, __b, __c, Compare(c))
+        apply(__a, __b, __c, Compare.fromGetOrdered(c))
     }
 
-    def apply[A](__a: A, __b: A, __c: A, __comp: Compare.Type[A]): A = {
+    def apply[A](__a: A, __b: A, __c: A, __comp: Compare.Predicate[A]): A = {
         if (__comp(__a, __b)) {
             if (__comp(__b, __c)) {
                 __b

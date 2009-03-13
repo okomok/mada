@@ -38,10 +38,10 @@ import Compare.GetOrdered
 
 private[mada] object LexicographicalCompare {
     def apply[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int)(implicit c: GetOrdered[A]): Boolean = {
-        apply(v1, first1, __last1, v2, first2, __last2, Compare(c))
+        apply(v1, first1, __last1, v2, first2, __last2, Compare.fromGetOrdered(c))
     }
 
-    def apply[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int, __comp: Compare.Type[A]): Boolean = {
+    def apply[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int, __comp: Compare.Predicate[A]): Boolean = {
         if (LexicographicalCompare3way(v1, first1, __last1, v2, first2, __last2, __comp) < 0) true else false
     }
 }
@@ -49,10 +49,10 @@ private[mada] object LexicographicalCompare {
 
 private[mada] object LexicographicalCompare3way {
     def apply[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int)(implicit c: GetOrdered[A]): Int = {
-        apply(v1, first1, __last1, v2, first2, __last2, Compare(c))
+        apply(v1, first1, __last1, v2, first2, __last2, Compare.fromGetOrdered(c))
     }
 
-    def apply[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int, __comp: Compare.Type[A]): Int = {
+    def apply[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int, __comp: Compare.Predicate[A]): Int = {
         var __first1 = first1
         var __first2 = first2
 
