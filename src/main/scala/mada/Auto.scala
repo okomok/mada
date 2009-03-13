@@ -29,13 +29,16 @@ object Auto extends auto.Eligibles {
     /**
      * Alias of <code>using</code>
      */
-    def apply[A](e: A)(f: A => Unit)(implicit a: Auto[A]): Unit = using(e)(f)(a)
+    def apply[A, B](e: A)(f: A => B)(implicit a: Auto[A]): B = using(e)(f)(a)
 
     /**
      * @return  <code>try { f(e) } finally { a.dispose(e) }</code>.
      */
-    def using[A](e: A)(f: A => Unit)(implicit a: Auto[A]): Unit = try { f(e) } finally { a.dispose(e) }
+    def using[A, B](e: A)(f: A => B)(implicit a: Auto[A]): B = try { f(e) } finally { a.dispose(e) }
 
+    /**
+     * Can be used instead of implicit objects.
+     */
     trait Interface {
         def dispose: Unit
     }

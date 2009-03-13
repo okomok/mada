@@ -83,17 +83,18 @@ class AutoTest {
     def testHis: Unit = {
         val file = new HisFile[Int]
         assertFalse(file.disposed)
-        Auto(file){ f =>
-            f.read
+        val tmp = Auto(file){ f =>
+            f.read; 3
         }
         assertTrue(file.disposed)
+        assertEquals(3, tmp)
     }
 
     def testHer: Unit = {
         val file = new HerFile[Int]
         assertFalse(file.disposed)
-        Auto(file){ f =>
-            f.read
+        Auto(file){
+            _.read
         }//(file)
         assertTrue(file.disposed)
     }
