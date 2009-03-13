@@ -7,12 +7,12 @@
 package mada.vec
 
 
-import java.io.{ File, RandomAccessFile }
+import java.io.{ File, RandomAccessFile, Closeable }
 
 
 // Char
 
-private[mada] class CharFileVector private (val randomAccessFile: RandomAccessFile) extends Vector[Char] with Auto.Closeable {
+private[mada] class CharFileVector private (val randomAccessFile: RandomAccessFile) extends Vector[Char] with Closeable {
     def this(file: File, mode: String) = this(new RandomAccessFile(file, mode))
     def this(name: String, mode: String) = this(new RandomAccessFile(name, mode))
 
@@ -27,7 +27,7 @@ private[mada] class CharFileVector private (val randomAccessFile: RandomAccessFi
 
 // Int
 
-private[mada] class IntFileVector private (val randomAccessFile: RandomAccessFile) extends Vector[Int] with Auto.Closeable {
+private[mada] class IntFileVector private (val randomAccessFile: RandomAccessFile) extends Vector[Int] with Closeable {
     def this(file: File, mode: String) = this(new RandomAccessFile(file, mode))
     def this(name: String, mode: String) = this(new RandomAccessFile(name, mode))
 
@@ -42,7 +42,7 @@ private[mada] class IntFileVector private (val randomAccessFile: RandomAccessFil
 
 // Long
 
-private[mada] class LongFileVector private (val randomAccessFile: RandomAccessFile) extends Vector[Long] with Auto.Closeable {
+private[mada] class LongFileVector private (val randomAccessFile: RandomAccessFile) extends Vector[Long] with Closeable {
     def this(file: File, mode: String) = this(new RandomAccessFile(file, mode))
     def this(name: String, mode: String) = this(new RandomAccessFile(name, mode))
 

@@ -10,10 +10,12 @@ package mada
 package auto {
 
     trait Eligibles {
-        import Auto.Closeable
+        implicit object ofInterface extends Auto[Auto.Interface] {
+            def dispose(e: Auto.Interface) = e.dispose
+        }
 
-        implicit object ofCloseable extends Auto[Closeable] {
-            def dispose(e: Closeable) = e.close
+        implicit object ofCloseable extends Auto[java.io.Closeable] {
+            def dispose(e: java.io.Closeable) = e.close
         }
     }
 
@@ -34,10 +36,9 @@ object Auto extends auto.Eligibles {
      */
     def using[A](e: A)(f: A => Unit)(implicit a: Auto[A]): Unit = try { f(e) } finally { a.dispose(e) }
 
-    /**
-     * Alias of <code>java.io.Closeable</code>
-     */
-    type Closeable = java.io.Closeable
+    trait Interface {
+        def dispose: Unit
+    }
 }
 
 
