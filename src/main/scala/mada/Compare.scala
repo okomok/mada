@@ -41,3 +41,26 @@ object Compare extends Conversions {
      */
     val Compatibles = cmp.Compatibles
 }
+
+
+/**
+ * Represents strict weak ordering.
+ */
+trait Compare[-A] extends Function2[A, A, Boolean] {
+    /**
+     * Alias of <code>lt</code>
+     */
+    final def apply(x: A, y: A): Boolean
+
+    /**
+     * @return  <code>true</code> iif x precedes y.
+     */
+    def lt(x: A, y: A): Boolean
+
+    /**
+     * Can be overridden for optimization.
+     *
+     * @return  <code>!apply(x, y) && !apply(y, x)</code>.
+     */
+    def equiv(x: A, y: A): Boolean = !lt(x, y) && !lt(y, x)
+}
