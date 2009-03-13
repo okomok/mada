@@ -7,7 +7,7 @@
 package mada
 
 
-import comp._
+import cmp._
 
 
 /**
@@ -39,5 +39,5 @@ object Compare extends Conversions {
     /**
      * Alias of <code>comp.Compatibles</code>
      */
-    val Compatibles = comp.Compatibles
+    val Compatibles = cmp.Compatibles
 }

@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.comp
+package mada.cmp
 
 
 import java.util.Comparator
