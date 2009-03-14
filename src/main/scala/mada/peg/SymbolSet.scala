@@ -12,9 +12,9 @@ package mada.peg
  */
 object SymbolSet {
     /**
-     * @return  <code>this(vs)(Compare.fromGetOrdered(c))</code>.
+     * @return  <code>apply(vs)(c)</code>.
      */
-    def apply[A](vs: Vector[A]*)(implicit c: Compare.GetOrdered[A]): SymbolSet[A] = apply(vs)(Compare.fromGetOrdered(c))
+    def apply[A](vs: Vector[A]*)(implicit c: Compare[A]): SymbolSet[A] = apply(vs)(c)
 
     /**
      * Constructs <code>SymbolSet</code> containing <code>vs</code> as elements.

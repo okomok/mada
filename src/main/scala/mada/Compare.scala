@@ -37,9 +37,9 @@ object Compare extends Conversions with Compatibles {
     def from[A](to: Compare[A]) = to
 
     /**
-     * Alias of <code>fromGetOrdered</code>
+     * Alias of <code>fromPredicate</code>
      */
-    def getOrderedToPredicate[A](from: GetOrdered[A]): Predicate[A] = fromGetOrdered(from)
+    def by[A](p: Predicate[A]): Compare[A] = fromPredicate(p)
 
     /**
      * @return  <code>this</code>.
@@ -51,15 +51,13 @@ object Compare extends Conversions with Compatibles {
 /**
  * Represents strict weak ordering.
  */
-trait Compare[-A] extends Function2[A, A, Boolean] {
+trait Compare[-A] extends Compare.Predicate[A] {
     /**
      * @return  <code>true</code> iif x precedes y.
      */
     def apply(x: A, y: A): Boolean
 
     /**
-     * Can be overridden for optimization.
-     *
      * @return  <code>if (apply(x, y)) -1 else if (apply(y, x)) 1 else 0</code>.
      */
     def threeWay(x: A, y: A): Int = if (apply(x, y)) -1 else if (apply(y, x)) 1 else 0

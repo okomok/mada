@@ -12,9 +12,9 @@ package mada.peg
  */
 object SymbolMap {
     /**
-     * @return  <code>this(es)(Compare.fromGetOrdered(c))</code>.
+     * @return  <code>apply(es)(c)</code>.
      */
-    def apply[A](es: (Vector[A], Peg[A])*)(implicit c: Compare.GetOrdered[A]): SymbolMap[A] = apply(es)(Compare.fromGetOrdered(c))
+    def apply[A](es: (Vector[A], Peg[A])*)(implicit c: Compare[A]): SymbolMap[A] = apply(es)(c)
 
     /**
      * Constructs <code>SymbolMet</code> containing <code>es</code> as key-and-value entries.

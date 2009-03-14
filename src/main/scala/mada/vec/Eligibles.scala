@@ -11,21 +11,23 @@ package mada.vec
  * Contains eligibles around <code>Vector</code>.
  */
 trait Eligibles {
-
     // Hmm, Ordering should have taken [-A]?
-    implicit def forOrdering[A](implicit e: Ordering[A]): Ordering[Vector[A]] = new Ordering[Vector[A]] {
-        private val _lt = Compare.fromOrdering(e)
-        override def compare(v: Vector[A], w: Vector[A]) = {
-            Stl.lexicographicalCompare3way(v, v.start, v.end, w, w.start, w.end, _lt)
-        }
+    implicit def forOrdering[A](implicit c: Ordering[A]): Ordering[Vector[A]] = {
+        Compare.toOrdering(forCompare(Compare.fromOrdering(c)))
     }
 
-/* falls into ambiguity.
-    implicit def forOrdering_[A](implicit e: Compare.GetOrdered[A]): Ordering[Vector[A]] = new Ordering[Vector[A]] {
-        private val _lt = Compare.fromGetOrdered(e)
-        override def compare(v: Vector[A], w: Vector[A]) = {
-            Stl.lexicographicalCompare3way(v, v.start, v.end, w, w.start, w.end, _lt)
+    /*implicit*/ def forOrdering_[A](implicit c: Compare.GetOrdered[A]): Ordering[Vector[A]] = {
+        Compare.toOrdering(forCompare(Compare.fromGetOrdered(c)))
+    }
+
+    // For unambiguous overload resolution, `implicit` is facing the alternative
+    // of `madaVectorToOrdered` or ...
+    /*implicit*/ def forCompare[A](implicit c: Compare[A]): Compare[Vector[A]] = new Compare[Vector[A]] {
+        override def apply(v: Vector[A], w: Vector[A]) = {
+            Stl.lexicographicalCompare(v, v.start, v.end, w, w.start, w.end, c)
+        }
+        override def threeWay(v: Vector[A], w: Vector[A]) = {
+            Stl.lexicographicalCompare3way(v, v.start, v.end, w, w.start, w.end, c)
         }
     }
-*/
 }
