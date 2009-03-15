@@ -33,12 +33,9 @@
 package mada.stl
 
 
-import Compare.GetOrdered
-
-
 private[mada] object LexicographicalCompare {
-    def apply[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int)(implicit c: GetOrdered[A]): Boolean = {
-        apply(v1, first1, __last1, v2, first2, __last2, Compare.fromGetOrdered(c))
+    def apply[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int)(implicit c: Compare[A]): Boolean = {
+        apply(v1, first1, __last1, v2, first2, __last2, c)
     }
 
     def apply[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int, __comp: Compare.Predicate[A]): Boolean = {
@@ -48,8 +45,8 @@ private[mada] object LexicographicalCompare {
 
 
 private[mada] object LexicographicalCompare3way {
-    def apply[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int)(implicit c: GetOrdered[A]): Int = {
-        apply(v1, first1, __last1, v2, first2, __last2, Compare.fromGetOrdered(c))
+    def apply[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int)(implicit c: Compare[A]): Int = {
+        apply(v1, first1, __last1, v2, first2, __last2, c)
     }
 
     def apply[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int, __comp: Compare.Predicate[A]): Int = {

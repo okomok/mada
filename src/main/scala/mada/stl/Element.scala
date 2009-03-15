@@ -34,8 +34,8 @@ package mada.stl
 
 
 private[mada] object MinElement {
-    def apply[A](* : Vector[A], first: Int, __last: Int)(implicit c: Compare.GetOrdered[A]): Int = {
-        apply(*, first, __last, Compare.fromGetOrdered(c))
+    def apply[A](* : Vector[A], first: Int, __last: Int)(implicit c: Compare[A]): Int = {
+        apply(*, first, __last, c)
     }
 
     def apply[A](* : Vector[A], first: Int, __last: Int, __comp: Compare.Predicate[A]): Int = {
@@ -57,8 +57,8 @@ private[mada] object MinElement {
 }
 
 private[mada] object MaxElement {
-    def apply[A](* : Vector[A], first: Int, __last: Int)(implicit c: Compare.GetOrdered[A]): Int = {
-        apply(*, first, __last, Compare.fromGetOrdered(c))
+    def apply[A](* : Vector[A], first: Int, __last: Int)(implicit c: Compare[A]): Int = {
+        apply(*, first, __last, c)
     }
 
     def apply[A](* : Vector[A], first: Int, __last: Int, __comp: Compare.Predicate[A]): Int = {

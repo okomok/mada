@@ -36,8 +36,8 @@ package mada.stl
 // PushHeap
 
 private[mada] object PushHeap {
-    def apply[A](* : Vector[A], __first: Int, __last: Int)(implicit c: Compare.GetOrdered[A]): Unit = {
-        apply(*, __first, __last, Compare.fromGetOrdered(c))
+    def apply[A](* : Vector[A], __first: Int, __last: Int)(implicit c: Compare[A]): Unit = {
+        apply(*, __first, __last, c)
     }
 
     def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Compare.Predicate[A]): Unit = {
@@ -61,8 +61,8 @@ private[mada] object PushHeap {
 // PopHeap
 
 private[mada] object PopHeap {
-    def apply[A](* : Vector[A], __first: Int, __last: Int)(implicit c: Compare.GetOrdered[A]): Unit = {
-        apply(*, __first, __last, Compare.fromGetOrdered(c))
+    def apply[A](* : Vector[A], __first: Int, __last: Int)(implicit c: Compare[A]): Unit = {
+        apply(*, __first, __last, c)
     }
 
     def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Compare.Predicate[A]): Unit = {
@@ -79,8 +79,8 @@ private[mada] object PopHeap {
 // MakeHeap
 
 private[mada] object MakeHeap {
-    def apply[A](* : Vector[A], __first: Int, __last: Int)(implicit c: Compare.GetOrdered[A]): Unit = {
-        apply(*, __first, __last, Compare.fromGetOrdered(c))
+    def apply[A](* : Vector[A], __first: Int, __last: Int)(implicit c: Compare[A]): Unit = {
+        apply(*, __first, __last, c)
     }
 
     def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Compare.Predicate[A]): Unit = {
@@ -104,8 +104,8 @@ private[mada] object MakeHeap {
 // SortHeap
 
 private[mada] object SortHeap {
-    def apply[A](* : Vector[A], __first: Int, __last: Int)(implicit c: Compare.GetOrdered[A]): Unit = {
-        apply(*, __first, __last, Compare.fromGetOrdered(c))
+    def apply[A](* : Vector[A], __first: Int, __last: Int)(implicit c: Compare[A]): Unit = {
+        apply(*, __first, __last, c)
     }
 
     def apply[A](* : Vector[A], __first: Int, last: Int, __comp: Compare.Predicate[A]): Unit = {

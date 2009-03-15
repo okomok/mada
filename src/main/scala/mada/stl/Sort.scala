@@ -8,8 +8,8 @@ package mada.stl
 
 
 private[mada] object Sort {
-    def apply[A](v: Vector[A], __first: Int, __last: Int)(implicit c: Compare.GetOrdered[A]): Unit = {
-        apply(v, __first, __last, Compare.fromGetOrdered(c))
+    def apply[A](v: Vector[A], __first: Int, __last: Int)(implicit c: Compare[A]): Unit = {
+        apply(v, __first, __last, c)
     }
 
     def apply[A](v: Vector[A], __first: Int, __last: Int, __comp: Compare.Predicate[A]): Unit = {

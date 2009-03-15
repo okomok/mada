@@ -34,8 +34,8 @@ package mada.stl
 
 
 private[mada] object LowerBound {
-    def apply[A](* : Vector[A], first: Int, __last: Int, __val: A)(implicit c: Compare.GetOrdered[A]): Int = {
-        apply(*, first, __last, __val, Compare.fromGetOrdered(c))
+    def apply[A](* : Vector[A], first: Int, __last: Int, __val: A)(implicit c: Compare[A]): Int = {
+        apply(*, first, __last, __val, c)
     }
 
     def apply[A](* : Vector[A], first: Int, __last: Int, __val: A, __comp: Compare.Predicate[A]): Int = {
@@ -62,8 +62,8 @@ private[mada] object LowerBound {
 }
 
 private[mada] object UpperBound {
-    def apply[A](* : Vector[A], first: Int, __last: Int, __val: A)(implicit c: Compare.GetOrdered[A]): Int = {
-        apply(*, first, __last, __val, Compare.fromGetOrdered(c))
+    def apply[A](* : Vector[A], first: Int, __last: Int, __val: A)(implicit c: Compare[A]): Int = {
+        apply(*, first, __last, __val, c)
     }
 
     def apply[A](* : Vector[A], first: Int, __last: Int, __val: A, __comp: Compare.Predicate[A]): Int = {

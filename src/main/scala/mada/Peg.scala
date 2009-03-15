@@ -106,7 +106,7 @@ object Peg extends Conversions with Compatibles with Operators {
     /**
      * Matches range values.
      */
-    def range[A](i: A, j: A)(implicit c: Compare.GetOrdered[A]): Peg[A] = Range(i, j, c)
+    def range[A](i: A, j: A)(implicit c: Compare[A]): Peg[A] = Range(i, j, c)
 
     /**
      * @return  <code>fromRegexPattern(java.util.regex.Pattern.compile(str))</code>.
