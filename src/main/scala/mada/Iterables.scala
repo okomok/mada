@@ -204,4 +204,9 @@ object Iterables extends Conversions with Compatibles with Operators {
      * Alias of <code>iter.IteratorProxy</code>
      */
     type IteratorProxy[A] = iter.IteratorProxy[A]
+
+    /**
+     * Alias of <code>iter.Sorted</code>
+     */
+    val Sorted = iter.Sorted
 }

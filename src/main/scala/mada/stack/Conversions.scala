@@ -11,7 +11,7 @@ package mada.stack
  * Contains explicit conversions around <code>Stack</code>.
  */
 trait Conversions {
-    def fromJclDeque[A](from: java.util.Deque[A]) = new Stack[A] {
+    def fromJclDeque[A](from: java.util.Deque[A]): Stack[A] = new Stack[A] {
         override def push(e: A) = from.push(e)
         override def pop = from.pop
         override def peek = from.peek
@@ -20,7 +20,7 @@ trait Conversions {
         override def clear = from.clear
     }
 
-    def fromSclStack[A](from: scala.collection.mutable.Stack[A]) = new Stack[A] {
+    def fromSclStack[A](from: scala.collection.mutable.Stack[A]): Stack[A] = new Stack[A] {
         override def push(e: A) = from.push(e)
         override def pop = from.pop
         override def peek = from.top
@@ -29,7 +29,7 @@ trait Conversions {
         override def clear = from.clear
     }
 
-    def fromSclArrayStack[A](from: scala.collection.mutable.ArrayStack[A]) = new Stack[A] {
+    def fromSclArrayStack[A](from: scala.collection.mutable.ArrayStack[A]): Stack[A] = new Stack[A] {
         override def push(e: A) = from.push(e)
         override def pop = from.pop
         override def peek = from.peek

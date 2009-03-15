@@ -13,7 +13,7 @@ package mada.stack
 trait Compatibles {
     import Stack._
 
-    implicit def madaStackFromJclDeque[A](from: java.util.Deque[A]) = fromJclDeque(from)
-    implicit def madaStackFromSclStack[A](from: scala.collection.mutable.Stack[A]) = fromSclStack(from)
-    implicit def madaStackFromSclArrayStack[A](from: scala.collection.mutable.ArrayStack[A]) = fromSclArrayStack(from)
+    implicit def madaStackFromJclDeque[A](from: java.util.Deque[A]): Stack[A] = fromJclDeque(from)
+    implicit def madaStackFromSclStack[A](from: scala.collection.mutable.Stack[A]): Stack[A] = fromSclStack(from)
+    implicit def madaStackFromSclArrayStack[A](from: scala.collection.mutable.ArrayStack[A]): Stack[A] = fromSclArrayStack(from)
 }
