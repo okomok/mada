@@ -33,6 +33,6 @@ class ImplicitResolutionTest {
 
     def testTrivial: Unit = {
         makeK(999)(1)
-        makeK(new V[Int])(2)
+        makeK(new V[Int])(2) // I don't know whether or not this is guaranteed. (should be ambiguous?)
     }
 }
