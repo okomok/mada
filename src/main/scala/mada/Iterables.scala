@@ -259,11 +259,6 @@ object Iterables extends Conversions with Compatibles with Operators {
     type IteratorProxy[A] = iter.IteratorProxy[A]
 
     /**
-     * Alias of <code>iter.Sorted</code>
-     */
-    val Sorted = iter.Sorted
-
-    /**
      * Alias of <code>iter.Pointer</code>
      */
     val Pointer = iter.Pointer

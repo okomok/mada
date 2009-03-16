@@ -15,7 +15,7 @@ object Pointer extends PointerConversions with PointerCompatibles {
      * The end pointer
      */
     val end: Pointer[Nothing] = new Pointer[Nothing] {
-        override def isEnd: Boolean = true
+        override def isEnd = true
         override def deref = throw new NoSuchElementException("deref on the end pointer")
         override def increment = throw new UnsupportedOperationException("increment on the end pointer")
     }
@@ -64,7 +64,7 @@ trait Pointer[+A] {
     /**
      * Is pointer pass-the-end?
      */
-    def isEnd : Boolean
+    def isEnd: Boolean
 
     /**
      * Dereferences pointer.
@@ -74,12 +74,12 @@ trait Pointer[+A] {
     /**
      * Increments pointer.
      */
-    def increment : Unit
+    def increment: Unit
 }
 
 
 /**
- * Contains explicit conversions around <code>Stack</code>.
+ * Contains explicit conversions around <code>Pointer</code>.
  */
 trait PointerConversions {
     def fromIterator[A](from: Iterator[A]): Pointer[A] = new Pointer[A] {
@@ -88,9 +88,9 @@ trait PointerConversions {
             e.assign(from.next)
         }
 
-        override def isEnd: Boolean = e.isNull
-        override def deref: A = e.self
-        override def increment: Unit = {
+        override def isEnd = e.isNull
+        override def deref = e.self
+        override def increment = {
             if (from.hasNext) {
                 e.assign(from.next)
             } else {
@@ -114,7 +114,7 @@ trait PointerConversions {
 /**
  * Contains implicit conversions around <code>Pointer</code>.
  */
-private[mada] trait PointerCompatibles {
+trait PointerCompatibles {
     import Pointer._
 
     implicit def madaPointerFromIterator[A](from: Iterator[A]): Pointer[A] = fromIterator(from)
