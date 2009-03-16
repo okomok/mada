@@ -178,6 +178,59 @@ object Iterables extends Conversions with Compatibles with Operators {
     def singlePass[A](it: Iterable[A]): Iterable[A] = by(it.elements)
 
 
+// sorted projections
+
+    /**
+     * @return  <code>mergeBy(it1)(it2)(c)</code>.
+     */
+    def merge[A](it1: Iterable[A])(it2: Iterable[A])(implicit c: Compare[A]): Iterable[A] = Merge(it1, it2, c)
+
+    /**
+     * Combines the elements in the sorted iterables, into a new iterable with its elements sorted.
+     */
+    def mergeBy[A](it1: Iterable[A])(it2: Iterable[A])(lt: Compare.Predicate[A]): Iterable[A] = Merge(it1, it2, lt)
+
+    /**
+     * @return  <code>unionBy(it1)(it2)(c)</code>.
+     */
+    def union[A](it1: Iterable[A])(it2: Iterable[A])(implicit c: Compare[A]): Iterable[A] = Union(it1, it2, c)
+
+    /**
+     * Constructs a sorted iterable with the set union of the two sorted iterables.
+     */
+    def unionBy[A](it1: Iterable[A])(it2: Iterable[A])(lt: Compare.Predicate[A]): Iterable[A] = Union(it1, it2, lt)
+
+    /**
+     * @return  <code>intersectionBy(it1)(it2)(c)</code>.
+     */
+    def intersection[A](it1: Iterable[A])(it2: Iterable[A])(implicit c: Compare[A]): Iterable[A] = Intersection(it1, it2, c)
+
+    /**
+     * Constructs a sorted iterable with the set intersection of the two sorted iterables.
+     */
+    def intersectionBy[A](it1: Iterable[A])(it2: Iterable[A])(lt: Compare.Predicate[A]): Iterable[A] = Intersection(it1, it2, lt)
+
+    /**
+     * @return  <code>differenceBy(it1)(it2)(c)</code>.
+     */
+    def difference[A](it1: Iterable[A])(it2: Iterable[A])(implicit c: Compare[A]): Iterable[A] = Difference(it1, it2, c)
+
+    /**
+     * Constructs a sorted iterable with the set difference of the two sorted iterables.
+     */
+    def differenceBy[A](it1: Iterable[A])(it2: Iterable[A])(lt: Compare.Predicate[A]): Iterable[A] = Difference(it1, it2, lt)
+
+    /**
+     * @return  <code>symmetricDifferenceBy(it1)(it2)(c)</code>.
+     */
+    def symmetricDifference[A](it1: Iterable[A])(it2: Iterable[A])(implicit c: Compare[A]): Iterable[A] = SymmetricDifference(it1, it2, c)
+
+    /**
+     * Constructs a sorted iterable with the set symmetric difference of the two sorted iterables.
+     */
+    def symmetricDifferenceBy[A](it1: Iterable[A])(it2: Iterable[A])(lt: Compare.Predicate[A]): Iterable[A] = SymmetricDifference(it1, it2, lt)
+
+
 // aliases
 
     /**
