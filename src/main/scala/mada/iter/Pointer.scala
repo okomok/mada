@@ -14,7 +14,7 @@ package mada.iter
 /**
  * Contains utility methods operating on <code>Pointer</code>.
  */
-object Pointer extends ptr.Conversions with ptr.Compatibles {
+private[mada] object Pointer extends ptr.Conversions with ptr.Compatibles {
     /**
      * The end pointer
      */
@@ -37,7 +37,7 @@ object Pointer extends ptr.Conversions with ptr.Compatibles {
  *
  * @see     scalax.BufferedIterator
  */
-trait Pointer[+A] {
+private[mada] trait Pointer[+A] {
     /**
      * Alias of <code>isEnd</code>
      */

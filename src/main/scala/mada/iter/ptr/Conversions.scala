@@ -10,7 +10,7 @@ package mada.iter.ptr
 /**
  * Contains explicit conversions around <code>Stack</code>.
  */
-trait Conversions {
+private[mada] trait Conversions {
     def fromIterator[A](from: Iterator[A]): Pointer[A] = new Pointer[A] {
         private val e = new Proxies.Var[A]
         if (from.hasNext) {

@@ -10,7 +10,7 @@ package mada.iter.ptr
 /**
  * Contains implicit conversions around <code>Pointer</code>.
  */
-trait Compatibles {
+private[mada] trait Compatibles {
     import Pointer._
 
     implicit def madaPointerFromIterator[A](from: Iterator[A]): Pointer[A] = fromIterator(from)
