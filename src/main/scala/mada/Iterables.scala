@@ -266,10 +266,10 @@ object Iterables extends Conversions with Compatibles with Operators {
     /**
      * Alias of <code>iter.Pointer</code>
      */
-    private[mada] val Pointer = iter.Pointer
+    val Pointer = iter.Pointer
 
     /**
      * Alias of <code>iter.Pointer</code>
      */
-    private[mada] type Pointer[A] = iter.Pointer[A]
+    type Pointer[A] = iter.Pointer[A]
 }

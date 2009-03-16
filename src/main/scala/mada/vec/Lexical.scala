@@ -8,6 +8,24 @@ package mada.vec
 
 
 /**
+ * Contains utility methods parsing on char Vector.
+ */
+object Lexical extends LexicalConversions with LexicalCompatibles {
+    /**
+     * Triggers implicit conversions explicitly.
+     *
+     * @return  <code>to</code>.
+     */
+    def from(to: Vector[Char]): Vector[Char] = to
+
+    /**
+     * @return  <code>this</code>.
+     */
+    val Compatibles: LexicalCompatibles = this
+}
+
+
+/**
  * Contains explicit conversions around char vector.
  */
 trait LexicalConversions {
@@ -29,6 +47,7 @@ trait LexicalConversions {
     def toFloat(from: Vector[Char]): Float = java.lang.Float.parseFloat(stringize(from))
     def toDouble(from: Vector[Char]): Double = java.lang.Double.parseDouble(stringize(from))
 }
+
 
 /**
  * Contains implicit conversions around char vector.
@@ -53,21 +72,4 @@ trait LexicalCompatibles {
     implicit def madaCharVectorToLong(from: Vector[Char]): Long = toLong(from)
     implicit def madaCharVectorToFloat(from: Vector[Char]): Float = toFloat(from)
     implicit def madaCharVectorToDouble(from: Vector[Char]): Double = toDouble(from)
-}
-
-/**
- * Contains utility methods parsing on char Vector.
- */
-object Lexical extends LexicalConversions with LexicalCompatibles {
-    /**
-     * Triggers implicit conversions explicitly.
-     *
-     * @return  <code>to</code>.
-     */
-    def from(to: Vector[Char]): Vector[Char] = to
-
-    /**
-     * @return  <code>this</code>.
-     */
-    val Compatibles: LexicalCompatibles = this
 }

@@ -7,14 +7,10 @@
 package mada.iter
 
 
-// Compiler bug? imports should have higher precedence than package members.
-// import ptr._
-
-
 /**
  * Contains utility methods operating on <code>Pointer</code>.
  */
-private[mada] object Pointer extends ptr.Conversions with ptr.Compatibles {
+object Pointer extends PointerConversions with PointerCompatibles {
     /**
      * The end pointer
      */
@@ -28,6 +24,18 @@ private[mada] object Pointer extends ptr.Conversions with ptr.Compatibles {
      * @return  <code>end</code>.
      */
     def endOf[A]: Pointer[A] = end
+
+    /**
+     * Triggers implicit conversions explicitly.
+     *
+     * @return  <code>to</code>.
+     */
+    def from[A](to: Pointer[A]): Pointer[A] = to
+
+    /**
+     * @return  <code>this</code>.
+     */
+    val Compatibles: PointerCompatibles = this
 }
 
 
@@ -37,7 +45,7 @@ private[mada] object Pointer extends ptr.Conversions with ptr.Compatibles {
  *
  * @see     scalax.BufferedIterator
  */
-private[mada] trait Pointer[+A] {
+trait Pointer[+A] {
     /**
      * Alias of <code>isEnd</code>
      */
@@ -67,4 +75,48 @@ private[mada] trait Pointer[+A] {
      * Increments pointer.
      */
     def increment : Unit
+}
+
+
+/**
+ * Contains explicit conversions around <code>Stack</code>.
+ */
+trait PointerConversions {
+    def fromIterator[A](from: Iterator[A]): Pointer[A] = new Pointer[A] {
+        private val e = new Proxies.Var[A]
+        if (from.hasNext) {
+            e.assign(from.next)
+        }
+
+        override def isEnd: Boolean = e.isNull
+        override def deref: A = e.self
+        override def increment: Unit = {
+            if (from.hasNext) {
+                e.assign(from.next)
+            } else {
+                e.resign
+            }
+
+        }
+    }
+
+    def toIterator[A](from: Pointer[A]): Iterator[A] = new Iterator[A] {
+        override def hasNext = !from.isEnd
+        override def next = {
+            val tmp = ~from
+            from.++
+            tmp
+        }
+    }
+}
+
+
+/**
+ * Contains implicit conversions around <code>Pointer</code>.
+ */
+private[mada] trait PointerCompatibles {
+    import Pointer._
+
+    implicit def madaPointerFromIterator[A](from: Iterator[A]): Pointer[A] = fromIterator(from)
+    implicit def madaPointerToIterator[A](from: Pointer[A]): Iterator[A] = toIterator(from)
 }
