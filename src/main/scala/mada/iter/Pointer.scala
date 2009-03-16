@@ -4,16 +4,17 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada
+package mada.iter
 
 
-import ptr._
+// Compiler bug? imports should have higher precedence than package members.
+// import ptr._
 
 
 /**
  * Contains utility methods operating on <code>Pointer</code>.
  */
-object Pointer extends Conversions with Compatibles {
+object Pointer extends ptr.Conversions with ptr.Compatibles {
     /**
      * The end pointer
      */
@@ -33,6 +34,8 @@ object Pointer extends Conversions with Compatibles {
 /**
  * Equivalent to <code>Iterator</code>, but useful if <code>Iterator</code>
  * is cumbersome for implementing complicated algorithms.
+ *
+ * @see     scalax.BufferedIterator
  */
 trait Pointer[+A] {
     /**

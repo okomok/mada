@@ -209,4 +209,14 @@ object Iterables extends Conversions with Compatibles with Operators {
      * Alias of <code>iter.Sorted</code>
      */
     val Sorted = iter.Sorted
+
+    /**
+     * Alias of <code>iter.Pointer</code>
+     */
+    val Pointer = iter.Pointer
+
+    /**
+     * Alias of <code>iter.Pointer</code>
+     */
+    type Pointer[A] = iter.Pointer[A]
 }
