@@ -88,11 +88,8 @@ trait VectorProxy[A] extends Adapter.Transform[A] with Proxies.ProxyOf[Vector[A]
     override def clone: Vector[A] = underlying.clone
   // parallel support
     override def parallel(_grainSize: Int): Vector[A] = underlying.parallel(_grainSize)
-    override def unparallel: Vector[A] = underlying.unparallel
     override def grainSize: Int = underlying.grainSize
     override def defaultGrainSize: Int = underlying.defaultGrainSize
-    override def isParallel: Boolean = underlying.isParallel
-    override def join: Unit = underlying.join
   // associative folding
     override def fold(z: A)(op: (A, A) => A): A = underlying.fold(z)(op)
     override def folder(z: A)(op: (A, A) => A): Vector[A] = underlying.folder(z)(op)

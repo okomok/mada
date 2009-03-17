@@ -9,8 +9,8 @@ package mada.vec.para
 
 private[mada] object Count {
     def apply[A](v: Vector[A], p: A => Boolean, grainSize: Int): Int = {
-        Assert(!v.isParallel)
+        Assert(!IsParallel(v))
         v.parallelRegions(grainSize).map{ w => w.count(p) }.
-            unparallel.reduce(_ + _)
+            reduce(_ + _)
     }
 }

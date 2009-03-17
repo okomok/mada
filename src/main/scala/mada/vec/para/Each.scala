@@ -9,7 +9,8 @@ package mada.vec.para
 
 private[mada] object Each {
     def apply[A](v: Vector[A], f: A => Unit, grainSize: Int): Unit = {
-        Assert(!v.isParallel)
-        v.parallel(grainSize).map(f).join
+        Assert(!IsParallel(v))
+        v.parallel(grainSize).map(f).
+            join
     }
 }

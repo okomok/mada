@@ -12,7 +12,7 @@ private[mada] object Filter {
 }
 
 private[mada] class FilterVector[A](v: Vector[A], p: A => Boolean, grainSize: Int) extends VectorProxy[A] {
-    Assert(!v.isParallel)
+    Assert(!IsParallel(v))
     override lazy val self = v.clone.parallel(grainSize).mutatingFilter(p).readOnly
     override def filter(_p: A => Boolean) = v.parallel(grainSize).filter{ e => p(e) && _p(e) } // filter-filter fusion
 }
@@ -20,13 +20,11 @@ private[mada] class FilterVector[A](v: Vector[A], p: A => Boolean, grainSize: In
 
 private[mada] object MutatingFilter {
     def apply[A](v: Vector[A], p: A => Boolean, grainSize: Int): Vector[A] = {
-        Assert(!v.isParallel)
+        Assert(!IsParallel(v))
 
         Vector.flatten(
             v.parallelRegions(grainSize).map{ w => w.mutatingFilter(p) }.
-                unparallel.
-                    toIterable // works around a compiler bug of 2.7.3.
-        ).
-            parallel(grainSize)
+                toIterable // works around a compiler bug of 2.7.3.
+        )
     }
 }

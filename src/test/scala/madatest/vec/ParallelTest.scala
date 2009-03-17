@@ -17,7 +17,7 @@ class ParallelTest {
         val e = Vector.range(1, 11)
         assertEquals(e, v.parallel(4).parallel(3).parallel(1).map(_ + 1))
     }
-
+/*
     def testUnparallel: Unit = {
         val v = Vector.range(0, 10)
         val e = Vector.range(1, 11)
@@ -28,7 +28,7 @@ class ParallelTest {
         val uupv = pv.unparallel.unparallel
         assertFalse(uupv.isParallel)
     }
-
+*/
     def foo(x: Any): Unit = {
         //println(x)
         ()

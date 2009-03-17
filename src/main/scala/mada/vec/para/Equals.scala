@@ -9,7 +9,7 @@ package mada.vec.para
 
 private[mada] object EqualsBy {
     def apply[A, B](v: Vector[A], w: Vector[B], p: Functions.Predicate2[A, B], grainSize: Int): Boolean = {
-        Assert(!v.isParallel)
+        Assert(!IsParallel(v))
 
         if (v.size != w.size) {
             false
@@ -17,7 +17,7 @@ private[mada] object EqualsBy {
             val bp = new Breakable2(p, false)
             (v.divide(grainSize) zip w.divide(grainSize)).
                 parallel(1).map{ case (v1, w1) => breakingEquals(v1, w1, bp) }.
-                    unparallel.reduce(_ && _)
+                    reduce(_ && _)
         }
     }
 

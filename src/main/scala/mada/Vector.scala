@@ -825,11 +825,6 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     def parallel(grainSize: Int): Vector[A] = Parallel(this, grainSize)
 
     /**
-     * Reverts <code>parallel</code>.
-     */
-    def unparallel: Vector[A] = this
-
-    /**
      * Specifies the grain size, which is used to divide this vector in parallel methods.
      */
     def grainSize: Int = size
@@ -840,14 +835,9 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     def defaultGrainSize: Int = DefaultGrainSize(this)
 
     /**
-     * Is this vector methods possibly performing in parallel?
-     */
-    def isParallel: Boolean = false
-
-    /**
      * Waits for parallel element calculations over.
      */
-    def join: Unit = ()
+    final def join: Unit = foreach{ e => () }
 
     /**
      * @return  <code>divide(grainSize).parallel(1)</code>.

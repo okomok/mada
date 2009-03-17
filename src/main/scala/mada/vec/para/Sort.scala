@@ -15,9 +15,9 @@ private[mada] object SortBy {
     import stl.{ UnguardedPartition, Median }
 
     def apply[A](v: Vector[A], lt: Compare.Predicate[A], grainSize: Int): Vector[A] = {
-        Assert(!v.isParallel)
+        Assert(!IsParallel(v))
         partition(v, lt, grainSize).parallel(1).each{ f => f() }
-        v.parallel(grainSize)
+        v
     }
 
     def partition[A](v: Vector[A], lt: Compare.Predicate[A], grainSize: Int): Vector[() => Unit] = {
