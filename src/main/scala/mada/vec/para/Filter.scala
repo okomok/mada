@@ -14,7 +14,7 @@ private[mada] object Filter {
 private[mada] class FilterVector[A](v: Vector[A], p: A => Boolean, grainSize: Int) extends VectorProxy[A] {
     Assert(!IsParallel(v))
     override lazy val self = v.clone.parallel(grainSize).mutatingFilter(p).readOnly
-    override def filter(_p: A => Boolean) = v.parallel(grainSize).filter{ e => p(e) && _p(e) } // filter-filter fusion
+//    override def filter(_p: A => Boolean) = v.parallel(grainSize).filter{ e => p(e) && _p(e) } // filter-filter fusion
 }
 
 
