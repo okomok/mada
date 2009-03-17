@@ -13,13 +13,14 @@ private[mada] object Map {
 
 private[mada] class MapVector[Z, A](v: Vector[Z], f: Z => A, grainSize: Int) extends VectorProxy[A] {
     Assert(!IsParallel(v))
+    import Functions.future
 
     override lazy val self = {
         if (grainSize == 1) {
-            v.map{ e => Future(f(e)) }.force.map{ u => u() }
+            v.map{ e => future(f(e)) }.force.map{ u => u() }
         } else {
             Vector.undivide(
-                v.divide(grainSize).map{ w => Future(w.map(f).force) }.force.map{ u => u() }
+                v.divide(grainSize).map{ w => future(w.map(f).force) }.force.map{ u => u() }
             )
         }
     }

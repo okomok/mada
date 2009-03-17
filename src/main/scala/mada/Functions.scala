@@ -7,6 +7,9 @@
 package mada
 
 
+import func._
+
+
 /**
  * Contains utility methods operating on <code>Function</code>.
  */
@@ -70,17 +73,22 @@ object Functions {
     def identity[T]: Transform[T] = { v => v }
 
     /**
-     * Converts by-name-parameter to a function returning <code>v</code>.
+     * Converts by-name-parameter to a function returning <code>body</code>.
      */
-    def byName[R](v: => R): Function0[R] = { () => v }
+    def byName[R](body: => R): Function0[R] = { () => body }
 
     /**
-     * Converts by-name-parameter to a function returning <code>lazy v</code>.
+     * A function calculating <code>body</code> by <code>lazy</code>
      */
-    def byLazy[R](v: => R): Function0[R] = new Function0[R] {
-        private lazy val _v = v
+    def byLazy[R](body: => R): Function0[R] = new Function0[R] {
+        private lazy val _v = body
         override def apply() = _v
     }
+
+    /**
+     * A function calculating <code>body</code> in (possibly) other threads
+     */
+    def future[R](body: => R): Function0[R] = Future(body)
 
     /**
      * Fixed point combinator

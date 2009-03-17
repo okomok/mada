@@ -8,5 +8,5 @@ package mada.vec
 
 
 private[mada] object DefaultGrainSize {
-    def apply[A](v: Vector[A]): Int = Math.max(1, v.size / para.Futures.corePoolSize)
+    def apply[A](v: Vector[A]): Int = Math.max(1, v.size / func.Future.corePoolSize)
 }
