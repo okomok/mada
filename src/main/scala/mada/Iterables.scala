@@ -113,11 +113,6 @@ object Iterables extends Conversions with Compatibles with Operators {
 // projections
 
     /**
-     * Lightweight filter
-     */
-    def filter[A](it: Iterable[A])(p: A => Boolean): Iterable[A] = Filter(it, p)
-
-    /**
      * Flattens an iterable of iterables.
      */
     def flatten[A](its: Iterable[Iterable[A]]): Iterable[A] = Flatten(its)
@@ -143,16 +138,6 @@ object Iterables extends Conversions with Compatibles with Operators {
     def step[A](it: Iterable[A], n: Int): Iterable[A] = Step(it, n)
 
     /**
-     * Works around 2.7.3 deprecated warning.
-     */
-    def take[A](it: Iterable[A], n: Int): Iterable[A] = byName(it.elements.take(n))
-
-    /**
-     * Lightweight takeWhile
-     */
-    def takeWhile[A](it: Iterable[A])(p: A => Boolean): Iterable[A] = TakeWhile(it, p)
-
-    /**
      * @return  <code>uniqueBy(it)(Functions.equal)</code>.
      */
     def unique[A](it: Iterable[A]): Iterable[A] = Unique(it, Functions.equal)
@@ -176,6 +161,34 @@ object Iterables extends Conversions with Compatibles with Operators {
      * @return  <code>by(it.elements)</code>.
      */
     def singlePass[A](it: Iterable[A]): Iterable[A] = by(it.elements)
+
+
+// Iterable workarounds
+
+    /**
+     * <code>scala.Iterable</code> requires copy.
+     */
+    def drop[A](it: Iterable[A], n: Int): Iterable[A] = byName(it.elements.drop(n))
+
+    /**
+     * <code>scala.Iterable</code> requires copy.
+     */
+    def dropWhile[A](it: Iterable[A])(p: A => Boolean): Iterable[A] = byName(it.elements.dropWhile(p))
+
+    /**
+     * <code>scala.Iterable</code> isn't projection.
+     */
+    def take[A](it: Iterable[A], n: Int): Iterable[A] = byName(it.elements.take(n))
+
+    /**
+     * <code>scala.Iterable</code> uses <code>BufferedIterator</code>.
+     */
+    def takeWhile[A](it: Iterable[A])(p: A => Boolean): Iterable[A] = TakeWhile(it, p)
+
+    /**
+     * <code>scala.Iterable</code> uses <code>BufferedIterator</code>.
+     */
+    def filter[A](it: Iterable[A])(p: A => Boolean): Iterable[A] = Filter(it, p)
 
 
 // sorted projections
