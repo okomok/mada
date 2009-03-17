@@ -57,14 +57,14 @@ object Mixin {
 /**
  * Applies <code>apply</code> to result of vector-to-vector methods.
  */
-trait Mixin {
+trait Mixin { ^ =>
     def apply[B](v: Vector[B]): Vector[B]
 
     /**
      * Mixin composition
      */
     final def `with`(that: Mixin): Mixin = new Mixin {
-        override def apply[B](v: Vector[B]) = that(Mixin.this.apply(v))
+        override def apply[B](v: Vector[B]) = that(^(v))
     }
 }
 

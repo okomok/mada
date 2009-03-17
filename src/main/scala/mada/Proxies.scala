@@ -46,7 +46,7 @@ object Proxies {
     /**
      * Mutable proxy
      */
-    trait Mutable[A] extends ProxyOf[A] {
+    trait Mutable[A] extends ProxyOf[A] { ^ =>
         /**
          * Assigns <code>that</code> to <code>self</code>.
          */
@@ -86,9 +86,9 @@ object Proxies {
          */
         final def proxyToVector: Vector[A] = new Vector[A] {
             override def start = 0
-            override def end = if (Mutable.this.isNull) 0 else 1
-            override def apply(i: Int) = Mutable.this.self
-            override def update(i: Int, e: A) = Mutable.this := e
+            override def end = if (^.isNull) 0 else 1
+            override def apply(i: Int) = ^.self
+            override def update(i: Int, e: A) = ^.assign(e)
         }
     }
 
