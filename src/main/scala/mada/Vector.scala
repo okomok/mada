@@ -252,6 +252,11 @@ object Vector extends Conversions with Compatibles with Eligibles with Operators
      * Alias of <code>vec.Writer</code>
      */
     type Writer[A] = vec.Writer[A]
+
+    /**
+     * Alias of <code>Vector</code>
+     */
+    type Type[A] = Vector[A]
 }
 
 
@@ -988,6 +993,11 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * Alias of <code>foldRight</code>
      */
     final def :\[B](z: B)(op: (A, B) => B): B = foldRight(z)(op)
+
+    /**
+     * Alias of <code>Vector</code>
+     */
+    final def companion = Vector
 
 
 // implementation helpers

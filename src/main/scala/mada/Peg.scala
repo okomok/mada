@@ -305,6 +305,11 @@ object Peg extends Conversions with Compatibles with Operators {
      * Alias of <code>peg.VerificationException</code>
      */
     type VerificationException[A] = peg.VerificationException[A]
+
+    /**
+     * Alias of <code>Peg</code>
+     */
+    type Type[A] = Peg[A]
 }
 
 
@@ -664,6 +669,11 @@ trait Peg[A] {
      * @return  <code>(e, this)</code>.
      */
     final def inCase(e: A): (A, Peg[A]) = (e, this)
+
+    /**
+     * Alias of <code>Peg</code>
+     */
+    final def companion = Peg
 
 
 // implementation helpers

@@ -280,4 +280,9 @@ object Iterables extends Conversions with Compatibles with Operators {
      * Alias of <code>iter.Pointer</code>
      */
     type Pointer[A] = iter.Pointer[A]
+
+    /**
+     * Alias of <code>Iterable</code>
+     */
+    type Type[+A] = Iterable[A]
 }

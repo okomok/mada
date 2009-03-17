@@ -90,6 +90,11 @@ object Expr {
      */
     type Start[A] = expr.Start[A]
 
+    /**
+     * Alias of <code>Expr</code>
+     */
+    type Type[Z, A] = Expr[Z, A]
+
 
 // exceptions
 
@@ -173,4 +178,9 @@ trait Expr[Z, A] {
      * Alias of <code>xseal</code>
      */
     final def ! = xseal
+
+    /**
+     * Alias of <code>Expr</code>
+     */
+    final def companion = Expr
 }

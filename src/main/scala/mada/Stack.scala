@@ -32,6 +32,11 @@ object Stack extends stack.Conversions with stack.Compatibles {
      * @return  <code>this</code>.
      */
     val Compatibles: stack.Compatibles = this
+
+    /**
+     * Alias of <code>Stack</code>
+     */
+    type Type[A] = Stack[A]
 }
 
 
@@ -78,4 +83,9 @@ trait Stack[A] {
      * Alias of <code>size</code>
      */
     final def length: Int = size
+
+    /**
+     * Alias of <code>Stack</code>
+     */
+    final def companion = Stack
 }

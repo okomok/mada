@@ -45,6 +45,11 @@ object Compare extends Conversions with Compatibles {
      * @return  <code>this</code>.
      */
     val Compatibles: cmp.Compatibles = this
+
+    /**
+     * Alias of <code>Compare</code>
+     */
+    type Type[-A] = Compare[A]
 }
 
 
@@ -61,4 +66,9 @@ trait Compare[-A] extends Compare.Predicate[A] {
      * @return  <code>if (apply(x, y)) -1 else if (apply(y, x)) 1 else 0</code>.
      */
     def threeWay(x: A, y: A): Int = if (apply(x, y)) -1 else if (apply(y, x)) 1 else 0
+
+    /**
+     * Alias of <code>Compare</code>
+     */
+    final def companion = Compare
 }

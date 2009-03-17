@@ -42,6 +42,11 @@ object Auto extends auto.Eligibles {
     trait Interface {
         def dispose: Unit
     }
+
+    /**
+     * Alias of <code>Auto</code>
+     */
+    type Type[-A] = Auto[A]
 }
 
 
@@ -53,4 +58,9 @@ trait Auto[-A] {
      * Cleans up resources.
      */
     def dispose(e: A): Unit
+
+    /**
+     * Alias of <code>Auto</code>
+     */
+    final def companion = Auto
 }
