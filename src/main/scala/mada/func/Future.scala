@@ -17,13 +17,13 @@ private[mada] object Future {
 
     def apply[R](body: => R): Function0[R] = {
         try {
-            new Func(body)
+            new Call(body)
         } catch {
-            case e: RejectedExecutionException => Functions.byLazy(body)
+            case _: RejectedExecutionException => Functions.byLazy(body)
         }
     }
 
-    private class Func[R](body: => R) extends Function0[R] {
+    private class Call[R](body: => R) extends Function0[R] {
         private val c = new Callable[R] { override def call(): R = body }
         private val u = exe.synchronized { exe.submit(c) }
         override def apply(): R = u.get
