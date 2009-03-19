@@ -34,6 +34,11 @@ object Iterables extends Conversions with Compatibles with Operators {
     def length[A](it: Iterable[A]): Int = Length(it)
 
     /**
+     * @return  <code>it.elements.drop(n).next</code>.
+     */
+    def at[A](it: Iterable[A], n: Int): A = it.elements.drop(n).next
+
+    /**
      * @return  <code>it.reduceLeft{ (b, a) => which(b, a) }</code>.
      */
     def best[A](it: Iterable[A])(which: (A, A) => A): A = it.reduceLeft{ (b, a) => which(b, a) }
@@ -94,6 +99,11 @@ object Iterables extends Conversions with Compatibles with Operators {
      * @return  <code>iterate(e){ x => x }</code>.
      */
     def repeat[A](e: A): Iterable[A] = iterate(e){ x => x }
+
+    /**
+     * Constructs <code>Iterable</code> from iterator block.
+     */
+    def block[A](op: Function1[A, Unit] => Unit): Iterable[A] = Block(op)
 
 
 // Enumeration
@@ -279,7 +289,7 @@ object Iterables extends Conversions with Compatibles with Operators {
     /**
      * Alias of <code>iter.Pointer</code>
      */
-    type Pointer[A] = iter.Pointer[A]
+    type Pointer[+A] = iter.Pointer[A]
 
     /**
      * Alias of <code>Iterable</code>

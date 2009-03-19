@@ -7,10 +7,13 @@
 package mada
 
 
+import stack._
+
+
 /**
  * Contains utility methods operating on <code>Stack</code>.
  */
-object Stack extends stack.Conversions with stack.Compatibles {
+object Stack extends Conversions with Compatibles {
     /**
      * Alias of <code>stack.StackProxy</code>
      */
