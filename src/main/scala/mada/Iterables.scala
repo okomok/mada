@@ -105,6 +105,11 @@ object Iterables extends Conversions with Compatibles with Operators {
      */
     def block[A](op: Function1[A, Unit] => Unit): Iterable[A] = Block(op)
 
+    /**
+     * Constructs <code>Iterable</code> from iterator block with buffer size <code>n</code>.
+     */
+    def block[A](op: Function1[A, Unit] => Unit, n: Int): Iterable[A] = Block(op, n)
+
 
 // Enumeration
 /*

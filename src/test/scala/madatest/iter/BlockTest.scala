@@ -40,6 +40,24 @@ class BlockTest {
         assertTrue(Iterables.equal(Iterables(1,2,3,4,5), it)) // run again.
     }
 
+    def testCapacity: Unit = {
+        withCapacity(1)
+        withCapacity(2)
+        withCapacity(3)
+        withCapacity(4)
+        withCapacity(5)
+        withCapacity(6)
+        withCapacity(7)
+        withCapacity(8)
+        withCapacity(20)
+    }
+
+    def withCapacity(n: Int): Unit = {
+        val it = Iterables.block(makeValues, n)
+        assertTrue(Iterables.equal(Iterables(1,2,3,4,5), it))
+        assertTrue(Iterables.equal(Iterables(1,2,3,4,5), it)) // run again.
+    }
+
     def testOne: Unit = {
         val it = Iterables.block(makeOne)
         assertTrue(Iterables.equal(Iterables(1), it))
