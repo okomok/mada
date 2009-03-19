@@ -11,7 +11,7 @@ private[mada] object Block {
     private val DEFAULT_CAPACITY = 8
     def apply[A](op: Function1[A, Unit] => Unit): Iterable[A] = apply(op, DEFAULT_CAPACITY)
     def apply[A](op: Function1[A, Unit] => Unit, n: Int): Iterable[A] = Iterables.byName(iimpl(op, n))
-    def iimpl[A](op: Function1[A, Unit] => Unit, n: Int): Iterator[A] = new BlockIterator(op,n )
+    def iimpl[A](op: Function1[A, Unit] => Unit, n: Int): Iterator[A] = new BlockIterator(op, n)
 }
 
 private[mada] class BlockIterator[A](op: Function1[A, Unit] => Unit, capacity: Int) extends Iterator[A] {
