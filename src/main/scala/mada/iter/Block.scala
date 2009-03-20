@@ -7,28 +7,22 @@
 package mada.iter
 
 
+import Iterables.Yield
+import java.util.ArrayDeque
+import java.util.concurrent.Exchanger
+
+
 private[mada] object Block {
-    private val DEFAULT_CAPACITY = 8
-    def apply[A](op: Function1[A, Unit] => Unit): Iterable[A] = apply(op, DEFAULT_CAPACITY)
-    def apply[A](op: Function1[A, Unit] => Unit, n: Int): Iterable[A] = Iterables.byName(iimpl(op, n))
-    def iimpl[A](op: Function1[A, Unit] => Unit, n: Int): Iterator[A] = new BlockIterator(op, n)
+    val CAPACITY = 8
+    def apply[A](op: Yield[A] => Unit): Iterable[A] = Iterables.byName(iimpl(op))
+    def iimpl[A](op: Yield[A] => Unit): Iterator[A] = new BlockIterator(op)
 }
 
-private[mada] class BlockIterator[A](op: Function1[A, Unit] => Unit, capacity: Int) extends Iterator[A] {
-    if (capacity <= 0) {
-        throw new IllegalArgumentException("block buffer size: " + capacity)
-    }
+private[mada] class BlockIterator[A](op: Yield[A] => Unit) extends Iterator[A] {
+    private var in = new BlockData[A]
+    private val x = new Exchanger[BlockData[A]]
 
-    import java.util.ArrayDeque
-
-    private class Data(val buf: ArrayDeque[A], var isLast: Boolean) {
-        def this() = this(new ArrayDeque[A](capacity), false)
-    }
-
-    private var in = new Data
-    private val x = new java.util.concurrent.Exchanger[Data]
-
-    new BlockThread().start
+    new BlockThread(op, x).start
     in = x.exchange(in)
 
     override def hasNext = !in.buf.isEmpty
@@ -39,25 +33,29 @@ private[mada] class BlockIterator[A](op: Function1[A, Unit] => Unit, capacity: I
         }
         tmp
     }
+}
 
-    private class BlockThread extends java.lang.Thread {
-        private var out = new Data
+private[mada] class BlockThread[A](op: Yield[A] => Unit, x: Exchanger[BlockData[A]]) extends java.lang.Thread {
+    private var out = new BlockData[A]
 
-        private val y = new Function1[A, Unit] {
-            override def apply(v: A) = {
-                out.buf.addLast(v)
-                if (out.buf.size == capacity) {
-                    out = x.exchange(out)
-                    Assert(out.buf.isEmpty)
-                }
+    private val y = new Yield[A] {
+        override def apply(v: A) = {
+            out.buf.addLast(v)
+            if (out.buf.size == Block.CAPACITY) {
+                out = x.exchange(out)
+                Assert(out.buf.isEmpty)
             }
         }
-
-        override def run() = {
-            op(y)
-            out.isLast = true
-            out = x.exchange(out)
-            Assert(out.buf.isEmpty)
-        }
     }
+
+    override def run() = {
+        op(y)
+        out.isLast = true
+        out = x.exchange(out)
+        Assert(out.buf.isEmpty)
+    }
+}
+
+private[mada] class BlockData[A](val buf: ArrayDeque[A], var isLast: Boolean) {
+    def this() = this(new ArrayDeque[A](Block.CAPACITY), false)
 }
