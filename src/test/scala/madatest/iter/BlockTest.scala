@@ -33,13 +33,26 @@ class BlockTest {
     }
 
     def testTrivial: Unit = {
-        withMakeValuesTo(1) // empty test
-        withMakeValuesTo(2)
+        withMakeValuesTo(1)
         withMakeValuesTo(3)
+        withMakeValuesTo(5)
         withMakeValuesTo(7)
-        withMakeValuesTo(8)
         withMakeValuesTo(9)
-        withMakeValuesTo(10)
+        withMakeValuesTo(11)
+        withMakeValuesTo(19)
         withMakeValuesTo(20)
+        withMakeValuesTo(21)
+        withMakeValuesTo(25)
+        withMakeValuesTo(30)
+        withMakeValuesTo(300)
+    }
+}
+
+class BlockLockTest extends NoBenchmark {
+    val b = new BlockTest
+    val it = Iterables.block(b.makeValuesTo(100000))
+    override def run = {
+        val a = Iterables.length(it)
+        ()
     }
 }

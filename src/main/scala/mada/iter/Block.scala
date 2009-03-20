@@ -13,7 +13,7 @@ import java.util.concurrent.Exchanger
 
 
 private[mada] object Block {
-    val CAPACITY = 8
+    val CAPACITY = 20
     def apply[A](op: Yield[A] => Unit): Iterable[A] = Iterables.byName(iimpl(op))
     def iimpl[A](op: Yield[A] => Unit): Iterator[A] = new BlockIterator(op)
 }
