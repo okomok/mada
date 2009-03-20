@@ -50,6 +50,31 @@ class BlockTest {
         withMakeValuesTo(300)
         withMakeValuesTo(310)
     }
+
+    def throwSome(y: Iterables.Yield[Int]): Unit = {
+        for (i <- 1 to 27) {
+            y(i)
+        }
+        throw new Error()
+    }
+
+    def testThrow(testOff: Int): Unit = {
+        val it = Iterables.block(throwSome)
+        var ret = false
+        try {
+            ret = Iterables.equal(1 to 27, it)
+        } catch {
+            case e: Error =>
+        }
+        assertTrue(ret)
+        ret = false
+        try {
+            ret = Iterables.equal(1 to 27, it) // run again.
+        } catch {
+            case e: Error =>
+        }
+        assertTrue(ret)
+    }
 }
 
 class BlockLockTest extends NoBenchmark {

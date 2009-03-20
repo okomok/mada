@@ -8,6 +8,7 @@ package mada.iter
 
 
 import Iterables.Yield
+import java.lang.InterruptedException
 import java.util.ArrayDeque
 import java.util.concurrent.Exchanger
 
@@ -21,17 +22,23 @@ private[mada] object Block {
 private[mada] class BlockIterator[A](op: Yield[A] => Unit) extends Iterator[A] {
     private var in = new BlockData[A]
     private val x = new Exchanger[BlockData[A]]
+    private val bt = new BlockThread(op, x)
 
-    new BlockThread(op, x).start
-    in = x.exchange(in)
+    bt.start
+    doExchange
 
     override def hasNext = !in.buf.isEmpty
     override def next = {
         val tmp = in.buf.removeFirst
         if (in.buf.isEmpty && !in.isLast) {
-            in = x.exchange(in)
+            doExchange
         }
         tmp
+    }
+
+    private def doExchange: Unit = {
+        Assert(in.buf.isEmpty)
+        in = x.exchange(in)
     }
 }
 
@@ -42,15 +49,21 @@ private[mada] class BlockThread[A](op: Yield[A] => Unit, x: Exchanger[BlockData[
         override def apply(v: A) = {
             out.buf.addLast(v)
             if (out.buf.size == Block.CAPACITY) {
-                out = x.exchange(out)
-                Assert(out.buf.isEmpty)
+                doExchange
             }
         }
     }
 
     override def run() = {
-        op(y)
-        out.isLast = true
+        try {
+            op(y)
+        } finally {
+            out.isLast = true
+            doExchange
+        }
+    }
+
+    private def doExchange: Unit = {
         out = x.exchange(out)
         Assert(out.buf.isEmpty)
     }
