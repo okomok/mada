@@ -34,9 +34,8 @@ class BlockTest {
 
     def testTrivial: Unit = {
         withMakeValuesTo(1)
+        withMakeValuesTo(2)
         withMakeValuesTo(3)
-        withMakeValuesTo(5)
-        withMakeValuesTo(7)
         withMakeValuesTo(9)
         withMakeValuesTo(11)
         withMakeValuesTo(19)
@@ -44,7 +43,12 @@ class BlockTest {
         withMakeValuesTo(21)
         withMakeValuesTo(25)
         withMakeValuesTo(30)
+        withMakeValuesTo(60)
+        withMakeValuesTo(67)
+        withMakeValuesTo(80)
+        withMakeValuesTo(82)
         withMakeValuesTo(300)
+        withMakeValuesTo(310)
     }
 }
 
