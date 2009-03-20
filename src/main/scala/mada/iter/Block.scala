@@ -22,9 +22,8 @@ private[mada] object Block {
 private[mada] class BlockIterator[A](op: Yield[A] => Unit) extends Iterator[A] {
     private var in = new BlockData[A]
     private val x = new Exchanger[BlockData[A]]
-    private val bt = new BlockThread(op, x)
 
-    bt.start
+    new BlockThread(op, x).start
     doExchange
 
     override def hasNext = !in.buf.isEmpty
@@ -46,8 +45,8 @@ private[mada] class BlockThread[A](op: Yield[A] => Unit, x: Exchanger[BlockData[
     private var out = new BlockData[A]
 
     private val y = new Yield[A] {
-        override def apply(v: A) = {
-            out.buf.addLast(v)
+        override def apply(e: A) = {
+            out.buf.addLast(e)
             if (out.buf.size == Block.CAPACITY) {
                 doExchange
             }
