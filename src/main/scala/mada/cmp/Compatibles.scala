@@ -13,7 +13,7 @@ package mada.cmp
 trait Compatibles {
     import Compare._
 // from
-    implicit def madaCompareFromPredicate[A](from: Predicate[A]): Compare[A] = fromPredicate(from)
+    implicit def madaCompareFromFunc[A](from: Func[A]): Compare[A] = fromFunc(from)
     implicit def madaCompareFromGetOrdered[A](implicit from: GetOrdered[A]): Compare[A] = fromGetOrdered(from)
     implicit def madaCompareFromOrdering[A](from: Ordering[A]): Compare[A] = fromOrdering(from)
     implicit def madaCompareFromComparator[A](from: Comparator[A]): Compare[A] = fromComparator(from)

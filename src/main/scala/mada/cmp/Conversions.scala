@@ -11,10 +11,10 @@ package mada.cmp
  * Contains explicit conversions for strict weak ordering.
  */
 trait Conversions {
-    import Compare.{ Predicate, GetOrdered, Comparator }
+    import Compare.{ Func, GetOrdered, Comparator }
 
 // from
-    def fromPredicate[A](from: Predicate[A]): Compare[A] = new Compare[A] {
+    def fromFunc[A](from: Func[A]): Compare[A] = new Compare[A] {
         override def apply(x: A, y: A) = from(x, y)
     }
 

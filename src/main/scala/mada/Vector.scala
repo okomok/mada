@@ -318,19 +318,19 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * Compares each element using predicate <code>p</code>.
      * Returns <code>false</code> if <code>size != that.size</code>.
      */
-    def equalsBy[B](that: Vector[B])(p: Functions.Predicate2[A, B]): Boolean = EqualsBy(this, that, p)
+    def equalsIf[B](that: Vector[B])(p: (A, B) => Boolean): Boolean = EqualsIf(this, that, p)
 
     /**
      * Vector has value semantics <code>==</code>.
      *
-     * @return  <code>equalsBy(that)(Functions.equal)</code>.
+     * @return  <code>equalsIf(that)(Functions.equal)</code>.
      */
     override def equals(that: Any): Boolean = Equals(this, that)
 
     /**
-     * @return  <code>equalsBy(that)(Functions.equal)</code>.
+     * @return  <code>equalsIf(that)(Functions.equal)</code>.
      */
-    final def equalsTo[B](that: Vector[B]): Boolean = equalsBy(that)(Functions.equal)
+    final def equalsTo[B](that: Vector[B]): Boolean = equalsIf(that)(Functions.equal)
 
     /**
      * Generates hash code as value semantics.
@@ -672,7 +672,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * @param   lt  strict weak ordering
      * @return  this vector sorted according to <code>lt</code>.
      */
-    def sortBy(lt: Compare.Predicate[A]): Vector[A] = Sort(this, lt)
+    def sortBy(lt: Compare.Func[A]): Vector[A] = Sort(this, lt)
 
     /**
      * @return  <code>stableSortBy(c)</code>.
@@ -686,7 +686,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * @param   lt  strict weak ordering
      * @return  this vector sorted according to <code>lt</code>.
      */
-    def stableSortBy(lt: Compare.Predicate[A]): Vector[A] = StableSort(this, lt)
+    def stableSortBy(lt: Compare.Func[A]): Vector[A] = StableSort(this, lt)
 
 
 // concatenation

@@ -34,11 +34,7 @@ package mada.stl
 
 
 private[mada] object MinElement {
-    def apply[A](* : Vector[A], first: Int, __last: Int)(implicit c: Compare[A]): Int = {
-        apply(*, first, __last, c)
-    }
-
-    def apply[A](* : Vector[A], first: Int, __last: Int, __comp: Compare.Predicate[A]): Int = {
+    def apply[A](* : Vector[A], first: Int, __last: Int, __comp: Compare.Func[A]): Int = {
         var __first = first
 
         if (__first == __last) {
@@ -57,11 +53,7 @@ private[mada] object MinElement {
 }
 
 private[mada] object MaxElement {
-    def apply[A](* : Vector[A], first: Int, __last: Int)(implicit c: Compare[A]): Int = {
-        apply(*, first, __last, c)
-    }
-
-    def apply[A](* : Vector[A], first: Int, __last: Int, __comp: Compare.Predicate[A]): Int = {
+    def apply[A](* : Vector[A], first: Int, __last: Int, __comp: Compare.Func[A]): Int = {
         MinElement(*, first, __last, { (x: A, y: A) => __comp(y, x) })
     }
 }

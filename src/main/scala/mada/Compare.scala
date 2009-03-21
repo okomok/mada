@@ -17,7 +17,7 @@ object Compare extends Conversions with Compatibles {
     /**
      * Alias of <code>Function2[T, T, Boolean]</code>
      */
-    type Predicate[-T] = Function2[T, T, Boolean]
+    type Func[-T] = Function2[T, T, Boolean]
 
     /**
      * Alias of <code>Function1[T, Ordered[T]]</code>
@@ -37,9 +37,9 @@ object Compare extends Conversions with Compatibles {
     def from[A](to: Compare[A]) = to
 
     /**
-     * Alias of <code>fromPredicate</code>
+     * Alias of <code>fromFunc</code>
      */
-    def by[A](p: Predicate[A]): Compare[A] = fromPredicate(p)
+    def by[A](p: Func[A]): Compare[A] = fromFunc(p)
 
     /**
      * @return  <code>this</code>.
@@ -56,7 +56,7 @@ object Compare extends Conversions with Compatibles {
 /**
  * Represents strict weak ordering.
  */
-trait Compare[-A] extends Compare.Predicate[A] {
+trait Compare[-A] extends Compare.Func[A] {
     /**
      * @return  <code>true</code> iif x precedes y.
      */

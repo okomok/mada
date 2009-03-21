@@ -38,11 +38,11 @@ private[mada] object IsHeap {
         apply(v, __first, __last, c)
     }
 
-    def apply[A](v: Vector[A], __first: Int, __last: Int, __comp: Compare.Predicate[A]): Boolean = {
+    def apply[A](v: Vector[A], __first: Int, __last: Int, __comp: Compare.Func[A]): Boolean = {
         __apply(v, __first, __comp, __last - __first)
     }
 
-    def __apply[A](* : Vector[A], __first: Int, __comp: Compare.Predicate[A], __n: Int): Boolean = {
+    def __apply[A](* : Vector[A], __first: Int, __comp: Compare.Func[A], __n: Int): Boolean = {
         var __parent = 0
         var __child = 1
         while (__child < __n) {

@@ -38,7 +38,7 @@ private[mada] object UniqueCopy {
         apply(v, first, __last, ^, result, Functions.equal)
     }
 
-    def apply[A, B >: A](v : Vector[A], first: Int, __last: Int, ^ : Vector[B], result: Int, __binary_pred: Functions.Predicate2[A, B]): Int = {
+    def apply[A, B >: A](v : Vector[A], first: Int, __last: Int, ^ : Vector[B], result: Int, __binary_pred: (A, B) => Boolean): Int = {
         var __first = first
         var __result = result
 

@@ -7,8 +7,8 @@
 package mada.vec.para
 
 
-private[mada] object EqualsBy {
-    def apply[A, B](v: Vector[A], w: Vector[B], p: Functions.Predicate2[A, B], grainSize: Int): Boolean = {
+private[mada] object EqualsIf {
+    def apply[A, B](v: Vector[A], w: Vector[B], p: (A, B) => Boolean, grainSize: Int): Boolean = {
         Assert(!IsParallel(v))
 
         if (v.size != w.size) {
@@ -22,7 +22,7 @@ private[mada] object EqualsBy {
     }
 
     private def breakingEquals[A, B](v: Vector[A], w: Vector[B], p: Breakable2[A, B]): Boolean = {
-        val x = v.equalsBy(w)(p)
+        val x = v.equalsIf(w)(p)
         if (!x) {
             p.break
         }

@@ -13,7 +13,7 @@ package mada.iter
 trait Operators {
     sealed class MadaIterables[A](_1: Iterable[A]) {
         def equal[B](_2: Iterable[B]) = Iterables.equal(_1, _2)
-        def equalBy[B](_2: Iterable[B])(_3: Functions.Predicate2[A, B]) = Iterables.equalBy(_1, _2)(_3)
+        def equalIf[B](_2: Iterable[B])(_3: (A, B) => Boolean) = Iterables.equalIf(_1, _2)(_3)
         def filter_(_2: A => Boolean) = Iterables.filter(_1)(_2)
         def folderLeft[B](_2: B)(_3: (B, A) => B) = Iterables.folderLeft(_1, _2)(_3)
         def reducerLeft[B >: A](_2: (B, A) => B) = Iterables.reducerLeft[A, B](_1)(_2)
@@ -28,15 +28,15 @@ trait Operators {
         def withSideEffect(_2: A => Unit) = Iterables.withSideEffect(_1)(_2)
 
         def merge(_2: Iterable[A])(implicit _3: Compare[A]) = Iterables.merge(_1)(_2)(_3)
-        def mergeBy(_2: Iterable[A])(_3: Compare.Predicate[A]) = Iterables.mergeBy(_1)(_2)(_3)
+        def mergeBy(_2: Iterable[A])(_3: Compare.Func[A]) = Iterables.mergeBy(_1)(_2)(_3)
         def union(_2: Iterable[A])(implicit _3: Compare[A]) = Iterables.union(_1)(_2)(_3)
-        def unionBy(_2: Iterable[A])(_3: Compare.Predicate[A]) = Iterables.unionBy(_1)(_2)(_3)
+        def unionBy(_2: Iterable[A])(_3: Compare.Func[A]) = Iterables.unionBy(_1)(_2)(_3)
         def intersection(_2: Iterable[A])(implicit _3: Compare[A]) = Iterables.intersection(_1)(_2)(_3)
-        def intersectionBy(_2: Iterable[A])(_3: Compare.Predicate[A]) = Iterables.intersectionBy(_1)(_2)(_3)
+        def intersectionBy(_2: Iterable[A])(_3: Compare.Func[A]) = Iterables.intersectionBy(_1)(_2)(_3)
         def difference(_2: Iterable[A])(implicit _3: Compare[A]) = Iterables.difference(_1)(_2)(_3)
-        def differenceBy(_2: Iterable[A])(_3: Compare.Predicate[A]) = Iterables.differenceBy(_1)(_2)(_3)
+        def differenceBy(_2: Iterable[A])(_3: Compare.Func[A]) = Iterables.differenceBy(_1)(_2)(_3)
         def symmetricDifference(_2: Iterable[A])(implicit _3: Compare[A]) = Iterables.symmetricDifference(_1)(_2)(_3)
-        def symmetricDifferenceBy(_2: Iterable[A])(_3: Compare.Predicate[A]) = Iterables.symmetricDifferenceBy(_1)(_2)(_3)
+        def symmetricDifferenceBy(_2: Iterable[A])(_3: Compare.Func[A]) = Iterables.symmetricDifferenceBy(_1)(_2)(_3)
     }
     implicit def madaIterables[A](_1: Iterable[A]): MadaIterables[A] = new MadaIterables(_1)
 

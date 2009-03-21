@@ -34,7 +34,7 @@ package mada.stl
 
 
 private[mada] object StableSort {
-    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Compare.Predicate[A]): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Compare.Func[A]): Unit = {
         val __len = (__last - __first + 1) / 2
         val __middle = __first + __len
 
@@ -42,7 +42,7 @@ private[mada] object StableSort {
         MergeSortWithBuffer(*, __first, __middle, buf, buf.start, __comp)
         MergeSortWithBuffer(*, __middle, __last, buf, buf.start, __comp)
 
-        val buf_end = Stl.copy(*, __first, __middle, buf, buf.start)
+        val buf_end = Copy(*, __first, __middle, buf, buf.start)
         Merge(buf, buf.start, buf_end, *, __middle, __last, *, __first, __comp)
     }
 }

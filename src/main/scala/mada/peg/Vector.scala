@@ -17,7 +17,7 @@ private[mada] class VectorPeg[A](from: Vector[A], pred: (A, A) => Boolean) exten
         val wsize = from.size
         if (end - start < wsize) {
             Peg.FAILURE
-        } else if (Stl.equal(from, from.start, from.end, v, start, pred)) {
+        } else if (stl.Equal(from, from.start, from.end, v, start, pred)) {
             start + wsize
         } else {
             Peg.FAILURE

@@ -36,7 +36,7 @@ class SortPerfTest {
         val e = fromJclList(longExampleArrayList1).cycle(cycleCount).clone
         val c: (Integer, Integer) => Boolean = _.intValue < _.intValue
         val start = java.lang.System.currentTimeMillis
-        mada.Stl.sort(e, 0, e.size, c)
+        mada.Stl.sortBy(e, 0, e.size)(c)
         println(java.lang.System.currentTimeMillis - start)
     }
 

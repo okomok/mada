@@ -24,10 +24,10 @@ trait Eligibles {
     // of `madaVectorToOrdered` or ...
     /*implicit*/ def forCompare[A](implicit c: Compare[A]): Compare[Vector[A]] = new Compare[Vector[A]] {
         override def apply(v: Vector[A], w: Vector[A]) = {
-            Stl.lexicographicalCompare(v, v.start, v.end, w, w.start, w.end, c)
+            stl.LexicographicalCompare(v, v.start, v.end, w, w.start, w.end, c)
         }
         override def threeWay(v: Vector[A], w: Vector[A]) = {
-            Stl.lexicographicalCompare3way(v, v.start, v.end, w, w.start, w.end, c)
+            stl.LexicographicalCompare3way(v, v.start, v.end, w, w.start, w.end, c)
         }
     }
 }

@@ -7,11 +7,8 @@
 package mada.iter
 
 
-import Compare.Predicate
-
-
 private[mada] object Sorted {
-    def derefBy[A](pt1: Pointer[A], pt2: Pointer[A], lt: Predicate[A]): A = {
+    def derefBy[A](pt1: Pointer[A], pt2: Pointer[A], lt: Compare.Func[A]): A = {
         if (!pt1) {
             ~pt2
         } else if (!pt2) {
@@ -21,7 +18,7 @@ private[mada] object Sorted {
         }
     }
 
-    def incrementBy[A](pt1: Pointer[A], pt2: Pointer[A], lt: Predicate[A]): Unit = {
+    def incrementBy[A](pt1: Pointer[A], pt2: Pointer[A], lt: Compare.Func[A]): Unit = {
         if (!pt1) {
             pt2.++
         } else if (!pt2) {
@@ -36,11 +33,11 @@ private[mada] object Sorted {
 // merge
 
 private[mada] object Merge {
-    def apply[A](it1: Iterable[A], it2: Iterable[A], lt: Predicate[A]): Iterable[A] = Iterables.byName(iimpl(it1.elements, it2.elements, lt))
-    def iimpl[A](it1: Iterator[A], it2: Iterator[A], lt: Predicate[A]): Iterator[A] = new MergePointer(it1, it2, lt)
+    def apply[A](it1: Iterable[A], it2: Iterable[A], lt: Compare.Func[A]): Iterable[A] = Iterables.byName(iimpl(it1.elements, it2.elements, lt))
+    def iimpl[A](it1: Iterator[A], it2: Iterator[A], lt: Compare.Func[A]): Iterator[A] = new MergePointer(it1, it2, lt)
 }
 
-private[mada] class MergePointer[A](pt1: Pointer[A], pt2: Pointer[A], lt: Predicate[A]) extends Pointer[A] {
+private[mada] class MergePointer[A](pt1: Pointer[A], pt2: Pointer[A], lt: Compare.Func[A]) extends Pointer[A] {
     override def isEnd = !pt1 && !pt2
     override def deref = Sorted.derefBy(pt1, pt2, lt)
     override def increment = Sorted.incrementBy(pt1, pt2, lt)
@@ -50,11 +47,11 @@ private[mada] class MergePointer[A](pt1: Pointer[A], pt2: Pointer[A], lt: Predic
 // union
 
 private[mada] object Union {
-    def apply[A](it1: Iterable[A], it2: Iterable[A], lt: Predicate[A]): Iterable[A] = Iterables.byName(iimpl(it1.elements, it2.elements, lt))
-    def iimpl[A](it1: Iterator[A], it2: Iterator[A], lt: Predicate[A]): Iterator[A] = new UnionPointer(it1, it2, lt)
+    def apply[A](it1: Iterable[A], it2: Iterable[A], lt: Compare.Func[A]): Iterable[A] = Iterables.byName(iimpl(it1.elements, it2.elements, lt))
+    def iimpl[A](it1: Iterator[A], it2: Iterator[A], lt: Compare.Func[A]): Iterator[A] = new UnionPointer(it1, it2, lt)
 }
 
-private[mada] class UnionPointer[A](pt1: Pointer[A], pt2: Pointer[A], lt: Predicate[A]) extends Pointer[A] {
+private[mada] class UnionPointer[A](pt1: Pointer[A], pt2: Pointer[A], lt: Compare.Func[A]) extends Pointer[A] {
     override def isEnd = !pt1 && !pt2
     override def deref = Sorted.derefBy(pt1, pt2, lt)
     override def increment = {
@@ -79,11 +76,11 @@ private[mada] class UnionPointer[A](pt1: Pointer[A], pt2: Pointer[A], lt: Predic
 // intersection
 
 private[mada] object Intersection {
-    def apply[A](it1: Iterable[A], it2: Iterable[A], lt: Predicate[A]): Iterable[A] = Iterables.byName(iimpl(it1.elements, it2.elements, lt))
-    def iimpl[A](it1: Iterator[A], it2: Iterator[A], lt: Predicate[A]): Iterator[A] = new IntersectionPointer(it1, it2, lt)
+    def apply[A](it1: Iterable[A], it2: Iterable[A], lt: Compare.Func[A]): Iterable[A] = Iterables.byName(iimpl(it1.elements, it2.elements, lt))
+    def iimpl[A](it1: Iterator[A], it2: Iterator[A], lt: Compare.Func[A]): Iterator[A] = new IntersectionPointer(it1, it2, lt)
 }
 
-private[mada] class IntersectionPointer[A](pt1: Pointer[A], pt2: Pointer[A], lt: Predicate[A]) extends Pointer[A] {
+private[mada] class IntersectionPointer[A](pt1: Pointer[A], pt2: Pointer[A], lt: Compare.Func[A]) extends Pointer[A] {
     ready
 
     override def isEnd = !pt1 || !pt2
@@ -107,11 +104,11 @@ private[mada] class IntersectionPointer[A](pt1: Pointer[A], pt2: Pointer[A], lt:
 // difference
 
 private[mada] object Difference {
-    def apply[A](it1: Iterable[A], it2: Iterable[A], lt: Predicate[A]): Iterable[A] = Iterables.byName(iimpl(it1.elements, it2.elements, lt))
-    def iimpl[A](it1: Iterator[A], it2: Iterator[A], lt: Predicate[A]): Iterator[A] = new DifferencePointer(it1, it2, lt)
+    def apply[A](it1: Iterable[A], it2: Iterable[A], lt: Compare.Func[A]): Iterable[A] = Iterables.byName(iimpl(it1.elements, it2.elements, lt))
+    def iimpl[A](it1: Iterator[A], it2: Iterator[A], lt: Compare.Func[A]): Iterator[A] = new DifferencePointer(it1, it2, lt)
 }
 
-private[mada] class DifferencePointer[A](pt1: Pointer[A], pt2: Pointer[A], lt: Predicate[A]) extends Pointer[A] {
+private[mada] class DifferencePointer[A](pt1: Pointer[A], pt2: Pointer[A], lt: Compare.Func[A]) extends Pointer[A] {
     ready
 
     override def isEnd = !pt1
@@ -136,11 +133,11 @@ private[mada] class DifferencePointer[A](pt1: Pointer[A], pt2: Pointer[A], lt: P
 // symmetricDifference
 
 private[mada] object SymmetricDifference {
-    def apply[A](it1: Iterable[A], it2: Iterable[A], lt: Predicate[A]): Iterable[A] = Iterables.byName(iimpl(it1.elements, it2.elements, lt))
-    def iimpl[A](it1: Iterator[A], it2: Iterator[A], lt: Predicate[A]): Iterator[A] = new SymmetricDifferencePointer(it1, it2, lt)
+    def apply[A](it1: Iterable[A], it2: Iterable[A], lt: Compare.Func[A]): Iterable[A] = Iterables.byName(iimpl(it1.elements, it2.elements, lt))
+    def iimpl[A](it1: Iterator[A], it2: Iterator[A], lt: Compare.Func[A]): Iterator[A] = new SymmetricDifferencePointer(it1, it2, lt)
 }
 
-private[mada] class SymmetricDifferencePointer[A](pt1: Pointer[A], pt2: Pointer[A], lt: Predicate[A]) extends Pointer[A] {
+private[mada] class SymmetricDifferencePointer[A](pt1: Pointer[A], pt2: Pointer[A], lt: Compare.Func[A]) extends Pointer[A] {
     ready
 
     override def isEnd = !pt1 && !pt2

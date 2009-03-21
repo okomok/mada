@@ -34,11 +34,7 @@ package mada.stl
 
 
 private[mada] object IsSorted {
-    def apply[A](* : Vector[A], first: Int, __last: Int)(implicit c: Compare[A]): Boolean = {
-        apply(*, first, __last, c)
-    }
-
-    def apply[A](* : Vector[A], first: Int, __last: Int, __comp: Compare.Predicate[A]): Boolean = {
+    def apply[A](* : Vector[A], first: Int, __last: Int, __comp: Compare.Func[A]): Boolean = {
         var __first = first
 
         if (__first == __last) {

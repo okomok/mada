@@ -52,7 +52,7 @@ object Functions {
     /**
      * @return  <code>{ (x, y) => x == y }</code>.
      */
-    val equal: Compare.Predicate[Any] = { (x, y) => x == y }
+    val equal: Compare.Func[Any] = { (x, y) => x == y }
 
     /**
      * @return  <code>{ y => x == y }</code>.

@@ -34,7 +34,7 @@ package mada.stl
 
 
 private[mada] object UnguardedPartition {
-    def apply[A](* : Vector[A], first: Int, last: Int, __pivot: A, __comp: Compare.Predicate[A]): Int = {
+    def apply[A](* : Vector[A], first: Int, last: Int, __pivot: A, __comp: Compare.Func[A]): Int = {
         var __first = first; var __last = last
 
         while (true) {

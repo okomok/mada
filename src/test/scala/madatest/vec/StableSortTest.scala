@@ -44,7 +44,7 @@ class StableSortTest {
         val ex2 = Array(18, 8, 0,14,17,19, 4,15,12, 6,23, 0, 11, 4,13) // 15 elements
         val ex = Vector.from(ex1).zip(ex2).clone
         ex.stableSortBy{ case (x, y) => x._1 < y._1 }
-        assertTrue(mada.Stl.isSorted(ex, ex.start, ex.end, mada.Functions.infer2[Tuple2[Int, Int], Tuple2[Int, Int], Boolean]{ (x, y) => x._1 < y._1 }))
+        assertTrue(mada.Stl.isSortedBy(ex, ex.start, ex.end){ case (x, y) => x._1 < y._1 })
         assertEquals( Vector(18,23), ex.filter{ x => x._1 == 0 }.map{ _._2 } )
         assertEquals( Vector(12,13), ex.filter{ x => x._1 == 4 }.map{ _._2 } )
     }
@@ -54,7 +54,7 @@ class StableSortTest {
         val ex2 = Array(18, 8, 0,14,17,19, 4,15,12, 6, 23,0,11, 4,13) // 15 elements
         val ex = Vector.from(ex1).zip(ex2).clone
         ex.stableSortBy{ case (x, y) => x._1 < y._1 }
-        assertTrue(mada.Stl.isSorted(ex, ex.start, ex.end, mada.Functions.infer2[Tuple2[Int, Int], Tuple2[Int, Int], Boolean]{ (x, y) => x._1 < y._1 }))
+        assertTrue(mada.Stl.isSortedBy(ex, ex.start, ex.end){ case (x, y) => x._1 < y._1 })
         assertEquals( Vector(18,0,17,4,12,0,4), ex.filter{ x => x._1 == 12 }.map{ _._2 } )
     }
 
@@ -62,19 +62,19 @@ class StableSortTest {
 // Stl
     def testStlTrivial: Unit = {
         val v = fromArray(example1)
-        mada.Stl.stableSort(v, 0, v.size, (_: Int) < (_: Int))
+        mada.Stl.stableSortBy(v, 0, v.size){ _ < _ }
         assertEquals(fromArray(example1Sorted), v)
     }
 
     def testStlBy: Unit = {
         val v = fromArray(example1)
-        mada.Stl.stableSort(v, 0, v.size, (_: Int) > (_: Int))
+        mada.Stl.stableSortBy(v, 0, v.size){ _ > _ }
         assertEquals(fromArray(example1ReversedSorted), v)
     }
 
     def testStlEmpty: Unit = {
         val v = fromArray(empty1)
-        mada.Stl.stableSort(v, 0, v.size, (_: Int) < (_: Int))
+        mada.Stl.stableSortBy(v, 0, v.size){ _ < _ }
         detail.TestEmpty(v)
     }
 
@@ -84,7 +84,7 @@ class StableSortTest {
 
     def testStlLongExample1: Unit = {
         val v = fromArray(longExample1)
-        mada.Stl.stableSort(v, 0, v.size, (_: Int) < (_: Int))
+        mada.Stl.stableSortBy(v, 0, v.size){ _ < _ }
         assertEquals(Vector.range(0, 1000), v)
     }
 }

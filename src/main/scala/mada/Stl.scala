@@ -32,115 +32,115 @@ import stl._
  * @see <a href="http://www.stanford.edu/group/coursework/docsTech/jgl/">JGL</a>
  */
 object Stl {
-    def accumulate[A, B](v: Vector[A], first: Int, last: Int, init: B, binary_op: (B, A) => B): B = Accumulate(v, first, last, init, binary_op)
+    def accumulate[A, B](v: Vector[A], first: Int, last: Int)(init: B)(binary_op: (B, A) => B): B = Accumulate(v, first, last, init, binary_op)
 
     def adjacentFind[A](v: Vector[A], first: Int, last: Int): Int = AdjacentFind(v, first, last)
-    def adjacentFind[A](v: Vector[A], first: Int, last: Int, binary_pred: Compare.Predicate[A]): Int = AdjacentFind(v, first, last, binary_pred)
+    def adjacentFindIf[A](v: Vector[A], first: Int, last: Int)(binary_pred: (A, A) => Boolean): Int = AdjacentFind(v, first, last, binary_pred)
 
-    def lowerBound[A](v: Vector[A], first: Int, last: Int, value: A)(implicit c: Compare[A]): Int = LowerBound(v, first, last, value)(c)
-    def lowerBound[A](v: Vector[A], first: Int, last: Int, value: A, comp: Compare.Predicate[A]): Int = LowerBound(v, first, last, value, comp)
-    def upperBound[A](v: Vector[A], first: Int, last: Int, value: A)(implicit c: Compare[A]): Int = UpperBound(v, first, last, value)(c)
-    def upperBound[A](v: Vector[A], first: Int, last: Int, value: A, comp: Compare.Predicate[A]): Int = UpperBound(v, first, last, value, comp)
+    def lowerBound[A](v: Vector[A], first: Int, last: Int, value: A)(implicit c: Compare[A]): Int = LowerBound(v, first, last, value, c)
+    def lowerBoundBy[A](v: Vector[A], first: Int, last: Int, value: A)(comp: Compare.Func[A]): Int = LowerBound(v, first, last, value, comp)
+    def upperBound[A](v: Vector[A], first: Int, last: Int, value: A)(implicit c: Compare[A]): Int = UpperBound(v, first, last, value, c)
+    def upperBoundBy[A](v: Vector[A], first: Int, last: Int, value: A)(comp: Compare.Func[A]): Int = UpperBound(v, first, last, value, comp)
 
-    def copy[A, B >: A](v : Vector[A], first: Int, last: Int, ^ : Vector[B], result: Int): Int = Copy(v, first, last, ^, result)
-    def copyIf[A, B >: A](v : Vector[A], first: Int, last: Int, ^ : Vector[B], result: Int, pred: A => Boolean): Int = CopyIf(v, first, last, ^, result, pred)
+    def copy[A](v : Vector[A], first: Int, last: Int)(^ : Vector[_ >: A], result: Int): Int = Copy(v, first, last, ^, result)
+    def copyIf[A](v : Vector[A], first: Int, last: Int)(^ : Vector[_ >: A], result: Int)(pred: A => Boolean): Int = CopyIf(v, first, last, ^, result, pred)
 
-    def copyBackward[A, B >: A](v : Vector[A], first: Int, last: Int, ^ : Vector[B], result: Int): Int = CopyBackward(v, first, last, ^, result)
+    def copyBackward[A](v : Vector[A], first: Int, last: Int)(^ : Vector[_ >: A], result: Int): Int = CopyBackward(v, first, last, ^, result)
 
-    def count[A](v: Vector[A], first: Int, last: Int, e: Any): Int = Count(v, first, last, e)
-    def countIf[A](v: Vector[A], first: Int, last: Int, pred: A => Boolean): Int = CountIf(v, first, last, pred)
+    def count[A](v: Vector[A], first: Int, last: Int)(e: Any): Int = Count(v, first, last, e)
+    def countIf[A](v: Vector[A], first: Int, last: Int)(pred: A => Boolean): Int = CountIf(v, first, last, pred)
 
-    def minElement[A](v: Vector[A], first: Int, last: Int)(implicit c: Compare[A]): Int = MinElement(v, first, last)(c)
-    def minElement[A](v: Vector[A], first: Int, last: Int, comp: Compare.Predicate[A]): Int = MinElement(v, first, last, comp)
-    def maxElement[A](v: Vector[A], first: Int, last: Int)(implicit c: Compare[A]): Int = MaxElement(v, first, last)(c)
-    def maxElement[A](v: Vector[A], first: Int, last: Int, comp: Compare.Predicate[A]): Int = MaxElement(v, first, last, comp)
+    def minElement[A](v: Vector[A], first: Int, last: Int)(implicit c: Compare[A]): Int = MinElement(v, first, last, c)
+    def minElementBy[A](v: Vector[A], first: Int, last: Int)(comp: Compare.Func[A]): Int = MinElement(v, first, last, comp)
+    def maxElement[A](v: Vector[A], first: Int, last: Int)(implicit c: Compare[A]): Int = MaxElement(v, first, last, c)
+    def maxElementBy[A](v: Vector[A], first: Int, last: Int)(comp: Compare.Func[A]): Int = MaxElement(v, first, last, comp)
 
-    def median[A](x: A, y: A, z: A)(implicit c: Compare[A]): A = Median(x, y, z)(c)
-    def median[A](x: A, y: A, z: A, comp: Compare.Predicate[A]): A = Median(x, y, z, comp)
+    def median[A](x: A, y: A, z: A)(implicit c: Compare[A]): A = Median(x, y, z, c)
+    def medianBy[A](x: A, y: A, z: A)(comp: Compare.Func[A]): A = Median(x, y, z, comp)
 
-    def equal[A1, A2](v1: Vector[A1], first1: Int, last1: Int, v2: Vector[A2], first2: Int): Boolean = Equal(v1, first1, last1, v2, first2)
-    def equal[A1, A2](v1: Vector[A1], first1: Int, last1: Int, v2: Vector[A2], first2: Int, binary_pred: (A1, A2) => Boolean): Boolean = Equal(v1, first1, last1, v2, first2, binary_pred)
+    def equal[A1, A2](v1: Vector[A1], first1: Int, last1: Int)(v2: Vector[A2], first2: Int): Boolean = Equal(v1, first1, last1, v2, first2)
+    def equalIf[A1, A2](v1: Vector[A1], first1: Int, last1: Int)(v2: Vector[A2], first2: Int)(binary_pred: (A1, A2) => Boolean): Boolean = Equal(v1, first1, last1, v2, first2, binary_pred)
 
-    def fill[A](v: Vector[A], first: Int, last: Int, value: A): Unit = Fill(v, first, last, value)
+    def fill[A](v: Vector[A], first: Int, last: Int)(value: A): Unit = Fill(v, first, last, value)
 
     def find[A](v: Vector[A], first: Int, last: Int, value: Any): Int = Find(v, first, last, value)
-    def find[A](v: Vector[A], first: Int, last: Int, pred: A => Boolean): Int = Find(v, first, last, pred)
+    def findIf[A](v: Vector[A], first: Int, last: Int)(pred: A => Boolean): Int = Find(v, first, last, pred)
 
     def forEach[A, F <: (A => Any)](v: Vector[A], first: Int, last: Int, f: F): F = ForEach(v, first, last, f)
 
-    def generate[A](v : Vector[A], first: Int, last: Int, gen: Unit => A): Unit = Generate(v, first, last, gen)
-    def generateN[A](^ : Vector[A], first: Int, n: Int, gen: Unit => A): Unit = GenerateN(^, first, n, gen)
+    def generate[A](v : Vector[A], first: Int, last: Int)(gen: Unit => A): Unit = Generate(v, first, last, gen)
+    def generateN[A](^ : Vector[A], first: Int, n: Int)(gen: Unit => A): Unit = GenerateN(^, first, n, gen)
 
-    def lexicographicalCompare[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int)(implicit c: Compare[A]): Boolean = LexicographicalCompare(v1, first1, __last1, v2, first2, __last2)(c)
-    def lexicographicalCompare[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int, __comp: Compare.Predicate[A]): Boolean = LexicographicalCompare(v1, first1, __last1, v2, first2, __last2, __comp)
-    def lexicographicalCompare3way[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int)(implicit c: Compare[A]): Int = LexicographicalCompare3way(v1, first1, __last1, v2, first2, __last2)(c)
-    def lexicographicalCompare3way[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int, __comp: Compare.Predicate[A]): Int = LexicographicalCompare3way(v1, first1, __last1, v2, first2, __last2, __comp)
+    def lexicographicalCompare[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int)(implicit c: Compare[A]): Boolean = LexicographicalCompare(v1, first1, __last1, v2, first2, __last2, c)
+    def lexicographicalCompareBy[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int)(__comp: Compare.Func[A]): Boolean = LexicographicalCompare(v1, first1, __last1, v2, first2, __last2, __comp)
+    def lexicographicalCompare3way[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int)(implicit c: Compare[A]): Int = LexicographicalCompare3way(v1, first1, __last1, v2, first2, __last2, c)
+    def lexicographicalCompare3wayBy[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int)(__comp: Compare.Func[A]): Int = LexicographicalCompare3way(v1, first1, __last1, v2, first2, __last2, __comp)
 
-    def merge[A](v1 : Vector[A], first1: Int, last1: Int, v2 : Vector[A], first2: Int, last2: Int, ^ : Vector[A], result: Int)(implicit c: Compare[A]): Int = Merge(v1, first1, last1, v2, first2, last2, ^, result, c)
-    def merge[A](v1 : Vector[A], first1: Int, last1: Int, v2 : Vector[A], first2: Int, last2: Int, ^ : Vector[A], result: Int, comp: Compare.Predicate[A]): Int = Merge(v1, first1, last1, v2, first2, last2, ^, result, comp)
+    def merge[A](v1 : Vector[A], first1: Int, last1: Int)(v2 : Vector[A], first2: Int, last2: Int)(^ : Vector[A], result: Int)(implicit c: Compare[A]): Int = Merge(v1, first1, last1, v2, first2, last2, ^, result, c)
+    def mergeBy[A](v1 : Vector[A], first1: Int, last1: Int)(v2 : Vector[A], first2: Int, last2: Int)(^ : Vector[A], result: Int)(comp: Compare.Func[A]): Int = Merge(v1, first1, last1, v2, first2, last2, ^, result, comp)
 
-    def partialSort[A](v: Vector[A], first: Int, middle: Int, last: Int)(implicit c: Compare[A]): Unit = PartialSort(v, first, middle, last)(c)
-    def partialSort[A](v: Vector[A], first: Int, middle: Int, last: Int, comp: Compare.Predicate[A]): Unit = PartialSort(v, first, middle, last, comp)
+    def partialSort[A](v: Vector[A], first: Int, middle: Int, last: Int)(implicit c: Compare[A]): Unit = PartialSort(v, first, middle, last, c)
+    def partialSortBy[A](v: Vector[A], first: Int, middle: Int, last: Int)(comp: Compare.Func[A]): Unit = PartialSort(v, first, middle, last, comp)
 
-    def pushHeap[A](v: Vector[A], first: Int, last: Int)(implicit c: Compare[A]): Unit = PushHeap(v, first, last)(c)
-    def pushHeap[A](v: Vector[A], first: Int, last: Int, comp: Compare.Predicate[A]): Unit = PushHeap(v, first, last, comp)
+    def pushHeap[A](v: Vector[A], first: Int, last: Int)(implicit c: Compare[A]): Unit = PushHeap(v, first, last, c)
+    def pushHeapBy[A](v: Vector[A], first: Int, last: Int)(comp: Compare.Func[A]): Unit = PushHeap(v, first, last, comp)
 
-    def popHeap[A](v: Vector[A], first: Int, last: Int)(implicit c: Compare[A]): Unit = PopHeap(v, first, last)(c)
-    def popHeap[A](v: Vector[A], first: Int, last: Int, comp: Compare.Predicate[A]): Unit = PopHeap(v, first, last, comp)
+    def popHeap[A](v: Vector[A], first: Int, last: Int)(implicit c: Compare[A]): Unit = PopHeap(v, first, last, c)
+    def popHeapBy[A](v: Vector[A], first: Int, last: Int)(comp: Compare.Func[A]): Unit = PopHeap(v, first, last, comp)
 
-    def makeHeap[A](v: Vector[A], first: Int, last: Int)(implicit c: Compare[A]): Unit = MakeHeap(v, first, last)(c)
-    def makeHeap[A](v: Vector[A], first: Int, last: Int, comp: Compare.Predicate[A]): Unit = MakeHeap(v, first, last, comp)
+    def makeHeap[A](v: Vector[A], first: Int, last: Int)(implicit c: Compare[A]): Unit = MakeHeap(v, first, last, c)
+    def makeHeapBy[A](v: Vector[A], first: Int, last: Int)(comp: Compare.Func[A]): Unit = MakeHeap(v, first, last, comp)
 
-    def sortHeap[A](v: Vector[A], first: Int, last: Int)(implicit c: Compare[A]): Unit = SortHeap(v, first, last)(c)
-    def sortHeap[A](v: Vector[A], first: Int, last: Int, comp: Compare.Predicate[A]): Unit = SortHeap(v, first, last, comp)
+    def sortHeap[A](v: Vector[A], first: Int, last: Int)(implicit c: Compare[A]): Unit = SortHeap(v, first, last, c)
+    def sortHeapBy[A](v: Vector[A], first: Int, last: Int)(comp: Compare.Func[A]): Unit = SortHeap(v, first, last, comp)
 
-    def isHeap[A](v: Vector[A], first: Int, last: Int)(implicit c: Compare[A]): Unit = IsHeap(v, first, last)(c)
-    def isHeap[A](v: Vector[A], first: Int, last: Int, comp: Compare.Predicate[A]): Boolean = IsHeap(v, first, last, comp)
+    def isHeap[A](v: Vector[A], first: Int, last: Int)(implicit c: Compare[A]): Unit = IsHeap(v, first, last, c)
+    def isHeapBy[A](v: Vector[A], first: Int, last: Int)(comp: Compare.Func[A]): Boolean = IsHeap(v, first, last, comp)
 
-    def iterSwap[A](v1: Vector[A], i1: Int, v2: Vector[A], i2: Int): Unit = IterSwap(v1, i1, v2, i2)
+    def iterSwap[A](v1: Vector[A], i1: Int)(v2: Vector[A], i2: Int): Unit = IterSwap(v1, i1, v2, i2)
 
     def randomShuffle[A](v: Vector[A], first: Int, last: Int): Unit = RandomShuffle(v, first, last)
-    def randomShuffle[A](v: Vector[A], first: Int, last: Int, rand: Int => Int): Unit = RandomShuffle(v, first, last, rand)
+    def randomShuffleBy[A](v: Vector[A], first: Int, last: Int)(rand: Int => Int): Unit = RandomShuffle(v, first, last, rand)
 
-    def randomSample[A, B >: A](v : Vector[A], first: Int, last: Int, ^ : Vector[B], out_first: Int, out_last: Int): Int = RandomSample(v, first, last, ^, out_first, out_last)
-    def randomSample[A, B >: A](v : Vector[A], first: Int, last: Int, ^ : Vector[B], out_first: Int, out_last: Int, rand: Int => Int): Int = RandomSample(v, first, last, ^, out_first, out_last, rand)
+    def randomSample[A](v : Vector[A], first: Int, last: Int)(^ : Vector[_ >: A], out_first: Int, out_last: Int): Int = RandomSample(v, first, last, ^, out_first, out_last)
+    def randomSampleBy[A](v : Vector[A], first: Int, last: Int)(^ : Vector[_ >: A], out_first: Int, out_last: Int)(rand: Int => Int): Int = RandomSample(v, first, last, ^, out_first, out_last, rand)
 
-    def randomSampleN[A, B >: A](v : Vector[A], first: Int, last: Int, ^ : Vector[B], out_ite: Int, n: Int): Int = RandomSampleN(v, first, last, ^, out_ite, n)
-    def randomSampleN[A, B >: A](v : Vector[A], first: Int, last: Int, ^ : Vector[B], out_ite: Int, n: Int, rand: Int => Int): Int = RandomSampleN(v, first, last, ^, out_ite, n, rand)
+    def randomSampleN[A](v : Vector[A], first: Int, last: Int)(^ : Vector[_ >: A], out_ite: Int, n: Int): Int = RandomSampleN(v, first, last, ^, out_ite, n)
+    def randomSampleNBy[A](v : Vector[A], first: Int, last: Int)(^ : Vector[_ >: A], out_ite: Int, n: Int)(rand: Int => Int): Int = RandomSampleN(v, first, last, ^, out_ite, n, rand)
 
-    def remove[A](v: Vector[A], first: Int, last: Int, e: Any): Int = Remove(v, first, last, e)
-    def remove[A](v: Vector[A], first: Int, last: Int, pred: A => Boolean): Int = Remove(v, first, last, pred)
+    def remove[A](v: Vector[A], first: Int, last: Int)(e: Any): Int = Remove(v, first, last, e)
+    def removeIf[A](v: Vector[A], first: Int, last: Int)(pred: A => Boolean): Int = Remove(v, first, last, pred)
 
-    def removeCopy[A, B >: A](v : Vector[A], first: Int, last: Int, ^ : Vector[B], result: Int, e: Any): Int = RemoveCopy(v, first, last, ^, result, e)
-    def removeCopyIf[A, B >: A](v : Vector[A], first: Int, last: Int, ^ : Vector[B], result: Int, pred: A => Boolean): Int = RemoveCopyIf(v, first, last, ^, result, pred)
+    def removeCopy[A](v : Vector[A], first: Int, last: Int)(^ : Vector[_ >: A], result: Int)(e: Any): Int = RemoveCopy(v, first, last, ^, result, e)
+    def removeCopyIf[A](v : Vector[A], first: Int, last: Int)(^ : Vector[_ >: A], result: Int)(pred: A => Boolean): Int = RemoveCopyIf(v, first, last, ^, result, pred)
 
-    def replace[A](v: Vector[A], first: Int, last: Int, old_value: Any, new_value: A): Unit = Replace(v, first, last, old_value, new_value)
-    def replaceIf[A](v: Vector[A], first: Int, last: Int, pred: A => Boolean, new_value: A): Unit = ReplaceIf(v, first, last, pred, new_value)
+    def replace[A](v: Vector[A], first: Int, last: Int)(old_value: Any, new_value: A): Unit = Replace(v, first, last, old_value, new_value)
+    def replaceIf[A](v: Vector[A], first: Int, last: Int)(pred: A => Boolean, new_value: A): Unit = ReplaceIf(v, first, last, pred, new_value)
 
-    def replaceCopy[A, B >: A](v : Vector[A], first: Int, last: Int, ^ : Vector[B], result: Int, old_value: Any, new_value: A): Int = ReplaceCopy(v, first, last, ^, result, old_value, new_value)
-    def replaceCopyIf[A, B >: A](v : Vector[A], first: Int, last: Int, ^ : Vector[B], result: Int, pred: A => Boolean, new_value: A): Int = ReplaceCopyIf(v, first, last, ^, result, pred, new_value)
+    def replaceCopy[A](v : Vector[A], first: Int, last: Int)(^ : Vector[_ >: A], result: Int, old_value: Any, new_value: A): Int = ReplaceCopy(v, first, last, ^, result, old_value, new_value)
+    def replaceCopyIf[A](v : Vector[A], first: Int, last: Int)(^ : Vector[_ >: A], result: Int)(pred: A => Boolean, new_value: A): Int = ReplaceCopyIf(v, first, last, ^, result, pred, new_value)
 
     def reverse[A](v: Vector[A], first: Int, last: Int): Unit = Reverse(v, first, last)
 
-    def sort[A](v: Vector[A], first: Int, last: Int)(implicit c: Compare[A]): Unit = Sort(v, first, last)(c)
-    def sort[A](v: Vector[A], first: Int, last: Int, comp: Compare.Predicate[A]): Unit = Sort(v, first, last, comp)
+    def sort[A](v: Vector[A], first: Int, last: Int)(implicit c: Compare[A]): Unit = Sort(v, first, last, c)
+    def sortBy[A](v: Vector[A], first: Int, last: Int)(comp: Compare.Func[A]): Unit = Sort(v, first, last, comp)
 
     def stableSort[A](v: Vector[A], first: Int, last: Int)(implicit c: Compare[A]): Unit = StableSort(v, first, last, c)
-    def stableSort[A](v: Vector[A], first: Int, last: Int, comp: Compare.Predicate[A]): Unit = StableSort(v, first, last, comp)
+    def stableSortBy[A](v: Vector[A], first: Int, last: Int)(comp: Compare.Func[A]): Unit = StableSort(v, first, last, comp)
 
-    def isSorted[A](v: Vector[A], first: Int, last: Int)(implicit c: Compare[A]): Boolean = IsSorted(v, first, last)(c)
-    def isSorted[A](v: Vector[A], first: Int, last: Int, comp: Compare.Predicate[A]): Boolean = IsSorted(v, first, last, comp)
+    def isSorted[A](v: Vector[A], first: Int, last: Int)(implicit c: Compare[A]): Boolean = IsSorted(v, first, last, c)
+    def isSortedBy[A](v: Vector[A], first: Int, last: Int)(comp: Compare.Func[A]): Boolean = IsSorted(v, first, last, comp)
 
-    def swapRanges[A](v1: Vector[A], first1: Int, last1: Int, v2: Vector[A], first2: Int): Int = SwapRanges(v1, first1, last1, v2, first2)
+    def swapRanges[A](v1: Vector[A], first1: Int, last1: Int)(v2: Vector[A], first2: Int): Int = SwapRanges(v1, first1, last1, v2, first2)
 
-    def transform[A, B](v : Vector[A], first: Int, last: Int, ^ : Vector[B], result: Int, opr: A => B): Int = Transform(v, first, last, ^, result, opr)
-    def transform[A, B, C](v1 : Vector[A], first1: Int, last1: Int, v2 : Vector[B], first2: Int,  ^ : Vector[C], result: Int, binary_op: (A, B) => C): Int = Transform(v1, first1, last1, v2, first2, ^, result, binary_op)
+    def transform[A, B](v : Vector[A], first: Int, last: Int)(^ : Vector[B], result: Int)(opr: A => B): Int = Transform(v, first, last, ^, result, opr)
+    def transformZip[A, B, C](v1 : Vector[A], first1: Int, last1: Int)(v2 : Vector[B], first2: Int)(^ : Vector[C], result: Int)(binary_op: (A, B) => C): Int = Transform(v1, first1, last1, v2, first2, ^, result, binary_op)
 
     def unique[A](v: Vector[A], first: Int, last: Int): Int = Unique(v, first, last)
-    def unique[A](v: Vector[A], first: Int, last: Int, binary_pred: Compare.Predicate[A]): Int = Unique(v, first, last, binary_pred)
+    def uniqueIf[A](v: Vector[A], first: Int, last: Int)(binary_pred: (A, A) => Boolean): Int = Unique(v, first, last, binary_pred)
 
-    def uniqueCopy[A, B >: A](v : Vector[A], first: Int, last: Int, ^ : Vector[B], result: Int): Int = UniqueCopy(v, first, last, ^, result)
-    def uniqueCopy[A, B >: A](v : Vector[A], first: Int, last: Int, ^ : Vector[B], result: Int, binary_pred: Functions.Predicate2[A, B]): Int = UniqueCopy(v, first, last, ^, result, binary_pred)
+    def uniqueCopy[A](v : Vector[A], first: Int, last: Int)(^ : Vector[_ >: A], result: Int): Int = UniqueCopy(v, first, last, ^, result)
+    def uniqueCopyIf[A, B >: A](v : Vector[A], first: Int, last: Int)(^ : Vector[B], result: Int)(binary_pred: (A, B) => Boolean): Int = UniqueCopy(v, first, last, ^, result, binary_pred)
 
     /**
      * Alias of <code>stl.OutputVector</code>

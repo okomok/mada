@@ -15,7 +15,7 @@ private[mada] class ParallelVector[A](override val self: Vector[A], override val
     Assert(!IsParallel(self))
     ThrowIf.nonpositive(grainSize, "grain size")
   // value semantics
-    override def equalsBy[B](that: Vector[B])(p: Functions.Predicate2[A, B]) = para.EqualsBy(self, that, p, grainSize)
+    override def equalsIf[B](that: Vector[B])(p: (A, B) => Boolean) = para.EqualsIf(self, that, p, grainSize)
   // filter
     override def filter(p: A => Boolean) = para.Filter(self, p, grainSize)
     override def mutatingFilter(p: A => Boolean): Vector[A] = para.MutatingFilter(self, p, grainSize)
@@ -28,7 +28,7 @@ private[mada] class ParallelVector[A](override val self: Vector[A], override val
     override def seek(p: A => Boolean) = para.Seek(self, p, grainSize)
     override def count(p: A => Boolean) = para.Count(self, p, grainSize)
   // sort
-    override def sortBy(lt: Compare.Predicate[A]) = para.SortBy(self, lt, grainSize)
+    override def sortBy(lt: Compare.Func[A]) = para.SortBy(self, lt, grainSize)
   // copy
     override def copyTo[B >: A](that: Vector[B]): Vector[A] = para.CopyTo(self, that, grainSize)
     override def clone: Vector[A] = Vector.fromArray(ToArray(this))
