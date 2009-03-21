@@ -45,7 +45,7 @@ private[mada] object IntroSort {
         var __last = last
         var __depth_limit = depth_limit
 
-        while (__last - __first > threshold) {
+        while (__last - __first > THRESHOLD) {
             if (__depth_limit == 0) {
                 PartialSort(*, __first, __last, __last, __comp)
                 return
@@ -58,15 +58,15 @@ private[mada] object IntroSort {
     }
 
     def finalInsertionSort[A](* : Vector[A], __first: Int, __last: Int, __comp: Compare.Predicate[A]): Unit = {
-        if (__last - __first > threshold) {
-            InsertionSort(*, __first, __first + threshold, __comp)
-            UnguardedInsertionSort(*, __first + threshold, __last, __comp)
+        if (__last - __first > THRESHOLD) {
+            InsertionSort(*, __first, __first + THRESHOLD, __comp)
+            UnguardedInsertionSort(*, __first + THRESHOLD, __last, __comp)
         } else {
             InsertionSort(*, __first, __last, __comp)
         }
     }
 
-    val threshold = 16
+    val THRESHOLD = 16
 
     def lg(n: Int): Int = {
         var __n = n

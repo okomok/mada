@@ -82,3 +82,16 @@ private[mada] object UnguardedLinearInsert {
         *(__last) = __val
     }
 }
+
+
+private[mada] object ChunkInsertionSort {
+    def apply[A](* : Vector[A], first: Int, __last: Int, __chunk_size: Int, __comp: Compare.Predicate[A]): Unit = {
+        var __first = first
+
+        while (__last - __first >= __chunk_size) {
+            InsertionSort(*, __first, __first + __chunk_size, __comp)
+            __first += __chunk_size
+        }
+        InsertionSort(*, __first, __last, __comp)
+    }
+}

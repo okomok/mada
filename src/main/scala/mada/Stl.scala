@@ -76,6 +76,9 @@ object Stl {
     def lexicographicalCompare3way[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int)(implicit c: Compare[A]): Int = LexicographicalCompare3way(v1, first1, __last1, v2, first2, __last2)(c)
     def lexicographicalCompare3way[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int, __comp: Compare.Predicate[A]): Int = LexicographicalCompare3way(v1, first1, __last1, v2, first2, __last2, __comp)
 
+    def merge[A](v1 : Vector[A], first1: Int, last1: Int, v2 : Vector[A], first2: Int, last2: Int, ^ : Vector[A], result: Int)(implicit c: Compare[A]): Int = Merge(v1, first1, last1, v2, first2, last2, ^, result, c)
+    def merge[A](v1 : Vector[A], first1: Int, last1: Int, v2 : Vector[A], first2: Int, last2: Int, ^ : Vector[A], result: Int, comp: Compare.Predicate[A]): Int = Merge(v1, first1, last1, v2, first2, last2, ^, result, comp)
+
     def partialSort[A](v: Vector[A], first: Int, middle: Int, last: Int)(implicit c: Compare[A]): Unit = PartialSort(v, first, middle, last)(c)
     def partialSort[A](v: Vector[A], first: Int, middle: Int, last: Int, comp: Compare.Predicate[A]): Unit = PartialSort(v, first, middle, last, comp)
 
@@ -121,6 +124,9 @@ object Stl {
 
     def sort[A](v: Vector[A], first: Int, last: Int)(implicit c: Compare[A]): Unit = Sort(v, first, last)(c)
     def sort[A](v: Vector[A], first: Int, last: Int, comp: Compare.Predicate[A]): Unit = Sort(v, first, last, comp)
+
+    def stableSort[A](v: Vector[A], first: Int, last: Int)(implicit c: Compare[A]): Unit = StableSort(v, first, last, c)
+    def stableSort[A](v: Vector[A], first: Int, last: Int, comp: Compare.Predicate[A]): Unit = StableSort(v, first, last, comp)
 
     def isSorted[A](v: Vector[A], first: Int, last: Int)(implicit c: Compare[A]): Boolean = IsSorted(v, first, last)(c)
     def isSorted[A](v: Vector[A], first: Int, last: Int, comp: Compare.Predicate[A]): Boolean = IsSorted(v, first, last, comp)
