@@ -24,4 +24,9 @@ private[mada] class ListVector[A](val from: List[A]) extends Vector[A] {
         Collections.sort(from, Compare.toComparator(lt))
         this
     }
+
+    override def stableSortBy(lt: Compare.Predicate[A]) = {
+        Collections.sort(from, Compare.toComparator(lt))
+        this
+    }
 }

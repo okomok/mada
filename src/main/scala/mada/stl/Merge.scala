@@ -49,15 +49,15 @@ private[mada] object Merge {
             }
             __result += 1
         }
-        Stl.copy(v2, __first2, __last2, ^, Stl.copy(v1, __first1, __last1, ^, __result))
+        Copy(v2, __first2, __last2, ^, Copy(v1, __first1, __last1, ^, __result))
     }
 }
 
 
-private[mada] object MergeSort {
+private[mada] object MergeSortWithBuffer {
     val CHUNK_SIZE = 7
 
-    def withBuffer[A](* : Vector[A], __first: Int, __last: Int, ^ : Vector[A], __buffer: Int, __comp: Compare.Predicate[A]): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __last: Int, ^ : Vector[A], __buffer: Int, __comp: Compare.Predicate[A]): Unit = {
         val __len = __last - __first
         val __buffer_last = __buffer + __len
 

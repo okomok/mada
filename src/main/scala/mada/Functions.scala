@@ -111,6 +111,39 @@ object Functions {
     }
 
 
+// infer
+
+    /**
+     * @return  <code>f</code>.
+     */
+    def infer1[T1, R](f: Function1[T1, R]): Function1[T1, R] = f
+
+    /**
+     * @return  <code>f</code>.
+     */
+    def infer2[T1, T2, R](f: Function2[T1, T2, R]): Function2[T1, T2, R] = f
+
+    /**
+     * @return  <code>f</code>.
+     */
+    def infer3[T1, T2, T3, R](f: Function3[T1, T2, T3, R]): Function3[T1, T2, T3, R] = f
+
+    /**
+     * Alias of <code>infer1</code>
+     */
+    def infer[T1, R](f: Function1[T1, R]): Function1[T1, R] = infer1(f)
+
+    /**
+     * Alias of <code>infer2</code>
+     */
+    def infer[T1, T2, R](f: Function2[T1, T2, R]): Function2[T1, T2, R] = infer2(f)
+
+    /**
+     * Alias of <code>infer3</code>
+     */
+    def infer[T1, T2, T3, R](f: Function3[T1, T2, T3, R]): Function3[T1, T2, T3, R] = infer3(f)
+
+
 // not
 
     /**

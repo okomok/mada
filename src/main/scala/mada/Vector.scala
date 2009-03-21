@@ -663,7 +663,7 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
     /**
      * @return  <code>sortBy(c)</code>.
      */
-    def sort(implicit c: Compare[A]): Vector[A] = sortBy(c)
+    final def sort(implicit c: Compare[A]): Vector[A] = sortBy(c)
 
     /**
      * Sort this vector according to the comparison function <code>lt</code>.
@@ -672,7 +672,21 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * @param   lt  strict weak ordering
      * @return  this vector sorted according to <code>lt</code>.
      */
-    def sortBy(lt: Compare.Predicate[A]): Vector[A] = SortBy(this, lt)
+    def sortBy(lt: Compare.Predicate[A]): Vector[A] = Sort(this, lt)
+
+    /**
+     * @return  <code>stableSortBy(c)</code>.
+     */
+    final def stableSort(implicit c: Compare[A]): Vector[A] = stableSortBy(c)
+
+    /**
+     * Stable sort this vector according to the comparison function <code>lt</code>.
+     * Note this vector is mutated.
+     *
+     * @param   lt  strict weak ordering
+     * @return  this vector sorted according to <code>lt</code>.
+     */
+    def stableSortBy(lt: Compare.Predicate[A]): Vector[A] = StableSort(this, lt)
 
 
 // concatenation

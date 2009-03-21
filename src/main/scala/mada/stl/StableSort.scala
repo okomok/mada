@@ -39,8 +39,8 @@ private[mada] object StableSort {
         val __middle = __first + __len
 
         val buf = Vector.from(new Array[A](__len))
-        MergeSort.withBuffer(*, __first, __middle, buf, buf.start, __comp)
-        MergeSort.withBuffer(*, __middle, __last, buf, buf.start, __comp)
+        MergeSortWithBuffer(*, __first, __middle, buf, buf.start, __comp)
+        MergeSortWithBuffer(*, __middle, __last, buf, buf.start, __comp)
 
         val buf_end = Stl.copy(*, __first, __middle, buf, buf.start)
         Merge(buf, buf.start, buf_end, *, __middle, __last, *, __first, __comp)
