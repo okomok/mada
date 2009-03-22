@@ -25,7 +25,7 @@ class FunctionsTest {
     }
 
     def testMemoizeFib: Unit = {
-        val mf = Functions memoize { (f: Int => Int, x: Int) => if (x <= 1) 1 else f(x-1) + f(x-2) }.curry
+        val mf = Functions memoize { (f: Int => Int) => (x: Int) => if (x <= 1) 1 else f(x-1) + f(x-2) }
         assertEquals(1346269, mf(30))
     }
 }

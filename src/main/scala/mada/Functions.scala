@@ -106,8 +106,8 @@ object Functions {
      */
     def memoizeBy[T, R](g: Transform[Function1[T, R]])(m: Maps.Mutable[T, R]): Function1[T, R] = {
         // See: http://citeseer.ist.psu.edu/51062.html
-        val wrap = { (fixed: Function1[T, R], v: T) => Maps.lazyGet(m)(v){ g(fixed)(v) } }
-        fix(wrap.curry)
+        val wrap = { (fixed: Function1[T, R]) => (v: T) => Maps.lazyGet(m)(v){ g(fixed)(v) } }
+        fix(wrap)
     }
 
 
