@@ -106,7 +106,7 @@ object Functions {
      */
     def memoizeBy[T, R](g: (T => R) => T => R)(m: Maps.Mutable[T, R]): T => R = {
         // See: That about wraps it up --- Using FIX to handle errors without exceptions, and other programming tricks (1997)
-        //  at http://citeseer.ist.psu.edu/51062.html
+        //      at http://citeseer.ist.psu.edu/51062.html
         val wrap_g = { (fixed: (T => R)) => (v: T) => Maps.lazyGet(m)(v){ g(fixed)(v) } }
         fix(wrap_g)
     }

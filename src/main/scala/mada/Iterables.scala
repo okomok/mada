@@ -186,7 +186,7 @@ object Iterables extends Conversions with Compatibles with Operators {
     def dropWhile[A](it: Iterable[A])(p: A => Boolean): Iterable[A] = byName(it.elements.dropWhile(p))
 
     /**
-     * <code>scala.Iterable</code> isn't projection.
+     * <code>scala.Iterable</code> returns no projection.
      */
     def take[A](it: Iterable[A], n: Int): Iterable[A] = byName(it.elements.take(n))
 
