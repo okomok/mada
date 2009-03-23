@@ -93,21 +93,22 @@ object Functions {
     /**
      * Fixed point combinator
      */
-    def fix[T, R](g: Transform[Function1[T, R]]): Function1[T, R] = { v => fixImpl(g)(v) }
-    private def fixImpl[T, R](g: Transform[Function1[T, R]])(v: T): R = g(fixImpl(g))(v)
+    def fix[T, R](g: (T => R) => T => R): T => R = { v => fixImpl(g)(v) }
+    private def fixImpl[T, R](g: (T => R) => T => R)(v: T): R = g(fixImpl(g))(v)
 
     /**
      * Memoizes <code>g</code> using hash map.
      */
-    def memoize[T, R](g: Transform[Function1[T, R]]): Function1[T, R] = memoizeBy(g)(new scala.collection.jcl.HashMap[T, R])
+    def memoize[T, R](g: (T => R) => T => R): T => R = memoizeBy(g)(new scala.collection.jcl.HashMap[T, R])
 
     /**
      * Memoizes <code>g</code> using <code>m</code> as memo table.
      */
-    def memoizeBy[T, R](g: Transform[Function1[T, R]])(m: Maps.Mutable[T, R]): Function1[T, R] = {
-        // See: http://citeseer.ist.psu.edu/51062.html
-        val wrap = { (fixed: Function1[T, R]) => (v: T) => Maps.lazyGet(m)(v){ g(fixed)(v) } }
-        fix(wrap)
+    def memoizeBy[T, R](g: (T => R) => T => R)(m: Maps.Mutable[T, R]): T => R = {
+        // See: That about wraps it up --- Using FIX to handle errors without exceptions, and other programming tricks (1997)
+        //  at http://citeseer.ist.psu.edu/51062.html
+        val wrap_g = { (fixed: (T => R)) => (v: T) => Maps.lazyGet(m)(v){ g(fixed)(v) } }
+        fix(wrap_g)
     }
 
 
