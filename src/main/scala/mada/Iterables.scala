@@ -103,7 +103,7 @@ object Iterables extends Conversions with Compatibles with Operators {
     /**
      * Constructs <code>Iterable</code> from iterator block.
      */
-    def block[A](op: (A => Iterable[A]) => B => C): B => C = Block(op)
+    def block[A](op: Yield[A] => Unit): Iterable[A] = Block(op)
 
 
 // Enumeration
