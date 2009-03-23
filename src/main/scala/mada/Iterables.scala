@@ -254,6 +254,15 @@ object Iterables extends Conversions with Compatibles with Operators {
     def symmetricDifferenceBy[A](it1: Iterable[A])(it2: Iterable[A])(lt: Compare.Func[A]): Iterable[A] = SymmetricDifference(it1, it2, lt)
 
 
+// misc
+
+    private[mada] def nextPrecondition[A](it: Iterator[A], klass: String): Unit = {
+        if (!it.hasNext) {
+            throw new NoSuchElementException("next on empty iterator of " + klass)
+        }
+    }
+
+
 // aliases
 
     /**

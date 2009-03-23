@@ -19,8 +19,5 @@ trait ZeroWidth[A] extends Peg[A] {
 
 
 private[mada] object IsZeroWidth {
-    def apply[A](p: Peg[A]): Boolean = p match {
-        case _: ZeroWidth[_] => true
-        case _ => false
-    }
+    def apply[A](p: Peg[A]): Boolean = p.isInstanceOf[ZeroWidth[_]]
 }

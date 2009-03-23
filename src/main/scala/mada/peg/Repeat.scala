@@ -41,7 +41,7 @@ private[mada] class RepeatExactlyPeg[A](p: Peg[A], n: Int) extends Peg[A] {
 }
 
 private[mada] class RepeatAtMostPeg[A](p: Peg[A], n: Int) extends Peg[A] {
-    // RepeatAtMostUntilPeg(p, n, !p) would include redandunt parsing.
+    // RepeatAtMostUntilPeg(p, n, !p) would include redundant parsing.
     override def parse(v: Vector[A], start: Int, end: Int): Int = {
         var cur = start
         var i = 0
@@ -58,19 +58,21 @@ private[mada] class RepeatAtMostPeg[A](p: Peg[A], n: Int) extends Peg[A] {
 }
 
 private[mada] class RepeatAtMostUntilPeg[A](p: Peg[A], n: Int, q: Peg[A]) extends Peg[A] {
-    override def parse(v: Vector[A], start: Int, end: Int): Int = {
+    override def parse(v: Vector[A], start: Int, end: Int) = parseImpl(v, start, end)._3
+
+    def parseImpl(v: Vector[A], start: Int, end: Int): (Int, Int, Int) = {
         var cur = start
         var i = 0
         var next = q.parse(v, cur, end)
         while (i != n && next == Peg.FAILURE) {
             next = p.parse(v, cur, end)
             if (next == Peg.FAILURE) {
-                return Peg.FAILURE
+                return (start, cur, Peg.FAILURE)
             }
             cur = next
             i += 1
             next = q.parse(v, cur, end)
         }
-        next
+        (start, cur, next)
     }
 }
