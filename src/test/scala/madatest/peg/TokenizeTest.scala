@@ -14,11 +14,11 @@ import mada.Peg.Compatibles._
 import mada.Vector.Region
 
 
-class SplitTest {
+class TokenizeTest {
     def testTrivial: Unit = {
         val pe = mada.Peg.from("abcd")
         val v = mada.Vector.from("XabcdXXabcdXX")
-        val it = pe.split(v.nth).elements
+        val it = pe.tokenize(v.nth).elements
         var c = 0
         while (it.hasNext) {
             val Region(_, i, j) = it.next
@@ -38,14 +38,14 @@ class SplitTest {
     def testBound: Unit = {
         val pe = mada.Peg.from("abcd")
         val v = mada.Vector.from("qqabqqab")
-        val it = pe.split(v).elements
+        val it = pe.tokenize(v).elements
         assertFalse(it.hasNext)
     }
 
     def testBound2: Unit = {
         val pe = mada.Peg.from("abcd")
         val v = mada.Vector.from("abcd")
-        val it = pe.split(v.nth).elements
+        val it = pe.tokenize(v.nth).elements
         val Region(_, i, j) = it.next
         assertEquals(0, i)
         assertEquals(4, j)
@@ -56,14 +56,14 @@ class SplitTest {
     def testEmpty: Unit = {
         val pe = mada.Peg.from("")
         val v = mada.Vector.from("")
-        val it = pe.split(v).elements
+        val it = pe.tokenize(v).elements
         assertFalse(it.hasNext)
     }
 
     def testTokens: Unit = {
         val pe = single('a') >> (any.+ until ~"XX")
         val v = mada.Vector.from("XabcdXXaBCDXX")
-        val it = pe.split(v.nth).elements
+        val it = pe.tokenize(v.nth).elements
         var c = 0
         while (it.hasNext) {
             val w = it.next

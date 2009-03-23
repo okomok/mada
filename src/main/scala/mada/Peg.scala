@@ -555,9 +555,9 @@ trait Peg[A] {
     final def matches(v: Vector[A]): Boolean = Matches(this, v)
 
     /**
-     * Splits input using this peg.
+     * Tokenizes input using this peg.
      */
-    final def split(v: Vector[A]): Iterable[Vector[A]] = Split(this, v)
+    final def tokenize(v: Vector[A]): Iterable[Vector[A]] = Tokenize(this, v)
 
     /**
      * Filters input using this peg.

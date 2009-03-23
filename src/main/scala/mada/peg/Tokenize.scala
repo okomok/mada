@@ -7,12 +7,12 @@
 package mada.peg
 
 
-private[mada] object Split {
+private[mada] object Tokenize {
     def apply[A](p: Peg[A], v: Vector[A]): Iterable[Vector[A]] = Iterables.byName(iimpl(p, v))
-    def iimpl[A](p: Peg[A], v: Vector[A]): Iterator[Vector[A]] = new SplitIterator(p, v)
+    def iimpl[A](p: Peg[A], v: Vector[A]): Iterator[Vector[A]] = new TokenizeIterator(p, v)
 }
 
-private[mada] class SplitIterator[A](p: Peg[A], v: Vector[A]) extends Iterator[Vector[A]] {
+private[mada] class TokenizeIterator[A](p: Peg[A], v: Vector[A]) extends Iterator[Vector[A]] {
     private var (k, l) = Find.impl(p, v, v.start, v.end)
     override def hasNext = l != Peg.FAILURE
     override def next = {
