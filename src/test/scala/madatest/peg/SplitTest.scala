@@ -27,6 +27,10 @@ class SplitTest {
         assertEquals(
             Vector(Vector.from(""), Vector.from("ab"), Vector.from("cdef"), Vector.from("gh")),
             Vector.fromIterable(Peg.from(":").split(Vector.from(":ab:cdef:gh:"))) )
+
+        assertEquals(
+            Vector(Vector.from("ab"), Vector.from(""), Vector.from("cdef"), Vector.from("gh"), Vector.from("")),
+            Vector.fromIterable(Peg.from(":").split(Vector.from("ab::cdef:gh::"))) )
     }
 
     def testBound: Unit = {

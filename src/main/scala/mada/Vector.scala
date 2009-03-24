@@ -120,7 +120,7 @@ object Vector extends Conversions with Compatibles with Eligibles with Operators
     def undivide[A](vv: Vector[Vector[A]]): Vector[A] = Undivide(vv)
 
     /**
-     * @return  flatten(vv.map{ v => sep.append(v) })
+     * Flattens <code>vs</code>, each vector appending <code>sep</code> except the last one.
      */
     def unsplit[A](vs: Iterable[Vector[A]])(sep: Vector[A]): Vector[A] = Unsplit(vs, sep)
 
