@@ -7,17 +7,14 @@
 package mada.vec.para
 
 
-import java.util.concurrent.atomic.AtomicBoolean
-
-
 private[mada] class Breakable1[A](p: A => Boolean, ret: Boolean) extends (A => Boolean) {
-    private val breaker = new AtomicBoolean(false)
-    override def apply(a: A) = if (breaker.get) ret else p(a)
-    final def break = breaker.set(true)
+    @volatile private var breaks = false
+    override def apply(a: A) = if (breaks) ret else p(a) // can call redundant p(a) but better than lock.
+    final def break: Unit = breaks = true
 }
 
 private[mada] class Breakable2[A, B](p: (A, B) => Boolean, ret: Boolean) extends ((A, B) => Boolean) {
-    private val breaker = new AtomicBoolean(false)
-    override def apply(a: A, b: B) = if (breaker.get) ret else p(a, b)
-    final def break = breaker.set(true)
+    @volatile private var breaks = false
+    override def apply(a: A, b: B) = if (breaks) ret else p(a, b)
+    final def break: Unit = breaks = true
 }
