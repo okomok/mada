@@ -31,7 +31,7 @@ class MapTest {
         }
     }
 
-    def testFusion: Unit = {
+    def testFusion: Unit = { // In fact, no fusions.
         val v = Vector.range(0, 10)
         val e = Vector.range(2, 12)
         assertEquals(e, v.parallel.map(_ + 1).map(_ + 1))
@@ -40,5 +40,12 @@ class MapTest {
 
         assertEquals(e.reduce(_ + _), v.parallel.map(_ + 1).map(_ + 1).reduce(_ + _))
         assertEquals(7, v.parallel.map(_ + 1).map(_ + 1).seek(_ == 7).get)
+    }
+
+    def testMany: Unit = {
+        val v = Vector.range(0, 10000)
+        val e = Vector.range(2, 10002)
+        assertEquals(e, v.parallel(1).map{ x => x + 2 })
+        assertEquals(e, v.parallel(3).map{ x => x + 2 } )
     }
 }
