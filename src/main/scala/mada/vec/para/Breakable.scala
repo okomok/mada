@@ -9,7 +9,7 @@ package mada.vec.para
 
 private[mada] class Breakable1[A](p: A => Boolean, ret: Boolean) extends (A => Boolean) {
     @volatile private var breaks = false
-    override def apply(a: A) = if (breaks) ret else p(a) // can call redundant p(a) but better than lock.
+    override def apply(a: A) = if (breaks) ret else p(a)
     final def break: Unit = breaks = true
 }
 

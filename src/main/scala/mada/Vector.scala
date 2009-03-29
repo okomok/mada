@@ -783,6 +783,11 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      */
     final def seal: Vector[A] = Seal(this)
 
+    /**
+     * Returns synchronized one.
+     */
+    final def `synchronized`: Vector[A] = Synchronized(this)
+
 
 // mixin
 

@@ -247,6 +247,45 @@ object Functions {
     val empty3: Function3[Any, Any, Any, Unit] = { (v1, v2, v3) => () }
 
 
+// synchronized, which memoize etc may need.
+
+    /**
+     * Returns synchronized one.
+     */
+    def synchronized1[T1, R](f: Function1[T1, R]): Function1[T1, R] = new Function1[T1, R] {
+        override def apply(v1: T1) = synchronized { f(v1) }
+    }
+
+    /**
+     * Returns synchronized one.
+     */
+    def synchronized2[T1, T2, R](f: Function2[T1, T2, R]): Function2[T1, T2, R] = new Function2[T1, T2, R] {
+        override def apply(v1: T1, v2: T2) = synchronized { f(v1, v2) }
+    }
+
+    /**
+     * Returns synchronized one.
+     */
+    def synchronized3[T1, T2, T3, R](f: Function3[T1, T2, T3, R]): Function3[T1, T2, T3, R] = new Function3[T1, T2, T3, R] {
+        override def apply(v1: T1, v2: T2, v3: T3) = synchronized { f(v1, v2, v3) }
+    }
+
+    /**
+     * Alias of <code>synchronized1</code>
+     */
+    def `synchronized`[T1, R](f: Function1[T1, R]): Function1[T1, R] = synchronized1(f)
+
+    /**
+     * Alias of <code>synchronized2</code>
+     */
+    def `synchronized`[T1, T2, R](f: Function2[T1, T2, R]): Function2[T1, T2, R] = synchronized2(f)
+
+    /**
+     * Alias of <code>synchronized3</code>
+     */
+    def `synchronized`[T1, T2, T3, R](f: Function3[T1, T2, T3, R]): Function3[T1, T2, T3, R] = synchronized3(f)
+
+
 // Ref
 
     /**
