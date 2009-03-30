@@ -20,24 +20,15 @@ private[mada] object Seek {
             val ar = new AtomicReference[A]
             val bp = new Breakable1(p, true)
             v.parallelRegions(grainSize).each{ w => breakingSeek(w, bp, ar) }
-            deref(ar)
+            Java.toOption(ar.get)
         }
     }
 
     private def breakingSeek[A](v: Vector[A], p: Breakable1[A], ar: AtomicReference[A]): Unit = {
         val x = v.seek(p)
         if (!x.isEmpty) {
-            ar.compareAndSet(null.asInstanceOf[A], x.get)
+            ar.compareAndSet(Java.fromNone, x.get)
             p.break
-        }
-    }
-
-    private def deref[A](ar: AtomicReference[A]): Option[A] = {
-        val a = ar.get
-        if (a == null) {
-            None
-        } else {
-            Some(a.asInstanceOf[A])
         }
     }
 }
