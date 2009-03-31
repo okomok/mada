@@ -12,7 +12,7 @@ private[mada] object LazyValues {
 }
 
 private[mada] class LazyValuesVector[A](override val underlying: Vector[A]) extends Adapter.Transform[A] with Adapter.NotWritable[A] {
-    private val table = new scala.collection.jcl.HashMap[Int, A]
+    private val table = new java.util.concurrent.ConcurrentHashMap[Int, () => A]
     override def apply(i: Int) = Maps.lazyGet(table)(i){ underlying(i) }
     override def lazyValues = this // lazyValues-lazyValues fusion
 }

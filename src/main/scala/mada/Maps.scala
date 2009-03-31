@@ -29,20 +29,6 @@ object Maps {
     /**
      * Puts only if <code>key</code> is not contained, then gets.
      */
-    def lazyGet[K, V](map: Mutable[K, V])(key: K)(value: => V): V = {
-        val ov = map.get(key)
-        if (ov.isEmpty) {
-            val v = value
-            map.put(key, v)
-            v
-        } else {
-            ov.get
-        }
-    }
-
-    /**
-     * Puts only if <code>key</code> is not contained, then gets.
-     */
     def lazyGet[K, V](map: Concurrent[K, () => V])(key: K)(value: => V): V = {
         // See: Java Concurrency in Practice - Listing 5.19
         Java.toOption(map.get(key)).getOrElse{
