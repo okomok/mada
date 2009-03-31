@@ -50,8 +50,8 @@ private[mada] object IntroSort {
                 PartialSort(*, __first, __last, __last, __comp)
                 return
             }
+            __depth_limit -= 1
             val __cut = UnguardedPartition(*, __first, __last, Median(*(__first), *(__first + (__last - __first)/2), *(__last - 1), __comp), __comp)
-            __depth_limit /= 2 // See: http://marc.info/?l=apache-stdcxx-dev&m=120120284610472&w=2
             loop(*, __cut, __last, __depth_limit, __comp)
             __last = __cut
         }
