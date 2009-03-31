@@ -22,6 +22,11 @@ object Maps {
     type Immutable[K, V] = scala.collection.immutable.Map[K, V]
 
     /**
+     * Alias of <code>java.util.concurrent.ConcurrentMap</code>
+     */
+    type Concurrent[K, V] = java.util.concurrent.ConcurrentMap[K, V]
+
+    /**
      * Puts only if <code>key</code> is not contained, then gets.
      */
     def lazyGet[K, V](map: Mutable[K, V])(key: K)(value: => V): V = {
@@ -33,5 +38,18 @@ object Maps {
         } else {
             ov.get
         }
+    }
+
+    /**
+     * Puts only if <code>key</code> is not contained, then gets.
+     */
+    def lazyGet[K, V](map: Concurrent[K, () => V])(key: K)(value: => V): V = {
+        // See: Java Concurrency in Practice - Listing 5.19
+        Java.toOption(map.get(key)).getOrElse{
+            val v = Functions.byLazy(value)
+            Java.toOption(map.putIfAbsent(key, v)).getOrElse{
+                v
+            }
+        }.apply()
     }
 }
