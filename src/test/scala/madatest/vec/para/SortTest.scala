@@ -51,6 +51,12 @@ class SortParallelPerfTest extends NoBenchmark {
     }
 }
 
+class SortParallelPerfNoParallelTest extends NoBenchmark {
+    override def run = {
+        longSample1.clone.seal.sortBy(_ < _)
+    }
+}
+
 class SortNonParallelPerfTest extends NoBenchmark {
     override def run = {
         longSample1.clone.seal.seal.sortBy(_ < _)

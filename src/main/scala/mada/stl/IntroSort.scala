@@ -36,7 +36,7 @@ package mada.stl
 private[mada] object IntroSort {
     def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Compare.Func[A]): Unit = {
         if (__first != __last) {
-            loop(*, __first, __last, lg(__last - __first) * 2, __comp)
+            loop(*, __first, __last, depthLimit(__first, __last), __comp)
             finalInsertionSort(*, __first, __last, __comp)
         }
     }
@@ -65,6 +65,8 @@ private[mada] object IntroSort {
             InsertionSort(*, __first, __last, __comp)
         }
     }
+
+    def depthLimit(first: Int, last: Int): Int = lg(last - first) * 2
 
     val THRESHOLD = 16
 
