@@ -26,6 +26,12 @@ private[mada] object Future {
     private class ByParallel[R](body: => R) extends Function0[R] {
         private val c = new Callable[R] { override def call(): R = body }
         private val u = exe.synchronized { exe.submit(c) }
-        override def apply(): R = u.get
+        override def apply(): R = {
+            try {
+                u.get
+            } catch {
+                case e: ExecutionException => throw e.getCause
+            }
+        }
     }
 }
