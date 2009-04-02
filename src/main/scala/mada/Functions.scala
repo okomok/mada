@@ -63,22 +63,6 @@ object Functions {
 // utilities
 
     /**
-     * Evaluates <code>body</code> infinite times.
-     */
-    def cycle[R](body: => R): Unit = while (true) body
-
-    /**
-     * Evaluates <code>body</code> <code>n</code> times.
-     */
-    def cycle[R](body: => R, n: Int): Unit = {
-        var i = 0
-        while (i != n) {
-            body
-            i += 1
-        }
-    }
-
-    /**
      * A function flipping two arguments
      */
     def flip[T1, T2, R](f: Function2[T1, T2, R]): Function2[T2, T1, R] = { (v2, v1) => f(v1, v2) }
