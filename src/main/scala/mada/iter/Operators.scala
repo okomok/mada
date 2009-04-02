@@ -21,6 +21,8 @@ trait Operators {
         def seal = Iterables.seal(_1)
         def step(_2: Int) = Iterables.step(_1, _2)
         def takeWhile_(_2: A => Boolean) = Iterables.takeWhile(_1)(_2)
+        def cycle = Iterables.cycle(_1)
+        def cycle(_2: Int) = Iterables.cycle(_1, _2)
         def toHashSet = Iterables.toHashSet(_1)
         def toString_ = Iterables.stringFrom(_1)
         def unique = Iterables.unique(_1)

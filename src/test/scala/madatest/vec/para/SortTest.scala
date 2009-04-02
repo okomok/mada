@@ -7,6 +7,7 @@
 package madatest.vec.para
 
 
+import mada.Functions
 import mada.Vector
 import mada.Vector._
 import junit.framework.Assert._
@@ -47,20 +48,16 @@ class SortTest {
 
 class SortParallelPerfTest extends NoBenchmark {
     override def run = {
-        longSample1.clone.parallel.seal.sortBy(_ < _)
+        longSample1.clone.parallel.sortBy{ (x, y) => Functions.cycle(longCalc, 5); x < y }
     }
-}
-
-class SortParallelPerfNoParallelTest extends NoBenchmark {
-    override def run = {
-        longSample1.clone.seal.sortBy(_ < _)
-    }
+    override val grainCount = 1
 }
 
 class SortNonParallelPerfTest extends NoBenchmark {
     override def run = {
-        longSample1.clone.seal.seal.sortBy(_ < _)
+        longSample1.clone.sortBy{ (x, y) => Functions.cycle(longCalc, 5); x < y }
     }
+    override val grainCount = 1
 }
 
 class SortParallelPartitionTest extends NoBenchmark {

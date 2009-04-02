@@ -9,11 +9,15 @@ package mada.func
 
 private[mada] object Future {
     import java.util.concurrent._
+    import java.lang.Runnable
 
-    val corePoolSize = 2 * java.lang.Runtime.getRuntime.availableProcessors
+    val POOL_SIZE = 2 * java.lang.Runtime.getRuntime.availableProcessors
 
-    // Note that scala.actors and ScheduledExecutorService don't work with nested futures.
-    private val exe = Executors.newCachedThreadPool()
+    // Dependent tasks need unbounded pools to avoid starvation deadlock.
+    // (scala.actors.Future doesn't support dependent tasks.)
+    private val exe =
+        new ThreadPoolExecutor(0, POOL_SIZE, 60L, TimeUnit.SECONDS, new SynchronousQueue[Runnable]())
+        // Executors.newCachedThreadPool()
 
     def apply[R](body: => R): Function0[R] = {
         try {

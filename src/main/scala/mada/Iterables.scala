@@ -168,6 +168,11 @@ object Iterables extends Conversions with Compatibles with Operators {
     def cycle[A](it: Iterable[A]): Iterable[A] = repeat(()).flatMap{ (u: Unit) => it }
 
     /**
+     * An <code>n</code> times repetition of <code>it</code>.
+     */
+    def cycle[A](it: Iterable[A], n: Int): Iterable[A] = Iterables.take(repeat(()), n).flatMap{ (u: Unit) => it }
+
+    /**
      * @return  <code>by(it.elements)</code>.
      */
     def singlePass[A](it: Iterable[A]): Iterable[A] = by(it.elements)
