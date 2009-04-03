@@ -14,12 +14,12 @@ import madatest.vec.detail.Example._
 import madatest.vec.detail._
 
 
-class ForeachTest {
+class EachTest {
     def testTrivial: Unit = {
         val ex = Array(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14)
-        mada.Vector.from(ex).parallel.foreach(print(_))
-        //mada.Vector.from(ex).parallel(6).foreach(print(_))
-        //mada.Vector.from(ex).parallel(100).foreach(print(_))
+        mada.Vector.from(ex).parallel.each(print(_))
+        mada.Vector.from(ex).parallel(6).each(print(_))
+        mada.Vector.from(ex).parallel(100).each(print(_))
     }
 
     def print(i: Int) = {
