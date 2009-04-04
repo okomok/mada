@@ -96,7 +96,7 @@ object Proxies {
     /**
      * Trivial mutable proxy (lightweight <code>Option</code>)
      */
-    class Var[A](private var x: A) extends Mutable[A] {
+    class Var[A](@volatile private var x: A) extends Mutable[A] {
         /**
          * Constructs null proxy.
          */
@@ -125,8 +125,8 @@ object Proxies {
     class LazyVar[A] extends Mutable[A] {
         private val r = new java.util.concurrent.atomic.AtomicReference[Function0[A]]
 
-        override lazy val self = r.get.apply
-        override def assign(that: => A) = { r.compareAndSet(null, Functions.byName(that)) }
+        override def self = r.get.apply()
+        override def assign(that: => A) = r.compareAndSet(null, Functions.byLazy(that))
         override def resign = r.set(null)
         override def isNull = null == r.get
 
