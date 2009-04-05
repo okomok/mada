@@ -270,7 +270,7 @@ object Vector extends Conversions with Compatibles with Eligibles with Operators
  *
  * Unless otherwise specified, these methods return projections to keep readability and writability.
  */
-trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
+trait Vector[A] extends PartialFunction[Int, A] {
 
 
 // kernel interface
@@ -336,8 +336,6 @@ trait Vector[A] extends PartialFunction[Int, A] with HashCode.OfRef {
      * Generates hash code as value semantics.
      */
     override def hashCode: Int = HashCode_(this)
-
-    final override def hashCodeOfRef: Int = super.hashCode
 
 
 // regions

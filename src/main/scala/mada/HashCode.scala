@@ -22,17 +22,7 @@ object HashCode {
     def ofLong(x: Long): Int = (x ^ (x >>> 32)).toInt
 
     /**
-     * Hash code of reference (value semantics ignored.)
+     * @return  <code>java.lang.System.idenityHashCode(x)</code>.
      */
-    def ofRef(x: OfRef): Int = x.hashCodeOfRef
-
-    /**
-     * Required for <code>ofRef</code>.
-     */
-    trait OfRef {
-        /**
-         * Shall return <code>super.hashCode</code> in subclass.
-         */
-        def hashCodeOfRef: Int
-    }
+    def ofRef(x: AnyRef): Int = java.lang.System.identityHashCode(x)
 }
