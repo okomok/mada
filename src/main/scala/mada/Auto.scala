@@ -10,12 +10,19 @@ package mada
 package auto {
 
     trait Eligibles {
+        import java.io.Closeable
+        import java.util.concurrent.locks.Lock
+
         implicit object ofInterface extends Auto[Auto.Interface] {
             def dispose(e: Auto.Interface) = e.dispose
         }
 
-        implicit object ofCloseable extends Auto[java.io.Closeable] {
-            def dispose(e: java.io.Closeable) = e.close
+        implicit object ofCloseable extends Auto[Closeable] {
+            def dispose(e: Closeable) = e.close
+        }
+
+        implicit object ofLock extends Auto[Lock] {
+            def dispose(e: Lock) = e.unlock
         }
     }
 

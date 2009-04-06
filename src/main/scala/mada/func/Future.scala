@@ -13,7 +13,7 @@ private[mada] object Future {
 
     val POOL_SIZE = 2 * java.lang.Runtime.getRuntime.availableProcessors
 
-    // Dependent tasks need unbounded pools to avoid starvation deadlock.
+    // Interdependent tasks need unbounded pools to avoid starvation deadlock.
     // (scala.actors.Future doesn't support dependent tasks.)
     private val exe =
         new ThreadPoolExecutor(0, POOL_SIZE, 60L, TimeUnit.SECONDS, new SynchronousQueue[Runnable]())
