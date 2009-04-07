@@ -11,23 +11,23 @@ import java.util.concurrent.atomic.AtomicReference
 
 
 private[mada] object Seek {
-    def apply[A, B](v: Vector[A], p: A => Boolean, grainSize: Int): Option[A] = {
+    def apply[A](v: Vector[A], p: A => Boolean, grainSize: Int): Option[A] = {
         Assert(!IsParallel(v))
 
         if (v.isEmpty) {
             None
         } else {
-            val ar = new AtomicReference[A]
+            val ar = new AtomicReference[_Nullable[A]](_Null)
             val bp = new Breakable1(p, true)
             v.parallelRegions(grainSize).each{ w => breakingSeek(w, bp, ar) }
-            Java.toOption(ar.get)
+            ar.get.toOption
         }
     }
 
-    private def breakingSeek[A](v: Vector[A], p: Breakable1[A], ar: AtomicReference[A]): Unit = {
-        val x = v.seek(p)
+    private def breakingSeek[A](v: Vector[A], p: Breakable1[A], ar: AtomicReference[_Nullable[A]]): Unit = {
+        val x = v.seek(p) // can tell a lie after someone wins.
         if (!x.isEmpty) {
-            ar.compareAndSet(Java.fromNone, x.get)
+            ar.compareAndSet(_Null, _NotNull(x.get)) // try to win the race.
             p.break
         }
     }
