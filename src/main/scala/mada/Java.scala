@@ -25,4 +25,9 @@ object Java {
      * @return  <code>null.asInstanceOf[A]</code>.
      */
     def fromNone[A]: A = null.asInstanceOf[A]
+
+    /**
+     * @return  <code>null.asInstanceOf[A]</code>.
+     */
+    def `null`[A]: A = null.asInstanceOf[A]
 }

@@ -7,7 +7,8 @@
 package mada.vec.para
 
 
-import java.util.concurrent.atomic.AtomicReference
+// AtomicReference isn't enough because null is a valid element of vector.
+import java.util.concurrent.atomic.AtomicMarkableReference
 
 
 private[mada] object Seek {
@@ -17,17 +18,17 @@ private[mada] object Seek {
         if (v.isEmpty) {
             None
         } else {
-            val ar = new AtomicReference[_Nullable[A]](_Null)
+            val ar = new AtomicMarkableReference[A](Java.`null`, false) // mark means "found".
             val bp = new Breakable1(p, true)
             v.parallelRegions(grainSize).each{ w => breakingSeek(w, bp, ar) }
-            ar.get.toOption
+            if (ar.isMarked) Some(ar.getReference) else None
         }
     }
 
-    private def breakingSeek[A](v: Vector[A], p: Breakable1[A], ar: AtomicReference[_Nullable[A]]): Unit = {
+    private def breakingSeek[A](v: Vector[A], p: Breakable1[A], ar: AtomicMarkableReference[A]): Unit = {
         val x = v.seek(p) // can tell a lie after someone wins.
         if (!x.isEmpty) {
-            ar.compareAndSet(_Null, _NotNull(x.get)) // try to win the race.
+            ar.compareAndSet(Java.`null`, x.get, false, true) // try to win the race.
             p.break
         }
     }
