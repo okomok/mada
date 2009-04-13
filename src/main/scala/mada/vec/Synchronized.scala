@@ -7,11 +7,11 @@
 package mada.vec
 
 
-private[mada] object Synchronized {
-    def apply[A](v: Vector[A]): Vector[A] = new SynchronizedVector(v)
+private[mada] object Synchronize {
+    def apply[A](v: Vector[A]): Vector[A] = new SynchronizeVector(v)
 }
 
-private[mada] class SynchronizedVector[A](override val self: Vector[A]) extends VectorProxy[A] {
+private[mada] class SynchronizeVector[A](override val self: Vector[A]) extends VectorProxy[A] {
   // value semantics
     override def equalsIf[B](that: Vector[B])(p: (A, B) => Boolean): Boolean = synchronized { self.equalsIf(that)(p) }
     override def equals(that: Any): Boolean = synchronized { Equals(this, that) } // works around scala.Proxy.equals.

@@ -537,9 +537,9 @@ trait Peg[A] {
     final def unmap[Z](f: Z => A): Peg[Z] = readMap{ v => v.map(f) }
 
     /**
-     * Returns synchronized one. <code>memoize</code> may need this.
+     * Returns synchronized one.
      */
-    final def `synchronized`: Peg[A] = Synchronized(this)
+    final def synchronize: Peg[A] = Synchronize(this)
 
 
 // algorithms

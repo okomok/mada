@@ -784,7 +784,7 @@ trait Vector[A] extends PartialFunction[Int, A] {
     /**
      * Returns synchronized one.
      */
-    final def `synchronized`: Vector[A] = Synchronized(this)
+    final def synchronize: Vector[A] = Synchronize(this)
 
 
 // mixin
