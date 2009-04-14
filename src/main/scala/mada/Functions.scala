@@ -46,6 +46,10 @@ object Functions {
      */
     type Predicate3[-T1, -T2, -T3] = Function3[T1, T2, T3, Boolean]
 
+    /**
+     * Alias of <code>func.Parameter[T]</code>
+     */
+    type Parameter[T] = func.Parameter[T]
 
 // equal
 
@@ -243,43 +247,76 @@ object Functions {
     val empty3: Function3[Any, Any, Any, Unit] = { (v1, v2, v3) => () }
 
 
-// synchronized, which memoize etc may need.
+// synchronize, probably useless
 
     /**
      * Returns synchronized one.
      */
-    def synchronized1[T1, R](f: Function1[T1, R]): Function1[T1, R] = new Function1[T1, R] {
+    def synchronize1[T1, R](f: Function1[T1, R]): Function1[T1, R] = new Function1[T1, R] {
         override def apply(v1: T1) = synchronized { f(v1) }
     }
 
     /**
      * Returns synchronized one.
      */
-    def synchronized2[T1, T2, R](f: Function2[T1, T2, R]): Function2[T1, T2, R] = new Function2[T1, T2, R] {
+    def synchronize2[T1, T2, R](f: Function2[T1, T2, R]): Function2[T1, T2, R] = new Function2[T1, T2, R] {
         override def apply(v1: T1, v2: T2) = synchronized { f(v1, v2) }
     }
 
     /**
      * Returns synchronized one.
      */
-    def synchronized3[T1, T2, T3, R](f: Function3[T1, T2, T3, R]): Function3[T1, T2, T3, R] = new Function3[T1, T2, T3, R] {
+    def synchronize3[T1, T2, T3, R](f: Function3[T1, T2, T3, R]): Function3[T1, T2, T3, R] = new Function3[T1, T2, T3, R] {
         override def apply(v1: T1, v2: T2, v3: T3) = synchronized { f(v1, v2, v3) }
     }
 
     /**
-     * Alias of <code>synchronized1</code>
+     * Alias of <code>synchronize1</code>
      */
-    def synchronize[T1, R](f: Function1[T1, R]): Function1[T1, R] = synchronized1(f)
+    def synchronize[T1, R](f: Function1[T1, R]): Function1[T1, R] = synchronize1(f)
 
     /**
-     * Alias of <code>synchronized2</code>
+     * Alias of <code>synchronize2</code>
      */
-    def synchronize[T1, T2, R](f: Function2[T1, T2, R]): Function2[T1, T2, R] = synchronized2(f)
+    def synchronize[T1, T2, R](f: Function2[T1, T2, R]): Function2[T1, T2, R] = synchronize2(f)
 
     /**
-     * Alias of <code>synchronized3</code>
+     * Alias of <code>synchronize3</code>
      */
-    def synchronize[T1, T2, T3, R](f: Function3[T1, T2, T3, R]): Function3[T1, T2, T3, R] = synchronized3(f)
+    def synchronize[T1, T2, T3, R](f: Function3[T1, T2, T3, R]): Function3[T1, T2, T3, R] = synchronize3(f)
+
+
+// parameterize
+
+    /**
+     * Returns parameterized one.
+     */
+    def parameterize1[T1, R](f: Function1[T1, R])(q1: Parameter[T1]): Function1[Seq[Parameter[_]], R] = Parameterize.apply1(f, q1)
+
+    /**
+     * Returns parameterized one.
+     */
+    def parameterize2[T1, T2, R](f: Function2[T1, T2, R])(q1: Parameter[T1], q2: Parameter[T2]): Function1[Seq[Parameter[_]], R] = Parameterize.apply2(f, q1, q2)
+
+    /**
+     * Returns parameterized one.
+     */
+    def parameterize3[T1, T2, T3, R](f: Function3[T1, T2, T3, R])(q1: Parameter[T1], q2: Parameter[T2], q3: Parameter[T3]): Function1[Seq[Parameter[_]], R] = Parameterize.apply3(f, q1, q2, q3)
+
+    /**
+     * Alias of <code>parameterize1</code>
+     */
+    def parameterize[T1, R](f: Function1[T1, R])(q1: Parameter[T1]): Function1[Seq[Parameter[_]], R] = parameterize1(f)(q1)
+
+    /**
+     * Alias of <code>parameterize2</code>
+     */
+    def parameterize[T1, T2, R](f: Function2[T1, T2, R])(q1: Parameter[T1], q2: Parameter[T2]): Function1[Seq[Parameter[_]], R] = parameterize2(f)(q1, q2)
+
+    /**
+     * Alias of <code>parameterize3</code>
+     */
+    def parameterize[T1, T2, T3, R](f: Function3[T1, T2, T3, R])(q1: Parameter[T1], q2: Parameter[T2], q3: Parameter[T3]): Function1[Seq[Parameter[_]], R] = parameterize3(f)(q1, q2, q3)
 
 
 // Ref
