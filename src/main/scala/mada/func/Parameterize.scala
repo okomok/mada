@@ -19,12 +19,7 @@ trait Parameter[A] {
     /**
      * The argument passed to this parameter
      */
-    def argument: A = throw new IllegalArgumentException(toString + " argument missing")
-
-    /**
-     * Alias of <code>pass</code>
-     */
-    final def apply(v: A): Parameter[A] = pass(v)
+    def argument: A = throw new IllegalArgumentException("missing argument: " + this)
 
     /**
      * Alias of <code>pass</code>
@@ -42,25 +37,17 @@ trait Parameter[A] {
 
 
 private[mada] object Parameterize {
+    private def getArg[T](ps: Seq[Parameter[_]], q: Parameter[T]) = ps.find(_.origin eq q.origin).getOrElse(q).argument.asInstanceOf[T]
+
     def apply1[T1, R](f: Function1[T1, R], q1: Parameter[T1]): Function1[Seq[Parameter[_]], R] = new Function1[Seq[Parameter[_]], R] {
-        override def apply(ps: Seq[Parameter[_]]) = f(getArg[T1](ps, 0, q1))
+        override def apply(ps: Seq[Parameter[_]]) = f(getArg(ps, q1))
     }
 
     def apply2[T1, T2, R](f: Function2[T1, T2, R], q1: Parameter[T1], q2: Parameter[T2]): Function1[Seq[Parameter[_]], R] = new Function1[Seq[Parameter[_]], R] {
-        override def apply(ps: Seq[Parameter[_]]) = f(getArg[T1](ps, 0, q1), getArg[T2](ps, 1, q2))
+        override def apply(ps: Seq[Parameter[_]]) = f(getArg(ps, q1), getArg(ps, q2))
     }
 
     def apply3[T1, T2, T3, R](f: Function3[T1, T2, T3, R], q1: Parameter[T1], q2: Parameter[T2], q3: Parameter[T3]): Function1[Seq[Parameter[_]], R] = new Function1[Seq[Parameter[_]], R] {
-        override def apply(ps: Seq[Parameter[_]]) = f(getArg[T1](ps, 0, q1), getArg[T2](ps, 1, q2), getArg[T3](ps, 2, q3))
-    }
-
-    private def getArg[T](ps: Seq[Parameter[_]], n: Int, q: Parameter[_]): T = {
-        val _p = ps.find(_.origin eq q.origin)
-        if (_p.isEmpty) {
-            q.argument.asInstanceOf[T]
-        } else {
-            _p.get.argument.asInstanceOf[T]
-        }
+        override def apply(ps: Seq[Parameter[_]]) = f(getArg(ps, q1), getArg(ps, q2), getArg(ps, q3))
     }
 }
-
