@@ -10,7 +10,7 @@ package mada.vec
 /**
  * Contains operators which can't be method of vector because of type constraints.
  */
-trait Operators {
+trait Operators { this: Vector.type =>
     sealed class MadaVectorIterableVector[A](_1: Iterable[Vector[A]]) {
         def flatten = Vector.flatten(_1)
         def unsplit(_2: Vector[A]) = Vector.unsplit(_1)(_2)
