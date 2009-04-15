@@ -9,9 +9,8 @@ package mada.func
 
 /**
  * Converts a function to synchronized one.
- * (This trait is for exposition only: use <code>Functions</code> methods instead.)
  */
-trait Synchronize {
+trait Synchronize { this: Functions.type =>
     def synchronize1[T1, R](f: Function1[T1, R]): Function1[T1, R] = new Function1[T1, R] {
         override def apply(v1: T1) = synchronized { f(v1) }
     }

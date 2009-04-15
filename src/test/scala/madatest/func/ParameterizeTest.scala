@@ -28,6 +28,8 @@ class ParameterizeTest {
     def namedFoo(ps: Functions.Parameter[_]*) = pd(ps)
 
     def testTrivial: Unit = {
+        // new mada.func.Parameterize { } // should not compile.
+
         assertEquals(10 * 2 + 5, namedFoo())
         assertEquals(3 * 2 + 5, namedFoo(width -> 3))
         assertEquals(10 * 3 + 5, namedFoo(height->3))

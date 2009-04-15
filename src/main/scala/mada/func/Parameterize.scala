@@ -9,9 +9,8 @@ package mada.func
 
 /**
  * Converts a function into parameterized one.
- * (This trait is for exposition only: use <code>Functions</code> methods instead.)
  */
-trait Parameterize {
+trait Parameterize { this: Functions.type =>
     def parameterize1[T1, R](f: Function1[T1, R])(q1: Parameter[T1]): Function1[Seq[Parameter[_]], R] = new Function1[Seq[Parameter[_]], R] {
         override def apply(ps: Seq[Parameter[_]]) = f(getArg(ps, q1))
     }
@@ -35,7 +34,7 @@ trait Parameterize {
 /**
  * Represents named parameter.
  */
-trait Parameter[A] {
+trait Parameter[A] { ^ =>
     /**
      * Returns <code>this</code> as parameter's unique id.
      */
@@ -55,7 +54,7 @@ trait Parameter[A] {
      * Passes the argument to this parameter.
      */
     final def pass(v: A): Parameter[A] = new Parameter[A] {
-        override def origin = Parameter.this
+        override def origin = ^
         override def argument = v
     }
 }
