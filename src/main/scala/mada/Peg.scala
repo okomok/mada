@@ -676,6 +676,11 @@ trait Peg[A] {
 // misc
 
     /**
+     * @return  <code>this</code>.
+     */
+    final def asPeg: Peg[A] = this
+
+    /**
      * @return  <code>(e, this)</code>.
      */
     final def inCase(e: A): (A, Peg[A]) = (e, this)

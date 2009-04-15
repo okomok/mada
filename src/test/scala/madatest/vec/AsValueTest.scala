@@ -19,6 +19,8 @@ class AsValueTest {
         assertNotSame(a, b)
         assertEquals(a, b)
         AssertNotEquals(a, c)
+
+        // Note: v.readOnly.hashCode can't be lazy because element itself can be mutable.
         assertEquals(a.hashCode, b.hashCode)
         AssertNotEquals(a.hashCode, c.hashCode)
     }

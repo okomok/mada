@@ -934,7 +934,7 @@ trait Vector[A] extends PartialFunction[Int, A] {
     /**
      * @return  <code>this</code>.
      */
-    final def vector: Vector[A] = this
+    final def asVector: Vector[A] = this
 
     /**
      * @return  <code>start == end</code>.
