@@ -10,7 +10,8 @@ package mada.stack
 /**
  * Contains explicit conversions around <code>Stack</code>.
  */
-trait Conversions {
+trait Conversions { this: Stack.type =>
+
     def fromJclDeque[A](from: java.util.Deque[A]): Stack[A] = new Stack[A] {
         override def push(e: A) = from.push(e)
         override def pop = from.pop

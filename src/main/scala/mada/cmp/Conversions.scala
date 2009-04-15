@@ -10,8 +10,7 @@ package mada.cmp
 /**
  * Contains explicit conversions for strict weak ordering.
  */
-trait Conversions {
-    import Compare.{ Func, GetOrdered, Comparator }
+trait Conversions { this: Compare.type =>
 
 // from
     def fromFunc[A](from: Func[A]): Compare[A] = new Compare[A] {

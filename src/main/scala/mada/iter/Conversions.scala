@@ -10,7 +10,8 @@ package mada.iter
 /**
  * Contains explicit conversions around <code>Iterable</code>.
  */
-trait Conversions {
+trait Conversions { this: Iterables.type =>
+
 // compatibles
   // from
     def fromJclIterable[A](from: java.lang.Iterable[A]): Iterable[A] = jcl.IterableToIterable(from)

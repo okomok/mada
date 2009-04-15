@@ -8,9 +8,10 @@ package mada.peg
 
 
 /**
- * Contains explicit conversions around <code>Peg</code>. (must be used through the <code>Peg</code> object.)
+ * Contains explicit conversions around <code>Peg</code>.
  */
-trait Conversions {
+trait Conversions { this: Peg.type =>
+
     def fromChar(from: Char): Peg[Char] = Single(from)
     def fromIterable[A](from: Iterable[A]): Peg[A] = FromIterable(from)
     def fromRegex(from: scala.util.matching.Regex): Peg[Char] = FromRegexPattern(from.pattern)

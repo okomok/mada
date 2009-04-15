@@ -10,7 +10,7 @@ package mada.bool
 /**
  * Contains operators for <code>Boolean</code>.
  */
-trait Operators {
+trait Operators { this: Booleans.type =>
     sealed class MadaBooleans(_1: Boolean) {
         def implies(_2: => Boolean) = Booleans.implies(_1, _2)
     }

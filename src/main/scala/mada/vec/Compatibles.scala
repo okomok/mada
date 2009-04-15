@@ -10,9 +10,7 @@ package mada.vec
 /**
  * Contains implicit conversions around <code>Vector</code>.
  */
-trait Compatibles {
-    import Vector._
-
+trait Compatibles { this: Vector.type =>
 // from
     implicit def madaVectorFromArray[A](from: Array[A]): Vector[A] = fromArray(from)
     implicit def madaVectorFromCell[A](from: Cell[A]): Vector[A] = fromCell(from)
@@ -22,7 +20,6 @@ trait Compatibles {
     implicit def madaVectorFromProduct(from: Product): Vector[Any] = fromProduct(from)
     implicit def madaVectorFromRandomAccessSeq[A](from: RandomAccessSeq[A]): Vector[A] = fromRandomAccessSeq(from)
     implicit def madaVectorFromString(from: String): Vector[Char] = fromString(from)
-
 // to
     implicit def madaVectorToJclCharSequence(from: Vector[Char]): java.lang.CharSequence = toJclCharSequence(from)
     implicit def madaVectorToIterable[A](from: Vector[A]): Iterable[A] = toIterable(from)

@@ -10,8 +10,7 @@ package mada.cmp
 /**
  * Contains implicit conversions for strict weak ordering.
  */
-trait Compatibles {
-    import Compare._
+trait Compatibles { this: Compare.type =>
 // from
     implicit def madaCompareFromFunc[A](from: Func[A]): Compare[A] = fromFunc(from)
     implicit def madaCompareFromGetOrdered[A](implicit from: GetOrdered[A]): Compare[A] = fromGetOrdered(from)
