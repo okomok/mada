@@ -26,7 +26,7 @@ class SymbolMapTest {
     }
 
     def testTrivial2: Unit = {
-        val g = SymbolMap(mada.Vector.fromString("e") -> mada.Peg.fromString("z"), mada.Vector.fromString("ef") -> mada.Peg.fromString("g"))
+        val g = SymbolMap(mada.Vector.unstringize("e") -> mada.Peg.unstringize("z"), mada.Vector.unstringize("ef") -> mada.Peg.unstringize("g"))
         assertTrue("abc" >> g  matches "abcez")
     }
 

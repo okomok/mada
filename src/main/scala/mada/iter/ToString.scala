@@ -7,7 +7,7 @@
 package mada.iter
 
 
-private[mada] object StringFrom {
+private[mada] object ToString {
     def apply[A](from: Iterable[A]): String = {
         val a = new java.util.ArrayList[A]
         for (e <- from.projection) {

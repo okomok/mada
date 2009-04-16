@@ -22,8 +22,9 @@ trait Conversions { this: Iterables.type =>
 
 // incompatibles
   // to
-    def stringize[A](it: Iterable[Char]): String = Stringize(it)
-    def stringFrom[A](it: Iterable[A]): String = StringFrom(it)
+    def stringize[A](from: Iterable[Char]): String = Stringize(from)
+    def unstringize[A](from: String): Iterable[Char] = throw new Error()
+    def toString[A](from: Iterable[A]): String = ToString(from)
     def toHashMap[K, V](from: Iterable[(K, V)]): scala.collection.Map[K, V] = ToHashMap(from)
     def toHashSet[A](from: Iterable[A]): scala.collection.Set[A] = ToHashSet(from)
 }

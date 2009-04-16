@@ -32,7 +32,7 @@ trait LexicalConversions {
     import Vector.stringize
 
 // from
-    def fromAny(from: Any): Vector[Char] = Vector.fromString(from.toString)
+    def fromAny(from: Any): Vector[Char] = Vector.unstringize(from.toString)
 
 // to
     def toBoolean(from: Vector[Char]): Boolean = stringize(from).toBoolean

@@ -13,8 +13,8 @@ import junit.framework.Assert._
 
 class StringTest {
     def testTrivial: Unit = {
-        val sample = mada.Vector.fromString("/*hello*/")
-        assertTrue(fromString("/*hello*/").matches(sample))
-        assertFalse(fromString("/*hello*").matches(sample))
+        val sample = mada.Vector.unstringize("/*hello*/")
+        assertTrue(unstringize("/*hello*/").matches(sample))
+        assertFalse(unstringize("/*hello*").matches(sample))
     }
 }

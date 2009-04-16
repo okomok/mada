@@ -15,6 +15,6 @@ trait Compatibles { this: Peg.type =>
     implicit def madaPegFromIterable[A](from: Iterable[A]): Peg[A] = fromIterable(from)
     implicit def madaPegFromRegex(from: scala.util.matching.Regex): Peg[Char] = fromRegexPattern(from.pattern)
     implicit def madaPegFromRegexPattern(from: java.util.regex.Pattern): Peg[Char] = fromRegexPattern(from)
-    implicit def madaPegFromString(from: String): Peg[Char] = fromString(from)
+    implicit def madaPegUnstringize(from: String): Peg[Char] = unstringize(from)
     implicit def madaPegFromVector[A](from: Vector[A]): Peg[A] = fromVector(from)
 }

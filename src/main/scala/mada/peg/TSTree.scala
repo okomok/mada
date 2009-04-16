@@ -257,9 +257,7 @@ private[mada] class TSTreeNode[A, V](val elem: A, val parent: TSTreeNode[A, V]) 
         out.writeEndElement
     }
 
-    override def toString = {
-        new StringBuilder("TSTreeNode(elem: ").append(elem).append(", data: ").append(data).append(')').toString
-    }
+    override def toString = Strings.concat("TSTreeNode(elem: ", elem, ", data: ", data, ')')
 }
 
 

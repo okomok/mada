@@ -223,8 +223,8 @@ class IterablesTest {
     }
 
   // string
-    def testStringFrom: Unit = {
-        assertEquals(Iterables.stringFrom(Iterables(1,2,3,4)), Vector(1,2,3,4).toString)
+    def testToString: Unit = {
+        assertEquals(Iterables.toString(Iterables(1,2,3,4)), Vector(1,2,3,4).toString)
     }
 
   // jio

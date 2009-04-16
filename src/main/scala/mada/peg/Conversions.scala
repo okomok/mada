@@ -16,7 +16,7 @@ trait Conversions { this: Peg.type =>
     def fromIterable[A](from: Iterable[A]): Peg[A] = FromIterable(from)
     def fromRegex(from: scala.util.matching.Regex): Peg[Char] = FromRegexPattern(from.pattern)
     def fromRegexPattern(from: java.util.regex.Pattern): Peg[Char] = FromRegexPattern(from)
-    def fromString(from: String): Peg[Char] = FromVector(Vector.fromString(from))
+    def unstringize(from: String): Peg[Char] = FromVector(Vector.unstringize(from))
     def fromVector[A](from: Vector[A]): Peg[A] = FromVector(from)
 
     /**
@@ -27,7 +27,7 @@ trait Conversions { this: Peg.type =>
     /**
      * Tries to match <code>from</code> using the predicate.
      */
-    def fromStringBy(from: String)(pred: (Char, Char) => Boolean): Peg[Char] = FromVector(Vector.fromString(from), pred)
+    def unstringizeBy(from: String)(pred: (Char, Char) => Boolean): Peg[Char] = FromVector(Vector.unstringize(from), pred)
 
     /**
      * Tries to match <code>from</code> using the predicate.

@@ -24,7 +24,7 @@ trait Operators { this: Iterables.type =>
         def cycle = Iterables.cycle(_1)
         def cycle(_2: Int) = Iterables.cycle(_1, _2)
         def toHashSet = Iterables.toHashSet(_1)
-        def toString_ = Iterables.stringFrom(_1)
+        def toString_ = Iterables.toString(_1)
         def unique = Iterables.unique(_1)
         def uniqueBy(_2: (A, A) => Boolean) = Iterables.uniqueBy(_1)(_2)
         def withSideEffect(_2: A => Unit) = Iterables.withSideEffect(_1)(_2)

@@ -36,7 +36,7 @@ class SortedTest {
         assertTrue( Iterables.equal(B1, AA) )
         assertTrue( Iterables.equal(B1, AA) ) // run again.
         val B2 = Iterables.emptyOf[Int] merge A1 merge A2 merge A3 merge Iterable.empty
-//        println(Iterables.stringFrom(B2))
+//        println(Iterables.toString(B2))
         assertTrue( Iterables.equal(B2, AA) )
         assertTrue( Iterables.equal(B2, AA) ) // run again.
     }

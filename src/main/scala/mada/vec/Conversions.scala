@@ -21,7 +21,7 @@ trait Conversions { this: Vector.type =>
     def fromOption[A](from: Option[A]): Vector[A] = FromOption(from)
     def fromProduct(from: Product): Vector[Any] = FromProduct(from)
     def fromRandomAccessSeq[A](from: RandomAccessSeq[A]): Vector[A] = FromRandomAccessSeq(from)
-    def fromString(from: String): Vector[Char] = FromString(from)
+    def unstringize(from: String): Vector[Char] = Unstringize(from)
   // to
     def toJclCharSequence(from: Vector[Char]): java.lang.CharSequence = jcl.CharSequenceFromVector(from)
     def toIterable[A](from: Vector[A]): Iterable[A] = ToIterable(from)
