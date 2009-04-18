@@ -83,3 +83,26 @@ class ProxiesVarTest {
         assertEquals(3, w.self)
     }
 }
+
+
+class ProxiesLazyVarTest {
+    import mada.Proxies._
+
+    def testTrivial {
+        val v = new LazyVar[Int]
+        assertTrue(null == v.self)
+        assertTrue(v.isNull)
+        v := 11
+        v := 12
+        assertTrue(v.self == 11)
+        assertTrue(null != v.self)
+        assertTrue(!v.isNull)
+
+        v.resign
+        assertTrue(null == v.self)
+        assertTrue(v.isNull)
+        v := 6
+        v := 7
+        assertTrue(v.self == 6)
+    }
+}

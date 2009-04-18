@@ -125,7 +125,7 @@ object Proxies {
     class LazyVar[A] extends Mutable[A] {
         private val r = new java.util.concurrent.atomic.AtomicReference[Function0[A]]
 
-        override def self = r.get.apply()
+        override def self = if (!isNull) r.get.apply() else null.asInstanceOf[A]
         override def assign(that: => A) = r.compareAndSet(null, Functions.byLazy(that))
         override def resign = r.set(null)
         override def isNull = null == r.get
