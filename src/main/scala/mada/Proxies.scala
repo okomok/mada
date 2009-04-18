@@ -63,22 +63,12 @@ object Proxies {
         def isNull: Boolean
 
         /**
-         * Alias of <code>assign</code>
-         */
-        final def :=(that: => A): Unit = assign(that)
-
-        /**
-         * Alias of <code>resign</code>
-         */
-        final def :=(that: Null.type): Unit = resign
-
-        /**
          * Swaps <code>self</code> and <code>that.self</code>.
          */
         final def proxySwap(that: Mutable[A]): Unit = {
             val tmp = self
-            this := that.self
-            that := tmp
+            this.assign(that.self)
+            that.assign(tmp)
         }
 
         /**
@@ -94,9 +84,30 @@ object Proxies {
 
 
     /**
+     * Mixins alias methods.
+     */
+    trait MutableAliasMethods[A] { this: Mutable[A] =>
+        /**
+         * Alias of <code>assign</code>
+         */
+        final def :=(that: => A): Unit = assign(that)
+
+        /**
+         * Alias of <code>resign</code>
+         */
+        final def :=(that: Null.type): Unit = resign
+
+        /**
+         * Alias of <code>isNull</code>
+         */
+        final def unary_! : Boolean = isNull
+    }
+
+
+    /**
      * Trivial mutable proxy (lightweight <code>Option</code>)
      */
-    class Var[A](@volatile private var x: A) extends Mutable[A] {
+    class Var[A](@volatile private var x: A) extends Mutable[A] with MutableAliasMethods[A] {
         /**
          * Constructs null proxy.
          */
@@ -122,7 +133,7 @@ object Proxies {
     /**
      * Trivial lazy mutable proxy; second time assignment is not evaluated.
      */
-    class LazyVar[A] extends Mutable[A] {
+    class LazyVar[A] extends Mutable[A] with MutableAliasMethods[A] {
         private val r = new java.util.concurrent.atomic.AtomicReference[Function0[A]]
 
         override def self = if (!isNull) r.get.apply() else null.asInstanceOf[A]

@@ -43,6 +43,7 @@ class ProxiesVarTest {
         assertTrue(!v.isNull)
         v.resign
         assertTrue(v.isNull)
+        assertTrue(!v)
 
         v assign 14
         assertEquals(14, v.self)
@@ -101,6 +102,7 @@ class ProxiesLazyVarTest {
         v.resign
         assertTrue(null == v.self)
         assertTrue(v.isNull)
+        assertTrue(!v)
         v := 6
         v := 7
         assertTrue(v.self == 6)
