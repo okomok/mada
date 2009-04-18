@@ -76,7 +76,8 @@ object Functions extends
     /**
      * A function returning argument as is
      */
-    def identity[T]: Transform[T] = { v => v }
+    def identity[T]: Transform[T] = identityImpl.asInstanceOf[Transform[T]]
+    private val identityImpl: Transform[Any] = { v => v }
 
     /**
      * Converts by-name-parameter to a function returning <code>body</code>.

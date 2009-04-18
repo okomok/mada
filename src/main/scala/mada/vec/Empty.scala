@@ -8,7 +8,8 @@ package mada.vec
 
 
 private[mada] object Empty {
-    def apply[A] = new EmptyVector[A]
+    def apply[A]: Vector[A] = impl.asInstanceOf[Vector[A]]
+    private val impl: Vector[Any] = new EmptyVector[Any]
 }
 
 private[mada] class EmptyVector[A] extends Vector[A] {

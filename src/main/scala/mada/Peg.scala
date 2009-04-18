@@ -51,17 +51,20 @@ object Peg extends Conversions with Compatibles with Operators {
     /**
      * Matches any one element.
      */
-    def any[A]: Peg[A] = advance(1)
+    def any[A]: Peg[A] = anyImpl.asInstanceOf[Peg[A]]
+    private val anyImpl: Peg[Any] = advance(1)
 
     /**
      * Matches the beginning of input.
      */
-    def begin[A]: Peg[A] = lookaround3 { (v, i, _) => i == v.start }
+    def begin[A]: Peg[A] = beginImpl.asInstanceOf[Peg[A]]
+    private val beginImpl: Peg[Any] = lookaround3 { (v, i, _) => i == v.start }
 
     /**
      * Matches the end of input.
      */
-    def end[A]: Peg[A] = lookaround3 { (v, i, _) => i == v.end }
+    def end[A]: Peg[A] = endImpl.asInstanceOf[Peg[A]]
+    private val endImpl: Peg[Any] = lookaround3 { (v, i, _) => i == v.end }
 
     /**
      * @return  <code>eps[A] act { _ => f() }</code>.
@@ -71,7 +74,8 @@ object Peg extends Conversions with Compatibles with Operators {
     /**
      * Epsilon; Matches an empty input.
      */
-    def eps[A]: Peg[A] = lookaround3 { (_, _, _) => true }
+    def eps[A]: Peg[A] = epsImpl.asInstanceOf[Peg[A]]
+    private val epsImpl: Peg[Any] = lookaround3 { (_, _, _) => true }
 
     /**
      * Always throws an Error.
@@ -81,7 +85,8 @@ object Peg extends Conversions with Compatibles with Operators {
     /**
      * Doesn't match any input.
      */
-    def fail[A]: Peg[A] = lookaround3 { (_, _, _) => false }
+    def fail[A]: Peg[A] = failImpl.asInstanceOf[Peg[A]]
+    private val failImpl: Peg[Any] = lookaround3 { (_, _, _) => false }
 
     /**
      * Mathches case-insensitively.
