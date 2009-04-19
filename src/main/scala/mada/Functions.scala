@@ -14,7 +14,7 @@ import func._
  * Contains utility methods operating on <code>Function</code>.
  */
 object Functions extends
-    Empty with Fuse with Infer with Not with Parameterize with Synchronize {
+    Empty with Fuse with Infer with Not with Parameterize with Synchronize { ^ =>
 
 
 // void
@@ -124,12 +124,12 @@ object Functions extends
         /**
          * @return  <code>{ (v1, v2) => v1 eq v2 }</code>.
          */
-        val equal: Function2[AnyRef, AnyRef, Boolean] = { (v1, v2) => v1 eq v2 }
+        val equal: Predicate2[AnyRef, AnyRef] = { (v1, v2) => v1 eq v2 }
 
         /**
          * @return  <code>{ v2 => v1 eq v2 }</code>.
          */
-        def equalTo(v1: AnyRef): Function1[AnyRef, Boolean] = { v2 => v1 eq v2 }
+        def equalTo(v1: AnyRef): Predicate1[AnyRef] = { v2 => v1 eq v2 }
     }
 
 
@@ -142,6 +142,6 @@ object Functions extends
         /**
          * @return  <code>{ (v1, v2) => v1 == v2 }</code>.
          */
-        def equal[T1, T2]: Function2[T1, T2, Boolean] = { (v1, v2) => v1 == v2 }
+        def equal[T1, T2]: Predicate2[T1, T2] = ^.equal.asInstanceOf[Predicate2[T1, T2]]
     }
 }
