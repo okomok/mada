@@ -9,20 +9,25 @@ package mada
 
 package auto {
 
-    trait Eligibles {
+    /**
+     * Contains eligible objects for <code>Auto</code>.
+     */
+    trait Eligibles { this: Auto.type =>
         import java.io.Closeable
         import java.util.concurrent.locks.Lock
 
         implicit object ofInterface extends Auto[Auto.Interface] {
-            def dispose(e: Auto.Interface) = e.dispose
+            override def begin(e: Auto.Interface) = e.begin
+            override def end(e: Auto.Interface) = e.end
         }
 
         implicit object ofCloseable extends Auto[Closeable] {
-            def dispose(e: Closeable) = e.close
+            override def end(e: Closeable) = e.close
         }
 
         implicit object ofLock extends Auto[Lock] {
-            def dispose(e: Lock) = e.unlock
+            override def begin(e: Lock) = e.lock
+            override def end(e: Lock) = e.unlock
         }
     }
 
@@ -39,15 +44,23 @@ object Auto extends auto.Eligibles {
     def apply[A, B](e: A)(f: A => B)(implicit a: Auto[A]): B = using(e)(f)(a)
 
     /**
-     * @return  <code>try { f(e) } finally { a.dispose(e) }</code>.
+     * @return  <code>a.begin(e); try { f(e) } finally { a.end(e) }</code>.
      */
-    def using[A, B](e: A)(f: A => B)(implicit a: Auto[A]): B = try { f(e) } finally { a.dispose(e) }
+    def using[A, B](e: A)(f: A => B)(implicit a: Auto[A]): B = {
+        a.begin(e)
+        try {
+            f(e)
+        } finally {
+            a.end(e)
+        }
+    }
 
     /**
      * Can be used instead of implicit objects.
      */
     trait Interface {
-        def dispose: Unit
+        def begin: Unit = ()
+        def end: Unit = ()
     }
 
     /**
@@ -62,9 +75,14 @@ object Auto extends auto.Eligibles {
  */
 trait Auto[-A] {
     /**
-     * Cleans up resources.
+     * Called when block begins.
      */
-    def dispose(e: A): Unit
+    def begin(e: A): Unit = ()
+
+    /**
+     * Called when block ends.
+     */
+    def end(e: A): Unit = ()
 
     /**
      * Alias of <code>Auto</code>

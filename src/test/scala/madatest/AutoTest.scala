@@ -13,7 +13,7 @@ import junit.framework.Assert._
 
 object MyFile {
     implicit object myAuto extends Auto[MyFile] {
-        override def dispose(x: MyFile) = x.disposed = true
+        override def end(x: MyFile) = x.disposed = true
     }
 }
 class MyFile {
@@ -24,7 +24,7 @@ class MyFile {
 
 class HisFile[A] extends Auto.Interface {
     var disposed = false
-    override def dispose = disposed = true
+    override def end = disposed = true
     def read: Unit = { }
 }
 
@@ -33,11 +33,11 @@ object HerFile {
 /*
     // "implicit class" might have been better.
     implicit object myAuto extends Auto[HerFile[_]] {
-        override def dispose(x: HerFile[_]) = x.disposed = true
+        override def end(x: HerFile[_]) = x.disposed = true
     }
 */
     implicit def toAuto[A]/*(implicit c: A => A)*/: Auto[HerFile[A]] = new Auto[HerFile[A]] {
-        override def dispose(x: HerFile[A]) = x.disposed = true
+        override def end(x: HerFile[A]) = x.disposed = true
     }
 }
 
