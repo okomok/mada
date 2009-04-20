@@ -35,7 +35,7 @@ package mada.stl
 
 private[mada] class DefaultRandomNumberGenerator extends (Int => Int) {
     private val rnd = new java.util.Random
-    def apply(__n: Int) = Math.abs(rnd.nextInt % __n)
+    override def apply(__n: Int) = rnd.nextInt(__n)
 }
 
 
