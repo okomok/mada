@@ -16,7 +16,7 @@ import Functions.future
 private[mada] object Sort {
     def apply[A](v: Vector[A], lt: Compare.Func[A], grainSize: Int): Vector[A] = {
         Assert(!IsParallel(v))
-        impl(v, v.start, v.end, lt, grainSize)
+        impl(v, v.start, v.end, lt, grainSize * 2) // best grain size?
         v
     }
 
