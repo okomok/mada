@@ -7,37 +7,13 @@
 package mada
 
 
-package auto {
-
-    /**
-     * Contains eligible objects for <code>Auto</code>.
-     */
-    trait Eligibles { this: Auto.type =>
-        import java.io.Closeable
-        import java.util.concurrent.locks.Lock
-
-        implicit object ofInterface extends Auto[Auto.Interface] {
-            override def begin(e: Auto.Interface) = e.begin
-            override def end(e: Auto.Interface) = e.end
-        }
-
-        implicit object ofCloseable extends Auto[Closeable] {
-            override def end(e: Closeable) = e.close
-        }
-
-        implicit object ofLock extends Auto[Lock] {
-            override def begin(e: Lock) = e.lock
-            override def end(e: Lock) = e.unlock
-        }
-    }
-
-} // package auto
+import auto._
 
 
 /**
  * Contains utility methods operating on <code>Auto</code>.
  */
-object Auto extends auto.Eligibles {
+object Auto extends Eligibles {
     /**
      * Alias of <code>using</code>
      */
