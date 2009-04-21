@@ -75,7 +75,7 @@ private[mada] class SynchronizeVector[A](override val self: Vector[A]) extends V
     override def zip[B](that: Vector[B]): Vector[(A, B)] = synchronized { self.zip(that) }
   // attributes
     override def force: Vector[A] = synchronized { self.force }
-    override def lazyValues : Vector[A] = synchronized { self.lazyValues }
+    override def memoize : Vector[A] = synchronized { self.memoize }
     override def bounds: Vector[A] = synchronized { self.bounds }
     override def readOnly: Vector[A] = synchronized { self.readOnly }
     override def identity: Vector[A] = synchronized { self.identity }

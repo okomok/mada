@@ -76,7 +76,7 @@ trait VectorProxy[A] extends Adapter.Transform[A] with Proxies.ProxyOf[Vector[A]
     override def zip[B](that: Vector[B]): Vector[(A, B)] = underlying.zip(that)
   // attributes
     override def force: Vector[A] = underlying.force
-    override def lazyValues : Vector[A] = underlying.lazyValues
+    override def memoize : Vector[A] = underlying.memoize
     override def bounds: Vector[A] = underlying.bounds
     override def readOnly: Vector[A] = underlying.readOnly
     override def identity: Vector[A] = underlying.identity

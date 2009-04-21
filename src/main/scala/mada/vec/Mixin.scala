@@ -26,10 +26,10 @@ object Mixin {
     }
 
     /**
-     * Calls <code>lazyValues</code> method.
+     * Calls <code>memoize</code> method.
      */
-    val lazyValues: Mixin = new Mixin {
-        override def apply[B](v: Vector[B]) = v.lazyValues
+    val memoize: Mixin = new Mixin {
+        override def apply[B](v: Vector[B]) = v.memoize
     }
 
     /**
@@ -147,7 +147,7 @@ private[mada] class MixinVector[A](v: Vector[A], mx: Mixin) extends VectorProxy[
     override def zip[B](that: Vector[B]): Vector[(A, B)] = carryMixin(self.zip(that))
   // attributes
     override def force: Vector[A] = carryMixin(self.force)
-    override def lazyValues : Vector[A] = carryMixin(self.lazyValues)
+    override def memoize : Vector[A] = carryMixin(self.memoize)
     override def bounds: Vector[A] = carryMixin(self.bounds)
     override def readOnly: Vector[A] = carryMixin(self.readOnly)
     override def identity: Vector[A] = carryMixin(self.identity)
