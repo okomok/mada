@@ -35,7 +35,7 @@ object Mixin {
     /**
      * Calls <code>parallel</code> method.
      */
-    def parallel: Mixin = new Mixin {
+    val parallel: Mixin = new Mixin {
         override def apply[B](v: Vector[B]) = v.parallel
     }
 

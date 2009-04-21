@@ -16,8 +16,8 @@ class MemoizeTest {
         var memo = false
         val v = Vector.from(Array(0,1,2,3,4,5)).map{ x => if (memo) fail("doh"); x + 10 }
         val w = v.memoize
-        assertEquals(Vector.from(Array(10,11,12,13,14,15)), w) // memoized
+        assertEquals(Vector.from(Array(10,11,12,13,14,15)), w)
         memo = true
-        assertEquals(Vector.from(Array(10,11,12,13,14,15)), w) // memoized
+        assertEquals(Vector.from(Array(10,11,12,13,14,15)), w)
     }
 }

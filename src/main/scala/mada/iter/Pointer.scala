@@ -36,6 +36,11 @@ object Pointer extends PointerConversions with PointerCompatibles {
      * @return  <code>this</code>.
      */
     val Compatibles: PointerCompatibles = this
+
+    /**
+     * Alias of <code>Pointer</code>
+     */
+    type Type[+A] = Pointer[A]
 }
 
 
@@ -75,13 +80,18 @@ trait Pointer[+A] {
      * Increments pointer.
      */
     def increment: Unit
+
+    /**
+     * Alias of <code>Pointer</code>
+     */
+    final def companion = Pointer
 }
 
 
 /**
  * Contains explicit conversions around <code>Pointer</code>.
  */
-trait PointerConversions {
+trait PointerConversions { this: Pointer.type =>
     def fromIterator[A](from: Iterator[A]): Pointer[A] = new Pointer[A] {
         private val e = new Proxies.Var[A]
         if (from.hasNext) {
@@ -114,9 +124,7 @@ trait PointerConversions {
 /**
  * Contains implicit conversions around <code>Pointer</code>.
  */
-trait PointerCompatibles {
-    import Pointer._
-
+trait PointerCompatibles { this: Pointer.type =>
     implicit def madaPointerFromIterator[A](from: Iterator[A]): Pointer[A] = fromIterator(from)
     implicit def madaPointerToIterator[A](from: Pointer[A]): Iterator[A] = toIterator(from)
 }
