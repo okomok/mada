@@ -1,0 +1,15 @@
+
+
+// Copyright Shunsuke Sogame 2008-2009.
+// Distributed under the terms of an MIT-style license.
+
+
+package mada.meta
+
+
+/**
+ * Represents "Not Available".
+ */
+final class NA extends Obj {
+    override type IsBind = Meta.False
+}

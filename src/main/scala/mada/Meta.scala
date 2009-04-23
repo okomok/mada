@@ -10,168 +10,65 @@ package mada
 import meta._
 
 
-object Meta {
+object Meta extends
+    Asserts with Args with Binds with Bools with Funcs with Quotes with Placeholders {
 
 
-// metafunctions
-
-    /**
-     * Alias of <code>Func0</code>
-     */
-    type Func = Func0
+// metamethods
 
     /**
-     * Nullary metafunction
+     * @return  <code>a</code>.
      */
-    trait Func0 {
-        type Type
+    type Identity[a <: Obj] = a
+
+    /*
+    type ByLazy1[f[_], a] = ByLazy1Impl[f, a]
+    trait ByLazy1Impl[f[_], a] extends Method0 {
+        override type Type = f[a]
     }
-
-    /**
-     * Unary metafunction
-     */
-    trait Func1[t1] {
-        type Type
-    }
-
-    /**
-     * Binary metafunction
-     */
-    trait Func2[t1, t2] {
-        type Type
-    }
-
-    /**
-     * Metafunction Class
-     */
-    trait FuncClass {
-        type Apply <: Func
-    }
-
-    /**
-     * Identity metafunction
-     */
-    trait Identity[a] extends Func0 {
-        type Type = a
-    }
-
-
-// predicates
-
-    /**
-     * Nullary meta-predicate
-     */
-    trait Predicate extends Func {
-        type Type <: Bool
-    }
+    */
 
     /**
      * Tests type equality. (probably infeasible.)
      */
-    type Equals[a, b] = Nothing // How?
+    type Equals[a <: Obj, b <: Obj] = Nothing // How?
 
 
-// bool
-
-    /**
-     * Compile-time logical-and
-     */
-    type &&[a <: Bool, b <: Bool] = a#And[b]
-
-    /**
-     * Compile-time logical-or
-     */
-    type ||[a <: Bool, b <: Bool] = a#Or[b]
-
-    /**
-     * Compile-time logical-not
-     */
-    type ![a <: Bool] = a#Not
-
-    /**
-     * Compile-time if
-     */
-    type If[cond <: Bool, then, else_] = cond#If[then, else_]
-
-    /**
-     * Compile-time if by lazy
-     */
-    type LazyIf[cond <: Bool, then <: Func, else_ <: Func] = cond#LazyIf[then, else_]
-
-
-// assertions
-
-    /**
-     * Compile-time assertion
-     */
-    case class Assert[a >: True <: True]()
-
-    /**
-     * Compile-time assertion of type equality
-     */
-    case class AssertEquals[a >: b <: b, b]()
-
-
-// misc
+// the value
 
     /**
      * @return  <code>null.asInstanceOf[a]</code>.
      */
-    def nullOf[a]: a = null.asInstanceOf[a]
+    def value[a <: Obj]: a = null.asInstanceOf[a]
 
 
 // aliases
 
     /**
-     * Alias of <code>meta.Bool</code>
+     * Alias of <code>meta.Obj</code>
      */
-    type Bool = meta.Bool
+    type Obj = meta.Obj
 
     /**
-     * Alias of <code>meta.True</code>
+     * Alias of <code>meta.Boxed</code>
      */
-    type True = meta.True
+    type Boxed[a] = meta.Boxed[a]
 
     /**
-     * Alias of <code>meta.False</code>
+     * Alias of <code>meta.Always</code>
      */
-    type False = meta.False
+    type Always[a <: Obj] = meta.Always[a]
 
     /**
-     * @return  <code>new True</code>.
+     * Alias of <code>meta.Void</code>
      */
-    val True = new True
+    type Void = meta.Void
+
+
+// namespaces
 
     /**
-     * @return  <code>new False</code>.
+     * @return  <code>this</code>.
      */
-    val False = new False
-
-
-
-//    implicit val falseToBoolean = TypeToValue[False, Boolean](false)
-//    implicit val trueToBoolean = TypeToValue[True, Boolean](true)
-
+    val Placeholders: meta.Placeholders = this
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
