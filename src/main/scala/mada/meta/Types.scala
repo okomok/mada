@@ -13,6 +13,7 @@ package mada.meta
 trait Types { this: Meta.type =>
 
     type int = boxed[scala.Int]
+    type char = boxed[scala.Char]
     type string = boxed[String]
 
 }

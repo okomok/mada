@@ -30,7 +30,7 @@ class BooleanTest {
 
     type foo[a <: N, _s <: N, _t <: _s] = `if`[a#isBoxed, _s, _t]
 
-    type feeling[a <: N, _s <: N, _t <: _s] = `if`[a#isBoxed, _s, _t]#feel
+    type feelIt[a <: N, _s <: N, _t <: _s] = `if`[a#isBoxed, _s, _t]#feel
 
     def testTypeSafe: Unit = {
        // instance[foo[string]#touch]

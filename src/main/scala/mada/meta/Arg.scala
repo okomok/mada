@@ -11,26 +11,41 @@ package mada.meta
  * Contains metafunctions to return the n-th argument.
  */
 trait Args { this: Meta.type =>
-/*
-    final class arg1[T <: Object] extends Function1[T, T] with Function2[T, Object, T] with Function3[T, Object, Object, T] {
+
+    final class arg1[T <: Object] extends Function1 with Function2 with Function3 {
         override type isBind = `true`
 
-        override type apply1[a1 <: T] = a1
-        override type apply2[a1 <: T, a2 <: Object] = a1
-        override type apply3[a1 <: T, a2 <: Object, a3 <: Object] = a1
+        override type Argument11 = T
+        override type Result1 = T
+        override type apply1[v1 <: Argument11] = v1
+
+        override type Argument21 = T
+        override type Result2 = T
+        override type apply2[v1 <: Argument21, v2 <: Argument22] = v1
+
+        override type Argument31 = T
+        override type Result3 = T
+        override type apply3[v1 <: Argument31, v2 <: Argument32, v3 <: Argument33] = v1
     }
 
-    final class arg2[T <: Object] extends Function2[Object, T, T] with Function3[Object, T, Object, T] {
+    final class arg2[T <: Object] extends Function2 with Function3 {
         override type isBind = `true`
 
-        override type apply2[a1 <: Object, a2 <: T] = a2
-        override type apply3[a1 <: Object, a2 <: T, a3 <: Object] = a2
+        override type Argument22 = T
+        override type Result2 = T
+        override type apply2[v1 <: Argument21, v2 <: Argument22] = v2
+
+        override type Argument32 = T
+        override type Result3 = T
+        override type apply3[v1 <: Argument31, v2 <: Argument32, v3 <: Argument33] = v2
     }
 
-    final class arg3[T <: Object] extends Function3[Object, Object, T, T] {
+    final class arg3[T <: Object] extends Function3 {
         override type isBind = `true`
 
-        override type apply3[a1 <: Object, a2 <: Object, a3 <: T] = a3
+        override type Argument33 = T
+        override type Result3 = T
+        override type apply3[v1 <: Argument31, v2 <: Argument32, v3 <: Argument33] = v3
     }
-*/
+
 }

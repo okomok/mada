@@ -11,7 +11,7 @@ import meta._
 
 
 object Meta extends
-    Alwayses with Asserts with Args with Binds with Booleans with Forwards with Functions with
+    Asserts with Args with Binds with Booleans with Forwards with Functions with
     Operators with Integers with Quotes with Placeholders with Types {
 
 
@@ -53,6 +53,11 @@ object Meta extends
      * Alias of <code>meta.boxed</code>
      */
     type boxed[a] = meta.boxed[a]
+
+    /**
+     * Alias of <code>meta.always</code>
+     */
+    type always[a <: Object] = meta.always[a]
 
 
 // namespaces

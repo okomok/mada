@@ -13,34 +13,18 @@ import Meta._
 /**
  * Metafunction always returning <code>a</code>
  */
-trait Alwayses { this: Meta.type =>
+final class always[a <: Object] extends Function0 with Function1 with Function2 with Function3 {
+    override type isBind = `false`
 
-    final class always0[a <: Object] extends Function0 {
-        override type isBind = `false`
+    override type Result0 = a
+    override type apply0[void] = a
 
-        override type Result = a
-        override type apply[void] = a
-    }
+    override type Result1 = a
+    override type apply1[v1 <: Argument11] = a
 
-    final class always1[a <: Object] extends Function1 {
-        override type isBind = `false`
+    override type Result2 = a
+    override type apply2[v1 <: Argument21, v2 <: Argument22] = a
 
-        override type Result = a
-        override type apply[b1 <: Object] = a
-    }
-
-    final class always2[a <: Object] extends Function2 {
-        override type isBind = `false`
-
-        override type Result = a
-        override type apply[b1 <: Object, b2 <: Object] = a
-    }
-
-    final class always3[a <: Object] extends Function3 {
-        override type isBind = `false`
-
-        override type Result = a
-        override type apply[b1 <: Object, b2 <: Object, b3 <: Object] = a
-    }
-
+    override type Result3 = a
+    override type apply3[v1 <: Argument31, v2 <: Argument32, v3 <: Argument33] = a
 }
