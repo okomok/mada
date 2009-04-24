@@ -11,7 +11,7 @@ import meta._
 
 
 object Meta extends
-    Asserts with Args with Binds with Bools with Funcs with Quotes with Placeholders {
+    Asserts with Args with Binds with Booleans with Functions with Quotes with Placeholders {
 
 
 // metamethods
@@ -19,7 +19,7 @@ object Meta extends
     /**
      * @return  <code>a</code>.
      */
-    type Identity[a <: Obj] = a
+    type identity[a <: Object] = a
 
     /*
     type ByLazy1[f[_], a] = ByLazy1Impl[f, a]
@@ -31,38 +31,38 @@ object Meta extends
     /**
      * Tests type equality. (probably infeasible.)
      */
-    type Equals[a <: Obj, b <: Obj] = Nothing // How?
+    type equals[a <: Object, b <: Object] = Nothing // How?
 
 
-// the value
+// the instance
 
     /**
      * @return  <code>null.asInstanceOf[a]</code>.
      */
-    def value[a <: Obj]: a = null.asInstanceOf[a]
+    def instance[a <: Object]: a = null.asInstanceOf[a]
 
 
 // aliases
 
     /**
-     * Alias of <code>meta.Obj</code>
+     * Alias of <code>meta.Object</code>
      */
-    type Obj = meta.Obj
-
-    /**
-     * Alias of <code>meta.Boxed</code>
-     */
-    type Boxed[a] = meta.Boxed[a]
-
-    /**
-     * Alias of <code>meta.Always</code>
-     */
-    type Always[a <: Obj] = meta.Always[a]
+    type Object = meta.Object
 
     /**
      * Alias of <code>meta.Void</code>
      */
     type Void = meta.Void
+
+    /**
+     * Alias of <code>meta.boxed</code>
+     */
+    type boxed[a] = meta.boxed[a]
+
+    /**
+     * Alias of <code>meta.always</code>
+     */
+    type always[a <: Object] = meta.always[a]
 
 
 // namespaces

@@ -7,14 +7,17 @@
 package mada.meta
 
 
+import Meta._
+
+
 /**
  * Metafunction always returning <code>a</code>
  */
-final class Always[a <: Obj] extends Meta.VarargFunc {
-    override type IsBind = Meta.False
+final class always[a <: Object] extends FunctionV {
+    override type isBind = `false`
 
-    override type Apply0[Void] = a
-    override type Apply1[b1 <: Obj] = a
-    override type Apply2[b1 <: Obj, b2 <: Obj] = a
-    override type Apply3[b1 <: Obj, b2 <: Obj, b3 <: Obj] = a
+    override type apply0[Void] = a
+    override type apply1[b1 <: Object] = a
+    override type apply2[b1 <: Object, b2 <: Object] = a
+    override type apply3[b1 <: Object, b2 <: Object, b3 <: Object] = a
 }

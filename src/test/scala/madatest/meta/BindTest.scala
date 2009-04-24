@@ -12,14 +12,14 @@ import mada.Meta._
 
 
 class BindTest {
-    type get1[a <: Obj, b <: Obj] = a
-    type q1 = Quote2[get1]
+    type get1[a <: Object, b <: Object] = a
+    type q1 = quote2[get1]
 
-    type get2[a <: Obj, b <: Obj] = b
-    type q2 = Quote2[get2]
+    type get2[a <: Object, b <: Object] = b
+    type q2 = quote2[get2]
 
     def testTrivial: Unit = {
-       // AssertEquals[Bind2[q1, _1, _1]#Apply1[Boxed[String]], Boxed[String]]
+       // assertEquals[Bind2[q1, _1, _1]#apply1[Boxed[String]], Boxed[String]]
         ()
     }
 }

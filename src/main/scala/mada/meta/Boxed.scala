@@ -7,11 +7,14 @@
 package mada.meta
 
 
+import Meta._
+
+
 /**
- * Boxes <code>a</code> into <code>Obj</code>.
+ * Boxes <code>a</code> into <code>Object</code>.
  */
-trait Boxed[a] extends Obj {
-    override type IsBind = Meta.False
-    override type IsBoxed = Meta.True
-    type Unbox = a
+final class boxed[a] extends Object {
+    override type isBind = `false`
+    override type IsBoxed = `true`
+    type unbox = a
 }

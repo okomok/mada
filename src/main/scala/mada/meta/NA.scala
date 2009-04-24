@@ -10,6 +10,6 @@ package mada.meta
 /**
  * Represents "Not Available".
  */
-final class NA extends Obj {
-    override type IsBind = Meta.False
+final class NA extends Object {
+    override type isBind = Meta.`false`
 }

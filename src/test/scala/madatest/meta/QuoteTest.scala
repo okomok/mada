@@ -12,20 +12,20 @@ import mada.Meta._
 
 
 class QuoteTest {
-    type get1[a <: Obj, b <: Obj] = a
-    type q1 = Quote2[get1]
+    type get1[a <: Object, b <: Object] = a
+    type q1 = quote2[get1]
 
-    type get2[a <: Obj, b <: Obj] = b
-    type q2 = Quote2[get2]
+    type get2[a <: Object, b <: Object] = b
+    type q2 = quote2[get2]
 
-    trait SomeThing extends Obj
-    final class alwaysSomeThing[a <: Obj] extends SomeThing
+    trait SomeThing extends Object
+    final class alwaysSomeThing[a <: Object] extends SomeThing
 
     def testTrivial: Unit = {
-        AssertEquals[Quote1[Identity]#Apply1[String], String]
-        AssertEquals[q1#Apply2[Int, String], Int]
-        AssertEquals[q2#Apply2[Int, String], String]
+        assertEquals[quote1[identity]#apply1[String], String]
+        assertEquals[q1#apply2[Int, String], Int]
+        assertEquals[q2#apply2[Int, String], String]
 
-        AssertLower[Quote1[alwaysSomeThing]#Apply1[Double], SomeThing]
+        assertLower[quote1[alwaysSomeThing]#apply1[Double], SomeThing]
     }
 }

@@ -10,7 +10,7 @@ package mada.meta
 /**
  * The root of the "meta class" hierarchy
  */
-trait Obj {
-    type IsBind <: Meta.Bool
-    type IsBoxed <: Meta.Bool
+trait Object {
+    type isBind <: Meta.Boolean
+    type IsBoxed <: Meta.Boolean
 }

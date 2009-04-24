@@ -12,24 +12,24 @@ package mada.meta
  */
 trait Quotes { this: Meta.type =>
 
-    final class Quote0[f[Void] <: Obj] extends Func0 {
-        override type IsBind = False
-        override type Apply0[Void] = f[Void]
+    final class quote0[f[Void] <: Object] extends Function0 {
+        override type isBind = `false`
+        override type apply0[Void] = f[Void]
     }
 
-    final class Quote1[f[_ <: Obj] <: Obj] extends Func1 {
-        override type IsBind = False
-        override type Apply1[a1 <: Obj] = f[a1]
+    final class quote1[f[_ <: Object] <: Object] extends Function1 {
+        override type isBind = `false`
+        override type apply1[a1 <: Object] = f[a1]
     }
 
-    final class Quote2[f[_ <: Obj, _ <: Obj] <: Obj] extends Func2 {
-        override type IsBind = False
-        override type Apply2[a1 <: Obj, a2 <: Obj] = f[a1, a2]
+    final class quote2[f[_ <: Object, _ <: Object] <: Object] extends Function2 {
+        override type isBind = `false`
+        override type apply2[a1 <: Object, a2 <: Object] = f[a1, a2]
     }
 
-    final class Quote3[f[_ <: Obj, _ <: Obj, _ <: Obj] <: Obj] extends Func3 {
-        override type IsBind = False
-        override type Apply3[a1 <: Obj, a2 <: Obj, a3 <: Obj] = f[a1, a2, a3]
+    final class quote3[f[_ <: Object, _ <: Object, _ <: Object] <: Object] extends Function3 {
+        override type isBind = `false`
+        override type apply3[a1 <: Object, a2 <: Object, a3 <: Object] = f[a1, a2, a3]
     }
 
 }

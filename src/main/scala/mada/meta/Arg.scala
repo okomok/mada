@@ -12,31 +12,31 @@ package mada.meta
  */
 trait Args { this: Meta.type =>
 
-    final class Arg1 extends VarargFunc {
-        override type IsBind = True
+    final class arg1 extends FunctionV {
+        override type isBind = `true`
 
-        override type Apply0[Void] = NA
-        override type Apply1[a1 <: Obj] = a1
-        override type Apply2[a1 <: Obj, a2 <: Obj] = a1
-        override type Apply3[a1 <: Obj, a2 <: Obj, a3 <: Obj] = a1
+        override type apply0[Void] = NA
+        override type apply1[a1 <: Object] = a1
+        override type apply2[a1 <: Object, a2 <: Object] = a1
+        override type apply3[a1 <: Object, a2 <: Object, a3 <: Object] = a1
     }
 
-    final class Arg2 extends VarargFunc {
-        override type IsBind = True
+    final class arg2 extends FunctionV {
+        override type isBind = `true`
 
-        override type Apply0[Void] = NA
-        override type Apply1[a1 <: Obj] = NA
-        override type Apply2[a1 <: Obj, a2 <: Obj] = a2
-        override type Apply3[a1 <: Obj, a2 <: Obj, a3 <: Obj] = a2
+        override type apply0[Void] = NA
+        override type apply1[a1 <: Object] = NA
+        override type apply2[a1 <: Object, a2 <: Object] = a2
+        override type apply3[a1 <: Object, a2 <: Object, a3 <: Object] = a2
     }
 
-    final class Arg3 extends VarargFunc {
-        override type IsBind = True
+    final class arg3 extends FunctionV {
+        override type isBind = `true`
 
-        override type Apply0[Void] = NA
-        override type Apply1[a1 <: Obj] = NA
-        override type Apply2[a1 <: Obj, a2 <: Obj] = NA
-        override type Apply3[a1 <: Obj, a2 <: Obj, a3 <: Obj] = a3
+        override type apply0[Void] = NA
+        override type apply1[a1 <: Object] = NA
+        override type apply2[a1 <: Object, a2 <: Object] = NA
+        override type apply3[a1 <: Object, a2 <: Object, a3 <: Object] = a3
     }
 
 }

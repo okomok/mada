@@ -7,6 +7,8 @@
 package mada
 
 
+// toy
+
 
 object Hetero {
 
@@ -16,7 +18,7 @@ object Hetero {
     sealed trait Iterator {
         type Head
         type ToNext <: Iterator
-        type HasNext <: Meta.Bool
+        type HasNext <: Meta.Boolean
 
         def head: Head
         def toNext: ToNext
@@ -26,7 +28,7 @@ object Hetero {
     final class NilIterator extends Iterator {
         override type Head = Nothing
         override type ToNext = Nothing
-        override type HasNext = Meta.False
+        override type HasNext = Meta.`false`
 
         def head: Head = throw new Error
         def toNext: ToNext = throw new Error
@@ -40,7 +42,7 @@ object Hetero {
     final case class ConsIterator[H, T <: Iterator](head: H, toNext: T) extends Iterator {
         override type Head = H
         override type ToNext = T
-        override type HasNext = Meta.True
+        override type HasNext = Meta.`true`
 
         def ::[A](e: A): ConsIterator[A, ConsIterator[H, T]] = ConsIterator(e, this)
     }

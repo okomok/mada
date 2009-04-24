@@ -8,9 +8,7 @@ package mada.meta
 
 
 /**
- * The meta <code>Unit</code><p />
- *
  * A nullary metamethod is defined by <code>type F[Void] = Int</code>
  * instance of <code>type F[] = Int</code>, which is illegal.
  */
-final class Void extends Obj
+sealed trait Void extends Object
