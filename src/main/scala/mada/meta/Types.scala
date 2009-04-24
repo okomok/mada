@@ -8,9 +8,11 @@ package mada.meta
 
 
 /**
- * The root of the "meta class" hierarchy
+ * Contains types.
  */
-trait Object {
-    type isBind <: Meta.Boolean
-    type isBoxed <: Meta.Boolean
+trait Types { this: Meta.type =>
+
+    type int = boxed[scala.Int]
+    type string = boxed[String]
+
 }

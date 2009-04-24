@@ -8,29 +8,34 @@ package mada.meta
 
 
 /**
- * Contains metafunction traits. (corresponding to MetafunctionClass of Boost)
+ * Contains metafunction traits.
  */
 trait Functions { this: Meta.type =>
 
     trait Function0 extends Object {
-        type apply0[Void] <: Object
+        type Result <: Object
+        type apply[void] <: Result
     }
 
     trait Function1 extends Object {
-        type apply1[a1 <: Object] <: Object
+        type Argument1 <: Object
+        type Result <: Object
+        type apply[v1 <: Argument1] <: Result
     }
 
     trait Function2 extends Object {
-        type apply2[a1 <: Object, a2 <: Object] <: Object
+        type Argument1 <: Object
+        type Argument2 <: Object
+        type Result <: Object
+        type apply[v1 <: Argument1, v2 <: Argument2] <: Result
     }
 
     trait Function3 extends Object {
-        type apply3[a1 <: Object, a2 <: Object, a3 <: Object] <: Object
+        type Argument1 <: Object
+        type Argument2 <: Object
+        type Argument3 <: Object
+        type Result <: Object
+        type apply[v1 <: Argument1, v2 <: Argument2, v3 <: Argument3] <: Result
     }
-
-    /**
-     * Takes variable arguments.
-     */
-    trait FunctionV extends Function0 with Function1 with Function2 with Function3
 
 }

@@ -8,28 +8,42 @@ package mada.meta
 
 
 /**
- * Turns metamethod into metafunction.
+ * Converts metamethod to metafunction.
  */
 trait Quotes { this: Meta.type =>
 
-    final class quote0[f[Void] <: Object] extends Function0 {
+    final class quote0[R <: Object, f[void] <: R] extends Function0 {
         override type isBind = `false`
-        override type apply0[Void] = f[Void]
+
+        override type Result = R
+        override type apply[void] = f[void]
     }
 
-    final class quote1[f[_ <: Object] <: Object] extends Function1 {
+    final class quote1[T1 <: Object, R <: Object, f[_ <: T1] <: R] extends Function1 {
         override type isBind = `false`
-        override type apply1[a1 <: Object] = f[a1]
+
+        override type Argument1 = T1
+        override type Result = R
+        override type apply[v1 <: Argument1] = f[v1]
     }
 
-    final class quote2[f[_ <: Object, _ <: Object] <: Object] extends Function2 {
+    final class quote2[T1 <: Object, T2 <: Object, R <: Object, f[_ <: T1, _ <: T2] <: R] extends Function2 {
         override type isBind = `false`
-        override type apply2[a1 <: Object, a2 <: Object] = f[a1, a2]
+
+        override type Argument1 = T1
+        override type Argument2 = T2
+        override type Result = R
+        override type apply[v1 <: Argument1, v2 <: Argument2] = f[v1, v2]
     }
 
-    final class quote3[f[_ <: Object, _ <: Object, _ <: Object] <: Object] extends Function3 {
+    final class quote3[T1 <: Object, T2 <: Object, T3 <: Object, R <: Object, f[_ <: T1, _ <: T2, _ <: T3] <: R] extends Function3 {
         override type isBind = `false`
-        override type apply3[a1 <: Object, a2 <: Object, a3 <: Object] = f[a1, a2, a3]
+
+        override type Argument1 = T1
+        override type Argument2 = T2
+        override type Argument3 = T3
+        override type Result = R
+        override type apply[v1 <: Argument1, v2 <: Argument2, v3 <: Argument3] = f[v1, v2, v3]
     }
 
 }

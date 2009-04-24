@@ -11,25 +11,20 @@ import meta._
 
 
 object Meta extends
-    Asserts with Args with Binds with Booleans with Functions with Quotes with Placeholders {
+    Alwayses with Asserts with Args with Binds with Booleans with Forwards with Functions with
+    Operators with Integers with Quotes with Placeholders with Types {
 
 
-// metamethods
+// metamethods (a.k.a type-constructor)
 
     /**
      * @return  <code>a</code>.
      */
     type identity[a <: Object] = a
 
-    /*
-    type ByLazy1[f[_], a] = ByLazy1Impl[f, a]
-    trait ByLazy1Impl[f[_], a] extends Method0 {
-        override type Type = f[a]
-    }
-    */
-
     /**
      * Tests type equality. (probably infeasible.)
+     * isInt etc will be feasible in 2.8, though.
      */
     type equals[a <: Object, b <: Object] = Nothing // How?
 
@@ -50,19 +45,14 @@ object Meta extends
     type Object = meta.Object
 
     /**
-     * Alias of <code>meta.Void</code>
+     * Alias of <code>meta.void</code>
      */
-    type Void = meta.Void
+    type void = meta.void
 
     /**
      * Alias of <code>meta.boxed</code>
      */
     type boxed[a] = meta.boxed[a]
-
-    /**
-     * Alias of <code>meta.always</code>
-     */
-    type always[a <: Object] = meta.always[a]
 
 
 // namespaces

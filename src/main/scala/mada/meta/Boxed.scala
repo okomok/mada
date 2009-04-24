@@ -15,6 +15,6 @@ import Meta._
  */
 final class boxed[a] extends Object {
     override type isBind = `false`
-    override type IsBoxed = `true`
+    override type isBoxed = `true`
     type unbox = a
 }

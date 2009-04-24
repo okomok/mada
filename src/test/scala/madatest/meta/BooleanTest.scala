@@ -12,9 +12,30 @@ import mada.Meta._
 
 
 class BooleanTest {
-    def testTrivial(off: Int): Unit = {
+    def testTrivial: Unit = {
         assertEquals[`true`, `true`]
         assertEquals[`false`, `if`[`true`, `false`, `true`]]
         assertEquals[`false`, `if`[`false`, `true`, `false`]]
+    }
+
+    trait N extends Object {
+        type feel <: Object
+    }
+    trait s extends N {
+        override type isBoxed = `false`
+    }
+    trait t extends s {
+        type touch <: Object
+    }
+
+    type foo[a <: N, _s <: N, _t <: _s] = `if`[a#isBoxed, _s, _t]
+
+    type feeling[a <: N, _s <: N, _t <: _s] = `if`[a#isBoxed, _s, _t]#feel
+
+    def testTypeSafe: Unit = {
+       // instance[foo[string]#touch]
+        instance[foo[s, s, t]#touch]
+        assertEquals[s, foo[string, s, t]]
+        assertEquals[t, foo[s, s, t]]
     }
 }
