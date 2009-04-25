@@ -27,7 +27,7 @@ trait Integers { this: Meta.type =>
         type multiply[that <: Integer] = decrement#multiply[that]#add[that]
 */
         override type Self = Integer
-        override type operate_+[that <: Integer] = add[that]
+        override type operate_+[that <: Self] = add[that]
     }
 
     sealed trait _0I extends Integer {

@@ -8,7 +8,7 @@ package mada.meta
 
 
 /**
- * Function forwardinging
+ * Function forwardings
  */
 trait Forwardings { this: Meta.type =>
 

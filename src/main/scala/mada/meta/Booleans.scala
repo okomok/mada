@@ -7,9 +7,6 @@
 package mada.meta
 
 
-// See: http://www.assembla.com/wiki/show/metascala
-
-
 /**
  * Contains meta Boolean functionalities.
  */
