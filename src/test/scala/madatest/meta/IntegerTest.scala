@@ -13,20 +13,29 @@ import mada.Meta._
 
 class IntegerTest {
     def testTrivial: Unit = {
-        /*
-        assertEquals[_0, _0]
-        assertEquals[_1, _0 + _1]
-        assertEquals[_1, _1 + _0]
-        assertEquals[_2, _1#increment]
-        assertEquals[_3, _1 + _2]
-        assertEquals[_2, _1 + _1]
-        assertEquals[_3, _1#plus[_1]#increment]
-        */
 
-      // illegal cyclic reference
-//        assertEquals[_3, _2#plus[_1]]
-      //  assertEquals[_5, _2#plus[_3]]
-      //  assertEquals[_5, _2#multiply[_3]]
+        assertEquals[_0I, _0I]
+        assertEquals[_1I, _0I + _1I]
+        assertEquals[_1I, _1I + _0I]
+        assertEquals[_2I, _1I#increment]
+        assertEquals[_3I, _1I + _2I]
+        assertEquals[_2I, _1I + _1I]
+        assertEquals[_3I, _1I#add[_1I]#increment]
+
+
+        assertEquals[_3I, _2I +_1I]
+        assertEquals[_5I, _2I + _3I]
+        assertEquals[_3I, _2I +_1I]
+        assertEquals[_5I, _3I + _2I]
+        assertEquals[_5I, _4I + _1I]
+        assertEquals[_5I, _2I + _3I]
+
+        assertEquals[_4I, _2I#multiply[_2I]]
+        assertEquals[_3I, _3I#multiply[_1I]]
+
+        assertEquals[_6I, _2I#multiply[_3I]]
+        assertEquals[_6I, _3I#multiply[_2I]]
+
       ()
     }
 }

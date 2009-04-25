@@ -11,76 +11,136 @@ package mada.meta
  * Contains meta integers.
  */
 trait Integers { this: Meta.type =>
-    /*
+
     sealed trait Integer extends Object with Operatable_+ {
         type increment <: Integer
         type decrement <: Integer
         type negate <: Integer
-        type plus[that <: Integer] <: Integer
+
+        type add[that <: Integer] <: Integer
         type minus[that <: Integer] <: Integer
         type multiply[that <: Integer] <: Integer
-
+/*
+        // Results in illegal cyclic reference. -Yrecursion is needed?
+        type add[that <: Integer] = decrement#add[that]#increment
+        type minus[that <: Integer] = decrement#minus[that]#increment
+        type multiply[that <: Integer] = decrement#multiply[that]#add[that]
+*/
         override type Self = Integer
-        override type operate_+[that <: Integer] = plus[that]
+        override type operate_+[that <: Integer] = add[that]
     }
 
-
-    sealed trait _0 extends Integer {
-        override type increment = _1
+    sealed trait _0I extends Integer {
+        override type increment = _1I
         override type decrement = throwError
-        override type negate = _0
-        override type plus[that <: Integer] = that
+        override type negate = _0I
+
+        override type add[that <: Integer] = that
         override type minus[that <: Integer] = that#negate
-        override type multiply[that <: Integer] = _0
+        override type multiply[that <: Integer] = _0I
     }
 
-    sealed trait IntegerImpl[d <: Integer, i <: Integer] extends Integer {
-        override type increment = i
-        override type decrement = d
+    sealed trait _1I extends Integer {
+        override type increment = _2I
+        override type decrement = _0I
+        override type negate = throwError
 
-        // Results in illegal cyclic reference, anyway: without -Yrecursion flag.
-        override type negate = d#negate#decrement
-        override type plus[that <: Integer] = d#plus[that]#increment
-        override type minus[that <: Integer] = d#minus[that]#increment
-        override type multiply[that <: Integer] = d#multiply[that]#plus[d]
+        type add[that <: Integer] = decrement#add[that]#increment
+        type minus[that <: Integer] = decrement#minus[that]#increment
+        type multiply[that <: Integer] = decrement#multiply[that]#add[that]
     }
 
-    // No recursions like C macros.
-    sealed trait _1 extends IntegerImpl[_0, _2]
-    sealed trait _2 extends IntegerImpl[_1, Nothing]
+    sealed trait _2I extends Integer {
+        override type increment = _3I
+        override type decrement = _1I
+        override type negate = throwError
 
-    sealed trait _3 extends IntegerImpl[_2, _4]
-    sealed trait _4 extends IntegerImpl[_3, _5]
-    sealed trait _5 extends IntegerImpl[_4, _6]
-    sealed trait _6 extends IntegerImpl[_5, _7]
-    sealed trait _7 extends IntegerImpl[_6, _8]
-    sealed trait _8 extends IntegerImpl[_7, _9]
-    sealed trait _9 extends IntegerImpl[_8, _10]
-    sealed trait _10 extends IntegerImpl[_9, Nothing]
-
-    sealed trait _succ[n <: Integer] extends Integer {
-        // This recursive call crashes compiler. Maybe -Yrecursion flag is needed?
-        private type `this` = _succ[n]
-        override type increment = _succ[`this`]
-        override type decrement = n
-        override type negate = n#negate#decrement
-        override type plus[that <: Integer] = n#plus[that]#increment
-        override type minus[that <: Integer] = n#minus[that]#increment
-        override type multiply[that <: Integer] = n#multiply[that]#plus[n]
+        type add[that <: Integer] = decrement#add[that]#increment
+        type minus[that <: Integer] = decrement#minus[that]#increment
+        type multiply[that <: Integer] = decrement#multiply[that]#add[that]
     }
 
-    type __1 = _succ[_0]
-    type __2 = _succ[__1]
-    type __3 = _succ[__2]
-    type __4 = _succ[__3]
-    type __5 = _succ[__4]
-    type __6 = _succ[__5]
-    type __7 = _succ[__6]
-    type __8 = _succ[__7]
-    type __9 = _succ[__8]
-    type __10 = _succ[__9]
+    sealed trait _3I extends Integer {
+        override type increment = _4I
+        override type decrement = _2I
+        override type negate = throwError
 
-        assertEquals[__3, __1 + __2]
-        assertEquals[__2, __1 + __1]
+        type add[that <: Integer] = decrement#add[that]#increment
+        type minus[that <: Integer] = decrement#minus[that]#increment
+        type multiply[that <: Integer] = decrement#multiply[that]#add[that]
+    }
+
+    sealed trait _4I extends Integer {
+        override type increment = _5I
+        override type decrement = _3I
+        override type negate = throwError
+
+        type add[that <: Integer] = decrement#add[that]#increment
+        type minus[that <: Integer] = decrement#minus[that]#increment
+        type multiply[that <: Integer] = decrement#multiply[that]#add[that]
+    }
+
+    sealed trait _5I extends Integer {
+        override type increment = _6I
+        override type decrement = _4I
+        override type negate = throwError
+
+        type add[that <: Integer] = decrement#add[that]#increment
+        type minus[that <: Integer] = decrement#minus[that]#increment
+        type multiply[that <: Integer] = decrement#multiply[that]#add[that]
+    }
+
+    sealed trait _6I extends Integer {
+        override type increment = Nothing
+        override type decrement = _5I
+        override type negate = throwError
+
+        type add[that <: Integer] = decrement#add[that]#increment
+        type minus[that <: Integer] = decrement#minus[that]#increment
+        type multiply[that <: Integer] = decrement#multiply[that]#add[that]
+    }
+
+/*
+    // No longer compiles in human history.
+    // It seems "ETI" like C++: all the possible computation is instantiated!?
+
+    sealed trait _7I extends Integer {
+        override type increment = _8I
+        override type decrement = _6I
+        override type negate = throwError
+
+        type add[that <: Integer] = decrement#add[that]#increment
+        type minus[that <: Integer] = decrement#minus[that]#increment
+        type multiply[that <: Integer] = decrement#multiply[that]#add[that]
+    }
+    sealed trait _8I extends Integer {
+        override type increment = _9I
+        override type decrement = _7I
+        override type negate = throwError
+
+        type add[that <: Integer] = decrement#add[that]#increment
+        type minus[that <: Integer] = decrement#minus[that]#increment
+        type multiply[that <: Integer] = decrement#multiply[that]#add[that]
+    }
+
+    sealed trait _9I extends Integer {
+        override type increment = _10I
+        override type decrement = _8I
+        override type negate = throwError
+
+        type add[that <: Integer] = decrement#add[that]#increment
+        type minus[that <: Integer] = decrement#minus[that]#increment
+        type multiply[that <: Integer] = decrement#multiply[that]#add[that]
+    }
+
+    sealed trait _10I extends Integer {
+        override type increment = throwError
+        override type decrement = _9I
+        override type negate = throwError
+
+        type add[that <: Integer] = decrement#add[that]#increment
+        type minus[that <: Integer] = decrement#minus[that]#increment
+        type multiply[that <: Integer] = decrement#multiply[that]#add[that]
+    }
 */
 }
