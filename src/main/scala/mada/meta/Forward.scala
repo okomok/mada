@@ -14,7 +14,7 @@ trait Forwards { this: Meta.type =>
 
     final class forward0[f <: Function0] extends Function0 {
         override type Result0 = f#Result0
-        override type apply0[void] = f#apply0[void]
+        override type apply0 = f#apply0
     }
 
     final class forward1[f <: Function1] extends Function1 {

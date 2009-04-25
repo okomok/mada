@@ -14,10 +14,10 @@ import Meta._
  * Metafunction always returning <code>a</code>
  */
 final class always[a <: Object] extends Function0 with Function1 with Function2 with Function3 {
-    override type isBind[void] = `false`
+    override type isBind = `false`
 
     override type Result0 = a
-    override type apply0[void] = a
+    override type apply0 = a
 
     override type Result1 = a
     override type apply1[v1 <: Argument11] = a

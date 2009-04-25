@@ -31,7 +31,7 @@ object Meta extends
     /**
      * @return  <code>Nothing</code>.
      */
-    type throwError[void] = Nothing
+    type throwError = Nothing
 
 
 // the instance

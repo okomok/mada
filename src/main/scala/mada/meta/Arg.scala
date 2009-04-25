@@ -13,7 +13,7 @@ package mada.meta
 trait Args { this: Meta.type =>
 
     final class arg1[T <: Object] extends Function1 with Function2 with Function3 {
-        override type isBind[void] = `true`
+        override type isBind = `true`
 
         override type Argument11 = T
         override type Result1 = T
@@ -29,7 +29,7 @@ trait Args { this: Meta.type =>
     }
 
     final class arg2[T <: Object] extends Function2 with Function3 {
-        override type isBind[void] = `true`
+        override type isBind = `true`
 
         override type Argument22 = T
         override type Result2 = T
@@ -41,7 +41,7 @@ trait Args { this: Meta.type =>
     }
 
     final class arg3[T <: Object] extends Function3 {
-        override type isBind[void] = `true`
+        override type isBind = `true`
 
         override type Argument33 = T
         override type Result3 = T

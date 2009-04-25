@@ -13,9 +13,9 @@ package mada.meta
 trait Integers { this: Meta.type =>
 
     sealed trait Integer extends Object with Operatable_+ {
-        type increment[void] <: Integer
-        type decrement[void] <: Integer
-        type negate[void] <: Integer
+        type increment <: Integer
+        type decrement <: Integer
+        type negate <: Integer
         type plus[that <: Integer] <: Integer
         type minus[that <: Integer] <: Integer
         type multiply[that <: Integer] <: Integer
@@ -24,28 +24,28 @@ trait Integers { this: Meta.type =>
         override type operate_+[that <: Integer] = plus[that]
     }
 
+/*
     final class _0 extends Integer {
-        override type increment[void] = _1
-        override type decrement[void] = throwError[void]
-        override type negate[void] = _0
+        override type increment = _1
+        override type decrement = throwError
+        override type negate = _0
         override type plus[that <: Integer] = that
-        override type minus[that <: Integer] = that#negate[void]
+        override type minus[that <: Integer] = that#negate
         override type multiply[that <: Integer] = _0
     }
 
     sealed trait IntegerImpl[d <: Integer, i <: Integer] extends Integer {
-        override type increment[void] = i
-        override type decrement[void] = d
+        override type increment = i
+        override type decrement = d
 
         // Results in illegal cyclic reference, anyway: without -Yrecursion flag.
-        override type negate[void] = d#negate[void]#decrement[void]
-        override type plus[that <: Integer] = d#plus[that]#increment[void]
-        override type minus[that <: Integer] = d#minus[that]#increment[void]
+        override type negate = d#negate#decrement
+        override type plus[that <: Integer] = d#plus[that]#increment
+        override type minus[that <: Integer] = d#minus[that]#increment
         override type multiply[that <: Integer] = d#multiply[that]#plus[d]
     }
 
     // No recursions like C macros.
-
     final class _1 extends IntegerImpl[_0, _2]
     final class _2 extends IntegerImpl[_1, _3]
     final class _3 extends IntegerImpl[_2, _4]
@@ -56,16 +56,16 @@ trait Integers { this: Meta.type =>
     final class _8 extends IntegerImpl[_7, _9]
     final class _9 extends IntegerImpl[_8, _10]
     final class _10 extends IntegerImpl[_9, Nothing]
-
+*/
 /*
     final class _succ[n <: Integer] extends Integer {
         // This recursive call crashes compiler. Maybe -Yrecursion flag is needed?
-        private type `this`[void] = _succ[n]
-        override type increment[void] = _succ[`this`[void]]
-        override type decrement[void] = n
-        override type negate[void] = n#negate[void]#decrement[void]
-        override type plus[that <: Integer] = n#plus[that]#increment[void]
-        override type minus[that <: Integer] = n#minus[that]#increment[void]
+        private type `this` = _succ[n]
+        override type increment = _succ[`this`]
+        override type decrement = n
+        override type negate = n#negate#decrement
+        override type plus[that <: Integer] = n#plus[that]#increment
+        override type minus[that <: Integer] = n#minus[that]#increment
         override type multiply[that <: Integer] = n#multiply[that]#plus[n]
     }
 

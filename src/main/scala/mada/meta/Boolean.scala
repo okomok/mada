@@ -18,7 +18,7 @@ trait Booleans { this: Meta.type =>
     sealed trait Boolean extends Object {
         type and[that <: Boolean] <: Boolean
         type or[that <: Boolean] <: Boolean
-        type not[void] <: Boolean
+        type not <: Boolean
 
         private[mada] type if_[then <: Object, else_ <: then] <: then
     }
@@ -26,7 +26,7 @@ trait Booleans { this: Meta.type =>
     final class `true` extends Boolean {
         override type and[that <: Boolean] = that
         override type or[that <: Boolean] = `true`
-        override type not[void] = `false`
+        override type not = `false`
 
         private[mada] override type if_[then <: Object, else_ <: then] = then
     }
@@ -34,7 +34,7 @@ trait Booleans { this: Meta.type =>
     final class `false` extends Boolean {
         override type and[that <: Boolean] = `false`
         override type or[that <: Boolean] = that
-        override type not[void] = `true`
+        override type not = `true`
 
         private[mada] override type if_[then <: Object, else_ <: then] = else_
     }
@@ -42,7 +42,7 @@ trait Booleans { this: Meta.type =>
     // TODO: Move to Operators.
     type &&[a <: Boolean, b <: Boolean] = a#and[b]
     type ||[a <: Boolean, b <: Boolean] = a#or[b]
-    type ![a <: Boolean] = a#not[void]
+    type ![a <: Boolean] = a#not
 
     type `if`[cond <: Boolean, then <: Object, else_ <: then] = cond#if_[then, else_]
 
