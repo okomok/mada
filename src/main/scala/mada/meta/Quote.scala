@@ -12,14 +12,14 @@ package mada.meta
  */
 trait Quotes { this: Meta.type =>
 
-    final class quote0[R <: Object, f <: R] extends Function0 {
+    sealed trait quote0[R <: Object, f <: R] extends Function0 {
         override type isBind = `false`
 
         override type Result0 = R
         override type apply0 = f
     }
 
-    final class quote1[T1 <: Object, R <: Object, f[_ <: T1] <: R] extends Function1 {
+    sealed trait quote1[T1 <: Object, R <: Object, f[_ <: T1] <: R] extends Function1 {
         override type isBind = `false`
 
         override type Argument11 = T1
@@ -27,7 +27,7 @@ trait Quotes { this: Meta.type =>
         override type apply1[v1 <: Argument11] = f[v1]
     }
 
-    final class quote2[T1 <: Object, T2 <: Object, R <: Object, f[_ <: T1, _ <: T2] <: R] extends Function2 {
+    sealed trait quote2[T1 <: Object, T2 <: Object, R <: Object, f[_ <: T1, _ <: T2] <: R] extends Function2 {
         override type isBind = `false`
 
         override type Argument21 = T1
@@ -36,7 +36,7 @@ trait Quotes { this: Meta.type =>
         override type apply2[v1 <: Argument21, v2 <: Argument22] = f[v1, v2]
     }
 
-    final class quote3[T1 <: Object, T2 <: Object, T3 <: Object, R <: Object, f[_ <: T1, _ <: T2, _ <: T3] <: R] extends Function3 {
+    sealed trait quote3[T1 <: Object, T2 <: Object, T3 <: Object, R <: Object, f[_ <: T1, _ <: T2, _ <: T3] <: R] extends Function3 {
         override type isBind = `false`
 
         override type Argument31 = T1

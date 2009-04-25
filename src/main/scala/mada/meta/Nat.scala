@@ -23,9 +23,9 @@ trait Nats { this: Meta.type =>
     }
 
 
-    // Workarond: `final class` crashes compiler.
+    // Workarond: `sealed trait` crashes compiler.
 
-    /*final class*/ sealed trait _0N extends Nat {
+    /*sealed trait*/ sealed trait _0N extends Nat {
         override type increment = _1N
         override type plus[that <: Nat] = that
         override type multiply[that <: Nat] = _0N
@@ -57,10 +57,10 @@ trait Nats { this: Meta.type =>
     }
 
     // No recursions like C macros.
-    final class _1N extends NatImpl[_2N]
-    final class _2N extends NatImpl[_3N]
-    final class _3N extends NatImpl[Nothing]
-    final class _succ[n <: Nat] extends Nat {
+    sealed trait _1N extends NatImpl[_2N]
+    sealed trait _2N extends NatImpl[_3N]
+    sealed trait _3N extends NatImpl[Nothing]
+    sealed trait _succ[n <: Nat] extends Nat {
         // This recursive call crashes compiler. Maybe -Yrecursion flag is needed?
         private type `this` = _succ1[n]
         override type increment = _succ2[`this`]

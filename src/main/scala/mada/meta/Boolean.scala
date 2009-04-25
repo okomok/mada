@@ -24,7 +24,7 @@ trait Booleans { this: Meta.type =>
         private[mada] type lazyIf[then <: Function0, _else <: Function0 { type Result0 <: then#Result0 }] <: then#Result0
     }
 
-    final class `true` extends Boolean {
+    sealed trait `true` extends Boolean {
         override type and[that <: Boolean] = that
         override type or[that <: Boolean] = `true`
         override type not = `false`
@@ -33,7 +33,7 @@ trait Booleans { this: Meta.type =>
         private[mada] override type lazyIf[then <: Function0, _else <: Function0 { type Result0 <: then#Result0 }] = then#apply0
     }
 
-    final class `false` extends Boolean {
+    sealed trait `false` extends Boolean {
         override type and[that <: Boolean] = `false`
         override type or[that <: Boolean] = that
         override type not = `true`
