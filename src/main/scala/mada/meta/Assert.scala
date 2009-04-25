@@ -12,24 +12,27 @@ package mada.meta
  */
 trait Asserts { this: Meta.type =>
 
+    // Prefer methods to case classes:
+    //   case classes permit should-be-illegal expression.
+
     /**
      * assertion
      */
-    def assert[a >: `true` <: `true`]: Unit = ()
+    def assert[a >: `true` <: `true`]: scala.Unit = ()
 
     /**
      * assertion of identity equality
      */
-    def assertSame[a >: b <: b, b]: Unit = ()
+    def assertSame[a >: b <: b, b]: scala.Unit = ()
 
     /**
-     * assertion if a is lower than b.
+     * assertion if <code>a</code> is lower than <code>b</code>.
      */
-    def assertLower[a <: b, b]: Unit = ()
+    def assertLower[a <: b, b]: scala.Unit = ()
 
     /**
-     * assertion if a is upper than b.
+     * assertion if <code>a</code> is upper than <code>b</code>.
      */
-    def assertUpper[a >: b, b]: Unit = ()
+    def assertUpper[a >: b, b]: scala.Unit = ()
 
 }

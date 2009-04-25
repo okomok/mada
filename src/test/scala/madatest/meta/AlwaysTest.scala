@@ -18,12 +18,11 @@ class AlwaysTest {
 
     def testTrivial: Unit = {
         type k = always[box[String]]#apply1[so]
-        /*
+        assertSame[box[String], k]
         assertSame[box[String], always[box[String]]#apply0]
         assertSame[box[String], always[box[String]]#apply1[so]]
         assertSame[box[String], always[box[String]]#apply2[box[scala.Int], so]]
         assertSame[box[String], always[box[String]]#apply3[box[scala.Int], so, so]]
-        */
         ()
     }
 }
