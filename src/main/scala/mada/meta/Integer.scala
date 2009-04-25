@@ -58,10 +58,10 @@ trait Integers { this: Meta.type =>
     final class _10 extends IntegerImpl[_9, Nothing]
 
 /*
-    final class succ[n <: Integer] extends Integer {
+    final class _succ[n <: Integer] extends Integer {
         // This recursive call crashes compiler. Maybe -Yrecursion flag is needed?
-        // private type `this` = succ[n]
-        // override type increment[void] = succ[`this`]
+        private type `this`[void] = _succ[n]
+        override type increment[void] = _succ[`this`[void]]
         override type decrement[void] = n
         override type negate[void] = n#negate[void]#decrement[void]
         override type plus[that <: Integer] = n#plus[that]#increment[void]
@@ -69,16 +69,18 @@ trait Integers { this: Meta.type =>
         override type multiply[that <: Integer] = n#multiply[that]#plus[n]
     }
 
-    type _1 = succ[_0]
-    type _2 = succ[_1]
-    type _3 = succ[_2]
-    type _4 = succ[_3]
-    type _5 = succ[_4]
-    type _6 = succ[_5]
-    type _7 = succ[_6]
-    type _8 = succ[_7]
-    type _9 = succ[_8]
-    type _10 = succ[_9]
-*/
+    type __1 = _succ[_0]
+    type __2 = _succ[__1]
+    type __3 = _succ[__2]
+    type __4 = _succ[__3]
+    type __5 = _succ[__4]
+    type __6 = _succ[__5]
+    type __7 = _succ[__6]
+    type __8 = _succ[__7]
+    type __9 = _succ[__8]
+    type __10 = _succ[__9]
 
+        assertEquals[__3, __1 + __2]
+        assertEquals[__2, __1 + __1]
+*/
 }

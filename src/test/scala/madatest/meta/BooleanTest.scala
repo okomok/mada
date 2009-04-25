@@ -22,15 +22,15 @@ class BooleanTest {
         type feel <: Object
     }
     trait s extends N {
-        override type isBoxed = `false`
+        override type isBoxed[void] = `false`
     }
     trait t extends s {
         type touch <: Object
     }
 
-    type foo[a <: N, _s <: N, _t <: _s] = `if`[a#isBoxed, _s, _t]
+    type foo[a <: N, _s <: N, _t <: _s] = `if`[a#isBoxed[void], _s, _t]
 
-    type feelIt[a <: N, _s <: N, _t <: _s] = `if`[a#isBoxed, _s, _t]#feel
+    type feelIt[a <: N, _s <: N, _t <: _s] = `if`[a#isBoxed[void], _s, _t]#feel
 
     def testTypeSafe: Unit = {
        // instance[foo[newObject[String]]#touch]

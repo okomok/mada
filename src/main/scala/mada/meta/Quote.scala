@@ -13,14 +13,14 @@ package mada.meta
 trait Quotes { this: Meta.type =>
 
     final class quote0[R <: Object, f[void] <: R] extends Function0 {
-        override type isBind = `false`
+        override type isBind[void] = `false`
 
         override type Result0 = R
         override type apply0[void] = f[void]
     }
 
     final class quote1[T1 <: Object, R <: Object, f[_ <: T1] <: R] extends Function1 {
-        override type isBind = `false`
+        override type isBind[void] = `false`
 
         override type Argument11 = T1
         override type Result1 = R
@@ -28,7 +28,7 @@ trait Quotes { this: Meta.type =>
     }
 
     final class quote2[T1 <: Object, T2 <: Object, R <: Object, f[_ <: T1, _ <: T2] <: R] extends Function2 {
-        override type isBind = `false`
+        override type isBind[void] = `false`
 
         override type Argument21 = T1
         override type Argument22 = T2
@@ -37,7 +37,7 @@ trait Quotes { this: Meta.type =>
     }
 
     final class quote3[T1 <: Object, T2 <: Object, T3 <: Object, R <: Object, f[_ <: T1, _ <: T2, _ <: T3] <: R] extends Function3 {
-        override type isBind = `false`
+        override type isBind[void] = `false`
 
         override type Argument31 = T1
         override type Argument32 = T2

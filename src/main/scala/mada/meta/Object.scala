@@ -11,8 +11,8 @@ package mada.meta
  * The root of the "meta class" hierarchy
  */
 trait Object {
-    type isBind <: Meta.Boolean
-    type isBoxed <: Meta.Boolean
+    type isBind[void] <: Meta.Boolean
+    type isBoxed[void] <: Meta.Boolean
 }
 
 
@@ -20,7 +20,7 @@ trait Object {
  * Boxes <code>a</code> into <code>Object</code>.
  */
 final class newObject[a] extends Object {
-    override type isBind = Meta.`false`
-    override type isBoxed = Meta.`true`
+    override type isBind[void] = Meta.`false`
+    override type isBoxed[void] = Meta.`true`
     type unbox = a
 }
