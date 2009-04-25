@@ -11,8 +11,8 @@ import meta._
 
 
 object Meta extends
-    Asserts with Args with Binds with Booleans with Forwards with Functions with Nats with Operators with
-    Integers with Quotes with Placeholders {
+    Asserts with Args with Binds with Booleans with Forwardings with Functions with Nats with Operators with
+    Integers with Quotes with Placeholders with Products with Tuples {
 
 
 // metamethods (a.k.a type-constructor)
@@ -47,11 +47,6 @@ object Meta extends
      * Alias of <code>meta.Object</code>
      */
     type Object = meta.Object
-
-    /**
-     * Alias of <code>meta.void</code>
-     */
-    type void = meta.void
 
     /**
      * Alias of <code>meta.box</code>

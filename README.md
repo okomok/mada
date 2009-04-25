@@ -14,6 +14,10 @@
 
     Utility methods for Iterator type
 
+- `Meta`
+
+    Metaprogramming toys
+
 - `Peg`
 
     Lightweight [PEG] parser combinators
@@ -37,6 +41,10 @@
 
 
 ## `Iterators`
+
+
+
+## `Meta`
 
 
 
@@ -107,6 +115,7 @@ You might notice that:
 1. [Browse Source]
 1. [Browse Test Source]
 1. [The Scala Programming Language]
+1. [MetaScala]
 
 
 
@@ -119,3 +128,5 @@ Shunsuke Sogame <<okomok@gmail.com>>
 [Browse Test Source]: http://github.com/okomok/mada/tree/master/src/test/scala/madatest "Browse Test Source"
 [The Scala Programming Language]: http://www.scala-lang.org/ "The Scala Programming Language"
 [PEG]: http://en.wikipedia.org/wiki/Parsing_expression_grammar "PEG"
+[MetaScala]: http://www.assembla.com/wiki/show/metascala
+
