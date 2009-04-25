@@ -15,21 +15,21 @@ trait Asserts { this: Meta.type =>
     /**
      * assertion
      */
-    final case class assert[a >: `true` <: `true`]()
+    def assert[a >: `true` <: `true`]: Unit = ()
 
     /**
      * assertion of identity equality
      */
-    final case class assertSame[a >: b <: b, b]()
+    def assertSame[a >: b <: b, b]: Unit = ()
 
     /**
      * assertion if a is lower than b.
      */
-    final case class assertLower[a <: b, b]()
+    def assertLower[a <: b, b]: Unit = ()
 
     /**
      * assertion if a is upper than b.
      */
-    final case class assertUpper[a >: b, b]()
+    def assertUpper[a >: b, b]: Unit = ()
 
 }

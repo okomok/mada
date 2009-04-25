@@ -28,7 +28,7 @@ object Meta extends
     type throwError = Nothing
 
     /**
-     * May be useful if you forget everything is type. :-)
+     * Problem...
      */
     type asInstanceOf[v <: T, T <: Object] = T
 
@@ -54,9 +54,9 @@ object Meta extends
     type void = meta.void
 
     /**
-     * Alias of <code>meta.newObject</code>
+     * Alias of <code>meta.box</code>
      */
-    type newObject[a] = meta.newObject[a]
+    type box[a] = meta.box[a]
 
     /**
      * Alias of <code>meta.always</code>

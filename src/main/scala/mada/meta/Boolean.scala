@@ -20,8 +20,8 @@ trait Booleans { this: Meta.type =>
         type or[that <: Boolean] <: Boolean
         type not <: Boolean
 
-        private[mada] type if_[then <: Object, _else <: then] <: then
-        private[mada] type lazyIf[then <: Function0, _else <: Function0 { type Result0 <: then#Result0 }] <: then#Result0
+        private[mada] type _if[R, then <: R, _else <: R] <: R
+        private[mada] type lazyIf[R, then <: Function0 { type Result0 <: R }, _else <: Function0 { type Result0 <: R }] <: R
     }
 
     sealed trait `true` extends Boolean {
@@ -29,8 +29,8 @@ trait Booleans { this: Meta.type =>
         override type or[that <: Boolean] = `true`
         override type not = `false`
 
-        private[mada] override type if_[then <: Object, _else <: then] = then
-        private[mada] override type lazyIf[then <: Function0, _else <: Function0 { type Result0 <: then#Result0 }] = then#apply0
+        private[mada] override type _if[R, then <: R, _else <: R] = then
+        private[mada] override type lazyIf[R, then <: Function0 { type Result0 <: R }, _else <: Function0 { type Result0 <: R }] = then#apply0
     }
 
     sealed trait `false` extends Boolean {
@@ -38,8 +38,8 @@ trait Booleans { this: Meta.type =>
         override type or[that <: Boolean] = that
         override type not = `true`
 
-        private[mada] override type if_[then <: Object, _else <: then] = _else
-        private[mada] override type lazyIf[then <: Function0, _else <: Function0 { type Result0 <: then#Result0 }] = _else#apply0
+        private[mada] override type _if[R, then <: R, _else <: R] = _else
+        private[mada] override type lazyIf[R, then <: Function0 { type Result0 <: R }, _else <: Function0 { type Result0 <: R }] = _else#apply0
     }
 
     // TODO: Move to Operators.
@@ -47,7 +47,7 @@ trait Booleans { this: Meta.type =>
     type ||[a <: Boolean, b <: Boolean] = a#or[b]
     type ![a <: Boolean] = a#not
 
-    type `if`[cond <: Boolean, then <: Object, _else <: then] = cond#if_[then, _else]
-    type lazyIf[cond <: Boolean, then <: Function0, _else <: Function0 { type Result0 <: then#Result0 }] = cond#lazyIf[then, _else]
+    type `if`[R, cond <: Boolean, then <: R, _else <: R] = cond#_if[R, then, _else]
+    type lazyIf[R, cond <: Boolean, then <: Function0 { type Result0 <: R }, _else <: Function0 { type Result0 <: R }] = cond#lazyIf[R, then, _else]
 
 }

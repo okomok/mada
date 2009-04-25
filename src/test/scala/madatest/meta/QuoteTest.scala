@@ -30,7 +30,7 @@ class QuoteTest {
     type q2 = quote2[Strong, Strung, Strung, get2]
 
     def testTrivial: Unit = {
-        assertSame[quote1[newObject[String], newObject[String], identity]#apply1[newObject[String]], newObject[String]]
+        assertSame[quote1[box[String], box[String], identity]#apply1[box[String]], box[String]]
         assertSame[q1#apply2[so, su], so]
         assertSame[q2#apply2[so, su], su]
     }
