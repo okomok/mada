@@ -11,7 +11,7 @@ package mada.meta
  * Contains meta integers.
  */
 trait Integers { this: Meta.type =>
-
+    /*
     sealed trait Integer extends Object with Operatable_+ {
         type increment <: Integer
         type decrement <: Integer
@@ -24,7 +24,7 @@ trait Integers { this: Meta.type =>
         override type operate_+[that <: Integer] = plus[that]
     }
 
-/*
+
     final class _0 extends Integer {
         override type increment = _1
         override type decrement = throwError
@@ -47,7 +47,8 @@ trait Integers { this: Meta.type =>
 
     // No recursions like C macros.
     final class _1 extends IntegerImpl[_0, _2]
-    final class _2 extends IntegerImpl[_1, _3]
+    final class _2 extends IntegerImpl[_1, Nothing]
+
     final class _3 extends IntegerImpl[_2, _4]
     final class _4 extends IntegerImpl[_3, _5]
     final class _5 extends IntegerImpl[_4, _6]
@@ -56,8 +57,7 @@ trait Integers { this: Meta.type =>
     final class _8 extends IntegerImpl[_7, _9]
     final class _9 extends IntegerImpl[_8, _10]
     final class _10 extends IntegerImpl[_9, Nothing]
-*/
-/*
+
     final class _succ[n <: Integer] extends Integer {
         // This recursive call crashes compiler. Maybe -Yrecursion flag is needed?
         private type `this` = _succ[n]
