@@ -21,7 +21,7 @@ trait Booleans { this: Meta.type =>
         type not <: Boolean
 
         private[mada] type _if[R, then <: R, _else <: R] <: R
-        private[mada] type lazyIf[R, then <: Function0 { type Result0 <: R }, _else <: Function0 { type Result0 <: R }] <: R
+        private[mada] type lazyIf[then <: Function0, _else <: Function0] <: Function0
     }
 
     sealed trait `true` extends Boolean {
@@ -30,7 +30,7 @@ trait Booleans { this: Meta.type =>
         override type not = `false`
 
         private[mada] override type _if[R, then <: R, _else <: R] = then
-        private[mada] override type lazyIf[R, then <: Function0 { type Result0 <: R }, _else <: Function0 { type Result0 <: R }] = then#apply0
+        private[mada] override type lazyIf[then <: Function0, _else <: Function0] = then
     }
 
     sealed trait `false` extends Boolean {
@@ -39,7 +39,7 @@ trait Booleans { this: Meta.type =>
         override type not = `true`
 
         private[mada] override type _if[R, then <: R, _else <: R] = _else
-        private[mada] override type lazyIf[R, then <: Function0 { type Result0 <: R }, _else <: Function0 { type Result0 <: R }] = _else#apply0
+        private[mada] override type lazyIf[then <: Function0, _else <: Function0] = _else
     }
 
     // TODO: Move to Operators.
@@ -48,6 +48,6 @@ trait Booleans { this: Meta.type =>
     type ![a <: Boolean] = a#not
 
     type `if`[R, cond <: Boolean, then <: R, _else <: R] = cond#_if[R, then, _else]
-    type lazyIf[R, cond <: Boolean, then <: Function0 { type Result0 <: R }, _else <: Function0 { type Result0 <: R }] = cond#lazyIf[R, then, _else]
+    type lazyIf[cond <: Boolean, then <: Function0, _else <: Function0] = cond#lazyIf[then, _else]
 
 }

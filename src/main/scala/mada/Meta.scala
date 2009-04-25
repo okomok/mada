@@ -11,7 +11,7 @@ import meta._
 
 
 object Meta extends
-    Asserts with Args with Binds with Booleans with Forwards with Functions with Operators with
+    Asserts with Args with Binds with Booleans with Forwards with Functions with Nats with Operators with
     Integers with Quotes with Placeholders {
 
 

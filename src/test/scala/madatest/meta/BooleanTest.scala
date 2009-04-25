@@ -36,4 +36,32 @@ class BooleanTest {
         unmeta[foo[s, s, t]#touch]
         assertSame[t, foo[s, s, t]]
     }
+
+
+    trait M extends Object {
+        type walk <: Object
+    }
+
+    sealed trait fn7 extends Function0 {
+        type Result0 = Object
+        type apply0 = N
+    }
+
+    sealed trait fn8 extends Function0 {
+        type Result0 = Object
+        type apply0 = M
+    }
+
+    sealed trait fn9 extends Function0 {
+        type Result0 = Object
+        type apply0 = t
+    }
+
+    def testLazy: Unit = {
+        unmeta[lazyIf[`true`, fn7, fn8]#apply0#feel]
+        unmeta[lazyIf[`false`, fn7, fn8]#apply0#walk]
+        unmeta[lazyIf[`true`, lazyIf[`false`, fn7, fn8], fn9]#apply0#walk]
+        assertSame[N, lazyIf[`true`, fn7, fn8]#apply0]
+        assertSame[M, lazyIf[`false`, fn7, fn8]#apply0]
+    }
 }
