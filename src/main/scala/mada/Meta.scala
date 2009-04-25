@@ -23,23 +23,22 @@ object Meta extends
     type identity[a <: Object] = a
 
     /**
-     * Tests type equality. (probably infeasible.)
-     * isInt etc will be feasible in 2.8, though.
-     */
-    type equals[a <: Object, b <: Object] = Nothing // How?
-
-    /**
      * @return  <code>Nothing</code>.
      */
     type throwError = Nothing
 
+    /**
+     * May be useful if you forget everything is type. :-)
+     */
+    type asInstanceOf[v <: T, T <: Object] = T
 
-// the instance
+
+// misc
 
     /**
      * @return  <code>null.asInstanceOf[a]</code>.
      */
-    def instance[a <: Object]: a = null.asInstanceOf[a]
+    def unmeta[a <: Object]: a = null.asInstanceOf[a]
 
 
 // aliases

@@ -18,9 +18,9 @@ trait Asserts { this: Meta.type =>
     final case class assert[a >: `true` <: `true`]()
 
     /**
-     * assertion of type equality
+     * assertion of identity equality
      */
-    final case class assertEquals[a >: b <: b, b]()
+    final case class assertSame[a >: b <: b, b]()
 
     /**
      * assertion if a is lower than b.

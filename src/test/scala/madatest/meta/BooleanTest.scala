@@ -13,9 +13,9 @@ import mada.Meta._
 
 class BooleanTest {
     def testTrivial: Unit = {
-        assertEquals[`true`, `true`]
-        assertEquals[`false`, `if`[`true`, `false`, `true`]]
-        assertEquals[`false`, `if`[`false`, `true`, `false`]]
+        assertSame[`true`, `true`]
+        assertSame[`false`, `if`[`true`, `false`, `true`]]
+        assertSame[`false`, `if`[`false`, `true`, `false`]]
     }
 
     trait N extends Object {
@@ -34,8 +34,8 @@ class BooleanTest {
 
     def testTypeSafe: Unit = {
        // instance[foo[newObject[String]]#touch]
-        instance[foo[s, s, t]#touch]
-        assertEquals[s, foo[newObject[String], s, t]]
-        assertEquals[t, foo[s, s, t]]
+        unmeta[foo[s, s, t]#touch]
+        assertSame[s, foo[newObject[String], s, t]]
+        assertSame[t, foo[s, s, t]]
     }
 }
