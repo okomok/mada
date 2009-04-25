@@ -14,3 +14,13 @@ trait Object {
     type isBind <: Meta.Boolean
     type isBoxed <: Meta.Boolean
 }
+
+
+/**
+ * Boxes <code>a</code> into <code>Object</code>.
+ */
+final class newObject[a] extends Object {
+    override type isBind = Meta.`false`
+    override type isBoxed = Meta.`true`
+    type unbox = a
+}

@@ -26,7 +26,7 @@ trait Integers { this: Meta.type =>
 
     final class _0 extends Integer {
         override type increment[void] = _1
-        override type decrement[void] = Nothing
+        override type decrement[void] = throwError[void]
         override type negate[void] = _0
         override type plus[that <: Integer] = that
         override type minus[that <: Integer] = that#negate[void]

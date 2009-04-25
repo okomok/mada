@@ -33,9 +33,9 @@ class BooleanTest {
     type feelIt[a <: N, _s <: N, _t <: _s] = `if`[a#isBoxed, _s, _t]#feel
 
     def testTypeSafe: Unit = {
-       // instance[foo[string]#touch]
+       // instance[foo[newObject[String]]#touch]
         instance[foo[s, s, t]#touch]
-        assertEquals[s, foo[string, s, t]]
+        assertEquals[s, foo[newObject[String], s, t]]
         assertEquals[t, foo[s, s, t]]
     }
 }

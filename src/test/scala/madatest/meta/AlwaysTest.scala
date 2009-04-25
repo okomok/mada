@@ -17,9 +17,9 @@ class AlwaysTest {
     final class so extends Strong
 
     def testTrivial: Unit = {
-        assertEquals[string, always[string]#apply0[void]]
-        assertEquals[string, always[string]#apply1[so]]
-        assertEquals[string, always[string]#apply2[int, so]]
-        assertEquals[string, always[string]#apply3[int, so, so]]
+        assertEquals[newObject[String], always[newObject[String]]#apply0[void]]
+        assertEquals[newObject[String], always[newObject[String]]#apply1[so]]
+        assertEquals[newObject[String], always[newObject[String]]#apply2[newObject[scala.Int], so]]
+        assertEquals[newObject[String], always[newObject[String]]#apply3[newObject[scala.Int], so, so]]
     }
 }
