@@ -27,17 +27,14 @@ trait Tuples { this: Meta.type =>
     }
 
     trait Tuple2[T1 <: Object, T2 <: Object, v1 <: T1, v2 <: T2] extends Product2 {
-        override type _T1 = T1
-        override type _T2 = T2
+        override type _T1 = T1; override type _T2 = T2
 
         override type _1[_] = v1
         override type _2[_] = v2
     }
 
     trait Tuple3[T1 <: Object, T2 <: Object, T3 <: Object, v1 <: T1, v2 <: T2, v3 <: T3] extends Product3 {
-        override type _T1 = T1
-        override type _T2 = T2
-        override type _T3 = T3
+        override type _T1 = T1; override type _T2 = T2; override type _T3 = T3
 
         override type _1[_] = v1
         override type _2[_] = v2

@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.hetero
+package madatest.meta
 
 
 import mada.Meta._
