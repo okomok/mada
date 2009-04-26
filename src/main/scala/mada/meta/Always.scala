@@ -17,7 +17,7 @@ sealed trait always[a <: Object] extends Function0 with Function1 with Function2
     override type isBind = `false`
 
     override type Result0 = a
-    override type apply0 = a
+    override type apply0[_] = a
 
     override type Result1 = a
     override type Argument11 = Object

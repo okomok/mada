@@ -48,7 +48,7 @@ trait Iterable {
 trait Iterator extends Object {
     type Element <: Object
 
-    type hasNext <: Boolean
-    type head <: Element
-    type toNext <: Iterator
+    type hasNext[_] <: Boolean
+    type head[_] <: Element
+    type toNext[_] <: Iterator
 }

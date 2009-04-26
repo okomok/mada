@@ -44,16 +44,16 @@ class BooleanTest {
 
     sealed trait fn7 extends Function0 {
         type Result0 = Object
-        type apply0 = N
+        type apply0[_] = N
     }
 
     sealed trait fn8 extends Function0 {
         type Result0 = Object
-        type apply0 = M
+        type apply0[_] = M
     }
 
     sealed trait fn9 extends Function0 {
         type Result0 = Object
-        type apply0 = t
+        type apply0[_] = t
     }
 }

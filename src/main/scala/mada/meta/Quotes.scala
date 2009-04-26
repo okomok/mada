@@ -16,7 +16,7 @@ trait Quotes { this: Meta.type =>
         override type isBind = `false`
 
         override type Result0 = R
-        override type apply0 = f
+        override type apply0[_] = f
     }
 
     sealed trait quote1[T1 <: Object, R <: Object, f[_ <: T1] <: R] extends Function1 {

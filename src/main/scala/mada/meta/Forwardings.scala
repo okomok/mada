@@ -14,7 +14,7 @@ trait Forwardings { this: Meta.type =>
 
     sealed trait forwarding0[f <: Function0] extends Function0 {
         override type Result0 = f#Result0
-        override type apply0 = f#apply0
+        override type apply0[_] = f#apply0[_]
     }
 
     sealed trait forwarding1[f <: Function1] extends Function1 {

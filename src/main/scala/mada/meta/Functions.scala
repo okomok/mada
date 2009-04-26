@@ -15,7 +15,7 @@ trait Functions { this: Meta.type =>
     trait Function0 extends Object {
         type Result0 <: Object
 
-        type apply0 <: Result0
+        type apply0[_] <: Result0
     }
 
     trait Function1 extends Object {
