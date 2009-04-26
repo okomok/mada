@@ -66,6 +66,10 @@ Mada is a library.
                         <arg>-deprecation</arg>
                         <arg>-unchecked</arg>
                     </args>
+                    <jvmArgs>
+                        <jvmArg>-Xms64m</jvmArg>
+                        <jvmArg>-Xmx512m</jvmArg>
+                    </jvmArgs>
                 </configuration>
             </plugin>
             <plugin>

@@ -44,4 +44,7 @@ trait Functions { this: Meta.type =>
 
     sealed trait foofoo[f <: Function0 { type Result0 <: Integer }]
 
+    type Predicate1[v <: Object] = Function1 { type Argument11 <: v; type Result1 <: Boolean }
+    type Transform[v <: Object] = Function1 { type Argument11 <: v; type Result1 <: v }
+
 }
