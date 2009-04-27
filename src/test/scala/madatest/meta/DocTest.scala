@@ -20,7 +20,7 @@ package madatest.meta
         }
 
         // value
-        val p = new Product1[Int] { // passes type argument.
+        val p = new Product1[Int] {
             override def _1 = 7 // implements method.
         }
 
@@ -29,7 +29,7 @@ package madatest.meta
         assert(getAndInc(p) == 8)
 
         // converts method to function(value).
-        val inc = increment(_ : Int)
+        val inc = increment(_: Int)
 
         // function invocation
         assert(inc.apply(3) == 4)
