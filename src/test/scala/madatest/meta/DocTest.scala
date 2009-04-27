@@ -33,7 +33,9 @@ package madatest.meta
 
         // converts method to function(value).
         val inc = increment _
-        assert(inc.apply(3) == 4) // function invocation
+
+        // function invocation
+        assert(inc.apply(3) == 4)
 
     // compile-time world
 
@@ -63,7 +65,9 @@ package madatest.meta
 
         // converts metamethod to metafunction(metavalue).
         trait minc extends quote1[Nat, Nat, mincrement]
-        assert[minc#apply1[_3N] == _4N] // metafunction invocation
+
+        // metafunction invocation
+        assert[minc#apply1[_3N] == _4N]
 
         def testTrivial: Unit = ()
     }

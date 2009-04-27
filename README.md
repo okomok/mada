@@ -48,7 +48,6 @@
 
 The following example contrasts the unmeta versus meta programming in Scala:
 
-
     class DocTest {
 
     // run-time world
@@ -75,7 +74,9 @@ The following example contrasts the unmeta versus meta programming in Scala:
 
         // converts method to function(value).
         val inc = increment _
-        assert(inc.apply(3) == 4) // function invocation
+
+        // function invocation
+        assert(inc.apply(3) == 4)
 
     // compile-time world
 
@@ -105,10 +106,21 @@ The following example contrasts the unmeta versus meta programming in Scala:
 
         // converts metamethod to metafunction(metavalue).
         trait minc extends quote1[Nat, Nat, mincrement]
-        assert[minc#apply1[_3N] == _4N] // metafunction invocation
+
+        // metafunction invocation
+        assert[minc#apply1[_3N] == _4N]
 
         def testTrivial: Unit = ()
     }
+
+Scala metaprogramming seems to put several restrictions:
+
+1. Pure: no meta variables.
+1. No metamethod overloading.
+1. Metamethods (for now) can't be recursive: like FORTRAN and C MACRO.
+1. "meta eq" is infeasible.
+1. A trivial algorithm may require quadratical time and memory.
+1. A trivial algorithm may crash the compiler.
 
 
 
