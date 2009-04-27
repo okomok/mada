@@ -12,7 +12,7 @@ import meta._
 
 object Meta extends
     Asserts with Args with Binds with Booleans with Forwardings with Functions with Nats with Operators with
-    Integers with Quotes with Placeholders with Products with Tuples with While {
+    Integers with Quotes with Placeholders with Products with Trampoline with Tuples with While {
 
 
 // metamethods
