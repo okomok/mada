@@ -48,6 +48,7 @@
 
 The following example contrasts the unmeta versus meta programming in Scala:
 
+
     class DocTest {
 
     // run-time world
@@ -57,11 +58,6 @@ The following example contrasts the unmeta versus meta programming in Scala:
 
         // method
         def increment(n: Int) = n + 1
-
-        // converts method to function. (function is value, method is not.)
-        val inc = increment _
-
-        assert(inc.apply(3) == 4) // function invocation
 
         // trait (cut-n-pasted from scala.Product1)
         trait Product1[+T1] { // takes type parameter.
@@ -77,6 +73,10 @@ The following example contrasts the unmeta versus meta programming in Scala:
         def getAndInc(x: Product1[Int]) = x._1() + 1
         assert(getAndInc(p) == 8)
 
+        // converts method to function(value).
+        val inc = increment _
+        assert(inc.apply(3) == 4) // function invocation
+
     // compile-time world
 
         import mada.Meta._
@@ -86,11 +86,6 @@ The following example contrasts the unmeta versus meta programming in Scala:
 
         // metamethod
         type mincrement[n <: Nat] = n#increment[_] // metamethod invocation by `#`
-
-        // converts metamethod to metafunction. (metafunction is type, metamethod is not.)
-        trait minc extends quote1[Nat, Nat, mincrement]
-
-        assert[minc#apply1[_3N] == _4N] // metafunction invocation
 
         // metatrait
         trait MProduct1 extends Object {
@@ -107,6 +102,10 @@ The following example contrasts the unmeta versus meta programming in Scala:
         // another metamethod
         type mgetAndInc[x <: MProduct1 { type _1[_] <: Nat }] = x#_1[_]#increment[_]
         assert[mgetAndInc[mp] == _8N]
+
+        // converts metamethod to metafunction(metavalue).
+        trait minc extends quote1[Nat, Nat, mincrement]
+        assert[minc#apply1[_3N] == _4N] // metafunction invocation
 
         def testTrivial: Unit = ()
     }
