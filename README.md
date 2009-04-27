@@ -119,7 +119,7 @@ Scala metaprogramming seems to put several restrictions:
 1. No metamethod overloading.
 1. Metamethods (for now) can't be recursive: like FORTRAN and C MACRO.
 1. "meta eq" is infeasible.
-1. A trivial algorithm may require quadratical time and memory.
+1. A trivial algorithm may require exponential time and memory.
 1. A trivial algorithm may crash the compiler.
 
 
