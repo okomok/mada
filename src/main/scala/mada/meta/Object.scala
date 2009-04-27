@@ -12,10 +12,10 @@ package mada.meta
  */
 trait Object {
     type eq[that <: Object] <: Meta.Boolean // probably infeasible. isInt etc will be feasible in 2.8, though.
-    type identityHashCode[_] <: Meta.Integer // how?
+    type identityHashCode <: Meta.Integer // how?
 
 //    type equals[that <: Object] = eq[that]
-    type hashCode[_] = identityHashCode[_]
+    type hashCode = identityHashCode
 
     type isBind <: Meta.Boolean
     type isBoxed <: Meta.Boolean

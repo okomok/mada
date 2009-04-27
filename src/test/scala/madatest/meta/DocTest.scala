@@ -8,9 +8,6 @@ package madatest.meta
 
 
     class DocTest {
-
-    // run-time world
-
         // boolean value
         assert(true)
 
@@ -18,56 +15,56 @@ package madatest.meta
         def increment(n: Int) = n + 1
 
         // trait (cut-n-pasted from scala.Product1)
-        trait Product1[+T1] { // takes type parameter.
-            def _1(): T1 // abstract method
+        trait Product1[+T1] {
+            def _1: T1 // abstract method
         }
 
         // value
         val p = new Product1[Int] { // passes type argument.
-            override def _1() = 7 // implements method.
+            override def _1 = 7 // implements method.
         }
 
         // another method
-        def getAndInc(x: Product1[Int]) = x._1() + 1
+        def getAndInc(x: Product1[Int]) = x._1 + 1
         assert(getAndInc(p) == 8)
 
         // converts method to function(value).
-        val inc = increment _
+        val inc = increment(_ : Int)
 
         // function invocation
         assert(inc.apply(3) == 4)
 
-    // compile-time world
+        def testTrivial: Unit = ()
+    }
 
+    class MetaDocTest {
         import mada.Meta._
 
         // meta boolean value
         assert[`true`]
 
         // metamethod
-        type mincrement[n <: Nat] = n#increment[_] // metamethod invocation by `#`
+        type increment[n <: Nat] = n#increment // metamethod invocation by `#`
 
         // metatrait
-        trait MProduct1 extends Object {
-            type _T1 <: Object // takes metatype parameter.
-            type _1[_] <: _T1 // abstract metamethod
+        trait Product1 extends Object {
+            type _1 <: Object // abstract metamethod
         }
 
         // metavalue
-        trait mp extends MProduct1 {
-            override type _T1 = Nat // passes metatype argument.
-            override type _1[_] = _7N // implements metamethod.
+        trait p extends Product1 {
+            override type _1 = _7N // implements metamethod.
         }
 
         // another metamethod
-        type mgetAndInc[x <: MProduct1 { type _1[_] <: Nat }] = x#_1[_]#increment[_]
-        assert[mgetAndInc[mp] == _8N]
+        type getAndInc[x <: Product1 { type _1 <: Nat }] = x#_1#increment
+        assert[getAndInc[p] == _8N]
 
         // converts metamethod to metafunction(metavalue).
-        trait minc extends quote1[Nat, Nat, mincrement]
+        trait inc extends quote1[increment, Nat]
 
         // metafunction invocation
-        assert[minc#apply1[_3N] == _4N]
+        assert[inc#apply1[_3N] == _4N]
 
         def testTrivial: Unit = ()
     }

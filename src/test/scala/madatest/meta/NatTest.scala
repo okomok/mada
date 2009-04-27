@@ -21,15 +21,15 @@ class NatTest {
         assert[_1N != _2N]
         assert[_1N != _3N]
 
-        assert[_1N#increment[_] == _2N]
+        assert[_1N#increment == _2N]
         assert[++[_1N] == _2N]
 
-        assert[_1N#increment[_]#increment[_] == _3N]
-        assert[_2N#increment[_]#decrement[_] == _2N]
+        assert[_1N#increment#increment == _3N]
+        assert[_2N#increment#decrement == _2N]
 
-        assert[_5N#decrement[_]#decrement[_]#decrement[_] == _2N]
-        assert[_8N == _7N#increment[_]#increment[_]#decrement[_]]
-        assert[_7N#decrement[_]#increment[_]#increment[_] == _7N#increment[_]#increment[_]#decrement[_]]
+        assert[_5N#decrement#decrement#decrement == _2N]
+        assert[_8N == _7N#increment#increment#decrement]
+        assert[_7N#decrement#increment#increment == _7N#increment#increment#decrement]
 
 // illegal cyclic reference involving ++
   //      assert[++[++[_2N]] == _4N]

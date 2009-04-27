@@ -29,13 +29,11 @@ trait Iterable {
 
     trait pred extends Function1 {
         override type Argument11 = state
-        override type Result1 = Boolean
         override type apply1[s <: state] = s#_1#hasNext
     }
 
     trait update extends Function1 {
         override type Argument11 = state
-        override type Result1 = state
         override type apply1[s <: state] = Tuple2[Iterator, Nat, s#_1#toNext, s#_2#increment]
     }
 
@@ -48,7 +46,7 @@ trait Iterable {
 trait Iterator extends Object {
     type Element <: Object
 
-    type hasNext[_] <: Boolean
-    type head[_] <: Element
-    type toNext[_] <: Iterator
+    type hasNext <: Boolean
+    type head <: Element
+    type toNext <: Iterator
 }

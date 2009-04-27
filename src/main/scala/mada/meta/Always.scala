@@ -16,19 +16,15 @@ import Meta._
 trait always[a <: Object] extends Function0 with Function1 with Function2 with Function3 {
     override type isBind = `false`
 
-    override type Result0 = a
-    override type apply0[_] = a
+    override type apply0 = a
 
-    override type Result1 = a
     override type Argument11 = Object
     override type apply1[v1 <: Argument11] = a
 
-    override type Result2 = a
     override type Argument21 = Object
     override type Argument22 = Object
     override type apply2[v1 <: Argument21, v2 <: Argument22] = a
 
-    override type Result3 = a
     override type Argument31 = Object
     override type Argument32 = Object
     override type Argument33 = Object

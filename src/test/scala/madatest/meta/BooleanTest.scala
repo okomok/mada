@@ -43,17 +43,14 @@ class BooleanTest {
     }
 
     trait fn7 extends Function0 {
-        type Result0 = Object
-        type apply0[_] = N
+        type apply0 = N
     }
 
     trait fn8 extends Function0 {
-        type Result0 = Object
-        type apply0[_] = M
+        type apply0 = M
     }
 
     trait fn9 extends Function0 {
-        type Result0 = Object
-        type apply0[_] = t
+        type apply0 = t
     }
 }

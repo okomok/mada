@@ -28,17 +28,17 @@ trait Operators { this: Meta.type =>
         type operate_==[that <: Self] <: Boolean
     }
     type ==[a <: Operatable_==, b <: a#Self] = a#operate_==[b]
-    type !=[a <: Operatable_==, b <: a#Self] = a#operate_==[b]#not[_]
+    type !=[a <: Operatable_==, b <: a#Self] = a#operate_==[b]#not
 
     trait Operatable_++ {
         type Self <: Operatable_++
-        type operate_++[_] <: Self
+        type operate_++ <: Self
     }
-    type ++[a <: Operatable_++] = a#operate_++[_]
+    type ++[a <: Operatable_++] = a#operate_++
 
     trait Operatable_-- {
         type Self <: Operatable_--
-        type operate_--[_] <: Self
+        type operate_-- <: Self
     }
-    type --[a <: Operatable_--] = a#operate_--[_]
+    type --[a <: Operatable_--] = a#operate_--
 }

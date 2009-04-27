@@ -25,7 +25,7 @@ trait Products { this: Meta.type =>
 
         override type productArity = _1N
 
-        type _1[_] <: _T1
+        type _1 <: _T1
     }
 
     trait Product2 extends Product {
@@ -33,8 +33,8 @@ trait Products { this: Meta.type =>
 
         override type productArity = _2N
 
-        type _1[_] <: _T1
-        type _2[_] <: _T2
+        type _1 <: _T1
+        type _2 <: _T2
     }
 
     trait Product3 extends Product {
@@ -42,9 +42,9 @@ trait Products { this: Meta.type =>
 
         override type productArity = _3N
 
-        type _1[_] <: _T1
-        type _2[_] <: _T2
-        type _3[_] <: _T3
+        type _1 <: _T1
+        type _2 <: _T2
+        type _3 <: _T3
     }
 
 }

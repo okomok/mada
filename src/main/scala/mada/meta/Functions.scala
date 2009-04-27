@@ -13,32 +13,28 @@ package mada.meta
 trait Functions { this: Meta.type =>
 
     trait Function0 extends Object {
-        type Result0 <: Object
-
-        type apply0[_] <: Result0
+        type apply0 <: Object
     }
 
     trait Function1 extends Object {
-        type Argument11 <: Object; type Result1 <: Object
+        type Argument11 <: Object
 
-        type apply1[v1 <: Argument11] <: Result1
+        type apply1[v1 <: Argument11] <: Object
     }
 
     trait Function2 extends Object {
-        type Argument21 <: Object; type Argument22 <: Object; type Result2 <: Object
+        type Argument21 <: Object; type Argument22 <: Object
 
-        type apply2[v1 <: Argument21, v2 <: Argument22] <: Result2
+        type apply2[v1 <: Argument21, v2 <: Argument22] <: Object
     }
 
     trait Function3 extends Object {
-        type Argument31 <: Object; type Argument32 <: Object; type Argument33 <: Object; type Result3 <: Object
+        type Argument31 <: Object; type Argument32 <: Object; type Argument33 <: Object
 
-        type apply3[v1 <: Argument31, v2 <: Argument32, v3 <: Argument33] <: Result3
+        type apply3[v1 <: Argument31, v2 <: Argument32, v3 <: Argument33] <: Object
     }
 
-    trait foofoo[f <: Function0 { type Result0 <: Integer }]
-
-    type Predicate1[v <: Object] = Function1 { type Argument11 <: v; type Result1 <: Boolean }
-    type Transform[v <: Object] = Function1 { type Argument11 <: v; type Result1 <: v }
+    type Predicate1 = Function1 { type apply1[v1 <: Argument11] <: Boolean }
+    type Transform = Function1 { type apply1[v1 <: Argument11] <: Argument11 }
 
 }
