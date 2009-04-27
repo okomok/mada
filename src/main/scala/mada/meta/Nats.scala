@@ -13,7 +13,7 @@ package mada.meta
  */
 trait Nats { this: Meta.type =>
 
-    sealed trait Nat extends Object with Operatable_== with Operatable_++ with Operatable_-- {
+    trait Nat extends Object with Operatable_== with Operatable_++ with Operatable_-- {
         type increment[_] <: Nat
         type decrement[_] <: Nat
 
@@ -37,7 +37,7 @@ trait Nats { this: Meta.type =>
         private[mada] type is10 <: Boolean
     }
 
-    sealed trait _0N extends Nat {
+    trait _0N extends Nat {
         override type increment[_] = _1N
         override type decrement[_] = throwError
 
@@ -56,7 +56,7 @@ trait Nats { this: Meta.type =>
         private[mada] override type is10 = `false`
     }
 
-    sealed trait _1N extends Nat {
+    trait _1N extends Nat {
         override type increment[_] = _2N
         override type decrement[_] = _0N
 
@@ -75,7 +75,7 @@ trait Nats { this: Meta.type =>
         private[mada] override type is10 = `false`
     }
 
-    sealed trait _2N extends Nat {
+    trait _2N extends Nat {
         override type increment[_] = _3N
         override type decrement[_] = _1N
 
@@ -94,7 +94,7 @@ trait Nats { this: Meta.type =>
         private[mada] override type is10 = `false`
     }
 
-    sealed trait _3N extends Nat {
+    trait _3N extends Nat {
         override type increment[_] = _4N
         override type decrement[_] = _2N
 
@@ -113,7 +113,7 @@ trait Nats { this: Meta.type =>
         private[mada] override type is10 = `false`
     }
 
-    sealed trait _4N extends Nat {
+    trait _4N extends Nat {
         override type increment[_] = _5N
         override type decrement[_] = _3N
 
@@ -132,7 +132,7 @@ trait Nats { this: Meta.type =>
         private[mada] override type is10 = `false`
     }
 
-    sealed trait _5N extends Nat {
+    trait _5N extends Nat {
         override type increment[_] = _6N
         override type decrement[_] = _4N
 
@@ -151,7 +151,7 @@ trait Nats { this: Meta.type =>
         private[mada] override type is10 = `false`
     }
 
-    sealed trait _6N extends Nat {
+    trait _6N extends Nat {
         override type increment[_] = _7N
         override type decrement[_] = _5N
 
@@ -170,7 +170,7 @@ trait Nats { this: Meta.type =>
         private[mada] override type is10 = `false`
     }
 
-    sealed trait _7N extends Nat {
+    trait _7N extends Nat {
         override type increment[_] = _8N
         override type decrement[_] = _6N
 
@@ -189,7 +189,7 @@ trait Nats { this: Meta.type =>
         private[mada] override type is10 = `false`
     }
 
-    sealed trait _8N extends Nat {
+    trait _8N extends Nat {
         override type increment[_] = _9N
         override type decrement[_] = _7N
 
@@ -208,7 +208,7 @@ trait Nats { this: Meta.type =>
         private[mada] override type is10 = `false`
     }
 
-    sealed trait _9N extends Nat {
+    trait _9N extends Nat {
         override type increment[_] = _10N
         override type decrement[_] = _8N
 
@@ -227,7 +227,7 @@ trait Nats { this: Meta.type =>
         private[mada] override type is10 = `false`
     }
 
-    sealed trait _10N extends Nat {
+    trait _10N extends Nat {
         override type increment[_] = throwError
         override type decrement[_] = _9N
 

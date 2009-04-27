@@ -18,7 +18,7 @@ class ObjectTest {
             type secret1 <: Object
         }
 
-        sealed trait my extends My {
+        trait my extends My {
             type secret2 <: Object
         }
 

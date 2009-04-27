@@ -12,7 +12,7 @@ package mada.meta
  */
 trait Integers { this: Meta.type =>
 
-    sealed trait Integer extends Object with Operatable_+ {
+    trait Integer extends Object with Operatable_+ {
         type increment[_] <: Integer
         type decrement[_] <: Integer
         type negate[_] <: Integer
@@ -31,7 +31,7 @@ trait Integers { this: Meta.type =>
     }
 
 /*
-    sealed trait _0I extends Integer {
+    trait _0I extends Integer {
         override type increment[_] = _1I
         override type decrement[_] = throwError
         override type negate[_] = _0I
@@ -41,7 +41,7 @@ trait Integers { this: Meta.type =>
         override type multiply[that <: Integer] = _0I
     }
 
-    sealed trait _1I extends Integer {
+    trait _1I extends Integer {
         override type increment[_] = _2I
         override type decrement[_] = _0I
         override type negate[_] = throwError
@@ -51,7 +51,7 @@ trait Integers { this: Meta.type =>
         override type multiply[that <: Integer] = decrement[_]#multiply[that]#add[that]
     }
 
-    sealed trait _2I extends Integer {
+    trait _2I extends Integer {
         override type increment[_] = _3I
         override type decrement[_] = _1I
         override type negate[_] = throwError
@@ -61,7 +61,7 @@ trait Integers { this: Meta.type =>
         override type multiply[that <: Integer] = decrement[_]#multiply[that]#add[that]
     }
 
-    sealed trait _3I extends Integer {
+    trait _3I extends Integer {
         override type increment[_] = _4I
         override type decrement[_] = _2I
         override type negate[_] = throwError
@@ -71,7 +71,7 @@ trait Integers { this: Meta.type =>
         override type multiply[that <: Integer] = decrement[_]#multiply[that]#add[that]
     }
 
-    sealed trait _4I extends Integer {
+    trait _4I extends Integer {
         override type increment[_] = _5I
         override type decrement[_] = _3I
         override type negate[_] = throwError
@@ -81,7 +81,7 @@ trait Integers { this: Meta.type =>
         override type multiply[that <: Integer] = decrement[_]#multiply[that]#add[that]
     }
 
-    sealed trait _5I extends Integer {
+    trait _5I extends Integer {
         override type increment[_] = throwError
         override type decrement[_] = _4I
         override type negate[_] = throwError
@@ -95,7 +95,7 @@ trait Integers { this: Meta.type =>
     // No longer compiles in human history.
     // It seems "ETI" like C++: all the possible computation is instantiated!?
 
-    sealed trait _6I extends Integer {
+    trait _6I extends Integer {
         override type increment[_] = _7I
         override type decrement[_] = _5I
         override type negate[_] = throwError
@@ -106,7 +106,7 @@ trait Integers { this: Meta.type =>
     }
 
 
-    sealed trait _7I extends Integer {
+    trait _7I extends Integer {
         override type increment[_] = _8I
         override type decrement[_] = _6I
         override type negate[_] = throwError
@@ -116,7 +116,7 @@ trait Integers { this: Meta.type =>
         override type multiply[that <: Integer] = decrement[_]#multiply[that]#add[that]
     }
 
-    sealed trait _8I extends Integer {
+    trait _8I extends Integer {
         override type increment[_] = _9I
         override type decrement[_] = _7I
         override type negate[_] = throwError
@@ -126,7 +126,7 @@ trait Integers { this: Meta.type =>
         override type multiply[that <: Integer] = decrement[_]#multiply[that]#add[that]
     }
 
-    sealed trait _9I extends Integer {
+    trait _9I extends Integer {
         override type increment[_] = _10I
         override type decrement[_] = _8I
         override type negate[_] = throwError
@@ -136,7 +136,7 @@ trait Integers { this: Meta.type =>
         override type multiply[that <: Integer] = decrement[_]#multiply[that]#add[that]
     }
 
-    sealed trait _10I extends Integer {
+    trait _10I extends Integer {
         override type increment[_] = throwError
         override type decrement[_] = _9I
         override type negate[_] = throwError

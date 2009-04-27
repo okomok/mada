@@ -42,17 +42,17 @@ class BooleanTest {
         type walk <: Object
     }
 
-    sealed trait fn7 extends Function0 {
+    trait fn7 extends Function0 {
         type Result0 = Object
         type apply0[_] = N
     }
 
-    sealed trait fn8 extends Function0 {
+    trait fn8 extends Function0 {
         type Result0 = Object
         type apply0[_] = M
     }
 
-    sealed trait fn9 extends Function0 {
+    trait fn9 extends Function0 {
         type Result0 = Object
         type apply0[_] = t
     }

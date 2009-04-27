@@ -25,7 +25,7 @@ trait Object {
 /**
  * Boxes <code>a</code> into <code>Object</code>.
  */
-sealed trait box[a] extends Object {
+trait box[a] extends Object {
     override type isBind = Meta.`false`
     override type isBoxed = Meta.`true`
     type unbox = a

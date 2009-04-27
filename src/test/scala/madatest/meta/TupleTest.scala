@@ -18,20 +18,20 @@ class TupleTest {
     trait Strung extends Object
 
     // "objects"
-    sealed trait so1 extends Strong
-    sealed trait su1 extends Strung
+    trait so1 extends Strong
+    trait su1 extends Strung
 
-    sealed trait so2 extends Strong
-    sealed trait su2 extends Strung
+    trait so2 extends Strong
+    trait su2 extends Strung
 
     type id[p <: Product2 { type _T1 <: Strong; type _T2 <: Strung }] = pair[p#_1[_], p#_2[_]]//Tuple2[Strong, Strung, p#_1[_], p#_2[_]]
     type pair_[t1 <: Object, t2 <: Object] = Tuple2[t1, t2, t1, t2]
 
     // "objects"
-    sealed trait ok1 extends id[pair_[so1, su1]]
-    sealed trait ok2 extends id[pair_[so2, su2]]
-    sealed trait ok3_ extends id[pair_[so1, su2]]
-    sealed trait ok3  extends
+    trait ok1 extends id[pair_[so1, su1]]
+    trait ok2 extends id[pair_[so2, su2]]
+    trait ok3_ extends id[pair_[so1, su2]]
+    trait ok3  extends
         id[ok3_]
         //id[id[pair_[so1, su2]]]
 

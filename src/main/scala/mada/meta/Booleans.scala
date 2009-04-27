@@ -12,7 +12,7 @@ package mada.meta
  */
 trait Booleans { this: Meta.type =>
 
-    sealed trait Boolean extends Object {
+    trait Boolean extends Object {
         type and[that <: Boolean] <: Boolean
         type or[that <: Boolean] <: Boolean
         type not[_] <: Boolean
@@ -20,7 +20,7 @@ trait Booleans { this: Meta.type =>
         private[mada] type _if[R, then <: R, _else <: R] <: R
     }
 
-    sealed trait `true` extends Boolean {
+    trait `true` extends Boolean {
         override type and[that <: Boolean] = that
         override type or[that <: Boolean] = `true`
         override type not[_] = `false`
@@ -28,7 +28,7 @@ trait Booleans { this: Meta.type =>
         private[mada] override type _if[R, then <: R, _else <: R] = then
     }
 
-    sealed trait `false` extends Boolean {
+    trait `false` extends Boolean {
         override type and[that <: Boolean] = `false`
         override type or[that <: Boolean] = that
         override type not[_] = `true`

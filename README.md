@@ -46,15 +46,22 @@
 
 ## `Meta`
 
+The following example contrasts the unmeta versus meta programming in Scala:
+
     class DocTest {
 
     // run-time world
 
+        // boolean value
+        assert(true)
+
         // method
         def increment(n: Int) = n + 1
 
-        // boolean value
-        assert(true)
+        // converts method to function. (function is value, method is not.)
+        val inc = increment _
+
+        assert(inc.apply(3) == 4) // function invocation
 
         // trait (cut-n-pasted from scala.Product1)
         trait Product1[+T1] { // takes type parameter.
@@ -63,7 +70,7 @@
 
         // value
         val p = new Product1[Int] { // passes type argument.
-            override def _1() = 7 // implements method.// assertion
+            override def _1() = 7 // implements method.
         }
 
         // another method
@@ -74,20 +81,25 @@
 
         import mada.Meta._
 
-        // metamethod
-        type mincrement[n <: Nat] = n#increment[_] // calls metamethod.
-
         // meta boolean value
         assert[`true`]
 
+        // metamethod
+        type mincrement[n <: Nat] = n#increment[_] // metamethod invocation by `#`
+
+        // converts metamethod to metafunction. (metafunction is type, metamethod is not.)
+        trait minc extends quote1[Nat, Nat, mincrement]
+
+        assert[minc#apply1[_3N] == _4N] // metafunction invocation
+
         // metatrait
         trait MProduct1 extends Object {
-            type _T1 <: Object // takes metatype parameter. (possibly unneeded...)
+            type _T1 <: Object // takes metatype parameter.
             type _1[_] <: _T1 // abstract metamethod
         }
 
         // metavalue
-        sealed trait mp extends MProduct1 {
+        trait mp extends MProduct1 {
             override type _T1 = Nat // passes metatype argument.
             override type _1[_] = _7N // implements metamethod.
         }

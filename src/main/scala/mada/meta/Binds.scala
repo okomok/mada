@@ -17,7 +17,7 @@ trait Binds { this: Meta.type =>
     private type Substitute2[f <: Function2] = f#isBind#IfFunction2[f, Always[f]]
     private type Substitute3[f <: Function3] = f#isBind#IfFunction3[f, Always[f]]
 
-    sealed trait Bind0[f <: Function0] extends FunctionV {
+    trait Bind0[f <: Function0] extends FunctionV {
         override type isBind = `true`
 
         override type apply0[_] = Substitute0[f]#apply0[_][ void ]
@@ -26,7 +26,7 @@ trait Binds { this: Meta.type =>
         override type apply3[a1 <: Object, a2 <: Object, a3 <: Object] = Substitute0[f]#apply0[_][ void ]
     }
 
-    sealed trait Bind1[T1f <: Function1, b1 <: FunctionV] extends FunctionV {
+    trait Bind1[T1f <: Function1, b1 <: FunctionV] extends FunctionV {
         override type isBind = `true`
 
         override type apply0[_] = Substitute1[f]#apply1#apply1[ Substitute0[b1]#apply0[_] ]
@@ -35,7 +35,7 @@ trait Binds { this: Meta.type =>
         override type apply3[a1 <: Object, a2 <: Object, a3 <: Object] = Substitute1[f]#apply3[a1, a2, a3]#apply1[ Substitute3[b1]#apply3[a1, a2, a3] ]
     }
 
-    sealed trait Bind2[f <: Function2, b1 <: FunctionV, b2 <: FunctionV] extends FunctionV {
+    trait Bind2[f <: Function2, b1 <: FunctionV, b2 <: FunctionV] extends FunctionV {
         override type isBind = `true`
 
         override type apply0[_] = Substitute2[f]#apply0[_]#apply2[ Substitute0[b1]#apply0[_], Substitute0[b2]#apply0[_] ]
@@ -44,7 +44,7 @@ trait Binds { this: Meta.type =>
         override type apply3[a1 <: Object, a2 <: Object, a3 <: Object] = Substitute2[f]#apply3[a1, a2, a3]#apply2[ Substitute3[b1]#apply3[a1, a2, a3], Substitute3[b2]#apply3[a1, a2, a3] ]
      }
 
-    sealed trait Bind3[T1, T2, T3, R, f <: Function3[_ <: T1, _ <: T2, _ <: T3, _ <: R], b1 <: T1, b2 <: T3, b3 <: T3] extends FunctionV {
+    trait Bind3[T1, T2, T3, R, f <: Function3[_ <: T1, _ <: T2, _ <: T3, _ <: R], b1 <: T1, b2 <: T3, b3 <: T3] extends FunctionV {
         override type isBind = `true`
 
         override type apply0[_] = Substitute3[f]#apply0[_]#apply3[ Substitute0[b1]#apply0[_], Substitute0[b2]#apply0[_], Substitute0[b3]#apply0[_] ]
