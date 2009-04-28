@@ -18,6 +18,17 @@ class BooleanTest {
         assertSame[`false`, `if`[`false`, `true`, `false`, Boolean]]
     }
 
+/*
+
+    type incinc[n <: Nat] = `if`[n == _3N, n#increment, n, Nat { type increment <: Nat }]#increment
+    // = fIf[n == _3N, always[n#increment], always[n]]#apply0#increment#increment
+    assertLower[incinc[_2N], Nat]
+    // typed if loses result...
+    assertSame[incinc[_2N], _3N]
+    assertSame[incinc[_3N], _5N]
+
+*/
+
     trait N extends Object {
         type feel <: Object
     }

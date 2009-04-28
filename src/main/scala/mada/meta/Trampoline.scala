@@ -12,18 +12,17 @@ package mada.meta
 
 
 trait Trampoline { this:Meta.type =>
-
-    /*
+/*
     type RESULT = Boolean
 
     trait BounceFunction extends Function0 {
         override type apply0 <: Bounce
     }
 
-    sealed trait Bounce extends Object with Function0 {
+    sealed trait Bounce[A] extends Object with Function0 {
         private[mada] type isDone <: Boolean
-        type apply0 <: RESULT
-        private[mada] type thunk <: Function0 { type apply0 <: Bounce { type result <: RESULT } }
+        type apply0 <: A // gets the result.
+        private[mada] type thunk <: Function0 { type apply0 <: Bounce[A] }
     }
 
     trait done[r <: Boolean] extends Bounce {
@@ -50,7 +49,7 @@ trait Trampoline { this:Meta.type =>
 
 
 /*
-// Hmm, `if` seems to lose nexted apply0 type in Function0 { type apply0 <: RESULT }.
+// Hmm, `if` seems to lose nested apply0 type in Function0 { type apply0 <: RESULT }.
 
     trait trampoline0[b <: Bounce] extends Function0 {
         override type apply0 = `if`[b#isDone, b, trampoline1[b#thunk#apply0], Function0 { type apply0 <: RESULT }]#apply0
