@@ -9,14 +9,13 @@ package mada.meta
 
 /**
  * Contains meta natural numbers,
- * which has constant-time methods only.
+ * which have constant-time methods only.
  */
 trait Nats { this: Meta.type =>
 
     trait Nat extends Object with Operatable_== with Operatable_++ with Operatable_-- {
         type increment <: Nat
         type decrement <: Nat
-
         type equals[that <: Nat] <: Boolean
 
         override type Self = Nat
@@ -40,7 +39,6 @@ trait Nats { this: Meta.type =>
     trait _0N extends Nat {
         override type increment = _1N
         override type decrement = throwError
-
         override type equals[that <: Nat] = that#is0
 
         private[mada] override type is0 = `true`
@@ -59,7 +57,6 @@ trait Nats { this: Meta.type =>
     trait _1N extends Nat {
         override type increment = _2N
         override type decrement = _0N
-
         override type equals[that <: Nat] = that#is1
 
         private[mada] override type is0 = `false`
@@ -78,7 +75,6 @@ trait Nats { this: Meta.type =>
     trait _2N extends Nat {
         override type increment = _3N
         override type decrement = _1N
-
         override type equals[that <: Nat] = that#is2
 
         private[mada] override type is0 = `false`
@@ -97,7 +93,6 @@ trait Nats { this: Meta.type =>
     trait _3N extends Nat {
         override type increment = _4N
         override type decrement = _2N
-
         override type equals[that <: Nat] = that#is3
 
         private[mada] override type is0 = `false`
@@ -116,7 +111,6 @@ trait Nats { this: Meta.type =>
     trait _4N extends Nat {
         override type increment = _5N
         override type decrement = _3N
-
         override type equals[that <: Nat] = that#is4
 
         private[mada] override type is0 = `false`
@@ -135,7 +129,6 @@ trait Nats { this: Meta.type =>
     trait _5N extends Nat {
         override type increment = _6N
         override type decrement = _4N
-
         override type equals[that <: Nat] = that#is5
 
         private[mada] override type is0 = `false`
@@ -154,7 +147,6 @@ trait Nats { this: Meta.type =>
     trait _6N extends Nat {
         override type increment = _7N
         override type decrement = _5N
-
         override type equals[that <: Nat] = that#is6
 
         private[mada] override type is0 = `false`
@@ -173,7 +165,6 @@ trait Nats { this: Meta.type =>
     trait _7N extends Nat {
         override type increment = _8N
         override type decrement = _6N
-
         override type equals[that <: Nat] = that#is7
 
         private[mada] override type is0 = `false`
@@ -192,7 +183,6 @@ trait Nats { this: Meta.type =>
     trait _8N extends Nat {
         override type increment = _9N
         override type decrement = _7N
-
         override type equals[that <: Nat] = that#is8
 
         private[mada] override type is0 = `false`
@@ -211,7 +201,6 @@ trait Nats { this: Meta.type =>
     trait _9N extends Nat {
         override type increment = _10N
         override type decrement = _8N
-
         override type equals[that <: Nat] = that#is9
 
         private[mada] override type is0 = `false`
@@ -230,7 +219,6 @@ trait Nats { this: Meta.type =>
     trait _10N extends Nat {
         override type increment = throwError
         override type decrement = _9N
-
         override type equals[that <: Nat] = that#is10
 
         private[mada] override type is0 = `false`

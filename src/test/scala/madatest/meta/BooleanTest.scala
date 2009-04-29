@@ -18,6 +18,17 @@ class BooleanTest {
         assertSame[`false`, `if`[`false`, `true`, `false`, Boolean]]
     }
 
+    assert[`true` == `true`]
+    assert[`false` == `false`]
+    assert[`true` != `false`]
+    assert[`false` != `true`]
+
+    type myNot[b <: Boolean] = b#not
+    assert[myNot[`true`] != `true`]
+//    assert[myNot[`false`] != `false`] // ICR (illegal cyclic reference) (#not#not)
+    assert[myNot[`true`] == `false`]
+//    assert[myNot[`false`] == `true`] // ICR (#not#not)
+
 /*
 
     type incinc[n <: Nat] = `if`[n == _3N, n#increment, n, Nat { type increment <: Nat }]#increment

@@ -12,10 +12,17 @@ package mada.meta
  */
 trait Booleans { this: Meta.type =>
 
-    trait Boolean extends Object {
+    trait Boolean extends Object with Operatable_==  {
         type and[that <: Boolean] <: Boolean
         type or[that <: Boolean] <: Boolean
         type not <: Boolean
+        type equals[that <: Boolean] <: Boolean
+
+        override type Self = Boolean
+        override type operate_==[that <: Self] = equals[that]
+
+        private[mada] type isTrue <: Boolean
+        private[mada] type isFalse <: Boolean
 
 
         // Seems millenium problem...
@@ -29,16 +36,17 @@ trait Booleans { this: Meta.type =>
 
     }
 
-    trait IfOf[T <: Object] extends Function2 {
-        override type Argument21 = T
-        override type Argument22 = T
-        override type apply2[then <: T, _else <: T] <: T
-    }
-
     trait `true` extends Boolean {
         override type and[that <: Boolean] = that
         override type or[that <: Boolean] = `true`
         override type not = `false`
+        override type equals[that <: Boolean] = that#isTrue
+
+        private[mada] override type isTrue = `true`
+        private[mada] override type isFalse = `false`
+
+
+
 
         private[mada] override type _if[then <: R, _else <: R, R <: Object] = then
         private[mada] override type anyIf[then, _else] = then
@@ -52,6 +60,12 @@ trait Booleans { this: Meta.type =>
         override type and[that <: Boolean] = `false`
         override type or[that <: Boolean] = that
         override type not = `true`
+        override type equals[that <: Boolean] = that#isFalse
+
+        private[mada] override type isTrue = `false`
+        private[mada] override type isFalse = `true`
+
+
 
         private[mada] override type _if[then <: R, _else <: R, R <: Object] = _else
         private[mada] override type anyIf[then, _else] = _else
@@ -59,6 +73,12 @@ trait Booleans { this: Meta.type =>
         private[mada] override type natIf[then <: Nat, _else <: Nat] = _else
 
         private[mada] override type fIf[then <: Function0, _else <: Function0] = then
+    }
+
+    trait IfOf[T <: Object] extends Function2 {
+        override type Argument21 = T
+        override type Argument22 = T
+        override type apply2[then <: T, _else <: T] <: T
     }
 
     // TODO: Move to Operators.
