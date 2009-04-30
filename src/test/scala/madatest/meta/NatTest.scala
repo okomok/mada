@@ -31,9 +31,9 @@ class NatTest {
         assert[_8N == _7N#increment#increment#decrement]
         assert[_7N#decrement#increment#increment == _7N#increment#increment#decrement]
 
-// illegal cyclic reference involving ++
-  //      assert[++[++[_2N]] == _4N]
-  //      assert[--[++[_3N]] == _3N]
+// illegal cyclic reference involving ++ without -Yrecursion.
+        assert[++[++[_2N]] == _4N]
+        assert[--[++[_3N]] == _3N]
 
       ()
     }

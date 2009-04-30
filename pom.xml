@@ -29,8 +29,30 @@ Mada is a library.
     </developers>
 
     <properties>
-        <scala.version>2.7.3</scala.version>
+        <scala.version>2.7.4</scala.version>
     </properties>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>scala-tools.org</id>
+            <name>Scala Tools Maven2 Repository</name>
+            <url>http://scala-tools.org/repo-releases</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <repositories>
+        <repository>
+            <id>scala-tools.org</id>
+            <name>Scala Tools Maven2 Repository</name>
+            <url>http://scala-tools.org/repo-releases</url>
+        </repository>
+        <repository>
+            <id>scala-tools.org.snapshots</id>
+            <name>Scala Tools Maven2 Repository</name>
+            <url>http://scala-tools.org/repo-snapshots</url>
+            <snapshots />
+        </repository>
+    </repositories>
 
     <dependencies>
         <dependency>
@@ -65,9 +87,9 @@ Mada is a library.
                     <args>
                         <arg>-deprecation</arg>
                         <arg>-unchecked</arg>
+                        <arg>-"Yrecursion 50"</arg>
                     </args>
                     <jvmArgs>
-                        <jvmArg>-Xms64m</jvmArg>
                         <jvmArg>-Xmx512m</jvmArg>
                     </jvmArgs>
                 </configuration>
