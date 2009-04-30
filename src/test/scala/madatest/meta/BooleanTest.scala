@@ -14,8 +14,8 @@ import mada.Meta._
 class BooleanTest {
     def testTrivial: Unit = {
         assertSame[`true`, `true`]
-        assertSame[`false`, `if`[`true`, `false`, `true`, Boolean]]
-        assertSame[`false`, `if`[`false`, `true`, `false`, Boolean]]
+        assertSame[`false`, `if`[`true`, `false`, `true`]]
+        assertSame[`false`, `if`[`false`, `true`, `false`]]
     }
 
     assert[`true` == `true`]
@@ -29,50 +29,38 @@ class BooleanTest {
     assert[myNot[`true`] == `false`]
     assert[myNot[`false`] == `true`]
 
-/*
 
-    type incinc[n <: Nat] = `if`[n == _3N, n#increment, n, Nat { type increment <: Nat }]#increment
-    // = fIf[n == _3N, always[n#increment], always[n]]#apply0#increment#increment
-    assertLower[incinc[_2N], Nat]
-    // typed if loses result...
-    assertSame[incinc[_2N], _3N]
-    assertSame[incinc[_3N], _5N]
+    trait testPropagation {
+        type incinc[n <: Nat] = natIf[n == _3N, n#increment, n]#increment
+        assertLower[incinc[_2N], Nat]
 
-*/
+        assert[`if`[_2N == _3N, _2N#increment, _2N]#increment == _3N]
+        assert[incinc[_2N] == _3N]
+        assert[incinc[_3N] == _5N]
+    }
 
+
+    /*
     trait N extends Object {
+        type Self = N
         type feel <: Object
     }
     trait s extends N {
+        type `this` = s
         override type isBoxed = `false`
     }
     trait t extends s {
+        type `this` = t
         type touch <: Object
     }
 
-    type foo[a <: N, _s <: N, _t <: _s] = `if`[a#isBoxed, _s, _t, _s]
+    type foo[a <: N, _s <: N, _t <: _s] = `if`[a#isBoxed, _s, _t]
 
-    type feelIt[a <: N, _s <: N, _t <: _s] = `if`[a#isBoxed, _s, _t, N]#feel
+    type feelIt[a <: N, _s <: N, _t <: _s] = `if`[a#isBoxed, _s, _t]#feel
 
     def testTypeSafe: Unit = {
         nullOf[foo[s, s, t]#touch]
         assertSame[t, foo[s, s, t]]
     }
-
-
-    trait M extends Object {
-        type walk <: Object
-    }
-
-    trait fn7 extends Function0 {
-        type apply0 = N
-    }
-
-    trait fn8 extends Function0 {
-        type apply0 = M
-    }
-
-    trait fn9 extends Function0 {
-        type apply0 = t
-    }
+    */
 }

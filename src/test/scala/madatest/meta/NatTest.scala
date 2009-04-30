@@ -12,8 +12,9 @@ import mada.Meta._
 
 
 class NatTest {
-    def testTrivial: Unit = {
+    def testNone: Unit = ()
 
+    trait testTrivial {
         assert[_0N == _0N]
         assert[_0N != _1N]
 
@@ -33,7 +34,19 @@ class NatTest {
 
         assert[++[++[_2N]] == _4N]
         assert[--[++[_3N]] == _3N]
+    }
 
-      ()
+    trait testPropagation {
+        type plusPlus[n <: Nat] = ++[++[n]]
+        type id[n <: Nat] = ++[--[n]]#increment#decrement
+        type equaL[n <: Nat, m <: Nat] = plusPlus[n] == id[m]
+
+        assert[plusPlus[_4N] == _6N]
+        assert[plusPlus[_7N] == _9N]
+        assert[id[_9N] == _9N]
+        assert[id[_7N] == _7N]
+
+        assert[equaL[_3N, _5N]]
+        assert[equaL[_4N, _6N]]
     }
 }

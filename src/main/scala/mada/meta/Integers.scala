@@ -12,7 +12,7 @@ package mada.meta
  */
 trait Integers { this: Meta.type =>
 
-    trait Integer extends Object with Operatable_+ {
+    trait Integer extends Object {
         type increment <: Integer
         type decrement <: Integer
         type negate <: Integer
@@ -26,8 +26,8 @@ trait Integers { this: Meta.type =>
         type minus[that <: Integer] = decrement#minus[that]#increment
         type multiply[that <: Integer] = decrement#multiply[that]#add[that]
 */
-        override type Self = Integer
-        override type operate_+[that <: Self] = add[that]
+        override type This = Integer
+        override type operator_+[that <: This] = add[that]
     }
 
 /*

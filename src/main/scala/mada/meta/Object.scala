@@ -14,11 +14,19 @@ trait Object {
     type eq[that <: Object] <: Meta.Boolean // probably infeasible. isInt etc will be feasible in 2.8, though.
     type identityHashCode <: Meta.Integer // how?
 
-//    type equals[that <: Object] = eq[that]
+//    type equals[that <: Object] = eq[that] // meta-is/asInstanceOf is infeasible.
     type hashCode = identityHashCode
 
     type isBind <: Meta.Boolean
     type isBoxed <: Meta.Boolean
+
+    type This <: Object
+    type `this` <: This
+    type operator_==[that <: This] <: Meta.Boolean
+    type operator_+[that <: This] <: This
+    type operator_-[that <: This] <: This
+    type operator_++ <: This
+    type operator_-- <: This
 }
 
 

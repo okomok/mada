@@ -65,4 +65,10 @@ object Meta extends
      * @return  <code>this</code>.
      */
     val Placeholders: meta.Placeholders = this
+
+    /**
+     * @return  <code>this</code>.
+     */
+    val Operators: meta.Operators = this
+
 }
