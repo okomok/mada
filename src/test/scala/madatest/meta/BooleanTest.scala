@@ -25,9 +25,9 @@ class BooleanTest {
 
     type myNot[b <: Boolean] = b#not
     assert[myNot[`true`] != `true`]
-    assert[myNot[`false`] != `false`] // ICR (illegal cyclic reference) (#not#not)
+    assert[myNot[`false`] != `false`]
     assert[myNot[`true`] == `false`]
-    assert[myNot[`false`] == `true`] // ICR (#not#not)
+    assert[myNot[`false`] == `true`]
 
 /*
 

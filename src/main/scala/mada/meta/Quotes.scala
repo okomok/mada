@@ -12,20 +12,20 @@ package mada.meta
  */
 trait Quotes { this: Meta.type =>
 
-    trait quote0[f <: Object] extends Function0 {
+    sealed trait quote0[f <: Object] extends Function0 {
         override type isBind = `false`
 
         override type apply0 = f
     }
 
-    trait quote1[f[_ <: T1] <: Object, T1 <: Object] extends Function1 {
+    sealed trait quote1[f[_ <: T1] <: Object, T1 <: Object] extends Function1 {
         override type isBind = `false`
 
         override type Argument11 = T1
         override type apply1[v1 <: Argument11] = f[v1]
     }
 
-    trait quote2[f[_ <: T1, _ <: T2] <: Object, T1 <: Object, T2 <: Object] extends Function2 {
+    sealed trait quote2[f[_ <: T1, _ <: T2] <: Object, T1 <: Object, T2 <: Object] extends Function2 {
         override type isBind = `false`
 
         override type Argument21 = T1
@@ -33,7 +33,7 @@ trait Quotes { this: Meta.type =>
         override type apply2[v1 <: Argument21, v2 <: Argument22] = f[v1, v2]
     }
 
-    trait quote3[f[_ <: T1, _ <: T2, _ <: T3] <: Object, T1 <: Object, T2 <: Object, T3 <: Object] extends Function3 {
+    sealed trait quote3[f[_ <: T1, _ <: T2, _ <: T3] <: Object, T1 <: Object, T2 <: Object, T3 <: Object] extends Function3 {
         override type isBind = `false`
 
         override type Argument31 = T1

@@ -15,8 +15,6 @@ trait Tuples { this: Meta.type =>
 
 // classes
 
-// may be useless.
-
     trait Tuple0 extends Product0 {
     }
 

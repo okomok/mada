@@ -102,7 +102,7 @@ The following example contrasts the non-meta versus meta programming in Scala:
         assert[getAndInc[p] == _8N]
 
         // converts metamethod to metafunction(metavalue).
-        trait inc extends quote1[increment, Nat]
+        type inc = quote1[increment, Nat]
 
         // metafunction invocation
         assert[inc#apply1[_3N] == _4N]
@@ -112,13 +112,13 @@ The following example contrasts the non-meta versus meta programming in Scala:
 
 Scala metaprogramming seems to put several restrictions:
 
+1. Requires -"Yrecursion 10" flag.
 1. Pure: no meta variables.
 1. No metamethod overloading.
-1. Metamethods (for now) can't be recursive: like FORTRAN and C MACRO.
 1. meta-eq is infeasible.
+1. meta-if may be infeasible.
 1. A trivial algorithm may require exponential time and memory.
 1. A trivial algorithm may crash the compiler.
-1. meta-if may be infeasible. (Contact me "if" you know the way!)
 
 
 

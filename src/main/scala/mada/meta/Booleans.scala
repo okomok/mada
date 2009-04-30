@@ -24,8 +24,6 @@ trait Booleans { this: Meta.type =>
         private[mada] type isTrue <: Boolean
         private[mada] type isFalse <: Boolean
 
-        def unmeta: scala.Boolean
-
 
         // Seems millenium problem...
 
@@ -38,7 +36,7 @@ trait Booleans { this: Meta.type =>
 
     }
 
-    trait `true` extends Boolean {
+    sealed trait `true` extends Boolean {
         override type and[that <: Boolean] = that
         override type or[that <: Boolean] = `true`
         override type not = `false`
@@ -46,9 +44,6 @@ trait Booleans { this: Meta.type =>
 
         private[mada] override type isTrue = `true`
         private[mada] override type isFalse = `false`
-
-        override def unmeta = true
-
 
 
         private[mada] override type _if[then <: R, _else <: R, R <: Object] = then
@@ -59,7 +54,7 @@ trait Booleans { this: Meta.type =>
         private[mada] override type fIf[then <: Function0, _else <: Function0] = then
     }
 
-    trait `false` extends Boolean {
+    sealed trait `false` extends Boolean {
         override type and[that <: Boolean] = `false`
         override type or[that <: Boolean] = that
         override type not = `true`
@@ -67,9 +62,6 @@ trait Booleans { this: Meta.type =>
 
         private[mada] override type isTrue = `false`
         private[mada] override type isFalse = `true`
-
-        override def unmeta = false
-
 
 
         private[mada] override type _if[then <: R, _else <: R, R <: Object] = _else

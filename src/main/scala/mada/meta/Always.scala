@@ -13,7 +13,7 @@ import Meta._
 /**
  * Metafunction always returning <code>a</code>
  */
-trait always[a <: Object] extends Function0 with Function1 with Function2 with Function3 {
+sealed trait always[a <: Object] extends Function0 with Function1 with Function2 with Function3 {
     override type isBind = `false`
 
     override type apply0 = a

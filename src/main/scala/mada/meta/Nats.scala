@@ -36,7 +36,7 @@ trait Nats { this: Meta.type =>
         private[mada] type is10 <: Boolean
     }
 
-    trait _0N extends Nat {
+    sealed trait _0N extends Nat {
         override type increment = _1N
         override type decrement = throwError
         override type equals[that <: Nat] = that#is0
@@ -54,7 +54,7 @@ trait Nats { this: Meta.type =>
         private[mada] override type is10 = `false`
     }
 
-    trait _1N extends Nat {
+    sealed trait _1N extends Nat {
         override type increment = _2N
         override type decrement = _0N
         override type equals[that <: Nat] = that#is1
@@ -72,7 +72,7 @@ trait Nats { this: Meta.type =>
         private[mada] override type is10 = `false`
     }
 
-    trait _2N extends Nat {
+    sealed trait _2N extends Nat {
         override type increment = _3N
         override type decrement = _1N
         override type equals[that <: Nat] = that#is2
@@ -90,7 +90,7 @@ trait Nats { this: Meta.type =>
         private[mada] override type is10 = `false`
     }
 
-    trait _3N extends Nat {
+    sealed trait _3N extends Nat {
         override type increment = _4N
         override type decrement = _2N
         override type equals[that <: Nat] = that#is3
@@ -108,7 +108,7 @@ trait Nats { this: Meta.type =>
         private[mada] override type is10 = `false`
     }
 
-    trait _4N extends Nat {
+    sealed trait _4N extends Nat {
         override type increment = _5N
         override type decrement = _3N
         override type equals[that <: Nat] = that#is4
@@ -126,7 +126,7 @@ trait Nats { this: Meta.type =>
         private[mada] override type is10 = `false`
     }
 
-    trait _5N extends Nat {
+    sealed trait _5N extends Nat {
         override type increment = _6N
         override type decrement = _4N
         override type equals[that <: Nat] = that#is5
@@ -144,7 +144,7 @@ trait Nats { this: Meta.type =>
         private[mada] override type is10 = `false`
     }
 
-    trait _6N extends Nat {
+    sealed trait _6N extends Nat {
         override type increment = _7N
         override type decrement = _5N
         override type equals[that <: Nat] = that#is6
@@ -162,7 +162,7 @@ trait Nats { this: Meta.type =>
         private[mada] override type is10 = `false`
     }
 
-    trait _7N extends Nat {
+    sealed trait _7N extends Nat {
         override type increment = _8N
         override type decrement = _6N
         override type equals[that <: Nat] = that#is7
@@ -180,7 +180,7 @@ trait Nats { this: Meta.type =>
         private[mada] override type is10 = `false`
     }
 
-    trait _8N extends Nat {
+    sealed trait _8N extends Nat {
         override type increment = _9N
         override type decrement = _7N
         override type equals[that <: Nat] = that#is8
@@ -198,7 +198,7 @@ trait Nats { this: Meta.type =>
         private[mada] override type is10 = `false`
     }
 
-    trait _9N extends Nat {
+    sealed trait _9N extends Nat {
         override type increment = _10N
         override type decrement = _8N
         override type equals[that <: Nat] = that#is9
@@ -216,7 +216,7 @@ trait Nats { this: Meta.type =>
         private[mada] override type is10 = `false`
     }
 
-    trait _10N extends Nat {
+    sealed trait _10N extends Nat {
         override type increment = throwError
         override type decrement = _9N
         override type equals[that <: Nat] = that#is10

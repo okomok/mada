@@ -61,7 +61,7 @@ package madatest.meta
         assert[getAndInc[p] == _8N]
 
         // converts metamethod to metafunction(metavalue).
-        trait inc extends quote1[increment, Nat]
+        type inc = quote1[increment, Nat]
 
         // metafunction invocation
         assert[inc#apply1[_3N] == _4N]
