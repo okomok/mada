@@ -12,7 +12,7 @@ package mada
  */
 object Debug {
 
-    val isDebug = true
+    val isDebug = new isDebug{}.unmeta
 
     type isDebug = Meta.`true`
 

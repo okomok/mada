@@ -22,8 +22,8 @@ class ObjectTest {
             type secret2 <: Object
         }
 
-        unmeta[asInstanceOf[my, My]#secret1]
-//        unmeta[asInstanceOf[my, My]#secret2] // error!
+        nullOf[asInstanceOf[my, My]#secret1]
+//        nullOf[asInstanceOf[my, My]#secret2] // error!
 
       ()
     }

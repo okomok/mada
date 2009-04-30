@@ -46,7 +46,7 @@
 
 ## `Meta`
 
-The following example contrasts the unmeta versus meta programming in Scala:
+The following example contrasts the non-meta versus meta programming in Scala:
 
     class DocTest {
         // boolean value

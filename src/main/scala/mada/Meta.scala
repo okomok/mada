@@ -38,7 +38,7 @@ object Meta extends
     /**
      * @return  <code>null.asInstanceOf[a]</code>.
      */
-    def unmeta[a <: Object]: a = null.asInstanceOf[a]
+    def nullOf[a <: Object]: a = null.asInstanceOf[a]
 
 
 // aliases

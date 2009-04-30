@@ -55,7 +55,7 @@ class BooleanTest {
     type feelIt[a <: N, _s <: N, _t <: _s] = `if`[a#isBoxed, _s, _t, N]#feel
 
     def testTypeSafe: Unit = {
-        unmeta[foo[s, s, t]#touch]
+        nullOf[foo[s, s, t]#touch]
         assertSame[t, foo[s, s, t]]
     }
 

@@ -8,22 +8,22 @@ package madatest
 
 
 import mada.Meta
-import mada.DoIf
+import mada.Blend
 import junit.framework.Assert._
 
 
-class DoIfTest {
+class IfTest {
 
     type on = Meta.`true`
     type off = Meta.`false`
 
     type id[b <: Meta.Boolean] = b#not#not
 
-    import DoIf._
+    import Blend.If._
 
     def testOn: Unit = {
         var k = false
-        doIf[on] {
+        Blend.`if`[on] {
             k = true
         }
         assertTrue(k)
@@ -31,7 +31,7 @@ class DoIfTest {
 
     def testOff: Unit = {
         var k = false
-        doIf[off] {
+        Blend.`if`[off] {
             k = true
         }
         assertFalse(k)
@@ -40,7 +40,7 @@ class DoIfTest {
 
     def testOn2: Unit = {
         var k = false
-        doIf[id[on]] {
+        Blend.`if`[id[on]] {
             k = true
         }
         assertTrue(k)
@@ -48,7 +48,7 @@ class DoIfTest {
 
     def testOff2: Unit = {
         var k = false
-        doIf[id[off]] {
+        Blend.`if`[id[off]] {
             k = true
         }
         assertFalse(k)

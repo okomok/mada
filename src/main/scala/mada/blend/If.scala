@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada
+package mada.blend
 
 
 // See: Meta-Programming with Scala: Conditional Compilation and Loop Unrolling
@@ -14,22 +14,23 @@ package mada
 /**
  * Provides conditional compilation based on meta boolean value.
  */
-object DoIf {
+object If {
 
     /**
      * Following statements are evaluated if <code>b</code> is <code>`true`</code>.
      */
-    def doIf[b <: Meta.Boolean] = Meta.unmeta[b]
+    def madaBlendIf[b <: Meta.Boolean] = null.asInstanceOf[b]
 
-    object MadaDoIfTrue {
+    object MadaBlendIfTrue {
         // Without Yclosure-elim, by-name parameter is not free.
         def apply(block: => Unit): Unit = block
     }
-    object MadaDoIfFalse {
+
+    object MadaBlendIfFalse {
         def apply(block: => Unit): Unit = ()
     }
 
-    implicit def madaDoIfTrue(t: Meta.`true`) = MadaDoIfTrue
-    implicit def madaDoIfFalse(f: Meta.`false`) = MadaDoIfFalse
+    implicit def madaBlendIfTrue(t: Meta.`true`): MadaBlendIfTrue.type = MadaBlendIfTrue
+    implicit def madaBlendIfFalse(f: Meta.`false`): MadaBlendIfFalse.type = MadaBlendIfFalse
 
 }
