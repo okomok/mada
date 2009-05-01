@@ -23,13 +23,16 @@ trait Functions { this: Meta.type =>
     }
 
     trait Function2 extends Object {
-        type Argument21 <: Object; type Argument22 <: Object
+        type Argument21 <: Object
+        type Argument22 <: Object
 
         type apply2[v1 <: Argument21, v2 <: Argument22] <: Object
     }
 
     trait Function3 extends Object {
-        type Argument31 <: Object; type Argument32 <: Object; type Argument33 <: Object
+        type Argument31 <: Object
+        type Argument32 <: Object
+        type Argument33 <: Object
 
         type apply3[v1 <: Argument31, v2 <: Argument32, v3 <: Argument33] <: Object
     }

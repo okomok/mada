@@ -8,12 +8,18 @@ package mada
 
 
 /**
- * Contains debugging properties.
+ * Contains Environment constants of mada.
  */
-object Debug {
+object Env {
 
+    /**
+     * Is mada in debug mode?
+     */
     val isDebug = true
 
+    /**
+     * Is mada in debug mode?
+     */
     type isDebug = Meta.`true`
 
 }
