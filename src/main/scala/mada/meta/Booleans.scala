@@ -25,6 +25,7 @@ trait Booleans { this: Meta.type =>
         private[mada] type isFalse <: Boolean
 
         private[mada] type _if[then <: Object, _else <: then#This] <: then#This // doesn't work in dependent context.
+        private[mada] type ifThen[then <: Object] <: then // doesn't work, too.
         private[mada] type natIf[then <: Nat, _else <: Nat] <: Nat
     }
 
@@ -40,6 +41,7 @@ trait Booleans { this: Meta.type =>
         private[mada] override type isFalse = `false`
 
         private[mada] override type _if[then <: Object, _else <: then#This] = then#`this`
+        private[mada] override type ifThen[then <: Object] = then
         private[mada] override type natIf[then <: Nat, _else <: Nat] = then
     }
 
@@ -55,10 +57,12 @@ trait Booleans { this: Meta.type =>
         private[mada] override type isFalse = `true`
 
         private[mada] override type _if[then <: Object, _else <: then#This] = _else
+        private[mada] override type ifThen[then <: Object] = Nothing
         private[mada] override type natIf[then <: Nat, _else <: Nat] = _else
     }
 
     type `if`[cond <: Boolean, then <: Object, _else <: then#This] = cond#_if[then, _else]
+    type ifThen[cond <: Boolean, then <: Object] = cond#ifThen[then]
     type natIf[cond <: Boolean, then <: Nat, _else <: Nat] = cond#natIf[then, _else]
 
 

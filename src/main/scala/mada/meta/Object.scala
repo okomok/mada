@@ -25,7 +25,7 @@ trait Object {
     type operator_==[that <: This] <: Meta.Boolean
     type operator_+[that <: This] <: This
     type operator_-[that <: This] <: This
-    type operator_++ <: This
+    type operator_++ <: This // <: Result_operator_++ is better.
     type operator_-- <: This
 }
 

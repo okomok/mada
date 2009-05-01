@@ -39,6 +39,13 @@ class BooleanTest {
         assert[incinc[_3N] == _5N]
     }
 
+    trait testPropagation2 {
+/*
+        type incinc[n <: Nat] = ifThen[n == _3N, n#increment]#increment
+        assert[incinc[_3N] == _5N]
+*/
+    }
+
 
     /*
     trait N extends Object {
