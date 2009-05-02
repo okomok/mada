@@ -12,12 +12,7 @@ import junit.framework.Assert._
 import junit.framework.TestCase
 
 
-/*
 class AssertTest extends TestCase {
-    override def setUp {
-        Assert.isEnabled = true
-    }
-
     def neverEvaluated(): Boolean = {
         assertTrue("impossible", false)
         false
@@ -28,21 +23,18 @@ class AssertTest extends TestCase {
         "doh"
     }
 
-    def testTrivial {
-        assertTrue(Assert.isEnabled)
-
-        Assert.isEnabled = false
-        assertFalse(Assert.isEnabled)
-        Assert("never evaluated", neverEvaluated())
-
-        Assert.isEnabled = true
-        var thrown = false
-        try {
-            Assert("fail", false)
-        } catch {
-            case e: java.lang.AssertionError => thrown = true
+    def testTrivial: Unit = {
+        import mada.Blend.If._
+        mada.Blend.`if`[mada.Env.isDebug] {
+            assertTrue(mada.Env.isDebug)
+            var thrown = false
+            try {
+                Assert("fail", false)
+            } catch {
+                case e: java.lang.AssertionError => thrown = true
+            }
+            assertTrue("must be thrown", thrown)
         }
-        assertTrue("must be thrown", thrown)
     }
 
     def mustBeEvaluated(): Boolean = {
@@ -61,24 +53,23 @@ class AssertTest extends TestCase {
     }
 
     def testNotEvaluatedMsg: Unit = {
-        Assert.isEnabled = false
-        Assert(neverEvaluatedMsg, true)
-        Assert.verify(neverEvaluatedMsg, true)
-        Assert.isEnabled = true
         Assert(neverEvaluatedMsg, true)
         Assert.verify(neverEvaluatedMsg, true)
     }
 
     def testCheck: Unit = {
-        assertEquals(12, Assert.ensure(12)(10 < (_: Int)))
+        import mada.Blend.If._
+        mada.Blend.`if`[mada.Env.isDebug] {
+            assertTrue(mada.Env.isDebug)
+            assertEquals(12, Assert.ensure(12)(10 < (_: Int)))
 
-        var thrown = false
-        try {
-            Assert.ensure("fail", 12)(10 > (_: Int))
-        } catch {
-            case e: java.lang.AssertionError => thrown = true
+            var thrown = false
+            try {
+                Assert.ensure("fail", 12)(10 > (_: Int))
+            } catch {
+                case e: java.lang.AssertionError => thrown = true
+            }
+            assertTrue("must be thrown", thrown)
         }
-        assertTrue("must be thrown", thrown)
     }
 }
-*/

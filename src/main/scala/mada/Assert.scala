@@ -7,22 +7,18 @@
 package mada
 
 
+import Blend.If._
+
+
 /**
  * Assertion methods used in Mada
  */
 object Assert {
     /**
-     * Is assertion enabled?
-     */
-    final val isEnabled = true
-    // var isEnabled = true
-
-    /**
      * The assert
      */
-    def apply(cond: => Boolean): Unit = { // Without Yclosure-elim, by-name parameters require heap allocation.
-        // For some reason, optimizer dislikes ! and && operators.
-        if (isEnabled) {
+    def apply(cond: => Boolean): Unit = {
+        Blend.`if`[Env.isDebug] {
             if (!cond) {
                 throw new java.lang.AssertionError("assertion failed")
             }
@@ -33,7 +29,7 @@ object Assert {
      * assert with message
      */
     def apply(msg: => Any, cond: => Boolean): Unit = {
-        if (isEnabled) {
+        Blend.`if`[Env.isDebug] {
             if (!cond) {
                 throw new java.lang.AssertionError("assertion failed: " + msg)
             }
