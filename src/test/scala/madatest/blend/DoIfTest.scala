@@ -12,18 +12,18 @@ import mada.Blend
 import junit.framework.Assert._
 
 
-class IfTest {
+class DoIfTest {
 
     type on = Meta.`true`
     type off = Meta.`false`
 
     type id[b <: Meta.Boolean] = b#not#not
 
-    import Blend.If._
+    import Blend.DoIf._
 
     def testOn: Unit = {
         var k = false
-        Blend.`if`[on] {
+        Blend.doIf[on] {
             k = true
         }
         assertTrue(k)
@@ -31,7 +31,7 @@ class IfTest {
 
     def testOff: Unit = {
         var k = false
-        Blend.`if`[off] {
+        Blend.doIf[off] {
             k = true
         }
         assertFalse(k)
@@ -40,7 +40,7 @@ class IfTest {
 
     def testOn2: Unit = {
         var k = false
-        Blend.`if`[id[on]] {
+        Blend.doIf[id[on]] {
             k = true
         }
         assertTrue(k)
@@ -48,7 +48,7 @@ class IfTest {
 
     def testOff2: Unit = {
         var k = false
-        Blend.`if`[id[off]] {
+        Blend.doIf[id[off]] {
             k = true
         }
         assertFalse(k)

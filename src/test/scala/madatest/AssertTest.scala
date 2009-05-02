@@ -24,8 +24,8 @@ class AssertTest extends TestCase {
     }
 
     def testTrivial: Unit = {
-        import mada.Blend.If._
-        mada.Blend.`if`[mada.Env.isDebug] {
+        import mada.Blend.DoIf._
+        mada.Blend.doIf[mada.Env.isDebug] {
             assertTrue(mada.Env.isDebug)
             var thrown = false
             try {
@@ -58,8 +58,8 @@ class AssertTest extends TestCase {
     }
 
     def testCheck: Unit = {
-        import mada.Blend.If._
-        mada.Blend.`if`[mada.Env.isDebug] {
+        import mada.Blend.DoIf._
+        mada.Blend.doIf[mada.Env.isDebug] {
             assertTrue(mada.Env.isDebug)
             assertEquals(12, Assert.ensure(12)(10 < (_: Int)))
 

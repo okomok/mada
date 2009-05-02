@@ -16,13 +16,13 @@ import blend._
 object Blend {
 
     /**
-     * Alias of <code>blend.If</code>
+     * Alias of <code>blend.DoIf</code>
      */
-    val If = blend.If
+    val DoIf = blend.DoIf
 
     /**
-     * Alias of <code>blend.If.madaBlendIf</code>
+     * Alias of <code>blend.DoIf.madaBlendDoIf</code>
      */
-    def `if`[b <: Meta.Boolean] = If.madaBlendIf[b]
+    def doIf[b <: Meta.Boolean] = DoIf.madaBlendDoIf[b]
 
 }

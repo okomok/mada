@@ -14,23 +14,23 @@ package mada.blend
 /**
  * Provides conditional compilation based on meta boolean value.
  */
-object If {
+object DoIf {
 
     /**
      * Following statements are evaluated if <code>b</code> is <code>`true`</code>.
      */
-    def madaBlendIf[b <: Meta.Boolean] = null.asInstanceOf[b]
+    def madaBlendDoIf[b <: Meta.Boolean] = null.asInstanceOf[b]
 
-    object MadaBlendIfTrue {
+    object MadaBlendDoIfTrue {
         // Without Yclosure-elim, by-name parameter is not free.
         def apply(block: => Unit): Unit = block
     }
 
-    object MadaBlendIfFalse {
+    object MadaBlendDoIfFalse {
         def apply(block: => Unit): Unit = ()
     }
 
-    implicit def madaBlendIfTrue(t: Meta.`true`): MadaBlendIfTrue.type = MadaBlendIfTrue
-    implicit def madaBlendIfFalse(f: Meta.`false`): MadaBlendIfFalse.type = MadaBlendIfFalse
+    implicit def madaBlendDoIfTrue(t: Meta.`true`): MadaBlendDoIfTrue.type = MadaBlendDoIfTrue
+    implicit def madaBlendDoIfFalse(f: Meta.`false`): MadaBlendDoIfFalse.type = MadaBlendDoIfFalse
 
 }
