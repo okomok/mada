@@ -53,6 +53,14 @@ class IfTest {
         assertTrue(l)
     }
 
+    def testWithNat: Unit = {
+        import Meta._
+        import mada.Blend.`if`
+        type k = ++[_3N] // must be stable.
+        val n = `if`[Int, k == _3N] { 3 } .elseIf[k == _4N] { 4 } `else` { 5 }
+        assertEquals(4, n)
+    }
+
     /*
     // Will never work due to erasure....
     def makeInt0[k <: Meta.Nat]: Int = {
