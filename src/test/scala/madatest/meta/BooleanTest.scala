@@ -14,8 +14,10 @@ import mada.Meta._
 class BooleanTest {
     def testTrivial: Unit = {
         assertSame[`true`, `true`]
-        assertSame[`false`, `if`[`true`, `false`, `true`]]
-        assertSame[`false`, `if`[`false`, `true`, `false`]]
+        assert[`false` == `if`[`true`, `false`, `true`]]
+        assert[`false` == `if`[`false`, `true`, `false`]]
+        //assertSame[`false`, `if`[`true`, `false`, `true`]]
+        //assertSame[`false`, `if`[`false`, `true`, `false`]]
     }
 
     assert[`true` == `true`]
@@ -29,6 +31,12 @@ class BooleanTest {
     assert[myNot[`true`] == `false`]
     assert[myNot[`false`] == `true`]
 
+    trait testOperator {
+        assert[`true` && `true`]
+        assert[![`false` && `true`]]
+        assert[`false` || `true`]
+        assert[`true` || `false`]
+    }
 
     trait testPropagation {
         type incinc[n <: Nat] = natIf[n == _3N, n#increment, n]#increment

@@ -26,8 +26,8 @@ trait Integers { this: Meta.type =>
         type minus[that <: Integer] = decrement#minus[that]#increment
         type multiply[that <: Integer] = decrement#multiply[that]#add[that]
 */
-        override type This = Integer
-        override type operator_+[that <: This] = add[that]
+        override type Operand_+ = Integer
+        override type operator_+[that <: Integer] = add[that]
     }
 
 /*

@@ -20,13 +20,24 @@ trait Object {
     type isBind <: Meta.Boolean
     type isBoxed <: Meta.Boolean
 
-    type This <: Object
-    type `this` <: This
-    type operator_==[that <: This] <: Meta.Boolean
-    type operator_+[that <: This] <: This
-    type operator_-[that <: This] <: This
-    type operator_++ <: This // <: Result_operator_++ is better.
-    type operator_-- <: This
+    type Operand_== <: Object
+    type operator_==[that <: Operand_==] <: Meta.Boolean
+
+    type Operand_+ <: Object
+    type operator_+[that <: Operand_+] <: Object
+
+    type Operand_- <: Object
+    type operator_-[that <: Operand_-] <: Object
+
+    type Operand_&& <: Object
+    type operator_&&[that <: Operand_&&] <: Object
+
+    type Operand_|| <: Object
+    type operator_||[that <: Operand_||] <: Object
+
+    type operator_++ <: Object
+    type operator_-- <: Object
+    type operator_! <: Object
 }
 
 

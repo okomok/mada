@@ -15,12 +15,16 @@ package mada.meta
  */
 trait Operators { this: Meta.type =>
 
-    type +[a <: Object, b <: a#This] = a#operator_+[b]
-    type -[a <: Object, b <: a#This] = a#operator_-[b]
+    type +[a <: Object, b <: a#Operand_+] = a#operator_+[b]
+    type -[a <: Object, b <: a#Operand_-] = a#operator_-[b]
 
-    type ==[a <: Object, b <: a#This] = a#operator_==[b]
-    type !=[a <: Object, b <: a#This] = a#operator_==[b]#not
+    type ==[a <: Object, b <: a#Operand_==] = a#operator_==[b]
+    type !=[a <: Object, b <: a#Operand_==] = a#operator_==[b]#not
 
+    type &&[a <: Object, b <: a#Operand_&&] = a#operator_&&[b]
+    type ||[a <: Boolean, b <: a#Operand_||] = a#operator_||[b]
+
+    type ![a <: Object] = a#operator_!
     type ++[a <: Object] = a#operator_++
     type --[a <: Object] = a#operator_--
 
