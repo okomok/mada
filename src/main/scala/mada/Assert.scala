@@ -7,7 +7,7 @@
 package mada
 
 
-import Blend.DoIf._
+import Blend._
 
 
 /**
@@ -18,7 +18,7 @@ object Assert {
      * The assert
      */
     def apply(cond: => Boolean): Unit = {
-        Blend.doIf[Env.isDebug] {
+        doIf[Env.isDebug] {
             if (!cond) {
                 throw new java.lang.AssertionError("assertion failed")
             }
@@ -29,7 +29,7 @@ object Assert {
      * assert with message
      */
     def apply(msg: => Any, cond: => Boolean): Unit = {
-        Blend.doIf[Env.isDebug] {
+        doIf[Env.isDebug] {
             if (!cond) {
                 throw new java.lang.AssertionError("assertion failed: " + msg)
             }

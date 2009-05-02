@@ -4,11 +4,11 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest
+package madatest.blend
 
 
 import mada.Meta
-import mada.Blend
+import mada.Blend._
 import junit.framework.Assert._
 
 
@@ -19,11 +19,9 @@ class DoIfTest {
 
     type id[b <: Meta.Boolean] = b#not#not
 
-    import Blend.DoIf._
-
     def testOn: Unit = {
         var k = false
-        Blend.doIf[on] {
+        doIf[on] {
             k = true
         }
         assertTrue(k)
@@ -31,7 +29,7 @@ class DoIfTest {
 
     def testOff: Unit = {
         var k = false
-        Blend.doIf[off] {
+        doIf[off] {
             k = true
         }
         assertFalse(k)
@@ -40,7 +38,7 @@ class DoIfTest {
 
     def testOn2: Unit = {
         var k = false
-        Blend.doIf[id[on]] {
+        doIf[id[on]] {
             k = true
         }
         assertTrue(k)
@@ -48,7 +46,7 @@ class DoIfTest {
 
     def testOff2: Unit = {
         var k = false
-        Blend.doIf[id[off]] {
+        doIf[id[off]] {
             k = true
         }
         assertFalse(k)

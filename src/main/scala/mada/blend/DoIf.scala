@@ -12,17 +12,16 @@ package mada.blend
 
 
 /**
- * Provides conditional compilation based on meta boolean value.
+ * Intermediate trait for implicit conversions.
  */
-object DoIf {
+sealed trait DoIf[b <: Meta.Boolean]
 
-    /**
-     * Following statements are evaluated if <code>b</code> is <code>`true`</code>.
-     */
-    def madaBlendDoIf[b <: Meta.Boolean] = null.asInstanceOf[b]
+/**
+ * Contains implicit conversions for <code>doIf</code>.
+ */
+trait DoIfImplicits { this: Blend.type =>
 
     object MadaBlendDoIfTrue {
-        // Without Yclosure-elim, by-name parameter is not free.
         def apply(block: => Unit): Unit = block
     }
 
@@ -30,7 +29,11 @@ object DoIf {
         def apply(block: => Unit): Unit = ()
     }
 
-    implicit def madaBlendDoIfTrue(t: Meta.`true`): MadaBlendDoIfTrue.type = MadaBlendDoIfTrue
-    implicit def madaBlendDoIfFalse(f: Meta.`false`): MadaBlendDoIfFalse.type = MadaBlendDoIfFalse
+    implicit def madaBlendDoIfTrue(t: DoIf[Meta.`true`]): MadaBlendDoIfTrue.type = MadaBlendDoIfTrue
+    implicit def madaBlendDoIfFalse(f: DoIf[Meta.`false`]): MadaBlendDoIfFalse.type = MadaBlendDoIfFalse
 
+}
+
+private[mada] object DoIf {
+    def apply[b <: Meta.Boolean]: DoIf[b] = new DoIf[b]{}
 }
