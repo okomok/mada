@@ -11,16 +11,18 @@ import Meta._
 
 
 /**
- * Contains meta assertions.
+ * The meta iterable
  */
 object Iterable {
+
+    sealed trait by[it <: Iterator] extends Iterable {
+        override type elements = it
+    }
 
 }
 
 trait Iterable {
-    type Element <: Object
-
-    type elements <: Iterator { type Element <: Iterable#Element }
+    type elements <: Iterator
 
 /*
 
@@ -40,13 +42,50 @@ trait Iterable {
     type length = `while`[Tuple2[Iterator, Nat, elements, _0N], pred, state]#_2
 
     */
+
+/*
+    type foldLeft[z <: Object, op <: elements#FoldLeftFunction[z]] = elements#foldLeft[z, op]#apply0
+*/
 }
 
 
 trait Iterator extends Object {
-    type Element <: Object
 
     type hasNext <: Boolean
-    type head <: Element
+    type head <: Object
     type toNext <: Iterator
+
+/*
+    type FoldLeftFunction[B <: Object] = Meta.Function2 { type Argument21 >: B; type Argument22 >: Element; type apply2[b <: Argument21, a <: Argument22] <: B }
+    sealed trait foldLeft[z <: Object, op <: FoldLeftFunction[z]] extends Meta.Function0 {
+        override type apply0 = `if`[hasNext, toNext#foldLeft[op#apply2[z, head], op], always[z]]#apply0
+    }
+*/
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

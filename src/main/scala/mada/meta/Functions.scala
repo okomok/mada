@@ -38,6 +38,6 @@ trait Functions { this: Meta.type =>
     }
 
     type Predicate1 = Function1 { type apply1[v1 <: Argument11] <: Boolean }
-    type Transform = Function1 { type apply1[v1 <: Argument11] <: Argument11 }
+    type Transform[A <: Object] = Function1 { type Argument11 >: A; type apply1[v1 <: Argument11] <: A }
 
 }

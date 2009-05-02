@@ -8,7 +8,7 @@ package mada
 
 
 /**
- * Contains Environment constants of mada.
+ * Contains environment constants of mada.
  */
 object Env {
 

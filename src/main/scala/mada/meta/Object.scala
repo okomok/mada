@@ -10,6 +10,8 @@ package mada.meta
 /**
  * The root of the "meta class" hierarchy
  */
+
+// should be removed meta-if is infeasible.
 trait Object {
     type eq[that <: Object] <: Meta.Boolean // probably infeasible. isInt etc will be feasible in 2.8, though.
     type identityHashCode <: Meta.Integer // how?
