@@ -44,8 +44,6 @@ trait Nats { this: Meta.type =>
     }
 
     sealed trait _0N extends Nat {
-        private[mada] override type `this` = _0N
-
         override type increment = _1N
         override type decrement = throwError
         override type equals[that <: Nat] = that#is0
@@ -65,9 +63,11 @@ trait Nats { this: Meta.type =>
         override type foldLeft[z <: op#Result2, op <: FoldLeftFunction] = z
     }
 
-    sealed trait _1N extends Nat {
-        private[mada] override type `this` = _1N
+    sealed trait PositiveNat extends Nat {
+        override type foldLeft[z <: op#Result2, op <: FoldLeftFunction] = decrement#foldLeft[op#apply2[z, decrement], op]
+    }
 
+    sealed trait _1N extends Nat with PositiveNat {
         override type increment = _2N
         override type decrement = _0N
         override type equals[that <: Nat] = that#is1
@@ -83,13 +83,9 @@ trait Nats { this: Meta.type =>
         private[mada] override type is8 = `false`
         private[mada] override type is9 = `false`
         private[mada] override type is10 = `false`
-
-        override type foldLeft[z <: op#Result2, op <: FoldLeftFunction] = op#apply2[z, _0N]
     }
 
-    sealed trait _2N extends Nat {
-        private[mada] override type `this` = _2N
-
+    sealed trait _2N extends Nat with PositiveNat {
         override type increment = _3N
         override type decrement = _1N
         override type equals[that <: Nat] = that#is2
@@ -105,13 +101,9 @@ trait Nats { this: Meta.type =>
         private[mada] override type is8 = `false`
         private[mada] override type is9 = `false`
         private[mada] override type is10 = `false`
-
-        override type foldLeft[z <: op#Result2, op <: FoldLeftFunction] = op#apply2[op#apply2[z, _1N], _0N]
     }
 
-    sealed trait _3N extends Nat {
-        private[mada] override type `this` = _3N
-
+    sealed trait _3N extends Nat with PositiveNat {
         override type increment = _4N
         override type decrement = _2N
         override type equals[that <: Nat] = that#is3
@@ -127,13 +119,9 @@ trait Nats { this: Meta.type =>
         private[mada] override type is8 = `false`
         private[mada] override type is9 = `false`
         private[mada] override type is10 = `false`
-
-        override type foldLeft[z <: op#Result2, op <: FoldLeftFunction] = op#apply2[op#apply2[op#apply2[z, _2N], _1N], _0N]
     }
 
-    sealed trait _4N extends Nat {
-        private[mada] override type `this` = _4N
-
+    sealed trait _4N extends Nat with PositiveNat {
         override type increment = _5N
         override type decrement = _3N
         override type equals[that <: Nat] = that#is4
@@ -149,13 +137,9 @@ trait Nats { this: Meta.type =>
         private[mada] override type is8 = `false`
         private[mada] override type is9 = `false`
         private[mada] override type is10 = `false`
-
-        type foldLeft[z <: op#Result2, op <: FoldLeftFunction] = op#apply2[op#apply2[op#apply2[op#apply2[z, _3N], _2N], _1N], _0N]
     }
 
-    sealed trait _5N extends Nat {
-        private[mada] override type `this` = _5N
-
+    sealed trait _5N extends Nat with PositiveNat {
         override type increment = _6N
         override type decrement = _4N
         override type equals[that <: Nat] = that#is5
@@ -171,13 +155,9 @@ trait Nats { this: Meta.type =>
         private[mada] override type is8 = `false`
         private[mada] override type is9 = `false`
         private[mada] override type is10 = `false`
-
-        type foldLeft[z <: op#Result2, op <: FoldLeftFunction] = op#apply2[op#apply2[op#apply2[op#apply2[op#apply2[z, _4N], _3N], _2N], _1N], _0N]
     }
 
-    sealed trait _6N extends Nat {
-        private[mada] override type `this` = _6N
-
+    sealed trait _6N extends Nat with PositiveNat {
         override type increment = _7N
         override type decrement = _5N
         override type equals[that <: Nat] = that#is6
@@ -193,13 +173,9 @@ trait Nats { this: Meta.type =>
         private[mada] override type is8 = `false`
         private[mada] override type is9 = `false`
         private[mada] override type is10 = `false`
-
-        type foldLeft[z <: op#Result2, op <: FoldLeftFunction] = op#apply2[op#apply2[op#apply2[op#apply2[op#apply2[op#apply2[z, _5N], _4N], _3N], _2N], _1N], _0N]
     }
 
-    sealed trait _7N extends Nat {
-        private[mada] override type `this` = _7N
-
+    sealed trait _7N extends Nat with PositiveNat {
         override type increment = _8N
         override type decrement = _6N
         override type equals[that <: Nat] = that#is7
@@ -215,13 +191,9 @@ trait Nats { this: Meta.type =>
         private[mada] override type is8 = `false`
         private[mada] override type is9 = `false`
         private[mada] override type is10 = `false`
-
-        type foldLeft[z <: op#Result2, op <: FoldLeftFunction] = op#apply2[op#apply2[op#apply2[op#apply2[op#apply2[op#apply2[op#apply2[z, _6N], _5N], _4N], _3N], _2N], _1N], _0N]
      }
 
-    sealed trait _8N extends Nat {
-        private[mada] override type `this` = _8N
-
+    sealed trait _8N extends Nat with PositiveNat {
         override type increment = _9N
         override type decrement = _7N
         override type equals[that <: Nat] = that#is8
@@ -237,13 +209,9 @@ trait Nats { this: Meta.type =>
         private[mada] override type is8 = `true`
         private[mada] override type is9 = `false`
         private[mada] override type is10 = `false`
-
-        type foldLeft[z <: op#Result2, op <: FoldLeftFunction] = op#apply2[op#apply2[op#apply2[op#apply2[op#apply2[op#apply2[op#apply2[op#apply2[z, _7N], _6N], _5N], _4N], _3N], _2N], _1N], _0N]
     }
 
-    sealed trait _9N extends Nat {
-        private[mada] override type `this` = _9N
-
+    sealed trait _9N extends Nat with PositiveNat {
         override type increment = _10N
         override type decrement = _8N
         override type equals[that <: Nat] = that#is9
@@ -259,13 +227,9 @@ trait Nats { this: Meta.type =>
         private[mada] override type is8 = `false`
         private[mada] override type is9 = `true`
         private[mada] override type is10 = `false`
-
-        type foldLeft[z <: op#Result2, op <: FoldLeftFunction] = op#apply2[op#apply2[op#apply2[op#apply2[op#apply2[op#apply2[op#apply2[op#apply2[op#apply2[z, _8N], _7N], _6N], _5N], _4N], _3N], _2N], _1N], _0N]
     }
 
-    sealed trait _10N extends Nat {
-        private[mada] override type `this` = _10N
-
+    sealed trait _10N extends Nat with PositiveNat {
         override type increment = throwError
         override type decrement = _9N
         override type equals[that <: Nat] = that#is10
@@ -281,8 +245,6 @@ trait Nats { this: Meta.type =>
         private[mada] override type is8 = `false`
         private[mada] override type is9 = `false`
         private[mada] override type is10 = `true`
-
-        type foldLeft[z <: op#Result2, op <: FoldLeftFunction] = op#apply2[op#apply2[op#apply2[op#apply2[op#apply2[op#apply2[op#apply2[op#apply2[op#apply2[op#apply2[z, _9N], _8N], _7N], _6N], _5N], _4N], _3N], _2N], _1N], _0N]
    }
 
 }
