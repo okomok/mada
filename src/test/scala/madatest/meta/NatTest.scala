@@ -49,4 +49,18 @@ class NatTest {
         assert[equaL[_3N, _5N]]
         assert[equaL[_4N, _6N]]
     }
+
+    trait testFoldLeft {
+        type inc[b <: Nat, a <: Nat] = ++[b]
+        type id[n <: Nat] = --[++[n]]
+        type qp = quote2[inc, Nat, Nat, Nat]
+
+        assert[qp#apply2[_8N, _0N] == _9N]
+        assertLower[_3N#foldLeft[_0N, qp], Nat]
+        assert[_3N#foldLeft[_0N, qp] == _3N]
+        assert[inc[_2N, _0N]#foldLeft[_2N, qp] == _5N]
+
+        type callFold[n <: Nat] = inc[n, _0N]#foldLeft[_2N, qp]
+        assert[callFold[_2N] == _5N]
+    }
 }
