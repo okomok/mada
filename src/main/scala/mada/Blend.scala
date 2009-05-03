@@ -13,7 +13,7 @@ import blend._
 /**
  * Gets runtime and meta programming to blend.
  */
-object Blend extends IfImplicits with DoIfImplicits {
+object Blend extends IfImplicits {
 
     /**
      * Conditional compilation based on meta boolean value.
@@ -28,11 +28,6 @@ object Blend extends IfImplicits with DoIfImplicits {
     /**
      * Conditional compilation based on meta boolean value.
      */
-    def doIf[b <: Meta.Boolean]: DoIf[b] = DoIf.apply[b]
-
-    /**
-     * @return  <code>this</code>.
-     */
-    val DoIfImplicits: blend.DoIfImplicits = this
+    def doIf[b <: Meta.Boolean](block: => Unit)(implicit c: DoIf[b]): Unit = c(block)
 
 }
