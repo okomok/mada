@@ -71,4 +71,7 @@ trait Booleans { this: Meta.type =>
     // type ifThen[cond <: Boolean, then <: Object] = cond#ifThen[then]
     type natIf[cond <: Boolean, then <: Nat, _else <: Nat] = cond#natIf[then, _else]
 
+    implicit val unmeta_true_Boolean = Unmeta[`true`, scala.Boolean](true)
+    implicit val unmeta_false_Boolean = Unmeta[`false`, scala.Boolean](false)
+
 }

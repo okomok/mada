@@ -8,11 +8,15 @@ package madatest.meta
 
 
 import mada.Meta._
-// import junit.framework.Assert._
 
 
 class NatTest {
-    def testNone: Unit = ()
+    def testUnmeta: Unit = {
+        import junit.framework.Assert._
+        assertEquals(0, unmeta[_0N, Int])
+        assertEquals(7, unmeta[++[_6N], Int])
+        assertEquals(10, unmeta[_10N, Int])
+    }
 
     trait testTrivial {
         assert[_0N == _0N]

@@ -12,6 +12,12 @@ import mada.Meta._
 
 
 class BooleanTest {
+    def testUnmeta: Unit = {
+        import junit.framework.Assert._
+        assertEquals(true, unmeta[`true`, scala.Boolean])
+        assertEquals(false, unmeta[`false`, scala.Boolean])
+    }
+
     def testTrivial: Unit = {
         assertSame[`true`, `true`]
         assert[`false` == `if`[`true`, `false`, `true`]]

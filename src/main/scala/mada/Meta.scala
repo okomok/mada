@@ -40,6 +40,11 @@ object Meta extends
      */
     def nullOf[a <: Object]: a = null.asInstanceOf[a]
 
+    /**
+     * Returns corresponding runtime value.
+     */
+    def unmeta[From <: Object, To](implicit c: Unmeta[From, To]): To = c.value
+
 
 // aliases
 
