@@ -11,8 +11,8 @@ import meta._
 
 
 object Meta extends
-    Asserts with Args with Binds with Booleans with Forwardings with Functions with Nats with Operators with
-    Integers with Quotes with Placeholders with Products with Trampoline with Tuples with While {
+    Alwayses with Asserts with Args with Binds with Booleans with Forwardings with Functions with Nats with
+    Operators with Integers with Quotes with Placeholders with Products with Trampoline with Tuples with While {
 
 
 // metamethods
@@ -52,11 +52,6 @@ object Meta extends
      * Alias of <code>meta.box</code>
      */
     type box[a] = meta.box[a]
-
-    /**
-     * Alias of <code>meta.always</code>
-     */
-    type always[a <: Object] = meta.always[a]
 
 
 // namespaces
