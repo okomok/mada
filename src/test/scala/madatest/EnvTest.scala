@@ -7,14 +7,17 @@
 package madatest
 
 
+import mada.Blend
 import mada.Env
 import junit.framework.Assert._
 
 
-class DebugTest {
+class EnvTest {
     def testTrivial: Unit = {
-        val j = mada.Env.isDebug
-        val k = mada.isDebug_
-        ()
+        Blend.`if`[Unit, Env.isDebug] {
+            assertTrue(Env.isDebug)
+        } `else` {
+            assertFalse(Env.isDebug)
+        }
     }
 }

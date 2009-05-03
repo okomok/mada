@@ -43,4 +43,3 @@ object Unmeta {
 sealed trait Unmeta[From <: Object, To] {
     def apply(): To
 }
-
