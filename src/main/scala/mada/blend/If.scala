@@ -8,34 +8,38 @@ package mada.blend
 
 
 /**
- * Intermediate trait for implicit conversions.
+ * Contains eligibles for <code>`if`</code>.
  */
-sealed trait If[A, b <: Meta.Boolean] {
-    private[mada] def block: A
+object If {
+
+    implicit def if_true[A] = new If[A, Meta.`true`] {
+        override def apply(block: => A) = new Then[A] {
+            override def `else`(unused: => A) = block
+            override def elseIf[b <: Meta.Boolean](unused: => A)(implicit _if: If[A, b]) = this
+
+        }
+    }
+
+    implicit def if_false[A] = new If[A, Meta.`false`] {
+        override def apply(unused: => A) = new Then[A] {
+            override def `else`(block: => A) = block
+            override def elseIf[b <: Meta.Boolean](block: => A)(implicit _if: If[A, b]) = _if(block)
+        }
+    }
+
 }
 
 /**
- * Contains implicit conversions for <code>`if`</code>.
+ * Intermediate trait for implicit conversions.
  */
-trait IfImplicits { this: Blend.type =>
-
-    final class MadaBlendTrueThen[A](block: => A) {
-        def `else`(unused: => A) = block
-        def elseIf[b <: Meta.Boolean](unused: => A): MadaBlendTrueThen[A] = this
-    }
-
-    final class MadaBlendFalseThen[A] {
-        def `else`(block: => A) = block
-        def elseIf[b <: Meta.Boolean](block: => A): If[A, b] = If.apply[A, b](block)
-    }
-
-    implicit def madaBlendIfTrue[A](t: If[A, Meta.`true`]): MadaBlendTrueThen[A] = new MadaBlendTrueThen[A](t.block)
-    implicit def madaBlendIfFalse[A](f: If[A, Meta.`false`]): MadaBlendFalseThen[A] = new MadaBlendFalseThen[A]
-
+sealed trait If[A, b <: Meta.Boolean] {
+    def apply(block: => A): Then[A]
 }
 
-private[mada] object If {
-    def apply[A, b <: Meta.Boolean](_block: => A): If[A, b] = new If[A, b] {
-        private[mada] override def block = _block
-    }
+/**
+ * Intermediate trait for if expressions.
+ */
+sealed trait Then[A] {
+    def `else`(block: => A): A
+    def elseIf[b <: Meta.Boolean](block: => A)(implicit _if: If[A, b]): Then[A]
 }

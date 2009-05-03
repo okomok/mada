@@ -12,7 +12,7 @@ package mada.blend
 
 
 /**
- * Contains implicit objects for <code>doIf</code>.
+ * Contains eligibles for <code>doIf</code>.
  */
 object DoIf {
 
@@ -29,6 +29,6 @@ object DoIf {
 /**
  * Executes a block based on meta boolean value.
  */
-trait DoIf[b <: Meta.Boolean] {
+sealed trait DoIf[b <: Meta.Boolean] {
     def apply(block: => Unit): Unit
 }
