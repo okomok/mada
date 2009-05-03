@@ -61,6 +61,10 @@ class NatTest {
         assert[inc[_2N, _0N]#foldLeft[_2N, qp] == _5N]
 
         type callFold[n <: Nat] = inc[n, _0N]#foldLeft[_2N, qp]
-        assert[callFold[_2N] == _5N]
+        assert[callFold[_2N]#increment == _6N]
+
+        // same problem as meta-if.
+        //type callFold[n <: Nat] = inc[n, _0N]#foldLeft[_2N, qp]#increment
+        //assert[callFold[_2N] == _6N]
     }
 }
