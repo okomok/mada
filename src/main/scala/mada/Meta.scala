@@ -43,7 +43,7 @@ object Meta extends
     /**
      * Returns corresponding runtime value.
      */
-    def unmeta[From <: Object, To](implicit c: Unmeta[From, To]): To = c.value
+    def unmeta[From <: Object, To](implicit _unmeta: Unmeta[From, To]): To = _unmeta()
 
 
 // aliases

@@ -247,17 +247,4 @@ trait Nats { this: Meta.type =>
         private[mada] override type is10 = `true`
     }
 
-    implicit val unmeta_0N_Int = Unmeta[_0N, Int](0)
-    implicit val unmeta_1N_Int = Unmeta[_1N, Int](1)
-    implicit val unmeta_2N_Int = Unmeta[_2N, Int](2)
-    implicit val unmeta_3N_Int = Unmeta[_3N, Int](3)
-    implicit val unmeta_4N_Int = Unmeta[_4N, Int](4)
-    implicit val unmeta_5N_Int = Unmeta[_5N, Int](5)
-    implicit val unmeta_6N_Int = Unmeta[_6N, Int](6)
-    implicit val unmeta_7N_Int = Unmeta[_7N, Int](7)
-    implicit val unmeta_8N_Int = Unmeta[_8N, Int](8)
-    implicit val unmeta_9N_Int = Unmeta[_9N, Int](9)
-    implicit val unmeta_10N_Int = Unmeta[_10N, Int](10)
-    // implicit def positiveNatToInt[n <: Nat](implicit c: Unmeta[n, Int]): Unmeta[n#increment, Int] = Unmeta[n#increment, Int](1 + c.value) // doesn't work.
-
 }
