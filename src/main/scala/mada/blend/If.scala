@@ -7,9 +7,6 @@
 package mada.blend
 
 
-/**
- * Contains eligibles for <code>`if`</code>.
- */
 object If {
 
     implicit def if_true[A] = new If[A, Meta.`true`] {
@@ -29,10 +26,7 @@ object If {
 
 }
 
-/**
- * Intermediate trait for implicit conversions.
- */
-sealed trait If[A, b <: Meta.Boolean] {
+sealed trait If[A, b <: Meta.Boolean] extends Specializer {
     def apply(block: => A): Then[A]
 }
 

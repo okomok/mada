@@ -11,9 +11,6 @@ package mada.blend
 //      at http://michid.wordpress.com/2008/10/29/meta-programming-with-scala-conditional-compilation-and-loop-unrolling/
 
 
-/**
- * Contains eligibles for <code>doIf</code>.
- */
 object DoIf {
 
     implicit object doIf_true extends DoIf[Meta.`true`] {
@@ -26,9 +23,6 @@ object DoIf {
 
 }
 
-/**
- * Executes a block based on meta boolean value.
- */
-sealed trait DoIf[b <: Meta.Boolean] {
+sealed trait DoIf[b <: Meta.Boolean] extends Specializer {
     def apply(block: => Unit): Unit
 }

@@ -25,4 +25,14 @@ object Blend {
      */
     def doIf[b <: Meta.Boolean](block: => Unit)(implicit _doIf: DoIf[b]): Unit = _doIf(block)
 
+    /**
+     * Repeats <code>n</code> times.
+     */
+    def times[n <: Meta.Nat](op: => Unit)(implicit _times: Times[n]): Unit = _times(_ => op)
+
+    /**
+     * Repeats <code>n</code> times.
+     */
+    def timesBy[n <: Meta.Nat](op: Int => Unit)(implicit _times: Times[n]): Unit = _times(op)
+
 }
