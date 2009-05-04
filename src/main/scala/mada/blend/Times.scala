@@ -13,52 +13,52 @@ package mada.blend
 
 object Times {
 
-    implicit object times_0N extends Times[Meta._0N] {
+    implicit object times_0I extends Times[Meta._0I] {
         override def apply(op: Int => Unit) = { }
     }
 
-    implicit object times_1N extends Times[Meta._1N] {
+    implicit object times_1I extends Times[Meta._1I] {
         override def apply(op: Int => Unit) = { op(0) }
     }
 
-    implicit object times_2N extends Times[Meta._2N] {
+    implicit object times_2I extends Times[Meta._2I] {
         override def apply(op: Int => Unit) = { op(0); op(1) }
     }
 
-    implicit object times_3N extends Times[Meta._3N] {
+    implicit object times_3I extends Times[Meta._3I] {
         override def apply(op: Int => Unit) = { op(0); op(1); op(2) }
     }
 
-    implicit object times_4N extends Times[Meta._4N] {
+    implicit object times_4I extends Times[Meta._4I] {
         override def apply(op: Int => Unit) = { op(0); op(1); op(2); op(3) }
     }
 
-    implicit object times_5N extends Times[Meta._5N] {
+    implicit object times_5I extends Times[Meta._5I] {
         override def apply(op: Int => Unit) = { op(0); op(1); op(2); op(3); op(4) }
     }
 
-    implicit object times_6N extends Times[Meta._6N] {
+    implicit object times_6I extends Times[Meta._6I] {
         override def apply(op: Int => Unit) = { op(0); op(1); op(2); op(3); op(4); op(5) }
     }
 
-    implicit object times_7N extends Times[Meta._7N] {
+    implicit object times_7I extends Times[Meta._7I] {
         override def apply(op: Int => Unit) = { op(0); op(1); op(2); op(3); op(4); op(5); op(6) }
     }
 
-    implicit object times_8N extends Times[Meta._8N] {
+    implicit object times_8I extends Times[Meta._8I] {
         override def apply(op: Int => Unit) = { op(0); op(1); op(2); op(3); op(4); op(5); op(6); op(7) }
     }
 
-    implicit object times_9N extends Times[Meta._9N] {
+    implicit object times_9I extends Times[Meta._9I] {
         override def apply(op: Int => Unit) = { op(0); op(1); op(2); op(3); op(4); op(5); op(6); op(7); op(8) }
     }
 
-    implicit object times_10N extends Times[Meta._10N] {
+    implicit object times_10I extends Times[Meta._10I] {
         override def apply(op: Int => Unit) = { op(0); op(1); op(2); op(3); op(4); op(5); op(6); op(7); op(8); op(9) }
     }
 
 }
 
-sealed trait Times[n <: Meta.Nat] extends Specializer {
+sealed trait Times[n <: Meta.Int] extends Specializer {
     def apply(op: Int => Unit): Unit
 }

@@ -12,8 +12,8 @@ package mada.meta
  */
 trait Placeholders { this: Meta.type =>
 
-    type _a1[T <: Object] = arg1[T]
-    type _a2[T <: Object] = arg2[T]
-    type _a3[T <: Object] = arg3[T]
+    type _a1[T] = arg1[T]
+    type _a2[T] = arg2[T]
+    type _a3[T] = arg3[T]
 
 }

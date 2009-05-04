@@ -14,10 +14,10 @@ import mada.Meta._
 class ForwardingTest {
     def testNone: Unit = ()
 
-    type incre[n <: Nat] = n#increment
-    type inc = quote1[incre, Nat, Nat]
+    type incre[n <: Int] = n#increment
+    type inc = quote1[incre, Int, Int]
 
     trait testTrivial {
-        assert[forwarding1[inc]#apply1[_3N] == _4N]
+        assert[forwarding1[inc]#apply1[_3I] == _4I]
     }
 }

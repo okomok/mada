@@ -8,7 +8,7 @@ package mada.blend
 
 
 /**
- * designates that subclass is used to map type to value,
- * meaning that you need not to care about such one.
+ * Designates that subclass is used to map type to value:
+ * you need not to know such subclasses.
  */
 trait Specializer

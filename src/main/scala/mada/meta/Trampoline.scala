@@ -19,7 +19,7 @@ trait Trampoline { this:Meta.type =>
         override type apply0 <: Bounce
     }
 
-    sealed trait Bounce[A] extends Object with Function0 {
+    sealed trait Bounce[A] with Function0 {
         private[mada] type isDone <: Boolean
         type apply0 <: A // gets the result.
         private[mada] type thunk <: Function0 { type apply0 <: Bounce[A] }
@@ -32,7 +32,7 @@ trait Trampoline { this:Meta.type =>
 
     trait call[t <: Function0 { type apply0 <: Bounce { type result <: RESULT } }] extends Bounce {
         override type isDone = `false`
-        override type apply0 = throwError
+        override type apply0 = Nothing
         override type thunk = t
     }
 
@@ -92,7 +92,7 @@ trait Trampoline { this:Meta.type =>
     }
 
     trait trampoline10[b <: Bounce] extends Function0 {
-        override type apply0 = throwError
+        override type apply0 = Nothing
     }
 */
 }

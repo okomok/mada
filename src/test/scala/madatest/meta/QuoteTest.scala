@@ -14,8 +14,8 @@ import mada.Meta._
 class QuoteTest {
 
     // "types"
-    trait Strong extends Object
-    trait Strung extends Object
+    trait Strong
+    trait Strung
 
     // "objects"
     final class so extends Strong
@@ -30,7 +30,7 @@ class QuoteTest {
     type q2 = quote2[get2, Strong, Strung, Strung]
 
     def testTrivial: Unit = {
-        assertSame[quote1[identity, box[String], box[String]]#apply1[box[String]], box[String]]
+        assertSame[quote1[identity, String, String]#apply1[String], String]
         assertSame[q1#apply2[so, su], so]
         assertSame[q2#apply2[so, su], su]
     }

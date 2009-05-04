@@ -11,8 +11,8 @@ import meta._
 
 
 object Meta extends
-    Alwayses with Asserts with Args with Binds with Booleans with Forwardings with Functions with Nats with
-    Operators with Integers with Quotes with Placeholders with Products with Trampoline with Tuples with While {
+    Alwayses with Asserts with Args with Binds with Booleans with Forwardings with Functions with Ints with
+    Operators with Nats with Quotes with Placeholders with Products with Tuples {
 
 
 // metamethods
@@ -20,17 +20,12 @@ object Meta extends
     /**
      * @return  <code>a</code>.
      */
-    type identity[a <: Object] = a
+    type identity[a] = a
 
     /**
      * @return  <code>Nothing</code>.
      */
-    type throwError = Nothing
-
-    /**
-     * Problem...
-     */
-    type asInstanceOf[v <: T, T <: Object] = T
+    type error = Nothing
 
 
 // misc
@@ -38,25 +33,12 @@ object Meta extends
     /**
      * @return  <code>null.asInstanceOf[a]</code>.
      */
-    def nullOf[a <: Object]: a = null.asInstanceOf[a]
+    def nullOf[a]: a = null.asInstanceOf[a]
 
     /**
      * Returns corresponding runtime value.
      */
-    def unmeta[From <: Object, To](implicit _unmeta: Unmeta[From, To]): To = _unmeta()
-
-
-// aliases
-
-    /**
-     * Alias of <code>meta.Object</code>
-     */
-    type Object = meta.Object
-
-    /**
-     * Alias of <code>meta.box</code>
-     */
-    type box[a] = meta.box[a]
+    def unmeta[From, To](implicit _unmeta: Unmeta[From, To]): To = _unmeta()
 
 
 // namespaces

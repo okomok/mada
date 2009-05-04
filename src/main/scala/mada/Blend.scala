@@ -28,11 +28,11 @@ object Blend {
     /**
      * Repeats <code>n</code> times.
      */
-    def times[n <: Meta.Nat](op: => Unit)(implicit _times: Times[n]): Unit = _times(_ => op)
+    def times[n <: Meta.Int](op: => Unit)(implicit _times: Times[n]): Unit = _times(_ => op)
 
     /**
      * Repeats <code>n</code> times.
      */
-    def timesBy[n <: Meta.Nat](op: Int => Unit)(implicit _times: Times[n]): Unit = _times(op)
+    def timesBy[n <: Meta.Int](op: Int => Unit)(implicit _times: Times[n]): Unit = _times(op)
 
 }

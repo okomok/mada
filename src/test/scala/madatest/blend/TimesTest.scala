@@ -15,7 +15,7 @@ import junit.framework.Assert._
 class TimesTest {
     def testTrivial: Unit = {
         var i = 0
-        times[Meta._6N#increment] {
+        times[Meta._6I#increment] {
             i += 1
         }
         assertEquals(7, i)
@@ -23,7 +23,7 @@ class TimesTest {
 
     def testTrivial2: Unit = {
         var i = 11
-        timesBy[Meta._6N#increment] { j =>
+        timesBy[Meta._6I#increment] { j =>
             i += j
         }
         assertEquals(11+0+1+2+3+4+5+6, i)

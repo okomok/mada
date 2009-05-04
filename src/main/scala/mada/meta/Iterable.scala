@@ -27,7 +27,7 @@ trait Iterable {
 /*
 
 
-    type state = Product2 { type _T1 <: Iterator; type _T2 <: Nat }
+    type state = Product2 { type _T1 <: Iterator; type _T2 <: Int }
 
     trait pred extends Function1 {
         override type Argument11 = state
@@ -36,28 +36,28 @@ trait Iterable {
 
     trait update extends Function1 {
         override type Argument11 = state
-        override type apply1[s <: state] = Tuple2[Iterator, Nat, s#_1#toNext, s#_2#increment]
+        override type apply1[s <: state] = Tuple2[Iterator, Int, s#_1#toNext, s#_2#increment]
     }
 
-    type length = `while`[Tuple2[Iterator, Nat, elements, _0N], pred, state]#_2
+    type length = `while`[Tuple2[Iterator, Int, elements, _0I], pred, state]#_2
 
     */
 
 /*
-    type foldLeft[z <: Object, op <: elements#FoldLeftFunction[z]] = elements#foldLeft[z, op]#apply0
+    type foldLeft[z, op <: elements#FoldLeftFunction[z]] = elements#foldLeft[z, op]#apply0
 */
 }
 
 
-trait Iterator extends Object {
+trait Iterator {
 
     type hasNext <: Boolean
-    type head <: Object
+    type head
     type toNext <: Iterator
 
 /*
-    type FoldLeftFunction[B <: Object] = Meta.Function2 { type Argument21 >: B; type Argument22 >: Element; type apply2[b <: Argument21, a <: Argument22] <: B }
-    sealed trait foldLeft[z <: Object, op <: FoldLeftFunction[z]] extends Meta.Function0 {
+    type FoldLeftFunction[B] = Meta.Function2 { type Argument21 >: B; type Argument22 >: Element; type apply2[b <: Argument21, a <: Argument22] <: B }
+    sealed trait foldLeft[z, op <: FoldLeftFunction[z]] extends Meta.Function0 {
         override type apply0 = `if`[hasNext, toNext#foldLeft[op#apply2[z, head], op], always[z]]#apply0
     }
 */

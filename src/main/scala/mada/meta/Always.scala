@@ -12,9 +12,7 @@ trait Alwayses { this: Meta.type =>
     /**
      * Metafunction always returning <code>a</code>
      */
-    sealed trait Always[T <: Object, a <: T] extends Function0 with Function1 with Function2 with Function3 {
-        override type isBind = `false`
-
+    sealed trait Always[T, a <: T] extends Function0 with Function1 with Function2 with Function3 {
         override type Result0 = T
         override type apply0 = a
 
@@ -37,6 +35,6 @@ trait Alwayses { this: Meta.type =>
     /**
      * Constructor of <code>Always</code>
      */
-    sealed trait always[a <: Object] extends Always[a, a]
+    sealed trait always[a] extends Always[a, a]
 
 }

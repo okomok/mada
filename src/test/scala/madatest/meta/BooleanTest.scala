@@ -45,26 +45,26 @@ class BooleanTest {
     }
 
     trait testPropagation {
-        type incinc[n <: Nat] = natIf[n == _3N, n#increment, n]#increment
-        assertLower[incinc[_2N], Nat]
+        type incinc[n <: Int] = natIf[n == _3I, n#increment, n]#increment
+        assertLower[incinc[_2I], Int]
 
-        assert[`if`[_2N == _3N, _2N#increment, _2N]#increment == _3N]
-        assert[incinc[_2N] == _3N]
-        assert[incinc[_3N] == _5N]
+        assert[`if`[_2I == _3I, _2I#increment, _2I]#increment == _3I]
+        assert[incinc[_2I] == _3I]
+        assert[incinc[_3I] == _5I]
     }
 
     trait testPropagation2 {
 /*
-        type incinc[n <: Nat] = ifThen[n == _3N, n#increment]#increment
-        assert[incinc[_3N] == _5N]
+        type incinc[n <: Int] = ifThen[n == _3I, n#increment]#increment
+        assert[incinc[_3I] == _5I]
 */
     }
 
 
     /*
-    trait N extends Object {
+    trait N {
         type Self = N
-        type feel <: Object
+        type feel
     }
     trait s extends N {
         type `this` = s
@@ -72,7 +72,7 @@ class BooleanTest {
     }
     trait t extends s {
         type `this` = t
-        type touch <: Object
+        type touch
     }
 
     type foo[a <: N, _s <: N, _t <: _s] = `if`[a#isBoxed, _s, _t]

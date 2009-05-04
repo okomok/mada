@@ -14,8 +14,8 @@ import mada.Meta._
 class TupleTest {
 
     // "types"
-    trait Strong extends Object
-    trait Strung extends Object
+    trait Strong
+    trait Strung
 
     // "objects"
     trait so1 extends Strong
@@ -25,7 +25,7 @@ class TupleTest {
     trait su2 extends Strung
 
     type id[p <: Product2 { type _T1 <: Strong; type _T2 <: Strung }] = pair[p#_1, p#_2]//Tuple2[Strong, Strung, p#_1, p#_2]
-    type pair_[t1 <: Object, t2 <: Object] = Tuple2[t1, t2, t1, t2]
+    type pair_[t1, t2] = Tuple2[t1, t2, t1, t2]
 
     type ok1 = id[pair_[so1, su1]]
     type ok2 = id[pair_[so2, su2]]

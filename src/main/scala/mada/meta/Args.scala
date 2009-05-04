@@ -12,9 +12,7 @@ package mada.meta
  */
 trait Args { this: Meta.type =>
 
-    sealed trait arg1[T <: Object] extends Function1 with Function2 with Function3 {
-        override type isBind = `true`
-
+    sealed trait arg1[T] extends Function1 with Function2 with Function3 {
         override type Argument11 = T
         override type Result1 = T
         override type apply1[v1 <: Argument11] = v1
@@ -31,9 +29,7 @@ trait Args { this: Meta.type =>
         override type apply3[v1 <: Argument31, v2 <: Argument32, v3 <: Argument33] = v1
     }
 
-    sealed trait arg2[T <: Object] extends Function2 with Function3 {
-        override type isBind = `true`
-
+    sealed trait arg2[T] extends Function2 with Function3 {
         override type Argument21 = Object
         override type Argument22 = T
         override type Result2 = T
@@ -46,9 +42,7 @@ trait Args { this: Meta.type =>
         override type apply3[v1 <: Argument31, v2 <: Argument32, v3 <: Argument33] = v2
     }
 
-    sealed trait arg3[T <: Object] extends Function3 {
-        override type isBind = `true`
-
+    sealed trait arg3[T] extends Function3 {
         override type Argument31 = Object
         override type Argument32 = Object
         override type Argument33 = T

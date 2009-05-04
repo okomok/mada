@@ -12,35 +12,35 @@ package mada.meta
  */
 trait Products { this: Meta.type =>
 
-    trait Product extends Object {
-        type productArity <: Nat
+    trait Product {
+        type productArity <: Int
     }
 
     trait Product0 extends Product {
-        override type productArity = _0N
+        override type productArity = _0I
     }
 
     trait Product1 extends Product {
-        type _T1 <: Object
+        type _T1
 
-        override type productArity = _1N
+        override type productArity = _1I
 
         type _1 <: _T1
     }
 
     trait Product2 extends Product {
-        type _T1 <: Object; type _T2 <: Object
+        type _T1; type _T2
 
-        override type productArity = _2N
+        override type productArity = _2I
 
         type _1 <: _T1
         type _2 <: _T2
     }
 
     trait Product3 extends Product {
-        type _T1 <: Object; type _T2 <: Object; type _T3 <: Object
+        type _T1; type _T2; type _T3
 
-        override type productArity = _3N
+        override type productArity = _3I
 
         type _1 <: _T1
         type _2 <: _T2

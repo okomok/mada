@@ -15,17 +15,57 @@ package mada.meta
  */
 trait Operators { this: Meta.type =>
 
-    type +[a <: Object, b <: a#Operand_+] = a#operator_+[b]
-    type -[a <: Object, b <: a#Operand_-] = a#operator_-[b]
+    type +[a <: Operatable_+, b <: a#Operand_+] = a#operator_+[b]
+    type -[a <: Operatable_-, b <: a#Operand_-] = a#operator_-[b]
 
-    type ==[a <: Object, b <: a#Operand_==] = a#operator_==[b]
-    type !=[a <: Object, b <: a#Operand_==] = a#operator_==[b]#not
+    type ==[a <: Operatable_==, b <: a#Operand_==] = a#operator_==[b]
+    type !=[a <: Operatable_==, b <: a#Operand_==] = a#operator_==[b]#not
 
-    type &&[a <: Object, b <: a#Operand_&&] = a#operator_&&[b]
-    type ||[a <: Boolean, b <: a#Operand_||] = a#operator_||[b]
+    type &&[a <: Operatable_&&, b <: a#Operand_&&] = a#operator_&&[b]
+    type ||[a <: Operatable_||, b <: a#Operand_||] = a#operator_||[b]
 
-    type ![a <: Object] = a#operator_!
-    type ++[a <: Object] = a#operator_++
-    type --[a <: Object] = a#operator_--
+    type ![a <: Operatable_!] = a#operator_!
+    type ++[a <: Operatable_++] = a#operator_++
+    type --[a <: Operatable_--] = a#operator_--
 
+    trait Operatable extends Operatable_== with Operatable_+ with Operatable_- with Operatable_&& with Operatable_||
+        with Operatable_++ with Operatable_-- with Operatable_!
+
+    trait Operatable_== {
+        type Operand_==
+        type operator_==[that <: Operand_==] <: Boolean
+    }
+
+    trait Operatable_+ {
+        type Operand_+
+        type operator_+[that <: Operand_+]
+    }
+
+    trait Operatable_- {
+        type Operand_-
+        type operator_-[that <: Operand_-]
+    }
+
+    trait Operatable_&& {
+        type Operand_&&
+        type operator_&&[that <: Operand_&&]
+    }
+
+    trait Operatable_|| {
+        type Operand_||
+        type operator_||[that <: Operand_||]
+    }
+
+    trait Operatable_++ {
+        type operator_++
+    }
+
+    trait Operatable_-- {
+        type operator_--
+    }
+
+    trait Operatable_! {
+        type operator_!
+    }
 }
+

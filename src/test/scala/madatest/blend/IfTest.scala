@@ -53,31 +53,31 @@ class IfTest {
         assertTrue(l)
     }
 
-    type _k = Meta.++[Meta._3N]
+    type _k = Meta.++[Meta._3I]
     def testWithNat: Unit = {
         import Meta._
         import mada.Blend.`if`
-        val n = `if`[Int, _k == _3N] { 3 } .elseIf[_k == _4N] { 4 } `else` { 5 }
+        val n = `if`[scala.Int, _k == _3I] { 3 } .elseIf[_k == _4I] { 4 } `else` { 5 }
         assertEquals(4, n)
     }
 
     /*
     // Will never work due to erasure....
-    def makeInt0[k <: Meta.Nat]: Int = {
-        `if`[Int, k#equals[Meta._1N]] { 1 } `else` { 99 }
+    def makeInt0[k <: Meta.Int]: Int = {
+        `if`[Int, k#equals[Meta._1I]] { 1 } `else` { 99 }
     }
 
-    def makeInt[k <: Meta.Nat]: Int = {
+    def makeInt[k <: Meta.Int]: Int = {
         import Meta._
-        mada.Blend.`if`[Int, k == _1N] { 1 } .elseIf[k == _3N] { 3 } .elseIf[k == _7N] { 7 } .elseIf[k == _10N] { 10 } `else` { 99 }
+        mada.Blend.`if`[Int, k == _1I] { 1 } .elseIf[k == _3I] { 3 } .elseIf[k == _7I] { 7 } .elseIf[k == _10I] { 10 } `else` { 99 }
     }
 
     def testElseIf2: Unit = {
-        assertEquals(1, makeInt[Meta._1N])
-        assertEquals(3, makeInt[Meta._3N])
-        assertEquals(7, makeInt[Meta._7N])
-        assertEquals(10, makeInt[Meta._10N])
-        assertEquals(99, makeInt[Meta._2N])
+        assertEquals(1, makeInt[Meta._1I])
+        assertEquals(3, makeInt[Meta._3I])
+        assertEquals(7, makeInt[Meta._7I])
+        assertEquals(10, makeInt[Meta._10I])
+        assertEquals(99, makeInt[Meta._2I])
     }
     */
 }
