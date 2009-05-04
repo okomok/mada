@@ -61,7 +61,7 @@ The following example contrasts the non-meta versus meta programming in Scala:
         }
 
         // value
-        val p = new Product1[Int] { // passes type argument.
+        val p = new Product1[Int] {
             override def _1 = 7 // implements method.
         }
 
@@ -70,7 +70,7 @@ The following example contrasts the non-meta versus meta programming in Scala:
         assert(getAndInc(p) == 8)
 
         // converts method to function(value).
-        val inc = increment(_ : Int)
+        val inc = increment(_: Int)
 
         // function invocation
         assert(inc.apply(3) == 4)
@@ -85,27 +85,27 @@ The following example contrasts the non-meta versus meta programming in Scala:
         assert[`true`]
 
         // metamethod
-        type increment[n <: Nat] = n#increment // metamethod invocation by `#`
+        type increment[n <: Int] = n#increment // metamethod invocation by `#`
 
         // metatrait
-        trait Product1 extends Object {
-            type _1 <: Object // abstract metamethod
+        trait Product1 {
+            type _1 // abstract metamethod
         }
 
         // metavalue
         trait p extends Product1 {
-            override type _1 = _7N // implements metamethod.
+            override type _1 = _7I // implements metamethod.
         }
 
         // another metamethod
-        type getAndInc[x <: Product1 { type _1 <: Nat }] = x#_1#increment
-        assert[getAndInc[p] == _8N]
+        type getAndInc[x <: Product1 { type _1 <: Int }] = x#_1#increment
+        assert[getAndInc[p] == _8I]
 
         // converts metamethod to metafunction(metavalue).
-        type inc = quote1[increment, Nat]
+        type inc = quote1[increment, Int, Int]
 
         // metafunction invocation
-        assert[inc#apply1[_3N] == _4N]
+        assert[inc#apply1[_3I] == _4I]
 
         def testTrivial: Unit = ()
     }
@@ -117,9 +117,6 @@ Scala metaprogramming seems to put several restrictions:
 1. No metamethod overloading.
 1. meta-eq is infeasible.
 1. meta-if may be infeasible.
-1. A trivial algorithm may require exponential time and memory.
-1. A trivial algorithm may crash the compiler.
-
 
 
 ## `Peg`
