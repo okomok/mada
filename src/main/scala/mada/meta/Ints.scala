@@ -10,7 +10,7 @@ package mada.meta
 /**
  * Provides meta integers.
  * Meta.Int is strongly-typed, meaning that it can support <code>equals</code>
- * but can't be used as specializer.
+ * but can't be used as recursive specializer.
  */
 @provider
 trait Ints { this: Meta.type =>

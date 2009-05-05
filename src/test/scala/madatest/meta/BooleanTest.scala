@@ -22,8 +22,9 @@ class BooleanTest {
         assertSame[`true`, `true`]
         assert[`false` == `if`[`true`, `false`, `true`]]
         assert[`false` == `if`[`false`, `true`, `false`]]
-        //assertSame[`false`, `if`[`true`, `false`, `true`]]
-        //assertSame[`false`, `if`[`false`, `true`, `false`]]
+
+        //assertSame[`false`, `if`[`true`, `false`, `true`]] // wow, error
+        //assertSame[`false`, `if`[`false`, `true`, `false`]] // wow, error
     }
 
     assert[`true` == `true`]
