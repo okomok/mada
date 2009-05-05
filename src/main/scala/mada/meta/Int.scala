@@ -8,13 +8,12 @@ package mada.meta
 
 
 /**
- * Provides meta integers.
+ * Provides meta integer trait.
  * Meta.Int is strongly-typed, meaning that it can support <code>equals</code>
- * but can't be used as recursive specializer.
+ * but can't be used as recursive specializer. (You can convert Int to Nat, though.)
  */
 @provider
 trait Ints { this: Meta.type =>
-
 
     trait Int extends Operatable {
         private[mada] type `this` <: Int
@@ -59,6 +58,14 @@ trait Ints { this: Meta.type =>
         type toNat <: Nat
     }
 
+    sealed trait PositiveInt extends Int {
+        final override type add[that <: Int] = decrement#add[that]#increment
+        final override type minus[that <: Int] = decrement#minus[that]#increment
+        final override type multiply[that <: Int] = decrement#multiply[that]#add[that]
+
+        final override type foldLeft[z <: op#Result2, op <: FoldLeftFunction] = decrement#foldLeft[op#apply2[z, decrement], op]
+        final override type toNat = Nat.succ[decrement#toNat]
+    }
 
     sealed trait _0I extends Int {
         override type increment = _1I
@@ -83,16 +90,6 @@ trait Ints { this: Meta.type =>
 
         override type foldLeft[z <: op#Result2, op <: FoldLeftFunction] = z
         override type toNat = Nat.zero
-    }
-
-
-    sealed trait PositiveInt extends Int {
-        final override type add[that <: Int] = decrement#add[that]#increment
-        final override type minus[that <: Int] = decrement#minus[that]#increment
-        final override type multiply[that <: Int] = decrement#multiply[that]#add[that]
-
-        final override type foldLeft[z <: op#Result2, op <: FoldLeftFunction] = decrement#foldLeft[op#apply2[z, decrement], op]
-        final override type toNat = Nat.succ[decrement#toNat]
     }
 
     sealed trait _1I extends Int with PositiveInt {

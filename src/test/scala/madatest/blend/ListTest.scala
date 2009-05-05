@@ -28,11 +28,12 @@ class ListTest {
     }
 
     trait testAt {
+        import Meta.assertSame
         type lst = Int :: String :: Double :: Char :: Nil
-        Meta.assertSame[lst#at[Meta._0I], Int]
-        Meta.assertSame[lst#at[Meta._1I], String]
-        Meta.assertSame[lst#at[Meta._2I], Double]
-        Meta.assertSame[lst#at[Meta._3I], Char]
-        Meta.assertSame[lst#at[Meta._2I#add[Meta._1I]], Char]
+        assertSame[lst#at[Meta._0I], Int]
+        assertSame[lst#at[Meta._1I], String]
+        assertSame[lst#at[Meta._2I], Double]
+        assertSame[lst#at[Meta._3I], Char]
+        assertSame[lst#at[Meta._2I#add[Meta._1I]], Char]
     }
 }
