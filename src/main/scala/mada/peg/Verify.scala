@@ -10,6 +10,7 @@ package mada.peg
 /**
  * Thrown in case <code>Peg.verify</code> doesn't match.
  */
+@aliased
 case class VerificationException[A](peg: Peg[A], vector: Vector[A]) extends RuntimeException
 
 

@@ -11,6 +11,7 @@ package mada.vec
  * Contains implicit conversions around <code>Vector</code>.
  */
 trait Compatibles { this: Vector.type =>
+    @returnthis val Compatibles: Compatibles = this
 // from
     implicit def madaVectorFromArray[A](from: Array[A]): Vector[A] = fromArray(from)
     implicit def madaVectorFromCell[A](from: Cell[A]): Vector[A] = fromCell(from)

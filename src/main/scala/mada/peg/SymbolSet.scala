@@ -10,6 +10,7 @@ package mada.peg
 /**
  * Contains utility methods operating on type <code>SymbolSet</code>.
  */
+@aliased
 object SymbolSet {
     /**
      * @return  <code>apply(vs)(c)</code>.
@@ -32,6 +33,7 @@ object SymbolSet {
 /**
  * A <code>Peg</code> to optimize the form <code>k1|k2|k3|...</code> using ternary search tree.
  */
+@aliased
 class SymbolSet[A] private (private val tree: TSTree[A, Unit]) extends Peg[A] with Sets.Mutable[Vector[A]] {
     /**
      * Constructs <code>SymbolSet</code>.

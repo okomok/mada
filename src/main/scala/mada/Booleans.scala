@@ -18,9 +18,4 @@ object Booleans extends Operators {
      * @return  <code>!pre || post</code>.
      */
     def implies(pre: Boolean, post: => Boolean): Boolean = !pre || post
-
-    /**
-     * @return  <code>this</code>
-     */
-    val Operators: bool.Operators = this
 }

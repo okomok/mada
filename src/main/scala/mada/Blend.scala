@@ -35,9 +35,4 @@ object Blend {
      */
     def timesBy[n <: Meta.Int](op: Int => Unit)(implicit _times: Times[n]): Unit = _times(op)
 
-    /**
-     * Alias of <code>blend.Specializer</code>
-     */
-    type Specializer = blend.Specializer
-
 }

@@ -10,6 +10,7 @@ package mada.vec
 /**
  * Contains utility methods operating on <code>Mixin</code>.
  */
+@aliased
 object Mixin {
     /**
      * Calls <code>bounds</code> method.
@@ -57,6 +58,7 @@ object Mixin {
 /**
  * Applies <code>apply</code> to result of vector-to-vector methods.
  */
+@aliased
 trait Mixin { ^ =>
     def apply[B](v: Vector[B]): Vector[B]
 

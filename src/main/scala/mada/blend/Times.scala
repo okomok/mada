@@ -59,6 +59,7 @@ object Times {
 
 }
 
-sealed trait Times[n <: Meta.Int] extends Specializer {
+@specializer
+sealed trait Times[n <: Meta.Int] {
     def apply(op: Int => Unit): Unit
 }

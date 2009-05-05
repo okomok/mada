@@ -10,6 +10,7 @@ package mada.peg
 /**
  * Adds reluctant methods for quantified peg.
  */
+@aliased
 trait Quantified[A] extends Peg[A] {
     /**
      * Stops including <code>that</code>.

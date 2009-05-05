@@ -42,11 +42,6 @@ object Compare extends Conversions with Compatibles {
     def by[A](p: Func[A]): Compare[A] = fromFunc(p)
 
     /**
-     * @return  <code>this</code>.
-     */
-    val Compatibles: cmp.Compatibles = this
-
-    /**
      * Alias of <code>Compare</code>
      */
     type Type[-A] = Compare[A]
@@ -56,7 +51,10 @@ object Compare extends Conversions with Compatibles {
 /**
  * Represents strict weak ordering.
  */
-trait Compare[-A] extends Compare.Func[A] {
+trait Compare[-A] extends Compare.Func[A] with Companion[Compare.type] {
+
+    override def companion = Compare
+
     /**
      * @return  <code>true</code> iif x precedes y.
      */
@@ -66,9 +64,4 @@ trait Compare[-A] extends Compare.Func[A] {
      * @return  <code>if (apply(x, y)) -1 else if (apply(y, x)) 1 else 0</code>.
      */
     def threeWay(x: A, y: A): Int = if (apply(x, y)) -1 else if (apply(y, x)) 1 else 0
-
-    /**
-     * Alias of <code>Compare</code>
-     */
-    final def companion = Compare
 }

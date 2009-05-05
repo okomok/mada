@@ -23,6 +23,7 @@ object DoIf {
 
 }
 
-sealed trait DoIf[b <: Meta.Boolean] extends Specializer {
+@specializer
+sealed trait DoIf[b <: Meta.Boolean] {
     def apply(block: => Unit): Unit
 }

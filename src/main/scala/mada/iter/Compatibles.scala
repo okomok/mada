@@ -11,6 +11,7 @@ package mada.iter
  * Contains implicit conversions around <code>Iterable</code>.
  */
 trait Compatibles { this: Iterables.type =>
+    @returnthis val Compatibles: Compatibles = this
 // from
     implicit def madaIterableFromJclIterable[A](from: java.lang.Iterable[A]): Iterable[A] = fromJclIterable(from)
     implicit def madaIterableFromJioObjectInput(from: java.io.ObjectInput): Iterable[AnyRef] = fromJioObjectInput(from)

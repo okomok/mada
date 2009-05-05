@@ -26,7 +26,8 @@ object If {
 
 }
 
-sealed trait If[A, b <: Meta.Boolean] extends Specializer {
+@specializer
+sealed trait If[A, b <: Meta.Boolean] {
     def apply(block: => A): Then[A]
 }
 

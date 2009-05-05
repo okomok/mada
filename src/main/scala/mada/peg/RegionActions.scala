@@ -10,6 +10,7 @@ package mada.peg
 /**
  * Associates actions where Peg can't be placed.
  */
+@aliased
 class RegionActions[A] {
     private val stack = new java.util.ArrayDeque[Int]
 

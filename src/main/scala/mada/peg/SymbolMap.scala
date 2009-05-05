@@ -10,6 +10,7 @@ package mada.peg
 /**
  * Contains utility methods operating on type <code>SymbolMap</code>.
  */
+@aliased
 object SymbolMap {
     /**
      * @return  <code>apply(es)(c)</code>.
@@ -32,6 +33,7 @@ object SymbolMap {
 /**
  * A <code>Peg</code> to optimize the form <code>(k1 >> p1)|(k2 >> p2)|(k3 >> p3)|...</code> using ternary search tree.
  */
+@aliased
 class SymbolMap[A] private (private val tree: TSTree[A, Peg[A]]) extends Peg[A] with Maps.Mutable[Vector[A], Peg[A]] {
     /**
      * Constructs <code>SymbolMap</code>.

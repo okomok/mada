@@ -10,6 +10,7 @@ package mada.peg
 /**
  * Trivial mixin for zero-width peg.
  */
+@aliased
 trait ZeroWidth[A] extends Peg[A] {
     /**
      * @return  <code>0</code>.

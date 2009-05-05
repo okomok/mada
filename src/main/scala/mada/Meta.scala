@@ -40,17 +40,4 @@ object Meta extends
      */
     def unmeta[From, To](implicit _unmeta: Unmeta[From, To]): To = _unmeta()
 
-
-// namespaces
-
-    /**
-     * @return  <code>this</code>.
-     */
-    val Placeholders: meta.Placeholders = this
-
-    /**
-     * @return  <code>this</code>.
-     */
-    val Operators: meta.Operators = this
-
 }

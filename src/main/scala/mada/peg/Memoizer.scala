@@ -13,6 +13,7 @@ package mada.peg
  *
  * @param   input   the target vector of this memoization
  */
+@aliased
 class Memoizer[A](val input: Vector[A]) {
     /**
      * Alias of <code>memoize</code>

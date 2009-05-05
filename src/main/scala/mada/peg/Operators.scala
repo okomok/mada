@@ -11,6 +11,8 @@ package mada.peg
  * Contains operators which can't be method of vector because of type constraints.
  */
 trait Operators { this: Peg.type =>
+    @returnthis val Operators: Operators = this
+
     sealed class MadaPegChar(_1: Peg[Char]) {
         def lowerCaseRead = Peg.lowerCaseRead(_1)
     }

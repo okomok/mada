@@ -187,16 +187,6 @@ object Peg extends Conversions with Compatibles with Operators {
 // aliases
 
     /**
-     * @return  <code>this</code>.
-     */
-    val Compatibles: peg.Compatibles = this
-
-    /**
-     * @return  <code>this</code>.
-     */
-    val Operators: peg.Operators = this
-
-    /**
      * Alias of <code>peg.ZeroWidth</code>
      */
     type ZeroWidth[A] = peg.ZeroWidth[A]
@@ -335,7 +325,9 @@ object Peg extends Conversions with Compatibles with Operators {
  * <li/><code>java.util.regex</code> is trivially compatible to <code>mada.Peg</code>.
  * </ul>
  */
-trait Peg[A] {
+trait Peg[A] extends Companion[Peg.type] {
+
+    override def companion = Peg
 
 
 // kernel interface
@@ -689,11 +681,6 @@ trait Peg[A] {
      * @return  <code>(e, this)</code>.
      */
     final def inCase(e: A): (A, Peg[A]) = (e, this)
-
-    /**
-     * Alias of <code>Peg</code>
-     */
-    final def companion = Peg
 
 
 // implementation helpers

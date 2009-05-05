@@ -10,6 +10,7 @@ package mada.stl
 /**
  * Mixin which supports only the <code>update</code> method, whose index argument is ignored.
  */
+@aliased
 trait OutputVector[A] extends Vector[A] {
     /**
      * Does something using <code>e</code>.

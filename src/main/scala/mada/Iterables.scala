@@ -271,16 +271,6 @@ object Iterables extends Conversions with Compatibles with Operators {
 // aliases
 
     /**
-     * @return  <code>this</code>.
-     */
-    val Compatibles: iter.Compatibles = this
-
-    /**
-     * @return  <code>this</code>.
-     */
-    val Operators: iter.Operators = this
-
-    /**
      * Alias of <code>IterableProxy</code>
      */
     type Forwarder[A] = IterableProxy[A]

@@ -10,6 +10,7 @@ package mada.vec
 /**
  * Contains utility types and methods operating on type <code>Adapter</code>.
  */
+@aliased
 object Adapter {
     /**
      * Alias of <code>Adapter[A, A]</code>
@@ -32,6 +33,7 @@ object Adapter {
 /**
  * Adapts underlying vector.
  */
+@aliased
 trait Adapter[Z, A] extends Vector[A] {
     /**
      * Underlying vector, overridden in subclasses.

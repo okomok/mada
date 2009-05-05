@@ -113,7 +113,9 @@ object Expr {
 /**
  * Replaces expression evaluations with modern and heavy way.
  */
-trait Expr[Z, A] {
+trait Expr[Z, A] extends Companion[Expr.type] {
+
+    override def companion = Expr
 
     /**
      * Overridden in subclasses.
@@ -178,9 +180,4 @@ trait Expr[Z, A] {
      * Alias of <code>xseal</code>
      */
     final def ! = xseal
-
-    /**
-     * Alias of <code>Expr</code>
-     */
-    final def companion = Expr
 }

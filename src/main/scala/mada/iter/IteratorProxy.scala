@@ -10,6 +10,7 @@ package mada.iter
 /**
  * Implements a proxy for iterator objects.
  */
+@aliased
 trait IteratorProxy[A] extends Iterator[A] with Proxies.ProxyOf[Iterator[A]] {
     override def hasNext = self.hasNext
     override def next = self.next

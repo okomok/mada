@@ -169,16 +169,6 @@ object Vector extends Conversions with Compatibles with Eligibles with Operators
 // aliases
 
     /**
-     * @return  <code>this</code>.
-     */
-    val Compatibles: vec.Compatibles = this
-
-    /**
-     * @return  <code>this</code>.
-     */
-    val Operators: vec.Operators = this
-
-    /**
      * Alias of <code>Vector[A] => B</code>
      */
     type Func[A, B] = Vector[A] => B
@@ -270,7 +260,9 @@ object Vector extends Conversions with Compatibles with Eligibles with Operators
  *
  * Unless otherwise specified, these methods return projections to keep readability and writability.
  */
-trait Vector[A] extends PartialFunction[Int, A] {
+trait Vector[A] extends PartialFunction[Int, A] with Companion[Vector.type] {
+
+    override def companion = Vector
 
 
 // kernel interface
@@ -1000,11 +992,6 @@ trait Vector[A] extends PartialFunction[Int, A] {
      * Alias of <code>foldRight</code>
      */
     final def :\[B](z: B)(op: (A, B) => B): B = foldRight(z)(op)
-
-    /**
-     * Alias of <code>Vector</code>
-     */
-    final def companion = Vector
 
 
 // implementation helpers

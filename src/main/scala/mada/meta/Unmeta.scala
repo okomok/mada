@@ -33,6 +33,7 @@ object Unmeta {
 
 }
 
-sealed trait Unmeta[From, To] extends Blend.Specializer {
+@specializer
+sealed trait Unmeta[From, To] {
     def apply(): To
 }

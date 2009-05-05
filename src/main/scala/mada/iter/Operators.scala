@@ -11,6 +11,8 @@ package mada.iter
  * Contains operators missing from <code>Iterable</code>.
  */
 trait Operators { this: Iterables.type =>
+    @returnthis val Operators: Operators = this
+
     sealed class MadaIterables[A](_1: Iterable[A]) {
         def equal[B](_2: Iterable[B]) = Iterables.equal(_1, _2)
         def equalIf[B](_2: Iterable[B])(_3: (A, B) => Boolean) = Iterables.equalIf(_1, _2)(_3)

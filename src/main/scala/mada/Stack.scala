@@ -32,11 +32,6 @@ object Stack extends Conversions with Compatibles {
     def from[A](to: Stack[A]) = to
 
     /**
-     * @return  <code>this</code>.
-     */
-    val Compatibles: stack.Compatibles = this
-
-    /**
      * Alias of <code>Stack</code>
      */
     type Type[A] = Stack[A]
@@ -46,7 +41,10 @@ object Stack extends Conversions with Compatibles {
 /**
  * Trivial stack interface
  */
-trait Stack[A] {
+trait Stack[A] extends Companion[Stack.type] {
+
+    override def companion = Stack
+
     /**
      * Pushes.
      */
@@ -87,8 +85,4 @@ trait Stack[A] {
      */
     final def length: Int = size
 
-    /**
-     * Alias of <code>Stack</code>
-     */
-    final def companion = Stack
 }

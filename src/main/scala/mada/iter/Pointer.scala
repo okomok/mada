@@ -10,6 +10,7 @@ package mada.iter
 /**
  * Contains utility methods operating on <code>Pointer</code>.
  */
+@aliased
 object Pointer extends PointerConversions with PointerCompatibles {
     /**
      * The end pointer
@@ -50,7 +51,11 @@ object Pointer extends PointerConversions with PointerCompatibles {
  *
  * @see     scalax.BufferedIterator
  */
-trait Pointer[+A] {
+@aliased
+trait Pointer[+A] extends Companion[Pointer.type] {
+
+    override def companion = Pointer
+
     /**
      * Alias of <code>isEnd</code>
      */
@@ -80,11 +85,6 @@ trait Pointer[+A] {
      * Increments pointer.
      */
     def increment: Unit
-
-    /**
-     * Alias of <code>Pointer</code>
-     */
-    final def companion = Pointer
 }
 
 
