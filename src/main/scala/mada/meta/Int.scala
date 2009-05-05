@@ -57,13 +57,12 @@ trait Ints { this: Meta.type =>
         type foldLeft[z <: op#Result2, op <: FoldLeftFunction] <: op#Result2
 
         type toNat <: Nat
-        type toIntList <: IntList
     }
 
 
     sealed trait _0I extends Int {
         override type increment = _1I
-        override type decrement = Nothing
+        override type decrement = Nothing // TODO
         override type equals[that <: Int] = that#is0
 
         override type add[that <: Int] = that
@@ -83,8 +82,7 @@ trait Ints { this: Meta.type =>
         private[mada] override type is10 = `false`
 
         override type foldLeft[z <: op#Result2, op <: FoldLeftFunction] = z
-        override type toNat = _0N
-        override type toIntList = IntList.nil
+        override type toNat = Nat.zero
     }
 
 
@@ -94,7 +92,7 @@ trait Ints { this: Meta.type =>
         final override type multiply[that <: Int] = decrement#multiply[that]#add[that]
 
         final override type foldLeft[z <: op#Result2, op <: FoldLeftFunction] = decrement#foldLeft[op#apply2[z, decrement], op]
-        final override type toIntList = IntList.cons[decrement, decrement#toIntList]
+        final override type toNat = Nat.succ[decrement#toNat]
     }
 
     sealed trait _1I extends Int with PositiveInt {
@@ -113,8 +111,6 @@ trait Ints { this: Meta.type =>
         private[mada] override type is8 = `false`
         private[mada] override type is9 = `false`
         private[mada] override type is10 = `false`
-
-        override type toNat = _1N
     }
 
     sealed trait _2I extends Int with PositiveInt {
@@ -133,8 +129,6 @@ trait Ints { this: Meta.type =>
         private[mada] override type is8 = `false`
         private[mada] override type is9 = `false`
         private[mada] override type is10 = `false`
-
-        override type toNat = _2N
     }
 
     sealed trait _3I extends Int with PositiveInt {
@@ -153,8 +147,6 @@ trait Ints { this: Meta.type =>
         private[mada] override type is8 = `false`
         private[mada] override type is9 = `false`
         private[mada] override type is10 = `false`
-
-        override type toNat = _3N
     }
 
     sealed trait _4I extends Int with PositiveInt {
@@ -173,8 +165,6 @@ trait Ints { this: Meta.type =>
         private[mada] override type is8 = `false`
         private[mada] override type is9 = `false`
         private[mada] override type is10 = `false`
-
-        override type toNat = _4N
     }
 
     sealed trait _5I extends Int with PositiveInt {
@@ -193,8 +183,6 @@ trait Ints { this: Meta.type =>
         private[mada] override type is8 = `false`
         private[mada] override type is9 = `false`
         private[mada] override type is10 = `false`
-
-        override type toNat = _5N
     }
 
     sealed trait _6I extends Int with PositiveInt {
@@ -213,8 +201,6 @@ trait Ints { this: Meta.type =>
         private[mada] override type is8 = `false`
         private[mada] override type is9 = `false`
         private[mada] override type is10 = `false`
-
-        override type toNat = _6N
     }
 
     sealed trait _7I extends Int with PositiveInt {
@@ -233,8 +219,6 @@ trait Ints { this: Meta.type =>
         private[mada] override type is8 = `false`
         private[mada] override type is9 = `false`
         private[mada] override type is10 = `false`
-
-        override type toNat = _7N
      }
 
     sealed trait _8I extends Int with PositiveInt {
@@ -253,8 +237,6 @@ trait Ints { this: Meta.type =>
         private[mada] override type is8 = `true`
         private[mada] override type is9 = `false`
         private[mada] override type is10 = `false`
-
-        override type toNat = _8N
     }
 
     sealed trait _9I extends Int with PositiveInt {
@@ -273,8 +255,6 @@ trait Ints { this: Meta.type =>
         private[mada] override type is8 = `false`
         private[mada] override type is9 = `true`
         private[mada] override type is10 = `false`
-
-        override type toNat = _9N
     }
 
     sealed trait _10I extends Int with PositiveInt {
@@ -293,8 +273,6 @@ trait Ints { this: Meta.type =>
         private[mada] override type is8 = `false`
         private[mada] override type is9 = `false`
         private[mada] override type is10 = `true`
-
-        override type toNat = _10N
     }
 
 }

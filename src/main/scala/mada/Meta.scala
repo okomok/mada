@@ -11,8 +11,8 @@ import meta._
 
 
 object Meta extends
-    Alwayses with Asserts with Args with Binds with Booleans with Forwardings with Functions with Ints with
-    IntLists with Nats with Operators with Quotes with Placeholders with Products with Tuples {
+    Alwayses with Asserts with Args with Booleans with Forwardings with Functions with Ints with Nats
+    with Operators with Quotes with Products with Tuples {
 
 
 // metamethods

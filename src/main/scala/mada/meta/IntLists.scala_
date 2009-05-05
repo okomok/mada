@@ -7,6 +7,10 @@
 package mada.meta
 
 
+// See: Nats.scala
+//      at http://www.assembla.com/wiki/show/metascala
+
+
 /**
  * Provides meta int list.
  * This is considered as "pointer" in the meta world.
@@ -19,11 +23,19 @@ trait IntLists { this: Meta.type =>
         sealed trait nil extends IntList {
             override type head = error
             override type tail = error
+            override type accept[v <: Visitor] = v#end
         }
 
         sealed trait cons[h <: Int, t <: IntList] extends IntList {
             override type head = h
             override type tail = t
+            override type accept[v <: Visitor] = v#visit[t]
+        }
+
+        trait Visitor {
+            type Result
+            type end <: Result
+            type visit[iz <: IntList] <: Result
         }
 
     }
@@ -31,6 +43,7 @@ trait IntLists { this: Meta.type =>
     trait IntList {
         type head <: Int
         type tail <: IntList
+        type accept[v <: IntList.Visitor] <: v#Result
     }
 
 }

@@ -40,6 +40,20 @@ class IntTest {
         assert[--[++[_3I]] == _3I]
     }
 
+    trait testAdd {
+        assert[_0I + _3I == _3I]
+        assert[_4I + _3I == _7I]
+        assert[_1I + _8I == _9I]
+        assert[_5I + _2I == _7I]
+    }
+/*
+    trait testSub {
+        assert[_3I - _0I == _3I]
+        assert[_4I - _3I == _1I]
+        assert[_8I - _1I == _7I]
+        assert[_5I - _2I == _3I]
+    }
+*/
     trait testPropagation {
         type plusPlus[n <: Int] = ++[++[n]]
         type id[n <: Int] = ++[--[n]]#increment#decrement

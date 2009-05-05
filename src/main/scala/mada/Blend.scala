@@ -13,7 +13,7 @@ import blend._
 /**
  * Gets runtime and meta programming to blend.
  */
-object Blend {
+object Blend extends Lists {
 
     /**
      * Conditional compilation based on meta boolean value.

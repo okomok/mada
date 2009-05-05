@@ -7,66 +7,66 @@
 package mada.blend
 
 
-import Meta.Int
-
-
 @provider
 trait Lists { this: Blend.type =>
-/*
 
-    sealed trait List extends Meta.Object {
+
+// List
+
+    sealed trait List {
         type head
         type tail <: List
     }
 
-
     final class Nil extends List {
-        override type head = Nothing
-        override type tail = Nil
+        override type head = Meta.error
+        override type tail = Meta.error
 
         def ::[A](e: A) = Cons(e, this)
     }
 
+    val Nil = new Nil
 
-    final case class Cons[H, T <: List](head: H, tail: T) extends List {
-        type `this` = Cons[H, T]
-        override type head = H
-        override type tail = T
+    final case class Cons[h, t <: List](head: h, tail: t) extends List {
+        type `this` = Cons[h, t]
 
-        def head_ : head = head
+        override type head = h
+        override type tail = t
 
         def ::[A](e: A) = Cons(e, this)
 
-        def at[n <: Int](implicit _at: At[`this`, n]): at[`this`, n] = _at(this)
+        type at[i <: Meta.Int] = At.apply[`this`, i#toNat]
+        def at[i <: Meta.Int](implicit _at: At[`this`, i#toNat]) = At.apply[`this`, i#toNat](this, _at)
     }
 
-    type tailOf[l <: List, _] = l#tail
-    type tailFn = Meta.quote2[tailOf, List, Int, List]
-    type at[l <: List, n <: Int] = n#foldLeft[l, tailFn]
-
-    Meta.assert[ at[Cons[Meta._3I, Cons[Meta._4I, Cons[Meta._5I, Nil]]], Meta._1I]#head #equals [Meta._4I]]
-    Meta.assertSame[ at[Cons[Meta._3I, Cons[Meta._4I, Cons[Meta._5I, Nil]]], Meta._1I]#head, Meta._4I]
-
-    Meta.assert[ at[Cons[Meta._3I, Cons[Meta._4I, Cons[Meta._5I, Nil]]], Meta._0I]#head #equals [Meta._3I]]
-    Meta.assertSame[ at[Cons[Meta._3I, Cons[Meta._4I, Cons[Meta._5I, Nil]]], Meta._0I]#head, Meta._3I]
+    type ::[h, t <: List] = Cons[h, t]
 
 
-    trait At[l <: List, n <: Int] extends Specializer {
-   //     type R <: at[l, n]
-        def apply(_l: l)(implicit _at: At[l#tail, n#decrement]): at[l, n]
+// at
+
+    @specializer
+    trait At[l <: List, n <: Meta.Nat] {
+        def apply(_l: l): At.apply[l, n]
     }
 
     object At {
-        implicit def at_0[H, T <: List] = new At[Cons[H, T], Meta._0I] {
-      //      override type R = at[Cons[H, T], Meta._0I]
-            override def apply(_l: Cons[H, T])(implicit _at: At[T, Meta._0I#decrement]) = _l
+        type apply[l <: List, n <: Meta.Nat] = n#accept[visitor[l]]
+        def apply[l <: List, n <: Meta.Nat](_l: l, _at: At[l, n]) = _at(_l)
+
+        sealed trait visitor[l <: List] extends Meta.Nat.Visitor {
+            override type Result = Any
+            override type end = l#head
+            override type visit[n <: Meta.Nat] = n#accept[visitor[l#tail]]
         }
 
-        implicit def at_N[H, T <: List, n <: Int] = new At[Cons[H, T], n] {
-       //     override type R = at[Cons[H, T], n]
-            override def apply(_l: Cons[H, T])(implicit _at: At[T, n#decrement]) = _at(_l.tail)
+        implicit def at_0[h, t <: List] = new At[Cons[h, t], Meta.Nat.zero] {
+            override def apply(_l: Cons[h, t]) = _l.head
+        }
+
+        implicit def at_N[h, t <: List, n <: Meta.Nat](implicit _at: At[t, n]) = new At[Cons[h, t], Meta.Nat.succ[n]] {
+            override def apply(_l: Cons[h, t]) = _at(_l.tail)
         }
 
     }
-*/
+
 }
