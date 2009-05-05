@@ -11,6 +11,7 @@ package mada.meta
 //      http://blog.richdougherty.com/2009/04/tail-calls-tailrec-and-trampolines.html
 
 
+@provider
 trait Trampoline { this:Meta.type =>
 /*
     type RESULT = Boolean

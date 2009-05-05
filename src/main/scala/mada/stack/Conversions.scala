@@ -10,6 +10,7 @@ package mada.stack
 /**
  * Contains explicit conversions around <code>Stack</code>.
  */
+@provider
 trait Conversions { this: Stack.type =>
 
     def fromJclDeque[A](from: java.util.Deque[A]): Stack[A] = new Stack[A] {

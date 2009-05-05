@@ -10,6 +10,7 @@ package mada.meta
 /**
  * Contains meta assertions.
  */
+@provider
 trait Asserts { this: Meta.type =>
 
     // Prefer methods to case classes:

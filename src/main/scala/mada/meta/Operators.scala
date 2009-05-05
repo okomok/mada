@@ -13,6 +13,7 @@ package mada.meta
 /**
  * Contains "overloadable" operators.
  */
+@provider
 trait Operators { this: Meta.type =>
 
     @returnthis val Operators: Operators = this

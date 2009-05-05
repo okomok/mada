@@ -10,6 +10,7 @@ package mada.meta
 /**
  * Contains metafunctions to return the n-th argument.
  */
+@provider
 trait Args { this: Meta.type =>
 
     sealed trait arg1[T] extends Function1 with Function2 with Function3 {

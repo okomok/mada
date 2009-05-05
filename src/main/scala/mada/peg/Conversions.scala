@@ -10,6 +10,7 @@ package mada.peg
 /**
  * Contains explicit conversions around <code>Peg</code>.
  */
+@provider
 trait Conversions { this: Peg.type =>
 
     def fromChar(from: Char): Peg[Char] = Single(from)

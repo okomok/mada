@@ -10,6 +10,7 @@ package mada.iter
 /**
  * Contains explicit conversions around <code>Iterable</code>.
  */
+@provider
 trait Conversions { this: Iterables.type =>
 
 // compatibles

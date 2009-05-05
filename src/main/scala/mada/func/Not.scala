@@ -10,6 +10,7 @@ package mada.func
 /**
  * Negates a predicate.
  */
+@provider
 trait Not { this: Functions.type =>
     def not1[T1](f: Predicate1[T1]): Predicate1[T1] = { v1 => !f(v1) }
     def not2[T1, T2](f: Predicate2[T1, T2]): Predicate2[T1, T2] = { (v1, v2) => !f(v1, v2) }

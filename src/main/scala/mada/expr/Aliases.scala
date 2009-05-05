@@ -7,6 +7,7 @@
 package mada.expr
 
 
+@provider
 trait Aliases { this: Expr.type =>
     /**
      * Alias of <code>Expr</code>

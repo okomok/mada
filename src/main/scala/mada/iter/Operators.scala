@@ -10,6 +10,7 @@ package mada.iter
 /**
  * Contains operators missing from <code>Iterable</code>.
  */
+@provider
 trait Operators { this: Iterables.type =>
     @returnthis val Operators: Operators = this
 

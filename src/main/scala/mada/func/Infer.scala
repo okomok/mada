@@ -10,6 +10,7 @@ package mada.func
 /**
  * Returns <code>f</code> as is, which helps type inference.
  */
+@provider
 trait Infer { this: Functions.type =>
     def infer1[T1, R](f: Function1[T1, R]): Function1[T1, R] = f
     def infer2[T1, T2, R](f: Function2[T1, T2, R]): Function2[T1, T2, R] = f

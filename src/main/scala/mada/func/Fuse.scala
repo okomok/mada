@@ -10,6 +10,7 @@ package mada.func
 /**
  * Converts a function into one taking a tuple argument, and vice versa.
  */
+@provider
 trait Fuse { this: Functions.type =>
     def fuse1[T1, R](f: Function1[T1, R]): Function1[Tuple1[T1], R] = { v => f(v._1) }
     def fuse2[T1, T2, R](f: Function2[T1, T2, R]): Function1[Tuple2[T1, T2], R] = { v => f(v._1, v._2) }

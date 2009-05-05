@@ -10,6 +10,7 @@ package mada.peg
 /**
  * Contains operators which can't be method of vector because of type constraints.
  */
+@provider
 trait Operators { this: Peg.type =>
     @returnthis val Operators: Operators = this
 

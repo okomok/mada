@@ -10,6 +10,7 @@ package mada.meta
 /**
  * Contains placeholders.
  */
+@provider
 trait Placeholders { this: Meta.type =>
     @returnthis val Placeholders: Placeholders = this
     type _a1[T] = arg1[T]

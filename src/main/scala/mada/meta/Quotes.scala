@@ -10,6 +10,7 @@ package mada.meta
 /**
  * Converts metamethod to metafunction.
  */
+@provider
 trait Quotes { this: Meta.type =>
 
     sealed trait quote0[f <: R, R] extends Function0 {

@@ -10,6 +10,7 @@ package mada.cmp
 /**
  * Contains explicit conversions for strict weak ordering.
  */
+@provider
 trait Conversions { this: Compare.type =>
 
 // from

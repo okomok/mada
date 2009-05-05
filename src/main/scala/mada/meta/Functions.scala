@@ -10,6 +10,7 @@ package mada.meta
 /**
  * Contains metafunction traits.
  */
+@provider
 trait Functions { this: Meta.type =>
 
     trait Function0 {

@@ -10,6 +10,7 @@ package mada.iter
 /**
  * Contains implicit conversions around <code>Iterable</code>.
  */
+@provider
 trait Compatibles { this: Iterables.type =>
     @returnthis val Compatibles: Compatibles = this
 // from

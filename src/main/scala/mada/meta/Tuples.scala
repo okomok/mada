@@ -10,6 +10,7 @@ package mada.meta
 /**
  * Contains meta tuples.
  */
+@provider
 trait Tuples { this: Meta.type =>
 
 

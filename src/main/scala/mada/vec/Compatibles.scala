@@ -10,6 +10,7 @@ package mada.vec
 /**
  * Contains implicit conversions around <code>Vector</code>.
  */
+@provider
 trait Compatibles { this: Vector.type =>
     @returnthis val Compatibles: Compatibles = this
 // from

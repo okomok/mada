@@ -10,6 +10,7 @@ package mada.meta
 /**
  * Function forwardings
  */
+@provider
 trait Forwardings { this: Meta.type =>
 
     sealed trait forwarding0[f <: Function0] extends Function0 {

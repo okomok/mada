@@ -10,6 +10,7 @@ package mada.vec
 /**
  * Contains explicit conversions around <code>Vector</code>.
  */
+@provider
 trait Conversions { this: Vector.type =>
 
 // compatibles

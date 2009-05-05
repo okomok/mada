@@ -10,6 +10,7 @@ package mada.meta
 /**
  * Contains meta products.
  */
+@provider
 trait Products { this: Meta.type =>
 
     trait Product {

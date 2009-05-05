@@ -7,6 +7,7 @@
 package mada.peg
 
 
+@provider
 trait Aliases { this: Peg.type =>
     /**
      * Alias of <code>Peg</code>

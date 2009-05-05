@@ -10,6 +10,7 @@ package mada.meta
 /**
  * Contains meta Boolean functionalities.
  */
+@provider
 trait Booleans { this: Meta.type =>
 
     trait Boolean extends Operatable {

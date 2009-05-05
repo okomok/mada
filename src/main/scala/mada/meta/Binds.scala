@@ -10,6 +10,7 @@ package mada.meta
 /**
  * Binds metafunction arguments.
  */
+@provider
 trait Binds { this: Meta.type =>
 /*
     private type Substitute0[f <: Function0] = f#isBind#IfFunction0[f, Always[f]]

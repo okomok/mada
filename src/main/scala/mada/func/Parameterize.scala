@@ -10,6 +10,7 @@ package mada.func
 /**
  * Converts a function into parameterized one.
  */
+@provider
 trait Parameterize { this: Functions.type =>
     private def getArg[T](ps: Iterable[Parameter[_]], q: Parameter[T]) = ps.find(_.origin eq q.origin).getOrElse(q).argument.asInstanceOf[T]
 

@@ -7,6 +7,7 @@
 package mada.cmp
 
 
+@provider
 trait Aliases { this: Compare.type =>
     /**
      * Alias of <code>Function2[T, T, Boolean]</code>

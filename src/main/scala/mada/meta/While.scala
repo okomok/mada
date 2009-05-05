@@ -7,9 +7,7 @@
 package mada.meta
 
 
-import Meta._
-
-
+@provider
 trait While { this: Meta.type =>
 
     // For now, Scala doesn't allow metamethod recursion. That's why this is similar to Boost.Preprocessor way.

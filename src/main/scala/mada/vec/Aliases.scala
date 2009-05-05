@@ -7,6 +7,7 @@
 package mada.vec
 
 
+@provider
 trait Aliases { this: Vector.type =>
     /**
      * Alias of <code>Vector</code>

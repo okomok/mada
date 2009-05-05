@@ -10,6 +10,7 @@ package mada.auto
 /**
  * Contains eligible objects for <code>Auto</code>.
  */
+@provider
 trait Eligibles { this: Auto.type =>
     import java.io.Closeable
     import java.util.concurrent.locks.Lock

@@ -10,15 +10,19 @@ package mada.meta
 // See: http://www.assembla.com/wiki/show/metascala
 
 
+@provider
 trait Nats { this: Meta.type =>
 
     sealed trait Nat extends Operatable {
+        type toInt <: Int
     }
 
     sealed trait _0N extends Nat {
+        override type toInt = _0I
     }
 
     sealed trait Succ[n <: Nat] extends Nat {
+        override type toInt = n#toInt#increment
     }
 
     type _1N = Succ[_0N]

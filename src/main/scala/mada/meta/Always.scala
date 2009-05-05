@@ -7,6 +7,7 @@
 package mada.meta
 
 
+@provider
 trait Alwayses { this: Meta.type =>
 
     /**

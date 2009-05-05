@@ -84,6 +84,7 @@ trait Pointer[+A] extends Companion[Pointer.type] {
 /**
  * Contains explicit conversions around <code>Pointer</code>.
  */
+@provider
 trait PointerConversions { this: Pointer.type =>
     def fromIterator[A](from: Iterator[A]): Pointer[A] = new Pointer[A] {
         private val e = new Proxies.Var[A]
@@ -117,6 +118,7 @@ trait PointerConversions { this: Pointer.type =>
 /**
  * Contains implicit conversions around <code>Pointer</code>.
  */
+@provider
 trait PointerCompatibles { this: Pointer.type =>
     @returnthis val Compatibles: PointerCompatibles = this
     implicit def madaPointerFromIterator[A](from: Iterator[A]): Pointer[A] = fromIterator(from)

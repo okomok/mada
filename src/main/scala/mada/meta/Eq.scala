@@ -10,6 +10,7 @@ package mada.meta
 /**
  * Identity equality
  */
+@provider
 trait Eq { this: Meta.type =>
 
     type eq[A , B] = `false`

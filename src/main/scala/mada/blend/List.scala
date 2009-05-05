@@ -10,6 +10,7 @@ package mada.blend
 import Meta.Int
 
 
+@provider
 trait Lists { this: Blend.type =>
 /*
 

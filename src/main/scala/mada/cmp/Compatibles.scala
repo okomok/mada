@@ -10,6 +10,7 @@ package mada.cmp
 /**
  * Contains implicit conversions for strict weak ordering.
  */
+@provider
 trait Compatibles { this: Compare.type =>
     @returnthis val Compatibles: Compatibles = this
 

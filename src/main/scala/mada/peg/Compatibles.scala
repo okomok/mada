@@ -10,6 +10,7 @@ package mada.peg
 /**
  * Contains implicit conversions around <code>Peg</code>.
  */
+@provider
 trait Compatibles { this: Peg.type =>
     @returnthis val Compatibles: Compatibles = this
     implicit def madaPegFromChar(from: Char): Peg[Char] = fromChar(from)

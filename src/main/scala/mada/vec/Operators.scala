@@ -10,6 +10,7 @@ package mada.vec
 /**
  * Contains operators which can't be method of vector because of type constraints.
  */
+@provider
 trait Operators { this: Vector.type =>
     @returnthis val Operators: Operators = this
 

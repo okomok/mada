@@ -10,6 +10,7 @@ package mada.stack
 /**
  * Contains implicit conversions around <code>Stack</code>.
  */
+@provider
 trait Aliases { this: Stack.type =>
     /**
      * Alias of <code>Stack</code>

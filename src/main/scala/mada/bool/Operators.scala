@@ -10,6 +10,7 @@ package mada.bool
 /**
  * Contains operators for <code>Boolean</code>.
  */
+@provider
 trait Operators { this: Booleans.type =>
     @returnthis val Operators: Operators = this
 

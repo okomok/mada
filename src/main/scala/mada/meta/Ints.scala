@@ -8,8 +8,11 @@ package mada.meta
 
 
 /**
- * Contains meta integers.
+ * Provides meta integers.
+ * Meta.Int is strongly-typed, meaning that it can support <code>equals</code>
+ * but can't be used as specializer.
  */
+@provider
 trait Ints { this: Meta.type =>
 
     trait Int extends Operatable {
