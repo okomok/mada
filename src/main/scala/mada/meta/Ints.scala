@@ -15,6 +15,7 @@ package mada.meta
 @provider
 trait Ints { this: Meta.type =>
 
+
     trait Int extends Operatable {
         private[mada] type `this` <: Int
 
@@ -56,8 +57,9 @@ trait Ints { this: Meta.type =>
         type foldLeft[z <: op#Result2, op <: FoldLeftFunction] <: op#Result2
 
         type toNat <: Nat
-        type toList <: List
+        type toIntList <: IntList
     }
+
 
     sealed trait _0I extends Int {
         override type increment = _1I
@@ -82,8 +84,9 @@ trait Ints { this: Meta.type =>
 
         override type foldLeft[z <: op#Result2, op <: FoldLeftFunction] = z
         override type toNat = _0N
-        override type toList = nil
+        override type toIntList = IntList.nil
     }
+
 
     sealed trait PositiveInt extends Int {
         final override type add[that <: Int] = decrement#add[that]#increment
@@ -91,7 +94,7 @@ trait Ints { this: Meta.type =>
         final override type multiply[that <: Int] = decrement#multiply[that]#add[that]
 
         final override type foldLeft[z <: op#Result2, op <: FoldLeftFunction] = decrement#foldLeft[op#apply2[z, decrement], op]
-        final override type toList = cons[decrement, decrement#toList]
+        final override type toIntList = IntList.cons[decrement, decrement#toIntList]
     }
 
     sealed trait _1I extends Int with PositiveInt {

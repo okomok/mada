@@ -11,7 +11,7 @@ package mada.meta
 
 
 
-// will be replaced by Meta.List.
+// will be replaced by Meta.IntList.
 @provider
 trait Nats { this: Meta.type =>
 
