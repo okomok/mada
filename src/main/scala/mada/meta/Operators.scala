@@ -20,6 +20,8 @@ trait Operators { this: Meta.type =>
 
     type +[a <: Operatable_+, b <: a#Operand_+] = a#operator_+[b]
     type -[a <: Operatable_-, b <: a#Operand_-] = a#operator_-[b]
+    type *[a <: Operatable_*, b <: a#Operand_*] = a#operator_*[b]
+    type /[a <: Operatable_/, b <: a#Operand_/] = a#operator_/[b]
 
     type ==[a <: Operatable_==, b <: a#Operand_==] = a#operator_==[b]
     type !=[a <: Operatable_==, b <: a#Operand_==] = a#operator_==[b]#not
@@ -31,7 +33,8 @@ trait Operators { this: Meta.type =>
     type ++[a <: Operatable_++] = a#operator_++
     type --[a <: Operatable_--] = a#operator_--
 
-    trait Operatable extends Operatable_== with Operatable_+ with Operatable_- with Operatable_&& with Operatable_||
+    trait Operatable extends Operatable_== with Operatable_+ with Operatable_- with Operatable_* with Operatable_/
+        with Operatable_&& with Operatable_||
         with Operatable_++ with Operatable_-- with Operatable_!
 
     trait Operatable_== {
@@ -47,6 +50,16 @@ trait Operators { this: Meta.type =>
     trait Operatable_- {
         type Operand_-
         type operator_-[that <: Operand_-]
+    }
+
+    trait Operatable_* {
+        type Operand_*
+        type operator_*[that <: Operand_*]
+    }
+
+    trait Operatable_/ {
+        type Operand_/
+        type operator_/[that <: Operand_/]
     }
 
     trait Operatable_&& {

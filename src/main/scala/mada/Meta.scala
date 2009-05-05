@@ -12,7 +12,7 @@ import meta._
 
 object Meta extends
     Alwayses with Asserts with Args with Binds with Booleans with Forwardings with Functions with Ints with
-    Operators with Nats with Quotes with Placeholders with Products with Tuples {
+    Lists with Nats with Operators with Quotes with Placeholders with Products with Tuples {
 
 
 // metamethods

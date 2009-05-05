@@ -10,6 +10,8 @@ package mada.meta
 // See: http://www.assembla.com/wiki/show/metascala
 
 
+
+// will be replaced by Meta.List.
 @provider
 trait Nats { this: Meta.type =>
 

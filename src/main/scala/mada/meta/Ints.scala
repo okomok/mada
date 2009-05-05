@@ -22,11 +22,22 @@ trait Ints { this: Meta.type =>
         type decrement <: Int
         type equals[that <: Int] <: Boolean
 
-        override type Operand_== = Int
-        override type operator_==[that <: Int] = equals[that]
+        type add[that <: Int] <: Int
+        type minus[that <: Int] <: Int
+        type multiply[that <: Int] <: Int
 
-        override type operator_++ = increment
-        override type operator_-- = decrement
+        final override type Operand_== = Int
+        final override type operator_==[that <: Int] = equals[that]
+
+        final override type operator_++ = increment
+        final override type operator_-- = decrement
+
+        final override type Operand_+ = Int
+        final override type operator_+[that <: Int] = add[that]
+        final override type Operand_- = Int
+        final override type operator_-[that <: Int] = minus[that]
+        final override type Operand_* = Int
+        final override type operator_*[that <: Int] = multiply[that]
 
         private[mada] type is0 <: Boolean
         private[mada] type is1 <: Boolean
@@ -45,12 +56,17 @@ trait Ints { this: Meta.type =>
         type foldLeft[z <: op#Result2, op <: FoldLeftFunction] <: op#Result2
 
         type toNat <: Nat
+        type toList <: List
     }
 
     sealed trait _0I extends Int {
         override type increment = _1I
         override type decrement = Nothing
         override type equals[that <: Int] = that#is0
+
+        override type add[that <: Int] = that
+        override type minus[that <: Int] = error
+        override type multiply[that <: Int] = _0I
 
         private[mada] override type is0 = `true`
         private[mada] override type is1 = `false`
@@ -66,14 +82,16 @@ trait Ints { this: Meta.type =>
 
         override type foldLeft[z <: op#Result2, op <: FoldLeftFunction] = z
         override type toNat = _0N
+        override type toList = nil
     }
 
     sealed trait PositiveInt extends Int {
+        final override type add[that <: Int] = decrement#add[that]#increment
+        final override type minus[that <: Int] = decrement#minus[that]#increment
+        final override type multiply[that <: Int] = decrement#multiply[that]#add[that]
 
-        //type add[that <: Int] = decrement#add[that]#increment
-        //type minus[that <: Int] = decrement#minus[that]#increment
-        //type multiply[that <: Int] = decrement#multiply[that]#add[that]
-        override type foldLeft[z <: op#Result2, op <: FoldLeftFunction] = decrement#foldLeft[op#apply2[z, decrement], op]
+        final override type foldLeft[z <: op#Result2, op <: FoldLeftFunction] = decrement#foldLeft[op#apply2[z, decrement], op]
+        final override type toList = cons[decrement, decrement#toList]
     }
 
     sealed trait _1I extends Int with PositiveInt {
