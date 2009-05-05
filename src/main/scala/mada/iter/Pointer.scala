@@ -10,7 +10,6 @@ package mada.iter
 /**
  * Contains utility methods operating on <code>Pointer</code>.
  */
-@aliased
 object Pointer extends PointerConversions with PointerCompatibles {
     /**
      * The end pointer
@@ -34,11 +33,6 @@ object Pointer extends PointerConversions with PointerCompatibles {
     def from[A](to: Pointer[A]): Pointer[A] = to
 
     /**
-     * @return  <code>this</code>.
-     */
-    val Compatibles: PointerCompatibles = this
-
-    /**
      * Alias of <code>Pointer</code>
      */
     type Type[+A] = Pointer[A]
@@ -51,7 +45,6 @@ object Pointer extends PointerConversions with PointerCompatibles {
  *
  * @see     scalax.BufferedIterator
  */
-@aliased
 trait Pointer[+A] extends Companion[Pointer.type] {
 
     override def companion = Pointer
@@ -125,6 +118,7 @@ trait PointerConversions { this: Pointer.type =>
  * Contains implicit conversions around <code>Pointer</code>.
  */
 trait PointerCompatibles { this: Pointer.type =>
+    @returnthis val Compatibles: PointerCompatibles = this
     implicit def madaPointerFromIterator[A](from: Iterator[A]): Pointer[A] = fromIterator(from)
     implicit def madaPointerToIterator[A](from: Pointer[A]): Iterator[A] = toIterator(from)
 }

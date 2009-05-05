@@ -17,11 +17,6 @@ object Lexical extends LexicalConversions with LexicalCompatibles {
      * @return  <code>to</code>.
      */
     def from(to: Vector[Char]): Vector[Char] = to
-
-    /**
-     * @return  <code>this</code>.
-     */
-    val Compatibles: LexicalCompatibles = this
 }
 
 
@@ -54,6 +49,8 @@ trait LexicalConversions {
  */
 trait LexicalCompatibles {
     import Lexical._
+
+    @returnthis val Compatibles: LexicalCompatibles = this
 
 // from
     implicit def madaCharVectorFromBoolean(from: Boolean): Vector[Char] = fromAny(from)

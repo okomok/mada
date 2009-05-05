@@ -13,7 +13,7 @@ import peg._
 /**
  * Contains utility methods operating on <code>Peg</code>.
  */
-object Peg extends Conversions with Compatibles with Operators {
+object Peg extends Aliases with Conversions with Compatibles with Operators {
 
 
 // constants
@@ -184,127 +184,16 @@ object Peg extends Conversions with Compatibles with Operators {
     def switch[A](es: scala.collection.Map[A, Peg[A]]): Peg[A] = Switch(es)
 
 
-// aliases
-
-    /**
-     * Alias of <code>peg.ZeroWidth</code>
-     */
-    type ZeroWidth[A] = peg.ZeroWidth[A]
-
-    /**
-     * Alias of <code>peg.Quantified</code>
-     */
-    type Quantified[A] = peg.Quantified[A]
-
-    /**
-     * Alias of <code>peg.PegProxy</code>
-     */
-    type Forwarder[A] = peg.PegProxy[A]
-
-    /**
-     * Alias of <code>peg.PegProxy</code>
-     */
-    type PegProxy[A] = peg.PegProxy[A]
-
-    /**
-     * Alias of <code>peg.Rule</code>
-     */
-    type Rule[A] = peg.Rule[A]
-
-    /**
-     * Alias of <code>Vector.Func[A, Unit]</code>
-     */
-    type Action[A] = Vector.Func[A, Unit]
-
-    /**
-     * Alias of <code>Vector.Func3[A, Unit]</code>
-     */
-    type Action3[A] = Vector.Func3[A, Unit]
-
-    /**
-     * Alias of <code>peg.ASTreeBuilder</code>
-     */
-    val ASTreeBuilder = peg.ASTreeBuilder
-
-    /**
-     * Alias of <code>peg.ASTreeBuilder</code>
-     */
-    type ASTreeBuilder[T <: javax.swing.tree.DefaultMutableTreeNode] = peg.ASTreeBuilder[T]
-
-    /**
-     * Alias of <code>peg.SymbolSet</code>
-     */
-    val SymbolSet = peg.SymbolSet
-
-    /**
-     * Alias of <code>peg.SymbolMap</code>
-     */
-    val SymbolMap = peg.SymbolMap
-
-    /**
-     * Alias of <code>peg.SymbolSet</code>
-     */
-    type SymbolSet[A] = peg.SymbolSet[A]
-
-    /**
-     * Alias of <code>peg.SymbolMap</code>
-     */
-    type SymbolMap[A] = peg.SymbolMap[A]
-
-    /**
-     * Alias of <code>peg.ByNeedActions</code>
-     */
-    type ByNeedActions[A] = peg.ByNeedActions[A]
-
-    /**
-     * Alias of <code>peg.RegionActions</code>
-     */
-    type RegionActions[A] = peg.RegionActions[A]
-
-    /**
-     * Alias of <code>peg.StackActions</code>
-     */
-    type StackActions[A, B] = peg.StackActions[A, B]
-
-    /**
-     * Alias of <code>peg.CapturingGroups</code>
-     */
-    type CapturingGroups[K, A] = peg.CapturingGroups[K, A]
-
-    /**
-     * Alias of <code>peg.Memoizer</code>
-     */
-    type Memoizer[A] = peg.Memoizer[A]
-
-    /**
-     * Alias of <code>peg.PrettyPrinter</code>
-     */
-    val PrettyPrinter = peg.PrettyPrinter
-
-    /**
-     * Alias of <code>peg.PrettyPrinter</code>
-     */
-    type PrettyPrinter = peg.PrettyPrinter
+// verify
 
     /**
      * Throws VerificationException if p doesn't match.
      */
     def verify[A](p: Peg[A]): Peg[A] = Verify(p)
 
-    /**
-     * Alias of <code>peg.VerificationException</code>
-     */
-    val VerificationException = peg.VerificationException
+    @alias val VerificationException = peg.VerificationException
+    @alias type VerificationException[A] = peg.VerificationException[A]
 
-    /**
-     * Alias of <code>peg.VerificationException</code>
-     */
-    type VerificationException[A] = peg.VerificationException[A]
-
-    /**
-     * Alias of <code>Peg</code>
-     */
-    type Type[A] = Peg[A]
 }
 
 

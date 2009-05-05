@@ -13,7 +13,7 @@ import vec._
 /**
  * Contains utility types and methods operating on <code>Vector</code>.
  */
-object Vector extends Conversions with Compatibles with Eligibles with Operators {
+object Vector extends Aliases with Conversions with Compatibles with Eligibles with Operators {
 
 
 // constants
@@ -165,88 +165,6 @@ object Vector extends Conversions with Compatibles with Eligibles with Operators
      */
     def upperCase(v: Vector[Char]): Vector[Char] = v.map(java.lang.Character.toUpperCase(_))
 
-
-// aliases
-
-    /**
-     * Alias of <code>Vector[A] => B</code>
-     */
-    type Func[A, B] = Vector[A] => B
-
-    /**
-     * Alias of <code>(Vector[A], Int, Int) => B</code>
-     */
-    type Func3[A, B] = (Vector[A], Int, Int) => B
-
-    /**
-     * Alias of <code>Func[A, Boolean]</code>
-     */
-    type Pred[A] = Func[A, Boolean]
-
-    /**
-     * Alias of <code>Func3[A, Boolean]</code>
-     */
-    type Pred3[A] = Func3[A, Boolean]
-
-    /**
-     * Alias of <code>vec.Adapter</code>
-     */
-    val Adapter = vec.Adapter
-
-    /**
-     * Alias of <code>vec.Adapter</code>
-     */
-    type Adapter[Z, A] = vec.Adapter[Z, A]
-
-    /**
-     * Alias of <code>vec.VectorProxy</code>
-     */
-    type Forwarder[A] = vec.VectorProxy[A]
-
-    /**
-     * Alias of <code>vec.VectorProxy</code>
-     */
-    type VectorProxy[A] = vec.VectorProxy[A]
-
-    /**
-     * Alias of <code>vec.Mixin</code>
-     */
-    val Mixin = vec.Mixin
-
-    /**
-     * Alias of <code>vec.Mixin</code>
-     */
-    type Mixin = vec.Mixin
-
-    /**
-     * Alias of <code>vec.Region</code>
-     */
-    val Region = vec.Region
-
-    /**
-     * Alias of <code>vec.Region</code>
-     */
-    type Region[A] = vec.Region[A]
-
-    /**
-     * Alias of <code>vec.IntFileVector</code>
-     */
-    type IntFileVector = vec.IntFileVector
-
-    /**
-     * Alias of <code>vec.LongFileVector</code>
-     */
-    type LongFileVector = vec.LongFileVector
-
-    /**
-     * Alias of <code>vec.Writer</code>
-     */
-    type Writer[A] = vec.Writer[A]
-
-    /**
-     * Alias of <code>Vector</code>
-     */
-    type Type[A] = Vector[A]
 }
 
 
@@ -338,9 +256,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Companion[Vector.type] {
      */
     def region(_start: Int, _end: Int): Vector[A] = Region(this, _start, _end)
 
-    /**
-     * @return  <code>this</code>.
-     */
+    @returnthis
     def regionBase: Vector[A] = this
 
     /**
@@ -923,9 +839,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Companion[Vector.type] {
 
 // trivials
 
-    /**
-     * @return  <code>this</code>.
-     */
+    @returnthis
     final def asVector: Vector[A] = this
 
     /**

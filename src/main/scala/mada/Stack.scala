@@ -13,28 +13,13 @@ import stack._
 /**
  * Contains utility methods operating on <code>Stack</code>.
  */
-object Stack extends Conversions with Compatibles {
-    /**
-     * Alias of <code>stack.StackProxy</code>
-     */
-    type Forwarder[A] = stack.StackProxy[A]
-
-    /**
-     * Alias of <code>stack.StackProxy</code>
-     */
-    type StackProxy[A] = stack.StackProxy[A]
-
+object Stack extends Aliases with Conversions with Compatibles {
     /**
      * Triggers implicit conversions explicitly.
      *
      * @return  <code>to</code>.
      */
     def from[A](to: Stack[A]) = to
-
-    /**
-     * Alias of <code>Stack</code>
-     */
-    type Type[A] = Stack[A]
 }
 
 

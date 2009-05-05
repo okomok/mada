@@ -13,22 +13,7 @@ import cmp._
 /**
  * Contains utility methods operating on <code>Compare</code>.
  */
-object Compare extends Conversions with Compatibles {
-    /**
-     * Alias of <code>Function2[T, T, Boolean]</code>
-     */
-    type Func[-T] = Function2[T, T, Boolean]
-
-    /**
-     * Alias of <code>Function1[T, Ordered[T]]</code>
-     */
-    type GetOrdered[T] = Function1[T, Ordered[T]]
-
-    /**
-     * Alias of <code>java.util.Comparator[T]</code>
-     */
-    type Comparator[T] = java.util.Comparator[T]
-
+object Compare extends Aliases with Conversions with Compatibles {
     /**
      * Triggers implicit conversions explicitly.
      *
@@ -40,11 +25,6 @@ object Compare extends Conversions with Compatibles {
      * Alias of <code>fromFunc</code>
      */
     def by[A](p: Func[A]): Compare[A] = fromFunc(p)
-
-    /**
-     * Alias of <code>Compare</code>
-     */
-    type Type[-A] = Compare[A]
 }
 
 

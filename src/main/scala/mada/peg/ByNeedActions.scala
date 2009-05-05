@@ -10,7 +10,6 @@ package mada.peg
 /**
  * Suppresses actions until outer <code>Peg</code> is matched.
  */
-@aliased
 class ByNeedActions[A] {
     private val queue = new java.util.ArrayDeque[(Peg.Action[A], Vector[A])]
 

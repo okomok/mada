@@ -10,7 +10,6 @@ package mada.stl
 /**
  * Counts calls of <code>Vector.update</code>.
  */
-@aliased
 class OutputCounter(val from: Int) extends OutputVector[Any] {
     /**
      * Starts from count <code>0</code>.

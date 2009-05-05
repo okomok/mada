@@ -18,7 +18,6 @@ private[mada] object Writer {
  *
  * @param   start   the initial value of internal index.
  */
-@aliased
 class Writer[A](val out: Vector[A], val start: Int) extends (A => Unit) {
     private var i = start
 

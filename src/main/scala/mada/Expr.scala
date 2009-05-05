@@ -10,94 +10,7 @@ package mada
 /**
  * Contains utility methods operating on <code>Expr</code>.
  */
-object Expr {
-
-
-// aliases
-
-    /**
-     * Alias of <code>Expr[_, A]</code>
-     */
-    type Of[A] = Expr[_, A]
-
-    /**
-     * Alias of <code>Expr[A, A]</code>
-     */
-    type Identity[A] = Expr[A, A]
-
-    /**
-     * Alias of <code>Expr[Nothing, A]</code>
-     */
-    type Terminal[A] = Expr[Nothing, A]
-
-    /**
-     * Alias of <code>expr.ConstantOf</code>
-     */
-    type ConstantOf[A] = expr.ConstantOf[A]
-
-    /**
-     * Alias of <code>expr.Method</code>
-     */
-    type Method[Z, A] = expr.Method[Z, A]
-
-    /**
-     * Alias of <code>expr.Method[A, A]</code>
-     */
-    type Transform[A] = expr.Method[A, A]
-
-    /**
-     * Alias of <code>expr.Alias</code>
-     */
-    type Alias[Z, A] = expr.Alias[Z, A]
-
-    /**
-     * Alias of <code>expr.Constant</code>
-     */
-    val Constant = expr.Constant
-
-    /**
-     * Alias of <code>expr.Constant</code>
-     */
-    type Constant[A] = expr.Constant[A]
-
-    /**
-     * Alias of <code>expr.Lazy</code>
-     */
-    val Lazy = expr.Lazy
-
-    /**
-     * Alias of <code>expr.Lazy</code>
-     */
-    type Lazy[A] = expr.Lazy[A]
-
-    /**
-     * Alias of <code>expr.Seal</code>
-     */
-    val Seal = expr.Seal
-
-    /**
-     * Alias of <code>expr.Seal</code>
-     */
-    type Seal[A] = expr.Seal[A]
-
-    /**
-     * @return  <code>Constant(from).expr<code>
-     */
-    def apply[A](from: A) = Constant(from).expr
-
-    /**
-     * Alias of <code>expr.Start</code>
-     */
-    type Start[A] = expr.Start[A]
-
-    /**
-     * Alias of <code>Expr</code>
-     */
-    type Type[Z, A] = Expr[Z, A]
-
-
-// exceptions
-
+object Expr extends expr.Aliases {
     /**
      * Thrown if Self case missing.
      */
@@ -151,9 +64,7 @@ trait Expr[Z, A] extends Companion[Expr.type] {
      */
     protected def dontKnow[B](x: Expr[A, B]): B = x.eval(x.Unknown)
 
-    /**
-     * @return  <code>this</code>.
-     */
+    @returnthis
     final def expr = this
 
     /**

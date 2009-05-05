@@ -11,7 +11,6 @@ package mada.vec
  * Implements a proxy for vectors.
  * It forwards all calls to a different vector object.
  */
-@aliased
 trait VectorProxy[A] extends Adapter.Transform[A] with Proxies.ProxyOf[Vector[A]] {
     final override def underlying = self
   // value semantics

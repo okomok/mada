@@ -10,7 +10,6 @@ package mada.peg
 /**
  * Contains utility methods operating on type <code>PrettyPrinter</code>.
  */
-@aliased
 object PrettyPrinter {
     /**
      * @return  <code>xml(new java.io.OutputStreamWriter(java.lang.System.out), 4)</code>

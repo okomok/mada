@@ -13,7 +13,6 @@ import javax.swing.tree.{ MutableTreeNode, DefaultMutableTreeNode }
 /**
  * Contains utility methods operating on type <code>ASTreeBuilder</code>.
  */
-@aliased
 object ASTreeBuilder {
     /**
      * Creates a default root tree.
@@ -45,7 +44,6 @@ object ASTreeBuilder {
  * @param   root    the root node of this tree
  * @param   cloner  a function returns shallow-copy of <code>T</code> object
  */
-@aliased
 class ASTreeBuilder[T <: MutableTreeNode](root: T, cloner: T => T) {
     private val branches = new java.util.ArrayDeque[T]
     branches.push(root)

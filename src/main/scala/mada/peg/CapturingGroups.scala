@@ -10,7 +10,6 @@ package mada.peg
 /**
  * Provides capturing groups functionality.
  */
-@aliased
 class CapturingGroups[K, A](val map: Maps.Mutable[K, Vector[A]]) {
     /**
      * Constructs from a hash-map.
