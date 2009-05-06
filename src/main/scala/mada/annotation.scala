@@ -23,15 +23,15 @@ class provider extends StaticAnnotation
 
 
 /**
- * Returns <code>this</code>.
- */
-class returnthis extends StaticAnnotation
-
-
-/**
  * Returns the companion module.
  */
 class returncompanion extends StaticAnnotation
+
+
+/**
+ * Returns <code>this</code>.
+ */
+class returnthis extends StaticAnnotation
 
 
 /**
@@ -39,5 +39,3 @@ class returncompanion extends StaticAnnotation
  * to which it is used to associate type with value.
  */
 class specializer extends StaticAnnotation
-
-
