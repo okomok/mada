@@ -26,9 +26,9 @@ object Stack extends Aliases with Conversions with Compatibles {
 /**
  * Trivial stack interface
  */
-trait Stack[A] extends Companion[Stack.type] {
+trait Stack[A] {
 
-    override def companion = Stack
+    @returncompanion def companion = Stack
 
     /**
      * Pushes.

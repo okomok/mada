@@ -31,9 +31,9 @@ object Compare extends Aliases with Conversions with Compatibles {
 /**
  * Represents strict weak ordering.
  */
-trait Compare[-A] extends Compare.Func[A] with Companion[Compare.type] {
+trait Compare[-A] extends Compare.Func[A] {
 
-    override def companion = Compare
+    @returncompanion def companion = Compare
 
     /**
      * @return  <code>true</code> iif x precedes y.

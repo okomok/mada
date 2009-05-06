@@ -214,9 +214,9 @@ object Peg extends Aliases with Conversions with Compatibles with Operators {
  * <li/><code>java.util.regex</code> is trivially compatible to <code>mada.Peg</code>.
  * </ul>
  */
-trait Peg[A] extends Companion[Peg.type] {
+trait Peg[A] {
 
-    override def companion = Peg
+    @returncompanion def companion = Peg
 
 
 // kernel interface

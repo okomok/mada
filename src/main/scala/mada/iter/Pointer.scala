@@ -45,9 +45,9 @@ object Pointer extends PointerConversions with PointerCompatibles {
  *
  * @see     scalax.BufferedIterator
  */
-trait Pointer[+A] extends Companion[Pointer.type] {
+trait Pointer[+A] {
 
-    override def companion = Pointer
+    @returncompanion def companion = Pointer
 
     /**
      * Alias of <code>isEnd</code>

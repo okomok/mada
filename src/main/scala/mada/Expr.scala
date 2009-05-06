@@ -26,9 +26,9 @@ object Expr extends expr.Aliases {
 /**
  * Replaces expression evaluations with modern and heavy way.
  */
-trait Expr[Z, A] extends Companion[Expr.type] {
+trait Expr[Z, A] {
 
-    override def companion = Expr
+    @returncompanion def companion = Expr
 
     /**
      * Overridden in subclasses.

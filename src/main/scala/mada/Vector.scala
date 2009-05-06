@@ -178,9 +178,9 @@ object Vector extends Aliases with Conversions with Compatibles with Eligibles w
  *
  * Unless otherwise specified, these methods return projections to keep readability and writability.
  */
-trait Vector[A] extends PartialFunction[Int, A] with Companion[Vector.type] {
+trait Vector[A] extends PartialFunction[Int, A] {
 
-    override def companion = Vector
+    @returncompanion def companion = Vector
 
 
 // kernel interface

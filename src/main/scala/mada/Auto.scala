@@ -49,9 +49,9 @@ object Auto extends Eligibles {
 /**
  * Trait for automatically called methods
  */
-trait Auto[-A] extends Companion[Auto.type] {
+trait Auto[-A] {
 
-    override def companion = Auto
+    @returncompanion def companion = Auto
 
     /**
      * Called when block begins.
