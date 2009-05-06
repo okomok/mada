@@ -55,8 +55,8 @@ trait Lists { this: Blend.type =>
 
         sealed trait visitor[l <: List] extends Meta.Nat.Visitor {
             override type Result = Any
-            override type end = l#head
-            override type visit[n <: Meta.Nat] = n#accept[visitor[l#tail]]
+            override type visitZero = l#head
+            override type visitSucc[n <: Meta.Nat] = n#accept[visitor[l#tail]]
         }
 
         implicit def at_0[h, t <: List] = new At[Cons[h, t], Meta.Nat.zero] {

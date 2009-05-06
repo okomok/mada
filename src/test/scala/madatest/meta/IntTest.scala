@@ -46,6 +46,12 @@ class IntTest {
         assert[_1I + _8I == _9I]
         assert[_5I + _2I == _7I]
     }
+
+    trait testWithNat {
+        assert[_0I#toNat#toInt == _0I]
+        assert[_5I#toNat#toInt == _5I]
+    }
+
 /*
     trait testSub {
         assert[_3I - _0I == _3I]

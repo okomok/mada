@@ -17,23 +17,26 @@ trait Nats { this: Meta.type =>
     object Nat {
 
         sealed trait zero extends Nat {
-            override type accept[v <: Visitor] = v#end
+            override type toInt = _0I
+            override type accept[v <: Visitor] = v#visitZero
         }
 
         sealed trait succ[n <: Nat] extends Nat {
-            override type accept[v <: Visitor] = v#visit[n]
+            override type toInt = n#toInt#increment
+            override type accept[v <: Visitor] = v#visitSucc[n]
         }
 
         trait Visitor {
             type Result
-            type end <: Result
-            type visit[n <: Nat] <: Result
+            type visitZero <: Result
+            type visitSucc[n <: Nat] <: Result
         }
 
     }
 
     trait Nat {
-        type accept[v <: Nat.Visitor] <: v#Result
+        type toInt <: Int
+        type accept[v <: Nat.Visitor] <: v#Result // More generic algorithms (fold etc) won't work.
     }
 
 }
