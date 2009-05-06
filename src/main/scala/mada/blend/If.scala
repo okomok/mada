@@ -7,6 +7,20 @@
 package mada.blend
 
 
+@specializer
+sealed trait If[A, b <: Meta.Boolean] {
+    def apply(block: => A): Then[A]
+}
+
+/**
+ * Intermediate trait for if expressions.
+ */
+sealed trait Then[A] {
+    def `else`(block: => A): A
+    def elseIf[b <: Meta.Boolean](block: => A)(implicit _if: If[A, b]): Then[A]
+}
+
+
 object If {
 
     implicit def if_true[A] = new If[A, Meta.`true`] {
@@ -24,17 +38,4 @@ object If {
         }
     }
 
-}
-
-@specializer
-sealed trait If[A, b <: Meta.Boolean] {
-    def apply(block: => A): Then[A]
-}
-
-/**
- * Intermediate trait for if expressions.
- */
-sealed trait Then[A] {
-    def `else`(block: => A): A
-    def elseIf[b <: Meta.Boolean](block: => A)(implicit _if: If[A, b]): Then[A]
 }

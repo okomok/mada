@@ -10,6 +10,10 @@ package mada.meta
 import Meta._
 
 
+@specializer
+sealed trait Unmeta[From, To] extends scala.Function0[To]
+
+
 object Unmeta {
 
     private def make[From, To](v: To) = new Unmeta[From, To] {
@@ -31,9 +35,4 @@ object Unmeta {
     implicit val unmeta_9I_Int = make[_9I, scala.Int](9)
     implicit val unmeta_10I_Int = make[_10I, scala.Int](10)
 
-}
-
-@specializer
-sealed trait Unmeta[From, To] {
-    def apply(): To
 }

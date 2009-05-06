@@ -45,9 +45,7 @@ trait Lists { this: Blend.type =>
 // at
 
     @specializer
-    trait At[l <: List, n <: Meta.Nat] {
-        def apply(_l: l): At.apply[l, n]
-    }
+    trait At[l <: List, n <: Meta.Nat] extends (l => At.apply[l, n])
 
     object At {
         type apply[l <: List, n <: Meta.Nat] = n#accept[visitor[l]]
