@@ -61,10 +61,13 @@ class ListUnmetaTest {
     }
 
     def testDrop = {
-        /*
+//        val k = Nil.drop[_2I]
+//        assertEquals(Nil, k)
+
         val i = new java.lang.Integer(10)
         val lst = 3 :: "hello" :: i :: 'a' :: 12 :: Nil
         val a = i :: 'a' :: 12 :: Nil
+        val s = lst.drop[_0I]
         val b = lst.drop[_2I]
         val c = lst.drop[_5I]
         val d = lst.drop[_9I]
@@ -74,7 +77,6 @@ class ListUnmetaTest {
         assertEquals(Nil, c)
         assertEquals(0, d.length)
         assertEquals(Nil, d)
-        */
     }
 
     def testTyped = {

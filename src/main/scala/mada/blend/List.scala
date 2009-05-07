@@ -78,19 +78,24 @@ trait Lists { this: Blend.type =>
          * Converts to <code>scala.List[Any]</code>.
          */
         def untyped: scala.List[Any]
-
+/*
+        override def equals(that: Any) = that match {
+            case that: List => untyped == that.untyped
+            case _ => false
+        }
+*/
         override def toString = untyped.toString
     }
 
 
 // Nil
 
-    case object Nil extends List {
+    final class Nil extends List {
         override type `this` = List
         override type isNil = Meta.`true`
 
         override type head = Meta.error
-        override type tail = Nil//Meta.error//Nil
+        override type tail = Nil
         def ::[A](e: A) = Cons(e, this)
 
         override type append[l <: List] = l
@@ -103,7 +108,10 @@ trait Lists { this: Blend.type =>
         override def untyped = scala.Nil
     }
 
-    type Nil = Nil.type
+    val Nil = new Nil
+
+    // Compiler will fails to find implicits.
+    // case object Nil; type Nil = Nil.type
 
 
 // Cons
@@ -120,8 +128,7 @@ trait Lists { this: Blend.type =>
         def at[i <: Int](implicit _at: At[`this`, i#toNat]) = _at(this)
 
         override type drop[i <: Int] = metaDrop[`this`, i#toNat]
-//        def drop[i <: Int](implicit _drop: Drop[`this`, i#toNat]) = _drop(this)
-//        def drop[i <: Int](implicit _unmeta: Meta.Unmeta[i, scala.Int], _typed: List.Typed[drop[i]]) = _typed(untyped.drop(_unmeta()))
+        def drop[i <: Int](implicit _drop: Drop[`this`, i#toNat]) = _drop(this)
 
         override type length = t#length#increment
         override def length = tail.length + 1 // length(implicit _unmeta: Meta.Unmeta[length, scala.Int]) = _unmeta()
@@ -166,36 +173,40 @@ trait Lists { this: Blend.type =>
         override type visitSucc[n <: Nat] = n#accept[dropVisitor[l#tail]]
     }
 
+/*
     @specializer
-    trait Drop[l <: List, n <: Nat] extends (l => metaDrop[l, n]) {
-    //    type Argument = l
+    trait Drop1[l <: List, n <: Nat] extends (l => metaDrop[l, n])
+
+    object Drop1 {
+        implicit def ofNil[n <: Nat]: Drop1[Nil, n] = new Drop1[Nil, n] {
+            override def apply(_l: Nil) = Nil.asInstanceOf[metaDrop[Nil, n]] // Nil // stack overflow
+        }
+
+        implicit def ofCons[h, t <: List, n <: Nat](implicit _drop2: Drop2[Cons[h, t], n]): Drop1[Cons[h, t], n] = new Drop1[Cons[h, t], n] {
+            override def apply(_l: Cons[h, t]) = _drop2(_l)
+        }
     }
 
     @specializer
-    trait DropNil[n <: Nat] {
-        def apply: Nil
+    trait Drop2[l <: List, n <: Nat] extends (l => metaDrop[l, n])
+
+    object Drop2 {
+        implicit def ofZero[l <: List]: Drop2[l, Nat.zero] = new Drop2[l, Nat.zero] {
+            override def apply(_l: l) = _l
+        }
+
+        implicit def ofSucc[h, t <: List, n <: Nat](implicit _drop1: Drop1[t, n]): Drop2[Cons[h, t], Nat.succ[n]] = new Drop2[Cons[h, t], Nat.succ[n]] {
+            override def apply(_l: Cons[h, t]) = _drop1(_l.tail)
+        }
     }
+*/
+
+    @specializer
+    trait Drop[l <: List, n <: Nat] extends (l => metaDrop[l, n])
 
     object Drop {
-/*
         implicit def ofNil[n <: Nat] = new Drop[Nil, n] {
-            override def apply(_l: Nil) = _l//{ Assert(_l eq Nil); _l.asInstanceOf[metaDrop[Nil, n]] }
-        }
-
-        implicit val ofNilZero = new Drop[Nil, Nat.zero] {
-            override def apply(_l: Nil) = _l //{ Assert(_l eq Nil); _l.asInstanceOf[metaDrop[Nil, Nat.zero]] }
-        }
-
-        implicit def ofNilSucc[n <: Nat](implicit _drop: Drop[Nil, n]) = new Drop[Nil, Nat.succ[n]] {
-            override def apply(_l: Nil) = _drop(_l)//{ Assert(_l eq Nil); _l.asInstanceOf[metaDrop[Nil, Nat.succ[n]]] }
-        }
-
-        implicit def ofLastZero[h] = new Drop[Cons[h, Nil], Nat.zero] {
-            override def apply(_l: Cons[h, Nil]) = _l
-        }
-
-        implicit def ofLastSucc[h, n <: Nat] = new Drop[Cons[h, Nil], Nat.succ[n]] {
-            override def apply(_l: Cons[h, Nil]) = _l.asInstanceOf[metaDrop[Cons[h, Nil], Nat.succ[n]]]
+            override def apply(_l: Nil) = Nil.asInstanceOf[metaDrop[Nil, n]]
         }
 
         implicit def ofZero[h, t <: List] = new Drop[Cons[h, t], Nat.zero] {
@@ -205,23 +216,6 @@ trait Lists { this: Blend.type =>
         implicit def ofSucc[h, t <: List, n <: Nat](implicit _drop: Drop[t, n]) = new Drop[Cons[h, t], Nat.succ[n]] {
             override def apply(_l: Cons[h, t]) = _drop(_l.tail)
         }
-
-        implicit def ofNil[n <: Nat] = new Drop[Nil, n] {
-            override def apply(_l: Nil) = { Assert(_l eq Nil); _l.asInstanceOf[metaDrop[Nil, n]] }
-        }
-
-        implicit def ofZero[h, t <: List] = new Drop[Cons[h, t], Nat.zero] {
-            override def apply(_l: Cons[h, t]) = _l
-        }
-
-        implicit def ofSucc[h, t <: List, n <: Nat](implicit _drop: Drop[t, n]) = new Drop[Cons[h, t], Nat.succ[n]] {
-            override def apply(_l: Cons[h, t]) = _drop(_l.tail)
-        }
-
-        implicit def ofLastSucc[h, n <: Nat] = new Drop[Cons[h, Nil], Nat.succ[n]] {
-            override def apply(_l: Cons[h, Nil]) = _l.tail
-        }
-*/
     }
 
 }
