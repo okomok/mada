@@ -23,7 +23,7 @@ sealed trait Then[A] {
 
 object If {
 
-    implicit def if_true[A] = new If[A, Meta.`true`] {
+    implicit def ofTrue[A] = new If[A, Meta.`true`] {
         override def apply(block: => A) = new Then[A] {
             override def `else`(unused: => A) = block
             override def elseIf[b <: Meta.Boolean](unused: => A)(implicit _if: If[A, b]) = this
@@ -31,7 +31,7 @@ object If {
         }
     }
 
-    implicit def if_false[A] = new If[A, Meta.`false`] {
+    implicit def ofFalse[A] = new If[A, Meta.`false`] {
         override def apply(unused: => A) = new Then[A] {
             override def `else`(block: => A) = block
             override def elseIf[b <: Meta.Boolean](block: => A)(implicit _if: If[A, b]) = _if(block)

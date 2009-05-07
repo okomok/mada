@@ -40,4 +40,6 @@ object Meta extends
      */
     def unmeta[From, To](implicit _unmeta: Unmeta[From, To]): To = _unmeta()
 
+    @alias type Unmeta[From, To] = meta.Unmeta[From, To]
+
 }

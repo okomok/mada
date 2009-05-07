@@ -11,9 +11,10 @@ import mada.Blend._
 import mada.Meta
 
 
-class ListTest {
-    def testAt: Unit = {
-        import junit.framework.Assert._
+class ListUnmetaTest {
+    import junit.framework.Assert._
+
+    def testAt = {
         val i = new java.lang.Integer(10)
         val lst = 3 :: "hello" :: i :: 'a' :: Nil
         val _0: Int = lst.at[Meta._0I]
@@ -27,13 +28,27 @@ class ListTest {
         assertEquals(10, lst.at[Meta._2I].intValue)
     }
 
+    def testLength = {
+        val i = new java.lang.Integer(10)
+        val lst = 3 :: "hello" :: i :: 'a' :: Nil
+        assertEquals(4, lst.length)
+    }
+}
+
+class ListMetaTest {
+    import Meta.{ assert, assertSame }
+
     trait testAt {
-        import Meta.assertSame
         type lst = Int :: String :: Double :: Char :: Nil
         assertSame[lst#at[Meta._0I], Int]
         assertSame[lst#at[Meta._1I], String]
         assertSame[lst#at[Meta._2I], Double]
         assertSame[lst#at[Meta._3I], Char]
         assertSame[lst#at[Meta._2I#add[Meta._1I]], Char]
+    }
+
+    trait testLength {
+        type lst = Int :: String :: Double :: Char :: Nil
+        assert[lst#length#equals[Meta._4I]]
     }
 }

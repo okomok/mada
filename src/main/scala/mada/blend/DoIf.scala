@@ -19,11 +19,11 @@ sealed trait DoIf[b <: Meta.Boolean] {
 
 object DoIf {
 
-    implicit object doIf_true extends DoIf[Meta.`true`] {
+    implicit object ofTrue extends DoIf[Meta.`true`] {
         override def apply(block: => Unit) = block
     }
 
-    implicit object doIf_false extends DoIf[Meta.`false`] {
+    implicit object ofFalse extends DoIf[Meta.`false`] {
         override def apply(block: => Unit) = ()
     }
 

@@ -60,7 +60,7 @@ trait Ints { this: Meta.type =>
 
     sealed trait PositiveInt extends Int {
         final override type add[that <: Int] = decrement#add[that]#increment
-        final override type minus[that <: Int] = decrement#minus[that]#increment
+        final override type minus[that <: Int] = error // TODO
         final override type multiply[that <: Int] = decrement#multiply[that]#add[that]
 
         final override type foldLeft[z <: op#Result2, op <: FoldLeftFunction] = decrement#foldLeft[op#apply2[z, decrement], op]
@@ -69,7 +69,7 @@ trait Ints { this: Meta.type =>
 
     sealed trait _0I extends Int {
         override type increment = _1I
-        override type decrement = Nothing // TODO
+        override type decrement = error // TODO
         override type equals[that <: Int] = that#is0
 
         override type add[that <: Int] = that
