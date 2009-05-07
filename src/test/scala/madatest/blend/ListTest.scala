@@ -13,6 +13,7 @@ import mada.Meta
 
 class ListUnmetaTest {
     import junit.framework.Assert._
+    assertFalse(scala.Nil eq Nil)
 
     def testAt = {
         val i = new java.lang.Integer(10)
@@ -32,6 +33,30 @@ class ListUnmetaTest {
         val i = new java.lang.Integer(10)
         val lst = 3 :: "hello" :: i :: 'a' :: Nil
         assertEquals(4, lst.length)
+        assertEquals(0, Nil.length)
+    }
+
+    def testTypeErase = {
+        val i = new java.lang.Integer(10)
+        val lst = 3 :: "hello" :: i :: 'a' :: Nil
+        assertEquals("List()", Nil.toString)
+        assertEquals("List(3, hello, 10, a)", lst.toString)
+    }
+
+    def testEquals = {
+        val i = new java.lang.Integer(10)
+        val j = new java.lang.Integer(10)
+        assertEquals(i, j)
+        val lst1 = 3 :: "hello" :: i :: 'a' :: Nil
+        val lst2 = 3 :: "hello" :: j :: 'a' :: Nil
+        val lst3 = 3 :: "hello" :: 'b' :: Nil
+        val lst4 = 2 :: "hello" :: i :: 'a' :: Nil
+        val lst5 = Nil
+        assertEquals(lst1, lst2)
+        AssertNotEquals(lst1, lst3)
+        AssertNotEquals(lst1, lst4)
+        assertEquals(lst5, lst5)
+        AssertNotEquals(lst1, lst5)
     }
 }
 
