@@ -9,6 +9,7 @@ package madatest.blend
 
 import mada.Blend._
 import mada.Meta
+import mada.Meta.IntLiterals._
 
 
 class ListUnmetaTest {
@@ -18,15 +19,15 @@ class ListUnmetaTest {
     def testAt = {
         val i = new java.lang.Integer(10)
         val lst = 3 :: "hello" :: i :: 'a' :: Nil
-        val _0: Int = lst.at[Meta._0I]
+        val _0: Int = lst.at[_0I]
         assertEquals(3, _0)
-        val _1: String = lst.at[Meta._1I]
+        val _1: String = lst.at[_1I]
         assertEquals("hello", _1)
-        val _2: java.lang.Integer = lst.at[Meta._2I]
+        val _2: java.lang.Integer = lst.at[_2I]
         assertSame(i, _2)
-        val _3: Char = lst.at[Meta._3I]
+        val _3: Char = lst.at[_3I]
         assertEquals('a', _3)
-        assertEquals(10, lst.at[Meta._2I].intValue)
+        assertEquals(10, lst.at[_2I].intValue)
     }
 
     def testLength = {
@@ -58,6 +59,33 @@ class ListUnmetaTest {
         assertEquals(lst5, lst5)
         AssertNotEquals(lst1, lst5)
     }
+
+    def testDrop = {
+        /*
+        val i = new java.lang.Integer(10)
+        val lst = 3 :: "hello" :: i :: 'a' :: 12 :: Nil
+        val a = i :: 'a' :: 12 :: Nil
+        val b = lst.drop[_2I]
+        val c = lst.drop[_5I]
+        val d = lst.drop[_9I]
+        assertEquals(3, b.length)
+        assertEquals(a, b)
+        assertEquals(0, c.length)
+        assertEquals(Nil, c)
+        assertEquals(0, d.length)
+        assertEquals(Nil, d)
+        */
+    }
+
+    def testTyped = {
+        val i = new java.lang.Integer(10)
+        val el: scala.List[Any] = scala.::[Any](3, scala.::[Any]("hello", scala.::[Any](i, scala.::[Any]('a', scala.Nil))))
+        val tl = 3 :: "hello" :: i :: 'a' :: Nil
+        assertEquals(tl, List.typed[ Int :: String :: java.lang.Integer :: Char :: Nil](el))
+
+        assertEquals(Nil, List.typed[Nil](scala.Nil))
+        ()
+    }
 }
 
 class ListMetaTest {
@@ -65,15 +93,25 @@ class ListMetaTest {
 
     trait testAt {
         type lst = Int :: String :: Double :: Char :: Nil
-        assertSame[lst#at[Meta._0I], Int]
-        assertSame[lst#at[Meta._1I], String]
-        assertSame[lst#at[Meta._2I], Double]
-        assertSame[lst#at[Meta._3I], Char]
-        assertSame[lst#at[Meta._2I#add[Meta._1I]], Char]
+        assertSame[lst#at[_0I], Int]
+        assertSame[lst#at[_1I], String]
+        assertSame[lst#at[_2I], Double]
+        assertSame[lst#at[_3I], Char]
+        assertSame[lst#at[_2I#add[_1I]], Char]
     }
 
     trait testLength {
         type lst = Int :: String :: Double :: Char :: Nil
-        assert[lst#length#equals[Meta._4I]]
+        assert[lst#length#equals[_4I]]
+    }
+
+    trait testDrop {
+        type lst = Int :: String :: Double :: Char :: Nil
+        type lst1 = lst#drop[_2I]
+        assertSame[lst#drop[_4I], Nil]
+        assertSame[lst#drop[_10I], Nil]
+        assertSame[lst1#length, _2I]
+        assertSame[lst1#at[_0I], Double]
+        assertSame[lst1#at[_1I], Char]
     }
 }
