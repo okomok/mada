@@ -79,6 +79,11 @@ class ListUnmetaTest {
         assertEquals(Nil, d)
     }
 
+    def testIsEmpty = {
+        assertTrue(Nil.isEmpty)
+        assertFalse((3 :: "hello" :: Nil).isEmpty)
+    }
+
     def testTyped = {
         val i = new java.lang.Integer(10)
         val el: scala.List[Any] = scala.::[Any](3, scala.::[Any]("hello", scala.::[Any](i, scala.::[Any]('a', scala.Nil))))
@@ -105,6 +110,12 @@ class ListMetaTest {
     trait testLength {
         type lst = Int :: String :: Double :: Char :: Nil
         assert[lst#length#equals[_4I]]
+    }
+
+    trait testIsEmpty {
+        type lst = Int :: String :: Double :: Char :: Nil
+        assertSame[Nil#isEmpty, Meta.`true`]
+        assertSame[lst#isEmpty, Meta.`false`]
     }
 
     trait testDrop {

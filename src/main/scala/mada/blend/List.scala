@@ -36,30 +36,48 @@ trait Lists { this: Blend.type =>
 
 // List
 
-    sealed trait List {
-        type `this` <: List
+    sealed trait List { // this: `this` =>
+        private val _this = this.asInstanceOf[`this`]
+        private[mada] type `this` <: List
+
+        /**
+         * Returns the first element.
+         */
+        def head: head
+        type head
+
+        /**
+         * Returns the trailing list.
+         */
+        def tail: tail
+        type tail <: List
 
         /**
          * Is this list nil?
          */
-        def isEmpty: scala.Boolean
+        final def isEmpty(implicit _unmeta: Meta.Unmeta[isEmpty, scala.Boolean]) = _unmeta()
         type isEmpty <: Meta.Boolean
 
-        def head: head
-        def tail: tail
-        type head
-        type tail <: List
-
-
         type append[l <: List] <: List
-        type at[i <: Int]
-        type drop[i <: Int] <: List
+
+        /**
+         * Returns the <code>i</code>-th element.
+         */
+        final def at[i <: Int](implicit _at: At[`this`, i#toNat]) = _at(_this)
+        final type at[i <: Int] = metaAt[`this`, i#toNat]
+
+        /**
+         * Drops <code>i</code> elements.
+         */
+        final def drop[i <: Int](implicit _drop: Drop[`this`, i#toNat]) = _drop(_this)
+        final type drop[i <: Int] = metaDrop[`this`, i#toNat]
+
         type take[i <: Int] <: List
 
         /**
          * Returns the length.
          */
-        def length: scala.Int
+        final def length(implicit _unmeta: Meta.Unmeta[length, scala.Int]) = _unmeta()
         type length <: Int
 
         /**
@@ -67,34 +85,28 @@ trait Lists { this: Blend.type =>
          */
         def untyped: scala.List[Any]
 
-        override def toString = untyped.toString
-
         /**
          * Prepends the element.
          */
-        final def ::[A](e: A): Cons[A, `this`] = new Cons(e, this.asInstanceOf[`this`])
+        final def ::[A](e: A): Cons[A, `this`] = new Cons(e, _this)
+
+        final override def toString = untyped.toString
     }
 
 
 // Nil
 
     sealed trait Nil extends List {
-        override type `this` = Nil
-
-        override def isEmpty = true
-        override type isEmpty = Meta.`true`
+        private[mada] override type `this` = Nil
 
         override def head = throw new NoSuchElementException("head of empty list")
-        override def tail = throw new NoSuchElementException("tail of empty list")
         override type head = Meta.error
+        override def tail = throw new NoSuchElementException("tail of empty list")
         override type tail = Nil // Note that meta-algorithms can't use `if`.
+        override type isEmpty = Meta.`true`
 
         override type append[l <: List] = l
-        override type at[i <: Int] = Meta.error
-        override type drop[i <: Int] = Nil
         override type take[i <: Int] = Nil
-
-        override def length = 0
         override type length = Meta._0I
 
         override def untyped = scala.Nil
@@ -108,24 +120,13 @@ trait Lists { this: Blend.type =>
 
 // Cons
 
-    final case class Cons[h, t <: List](private val _h: h, private val _t: t) extends List {
-        override type `this` = Cons[h, t]
+    final case class Cons[h, t <: List](override val head: h, override val tail: t) extends List {
+        private[mada] override type `this` = Cons[h, t]
 
-        override def isEmpty = false
-        override type isEmpty = Meta.`false`
-
-        override def head = _h
-        override def tail = _t
         override type head = h
         override type tail = t
+        override type isEmpty = Meta.`false`
 
-        def at[i <: Int](implicit _at: At[`this`, i#toNat]) = _at(this)
-        override type at[i <: Int] = metaAt[`this`, i#toNat]
-
-        def drop[i <: Int](implicit _drop: Drop[`this`, i#toNat]) = _drop(this)
-        override type drop[i <: Int] = metaDrop[`this`, i#toNat]
-
-        override def length = tail.length + 1
         override type length = tail#length#increment
 
         override def untyped = scala.::[Any](head, tail.untyped)
@@ -174,20 +175,18 @@ trait Lists { this: Blend.type =>
     @specializer
     trait Drop[l <: List, n <: Nat] extends (l => metaDrop[l, n])
 
-    object Drop { // Follows metaDrop algorithm to avoid asInstanceOf.
-        implicit val ofNilZero = new Drop[Nil, Nat.zero] {
-            override def apply(_l: Nil) = _l
+    object Drop {
+        implicit def ofNil[n <: Nat] = new Drop[Nil, n] {
+            // * Compiler needs _l.tail due to metaDrop algorithm, but Nil.tail shouldn't return Nil.
+            // * ofNilZero and ofNilSucc could remove asInstaceOf.
+            override def apply(_l: Nil) = Nil.asInstanceOf[metaDrop[Nil, n]]
         }
 
-        implicit def ofNilSucc[n <: Nat](implicit _drop: Drop[Nil, n]) = new Drop[Nil, Nat.succ[n]] {
-            override def apply(_l: Nil) = _drop(_l)
-        }
-
-        implicit def ofConsZero[h, t <: List] = new Drop[Cons[h, t], Nat.zero] {
+        implicit def ofZero[h, t <: List] = new Drop[Cons[h, t], Nat.zero] {
             override def apply(_l: Cons[h, t]) = _l
         }
 
-        implicit def ofConsSucc[h, t <: List, n <: Nat](implicit _drop: Drop[t, n]) = new Drop[Cons[h, t], Nat.succ[n]] {
+        implicit def ofSucc[h, t <: List, n <: Nat](implicit _drop: Drop[t, n]) = new Drop[Cons[h, t], Nat.succ[n]] {
             override def apply(_l: Cons[h, t]) = _drop(_l.tail)
         }
     }
