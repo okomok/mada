@@ -27,7 +27,7 @@ trait Lists { this: Blend.type =>
             }
 
             implicit def ofCons[h, t <: List](implicit _typed: Typed[t]) = new Typed[Cons[h, t]] {
-                override def apply(_l: scala.List[Any]) = Cons(_l.head.asInstanceOf[h], _typed(_l.tail))
+                override def apply(_l: scala.List[Any]) = new Cons(_l.head.asInstanceOf[h], _typed(_l.tail))
             }
         }
 
@@ -95,16 +95,16 @@ trait Lists { this: Blend.type =>
         override def untyped = scala.Nil
     }
 
-    val Nil = new Nil{}
+    val Nil: Nil = new Nil{}
 
-    // Compiler will fails to find implicits.
+    // Compiler will fail to search implicits.
     // case object Nil; type Nil = Nil.type
 
 
 // Cons
 
     final case class Cons[h, t <: List](head: h, tail: t) extends List {
-        type `this` = Cons[h, t]
+        override type `this` = Cons[h, t]
 
         override def isEmpty = false
         override type isEmpty = Meta.`false`
