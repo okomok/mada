@@ -50,12 +50,11 @@ trait Lists { this: Blend.type =>
         type drop[i <: Int] <: List
         type take[i <: Int] <: List
 
-        type length <: Int
-
         /**
          * Returns the length.
          */
         def length: scala.Int
+        type length <: Int
 
         /**
          * Converts to <code>scala.List[Any]</code>.
@@ -63,13 +62,18 @@ trait Lists { this: Blend.type =>
         def untyped: scala.List[Any]
 
         override def toString = untyped.toString
+
+        /**
+         * Prepends the element.
+         */
+        final def ::[A](e: A): Cons[A, `this`] = new Cons(e, this.asInstanceOf[`this`])
     }
 
 
 // Nil
 
     final class Nil extends List {
-        override type `this` = List
+        override type `this` = Nil
 
         override def isEmpty = true
         override type isEmpty = Meta.`true`
@@ -77,15 +81,14 @@ trait Lists { this: Blend.type =>
         override type head = Meta.error
         override type tail = Nil
 
-        def ::[A](e: A) = Cons(e, this)
-
         override type append[l <: List] = l
         override type at[i <: Int] = Meta.error
         override type drop[i <: Int] = Nil
         override type take[i <: Int] = Nil
-        override type length = Meta._0I
 
         override def length = 0
+        override type length = Meta._0I
+
         override def untyped = scala.Nil
     }
 
@@ -105,7 +108,6 @@ trait Lists { this: Blend.type =>
 
         override type head = h
         override type tail = t
-        def ::[A](e: A) = Cons(e, this)
 
         def at[i <: Int](implicit _at: At[`this`, i#toNat]) = _at(this)
         override type at[i <: Int] = metaAt[`this`, i#toNat]
