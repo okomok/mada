@@ -65,7 +65,7 @@ class ListUnmetaTest {
         val lst = 3 :: "hello" :: i :: 'a' :: 12 :: Nil
         val a = i :: 'a' :: 12 :: Nil
         val s = lst.drop[_0I]
-        val b = lst.drop[_2I]
+        val b: java.lang.Integer :: Char :: Int :: Nil = lst.drop[_2I]
         val c = lst.drop[_5I]
 //        val d = lst.drop[_9I]
         assertEquals(3, b.length)
@@ -82,7 +82,7 @@ class ListUnmetaTest {
         val i = new java.lang.Integer(10)
         val lst = 3 :: "hello" :: i :: 'a' :: 12 :: Nil
         val a = lst.take[_0I]
-        val b = lst.take[_2I]
+        val b: Int :: String :: Nil = lst.take[_2I]
         val c = lst.take[_5I]
         assertEquals(Nil, a)
         assertEquals(3 :: "hello" :: Nil, b)
@@ -111,7 +111,8 @@ class ListUnmetaTest {
         assertEquals(Nil ::: Nil, Nil)
         assertEquals(lst1 ::: Nil, 3 :: "hello" :: i :: 'a' :: 12 :: Nil)
         assertEquals(Nil ::: lst1, 3 :: "hello" :: i :: 'a' :: 12 :: Nil)
-        assertEquals(lst1, (3 :: "hello" :: Nil) ::: (i :: Nil) ::: ('a' :: 12 :: Nil) ::: Nil)
+        val k: Int :: String :: java.lang.Integer :: Char :: Int :: Nil = (3 :: "hello" :: Nil) ::: (i :: Nil) ::: ('a' :: 12 :: Nil) ::: Nil
+        assertEquals(lst1, k)
     }
 
 }
