@@ -104,6 +104,18 @@ trait Lists { this: Blend.type =>
         final type prepend[that <: List] = metaPrepend[`this`, that]
 
         /**
+         * Prepends reversed <code>that</code>.
+         */
+        final def reverse_:::[that <: List](_that: that)(implicit _reversePrepend: ReversePrepend[`this`, that]): reversePrepend[that] = _reversePrepend(_this, _that)
+        final type reversePrepend[that <: List] = metaReversePrepend[`this`, that]
+
+        /**
+         * Returns reversed one.
+         */
+        final def reverse(implicit _reversePrepend: ReversePrepend[Nil, `this`]): reverse = _reversePrepend(Nil, _this)
+        final type reverse = metaReversePrepend[Nil, `this`]
+
+        /**
          * Converts to <code>scala.List[Any]</code>.
          */
         def untyped: untyped // The implicit way would annoy toString.
@@ -121,6 +133,11 @@ trait Lists { this: Blend.type =>
      * @return <code>r#prepend[l]</code>.
      */
     type :::[l <: List, r <: List] = r#prepend[l]
+
+    /**
+     * @return <code>r#reversePrepend[l]</code>.
+     */
+    type reverse_:::[l <: List, r <: List] = r#reversePrepend[l]
 
 
 // Nil
@@ -235,6 +252,17 @@ trait Lists { this: Blend.type =>
     }
 
 
+// length
+
+    type metaLength[l <: List] = l#accept[lengthVisitor[Meta._0I]]
+
+    sealed trait lengthVisitor[i <: Meta.Int] extends List.Visitor {
+        override type Result = Meta.Int
+        override type visitNil = i
+        override type visitCons[h, t <: List] = t#accept[lengthVisitor[i#increment]]
+    }
+
+
 // prepend
 
     type metaPrepend[r <: List, l <: List] = l#accept[prependVisitor[r]]
@@ -259,14 +287,27 @@ trait Lists { this: Blend.type =>
     }
 
 
-// length
+// reversePrepend
 
-    type metaLength[l <: List] = l#accept[lengthVisitor[Meta._0I]]
+    type metaReversePrepend[r <: List, l <: List] = l#accept[reversePrependVisitor[r]]
 
-    sealed trait lengthVisitor[i <: Meta.Int] extends List.Visitor {
-        override type Result = Meta.Int
-        override type visitNil = i
-        override type visitCons[h, t <: List] = t#accept[lengthVisitor[i#increment]]
+    sealed trait reversePrependVisitor[r <: List] extends List.Visitor {
+        override type Result = List
+        override type visitNil = r
+        override type visitCons[h, t <: List] = t#accept[reversePrependVisitor[Cons[h, r]]]
+    }
+
+    @specializer
+    trait ReversePrepend[r <: List, l <: List] extends ((r, l) => metaReversePrepend[r, l])
+
+    object ReversePrepend {
+        implicit def ofNil[r <: List] = new ReversePrepend[r, Nil] {
+            override def apply(_r: r, _l: Nil) = _r
+        }
+
+        implicit def ofCons[r <: List, h, t <: List](implicit _reversePrepend: ReversePrepend[Cons[h, r], t]) = new ReversePrepend[r, Cons[h, t]] {
+            override def apply(_r: r, _l: Cons[h, t]) = _reversePrepend(Cons(_l.head, _r), _l.tail)
+        }
     }
 
 }

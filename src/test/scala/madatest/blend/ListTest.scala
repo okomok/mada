@@ -113,6 +113,31 @@ class ListUnmetaTest {
         assertEquals(lst1, k)
     }
 
+    def testReversePrepend = {
+        val i = new java.lang.Integer(10)
+        type Lst1 = Int :: String :: java.lang.Integer :: Char :: Int :: Nil
+        type Lst2 = String :: Int :: Nil
+        val lst1: Lst1 = 3 :: "hello" :: i :: 'a' :: 12 :: Nil
+        val lst2: Lst2 = "wow" :: 99 :: Nil
+        val lst12: Lst1 reverse_::: Lst2 = lst1 reverse_::: lst2
+        assertEquals(12 :: 'a' :: i :: "hello" :: 3 :: "wow" :: 99 :: Nil, lst12)
+        assertEquals(Nil reverse_::: Nil, Nil)
+        assertEquals(lst1 reverse_::: Nil, 12 :: 'a' :: i :: "hello" :: 3  :: Nil)
+        assertEquals(Nil reverse_::: lst1, 3 :: "hello" :: i :: 'a' :: 12 :: Nil)
+        val k: Int :: String :: java.lang.Integer :: Char :: Int :: Nil = ("hello" :: 3 :: Nil) reverse_::: (i :: Nil) reverse_::: (12 :: 'a' :: Nil) reverse_::: Nil
+        assertEquals(lst1, k)
+    }
+
+    def testReverse = {
+        val i = new java.lang.Integer(10)
+        type Lst1 = Int :: String :: java.lang.Integer :: Char :: Int :: Nil
+        val lst1: Lst1 = 3 :: "hello" :: i :: 'a' :: 12 :: Nil
+        val lst1r: Lst1#reverse = lst1.reverse
+        val lst1r_ : Int :: Char :: java.lang.Integer :: String :: Int :: Nil = lst1r
+        assertEquals(12 :: 'a' :: i :: "hello" :: 3 :: Nil, lst1r)
+        assertEquals(Nil.reverse, Nil)
+    }
+
 }
 
 class ListMetaTest {
