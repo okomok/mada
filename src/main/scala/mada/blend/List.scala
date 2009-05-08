@@ -39,6 +39,9 @@ trait Lists { this: Blend.type =>
     sealed trait List {
         type `this` <: List
 
+        /**
+         * Is this list nil?
+         */
         def isEmpty: scala.Boolean
         type isEmpty <: Meta.Boolean
 
@@ -72,14 +75,14 @@ trait Lists { this: Blend.type =>
 
 // Nil
 
-    final class Nil extends List {
+    sealed trait Nil extends List {
         override type `this` = Nil
 
         override def isEmpty = true
         override type isEmpty = Meta.`true`
 
         override type head = Meta.error
-        override type tail = Nil
+        override type tail = Nil // Note that meta-algorithms can't use `if`.
 
         override type append[l <: List] = l
         override type at[i <: Int] = Meta.error
@@ -92,7 +95,7 @@ trait Lists { this: Blend.type =>
         override def untyped = scala.Nil
     }
 
-    val Nil = new Nil
+    val Nil = new Nil{}
 
     // Compiler will fails to find implicits.
     // case object Nil; type Nil = Nil.type
@@ -121,6 +124,9 @@ trait Lists { this: Blend.type =>
         override def untyped = scala.::[Any](head, tail.untyped)
     }
 
+    /**
+     * Alias of <code>Cons</code>
+     */
     type ::[h, t <: List] = Cons[h, t]
 
 
