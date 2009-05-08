@@ -45,8 +45,11 @@ trait Lists { this: Blend.type =>
         def isEmpty: scala.Boolean
         type isEmpty <: Meta.Boolean
 
+        def head: head
+        def tail: tail
         type head
         type tail <: List
+
 
         type append[l <: List] <: List
         type at[i <: Int]
@@ -81,6 +84,8 @@ trait Lists { this: Blend.type =>
         override def isEmpty = true
         override type isEmpty = Meta.`true`
 
+        override def head = throw new NoSuchElementException("head of empty list")
+        override def tail = throw new NoSuchElementException("tail of empty list")
         override type head = Meta.error
         override type tail = Nil // Note that meta-algorithms can't use `if`.
 
@@ -103,12 +108,14 @@ trait Lists { this: Blend.type =>
 
 // Cons
 
-    final case class Cons[h, t <: List](head: h, tail: t) extends List {
+    final case class Cons[h, t <: List](private val _h: h, private val _t: t) extends List {
         override type `this` = Cons[h, t]
 
         override def isEmpty = false
         override type isEmpty = Meta.`false`
 
+        override def head = _h
+        override def tail = _t
         override type head = h
         override type tail = t
 
@@ -119,7 +126,7 @@ trait Lists { this: Blend.type =>
         override type drop[i <: Int] = metaDrop[`this`, i#toNat]
 
         override def length = tail.length + 1
-        override type length = t#length#increment
+        override type length = tail#length#increment
 
         override def untyped = scala.::[Any](head, tail.untyped)
     }
