@@ -113,6 +113,11 @@ trait Lists { this: Blend.type =>
         final override def toString = untyped.toString
     }
 
+    /**
+     * @return <code>r#prepend[l]</code>.
+     */
+    type :::[l <: List, r <: List] = r#prepend[l]
+
 
 // Nil
 

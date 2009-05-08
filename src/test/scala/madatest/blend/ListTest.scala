@@ -111,6 +111,7 @@ class ListUnmetaTest {
         assertEquals(Nil ::: Nil, Nil)
         assertEquals(lst1 ::: Nil, 3 :: "hello" :: i :: 'a' :: 12 :: Nil)
         assertEquals(Nil ::: lst1, 3 :: "hello" :: i :: 'a' :: 12 :: Nil)
+        assertEquals(lst1, (3 :: "hello" :: Nil) ::: (i :: Nil) ::: ('a' :: 12 :: Nil) ::: Nil)
     }
 
 }
@@ -159,5 +160,12 @@ class ListMetaTest {
         assertSame[Int :: String :: Double :: Char :: Float :: Boolean :: Byte :: Nil, lst2#prepend[lst1]]
         assertSame[lst1, lst1#prepend[Nil]]
         assertSame[lst1, Nil#prepend[lst1]]
+
+        assertSame[Nil, Nil ::: Nil]
+        assertSame[Int :: String :: Double :: Char :: Float :: Boolean :: Byte :: Nil, lst1 ::: lst2]
+        assertSame[lst1, lst1 ::: Nil]
+        assertSame[lst1, Nil ::: lst1]
+
+        assertSame[lst1, (Int :: String :: Nil) ::: (Double :: Nil) ::: (Char :: Float :: Nil) ::: Nil]
     }
 }
