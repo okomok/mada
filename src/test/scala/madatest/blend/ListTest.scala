@@ -61,22 +61,32 @@ class ListUnmetaTest {
     }
 
     def testDrop = {
-//        val k = Nil.drop[_2I]
-//        assertEquals(Nil, k)
-
         val i = new java.lang.Integer(10)
         val lst = 3 :: "hello" :: i :: 'a' :: 12 :: Nil
         val a = i :: 'a' :: 12 :: Nil
         val s = lst.drop[_0I]
         val b = lst.drop[_2I]
         val c = lst.drop[_5I]
-        val d = lst.drop[_9I]
+//        val d = lst.drop[_9I]
         assertEquals(3, b.length)
         assertEquals(a, b)
+//        assertEquals(0, d.length)
+//        assertEquals(Nil, d)
+        assertEquals(3 :: "hello" :: i :: 'a' :: 12 :: Nil, s)
+        assertEquals(i :: 'a' :: 12 :: Nil, b)
         assertEquals(0, c.length)
         assertEquals(Nil, c)
-        assertEquals(0, d.length)
-        assertEquals(Nil, d)
+    }
+
+    def testTake = {
+        val i = new java.lang.Integer(10)
+        val lst = 3 :: "hello" :: i :: 'a' :: 12 :: Nil
+        val a = lst.take[_0I]
+        val b = lst.take[_2I]
+        val c = lst.take[_5I]
+        assertEquals(Nil, a)
+        assertEquals(3 :: "hello" :: Nil, b)
+        assertEquals(3 :: "hello" :: i :: 'a' :: 12 :: Nil, c)
     }
 
     def testIsEmpty = {
@@ -89,10 +99,20 @@ class ListUnmetaTest {
         val el: scala.List[Any] = scala.::[Any](3, scala.::[Any]("hello", scala.::[Any](i, scala.::[Any]('a', scala.Nil))))
         val tl = 3 :: "hello" :: i :: 'a' :: Nil
         assertEquals(tl, List.typed[ Int :: String :: java.lang.Integer :: Char :: Nil](el))
-
         assertEquals(Nil, List.typed[Nil](scala.Nil))
         ()
     }
+
+    def testPrepend = {
+        val i = new java.lang.Integer(10)
+        val lst1 = 3 :: "hello" :: i :: 'a' :: 12 :: Nil
+        val lst2 = "wow" :: 99 :: Nil
+        assertEquals(3 :: "hello" :: i :: 'a' :: 12 :: "wow" :: 99 :: Nil, lst1 ::: lst2)
+        assertEquals(Nil ::: Nil, Nil)
+        assertEquals(lst1 ::: Nil, 3 :: "hello" :: i :: 'a' :: 12 :: Nil)
+        assertEquals(Nil ::: lst1, 3 :: "hello" :: i :: 'a' :: 12 :: Nil)
+    }
+
 }
 
 class ListMetaTest {
@@ -119,12 +139,25 @@ class ListMetaTest {
     }
 
     trait testDrop {
-        type lst = Int :: String :: Double :: Char :: Nil
-        type lst1 = lst#drop[_2I]
-        assertSame[lst#drop[_4I], Nil]
-        assertSame[lst#drop[_10I], Nil]
-        assertSame[lst1#length, _2I]
-        assertSame[lst1#at[_0I], Double]
-        assertSame[lst1#at[_1I], Char]
+        type lst = Int :: String :: Double :: Char :: Float :: Nil
+        assertSame[Int :: String :: Double :: Char :: Float :: Nil, lst#drop[_0I]]
+        assertSame[Double :: Char :: Float :: Nil, lst#drop[_2I]]
+        assertSame[Nil, lst#drop[_5I]]
+    }
+
+    trait testTake {
+        type lst = Int :: String :: Double :: Char :: Float :: Nil
+        assertSame[Nil, lst#take[_0I]]
+        assertSame[Int :: String :: Nil, lst#take[_2I]]
+        assertSame[Int :: String :: Double :: Char :: Float :: Nil, lst#take[_5I]]
+    }
+
+    trait testPrepend {
+        type lst1 = Int :: String :: Double :: Char :: Float :: Nil
+        type lst2 = Boolean :: Byte :: Nil
+        assertSame[Nil, Nil#prepend[Nil]]
+        assertSame[Int :: String :: Double :: Char :: Float :: Boolean :: Byte :: Nil, lst2#prepend[lst1]]
+        assertSame[lst1, lst1#prepend[Nil]]
+        assertSame[lst1, Nil#prepend[lst1]]
     }
 }
