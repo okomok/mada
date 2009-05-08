@@ -68,13 +68,11 @@ class ListUnmetaTest {
         val b: java.lang.Integer :: Char :: Int :: Nil = lst.drop[_2I]
         val c = lst.drop[_5I]
 //        val d = lst.drop[_9I]
-        assertEquals(3, b.length)
         assertEquals(a, b)
 //        assertEquals(0, d.length)
 //        assertEquals(Nil, d)
         assertEquals(3 :: "hello" :: i :: 'a' :: 12 :: Nil, s)
         assertEquals(i :: 'a' :: 12 :: Nil, b)
-        assertEquals(0, c.length)
         assertEquals(Nil, c)
     }
 
@@ -132,6 +130,7 @@ class ListMetaTest {
     trait testLength {
         type lst = Int :: String :: Double :: Char :: Nil
         assert[lst#length#equals[_4I]]
+        assert[Nil#length#equals[_0I]]
     }
 
     trait testIsEmpty {

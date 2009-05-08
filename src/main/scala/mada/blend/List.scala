@@ -11,7 +11,7 @@ package mada.blend
 //      at http://www.assembla.com/wiki/show/metascala
 
 
-import Meta.{ Int, Nat }
+import Meta.Nat
 
 
 @provider
@@ -65,34 +65,37 @@ trait Lists { this: Blend.type =>
         /**
          * Is this list nil?
          */
-        final def isEmpty(implicit _unmeta: Meta.Unmeta[isEmpty, scala.Boolean]): scala.Boolean = _unmeta()
         type isEmpty <: Meta.Boolean
+        final def isEmpty(implicit _unmeta: Meta.Unmeta[isEmpty, scala.Boolean]): scala.Boolean = _unmeta() // just for convenience.
 
+        /**
+         * Supports visitor algorithm.
+         */
         type accept[v <: List.Visitor] <: v#Result
 
         /**
          * Returns the <code>i</code>-th element.
          */
-        final def at[i <: Int](implicit _at: At[`this`, i#toNat]): at[i] = _at(_this)
-        final type at[i <: Int] = metaAt[`this`, i#toNat]
+        final def at[i <: Meta.Int](implicit _at: At[`this`, i#toNat]): at[i] = _at(_this)
+        final type at[i <: Meta.Int] = metaAt[`this`, i#toNat]
 
         /**
          * Drops EXACTLY <code>i</code> elements.
          */
-        final def drop[i <: Int](implicit _drop: Drop[`this`, i#toNat]): drop[i] = _drop(_this)
-        final type drop[i <: Int] = metaDrop[`this`, i#toNat]
+        final def drop[i <: Meta.Int](implicit _drop: Drop[`this`, i#toNat]): drop[i] = _drop(_this)
+        final type drop[i <: Meta.Int] = metaDrop[`this`, i#toNat]
 
         /**
          * Takes EXACTLY <code>i</code> elements.
          */
-        final def take[i <: Int](implicit _take: Take[`this`, i#toNat]): take[i] = _take(_this)
-        final type take[i <: Int] = metaTake[`this`, i#toNat]
+        final def take[i <: Meta.Int](implicit _take: Take[`this`, i#toNat]): take[i] = _take(_this)
+        final type take[i <: Meta.Int] = metaTake[`this`, i#toNat]
 
         /**
          * Returns the length.
          */
-        final def length(implicit _unmeta: Meta.Unmeta[length, scala.Int]): scala.Int = _unmeta()
-        type length <: Int
+        final type length = metaLength[`this`]
+        final def length(implicit _unmeta: Meta.Unmeta[length, scala.Int]): scala.Int = _unmeta() // just for convenience.
 
         /**
          * Prepends <code>that</code>.
@@ -103,7 +106,8 @@ trait Lists { this: Blend.type =>
         /**
          * Converts to <code>scala.List[Any]</code>.
          */
-        def untyped: scala.List[Any]
+        def untyped: untyped // The implicit way would annoy toString.
+        final type untyped = scala.List[Any]
 
         /**
          * Prepends <code>e</code>.
@@ -130,7 +134,6 @@ trait Lists { this: Blend.type =>
         override type tail = Meta.error // Nil would `List.take` less-restrictive, but less-mathematical.
         override type isEmpty = Meta.`true`
         override type accept[v <: List.Visitor] = v#visitNil
-        override type length = Meta._0I
 
         override def untyped = scala.Nil
     }
@@ -150,7 +153,6 @@ trait Lists { this: Blend.type =>
         override type tail = t
         override type isEmpty = Meta.`false`
         override type accept[v <: List.Visitor] = v#visitCons[h, t]
-        override type length = tail#length#increment
 
         override def untyped = scala.::[Any](head, tail.untyped)
     }
@@ -159,30 +161,6 @@ trait Lists { this: Blend.type =>
      * Alias of <code>Cons</code>
      */
     type ::[h, t <: List] = Cons[h, t]
-
-
-// prepend
-
-    type metaPrepend[l <: List, n <: List] = n#accept[prependVisitor[l]]
-
-    sealed trait prependVisitor[l <: List] extends List.Visitor {
-        override type Result = List
-        override type visitNil = l
-        override type visitCons[h, t <: List] = Cons[h, t#accept[prependVisitor[l]]]
-    }
-
-    @specializer
-    trait Prepend[l <: List, n <: List] extends ((l, n) => metaPrepend[l, n])
-
-    object Prepend {
-        implicit def ofNil[l <: List] = new Prepend[l, Nil] {
-            override def apply(_l: l, _n: Nil) = _l
-        }
-
-        implicit def ofCons[l <: List, h, t <: List](implicit _prepend: Prepend[l, t]) = new Prepend[l, Cons[h, t]] {
-            override def apply(_l: l, _n: Cons[h, t]) = Cons(_n.head, _prepend(_l, _n.tail))
-        }
-    }
 
 
 // at
@@ -254,6 +232,41 @@ trait Lists { this: Blend.type =>
         implicit def ofSucc[h, t <: List, n <: Nat](implicit _take: Take[t, n]) = new Take[Cons[h, t], Nat.succ[n]] {
             override def apply(_l: Cons[h, t]) = Cons(_l.head, _take(_l.tail))
         }
+    }
+
+
+// prepend
+
+    type metaPrepend[r <: List, l <: List] = l#accept[prependVisitor[r]]
+
+    sealed trait prependVisitor[r <: List] extends List.Visitor {
+        override type Result = List
+        override type visitNil = r
+        override type visitCons[h, t <: List] = Cons[h, t#accept[prependVisitor[r]]]
+    }
+
+    @specializer
+    trait Prepend[r <: List, l <: List] extends ((r, l) => metaPrepend[r, l])
+
+    object Prepend {
+        implicit def ofNil[r <: List] = new Prepend[r, Nil] {
+            override def apply(_r: r, _l: Nil) = _r
+        }
+
+        implicit def ofCons[r <: List, h, t <: List](implicit _prepend: Prepend[r, t]) = new Prepend[r, Cons[h, t]] {
+            override def apply(_r: r, _l: Cons[h, t]) = Cons(_l.head, _prepend(_r, _l.tail))
+        }
+    }
+
+
+// length
+
+    type metaLength[l <: List] = l#accept[lengthVisitor[Meta._0I]]
+
+    sealed trait lengthVisitor[i <: Meta.Int] extends List.Visitor {
+        override type Result = Meta.Int
+        override type visitNil = i
+        override type visitCons[h, t <: List] = t#accept[lengthVisitor[i#increment]]
     }
 
 }
