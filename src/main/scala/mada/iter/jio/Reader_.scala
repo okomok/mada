@@ -15,7 +15,7 @@ private[mada] object ReaderToIterable {
 }
 
 
-private[mada] class ReaderIterable(in: Reader) extends Iterable.Projection[Char] {
+private[mada] class ReaderIterable(in: Reader) extends Iterable/*.Projection*/[Char] {
     override def elements = {
         in.reset
         new ReaderIterator(in)

@@ -81,7 +81,7 @@ object Iterables extends Conversions with Compatibles with Operators {
     /**
      * Returns lazy one.
      */
-    def `lazy`[A](it: => Iterable[A]): Iterable[A] = new IterableProxy[A] {
+    def `lazy`[A](it: => Iterable[A]): Iterable[A] = new scala.collection.IterableProxy[A] {
         override lazy val self = it.projection
     }
 
@@ -273,7 +273,7 @@ object Iterables extends Conversions with Compatibles with Operators {
     /**
      * Alias of <code>IterableProxy</code>
      */
-    type Forwarder[A] = IterableProxy[A]
+    type Forwarder[A] = scala.collection.IterableProxy[A]
 
     /**
      * Alias of <code>iter.IteratorProxy</code>

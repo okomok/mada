@@ -62,7 +62,7 @@ class SymbolSet[A] private (private val tree: TSTree[A, Unit]) extends Peg[A] wi
     override def hashCode = tree.hashCode
     override def isEmpty = tree.isEmpty
     override def size = tree.size
-    protected override def stringPrefix = "SymbolSet"
+    override def stringPrefix = "SymbolSet"
 
 // mutable.Set
     override def +=(v: Vector[A]): Unit = tree.put(v, ())

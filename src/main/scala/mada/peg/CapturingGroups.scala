@@ -14,7 +14,7 @@ class CapturingGroups[K, A](val map: Maps.Mutable[K, Vector[A]]) {
     /**
      * Constructs from a hash-map.
      */
-    def this() = this(new scala.collection.jcl.HashMap[K, Vector[A]])
+    def this() = this(new scala.collection.mutable.HashMap[K, Vector[A]])
 
     /**
      * Alias of <code>capture</code>

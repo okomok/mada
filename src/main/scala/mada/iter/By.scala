@@ -8,13 +8,13 @@ package mada.iter
 
 
 private[mada] object By {
-    def apply[A](it: Iterator[A]): Iterable[A] = new Iterable.Projection[A] {
+    def apply[A](it: Iterator[A]): Iterable[A] = new Iterable/*.Projection*/[A] {
         override val elements = it
     }
 }
 
 private[mada] object ByName {
-    def apply[A](it: => Iterator[A]): Iterable[A] = new Iterable.Projection[A] {
+    def apply[A](it: => Iterator[A]): Iterable[A] = new Iterable/*.Projection*/[A] {
         override def elements = it
     }
 }

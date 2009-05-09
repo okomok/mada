@@ -829,7 +829,7 @@ trait Vector[A] extends PartialFunction[Int, A] {
     /**
      * @return  <code>Vector.toRandomAccessSeq(this)</code>.
      */
-    final def toRandomAccessSeq: RandomAccessSeq.Mutable[A] = Vector.toRandomAccessSeq(this)
+    final def toRandomAccessSeq: scala.collection.mutable.Vector[A] = Vector.toRandomAccessSeq(this)
 
     /**
      * @return  <code>Vector.toStream(this)</code>.

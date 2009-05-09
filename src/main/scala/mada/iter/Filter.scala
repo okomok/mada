@@ -15,7 +15,7 @@ private[mada] object Filter {
 }
 
 
-private[mada] class FilterIterable[A](val it: Iterable[A], val p: A => Boolean) extends Iterable.Projection[A] {
+private[mada] class FilterIterable[A](val it: Iterable[A], val p: A => Boolean) extends Iterable/*.Projection*/[A] {
     override def elements = new FilterIterator(it.elements, p)
 }
 

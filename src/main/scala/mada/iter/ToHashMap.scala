@@ -9,7 +9,7 @@ package mada.iter
 
 private[mada] object ToHashMap {
     def apply[K, V](from: Iterable[(K, V)]): scala.collection.Map[K, V] = {
-        val to = new scala.collection.jcl.HashMap[K, V]
+        val to = new scala.collection.mutable.HashMap[K, V]
         for (e <- from.projection) {
             to.put(e._1, e._2)
         }

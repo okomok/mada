@@ -62,7 +62,7 @@ class SymbolMap[A] private (private val tree: TSTree[A, Peg[A]]) extends Peg[A] 
     override def hashCode = tree.hashCode
     override def isEmpty = tree.isEmpty
     override def size = tree.size
-    protected override def stringPrefix = "SymbolMap"
+    override def stringPrefix = "SymbolMap"
 
 // mutable.Map
     override def -=(key: Vector[A]) = tree.remove(key)

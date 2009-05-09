@@ -21,7 +21,7 @@ private[mada] object Step {
 }
 
 
-private[mada] class StepIterable[A](val it: Iterable[A], val n: Int) extends Iterable.Projection[A] {
+private[mada] class StepIterable[A](val it: Iterable[A], val n: Int) extends Iterable/*.Projection*/[A] {
     override def elements = {
         if (n == 0) {
             new NonStepIterator(it.elements)

@@ -8,9 +8,9 @@ package mada.vec
 
 
 private[mada] object ToStream {
-    def apply[A](v: Vector[A]): Stream[A] = new VectorStream(v)
+    def apply[A](v: Vector[A]): Stream[A] = throw new Error // new VectorStream(v)
 }
-
+/*
 private[mada] class VectorStream[A](v: Vector[A]) extends Stream.Definite[A] {
     override def isEmpty = v.isEmpty
     override def head = {
@@ -49,3 +49,4 @@ private[mada] class VectorStream[A](v: Vector[A]) extends Stream.Definite[A] {
         }
     }
 }
+*/
