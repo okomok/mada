@@ -138,6 +138,36 @@ class ListUnmetaTest {
         assertEquals(Nil.reverse, Nil)
     }
 
+    def testLast = {
+        val i = new java.lang.Integer(10)
+        type Lst1 = Int :: String :: java.lang.Integer :: Char :: Int :: Nil
+        val lst1: Lst1 = 3 :: "hello" :: i :: 'a' :: 12 :: Nil
+        val e: Lst1#last = lst1.last
+        val e_ : Int = e
+        assertEquals(12, e_)
+
+        type Lst2 = String :: Nil
+        val lst2: Lst2 = "hello" :: Nil
+        val e2: Lst2#last = lst2.last
+        val e2_ : String = e2
+        assertEquals("hello", e2_)
+    }
+/*
+    def testInit = {
+        val i = new java.lang.Integer(10)
+        type Lst1 = Int :: String :: java.lang.Integer :: Char :: Int :: Nil
+        val lst1: Lst1 = 3 :: "hello" :: i :: 'a' :: 12 :: Nil
+        val e: Lst1#init = lst1.init
+        val e_ : Int :: String :: java.lang.Integer :: Char :: Nil = e
+        assertEquals(i, e.at[_2I])
+
+        type Lst2 = String :: Nil
+        val lst2: Lst2 = "hello" :: Nil
+        val e2: Lst2#init = lst2.init
+        val e2_ : Nil = e2
+        assertEquals(Nil, e2_)
+    }
+*/
 }
 
 class ListMetaTest {

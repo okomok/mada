@@ -20,12 +20,18 @@ trait Lists { this: Blend.type =>
 
     object List {
 
+        /**
+         * Just like iterator of the meta List.
+         */
         trait Visitor {
             type Result
             type visitNil <: Result
             type visitCons[h, t <: List] <: Result
         }
 
+        /**
+         * Creates meta List from <code>scala.List</code>.
+         */
         def typed[l <: List](from: scala.List[Any])(implicit _typed: Typed[l]) = _typed(from)
 
         @specializer
@@ -69,7 +75,7 @@ trait Lists { this: Blend.type =>
         final def isEmpty(implicit _unmeta: Meta.Unmeta[isEmpty, scala.Boolean]): scala.Boolean = _unmeta() // just for convenience.
 
         /**
-         * Supports visitor algorithm.
+         * Supports visiting iteration.
          */
         type accept[v <: List.Visitor] <: v#Result
 
@@ -90,6 +96,12 @@ trait Lists { this: Blend.type =>
          */
         final def take[i <: Meta.Int](implicit _take: Take[`this`, i#toNat]): take[i] = _take(_this)
         final type take[i <: Meta.Int] = metaTake[`this`, i#toNat]
+
+        /**
+         * Returns the last element.
+         */
+        final def last(implicit _last: Last[`this`, Meta.error]): last = _last(_this, Meta.nullOf[Meta.error])
+        final type last = metaLast[`this`, Meta.error]
 
         /**
          * Returns the length.
@@ -182,6 +194,8 @@ trait Lists { this: Blend.type =>
 
 // at
 
+    // drop#head can't replace this. The delayed #head destroys type identity.
+
     type metaAt[l <: List, n <: Nat] = n#accept[atVisitor[l]]
 
     sealed trait atVisitor[l <: List] extends Nat.Visitor {
@@ -250,6 +264,40 @@ trait Lists { this: Blend.type =>
             override def apply(_l: Cons[h, t]) = Cons(_l.head, _take(_l.tail))
         }
     }
+
+
+// last
+
+    // lastOption might be better, but compiler can't find specializer for scala.None.type.
+
+    type metaLast[l <: List, e] = l#accept[lastVisitor[e]]
+
+    sealed trait lastVisitor[e] extends List.Visitor {
+        override type Result = Any
+        override type visitNil = e
+        override type visitCons[h, t <: List] = t#accept[lastVisitor[h]]
+    }
+
+    // Synchronizing with metaLast algorithm can remove asInstanceOf.
+    @specializer
+    trait Last[l <: List, e] extends ((l, e) => metaLast[l, e])
+
+    object Last {
+        implicit def ofNil[e] = new Last[Nil, e] {
+            override def apply(_l: Nil, _e: e) = _e
+        }
+
+        implicit def ofCons[h, t <: List, e](implicit _last: Last[t, h]) = new Last[Cons[h, t], e] {
+            override def apply(_l: Cons[h, t], unused: e) = _last(_l.tail, _l.head)
+        }
+    }
+
+
+// init
+
+    // I don't know the 1-path algorithm.
+    // "#take with #length#decrement" doesn't work: #length destroys type identity,
+    // so that compiler fails to find specializers.
 
 
 // length
