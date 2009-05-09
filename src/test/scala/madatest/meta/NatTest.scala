@@ -28,21 +28,35 @@ class NatTest {
 
         assert[_1#increment == _2]
         assert[_1#increment#increment == _3]
+
+        assert[_1#decrement == _0]
+        assert[_3#decrement#decrement == _1]
+        assert[_4#decrement == _3]
+        assert[_7#increment#decrement#decrement == _6]
     }
 
     trait testAdd {
+        assert[_0 + _0 == _0]
         assert[_0 + _3 == _3]
         assert[_4 + _3 == _7]
         assert[_1 + _8 == _9]
         assert[_5 + _2 == _7]
     }
 
+    trait testSubtract {
+        assert[_0 - _0 == _0]
+        assert[_3 - _0 == _3]
+        assert[_4 - _3 == _1]
+        assert[_8 - _1 == _7]
+        assert[_5 - _2 == _3]
+    }
+
     trait testMultiply {
+        assert[_3#multiply[_2] == _6]
         /* very slow to compile.
         assert[_0#multiply[_3] == _0]
         assert[_1#multiply[_3] == _3]
         assert[_3#multiply[_1] == _3]
-        assert[_3#multiply[_2] == _6]
         assert[_2#multiply[_3] == _6]
         assert[_9#multiply[_1] == _9]
         assert[_3#multiply[_3] == _9]
@@ -52,7 +66,7 @@ class NatTest {
 
     trait testPropagation {
         type plusPlus[n <: Nat] = n#increment#increment
-        type id[n <: Nat] = n
+        type id[n <: Nat] = n#increment#decrement
         type equaL[n <: Nat, m <: Nat] = plusPlus[n] == id[m]
 
         assert[plusPlus[_4] == _6]

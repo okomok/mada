@@ -29,15 +29,21 @@ trait Nats { this: Meta.type =>
 
 
     trait Nat extends Operatable {
+        type `this` <: Nat
         final type equals[that <: Nat] = identity#equals[that#identity]
         final override type Operand_== = Nat
         final override type operator_==[that <: Nat] = equals[that]
 
         type increment <: Nat
+        type decrement <: Nat
 
         type add[that <: Nat] <: Nat
         final override type Operand_+ = Nat
         final override type operator_+[that <: Nat] = add[that]
+
+        final type subtract[that <: Nat] = that#accept[Nat.subtractVisitor[`this`]]
+        final override type Operand_- = Nat
+        final override type operator_-[that <: Nat] = subtract[that]
 
         type multiply[that <: Nat] <: Nat
 
@@ -48,8 +54,11 @@ trait Nats { this: Meta.type =>
 
     object Nat {
 
+
         sealed trait zero extends Nat {
+            override type `this` = zero
             override type increment = succ[zero]
+            override type decrement = error
             override type add[that <: Nat] = that
             override type multiply[that <: Nat] = zero
             override type identity = Identity._0
@@ -57,18 +66,28 @@ trait Nats { this: Meta.type =>
         }
 
         sealed trait succ[n <: Nat] extends Nat {
-            override type increment = succ[succ[n]]
+            override type `this` = succ[n]
+            override type increment = succ[`this`]
+            override type decrement = n
             override type add[that <: Nat] = succ[n#add[that]]
             override type multiply[that <: Nat] = n#multiply[that]#add[that]
             override type identity = n#identity#increment
             override type accept[v <: Visitor] = v#visitSucc[n]
         }
 
+
         trait Visitor {
             type Result
             type visitZero <: Result
             type visitSucc[n <: Nat] <: Result
         }
+
+        sealed trait subtractVisitor[x <: Nat] extends Visitor {
+            type Result = Nat
+            type visitZero = x
+            type visitSucc[y <: Nat] = y#accept[subtractVisitor[x#decrement]]
+        }
+
 
         sealed trait Identity {
             type increment <: Identity
