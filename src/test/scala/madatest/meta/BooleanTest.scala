@@ -40,49 +40,17 @@ class BooleanTest {
 
     trait testOperator {
         assert[`true` && `true`]
-        assert[![`false` && `true`]]
+        assert[(`false` && `true`)#not]
         assert[`false` || `true`]
         assert[`true` || `false`]
     }
 
     trait testPropagation {
-        type incinc[n <: Int] = natIf[n == _3I, n#increment, n]#increment
-        assertLower[incinc[_2I], Int]
+        type incinc[n <: Nat] = natIf[n == _3, n#increment, n]#increment
+        assertLower[incinc[_2], Nat]
 
-        assert[`if`[_2I == _3I, _2I#increment, _2I]#increment == _3I]
-        assert[incinc[_2I] == _3I]
-        assert[incinc[_3I] == _5I]
+//        assert[`if`[_2 == _3, _2#increment, _2]#increment == _3]
+        assert[incinc[_2] == _3]
+        assert[incinc[_3] == _5]
     }
-
-    trait testPropagation2 {
-/*
-        type incinc[n <: Int] = ifThen[n == _3I, n#increment]#increment
-        assert[incinc[_3I] == _5I]
-*/
-    }
-
-
-    /*
-    trait N {
-        type Self = N
-        type feel
-    }
-    trait s extends N {
-        type `this` = s
-        override type isBoxed = `false`
-    }
-    trait t extends s {
-        type `this` = t
-        type touch
-    }
-
-    type foo[a <: N, _s <: N, _t <: _s] = `if`[a#isBoxed, _s, _t]
-
-    type feelIt[a <: N, _s <: N, _t <: _s] = `if`[a#isBoxed, _s, _t]#feel
-
-    def testTypeSafe: Unit = {
-        nullOf[foo[s, s, t]#touch]
-        assertSame[t, foo[s, s, t]]
-    }
-    */
 }

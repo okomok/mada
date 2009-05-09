@@ -19,15 +19,15 @@ class ListUnmetaTest {
     def testAt = {
         val i = new java.lang.Integer(10)
         val lst = 3 :: "hello" :: i :: 'a' :: Nil
-        val _0: Int = lst.at[_0I]
+        val _0: Int = lst.at[_0]
         assertEquals(3, _0)
-        val _1: String = lst.at[_1I]
+        val _1: String = lst.at[_1]
         assertEquals("hello", _1)
-        val _2: java.lang.Integer = lst.at[_2I]
+        val _2: java.lang.Integer = lst.at[_2]
         assertSame(i, _2)
-        val _3: Char = lst.at[_3I]
+        val _3: Char = lst.at[_3]
         assertEquals('a', _3)
-        assertEquals(10, lst.at[_2I].intValue)
+        assertEquals(10, lst.at[_2].intValue)
     }
 
     def testLength = {
@@ -64,10 +64,10 @@ class ListUnmetaTest {
         val i = new java.lang.Integer(10)
         val lst = 3 :: "hello" :: i :: 'a' :: 12 :: Nil
         val a = i :: 'a' :: 12 :: Nil
-        val s = lst.drop[_0I]
-        val b: java.lang.Integer :: Char :: Int :: Nil = lst.drop[_2I]
-        val c = lst.drop[_5I]
-//        val d = lst.drop[_9I]
+        val s = lst.drop[_0]
+        val b: java.lang.Integer :: Char :: Int :: Nil = lst.drop[_2]
+        val c = lst.drop[_5]
+//        val d = lst.drop[_9]
         assertEquals(a, b)
 //        assertEquals(0, d.length)
 //        assertEquals(Nil, d)
@@ -79,9 +79,9 @@ class ListUnmetaTest {
     def testTake = {
         val i = new java.lang.Integer(10)
         val lst = 3 :: "hello" :: i :: 'a' :: 12 :: Nil
-        val a = lst.take[_0I]
-        val b: Int :: String :: Nil = lst.take[_2I]
-        val c = lst.take[_5I]
+        val a = lst.take[_0]
+        val b: Int :: String :: Nil = lst.take[_2]
+        val c = lst.take[_5]
         assertEquals(Nil, a)
         assertEquals(3 :: "hello" :: Nil, b)
         assertEquals(3 :: "hello" :: i :: 'a' :: 12 :: Nil, c)
@@ -159,7 +159,7 @@ class ListUnmetaTest {
         val lst1: Lst1 = 3 :: "hello" :: i :: 'a' :: 12 :: Nil
         val e: Lst1#init = lst1.init
         val e_ : Int :: String :: java.lang.Integer :: Char :: Nil = e
-        assertEquals(i, e.at[_2I])
+        assertEquals(i, e.at[_2])
 
         type Lst2 = String :: Nil
         val lst2: Lst2 = "hello" :: Nil
@@ -175,17 +175,17 @@ class ListMetaTest {
 
     trait testAt {
         type lst = Int :: String :: Double :: Char :: Nil
-        assertSame[lst#at[_0I], Int]
-        assertSame[lst#at[_1I], String]
-        assertSame[lst#at[_2I], Double]
-        assertSame[lst#at[_3I], Char]
-        assertSame[lst#at[_2I#add[_1I]], Char]
+        assertSame[lst#at[_0], Int]
+        assertSame[lst#at[_1], String]
+        assertSame[lst#at[_2], Double]
+        assertSame[lst#at[_3], Char]
+        assertSame[lst#at[_2#add[_1]], Char]
     }
 
     trait testLength {
         type lst = Int :: String :: Double :: Char :: Nil
-        assert[lst#length#equals[_4I]]
-        assert[Nil#length#equals[_0I]]
+        assert[lst#length#equals[_4]]
+        assert[Nil#length#equals[_0]]
     }
 
     trait testIsEmpty {
@@ -196,16 +196,16 @@ class ListMetaTest {
 
     trait testDrop {
         type lst = Int :: String :: Double :: Char :: Float :: Nil
-        assertSame[Int :: String :: Double :: Char :: Float :: Nil, lst#drop[_0I]]
-        assertSame[Double :: Char :: Float :: Nil, lst#drop[_2I]]
-        assertSame[Nil, lst#drop[_5I]]
+        assertSame[Int :: String :: Double :: Char :: Float :: Nil, lst#drop[_0]]
+        assertSame[Double :: Char :: Float :: Nil, lst#drop[_2]]
+        assertSame[Nil, lst#drop[_5]]
     }
 
     trait testTake {
         type lst = Int :: String :: Double :: Char :: Float :: Nil
-        assertSame[Nil, lst#take[_0I]]
-        assertSame[Int :: String :: Nil, lst#take[_2I]]
-        assertSame[Int :: String :: Double :: Char :: Float :: Nil, lst#take[_5I]]
+        assertSame[Nil, lst#take[_0]]
+        assertSame[Int :: String :: Nil, lst#take[_2]]
+        assertSame[Int :: String :: Double :: Char :: Float :: Nil, lst#take[_5]]
     }
 
     trait testPrepend {

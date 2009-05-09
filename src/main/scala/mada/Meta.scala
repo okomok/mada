@@ -11,7 +11,7 @@ import meta._
 
 
 object Meta extends
-    Alwayses with Asserts with Args with Booleans with Forwardings with Functions with Ints with Nats
+    Alwayses with Asserts with Args with Booleans with Forwardings with Functions with Nats
     with Operators with Quotes with Products with Tuples { ^ =>
 
 
@@ -54,17 +54,17 @@ object Meta extends
      * Contains aliases of meta Int literals.
      */
     object IntLiterals {
-        type _0I = ^._0I
-        type _1I = ^._1I
-        type _2I = ^._2I
-        type _3I = ^._3I
-        type _4I = ^._4I
-        type _5I = ^._5I
-        type _6I = ^._6I
-        type _7I = ^._7I
-        type _8I = ^._8I
-        type _9I = ^._9I
-        type _10I = ^._10I
+        type _0 = ^._0
+        type _1 = ^._1
+        type _2 = ^._2
+        type _3 = ^._3
+        type _4 = ^._4
+        type _5 = ^._5
+        type _6 = ^._6
+        type _7 = ^._7
+        type _8 = ^._8
+        type _9 = ^._9
+        type _10 = ^._10
     }
 
 }

@@ -44,7 +44,7 @@ package madatest.meta
         assert[`true`]
 
         // metamethod
-        type increment[n <: Int] = n#increment // metamethod invocation by `#`
+        type increment[n <: Nat] = n#increment // metamethod invocation by `#`
 
         // metatrait
         trait Product1 {
@@ -53,18 +53,18 @@ package madatest.meta
 
         // metavalue
         trait p extends Product1 {
-            override type _1 = _7I // implements metamethod.
+            override type _1 = _7 // implements metamethod.
         }
 
         // another metamethod
-        type getAndInc[x <: Product1 { type _1 <: Int }] = x#_1#increment
-        assert[getAndInc[p] == _8I]
+        type getAndInc[x <: Product1 { type _1 <: Nat }] = x#_1#increment
+        assert[getAndInc[p] == _8]
 
         // converts metamethod to metafunction(metavalue).
-        type inc = quote1[increment, Int, Int]
+        type inc = quote1[increment, Nat, Nat]
 
         // metafunction invocation
-        assert[inc#apply1[_3I] == _4I]
+        assert[inc#apply1[_3] == _4]
 
         def testTrivial: Unit = ()
     }

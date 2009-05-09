@@ -80,22 +80,22 @@ trait Lists { this: Blend.type =>
         type accept[v <: List.Visitor] <: v#Result
 
         /**
-         * Returns the <code>i</code>-th element.
+         * Returns the <code>n</code>-th element.
          */
-        final def at[i <: Meta.Int](implicit _at: At[`this`, i#toNat]): at[i] = _at(_this)
-        final type at[i <: Meta.Int] = metaAt[`this`, i#toNat]
+        final def at[n <: Nat](implicit _at: At[`this`, n]): at[n] = _at(_this)
+        final type at[n <: Nat] = metaAt[`this`, n]
 
         /**
-         * Drops EXACTLY <code>i</code> elements.
+         * Drops EXACTLY <code>n</code> elements.
          */
-        final def drop[i <: Meta.Int](implicit _drop: Drop[`this`, i#toNat]): drop[i] = _drop(_this)
-        final type drop[i <: Meta.Int] = metaDrop[`this`, i#toNat]
+        final def drop[n <: Nat](implicit _drop: Drop[`this`, n]): drop[n] = _drop(_this)
+        final type drop[n <: Nat] = metaDrop[`this`, n]
 
         /**
-         * Takes EXACTLY <code>i</code> elements.
+         * Takes EXACTLY <code>n</code> elements.
          */
-        final def take[i <: Meta.Int](implicit _take: Take[`this`, i#toNat]): take[i] = _take(_this)
-        final type take[i <: Meta.Int] = metaTake[`this`, i#toNat]
+        final def take[n <: Nat](implicit _take: Take[`this`, n]): take[n] = _take(_this)
+        final type take[n <: Nat] = metaTake[`this`, n]
 
         /**
          * Returns the last element.
@@ -302,12 +302,12 @@ trait Lists { this: Blend.type =>
 
 // length
 
-    type metaLength[l <: List] = l#accept[lengthVisitor[Meta._0I]]
+    type metaLength[l <: List] = l#accept[lengthVisitor[Nat.zero]]
 
-    sealed trait lengthVisitor[i <: Meta.Int] extends List.Visitor {
-        override type Result = Meta.Int
-        override type visitNil = i
-        override type visitCons[h, t <: List] = t#accept[lengthVisitor[i#increment]]
+    sealed trait lengthVisitor[n <: Nat] extends List.Visitor {
+        override type Result = Meta.Nat
+        override type visitNil = n
+        override type visitCons[h, t <: List] = t#accept[lengthVisitor[n#increment]]
     }
 
 
