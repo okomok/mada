@@ -75,7 +75,7 @@ trait Lists { this: Blend.type =>
         final def isEmpty(implicit _unmeta: Meta.Unmeta[isEmpty, scala.Boolean]): scala.Boolean = _unmeta() // just for convenience.
 
         /**
-         * Supports visiting iteration.
+         * Supports visitor iteration.
          */
         type accept[v <: List.Visitor] <: v#Result
 
@@ -96,6 +96,12 @@ trait Lists { this: Blend.type =>
          */
         final def take[n <: Nat](implicit _take: Take[`this`, n]): take[n] = _take(_this)
         final type take[n <: Nat] = metaTake[`this`, n]
+
+        /**
+         * @return <code>drop[n].take[m - n]</code>.
+         */
+        final def slice[n <: Nat, m <: Nat](implicit _slice: Slice[`this`, n, m]): slice[n, m] = _slice(_this)
+        final type slice[n <: Nat, m <: Nat] = metaSlice[`this`, n, m]
 
         /**
          * Returns the last element.
@@ -262,6 +268,30 @@ trait Lists { this: Blend.type =>
 
         implicit def ofSucc[h, t <: List, n <: Nat](implicit _take: Take[t, n]) = new Take[Cons[h, t], Nat.succ[n]] {
             override def apply(_l: Cons[h, t]) = Cons(_l.head, _take(_l.tail))
+        }
+    }
+
+
+// slice
+
+    type metaSlice[l <: List, n <: Nat, m <: Nat] = n#accept[sliceVisitor[l, m]]
+
+    sealed trait sliceVisitor[l <: List, m <: Nat] extends Nat.Visitor {
+        override type Result = List
+        override type visitZero = metaTake[l, m]
+        override type visitSucc[n <: Nat] = n#accept[sliceVisitor[l#tail, m#decrement]]
+    }
+
+    @specializer
+    trait Slice[l <: List, n <: Nat, m <: Nat] extends (l => metaSlice[l, n, m])
+
+    object Slice {
+        implicit def ofZero[l <: List, m <: Nat](implicit _take: Take[l, m]) = new Slice[l, Nat.zero, m] {
+            override def apply(_l: l) = _take(_l)
+        }
+
+        implicit def ofSucc[h, t <: List, n <: Nat, m <: Nat](implicit _slice: Slice[t, n, m]) = new Slice[Cons[h, t], Nat.succ[n], Nat.succ[m]] {
+            override def apply(_l: Cons[h, t]) = _slice(_l.tail)
         }
     }
 

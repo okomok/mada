@@ -152,6 +152,49 @@ class ListUnmetaTest {
         val e2_ : String = e2
         assertEquals("hello", e2_)
     }
+
+    def testSlice = {
+        val i = new java.lang.Integer(10)
+        type Lst1 = Int :: String :: java.lang.Integer :: Char :: Int :: Nil
+        val lst1: Lst1 = 3 :: "hello" :: i :: 'a' :: 12 :: Nil;
+        {
+            val e: Lst1#slice[_0, _2] = lst1.slice[_0, _2]
+            val e_ : Int::String::Nil = e
+            assertEquals(3::"hello"::Nil, e_)
+        }
+        {
+            val e: Lst1#slice[_1, _5] = lst1.slice[_1, _5]
+            val e_ : String :: java.lang.Integer :: Char :: Int :: Nil = e
+            assertEquals("hello" :: i :: 'a' :: 12 :: Nil, e_)
+        }
+        {
+            val e: Lst1#slice[_2, _4] = lst1.slice[_2, _4]
+            val e_ : java.lang.Integer :: Char :: Nil = e
+            assertEquals(i :: 'a' :: Nil, e_)
+        }
+
+        type Lst2 = String :: Nil
+        val lst2: Lst2 = "hello" :: Nil;
+        {
+            val e: Lst2#slice[_0, _0] = lst2.slice[_0, _0]
+            val e_ : Nil = e
+            assertEquals(Nil, e_)
+        }
+        {
+            val e: Lst2#slice[_0, _1] = lst2.slice[_0, _1]
+            val e_ : String :: Nil = e
+            assertEquals("hello" :: Nil, e_)
+        }
+
+        type Lst3 = Nil
+        val lst3: Lst3 = Nil;
+        {
+            val e: Lst2#slice[_0, _0] = lst2.slice[_0, _0]
+            val e_ : Nil = e
+            assertEquals(Nil, e_)
+        }
+        ()
+    }
 /*
     def testInit = {
         val i = new java.lang.Integer(10)
