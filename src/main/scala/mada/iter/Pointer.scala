@@ -120,7 +120,7 @@ trait PointerConversions { this: Pointer.type =>
  */
 @provider
 trait PointerCompatibles { this: Pointer.type =>
-    @returnthis val Compatibles: PointerCompatibles = this
+    @returnThis val Compatibles: PointerCompatibles = this
     implicit def madaPointerFromIterator[A](from: Iterator[A]): Pointer[A] = fromIterator(from)
     implicit def madaPointerToIterator[A](from: Pointer[A]): Iterator[A] = toIterator(from)
 }

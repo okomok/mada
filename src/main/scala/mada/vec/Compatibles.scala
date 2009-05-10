@@ -12,7 +12,7 @@ package mada.vec
  */
 @provider
 trait Compatibles { this: Vector.type =>
-    @returnthis val Compatibles: Compatibles = this
+    @returnThis val Compatibles: Compatibles = this
 // from
     implicit def madaVectorFromArray[A](from: Array[A]): Vector[A] = fromArray(from)
     implicit def madaVectorFromCell[A](from: Cell[A]): Vector[A] = fromCell(from)

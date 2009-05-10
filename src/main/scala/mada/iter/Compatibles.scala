@@ -12,7 +12,7 @@ package mada.iter
  */
 @provider
 trait Compatibles { this: Iterables.type =>
-    @returnthis val Compatibles: Compatibles = this
+    @returnThis val Compatibles: Compatibles = this
 // from
     implicit def madaIterableFromJclIterable[A](from: java.lang.Iterable[A]): Iterable[A] = fromJclIterable(from)
     implicit def madaIterableFromJioObjectInput(from: java.io.ObjectInput): Iterable[AnyRef] = fromJioObjectInput(from)

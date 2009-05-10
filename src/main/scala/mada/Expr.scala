@@ -64,7 +64,7 @@ trait Expr[Z, A] {
      */
     protected def dontKnow[B](x: Expr[A, B]): B = x.eval(x.Unknown)
 
-    @returnthis
+    @returnThis
     final def expr = this
 
     /**

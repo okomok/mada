@@ -12,7 +12,7 @@ package mada.peg
  */
 @provider
 trait Operators { this: Peg.type =>
-    @returnthis val Operators: Operators = this
+    @returnThis val Operators: Operators = this
 
     sealed class MadaPegChar(_1: Peg[Char]) {
         def lowerCaseRead = Peg.lowerCaseRead(_1)

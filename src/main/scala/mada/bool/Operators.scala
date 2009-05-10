@@ -12,7 +12,7 @@ package mada.bool
  */
 @provider
 trait Operators { this: Booleans.type =>
-    @returnthis val Operators: Operators = this
+    @returnThis val Operators: Operators = this
 
     sealed class MadaBooleans(_1: Boolean) {
         def implies(_2: => Boolean) = Booleans.implies(_1, _2)

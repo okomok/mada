@@ -12,7 +12,7 @@ package mada.peg
  */
 @provider
 trait Compatibles { this: Peg.type =>
-    @returnthis val Compatibles: Compatibles = this
+    @returnThis val Compatibles: Compatibles = this
     implicit def madaPegFromChar(from: Char): Peg[Char] = fromChar(from)
     implicit def madaPegFromIterable[A](from: Iterable[A]): Peg[A] = fromIterable(from)
     implicit def madaPegFromRegex(from: scala.util.matching.Regex): Peg[Char] = fromRegexPattern(from.pattern)

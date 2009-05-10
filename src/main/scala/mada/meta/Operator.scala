@@ -17,7 +17,7 @@ package mada.meta
 @provider
 trait Operators { this: Meta.type =>
 
-    @returnthis val Operators: Operators = this
+    @returnThis val Operators: Operators = this
 
     type +[a <: Operatable_+, b <: a#Operand_+] = a#operator_+[b]
     type -[a <: Operatable_-, b <: a#Operand_-] = a#operator_-[b]

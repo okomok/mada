@@ -12,7 +12,7 @@ package mada.cmp
  */
 @provider
 trait Compatibles { this: Compare.type =>
-    @returnthis val Compatibles: Compatibles = this
+    @returnThis val Compatibles: Compatibles = this
 
 // from
     implicit def madaCompareFromFunc[A](from: Func[A]): Compare[A] = fromFunc(from)

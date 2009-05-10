@@ -256,7 +256,7 @@ trait Vector[A] extends PartialFunction[Int, A] {
      */
     def region(_start: Int, _end: Int): Vector[A] = Region(this, _start, _end)
 
-    @returnthis
+    @returnThis
     def regionBase: Vector[A] = this
 
     /**
@@ -839,7 +839,7 @@ trait Vector[A] extends PartialFunction[Int, A] {
 
 // trivials
 
-    @returnthis
+    @returnThis
     final def asVector: Vector[A] = this
 
     /**

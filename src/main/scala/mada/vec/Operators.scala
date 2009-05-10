@@ -12,7 +12,7 @@ package mada.vec
  */
 @provider
 trait Operators { this: Vector.type =>
-    @returnthis val Operators: Operators = this
+    @returnThis val Operators: Operators = this
 
     sealed class MadaVectorIterableVector[A](_1: Iterable[Vector[A]]) {
         def flatten = Vector.flatten(_1)

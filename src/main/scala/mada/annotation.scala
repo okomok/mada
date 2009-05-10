@@ -13,6 +13,50 @@ package mada
  */
 class alias extends StaticAnnotation
 
+/**
+ * An alias of a name
+ */
+class aliasOf(name: String) extends StaticAnnotation
+
+
+/**
+ * A companion module
+ */
+class companionModule extends StaticAnnotation
+
+/**
+ * Returns the companion module.
+ */
+class returncompanion extends StaticAnnotation
+
+
+/**
+ * Contains implicit conversions. (All the names must be "long".)
+ */
+class compatibles extends StaticAnnotation
+
+/**
+ * An explicit conversion
+ */
+class conversion extends StaticAnnotation
+
+/**
+ * Contains eligibles.
+ */
+class eligibles extends StaticAnnotation
+
+
+/**
+ * Forwards all its method calls to another object.
+ */
+class forwarder extends StaticAnnotation
+
+
+/**
+ * Not thread-safe.
+ */
+class notThreadSafe extends StaticAnnotation
+
 
 /**
  * Specifies a type(usually trait) exists only to provide methods and values
@@ -23,15 +67,14 @@ class provider extends StaticAnnotation
 
 
 /**
- * Returns the companion module.
- */
-class returncompanion extends StaticAnnotation
-
-
-/**
  * Returns <code>this</code>.
  */
-class returnthis extends StaticAnnotation
+class returnThis extends StaticAnnotation
+
+/**
+ * Returns the passed argument as is. (Useful to trigger implicit conversion "explicitly".)
+ */
+class returnThat extends StaticAnnotation
 
 
 /**

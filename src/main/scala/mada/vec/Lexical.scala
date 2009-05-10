@@ -50,7 +50,7 @@ trait LexicalConversions {
 trait LexicalCompatibles {
     import Lexical._
 
-    @returnthis val Compatibles: LexicalCompatibles = this
+    @returnThis val Compatibles: LexicalCompatibles = this
 
 // from
     implicit def madaCharVectorFromBoolean(from: Boolean): Vector[Char] = fromAny(from)

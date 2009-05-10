@@ -12,7 +12,7 @@ package mada.iter
  */
 @provider
 trait Operators { this: Iterables.type =>
-    @returnthis val Operators: Operators = this
+    @returnThis val Operators: Operators = this
 
     sealed class MadaIterables[A](_1: Iterable[A]) {
         def equal[B](_2: Iterable[B]) = Iterables.equal(_1, _2)
