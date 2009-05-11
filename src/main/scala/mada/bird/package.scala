@@ -10,7 +10,8 @@ package mada
 /**
  * Contains combinator birds.
  */
-object Bird {
+package object bird {
+
     /**
      * S combinator
      */
@@ -25,4 +26,5 @@ object Bird {
      * I combinator
      */
     def I[X](x: X): X = x
+
 }

@@ -10,7 +10,7 @@ package mada
 /**
  * Contains utility methods for control expressions.
  */
-object Control {
+package object control {
     /**
      * Evaluates <code>body</code> infinite times.
      */
