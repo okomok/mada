@@ -12,7 +12,6 @@ package object traversable {
     @aliasOf("Traversable")
     type Type[+A] = Traversable[A]
 
-
     @returnThat
     def from[A](to: Traversable[A]) = to
 

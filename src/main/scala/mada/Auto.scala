@@ -11,47 +11,9 @@ import auto._
 
 
 /**
- * Contains utility methods operating on <code>Auto</code>.
- */
-object Auto extends Eligibles {
-    /**
-     * Alias of <code>using</code>
-     */
-    def apply[A, B](e: A)(f: A => B)(implicit a: Auto[A]): B = using(e)(f)(a)
-
-    /**
-     * @return  <code>a.begin(e); try { f(e) } finally { a.end(e) }</code>.
-     */
-    def using[A, B](e: A)(f: A => B)(implicit a: Auto[A]): B = {
-        a.begin(e)
-        try {
-            f(e)
-        } finally {
-            a.end(e)
-        }
-    }
-
-    /**
-     * Can be used instead of implicit objects.
-     */
-    trait Interface {
-        def begin: Unit = ()
-        def end: Unit = ()
-    }
-
-    /**
-     * Alias of <code>Auto</code>
-     */
-    type Type[-A] = Auto[A]
-}
-
-
-/**
  * Trait for automatically called methods
  */
 trait Auto[-A] {
-
-    @returncompanion def companion = Auto
 
     /**
      * Called when block begins.
@@ -62,4 +24,30 @@ trait Auto[-A] {
      * Called when block ends.
      */
     def end(e: A): Unit = ()
+
+}
+
+
+object Auto {
+
+    import java.io.Closeable
+    import java.util.concurrent.locks.Lock
+
+    implicit object ofInterface extends Auto[Interface] {
+        override def begin(e: Interface) = e.begin
+        override def end(e: Interface) = e.end
+    }
+
+    implicit object ofCloseable extends Auto[Closeable] {
+        override def end(e: Closeable) = e.close
+    }
+
+    implicit object ofLock extends Auto[Lock] {
+        override def begin(e: Lock) = e.lock
+        override def end(e: Lock) = e.unlock
+    }
+
+    @aliasOf("auto.using")
+    def apply[A, B](e: A)(f: A => B)(implicit a: Auto[A]): B = using(e)(f)(a)
+
 }

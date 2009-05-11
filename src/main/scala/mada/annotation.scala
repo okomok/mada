@@ -47,6 +47,12 @@ class eligibles extends StaticAnnotation
 
 
 /**
+ * Implementation detail. Don't use the name.
+ */
+class detail extends StaticAnnotation
+
+
+/**
  * Forwards all its method calls to another object.
  */
 class forwarder extends StaticAnnotation

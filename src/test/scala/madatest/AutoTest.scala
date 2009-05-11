@@ -7,12 +7,12 @@
 package madatest
 
 
-import mada.Auto
+import mada.{auto, Auto}
 import junit.framework.Assert._
 
 
 object MyFile {
-    implicit object myAuto extends Auto[MyFile] {
+    implicit object myauto extends auto.Type[MyFile] {
         override def end(x: MyFile) = x.disposed = true
     }
 }
@@ -22,7 +22,7 @@ class MyFile {
 }
 
 
-class HisFile[A] extends Auto.Interface {
+class HisFile[A] extends auto.Interface {
     var disposed = false
     override def end = disposed = true
     def read: Unit = { }
@@ -32,11 +32,11 @@ class HisFile[A] extends Auto.Interface {
 object HerFile {
 /*
     // "implicit class" might have been better.
-    implicit object myAuto extends Auto[HerFile[_]] {
+    implicit object myauto extends auto.Type[HerFile[_]] {
         override def end(x: HerFile[_]) = x.disposed = true
     }
 */
-    implicit def toAuto[A]/*(implicit c: A => A)*/: Auto[HerFile[A]] = new Auto[HerFile[A]] {
+    implicit def toautoType[A]/*(implicit c: A => A)*/: auto.Type[HerFile[A]] = new auto.Type[HerFile[A]] {
         override def end(x: HerFile[A]) = x.disposed = true
     }
 }
@@ -74,7 +74,7 @@ class AutoTest {
     def testTrivial: Unit = {
         val file = new MyFile
         assertFalse(file.disposed)
-        Auto(file){ f =>
+        auto.using(file){ f =>
             f.read
         }
         assertTrue(file.disposed)
@@ -83,7 +83,7 @@ class AutoTest {
     def testHis: Unit = {
         val file = new HisFile[Int]
         assertFalse(file.disposed)
-        val tmp = Auto(file){ f =>
+        val tmp = auto.using(file){ f =>
             f.read; 3
         }
         assertTrue(file.disposed)
@@ -105,7 +105,7 @@ class AutoTest {
         assertFalse(file.disposed)
         assertFalse(thrown)
         try {
-            Auto(file){ f =>
+            auto.using(file){ f =>
                 f.read
                 throw new Error("wow")
             }
@@ -117,7 +117,7 @@ class AutoTest {
     }
 
     def testEligibles: Unit = {
-        Auto(new java.io.StringReader("abc")){ r =>
+        auto.using(new java.io.StringReader("abc")){ r =>
             ()
         }
     }
