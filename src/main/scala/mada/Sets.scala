@@ -11,13 +11,9 @@ package mada
  * Contains utility methods operating on maps.
  */
 object Sets {
-    /**
-     * Alias of <code>scala.collection.mutable.Set</code>
-     */
+    @aliasOf("scala.collection.mutable.Set")
     type Mutable[A] = scala.collection.mutable.Set[A]
 
-    /**
-     * Alias of <code>scala.collection.immutable.Set</code>
-     */
+    @aliasOf("scala.collection.immutable.Set")
     type Immutable[A] = scala.collection.immutable.Set[A]
 }

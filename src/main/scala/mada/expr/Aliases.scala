@@ -9,29 +9,19 @@ package mada.expr
 
 @provider
 trait Aliases { this: Expr.type =>
-    /**
-     * Alias of <code>Expr</code>
-     */
+    @aliasOf("Expr")
     type Type[Z, A] = Expr[Z, A]
 
-    /**
-     * Alias of <code>Expr[_, A]</code>
-     */
+    @aliasOf("Expr[_, A]")
     type Of[A] = Expr[_, A]
 
-    /**
-     * Alias of <code>Expr[A, A]</code>
-     */
+    @aliasOf("Expr[A, A]")
     type Identity[A] = Expr[A, A]
 
-    /**
-     * Alias of <code>Expr[Nothing, A]</code>
-     */
+    @aliasOf("Expr[Nothing, A]")
     type Terminal[A] = Expr[Nothing, A]
 
-    /**
-     * Alias of <code>expr.Method[A, A]</code>
-     */
+    @aliasOf("expr.Method[A, A]")
     type Transform[A] = expr.Method[A, A]
 
     /**

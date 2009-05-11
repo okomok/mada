@@ -61,9 +61,7 @@ class ASTreeBuilder[T <: MutableTreeNode](root: T, cloner: T => T) {
         n
     }
 
-    /**
-     * Alias of <code>node</code>
-     */
+    @aliasOf("node")
     final def apply[A](p: Peg[A])(f: Peg.Action[A]): Peg[A] = node(p)(f)
 
     /**

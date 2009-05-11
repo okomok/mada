@@ -13,9 +13,7 @@ package mada.peg
 class ByNeedActions[A] {
     private val queue = new java.util.ArrayDeque[(Peg.Action[A], Vector[A])]
 
-    /**
-     * Alias of <code>byNeed</code>
-     */
+    @aliasOf("byNeed")
     final def apply(f: Peg.Action[A]): Peg.Action[A] = byNeed(f)
 
     /**

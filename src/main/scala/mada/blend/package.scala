@@ -40,9 +40,7 @@ package object blend {
      */
     val Nil = NilWrap.value
 
-    /**
-     * Alias of <code>Cons</code>
-     */
+    @aliasOf("Cons")
     type ::[h, t <: List] = Cons[h, t]
 
     /**

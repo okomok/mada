@@ -19,37 +19,25 @@ object Functions extends
 
 // void
 
-    /**
-     * Alias of <code>()</code>
-     */
+    @aliasOf("()")
     val void: Unit = ()
 
 
 // type aliases
 
-    /**
-     * Alias of <code>Function1[T, T]</code>
-     */
+    @aliasOf("Function1[T, T]")
     type Transform[T] = Function1[T, T]
 
-    /**
-     * Alias of <code>Function1[T1, Boolean]</code>
-     */
+    @aliasOf("Function1[T1, Boolean]")
     type Predicate1[-T1] = Function1[T1, Boolean]
 
-    /**
-     * Alias of <code>Function2[T1, T2, Boolean]</code>
-     */
+    @aliasOf("Function2[T1, T2, Boolean]")
     type Predicate2[-T1, -T2] = Function2[T1, T2, Boolean]
 
-    /**
-     * Alias of <code>Function3[T1, T2, T3, Boolean]</code>
-     */
+    @aliasOf("Function3[T1, T2, T3, Boolean]")
     type Predicate3[-T1, -T2, -T3] = Function3[T1, T2, T3, Boolean]
 
-    /**
-     * Alias of <code>func.Parameter[T]</code>
-     */
+    @aliasOf("func.Parameter[T]")
     type Parameter[T] = func.Parameter[T]
 
 

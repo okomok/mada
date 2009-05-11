@@ -77,18 +77,12 @@ trait Expr[Z, A] {
      */
     final def xseal = Expr.Seal(this).expr
 
-    /**
-     * Alias of <code>eval</code>
-     */
+    @aliasOf("eval")
     final def / = eval
 
-    /**
-     * Alias of <code>eval</code>
-     */
+    @aliasOf("eval")
     final def ?[B](x: Expr[A, B]) = eval(x)
 
-    /**
-     * Alias of <code>xseal</code>
-     */
+    @aliasOf("xseal")
     final def ! = xseal
 }

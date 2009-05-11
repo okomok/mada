@@ -32,9 +32,7 @@ object Pointer extends PointerConversions with PointerCompatibles {
      */
     def from[A](to: Pointer[A]): Pointer[A] = to
 
-    /**
-     * Alias of <code>Pointer</code>
-     */
+    @aliasOf("Pointer")
     type Type[+A] = Pointer[A]
 }
 
@@ -49,19 +47,13 @@ trait Pointer[+A] {
 
     @returncompanion def companion = Pointer
 
-    /**
-     * Alias of <code>isEnd</code>
-     */
+    @aliasOf("isEnd")
     final def unary_! : Boolean = isEnd
 
-    /**
-     * Alias of <code>deref</code>
-     */
+    @aliasOf("deref")
     final def unary_~ : A = deref
 
-    /**
-     * Alias of <code>increment</code>
-     */
+    @aliasOf("increment")
     final def ++ : Unit = increment
 
     /**

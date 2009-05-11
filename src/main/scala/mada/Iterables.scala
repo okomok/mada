@@ -46,9 +46,7 @@ object Iterables extends Conversions with Compatibles with Operators {
 
 // constructors
 
-    /**
-     * Alias of <code>fromValues</code>
-     */
+    @aliasOf("fromValues")
     def apply[A](from: A*): Iterable[A] = from
 
     /**
@@ -270,38 +268,24 @@ object Iterables extends Conversions with Compatibles with Operators {
 
 // aliases
 
-    /**
-     * Alias of <code>IterableProxy</code>
-     */
+    @aliasOf("IterableProxy")
     type Forwarder[A] = scala.collection.IterableProxy[A]
 
-    /**
-     * Alias of <code>iter.IteratorProxy</code>
-     */
+    @aliasOf("iter.IteratorProxy")
     type IteratorForwarder[A] = iter.IteratorProxy[A]
 
-    /**
-     * Alias of <code>iter.IteratorProxy</code>
-     */
+    @aliasOf("iter.IteratorProxy")
     type IteratorProxy[A] = iter.IteratorProxy[A]
 
-    /**
-     * Alias of <code>iter.Pointer</code>
-     */
+    @aliasOf("iter.Pointer")
     val Pointer = iter.Pointer
 
-    /**
-     * Alias of <code>iter.Pointer</code>
-     */
+    @aliasOf("iter.Pointer")
     type Pointer[+A] = iter.Pointer[A]
 
-    /**
-     * Alias of <code>Iterable</code>
-     */
+    @aliasOf("Iterable")
     type Type[+A] = Iterable[A]
 
-    /**
-     * Alias of <code>Function1[A, Unit]</code>
-     */
+    @aliasOf("Function1[A, Unit]")
     type Yield[-A] = Function1[A, Unit]
 }

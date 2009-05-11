@@ -25,9 +25,7 @@ class RegionActions[A] {
         }
     }
 
-    /**
-     * Alias of <code>endWith</code>
-     */
+    @aliasOf("endWith")
     final def apply(f: Peg.Action[A]): Peg[A] = endWith(f)
 
     /**

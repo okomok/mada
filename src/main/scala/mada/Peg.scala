@@ -463,9 +463,7 @@ trait Peg[A] {
 
 // aliases
 
-    /**
-     * Alias of <code>act</code>
-     */
+    @aliasOf("act")
     final def apply(f: Peg.Action[A]): Peg[A] = act(f)
 
     /**
@@ -478,14 +476,10 @@ trait Peg[A] {
      */
     final def unary_! : Peg[A] = lookahead.negate
 
-    /**
-     * Alias of <code>negate</code>
-     */
+    @aliasOf("negate")
     final def unary_- : Peg[A] = negate
 
-    /**
-     * Alias of <code>and</code>
-     */
+    @aliasOf("and")
     final def &(that: Peg[A]): Peg[A] = and(that)
 
     /**
@@ -493,14 +487,10 @@ trait Peg[A] {
      */
     final def |(that: Peg[A]): Peg[A] = or(that)
 
-    /**
-     * Alias of <code>minus</code>
-     */
+    @aliasOf("minus")
     final def -(that: Peg[A]): Peg[A] = minus(that)
 
-    /**
-     * Alias of <code>xor</code>
-     */
+    @aliasOf("xor")
     final def ^(that: Peg[A]): Peg[A] = xor(that)
 
     /**
@@ -508,19 +498,13 @@ trait Peg[A] {
      */
     final def >>(that: Peg[A]): Peg[A] = seqAnd(that)
 
-    /**
-     * Alias of <code>seqOr</code>
-     */
+    @aliasOf("seqOr")
     final def >|>(that: Peg[A]): Peg[A] = seqOr(that)
 
-    /**
-     * Alias of <code>seqImply</code>
-     */
+    @aliasOf("seqImply")
     final def >->(that: Peg[A]): Peg[A] = seqImply(that)
 
-    /**
-     * Alias of <code>seqOpt_:</code>
-     */
+    @aliasOf("seqOpt_:")
     final def >?>:(that: Peg[A]): Peg[A] = seqOpt_:(that)
 
     /**
@@ -538,24 +522,16 @@ trait Peg[A] {
      */
     final def ? : Quantified[A] = opt
 
-    /**
-     * Alias of <code>lookbehind</code>
-     */
+    @aliasOf("lookbehind")
     final def <=~ : Peg[A] = lookbehind
 
-    /**
-     * Alias of <code>lookbehind.negate</code>
-     */
+    @aliasOf("lookbehind.negate")
     final def <=! : Peg[A] = lookbehind.negate
 
-    /**
-     * Alias of <code>lookback</code>
-     */
+    @aliasOf("lookback")
     final def <<~ : Peg[A] = lookback
 
-    /**
-     * Alias of <code>lookback.negate</code>
-     */
+    @aliasOf("lookback.negate")
     final def <<! : Peg[A] = lookback.negate
 
 

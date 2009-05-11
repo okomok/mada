@@ -11,19 +11,13 @@ package mada
  * Contains utility methods operating on maps.
  */
 object Maps {
-    /**
-     * Alias of <code>scala.collection.mutable.Map</code>
-     */
+    @aliasOf("scala.collection.mutable.Map")
     type Mutable[K, V] = scala.collection.mutable.Map[K, V]
 
-    /**
-     * Alias of <code>scala.collection.immutable.Map</code>
-     */
+    @aliasOf("scala.collection.immutable.Map")
     type Immutable[K, V] = scala.collection.immutable.Map[K, V]
 
-    /**
-     * Alias of <code>java.util.concurrent.ConcurrentMap</code>
-     */
+    @aliasOf("java.util.concurrent.ConcurrentMap")
     type Concurrent[K, V] = java.util.concurrent.ConcurrentMap[K, V]
 
     /**

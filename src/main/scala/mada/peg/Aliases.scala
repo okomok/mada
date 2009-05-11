@@ -9,24 +9,16 @@ package mada.peg
 
 @provider
 trait Aliases { this: Peg.type =>
-    /**
-     * Alias of <code>Peg</code>
-     */
+    @aliasOf("Peg")
     type Type[A] = Peg[A]
 
-    /**
-     * Alias of <code>PegProxy</code>
-     */
+    @aliasOf("PegProxy")
     type Forwarder[A] = peg.PegProxy[A]
 
-    /**
-     * Alias of <code>Vector.Func[A, Unit]</code>
-     */
+    @aliasOf("Vector.Func[A, Unit]")
     type Action[A] = Vector.Func[A, Unit]
 
-    /**
-     * Alias of <code>Vector.Func3[A, Unit]</code>
-     */
+    @aliasOf("Vector.Func3[A, Unit]")
     type Action3[A] = Vector.Func3[A, Unit]
 
     @alias type ZeroWidth[A] = peg.ZeroWidth[A]

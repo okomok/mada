@@ -16,9 +16,7 @@ class CapturingGroups[K, A](val map: Maps.Mutable[K, Vector[A]]) {
      */
     def this() = this(new scala.collection.mutable.HashMap[K, Vector[A]])
 
-    /**
-     * Alias of <code>capture</code>
-     */
+    @aliasOf("capture")
     final def apply(k: K, p: Peg[A]): Peg[A] = capture(k, p)
 
     /**
@@ -26,9 +24,7 @@ class CapturingGroups[K, A](val map: Maps.Mutable[K, Vector[A]]) {
      */
     def capture(k: K, p: Peg[A]): Peg[A] = p.act{ v => map(k) = v }
 
-    /**
-     * Alias of <code>backref</code>
-     */
+    @aliasOf("backref")
     final def apply(k: K): Peg[A] = backref(k)
 
     /**

@@ -23,24 +23,16 @@ class StackActions[A, B](override val self: Stack[B]) extends stack.Forwarder[B]
 
 // apply
 
-    /**
-     * Alias of <code>eval0</code>
-     */
+    @aliasOf("eval0")
     final def apply(f: Function1[Vector[A], B]): Peg.Action[A] = eval0(f)
 
-    /**
-     * Alias of <code>eval1</code>
-     */
+    @aliasOf("eval1")
     final def apply(f: Function2[Vector[A], B, B]): Peg.Action[A] = eval1(f)
 
-    /**
-     * Alias of <code>eval2</code>
-     */
+    @aliasOf("eval2")
     final def apply(f: Function3[Vector[A], B, B, B]): Peg.Action[A] = eval2(f)
 
-    /**
-     * Alias of <code>eval3</code>
-     */
+    @aliasOf("eval3")
     final def apply(f: Function4[Vector[A], B, B, B, B]): Peg.Action[A] = eval3(f)
 
 

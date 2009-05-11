@@ -39,9 +39,7 @@ object Vector extends Aliases with Conversions with Compatibles with Eligibles w
 
 // pattern matching
 
-    /**
-     * Alias of <code>fromValues</code>
-     */
+    @aliasOf("fromValues")
     def apply[A](from: A*): Vector[A] = fromValues(from: _*)
 
     /**
@@ -150,9 +148,7 @@ object Vector extends Aliases with Conversions with Compatibles with Eligibles w
 
 // Char vector
 
-    /**
-     * Alias of <code>vec.Lexical</code>
-     */
+    @aliasOf("vec.Lexical")
     val lexical = vec.Lexical
 
     /**
@@ -371,22 +367,16 @@ trait Vector[A] extends PartialFunction[Int, A] {
      */
     final def last: A = { throwIfEmpty("last"); this(end - 1) }
 
-    /**
-     * Alias of <code>randomAccessSeq.firstOption</code>
-     */
+    @aliasOf("randomAccessSeq.firstOption")
     final def firstOption: Option[A] = FirstOption(this)
 
-    /**
-     * Alias of <code>randomAccessSeq.lastOption</code>
-     */
+    @aliasOf("randomAccessSeq.lastOption")
     final def lastOption: Option[A] = LastOption(this)
 
 
 // as list
 
-    /**
-     * Alias of <code>first</code>
-     */
+    @aliasOf("first")
     final def head: A = { throwIfEmpty("head"); first }
 
     /**
@@ -394,9 +384,7 @@ trait Vector[A] extends PartialFunction[Int, A] {
      */
     def tail: Vector[A] = { throwIfEmpty("tail"); this(start + 1, end) }
 
-    /**
-     * Alias of <code>isEmpty</code>
-     */
+    @aliasOf("isEmpty")
     final def isNil: Boolean = isEmpty
 
 
@@ -483,9 +471,7 @@ trait Vector[A] extends PartialFunction[Int, A] {
 
 // search
 
-    /**
-     * Alias of <code>elements.find</code>
-     */
+    @aliasOf("elements.find")
     final def find(p: A => Boolean): Option[A] = Find(this, p)
 
     /**
@@ -498,9 +484,7 @@ trait Vector[A] extends PartialFunction[Int, A] {
      */
     def seek(p: A => Boolean): Option[A] = find(p)
 
-    /**
-     * Alias of <code>randomAccessSeq.count</code>
-     */
+    @aliasOf("randomAccessSeq.count")
     def count(p: A => Boolean): Int = Count(this, p)
 
     /**
@@ -521,14 +505,10 @@ trait Vector[A] extends PartialFunction[Int, A] {
 
 // folding
 
-    /**
-     * Alias of <code>elements.foldLeft</code>
-     */
+    @aliasOf("elements.foldLeft")
     final def foldLeft[B](z: B)(op: (B, A) => B): B = FoldLeft(this, z, op)
 
-    /**
-     * Alias of <code>elements.foldRight</code>
-     */
+    @aliasOf("elements.foldRight")
     final def foldRight[B](z: B)(op: (A, B) => B): B = reverse.foldLeft(z)(Functions.flip(op))
 
     /**
@@ -877,34 +857,22 @@ trait Vector[A] extends PartialFunction[Int, A] {
 
 // aliases
 
-    /**
-     * Alias of <code>size</code>
-     */
+    @aliasOf("size")
     final def length: Int = size
 
-    /**
-     * Alias of <code>toIterable.elements</code>
-     */
+    @aliasOf("toIterable.elements")
     final def elements: Iterator[A] = toIterable.elements
 
-    /**
-     * Alias of <code>region</code>
-     */
+    @aliasOf("region")
     final def apply(_start: Int, _end: Int): Vector[A] = region(_start, _end)
 
-    /**
-     * Alias of <code>append</code>
-     */
+    @aliasOf("append")
     final def ++(that: Vector[A]): Vector[A] = append(that)
 
-    /**
-     * Alias of <code>foldLeft</code>
-     */
+    @aliasOf("foldLeft")
     final def /:[B](z: B)(op: (B, A) => B): B = foldLeft(z)(op)
 
-    /**
-     * Alias of <code>foldRight</code>
-     */
+    @aliasOf("foldRight")
     final def :\[B](z: B)(op: (A, B) => B): B = foldRight(z)(op)
 
 

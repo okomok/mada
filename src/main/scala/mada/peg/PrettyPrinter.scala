@@ -64,13 +64,9 @@ trait PrettyPrinter {
      */
     final def print[A](name: String)(p: Peg[A]): Peg[A] = print(p.named(name))
 
-    /**
-     * Alias of <code>print</code>
-     */
+    @aliasOf("print")
     final def apply[A](p: Peg[A]): Peg[A] = print(p)
 
-    /**
-     * Alias of <code>print</code>
-     */
+    @aliasOf("print")
     final def apply[A](name: String)(p: Peg[A]): Peg[A] = print(name)(p)
 }

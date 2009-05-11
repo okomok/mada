@@ -45,14 +45,10 @@ trait Stack[A] {
      */
     def clear: Unit
 
-    /**
-     * Alias of <code>peek</code>
-     */
+    @aliasOf("peek")
     final def top: A = peek
 
-    /**
-     * Alias of <code>size</code>
-     */
+    @aliasOf("size")
     final def length: Int = size
 
 }

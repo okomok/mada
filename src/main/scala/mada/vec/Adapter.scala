@@ -11,9 +11,7 @@ package mada.vec
  * Contains utility types and methods operating on type <code>Adapter</code>.
  */
 object Adapter {
-    /**
-     * Alias of <code>Adapter[A, A]</code>
-     */
+    @aliasOf("Adapter[A, A]")
     type Transform[A] = Adapter[A, A]
 
     /**

@@ -9,34 +9,22 @@ package mada.vec
 
 @provider
 trait Aliases { this: Vector.type =>
-    /**
-     * Alias of <code>Vector</code>
-     */
+    @aliasOf("Vector")
     type Type[A] = Vector[A]
 
-    /**
-     * Alias of <code>Vector[A] => B</code>
-     */
+    @aliasOf("Vector[A] => B")
     type Func[A, B] = Vector[A] => B
 
-    /**
-     * Alias of <code>(Vector[A], Int, Int) => B</code>
-     */
+    @aliasOf("(Vector[A], Int, Int) => B")
     type Func3[A, B] = (Vector[A], Int, Int) => B
 
-    /**
-     * Alias of <code>Func[A, Boolean]</code>
-     */
+    @aliasOf("Func[A, Boolean]")
     type Pred[A] = Func[A, Boolean]
 
-    /**
-     * Alias of <code>Func3[A, Boolean]</code>
-     */
+    @aliasOf("Func3[A, Boolean]")
     type Pred3[A] = Func3[A, Boolean]
 
-    /**
-     * Alias of <code>vec.VectorProxy</code>
-     */
+    @aliasOf("vec.VectorProxy")
     type Forwarder[A] = vec.VectorProxy[A]
 
     @alias val Adapter = vec.Adapter

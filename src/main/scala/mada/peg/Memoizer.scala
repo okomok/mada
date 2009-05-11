@@ -14,9 +14,7 @@ package mada.peg
  * @param   input   the target vector of this memoization
  */
 class Memoizer[A](val input: Vector[A]) {
-    /**
-     * Alias of <code>memoize</code>
-     */
+    @aliasOf("memoize")
     final def apply(p: Peg[A]): Peg[A] = memoize(p)
 
     /**

@@ -46,9 +46,7 @@ trait Parameter[A] { ^ =>
      */
     def argument: A = throw new IllegalArgumentException("missing argument: " + this)
 
-    /**
-     * Alias of <code>pass</code>
-     */
+    @aliasOf("pass")
     final def ->(v: A): Parameter[A] = pass(v)
 
     /**
