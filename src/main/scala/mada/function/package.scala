@@ -88,7 +88,7 @@ package object function {
         // See: That about wraps it up --- Using FIX to handle errors without exceptions, and other programming tricks (1997)
         //      at http://citeseer.ist.psu.edu/51062.html
         val m = new java.util.concurrent.ConcurrentHashMap[T, () => R]
-        val wrap_g = { (fixed: (T => R)) => (v: T) => Maps.lazyGet(m)(v){ g(fixed)(v) } }
+        val wrap_g = { (fixed: (T => R)) => (v: T) => assoc.lazyGet(m)(v){ g(fixed)(v) } }
         fix(wrap_g)
     }
 

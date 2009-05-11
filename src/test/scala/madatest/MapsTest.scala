@@ -7,7 +7,7 @@
 package madatest
 
 
-import mada.Maps
+import mada.assoc
 import mada.function
 import junit.framework.Assert._
 
@@ -15,10 +15,10 @@ import junit.framework.Assert._
 class MapsTest {
     def testLazyGet: Unit = {
         val map = new java.util.concurrent.ConcurrentHashMap[String, () => Int]
-        assertEquals( 3, Maps.lazyGet(map)("abc"){3} )
-        assertEquals( 3, Maps.lazyGet(map)("abc"){fail("doh"); 3} )
+        assertEquals( 3, assoc.lazyGet(map)("abc"){3} )
+        assertEquals( 3, assoc.lazyGet(map)("abc"){fail("doh"); 3} )
 
-        assertEquals( 5, Maps.lazyGet(map)("abcde"){5} )
-        assertEquals( 5, Maps.lazyGet(map)("abcde"){fail("doh"); 5} )
+        assertEquals( 5, assoc.lazyGet(map)("abcde"){5} )
+        assertEquals( 5, assoc.lazyGet(map)("abcde"){fail("doh"); 5} )
     }
 }

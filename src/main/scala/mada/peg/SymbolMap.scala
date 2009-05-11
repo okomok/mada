@@ -20,11 +20,11 @@ object SymbolMap {
      * Constructs <code>SymbolMet</code> containing <code>es</code> as key-and-value entries.
      */
     def apply[A](es: Iterable[(Vector[A], Peg[A])])(lt: compare.Func[A]): SymbolMap[A] = {
-        val map = new SymbolMap(lt)
+        val m = new SymbolMap(lt)
         for (e <- es.projection) {
-            map.put(e._1, e._2)
+            m.put(e._1, e._2)
         }
-        map
+        m
     }
 }
 
@@ -32,7 +32,7 @@ object SymbolMap {
 /**
  * A <code>Peg</code> to optimize the form <code>(k1 >> p1)|(k2 >> p2)|(k3 >> p3)|...</code> using ternary search tree.
  */
-class SymbolMap[A] private (private val tree: TSTree[A, Peg[A]]) extends Peg[A] with Maps.Mutable[Vector[A], Peg[A]] {
+class SymbolMap[A] private (private val tree: TSTree[A, Peg[A]]) extends Peg[A] with scala.collection.mutable.Map[Vector[A], Peg[A]] {
     /**
      * Constructs <code>SymbolMap</code>.
      *

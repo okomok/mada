@@ -10,9 +10,9 @@ package mada.peg
 /**
  * Provides capturing groups functionality.
  */
-class CapturingGroups[K, A](val map: Maps.Mutable[K, Vector[A]]) {
+class CapturingGroups[K, A](val map: scala.collection.mutable.Map[K, Vector[A]]) {
     /**
-     * Constructs from a hash-map.
+     * Constructs from a hash-assoc.
      */
     def this() = this(new scala.collection.mutable.HashMap[K, Vector[A]])
 
