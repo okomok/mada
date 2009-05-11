@@ -28,7 +28,7 @@ private[mada] class ParallelVector[A](override val self: Vector[A], override val
     override def seek(p: A => Boolean) = para.Seek(self, p, grainSize)
     override def count(p: A => Boolean) = para.Count(self, p, grainSize)
   // sort
-    override def sortBy(lt: Compare.Func[A]) = para.Sort(self, lt, grainSize)
+    override def sortBy(lt: compare.Func[A]) = para.Sort(self, lt, grainSize)
   // copy
     override def copyTo[B >: A](that: Vector[B]): Vector[A] = para.CopyTo(self, that, grainSize)
     override def clone: Vector[A] = Vector.fromArray(ToArray(this))

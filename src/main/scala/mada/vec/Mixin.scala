@@ -132,8 +132,8 @@ private[mada] class MixinVector[A](v: Vector[A], mx: Mixin) extends VectorProxy[
     override def reducerLeft[B >: A](op: (B, A) => B): Vector[B] = carryMixin(self.reducerLeft(op))
     override def reducerRight[B >: A](op: (A, B) => B): Vector[B] = carryMixin(self.reducerRight(op))
   // sort
-    override def sortBy(lt: Compare.Func[A]): Vector[A] = carryMixin(self.sortBy(lt))
-    override def stableSortBy(lt: Compare.Func[A]): Vector[A] = carryMixin(self.stableSortBy(lt))
+    override def sortBy(lt: compare.Func[A]): Vector[A] = carryMixin(self.sortBy(lt))
+    override def stableSortBy(lt: compare.Func[A]): Vector[A] = carryMixin(self.stableSortBy(lt))
   // concatenation
     override def append(that: Vector[A]): Vector[A] = carryMixin(self.append(that))
   // permutation

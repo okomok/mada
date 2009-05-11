@@ -34,7 +34,7 @@ package mada.stl
 
 
 private[mada] object Median {
-    def apply[A](__a: A, __b: A, __c: A, __comp: Compare.Func[A]): A = {
+    def apply[A](__a: A, __b: A, __c: A, __comp: compare.Func[A]): A = {
         if (__comp(__a, __b)) {
             if (__comp(__b, __c)) {
                 __b

@@ -26,8 +26,8 @@ class OrderedTest {
     }
 
     def testOrdering: Unit = {
-        implicit val charComp1 = mada.Compare.toOrdering{ (x: Char, y: Char) => x < y }
-    //    implicit val charComp2 = mada.Compare.toGetOrdered{ (x: Char, y: Char) => x < y }
+        implicit val charComp1 = mada.compare.toOrdering{ (x: Char, y: Char) => x < y }
+    //    implicit val charComp2 = mada.compare.toGetOrdered{ (x: Char, y: Char) => x < y }
         val v1 = Vector.from("ab")
         val v2 = Vector.from("")
         val v3 = Vector.from("abc")
@@ -41,6 +41,6 @@ class OrderedTest {
     }
 
     def sortByOrdering[A](v: Vector[A])(implicit o: Ordering[A]): Unit = {
-        v.sortBy(mada.Compare.fromOrdering(o))
+        v.sortBy(mada.compare.fromOrdering(o))
     }
 }

@@ -36,11 +36,11 @@ package mada.stl
 // PushHeap
 
 private[mada] object PushHeap {
-    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Compare.Func[A]): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: compare.Func[A]): Unit = {
         __apply(*, __first, (__last - __first) - 1, 0, *(__last - 1), __comp)
     }
 
-    def __apply[A](* : Vector[A], __first: Int, holeIndex: Int, __topIndex: Int, __value: A, __comp: Compare.Func[A]): Unit = {
+    def __apply[A](* : Vector[A], __first: Int, holeIndex: Int, __topIndex: Int, __value: A, __comp: compare.Func[A]): Unit = {
         var __holeIndex = holeIndex
 
         var __parent = (__holeIndex - 1) / 2
@@ -57,11 +57,11 @@ private[mada] object PushHeap {
 // PopHeap
 
 private[mada] object PopHeap {
-    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Compare.Func[A]): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: compare.Func[A]): Unit = {
         __apply(*, __first, __last - 1, __last - 1, *(__last - 1), __comp)
     }
 
-    def __apply[A](* : Vector[A], __first: Int, __last: Int, __result: Int, __value: A, __comp: Compare.Func[A]): Unit = {
+    def __apply[A](* : Vector[A], __first: Int, __last: Int, __result: Int, __value: A, __comp: compare.Func[A]): Unit = {
         *(__result) = *(__first)
         AdjustHeap(*, __first, 0, __last - __first, __value, __comp);
     }
@@ -71,7 +71,7 @@ private[mada] object PopHeap {
 // MakeHeap
 
 private[mada] object MakeHeap {
-    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Compare.Func[A]): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: compare.Func[A]): Unit = {
         if (__last - __first < 2) {
             return
         }
@@ -92,7 +92,7 @@ private[mada] object MakeHeap {
 // SortHeap
 
 private[mada] object SortHeap {
-    def apply[A](* : Vector[A], __first: Int, last: Int, __comp: Compare.Func[A]): Unit = {
+    def apply[A](* : Vector[A], __first: Int, last: Int, __comp: compare.Func[A]): Unit = {
         var __last = last
 
         while (__last - __first > 1) {
@@ -106,7 +106,7 @@ private[mada] object SortHeap {
 // AdjustHeap
 
 private[mada] object AdjustHeap {
-    def apply[A](* : Vector[A], __first: Int, holeIndex: Int, __len: Int, __value: A, __comp: Compare.Func[A]): Unit = {
+    def apply[A](* : Vector[A], __first: Int, holeIndex: Int, __len: Int, __value: A, __comp: compare.Func[A]): Unit = {
         var __holeIndex = holeIndex
 
         val __topIndex = __holeIndex;

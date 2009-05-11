@@ -19,7 +19,7 @@ object SymbolMap {
     /**
      * Constructs <code>SymbolMet</code> containing <code>es</code> as key-and-value entries.
      */
-    def apply[A](es: Iterable[(Vector[A], Peg[A])])(lt: Compare.Func[A]): SymbolMap[A] = {
+    def apply[A](es: Iterable[(Vector[A], Peg[A])])(lt: compare.Func[A]): SymbolMap[A] = {
         val map = new SymbolMap(lt)
         for (e <- es.projection) {
             map.put(e._1, e._2)
@@ -38,7 +38,7 @@ class SymbolMap[A] private (private val tree: TSTree[A, Peg[A]]) extends Peg[A] 
      *
      * @param   lt  strict weak ordering
      */
-    def this(lt: Compare.Func[A]) = this(new TSTree[A, Peg[A]](lt))
+    def this(lt: compare.Func[A]) = this(new TSTree[A, Peg[A]](lt))
 
     /**
      * Succeeds if any element of this set matches then its corresponding <code>Peg</code> matches.

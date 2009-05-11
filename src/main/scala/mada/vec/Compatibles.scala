@@ -28,5 +28,5 @@ trait Compatibles { this: Vector.type =>
 //    implicit def madaVectorToRandomAccessSeq[A](from: Vector[A]): RandomAccessSeq.Mutable[A] = toRandomAccessSeq(from)
     implicit def madaVectorToProduct[A](from: Vector[A]): Product = toProduct(from)
 //    implicit def madaVectorToStream[A](from: Vector[A]): Stream[A] = toStream(from)
-    implicit def madaVectorToOrdered[A](from: Vector[A])(implicit c: Compare.GetOrdered[A]): Ordered[Vector[A]] = toOrdered(from)(c)
+    implicit def madaVectorToOrdered[A](from: Vector[A])(implicit c: compare.GetOrdered[A]): Ordered[Vector[A]] = toOrdered(from)(c)
 }

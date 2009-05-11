@@ -8,7 +8,7 @@ package mada.stl
 
 
 private[mada] object Sort {
-    def apply[A](v: Vector[A], __first: Int, __last: Int, __comp: Compare.Func[A]): Unit = {
+    def apply[A](v: Vector[A], __first: Int, __last: Int, __comp: compare.Func[A]): Unit = {
         IntroSort(v, __first, __last, __comp)
     }
 }

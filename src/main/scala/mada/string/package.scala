@@ -7,9 +7,6 @@
 package mada
 
 
-/**
- * Contains utility methods operating on strings.
- */
 package object string {
 
     /**

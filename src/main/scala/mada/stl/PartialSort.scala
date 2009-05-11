@@ -34,7 +34,7 @@ package mada.stl
 
 
 private[mada] object PartialSort {
-    def apply[A](* : Vector[A], __first: Int, __middle: Int, __last: Int, __comp: Compare.Func[A]): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __middle: Int, __last: Int, __comp: compare.Func[A]): Unit = {
         MakeHeap(*, __first, __middle, __comp)
         var __i = __middle
         while (__i < __last) {

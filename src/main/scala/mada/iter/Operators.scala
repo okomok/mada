@@ -33,15 +33,15 @@ trait Operators { this: Iterables.type =>
         def withSideEffect(_2: A => Unit) = Iterables.withSideEffect(_1)(_2)
 
         def merge(_2: Iterable[A])(implicit _3: Compare[A]) = Iterables.merge(_1)(_2)(_3)
-        def mergeBy(_2: Iterable[A])(_3: Compare.Func[A]) = Iterables.mergeBy(_1)(_2)(_3)
+        def mergeBy(_2: Iterable[A])(_3: compare.Func[A]) = Iterables.mergeBy(_1)(_2)(_3)
         def union(_2: Iterable[A])(implicit _3: Compare[A]) = Iterables.union(_1)(_2)(_3)
-        def unionBy(_2: Iterable[A])(_3: Compare.Func[A]) = Iterables.unionBy(_1)(_2)(_3)
+        def unionBy(_2: Iterable[A])(_3: compare.Func[A]) = Iterables.unionBy(_1)(_2)(_3)
         def intersection(_2: Iterable[A])(implicit _3: Compare[A]) = Iterables.intersection(_1)(_2)(_3)
-        def intersectionBy(_2: Iterable[A])(_3: Compare.Func[A]) = Iterables.intersectionBy(_1)(_2)(_3)
+        def intersectionBy(_2: Iterable[A])(_3: compare.Func[A]) = Iterables.intersectionBy(_1)(_2)(_3)
         def difference(_2: Iterable[A])(implicit _3: Compare[A]) = Iterables.difference(_1)(_2)(_3)
-        def differenceBy(_2: Iterable[A])(_3: Compare.Func[A]) = Iterables.differenceBy(_1)(_2)(_3)
+        def differenceBy(_2: Iterable[A])(_3: compare.Func[A]) = Iterables.differenceBy(_1)(_2)(_3)
         def symmetricDifference(_2: Iterable[A])(implicit _3: Compare[A]) = Iterables.symmetricDifference(_1)(_2)(_3)
-        def symmetricDifferenceBy(_2: Iterable[A])(_3: Compare.Func[A]) = Iterables.symmetricDifferenceBy(_1)(_2)(_3)
+        def symmetricDifferenceBy(_2: Iterable[A])(_3: compare.Func[A]) = Iterables.symmetricDifferenceBy(_1)(_2)(_3)
     }
     implicit def madaIterables[A](_1: Iterable[A]): MadaIterables[A] = new MadaIterables(_1)
 

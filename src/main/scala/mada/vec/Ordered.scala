@@ -8,7 +8,7 @@ package mada.vec
 
 
 private[mada] object ToOrdered {
-    def apply[A](from: Vector[A], c: Compare.GetOrdered[A]): Ordered[Vector[A]] = {
-        Compare.toGetOrdered(Vector.forCompare(Compare.fromGetOrdered(c)))(from)
+    def apply[A](from: Vector[A], c: compare.GetOrdered[A]): Ordered[Vector[A]] = {
+        compare.toGetOrdered(Vector.forCompare(compare.fromGetOrdered(c)))(from)
     }
 }

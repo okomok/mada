@@ -7,33 +7,13 @@
 package mada
 
 
-import cmp._
-
-
-/**
- * Contains utility methods operating on <code>Compare</code>.
- */
-object Compare extends Aliases with Conversions with Compatibles {
-    /**
-     * Triggers implicit conversions explicitly.
-     *
-     * @return  <code>to</code>.
-     */
-    def from[A](to: Compare[A]) = to
-
-    /**
-     * Alias of <code>fromFunc</code>
-     */
-    def by[A](p: Func[A]): Compare[A] = fromFunc(p)
-}
+import compare._
 
 
 /**
  * Represents strict weak ordering.
  */
-trait Compare[-A] extends Compare.Func[A] {
-
-    @returncompanion def companion = Compare
+trait Compare[-A] extends Func[A] {
 
     /**
      * @return  <code>true</code> iif x precedes y.
@@ -44,4 +24,9 @@ trait Compare[-A] extends Compare.Func[A] {
      * @return  <code>if (apply(x, y)) -1 else if (apply(y, x)) 1 else 0</code>.
      */
     def threeWay(x: A, y: A): Int = if (apply(x, y)) -1 else if (apply(y, x)) 1 else 0
+
+}
+
+
+object Compare extends Compatibles {
 }

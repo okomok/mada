@@ -34,7 +34,7 @@ package mada.stl
 
 
 private[mada] object IsSorted {
-    def apply[A](* : Vector[A], first: Int, __last: Int, __comp: Compare.Func[A]): Boolean = {
+    def apply[A](* : Vector[A], first: Int, __last: Int, __comp: compare.Func[A]): Boolean = {
         var __first = first
 
         if (__first == __last) {

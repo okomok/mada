@@ -60,8 +60,8 @@ private[mada] class SynchronizeVector[A](override val self: Vector[A]) extends V
     override def reducerLeft[B >: A](op: (B, A) => B): Vector[B] = synchronized { self.reducerLeft(op) }
     override def reducerRight[B >: A](op: (A, B) => B): Vector[B] = synchronized { self.reducerRight(op) }
   // sort
-    override def sortBy(lt: Compare.Func[A]): Vector[A] = synchronized { self.sortBy(lt) }
-    override def stableSortBy(lt: Compare.Func[A]): Vector[A] = synchronized { self.stableSortBy(lt) }
+    override def sortBy(lt: compare.Func[A]): Vector[A] = synchronized { self.sortBy(lt) }
+    override def stableSortBy(lt: compare.Func[A]): Vector[A] = synchronized { self.stableSortBy(lt) }
   // concatenation
     override def append(that: Vector[A]): Vector[A] = synchronized { self.append(that) }
   // permutation

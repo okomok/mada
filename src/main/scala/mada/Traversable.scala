@@ -43,7 +43,7 @@ trait Traversable[+A] { ^ =>
     /**
      * Combines the elements tr the sorted traversables, into a new traversable with its elements sorted.
      */
-    def mergeBy[B >: A](that: Traversable[B])(lt: Compare.Func[B]): Traversable[B] = bind(new MergeTraverser[B](start, that.start, lt))
+    def mergeBy[B >: A](that: Traversable[B])(lt: compare.Func[B]): Traversable[B] = bind(new MergeTraverser[B](start, that.start, lt))
 
 }
 

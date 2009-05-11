@@ -13,11 +13,11 @@ package mada.vec
 trait Eligibles {
     // Hmm, Ordering should have taken [-A]?
     implicit def forOrdering[A](implicit c: Ordering[A]): Ordering[Vector[A]] = {
-        Compare.toOrdering(forCompare(Compare.fromOrdering(c)))
+        compare.toOrdering(forCompare(compare.fromOrdering(c)))
     }
 
-    /*implicit*/ def forOrdering_[A](implicit c: Compare.GetOrdered[A]): Ordering[Vector[A]] = {
-        Compare.toOrdering(forCompare(Compare.fromGetOrdered(c)))
+    /*implicit*/ def forOrdering_[A](implicit c: compare.GetOrdered[A]): Ordering[Vector[A]] = {
+        compare.toOrdering(forCompare(compare.fromGetOrdered(c)))
     }
 
     // For unambiguous overload resolution, `implicit` is facing the alternative

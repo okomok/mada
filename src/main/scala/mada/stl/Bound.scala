@@ -34,7 +34,7 @@ package mada.stl
 
 
 private[mada] object LowerBound {
-    def apply[A](* : Vector[A], first: Int, __last: Int, __val: A, __comp: Compare.Func[A]): Int = {
+    def apply[A](* : Vector[A], first: Int, __last: Int, __val: A, __comp: compare.Func[A]): Int = {
         var __first = first
 
         var __len = __last - __first
@@ -58,7 +58,7 @@ private[mada] object LowerBound {
 }
 
 private[mada] object UpperBound {
-    def apply[A](* : Vector[A], first: Int, __last: Int, __val: A, __comp: Compare.Func[A]): Int = {
+    def apply[A](* : Vector[A], first: Int, __last: Int, __val: A, __comp: compare.Func[A]): Int = {
         LowerBound(*, first, __last, __val, { (x: A, y: A) => !__comp(y, x) })
     }
 }

@@ -13,7 +13,7 @@ package mada.peg
  *
  * @see <a href="http://www.javaworld.com/javaworld/jw-02-2001/jw-0216-ternary.html">Plant your data in a ternary search tree</a>
  */
-class TSTree[A, V](_lt: Compare.Func[A]) {
+class TSTree[A, V](_lt: compare.Func[A]) {
     private var rootNode: TSTreeNode[A, V] = null
 
     def clear: Unit = {

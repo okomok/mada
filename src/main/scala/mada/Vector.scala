@@ -578,7 +578,7 @@ trait Vector[A] extends PartialFunction[Int, A] {
      * @param   lt  strict weak ordering
      * @return  this vector sorted according to <code>lt</code>.
      */
-    def sortBy(lt: Compare.Func[A]): Vector[A] = Sort(this, lt)
+    def sortBy(lt: compare.Func[A]): Vector[A] = Sort(this, lt)
 
     /**
      * @return  <code>stableSortBy(c)</code>.
@@ -592,7 +592,7 @@ trait Vector[A] extends PartialFunction[Int, A] {
      * @param   lt  strict weak ordering
      * @return  this vector sorted according to <code>lt</code>.
      */
-    def stableSortBy(lt: Compare.Func[A]): Vector[A] = StableSort(this, lt)
+    def stableSortBy(lt: compare.Func[A]): Vector[A] = StableSort(this, lt)
 
 
 // concatenation

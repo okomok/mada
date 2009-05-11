@@ -7,7 +7,7 @@
 package madatest
 
 
-import mada.Compare
+import mada.{compare, Compare}
 import junit.framework.Assert._
 
 
@@ -15,6 +15,6 @@ class CompareTest {
     def takeLambda[A](x: A)(c: Compare[A]): Unit = ()
 
     def testTrivial: Unit = {
-        takeLambda(3)(Compare.by[Int](_ < _))
+        takeLambda(3)(compare.by[Int](_ < _))
     }
 }

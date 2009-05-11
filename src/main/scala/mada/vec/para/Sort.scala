@@ -14,13 +14,13 @@ import Functions.future
 
 
 private[mada] object Sort {
-    def apply[A](v: Vector[A], lt: Compare.Func[A], grainSize: Int): Vector[A] = {
+    def apply[A](v: Vector[A], lt: compare.Func[A], grainSize: Int): Vector[A] = {
         Assert(!IsParallel(v))
         impl(v, v.start, v.end, lt, grainSize * 2) // best grain size?
         v
     }
 
-    def impl[A](v: Vector[A], first: Int, last: Int, lt: Compare.Func[A], grainSize: Int): Unit = {
+    def impl[A](v: Vector[A], first: Int, last: Int, lt: compare.Func[A], grainSize: Int): Unit = {
         if (first != last) {
             val rs = new ArrayList[Vector[A]]
             loop(v, first, last, depthLimit(first, last), lt, grainSize, rs)
@@ -29,7 +29,7 @@ private[mada] object Sort {
     }
 
     // See: stl.IntroSort
-    def loop[A](* : Vector[A], __first: Int, last: Int, depth_limit: Int, __comp: Compare.Func[A], grainSize: Int, rs: ArrayList[Vector[A]]): Unit = {
+    def loop[A](* : Vector[A], __first: Int, last: Int, depth_limit: Int, __comp: compare.Func[A], grainSize: Int, rs: ArrayList[Vector[A]]): Unit = {
         var __last = last
         var __depth_limit = depth_limit
 

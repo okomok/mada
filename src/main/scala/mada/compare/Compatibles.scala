@@ -4,16 +4,11 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.cmp
+package mada.compare
 
 
-/**
- * Contains implicit conversions for strict weak ordering.
- */
-@provider
+@compatibles
 trait Compatibles { this: Compare.type =>
-    @returnThis val Compatibles: Compatibles = this
-
 // from
     implicit def madaCompareFromFunc[A](from: Func[A]): Compare[A] = fromFunc(from)
     implicit def madaCompareFromGetOrdered[A](implicit from: GetOrdered[A]): Compare[A] = fromGetOrdered(from)
