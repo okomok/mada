@@ -10,7 +10,8 @@ package mada
 /**
  * Contains utility methods operating on strings.
  */
-object Strings {
+package object string {
+
     /**
      * Concatenates all the arguments of a given iterable of objects.
      */
@@ -26,4 +27,5 @@ object Strings {
      * @return  <code>flatten(ss)</code>.
      */
     def concat(ss: Any*): String = flatten(ss)
+
 }

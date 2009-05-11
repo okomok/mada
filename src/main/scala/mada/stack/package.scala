@@ -4,15 +4,20 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.stack
+package mada
 
 
-/**
- * Contains explicit conversions around <code>Stack</code>.
- */
-@provider
-trait Conversions { this: Stack.type =>
+package object stack {
 
+    @aliasOf("Stack")
+    type Type[A] = Stack[A]
+
+    @returnThat
+    def from[A](to: Stack[A]) = to
+
+    val compatibles: Compatibles = Stack
+
+    @conversion
     def fromJclDeque[A](from: java.util.Deque[A]): Stack[A] = new Stack[A] {
         override def push(e: A) = from.push(e)
         override def pop = from.pop
@@ -22,6 +27,7 @@ trait Conversions { this: Stack.type =>
         override def clear = from.clear
     }
 
+    @conversion
     def fromSclStack[A](from: scala.collection.mutable.Stack[A]): Stack[A] = new Stack[A] {
         override def push(e: A) = from.push(e)
         override def pop = from.pop
@@ -31,6 +37,7 @@ trait Conversions { this: Stack.type =>
         override def clear = from.clear
     }
 
+    @conversion
     def fromSclArrayStack[A](from: scala.collection.mutable.ArrayStack[A]): Stack[A] = new Stack[A] {
         override def push(e: A) = from.push(e)
         override def pop = from.pop
@@ -39,4 +46,5 @@ trait Conversions { this: Stack.type =>
         override def isEmpty = from.isEmpty
         override def clear = from.clear
     }
+
 }

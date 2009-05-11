@@ -7,15 +7,15 @@
 package madatest
 
 
-import mada.Strings
+import mada.string
 import junit.framework.Assert._
 
 
 class StringsTest {
     def testConcat: Unit = {
-        assertEquals( "abcdef", Strings.concat("ab", "", "c", "def", "") )
-        AssertNotEquals( "abcxef", Strings.concat("ab", "", "c", "def", "") )
+        assertEquals( "abcdef", string.concat("ab", "", "c", "def", "") )
+        AssertNotEquals( "abcxef", string.concat("ab", "", "c", "def", "") )
 
-        assertEquals( "ab3cdefg", Strings.concat("ab", 3, "c", "def", "", 'g') )
+        assertEquals( "ab3cdefg", string.concat("ab", 3, "c", "def", "", 'g') )
     }
 }

@@ -7,10 +7,8 @@
 package mada.stack
 
 
-/**
- * Implements a proxy for stack objects.
- */
-trait StackProxy[A] extends Stack[A] with Proxies.ProxyOf[Stack[A]] {
+@forwarder
+trait Forwarder[A] extends Stack[A] with Proxies.ProxyOf[Stack[A]] {
     override def push(e: A) = self.push(e)
     override def pop: A = self.pop
     override def peek: A = self.peek

@@ -21,4 +21,19 @@ package object mada {
      */
     def implies(pre: Boolean, post: => Boolean): Boolean = !pre || post
 
+    /**
+     * Hash code of <code>Int</code>
+     */
+    def hashCodeOfInt(x: Int): Int = x
+
+    /**
+     * Hash code of <code>Long</code>
+     */
+    def hashCodeOfLong(x: Long): Int = (x ^ (x >>> 32)).toInt
+
+    /**
+     * @return  <code>java.lang.System.idenityHashCode(x)</code>.
+     */
+    def hashCodeOfRef(x: AnyRef): Int = java.lang.System.identityHashCode(x)
+
 }

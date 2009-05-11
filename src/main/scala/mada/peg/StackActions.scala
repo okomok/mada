@@ -10,7 +10,7 @@ package mada.peg
 /**
  * Helper for stack evaluations.
  */
-class StackActions[A, B](override val self: Stack[B]) extends Stack.StackProxy[B] {
+class StackActions[A, B](override val self: Stack[B]) extends stack.Forwarder[B] {
 
 
 // constructors

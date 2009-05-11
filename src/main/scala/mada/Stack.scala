@@ -11,24 +11,9 @@ import stack._
 
 
 /**
- * Contains utility methods operating on <code>Stack</code>.
- */
-object Stack extends Aliases with Conversions with Compatibles {
-    /**
-     * Triggers implicit conversions explicitly.
-     *
-     * @return  <code>to</code>.
-     */
-    def from[A](to: Stack[A]) = to
-}
-
-
-/**
  * Trivial stack interface
  */
 trait Stack[A] {
-
-    @returncompanion def companion = Stack
 
     /**
      * Pushes.
@@ -69,5 +54,13 @@ trait Stack[A] {
      * Alias of <code>size</code>
      */
     final def length: Int = size
+
+}
+
+
+object Stack extends Compatibles {
+
+    @returnThis
+    val compatibles: Compatibles = this
 
 }
