@@ -11,51 +11,31 @@ package mada.meta
 //      at http://www.assembla.com/wiki/show/metascala
 
 
-/**
- * Contains "overloadable" operators.
- */
-@provider
-trait Operators { this: Meta.type =>
+trait Operatable extends Operatable_==
+    with Operatable_+ with Operatable_-
+    with Operatable_&& with Operatable_||
 
-    @returnThis val Operators: Operators = this
-
-    type +[a <: Operatable_+, b <: a#Operand_+] = a#operator_+[b]
-    type -[a <: Operatable_-, b <: a#Operand_-] = a#operator_-[b]
-
-    type ==[a <: Operatable_==, b <: a#Operand_==] = a#operator_==[b]
-    type !=[a <: Operatable_==, b <: a#Operand_==] = a#operator_==[b]#not
-
-    type &&[a <: Operatable_&&, b <: a#Operand_&&] = a#operator_&&[b]
-    type ||[a <: Operatable_||, b <: a#Operand_||] = a#operator_||[b]
-
-    trait Operatable extends Operatable_==
-        with Operatable_+ with Operatable_-
-        with Operatable_&& with Operatable_||
-
-    trait Operatable_== {
-        type Operand_==
-        type operator_==[that <: Operand_==] <: Boolean
-    }
-
-    trait Operatable_+ {
-        type Operand_+
-        type operator_+[that <: Operand_+]
-    }
-
-    trait Operatable_- {
-        type Operand_-
-        type operator_-[that <: Operand_-]
-    }
-
-    trait Operatable_&& {
-        type Operand_&&
-        type operator_&&[that <: Operand_&&]
-    }
-
-    trait Operatable_|| {
-        type Operand_||
-        type operator_||[that <: Operand_||]
-    }
-
+trait Operatable_== {
+    type Operand_==
+    type operator_==[that <: Operand_==] <: Boolean
 }
 
+trait Operatable_+ {
+    type Operand_+
+    type operator_+[that <: Operand_+]
+}
+
+trait Operatable_- {
+    type Operand_-
+    type operator_-[that <: Operand_-]
+}
+
+trait Operatable_&& {
+    type Operand_&&
+    type operator_&&[that <: Operand_&&]
+}
+
+trait Operatable_|| {
+    type Operand_||
+    type operator_||[that <: Operand_||]
+}

@@ -8,47 +8,43 @@ package mada.meta
 
 
 /**
- * Contains meta products.
+ * Meta product
  */
-@provider
-trait Products { this: Meta.type =>
+trait Product {
+    type productArity <: Nat
+}
 
-    trait Product {
-        type productArity <: Nat
-    }
 
-    trait Product0 extends Product {
-        override type productArity = Meta._0
-    }
+trait Product0 extends Product {
+    override type productArity = _0N
+}
 
-    trait Product1 extends Product {
-        type _T1
+trait Product1 extends Product {
+    type _T1
 
-        override type productArity = Meta._1
+    override type productArity = _1N
 
-        type _1 <: _T1
-    }
+    type _1 <: _T1
+}
 
-    trait Product2 extends Product {
-        type _T1
-        type _T2
+trait Product2 extends Product {
+    type _T1
+    type _T2
 
-        override type productArity = Meta._2
+    override type productArity = _2N
 
-        type _1 <: _T1
-        type _2 <: _T2
-    }
+    type _1 <: _T1
+    type _2 <: _T2
+}
 
-    trait Product3 extends Product {
-        type _T1
-        type _T2
-        type _T3
+trait Product3 extends Product {
+    type _T1
+    type _T2
+    type _T3
 
-        override type productArity = Meta._3
+    override type productArity = _3N
 
-        type _1 <: _T1
-        type _2 <: _T2
-        type _3 <: _T3
-    }
-
+    type _1 <: _T1
+    type _2 <: _T2
+    type _3 <: _T3
 }

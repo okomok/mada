@@ -7,23 +7,23 @@
 package mada.blend
 
 
-// See: Meta-Programming with Scala: Conditional Compilation and Loop Unrolling
+// See: meta.Programming with Scala: Conditional Compilation and Loop Unrolling
 //      at http://michid.wordpress.com/2008/10/29/meta-programming-with-scala-conditional-compilation-and-loop-unrolling/
 
 
 @specializer
-sealed trait DoIf[b <: Meta.Boolean] {
+sealed trait DoIf[b <: meta.Boolean] {
     def apply(block: => Unit): Unit
 }
 
 
 object DoIf {
 
-    implicit object ofTrue extends DoIf[Meta.`true`] {
+    implicit object ofTrue extends DoIf[meta.`true`] {
         override def apply(block: => Unit) = block
     }
 
-    implicit object ofFalse extends DoIf[Meta.`false`] {
+    implicit object ofFalse extends DoIf[meta.`false`] {
         override def apply(block: => Unit) = ()
     }
 

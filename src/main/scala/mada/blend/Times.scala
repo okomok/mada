@@ -7,24 +7,21 @@
 package mada.blend
 
 
-// See: Meta-Programming with Scala: Conditional Compilation and Times Unrolling
+// See: meta.Programming with Scala: Conditional Compilation and Times Unrolling
 //      at http://michid.wordpress.com/2008/10/29/meta-programming-with-scala-conditional-compilation-and-loop-unrolling/
 
 
-import Meta.Nat
-
-
 @specializer
-sealed trait Times[n <: Nat] extends ((Int => Unit, Int) => Unit)
+sealed trait Times[n <: meta.Nat] extends ((Int => Unit, Int) => Unit)
 
 
 object Times {
 
-    implicit val ofZero = new Times[Nat.zero] {
+    implicit val ofZero = new Times[meta.Zero] {
         override def apply(op: Int => Unit, i: Int) = ()
     }
 
-    implicit def ofSucc[n <: Nat](implicit _times: Times[n]) = new Times[Nat.succ[n]] {
+    implicit def ofSucc[n <: meta.Nat](implicit _times: Times[n]) = new Times[meta.Succ[n]] {
         override def apply(op: Int => Unit, i: Int) = { op(i); _times(op, i + 1) }
     }
 

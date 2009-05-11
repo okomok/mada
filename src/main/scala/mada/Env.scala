@@ -15,11 +15,11 @@ object Env {
     /**
      * Is mada in debug mode?
      */
-    val isDebug = Meta.unmeta[isDebug, Boolean]
+    val isDebug = meta.unmeta[isDebug, Boolean]
 
     /**
      * Is mada in debug mode?
      */
-    type isDebug = Meta.`true`
+    type isDebug = meta.`true`
 
 }

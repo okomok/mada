@@ -28,7 +28,7 @@ package object traversable {
      * Creates non-retraversable from a traverser.
      */
     def bindOnce[A](t: Traverser[A]) = new Traversable[A] {
-        override val start = t
+        override def start = t
         override def isRetraversable = false
     }
 

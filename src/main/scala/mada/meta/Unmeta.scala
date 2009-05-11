@@ -7,9 +7,6 @@
 package mada.meta
 
 
-import Meta._
-
-
 @specializer
 sealed trait Unmeta[From, To] extends scala.Function0[To]
 
@@ -23,10 +20,10 @@ object Unmeta {
         override def apply() = false
     }
 
-    implicit val ofZero = new Unmeta[Nat.zero, scala.Int] {
+    implicit val ofZero = new Unmeta[Zero, scala.Int] {
         override def apply() = 0
     }
-    implicit def ofSucc[n <: Nat](implicit _unmeta: Unmeta[n, scala.Int]) = new Unmeta[Nat.succ[n], scala.Int] {
+    implicit def ofSucc[n <: Nat](implicit _unmeta: Unmeta[n, scala.Int]) = new Unmeta[Succ[n], scala.Int] {
         override def apply() = 1 + _unmeta()
     }
 

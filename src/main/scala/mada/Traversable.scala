@@ -50,24 +50,24 @@ trait Traversable[+A] { ^ =>
 
 object Traversable {
 
-    sealed trait ByNameMethods[A] {
+    sealed trait OfByName[A] {
         def `lazy`: Traversable[A]
     }
-    implicit def byNameMethods[A](tr: => Traversable[A]): ByNameMethods[A] = new ByNameMethods[A] {
+    implicit def ofByname[A](tr: => Traversable[A]): OfByName[A] = new OfByName[A] {
         override def `lazy` = tr._lazy(tr)
     }
 
-    sealed trait TraversableMethods[A] {
+    sealed trait OfTraversable[A] {
         def flatten: Traversable[A]
     }
-    implicit def traversableMethods[A](tr: Traversable[Traversable[A]]): TraversableMethods[A] = new TraversableMethods[A] {
+    implicit def ofTraversable[A](tr: Traversable[Traversable[A]]): OfTraversable[A] = new OfTraversable[A] {
         override def flatten = tr._flatten(tr)
     }
 
-    sealed trait CharMethods {
+    sealed trait OfChar {
         def stringize: String
     }
-    implicit def charMethods(tr: Traversable[Char]): CharMethods = new CharMethods {
+    implicit def ofChar(tr: Traversable[Char]): OfChar = new OfChar {
         override def stringize = tr._stringize(tr)
     }
 
