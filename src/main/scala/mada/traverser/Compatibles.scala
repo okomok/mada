@@ -9,6 +9,6 @@ package mada.traverser
 
 @provider @compatibles
 trait Compatibles { self: Traverser.type =>
-    implicit def madaTraverserFromIterator[A](from: Iterator[A]): Iterator[A] = fromIterator(from)
+    implicit def madaTraverserFromIterator[A](from: Iterator[A]): Traverser[A] = fromIterator(from)
     implicit def madaTraverserToIterator[A](from: Traverser[A]): Iterator[A] = toIterator(from)
 }

@@ -7,19 +7,12 @@
 package mada
 
 
-package object traverser {
-
-    @aliasOf("Traversable")
-    type Type[+A] = Traverser[A]
-
-
-    val compatibles: traverser.Compatibles = Traverser
-
-}
+import traverser._
 
 
 /**
- * Yet another Iterator
+ * Yet another Iterator: backend of <code>Traversable</code>.
+ * Unlike <code>Iterator</code>, this separates element-access and traversing method.
  */
 @notThreadSafe
 trait Traverser[+A] {
@@ -51,10 +44,9 @@ trait Traverser[+A] {
 }
 
 
-@companionModule
-object Traverser extends traverser.Compatibles {
+object Traverser extends Compatibles {
 
     @returnThis
-    val compatibles: traverser.Compatibles = this
+    val Compatibles: Compatibles = this
 
 }

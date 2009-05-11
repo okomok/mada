@@ -7,12 +7,7 @@
 package mada
 
 
-package object traversable {
-
-    @aliasOf("Traversable")
-    type Type[+A] = Traversable[A]
-
-}
+import traversable._
 
 
 /**
@@ -20,25 +15,22 @@ package object traversable {
  */
 trait Traversable[+A] { ^ =>
 
-    import traversable._
-
-
     /**
      * Returns a starting traverser.
      */
     def start: Traverser[A]
 
     /**
-     * Is this traversable again?
+     * Is this traversable as many times as one wants?
      */
     def isRetraversable: Boolean
 
 
-    def flattenImpl[B](_this: Traversable[Traversable[B]]): Traversable[B] = throw new Error
+    def _flatten[B](_this: Traversable[Traversable[B]]): Traversable[B] = throw new Error
 
-    def stringizeImpl(_this: Traversable[Char]): String = throw new Error
+    def _stringize(_this: Traversable[Char]): String = throw new Error
 
-    def lazyImpl[B](_this: => Traversable[B]): Traversable[B] = throw new Error
+    def _lazy[B](_this: => Traversable[B]): Traversable[B] = throw new Error
 
 
 // sorted
@@ -46,7 +38,7 @@ trait Traversable[+A] { ^ =>
     /**
      * @return  <code>mergeby(that)(c)</code>.
      */
-    final def merge[B >: A](that: Traversable[B])(implicit c: Compare[B]): Traversable[B] = mergeBy(that)(c)
+    final def merge[B >: A](that: Traversable[B])(implicit c: Compare[B]) = mergeBy(that)(c)
 
     /**
      * Combines the elements tr the sorted traversables, into a new traversable with its elements sorted.
@@ -56,28 +48,27 @@ trait Traversable[+A] { ^ =>
 }
 
 
-@companionModule
 object Traversable {
 
     sealed trait ByNameMethods[A] {
         def `lazy`: Traversable[A]
     }
     implicit def byNameMethods[A](tr: => Traversable[A]): ByNameMethods[A] = new ByNameMethods[A] {
-        override def `lazy` = tr.lazyImpl(tr)
+        override def `lazy` = tr._lazy(tr)
     }
 
     sealed trait TraversableMethods[A] {
         def flatten: Traversable[A]
     }
     implicit def traversableMethods[A](tr: Traversable[Traversable[A]]): TraversableMethods[A] = new TraversableMethods[A] {
-        override def flatten = tr.flattenImpl(tr)
+        override def flatten = tr._flatten(tr)
     }
 
     sealed trait CharMethods {
         def stringize: String
     }
     implicit def charMethods(tr: Traversable[Char]): CharMethods = new CharMethods {
-        override def stringize = tr.stringizeImpl(tr)
+        override def stringize = tr._stringize(tr)
     }
 
 }

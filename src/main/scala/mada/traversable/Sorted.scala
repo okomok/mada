@@ -9,12 +9,12 @@ package mada.traversable
 
 private[mada] class MergeTraverser[A](t1: Traverser[A], t2: Traverser[A], lt: Compare.Func[A]) extends Traverser[A] {
     override def isEnd = !t1 && !t2
-    override def deref = sorted.derefBy(t1, t2, lt)
-    override def increment = sorted.incrementBy(t1, t2, lt)
+    override def deref = Sorted.derefBy(t1, t2, lt)
+    override def increment = Sorted.incrementBy(t1, t2, lt)
 }
 
 
-private object sorted {
+private object Sorted {
 
     def derefBy[A](t1: Traverser[A], t2: Traverser[A], lt: Compare.Func[A]): A = {
         if (!t1) {

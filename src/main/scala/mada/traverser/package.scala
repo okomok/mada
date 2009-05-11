@@ -4,12 +4,22 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.traverser
+package mada
 
 
-@conversion
-object fromIterator {
-    def apply[A](from: Iterator[A]) = new Traverser[A] {
+package object traverser {
+
+    @aliasOf("Traversable")
+    type Type[+A] = Traverser[A]
+
+    @aliasOf("Traversable.Compatibles")
+    val compatibles = Traverser.Compatibles
+
+    @returnThat
+    def from[A](to: Traverser[A]) = to
+
+    @conversion
+    def fromIterator[A](from: Iterator[A]) = new Traverser[A] {
         private val e = new Proxies.Var[A]
         if (from.hasNext) {
             e.assign(from.next)
@@ -26,12 +36,9 @@ object fromIterator {
 
         }
     }
-}
 
-
-@conversion
-object toIterator {
-    def apply[A](from: Traverser[A]) = new Iterator[A] {
+    @conversion
+    def toIterator[A](from: Traverser[A]) = new Iterator[A] {
         override def hasNext = !from.isEnd
         override def next = {
             val tmp = ~from
@@ -39,4 +46,5 @@ object toIterator {
             tmp
         }
     }
+
 }
