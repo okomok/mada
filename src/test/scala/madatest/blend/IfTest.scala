@@ -4,20 +4,20 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.blend
+package madatest.blendtest
 
 
-import mada.Meta
-import mada.Blend._
+import mada.meta
+import mada.blend._
 import junit.framework.Assert._
 
 
 class IfTest {
 
-    type on = Meta.`true`
-    type off = Meta.`false`
+    type on = meta.`true`
+    type off = meta.`false`
 
-    type id[b <: Meta.Boolean] = b#not#not
+    type id[b <: meta.Boolean] = b#not#not
 
     def testOn: Unit = {
         var e = false
@@ -53,31 +53,31 @@ class IfTest {
         assertTrue(l)
     }
 
-    type _k = Meta._3#increment
+    type _k = meta._3N#increment
     def testWithNat: Unit = {
-        import Meta._
-        import mada.Blend.`if`
-        val n = `if`[scala.Int, _k == _3] { 3 } .elseIf[_k == _4] { 4 } `else` { 5 }
+        import meta._
+        import mada.blend.`if`
+        val n = `if`[scala.Int, _k == _3N] { 3 } .elseIf[_k == _4N] { 4 } `else` { 5 }
         assertEquals(4, n)
     }
 
     /*
     // Will never work due to erasure....
-    def makeInt0[k <: Meta.Int]: Int = {
-        `if`[Int, k#equals[Meta._1]] { 1 } `else` { 99 }
+    def makeInt0[k <: meta.Int]: Int = {
+        `if`[Int, k#equals[meta._1N]] { 1 } `else` { 99 }
     }
 
-    def makeInt[k <: Meta.Int]: Int = {
-        import Meta._
-        mada.Blend.`if`[Int, k == _1] { 1 } .elseIf[k == _3] { 3 } .elseIf[k == _7] { 7 } .elseIf[k == _10] { 10 } `else` { 99 }
+    def makeInt[k <: meta.Int]: Int = {
+        import meta._
+        mada.blend.`if`[Int, k == _1N] { 1 } .elseIf[k == _3N] { 3 } .elseIf[k == _7N] { 7 } .elseIf[k == _10N] { 10 } `else` { 99 }
     }
 
     def testElseIf2: Unit = {
-        assertEquals(1, makeInt[Meta._1])
-        assertEquals(3, makeInt[Meta._3])
-        assertEquals(7, makeInt[Meta._7])
-        assertEquals(10, makeInt[Meta._10])
-        assertEquals(99, makeInt[Meta._2])
+        assertEquals(1, makeInt[meta._1N])
+        assertEquals(3, makeInt[meta._3N])
+        assertEquals(7, makeInt[meta._7N])
+        assertEquals(10, makeInt[meta._10N])
+        assertEquals(99, makeInt[meta._2N])
     }
     */
 }

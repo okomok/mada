@@ -82,3 +82,10 @@ class returnThat extends StaticAnnotation
  * to which it is used to associate type with value.
  */
 class specializer extends StaticAnnotation
+
+
+/**
+ * An annotation that designates the definition
+ * to which it is used to work around a compiler bug.
+ */
+class compilerWorkaround extends StaticAnnotation

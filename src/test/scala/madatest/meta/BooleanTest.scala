@@ -4,10 +4,10 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.meta
+package madatest.metatest
 
 
-import mada.Meta._
+import mada.meta._
 //import junit.framework.Assert._
 
 
@@ -46,11 +46,11 @@ class BooleanTest {
     }
 
     trait testPropagation {
-        type incinc[n <: Nat] = natIf[n == _3, n#increment, n]#increment
-        assertLower[incinc[_2], Nat]
+        type incinc[n <: Nat] = natIf[n == _3N, n#increment, n]#increment
+        assertLower[incinc[_2N], Nat]
 
-//        assert[`if`[_2 == _3, _2#increment, _2]#increment == _3]
-        assert[incinc[_2] == _3]
-        assert[incinc[_3] == _5]
+//        assert[`if`[_2N == _3N, _2N#increment, _2N]#increment == _3N]
+        assert[incinc[_2N] == _3N]
+        assert[incinc[_3N] == _5N]
     }
 }

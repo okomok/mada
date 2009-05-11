@@ -4,10 +4,10 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.meta
+package madatest.metatest
 
 
-import mada.Meta._
+import mada.meta._
 // import junit.framework.Assert._
 
 
@@ -18,6 +18,6 @@ class ForwardingTest {
     type inc = quote1[incre, Nat, Nat]
 
     trait testTrivial {
-        assert[forwarding1[inc]#apply1[_3] == _4]
+        assert[forwarding1[inc]#apply1[_3N] == _4N]
     }
 }

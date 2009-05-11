@@ -4,10 +4,10 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.meta
+package madatest.metatest
 
 
-import mada.Meta._
+import mada.meta._
 // import junit.framework.Assert._
 
 

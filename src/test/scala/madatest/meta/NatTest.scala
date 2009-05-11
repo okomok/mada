@@ -4,63 +4,63 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.meta
+package madatest.metatest
 
 
-import mada.Meta._
+import mada.meta._
 
 
 class NatTest {
     def testUnmeta: Unit = {
         import junit.framework.Assert._
-        assertEquals(0, unmeta[_0, scala.Int])
-        assertEquals(7, unmeta[_6#increment, scala.Int])
-        assertEquals(10, unmeta[_10, scala.Int])
+        assertEquals(0, unmeta[_0N, scala.Int])
+        assertEquals(7, unmeta[_6N#increment, scala.Int])
+        assertEquals(10, unmeta[_10N, scala.Int])
     }
 
     trait testTrivial {
-        assert[_0 == _0]
-        assert[_0 != _1]
+        assert[_0N == _0N]
+        assert[_0N != _1N]
 
-        assert[_1 == _1]
-        assert[_1 != _2]
-        assert[_1 != _3]
+        assert[_1N == _1N]
+        assert[_1N != _2N]
+        assert[_1N != _3N]
 
-        assert[_1#increment == _2]
-        assert[_1#increment#increment == _3]
+        assert[_1N#increment == _2N]
+        assert[_1N#increment#increment == _3N]
 
-        assert[_1#decrement == _0]
-        assert[_3#decrement#decrement == _1]
-        assert[_4#decrement == _3]
-        assert[_7#increment#decrement#decrement == _6]
+        assert[_1N#decrement == _0N]
+        assert[_3N#decrement#decrement == _1N]
+        assert[_4N#decrement == _3N]
+        assert[_7N#increment#decrement#decrement == _6N]
     }
 
     trait testAdd {
-        assert[_0 + _0 == _0]
-        assert[_0 + _3 == _3]
-        assert[_4 + _3 == _7]
-        assert[_1 + _8 == _9]
-        assert[_5 + _2 == _7]
+        assert[_0N + _0N == _0N]
+        assert[_0N + _3N == _3N]
+        assert[_4N + _3N == _7N]
+        assert[_1N + _8N == _9N]
+        assert[_5N + _2N == _7N]
     }
 
     trait testSubtract {
-        assert[_0 - _0 == _0]
-        assert[_3 - _0 == _3]
-        assert[_4 - _3 == _1]
-        assert[_8 - _1 == _7]
-        assert[_5 - _2 == _3]
+        assert[_0N - _0N == _0N]
+        assert[_3N - _0N == _3N]
+        assert[_4N - _3N == _1N]
+        assert[_8N - _1N == _7N]
+        assert[_5N - _2N == _3N]
     }
 
     trait testMultiply {
-        assert[_3#multiply[_2] == _6]
+        assert[_3N#multiply[_2N] == _6N]
         /* very slow to compile.
-        assert[_0#multiply[_3] == _0]
-        assert[_1#multiply[_3] == _3]
-        assert[_3#multiply[_1] == _3]
-        assert[_2#multiply[_3] == _6]
-        assert[_9#multiply[_1] == _9]
-        assert[_3#multiply[_3] == _9]
-        assert[_4#multiply[_2] == _8]
+        assert[_0N#multiply[_3N] == _0N]
+        assert[_1N#multiply[_3N] == _3N]
+        assert[_3N#multiply[_1N] == _3N]
+        assert[_2N#multiply[_3N] == _6N]
+        assert[_9N#multiply[_1N] == _9N]
+        assert[_3N#multiply[_3N] == _9N]
+        assert[_4N#multiply[_2N] == _8N]
         */
     }
 
@@ -69,13 +69,13 @@ class NatTest {
         type id[n <: Nat] = n#increment#decrement
         type equaL[n <: Nat, m <: Nat] = plusPlus[n] == id[m]
 
-        assert[plusPlus[_4] == _6]
-        assert[plusPlus[_7] == _9]
-        assert[id[_9] == _9]
-        assert[id[_7] == _7]
+        assert[plusPlus[_4N] == _6N]
+        assert[plusPlus[_7N] == _9N]
+        assert[id[_9N] == _9N]
+        assert[id[_7N] == _7N]
 
-        assert[equaL[_3, _5]]
-        assert[equaL[_4, _6]]
+        assert[equaL[_3N, _5N]]
+        assert[equaL[_4N, _6N]]
     }
 /*
     trait testFoldLeft {
@@ -83,17 +83,17 @@ class NatTest {
         type id[n <: Int] = n
         type qp = quote2[inc, Int, Int, Int]
 
-        assert[qp#apply2[_8, _0] == _9]
-        assertLower[_3#foldLeft[_0, qp], Int]
-        assert[_3#foldLeft[_0, qp] == _3]
-        assert[inc[_2, _0]#foldLeft[_2, qp] == _5]
+        assert[qp#apply2[_8N, _0N] == _9N]
+        assertLower[_3N#foldLeft[_0N, qp], Int]
+        assert[_3N#foldLeft[_0N, qp] == _3N]
+        assert[inc[_2N, _0N]#foldLeft[_2N, qp] == _5N]
 
-        type callFold[n <: Int] = inc[n, _0]#foldLeft[_2, qp]
-        assert[callFold[_2]#increment == _6]
+        type callFold[n <: Int] = inc[n, _0N]#foldLeft[_2N, qp]
+        assert[callFold[_2N]#increment == _6N]
 
         // same problem as meta-if.
-        //type callFold[n <: Int] = inc[n, _0]#foldLeft[_2, qp]#increment
-        //assert[callFold[_2] == _6]
+        //type callFold[n <: Int] = inc[n, _0N]#foldLeft[_2N, qp]#increment
+        //assert[callFold[_2N] == _6N]
     }
 */
 }

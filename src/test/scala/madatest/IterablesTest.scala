@@ -11,7 +11,7 @@ import mada.Iterables
 import mada.Vector
 import junit.framework.Assert._
 
-
+/*
 class IterablesTest {
     def testEquals: Unit = {
         assertFalse(Iterables.equal(Iterable.empty, Iterables(1,2,3)))
@@ -257,3 +257,4 @@ class IterablesTest {
         assertTrue(Iterables.equal(jt, Iterables(9))) // traverse again.
     }
 }
+*/

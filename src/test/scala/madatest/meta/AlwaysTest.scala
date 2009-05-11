@@ -4,10 +4,10 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.meta
+package madatest.metatest
 
 
-import mada.Meta._
+import mada.meta._
 // import junit.framework.Assert._
 
 
@@ -19,6 +19,7 @@ class AlwaysTest {
     def testTrivial: Unit = {
         type k = always[String]#apply1[so]
         assertSame[String, k]
+        assertSame[String, Always[String, String]#apply0]
         assertSame[String, always[String]#apply0]
         assertSame[String, always[String]#apply1[so]]
         assertSame[String, always[String]#apply2[scala.Int, so]]

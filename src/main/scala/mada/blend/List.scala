@@ -143,3 +143,21 @@ final case class Cons[h, t <: List](override val head: h, override val tail: t) 
 
     override def untyped = scala.::[Any](head, tail.untyped)
 }
+
+
+@compilerWorkaround
+object List {
+
+    // For some compiler bug, these are placed in companion module.
+
+    /**
+     * @return  <code>r#prepend[l]</code>.
+     */
+    type :::[l <: List, r <: List] = r#prepend[l]
+
+    /**
+     * @return  <code>r#reversePrepend[l]</code>.
+     */
+    type reverse_:::[l <: List, r <: List] = r#reversePrepend[l]
+
+}

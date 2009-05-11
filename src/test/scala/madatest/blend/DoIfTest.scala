@@ -4,20 +4,20 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.blend
+package madatest.blendtest
 
 
-import mada.Meta
-import mada.Blend._
+import mada.meta
+import mada.blend._
 import junit.framework.Assert._
 
 
 class DoIfTest {
 
-    type on = Meta.`true`
-    type off = Meta.`false`
+    type on = meta.`true`
+    type off = meta.`false`
 
-    type id[b <: Meta.Boolean] = b#not#not
+    type id[b <: meta.Boolean] = b#not#not
 
     def testOn: Unit = {
         var k = false

@@ -48,11 +48,11 @@ package object blend {
     /**
      * @return  <code>r#prepend[l]</code>.
      */
-    type :::[l <: List, r <: List] = r#prepend[l]
+    type :::[l <: List, r <: List] = List.:::[l, r]
 
     /**
      * @return  <code>r#reversePrepend[l]</code>.
      */
-    type reverse_:::[l <: List, r <: List] = r#reversePrepend[l]
+    type reverse_:::[l <: List, r <: List] = List.reverse_:::[l, r]
 
 }

@@ -80,10 +80,6 @@ package object meta {
     type natIf[cond <: Boolean, then <: Nat, _else <: Nat] = cond#natIf[then, _else]
 
 
-    type Predicate1 = Function1 { type apply1[v1 <: Argument11] <: Boolean }
-    type Transform[A] = Function1 { type Argument11 >: A; type apply1[v1 <: Argument11] <: A }
-
-
 // constructors for type inference
 
     type tuple0 = Tuple0
@@ -111,5 +107,24 @@ package object meta {
     type _8N = Succ[_7N]
     type _9N = Succ[_8N]
     type _10N = Succ[_9N]
+
+
+// always
+
+    /**
+     * Metafunction always returning <code>a</code>
+     */
+    type Always[T, a <: T] = AlwaysWorkaround.Always[T, a]
+
+    /**
+     * Constructor of <code>Always</code>
+     */
+    type always[a] = AlwaysWorkaround.always[a]
+
+
+// functions
+
+    type Predicate1 = Function1 { type apply1[v1 <: Argument11] <: Boolean }
+    type Transform[A] = Function1 { type Argument11 >: A; type apply1[v1 <: Argument11] <: A }
 
 }
