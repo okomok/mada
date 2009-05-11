@@ -15,7 +15,7 @@ object Assert {
      * The assert
      */
     def apply(cond: => Boolean): Unit = {
-        blend.doIf[Env.isDebug] {
+        blend.doIf[isDebug] {
             if (!cond) {
                 throw new java.lang.AssertionError("assertion failed")
             }
@@ -26,7 +26,7 @@ object Assert {
      * assert with message
      */
     def apply(msg: => Any, cond: => Boolean): Unit = {
-        blend.doIf[Env.isDebug] {
+        blend.doIf[isDebug] {
             if (!cond) {
                 throw new java.lang.AssertionError("assertion failed: " + msg)
             }

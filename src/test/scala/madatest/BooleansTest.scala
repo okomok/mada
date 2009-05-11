@@ -7,7 +7,7 @@
 package madatest
 
 
-import mada.Booleans.Operators._
+import mada.implies
 import junit.framework.Assert._
 
 
@@ -17,11 +17,11 @@ class BooleansTest {
         false
     }
 
-    def testMe {
-        assertTrue(true implies true)
-        assertTrue(false implies true)
-        assertTrue(false implies false)
-        assertFalse(true implies false)
-        false implies neverEvaluated
+    def testMe = {
+        assertTrue(implies(true, true))
+        assertTrue(implies(false, true))
+        assertTrue(implies(false, false))
+        assertFalse(implies(true, false))
+        implies(false, neverEvaluated)
     }
 }

@@ -4,18 +4,21 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada
+package object mada {
 
+    /**
+     * Is mada in debug mode?
+     */
+    final val isDebug = true
 
-import bool._
+    /**
+     * Is mada in debug mode?
+     */
+    type isDebug = meta.`true`
 
-
-/**
- * Contains utility methods operating on <code>Boolean</code>.
- */
-object Booleans extends Operators {
     /**
      * @return  <code>!pre || post</code>.
      */
     def implies(pre: Boolean, post: => Boolean): Boolean = !pre || post
+
 }
