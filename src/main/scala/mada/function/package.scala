@@ -207,34 +207,4 @@ package object function {
         def apply[T1, T2, T3, R](f: Function3[T1, T2, T3, R]): Function3[T1, T2, T3, R] = synchronize3(f)
     }
 
-
-// Ref
-
-    /**
-     * Contains utility methods operating on <code>Function</code> and references.
-     */
-    object Ref {
-        /**
-         * @return  <code>{ (v1, v2) => v1 eq v2 }</code>.
-         */
-        val equal: Predicate2[AnyRef, AnyRef] = { (v1, v2) => v1 eq v2 }
-
-        /**
-         * @return  <code>{ v2 => v1 eq v2 }</code>.
-         */
-        def equalTo(v1: AnyRef): Predicate1[AnyRef] = { v2 => v1 eq v2 }
-    }
-
-
-// Typed
-
-    /**
-     * Contains utility methods operating on <code>Function</code> and typed references.
-     */
-    object Typed {
-        /**
-         * @return  <code>{ (v1, v2) => v1 == v2 }</code>.
-         */
-        def equal[T1, T2]: Predicate2[T1, T2] = function.equal.asInstanceOf[Predicate2[T1, T2]]
-    }
 }
