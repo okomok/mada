@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.func
+package mada.function
 
 
 private[mada] object Future {
@@ -23,7 +23,7 @@ private[mada] object Future {
         try {
             new ByParallel(body)
         } catch {
-            case _: RejectedExecutionException => Functions.byLazy(body)
+            case _: RejectedExecutionException => function.byLazy(body)
         }
     }
 

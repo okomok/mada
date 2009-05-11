@@ -8,7 +8,7 @@ package mada.peg
 
 
 private[mada] object FromIterable {
-    def apply[A](from: Iterable[A]): Peg[A] = apply(from, Functions.equal)
+    def apply[A](from: Iterable[A]): Peg[A] = apply(from, function.equal)
     def apply[A](from: Iterable[A], pred: (A, A) => Boolean): Peg[A] = new IterablePeg(from, pred)
 }
 

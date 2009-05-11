@@ -10,7 +10,7 @@ package mada.vec.para
 import java.util.ArrayList
 import stl.IntroSort.depthLimit
 import stl.{ UnguardedPartition, Median }
-import Functions.future
+import function.future
 
 
 private[mada] object Sort {

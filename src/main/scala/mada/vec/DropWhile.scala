@@ -9,6 +9,6 @@ package mada.vec
 
 private[mada] object DropWhile {
     def apply[A](v: Vector[A], p: A => Boolean): Vector[A] = {
-        v(stl.FindIf(v, v.start, v.end, Functions.not(p)), v.end)
+        v(stl.FindIf(v, v.start, v.end, function.not(p)), v.end)
     }
 }

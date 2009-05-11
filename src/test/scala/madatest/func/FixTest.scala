@@ -7,7 +7,7 @@
 package madatest.func
 
 
-import mada.Functions
+import mada.function
 import junit.framework.Assert._
 
 // See: That about wraps it up --- Using FIX to handle errors without exceptions, and other programming tricks (1997)
@@ -29,7 +29,7 @@ class FixTest {
             = wrap(inc)
 
         val fix_wrap_inc: String => Int => R
-            = Functions.fix(wrap_inc)
+            = function.fix(wrap_inc)
 
         assertEquals(11, fix_wrap_inc("hello")(10).i)
     }

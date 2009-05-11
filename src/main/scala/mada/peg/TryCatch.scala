@@ -24,7 +24,7 @@ sealed class Try[A](p: Peg[A]) {
      * Intermediate peg for pseudo try-catch-finally expression.
      */
     sealed class TryCatch[A](p: Peg[A], f: Throwable => Peg[A]) extends PegProxy[A] {
-        override val self = new TryCatchFinallyPeg(p, f, Functions.empty1)
+        override val self = new TryCatchFinallyPeg(p, f, function.empty1)
         def `finally`(g: Peg.Action[A]): Peg[A] = new TryCatchFinallyPeg(p, f, g)
     }
 }

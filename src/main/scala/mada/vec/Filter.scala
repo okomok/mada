@@ -18,5 +18,5 @@ private[mada] class FilterVector[A](v: Vector[A], p: A => Boolean) extends Vecto
 
 
 private[mada] object MutatingFilter {
-    def apply[A](v: Vector[A], p: A => Boolean): Vector[A] = v(v.start, stl.RemoveIf(v, v.start, v.end, Functions.not(p)))
+    def apply[A](v: Vector[A], p: A => Boolean): Vector[A] = v(v.start, stl.RemoveIf(v, v.start, v.end, function.not(p)))
 }

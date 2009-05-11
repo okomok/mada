@@ -35,7 +35,7 @@ package mada.stl
 
 private[mada] object Unique {
     def apply[A](v: Vector[A], first: Int, __last: Int): Int = {
-        apply(v, first, __last, Functions.equal)
+        apply(v, first, __last, function.equal)
     }
 
     def apply[A](v: Vector[A], first: Int, __last: Int, __binary_pred: (A, A) => Boolean): Int = {

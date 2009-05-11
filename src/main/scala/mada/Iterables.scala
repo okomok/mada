@@ -19,9 +19,9 @@ object Iterables extends Conversions with Compatibles with Operators {
 // algorithms
 
     /**
-     * @return  <code>equalIf(it, jt)(Functions.equal)</code>
+     * @return  <code>equalIf(it, jt)(function.equal)</code>
      */
-    def equal[A, B](it: Iterable[A], jt: Iterable[B]): Boolean = EqualIf(it, jt, Functions.equal)
+    def equal[A, B](it: Iterable[A], jt: Iterable[B]): Boolean = EqualIf(it, jt, function.equal)
 
     /**
      * @return  <code>true</code> iif elements and length are the same.
@@ -146,9 +146,9 @@ object Iterables extends Conversions with Compatibles with Operators {
     def step[A](it: Iterable[A], n: Int): Iterable[A] = Step(it, n)
 
     /**
-     * @return  <code>uniqueBy(it)(Functions.equal)</code>.
+     * @return  <code>uniqueBy(it)(function.equal)</code>.
      */
-    def unique[A](it: Iterable[A]): Iterable[A] = Unique(it, Functions.equal)
+    def unique[A](it: Iterable[A]): Iterable[A] = Unique(it, function.equal)
 
     /**
      * Removes the duplicate consecutive elements.

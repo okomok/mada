@@ -7,17 +7,17 @@
 package madatest.func
 
 
-import mada.Functions
+import mada.function
 import junit.framework.Assert._
 
 
 class IdentityTest {
     def testTrivial: Unit = {
-        assertEquals(11, Functions.identity[Int].apply(11))
-        assertEquals("11", Functions.identity[String].apply("11"))
-        assertEquals(11, Functions.identity.apply(11))
-        assertEquals("11", Functions.identity.apply("11"))
-        assertEquals(11, Functions.identity(11))
-        assertEquals("11", Functions.identity("11"))
+        assertEquals(11, function.identity[Int].apply(11))
+        assertEquals("11", function.identity[String].apply("11"))
+        assertEquals(11, function.identity.apply(11))
+        assertEquals("11", function.identity.apply("11"))
+        assertEquals(11, function.identity(11))
+        assertEquals("11", function.identity("11"))
     }
 }

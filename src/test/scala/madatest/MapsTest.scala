@@ -8,7 +8,7 @@ package madatest
 
 
 import mada.Maps
-import mada.Functions
+import mada.function
 import junit.framework.Assert._
 
 

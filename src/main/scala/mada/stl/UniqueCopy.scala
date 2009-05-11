@@ -35,7 +35,7 @@ package mada.stl
 
 private[mada] object UniqueCopy {
     def apply[A, B >: A](v : Vector[A], first: Int, __last: Int, ^ : Vector[B], result: Int): Int = {
-        apply(v, first, __last, ^, result, Functions.equal)
+        apply(v, first, __last, ^, result, function.equal)
     }
 
     def apply[A, B >: A](v : Vector[A], first: Int, __last: Int, ^ : Vector[B], result: Int, __binary_pred: (A, B) => Boolean): Int = {

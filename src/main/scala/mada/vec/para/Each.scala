@@ -10,7 +10,7 @@ package mada.vec.para
 private[mada] object Each {
     def apply[A](v: Vector[A], f: A => Unit, grainSize: Int): Unit = {
         Assert(!IsParallel(v))
-        import Functions.future
+        import function.future
 
         if (grainSize == 1) {
             v.map{ e => future(f(e)) }.force.foreach{ u => u() }

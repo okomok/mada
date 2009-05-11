@@ -7,7 +7,7 @@
 package madatest.func
 
 
-import mada.Functions
+import mada.function
 import junit.framework.Assert._
 
 
@@ -15,21 +15,19 @@ class ParameterizeTest {
 
     def foo(w: Int, h: Int, msg: String): Int = w * h + msg.length
 
-    object width extends Functions.Parameter[Int]
-    object height extends Functions.Parameter[Int] {
+    object width extends function.Parameter[Int]
+    object height extends function.Parameter[Int] {
        override def argument = 2 // set default value
     }
-    case object message extends Functions.Parameter[String] // `case` makes error-message cute?
+    case object message extends function.Parameter[String] // `case` makes error-message cute?
 
     def msg: String = throw new Error // dummy.
     def msg_=(v: String) = message.pass(v)
 
-    val pd = Functions.parameterize(foo _)(width -> 10, height, message -> "hello") // set default values (not lazy)
-    def namedFoo(ps: Functions.Parameter[_]*) = pd(ps)
+    val pd = function.parameterize(foo _)(width -> 10, height, message -> "hello") // set default values (not lazy)
+    def namedFoo(ps: function.Parameter[_]*) = pd(ps)
 
     def testTrivial: Unit = {
-        // new mada.func.Parameterize { } // should not compile.
-
         assertEquals(10 * 2 + 5, namedFoo())
         assertEquals(3 * 2 + 5, namedFoo(width -> 3))
         assertEquals(10 * 3 + 5, namedFoo(height->3))
@@ -39,9 +37,9 @@ class ParameterizeTest {
     }
 
 
-    val port = new Functions.Parameter[Int] { } // must be `val`.
+    val port = new function.Parameter[Int] { } // must be `val`.
     def bar(msg: String, port: Int): Int = msg.length * port
-    def namedBar(ps: Functions.Parameter[_]*) = Functions.parameterize2(bar)(message -> "hello", port -> 99)(ps)
+    def namedBar(ps: function.Parameter[_]*) = function.parameterize2(bar)(message -> "hello", port -> 99)(ps)
 
     def testShareParam: Unit = {
         assertEquals(5 * 99, namedBar())
@@ -50,9 +48,9 @@ class ParameterizeTest {
     }
 
 
-    object noDefault extends Functions.Parameter[Int] // throws if `argument` is called.
+    object noDefault extends function.Parameter[Int] // throws if `argument` is called.
     def buz(v: Int): Int = v
-    def namedBuz(ps: Functions.Parameter[_]*) = Functions.parameterize(buz _)(noDefault)(ps)
+    def namedBuz(ps: function.Parameter[_]*) = function.parameterize(buz _)(noDefault)(ps)
 
     def testLazy: Unit = {
         assertEquals(10, namedBuz(noDefault -> 10))

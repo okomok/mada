@@ -26,7 +26,7 @@ object Maps {
     def lazyGet[K, V](map: Concurrent[K, () => V])(key: K)(value: => V): V = {
         // See: Java Concurrency in Practice - Listing 5.19
         Java.toOption(map.get(key)).getOrElse{
-            val v = Functions.byLazy(value)
+            val v = function.byLazy(value)
             Java.toOption(map.putIfAbsent(key, v)).getOrElse{
                 v
             }

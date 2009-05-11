@@ -229,14 +229,14 @@ trait Vector[A] extends PartialFunction[Int, A] {
     /**
      * Vector has value semantics <code>==</code>.
      *
-     * @return  <code>equalsIf(that)(Functions.equal)</code>.
+     * @return  <code>equalsIf(that)(function.equal)</code>.
      */
     override def equals(that: Any): Boolean = Equals(this, that)
 
     /**
-     * @return  <code>equalsIf(that)(Functions.equal)</code>.
+     * @return  <code>equalsIf(that)(function.equal)</code>.
      */
-    final def equalsTo[B](that: Vector[B]): Boolean = equalsIf(that)(Functions.equal)
+    final def equalsTo[B](that: Vector[B]): Boolean = equalsIf(that)(function.equal)
 
     /**
      * Generates hash code as value semantics.
@@ -350,9 +350,9 @@ trait Vector[A] extends PartialFunction[Int, A] {
     def span(p: A => Boolean): (Vector[A], Vector[A]) = Span(this, p)
 
     /**
-     * @return  <code>span(Functions.not(p))</code>.
+     * @return  <code>span(function.not(p))</code>.
      */
-    def break(p: A => Boolean): (Vector[A], Vector[A]) = span(Functions.not(p))
+    def break(p: A => Boolean): (Vector[A], Vector[A]) = span(function.not(p))
 
 
 // first and last
@@ -411,14 +411,14 @@ trait Vector[A] extends PartialFunction[Int, A] {
     def mutatingFilter(p: A => Boolean): Vector[A] = MutatingFilter(this, p)
 
     /**
-     * @return  <code>filter(Functions.not(p))</code>.
+     * @return  <code>filter(function.not(p))</code>.
      */
-    def remove(p: A => Boolean): Vector[A] = filter(Functions.not(p))
+    def remove(p: A => Boolean): Vector[A] = filter(function.not(p))
 
     /**
-     * @return  <code>mutatingFilter(Functions.not(p))</code>.
+     * @return  <code>mutatingFilter(function.not(p))</code>.
      */
-    def mutatingRemove(p: A => Boolean): Vector[A] = mutatingFilter(Functions.not(p))
+    def mutatingRemove(p: A => Boolean): Vector[A] = mutatingFilter(function.not(p))
 
     /**
      * @return  <code>(filter(p), remove(p))</code>.
@@ -490,12 +490,12 @@ trait Vector[A] extends PartialFunction[Int, A] {
     /**
      * @return  <code>exists(Funtions.equalTo(e))</code>.
      */
-    final def contains(e: Any): Boolean = exists(Functions.equalTo(e))
+    final def contains(e: Any): Boolean = exists(function.equalTo(e))
 
     /**
-     * @return  <code>seek(Functions.not(p)).isEmpty</code>.
+     * @return  <code>seek(function.not(p)).isEmpty</code>.
      */
-    final def forall(p: A => Boolean): Boolean = seek(Functions.not(p)).isEmpty
+    final def forall(p: A => Boolean): Boolean = seek(function.not(p)).isEmpty
 
     /**
      * @return  <code>!seek(p).isEmpty</code>.
@@ -509,7 +509,7 @@ trait Vector[A] extends PartialFunction[Int, A] {
     final def foldLeft[B](z: B)(op: (B, A) => B): B = FoldLeft(this, z, op)
 
     @aliasOf("elements.foldRight")
-    final def foldRight[B](z: B)(op: (A, B) => B): B = reverse.foldLeft(z)(Functions.flip(op))
+    final def foldRight[B](z: B)(op: (A, B) => B): B = reverse.foldLeft(z)(function.flip(op))
 
     /**
      * @return  <code>tail.foldLeft[B](head)(op)</code>.
@@ -517,9 +517,9 @@ trait Vector[A] extends PartialFunction[Int, A] {
     final def reduceLeft[B >: A](op: (B, A) => B): B = tail.foldLeft[B](head)(op)
 
     /**
-     * @return  <code>reverse.reduceLeft(Functions.flip(op))</code>.
+     * @return  <code>reverse.reduceLeft(function.flip(op))</code>.
      */
-    final def reduceRight[B >: A](op: (A, B) => B): B = reverse.reduceLeft(Functions.flip(op))
+    final def reduceRight[B >: A](op: (A, B) => B): B = reverse.reduceLeft(function.flip(op))
 
     /**
      * Returns the prefix sum of this vector. (a.k.a. scanl)
@@ -529,9 +529,9 @@ trait Vector[A] extends PartialFunction[Int, A] {
     def folderLeft[B](z: B)(op: (B, A) => B): Vector[B] = FolderLeft(this, z, op)
 
     /**
-     * @return  <code>reverse.folderLeft(z)(Functions.flip(op))</code>.
+     * @return  <code>reverse.folderLeft(z)(function.flip(op))</code>.
      */
-    def folderRight[B](z: B)(op: (A, B) => B): Vector[B] = reverse.folderLeft(z)(Functions.flip(op))
+    def folderRight[B](z: B)(op: (A, B) => B): Vector[B] = reverse.folderLeft(z)(function.flip(op))
 
     /**
      * @return  <code>tail.folderLeft(head)</code>.
@@ -539,9 +539,9 @@ trait Vector[A] extends PartialFunction[Int, A] {
     def reducerLeft[B >: A](op: (B, A) => B): Vector[B] = tail.folderLeft[B](head)(op)
 
     /**
-     * @return  <code>reverse.reducerLeft(Functions.flip(op))</code>.
+     * @return  <code>reverse.reducerLeft(function.flip(op))</code>.
      */
-    def reducerRight[B >: A](op: (A, B) => B): Vector[B] = reverse.reducerLeft(Functions.flip(op))
+    def reducerRight[B >: A](op: (A, B) => B): Vector[B] = reverse.reducerLeft(function.flip(op))
 
 
 // sort

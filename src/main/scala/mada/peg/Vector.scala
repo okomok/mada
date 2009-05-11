@@ -8,7 +8,7 @@ package mada.peg
 
 
 private[mada] object FromVector {
-    def apply[A](from: Vector[A]): Peg[A] = apply(from, Functions.equal)
+    def apply[A](from: Vector[A]): Peg[A] = apply(from, function.equal)
     def apply[A](from: Vector[A], pred: (A, A) => Boolean): Peg[A] = new VectorPeg(from, pred)
 }
 

@@ -13,7 +13,7 @@ private[mada] object Map {
 
 private[mada] class MapVector[Z, A](v: Vector[Z], f: Z => A, grainSize: Int) extends VectorProxy[A] {
     Assert(!IsParallel(v))
-    import Functions.future
+    import function.future
 
     override lazy val self = {
         if (grainSize == 1) {
