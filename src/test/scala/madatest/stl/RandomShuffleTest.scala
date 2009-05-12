@@ -10,8 +10,8 @@ package madatest.stl
 import mada.Vector._
 import mada.Vector
 import junit.framework.Assert._
-import madatest.vec.detail.Example._
-import madatest.vec.detail._
+import madatest.vectortest.detail.Example._
+import madatest.vectortest.detail._
 
 
 class RandomShuffleTest {

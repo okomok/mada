@@ -4,14 +4,14 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.vec.para
+package madatest.vectortest.para
 
 
 import mada.control
 import mada.Vector
 import mada.Vector._
 import junit.framework.Assert._
-import madatest.vec.detail.Example._
+import madatest.vectortest.detail.Example._
 
 
 class SortTest {
@@ -62,6 +62,6 @@ class SortNonParallelPerfTest extends NoBenchmark {
 
 class SortParallelPartitionTest extends NoBenchmark {
     override def run = {
-        // mada.vec.parallel.SortBy.partition(longSample1.clone, (_: Int) < (_: Int), mada.vec.parallel.DefaultGrainSize(longSample1))
+        // mada.vector.parallel.SortBy.partition(longSample1.clone, (_: Int) < (_: Int), mada.vector.parallel.DefaultGrainSize(longSample1))
     }
 }

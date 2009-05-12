@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.vec.detail
+package madatest.vectortest.detail
 
 
 import mada._

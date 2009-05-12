@@ -4,12 +4,12 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.vec.jcl
+package madatest.vectortest.jcl
 
 
 import mada.Vector
 import mada.Vector.fromJclList
-import madatest.vec.detail.NewArrayList
+import madatest.vectortest.detail.NewArrayList
 import junit.framework.Assert._
 
 

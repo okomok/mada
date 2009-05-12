@@ -4,14 +4,14 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.vec
+package madatest.vectortest
 
 
 import mada.Vector._
 import mada.Vector
 
 import junit.framework.Assert._
-import madatest.vec.detail.Example._
+import madatest.vectortest.detail.Example._
 
 
 class FolderTest {

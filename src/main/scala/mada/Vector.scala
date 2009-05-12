@@ -7,7 +7,7 @@
 package mada
 
 
-import vec._
+import vector._
 
 
 /**
@@ -148,8 +148,8 @@ object Vector extends Aliases with Conversions with Compatibles with Eligibles w
 
 // Char vector
 
-    @aliasOf("vec.Lexical")
-    val lexical = vec.Lexical
+    @aliasOf("vector.Lexical")
+    val lexical = vector.Lexical
 
     /**
      * Converts to lower case letters.

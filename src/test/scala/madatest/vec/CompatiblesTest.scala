@@ -4,14 +4,14 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.vec
+package madatest.vectortest
 
 
 import mada.Vector
 import mada.Vector.fromArray
 import junit.framework.Assert._
 import mada.Vector
-import madatest.vec.detail.Example._
+import madatest.vectortest.detail.Example._
 
 
 class CompatiblesTest {

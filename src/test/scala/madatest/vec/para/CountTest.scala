@@ -4,14 +4,14 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.vec.para
+package madatest.vectortest.para
 
 
 import mada.Vector._
 
 import junit.framework.Assert._
-import madatest.vec.detail.Example._
-import madatest.vec.detail._
+import madatest.vectortest.detail.Example._
+import madatest.vectortest.detail._
 
 
 class CountTest {
@@ -38,7 +38,7 @@ class CountNoThreadsTest extends NoBenchmark {
 class CountParallelCountTest extends NoBenchmark {
     override def run = {
         val a = longSample1.parallel.count({e => e % 2 == 0})
-        //val a = longSample1.divide(mada.vec.parallel.DefaultGrainSize(longSample1)).parallel.map({ w => w.count(_ % 2 == 0) }).unparallel.reduce(_ + _)
+        //val a = longSample1.divide(mada.vector.parallel.DefaultGrainSize(longSample1)).parallel.map({ w => w.count(_ % 2 == 0) }).unparallel.reduce(_ + _)
         ()
     }
 }
