@@ -4,13 +4,13 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.peg
+package madatest.pegtest
 
 
 import mada.{Vector, vector}
-import mada.Peg._
+import mada.peg._
 import junit.framework.Assert._
-import mada.Peg.Compatibles._
+import mada.peg.compatibles._
 
 import javax.swing.tree.TreeNode
 

@@ -11,15 +11,15 @@ package mada.peg
  * Suppresses actions until outer <code>Peg</code> is matched.
  */
 class ByNeedActions[A] {
-    private val queue = new java.util.ArrayDeque[(Peg.Action[A], Vector[A])]
+    private val queue = new java.util.ArrayDeque[(Action[A], Vector[A])]
 
     @aliasOf("byNeed")
-    final def apply(f: Peg.Action[A]): Peg.Action[A] = byNeed(f)
+    final def apply(f: Action[A]): Action[A] = byNeed(f)
 
     /**
      * Creates action which is delayed until <code>need</code> is applied.
      */
-    def byNeed(f: Peg.Action[A]): Peg.Action[A] = new Peg.Action[A] {
+    def byNeed(f: Action[A]): Action[A] = new Action[A] {
         override def apply(v: Vector[A]) = queue.add((f, v))
     }
 
@@ -28,10 +28,10 @@ class ByNeedActions[A] {
      */
     def need(p: Peg[A]): Peg[A] = new NeedPeg(p)
 
-    private class NeedPeg(override val self: Peg[A]) extends PegProxy[A] {
+    private class NeedPeg(override val self: Peg[A]) extends Forwarder[A] {
         override def parse(v: Vector[A], start: Int, end: Int) = {
             val cur = self.parse(v, start, end)
-            if (cur != Peg.FAILURE) {
+            if (cur != FAILURE) {
                 fireActions
             }
             queue.clear

@@ -16,7 +16,7 @@ private[mada] class Lookaround3Peg[A](p: vector.Pred3[A]) extends Peg[A] with Ze
         if (p(v, start, end)) {
             start
         } else {
-            Peg.FAILURE
+            FAILURE
         }
     }
 }

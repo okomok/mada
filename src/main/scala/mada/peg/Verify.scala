@@ -8,7 +8,7 @@ package mada.peg
 
 
 /**
- * Thrown in case <code>Peg.verify</code> doesn't match.
+ * Thrown in case <code>verify</code> doesn't match.
  */
 case class VerificationException[A](peg: Peg[A], vector: Vector[A]) extends RuntimeException
 
@@ -17,10 +17,10 @@ private[mada] object Verify {
     def apply[A](p: Peg[A]): Peg[A] = new VerifyPeg(p)
 }
 
-private[mada] class VerifyPeg[A](override val self: Peg[A]) extends PegProxy[A] {
+private[mada] class VerifyPeg[A](override val self: Peg[A]) extends Forwarder[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
         val cur = self.parse(v, start, end)
-        if (cur == Peg.FAILURE) {
+        if (cur == FAILURE) {
             throw new VerificationException(self, v(start, end))
         }
         cur

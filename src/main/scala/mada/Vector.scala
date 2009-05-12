@@ -692,7 +692,7 @@ trait Vector[A] extends PartialFunction[Int, A] {
     final def indices: Vector[Int] = vector.range(start, end)
 
     /**
-     * Returns a set entry as pair, which is useful for <code>Peg.switch</code>.
+     * Returns a set entry as pair, which is useful for <code>peg.switch</code>.
      *
      * @return  <code>(this, p)</code>
      */

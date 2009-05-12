@@ -19,12 +19,12 @@ private[mada] class IterablePeg[A](from: Iterable[A], pred: (A, A) => Boolean) e
 
         while (it.hasNext && cur != end) {
             if (!pred(it.next, v(cur))) {
-                return Peg.FAILURE
+                return FAILURE
             }
             cur += 1
         }
 
-        if (cur == end && it.hasNext) Peg.FAILURE else cur
+        if (cur == end && it.hasNext) FAILURE else cur
     }
 
     override def width = Iterables.length(from)

@@ -4,13 +4,13 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.peg
+package madatest.pegtest
 
 
 import junit.framework.Assert._
 
-import mada.Peg.Compatibles._
-import mada.Peg._
+import mada.peg.compatibles._
+import mada.peg._
 import mada.vector._
 import mada.vector.compatibles._
 
@@ -26,7 +26,7 @@ class SymbolMapTest {
     }
 
     def testTrivial2: Unit = {
-        val g = SymbolMap(mada.vector.unstringize("e") -> mada.Peg.unstringize("z"), mada.vector.unstringize("ef") -> mada.Peg.unstringize("g"))
+        val g = SymbolMap(mada.vector.unstringize("e") -> mada.peg.unstringize("z"), mada.vector.unstringize("ef") -> mada.peg.unstringize("g"))
         assertTrue("abc" >> g  matches "abcez")
     }
 

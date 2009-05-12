@@ -4,32 +4,32 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.peg
+package madatest.pegtest
 
 
 import junit.framework.Assert._
 import mada.vector.compatibles._
 import mada.{Vector, vector}
-import mada.Peg.Compatibles._
-import mada.Peg
+import mada.peg.compatibles._
+import mada.{Peg, peg}
 
 
 class BestTest {
     def testLongest(i: Int): Unit = {
-        val p = Peg.longest("a", "abc", "KKKKKKKKKK", "abcdefg", "abcd")
+        val p = peg.longest("a", "abc", "KKKKKKKKKK", "abcdefg", "abcd")
         assertTrue("123" >> p >> "LL"  matches "123abcdefgLL")
     }
 
     def testShortest: Unit = {
-        val p = Peg.shortest("abc", "abcdefg", "K", "ab", "abcd")
+        val p = peg.shortest("abc", "abcdefg", "K", "ab", "abcd")
         assertTrue("123" >> p >> "cdefgLL"  matches "123abcdefgLL")
     }
 
     def testEmpty: Unit = {
-        val p2 = Peg.longest(mada.Iterables.emptyOf[Char])
+        val p2 = peg.longest(mada.Iterables.emptyOf[Char])
         assertFalse("123" >> p2 >> "cdefgLL"  matches "123abcdefgLL")
 
-        val p1 = Peg.shortest("K", "B")
+        val p1 = peg.shortest("K", "B")
         assertFalse("123" >> p1 >> "cdefgLL"  matches "123abcdefgLL")
     }
 }

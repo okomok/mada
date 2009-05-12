@@ -4,13 +4,13 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.peg
+package madatest.pegtest
 
 
 import junit.framework.Assert._
 
-import mada.Peg.Compatibles._
-import mada.Peg._
+import mada.peg.compatibles._
+import mada.peg._
 import java.util.regex.Pattern
 
 

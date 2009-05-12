@@ -4,10 +4,10 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.peg
+package madatest.pegtest
 
 
-import mada.Peg._
+import mada.peg._
 import junit.framework.Assert._
 
 

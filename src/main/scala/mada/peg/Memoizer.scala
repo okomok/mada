@@ -22,7 +22,7 @@ class Memoizer[A](val input: Vector[A]) {
      */
     def memoize(p: Peg[A]): Peg[A] = new MemoizePeg(p)
 
-    private class MemoizePeg(override val self: Peg[A]) extends PegProxy[A] {
+    private class MemoizePeg(override val self: Peg[A]) extends Forwarder[A] {
         private val memoTable = new java.util.concurrent.ConcurrentHashMap[Pair[Int, Int], () => Int]
 
         override def parse(v: Vector[A], start: Int, end: Int) = {

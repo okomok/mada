@@ -4,19 +4,19 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.peg
+package madatest.pegtest
 
 
 import junit.framework.Assert._
-import mada.Peg.Compatibles._
-import mada.Peg
+import mada.peg.compatibles._
+import mada.{Peg, peg}
 
 
 class ByNeedActionsTest {
     def testTrivial: Unit = {
-        val B = new Peg.ByNeedActions[Char]
+        val B = new peg.ByNeedActions[Char]
         var c = 0
-        val p = "abc" >> B.need( ( Peg.from("def"){B{_ => c+=1}} >> Peg.from("ghi"){B{_ => c*=3}} ) | ("ihjk") )
+        val p = "abc" >> B.need( ( peg.from("def"){B{_ => c+=1}} >> peg.from("ghi"){B{_ => c*=3}} ) | ("ihjk") )
 
         assertTrue(p matches  "abcihjk")
         assertEquals(0, c)

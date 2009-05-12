@@ -13,14 +13,14 @@ private[mada] object Negate {
 
 private[mada] class NegatePeg[A](p: Peg[A]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
-        if (p.parse(v, start, end) != Peg.FAILURE) {
-            Peg.FAILURE
+        if (p.parse(v, start, end) != FAILURE) {
+            FAILURE
         } else {
             val cur = start + p.width
             if (cur <= end) {
                 cur
             } else {
-                Peg.FAILURE
+                FAILURE
             }
         }
     }

@@ -11,6 +11,6 @@ private[mada] object Named {
     def apply[A](p: Peg[A], name: String): Peg[A] = new NamedPeg(p, name)
 }
 
-private[mada] class NamedPeg[A](override val self: Peg[A], name: String) extends PegProxy[A] {
+private[mada] class NamedPeg[A](override val self: Peg[A], name: String) extends Forwarder[A] {
     override def toString = name
 }

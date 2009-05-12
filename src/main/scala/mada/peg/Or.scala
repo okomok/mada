@@ -14,7 +14,7 @@ private[mada] object Or {
 private[mada] class OrPeg[A](p: Peg[A], q: Peg[A]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
         var cur = p.parse(v, start, end)
-        if (cur == Peg.FAILURE) {
+        if (cur == FAILURE) {
             q.parse(v, start, end)
         } else {
             cur
@@ -24,7 +24,7 @@ private[mada] class OrPeg[A](p: Peg[A], q: Peg[A]) extends Peg[A] {
     override def width = {
         val plen = p.width
         if (plen != q.width) {
-            throw new Peg.NotConstantWidth("Peg.or")
+            throw new NotConstantWidth("or")
         } else {
             plen
         }

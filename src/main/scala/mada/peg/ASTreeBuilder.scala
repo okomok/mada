@@ -62,20 +62,20 @@ class ASTreeBuilder[T <: MutableTreeNode](root: T, cloner: T => T) {
     }
 
     @aliasOf("node")
-    final def apply[A](p: Peg[A])(f: Peg.Action[A]): Peg[A] = node(p)(f)
+    final def apply[A](p: Peg[A])(f: Action[A]): Peg[A] = node(p)(f)
 
     /**
      * Creates a Peg which appends a tree node using <code>f</code>.
      */
-    def node[A](p: Peg[A])(f: Peg.Action[A]): Peg[A] = new NodePeg(p, f)
+    def node[A](p: Peg[A])(f: Action[A]): Peg[A] = new NodePeg(p, f)
 
-    private class NodePeg[A](override val self: Peg[A], f: Peg.Action[A]) extends PegProxy[A] {
+    private class NodePeg[A](override val self: Peg[A], f: Action[A]) extends Forwarder[A] {
         override def parse(v: Vector[A], start: Int, end: Int) = {
             val n = newNode
             branches.push(n)
             val cur = self.parse(v, start, end)
             Assert.verify(n eq branches.pop)
-            if (cur != Peg.FAILURE) {
+            if (cur != FAILURE) {
                 n.setUserObject(f(v(start, cur)))
                 addNode(branches.peek, n)
             }
@@ -86,7 +86,7 @@ class ASTreeBuilder[T <: MutableTreeNode](root: T, cloner: T => T) {
     /**
      * Creates a Peg which appends a leaf node using <code>f</code>.
      */
-    def leaf[A](p: Peg[A])(f: Peg.Action[A]): Peg[A] = {
+    def leaf[A](p: Peg[A])(f: Action[A]): Peg[A] = {
         def _add(v: Vector[A]) = {
             val n = newNode
             n.setUserObject(f(v))

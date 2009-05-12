@@ -19,7 +19,7 @@ private[mada] class AdvancePeg[A](n: Int) extends Peg[A] {
         if (cur <= end) {
             cur
         } else {
-            Peg.FAILURE
+            FAILURE
         }
     }
 

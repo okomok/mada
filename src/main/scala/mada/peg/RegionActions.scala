@@ -26,14 +26,14 @@ class RegionActions[A] {
     }
 
     @aliasOf("endWith")
-    final def apply(f: Peg.Action[A]): Peg[A] = endWith(f)
+    final def apply(f: Action[A]): Peg[A] = endWith(f)
 
     /**
      * Triggers the action.
      */
-    def endWith(f: Peg.Action[A]): Peg[A] = new EndWithPeg(f)
+    def endWith(f: Action[A]): Peg[A] = new EndWithPeg(f)
 
-    private class EndWithPeg(f: Peg.Action[A]) extends Peg[A] with ZeroWidth[A] {
+    private class EndWithPeg(f: Action[A]) extends Peg[A] with ZeroWidth[A] {
         override def parse(v: Vector[A], start: Int, end: Int) = {
             f(v(stack.pop, start))
             start

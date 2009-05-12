@@ -4,16 +4,16 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.peg
+package madatest.pegtest
 
 
-import mada.Peg
+import mada.{Peg, peg}
 import junit.framework.Assert._
 
 
 class SeqOptTest {
     def testTrivial: Unit = {
-        val p = "abc" >?>: "de" >?>: "fghi" >?>: Peg.from("jk")
+        val p = "abc" >?>: "de" >?>: "fghi" >?>: peg.from("jk")
         assertTrue(p matches "abc")
         assertTrue(p matches "abcde")
         assertTrue(p matches "abcdefghi")

@@ -23,13 +23,13 @@ sealed class Try[A](p: Peg[A]) {
     /**
      * Intermediate peg for pseudo try-catch-finally expression.
      */
-    sealed class TryCatch[A](p: Peg[A], f: Throwable => Peg[A]) extends PegProxy[A] {
+    sealed class TryCatch[A](p: Peg[A], f: Throwable => Peg[A]) extends Forwarder[A] {
         override val self = new TryCatchFinallyPeg(p, f, function.empty1)
-        def `finally`(g: Peg.Action[A]): Peg[A] = new TryCatchFinallyPeg(p, f, g)
+        def `finally`(g: Action[A]): Peg[A] = new TryCatchFinallyPeg(p, f, g)
     }
 }
 
-private[mada] class TryCatchFinallyPeg[A](p: Peg[A], f: Throwable => Peg[A], g: Peg.Action[A]) extends Peg[A] {
+private[mada] class TryCatchFinallyPeg[A](p: Peg[A], f: Throwable => Peg[A], g: Action[A]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
         try {
             p.parse(v, start, end)

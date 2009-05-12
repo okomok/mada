@@ -17,7 +17,7 @@ private[mada] object Repeat {
 }
 
 
-private[mada] class RepeatPeg[A](p: Peg[A], n: Int, m: Int) extends PegProxy[A] with Quantified[A] {
+private[mada] class RepeatPeg[A](p: Peg[A], n: Int, m: Int) extends Forwarder[A] with Quantified[A] {
     private val prefix = new RepeatExactlyPeg(p, n)
     override val self = prefix >> new RepeatAtMostPeg(p, m - n)
     override def until(that: Peg[A]) = prefix >> new RepeatAtMostUntilPeg(p, m - n, that)
@@ -29,8 +29,8 @@ private[mada] class RepeatExactlyPeg[A](p: Peg[A], n: Int) extends Peg[A] {
         var i = 0
         while (i != n) {
             cur = p.parse(v, cur, end)
-            if (cur == Peg.FAILURE) {
-                return Peg.FAILURE
+            if (cur == FAILURE) {
+                return FAILURE
             }
             i += 1
         }
@@ -47,7 +47,7 @@ private[mada] class RepeatAtMostPeg[A](p: Peg[A], n: Int) extends Peg[A] {
         var i = 0
         while (i != n && cur != end) {
             val next = p.parse(v, cur, end)
-            if (next == Peg.FAILURE) {
+            if (next == FAILURE) {
                 return cur
             }
             cur = next
@@ -64,10 +64,10 @@ private[mada] class RepeatAtMostUntilPeg[A](p: Peg[A], n: Int, q: Peg[A]) extend
         var cur = start
         var i = 0
         var next = q.parse(v, cur, end)
-        while (i != n && next == Peg.FAILURE) {
+        while (i != n && next == FAILURE) {
             next = p.parse(v, cur, end)
-            if (next == Peg.FAILURE) {
-                return (start, cur, Peg.FAILURE)
+            if (next == FAILURE) {
+                return (start, cur, FAILURE)
             }
             cur = next
             i += 1

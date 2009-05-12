@@ -16,11 +16,11 @@ private[mada] class VectorPeg[A](from: Vector[A], pred: (A, A) => Boolean) exten
     override def parse(v: Vector[A], start: Int, end: Int) = {
         val wsize = from.size
         if (end - start < wsize) {
-            Peg.FAILURE
+            FAILURE
         } else if (stl.Equal(from, from.start, from.end, v, start, pred)) {
             start + wsize
         } else {
-            Peg.FAILURE
+            FAILURE
         }
     }
 

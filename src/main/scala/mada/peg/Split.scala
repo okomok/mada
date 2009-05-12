@@ -13,7 +13,7 @@ private[mada] object Split {
 }
 
 private[mada] class SplitIterator[A](p: Peg[A], v: Vector[A]) extends Iterator[Vector[A]] {
-    private val u = new RepeatAtMostUntilPeg(Peg.any, Math.MAX_INT, Peg.end | p)
+    private val u = new RepeatAtMostUntilPeg(any, Math.MAX_INT, end | p)
     private var (k, b, l) = u.parseImpl(v, v.start, v.end)
 
     override def hasNext = k != l

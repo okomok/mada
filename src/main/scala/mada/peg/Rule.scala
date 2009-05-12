@@ -13,7 +13,7 @@ package mada.peg
  *
  * @param   p   assigned to <code>self</code>
  */
-class Rule[A](private var p: Peg[A]) extends PegProxy[A] with Proxies.Mutable[Peg[A]] {
+class Rule[A](private var p: Peg[A]) extends Forwarder[A] with Proxies.Mutable[Peg[A]] {
     /**
      * Constructs null proxy.
      */

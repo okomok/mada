@@ -14,8 +14,8 @@ private[mada] object Lookback {
 private[mada] class LookbackPeg[A](p: Peg[A]) extends Peg[A] with ZeroWidth[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
         val x = v.reverse
-        if (p.parse(x, x.end - (start - v.start), x.end) == Peg.FAILURE) {
-            Peg.FAILURE
+        if (p.parse(x, x.end - (start - v.start), x.end) == FAILURE) {
+            FAILURE
         } else {
             start
         }

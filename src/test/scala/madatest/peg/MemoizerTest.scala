@@ -4,22 +4,22 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.peg
+package madatest.pegtest
 
 
 import junit.framework.Assert._
 import mada.{Vector, vector}
 
-import mada.Peg.Compatibles._
-import mada.Peg
+import mada.peg.compatibles._
+import mada.{Peg, peg}
 
 
 class MemoizerTest {
     def testTrivial: Unit = {
         var c = 0
         val v = vector.from("abcdefghij")
-        val m = new Peg.Memoizer(v)
-        val q = m(Peg.from("hij"){ _ => c += 1 })
+        val m = new peg.Memoizer(v)
+        val q = m(peg.from("hij"){ _ => c += 1 })
         val p = "abc" >> "defg" >> q
         assertEquals(0, c)
         assertTrue(p matches v)
@@ -39,8 +39,8 @@ class MemoizerTest {
         val v2 = w(w.start, w.end - 3)
         assertNotSame(v1, v2)
 
-        val m = new Peg.Memoizer(w) // for w
-        val q = m(Peg.from("hij"){ _ => c += 1 })
+        val m = new peg.Memoizer(w) // for w
+        val q = m(peg.from("hij"){ _ => c += 1 })
         val p = "abc" >> "defg" >> q
         assertEquals(0, c)
 

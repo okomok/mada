@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.peg
+package madatest.pegtest
 
 
 // See: http://www.javaworld.com/javaworld/jw-02-2001/jw-0216-ternary.html
@@ -12,8 +12,8 @@ package madatest.peg
 
 import junit.framework.Assert._
 
-import mada.Peg.Compatibles._
-import mada.Peg._
+import mada.peg.compatibles._
+import mada.peg._
 import mada.vector.compatibles._
 
 

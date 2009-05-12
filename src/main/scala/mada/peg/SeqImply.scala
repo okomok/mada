@@ -14,7 +14,7 @@ private[mada] object SeqImply {
 private[mada] class SeqImplyPeg[A](p: Peg[A], q: Peg[A]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
         val cur = p.parse(v, start, end)
-        if (cur == Peg.FAILURE) {
+        if (cur == FAILURE) {
             start
         } else {
             q.parse(v, cur, end)

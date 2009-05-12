@@ -4,16 +4,17 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.peg
+package madatest.pegtest
 
 
-import mada.Peg._
+import mada.peg
+import mada.peg.compatibles._
 import junit.framework.Assert._
 
 class DocTest {
-    val S, A, B = new Rule[Char]
+    val S, A, B = new peg.Rule[Char]
 
-    S ::= ~(A >> !"b") >> from("a").+ >> B >> !("a"|"b"|"c")
+    S ::= ~(A >> !"b") >> peg.from("a").+ >> B >> !("a"|"b"|"c")
     A ::= "a" >> A.? >> "b"
     B ::= ("b" >> B.? >> "c") // { println(_) }
 

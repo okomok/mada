@@ -17,7 +17,7 @@ private[mada] object Multiple {
 private[mada] class MultiplePeg[A](es: Set[A]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
         if (start == end || !es.contains(v(start))) {
-            Peg.FAILURE
+            FAILURE
         } else {
             start + 1
         }

@@ -4,17 +4,17 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.peg
+package madatest.pegtest
 
 
 import mada._
-import mada.Peg.Compatibles._
+import mada.peg.compatibles._
 import junit.framework.Assert._
 
 
 class IterableTest {
     def testTrivial: Unit = {
-        val p = Peg.from(Iterables('a','b','c'))
+        val p = peg.from(Iterables('a','b','c'))
         assertTrue("123" >> p >> "XYZ" matches "123abcXYZ")
         assertTrue("123" >> p matches "123abc")
         assertFalse("123" >> p matches "123ab")
@@ -23,7 +23,7 @@ class IterableTest {
     }
 
     def testEmpty: Unit = {
-        val p = Peg.from(Iterables.emptyOf[Char])
+        val p = peg.from(Iterables.emptyOf[Char])
         assertTrue("123" >> p >> "XYZ" matches "123XYZ")
         assertFalse("123" >> p >> "XYZ" matches "123aXYZ")
     }
