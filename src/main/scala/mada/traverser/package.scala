@@ -9,11 +9,29 @@ package mada
 
 package object traverser {
 
+
+// aliases
+
     @aliasOf("Traversable")
     type Type[+A] = Traverser[A]
 
-    @aliasOf("Traversable.Compatibles")
-    val compatibles = Traverser.Compatibles
+    @aliasOf("Traversable")
+    val compatibles: Compatibles = Traverser
+
+
+// methods
+
+    /**
+     * The universal end traverser
+     */
+    val theEnd = new Traverser[Nothing] {
+        override def isEnd = true
+        override def deref = throw new NoSuchElementException("deref on end traverser")
+        override def increment = throw new UnsupportedOperationException("increment on end traverser")
+    }
+
+
+// conversions
 
     @returnThat
     def from[A](to: Traverser[A]) = to

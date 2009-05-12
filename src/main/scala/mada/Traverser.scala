@@ -41,6 +41,10 @@ trait Traverser[+A] {
     @aliasOf("next")
     final def ++ = increment
 
+    // Do you know NVI pattern?
+    protected def preDeref: Unit = if (isEnd) throw new NoSuchElementException("deref on end traverser")
+    protected def preIncrement: Unit = if (isEnd) throw new UnsupportedOperationException("increment on end traverser")
+
 }
 
 
