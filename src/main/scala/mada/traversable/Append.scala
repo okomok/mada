@@ -10,12 +10,19 @@ package mada.traversable
 case class Append[A](left: Traversable[A], right: Traversable[A]) extends Traversable[A] { ^ =>
     override def start = new Traverser[A] {
         private var t = ^.left.start
+        private var inLeft = true
+        ready
         override def isEnd = t.isEnd
         override def deref = t.deref
         override def increment = {
             t.increment
-            if (t.isEnd) {
+            ready
+        }
+
+        private def ready: Unit = {
+            if (t.isEnd && inLeft) {
                 t = ^.right.start
+                inLeft = false
             }
         }
     }

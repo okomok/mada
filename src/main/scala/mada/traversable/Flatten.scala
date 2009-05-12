@@ -1,0 +1,34 @@
+
+
+// Copyright Shunsuke Sogame 2008-2009.
+// Distributed under the terms of an MIT-style license.
+
+
+package mada.traversable
+
+
+case class Flatten[A](that: Traversable[Traversable[A]]) extends Traversable[A] { ^ =>
+    override def start = new Traverser[A] {
+        private val tt = ^.that.start
+        private var t = ready
+        override def isEnd = t.isEnd
+        override def deref = t.deref
+        override def increment = {
+            t.increment
+            if (t.isEnd) {
+                tt.increment
+                t = ready
+            }
+        }
+
+        private def ready: Traverser[A] = {
+            while (!tt.isEnd) {
+                val _t = tt.deref.start
+                if (!_t.isEnd) {
+                    return _t
+                }
+            }
+            traverser.theEnd
+        }
+    }
+}

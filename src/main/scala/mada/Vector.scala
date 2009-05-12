@@ -332,7 +332,7 @@ trait Vector[A] extends PartialFunction[Int, A] {
     def count(p: A => Boolean): Int = Count(this, p)
 
     /**
-     * @return  <code>exists(Funtions.equalTo(e))</code>.
+     * @return  <code>exists(function.equalTo(e))</code>.
      */
     final def contains(e: Any): Boolean = exists(function.equalTo(e))
 

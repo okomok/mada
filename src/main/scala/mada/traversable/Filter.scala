@@ -10,12 +10,12 @@ package mada.traversable
 case class Filter[A](that: Traversable[A], predicate: A => Boolean) extends Traversable[A] { ^ =>
     override def start = new Traverser[A] {
         private val t = ^.that.start
-        _ready
+        ready
         override def isEnd = t.isEnd
         override def deref = t.deref
-        override def increment = _ready
+        override def increment = ready
 
-        private def _ready: Unit = {
+        private def ready: Unit = {
             while (!t.isEnd && !(^.predicate(t.deref))) {
                 t.increment
             }

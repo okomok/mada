@@ -55,6 +55,11 @@ trait Traversable[+A] { ^ =>
     final def ++[B >: A](that: Traversable[B]) = append(that)
 
     /**
+     * @return  <code>map(f).flatten</code>.
+     */
+    final def flatMap[B](f: A => Traversable[B]): Traversable[B] = _flatten(map(f))
+
+    /**
      * Filters elements using <code>f</code>.
      */
     def filter(p: A => Boolean): Traversable[A] = Filter(this, p)
@@ -175,7 +180,7 @@ trait Traversable[+A] { ^ =>
 // sorted
 
     /**
-     * @return  <code>mergeby(that)(c)</code>.
+     * @return  <code>mergeBy(that)(c)</code>.
      */
     final def merge[B >: A](that: Traversable[B])(implicit c: Compare[B]) = mergeBy(that)(c)
 
