@@ -24,6 +24,31 @@ trait Traversable[+A] { ^ =>
     def start: Traverser[A]
 
 
+// value semantics
+
+    override def equals(that: Any) = that match {
+        case that: Traversable[_] => equalsIf(that)(function.equal)
+        case _ => false
+    }
+
+    /**
+     * Equals <code>that</code> iif they has the same length and <code>p</code> meets.
+     */
+    def equalsIf[B](that: Traversable[B])(p: (A, B) => Boolean): Boolean = {
+        val t = start
+        val u = that.start
+        while (!t.isEnd && !u.isEnd) {
+            if (!p(~t, ~u)) {
+                return false
+            }
+            t.++; u.++
+        }
+        !t && !u
+    }
+
+    override def hashCode = throw new Error
+
+
 // general
 
     /**
@@ -84,7 +109,7 @@ trait Traversable[+A] { ^ =>
      */
     def foreach(f: A => Unit): Unit = {
         val t = start
-        while (!t) {
+        while (!t.isEnd) {
             f(~t)
             t.++
         }
@@ -95,7 +120,7 @@ trait Traversable[+A] { ^ =>
      */
     def find(p: A => Boolean): Option[A] = {
         val t = start
-        while (!t) {
+        while (!t.isEnd) {
             val e = ~t
             if (p(e)) {
                 return Some(e)
@@ -126,7 +151,7 @@ trait Traversable[+A] { ^ =>
     def foldLeft[B](z: B)(op: (B, A) => B): B = {
         var acc = z
         val t = start
-        while (!t) {
+        while (!t.isEnd) {
             acc = op(acc, ~t)
             t.++
         }
@@ -160,7 +185,7 @@ trait Traversable[+A] { ^ =>
     def length: Int = {
         val t = start
         var i = 0
-        while (!t) {
+        while (!t.isEnd) {
             t.++
             i += 1
         }
@@ -170,7 +195,7 @@ trait Traversable[+A] { ^ =>
 
 // methodized
 
-    def _flatten[B](_this: Traversable[Traversable[B]]): Traversable[B] = throw new Error
+    def _flatten[B](_this: Traversable[Traversable[B]]): Traversable[B] = Flatten(_this)
 
     def _stringize(_this: Traversable[Char]): String = throw new Error
 

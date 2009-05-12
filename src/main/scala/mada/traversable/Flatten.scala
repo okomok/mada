@@ -23,9 +23,9 @@ case class Flatten[A](that: Traversable[Traversable[A]]) extends Traversable[A] 
 
         private def ready: Traverser[A] = {
             while (!tt.isEnd) {
-                val _t = tt.deref.start
-                if (!_t.isEnd) {
-                    return _t
+                val u = tt.deref.start
+                if (!u.isEnd) {
+                    return u
                 }
             }
             traverser.theEnd
