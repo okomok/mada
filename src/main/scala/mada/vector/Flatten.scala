@@ -15,6 +15,6 @@ private[mada] object Flatten {
                 ar.add(e)
             }
         }
-        Vector.fromJclList(ar)
+        vector.fromJclList(ar)
     }
 }

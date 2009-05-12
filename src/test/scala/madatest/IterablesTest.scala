@@ -8,7 +8,7 @@ package madatest
 
 
 import mada.Iterables
-import mada.Vector
+import mada.{Vector, vector}
 import junit.framework.Assert._
 
 /*
@@ -73,7 +73,7 @@ class IterablesTest {
     }
 
     def testStringize: Unit = {
-        assertEquals(Vector.from("abcde"), Vector.from( Iterables.stringize(Iterables('a','b','c','d','e')) ) )
+        assertEquals(vector.from("abcde"), vector.from( Iterables.stringize(Iterables('a','b','c','d','e')) ) )
         assertTrue(Iterables.stringize(Iterable.empty).isEmpty)
     }
 
@@ -213,7 +213,7 @@ class IterablesTest {
     }
 
     def testFolderLeftEmpty: Unit = {
-        val it = Iterables.folderLeft(Vector.empty[Int].toRandomAccessSeq, 64)(_ / _)
+        val it = Iterables.folderLeft(vector.empty[Int].toRandomAccessSeq, 64)(_ / _)
         assertTrue(Iterables.equal(it, Iterables(64)))
     }
 

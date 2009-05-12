@@ -53,6 +53,6 @@ private[mada] object IterableToVector {
         while (from.hasNext) {
             a.add(from.next)
         }
-        Vector.fromJclList(a)
+        vector.fromJclList(a)
     }
 }

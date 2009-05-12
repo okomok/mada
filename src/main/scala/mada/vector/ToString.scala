@@ -12,10 +12,10 @@ private[mada] object ToString {
 
 /* nightmare
     def apply[A](from: Vector[A]): String = {
-        Vector.stringize(wrap(
-            Vector.unsplit(from.map{ (e: A) => Vector.unstringize(e.toString) })(Vector.unstringize(", "))
+        vector.stringize(wrap(
+            vector.unsplit(from.map{ (e: A) => vector.unstringize(e.toString) })(vector.unstringize(", "))
         ))
     }
-    private def wrap(from: Vector[Char]) = Vector.unstringize("[").append(from.drop(2)).append(Vector.unstringize("]"))
+    private def wrap(from: Vector[Char]) = vector.unstringize("[").append(from.drop(2)).append(vector.unstringize("]"))
 */
 }

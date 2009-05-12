@@ -38,7 +38,7 @@ private[mada] object StableSort {
         val __len = (__last - __first + 1) / 2
         val __middle = __first + __len
 
-        val buf = Vector.from(new Array[A](__len))
+        val buf = vector.from(new Array[A](__len))
         MergeSortWithBuffer(*, __first, __middle, buf, buf.start, __comp)
         MergeSortWithBuffer(*, __middle, __last, buf, buf.start, __comp)
 

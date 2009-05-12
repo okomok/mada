@@ -11,7 +11,7 @@ private[mada] object Map {
     def apply[Z, A](v: Vector[Z], f: Z => A, grainSize: Int): Vector[A] = new MapVector(v, f, grainSize)
 }
 
-private[mada] class MapVector[Z, A](v: Vector[Z], f: Z => A, grainSize: Int) extends VectorProxy[A] {
+private[mada] class MapVector[Z, A](v: Vector[Z], f: Z => A, grainSize: Int) extends Forwarder[A] {
     Assert(!IsParallel(v))
     import function.future
 
@@ -19,7 +19,7 @@ private[mada] class MapVector[Z, A](v: Vector[Z], f: Z => A, grainSize: Int) ext
         if (grainSize == 1) {
             v.map{ e => future(f(e)) }.force.map{ u => u() }
         } else {
-            Vector.undivide(
+            vector.undivide(
                 v.divide(grainSize).map{ w => future(w.map(f).force) }.
                     force. // start tasks.
                         map{ u => u() } // get result by projection.

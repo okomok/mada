@@ -10,7 +10,7 @@
 package madatest.peg
 
 
-import mada.Vector
+import mada.{Vector, vector}
 import mada.Peg
 import mada.Peg._
 import junit.framework.Assert._
@@ -30,7 +30,7 @@ class LazyTest {
                 ('(' >> `lazy`(expr) >> ')') |
                 ('-' >> `lazy`(factor)){S{ (_, x) => -x }} |
                 ('+' >> `lazy`(factor))
-    lazy val integer = (digit.+){S{ v => Vector.lexical.toInt(v) }}
+    lazy val integer = (digit.+){S{ v => vector.lexical.toInt(v) }}
     lazy val digit   = "[0-9]".r
 
     def testTrivial: Unit = {

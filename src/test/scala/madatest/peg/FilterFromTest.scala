@@ -16,8 +16,8 @@ import mada.Peg.Compatibles._
 class FilterFromTest {
     def testTrivial: Unit = {
         val pe = mada.Peg.from("abcd")
-        val v = mada.Vector.from("XabcdXXabcdXX")
+        val v = mada.vector.from("XabcdXXabcdXX")
         val it = pe.filterFrom(v)
-        assertEquals(mada.Vector.from("abcdabcd"), mada.Vector.fromIterable(it))
+        assertEquals(mada.vector.from("abcdabcd"), mada.vector.fromIterable(it))
     }
 }

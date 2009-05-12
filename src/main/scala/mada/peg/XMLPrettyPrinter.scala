@@ -48,7 +48,7 @@ private[mada] class XMLPrettyPrinter(val out: java.io.Writer, val indentWidth: I
     def this(w: Int) = this(XMLPrettyPrinter.defaultWriter, w)
 
     private var indentLevel = 0
-    private val indentString = Vector.single(' ').cycle(indentWidth)
+    private val indentString = vector.single(' ').cycle(indentWidth)
     private def indent = indentString.cycle(indentLevel)
     private val stack = new java.util.ArrayDeque[Any]
 
@@ -57,7 +57,7 @@ private[mada] class XMLPrettyPrinter(val out: java.io.Writer, val indentWidth: I
      */
     def writeStartElement(tag: Any): Unit = {
         stack.push(tag)
-        out.write(Vector.stringize(indent ++ "<" ++ tag.toString ++ ">\n"))
+        out.write(vector.stringize(indent ++ "<" ++ tag.toString ++ ">\n"))
         out.flush
         indentLevel += 1
     }
@@ -67,7 +67,7 @@ private[mada] class XMLPrettyPrinter(val out: java.io.Writer, val indentWidth: I
      */
     def writeEndElement: Unit = {
         indentLevel -= 1
-        out.write(Vector.stringize(indent ++ "</" ++ stack.pop.toString ++ ">\n"))
+        out.write(vector.stringize(indent ++ "</" ++ stack.pop.toString ++ ">\n"))
         out.flush
     }
 
@@ -75,7 +75,7 @@ private[mada] class XMLPrettyPrinter(val out: java.io.Writer, val indentWidth: I
      * Writes element without new line.
      */
     def writeElement(tag: Any, chars: Any): Unit = {
-        out.write(Vector.stringize(indent ++ "<" ++ tag.toString ++ ">" ++ chars.toString ++ "</" ++ tag.toString ++ ">\n"))
+        out.write(vector.stringize(indent ++ "<" ++ tag.toString ++ ">" ++ chars.toString ++ "</" ++ tag.toString ++ ">\n"))
         out.flush
     }
 

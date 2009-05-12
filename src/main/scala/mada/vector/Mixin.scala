@@ -92,7 +92,7 @@ private[mada] object NewMixin {
     def apply[A](v: Vector[A], mx: Mixin): Vector[A] = new MixinVector(v, mx)
 }
 
-private[mada] class MixinVector[A](v: Vector[A], mx: Mixin) extends VectorProxy[A] {
+private[mada] class MixinVector[A](v: Vector[A], mx: Mixin) extends Forwarder[A] {
     override lazy val self = mx(v)
     private def carryMixin[B](that: Vector[B]): Vector[B] = that.mixin(mx)
     private def carryMixin2[B](that2: (Vector[B], Vector[B])): (Vector[B], Vector[B]) = (that2._1.mixin(mx), that2._2.mixin(mx))

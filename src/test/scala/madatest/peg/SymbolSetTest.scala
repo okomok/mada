@@ -11,7 +11,7 @@ import junit.framework.Assert._
 
 import mada.Peg.Compatibles._
 import mada.Peg._
-import mada.Vector.Compatibles._
+import mada.vector.compatibles._
 
 
 class SymbolSetTest {

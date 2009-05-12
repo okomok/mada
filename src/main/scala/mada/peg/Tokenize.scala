@@ -18,7 +18,7 @@ private[mada] class TokenizeIterator[A](p: Peg[A], v: Vector[A]) extends Iterato
     override def hasNext = l != Peg.FAILURE
     override def next = {
         Iterables.nextPrecondition(this, "tokenize")
-        val tmp = new Vector.Region(v, k, l)
+        val tmp = new vector.Region(v, k, l)
         k_l_assign(Find.impl(p, v, l, v.end))
         tmp
     }

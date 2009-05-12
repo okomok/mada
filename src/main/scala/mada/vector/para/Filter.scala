@@ -18,7 +18,7 @@ private[mada] object MutatingFilter {
     def apply[A](v: Vector[A], p: A => Boolean, grainSize: Int): Vector[A] = {
         Assert(!IsParallel(v))
 
-        Vector.flatten(
+        vector.flatten(
             v.parallelRegions(grainSize).map{ w => w.mutatingFilter(p) }.
                 toIterable // works around a compiler bug of 2.7.3.
         )

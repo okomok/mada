@@ -11,160 +11,6 @@ import vector._
 
 
 /**
- * Contains utility types and methods operating on <code>Vector</code>.
- */
-object Vector extends Aliases with Conversions with Compatibles with Eligibles with Operators {
-
-
-// constants
-
-    /**
-     * @return  <code>Math.MIN_INT</code>, which is the reserved index by <code>mada.Vector</code>.
-     */
-    final val SINGULAR = 0x80000000
-
-
-// exceptions
-
-    /**
-     * Thrown if vector is not readable.
-     */
-    class NotReadableException[A](val vector: Vector[A]) extends RuntimeException
-
-    /**
-     * Thrown if vector is not writable.
-     */
-    class NotWritableException[A](val vector: Vector[A]) extends RuntimeException
-
-
-// pattern matching
-
-    @aliasOf("fromValues")
-    def apply[A](from: A*): Vector[A] = fromValues(from: _*)
-
-    /**
-     * Supports pattern matching.
-     */
-    def unapplySeq[A](from: Vector[A]): Option[Seq[A]] = Some(toRandomAccessSeq(from))
-
-
-// constructors
-
-    /**
-     * Triggers implicit conversions explicitly.
-     *
-     * @return  <code>to</code>.
-     */
-    def from[A](to: Vector[A]): Vector[A] = to
-
-    /**
-     * Concatenate all argument sequences into a single vector.
-     *
-     * @param   vs  the given argument sequences
-     * @return  the projection vector created from the concatenated arguments
-     */
-    def concat[A](vs: Vector[A]*): Vector[A] = Concat(vs: _*)
-
-    /**
-     * @return  an empty vector.
-     */
-    def empty[A]: Vector[A] = Empty.apply[A]
-
-    /**
-     * Create a vector that is the concantenation of all vectors
-     * returned by a given vector of vectors.
-     *
-     * @param   vs  The iterator which returns on each call to next
-     *              a new vector whose elements are to be concatenated to the result.
-     * @return  the newly created writable vector (not a projection into <code>vs</code>).
-     */
-    def flatten[A](vs: Iterable[Vector[A]]): Vector[A] = Flatten(vs)
-
-    /**
-     * @return  <code>v.filter(_.isLeft).map(_.left.get)</code>.
-     */
-    def lefts[A, B](v: Vector[Either[A, B]]): Vector[A] = v.filter(_.isLeft).map(_.left.get)
-
-    /**
-     * @return  <code>v.filter(_.isRight).map(_.right.get)</code>.
-     */
-    def rights[A, B](v: Vector[Either[A, B]]): Vector[B] = v.filter(_.isRight).map(_.right.get)
-
-    /**
-     * Creates a vector containing of successive integers.
-     *
-     * @param   i   the value of the first element of the vector
-     * @param   j   the value of the last element of the vector plus 1
-     * @return  the sorted vector of all integers in range [i, j).
-     */
-    def range(i: Int, j: Int): Vector[Int] = Range(i, j)
-
-    /**
-     * @return  <code>range(i, Math.MAX_INT)</code>.
-     */
-    def range(i: Int, u: Unit): Vector[Int] = Range(i, Math.MAX_INT)
-
-    /**
-     * @param   e   the element
-     * @return  the writable vector with one single element.
-     */
-    def single[A](e: A): Vector[A] = Single(e)
-
-    /**
-     * Reverts <code>divide</code>.
-     *
-     * @pre     each vector is the same size except for the last one.
-     */
-    def undivide[A](vv: Vector[Vector[A]]): Vector[A] = Undivide(vv)
-
-    /**
-     * Flattens <code>vs</code>, each vector appending <code>sep</code> except the last one.
-     */
-    def unsplit[A](vs: Iterable[Vector[A]])(sep: Vector[A]): Vector[A] = Unsplit(vs, sep)
-
-    /**
-     * Reverts <code>zip</code>.
-     */
-    def unzip[A, B](v: Vector[(A, B)]): (Vector[A], Vector[B]) = Unzip(v)
-
-    /**
-     * Creates a <code>lazy</code> vector.
-     */
-    def `lazy`[A](v: => Vector[A]) = Lazy(v)
-
-
-// triplify
-
-    /**
-     * Converts a <code>Func</code> to <code>Func3</code>.
-     */
-    def triplify[A, B](f: Func[A, B]): Func3[A, B] = Triplify(f)
-
-    /**
-     * Converts a <code>Func3</code> to <code>Func</code>.
-     */
-    def untriplify[A, B](f: Func3[A, B]): Func[A, B] = Untriplify(f)
-
-
-// Char vector
-
-    @aliasOf("vector.Lexical")
-    val lexical = vector.Lexical
-
-    /**
-     * Converts to lower case letters.
-     */
-    def lowerCase(v: Vector[Char]): Vector[Char] = v.map(java.lang.Character.toLowerCase(_))
-
-    /**
-     * Converts to upper case letters.
-     */
-    def upperCase(v: Vector[Char]): Vector[Char] = v.map(java.lang.Character.toUpperCase(_))
-
-}
-
-
-/**
  * Sequences that guarantees O(1) element access and O(1) length computation.
  * A vector is optionally writable but structurally-unmodifiable so that synchronization is unneeded.<p/>
  *
@@ -175,8 +21,6 @@ object Vector extends Aliases with Conversions with Compatibles with Eligibles w
  * Unless otherwise specified, these methods return projections to keep readability and writability.
  */
 trait Vector[A] extends PartialFunction[Int, A] {
-
-    @returncompanion def companion = Vector
 
 
 // kernel interface
@@ -196,9 +40,9 @@ trait Vector[A] extends PartialFunction[Int, A] {
      * @pre     this vector is readable.
      * @pre     <code>isDefinedAt(i)</code>
      * @return  the element at the specified position in this vector.
-     * @throws  Vector.NotReadableException if not overridden.
+     * @throws  vector.NotReadableException if not overridden.
      */
-    override def apply(i: Int): A = throw new Vector.NotReadableException(this)
+    override def apply(i: Int): A = throw new vector.NotReadableException(this)
 
     /**
      * Replaces the element at the specified position in this vector with
@@ -208,9 +52,9 @@ trait Vector[A] extends PartialFunction[Int, A] {
      * @param   e   element to be stored at the specified position.
      * @pre     this vector is writable.
      * @pre     <code>isDefinedAt(i)</code>
-     * @throws  Vector.NotWritableException if not overridden.
+     * @throws  vector.NotWritableException if not overridden.
      */
-    def update(i: Int, e: A): Unit = throw new Vector.NotWritableException(this)
+    def update(i: Int, e: A): Unit = throw new vector.NotWritableException(this)
 
     /**
      * @return  <code>(start <= i) && (i < end)</code>, possibly overridden in subclasses.
@@ -330,7 +174,7 @@ trait Vector[A] extends PartialFunction[Int, A] {
      *
      * @param   n   divisor
      * @return  <code>[this(start, n), this(start + n, 2*n), this(start + 2*n, 3*n),...]</code>.
-     * @see     Vector.undivide
+     * @see     vector.undivide
      */
     def divide(n: Int): Vector[Vector[A]] = Divide(this, n)
 
@@ -437,9 +281,9 @@ trait Vector[A] extends PartialFunction[Int, A] {
     def map[B](f: A => B): Vector[B] = Map(this, f)
 
     /**
-     * @return  <code>Vector.flatten(map(f))</code>.
+     * @return  <code>vector.flatten(map(f))</code>.
      */
-    def flatMap[B](f: A => Vector[B]): Vector[B] = Vector.flatten(map(f).toIterable)
+    def flatMap[B](f: A => Vector[B]): Vector[B] = vector.flatten(map(f).toIterable)
 
     /**
      * Casts element to type <code>B</code>.
@@ -578,7 +422,7 @@ trait Vector[A] extends PartialFunction[Int, A] {
 // concatenation
 
     /**
-     * @return  <code>Vector.fromRandomAccessSeq(randomAccessSeq.projection ++ that)</code>
+     * @return  <code>vector.fromRandomAccessSeq(randomAccessSeq.projection ++ that)</code>
      */
     def append(that: Vector[A]): Vector[A] = Append(this, that)
 
@@ -704,7 +548,7 @@ trait Vector[A] extends PartialFunction[Int, A] {
      *
      * @return  a writable clone of this vector.
      */
-    override def clone: Vector[A] = Vector.fromArray(toArray)
+    override def clone: Vector[A] = vector.fromArray(toArray)
 
     /**
      * @return  <code>writer(start)</code>
@@ -782,39 +626,39 @@ trait Vector[A] extends PartialFunction[Int, A] {
     override def toString: String = ToString(this)
 
     /**
-     * @return  <code>Vector.toArray(this)</code>.
+     * @return  <code>vector.toArray(this)</code>.
      */
-    final def toArray: Array[A] = Vector.toArray(this)
+    final def toArray: Array[A] = vector.toArray(this)
 
     /**
-     * @return  <code>Vector.toIterable(this)</code>.
+     * @return  <code>vector.toIterable(this)</code>.
      */
-    final def toIterable: Iterable[A] = Vector.toIterable(this)
+    final def toIterable: Iterable[A] = vector.toIterable(this)
 
     /**
-     * @return  <code>Vector.toJclArrayList(this)</code>.
+     * @return  <code>vector.toJclArrayList(this)</code>.
      */
-    final def toJclArrayList: java.util.ArrayList[A] = Vector.toJclArrayList(this)
+    final def toJclArrayList: java.util.ArrayList[A] = vector.toJclArrayList(this)
 
     /**
-     * @return  <code>Vector.toIterator</code>.
+     * @return  <code>vector.toIterator</code>.
      */
-    final def toLinearAccessSeq: Seq[A] = Vector.toLinearAccessSeq(this)
+    final def toLinearAccessSeq: Seq[A] = vector.toLinearAccessSeq(this)
 
     /**
-     * @return  <code>Vector.toList(this)</code>.
+     * @return  <code>vector.toList(this)</code>.
      */
-    final def toList: List[A] = Vector.toList(this)
+    final def toList: List[A] = vector.toList(this)
 
     /**
-     * @return  <code>Vector.toRandomAccessSeq(this)</code>.
+     * @return  <code>vector.toRandomAccessSeq(this)</code>.
      */
-    final def toRandomAccessSeq: scala.collection.mutable.Vector[A] = Vector.toRandomAccessSeq(this)
+    final def toRandomAccessSeq: scala.collection.mutable.Vector[A] = vector.toRandomAccessSeq(this)
 
     /**
-     * @return  <code>Vector.toStream(this)</code>.
+     * @return  <code>vector.toStream(this)</code>.
      */
-    final def toStream: Stream[A] = Vector.toStream(this)
+    final def toStream: Stream[A] = vector.toStream(this)
 
 
 // trivials
@@ -843,9 +687,9 @@ trait Vector[A] extends PartialFunction[Int, A] {
     final def sideEffect(f: Vector[A] => Unit): Vector[A] = { f(this); this }
 
     /**
-     * @return  <code>Vector.range(start, end)</code>.
+     * @return  <code>vector.range(start, end)</code>.
      */
-    final def indices: Vector[Int] = Vector.range(start, end)
+    final def indices: Vector[Int] = vector.range(start, end)
 
     /**
      * Returns a set entry as pair, which is useful for <code>Peg.switch</code>.
@@ -879,4 +723,77 @@ trait Vector[A] extends PartialFunction[Int, A] {
 // implementation helpers
 
     private def throwIfEmpty(method: String) = ThrowIf.empty(this, method)
+}
+
+
+object Vector extends Compatibles {
+
+
+// pattern matching
+
+    @aliasOf("fromValues")
+    def apply[A](from: A*): Vector[A] = fromValues(from: _*)
+
+    def unapplySeq[A](from: Vector[A]): Option[Seq[A]] = Some(toRandomAccessSeq(from))
+
+
+// operators
+
+    sealed class MadaVectorIterableVector[A](_1: Iterable[Vector[A]]) {
+        def flatten = vector.flatten(_1)
+        def unsplit(_2: Vector[A]) = vector.unsplit(_1)(_2)
+    }
+    implicit def madaVectorIterableVector[A](_1: Iterable[Vector[A]]): MadaVectorIterableVector[A] = new MadaVectorIterableVector(_1)
+
+    sealed class MadaVectorEither[A, B](_1: Vector[Either[A, B]]) {
+        def lefts = vector.lefts(_1)
+        def rights = vector.rights(_1)
+    }
+    implicit def madaVectorEither[A, B](_1: Vector[Either[A, B]]): MadaVectorEither[A, B] = new MadaVectorEither(_1)
+
+    sealed class MadaVectorVector[A](_1: Vector[Vector[A]]) {
+        def undivide = vector.undivide(_1)
+    }
+    implicit def madaVectorVector[A](_1: Vector[Vector[A]]): MadaVectorVector[A] = new MadaVectorVector(_1)
+
+    sealed class MadaVectorPair[A, B](_1: Vector[(A, B)]) {
+        def unzip = vector.unzip(_1)
+    }
+    implicit def madaVectorPair[A, B](_1: Vector[(A, B)]): MadaVectorPair[A, B] = new MadaVectorPair(_1)
+
+    sealed class MadaVectorByName[A](_1: => Vector[A]) {
+        def `lazy` = vector.`lazy`(_1)
+    }
+    implicit def madaVectorByName[A](_1: => Vector[A]): MadaVectorByName[A] = new MadaVectorByName(_1)
+
+    sealed class MadaVectorChar(_1: Vector[Char]) {
+        def lowerCase = vector.lowerCase(_1)
+        def upperCase = vector.upperCase(_1)
+        def stringize = vector.stringize(_1)
+    }
+    implicit def madaVectorChar(_1: Vector[Char]): MadaVectorChar = new MadaVectorChar(_1)
+
+
+// eligibles
+
+    // Hmm, Ordering should have taken [-A]?
+    implicit def forOrdering[A](implicit c: Ordering[A]): Ordering[Vector[A]] = {
+        compare.toOrdering(forCompare(compare.fromOrdering(c)))
+    }
+
+    /*implicit*/ def forOrdering_[A](implicit c: compare.GetOrdered[A]): Ordering[Vector[A]] = {
+        compare.toOrdering(forCompare(compare.fromGetOrdered(c)))
+    }
+
+    // For unambiguous overload resolution, `implicit` is facing the alternative
+    // of `madaVectorToOrdered` or ...
+    /*implicit*/ def forCompare[A](implicit c: Compare[A]): Compare[Vector[A]] = new Compare[Vector[A]] {
+        override def apply(v: Vector[A], w: Vector[A]) = {
+            stl.LexicographicalCompare(v, v.start, v.end, w, w.start, w.end, c)
+        }
+        override def threeWay(v: Vector[A], w: Vector[A]) = {
+            stl.LexicographicalCompare3way(v, v.start, v.end, w, w.start, w.end, c)
+        }
+    }
+
 }

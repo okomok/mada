@@ -134,7 +134,7 @@ package object function {
     def infer3[T1, T2, T3, R](f: Function3[T1, T2, T3, R]): Function3[T1, T2, T3, R] = f
 
 
-    @compilerWorkaround // overload resolver seems dead.
+    @packageObjectBrokenOverload
     object infer {
         def apply[T1, R](f: Function1[T1, R]): Function1[T1, R] = infer1(f)
         def apply[T1, T2, R](f: Function2[T1, T2, R]): Function2[T1, T2, R] = infer2(f)
@@ -151,7 +151,7 @@ package object function {
     def not2[T1, T2](f: Predicate2[T1, T2]): Predicate2[T1, T2] = { (v1, v2) => !f(v1, v2) }
     def not3[T1, T2, T3](f: Predicate3[T1, T2, T3]): Predicate3[T1, T2, T3] = { (v1, v2, v3) => !f(v1, v2, v3) }
 
-    @compilerWorkaround // overload resolver seems dead.
+    @packageObjectBrokenOverload
     object not {
         def apply[T1](f: Predicate1[T1]): Predicate1[T1] = not1(f)
         def apply[T1, T2](f: Predicate2[T1, T2]): Predicate2[T1, T2] = not2(f)
@@ -175,7 +175,7 @@ package object function {
         override def apply(ps: Iterable[Parameter[_]]) = f(getArg(ps, q1), getArg(ps, q2), getArg(ps, q3))
     }
 
-    @compilerWorkaround // overload resolver seems dead.
+    @packageObjectBrokenOverload
     object parameterize {
         def apply[T1, R](f: Function1[T1, R])(q1: Parameter[T1]): Function1[Iterable[Parameter[_]], R] = parameterize1(f)(q1)
         def apply[T1, T2, R](f: Function2[T1, T2, R])(q1: Parameter[T1], q2: Parameter[T2]): Function1[Iterable[Parameter[_]], R] = parameterize2(f)(q1, q2)
@@ -200,7 +200,7 @@ package object function {
         override def apply(v1: T1, v2: T2, v3: T3) = synchronized { f(v1, v2, v3) }
     }
 
-    @compilerWorkaround // overload resolver seems dead.
+    @packageObjectBrokenOverload
     object synchronize {
         def apply[T1, R](f: Function1[T1, R]): Function1[T1, R] = synchronize1(f)
         def apply[T1, T2, R](f: Function2[T1, T2, R]): Function2[T1, T2, R] = synchronize2(f)

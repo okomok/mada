@@ -8,8 +8,8 @@ package madatest.peg
 
 
 import junit.framework.Assert._
-import mada.Vector.Compatibles._
-import mada.Vector
+import mada.vector.compatibles._
+import mada.{Vector, vector}
 import mada.Peg.Compatibles._
 import mada.Peg
 
@@ -20,8 +20,8 @@ class RegionActionsTest {
         var w: Vector[Char] = null
         val g = R.startAt >> Peg.SymbolMap("e" --> "z", "ef" --> ( R{v => w = v} >> "g" ), "wx" --> "wy", "wxyz" --> ( R{v => w = v} >> "123" ) )
         assertTrue("abc" >> g >> "LL"  matches "abcefgLL")
-        assertEquals(Vector.from("ef"), w)
+        assertEquals(vector.from("ef"), w)
         assertTrue("abc" >> g >> "LL"  matches "abcwxyz123LL")
-        assertEquals(Vector.from("wxyz"), w)
+        assertEquals(vector.from("wxyz"), w)
     }
 }

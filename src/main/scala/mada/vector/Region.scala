@@ -22,7 +22,7 @@ case class Region[A](override val underlying: Vector[A], override val start: Int
 
     /**
      * Rewrites region of region into flat region.
-     * <code>Vector.seal</code> can work around this rewriting.
+     * <code>vector.seal</code> can work around this rewriting.
      */
     override def region(_start: Int, _end: Int) = { // region-region fusion
         if (_start == start && _end == end) {

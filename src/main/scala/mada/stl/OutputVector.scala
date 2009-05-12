@@ -17,14 +17,14 @@ trait OutputVector[A] extends Vector[A] {
     def output(e: A): Unit
 
     /**
-     * @return  <code>Vector.SINGULAR</code>.
+     * @return  <code>vector.SINGULAR</code>.
      */
-    final override def start = Vector.SINGULAR
+    final override def start = vector.SINGULAR
 
     /**
-     * @return  <code>Vector.nullIndex</code>.
+     * @return  <code>vector.nullIndex</code>.
      */
-    final override def end = Vector.SINGULAR
+    final override def end = vector.SINGULAR
 
     /**
      * Throws <code>UnsupportedOperationException</code>.

@@ -10,14 +10,14 @@ package mada.vector.para
 private[mada] object Fold {
     def apply[A](v: Vector[A], z: A, op: (A, A) => A, grainSize: Int): A = {
         Assert(!IsParallel(v))
-        (Vector.single(z) ++ v).parallel(grainSize).reduce(op)
+        (vector.single(z) ++ v).parallel(grainSize).reduce(op)
     }
 }
 
 private[mada] object Folder {
     def apply[A](v: Vector[A], z: A, op: (A, A) => A, grainSize: Int): Vector[A] = {
         Assert(!IsParallel(v))
-        (Vector.single(z) ++ v).parallel(grainSize).reducer(op)
+        (vector.single(z) ++ v).parallel(grainSize).reducer(op)
     }
 }
 
@@ -44,7 +44,7 @@ private[mada] object Reducer {
 
         val ls = rss.init.map{ w => w.last }.reducer(op)
         rss.head ++
-            Vector.undivide(
+            vector.undivide(
                 (ls zip rss.tail).parallel(1).map{ case (l, rs) => rs.map{ r => op(l, r) } } )
     }
 }

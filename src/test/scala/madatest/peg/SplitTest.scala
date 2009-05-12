@@ -11,49 +11,49 @@ import mada.Peg
 import junit.framework.Assert._
 import mada.Peg.Compatibles._
 
-import mada.Vector
+import mada.{Vector, vector}
 
 
 class SplitTest {
     def testTrivial: Unit = {
         assertEquals(
-            Vector(Vector.from("ab"), Vector.from("cdef"), Vector.from("gh")),
-            Vector.fromIterable(Peg.from(":").split(Vector.from("ab:cdef:gh"))) )
+            Vector(vector.from("ab"), vector.from("cdef"), vector.from("gh")),
+            vector.fromIterable(Peg.from(":").split(vector.from("ab:cdef:gh"))) )
 
         assertEquals(
-            Vector(Vector.from(""), Vector.from("ab"), Vector.from("cdef"), Vector.from("gh")),
-            Vector.fromIterable(Peg.from(":").split(Vector.from(":ab:cdef:gh"))) )
+            Vector(vector.from(""), vector.from("ab"), vector.from("cdef"), vector.from("gh")),
+            vector.fromIterable(Peg.from(":").split(vector.from(":ab:cdef:gh"))) )
 
         assertEquals(
-            Vector(Vector.from(""), Vector.from("ab"), Vector.from("cdef"), Vector.from("gh")),
-            Vector.fromIterable(Peg.from(":").split(Vector.from(":ab:cdef:gh:"))) )
+            Vector(vector.from(""), vector.from("ab"), vector.from("cdef"), vector.from("gh")),
+            vector.fromIterable(Peg.from(":").split(vector.from(":ab:cdef:gh:"))) )
 
         assertEquals(
-            Vector(Vector.from("ab"), Vector.from(""), Vector.from("cdef"), Vector.from("gh"), Vector.from("")),
-            Vector.fromIterable(Peg.from(":").split(Vector.from("ab::cdef:gh::"))) )
+            Vector(vector.from("ab"), vector.from(""), vector.from("cdef"), vector.from("gh"), vector.from("")),
+            vector.fromIterable(Peg.from(":").split(vector.from("ab::cdef:gh::"))) )
     }
 
     def testBound: Unit = {
         assertEquals(
-            Vector(Vector.from("ab")),
-            Vector.fromIterable(Peg.from(":").split(Vector.from("ab"))) )
+            Vector(vector.from("ab")),
+            vector.fromIterable(Peg.from(":").split(vector.from("ab"))) )
 
         assertEquals(
-            Vector(Vector.from("ab")),
-            Vector.fromIterable(Peg.from(":").split(Vector.from("ab:"))) )
+            Vector(vector.from("ab")),
+            vector.fromIterable(Peg.from(":").split(vector.from("ab:"))) )
 
         assertEquals(
-            Vector(Vector.from(""), Vector.from("ab")),
-            Vector.fromIterable(Peg.from(":").split(Vector.from(":ab:"))) )
+            Vector(vector.from(""), vector.from("ab")),
+            vector.fromIterable(Peg.from(":").split(vector.from(":ab:"))) )
 
         assertTrue(
-            Peg.from(":").split(Vector.from("")).isEmpty )
+            Peg.from(":").split(vector.from("")).isEmpty )
     }
 
     def testRegexBehavior(off: Int): Unit = {
-        println(Vector.from(java.util.regex.Pattern.compile(":").split("ab:cd:ef")))
-        println(Vector.from(java.util.regex.Pattern.compile(":").split("ab:cd:ef:")))
-        println(Vector.from(java.util.regex.Pattern.compile(":").split(":ab:cd:ef")))
-        println(Vector.from(java.util.regex.Pattern.compile(":").split(":ab:cd:ef:")))
+        println(vector.from(java.util.regex.Pattern.compile(":").split("ab:cd:ef")))
+        println(vector.from(java.util.regex.Pattern.compile(":").split("ab:cd:ef:")))
+        println(vector.from(java.util.regex.Pattern.compile(":").split(":ab:cd:ef")))
+        println(vector.from(java.util.regex.Pattern.compile(":").split(":ab:cd:ef:")))
     }
 }

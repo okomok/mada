@@ -8,7 +8,7 @@ package madatest.peg
 
 
 import junit.framework.Assert._
-import mada.Vector
+import mada.{Vector, vector}
 
 import mada.Peg.Compatibles._
 import mada.Peg
@@ -17,7 +17,7 @@ import mada.Peg
 class MemoizerTest {
     def testTrivial: Unit = {
         var c = 0
-        val v = Vector.from("abcdefghij")
+        val v = vector.from("abcdefghij")
         val m = new Peg.Memoizer(v)
         val q = m(Peg.from("hij"){ _ => c += 1 })
         val p = "abc" >> "defg" >> q
@@ -34,7 +34,7 @@ class MemoizerTest {
 
     def testRegion: Unit = {
         var c = 0
-        val w = Vector.from("abcdefghijklm")
+        val w = vector.from("abcdefghijklm")
         val v1 = w(w.start, w.end - 3)
         val v2 = w(w.start, w.end - 3)
         assertNotSame(v1, v2)

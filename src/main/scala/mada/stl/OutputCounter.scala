@@ -8,7 +8,7 @@ package mada.stl
 
 
 /**
- * Counts calls of <code>Vector.update</code>.
+ * Counts calls of <code>vector.update</code>.
  */
 class OutputCounter(val from: Int) extends OutputVector[Any] {
     /**

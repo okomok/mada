@@ -23,7 +23,7 @@ class VectorTest {
     }
 
     def testEmpty: Unit = {
-        val p = Peg.from(Vector.empty[Char])
+        val p = Peg.from(vector.empty[Char])
         assertTrue("123" >> p >> "XYZ" matches "123XYZ")
         assertFalse("123" >> p >> "XYZ" matches "123aXYZ")
     }

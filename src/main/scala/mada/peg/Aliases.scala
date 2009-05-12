@@ -15,11 +15,11 @@ trait Aliases { this: Peg.type =>
     @aliasOf("PegProxy")
     type Forwarder[A] = peg.PegProxy[A]
 
-    @aliasOf("Vector.Func[A, Unit]")
-    type Action[A] = Vector.Func[A, Unit]
+    @aliasOf("vector.Func[A, Unit]")
+    type Action[A] = vector.Func[A, Unit]
 
-    @aliasOf("Vector.Func3[A, Unit]")
-    type Action3[A] = Vector.Func3[A, Unit]
+    @aliasOf("vector.Func3[A, Unit]")
+    type Action3[A] = vector.Func3[A, Unit]
 
     @alias type ZeroWidth[A] = peg.ZeroWidth[A]
     @alias type Quantified[A] = peg.Quantified[A]

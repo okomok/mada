@@ -19,7 +19,7 @@ private[mada] class SplitIterator[A](p: Peg[A], v: Vector[A]) extends Iterator[V
     override def hasNext = k != l
     override def next = {
         Iterables.nextPrecondition(this, "split")
-        val tmp = new Vector.Region(v, k, b)
+        val tmp = new vector.Region(v, k, b)
         k_b_l_assign(u.parseImpl(v, l, v.end))
         tmp
     }

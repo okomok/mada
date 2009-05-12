@@ -8,7 +8,7 @@ package mada.vector
 
 
 /**
- * Contains utility methods parsing on char Vector.
+ * Contains utility methods parsing on char vector.
  */
 object Lexical extends LexicalConversions with LexicalCompatibles {
     /**
@@ -24,10 +24,10 @@ object Lexical extends LexicalConversions with LexicalCompatibles {
  * Contains explicit conversions around char vector.
  */
 trait LexicalConversions {
-    import Vector.stringize
+    import vector.stringize
 
 // from
-    def fromAny(from: Any): Vector[Char] = Vector.unstringize(from.toString)
+    def fromAny(from: Any): Vector[Char] = vector.unstringize(from.toString)
 
 // to
     def toBoolean(from: Vector[Char]): Boolean = stringize(from).toBoolean

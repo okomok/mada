@@ -19,7 +19,7 @@ object Peg extends Aliases with Conversions with Compatibles with Operators {
 // constants
 
     /**
-     * Alias of <code>Vector.SINGULAR</code> specifying the parsing failure.
+     * Alias of <code>vector.SINGULAR</code> specifying the parsing failure.
      */
     final val FAILURE = 0x80000000
 
@@ -91,22 +91,22 @@ object Peg extends Aliases with Conversions with Compatibles with Operators {
     /**
      * Mathches case-insensitively.
      */
-    def icase(v: Vector[Char]): Peg[Char] = lowerCaseRead(fromVector(Vector.lowerCase(v)))
+    def icase(v: Vector[Char]): Peg[Char] = lowerCaseRead(fromVector(vector.lowerCase(v)))
 
     /**
      * Zero-width assertion if region meets condition <code>pred</code>
      */
-    def lookaround[A](pred: Vector.Pred[A]): Peg[A] = Lookaround3(Vector.triplify(pred))
+    def lookaround[A](pred: vector.Pred[A]): Peg[A] = Lookaround3(vector.triplify(pred))
 
     /**
      * Zero-width assertion if region meets condition <code>pred</code> (no heap allocations)
      */
-    def lookaround3[A](pred: Vector.Pred3[A]): Peg[A] = Lookaround3(pred)
+    def lookaround3[A](pred: vector.Pred3[A]): Peg[A] = Lookaround3(pred)
 
     /**
      * Reads input as lower cases, then tries to match.
      */
-    def lowerCaseRead(p: Peg[Char]): Peg[Char] = p readMap { v => Vector.lowerCase(v) }
+    def lowerCaseRead(p: Peg[Char]): Peg[Char] = p readMap { v => vector.lowerCase(v) }
 
     /**
      * Matches range values.
@@ -222,7 +222,7 @@ trait Peg[A] {
 // kernel interface
 
     /**
-     * Parses specified region of input Vector.
+     * Parses specified region of input vector.
      * This apparently legacy interface is designed so that heap-allocation is removal.
      *
      * @return  next position if parsing succeeds, <code>Peg.FAILURE</code> otherwise.
@@ -380,7 +380,7 @@ trait Peg[A] {
      *
      * @see     apply as alias.
      */
-    final def act(f: Peg.Action[A]): Peg[A] = Act3(this, Vector.triplify(f))
+    final def act(f: Peg.Action[A]): Peg[A] = Act3(this, vector.triplify(f))
 
     /**
      * Associates semantic action. (no heap allocations)
@@ -393,12 +393,12 @@ trait Peg[A] {
     /**
      * Matches if matched region meets condition <code>pred</code>.
      */
-    final def andIf(pred: Vector.Pred[A]): Peg[A] = AndIf3(this, Vector.triplify(pred))
+    final def andIf(pred: vector.Pred[A]): Peg[A] = AndIf3(this, vector.triplify(pred))
 
     /**
      * Matches if matched region meets condition <code>pred</code>. (no heap allocations)
      */
-    final def andIf3(pred: Vector.Pred3[A]): Peg[A] = AndIf3(this, pred)
+    final def andIf3(pred: vector.Pred3[A]): Peg[A] = AndIf3(this, pred)
 
     /**
      * Returns an alias of this peg.
@@ -431,7 +431,7 @@ trait Peg[A] {
 // algorithms
 
     /**
-     * Finds <code>Vector.Region</code> which this peg matches.
+     * Finds <code>vector.Region</code> which this peg matches.
      */
     final def find(v: Vector[A]): Option[Vector[A]] = Find(this, v)
 

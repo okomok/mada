@@ -24,7 +24,7 @@ private[mada] object Sort {
         if (first != last) {
             val rs = new ArrayList[Vector[A]]
             loop(v, first, last, depthLimit(first, last), lt, grainSize, rs)
-            Vector.fromJclList(rs).parallel(1).each{ r => r.sortBy(lt) }
+            vector.fromJclList(rs).parallel(1).each{ r => r.sortBy(lt) }
         }
     }
 

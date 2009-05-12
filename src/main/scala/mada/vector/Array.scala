@@ -28,7 +28,7 @@ private[mada] class ArrayVector[A](from: Array[A]) extends Vector[A] {
 private[mada] object ToArray {
     def apply[A](from: Vector[A]): Array[A] = {
         val a = new Array[A](from.size)
-        from.copyTo(Vector.fromArray(a))
+        from.copyTo(vector.fromArray(a))
         a
     }
 }

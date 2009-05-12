@@ -10,7 +10,7 @@
 package madatest.peg
 
 
-import mada.Vector
+import mada.{Vector, vector}
 import mada.Peg._
 import junit.framework.Assert._
 import mada.Peg.Compatibles._
@@ -31,7 +31,7 @@ class StackActionsTest {
                 ('(' >> expr >> ')') |
                 ('-' >> factor){S{ (_, x) => -x }} |
                 ('+' >> factor)
-    integer ::= (digit.+){S{ v => Vector.lexical.toInt(v) }}
+    integer ::= (digit.+){S{ v => vector.lexical.toInt(v) }}
     digit   ::= "[0-9]".r
 
     def testTrivial: Unit = {

@@ -22,7 +22,7 @@ private[mada] object Unsplit {
             addVector(it.next, ar)
         }
 
-        Vector.fromJclList(ar)
+        vector.fromJclList(ar)
     }
 
     private def addVector[A](v: Vector[A], ar: ArrayList[A]): Unit = {

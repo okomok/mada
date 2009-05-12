@@ -95,3 +95,8 @@ class specializer extends StaticAnnotation
  * to which it is used to work around a compiler bug.
  */
 class compilerWorkaround extends StaticAnnotation
+
+/**
+ * In package object, overload resolution is broken in 2.8.
+ */
+class packageObjectBrokenOverload extends compilerWorkaround

@@ -11,7 +11,7 @@ private[mada] object Parallel {
     def apply[A](v: Vector[A], grainSize: Int): Vector[A] = new ParallelVector(v, grainSize)
 }
 
-private[mada] class ParallelVector[A](override val self: Vector[A], override val grainSize: Int) extends VectorProxy[A] {
+private[mada] class ParallelVector[A](override val self: Vector[A], override val grainSize: Int) extends Forwarder[A] {
     Assert(!IsParallel(self))
     ThrowIf.nonpositive(grainSize, "grain size")
   // value semantics
@@ -21,7 +21,7 @@ private[mada] class ParallelVector[A](override val self: Vector[A], override val
     override def mutatingFilter(p: A => Boolean): Vector[A] = para.MutatingFilter(self, p, grainSize)
   // map
     override def map[B](f: A => B): Vector[B] = para.Map(self, f, grainSize)
-    override def flatMap[B](f: A => Vector[B]): Vector[B] = Vector.flatten(map(f).toIterable)
+    override def flatMap[B](f: A => Vector[B]): Vector[B] = vector.flatten(map(f).toIterable)
   // loop
     override def each(f: A => Unit) = para.Each(self, f, grainSize)
   // search
@@ -31,7 +31,7 @@ private[mada] class ParallelVector[A](override val self: Vector[A], override val
     override def sortBy(lt: compare.Func[A]) = para.Sort(self, lt, grainSize)
   // copy
     override def copyTo[B >: A](that: Vector[B]): Vector[A] = para.CopyTo(self, that, grainSize)
-    override def clone: Vector[A] = Vector.fromArray(ToArray(this))
+    override def clone: Vector[A] = vector.fromArray(ToArray(this))
   // parallel support
     override def parallel(_grainSize: Int): Vector[A] = { // parallel-parallel fusion
       if (_grainSize == grainSize) this else self.parallel(_grainSize)

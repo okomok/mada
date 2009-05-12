@@ -13,7 +13,7 @@ import junit.framework.Assert._
 
 class SeqAndTest {
     def testTrivial: Unit = {
-        val sample = mada.Vector.unstringize("/*hello*/")
+        val sample = mada.vector.unstringize("/*hello*/")
         assertTrue((unstringize("/*hel") >> unstringize("lo*/")).matches(sample))
         assertFalse((unstringize("/*hel") >> unstringize("lo*")).matches(sample))
     }
