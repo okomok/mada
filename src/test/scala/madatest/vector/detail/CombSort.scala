@@ -31,7 +31,7 @@ object CombSort {
             var (target1, target2) = (first, first2)
             while (target2 != last) {
                 if (f(v(target2), v(target1))) {
-                    Stl.iterSwap(v, target1)(v, target2)
+                    vector.stl.iterSwap(v, target1)(v, target2)
                     swapped = true
                 }
                 target1 += 1; target2 += 1

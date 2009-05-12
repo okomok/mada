@@ -23,7 +23,7 @@ trait Traversable[+A] { ^ =>
     /**
      * Is this traversable as many times as one wants?
      */
-    def isRetraversable: Boolean
+    def isRetraversable: Boolean // will be useless.
 
 
     def _flatten[B](_this: Traversable[Traversable[B]]): Traversable[B] = throw new Error
