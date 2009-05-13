@@ -7,7 +7,7 @@
 package mada.traversable
 
 
-case class Append[A](left: Traversable[A], right: Traversable[A]) extends Traversable[A] { ^ =>
+class Append[A](val left: Traversable[A], val right: Traversable[A]) extends Traversable[A] { ^ =>
     override def start = new Traverser[A] {
         private var t = ^.left.start
         private var inLeft = true

@@ -7,12 +7,17 @@
 package mada.traversable
 
 
-case class Drop[A](that: Traversable[A], count: Int) extends Traversable[A] { ^ =>
-    override def start = {
+class Drop[A](val that: Traversable[A], val count: Int) extends Traversable[A] { ^ =>
+    override def start = that match {
+        case that: Drop[_] => that.that.drop(that.count + count).start // drop-drop fusion
+        case _ => _start
+    }
+
+    private def _start = {
         val t = that.start
         var i = count
-        while (i != 0 && !t.isEnd) {
-            t.increment
+        while (i != 0 && t) {
+            t.++
             i -= 1
         }
         t

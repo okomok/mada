@@ -43,7 +43,7 @@ package object traversable {
   // compatibles
 
     @conversion
-    def fromIterable[A](from: Iterable[A]): Traversable[A] = FromIterable(from)
+    def fromIterable[A](from: Iterable[A]): Traversable[A] = new FromIterable(from)
 
     @aliasOf("fromIterable")
     def fromValues[A](from: A*) = fromIterable(from)

@@ -65,4 +65,7 @@ package object traverser {
         }
     }
 
+    @conversion
+    def toBoolean[A](from: Traverser[A]) = !from.isEnd
+
 }

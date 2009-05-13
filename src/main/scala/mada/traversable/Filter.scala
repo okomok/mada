@@ -7,7 +7,7 @@
 package mada.traversable
 
 
-case class Filter[A](that: Traversable[A], predicate: A => Boolean) extends Traversable[A] { ^ =>
+class Filter[A](val that: Traversable[A], val predicate: A => Boolean) extends Traversable[A] { ^ =>
     override def start = new Traverser[A] {
         private val t = ^.that.start
         ready

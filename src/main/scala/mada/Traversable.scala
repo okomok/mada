@@ -37,7 +37,7 @@ trait Traversable[+A] { ^ =>
     def equalsIf[B](that: Traversable[B])(p: (A, B) => Boolean): Boolean = {
         val t = start
         val u = that.start
-        while (!t.isEnd && !u.isEnd) {
+        while (t && !u.isEnd) {
             if (!p(~t, ~u)) {
                 return false
             }
@@ -46,7 +46,8 @@ trait Traversable[+A] { ^ =>
         !t && !u
     }
 
-    override def hashCode = throw new Error
+    //TODO
+    //override def hashCode = throw new Error
 
 
 // general
@@ -54,27 +55,27 @@ trait Traversable[+A] { ^ =>
     /**
      * Takes at most <code>n</code> elements.
      */
-    def take(n: Int): Traversable[A] = Take(this, n)
+    def take(n: Int): Traversable[A] = new Take(this, n)
 
     /**
      * Drops at most <code>n</code> elements.
      */
-    def drop(n: Int): Traversable[A] = Drop(this, n)
+    def drop(n: Int): Traversable[A] = new Drop(this, n)
 
     /**
      * @return  <code>drop(n).take(n - m)</code>.
      */
-    def slice(n: Int, m: Int): Traversable[A] = Slice(this, n, m)
+    def slice(n: Int, m: Int): Traversable[A] = new Slice(this, n, m)
 
     /**
      * Maps elements using <code>f</code>.
      */
-    def map[B](f: A => B): Traversable[B] = Map(this, f)
+    def map[B](f: A => B): Traversable[B] = new Map(this, f)
 
     /**
      * Appends <code>that</code>.
      */
-    def append[B >: A](that: Traversable[B]): Traversable[B] = Append[B](this, that)
+    def append[B >: A](that: Traversable[B]): Traversable[B] = new Append[B](this, that)
 
     @aliasOf("append")
     final def ++[B >: A](that: Traversable[B]) = append(that)
@@ -87,29 +88,29 @@ trait Traversable[+A] { ^ =>
     /**
      * Filters elements using <code>f</code>.
      */
-    def filter(p: A => Boolean): Traversable[A] = Filter(this, p)
+    def filter(p: A => Boolean): Traversable[A] = new Filter(this, p)
 
     /**
      * Takes elements while <code>p</code> meets.
      */
-    def takeWhile(p: A => Boolean): Traversable[A] = TakeWhile(this, p)
+    def takeWhile(p: A => Boolean): Traversable[A] = new TakeWhile(this, p)
 
     /**
      * Drops elements while <code>p</code> meets.
      */
-    def dropWhile(p: A => Boolean): Traversable[A] = DropWhile(this, p)
+    def dropWhile(p: A => Boolean): Traversable[A] = new DropWhile(this, p)
 
     /**
      * Zips <code>this</code> and <code>that</code>.
      */
-    def zip[B](that: Traversable[B]): Traversable[(A, B)] = Zip(this, that)
+    def zip[B](that: Traversable[B]): Traversable[(A, B)] = new Zip(this, that)
 
     /**
      * Applies <code>f</code> to each element.
      */
     def foreach(f: A => Unit): Unit = {
         val t = start
-        while (!t.isEnd) {
+        while (t) {
             f(~t)
             t.++
         }
@@ -120,7 +121,7 @@ trait Traversable[+A] { ^ =>
      */
     def find(p: A => Boolean): Option[A] = {
         val t = start
-        while (!t.isEnd) {
+        while (t) {
             val e = ~t
             if (p(e)) {
                 return Some(e)
@@ -151,7 +152,7 @@ trait Traversable[+A] { ^ =>
     def foldLeft[B](z: B)(op: (B, A) => B): B = {
         var acc = z
         val t = start
-        while (!t.isEnd) {
+        while (t) {
             acc = op(acc, ~t)
             t.++
         }
@@ -185,7 +186,7 @@ trait Traversable[+A] { ^ =>
     def length: Int = {
         val t = start
         var i = 0
-        while (!t.isEnd) {
+        while (t) {
             t.++
             i += 1
         }
@@ -195,7 +196,7 @@ trait Traversable[+A] { ^ =>
 
 // methodized
 
-    def _flatten[B](_this: Traversable[Traversable[B]]): Traversable[B] = Flatten(_this)
+    def _flatten[B](_this: Traversable[Traversable[B]]): Traversable[B] = new Flatten(_this)
 
     def _stringize(_this: Traversable[Char]): String = throw new Error
 

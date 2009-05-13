@@ -25,4 +25,11 @@ class MapTest {
         assertEquals(t.map(_ + 1), u)
         assertEquals(t.map(_ + 1), u)
     }
+
+    def testFusion: Unit = {
+        val t = traversable.fromValues(1,2,3)
+        val u = traversable.fromValues(4,5,6)
+        assertEquals(t.map(_ + 1).map(_ + 2), u)
+        assertEquals(t.map(_ + 1).map(_ + 2), u)
+    }
 }

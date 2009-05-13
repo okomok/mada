@@ -7,7 +7,7 @@
 package mada.traversable
 
 
-case class TakeWhile[A](that: Traversable[A], predicate: A => Boolean) extends Traversable[A] { ^ =>
+class TakeWhile[A](val that: Traversable[A], val predicate: A => Boolean) extends Traversable[A] { ^ =>
     override def start = new Traverser[A] {
         private var t = ^.that.start
         ready

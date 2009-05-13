@@ -7,8 +7,13 @@
 package mada.traversable
 
 
-case class Map[A, B](that: Traversable[A], function: A => B) extends Traversable[B] { ^ =>
-    override def start = new Traverser[B] {
+class Map[A, B](val that: Traversable[A], val function: A => B) extends Traversable[B] { ^ =>
+    override def start = that match {
+        case that: Map[_, _] => that.that.map(function compose that.function).start // map-map fusion
+        case _ => _start
+    }
+
+    private def _start = new Traverser[B] {
         private val t = ^.that.start
         override def isEnd = t.isEnd
         override def deref = ^.function(t.deref)

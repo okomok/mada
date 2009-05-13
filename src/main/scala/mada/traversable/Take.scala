@@ -7,7 +7,7 @@
 package mada.traversable
 
 
-case class Take[A](that: Traversable[A], count: Int) extends Traversable[A] { ^ =>
+class Take[A](val that: Traversable[A], val count: Int) extends Traversable[A] { ^ =>
     override def start = new Traverser[A] {
         private var t = ^.that.start
         private var i = count
