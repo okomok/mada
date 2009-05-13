@@ -34,6 +34,11 @@ package object traversable {
     @aliasOf("empty")
     def emptyOf[A]: Traversable[A] = empty
 
+    /**
+     * A traversable with a single element.
+     */
+    def single[A](e: A): Traversable[A] = new Single(e)
+
 
 // conversions
 

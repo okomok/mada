@@ -27,6 +27,7 @@ class Flatten[A](val that: Traversable[Traversable[A]]) extends Traversable[A] {
                 if (!u.isEnd) {
                     return u
                 }
+                tt.++
             }
             traverser.theEnd
         }
