@@ -13,7 +13,10 @@ class Filter[A](val that: Traversable[A], val predicate: A => Boolean) extends T
         ready
         override def isEnd = t.isEnd
         override def deref = t.deref
-        override def increment = ready
+        override def increment = {
+            t.increment
+            ready
+        }
 
         private def ready: Unit = {
             while (!t.isEnd && !(^.predicate(t.deref))) {
@@ -21,4 +24,6 @@ class Filter[A](val that: Traversable[A], val predicate: A => Boolean) extends T
             }
         }
     }
+
+    override def filter(p: A => Boolean) = that.filter{ e => predicate(e) && p(e) } // filter-filter fusion
 }
