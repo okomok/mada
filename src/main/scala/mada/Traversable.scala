@@ -46,6 +46,7 @@ trait Traversable[+A] { ^ =>
         !t && !u
     }
 
+    override def toString = vector.fromIterable(new Iterable[A] { def elements = start.toIterator }).toString
     //TODO
     //override def hashCode = throw new Error
 

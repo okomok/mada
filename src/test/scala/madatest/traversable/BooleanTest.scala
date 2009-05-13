@@ -15,10 +15,15 @@ class BooleanTest {
     def testTrivial: Unit = {
         val tr = traversable.fromValues(2,4,6)
         val t = tr.start
+        t.toBoolean //
+        assertTrue(t.toBoolean)
         assertTrue(t)
+        assertTrue(!t.isEnd)
         assertFalse(!t)
+        assertFalse(t.isEnd)
 
         // SLS is weird.
+        assertTrue(!t.isEnd && !t.isEnd)
         assertTrue(t && t)
         assertTrue(t || neverCall)
         assertTrue(t || t)

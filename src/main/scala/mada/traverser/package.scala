@@ -37,35 +37,6 @@ package object traverser {
     def from[A](to: Traverser[A]) = to
 
     @conversion
-    def fromIterator[A](from: Iterator[A]) = new Traverser[A] {
-        private val e = new Proxies.Var[A]
-        if (from.hasNext) {
-            e.assign(from.next)
-        }
-
-        override def isEnd = e.isNull
-        override def deref = e.self
-        override def increment = {
-            if (from.hasNext) {
-                e.assign(from.next)
-            } else {
-                e.resign
-            }
-
-        }
-    }
-
-    @conversion
-    def toIterator[A](from: Traverser[A]) = new Iterator[A] {
-        override def hasNext = !from.isEnd
-        override def next = {
-            val tmp = ~from
-            from.++
-            tmp
-        }
-    }
-
-    @conversion
-    def toBoolean[A](from: Traverser[A]) = !from.isEnd
+    def fromIterator[A](from: Iterator[A]): Traverser[A] = new FromIterator(from)
 
 }
