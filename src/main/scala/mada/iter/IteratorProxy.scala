@@ -24,7 +24,7 @@ trait IteratorProxy[A] extends Iterator[A] with Proxies.ProxyOf[Iterator[A]] {
     override def dropWhile(p: A => Boolean): Iterator[A] = self.dropWhile(p)
     override def zip[B](that: Iterator[B]) = self.zip(that)
     override def zipWithIndex = self.zipWithIndex
-    override def foreach(f: A => Unit) = self.foreach(f)
+    override def foreach[U](f: A => U) = self.foreach(f)
     override def forall(p: A => Boolean): Boolean = self.forall(p)
     override def exists(p: A => Boolean): Boolean = self.exists(p)
     override def contains(elem: Any): Boolean = self.contains(elem)

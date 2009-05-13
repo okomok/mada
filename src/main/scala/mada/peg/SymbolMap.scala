@@ -65,8 +65,8 @@ class SymbolMap[A] private (private val tree: TSTree[A, Peg[A]]) extends Peg[A] 
     override def stringPrefix = "SymbolMap"
 
 // mutable.Map
-    override def -=(key: Vector[A]) = tree.remove(key)
+    override def -=(key: Vector[A]) = { tree.remove(key); this }
+    override def +=(kv: (Vector[A], Peg[A])) = { tree.put(kv._1, kv._2); this }
     override def clear = tree.clear
     override def clone: SymbolMap[A] = new SymbolMap(tree.clone)
-    override def update(key: Vector[A], value: Peg[A]) = tree.put(key, value)
 }

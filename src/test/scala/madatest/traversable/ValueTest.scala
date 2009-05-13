@@ -49,4 +49,17 @@ class ValueTest {
         assertEquals(t, u)
         assertEquals(t, u)
     }
+
+    def testToString: Unit = {
+        val t = traversable.fromValues(1,2,3)
+        assertEquals("[1, 2, 3]", t.toString)
+        assertEquals("[1, 2, 3]", t.toString)
+        val t0 = traversable.emptyOf[Int]
+        assertEquals("[]", t0.toString)
+        assertEquals("[]", t0.toString)
+        val t00 = traversable.fromValues()
+        assertEquals("[]", t00.toString)
+        assertEquals("[]", t00.toString)
+
+    }
 }
