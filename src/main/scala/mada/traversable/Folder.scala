@@ -25,14 +25,25 @@ private class _FolderLeft[A, B](_1: Traversable[A], _2: B, _3: (B, A) => B) exte
 }
 
 
-case class ReducerLeft[A, B >: A](_1: Traversable[A], _2: (B, A) => B) extends Forwarder[B] {
-    override val delegate = {
+case class ReducerLeft[A, B >: A](_1: Traversable[A], _2: (B, A) => B) extends Traversable[B] {
+    override def start = {
         val t = _1.start
         if (!t) {
             throw new UnsupportedOperationException("reducerLeft on empty traversable")
         }
         val e = ~t
         t.++
+        bind(t).folderLeft[B](e)(_2).start
+    }
+/*
+    override val delegate = {
+        val t = _1.start
+        if (!t) {
+            throw new UnsupportedOperationException("reducerLeft on empty traversable")
+        }
+        val e = ~t // too early?, but lazyness can't always be feasible. (BTW, Vector is usually infeasible.)
+        t.++
         bind(t).folderLeft[B](e)(_2)
     }
+*/
 }

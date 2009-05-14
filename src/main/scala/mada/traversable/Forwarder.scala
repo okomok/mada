@@ -12,16 +12,27 @@ trait Forwarder[+A] extends Traversable[A] with any.Forwarder {
     override protected def delegate: Traversable[A]
 
     override def start: Traverser[A] = delegate.start
+
+    override def equals(that: Any): Boolean = delegate.equals(that)
+    override def equalsIf[B](that: Traversable[B])(p: (A, B) => Boolean): Boolean = delegate.equalsIf(that)(p)
+
     override def isEmpty: Boolean = delegate.isEmpty
-    override def length: Int = delegate.length
-    override def append[B >: A](that: Traversable[B]): Traversable[B] = delegate.append(that)
+    override def concat[B >: A](that: Traversable[B]): Traversable[B] = delegate.concat(that)
     override def map[B](f: A => B): Traversable[B] = delegate.map(f)
+    override def flatMap[B](f: A => Traversable[B]): Traversable[B] = delegate.flatMap(f)
     override def filter(p: A => Boolean): Traversable[A] = delegate.filter(p)
-    override def foreach(f: A => Unit): Unit = delegate.foreach(f)
-    override def contains(e: Any): Boolean = delegate.contains(e)
+    override def partition(p: A => Boolean): (Traversable[A], Traversable[A]) = delegate.partition(p)
+    override def groupBy[K](f: A => K): scala.collection.Map[K, Traversable[A]] = delegate.groupBy(f)
+    override def foreach[B](f: A => B): Unit = delegate.foreach(f)
+    override def forall(p: A => Boolean): Boolean = delegate.forall(p)
+    override def exists(p: A => Boolean): Boolean = delegate.exists(p)
     override def count(p: A => Boolean): Int = delegate.count(p)
     override def find(p: A => Boolean): Option[A] = delegate.find(p)
     override def foldLeft[B](z: B)(op: (B, A) => B): B = delegate.foldLeft(z)(op)
+    //override def /:[B](z: B)(op: (B, A) => B): B = delegate./:(z)(op)
+    override def reduceLeft[B >: A](op: (B, A) => B): B = delegate.reduceLeft(op)
+    override def folderLeft[B](z: B)(op: (B, A) => B): Traversable[B] = delegate.folderLeft(z)(op)
+    override def reducerLeft[B >: A](op: (B, A) => B): Traversable[B] = delegate.reducerLeft(op)
     override def head: A = delegate.head
     override def headOption: Option[A] = delegate.headOption
     override def tail: Traversable[A] = delegate.tail
@@ -29,10 +40,22 @@ trait Forwarder[+A] extends Traversable[A] with any.Forwarder {
     override def lastOption: Option[A] = delegate.lastOption
     override def take(n: Int): Traversable[A] = delegate.take(n)
     override def drop(n: Int): Traversable[A] = delegate.drop(n)
-    override def slice(n: Int, m: Int): Traversable[A] = delegate.slice(n, m)
+    override def slice(from: Int, until: Int): Traversable[A] = delegate.slice(from, until)
     override def takeWhile(p: A => Boolean): Traversable[A] = delegate.takeWhile(p)
     override def dropWhile(p: A => Boolean): Traversable[A] = delegate.dropWhile(p)
-//    override def span(p: A => Boolean): (Forwarder[A], Forwarder[A]) = delegate.span(p)
-//    override def splitAt(n: Int): (Forwarder[A], Forwarder[A]) = delegate.splitAt(n)
-}
+    override def span(p: A => Boolean): (Traversable[A], Traversable[A]) = delegate.span(p)
+    override def splitAt(n: Int): (Traversable[A], Traversable[A]) = delegate.splitAt(n)
+    //override def copyToBuffer[B >: A](dest: Buffer[B]) = delegate.copyToBuffer(dest)
+    //override def copyToArray[B >: A](xs: Array[B], start: Int, len: Int) = delegate.copyToArray(xs, start, len)
+    //override def copyToArray[B >: A](xs: Array[B], start: Int) = delegate.copyToArray(xs, start)
+    //override def toArray[B >: A]: Array[B] = delegate.toArray
+    override def toIterable: Iterable[A] = delegate.toIterable
 
+    override def contains(e: Any): Boolean = delegate.contains(e)
+    override def zip[B](that: Traversable[B]): Traversable[(A, B)] = delegate.zip(that)
+
+    override def _flatten[B](_this: Traversable[Traversable[B]]): Traversable[B] = delegate._flatten(_this)
+    override def _stringize(_this: Traversable[Char]): String = delegate._stringize(_this)
+
+    override def mergeBy[B >: A](that: Traversable[B])(lt: compare.Func[B]): Traversable[B] = delegate.merge(that)(lt)
+}

@@ -24,7 +24,7 @@ trait Traversable[+A] {
     def start: Traverser[A]
 
 
-// value semantics
+// as value
 
     override def equals(that: Any) = that match {
         case that: Traversable[_] => equalsIf(that)(function.equal)
@@ -76,79 +76,12 @@ trait Traversable[+A] {
     }
 
 
-// region
+// scala traversable
 
     /**
-     * Takes at most <code>n</code> elements.
+     * Is <code>this</code> empty?
      */
-    def take(n: Int): Traversable[A] = Take(this, n)
-
-    /**
-     * Drops at most <code>n</code> elements.
-     */
-    def drop(n: Int): Traversable[A] = Drop(this, n)
-
-    /**
-     * @return  <code>drop(n).take(n - m)</code>.
-     */
-    def slice(n: Int, m: Int): Traversable[A] = Slice(this, n, m)
-
-
-// map
-
-    /**
-     * Maps elements using <code>f</code>.
-     */
-    def map[B](f: A => B): Traversable[B] = Map(this, f)
-
-    /**
-     * @return  <code>map(f).flatten</code>.
-     */
-    final def flatMap[B](f: A => Traversable[B]): Traversable[B] = _flatten(map(f))
-
-
-// concatenation
-
-    /**
-     * Appends <code>that</code>.
-     */
-    def append[B >: A](that: Traversable[B]): Traversable[B] = Append[B](this, that)
-
-    @aliasOf("append")
-    final def ++[B >: A](that: Traversable[B]) = append(that)
-
-
-// filter
-
-    /**
-     * Filters elements using <code>f</code>.
-     */
-    def filter(p: A => Boolean): Traversable[A] = Filter(this, p)
-    /**
-     * @return  <code>filter(function.not(p))</code>.
-     */
-    final def remove(p: A => Boolean): Traversable[A] = filter(function.not(p))
-
-    /**
-     * Takes elements while <code>p</code> meets.
-     */
-    def takeWhile(p: A => Boolean): Traversable[A] = TakeWhile(this, p)
-
-    /**
-     * Drops elements while <code>p</code> meets.
-     */
-    def dropWhile(p: A => Boolean): Traversable[A] = DropWhile(this, p)
-
-
-// zip
-
-    /**
-     * Zips <code>this</code> and <code>that</code>.
-     */
-    def zip[B](that: Traversable[B]): Traversable[(A, B)] = Zip(this, that)
-
-
-// traversing
+    def isEmpty: Boolean = start.isEnd
 
     /**
      * Returns the length.
@@ -167,15 +100,58 @@ trait Traversable[+A] {
     final def size = length
 
     /**
+     * Concatenates <code>that</code>.
+     */
+    def concat[B >: A](that: Traversable[B]): Traversable[B] = Concat[B](this, that)
+
+    @aliasOf("concat")
+    final def ++[B >: A](that: Traversable[B]) = concat(that)
+
+    /**
+     * Maps elements using <code>f</code>.
+     */
+    def map[B](f: A => B): Traversable[B] = Map(this, f)
+
+    /**
+     * @return  <code>map(f).flatten</code>.
+     */
+    def flatMap[B](f: A => Traversable[B]): Traversable[B] = _flatten(map(f))
+
+    /**
+     * Filters elements using <code>f</code>.
+     */
+    def filter(p: A => Boolean): Traversable[A] = Filter(this, p)
+
+    /**
+     * @return  <code>(filter(p), filter(function.not(p)))</code>.
+     */
+    def partition(p: A => Boolean): (Traversable[A], Traversable[A]) = (filter(p), filter(function.not(p)))
+
+    /**
+     * What?
+     */
+    def groupBy[K](f: A => K): scala.collection.Map[K, Traversable[A]] = throw new Error
+
+    /**
      * Applies <code>f</code> to each element.
      */
-    def foreach(f: A => Unit): Unit = {
+    def foreach[B](f: A => B): Unit = {
         val t = start
         while (t) {
             f(~t)
             t.++
         }
     }
+
+    /**
+     * Does <code>p</code> meet for any element?
+     */
+    def forall(p: A => Boolean): Boolean = find(function.not(p)).isEmpty
+
+    /**
+     * Does an element exists which <code>p</code> meets?
+     */
+    def exists(p: A => Boolean): Boolean = !find(p).isEmpty
 
     /**
      * Counts elements <code>p</code> meets.
@@ -208,24 +184,6 @@ trait Traversable[+A] {
     }
 
     /**
-     * Does <code>p</code> meet for any element?
-     */
-    final def forall(p: A => Boolean): Boolean = find(function.not(p)).isEmpty
-
-    /**
-     * Does an element exists which <code>p</code> meets?
-     */
-    final def exists(p: A => Boolean): Boolean = !find(p).isEmpty
-
-    /**
-     * Does this contain the element?
-     */
-    def contains(e: Any): Boolean = exists(function.equalTo(e))
-
-
-// folding
-
-    /**
      * Folds left to right.
      */
     def foldLeft[B](z: B)(op: (B, A) => B): B = {
@@ -244,7 +202,7 @@ trait Traversable[+A] {
     /**
      * Reduces left to right.
      */
-    final def reduceLeft[B >: A](op: (B, A) => B): B = {
+    def reduceLeft[B >: A](op: (B, A) => B): B = {
         val t = start
         if (!t) {
             throw new UnsupportedOperationException("reduceLeft on empty traversable")
@@ -262,15 +220,7 @@ trait Traversable[+A] {
     /**
      * Prefix sum reducing left to right.
      */
-    final def reducerLeft[B >: A](op: (B, A) => B): Traversable[B] = ReducerLeft(this, op)
-
-
-// trivial
-
-    /**
-     * Is <code>this</code> empty?
-     */
-    def isEmpty: Boolean = start.isEnd
+    def reducerLeft[B >: A](op: (B, A) => B): Traversable[B] = ReducerLeft(this, op)
 
     /**
      * Returns the first element.
@@ -339,6 +289,57 @@ trait Traversable[+A] {
         }
     }
 
+    /**
+     * Takes at most <code>n</code> elements.
+     */
+    def take(n: Int): Traversable[A] = Take(this, n)
+
+    /**
+     * Drops at most <code>n</code> elements.
+     */
+    def drop(n: Int): Traversable[A] = Drop(this, n)
+
+    /**
+     * @return  <code>drop(n).take(n - m)</code>.
+     */
+    def slice(from: Int, until: Int): Traversable[A] = Slice(this, from, until)
+
+    /**
+     * Takes elements while <code>p</code> meets.
+     */
+    def takeWhile(p: A => Boolean): Traversable[A] = TakeWhile(this, p)
+
+    /**
+     * Drops elements while <code>p</code> meets.
+     */
+    def dropWhile(p: A => Boolean): Traversable[A] = DropWhile(this, p)
+
+    /**
+     * @return  <code>(takeWhile(p), dropWhile(p))</code>.
+     */
+    def span(p: A => Boolean): (Traversable[A], Traversable[A]) = (takeWhile(p), dropWhile(p))
+
+    /**
+     * @return  <code>(take(n), drop(n))</code>.
+     */
+    def splitAt(n: Int): (Traversable[A], Traversable[A]) = (take(n), drop(n))
+
+    @conversion
+    def toIterable: Iterable[A] = ToIterable(this)
+
+
+// misc
+
+    /**
+     * Does this contain the element?
+     */
+    def contains(e: Any): Boolean = exists(function.equalTo(e))
+
+    /**
+     * Zips <code>this</code> and <code>that</code>.
+     */
+    def zip[B](that: Traversable[B]): Traversable[(A, B)] = Zip(this, that)
+
 
 // methodization
 
@@ -366,12 +367,6 @@ trait Traversable[+A] {
      * @return  <code>mergeBy(that)(c)</code>.
      */
     final def merge[B >: A](that: Traversable[B])(implicit c: Compare[B]) = mergeBy(that)(c)
-
-
-// conversions
-
-    @conversion
-    def toIterable: Iterable[A] = ToIterable(this)
 
 }
 
