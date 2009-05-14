@@ -9,9 +9,10 @@ package mada.traverser
 
 // probably unused.
 @forwarder
-trait Forwarder[+A] extends Traverser[A] {
-    protected def underlying: Traverser[A]
-    override def isEnd = underlying.isEnd
-    override def deref = underlying.deref
-    override def increment = underlying.increment
+trait Forwarder[+A] extends Traverser[A] with any.Forwarder {
+    override protected def delegate: Traverser[A]
+
+    override def isEnd = delegate.isEnd
+    override def deref = delegate.deref
+    override def increment = delegate.increment
 }

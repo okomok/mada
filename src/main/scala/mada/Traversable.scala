@@ -76,7 +76,7 @@ trait Traversable[+A] {
     }
 
 
-// general
+// region
 
     /**
      * Takes at most <code>n</code> elements.
@@ -93,10 +93,21 @@ trait Traversable[+A] {
      */
     def slice(n: Int, m: Int): Traversable[A] = Slice(this, n, m)
 
+
+// map
+
     /**
      * Maps elements using <code>f</code>.
      */
     def map[B](f: A => B): Traversable[B] = Map(this, f)
+
+    /**
+     * @return  <code>map(f).flatten</code>.
+     */
+    final def flatMap[B](f: A => Traversable[B]): Traversable[B] = _flatten(map(f))
+
+
+// concatenation
 
     /**
      * Appends <code>that</code>.
@@ -106,15 +117,17 @@ trait Traversable[+A] {
     @aliasOf("append")
     final def ++[B >: A](that: Traversable[B]) = append(that)
 
-    /**
-     * @return  <code>map(f).flatten</code>.
-     */
-    def flatMap[B](f: A => Traversable[B]): Traversable[B] = _flatten(map(f))
+
+// filter
 
     /**
      * Filters elements using <code>f</code>.
      */
     def filter(p: A => Boolean): Traversable[A] = Filter(this, p)
+    /**
+     * @return  <code>filter(function.not(p))</code>.
+     */
+    final def remove(p: A => Boolean): Traversable[A] = filter(function.not(p))
 
     /**
      * Takes elements while <code>p</code> meets.
@@ -126,20 +139,57 @@ trait Traversable[+A] {
      */
     def dropWhile(p: A => Boolean): Traversable[A] = DropWhile(this, p)
 
+
+// zip
+
     /**
      * Zips <code>this</code> and <code>that</code>.
      */
     def zip[B](that: Traversable[B]): Traversable[(A, B)] = Zip(this, that)
 
+
+// traversing
+
+    /**
+     * Returns the length.
+     */
+    def length: Int = {
+        var i = 0
+        val t = start
+        while (t) {
+            i += 1
+            t.++
+        }
+        i
+    }
+
+    @aliasOf("length")
+    final def size = length
+
     /**
      * Applies <code>f</code> to each element.
      */
-    def foreach[U](f: A => U): Unit = {
+    def foreach(f: A => Unit): Unit = {
         val t = start
         while (t) {
             f(~t)
             t.++
         }
+    }
+
+    /**
+     * Counts elements <code>p</code> meets.
+     */
+    def count(p: A => Boolean): Int = {
+        var i = 0
+        val t = start
+        while (t) {
+            if (p(~t)) {
+                i += 1
+            }
+            t.++
+        }
+        i
     }
 
     /**
@@ -158,19 +208,22 @@ trait Traversable[+A] {
     }
 
     /**
-     * Does this contain the element?
-     */
-    def contains(e: Any): Boolean = exists(function.equalTo(e))
-
-    /**
      * Does <code>p</code> meet for any element?
      */
-    def forall(p: A => Boolean): Boolean = find(function.not(p)).isEmpty
+    final def forall(p: A => Boolean): Boolean = find(function.not(p)).isEmpty
 
     /**
      * Does an element exists which <code>p</code> meets?
      */
-    def exists(p: A => Boolean): Boolean = !find(p).isEmpty
+    final def exists(p: A => Boolean): Boolean = !find(p).isEmpty
+
+    /**
+     * Does this contain the element?
+     */
+    def contains(e: Any): Boolean = exists(function.equalTo(e))
+
+
+// folding
 
     /**
      * Folds left to right.
@@ -191,7 +244,7 @@ trait Traversable[+A] {
     /**
      * Reduces left to right.
      */
-    def reduceLeft[B >: A](op: (B, A) => B): B = {
+    final def reduceLeft[B >: A](op: (B, A) => B): B = {
         val t = start
         if (!t) {
             throw new UnsupportedOperationException("reduceLeft on empty traversable")
@@ -202,27 +255,6 @@ trait Traversable[+A] {
     }
 
     /**
-     * Is <code>this</code> empty?
-     */
-    def isEmpty: Boolean = start.isEnd
-
-    /**
-     * Returns the length.
-     */
-    def length: Int = {
-        var i = 0
-        val t = start
-        while (t) {
-            i += 1
-            t.++
-        }
-        i
-    }
-
-
-// prefix sum
-
-    /**
      * Prefix sum folding left to right.
      */
     def folderLeft[B](z: B)(op: (B, A) => B): Traversable[B] = FolderLeft(this, z, op)
@@ -230,7 +262,82 @@ trait Traversable[+A] {
     /**
      * Prefix sum reducing left to right.
      */
-    def reducerLeft[B >: A](op: (B, A) => B): Traversable[B] = ReducerLeft(this, op)
+    final def reducerLeft[B >: A](op: (B, A) => B): Traversable[B] = ReducerLeft(this, op)
+
+
+// trivial
+
+    /**
+     * Is <code>this</code> empty?
+     */
+    def isEmpty: Boolean = start.isEnd
+
+    /**
+     * Returns the first element.
+     */
+    def head: A = {
+        val t = start
+        if (!t) {
+            throw new NoSuchElementException("head on empty traversable")
+        }
+        ~t
+    }
+
+    /**
+     * Optionally returns the first element.
+     */
+    def headOption: Option[A] = {
+        val t = start
+        if (!t) {
+            None
+        } else {
+            Some(~t)
+        }
+    }
+
+    /**
+     * Returns all the elements without the first one.
+     */
+    def tail: Traversable[A] = {
+        val t = start
+        if (!t) {
+            throw new NoSuchElementException("tail on empty traversable")
+        }
+        bind(t)
+    }
+
+    /**
+     * Returns the last element.
+     */
+    def last: A = {
+        val t = start
+        if (!t) {
+            throw new NoSuchElementException("last on empty traversable")
+        }
+        var e = ~t
+        t.++
+        while (t) {
+            e = ~t
+        }
+        e
+    }
+
+    /**
+     * Optionally returns the last element.
+     */
+    def lastOption: Option[A] = {
+        var e = new Proxies.Var[A]
+        val t = start
+        while (t) {
+            e.assign(~t)
+        }
+        // TODO: e.toOption is needed.
+        if (e.isNull) {
+            None
+        } else {
+            Some(e.self)
+        }
+    }
 
 
 // methodization
@@ -247,20 +354,18 @@ trait Traversable[+A] {
         sb.toString
     }
 
-    def _byLazy[B](_this: => Traversable[B]): Traversable[B] = throw new Error
-
 
 // sorted
-
-    /**
-     * @return  <code>mergeBy(that)(c)</code>.
-     */
-    def merge[B >: A](that: Traversable[B])(implicit c: Compare[B]) = mergeBy(that)(c)
 
     /**
      * Combines the elements tr the sorted traversables, into a new traversable with its elements sorted.
      */
     def mergeBy[B >: A](that: Traversable[B])(lt: compare.Func[B]): Traversable[B] = Merge[B](this, that, lt)
+
+    /**
+     * @return  <code>mergeBy(that)(c)</code>.
+     */
+    final def merge[B >: A](that: Traversable[B])(implicit c: Compare[B]) = mergeBy(that)(c)
 
 }
 
@@ -268,17 +373,17 @@ trait Traversable[+A] {
 object Traversable extends Compatibles {
 
     sealed class OfByName[A](tr: => Traversable[A]) {
-        def byLazy: Traversable[A] = tr._byLazy(tr)
+        final def `lazy`: Traversable[A] = new Lazy(tr)
     }
     implicit def ofByname[A](tr: => Traversable[A]): OfByName[A] = new OfByName(tr)
 
     sealed class OfTraversable[A](tr: Traversable[Traversable[A]]) {
-        def flatten: Traversable[A] = tr._flatten(tr)
+        final def flatten: Traversable[A] = tr._flatten(tr)
     }
     implicit def ofTraversable[A](tr: Traversable[Traversable[A]]): OfTraversable[A] = new OfTraversable(tr)
 
     sealed class OfChar(tr: Traversable[Char]) {
-        def stringize: String = tr._stringize(tr)
+        final def stringize: String = tr._stringize(tr)
     }
     implicit def ofChar(tr: Traversable[Char]): OfChar = new OfChar(tr)
 
