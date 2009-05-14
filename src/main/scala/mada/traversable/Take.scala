@@ -7,10 +7,10 @@
 package mada.traversable
 
 
-case class Take[A](_1: Traversable[A], _2: Int) extends Traversable[A] { self =>
+case class Take[A](_1: Traversable[A], _2: Int) extends Traversable[A] {
     override def start = new Traverser[A] {
-        private var t = self._1.start
-        private var i = self._2
+        private var t = _1.start
+        private var i = _2
         ready
         override def isEnd = !t
         override def deref = ~t

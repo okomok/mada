@@ -7,13 +7,13 @@
 package mada.traversable
 
 
-case class Merge[A](_1: Traversable[A], _2: Traversable[A], _3: compare.Func[A]) extends Traversable[A] { self =>
+case class Merge[A](_1: Traversable[A], _2: Traversable[A], _3: compare.Func[A]) extends Traversable[A] {
     override def start = new Traverser[A] {
-        private val t1 = self._1.start
-        private val t2 = self._2.start
+        private val t1 = _1.start
+        private val t2 = _2.start
         override def isEnd = !t1 && !t2
-        override def deref = Sorted.derefBy(t1, t2, self._3)
-        override def increment = Sorted.incrementBy(t1, t2, self._3)
+        override def deref = Sorted.derefBy(t1, t2, _3)
+        override def increment = Sorted.incrementBy(t1, t2, _3)
     }
 }
 

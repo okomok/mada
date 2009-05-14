@@ -7,6 +7,6 @@
 package mada.traversable
 
 
-case class Slice[A](_1: Traversable[A], _2: Int, _3: Int) extends Traversable[A] { self =>
+case class Slice[A](_1: Traversable[A], _2: Int, _3: Int) extends Traversable[A] {
     override def start = _1.drop(_2).take(_3 - _2).start
 }

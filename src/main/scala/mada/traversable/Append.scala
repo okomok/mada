@@ -7,9 +7,9 @@
 package mada.traversable
 
 
-case class Append[A](_1: Traversable[A], _2: Traversable[A]) extends Traversable[A] { self =>
+case class Append[A](_1: Traversable[A], _2: Traversable[A]) extends Traversable[A] {
     override def start = new Traverser[A] {
-        private var t = self._1.start
+        private var t = _1.start
         private var inLeft = true
         ready
         override def isEnd = !t
@@ -21,7 +21,7 @@ case class Append[A](_1: Traversable[A], _2: Traversable[A]) extends Traversable
 
         private def ready: Unit = {
             if (!t && inLeft) {
-                t = self._2.start
+                t = _2.start
                 inLeft = false
             }
         }

@@ -7,9 +7,9 @@
 package mada.traversable
 
 
-case class Filter[A](_1: Traversable[A], _2: A => Boolean) extends Traversable[A] { self =>
+case class Filter[A](_1: Traversable[A], _2: A => Boolean) extends Traversable[A] {
     override def start = new Traverser[A] {
-        private val t = self._1.start
+        private val t = _1.start
         ready
         override def isEnd = !t
         override def deref = ~t
@@ -19,7 +19,7 @@ case class Filter[A](_1: Traversable[A], _2: A => Boolean) extends Traversable[A
         }
 
         private def ready: Unit = {
-            while (t && !self._2(~t)) {
+            while (t && !_2(~t)) {
                 t.++
             }
         }

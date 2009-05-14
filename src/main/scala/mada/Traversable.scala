@@ -13,7 +13,7 @@ import traversable._
 /**
  * Yet another Iterable
  */
-trait Traversable[+A] { self =>
+trait Traversable[+A] {
 
 
 // start
@@ -84,7 +84,7 @@ trait Traversable[+A] { self =>
     /**
      * @return  <code>map(f).flatten</code>.
      */
-    final def flatMap[B](f: A => Traversable[B]): Traversable[B] = _flatten(map(f))
+    def flatMap[B](f: A => Traversable[B]): Traversable[B] = _flatten(map(f))
 
     /**
      * Filters elements using <code>f</code>.
@@ -135,7 +135,7 @@ trait Traversable[+A] { self =>
     /**
      * Does this contains an element?
      */
-    final def contains(e: Any): Boolean = exists(function.equalTo(e))
+    def contains(e: Any): Boolean = exists(function.equalTo(e))
 
     /**
      * Does <code>p</code> meet for any element?
@@ -166,7 +166,7 @@ trait Traversable[+A] { self =>
     /**
      * Reduces left to right.
      */
-    def reduceLeft[B >: A](op: (B, A) => B): B = {
+    final def reduceLeft[B >: A](op: (B, A) => B): B = {
         val t = start
         if (!t) {
             throw new UnsupportedOperationException("reduceLeft on empty traversable")
@@ -201,7 +201,7 @@ trait Traversable[+A] { self =>
 
     def _stringize(_this: Traversable[Char]): String = throw new Error
 
-    def _lazy[B](_this: => Traversable[B]): Traversable[B] = throw new Error
+    final def _asLazy[B](_this: => Traversable[B]): Traversable[B] = throw new Error
 
 
 // sorted
@@ -222,7 +222,7 @@ trait Traversable[+A] { self =>
 object Traversable extends Compatibles {
 
     sealed class OfByName[A](tr: => Traversable[A]) {
-        def `lazy`: Traversable[A] = tr._lazy(tr)
+        def asLazy: Traversable[A] = tr._asLazy(tr)
     }
     implicit def ofByname[A](tr: => Traversable[A]): OfByName[A] = new OfByName(tr)
 
