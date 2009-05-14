@@ -7,24 +7,24 @@
 package mada.traverser
 
 
-class FromIterator[A](val that: Iterator[A]) extends Forwarder[A] {
-    override val underlying: Traverser[A] = that match {
-        case that: ToIterator[_] => that.that // from-to fusion
-        case _ => new _FromIterator(that)
+final class FromIterator[A](val _1: Iterator[A]) extends Forwarder[A] {
+    override val underlying: Traverser[A] = _1 match {
+        case _1: ToIterator[_] => _1._1 // from-to fusion
+        case _ => new _FromIterator(_1)
     }
 }
 
-private[mada] class _FromIterator[A](that: Iterator[A]) extends Traverser[A] {
+private[mada] final class _FromIterator[A](_1: Iterator[A]) extends Traverser[A] {
     private val e = new Proxies.Var[A]
-    if (that.hasNext) {
-        e.assign(that.next)
+    if (_1.hasNext) {
+        e.assign(_1.next)
     }
 
     override def isEnd = e.isNull
     override def deref = e.self
     override def increment = {
-        if (that.hasNext) {
-            e.assign(that.next)
+        if (_1.hasNext) {
+            e.assign(_1.next)
         } else {
             e.resign
         }
@@ -32,15 +32,15 @@ private[mada] class _FromIterator[A](that: Iterator[A]) extends Traverser[A] {
     }
 
     // to-from fusion is infeasible, because constructor has side-effects.
-    // override def toIterator = that
+    // override def toIterator = _1
 }
 
 
-class ToIterator[A](val that: Traverser[A]) extends Iterator[A] {
-    override def hasNext = !that.isEnd
+final class ToIterator[A](val _1: Traverser[A]) extends Iterator[A] {
+    override def hasNext = !_1.isEnd
     override def next = {
-        val tmp = ~that
-        that.++
+        val tmp = ~_1
+        _1.++
         tmp
     }
 }

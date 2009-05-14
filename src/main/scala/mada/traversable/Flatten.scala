@@ -11,20 +11,20 @@ class Flatten[A](val _1: Traversable[Traversable[A]]) extends Traversable[A] { s
     override def start = new Traverser[A] {
         private val tt = self._1.start
         private var t = ready
-        override def isEnd = t.isEnd
-        override def deref = t.deref
+        override def isEnd = !t
+        override def deref = ~t
         override def increment = {
-            t.increment
-            if (t.isEnd) {
-                tt.increment
+            t.++
+            if (!t) {
+                tt.++
                 t = ready
             }
         }
 
         private def ready: Traverser[A] = {
-            while (!tt.isEnd) {
-                val u = tt.deref.start
-                if (!u.isEnd) {
+            while (tt) {
+                val u = (~tt).start
+                if (u) {
                     return u
                 }
                 tt.++

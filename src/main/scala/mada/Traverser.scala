@@ -13,6 +13,7 @@ import traverser._
 /**
  * Yet another Iterator: backend of <code>Traversable</code>.
  * Unlike <code>Iterator</code>, this separates element-access and traversing method.
+ * (E.g. <code>.map(f).length</code> is inefficient in Iterator abstraction.)
  */
 @notThreadSafe
 trait Traverser[+A] {
@@ -50,6 +51,8 @@ trait Traverser[+A] {
 
     @conversion @aliasOf("!isEnd")
     final def toBoolean: Boolean = !isEnd
+
+    final def memoize: Traverser[A] = new Memoize(this)
 
 /*
     // (Probably efficiently) compiles without:

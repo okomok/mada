@@ -7,7 +7,7 @@
 package mada.traversable
 
 
-class Merge[A](val _1: Traversable[A], val _2: Traversable[A], val _3: compare.Func[A]) extends Traversable[A] { self =>
+final class Merge[A](val _1: Traversable[A], val _2: Traversable[A], val _3: compare.Func[A]) extends Traversable[A] { self =>
     override def start = new Traverser[A] {
         private val t1 = self._1.start
         private val t2 = self._2.start

@@ -7,7 +7,7 @@
 package mada.traversable
 
 
-class Single[A](val _1: A) extends Traversable[A] { self =>
+final class Single[A](val _1: A) extends Traversable[A] { self =>
     override def start = new Traverser[A] {
         private var ends = false
         override def isEnd = ends

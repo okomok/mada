@@ -7,6 +7,7 @@
 package mada.traverser
 
 
+// probably unused.
 @forwarder
 trait Forwarder[+A] extends Traverser[A] {
     protected def underlying: Traverser[A]

@@ -41,7 +41,7 @@ package object traversable {
     /**
      * The empty traversable
      */
-    val empty: Traversable[Nothing] = Empty
+    val empty: Traversable[Nothing] = new Empty
 
     @aliasOf("empty")
     def emptyOf[A]: Traversable[A] = empty
