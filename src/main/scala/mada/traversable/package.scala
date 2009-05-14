@@ -32,7 +32,7 @@ package object traversable {
     def bindName[A](t: => Traverser[A]) = new BindName(t)
 
 
-// empty
+// methods
 
     /**
      * The empty traversable
@@ -42,13 +42,20 @@ package object traversable {
     @aliasOf("empty")
     def emptyOf[A]: Traversable[A] = empty
 
-
-// single
-
     /**
      * A traversable with a single element.
      */
     def single[A](e: A): Traversable[A] = Single(e)
+
+    /**
+     * Refers a traversable by lazy.
+     */
+    def `lazy`[A](tr: => Traversable[A]): Traversable[A] = new Lazy(tr)
+
+    /**
+     * Refers a traversable by name.
+     */
+    def `return`[A](tr: => Traversable[A]): Traversable[A] = new Return(tr)
 
 
 // conversions

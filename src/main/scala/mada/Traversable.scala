@@ -411,12 +411,6 @@ trait Traversable[+A] {
 
 object Traversable extends Compatibles {
 
-    sealed class OfByName[A](tr: => Traversable[A]) {
-        final def `lazy`: Traversable[A] = new Lazy(tr)
-        final def asName: Traversable[A] = new AsName(tr)
-    }
-    implicit def ofByName[A](tr: => Traversable[A]): OfByName[A] = new OfByName(tr)
-
     sealed class OfInvariant[A](tr: Traversable[A]) {
         final def toVector: Vector[A] = tr._toVector(tr)
     }

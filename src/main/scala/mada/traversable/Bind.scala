@@ -12,6 +12,6 @@ case class Bind[A](_1: Traverser[A]) extends Traversable[A] {
 }
 
 class BindName[A](t: => Traverser[A]) extends Traversable[A] {
-    final def _1 = function.byName(t)
+    val _1 = function.byName(t)
     override def start = _1()
 }

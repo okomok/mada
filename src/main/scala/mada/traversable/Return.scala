@@ -7,8 +7,7 @@
 package mada.traversable
 
 
-// In fact, most of all views are inherently lazy.
-class asName[A](tr: => Traversable[A]) extends Forwarder[A] {
-    final def _1 = function.byName(tr)
+class Return[A](tr: => Traversable[A]) extends Forwarder[A] {
+    val _1 = function.byName(tr)
     override protected def delegate = _1()
 }
