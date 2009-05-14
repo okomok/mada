@@ -12,6 +12,9 @@ case class FromIterator[A](_1: Iterator[A]) extends Forwarder[A] {
         case ToIterator(from) => from // from-to fusion
         case _ => new _FromIterator(_1)
     }
+
+    // to-from fusion is infeasible, because constructor has side-effects.
+    // override def toIterator = _1
 }
 
 private class _FromIterator[A](_1: Iterator[A]) extends Traverser[A] {
@@ -28,11 +31,7 @@ private class _FromIterator[A](_1: Iterator[A]) extends Traverser[A] {
         } else {
             e.resign
         }
-
     }
-
-    // to-from fusion is infeasible, because constructor has side-effects.
-    // override def toIterator = _1
 }
 
 

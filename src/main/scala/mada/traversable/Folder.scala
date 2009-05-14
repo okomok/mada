@@ -25,14 +25,14 @@ private class _FolderLeft[A, B](_1: Traversable[A], _2: B, _3: (B, A) => B) exte
 }
 
 
-case class ReducerLeft[A, B >: A](_1: Traversable[A], _2: (B, A) => B) extends Traversable[B] {
-    override def start = {
+case class ReducerLeft[A, B >: A](_1: Traversable[A], _2: (B, A) => B) extends Forwarder[B] {
+    override val delegate = {
         val t = _1.start
         if (!t) {
             throw new UnsupportedOperationException("reducerLeft on empty traversable")
         }
         val e = ~t
         t.++
-        bind(t).folderLeft[B](e)(_2).start
+        bind(t).folderLeft[B](e)(_2)
     }
 }

@@ -367,6 +367,12 @@ trait Traversable[+A] {
      */
     final def merge[B >: A](that: Traversable[B])(implicit c: Compare[B]) = mergeBy(that)(c)
 
+
+// conversions
+
+    @conversion
+    def toIterable: Iterable[A] = ToIterable(this)
+
 }
 
 
