@@ -7,7 +7,7 @@
 package mada.traverser
 
 
-final class Memoize[A](val _1: Traverser[A]) extends Traverser[A] {
+case class Memoize[A](_1: Traverser[A]) extends Traverser[A] {
     private val e = new Proxies.Var[A]
     override def isEnd = _1.isEnd
     override def deref = {

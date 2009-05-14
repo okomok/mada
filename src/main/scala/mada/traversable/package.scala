@@ -41,7 +41,7 @@ package object traversable {
     /**
      * The empty traversable
      */
-    val empty: Traversable[Nothing] = new Empty
+    val empty: Traversable[Nothing] = Empty
 
     @aliasOf("empty")
     def emptyOf[A]: Traversable[A] = empty
@@ -52,7 +52,7 @@ package object traversable {
     /**
      * A traversable with a single element.
      */
-    def single[A](e: A): Traversable[A] = new Single(e)
+    def single[A](e: A): Traversable[A] = Single(e)
 
 
 // conversions

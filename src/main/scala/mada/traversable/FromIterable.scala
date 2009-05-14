@@ -7,6 +7,6 @@
 package mada.traversable
 
 
-final class FromIterable[A](val _1: Iterable[A]) extends Traversable[A] {
+case class FromIterable[A](_1: Iterable[A]) extends Traversable[A] {
     override def start = traverser.fromIterator(_1.elements)
 }

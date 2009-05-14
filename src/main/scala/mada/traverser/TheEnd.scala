@@ -7,7 +7,7 @@
 package mada.traverser
 
 
-final class TheEnd extends Traverser[Nothing] {
+case object TheEnd extends Traverser[Nothing] {
     override def isEnd = true
     override def deref = throw new NoSuchElementException("deref on end traverser")
     override def increment = throw new UnsupportedOperationException("increment on end traverser")

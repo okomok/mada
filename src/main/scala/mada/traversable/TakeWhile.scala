@@ -7,7 +7,7 @@
 package mada.traversable
 
 
-final class TakeWhile[A](val _1: Traversable[A], val _2: A => Boolean) extends Traversable[A] { self =>
+case class TakeWhile[A](_1: Traversable[A], _2: A => Boolean) extends Traversable[A] { self =>
     override def start = new Traverser[A] {
         private var t = self._1.start
         ready

@@ -7,7 +7,7 @@
 package mada.traversable
 
 
-final class Map[A, B](val _1: Traversable[A], val _2: A => B) extends Traversable[B] { self =>
+case class Map[A, B](_1: Traversable[A], _2: A => B) extends Traversable[B] { self =>
     override def start = new Traverser[B] {
         private val t = self._1.start
         override def isEnd = !t

@@ -7,6 +7,6 @@
 package mada.traversable
 
 
-final class Empty extends Traversable[Nothing] {
+case object Empty extends Traversable[Nothing] {
     override def start = traverser.theEnd
 }

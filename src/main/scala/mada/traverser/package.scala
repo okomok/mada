@@ -24,7 +24,8 @@ package object traverser {
     /**
      * The universal end traverser
      */
-    val theEnd = new TheEnd
+    val theEnd: Traverser[Nothing] = TheEnd
+
 
 // conversions
 
@@ -32,6 +33,6 @@ package object traverser {
     def from[A](to: Traverser[A]) = to
 
     @conversion
-    def fromIterator[A](from: Iterator[A]): Traverser[A] = new FromIterator(from)
+    def fromIterator[A](from: Iterator[A]): Traverser[A] = FromIterator(from)
 
 }

@@ -47,12 +47,12 @@ trait Traverser[+A] {
     protected def preIncrement: Unit = if (isEnd) throw new UnsupportedOperationException("increment on end traverser")
 
     @conversion
-    final def toIterator: Iterator[A] = new ToIterator(this)
+    final def toIterator: Iterator[A] = ToIterator(this)
 
     @conversion @aliasOf("!isEnd")
     final def toBoolean: Boolean = !isEnd
 
-    final def memoize: Traverser[A] = new Memoize(this)
+    final def memoize: Traverser[A] = Memoize(this)
 
 /*
     // (Probably efficiently) compiles without:

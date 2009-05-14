@@ -7,7 +7,7 @@
 package mada.traversable
 
 
-final class Drop[A](val _1: Traversable[A], val _2: Int) extends Traversable[A] { self =>
+case class Drop[A](_1: Traversable[A], _2: Int) extends Traversable[A] { self =>
     override def start = {
         val t = _1.start
         var i = _2
