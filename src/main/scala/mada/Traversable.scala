@@ -46,9 +46,34 @@ trait Traversable[+A] {
         !t && !u
     }
 
-    override def toString = vector.fromIterable(new Iterable[A] { def elements = start.toIterator }).toString
-    //TODO
-    //override def hashCode = throw new Error
+    override def toString = {
+        val sb = new StringBuilder
+        sb.append('[')
+
+        val t = start
+        if (t) {
+            sb.append(~t)
+            t.++
+        }
+        while (t) {
+            sb.append(", ")
+            sb.append(~t)
+            t.++
+        }
+
+        sb.append(']')
+        sb.toString
+    }
+
+    override def hashCode = {
+        var code = 1
+        val t = start
+        while (t) {
+            code = 31 * code + (~t).hashCode
+            t.++
+        }
+        code
+    }
 
 
 // general
@@ -109,7 +134,7 @@ trait Traversable[+A] {
     /**
      * Applies <code>f</code> to each element.
      */
-    def foreach(f: A => Unit): Unit = {
+    def foreach[U](f: A => U): Unit = {
         val t = start
         while (t) {
             f(~t)
@@ -133,19 +158,19 @@ trait Traversable[+A] {
     }
 
     /**
-     * Does this contains an element?
+     * Does this contain the element?
      */
     def contains(e: Any): Boolean = exists(function.equalTo(e))
 
     /**
      * Does <code>p</code> meet for any element?
      */
-    final def forall(p: A => Boolean): Boolean = find(function.not(p)).isEmpty
+    def forall(p: A => Boolean): Boolean = find(function.not(p)).isEmpty
 
     /**
      * Does an element exists which <code>p</code> meets?
      */
-    final def exists(p: A => Boolean): Boolean = !find(p).isEmpty
+    def exists(p: A => Boolean): Boolean = !find(p).isEmpty
 
     /**
      * Folds left to right.
@@ -166,14 +191,14 @@ trait Traversable[+A] {
     /**
      * Reduces left to right.
      */
-    final def reduceLeft[B >: A](op: (B, A) => B): B = {
+    def reduceLeft[B >: A](op: (B, A) => B): B = {
         val t = start
         if (!t) {
             throw new UnsupportedOperationException("reduceLeft on empty traversable")
         }
         val e = ~t
         t.++
-        bindOnce(t).foldLeft[B](e)(op)
+        bind(t).foldLeft[B](e)(op)
     }
 
     /**
@@ -185,23 +210,44 @@ trait Traversable[+A] {
      * Returns the length.
      */
     def length: Int = {
-        val t = start
         var i = 0
+        val t = start
         while (t) {
-            t.++
             i += 1
+            t.++
         }
         i
     }
+
+
+// prefix sum
+
+    /**
+     * Prefix sum folding left to right.
+     */
+    def folderLeft[B](z: B)(op: (B, A) => B): Traversable[B] = FolderLeft(this, z, op)
+
+    /**
+     * Prefix sum reducing left to right.
+     */
+    def reducerLeft[B >: A](op: (B, A) => B): Traversable[B] = ReducerLeft(this, op)
 
 
 // methodization
 
     def _flatten[B](_this: Traversable[Traversable[B]]): Traversable[B] = Flatten(_this)
 
-    def _stringize(_this: Traversable[Char]): String = throw new Error
+    def _stringize(_this: Traversable[Char]): String = {
+        val sb = new StringBuilder
+        val t = start
+        while (t) {
+            sb.append(~t)
+            t.++
+        }
+        sb.toString
+    }
 
-    final def _asLazy[B](_this: => Traversable[B]): Traversable[B] = throw new Error
+    def _byLazy[B](_this: => Traversable[B]): Traversable[B] = throw new Error
 
 
 // sorted
@@ -209,7 +255,7 @@ trait Traversable[+A] {
     /**
      * @return  <code>mergeBy(that)(c)</code>.
      */
-    final def merge[B >: A](that: Traversable[B])(implicit c: Compare[B]) = mergeBy(that)(c)
+    def merge[B >: A](that: Traversable[B])(implicit c: Compare[B]) = mergeBy(that)(c)
 
     /**
      * Combines the elements tr the sorted traversables, into a new traversable with its elements sorted.
@@ -222,14 +268,14 @@ trait Traversable[+A] {
 object Traversable extends Compatibles {
 
     sealed class OfByName[A](tr: => Traversable[A]) {
-        def asLazy: Traversable[A] = tr._asLazy(tr)
+        def byLazy: Traversable[A] = tr._byLazy(tr)
     }
     implicit def ofByname[A](tr: => Traversable[A]): OfByName[A] = new OfByName(tr)
 
     sealed class OfTraversable[A](tr: Traversable[Traversable[A]]) {
         def flatten: Traversable[A] = tr._flatten(tr)
     }
-    implicit def ofTraversable[A](tr: Traversable[Traversable[A]]): OfTraversable[A] = new OfTraversable[A](tr)
+    implicit def ofTraversable[A](tr: Traversable[Traversable[A]]): OfTraversable[A] = new OfTraversable(tr)
 
     sealed class OfChar(tr: Traversable[Char]) {
         def stringize: String = tr._stringize(tr)

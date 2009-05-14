@@ -11,7 +11,7 @@ import mada.traversable
 import junit.framework.Assert._
 
 
-class ValueTest {
+class AsValueTest {
     def testTrivial: Unit = {
         val t: mada.Traversable[Int] = traversable.fromValues(1,2,3)
         val u = traversable.fromValues(1,2,3)
@@ -60,6 +60,29 @@ class ValueTest {
         val t00 = traversable.fromValues()
         assertEquals("[]", t00.toString)
         assertEquals("[]", t00.toString)
+        val t1 = traversable.fromValues(1)
+        assertEquals("[1]", t1.toString)
+        assertEquals("[1]", t1.toString)
+    }
 
+    def testStringize: Unit = {
+        val t = traversable.fromValues('1','2','3')
+        assertEquals("123", t.stringize)
+        assertEquals("123", t.stringize)
+        val t0 = traversable.emptyOf[Char]
+        assertEquals("", t0.stringize)
+        assertEquals("", t0.stringize)
+        val t1 = traversable.fromValues('1')
+        assertEquals("1", t1.stringize)
+        assertEquals("1", t1.stringize)
+    }
+
+    def testHashCode: Unit = {
+        val t = traversable.fromValues(4,7,6)
+        val s = traversable.fromValues(4,7,6)
+        val u = traversable.fromValues(4,7,9)
+        assertEquals(s.hashCode, t.hashCode)
+        assertEquals(t.hashCode, t.hashCode)
+        AssertNotEquals(u.hashCode, t.hashCode)
     }
 }

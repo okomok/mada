@@ -19,21 +19,17 @@ package object traversable {
     def compatibles: Compatibles = Traversable
 
 
-// bind
-
-    /**
-     * Creates a traversable starting from <code>t<code>, which is evaluated by-name.
-     */
-    def bind[A](t: => Traverser[A]) = new Traversable[A] {
-        override def start = t
-    }
+// bindName
 
     /**
      * Creates a traversable starting from <code>t<code>.
      */
-    def bindOnce[A](t: Traverser[A]) = new Traversable[A] {
-        override def start = t
-    }
+    def bind[A](t: Traverser[A]) = Bind(t)
+
+    /**
+     * Creates a traversable starting from <code>t<code>, which is evaluated by-name.
+     */
+    def bindName[A](t: => Traverser[A]) = new BindName(t)
 
 
 // empty
