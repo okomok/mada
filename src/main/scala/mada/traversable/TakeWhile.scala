@@ -11,15 +11,15 @@ case class TakeWhile[A](_1: Traversable[A], _2: A => Boolean) extends Traversabl
     override def start = new Traverser[A] {
         private var t = _1.start
         ready
-        override def isEnd = t.isEnd
-        override def deref = t.deref
+        override def isEnd = !t
+        override def deref = ~t
         override def increment = {
             t.++
             ready
         }
 
         private def ready: Unit = {
-            if (t && !_2(t.deref)) {
+            if (t && !_2(~t)) {
                 t = traverser.theEnd
             }
         }
