@@ -27,5 +27,5 @@ class Take[A](val _1: Traversable[A], val _2: Int) extends Traversable[A] { self
         }
     }
 
-    override def take(n: Int) = _1.take(Math.max(n, _2)) // take-take fusion
+    override def take(n: Int) = _1.take(Math.max(_2, n)) // take-take fusion
 }
