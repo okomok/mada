@@ -7,9 +7,9 @@
 package mada.traverser
 
 
-case class FromIterator[A](val _1: Iterator[A]) extends Forwarder[A] {
+case class FromIterator[A](_1: Iterator[A]) extends Forwarder[A] {
     override val underlying: Traverser[A] = _1 match {
-        case _1: ToIterator[_] => _1._1 // from-to fusion
+        case ToIterator(from) => from // from-to fusion
         case _ => new _FromIterator(_1)
     }
 }
