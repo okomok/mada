@@ -292,12 +292,18 @@ trait Traversable[+A] {
     /**
      * Takes at most <code>n</code> elements.
      */
-    def take(n: Int): Traversable[A] = Take(this, n)
+    def take(n: Int): Traversable[A] = {
+        throwIfNegative(n, "take")
+        Take(this, n)
+    }
 
     /**
      * Drops at most <code>n</code> elements.
      */
-    def drop(n: Int): Traversable[A] = Drop(this, n)
+    def drop(n: Int): Traversable[A] = {
+        throwIfNegative(n, "drop")
+        Drop(this, n)
+    }
 
     /**
      * @return  <code>drop(n).take(n - m)</code>.
@@ -322,7 +328,10 @@ trait Traversable[+A] {
     /**
      * @return  <code>(take(n), drop(n))</code>.
      */
-    def splitAt(n: Int): (Traversable[A], Traversable[A]) = (take(n), drop(n))
+    def splitAt(n: Int): (Traversable[A], Traversable[A]) = {
+        throwIfNegative(n, "splitAt")
+        (take(n), drop(n))
+    }
 
     @conversion
     def toIterable: Iterable[A] = ToIterable(this)
@@ -331,9 +340,36 @@ trait Traversable[+A] {
 // misc
 
     /**
+     * @return  <code>it.elements.drop(n).next</code>.
+     */
+    def at(n: Int): A = {
+        throwIfNegative(n, "at")
+        var i = n
+        val t = start
+        while (t) {
+            if (i == 0) {
+                return ~t
+            }
+            i -= 1
+            t.++
+        }
+        throw new NoSuchElementException("at" + Tuple1(n))
+    }
+
+    /**
      * Does this contain the element?
      */
     def contains(e: Any): Boolean = exists(function.equalTo(e))
+
+    /**
+     * Disables overrides.
+     */
+    final def seal: Traversable[A] = Seal(this)
+
+    /**
+     * Disables retraversing.
+     */
+    final def singlePass: Traversable[A] = SinglePass(this)
 
     /**
      * Zips <code>this</code> and <code>that</code>.
@@ -355,6 +391,8 @@ trait Traversable[+A] {
         sb.toString
     }
 
+    def _toVector[B](_this: Traversable[B]): Vector[B] = ToVector(_this)
+
 
 // sorted
 
@@ -375,8 +413,14 @@ object Traversable extends Compatibles {
 
     sealed class OfByName[A](tr: => Traversable[A]) {
         final def `lazy`: Traversable[A] = new Lazy(tr)
+        final def asName: Traversable[A] = new AsName(tr)
     }
-    implicit def ofByname[A](tr: => Traversable[A]): OfByName[A] = new OfByName(tr)
+    implicit def ofByName[A](tr: => Traversable[A]): OfByName[A] = new OfByName(tr)
+
+    sealed class OfInvariant[A](tr: Traversable[A]) {
+        final def toVector: Vector[A] = tr._toVector(tr)
+    }
+    implicit def ofInvariant[A](tr: Traversable[A]): OfInvariant[A] = new OfInvariant(tr)
 
     sealed class OfTraversable[A](tr: Traversable[Traversable[A]]) {
         final def flatten: Traversable[A] = tr._flatten(tr)

@@ -64,4 +64,12 @@ package object traversable {
     @aliasOf("fromIterable")
     def fromValues[A](from: A*) = fromIterable(from)
 
+
+// detail
+    private[mada] def throwIfNegative(n: Int, method: String): Unit = {
+        if (n < 0) {
+            throw new IllegalArgumentException("traversable." + method + Tuple1(n))
+        }
+    }
+
 }

@@ -17,6 +17,7 @@ trait Forwarder[+A] extends Traversable[A] with any.Forwarder {
     override def equalsIf[B](that: Traversable[B])(p: (A, B) => Boolean): Boolean = delegate.equalsIf(that)(p)
 
     override def isEmpty: Boolean = delegate.isEmpty
+    override def length: Int = delegate.length
     override def concat[B >: A](that: Traversable[B]): Traversable[B] = delegate.concat(that)
     override def map[B](f: A => B): Traversable[B] = delegate.map(f)
     override def flatMap[B](f: A => Traversable[B]): Traversable[B] = delegate.flatMap(f)
@@ -51,11 +52,13 @@ trait Forwarder[+A] extends Traversable[A] with any.Forwarder {
     //override def toArray[B >: A]: Array[B] = delegate.toArray
     override def toIterable: Iterable[A] = delegate.toIterable
 
+    override def at(n: Int): A = delegate.at(n)
     override def contains(e: Any): Boolean = delegate.contains(e)
     override def zip[B](that: Traversable[B]): Traversable[(A, B)] = delegate.zip(that)
 
     override def _flatten[B](_this: Traversable[Traversable[B]]): Traversable[B] = delegate._flatten(_this)
     override def _stringize(_this: Traversable[Char]): String = delegate._stringize(_this)
+    override def _toVector[B](_this: Traversable[B]): Vector[B] = delegate._toVector(_this)
 
     override def mergeBy[B >: A](that: Traversable[B])(lt: compare.Func[B]): Traversable[B] = delegate.merge(that)(lt)
 }
