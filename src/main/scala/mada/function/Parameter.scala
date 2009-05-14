@@ -10,7 +10,7 @@ package mada.function
 /**
  * Represents named parameter.
  */
-trait Parameter[A] { ^ =>
+trait Parameter[A] { self =>
 
     /**
      * Returns <code>this</code> as parameter's unique id.
@@ -29,7 +29,7 @@ trait Parameter[A] { ^ =>
      * Passes the argument to this parameter.
      */
     final def pass(v: A): Parameter[A] = new Parameter[A] {
-        override def origin = ^
+        override def origin = self
         override def argument = v
     }
 

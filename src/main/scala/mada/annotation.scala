@@ -59,6 +59,12 @@ class forwarder extends StaticAnnotation
 
 
 /**
+ * Provides pseudo methods to work around type constraints.
+ */
+class methodization extends StaticAnnotation
+
+
+/**
  * Not thread-safe.
  */
 class notThreadSafe extends StaticAnnotation

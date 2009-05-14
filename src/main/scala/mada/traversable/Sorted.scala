@@ -1,16 +1,20 @@
 
 
-// Copyright Shunsuke Sogame 2008-2009.
+// Copy_2 Shunsuke Sogame 2008-2009.
 // Distributed under the terms of an MIT-style license.
 
 
 package mada.traversable
 
 
-private[mada] class MergeTraverser[A](t1: Traverser[A], t2: Traverser[A], lt: compare.Func[A]) extends Traverser[A] {
-    override def isEnd = !t1 && !t2
-    override def deref = Sorted.derefBy(t1, t2, lt)
-    override def increment = Sorted.incrementBy(t1, t2, lt)
+class Merge[A](val _1: Traversable[A], val _2: Traversable[A], val _3: compare.Func[A]) extends Traversable[A] { self =>
+    override def start = new Traverser[A] {
+        private val t1 = self._1.start
+        private val t2 = self._2.start
+        override def isEnd = !t1 && !t2
+        override def deref = Sorted.derefBy(t1, t2, self._3)
+        override def increment = Sorted.incrementBy(t1, t2, self._3)
+    }
 }
 
 

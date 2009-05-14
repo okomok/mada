@@ -7,10 +7,10 @@
 package mada.traversable
 
 
-class DropWhile[A](val that: Traversable[A], val predicate: A => Boolean) extends Traversable[A] { ^ =>
+class DropWhile[A](val _1: Traversable[A], val _2: A => Boolean) extends Traversable[A] { self =>
     override def start = {
-        val t = that.start
-        while (t && predicate(~t)) {
+        val t = _1.start
+        while (t && _2(~t)) {
             t.++
         }
         t

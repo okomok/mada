@@ -7,9 +7,9 @@
 package mada.traversable
 
 
-class Flatten[A](val that: Traversable[Traversable[A]]) extends Traversable[A] { ^ =>
+class Flatten[A](val _1: Traversable[Traversable[A]]) extends Traversable[A] { self =>
     override def start = new Traverser[A] {
-        private val tt = ^.that.start
+        private val tt = self._1.start
         private var t = ready
         override def isEnd = t.isEnd
         override def deref = t.deref

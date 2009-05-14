@@ -13,7 +13,7 @@ import traversable._
 /**
  * Yet another Iterable
  */
-trait Traversable[+A] { ^ =>
+trait Traversable[+A] { self =>
 
 
 // start
@@ -195,7 +195,7 @@ trait Traversable[+A] { ^ =>
     }
 
 
-// methodized
+// methodization
 
     def _flatten[B](_this: Traversable[Traversable[B]]): Traversable[B] = new Flatten(_this)
 
@@ -214,35 +214,26 @@ trait Traversable[+A] { ^ =>
     /**
      * Combines the elements tr the sorted traversables, into a new traversable with its elements sorted.
      */
-    def mergeBy[B >: A](that: Traversable[B])(lt: compare.Func[B]): Traversable[B] = bind(new MergeTraverser[B](start, that.start, lt))
+    def mergeBy[B >: A](that: Traversable[B])(lt: compare.Func[B]): Traversable[B] = new Merge[B](this, that, lt)
 
 }
 
 
-object Traversable {
+object Traversable extends Compatibles {
 
+    sealed class OfByName[A](tr: => Traversable[A]) {
+        def `lazy`: Traversable[A] = tr._lazy(tr)
+    }
+    implicit def ofByname[A](tr: => Traversable[A]): OfByName[A] = new OfByName(tr)
 
-// methodized
+    sealed class OfTraversable[A](tr: Traversable[Traversable[A]]) {
+        def flatten: Traversable[A] = tr._flatten(tr)
+    }
+    implicit def ofTraversable[A](tr: Traversable[Traversable[A]]): OfTraversable[A] = new OfTraversable[A](tr)
 
-    sealed trait OfByName[A] {
-        def `lazy`: Traversable[A]
+    sealed class OfChar(tr: Traversable[Char]) {
+        def stringize: String = tr._stringize(tr)
     }
-    implicit def ofByname[A](tr: => Traversable[A]): OfByName[A] = new OfByName[A] {
-        override def `lazy` = tr._lazy(tr)
-    }
-
-    sealed trait OfTraversable[A] {
-        def flatten: Traversable[A]
-    }
-    implicit def ofTraversable[A](tr: Traversable[Traversable[A]]): OfTraversable[A] = new OfTraversable[A] {
-        override def flatten = tr._flatten(tr)
-    }
-
-    sealed trait OfChar {
-        def stringize: String
-    }
-    implicit def ofChar(tr: Traversable[Char]): OfChar = new OfChar {
-        override def stringize = tr._stringize(tr)
-    }
+    implicit def ofChar(tr: Traversable[Char]): OfChar = new OfChar(tr)
 
 }

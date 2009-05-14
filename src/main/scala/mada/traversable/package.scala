@@ -9,8 +9,17 @@ package mada
 
 package object traversable {
 
+
+// aliases
+
     @aliasOf("Traversable")
     type Type[+A] = Traversable[A]
+
+    @aliasOf("Traversable")
+    def compatibles: Compatibles = Traversable
+
+
+// bind
 
     /**
      * Creates a traversable starting from <code>t<code>, which is evaluated by-name.
@@ -26,6 +35,9 @@ package object traversable {
         override def start = t
     }
 
+
+// empty
+
     /**
      * The empty traversable
      */
@@ -33,6 +45,9 @@ package object traversable {
 
     @aliasOf("empty")
     def emptyOf[A]: Traversable[A] = empty
+
+
+// single
 
     /**
      * A traversable with a single element.

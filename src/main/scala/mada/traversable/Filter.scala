@@ -7,9 +7,9 @@
 package mada.traversable
 
 
-class Filter[A](val that: Traversable[A], val predicate: A => Boolean) extends Traversable[A] { ^ =>
+class Filter[A](val _1: Traversable[A], val _2: A => Boolean) extends Traversable[A] { self =>
     override def start = new Traverser[A] {
-        private val t = ^.that.start
+        private val t = self._1.start
         ready
         override def isEnd = t.isEnd
         override def deref = t.deref
@@ -19,11 +19,11 @@ class Filter[A](val that: Traversable[A], val predicate: A => Boolean) extends T
         }
 
         private def ready: Unit = {
-            while (!t.isEnd && !(^.predicate(t.deref))) {
+            while (!t.isEnd && !self._2(t.deref)) {
                 t.increment
             }
         }
     }
 
-    override def filter(p: A => Boolean) = that.filter{ e => predicate(e) && p(e) } // filter-filter fusion
+    override def filter(p: A => Boolean) = _1.filter{ e => _2(e) && p(e) } // filter-filter fusion
 }
