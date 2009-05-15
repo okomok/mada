@@ -362,6 +362,19 @@ trait Traversable[+A] {
     def contains(e: Any): Boolean = exists(function.equalTo(e))
 
     /**
+     * Repeats infinitely.
+     */
+    def cycle: Traversable[A] = Cycle(this)
+
+    /**
+     * Repeats <code>n</code> times
+     */
+    def times(n: Int): Traversable[A] = Times(this, n)
+
+    @methodization
+    def _flatten[B](_this: Traversable[Traversable[B]]): Traversable[B] = Flatten(_this)
+
+    /**
      * Disables overrides.
      */
     final def seal: Traversable[A] = Seal(this)
@@ -371,16 +384,7 @@ trait Traversable[+A] {
      */
     final def singlePass: Traversable[A] = SinglePass(this)
 
-    /**
-     * Zips <code>this</code> and <code>that</code>.
-     */
-    def zip[B](that: Traversable[B]): Traversable[(A, B)] = Zip(this, that)
-
-
-// methodization
-
-    def _flatten[B](_this: Traversable[Traversable[B]]): Traversable[B] = Flatten(_this)
-
+    @methodization
     def _stringize(_this: Traversable[Char]): String = {
         val sb = new StringBuilder
         val t = start
@@ -391,7 +395,35 @@ trait Traversable[+A] {
         sb.toString
     }
 
+    @methodization
+    def _toHashMap[K, V](_this: Traversable[(K, V)]): scala.collection.Map[K, V] = {
+        val r = new scala.collection.mutable.HashMap[K, V]
+        val t = _this.start
+        while (t) {
+            r += ~t
+            t.++
+        }
+        r
+    }
+
+    @methodization
+    def _toHashSet[B](_this: Traversable[B]): scala.collection.Set[B] = {
+        val r = new scala.collection.mutable.HashSet[B]
+        val t = _this.start
+        while (t) {
+            r += ~t
+            t.++
+        }
+        r
+    }
+
+    @methodization
     def _toVector[B](_this: Traversable[B]): Vector[B] = ToVector(_this)
+
+    /**
+     * Zips <code>this</code> and <code>that</code>.
+     */
+    def zip[B](that: Traversable[B]): Traversable[(A, B)] = Zip(this, that)
 
 
 // sorted
@@ -412,6 +444,7 @@ trait Traversable[+A] {
 object Traversable extends Compatibles {
 
     sealed class OfInvariant[A](tr: Traversable[A]) {
+        final def toHashSet: scala.collection.Set[A] = tr._toHashSet(tr)
         final def toVector: Vector[A] = tr._toVector(tr)
     }
     implicit def ofInvariant[A](tr: Traversable[A]): OfInvariant[A] = new OfInvariant(tr)
@@ -420,6 +453,11 @@ object Traversable extends Compatibles {
         final def flatten: Traversable[A] = tr._flatten(tr)
     }
     implicit def ofTraversable[A](tr: Traversable[Traversable[A]]): OfTraversable[A] = new OfTraversable(tr)
+
+    sealed class OfTuple2[T1, T2](tr: Traversable[(T1, T2)]) {
+        final def toHashMap: scala.collection.Map[T1, T2] = tr._toHashMap(tr)
+    }
+    implicit def ofTuple2[T1, T2](tr: Traversable[(T1, T2)]): OfTuple2[T1, T2] = new OfTuple2(tr)
 
     sealed class OfChar(tr: Traversable[Char]) {
         final def stringize: String = tr._stringize(tr)

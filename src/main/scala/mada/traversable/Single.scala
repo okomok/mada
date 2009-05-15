@@ -14,4 +14,7 @@ case class Single[A](_1: A) extends Traversable[A] {
         override def deref = { preDeref; _1 }
         override def increment = { preIncrement; ends = true }
     }
+
+    override def cycle = repeat(_1) // cycle-single fusion
+    override def times(n: Int) = repeat(_1).take(n) // times-single fusion
 }

@@ -54,11 +54,15 @@ trait Forwarder[+A] extends Traversable[A] with any.Forwarder {
 
     override def at(n: Int): A = delegate.at(n)
     override def contains(e: Any): Boolean = delegate.contains(e)
-    override def zip[B](that: Traversable[B]): Traversable[(A, B)] = delegate.zip(that)
-
+    override def cycle: Traversable[A] = delegate.cycle
+    override def times(n: Int): Traversable[A] = delegate.times(n)
     override def _flatten[B](_this: Traversable[Traversable[B]]): Traversable[B] = delegate._flatten(_this)
     override def _stringize(_this: Traversable[Char]): String = delegate._stringize(_this)
+    override def _toHashMap[K, V](_this: Traversable[(K, V)]): scala.collection.Map[K, V] = delegate._toHashMap(_this)
+    override def _toHashSet[B](_this: Traversable[B]): scala.collection.Set[B] = delegate._toHashSet(_this)
     override def _toVector[B](_this: Traversable[B]): Vector[B] = delegate._toVector(_this)
+    override def zip[B](that: Traversable[B]): Traversable[(A, B)] = delegate.zip(that)
+
 
     override def mergeBy[B >: A](that: Traversable[B])(lt: compare.Func[B]): Traversable[B] = delegate.merge(that)(lt)
 }

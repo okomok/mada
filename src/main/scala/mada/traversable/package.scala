@@ -57,6 +57,21 @@ package object traversable {
      */
     def byName[A](tr: => Traversable[A]): Traversable[A] = new ByName(tr)
 
+    /**
+     * Creates an infinite traversable repeatedly applying <code>op</code>.
+     */
+    def iterate[A](z: A)(op: A => A): Traversable[A] = Iterate(z, op)
+
+    /**
+     * Repeats <code>e</code> infinitely.
+     */
+    def repeat[A](e: A): Traversable[A] = Repeat(e)
+
+    /**
+     * Unfolds right to left.
+     */
+    def unfoldRight[A, B](z: A, op: A => Option[(B, A)]): Traversable[B] = UnfoldRight(z, op)
+
 
 // conversions
 
