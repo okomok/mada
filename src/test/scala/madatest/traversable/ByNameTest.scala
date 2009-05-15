@@ -23,7 +23,7 @@ class ByNameTest {
         val s2 = t.map(_ + 1)
         assertEquals(1, c)
 
-        val a = fromValues(2,3,4)
+        val a = of(2,3,4)
         assertEquals(a, s1)
         assertEquals(a, s2)
     }
@@ -37,13 +37,13 @@ class ByNameTest {
         val s2 = t.map(_ + 1)
         assertEquals(2, c)
 
-        val a = fromValues(2,3,4)
+        val a = of(2,3,4)
         assertEquals(a, s1)
         assertEquals(a, s2)
     }
 
     def makeT = {
         c += 1
-        fromValues(1,2,3)
+        of(1,2,3)
     }
 }

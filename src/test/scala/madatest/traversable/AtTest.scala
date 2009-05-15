@@ -11,13 +11,10 @@ import mada.traversable
 import junit.framework.Assert._
 
 
-class SingleTest {
+class AtTest {
     def testTrivial: Unit = {
-        val t = traversable.single(99)
-        val u = traversable.of(99)
-        assertEquals(1, t.length)
-        assertEquals(t, u)
-        assertEquals(1, t.length)
-        assertEquals(t, u)
+        val A1 = traversable.of(1,6,7,10,14,17)
+        assertEquals(1, A1.at(0))
+        assertEquals(10, A1.at(3))
     }
 }

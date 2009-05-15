@@ -13,7 +13,7 @@ import junit.framework.Assert._
 
 class FoldTest {
     def testFoldLeft: Unit = {
-        val tr = traversable.fromValues(2,4,6)
+        val tr = traversable.of(2,4,6)
         assertEquals(1+2+4+6, tr.foldLeft(1)(_ + _))
     }
 
@@ -23,7 +23,7 @@ class FoldTest {
     }
 
     def testReduceLeft: Unit = {
-        val tr = traversable.fromValues(2,4,6)
+        val tr = traversable.of(2,4,6)
         assertEquals(2+4+6, tr.reduceLeft(_ + _))
     }
 }

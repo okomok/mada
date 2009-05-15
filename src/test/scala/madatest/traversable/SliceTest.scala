@@ -13,11 +13,11 @@ import junit.framework.Assert._
 
 class SliceTest {
     def testTrivial: Unit = {
-        val t = traversable.fromValues(4,5,1,3,2,9,7,10)
-        val u = traversable.fromValues(4,5,1)
-        val v = traversable.fromValues(4,5,1,3,2,9,7,10)
-        val w = traversable.fromValues(1,3,2,9)
-        val x = traversable.fromValues(1,3,2,9,7,10)
+        val t = traversable.of(4,5,1,3,2,9,7,10)
+        val u = traversable.of(4,5,1)
+        val v = traversable.of(4,5,1,3,2,9,7,10)
+        val w = traversable.of(1,3,2,9)
+        val x = traversable.of(1,3,2,9,7,10)
         val k0 = t.slice(3, 3)
         assertTrue(k0.isEmpty)
         assertTrue(k0.isEmpty)

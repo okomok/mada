@@ -13,16 +13,16 @@ import junit.framework.Assert._
 
 class FilterTest {
     def testTrivial: Unit = {
-        val t = traversable.fromValues(1,2,2,3,4,5,5,6,7,8,9)
-        val u = traversable.fromValues(2,2,4,6,8)
+        val t = traversable.of(1,2,2,3,4,5,5,6,7,8,9)
+        val u = traversable.of(2,2,4,6,8)
         val k = t.filter(_ % 2 == 0)
         assertEquals(u, k)
         assertEquals(u, k)
     }
 
     def testTrivial2: Unit = {
-        val t = traversable.fromValues(2,2,3,4,5,5,6,7,8,9)
-        val u = traversable.fromValues(2,2,4,6,8)
+        val t = traversable.of(2,2,3,4,5,5,6,7,8,9)
+        val u = traversable.of(2,2,4,6,8)
         val k = t.filter(_ % 2 == 0)
         assertEquals(u, k)
         assertEquals(u, k)
@@ -36,15 +36,15 @@ class FilterTest {
     }
 
     def testEmpty2 = {
-        val t = traversable.fromValues(1,2,2,3,4,5,5,6,7,8,9)
+        val t = traversable.of(1,2,2,3,4,5,5,6,7,8,9)
         val k = t.filter(_ % 20 == 0)
         assertTrue(k.isEmpty)
         assertTrue(k.isEmpty)
     }
 
     def testFusion: Unit = {
-        val t = traversable.fromValues(1,2,2,3,4,5,5,6,7,8,9)
-        val u = traversable.fromValues(4,8)
+        val t = traversable.of(1,2,2,3,4,5,5,6,7,8,9)
+        val u = traversable.of(4,8)
         val k = t.filter(_ % 2 == 0).filter(_ % 4 == 0)
         assertEquals(u, k)
         assertEquals(u, k)

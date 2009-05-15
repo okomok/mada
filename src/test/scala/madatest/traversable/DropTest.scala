@@ -13,9 +13,9 @@ import junit.framework.Assert._
 
 class DropTest {
     def testTrivial: Unit = {
-        val t = traversable.fromValues(4,5,1,3,2,9,7,10)
-        val u = traversable.fromValues(9,7,10)
-        val v = traversable.fromValues(10)
+        val t = traversable.of(4,5,1,3,2,9,7,10)
+        val u = traversable.of(9,7,10)
+        val v = traversable.of(10)
         val k = t.drop(5)
         assertEquals(u, k)
         assertEquals(u, k)
@@ -28,9 +28,9 @@ class DropTest {
     }
 
     def testWhile: Unit = {
-        val t = traversable.fromValues(3,3,3,3,3,9,7,10)
-        val u = traversable.fromValues(9,7,10)
-        val v = traversable.fromValues(10)
+        val t = traversable.of(3,3,3,3,3,9,7,10)
+        val u = traversable.of(9,7,10)
+        val v = traversable.of(10)
         val k = t.dropWhile(_ == 3)
         assertEquals(u, k)
         assertTrue(t.dropWhile(_ != 99).isEmpty)
@@ -38,8 +38,8 @@ class DropTest {
     }
 
     def testFusion: Unit = {
-        val t = traversable.fromValues(3,3,3,3,3,9,7,10)
-        val u = traversable.fromValues(9,7,10)
+        val t = traversable.of(3,3,3,3,3,9,7,10)
+        val u = traversable.of(9,7,10)
         val k = t.drop(2).drop(3)
         assertEquals(k, u)
     }

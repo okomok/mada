@@ -13,9 +13,9 @@ import junit.framework.Assert._
 
 class TakeTest {
     def testTrivial: Unit = {
-        val t = traversable.fromValues(4,5,1,3,2,9,7,10)
-        val u = traversable.fromValues(4,5,1)
-        val v = traversable.fromValues(4,5,1,3,2,9,7,10)
+        val t = traversable.of(4,5,1,3,2,9,7,10)
+        val u = traversable.of(4,5,1)
+        val v = traversable.of(4,5,1,3,2,9,7,10)
         val k0 = t.take(0)
         assertTrue(k0.isEmpty)
         assertTrue(k0.isEmpty)
@@ -31,9 +31,9 @@ class TakeTest {
     }
 
     def testTrivial2 = {
-        val t = traversable.fromValues(14,15,11,3,2,9,7,10)
-        val u = traversable.fromValues(14,15,11)
-        val v = traversable.fromValues(14,15,11,3,2,9,7,10)
+        val t = traversable.of(14,15,11,3,2,9,7,10)
+        val u = traversable.of(14,15,11)
+        val v = traversable.of(14,15,11,3,2,9,7,10)
         val k0 = t.takeWhile(_ > 100)
         assertTrue(k0.isEmpty)
         assertTrue(k0.isEmpty)
@@ -46,8 +46,8 @@ class TakeTest {
     }
 
     def testFusion: Unit = {
-        val t = traversable.fromValues(9,7,10,1,2)
-        val u = traversable.fromValues(9,7,10)
+        val t = traversable.of(9,7,10,1,2)
+        val u = traversable.of(9,7,10)
         val k = t.take(2).take(3)
         assertEquals(k, u)
     }

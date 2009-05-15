@@ -13,7 +13,7 @@ import junit.framework.Assert._
 
 class LengthTest {
     def testTrivial: Unit = {
-        val tr = traversable.fromValues(1,2,3)
+        val tr = traversable.of(1,2,3)
         assertEquals(3, tr.length)
         assertEquals(3, tr.length)
     }

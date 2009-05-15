@@ -13,16 +13,16 @@ import junit.framework.Assert._
 
 class FolderTest {
     def testFolderLeft: Unit = {
-        val t = traversable.fromValues(1,2,3,4,5,6,7,8)
-        val u = traversable.fromValues(5,6,8,11,15,20,26,33,41)
+        val t = traversable.of(1,2,3,4,5,6,7,8)
+        val u = traversable.of(5,6,8,11,15,20,26,33,41)
         val k = t.folderLeft(5)(_ + _)
         assertEquals(u, k)
         assertEquals(u, k)
     }
 
     def testFolderLeft1: Unit = {
-        val t = traversable.fromValues(1)
-        val u = traversable.fromValues(5,6)
+        val t = traversable.of(1)
+        val u = traversable.of(5,6)
         val k = t.folderLeft(5)(_ + _)
         assertEquals(u, k)
         assertEquals(u, k)
@@ -33,8 +33,8 @@ class FolderTest {
     }
 
     def testReducerLeft: Unit = {
-        val t = traversable.fromValues(5,1,2,3,4,5,6,7,8)
-        val u = traversable.fromValues(5,6,8,11,15,20,26,33,41)
+        val t = traversable.of(5,1,2,3,4,5,6,7,8)
+        val u = traversable.of(5,6,8,11,15,20,26,33,41)
         val k = t.reducerLeft(_ + _)
         assertEquals(u, k)
         assertEquals(u, k)

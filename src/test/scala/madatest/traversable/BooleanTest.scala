@@ -13,7 +13,7 @@ import junit.framework.Assert._
 
 class BooleanTest {
     def testTrivial: Unit = {
-        val tr = traversable.fromValues(2,4,6)
+        val tr = traversable.of(2,4,6)
         val t = tr.start
         t.toBoolean //
         assertTrue(t.toBoolean)

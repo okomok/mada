@@ -10,37 +10,36 @@ package mada
 package object traversable {
 
 
-// aliases
-
     @aliasOf("Traversable")
     type Type[+A] = Traversable[A]
 
-    @aliasOf("Traversable")
-    def compatibles: Compatibles = Traversable
 
-
-// bindName
+// constructors
 
     /**
      * Creates a traversable starting from <code>t<code>.
      */
-    def bind[A](t: Traverser[A]) = Bind(t)
+    def bind[A](t: Traverser[A]): Traversable[A] = Bind(t)
 
     /**
      * Creates a traversable starting from <code>t<code>, which is evaluated by-name.
      */
-    def bindName[A](t: => Traverser[A]) = new BindName(t)
-
-
-// methods
+    def bindName[A](t: => Traverser[A]): Traversable[A] = new BindName(t)
 
     /**
      * The empty traversable
      */
     val empty: Traversable[Nothing] = Empty
 
-    @aliasOf("empty")
+    /**
+     * Typed <code>empty</code>
+     */
     def emptyOf[A]: Traversable[A] = empty
+
+    /**
+     * Creates a traversable initially containing the specified elements.
+     */
+    def of[A](from: A*) = fromIterable(from)
 
     /**
      * A traversable with a single element.
@@ -70,7 +69,7 @@ package object traversable {
     /**
      * Unfolds right to left.
      */
-    def unfoldRight[A, B](z: A, op: A => Option[(B, A)]): Traversable[B] = UnfoldRight(z, op)
+    def unfoldRight[A, B](z: A)(op: A => Option[(B, A)]): Traversable[B] = UnfoldRight(z, op)
 
 
 // conversions
@@ -80,14 +79,15 @@ package object traversable {
 
   // compatibles
 
+    @compatibles
+    def compatibles: Compatibles = Traversable
+
     @conversion
     def fromIterable[A](from: Iterable[A]): Traversable[A] = new FromIterable(from)
 
-    @aliasOf("fromIterable")
-    def fromValues[A](from: A*) = fromIterable(from)
-
 
 // detail
+
     private[mada] def throwIfNegative(n: Int, method: String): Unit = {
         if (n < 0) {
             throw new IllegalArgumentException("traversable." + method + Tuple1(n))
