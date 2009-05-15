@@ -18,7 +18,7 @@ trait Forwarder[+A] extends Traversable[A] with any.Forwarder {
 
     override def isEmpty: Boolean = delegate.isEmpty
     override def length: Int = delegate.length
-    override def concat[B >: A](that: Traversable[B]): Traversable[B] = delegate.concat(that)
+    override def append[B >: A](that: Traversable[B]): Traversable[B] = delegate.append(that)
     override def map[B](f: A => B): Traversable[B] = delegate.map(f)
     override def flatMap[B](f: A => Traversable[B]): Traversable[B] = delegate.flatMap(f)
     override def filter(p: A => Boolean): Traversable[A] = delegate.filter(p)

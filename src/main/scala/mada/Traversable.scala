@@ -100,12 +100,12 @@ trait Traversable[+A] {
     final def size = length
 
     /**
-     * Concatenates <code>that</code>.
+     * Appends <code>that</code>.
      */
-    def concat[B >: A](that: Traversable[B]): Traversable[B] = Concat[B](this, that)
+    def append[B >: A](that: Traversable[B]): Traversable[B] = Append[B](this, that)
 
-    @aliasOf("concat")
-    final def ++[B >: A](that: Traversable[B]) = concat(that)
+    @aliasOf("append")
+    final def ++[B >: A](that: Traversable[B]) = append(that)
 
     /**
      * Maps elements using <code>f</code>.
