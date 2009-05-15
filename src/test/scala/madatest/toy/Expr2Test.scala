@@ -69,7 +69,7 @@ object Expr {
         override protected def _eval[B](x: Expr[A, B]): B = _1.eval(x)
     }
 
-    case class Lazy[A](_1: Expr.Of[A]) extends Terminal[A] {
+    case class ByLazy[A](_1: Expr.Of[A]) extends Terminal[A] {
         private val e = new mada.Proxies.LazyVar[A]
         override protected def _eval[B](x: Expr[A, B]): B = x match {
             case Self => { e := _1.eval(x); e.self } // Self only
@@ -99,7 +99,7 @@ trait Expr[Z, A] {
 
     final def expr = this
     final def seal = Expr.Seal(this).expr
-    final def lazy_ = Expr.Lazy(this).expr
+    final def lazy_ = Expr.ByLazy(this).expr
 }
 
 

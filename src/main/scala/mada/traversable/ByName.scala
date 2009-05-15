@@ -7,7 +7,7 @@
 package mada.traversable
 
 
-class Return[A](tr: => Traversable[A]) extends Forwarder[A] {
-    val _1 = function.byName(tr)
+class ByName[A](tr: => Traversable[A]) extends Forwarder[A] {
+    val _1 = function.ofName(tr)
     override protected def delegate = _1()
 }

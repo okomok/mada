@@ -762,7 +762,7 @@ object Vector extends Compatibles {
     implicit def madaVectorPair[A, B](_1: Vector[(A, B)]): MadaVectorPair[A, B] = new MadaVectorPair(_1)
 
     sealed class MadaVectorByName[A](_1: => Vector[A]) {
-        def `lazy` = vector.`lazy`(_1)
+        def byLazy = vector.byLazy(_1)
     }
     implicit def madaVectorByName[A](_1: => Vector[A]): MadaVectorByName[A] = new MadaVectorByName(_1)
 

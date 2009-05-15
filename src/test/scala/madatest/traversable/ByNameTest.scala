@@ -16,7 +16,7 @@ class ByNameTest {
 
     def testLazy = {
         c = 0
-        val t = `lazy`(makeT)
+        val t = byLazy(makeT)
 
         val s1 = t.map(_ + 1)
         assertEquals(1, c)
@@ -28,9 +28,9 @@ class ByNameTest {
         assertEquals(a, s2)
     }
 
-    def testReturn = {
+    def testName = {
         c = 0
-        val t = `return`(makeT)
+        val t = byName(makeT)
 
         val s1 = t.map(_ + 1)
         assertEquals(1, c)

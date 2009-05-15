@@ -377,7 +377,7 @@ object Peg extends Compatibles {
     implicit def madaPegChar(_1: Peg[Char]): MadaPegChar = new MadaPegChar(_1)
 
     sealed class MadaPegByName[A](_1: => Peg[A]) {
-        def `lazy` = peg.`lazy`(_1)
+        def byLazy = peg.byLazy(_1)
     }
     implicit def madaPegByName[A](_1: => Peg[A]): MadaPegByName[A] = new MadaPegByName(_1)
 

@@ -120,7 +120,7 @@ package object vector {
     /**
      * Creates a <code>lazy</code> vector.
      */
-    def `lazy`[A](v: => Vector[A]) = Lazy(v)
+    def byLazy[A](v: => Vector[A]) = ByLazy(v)
 
 
 // triplify

@@ -50,12 +50,12 @@ package object traversable {
     /**
      * Refers a traversable by lazy.
      */
-    def `lazy`[A](tr: => Traversable[A]): Traversable[A] = new Lazy(tr)
+    def byLazy[A](tr: => Traversable[A]): Traversable[A] = new ByLazy(tr)
 
     /**
      * Refers a traversable by name.
      */
-    def `return`[A](tr: => Traversable[A]): Traversable[A] = new Return(tr)
+    def byName[A](tr: => Traversable[A]): Traversable[A] = new ByName(tr)
 
 
 // conversions

@@ -131,7 +131,7 @@ package object peg {
     /**
      * Constructs a lazy Peg object.
      */
-    def `lazy`[A](p: => Peg[A]): Peg[A] = Lazy(p)
+    def byLazy[A](p: => Peg[A]): Peg[A] = ByLazy(p)
 
     /**
      * Constructs a pseudo try-catch expression in

@@ -51,7 +51,7 @@ trait Operators { this: Iterables.type =>
     implicit def madaIterablesIterable[A](_1: Iterable[Iterable[A]]): MadaIterablesIterable[A] = new MadaIterablesIterable(_1)
 
     sealed class MadaIterablesByName[A](_1: => Iterable[A]) {
-        def `lazy` = Iterables.`lazy`(_1)
+        def byLazy = Iterables.byLazy(_1)
     }
     implicit def madaIterablesByName[A](_1: => Iterable[A]): MadaIterablesByName[A] = new MadaIterablesByName(_1)
 }

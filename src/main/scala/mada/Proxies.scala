@@ -137,7 +137,7 @@ object Proxies {
         private val r = new java.util.concurrent.atomic.AtomicReference[Function0[A]]
 
         override def self = if (!isNull) r.get.apply() else null.asInstanceOf[A]
-        override def assign(that: => A) = r.compareAndSet(null, function.byLazy(that))
+        override def assign(that: => A) = r.compareAndSet(null, function.ofLazy(that))
         override def resign = r.set(null)
         override def isNull = null == r.get
 

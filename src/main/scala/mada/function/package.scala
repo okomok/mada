@@ -60,12 +60,12 @@ package object function {
     /**
      * Converts by-name-parameter to a function returning <code>body</code>.
      */
-    def byName[R](body: => R): Function0[R] = { () => body }
+    def ofName[R](body: => R): Function0[R] = { () => body }
 
     /**
      * A function calculating <code>body</code> by <code>lazy</code>
      */
-    def byLazy[R](body: => R): Function0[R] = new Function0[R] {
+    def ofLazy[R](body: => R): Function0[R] = new Function0[R] {
         private lazy val _v = body
         override def apply() = _v
     }

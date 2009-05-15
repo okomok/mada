@@ -23,7 +23,7 @@ private[mada] object Future {
         try {
             new ByParallel(body)
         } catch {
-            case _: RejectedExecutionException => function.byLazy(body)
+            case _: RejectedExecutionException => function.ofLazy(body)
         }
     }
 
