@@ -17,14 +17,12 @@ package object traversable {
 // constructors
 
     /**
-     * Creates a traversable starting from <code>t<code>.
+     * Creates a traversable initially containing the specified elements.
      */
-    def bind[A](t: Traverser[A]): Traversable[A] = Bind(t)
-
-    /**
-     * Creates a traversable starting from <code>t<code>, which is evaluated by-name.
-     */
-    def bindName[A](t: => Traverser[A]): Traversable[A] = new BindName(t)
+    object of {
+        def apply[A](from: A*): Traversable[A] = fromIterable(from)
+        // def unapplySeq[A](from: Traversable[A]): Option[Seq[A]] = Some(from.toSeq)
+    }
 
     /**
      * The empty traversable
@@ -35,11 +33,6 @@ package object traversable {
      * Typed <code>empty</code>
      */
     def emptyOf[A]: Traversable[A] = empty
-
-    /**
-     * Creates a traversable initially containing the specified elements.
-     */
-    def of[A](from: A*) = fromIterable(from)
 
     /**
      * A traversable with a single element.
@@ -70,6 +63,24 @@ package object traversable {
      * Unfolds right to left.
      */
     def unfoldRight[A, B](z: A)(op: A => Option[(B, A)]): Traversable[B] = UnfoldRight(z, op)
+
+    /**
+     * Creates a traversable starting from <code>t<code>.
+     */
+    def bind[A](t: Traverser[A]): Traversable[A] = Bind(t)
+
+    /**
+     * Creates a traversable starting from <code>t<code>, which is evaluated by-name.
+     */
+    def bindName[A](t: => Traverser[A]): Traversable[A] = new BindName(t)
+
+    /**
+     * Constructs a traversable from traversing block.
+     */
+    def block[A](op: Yield[A] => Unit): Traversable[A] = Block(op)
+
+    @aliasOf("Function1[A, Unit]")
+    type Yield[-A] = Function1[A, Unit]
 
 
 // conversions

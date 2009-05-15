@@ -61,7 +61,7 @@ class forwarder extends StaticAnnotation
 /**
  * Provides pseudo methods to work around type constraints.
  */
-class methodization extends StaticAnnotation
+class methodized extends StaticAnnotation
 
 
 /**
