@@ -52,8 +52,23 @@ trait Traverser[+A] {
     @conversion @aliasOf("!isEnd")
     final def toBoolean: Boolean = !isEnd
 
-    final def memoize: Traverser[A] = Memoize(this)
+    final def drop(n: Int): Traverser[A] = {
+        var i = n
+        while (i != 0 && !isEnd) {
+            increment
+            i -= 1
+        }
+        this
+    }
 
+    final def dropWhile(p: A => Boolean): Traverser[A] = {
+        while (!isEnd && p(deref)) {
+            increment
+        }
+        this
+    }
+
+    final def memoize: Traverser[A] = Memoize(this)
 /*
     // (Probably efficiently) compiles without:
     final def &&(p: => Boolean): Boolean = if (!isEnd) p else false

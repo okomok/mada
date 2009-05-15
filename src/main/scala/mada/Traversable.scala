@@ -387,6 +387,21 @@ trait Traversable[+A] {
      */
     final def singlePass: Traversable[A] = SinglePass(this)
 
+    /**
+     * Steps by the specified stride.
+     */
+    def step(n: Int): Traversable[A] = Step(this, n)
+
+    /**
+     * Removes duplicates using <code>==</code>.
+     */
+    def unique: Traversable[A] = Unique(this)
+
+    /**
+     * Removes duplicates using the predicate.
+     */
+    def uniqueBy(p: (A, A) => Boolean): Traversable[A] = UniqueBy(this, p)
+
     @methodized @conversion
     def _stringize(_this: Traversable[Char]): String = {
         val sb = new StringBuilder

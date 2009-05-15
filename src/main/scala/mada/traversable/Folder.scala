@@ -36,7 +36,7 @@ case class ReducerLeft[A, B >: A](_1: Traversable[A], _2: (B, A) => B) extends T
         bind(t).folderLeft[B](e)(_2).start
     }
 /*
-    override val delegate = {
+    override protected val delegate = {
         val t = _1.start
         if (!t) {
             throw new UnsupportedOperationException("reducerLeft on empty traversable")
