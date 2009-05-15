@@ -11,7 +11,7 @@ import mada.traversable
 import junit.framework.Assert._
 
 
-class FlatenTest {
+class FlattenTest {
     def testTrivial = {
         val t1 = traversable.of(0,1,2)
         val t2 = traversable.of(3,4)

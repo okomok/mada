@@ -371,6 +371,9 @@ trait Traversable[+A] {
      */
     def times(n: Int): Traversable[A] = Times(this, n)
 
+    /**
+     * Turns a traversable of traversables into flat traversable.
+     */
     @methodized
     def _flatten[B](_this: Traversable[Traversable[B]]): Traversable[B] = Flatten(_this)
 
@@ -384,7 +387,7 @@ trait Traversable[+A] {
      */
     final def singlePass: Traversable[A] = SinglePass(this)
 
-    @methodized
+    @methodized @conversion
     def _stringize(_this: Traversable[Char]): String = {
         val sb = new StringBuilder
         val t = start
@@ -395,7 +398,7 @@ trait Traversable[+A] {
         sb.toString
     }
 
-    @methodized
+    @methodized @conversion
     def _toHashMap[K, V](_this: Traversable[(K, V)]): scala.collection.Map[K, V] = {
         val r = new scala.collection.mutable.HashMap[K, V]
         val t = _this.start
@@ -406,7 +409,7 @@ trait Traversable[+A] {
         r
     }
 
-    @methodized
+    @methodized @conversion
     def _toHashSet[B](_this: Traversable[B]): scala.collection.Set[B] = {
         val r = new scala.collection.mutable.HashSet[B]
         val t = _this.start
@@ -417,7 +420,7 @@ trait Traversable[+A] {
         r
     }
 
-    @methodized
+    @methodized @conversion
     def _toVector[B](_this: Traversable[B]): Vector[B] = ToVector(_this)
 
     /**
