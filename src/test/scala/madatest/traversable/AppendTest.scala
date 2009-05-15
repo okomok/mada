@@ -14,6 +14,7 @@ import junit.framework.Assert._
 class AppendTest {
 
     def testTrivial: Unit = {
+        new NotStartable[Int] ++ new NotStartable[Int]
         val t = traversable.of(4,5,1,3)
         val u = traversable.of(9,7,10)
         val v = traversable.of(4,5,1,3,9,7,10)

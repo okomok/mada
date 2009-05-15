@@ -96,6 +96,12 @@ package object traversable {
     @conversion
     def fromIterable[A](from: Iterable[A]): Traversable[A] = new FromIterable(from)
 
+    @conversion
+    def fromJioObjectInput(from: java.io.ObjectInput): Traversable[AnyRef] = new FromJioObjectInput(from)
+
+    @conversion
+    def fromJioReader(from: java.io.Reader): Traversable[Char] = new FromJioReader(from)
+
 
 // detail
 

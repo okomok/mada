@@ -15,6 +15,7 @@ private class _FolderLeft[A, B](_1: Traversable[A], _2: B, _3: (B, A) => B) exte
     override def start = new Traverser[B] {
         private val t = _1.start
         private var z = _2
+
         override def isEnd = !t
         override def deref = _3(z, ~t)
         override def increment = {

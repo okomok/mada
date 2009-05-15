@@ -13,6 +13,7 @@ import junit.framework.Assert._
 
 class DropTest {
     def testTrivial: Unit = {
+        new NotStartable[Int].drop(5)
         val t = traversable.of(4,5,1,3,2,9,7,10)
         val u = traversable.of(9,7,10)
         val v = traversable.of(10)

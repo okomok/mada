@@ -13,6 +13,7 @@ import junit.framework.Assert._
 
 class FlattenTest {
     def testTrivial = {
+        new NotStartable[traversable.Type[Int]]().flatten
         val t1 = traversable.of(0,1,2)
         val t2 = traversable.of(3,4)
         val t3 = traversable.emptyOf[Int]

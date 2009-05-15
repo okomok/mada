@@ -12,6 +12,7 @@ case class Take[A](_1: Traversable[A], _2: Int) extends Traversable[A] {
         private var t = _1.start
         private var i = _2
         ready
+
         override def isEnd = !t
         override def deref = ~t
         override def increment = {

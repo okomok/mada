@@ -12,6 +12,7 @@ case class Append[A](_1: Traversable[A], _2: Traversable[A]) extends Traversable
         private var t = _1.start
         private var inLeft = true
         ready
+
         override def isEnd = !t
         override def deref = ~t
         override def increment = {

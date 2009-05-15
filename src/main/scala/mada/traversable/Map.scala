@@ -10,6 +10,7 @@ package mada.traversable
 case class Map[A, B](_1: Traversable[A], _2: A => B) extends Traversable[B] {
     override def start = new Traverser[B] {
         private val t = _1.start
+
         override def isEnd = !t
         override def deref = _2(~t)
         override def increment = t.++

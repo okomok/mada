@@ -10,6 +10,7 @@ package mada.traversable
 case class Iterate[A](_1: A, _2: A => A) extends Traversable[A] {
     override def start = new Traverser[A] {
         private var acc = _1
+
         override def isEnd = false
         override def deref = acc
         override def increment = { acc = _2(acc) }

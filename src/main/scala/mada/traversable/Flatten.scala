@@ -11,6 +11,7 @@ case class Flatten[A](_1: Traversable[Traversable[A]]) extends Traversable[A] {
     override def start = new Traverser[A] {
         private val tt = _1.start
         private var t = ready
+
         override def isEnd = !t
         override def deref = ~t
         override def increment = {
