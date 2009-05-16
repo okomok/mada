@@ -26,14 +26,14 @@ package object meta {
 // misc
 
     /**
-     * @return  <code>null.asInstanceOf[a]</code>.
-     */
-    def nullOf[a]: a = null.asInstanceOf[a]
-
-    /**
      * Returns corresponding runtime value.
      */
     def unmeta[From, To](implicit _unmeta: Unmeta[From, To]): To = _unmeta()
+
+    /**
+     * @return  <code>null.asInstanceOf[a]</code>.
+     */
+    def instance[a]: a = null.asInstanceOf[a]
 
 
 // operators

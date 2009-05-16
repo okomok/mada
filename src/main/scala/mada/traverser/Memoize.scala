@@ -8,7 +8,7 @@ package mada.traverser
 
 
 case class Memoize[A](_1: Traverser[A]) extends Traverser[A] {
-    private var e: Option[A] = None
+    private var e = NoneOf[A]
 
     override def isEnd = _1.isEnd
     override def deref = {

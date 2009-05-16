@@ -36,4 +36,14 @@ package object mada {
      */
     def hashCodeOfRef(x: AnyRef): Int = java.lang.System.identityHashCode(x)
 
+    /**
+     * Typed <code>null</code>
+     */
+    def nullOf[A >: Null]: A = null
+
+    /**
+     * Typed <code>None</code>
+     */
+    def NoneOf[A]: Option[A] = None
+
 }

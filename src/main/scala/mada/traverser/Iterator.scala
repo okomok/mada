@@ -18,21 +18,16 @@ case class FromIterator[A](_1: Iterator[A]) extends Forwarder[A] {
 }
 
 private class _FromIterator[A](_1: Iterator[A]) extends Traverser[A] {
-    private var e: Option[A] = None
-    if (_1.hasNext) {
-        e := _1.next
-    }
+    private var e = ready
 
     override def isEnd = e.isEmpty
     override def deref = { preDeref; e.get }
     override def increment = {
         preIncrement
-        if (_1.hasNext) {
-            e = Some(_1.next)
-        } else {
-            e = None
-        }
+        e = ready
     }
+
+    private def ready: Option[A] = if (_1.hasNext) Some(_1.next) else None
 }
 
 

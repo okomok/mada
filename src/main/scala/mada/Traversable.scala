@@ -276,7 +276,7 @@ trait Traversable[+A] {
      * Optionally returns the last element.
      */
     def lastOption: Option[A] = {
-        var e = None
+        var e = NoneOf[A]
         val t = start
         while (t) {
             e = Some(~t)
