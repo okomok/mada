@@ -276,17 +276,12 @@ trait Traversable[+A] {
      * Optionally returns the last element.
      */
     def lastOption: Option[A] = {
-        var e = new Proxies.Var[A]
+        var e = None
         val t = start
         while (t) {
-            e.assign(~t)
+            e = Some(~t)
         }
-        // TODO: e.toOption is needed.
-        if (e.isNull) {
-            None
-        } else {
-            Some(e.self)
-        }
+        e
     }
 
     /**

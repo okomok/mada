@@ -18,18 +18,19 @@ case class FromIterator[A](_1: Iterator[A]) extends Forwarder[A] {
 }
 
 private class _FromIterator[A](_1: Iterator[A]) extends Traverser[A] {
-    private val e = new Proxies.Var[A]
+    private var e: Option[A] = None
     if (_1.hasNext) {
-        e.assign(_1.next)
+        e := _1.next
     }
 
-    override def isEnd = e.isNull
-    override def deref = e.self
+    override def isEnd = e.isEmpty
+    override def deref = { preDeref; e.get }
     override def increment = {
+        preIncrement
         if (_1.hasNext) {
-            e.assign(_1.next)
+            e = Some(_1.next)
         } else {
-            e.resign
+            e = None
         }
     }
 }

@@ -8,16 +8,17 @@ package mada.traverser
 
 
 case class Memoize[A](_1: Traverser[A]) extends Traverser[A] {
-    private val e = new Proxies.Var[A]
+    private var e: Option[A] = None
+
     override def isEnd = _1.isEnd
     override def deref = {
-        if (e.isNull) {
-            e.assign(_1.deref)
+        if (e.isEmpty) {
+            e = Some(_1.deref)
         }
-        e.self
+        e.get
     }
     override def increment = {
         _1.increment
-        e.resign
+        e = None
     }
 }
