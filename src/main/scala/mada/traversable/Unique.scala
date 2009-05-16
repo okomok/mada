@@ -20,7 +20,7 @@ case class UniqueBy[A](_1: Traversable[A], _2: (A, A) => Boolean) extends Traver
         override def increment = {
             val tmp = ~t
             t.++
-            t.dropWhile{ e => _2(tmp, e) }
+            t.advanceWhile{ e => _2(tmp, e) }
         }
     }
 

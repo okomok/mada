@@ -16,7 +16,7 @@ case class Step[A](_1: Traversable[A], _2: Int) extends Traversable[A] {
 
         override def isEnd = !t
         override def deref = ~t
-        override def increment = t.drop(_2)
+        override def increment = t.advance(_2)
     }
 
     override def step(n: Int) = _1.step(_2 * n) // step-step fusion

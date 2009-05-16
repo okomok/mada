@@ -39,7 +39,7 @@ trait Traverser[+A] {
     @aliasOf("deref")
     final def unary_~ = deref
 
-    @aliasOf("next")
+    @aliasOf("increment")
     final def ++ = increment
 
     // Do you know NVI pattern?
@@ -52,20 +52,24 @@ trait Traverser[+A] {
     @conversion @aliasOf("!isEnd")
     final def toBoolean: Boolean = !isEnd
 
-    final def drop(n: Int): Traverser[A] = {
+    /**
+     * Advances <code>n</code>.
+     */
+    final def advance(n: Int): Unit = {
         var i = n
         while (i != 0 && !isEnd) {
             increment
             i -= 1
         }
-        this
     }
 
-    final def dropWhile(p: A => Boolean): Traverser[A] = {
+    /**
+     * Advances while <code>p</code> meets.
+     */
+    final def advanceWhile(p: A => Boolean): Unit = {
         while (!isEnd && p(deref)) {
             increment
         }
-        this
     }
 
     final def memoize: Traverser[A] = Memoize(this)
@@ -78,8 +82,4 @@ trait Traverser[+A] {
 
 
 object Traverser extends Compatibles {
-
-    @returnThis
-    val Compatibles: Compatibles = this
-
 }

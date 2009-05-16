@@ -17,15 +17,15 @@ class UniqueTest {
         new NotStartable[Int].unique
         val tr = traversable.of(5,4,4,4,3,2,2,2,2,2,1)
         val sr = tr.unique
-        assertEquals(sr, traversable.of(5,4,3,2,1))
-        assertEquals(sr, traversable.of(5,4,3,2,1)) // traverse again.
+        assertEquals(traversable.of(5,4,3,2,1), sr)
+        assertEquals(traversable.of(5,4,3,2,1), sr) // traverse again.
     }
 
     def testFusion: Unit = {
         val tr = traversable.of(5,5,5,4,4,4,3,2,2,2,2,2,1)
         val sr = tr.unique.unique.unique
-        assertEquals(sr, traversable.of(5,4,3,2,1))
-        assertEquals(sr, traversable.of(5,4,3,2,1)) // traverse again.
+        assertEquals(traversable.of(5,4,3,2,1), sr)
+        assertEquals(traversable.of(5,4,3,2,1), sr) // traverse again.
     }
 
     def testUnique0: Unit = {
@@ -37,15 +37,15 @@ class UniqueTest {
     def testUnique1: Unit = {
         val tr = traversable.of(9)
         val sr = tr.unique
-        assertEquals(sr, traversable.of(9))
-        assertEquals(sr, traversable.of(9)) // traverse again.
+        assertEquals(traversable.of(9), sr)
+        assertEquals(traversable.of(9), sr) // traverse again.
     }
 
     def testUnique2: Unit = {
         val tr = traversable.of(9,9,9,9,9,9)
         val sr = tr.unique
-        assertEquals(sr, traversable.of(9))
-        assertEquals(sr, traversable.of(9)) // traverse again.
+        assertEquals(traversable.of(9), sr)
+        assertEquals(traversable.of(9), sr) // traverse again.
     }
 
 }

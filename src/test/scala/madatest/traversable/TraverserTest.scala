@@ -24,7 +24,7 @@ class TraverserTest {
         t.++
         assertFalse(t)
         val i = t.toIterator
-        assertFalse(t.hasNext)
+        assertFalse(i.hasNext)
     }
 
     def testIterator: Unit = {
@@ -34,23 +34,23 @@ class TraverserTest {
         assertEquals(4, i.next)
         assertEquals(6, i.next)
         assertFalse(i.hasNext)
-        val t = traverser.from(i)
+        val t = traverser.fromIterator(i)
         assertFalse(t)
     }
 
     def testFusion: Unit = {
         val tr = traversable.of(2,4,6)
-        val i = traverser.from(tr.start.toIterator).toIterator
+        val i = traverser.fromIterator(tr.start.toIterator).toIterator
         assertEquals(2, i.next)
         //println("fusion")
-        val t1 = traverser.from(i)
+        val t1 = traverser.fromIterator(i)
         assertEquals(4, ~t1)
         t1.++
         assertEquals(6, ~t1)
         val i1 = t1.toIterator
         assertEquals(6, i1.next)
         //println("fusion")
-        val t2 = traverser.from(i1)
+        val t2 = traverser.fromIterator(i1)
         assertFalse(t2)
     }
 }
