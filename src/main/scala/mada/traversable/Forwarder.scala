@@ -66,6 +66,14 @@ trait Forwarder[+A] extends Traversable[A] with any.Forwarder {
     override def _toVector[B](_this: Traversable[B]): Vector[B] = delegate._toVector(_this)
     override def zip[B](that: Traversable[B]): Traversable[(A, B)] = delegate.zip(that)
 
-
-    override def mergeBy[B >: A](that: Traversable[B])(lt: compare.Func[B]): Traversable[B] = delegate.merge(that)(lt)
+    override def merge[B >: A](that: Traversable[B])(implicit c: Compare[B]): Traversable[B] = delegate.merge(that)(c)
+    override def mergeBy[B >: A](that: Traversable[B])(lt: compare.Func[B]): Traversable[B] = delegate.mergeBy(that)(lt)
+    override def union[B >: A](that: Traversable[B])(implicit c: Compare[B]): Traversable[B] = delegate.union(that)(c)
+    override def unionBy[B >: A](that: Traversable[B])(lt: compare.Func[B]): Traversable[B] = delegate.unionBy(that)(lt)
+    override def intersection[B >: A](that: Traversable[B])(implicit c: Compare[B]): Traversable[B] = delegate.intersection(that)(c)
+    override def intersectionBy[B >: A](that: Traversable[B])(lt: compare.Func[B]): Traversable[B] = delegate.intersectionBy(that)(lt)
+    override def difference[B >: A](that: Traversable[B])(implicit c: Compare[B]): Traversable[B] = delegate.difference(that)(c)
+    override def differenceBy[B >: A](that: Traversable[B])(lt: compare.Func[B]): Traversable[B] = delegate.differenceBy(that)(lt)
+    override def symmetricDifference[B >: A](that: Traversable[B])(implicit c: Compare[B]): Traversable[B] = delegate.symmetricDifference(that)(c)
+    override def symmetricDifferenceBy[B >: A](that: Traversable[B])(lt: compare.Func[B]): Traversable[B] = delegate.symmetricDifferenceBy(that)(lt)
 }

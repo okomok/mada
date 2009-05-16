@@ -94,13 +94,16 @@ package object traversable {
     def compatibles: Compatibles = Traversable
 
     @conversion
-    def fromIterable[A](from: Iterable[A]): Traversable[A] = new FromIterable(from)
+    def fromIterable[A](from: Iterable[A]): Traversable[A] = FromIterable(from)
 
     @conversion
-    def fromJioObjectInput(from: java.io.ObjectInput): Traversable[AnyRef] = new FromJioObjectInput(from)
+    def unstringize(from: String): Traversable[Char] = Unstringize(from)
 
     @conversion
-    def fromJioReader(from: java.io.Reader): Traversable[Char] = new FromJioReader(from)
+    def fromJioObjectInput(from: java.io.ObjectInput): Traversable[AnyRef] = FromJioObjectInput(from)
+
+    @conversion
+    def fromJioReader(from: java.io.Reader): Traversable[Char] = FromJioReader(from)
 
 
 // detail

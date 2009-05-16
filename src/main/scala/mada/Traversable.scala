@@ -335,7 +335,7 @@ trait Traversable[+A] {
 // misc
 
     /**
-     * @return  <code>it.elements.drop(n).next</code>.
+     * Returns the <code>n</code>-th element.
      */
     def at(n: Int): A = {
         throwIfNegative(n, "at")
@@ -442,14 +442,54 @@ trait Traversable[+A] {
 // sorted
 
     /**
-     * Combines the elements tr the sorted traversables, into a new traversable with its elements sorted.
-     */
-    def mergeBy[B >: A](that: Traversable[B])(lt: compare.Func[B]): Traversable[B] = Merge[B](this, that, lt)
-
-    /**
      * @return  <code>mergeBy(that)(c)</code>.
      */
-    final def merge[B >: A](that: Traversable[B])(implicit c: Compare[B]) = mergeBy(that)(c)
+    def merge[B >: A](that: Traversable[B])(implicit c: Compare[B]): Traversable[B] = Merge[B](this, that, c)
+
+    /**
+     * Combines the elements tr the sorted traversables, into a new traversable with its elements sorted.
+     */
+    def mergeBy[B >: A](that: Traversable[B])(lt: compare.Func[B]): Traversable[B] = MergeBy[B](this, that, lt)
+
+    /**
+     * @return  <code>unionBy(that)(c)</code>.
+     */
+    def union[B >: A](that: Traversable[B])(implicit c: Compare[B]): Traversable[B] = Union[B](this, that, c)
+
+    /**
+     * Combines the elements tr the sorted traversables, into a new traversable with its elements sorted.
+     */
+    def unionBy[B >: A](that: Traversable[B])(lt: compare.Func[B]): Traversable[B] = UnionBy[B](this, that, lt)
+
+    /**
+     * @return  <code>intersectionBy(that)(c)</code>.
+     */
+    def intersection[B >: A](that: Traversable[B])(implicit c: Compare[B]): Traversable[B] = Intersection[B](this, that, c)
+
+    /**
+     * Constructs a sorted iterable with the set intersection of the two sorted iterables.
+     */
+    def intersectionBy[B >: A](that: Traversable[B])(lt: compare.Func[B]): Traversable[B] = IntersectionBy[B](this, that, lt)
+
+    /**
+     * @return  <code>differenceBy(that)(c)</code>.
+     */
+    def difference[B >: A](that: Traversable[B])(implicit c: Compare[B]): Traversable[B] = Difference[B](this, that, c)
+
+    /**
+     * Constructs a sorted iterable with the set difference of the two sorted iterables.
+     */
+    def differenceBy[B >: A](that: Traversable[B])(lt: compare.Func[B]): Traversable[B] = DifferenceBy[B](this, that, lt)
+
+    /**
+     * @return  <code>symmetricDifferenceBy(that)(c)</code>.
+     */
+    def symmetricDifference[B >: A](that: Traversable[B])(implicit c: Compare[B]): Traversable[B] = SymmetricDifference[B](this, that, c)
+
+    /**
+     * Constructs a sorted iterable with the set symmetric difference of the two sorted iterables.
+     */
+    def symmetricDifferenceBy[B >: A](that: Traversable[B])(lt: compare.Func[B]): Traversable[B] = SymmetricDifferenceBy[B](this, that, lt)
 
 }
 
