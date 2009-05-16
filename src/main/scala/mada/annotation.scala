@@ -8,26 +8,9 @@ package mada
 
 
 /**
- * An annotation to declare an aliase of name defined in "private" package as the same name.
- * You must use the alias: for forward compatibility.
- */
-class alias extends StaticAnnotation
-
-/**
  * An alias of a name
  */
 class aliasOf(name: String) extends StaticAnnotation
-
-
-/**
- * A companion module
- */
-class companionModule extends StaticAnnotation
-
-/**
- * Returns the companion module.
- */
-class returncompanion extends StaticAnnotation
 
 
 /**
@@ -40,22 +23,11 @@ class compatibles extends StaticAnnotation
  */
 class conversion extends StaticAnnotation
 
-/**
- * Contains eligibles.
- */
-class eligibles extends StaticAnnotation
-
 
 /**
  * Implementation detail. Don't use the name.
  */
 class detail extends StaticAnnotation
-
-
-/**
- * Forwards all its method calls to another object.
- */
-class forwarder extends StaticAnnotation
 
 
 /**
@@ -68,14 +40,6 @@ class methodized extends StaticAnnotation
  * Not thread-safe.
  */
 class notThreadSafe extends StaticAnnotation
-
-
-/**
- * Specifies a type(usually trait) exists only to provide methods and values
- * to mada top-level object. Provider keeps top-level object from being mammoth.
- * User shall not reference provider name.
- */
-class provider extends StaticAnnotation
 
 
 /**

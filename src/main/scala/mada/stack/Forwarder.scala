@@ -7,7 +7,6 @@
 package mada.stack
 
 
-@forwarder
 trait Forwarder[A] extends Stack[A] with Proxies.ProxyOf[Stack[A]] {
     override def push(e: A) = self.push(e)
     override def pop: A = self.pop

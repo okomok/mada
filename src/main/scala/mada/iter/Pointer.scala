@@ -45,8 +45,6 @@ object Pointer extends PointerConversions with PointerCompatibles {
  */
 trait Pointer[+A] {
 
-    @returncompanion def companion = Pointer
-
     @aliasOf("isEnd")
     final def unary_! : Boolean = isEnd
 
@@ -76,7 +74,7 @@ trait Pointer[+A] {
 /**
  * Contains explicit conversions around <code>Pointer</code>.
  */
-@provider
+//@provider
 trait PointerConversions { this: Pointer.type =>
     def fromIterator[A](from: Iterator[A]): Pointer[A] = new Pointer[A] {
         private val e = new Proxies.Var[A]
@@ -110,7 +108,7 @@ trait PointerConversions { this: Pointer.type =>
 /**
  * Contains implicit conversions around <code>Pointer</code>.
  */
-@provider
+//@provider
 trait PointerCompatibles { this: Pointer.type =>
     @returnThis val Compatibles: PointerCompatibles = this
     implicit def madaPointerFromIterator[A](from: Iterator[A]): Pointer[A] = fromIterator(from)

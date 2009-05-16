@@ -7,7 +7,6 @@
 package mada.traversable
 
 
-@forwarder
 trait Forwarder[+A] extends Traversable[A] with any.Forwarder {
     override protected def delegate: Traversable[A]
 
@@ -15,6 +14,7 @@ trait Forwarder[+A] extends Traversable[A] with any.Forwarder {
 
     override def equals(that: Any): Boolean = delegate.equals(that)
     override def equalsIf[B](that: Traversable[B])(p: (A, B) => Boolean): Boolean = delegate.equalsIf(that)(p)
+    override def hashCode: Int = delegate.hashCode
 
     override def isEmpty: Boolean = delegate.isEmpty
     override def length: Int = delegate.length

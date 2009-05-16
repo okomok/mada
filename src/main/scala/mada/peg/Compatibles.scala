@@ -10,7 +10,7 @@ package mada.peg
 /**
  * Contains implicit conversions around <code>Peg</code>.
  */
-@provider
+@compatibles
 trait Compatibles { this: Peg.type =>
     implicit def madaPegFromChar(from: Char): Peg[Char] = fromChar(from)
     implicit def madaPegFromIterable[A](from: Iterable[A]): Peg[A] = fromIterable(from)

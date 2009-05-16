@@ -8,7 +8,6 @@ package mada.traverser
 
 
 // probably unused.
-@forwarder
 trait Forwarder[+A] extends Traverser[A] with any.Forwarder {
     override protected def delegate: Traverser[A]
 

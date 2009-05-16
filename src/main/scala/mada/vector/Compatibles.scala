@@ -10,7 +10,7 @@ package mada.vector
 /**
  * Contains implicit conversions around <code>Vector</code>.
  */
-@provider
+@compatibles
 trait Compatibles { this: Vector.type =>
 // from
     implicit def madaVectorFromArray[A](from: Array[A]): Vector[A] = fromArray(from)

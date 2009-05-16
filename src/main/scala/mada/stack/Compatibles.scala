@@ -10,7 +10,7 @@ package mada.stack
 /**
  * Contains implicit conversions around <code>Stack</code>.
  */
-@provider
+@compatibles
 trait Compatibles { this: Stack.type =>
     implicit def madaStackFromJclDeque[A](from: java.util.Deque[A]): Stack[A] = fromJclDeque(from)
     implicit def madaStackFromSclStack[A](from: scala.collection.mutable.Stack[A]): Stack[A] = fromSclStack(from)
