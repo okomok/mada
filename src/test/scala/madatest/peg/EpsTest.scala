@@ -14,7 +14,7 @@ import junit.framework.Assert._
 class EpsTest {
     def testTrivial: Unit = {
         assertTrue(eps[Int].matches(mada.vector.empty[Int]))
-        assertFalse(eps[Int].matches(mada.vector.fromValues(1,2,3)))
+        assertFalse(eps[Int].matches(mada.vector.of(1,2,3)))
     }
 
     def testCompile(v: mada.Vector[Char]): Unit = {

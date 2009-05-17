@@ -181,7 +181,7 @@ package object vector {
     // from
     def fromIterable[A](from: Iterable[A]): Vector[A] = FromIterable(from)
     def fromJclIterable[A](from: java.lang.Iterable[A]): Vector[A] = jcl.IterableToVector(from)
-    def fromValues[A](from: A*): Vector[A] = fromIterable(from)
+    def of[A](from: A*): Vector[A] = fromIterable(from)
     def stringize(from: Vector[Char]): String = Stringize(from)
 
     // to

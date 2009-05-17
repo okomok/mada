@@ -731,8 +731,8 @@ object Vector extends Compatibles {
 
 // pattern matching
 
-    @aliasOf("fromValues")
-    def apply[A](from: A*): Vector[A] = fromValues(from: _*)
+    @aliasOf("of")
+    def apply[A](from: A*): Vector[A] = of(from: _*)
 
     def unapplySeq[A](from: Vector[A]): Option[Seq[A]] = Some(toRandomAccessSeq(from))
 

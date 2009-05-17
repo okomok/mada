@@ -15,12 +15,12 @@ import junit.framework.Assert._
 class ValuesTest {
     def testTrivial() = {
         val ex = Array(5,1,3,6,9,7,10,0)
-        val ac = vector.fromValues(5,1,3,6,9,7,10,0)
+        val ac = vector.of(5,1,3,6,9,7,10,0)
         detail.TestVectorReadOnly(ex, ac)
     }
 
     def testEmpty() = {
-        val ac = vector.fromValues[Int]()
+        val ac = vector.of[Int]()
         detail.TestEmpty(ac)
     }
 }

@@ -34,8 +34,8 @@ class ForTest {
     }
 
     def testFlatMap: Unit = {
-        val v = vector.fromValues(1,2,3)
-        val w = vector.fromValues(4)
+        val v = vector.of(1,2,3)
+        val w = vector.of(4)
         val x = for (e <- v; s <- w) yield e + s
         assertEquals(5+6+7, x.foldLeft(0)((_: Int) + (_: Int)))
     }

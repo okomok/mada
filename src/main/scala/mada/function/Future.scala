@@ -21,13 +21,13 @@ private[mada] object Future {
 
     def apply[R](body: => R): Function0[R] = {
         try {
-            new ByParallel(body)
+            new OfParallel(body)
         } catch {
             case _: RejectedExecutionException => function.ofLazy(body)
         }
     }
 
-    private class ByParallel[R](body: => R) extends Function0[R] {
+    private class OfParallel[R](body: => R) extends Function0[R] {
         private val c = new Callable[R] { override def call(): R = body }
         private val u = exe.synchronized { exe.submit(c) }
         override def apply(): R = {

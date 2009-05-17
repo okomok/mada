@@ -46,7 +46,7 @@ object Iterables extends Conversions with Compatibles with Operators {
 
 // constructors
 
-    @aliasOf("fromValues")
+    @aliasOf("of")
     def apply[A](from: A*): Iterable[A] = from
 
     /**
@@ -57,7 +57,7 @@ object Iterables extends Conversions with Compatibles with Operators {
     /**
      * @return  <code>from</code>.
      */
-    def fromValues[A](from: A*): Iterable[A] = from
+    def of[A](from: A*): Iterable[A] = from
 
     /**
      * Constructs <code>Iterable</code> from <code>Iterator</code>.
