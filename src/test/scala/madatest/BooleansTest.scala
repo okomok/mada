@@ -17,7 +17,7 @@ class BooleansTest {
         false
     }
 
-    def testMe = {
+    def testMe: Unit = {
         assertTrue(implies(true, true))
         assertTrue(implies(false, true))
         assertTrue(implies(false, false))

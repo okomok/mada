@@ -42,7 +42,7 @@ class SliceTest {
         assertEquals(x, k5)
     }
 
-    def testEmpty = {
+    def testEmpty: Unit = {
         val k = traversable.emptyOf[Int].slice(4, 4)
         assertTrue(k.isEmpty)
         val k0 = traversable.emptyOf[Int].slice(0, 0)

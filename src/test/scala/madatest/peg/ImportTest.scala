@@ -13,7 +13,7 @@ import junit.framework.Assert._
 import mada.peg.compatibles._ // "strong" import (not type-sensitive but name-sensitive)
 
 class ImportTest {
-    def testNotAmbiguous = {
+    def testNotAmbiguous: Unit = {
         "abcde" >> "abcde" // needs strong import to look up `>>`.
 
         usePeg("abcde") // not ambiguous even with strong import

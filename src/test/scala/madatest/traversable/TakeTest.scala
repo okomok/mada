@@ -31,7 +31,7 @@ class TakeTest {
         assertEquals(v, k3)
     }
 
-    def testTrivial2 = {
+    def testTrivial2: Unit = {
         val t = traversable.of(14,15,11,3,2,9,7,10)
         val u = traversable.of(14,15,11)
         val v = traversable.of(14,15,11,3,2,9,7,10)

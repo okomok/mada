@@ -36,7 +36,7 @@ class FilterTest {
         assertTrue(k.isEmpty)
     }
 
-    def testEmpty2 = {
+    def testEmpty2: Unit = {
         val t = traversable.of(1,2,2,3,4,5,5,6,7,8,9)
         val k = t.filter(_ % 20 == 0)
         assertTrue(k.isEmpty)

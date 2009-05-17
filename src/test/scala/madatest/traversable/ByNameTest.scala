@@ -14,7 +14,7 @@ import junit.framework.Assert._
 class ByNameTest {
     var c = 0
 
-    def testLazy = {
+    def testLazy: Unit = {
         c = 0
         val t = byLazy(makeT)
 
@@ -28,7 +28,7 @@ class ByNameTest {
         assertEquals(a, s2)
     }
 
-    def testName = {
+    def testName: Unit = {
         c = 0
         val t = byName(makeT)
 

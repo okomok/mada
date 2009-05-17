@@ -20,7 +20,7 @@ package object overloading {
 class PackageObjectOverloadingTest {
     def buz(n: Int, m: Int): Unit = ()
 
-    def testTrivial(off: Int) = {
+    def testTrivial(off: Int): Unit = {
         overloading.foo(1, 2) // assertion failed.
         // overloading.bar(buz _) // doesn't compile.
     }

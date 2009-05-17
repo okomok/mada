@@ -29,21 +29,21 @@ class ListUnmetaTest {
         assertEquals(10, lst.at[_2N].intValue)
     }
 
-    def testLength = {
+    def testLength: Unit = {
         val i = new java.lang.Integer(10)
         val lst = 3 :: "hello" :: i :: 'a' :: Nil
         assertEquals(4, lst.length)
         assertEquals(0, Nil.length)
     }
 
-    def testTypeErase = {
+    def testTypeErase: Unit = {
         val i = new java.lang.Integer(10)
         val lst = 3 :: "hello" :: i :: 'a' :: Nil
         assertEquals("List()", Nil.toString)
         assertEquals("List(3, hello, 10, a)", lst.toString)
     }
 
-    def testEquals = {
+    def testEquals: Unit = {
         val i = new java.lang.Integer(10)
         val j = new java.lang.Integer(10)
         assertEquals(i, j)
@@ -59,7 +59,7 @@ class ListUnmetaTest {
         AssertNotEquals(lst1, lst5)
     }
 
-    def testDrop = {
+    def testDrop: Unit = {
         val i = new java.lang.Integer(10)
         val lst = 3 :: "hello" :: i :: 'a' :: 12 :: Nil
         val a = i :: 'a' :: 12 :: Nil
@@ -75,7 +75,7 @@ class ListUnmetaTest {
         assertEquals(Nil, c)
     }
 
-    def testTake = {
+    def testTake: Unit = {
         val i = new java.lang.Integer(10)
         val lst = 3 :: "hello" :: i :: 'a' :: 12 :: Nil
         val a = lst.take[_0N]
@@ -86,12 +86,12 @@ class ListUnmetaTest {
         assertEquals(3 :: "hello" :: i :: 'a' :: 12 :: Nil, c)
     }
 
-    def testIsEmpty = {
+    def testIsEmpty: Unit = {
         assertTrue(Nil.isEmpty)
         assertFalse((3 :: "hello" :: Nil).isEmpty)
     }
 
-    def testTyped = {
+    def testTyped: Unit = {
         val i = new java.lang.Integer(10)
         val el: scala.List[Any] = scala.::[Any](3, scala.::[Any]("hello", scala.::[Any](i, scala.::[Any]('a', scala.Nil))))
         val tl = 3 :: "hello" :: i :: 'a' :: Nil
@@ -100,7 +100,7 @@ class ListUnmetaTest {
         ()
     }
 
-    def testPrepend = {
+    def testPrepend: Unit = {
         val i = new java.lang.Integer(10)
         val lst1 = 3 :: "hello" :: i :: 'a' :: 12 :: Nil
         val lst2 = "wow" :: 99 :: Nil
@@ -113,7 +113,7 @@ class ListUnmetaTest {
     }
 
 
-    def testReversePrepend = {
+    def testReversePrepend: Unit = {
         val i = new java.lang.Integer(10)
         type Lst1 = Int :: String :: java.lang.Integer :: Char :: Int :: Nil
         type Lst2 = String :: Int :: Nil
@@ -130,7 +130,7 @@ class ListUnmetaTest {
         ()
     }
 
-    def testReverse = {
+    def testReverse: Unit = {
         val i = new java.lang.Integer(10)
         type Lst1 = Int :: String :: java.lang.Integer :: Char :: Int :: Nil
         val lst1: Lst1 = 3 :: "hello" :: i :: 'a' :: 12 :: Nil
@@ -155,7 +155,7 @@ class ListUnmetaTest {
         assertEquals("hello", e2_)
     }
 
-    def testSlice = {
+    def testSlice: Unit = {
         val i = new java.lang.Integer(10)
         type Lst1 = Int :: String :: java.lang.Integer :: Char :: Int :: Nil
         val lst1: Lst1 = 3 :: "hello" :: i :: 'a' :: 12 :: Nil;

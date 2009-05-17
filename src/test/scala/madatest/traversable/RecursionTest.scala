@@ -15,12 +15,12 @@ class RecursionTest {
 
   // which way do you like?
 
-    def testLazy = {
+    def testLazy: Unit = {
         lazy val tr: Type[Int] = of(1,2,3) ++ byLazy(tr)
         assertEquals(of(1,2,3,1,2,3,1,2,3,1), tr.take(10))
     }
 
-    def testVar = {
+    def testVar: Unit = {
         val tr = new Var[Int]
         tr := of(1,2,3) ++ tr
         assertEquals(of(1,2,3,1,2,3,1,2,3,1), tr.take(10))
