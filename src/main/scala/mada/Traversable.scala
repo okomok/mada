@@ -26,11 +26,6 @@ trait Traversable[+A] {
 
 // as value
 
-    override def equals(that: Any) = that match {
-        case that: Traversable[_] => equalsIf(that)(function.equal)
-        case _ => false
-    }
-
     /**
      * Equals <code>that</code> iif they has the same length and <code>p</code> meets.
      */
@@ -44,6 +39,27 @@ trait Traversable[+A] {
             t.++; u.++
         }
         !t && !u
+    }
+
+    /**
+     * Compares the specified object with this traversable for equality.
+     * Returns true if and only if the specified object is also a traversable,
+     * both traversables have the same size, and all corresponding pairs of
+     * elements in the two traversables are equal.
+     */
+    override def equals(that: Any) = that match {
+        case that: Traversable[_] => equalsIf(that)(function.equal)
+        case _ => false
+    }
+
+    override def hashCode = {
+        var code = 1
+        val t = begin
+        while (t) {
+            code = 31 * code + (~t).hashCode
+            t.++
+        }
+        code
     }
 
     override def toString = {
@@ -63,16 +79,6 @@ trait Traversable[+A] {
 
         sb.append(']')
         sb.toString
-    }
-
-    override def hashCode = {
-        var code = 1
-        val t = begin
-        while (t) {
-            code = 31 * code + (~t).hashCode
-            t.++
-        }
-        code
     }
 
 

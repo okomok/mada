@@ -15,9 +15,10 @@ trait Forwarder[+A] extends Traversable[A] with any.Forwarder {
 
     override def begin: Traverser[A] = beforeForward(delegate).begin
 
-    override def equals(that: Any): Boolean = beforeForward(delegate).equals(that)
     override def equalsIf[B](that: Traversable[B])(p: (A, B) => Boolean): Boolean = beforeForward(delegate).equalsIf(that)(p)
+    override def equals(that: Any): Boolean = beforeForward(delegate).equals(that)
     override def hashCode: Int = beforeForward(delegate).hashCode
+    override def toString: String = beforeForward(delegate).toString
 
     override def isEmpty: Boolean = beforeForward(delegate).isEmpty
     override def length: Int = beforeForward(delegate).length
