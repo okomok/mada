@@ -43,6 +43,12 @@ class notThreadSafe extends StaticAnnotation
 
 
 /**
+ * Not override but overload.
+ */
+class overload extends StaticAnnotation
+
+
+/**
  * Returns <code>this</code>.
  */
 class returnThis extends StaticAnnotation

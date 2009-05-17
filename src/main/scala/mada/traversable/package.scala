@@ -103,10 +103,10 @@ package object traversable {
     def fromJIterable[A](from: java.lang.Iterable[A]): Traversable[A] = FromJIterable(from)
 
     @conversion
-    def fromJioObjectInput(from: java.io.ObjectInput): Traversable[AnyRef] = FromJioObjectInput(from)
+    def fromJObjectInput(from: java.io.ObjectInput): Traversable[AnyRef] = FromJObjectInput(from)
 
     @conversion
-    def fromJioReader(from: java.io.Reader): Traversable[Char] = FromJioReader(from)
+    def fromJReader(from: java.io.Reader): Traversable[Char] = FromJReader(from)
 
 
 // detail

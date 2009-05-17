@@ -440,7 +440,7 @@ trait Traversable[+A] {
         r
     }
 
-    @conversion
+    @methodized @conversion
     def _toJIterable[B](_this: Traversable[B]): java.lang.Iterable[B] = ToJIterable(_this)
 
     @methodized @conversion
@@ -450,6 +450,9 @@ trait Traversable[+A] {
      * Zips <code>this</code> and <code>that</code>.
      */
     def zip[B](that: Traversable[B]): Traversable[(A, B)] = Zip(this, that)
+
+    @returnThis
+    final def asTraversable: Traversable[A] = this
 
 
 // sorted

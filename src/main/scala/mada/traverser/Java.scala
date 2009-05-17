@@ -7,17 +7,17 @@
 package mada.traverser
 
 
-case class FromJclIterator[A](_1: java.util.Iterator[A]) extends Forwarder[A] {
+case class FromJIterator[A](_1: java.util.Iterator[A]) extends Forwarder[A] {
     override protected val delegate: Traverser[A] = _1 match {
-        case ToJclIterator(from) => from // from-to fusion
-        case _ => new _FromJclIterator(_1)
+        case ToJIterator(from) => from // from-to fusion
+        case _ => new _FromJIterator(_1)
     }
 
     // to-from fusion is infeasible, because constructor has side-effects.
     // override def toIterator = _1
 }
 
-private class _FromJclIterator[A](_1: java.util.Iterator[A]) extends Traverser[A] {
+private class _FromJIterator[A](_1: java.util.Iterator[A]) extends Traverser[A] {
     private var e = ready
 
     override def isEnd = e.isEmpty
@@ -28,12 +28,12 @@ private class _FromJclIterator[A](_1: java.util.Iterator[A]) extends Traverser[A
 }
 
 
-case class ToJclIterator[A](_1: Traverser[A]) extends java.util.Iterator[A] {
+case class ToJIterator[A](_1: Traverser[A]) extends java.util.Iterator[A] {
     override def hasNext = !_1.isEnd
     override def next = {
         val tmp = ~_1
         _1.++
         tmp
     }
-    override def remove = throw new UnsupportedOperationException("ToJclIterator.remove")
+    override def remove = throw new UnsupportedOperationException("ToJIterator.remove")
 }
