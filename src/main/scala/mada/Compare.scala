@@ -28,5 +28,4 @@ trait Compare[-A] extends Func[A] {
 }
 
 
-object Compare extends Compatibles {
-}
+object Compare extends compare.Compatibles

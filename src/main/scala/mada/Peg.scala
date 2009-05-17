@@ -373,7 +373,7 @@ trait Peg[A] {
 }
 
 
-object Peg extends Compatibles {
+object Peg extends peg.Compatibles {
 
     sealed class OfChar(_this: Peg[Char]) {
         def lowerCaseRead: Peg[Char] = _this._lowerCaseRead(_this)

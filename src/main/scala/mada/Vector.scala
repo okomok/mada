@@ -726,7 +726,7 @@ trait Vector[A] extends PartialFunction[Int, A] {
 }
 
 
-object Vector extends Compatibles {
+object Vector extends vector.Compatibles {
 
 
 // pattern matching
