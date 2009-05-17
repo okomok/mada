@@ -15,10 +15,11 @@ package object stack {
     @returnThat
     def from[A](to: Stack[A]) = to
 
+    @compatibles
     val compatibles: Compatibles = Stack
 
     @conversion
-    def fromJclDeque[A](from: java.util.Deque[A]): Stack[A] = new Stack[A] {
+    def fromJDeque[A](from: java.util.Deque[A]): Stack[A] = new Stack[A] {
         override def push(e: A) = from.push(e)
         override def pop = from.pop
         override def peek = from.peek
@@ -28,7 +29,7 @@ package object stack {
     }
 
     @conversion
-    def fromSclStack[A](from: scala.collection.mutable.Stack[A]): Stack[A] = new Stack[A] {
+    def fromSStack[A](from: scala.collection.mutable.Stack[A]): Stack[A] = new Stack[A] {
         override def push(e: A) = from.push(e)
         override def pop = from.pop
         override def peek = from.top
@@ -38,7 +39,7 @@ package object stack {
     }
 
     @conversion
-    def fromSclArrayStack[A](from: scala.collection.mutable.ArrayStack[A]): Stack[A] = new Stack[A] {
+    def fromSArrayStack[A](from: scala.collection.mutable.ArrayStack[A]): Stack[A] = new Stack[A] {
         override def push(e: A) = from.push(e)
         override def pop = from.pop
         override def peek = from.peek

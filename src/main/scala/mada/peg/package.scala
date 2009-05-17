@@ -92,7 +92,7 @@ package object peg {
     /**
      * Mathches case-insensitively.
      */
-    def icase(v: Vector[Char]): Peg[Char] = lowerCaseRead(fromVector(vector.lowerCase(v)))
+    def icase(v: Vector[Char]): Peg[Char] = fromVector(vector.lowerCase(v)).lowerCaseRead
 
     /**
      * Zero-width assertion if region meets condition <code>pred</code>
@@ -103,11 +103,6 @@ package object peg {
      * Zero-width assertion if region meets condition <code>pred</code> (no heap allocations)
      */
     def lookaround3[A](pred: vector.Pred3[A]): Peg[A] = Lookaround3(pred)
-
-    /**
-     * Reads input as lower cases, then tries to match.
-     */
-    def lowerCaseRead(p: Peg[Char]): Peg[Char] = p readMap { v => vector.lowerCase(v) }
 
     /**
      * Matches range values.

@@ -55,8 +55,4 @@ trait Stack[A] {
 
 
 object Stack extends Compatibles {
-
-    @returnThis
-    val compatibles: Compatibles = this
-
 }

@@ -234,6 +234,12 @@ trait Peg[A] {
     final def unmap[Z](f: Z => A): Peg[Z] = readMap{ v => v.map(f) }
 
     /**
+     * Reads input as lower cases, then tries to match.
+     */
+    @methodized
+    final def _lowerCaseRead(_this: Peg[Char]): Peg[Char] = _this.readMap{ v => vector.lowerCase(v) }
+
+    /**
      * Returns synchronized one.
      */
     final def synchronize: Peg[A] = Synchronize(this)
@@ -369,22 +375,9 @@ trait Peg[A] {
 
 object Peg extends Compatibles {
 
-// operators
-
-    sealed class MadaPegChar(_1: Peg[Char]) {
-        def lowerCaseRead = peg.lowerCaseRead(_1)
+    sealed class OfChar(_this: Peg[Char]) {
+        def lowerCaseRead: Peg[Char] = _this._lowerCaseRead(_this)
     }
-    implicit def madaPegChar(_1: Peg[Char]): MadaPegChar = new MadaPegChar(_1)
-
-    sealed class MadaPegByName[A](_1: => Peg[A]) {
-        def byLazy = peg.byLazy(_1)
-    }
-    implicit def madaPegByName[A](_1: => Peg[A]): MadaPegByName[A] = new MadaPegByName(_1)
-
-    sealed class MadaPegIterablePeg[A](_1: Iterable[Peg[A]]) {
-        def longest = peg.longest(_1)
-        def shortest = peg.shortest(_1)
-    }
-    implicit def madaPegIterablePeg[A](_1: Iterable[Peg[A]]): MadaPegIterablePeg[A] = new MadaPegIterablePeg(_1)
+    implicit def ofChar(_this: Peg[Char]): OfChar = new OfChar(_this)
 
 }
