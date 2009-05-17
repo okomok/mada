@@ -8,8 +8,8 @@ package mada.traversable
 
 
 case class TakeWhile[A](_1: Traversable[A], _2: A => Boolean) extends Traversable[A] {
-    override def start = new Traverser[A] {
-        private var t = _1.start
+    override def begin = new Traverser[A] {
+        private var t = _1.begin
         ready
 
         override def isEnd = !t

@@ -10,7 +10,7 @@ package mada.traversable
 trait Forwarder[+A] extends Traversable[A] with any.Forwarder {
     override protected def delegate: Traversable[A]
 
-    override def start: Traverser[A] = delegate.start
+    override def begin: Traverser[A] = delegate.begin
 
     override def equals(that: Any): Boolean = delegate.equals(that)
     override def equalsIf[B](that: Traversable[B])(p: (A, B) => Boolean): Boolean = delegate.equalsIf(that)(p)
@@ -47,8 +47,8 @@ trait Forwarder[+A] extends Traversable[A] with any.Forwarder {
     override def span(p: A => Boolean): (Traversable[A], Traversable[A]) = delegate.span(p)
     override def splitAt(n: Int): (Traversable[A], Traversable[A]) = delegate.splitAt(n)
     //override def copyToBuffer[B >: A](dest: Buffer[B]) = delegate.copyToBuffer(dest)
-    //override def copyToArray[B >: A](xs: Array[B], start: Int, len: Int) = delegate.copyToArray(xs, start, len)
-    //override def copyToArray[B >: A](xs: Array[B], start: Int) = delegate.copyToArray(xs, start)
+    //override def copyToArray[B >: A](xs: Array[B], begin: Int, len: Int) = delegate.copyToArray(xs, begin, len)
+    //override def copyToArray[B >: A](xs: Array[B], begin: Int) = delegate.copyToArray(xs, begin)
     //override def toArray[B >: A]: Array[B] = delegate.toArray
     override def toIterable: Iterable[A] = delegate.toIterable
 

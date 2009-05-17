@@ -8,5 +8,5 @@ package mada.traversable
 
 
 case object Empty extends Traversable[Nothing] {
-    override def start = traverser.theEnd
+    override def begin = traverser.theEnd
 }

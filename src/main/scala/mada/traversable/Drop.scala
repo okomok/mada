@@ -8,8 +8,8 @@ package mada.traversable
 
 
 case class Drop[A](_1: Traversable[A], _2: Int) extends Traversable[A] {
-    override def start = {
-        val t = _1.start
+    override def begin = {
+        val t = _1.begin
         t.advance(_2)
         t
     }

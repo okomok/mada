@@ -16,12 +16,12 @@ import traversable._
 trait Traversable[+A] {
 
 
-// start
+// begin
 
     /**
      * Returns a starting traverser.
      */
-    def start: Traverser[A]
+    def begin: Traverser[A]
 
 
 // as value
@@ -35,8 +35,8 @@ trait Traversable[+A] {
      * Equals <code>that</code> iif they has the same length and <code>p</code> meets.
      */
     def equalsIf[B](that: Traversable[B])(p: (A, B) => Boolean): Boolean = {
-        val t = start
-        val u = that.start
+        val t = begin
+        val u = that.begin
         while (t && !u.isEnd) {
             if (!p(~t, ~u)) {
                 return false
@@ -50,7 +50,7 @@ trait Traversable[+A] {
         val sb = new StringBuilder
         sb.append('[')
 
-        val t = start
+        val t = begin
         if (t) {
             sb.append(~t)
             t.++
@@ -67,7 +67,7 @@ trait Traversable[+A] {
 
     override def hashCode = {
         var code = 1
-        val t = start
+        val t = begin
         while (t) {
             code = 31 * code + (~t).hashCode
             t.++
@@ -81,14 +81,14 @@ trait Traversable[+A] {
     /**
      * Is <code>this</code> empty?
      */
-    def isEmpty: Boolean = start.isEnd
+    def isEmpty: Boolean = begin.isEnd
 
     /**
      * Returns the length.
      */
     def length: Int = {
         var i = 0
-        val t = start
+        val t = begin
         while (t) {
             i += 1
             t.++
@@ -136,7 +136,7 @@ trait Traversable[+A] {
      * Applies <code>f</code> to each element.
      */
     def foreach[B](f: A => B): Unit = {
-        val t = start
+        val t = begin
         while (t) {
             f(~t)
             t.++
@@ -158,7 +158,7 @@ trait Traversable[+A] {
      */
     def count(p: A => Boolean): Int = {
         var i = 0
-        val t = start
+        val t = begin
         while (t) {
             if (p(~t)) {
                 i += 1
@@ -172,7 +172,7 @@ trait Traversable[+A] {
      * Finds an element <code>p</code> meets.
      */
     def find(p: A => Boolean): Option[A] = {
-        val t = start
+        val t = begin
         while (t) {
             val e = ~t
             if (p(e)) {
@@ -188,7 +188,7 @@ trait Traversable[+A] {
      */
     def foldLeft[B](z: B)(op: (B, A) => B): B = {
         var acc = z
-        val t = start
+        val t = begin
         while (t) {
             acc = op(acc, ~t)
             t.++
@@ -203,7 +203,7 @@ trait Traversable[+A] {
      * Reduces left to right.
      */
     def reduceLeft[B >: A](op: (B, A) => B): B = {
-        val t = start
+        val t = begin
         if (!t) {
             throw new UnsupportedOperationException("reduceLeft on empty traversable")
         }
@@ -226,7 +226,7 @@ trait Traversable[+A] {
      * Returns the first element.
      */
     def head: A = {
-        val t = start
+        val t = begin
         if (!t) {
             throw new NoSuchElementException("head on empty traversable")
         }
@@ -237,7 +237,7 @@ trait Traversable[+A] {
      * Optionally returns the first element.
      */
     def headOption: Option[A] = {
-        val t = start
+        val t = begin
         if (!t) {
             None
         } else {
@@ -249,7 +249,7 @@ trait Traversable[+A] {
      * Returns all the elements without the first one.
      */
     def tail: Traversable[A] = {
-        val t = start
+        val t = begin
         if (!t) {
             throw new NoSuchElementException("tail on empty traversable")
         }
@@ -260,7 +260,7 @@ trait Traversable[+A] {
      * Returns the last element.
      */
     def last: A = {
-        val t = start
+        val t = begin
         if (!t) {
             throw new NoSuchElementException("last on empty traversable")
         }
@@ -277,7 +277,7 @@ trait Traversable[+A] {
      */
     def lastOption: Option[A] = {
         var e = NoneOf[A]
-        val t = start
+        val t = begin
         while (t) {
             e = Some(~t)
         }
@@ -340,7 +340,7 @@ trait Traversable[+A] {
     def at(n: Int): A = {
         throwIfNegative(n, "at")
         var i = n
-        val t = start
+        val t = begin
         while (t) {
             if (i == 0) {
                 return ~t
@@ -400,7 +400,7 @@ trait Traversable[+A] {
     @methodized @conversion
     def _stringize(_this: Traversable[Char]): String = {
         val sb = new StringBuilder
-        val t = start
+        val t = begin
         while (t) {
             sb.append(~t)
             t.++
@@ -411,7 +411,7 @@ trait Traversable[+A] {
     @methodized @conversion
     def _toHashMap[K, V](_this: Traversable[(K, V)]): scala.collection.Map[K, V] = {
         val r = new scala.collection.mutable.HashMap[K, V]
-        val t = _this.start
+        val t = _this.begin
         while (t) {
             r += ~t
             t.++
@@ -422,7 +422,7 @@ trait Traversable[+A] {
     @methodized @conversion
     def _toHashSet[B](_this: Traversable[B]): scala.collection.Set[B] = {
         val r = new scala.collection.mutable.HashSet[B]
-        val t = _this.start
+        val t = _this.begin
         while (t) {
             r += ~t
             t.++
@@ -496,25 +496,25 @@ trait Traversable[+A] {
 
 object Traversable extends Compatibles {
 
-    sealed class OfInvariant[A](tr: Traversable[A]) {
-        final def toHashSet: scala.collection.Set[A] = tr._toHashSet(tr)
-        final def toVector: Vector[A] = tr._toVector(tr)
+    sealed class OfInvariant[A](_this: Traversable[A]) {
+        final def toHashSet: scala.collection.Set[A] = _this._toHashSet(_this)
+        final def toVector: Vector[A] = _this._toVector(_this)
     }
-    implicit def ofInvariant[A](tr: Traversable[A]): OfInvariant[A] = new OfInvariant(tr)
+    implicit def ofInvariant[A](_this: Traversable[A]): OfInvariant[A] = new OfInvariant(_this)
 
-    sealed class OfTraversable[A](tr: Traversable[Traversable[A]]) {
-        final def flatten: Traversable[A] = tr._flatten(tr)
+    sealed class OfTraversable[A](_this: Traversable[Traversable[A]]) {
+        final def flatten: Traversable[A] = _this._flatten(_this)
     }
-    implicit def ofTraversable[A](tr: Traversable[Traversable[A]]): OfTraversable[A] = new OfTraversable(tr)
+    implicit def ofTraversable[A](_this: Traversable[Traversable[A]]): OfTraversable[A] = new OfTraversable(_this)
 
-    sealed class OfTuple2[T1, T2](tr: Traversable[(T1, T2)]) {
-        final def toHashMap: scala.collection.Map[T1, T2] = tr._toHashMap(tr)
+    sealed class OfTuple2[T1, T2](_this: Traversable[(T1, T2)]) {
+        final def toHashMap: scala.collection.Map[T1, T2] = _this._toHashMap(_this)
     }
-    implicit def ofTuple2[T1, T2](tr: Traversable[(T1, T2)]): OfTuple2[T1, T2] = new OfTuple2(tr)
+    implicit def ofTuple2[T1, T2](_this: Traversable[(T1, T2)]): OfTuple2[T1, T2] = new OfTuple2(_this)
 
-    sealed class OfChar(tr: Traversable[Char]) {
-        final def stringize: String = tr._stringize(tr)
+    sealed class OfChar(_this: Traversable[Char]) {
+        final def stringize: String = _this._stringize(_this)
     }
-    implicit def ofChar(tr: Traversable[Char]): OfChar = new OfChar(tr)
+    implicit def ofChar(_this: Traversable[Char]): OfChar = new OfChar(_this)
 
 }

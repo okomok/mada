@@ -8,7 +8,7 @@ package mada.traversable
 
 
 case class Single[A](_1: A) extends Traversable[A] {
-    override def start = new Traverser[A] {
+    override def begin = new Traverser[A] {
         private var ends = false
 
         override def isEnd = ends

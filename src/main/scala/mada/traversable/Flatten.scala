@@ -8,8 +8,8 @@ package mada.traversable
 
 
 case class Flatten[A](_1: Traversable[Traversable[A]]) extends Traversable[A] {
-    override def start = new Traverser[A] {
-        private val tt = _1.start
+    override def begin = new Traverser[A] {
+        private val tt = _1.begin
         private var t = ready
 
         override def isEnd = !t
@@ -24,7 +24,7 @@ case class Flatten[A](_1: Traversable[Traversable[A]]) extends Traversable[A] {
 
         private def ready: Traverser[A] = {
             while (tt) {
-                val u = (~tt).start
+                val u = (~tt).begin
                 if (u) {
                     return u
                 }

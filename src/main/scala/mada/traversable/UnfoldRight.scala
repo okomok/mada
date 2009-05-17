@@ -8,7 +8,7 @@ package mada.traversable
 
 
 case class UnfoldRight[A, B](_1: A, _2: A => Option[(B, A)]) extends Traversable[B] {
-    override def start = new Traverser[B] {
+    override def begin = new Traverser[B] {
         private var acc = _2(_1)
 
         override def isEnd = acc.isEmpty

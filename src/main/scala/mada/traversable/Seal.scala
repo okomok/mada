@@ -8,5 +8,5 @@ package mada.traversable
 
 
 case class Seal[A](_1: Traversable[A]) extends Traversable[A] {
-    override def start = _1.start
+    override def begin = _1.begin
 }

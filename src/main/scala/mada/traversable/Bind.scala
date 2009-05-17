@@ -8,10 +8,10 @@ package mada.traversable
 
 
 case class Bind[A](_1: Traverser[A]) extends Traversable[A] {
-    override def start = _1
+    override def begin = _1
 }
 
 class BindName[A](t: => Traverser[A]) extends Traversable[A] {
     val _1 = function.ofName(t)
-    override def start = _1()
+    override def begin = _1()
 }

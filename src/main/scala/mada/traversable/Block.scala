@@ -13,7 +13,7 @@ import java.util.concurrent.Exchanger
 
 
 case class Block[A](_1: Yield[A] => Unit) extends Traversable[A] {
-    override def start = new Traverser[A] {
+    override def begin = new Traverser[A] {
         private var in = new _Block._Data[A]
         private val x = new Exchanger[_Block._Data[A]]
 

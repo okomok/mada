@@ -8,8 +8,8 @@ package mada.traversable
 
 
 case class DropWhile[A](_1: Traversable[A], _2: A => Boolean) extends Traversable[A] {
-    override def start = {
-        val t = _1.start
+    override def begin = {
+        val t = _1.begin
         t.advanceWhile(_2)
         t
     }

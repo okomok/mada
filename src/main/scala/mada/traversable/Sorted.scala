@@ -37,9 +37,9 @@ case class Merge[A](_1: Traversable[A], _2: Traversable[A], _3: Compare[A]) exte
 }
 
 case class MergeBy[A](_1: Traversable[A], _2: Traversable[A], _3: compare.Func[A]) extends Traversable[A] {
-    override def start = new Traverser[A] {
-        private val t1 = _1.start
-        private val t2 = _2.start
+    override def begin = new Traverser[A] {
+        private val t1 = _1.begin
+        private val t2 = _2.begin
 
         override def isEnd = !t1 && !t2
         override def deref = Sorted.derefBy(t1, t2, _3)
@@ -53,9 +53,9 @@ case class Union[A](_1: Traversable[A], _2: Traversable[A], _3: Compare[A]) exte
 }
 
 case class UnionBy[A](_1: Traversable[A], _2: Traversable[A], _3: compare.Func[A]) extends Traversable[A] {
-    override def start = new Traverser[A] {
-        private val t1 = _1.start
-        private val t2 = _2.start
+    override def begin = new Traverser[A] {
+        private val t1 = _1.begin
+        private val t2 = _2.begin
 
         override def isEnd = !t1 && !t2
         override def deref = {
@@ -88,9 +88,9 @@ case class Intersection[A](_1: Traversable[A], _2: Traversable[A], _3: Compare[A
 }
 
 case class IntersectionBy[A](_1: Traversable[A], _2: Traversable[A], _3: compare.Func[A]) extends Traversable[A] {
-    override def start = new Traverser[A] {
-        private val t1 = _1.start
-        private val t2 = _2.start
+    override def begin = new Traverser[A] {
+        private val t1 = _1.begin
+        private val t2 = _2.begin
         ready
 
         override def isEnd = !t1 || !t2
@@ -121,9 +121,9 @@ case class Difference[A](_1: Traversable[A], _2: Traversable[A], _3: Compare[A])
 }
 
 case class DifferenceBy[A](_1: Traversable[A], _2: Traversable[A], _3: compare.Func[A]) extends Traversable[A] {
-    override def start = new Traverser[A] {
-        private val t1 = _1.start
-        private val t2 = _2.start
+    override def begin = new Traverser[A] {
+        private val t1 = _1.begin
+        private val t2 = _2.begin
         ready
 
         override def isEnd = !t1
@@ -154,9 +154,9 @@ case class SymmetricDifference[A](_1: Traversable[A], _2: Traversable[A], _3: Co
 }
 
 case class SymmetricDifferenceBy[A](_1: Traversable[A], _2: Traversable[A], _3: compare.Func[A]) extends Traversable[A] {
-    override def start = new Traverser[A] {
-        private val t1 = _1.start
-        private val t2 = _2.start
+    override def begin = new Traverser[A] {
+        private val t1 = _1.begin
+        private val t2 = _2.begin
         ready
 
         override def isEnd = !t1 && !t2

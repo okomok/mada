@@ -10,7 +10,7 @@ package mada.traversable
 /* Move to vector.
 
 case class ToTraversable[A](_1: Vector[A]) extends Traversable[A] {
-    override def start = traverser.fromIterator(_1.elements)
+    override def begin = traverser.fromIterator(_1.elements)
 
     override def toVector = _1 // to-from fusion
 }
@@ -19,7 +19,7 @@ case class ToTraversable[A](_1: Vector[A]) extends Traversable[A] {
 
 case class ToVector[A](_1: Traversable[A]) extends vector.Forwarder[A] {
     override val self = {
-        val t = _1.start
+        val t = _1.begin
         val a = new java.util.ArrayList[A]
         while (t) {
             a.add(~t)

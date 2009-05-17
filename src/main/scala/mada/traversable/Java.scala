@@ -8,7 +8,7 @@ package mada.traversable
 
 
 case class FromJioObjectInput[A, B](_1: java.io.ObjectInput) extends Traversable[AnyRef] {
-    override def start = new Traverser[AnyRef] {
+    override def begin = new Traverser[AnyRef] {
         private var e = ready // Note that null is a valid data.
 
         override def isEnd = e.isEmpty
@@ -27,7 +27,7 @@ case class FromJioObjectInput[A, B](_1: java.io.ObjectInput) extends Traversable
 
 
 case class FromJioReader[A, B](_1: java.io.Reader) extends Traversable[Char] {
-    override def start = new Traverser[Char] {
+    override def begin = new Traverser[Char] {
         _1.reset
         private var e = ready
 

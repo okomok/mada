@@ -17,10 +17,10 @@ case class FromIterable[A](_1: Iterable[A]) extends Forwarder[A] {
 }
 
 private class _FromIterable[A](_1: Iterable[A]) extends Traversable[A] {
-    override def start = traverser.fromIterator(_1.elements)
+    override def begin = traverser.fromIterator(_1.elements)
 }
 
 
 case class ToIterable[A](_1: Traversable[A]) extends Iterable[A] {
-    override def elements = _1.start.toIterator
+    override def elements = _1.begin.toIterator
 }
