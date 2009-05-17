@@ -9,8 +9,8 @@ package mada.traversable
 
 @compatibles
 trait Compatibles { self: Traversable.type =>
-    implicit def madaTraversableFromIterable[A](from: Iterable[A]): Traversable[A] = fromIterable(from)
-    implicit def madaTraversableToIterable[A](from: Traversable[A]): Iterable[A] = from.toIterable
+    implicit def madaTraversableFromSIterable[A](from: Iterable[A]): Traversable[A] = fromSIterable(from)
+    implicit def madaTraversableToSIterable[A](from: Traversable[A]): Iterable[A] = from.toSIterable
     implicit def madaTraversableFromJIterable[A](from: java.lang.Iterable[A]): Traversable[A] = fromJIterable(from)
     implicit def madaTraversableToJIterable[A](from: Traversable[A]): java.lang.Iterable[A] = from.toJIterable
     implicit def madaTraversableUnstringize(from: String): Traversable[Char] = Unstringize(from)

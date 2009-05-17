@@ -14,7 +14,7 @@ case class FromJIterator[A](_1: java.util.Iterator[A]) extends Forwarder[A] {
     }
 
     // to-from fusion is infeasible, because constructor has side-effects.
-    // override def toIterator = _1
+    // override def toJIterator = _1
 }
 
 private class _FromJIterator[A](_1: java.util.Iterator[A]) extends Traverser[A] {

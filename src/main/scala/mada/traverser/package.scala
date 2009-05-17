@@ -33,7 +33,7 @@ package object traverser {
     def from[A](to: Traverser[A]) = to
 
     @conversion
-    def fromIterator[A](from: Iterator[A]): Traverser[A] = FromIterator(from)
+    def fromSIterator[A](from: Iterator[A]): Traverser[A] = FromSIterator(from)
 
     @conversion
     def fromJIterator[A](from: java.util.Iterator[A]): Traverser[A] = FromJIterator(from)

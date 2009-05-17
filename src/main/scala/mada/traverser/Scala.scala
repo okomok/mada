@@ -7,17 +7,17 @@
 package mada.traverser
 
 
-case class FromIterator[A](_1: Iterator[A]) extends Forwarder[A] {
+case class FromSIterator[A](_1: Iterator[A]) extends Forwarder[A] {
     override protected val delegate: Traverser[A] = _1 match {
-        case ToIterator(from) => from // from-to fusion
-        case _ => new _FromIterator(_1)
+        case ToSIterator(from) => from // from-to fusion
+        case _ => new _FromSIterator(_1)
     }
 
     // to-from fusion is infeasible, because constructor has side-effects.
-    // override def toIterator = _1
+    // override def toSIterator = _1
 }
 
-private class _FromIterator[A](_1: Iterator[A]) extends Traverser[A] {
+private class _FromSIterator[A](_1: Iterator[A]) extends Traverser[A] {
     private var e = ready
 
     override def isEnd = e.isEmpty
@@ -28,7 +28,7 @@ private class _FromIterator[A](_1: Iterator[A]) extends Traverser[A] {
 }
 
 
-case class ToIterator[A](_1: Traverser[A]) extends Iterator[A] {
+case class ToSIterator[A](_1: Traverser[A]) extends Iterator[A] {
     override def hasNext = !_1.isEnd
     override def next = {
         val tmp = ~_1

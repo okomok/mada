@@ -20,7 +20,7 @@ package object traversable {
      * Creates a traversable initially containing the specified elements.
      */
     object of {
-        def apply[A](from: A*): Traversable[A] = fromIterable(from)
+        def apply[A](from: A*): Traversable[A] = fromSIterable(from)
         // def unapplySeq[A](from: Traversable[A]): Option[Seq[A]] = Some(from.toSeq)
     }
 
@@ -94,10 +94,10 @@ package object traversable {
     def compatibles: Compatibles = Traversable
 
     @conversion
-    def fromIterable[A](from: Iterable[A]): Traversable[A] = FromIterable(from)
+    def unstringize(from: String): Traversable[Char] = Unstringize(from)
 
     @conversion
-    def unstringize(from: String): Traversable[Char] = Unstringize(from)
+    def fromSIterable[A](from: Iterable[A]): Traversable[A] = FromSIterable(from)
 
     @conversion
     def fromJIterable[A](from: java.lang.Iterable[A]): Traversable[A] = FromJIterable(from)

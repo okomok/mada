@@ -335,7 +335,7 @@ trait Traversable[+A] {
     }
 
     @conversion
-    def toIterable: Iterable[A] = ToIterable(this)
+    def toSIterable: Iterable[A] = ToSIterable(this)
 
 
 // misc
@@ -425,7 +425,7 @@ trait Traversable[+A] {
     }
 
     @methodized @conversion
-    def _toHashMap[K, V](_this: Traversable[(K, V)]): scala.collection.Map[K, V] = {
+    def _toSHashMap[K, V](_this: Traversable[(K, V)]): scala.collection.Map[K, V] = {
         val r = new scala.collection.mutable.HashMap[K, V]
         val t = _this.begin
         while (t) {
@@ -436,7 +436,7 @@ trait Traversable[+A] {
     }
 
     @methodized @conversion
-    def _toHashSet[B](_this: Traversable[B]): scala.collection.Set[B] = {
+    def _toSHashSet[B](_this: Traversable[B]): scala.collection.Set[B] = {
         val r = new scala.collection.mutable.HashSet[B]
         val t = _this.begin
         while (t) {
@@ -519,7 +519,7 @@ trait Traversable[+A] {
 object Traversable extends Compatibles {
 
     sealed class OfInvariant[A](_this: Traversable[A]) {
-        final def toHashSet: scala.collection.Set[A] = _this._toHashSet(_this)
+        final def toSHashSet: scala.collection.Set[A] = _this._toSHashSet(_this)
         final def toJIterable: java.lang.Iterable[A] = _this._toJIterable(_this)
         final def toVector: Vector[A] = _this._toVector(_this)
     }
@@ -531,7 +531,7 @@ object Traversable extends Compatibles {
     implicit def ofTraversable[A](_this: Traversable[Traversable[A]]): OfTraversable[A] = new OfTraversable(_this)
 
     sealed class OfTuple2[T1, T2](_this: Traversable[(T1, T2)]) {
-        final def toHashMap: scala.collection.Map[T1, T2] = _this._toHashMap(_this)
+        final def toSHashMap: scala.collection.Map[T1, T2] = _this._toSHashMap(_this)
     }
     implicit def ofTuple2[T1, T2](_this: Traversable[(T1, T2)]): OfTuple2[T1, T2] = new OfTuple2(_this)
 

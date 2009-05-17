@@ -12,6 +12,7 @@ trait Forwarder[+A] extends Traversable[A] with any.Forwarder {
 
     protected def beforeForward[B](that: Traversable[B]): Traversable[B] = that
     protected def afterForward[B](that: Traversable[B]): Traversable[B] = that
+    private def afterForward2[B](that: (Traversable[B], Traversable[B])): (Traversable[B], Traversable[B]) = (afterForward(that._1), afterForward(that._2))
 
     override def begin: Traverser[A] = beforeForward(delegate).begin
 
@@ -26,7 +27,7 @@ trait Forwarder[+A] extends Traversable[A] with any.Forwarder {
     override def map[B](f: A => B): Traversable[B] = afterForward(beforeForward(delegate).map(f))
     override def flatMap[B](f: A => Traversable[B]): Traversable[B] = afterForward(beforeForward(delegate).flatMap(f))
     override def filter(p: A => Boolean): Traversable[A] = afterForward(beforeForward(delegate).filter(p))
-    override def partition(p: A => Boolean): (Traversable[A], Traversable[A]) = beforeForward(delegate).partition(p)
+    override def partition(p: A => Boolean): (Traversable[A], Traversable[A]) = afterForward2(beforeForward(delegate).partition(p))
     override def groupBy[K](f: A => K): scala.collection.Map[K, Traversable[A]] = beforeForward(delegate).groupBy(f)
     override def foreach[B](f: A => B): Unit = beforeForward(delegate).foreach(f)
     override def forall(p: A => Boolean): Boolean = beforeForward(delegate).forall(p)
@@ -48,13 +49,13 @@ trait Forwarder[+A] extends Traversable[A] with any.Forwarder {
     override def slice(from: Int, until: Int): Traversable[A] = afterForward(beforeForward(delegate).slice(from, until))
     override def takeWhile(p: A => Boolean): Traversable[A] = afterForward(beforeForward(delegate).takeWhile(p))
     override def dropWhile(p: A => Boolean): Traversable[A] = afterForward(beforeForward(delegate).dropWhile(p))
-    override def span(p: A => Boolean): (Traversable[A], Traversable[A]) = beforeForward(delegate).span(p)
-    override def splitAt(n: Int): (Traversable[A], Traversable[A]) = beforeForward(delegate).splitAt(n)
+    override def span(p: A => Boolean): (Traversable[A], Traversable[A]) = afterForward2(beforeForward(delegate).span(p))
+    override def splitAt(n: Int): (Traversable[A], Traversable[A]) = afterForward2(beforeForward(delegate).splitAt(n))
     //override def copyToBuffer[B >: A](dest: Buffer[B]) = beforeForward(delegate).copyToBuffer(dest)
     //override def copyToArray[B >: A](xs: Array[B], begin: Int, len: Int) = beforeForward(delegate).copyToArray(xs, begin, len)
     //override def copyToArray[B >: A](xs: Array[B], begin: Int) = beforeForward(delegate).copyToArray(xs, begin)
     //override def toArray[B >: A]: Array[B] = beforeForward(delegate).toArray
-    override def toIterable: Iterable[A] = beforeForward(delegate).toIterable
+    override def toSIterable: Iterable[A] = beforeForward(delegate).toSIterable
 
     override def at(n: Int): A = beforeForward(delegate).at(n)
     override def contains(e: Any): Boolean = beforeForward(delegate).contains(e)
@@ -67,8 +68,8 @@ trait Forwarder[+A] extends Traversable[A] with any.Forwarder {
     override def unique: Traversable[A] = afterForward(beforeForward(delegate).unique)
     override def uniqueBy(p: (A, A) => Boolean): Traversable[A] = afterForward(beforeForward(delegate).uniqueBy(p))
     override def _stringize(_this: Traversable[Char]): String = beforeForward(delegate)._stringize(_this)
-    override def _toHashMap[K, V](_this: Traversable[(K, V)]): scala.collection.Map[K, V] = beforeForward(delegate)._toHashMap(_this)
-    override def _toHashSet[B](_this: Traversable[B]): scala.collection.Set[B] = beforeForward(delegate)._toHashSet(_this)
+    override def _toSHashMap[K, V](_this: Traversable[(K, V)]): scala.collection.Map[K, V] = beforeForward(delegate)._toSHashMap(_this)
+    override def _toSHashSet[B](_this: Traversable[B]): scala.collection.Set[B] = beforeForward(delegate)._toSHashSet(_this)
     override def _toJIterable[B](_this: Traversable[B]): java.lang.Iterable[B] = beforeForward(delegate)._toJIterable(_this)
     override def _toVector[B](_this: Traversable[B]): Vector[B] = beforeForward(delegate)._toVector(_this)
     override def zip[B](that: Traversable[B]): Traversable[(A, B)] = afterForward(beforeForward(delegate).zip(that))

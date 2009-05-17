@@ -13,7 +13,7 @@ import traverser._
 /**
  * Yet another Iterator: backend of <code>Traversable</code>.
  * Unlike <code>Iterator</code>, this separates element-access and traversing method.
- * (E.g. <code>.map(f).length</code> is inefficient in Iterator abstraction.)
+ * (E.g. <code>.map(f).length</code> is inefficient in SIterator abstraction.)
  */
 @notThreadSafe
 trait Traverser[+A] {
@@ -50,7 +50,7 @@ trait Traverser[+A] {
     final def toBoolean: Boolean = !isEnd
 
     @conversion
-    final def toIterator: Iterator[A] = ToIterator(this)
+    final def toSIterator: Iterator[A] = ToSIterator(this)
 
     /**
      * Advances <code>n</code>.
