@@ -10,7 +10,7 @@ package mada.traversable
 /**
  * Applies <code>Mixin</code> to result of traversable-to-traversable methods.
  */
-case class Mix[+A](_1: Traversable[A], _2: Mixin) extends Forwarder[A] { self =>
+case class Mix[+A](_1: Traversable[A], _2: Mixin) extends Forwarder[A] {
     override protected lazy val delegate = _2(_1)
     override protected def afterForward[B](that: Traversable[B]) = that.mix(_2)
 

@@ -10,8 +10,13 @@ package mada.traversable
 /**
  * The mutable forwarder for traversable.
  */
-case class Var[A] extends Forwarder[A] {
-    @volatile private var tr: Traversable[A] = null
+class Var[A](@volatile private var tr: Traversable[A]) extends Forwarder[A] {
+    def this() = this(null)
     override protected def delegate = tr
-    final def :=(that: Traversable[A]): Unit = { tr = that }
+
+    final def isNull: Boolean = tr eq null
+    final def assign(that: Traversable[A]): Unit = { tr = that }
+
+    @aliasOf("assign")
+    final def :=(that: Traversable[A]): Unit = assign(that)
 }
