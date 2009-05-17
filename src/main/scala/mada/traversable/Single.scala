@@ -7,7 +7,7 @@
 package mada.traversable
 
 
-case class Single[A](_1: A) extends Traversable[A] {
+case class Single[+A](_1: A) extends Traversable[A] {
     override def begin = new Traverser[A] {
         private var ends = false
 

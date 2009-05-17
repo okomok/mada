@@ -7,7 +7,7 @@
 package mada.traversable
 
 
-case class Force[A](_1: Traversable[A]) extends Forwarder[A] {
+case class Force[+A](_1: Traversable[A]) extends Forwarder[A] {
     override protected lazy val delegate = {
         val r = new java.util.ArrayList[A]
         val t = _1.begin

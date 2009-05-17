@@ -7,6 +7,6 @@
 package mada.traversable
 
 
-case class SinglePass[A](_1: Traversable[A]) extends Traversable[A] {
+case class SinglePass[+A](_1: Traversable[A]) extends Traversable[A] {
     override val begin = _1.begin
 }

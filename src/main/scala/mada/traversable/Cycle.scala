@@ -7,7 +7,7 @@
 package mada.traversable
 
 
-case class Cycle[A](_1: Traversable[A]) extends Forwarder[A] {
+case class Cycle[+A](_1: Traversable[A]) extends Forwarder[A] {
     override protected lazy val delegate = {
         if (_1.isEmpty) {
             throw new UnsupportedOperationException("cycle on empty traversable")

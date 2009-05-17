@@ -7,7 +7,7 @@
 package mada.traversable
 
 
-case class Unique[A](_1: Traversable[A]) extends Forwarder[A] {
+case class Unique[+A](_1: Traversable[A]) extends Forwarder[A] {
     override protected val delegate = _1.uniqueBy(function.equal)
 }
 

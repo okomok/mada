@@ -7,7 +7,7 @@
 package mada.traversable
 
 
-case class Step[A](_1: Traversable[A], _2: Int) extends Traversable[A] {
+case class Step[+A](_1: Traversable[A], _2: Int) extends Traversable[A] {
     override def begin = new Traverser[A] {
         if (_2 < 0) {
             throw new IllegalArgumentException("step" + Tuple1(_2))

@@ -7,7 +7,7 @@
 package mada.traversable
 
 
-case class Zip[A, B](_1: Traversable[A], _2: Traversable[B]) extends Traversable[(A, B)] {
+case class Zip[+A, +B](_1: Traversable[A], _2: Traversable[B]) extends Traversable[(A, B)] {
     override def begin = new Traverser[(A, B)] {
         private val t1 = _1.begin
         private val t2 = _2.begin

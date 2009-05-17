@@ -27,7 +27,7 @@ package object traversable {
     /**
      * The empty traversable
      */
-    val empty: Traversable[Nothing] = Empty
+    val empty: Traversable[Nothing] = Empty()
 
     /**
      * Typed <code>empty</code>

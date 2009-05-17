@@ -7,7 +7,7 @@
 package mada.traversable
 
 
-case class Slice[A](_1: Traversable[A], _2: Int, _3: Int) extends Forwarder[A] {
+case class Slice[+A](_1: Traversable[A], _2: Int, _3: Int) extends Forwarder[A] {
     override protected lazy val delegate = {
         if (_2 > _3) {
             throw new IllegalArgumentException("slice" + (_2, _3))

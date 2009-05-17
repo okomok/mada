@@ -7,6 +7,6 @@
 package mada.traversable
 
 
-case class Unstringize[A](_1: String) extends Forwarder[Char] {
+case class Unstringize(_1: String) extends Forwarder[Char] {
     override protected val delegate = fromIterable(_1)
 }
