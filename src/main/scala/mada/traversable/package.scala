@@ -100,6 +100,9 @@ package object traversable {
     def unstringize(from: String): Traversable[Char] = Unstringize(from)
 
     @conversion
+    def fromJIterable[A](from: java.lang.Iterable[A]): Traversable[A] = FromJIterable(from)
+
+    @conversion
     def fromJioObjectInput(from: java.io.ObjectInput): Traversable[AnyRef] = FromJioObjectInput(from)
 
     @conversion

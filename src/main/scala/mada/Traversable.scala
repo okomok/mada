@@ -367,10 +367,20 @@ trait Traversable[+A] {
     def times(n: Int): Traversable[A] = Times(this, n)
 
     /**
+     * Cuts projection.
+     */
+    def force: Traversable[A] = Force(this)
+
+    /**
      * Turns a traversable of traversables into flat traversable.
      */
     @methodized
     def _flatten[B](_this: Traversable[Traversable[B]]): Traversable[B] = Flatten(_this)
+
+    /**
+     * Runtime mixin.
+     */
+    def mix(x: Mixin): Traversable[A] = Mix(this, x)
 
     /**
      * Disables overrides.
@@ -429,6 +439,9 @@ trait Traversable[+A] {
         }
         r
     }
+
+    @conversion
+    def _toJIterable[B](_this: Traversable[B]): java.lang.Iterable[B] = ToJIterable(_this)
 
     @methodized @conversion
     def _toVector[B](_this: Traversable[B]): Vector[B] = ToVector(_this)
@@ -498,6 +511,7 @@ object Traversable extends Compatibles {
 
     sealed class OfInvariant[A](_this: Traversable[A]) {
         final def toHashSet: scala.collection.Set[A] = _this._toHashSet(_this)
+        final def toJIterable: java.lang.Iterable[A] = _this._toJIterable(_this)
         final def toVector: Vector[A] = _this._toVector(_this)
     }
     implicit def ofInvariant[A](_this: Traversable[A]): OfInvariant[A] = new OfInvariant(_this)

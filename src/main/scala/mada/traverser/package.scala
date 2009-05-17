@@ -35,4 +35,10 @@ package object traverser {
     @conversion
     def fromIterator[A](from: Iterator[A]): Traverser[A] = FromIterator(from)
 
+    @conversion
+    def fromJclIterator[A](from: java.util.Iterator[A]): Traverser[A] = FromJclIterator(from)
+
+    @conversion
+    final def toJclIterator[A](from: Traverser[A]): java.util.Iterator[A] = ToJclIterator(from) // invariant can't be method.
+
 }

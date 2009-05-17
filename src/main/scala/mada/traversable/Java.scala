@@ -7,6 +7,15 @@
 package mada.traversable
 
 
+case class FromJIterable[A, B](_1: java.lang.Iterable[A]) extends Traversable[A] {
+    override def begin = traverser.fromJclIterator(_1.iterator)
+}
+
+case class ToJIterable[A, B](_1: Traversable[A]) extends java.lang.Iterable[A] {
+    override def iterator = traverser.toJclIterator(_1.begin)
+}
+
+
 case class FromJioObjectInput[A, B](_1: java.io.ObjectInput) extends Traversable[AnyRef] {
     override def begin = new Traverser[AnyRef] {
         private var e = ready // Note that null is a valid data.

@@ -46,11 +46,11 @@ trait Traverser[+A] {
     protected def preDeref: Unit = if (isEnd) throw new NoSuchElementException("deref on end traverser")
     protected def preIncrement: Unit = if (isEnd) throw new UnsupportedOperationException("increment on end traverser")
 
-    @conversion
-    final def toIterator: Iterator[A] = ToIterator(this)
-
     @conversion @aliasOf("!isEnd")
     final def toBoolean: Boolean = !isEnd
+
+    @conversion
+    final def toIterator: Iterator[A] = ToIterator(this)
 
     /**
      * Advances <code>n</code>.

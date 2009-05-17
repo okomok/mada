@@ -11,6 +11,8 @@ package mada.traversable
 trait Compatibles { self: Traversable.type =>
     implicit def madaTraversableFromIterable[A](from: Iterable[A]): Traversable[A] = fromIterable(from)
     implicit def madaTraversableToIterable[A](from: Traversable[A]): Iterable[A] = from.toIterable
+    implicit def madaTraversableFromJIterable[A](from: java.lang.Iterable[A]): Traversable[A] = fromJIterable(from)
+    implicit def madaTraversableToJIterable[A](from: Traversable[A]): java.lang.Iterable[A] = from.toJIterable
     implicit def madaTraversableUnstringize(from: String): Traversable[Char] = Unstringize(from)
     implicit def madaTraversableFromJioObjectInput(from: java.io.ObjectInput): Traversable[AnyRef] = fromJioObjectInput(from)
     implicit def madaTraversableFromJioReader(from: java.io.Reader): Traversable[Char] = fromJioReader(from)
