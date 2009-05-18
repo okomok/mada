@@ -18,7 +18,7 @@ case class ToSequence[A](_1: Vector[A]) extends Sequence[A] {
 
 
 case class ToVector[A](_1: Sequence[A]) extends vector.Forwarder[A] {
-    override val self = {
+    override protected lazy val delegate = {
         val it = _1.begin
         val a = new java.util.ArrayList[A]
         while (it) {

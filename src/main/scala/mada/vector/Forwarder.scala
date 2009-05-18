@@ -11,11 +11,12 @@ package mada.vector
  * Implements a proxy for vectors.
  * It forwards all calls to a different vector object.
  */
-trait Forwarder[A] extends Adapter.Transform[A] with Proxies.ProxyOf[Vector[A]] {
-    final override def underlying = self
+trait Forwarder[A] extends Adapter.Transform[A] with any.Forwarder {
+    override protected def delegate: Vector[A]
+    final override def underlying = delegate
   // value semantics
     override def equalsIf[B](that: Vector[B])(p: (A, B) => Boolean): Boolean = underlying.equalsIf(that)(p)
-    override def equals(that: Any): Boolean = Equals(this, that) // works around scala.Proxy.equals.
+    override def equals(that: Any): Boolean = Equals(this, that)
     override def hashCode: Int = underlying.hashCode
   // toString
     override def toString: String = underlying.toString

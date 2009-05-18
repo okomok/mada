@@ -12,7 +12,7 @@ private[mada] object Filter {
 }
 
 private[mada] class FilterVector[A](v: Vector[A], p: A => Boolean) extends Forwarder[A] {
-    override lazy val self = v.clone.mutatingFilter(p).readOnly
+    override lazy val delegate = v.clone.mutatingFilter(p).readOnly
     override def filter(_p: A => Boolean) = v.filter{ e => p(e) && _p(e) } // filter-filter fusion
 }
 

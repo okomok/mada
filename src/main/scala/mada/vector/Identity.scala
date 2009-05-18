@@ -11,6 +11,6 @@ private[mada] object Identity {
     def apply[A](v: Vector[A]): Vector[A] = new IdentityVector(v)
 }
 
-private[mada] class IdentityVector[A](override val self: Vector[A]) extends Forwarder[A] {
+private[mada] class IdentityVector[A](override val delegate: Vector[A]) extends Forwarder[A] {
     override def identity = this // identity-identity fusion
 }

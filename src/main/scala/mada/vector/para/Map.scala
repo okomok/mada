@@ -15,7 +15,7 @@ private[mada] class MapVector[Z, A](v: Vector[Z], f: Z => A, grainSize: Int) ext
     Assert(!IsParallel(v))
     import function.future
 
-    override lazy val self = {
+    override lazy val delegate = {
         if (grainSize == 1) {
             v.map{ e => future(f(e)) }.force.map{ u => u() }
         } else {
@@ -27,7 +27,7 @@ private[mada] class MapVector[Z, A](v: Vector[Z], f: Z => A, grainSize: Int) ext
         }
     }
 
-    override def memoize = self // memoize-map fusion
+    override def memoize = delegate // memoize-map fusion
 //    override def map[B](_f: A => B) = v.parallel(grainSize).map(_f compose f) // map-map fusion
 //    override def seek(p: A => Boolean) = v.parallel(grainSize).seek(p compose f).map(f) // seek-map fusion
 

@@ -12,5 +12,5 @@ private[mada] object ByLazy {
 }
 
 private[mada] class ByLazyVector[A](v: => Vector[A]) extends Forwarder[A] {
-    override lazy val self = v
+    override lazy val delegate = v
 }

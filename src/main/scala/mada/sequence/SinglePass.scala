@@ -8,5 +8,5 @@ package mada.sequence
 
 
 case class SinglePass[+A](_1: Sequence[A]) extends Sequence[A] {
-    override val begin = _1.begin
+    override lazy val begin = _1.begin
 }
