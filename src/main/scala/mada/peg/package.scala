@@ -171,7 +171,7 @@ package object peg {
         /**
          * Matches any element of set.
          */
-        def apply[A](es: A*): Peg[A] = Multiple(Iterables.toHashSet(es))
+        def apply[A](es: A*): Peg[A] = Multiple(sequence.fromSIterable(es).toSHashSet)
 
         /**
          * Matches any element of set.
@@ -184,7 +184,7 @@ package object peg {
         /**
          * Matches a key, then tries to match its value.
          */
-        def apply[A](es: (A, Peg[A])*): Peg[A] = Switch(Iterables.toHashMap(es))
+        def apply[A](es: (A, Peg[A])*): Peg[A] = Switch(sequence.fromSIterable(es).toSHashMap)
 
         /**
          * Matches a key, then tries to match its value.

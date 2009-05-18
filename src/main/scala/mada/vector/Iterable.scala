@@ -19,8 +19,9 @@ private[mada] object FromIterable {
 
 
 private[mada] object ToIterable {
-    def apply[A](from: Vector[A]): Iterable[A] = Iterables.byName(iimpl(from))
-    def iimpl[A](from: Vector[A]): Iterator[A] = new VectorIterator(from)
+    def apply[A](from: Vector[A]): Iterable[A] = new Iterable[A] {
+        override def elements = new VectorIterator(from)
+    }
 }
 
 private[mada] class VectorIterator[A](from: Vector[A]) extends Iterator[A] {
