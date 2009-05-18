@@ -7,24 +7,23 @@
 package mada.peg
 
 
-private[mada] object Split {
-    def apply[A](p: Peg[A], v: Vector[A]): Iterable[Vector[A]] = Iterables.byName(iimpl(p, v))
-    def iimpl[A](p: Peg[A], v: Vector[A]): Iterator[Vector[A]] = new SplitIterator(p, v)
-}
+case class Split[A](_1: Peg[A], _2: Vector[A]) extends Sequence[Vector[A]] {
+    override def begin = new sequence.Iterator[Vector[A]] {
+        private val u = new RepeatAtMostUntilPeg(any, Math.MAX_INT, end | _1)
+        private var (k, b, l) = u.parseImpl(_2, _2.start, _2.end)
 
-private[mada] class SplitIterator[A](p: Peg[A], v: Vector[A]) extends Iterator[Vector[A]] {
-    private val u = new RepeatAtMostUntilPeg(any, Math.MAX_INT, end | p)
-    private var (k, b, l) = u.parseImpl(v, v.start, v.end)
+        override def isEnd = k == l
+        override def deref = {
+            preDeref
+            new vector.Region(_2, k, b)
+        }
+        override def increment = {
+            preIncrement
+            k_b_l_assign(u.parseImpl(_2, l, _2.end))
+        }
 
-    override def hasNext = k != l
-    override def next = {
-        Iterables.nextPrecondition(this, "split")
-        val tmp = new vector.Region(v, k, b)
-        k_b_l_assign(u.parseImpl(v, l, v.end))
-        tmp
-    }
-
-    private def k_b_l_assign(r: (Int, Int, Int)): Unit = {
-        k = r._1; b = r._2; l = r._3;
+        private def k_b_l_assign(r: (Int, Int, Int)): Unit = {
+            k = r._1; b = r._2; l = r._3;
+        }
     }
 }

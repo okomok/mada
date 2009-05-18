@@ -265,17 +265,17 @@ trait Peg[A] {
     /**
      * Splits input using this peg.
      */
-    final def split(v: Vector[A]): Iterable[Vector[A]] = { throwIfZeroWidth("split"); Split(this, v) }
+    final def split(v: Vector[A]): Sequence[Vector[A]] = { throwIfZeroWidth("split"); Split(this, v) }
 
     /**
      * Tokenizes input using this peg.
      */
-    final def tokenize(v: Vector[A]): Iterable[Vector[A]] = Tokenize(this, v)
+    final def tokenize(v: Vector[A]): Sequence[Vector[A]] = Tokenize(this, v)
 
     /**
      * Filters input using this peg.
      */
-    final def filterFrom(v: Vector[A]): Iterable[A] = FilterFrom(this, v)
+    final def filterFrom(v: Vector[A]): Sequence[A] = FilterFrom(this, v)
 
 
 // aliases

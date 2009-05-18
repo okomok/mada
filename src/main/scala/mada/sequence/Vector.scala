@@ -7,15 +7,13 @@
 package mada.sequence
 
 
-/* Move to vector.
+// WILL BE REMOVED.
+case class FromVector[A](_1: Vector[A]) extends Sequence[A] {
+    override def begin = iterator.fromSIterator(_1.elements)
 
-case class ToSequence[A](_1: Vector[A]) extends Sequence[A] {
-    override def begin = iterator.fromIterator(_1.elements)
-
-    override def toVector = _1 // to-from fusion
+    // Never fusion: newly allocated vector is always provided.
+    // override def _toVector[B](_this: Sequence[B]) = _1.asInstanceOf[Vector[B]] // to-from fusion
 }
-*/
-
 
 case class ToVector[A](_1: Sequence[A]) extends vector.Forwarder[A] {
     override protected lazy val delegate = {
@@ -27,7 +25,4 @@ case class ToVector[A](_1: Sequence[A]) extends vector.Forwarder[A] {
         }
         vector.fromJclList(a)
     }
-
-    // Add to vector
-//    override def toSequence = _1 // to-from fusion
 }
