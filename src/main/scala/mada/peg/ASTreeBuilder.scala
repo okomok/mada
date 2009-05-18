@@ -69,11 +69,11 @@ class ASTreeBuilder[T <: MutableTreeNode](root: T, cloner: T => T) {
      */
     def node[A](p: Peg[A])(f: Action[A]): Peg[A] = new NodePeg(p, f)
 
-    private class NodePeg[A](override val self: Peg[A], f: Action[A]) extends Forwarder[A] {
+    private class NodePeg[A](override val delegate: Peg[A], f: Action[A]) extends Forwarder[A] {
         override def parse(v: Vector[A], start: Int, end: Int) = {
             val n = newNode
             branches.push(n)
-            val cur = self.parse(v, start, end)
+            val cur = delegate.parse(v, start, end)
             Assert.verify(n eq branches.pop)
             if (cur != FAILURE) {
                 n.setUserObject(f(v(start, cur)))

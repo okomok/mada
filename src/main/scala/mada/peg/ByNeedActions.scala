@@ -28,9 +28,9 @@ class ByNeedActions[A] {
      */
     def need(p: Peg[A]): Peg[A] = new NeedPeg(p)
 
-    private class NeedPeg(override val self: Peg[A]) extends Forwarder[A] {
+    private class NeedPeg(override val delegate: Peg[A]) extends Forwarder[A] {
         override def parse(v: Vector[A], start: Int, end: Int) = {
-            val cur = self.parse(v, start, end)
+            val cur = delegate.parse(v, start, end)
             if (cur != FAILURE) {
                 fireActions
             }

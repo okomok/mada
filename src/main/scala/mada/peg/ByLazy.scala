@@ -12,5 +12,5 @@ private[mada] object ByLazy {
 }
 
 private[mada] class ByLazyPeg[A](p: => Peg[A]) extends Forwarder[A] {
-    override lazy val self = p
+    override lazy val delegate = p
 }

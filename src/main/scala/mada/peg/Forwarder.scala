@@ -7,11 +7,13 @@
 package mada.peg
 
 
-/**
- * Implements a proxy for pegs.
- * It forwards all calls to a different vector object.
- */
-trait Forwarder[A] extends Peg[A] with Proxies.ProxyOf[Peg[A]] {
-    override def parse(v: Vector[A], start: Int, end: Int) = self.parse(v, start, end)
-    override def width = self.width
+trait Forwarder[A] extends Peg[A] with mada.any.Forwarder {
+    override protected def delegate: Peg[A]
+
+    protected def beforeForward[B](that: Peg[B]): Peg[B] = that
+
+    override def parse(v: Vector[A], start: Int, end: Int) = beforeForward(delegate).parse(v, start, end)
+    override def width = beforeForward(delegate).width
+
+    override def toString: String = beforeForward(delegate).toString
 }

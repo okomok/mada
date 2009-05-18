@@ -19,7 +19,7 @@ private[mada] object Repeat {
 
 private[mada] class RepeatPeg[A](p: Peg[A], n: Int, m: Int) extends Forwarder[A] with Quantified[A] {
     private val prefix = new RepeatExactlyPeg(p, n)
-    override val self = prefix >> new RepeatAtMostPeg(p, m - n)
+    override val delegate = prefix >> new RepeatAtMostPeg(p, m - n)
     override def until(that: Peg[A]) = prefix >> new RepeatAtMostUntilPeg(p, m - n, that)
 }
 

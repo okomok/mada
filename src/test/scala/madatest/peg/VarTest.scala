@@ -16,8 +16,8 @@ import mada.peg.compatibles._
 
 
 
-class RuleTest {
-    val start = new Rule[Char]
+class VarTest {
+    val start = new Var[Char]
 
     start ::= "a"
     start ::= start.clone | "b"

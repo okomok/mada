@@ -17,11 +17,11 @@ private[mada] object Verify {
     def apply[A](p: Peg[A]): Peg[A] = new VerifyPeg(p)
 }
 
-private[mada] class VerifyPeg[A](override val self: Peg[A]) extends Forwarder[A] {
+private[mada] class VerifyPeg[A](override val delegate: Peg[A]) extends Forwarder[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
-        val cur = self.parse(v, start, end)
+        val cur = delegate.parse(v, start, end)
         if (cur == FAILURE) {
-            throw new VerificationException(self, v(start, end))
+            throw new VerificationException(delegate, v(start, end))
         }
         cur
     }
