@@ -54,5 +54,4 @@ trait Stack[A] {
 }
 
 
-object Stack extends stack.Compatibles {
-}
+object Stack extends stack.Compatibles

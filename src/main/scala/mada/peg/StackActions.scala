@@ -10,7 +10,7 @@ package mada.peg
 /**
  * Helper for stack evaluations.
  */
-class StackActions[A, B](override val self: Stack[B]) extends stack.Forwarder[B] {
+class StackActions[A, B](override val delegate: Stack[B]) extends stack.Forwarder[B] {
 
 
 // constructors
@@ -43,7 +43,7 @@ class StackActions[A, B](override val self: Stack[B]) extends stack.Forwarder[B]
      */
     def eval0(f: Function1[Vector[A], B]): Action[A] = new Action[A] {
         override def apply(v: Vector[A]) = {
-            self.push(f(v))
+            delegate.push(f(v))
         }
     }
 
@@ -52,8 +52,8 @@ class StackActions[A, B](override val self: Stack[B]) extends stack.Forwarder[B]
      */
     def eval1(f: Function2[Vector[A], B, B]): Action[A] = new Action[A] {
         override def apply(v: Vector[A]) = {
-            val e1 = self.pop
-            self.push(f(v, e1))
+            val e1 = delegate.pop
+            delegate.push(f(v, e1))
         }
     }
 
@@ -62,9 +62,9 @@ class StackActions[A, B](override val self: Stack[B]) extends stack.Forwarder[B]
      */
     def eval2(f: Function3[Vector[A], B, B, B]): Action[A] = new Action[A] {
         override def apply(v: Vector[A]) = {
-            val e1 = self.pop
-            val e2 = self.pop
-            self.push(f(v, e2, e1))
+            val e1 = delegate.pop
+            val e2 = delegate.pop
+            delegate.push(f(v, e2, e1))
         }
     }
 
@@ -73,10 +73,10 @@ class StackActions[A, B](override val self: Stack[B]) extends stack.Forwarder[B]
      */
     def eval3(f: Function4[Vector[A], B, B, B, B]): Action[A] = new Action[A] {
         override def apply(v: Vector[A]) = {
-            val e1 = self.pop
-            val e2 = self.pop
-            val e3 = self.pop
-            self.push(f(v, e3, e2, e1))
+            val e1 = delegate.pop
+            val e2 = delegate.pop
+            val e3 = delegate.pop
+            delegate.push(f(v, e3, e2, e1))
         }
     }
 }
