@@ -22,7 +22,7 @@ import junit.framework.Assert._
 */
 
 
-
+/*
 
 object Expr {
     type Of[A] = Expr[_, A]
@@ -186,4 +186,4 @@ class ExprTest {
         ()
     }
 }
-
+*/
