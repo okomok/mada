@@ -422,7 +422,7 @@ trait Vector[A] extends PartialFunction[Int, A] {
 // concatenation
 
     /**
-     * @return  <code>vector.fromRandomAccessSeq(randomAccessSeq.projection ++ that)</code>
+     * @return  <code>vector.fromRandomAccessSeq(randomAccessSeq.view ++ that)</code>
      */
     def append(that: Vector[A]): Vector[A] = Append(this, that)
 

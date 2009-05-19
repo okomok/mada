@@ -14,7 +14,7 @@ package object string {
      */
     def flatten(ss: Iterable[Any]): String = {
         val sb = new StringBuilder
-        for (s <- ss.projection) {
+        for (s <- ss.view) {
             sb.append(s.toString)
         }
         sb.toString

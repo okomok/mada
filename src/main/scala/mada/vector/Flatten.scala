@@ -10,7 +10,7 @@ package mada.vector
 private[mada] object Flatten {
     def apply[A](vs: Iterable[Vector[A]]): Vector[A] = {
         val ar = new java.util.ArrayList[A]
-        for (v <- vs.projection) {
+        for (v <- vs.view) {
             for (e <- v) {
                 ar.add(e)
             }

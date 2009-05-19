@@ -10,7 +10,7 @@ package mada.vector
 private[mada] object FromIterable {
     def apply[A](from: Iterable[A]): Vector[A] = {
         val a = new java.util.ArrayList[A]
-        for (e <- from.projection) {
+        for (e <- from.view) {
             a.add(e)
         }
         vector.fromJclList(a)

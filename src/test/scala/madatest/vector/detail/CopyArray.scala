@@ -23,7 +23,7 @@ object CopyArray {
 object CopyReverseArray {
     def apply[A](a: Array[A]): Array[A] = {
         val b = new Array[A](a.length)
-        List.fromArray(a).reverse.elements.copyToArray(b, 0)
+        a.toList.reverse.elements.copyToArray(b, 0)
         b
     }
 }

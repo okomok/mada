@@ -21,7 +21,7 @@ object SymbolSet {
      */
     def apply[A](vs: Iterable[Vector[A]])(lt: compare.Func[A]): SymbolSet[A] = {
         val set = new SymbolSet(lt)
-        for (v <- vs.projection) {
+        for (v <- vs.view) {
             set.+=(v)
         }
         set

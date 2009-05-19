@@ -21,7 +21,7 @@ object SymbolMap {
      */
     def apply[A](es: Iterable[(Vector[A], Peg[A])])(lt: compare.Func[A]): SymbolMap[A] = {
         val m = new SymbolMap(lt)
-        for (e <- es.projection) {
+        for (e <- es.view) {
             m.put(e._1, e._2)
         }
         m
