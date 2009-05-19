@@ -14,13 +14,13 @@ import junit.framework.Assert._
 class LengthTest {
     def testTrivial: Unit = {
         val tr = sequence.of(1,2,3)
-        assertEquals(3, tr.length)
-        assertEquals(3, tr.length)
+        assertEquals(3, tr.size)
+        assertEquals(3, tr.size)
     }
 
     def testEmpty: Unit = {
         val tr = sequence.emptyOf[Int]
-        assertEquals(0, tr.length)
-        assertEquals(0, tr.length)
+        assertEquals(0, tr.size)
+        assertEquals(0, tr.size)
     }
 }

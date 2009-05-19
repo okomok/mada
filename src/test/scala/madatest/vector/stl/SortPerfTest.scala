@@ -24,7 +24,7 @@ class SortPerfTest {
 
     def testSpeedJava: Unit = {
         println("java-sort")
-        val e = fromJclList(longExampleArrayList1).cycle(cycleCount).toJclArrayList
+        val e = fromJclList(longExampleArrayList1).times(cycleCount).toJclArrayList
         val c = new java.util.Comparator[java.lang.Integer] { override def compare(x: Integer, y: Integer): Int = { x.intValue - y.intValue } }
         val start = java.lang.System.currentTimeMillis
         java.util.Collections.sort(e, c)
@@ -33,7 +33,7 @@ class SortPerfTest {
 
     def testSpeed: Unit = { // 2.1 times slower without intermediate-buffer
         println("mada-sort")
-        val e = fromJclList(longExampleArrayList1).cycle(cycleCount).clone
+        val e = fromJclList(longExampleArrayList1).times(cycleCount).clone
         val c: (Integer, Integer) => Boolean = _.intValue < _.intValue
         val start = java.lang.System.currentTimeMillis
         mada.vector.stl.sortBy(e, 0, e.size)(c)
@@ -42,7 +42,7 @@ class SortPerfTest {
 
     def testSpeedScala: Unit = { // 6.8 times slower
         println("scala-sort")
-        val e = fromJclList(longExampleArrayList1).cycle(cycleCount).toArray.elements.toList
+        val e = fromJclList(longExampleArrayList1).times(cycleCount).toArray.elements.toList
         val c: (Integer, Integer) => Boolean = _.intValue < _.intValue
         val start = java.lang.System.currentTimeMillis
         e.sortBy(c)

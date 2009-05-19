@@ -43,6 +43,12 @@ class notThreadSafe extends StaticAnnotation
 
 
 /**
+ * Overrides only for optimization.
+ */
+class optimize extends StaticAnnotation
+
+
+/**
  * Not override but overload.
  */
 class overload extends StaticAnnotation

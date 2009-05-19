@@ -27,5 +27,5 @@ private[mada] class IterablePeg[A](from: Iterable[A], pred: (A, A) => Boolean) e
         if (cur == end && it.hasNext) FAILURE else cur
     }
 
-    override def width = sequence.fromSIterable(from).length
+    override def width = sequence.fromSIterable(from).size
 }

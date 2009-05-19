@@ -14,7 +14,7 @@ import madatest.vectortest.detail.Example._
 
 class MixinTest {
     def testTrivial: Unit = {
-        val v = vector.from(Array(0,18,14,17)).mixin(vector.Mixin.readOnly)
+        val v = vector.from(Array(0,18,14,17)).mix(vector.mixin.readOnly)
         var thrown = false
         try {
             v.clone.sort

@@ -8,17 +8,6 @@ package mada.sequence
 
 
 /**
- * Applies <code>Mixin</code> to result of sequence-to-sequence methods.
- */
-case class Mix[+A](_1: Sequence[A], _2: Mixin) extends Forwarder[A] {
-    override protected lazy val delegate = _2(_1)
-    override protected def afterForward[B](that: Sequence[B]) = that.mix(_2)
-
-    override def mix(x: Mixin) = _1.mix(x `with` _2) // mix-mix fusion
-}
-
-
-/**
  * Mixin
  */
 trait Mixin { self =>

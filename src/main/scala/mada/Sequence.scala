@@ -19,7 +19,7 @@ trait Sequence[+A] {
 // begin
 
     /**
-     * Returns a starting iterator.
+     * Returns a beginning iterator.
      */
     def begin: Iterator[A]
 
@@ -92,9 +92,9 @@ trait Sequence[+A] {
     def isEmpty: Boolean = begin.isEnd
 
     /**
-     * Returns the length.
+     * Returns the size.
      */
-    def length: Int = {
+    def size: Int = {
         var i = 0
         val it = begin
         while (it) {
@@ -103,9 +103,6 @@ trait Sequence[+A] {
         }
         i
     }
-
-    @aliasOf("length")
-    final def size = length
 
     /**
      * Appends <code>that</code>.
@@ -131,9 +128,14 @@ trait Sequence[+A] {
     def filter(p: A => Boolean): Sequence[A] = Filter(this, p)
 
     /**
-     * @return  <code>(filter(p), filter(function.not(p)))</code>.
+     * Filters elements using <code>funtion.not(f)</code>.
      */
-    def partition(p: A => Boolean): (Sequence[A], Sequence[A]) = (filter(p), filter(function.not(p)))
+    def filterNot(p: A => Boolean): Sequence[A] = FilterNot(this, p)
+
+    /**
+     * @return  <code>(filter(p), filterNot(p))</code>.
+     */
+    def partition(p: A => Boolean): (Sequence[A], Sequence[A]) = (filter(p), filterNot(p))
 
     /**
      * What?
@@ -143,7 +145,7 @@ trait Sequence[+A] {
     /**
      * Applies <code>f</code> to each element.
      */
-    def foreach[B](f: A => B): Unit = {
+    def foreach(f: A => Unit): Unit = {
         val it = begin
         while (it) {
             f(~it)
@@ -375,7 +377,7 @@ trait Sequence[+A] {
     def times(n: Int): Sequence[A] = Times(this, n)
 
     /**
-     * Cuts projection.
+     * Cuts projection. (A result sequence is always readOnly.)
      */
     def force: Sequence[A] = Force(this)
 
@@ -386,19 +388,19 @@ trait Sequence[+A] {
     def _flatten[B](_this: Sequence[Sequence[B]]): Sequence[B] = Flatten(_this)
 
     /**
-     * Runtime mixin.
+     * Transforms sequence-to-sequence expression `seq.f.g.h` to `seq.x.f.x.g.x.h`.
      */
     def mix(x: Mixin): Sequence[A] = Mix(this, x)
 
     /**
      * Disables overrides.
      */
-    final def seal: Sequence[A] = Seal(this)
+    def seal: Sequence[A] = Seal(this)
 
     /**
      * Disables retraversing.
      */
-    final def singlePass: Sequence[A] = SinglePass(this)
+    def singlePass: Sequence[A] = SinglePass(this)
 
     /**
      * Steps by the specified stride.

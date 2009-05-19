@@ -15,9 +15,9 @@ class SingleTest {
     def testTrivial: Unit = {
         val t = sequence.single(99)
         val u = sequence.of(99)
-        assertEquals(1, t.length)
+        assertEquals(1, t.size)
         assertEquals(t, u)
-        assertEquals(1, t.length)
+        assertEquals(1, t.size)
         assertEquals(t, u)
     }
 }

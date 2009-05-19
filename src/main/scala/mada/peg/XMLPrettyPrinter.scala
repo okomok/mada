@@ -48,8 +48,8 @@ private[mada] class XMLPrettyPrinter(val out: java.io.Writer, val indentWidth: I
     def this(w: Int) = this(XMLPrettyPrinter.defaultWriter, w)
 
     private var indentLevel = 0
-    private val indentString = vector.single(' ').cycle(indentWidth)
-    private def indent = indentString.cycle(indentLevel)
+    private val indentString = vector.single(' ').times(indentWidth)
+    private def indent = indentString.times(indentLevel)
     private val stack = new java.util.ArrayDeque[Any]
 
     /**

@@ -41,6 +41,6 @@ private[mada] class UndivideVector[A](vv: Vector[Vector[A]]) extends Vector[A] {
     }
 
     private def quotient: Int = vv.nth.size - 1
-    private def divisor: Int = vv.nth.first.size
+    private def divisor: Int = vv.nth.head.size
     private def remainder: Int = vv.nth.last.size
 }

@@ -16,7 +16,7 @@ private[mada] case class FromOption[A](from: Option[A]) extends Vector[A] {
 private[mada] object FirstOption {
     def apply[A](v: Vector[A]): Option[A] = v match {
         case FromOption(_from) => _from // conversion fusion
-        case _ => if (v.isEmpty) None else Some(v.first)
+        case _ => if (v.isEmpty) None else Some(v.head)
     }
 }
 

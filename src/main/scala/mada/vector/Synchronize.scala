@@ -6,7 +6,7 @@
 
 package mada.vector
 
-
+/*
 private[mada] object Synchronize {
     def apply[A](v: Vector[A]): Vector[A] = new SynchronizeVector(v)
 }
@@ -95,3 +95,4 @@ private[mada] class SynchronizeVector[A](override val delegate: Vector[A]) exten
     override def reduce(op: (A, A) => A): A = synchronized { delegate.reduce(op) }
     override def reducer(op: (A, A) => A): Vector[A] = synchronized { delegate.reducer(op) }
 }
+*/

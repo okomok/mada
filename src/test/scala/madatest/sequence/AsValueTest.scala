@@ -18,11 +18,11 @@ class AsValueTest {
         assertNotSame(t, u)
         assertTrue(t.equalsIf(u)(mada.function.equal))
         assertEquals(t, u)
-        assertEquals(3, t.length)
-        assertEquals(3, u.length)
+        assertEquals(3, t.size)
+        assertEquals(3, u.size)
         assertEquals(t, u)
-        assertEquals(3, t.length)
-        assertEquals(3, u.length)
+        assertEquals(3, t.size)
+        assertEquals(3, u.size)
     }
 
     def testTrivial2: Unit = {

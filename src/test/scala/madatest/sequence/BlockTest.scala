@@ -81,7 +81,7 @@ class BlockLockTest extends NoBenchmark {
     val b = new BlockTest
     val tr = sequence.block(b.makeValuesTo(100000))
     override def run = {
-        val a = tr.length
+        val a = tr.size
         ()
     }
 }

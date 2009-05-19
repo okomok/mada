@@ -35,8 +35,11 @@ class ConversionTest {
         assertEquals(1, v(0))
         assertEquals(2, v(1))
         assertEquals(3, v(2))
+
+        /* no longer writable.
         v(0) = 9 // guarantees writable.
         assertEquals(9, v(0))
+        */
     }
 
     def testVector0: Unit = {

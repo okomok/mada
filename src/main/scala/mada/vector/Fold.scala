@@ -7,12 +7,6 @@
 package mada.vector
 
 
-private[mada] object FoldLeft {
-    def apply[A, B](v: Vector[A], z: B, op: (B, A) => B): B = {
-        stl.Accumulate(v, v.start, v.end, z, op)
-    }
-}
-
 private[mada] object FolderLeft {
     def apply[A, B](v: Vector[A], z: B, op: (B, A) => B): Vector[B] = {
         val a = new Array[B](v.size + 1)
