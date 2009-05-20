@@ -51,7 +51,8 @@ trait Stack[A] {
     @aliasOf("size")
     final def length: Int = size
 
+    final def compatible: Compatible[A] = new Compatible(this)
+
+    final def toSStack: scala.collection.mutable.Stack[A] = throw new Error
+
 }
-
-
-object Stack extends stack.Compatibles
