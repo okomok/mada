@@ -18,7 +18,7 @@ class TokenizeTest {
     def testTrivial: Unit = {
         val pe = mada.peg.from("abcd")
         val v = mada.vector.from("XabcdXXabcdXX")
-        val it = pe.tokenize(v.nth).elements
+        val it = pe.tokenize(v.nth).toSIterable.elements
         var c = 0
         while (it.hasNext) {
             val Region(_, i, j) = it.next
@@ -38,14 +38,14 @@ class TokenizeTest {
     def testBound: Unit = {
         val pe = mada.peg.from("abcd")
         val v = mada.vector.from("qqabqqab")
-        val it = pe.tokenize(v).elements
+        val it = pe.tokenize(v).toSIterable.elements
         assertFalse(it.hasNext)
     }
 
     def testBound2: Unit = {
         val pe = mada.peg.from("abcd")
         val v = mada.vector.from("abcd")
-        val it = pe.tokenize(v.nth).elements
+        val it = pe.tokenize(v.nth).toSIterable.elements
         val Region(_, i, j) = it.next
         assertEquals(0, i)
         assertEquals(4, j)
@@ -56,14 +56,14 @@ class TokenizeTest {
     def testEmpty: Unit = {
         val pe = mada.peg.from("")
         val v = mada.vector.from("")
-        val it = pe.tokenize(v).elements
+        val it = pe.tokenize(v).toSIterable.elements
         assertFalse(it.hasNext)
     }
 
     def testTokens: Unit = {
         val pe = single('a') >> (any.+ until ~"XX")
         val v = mada.vector.from("XabcdXXaBCDXX")
-        val it = pe.tokenize(v.nth).elements
+        val it = pe.tokenize(v.nth).toSIterable.elements
         var c = 0
         while (it.hasNext) {
             val w = it.next

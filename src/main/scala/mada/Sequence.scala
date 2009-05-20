@@ -326,7 +326,7 @@ trait Sequence[+A] {
         (take(n), drop(n))
     }
 
-    @conversion
+    @compatibleConversion
     def toSIterable: Iterable[A] = ToSIterable(this)
 
 
@@ -405,6 +405,9 @@ trait Sequence[+A] {
      */
     def uniqueBy(p: (A, A) => Boolean): Sequence[A] = UniqueBy(this, p)
 
+    @compatibleConversion
+    def toSome: ToSome[A] = new ToSome(this)
+
     @methodized @conversion
     def _stringize(_this: Sequence[Char]): String = {
         val sb = new StringBuilder
@@ -438,7 +441,7 @@ trait Sequence[+A] {
         r
     }
 
-    @methodized @conversion
+    @methodized @compatibleConversion
     def _toJIterable[B](_this: Sequence[B]): java.lang.Iterable[B] = ToJIterable(_this)
 
     @methodized @conversion
@@ -508,7 +511,10 @@ trait Sequence[+A] {
 }
 
 
-object Sequence extends sequence.Compatibles {
+object Sequence {
+
+
+// methodization
 
     sealed class OfInvariant[A](_this: Sequence[A]) {
         final def toSHashSet: scala.collection.Set[A] = _this._toSHashSet(_this)
@@ -531,5 +537,14 @@ object Sequence extends sequence.Compatibles {
         final def stringize: String = _this._stringize(_this)
     }
     implicit def ofChar(_this: Sequence[Char]): OfChar = new OfChar(_this)
+
+
+// compatibles
+
+    implicit def madaSequenceFromSIterable[A](from: Iterable[A]): Sequence[A] = fromSIterable(from)
+    implicit def madaSequenceFromJIterable[A](from: java.lang.Iterable[A]): Sequence[A] = fromJIterable(from)
+    implicit def madaSequenceUnstringize(from: String): Sequence[Char] = Unstringize(from)
+    implicit def madaSequenceFromJObjectInput(from: java.io.ObjectInput): Sequence[AnyRef] = fromJObjectInput(from)
+    implicit def madaSequenceFromJReader(from: java.io.Reader): Sequence[Char] = fromJReader(from)
 
 }

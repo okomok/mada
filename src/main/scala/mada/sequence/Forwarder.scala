@@ -69,6 +69,7 @@ trait Forwarder[+A] extends Sequence[A] with util.Forwarder {
     override def step(n: Int): Sequence[A] = delegate.step(n)
     override def unique: Sequence[A] = afterForward(delegate.unique)
     override def uniqueBy(p: (A, A) => Boolean): Sequence[A] = afterForward(delegate.uniqueBy(p))
+    override def toSome: ToSome[A] = delegate.toSome
     override def _stringize(_this: Sequence[Char]): String = delegate._stringize(_this)
     override def _toSHashMap[K, V](_this: Sequence[(K, V)]): scala.collection.Map[K, V] = delegate._toSHashMap(_this)
     override def _toSHashSet[B](_this: Sequence[B]): scala.collection.Set[B] = delegate._toSHashSet(_this)

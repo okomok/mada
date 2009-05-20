@@ -86,26 +86,21 @@ package object sequence {
 // conversions
 
     @returnThat
-    def from[A](to: Sequence[A]) = to
+    def from[A](to: Sequence[A]): Sequence[A] = to
 
-  // compatibles
-
-    @compatibles
-    def compatibles: Compatibles = Sequence
-
-    @conversion
+    @compatibleConversion
     def unstringize(from: String): Sequence[Char] = Unstringize(from)
 
-    @conversion
+    @compatibleConversion
     def fromSIterable[A](from: Iterable[A]): Sequence[A] = FromSIterable(from)
 
-    @conversion
+    @compatibleConversion
     def fromJIterable[A](from: java.lang.Iterable[A]): Sequence[A] = FromJIterable(from)
 
-    @conversion
+    @compatibleConversion
     def fromJObjectInput(from: java.io.ObjectInput): Sequence[AnyRef] = FromJObjectInput(from)
 
-    @conversion
+    @compatibleConversion
     def fromJReader(from: java.io.Reader): Sequence[Char] = FromJReader(from)
 
 

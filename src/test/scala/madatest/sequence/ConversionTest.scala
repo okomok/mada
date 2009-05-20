@@ -14,7 +14,7 @@ import junit.framework.Assert._
 class ConversionTest {
     def testIterable: Unit = {
         val t = sequence.of(1,2,3)
-        val it = t.toIterable
+        val it = t.toSome
         val i = it.elements
         assertEquals(1, i.next)
         assertEquals(2, i.next)
@@ -24,7 +24,7 @@ class ConversionTest {
 
     def testIterable0: Unit = {
         val t = sequence.emptyOf[Int]
-        val it = t.toIterable
+        val it = t.toSome
         val i = it.elements
         assertFalse(i.hasNext)
     }

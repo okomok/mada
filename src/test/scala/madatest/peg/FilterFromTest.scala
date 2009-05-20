@@ -18,6 +18,7 @@ class FilterFromTest {
         val pe = mada.peg.from("abcd")
         val v = mada.vector.from("XabcdXXabcdXX")
         val it = pe.filterFrom(v)
-        assertEquals(mada.vector.from("abcdabcd"), mada.vector.fromIterable(it))
+        assertEquals(mada.vector.from("abcdabcd"), it)
+        assertEquals(mada.vector.from("abcdabcd"), it)
     }
 }
