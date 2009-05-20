@@ -18,10 +18,16 @@ class aliasOf(name: String) extends StaticAnnotation
  */
 class compatibles extends StaticAnnotation
 
+
 /**
  * An explicit conversion
  */
 class conversion extends StaticAnnotation
+
+/**
+ * A lightweight conversion
+ */
+class compatibleConversion extends StaticAnnotation
 
 
 /**

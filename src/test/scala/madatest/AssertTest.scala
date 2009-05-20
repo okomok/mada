@@ -7,7 +7,8 @@
 package madatest
 
 
-import mada.Assert
+import mada.util.assert
+import mada.util
 import junit.framework.Assert._
 import junit.framework.TestCase
 
@@ -28,7 +29,7 @@ class AssertTest extends TestCase {
             assertTrue(mada.isDebug)
             var thrown = false
             try {
-                Assert("fail", false)
+                util.assert("fail", false)
             } catch {
                 case e: java.lang.AssertionError => thrown = true
             }
@@ -44,7 +45,7 @@ class AssertTest extends TestCase {
     def testVerify {
         var thrown = false
         try {
-            Assert.verify("fail", mustBeEvaluated)
+            util.verify("fail", mustBeEvaluated)
         } catch {
             case e: junit.framework.AssertionFailedError => thrown = true
         }
@@ -52,18 +53,18 @@ class AssertTest extends TestCase {
     }
 
     def testNotEvaluatedMsg: Unit = {
-        Assert(neverEvaluatedMsg, true)
-        Assert.verify(neverEvaluatedMsg, true)
+        util.assert(neverEvaluatedMsg, true)
+        util.verify(neverEvaluatedMsg, true)
     }
 
     def testCheck: Unit = {
         mada.blend.doIf[mada.isDebug] {
             assertTrue(mada.isDebug)
-            assertEquals(12, Assert.ensure(12)(10 < (_: Int)))
+            assertEquals(12, util.ensure(12)(10 < (_: Int)))
 
             var thrown = false
             try {
-                Assert.ensure("fail", 12)(10 > (_: Int))
+                util.ensure("fail", 12)(10 > (_: Int))
             } catch {
                 case e: java.lang.AssertionError => thrown = true
             }

@@ -7,7 +7,7 @@
 package madatest
 
 
-import mada.implies
+import mada.util.implies
 import junit.framework.Assert._
 
 

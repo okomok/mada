@@ -7,7 +7,7 @@
 package mada.sequence
 
 
-trait Forwarder[+A] extends Sequence[A] with any.Forwarder {
+trait Forwarder[+A] extends Sequence[A] with util.Forwarder {
     override protected def delegate: Sequence[A]
 
     protected def afterForward[B](that: Sequence[B]): Sequence[B] = that

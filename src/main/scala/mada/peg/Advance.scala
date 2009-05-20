@@ -12,7 +12,7 @@ private[mada] object Advance {
 }
 
 private[mada] class AdvancePeg[A](n: Int) extends Peg[A] {
-    Assert(n >= 0)
+    util.assert(n >= 0)
 
     override def parse(v: Vector[A], start: Int, end: Int) = {
         val cur = start + n

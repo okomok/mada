@@ -9,7 +9,7 @@ package mada.vector.para
 
 private[mada] object Each {
     def apply[A](v: Vector[A], f: A => Unit, grainSize: Int): Unit = {
-        Assert(!IsParallel(v))
+        util.assert(!IsParallel(v))
         import function.future
 
         if (grainSize == 1) {

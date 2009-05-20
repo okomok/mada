@@ -12,7 +12,7 @@ private[mada] object Map {
 }
 
 private[mada] class MapVector[Z, A](v: Vector[Z], f: Z => A, grainSize: Int) extends Forwarder[A] {
-    Assert(!IsParallel(v))
+    util.assert(!IsParallel(v))
     import function.future
 
     override lazy val delegate = {

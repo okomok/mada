@@ -83,7 +83,7 @@ private[mada] class XMLPrettyPrinter(val out: java.io.Writer, val indentWidth: I
      * @return  <code>out.close</code>.
      */
     override def close: Unit = {
-        Assert(stack.isEmpty)
+        util.assert(stack.isEmpty)
         out.close
     }
 

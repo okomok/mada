@@ -8,7 +8,7 @@ package mada.sequence.iterator
 
 
 case class Memoize[A](_1: Iterator[A]) extends Iterator[A] {
-    private var e = NoneOf[A]
+    private var e = option.NoneOf[A]
 
     override def isEnd = _1.isEnd
     override def deref = {

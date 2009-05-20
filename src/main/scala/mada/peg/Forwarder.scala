@@ -7,7 +7,7 @@
 package mada.peg
 
 
-trait Forwarder[A] extends Peg[A] with mada.any.Forwarder {
+trait Forwarder[A] extends Peg[A] with mada.util.Forwarder {
     override protected def delegate: Peg[A]
 
     protected def beforeForward[B](that: Peg[B]): Peg[B] = that

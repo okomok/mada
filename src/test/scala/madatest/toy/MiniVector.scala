@@ -54,7 +54,7 @@ class MiniVectorTest {
             case VAppend(VAppend(v1, v2), v3) => assertEquals(2, v1.vid)
             case _ => fail("doh")
         }
-        mada.as[MiniSequence[Int]](w) match {
+        mada.util.as[MiniSequence[Int]](w) match {
             case TAppend(TAppend(t1, t2), t3) => assertEquals(1, t1.tid)
             case _ => fail("doh")
         }

@@ -258,13 +258,7 @@ trait Sequence[+A] {
     /**
      * Returns all the elements without the first one.
      */
-    def tail: Sequence[A] = {
-        val it = begin
-        if (!it) {
-            throw new NoSuchElementException("tail on empty sequence")
-        }
-        bind(it)
-    }
+    def tail: Sequence[A] = Tail(this)
 
     /**
      * Returns the last element.
@@ -286,7 +280,7 @@ trait Sequence[+A] {
      * Optionally returns the last element.
      */
     def lastOption: Option[A] = {
-        var e = NoneOf[A]
+        var e = option.NoneOf[A]
         val it = begin
         while (it) {
             e = Some(~it)
@@ -297,18 +291,12 @@ trait Sequence[+A] {
     /**
      * Takes at most <code>n</code> elements.
      */
-    def take(n: Int): Sequence[A] = {
-        throwIfNegative(n, "take")
-        Take(this, n)
-    }
+    def take(n: Int): Sequence[A] = Take(this, n)
 
     /**
      * Drops at most <code>n</code> elements.
      */
-    def drop(n: Int): Sequence[A] = {
-        throwIfNegative(n, "drop")
-        Drop(this, n)
-    }
+    def drop(n: Int): Sequence[A] = Drop(this, n)
 
     /**
      * @return  <code>drop(n).take(n - m)</code>.

@@ -12,7 +12,7 @@ private[mada] object Parallel {
 }
 
 private[mada] class ParallelVector[A](override val delegate: Vector[A], override val grainSize: Int) extends Forwarder[A] {
-    Assert(!IsParallel(delegate))
+    util.assert(!IsParallel(delegate))
     ThrowIf.nonpositive(grainSize, "grain size")
   // value semantics
     override def equalsIf[B](that: Vector[B])(p: (A, B) => Boolean) = para.EqualsIf(delegate, that, p, grainSize)

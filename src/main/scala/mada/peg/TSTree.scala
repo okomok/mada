@@ -129,8 +129,8 @@ class TSTree[A, V](_lt: compare.Func[A]) {
     }
 
     private def copyInto(key: Vector[A], _first: Int, last: Int, _result: TSTreeNode[A, V]): TSTreeNode[A, V] = {
-        Assert(_first != last)
-        Assert(_result ne null)
+        util.assert(_first != last)
+        util.assert(_result ne null)
         var first = _first
         var result = _result
 
@@ -164,8 +164,8 @@ class TSTree[A, V](_lt: compare.Func[A]) {
     }
 
     private def search(_first1: TSTreeNode[A, V], key2: Vector[A], _first2: Int, last2: Int): (TSTreeNode[A, V], Int) = {
-        Assert(_first1 ne null)
-        Assert(_first2 != last2)
+        util.assert(_first1 ne null)
+        util.assert(_first2 != last2)
         var first1 = _first1
         var first2 = _first2
         var cur1: TSTreeNode[A, V] = null

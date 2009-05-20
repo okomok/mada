@@ -12,16 +12,16 @@ package object stack {
     @aliasOf("Stack")
     type Type[A] = Stack[A]
 
-    @conversion
-    def from[A](from: Compatible[A]): Stack[A] = from._1
+    @compatibleConversion
+    def from[A](to: Stack[A]): Stack[A] = to
 
-    @conversion
+    @compatibleConversion
     def fromJDeque[A](from: java.util.Deque[A]): Stack[A] = FromJDeque(from)
 
-    @conversion
+    @compatibleConversion
     def fromSStack[A](from: scala.collection.mutable.Stack[A]): Stack[A] = FromSStack(from)
 
-    @conversion
+    @compatibleConversion
     def fromSArrayStack[A](from: scala.collection.mutable.ArrayStack[A]): Stack[A] = FromSArrayStack(from)
 
 }

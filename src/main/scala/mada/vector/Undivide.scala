@@ -21,7 +21,7 @@ private[mada] object Undivide {
 }
 
 private[mada] class UndivideVector[A](vv: Vector[Vector[A]]) extends Vector[A] {
-    Assert(!vv.isEmpty)
+    util.assert(!vv.isEmpty)
 
     override def start = 0
     override def end = (quotient * divisor) + remainder

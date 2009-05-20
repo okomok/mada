@@ -34,7 +34,7 @@ case class Block[+A](_1: Yield[A] => Unit) extends Sequence[A] {
         }
 
         private def doExchange: Unit = {
-            Assert(in.buf.isEmpty)
+            util.assert(in.buf.isEmpty)
             in = x.exchange(in)
         }
     }
@@ -68,7 +68,7 @@ private object _Block {
 
         private def doExchange: Unit = {
             out = x.exchange(out)
-            Assert(out.buf.isEmpty)
+            util.assert(out.buf.isEmpty)
         }
     }
 

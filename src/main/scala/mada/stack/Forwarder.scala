@@ -7,17 +7,16 @@
 package mada.stack
 
 
-trait Forwarder[A] extends Stack[A] with any.Forwarder {
+trait Forwarder[A] extends Stack[A] with util.Forwarder {
     override protected def delegate: Stack[A]
 
-    protected def beforeForward[B](that: Stack[B]): Stack[B] = that
+    override def push(e: A): Unit = delegate.push(e)
+    override def pop: A = delegate.pop
+    override def peek: A = delegate.peek
+    override def isEmpty: Boolean = delegate.isEmpty
+    override def size: Int = delegate.size
+    override def clear: Unit = delegate.clear
 
-    override def push(e: A): Unit = beforeForward(delegate).push(e)
-    override def pop: A = beforeForward(delegate).pop
-    override def peek: A = beforeForward(delegate).peek
-    override def isEmpty: Boolean = beforeForward(delegate).isEmpty
-    override def size: Int = beforeForward(delegate).size
-    override def clear: Unit = beforeForward(delegate).clear
-
-    override def toString: String = beforeForward(delegate).toString
+    override def toSome: ToSome[A] = delegate.toSome
+    override def toString: String = delegate.toString
 }

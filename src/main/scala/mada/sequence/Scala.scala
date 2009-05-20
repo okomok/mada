@@ -26,7 +26,7 @@ case class ToSIterable[+A](_1: Sequence[A]) extends Iterable[A] {
 }
 
 
-trait SIteratorForwarder[A] extends scala.Iterator[A] with any.Forwarder {
+trait SIteratorForwarder[A] extends scala.Iterator[A] with util.Forwarder {
     override protected def delegate: scala.Iterator[A]
 
     override def hasNext = delegate.hasNext

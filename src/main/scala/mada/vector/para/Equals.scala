@@ -9,7 +9,7 @@ package mada.vector.para
 
 private[mada] object EqualsIf {
     def apply[A, B](v: Vector[A], w: Vector[B], p: (A, B) => Boolean, grainSize: Int): Boolean = {
-        Assert(!IsParallel(v))
+        util.assert(!IsParallel(v))
 
         if (v.size != w.size) {
             false

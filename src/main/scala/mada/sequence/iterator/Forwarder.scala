@@ -8,7 +8,7 @@ package mada.sequence.iterator
 
 
 // probably unused.
-trait Forwarder[+A] extends Iterator[A] with any.Forwarder {
+trait Forwarder[+A] extends Iterator[A] with util.Forwarder {
     override protected def delegate: Iterator[A]
 
     override def isEnd = delegate.isEnd

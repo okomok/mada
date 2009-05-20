@@ -9,14 +9,14 @@ package mada.vector.para
 
 private[mada] object Filter {
     def apply[A](v: Vector[A], p: A => Boolean, grainSize: Int): Vector[A] = {
-        Assert(!IsParallel(v))
+        util.assert(!IsParallel(v))
         v.clone.parallel(grainSize).mutatingFilter(p).readOnly
     }
 }
 
 private[mada] object MutatingFilter {
     def apply[A](v: Vector[A], p: A => Boolean, grainSize: Int): Vector[A] = {
-        Assert(!IsParallel(v))
+        util.assert(!IsParallel(v))
 
         vector.flatten(
             v.parallelRegions(grainSize).map{ w => w.mutatingFilter(p) }.

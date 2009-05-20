@@ -45,14 +45,22 @@ trait Stack[A] {
      */
     def clear: Unit
 
+    @compatibleConversion
+    def toSome: ToSome[A] = new ToSome(this)
+
+    @compatibleConversion
+    def toSStack: scala.collection.mutable.Stack[A] = throw new Error
+
     @aliasOf("peek")
     final def top: A = peek
 
     @aliasOf("size")
     final def length: Int = size
 
-    final def compatible: Compatible[A] = new Compatible(this)
+}
 
-    final def toSStack: scala.collection.mutable.Stack[A] = throw new Error
-
+object Stack {
+    implicit def madaStackFromJDeque[A](from: java.util.Deque[A]): Stack[A] = fromJDeque(from)
+    implicit def madaStackFromSStack[A](from: scala.collection.mutable.Stack[A]): Stack[A] = fromSStack(from)
+    implicit def madaStackFromSArrayStack[A](from: scala.collection.mutable.ArrayStack[A]): Stack[A] = fromSArrayStack(from)
 }

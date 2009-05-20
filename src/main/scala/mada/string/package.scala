@@ -10,11 +10,11 @@ package mada
 package object string {
 
     /**
-     * Concatenates all the arguments of a given iterable of objects.
+     * Concatenates all the arguments of a given sequence of objects.
      */
-    def flatten(ss: Iterable[Any]): String = {
+    def flatten(ss: Sequence[Any]): String = {
         val sb = new StringBuilder
-        for (s <- ss.view) {
+        for (s <- ss) {
             sb.append(s.toString)
         }
         sb.toString
