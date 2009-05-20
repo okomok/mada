@@ -21,12 +21,12 @@ private[mada] class ListVector[A](val from: List[A]) extends Vector[A] {
     override def update(i: Int, e: A) = from.set(i, e)
 
     override def sortBy(lt: compare.Func[A]) = {
-        Collections.sort(from, compare.toComparator(lt))
+        Collections.sort(from, compare.from(lt).toJComparator)
         this
     }
 
     override def stableSortBy(lt: compare.Func[A]) = {
-        Collections.sort(from, compare.toComparator(lt))
+        Collections.sort(from, compare.from(lt).toJComparator)
         this
     }
 }

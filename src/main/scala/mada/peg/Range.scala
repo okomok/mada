@@ -12,7 +12,7 @@ private[mada] object Range {
 }
 
 private[mada] class RangePeg[A](i: A, j: A, c: Compare[A]) extends Peg[A] {
-    private val ord = compare.toOrdering(c)
+    private val ord = c.toOrdering
 
     override def parse(v: Vector[A], start: Int, end: Int) = {
         if (start == end) {

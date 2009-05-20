@@ -594,11 +594,11 @@ object Vector extends vector.Compatibles {
 
     // Hmm, Ordering should have taken [-A]?
     implicit def forOrdering[A](implicit c: Ordering[A]): Ordering[Vector[A]] = {
-        compare.toOrdering(forCompare(compare.fromOrdering(c)))
+        forCompare(compare.fromOrdering(c)).toOrdering
     }
 
     /*implicit*/ def forOrdering_[A](implicit c: compare.GetOrdered[A]): Ordering[Vector[A]] = {
-        compare.toOrdering(forCompare(compare.fromGetOrdered(c)))
+        forCompare(compare.fromGetOrdered(c)).toOrdering
     }
 
     // For unambiguous overload resolution, `implicit` is facing the alternative

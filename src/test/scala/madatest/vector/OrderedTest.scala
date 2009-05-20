@@ -26,7 +26,7 @@ class OrderedTest {
     }
 
     def testOrdering: Unit = {
-        implicit val charComp1 = mada.compare.toOrdering{ (x: Char, y: Char) => x < y }
+        implicit val charComp1 = mada.compare.from{ (x: Char, y: Char) => x < y }.toOrdering
     //    implicit val charComp2 = mada.compare.toGetOrdered{ (x: Char, y: Char) => x < y }
         val v1 = vector.from("ab")
         val v2 = vector.from("")

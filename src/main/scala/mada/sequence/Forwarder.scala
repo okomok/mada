@@ -62,7 +62,7 @@ trait Forwarder[+A] extends Sequence[A] with util.Forwarder {
     override def cycle: Sequence[A] = afterForward(delegate.cycle)
     override def times(n: Int): Sequence[A] = delegate.times(n)
     override def force: Sequence[A] = afterForward(delegate.force)
-    override def _flatten[B](_this: Sequence[Sequence[B]]): Sequence[B] = afterForward(delegate._flatten(_this))
+    override def _flatten[B](_this: Sequence[Sequence[B]]): Sequence[B] = afterForward(delegate.asInstanceOf[Sequence[Sequence[B]]].flatten)
     override def mix(x: Mixin): Sequence[A] = afterForward(delegate.mix(x))
     override def seal: Sequence[A] = afterForward(delegate.seal)
     override def singlePass: Sequence[A] = afterForward(delegate.singlePass)
@@ -70,11 +70,11 @@ trait Forwarder[+A] extends Sequence[A] with util.Forwarder {
     override def unique: Sequence[A] = afterForward(delegate.unique)
     override def uniqueBy(p: (A, A) => Boolean): Sequence[A] = afterForward(delegate.uniqueBy(p))
     override def toSome: ToSome[A] = delegate.toSome
-    override def _stringize(_this: Sequence[Char]): String = delegate._stringize(_this)
-    override def _toSHashMap[K, V](_this: Sequence[(K, V)]): scala.collection.Map[K, V] = delegate._toSHashMap(_this)
-    override def _toSHashSet[B](_this: Sequence[B]): scala.collection.Set[B] = delegate._toSHashSet(_this)
-    override def _toJIterable[B](_this: Sequence[B]): java.lang.Iterable[B] = delegate._toJIterable(_this)
-    override def _toVector[B](_this: Sequence[B]): Vector[B] = delegate._toVector(_this)
+    override def _stringize(_this: Sequence[Char]): String = delegate.asInstanceOf[Sequence[Char]].stringize
+    override def _toSHashMap[K, V](_this: Sequence[(K, V)]): scala.collection.Map[K, V] = delegate.asInstanceOf[Sequence[(K, V)]].toSHashMap
+    override def _toSHashSet[B](_this: Sequence[B]): scala.collection.Set[B] = delegate.asInstanceOf[Sequence[B]].toSHashSet
+    override def _toJIterable[B](_this: Sequence[B]): java.lang.Iterable[B] = delegate.asInstanceOf[Sequence[B]].toJIterable
+    override def _toVector[B](_this: Sequence[B]): Vector[B] = delegate.asInstanceOf[Sequence[B]].toVector
     override def zip[B](that: Sequence[B]): Sequence[(A, B)] = afterForward(delegate.zip(that))
 
     override def merge[B >: A](that: Sequence[B])(implicit c: Compare[B]): Sequence[B] = afterForward(delegate.merge(that)(c))
