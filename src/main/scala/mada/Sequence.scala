@@ -327,7 +327,7 @@ trait Sequence[+A] {
     }
 
     @compatibleConversion
-    def toSIterable: Iterable[A] = ToSIterable(this)
+    def toSSequence: scala.collection.Sequence[A] = ToSSequence(this)
 
 
 // misc
@@ -517,24 +517,24 @@ object Sequence {
 // methodization
 
     sealed class OfInvariant[A](_this: Sequence[A]) {
-        final def toSHashSet: scala.collection.Set[A] = _this._toSHashSet(_this)
-        final def toJIterable: java.lang.Iterable[A] = _this._toJIterable(_this)
-        final def toVector: Vector[A] = _this._toVector(_this)
+        def toSHashSet: scala.collection.Set[A] = _this._toSHashSet(_this)
+        def toJIterable: java.lang.Iterable[A] = _this._toJIterable(_this)
+        def toVector: Vector[A] = _this._toVector(_this)
     }
     implicit def ofInvariant[A](_this: Sequence[A]): OfInvariant[A] = new OfInvariant(_this)
 
     sealed class OfSequence[A](_this: Sequence[Sequence[A]]) {
-        final def flatten: Sequence[A] = _this._flatten(_this)
+        def flatten: Sequence[A] = _this._flatten(_this)
     }
     implicit def ofSequence[A](_this: Sequence[Sequence[A]]): OfSequence[A] = new OfSequence(_this)
 
     sealed class OfTuple2[T1, T2](_this: Sequence[(T1, T2)]) {
-        final def toSHashMap: scala.collection.Map[T1, T2] = _this._toSHashMap(_this)
+        def toSHashMap: scala.collection.Map[T1, T2] = _this._toSHashMap(_this)
     }
     implicit def ofTuple2[T1, T2](_this: Sequence[(T1, T2)]): OfTuple2[T1, T2] = new OfTuple2(_this)
 
     sealed class OfChar(_this: Sequence[Char]) {
-        final def stringize: String = _this._stringize(_this)
+        def stringize: String = _this._stringize(_this)
     }
     implicit def ofChar(_this: Sequence[Char]): OfChar = new OfChar(_this)
 

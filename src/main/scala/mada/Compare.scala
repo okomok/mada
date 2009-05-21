@@ -47,9 +47,9 @@ object Compare {
 // methodization
 
     sealed class OfInvariant[A](_this: Compare[A]) {
-        final def toGetOrdered: GetOrdered[A] = _this._toGetOrdered(_this)
-        final def toOrdering: Ordering[A] = _this._toOrdering(_this)
-        final def toJComparator: java.util.Comparator[A] = _this._toJComparator(_this)
+        def toGetOrdered: GetOrdered[A] = _this._toGetOrdered(_this)
+        def toOrdering: Ordering[A] = _this._toOrdering(_this)
+        def toJComparator: java.util.Comparator[A] = _this._toJComparator(_this)
     }
     implicit def ofInvariant[A](_this: Compare[A]): OfInvariant[A] = new OfInvariant(_this)
 

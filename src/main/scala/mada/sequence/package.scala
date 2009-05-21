@@ -21,7 +21,7 @@ package object sequence {
      */
     object of {
         def apply[A](from: A*): Sequence[A] = fromSIterable(from)
-        // def unapplySeq[A](from: Sequence[A]): Option[Seq[A]] = Some(from.toSeq)
+        def unapplySeq[A](from: Sequence[A]): Option[Seq[A]] = Some(from.toSSequence)
     }
 
     /**

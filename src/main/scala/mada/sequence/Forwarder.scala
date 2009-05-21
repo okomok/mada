@@ -55,7 +55,7 @@ trait Forwarder[+A] extends Sequence[A] with util.Forwarder {
     //override def copyToArray[B >: A](xs: Array[B], begin: Int, len: Int) = delegate.copyToArray(xs, begin, len)
     //override def copyToArray[B >: A](xs: Array[B], begin: Int) = delegate.copyToArray(xs, begin)
     //override def toArray[B >: A]: Array[B] = delegate.toArray
-    override def toSIterable: Iterable[A] = delegate.toSIterable
+    override def toSSequence: scala.collection.Sequence[A] = delegate.toSSequence
 
     override def at(n: Int): A = delegate.at(n)
     override def contains(e: Any): Boolean = delegate.contains(e)
