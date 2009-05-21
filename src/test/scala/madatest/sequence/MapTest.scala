@@ -14,8 +14,8 @@ import junit.framework.Assert._
 class MapTest {
     def testTrivial: Unit = {
         new NotStartable[Int].map(_ + 1)
-        val t = sequence.of(1,2,3)
-        val u = sequence.of(2,3,4)
+        val t = sequence.Of(1,2,3)
+        val u = sequence.Of(2,3,4)
         val k = t.map(_ + 1)
         assertEquals(u, k)
         assertEquals(u, k)
@@ -30,9 +30,16 @@ class MapTest {
     }
 
     def testFusion: Unit = {
-        val t = sequence.of(1,2,3)
-        val u = sequence.of(4,5,6)
-        val k = t.map(_ + 1).map(_ + 2)
+        val t = sequence.Of(1,2,3)
+        val u = sequence.Of(7,8,9)
+        val k = t.map(_ + 1).map(_ + 2).map(_ + 3)
+
+        import sequence.Map
+        k match {
+            case Map(Map(s, f), g) => fail
+            case _ => ()
+        }
+
         assertEquals(u, k)
         assertEquals(u, k)
     }

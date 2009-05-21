@@ -13,7 +13,7 @@ import junit.framework.Assert._
 
 class ForeachTest {
     def testTrivial: Unit = {
-        val tr = sequence.of(1,2,3)
+        val tr = sequence.Of(1,2,3)
         val k1 = new java.util.ArrayList[Int]
         val k2 = new java.util.ArrayList[Int]
         tr.foreach(e => k1.add(e))

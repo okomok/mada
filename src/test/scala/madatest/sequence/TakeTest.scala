@@ -14,9 +14,9 @@ import junit.framework.Assert._
 class TakeTest {
     def testTrivial: Unit = {
         new NotStartable[Int].take(10)
-        val t = sequence.of(4,5,1,3,2,9,7,10)
-        val u = sequence.of(4,5,1)
-        val v = sequence.of(4,5,1,3,2,9,7,10)
+        val t = sequence.Of(4,5,1,3,2,9,7,10)
+        val u = sequence.Of(4,5,1)
+        val v = sequence.Of(4,5,1,3,2,9,7,10)
         val k0 = t.take(0)
         assertTrue(k0.isEmpty)
         assertTrue(k0.isEmpty)
@@ -32,9 +32,9 @@ class TakeTest {
     }
 
     def testTrivial2: Unit = {
-        val t = sequence.of(14,15,11,3,2,9,7,10)
-        val u = sequence.of(14,15,11)
-        val v = sequence.of(14,15,11,3,2,9,7,10)
+        val t = sequence.Of(14,15,11,3,2,9,7,10)
+        val u = sequence.Of(14,15,11)
+        val v = sequence.Of(14,15,11,3,2,9,7,10)
         val k0 = t.takeWhile(_ > 100)
         assertTrue(k0.isEmpty)
         assertTrue(k0.isEmpty)
@@ -47,8 +47,8 @@ class TakeTest {
     }
 
     def testFusion: Unit = {
-        val t = sequence.of(9,7,10,1,2)
-        val u = sequence.of(9,7,10)
+        val t = sequence.Of(9,7,10,1,2)
+        val u = sequence.Of(9,7,10)
         val k = t.take(2).take(3)
         assertEquals(k, u)
     }

@@ -16,8 +16,8 @@ class JavaTest {
     def testJioReader: Unit = {
         val arr = mada.Vector('a','b','c').toArray
         val tr = sequence.from(new java.io.CharArrayReader(arr))
-        assertEquals(sequence.of('a','b','c'), tr)
-        assertEquals(sequence.of('a','b','c'), tr) // traverse again.
+        assertEquals(sequence.Of('a','b','c'), tr)
+        assertEquals(sequence.Of('a','b','c'), tr) // traverse again.
     }
 
 }

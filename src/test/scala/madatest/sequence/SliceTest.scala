@@ -14,11 +14,11 @@ import junit.framework.Assert._
 class SliceTest {
     def testTrivial: Unit = {
         new NotStartable[Int].slice(1,2)
-        val t = sequence.of(4,5,1,3,2,9,7,10)
-        val u = sequence.of(4,5,1)
-        val v = sequence.of(4,5,1,3,2,9,7,10)
-        val w = sequence.of(1,3,2,9)
-        val x = sequence.of(1,3,2,9,7,10)
+        val t = sequence.Of(4,5,1,3,2,9,7,10)
+        val u = sequence.Of(4,5,1)
+        val v = sequence.Of(4,5,1,3,2,9,7,10)
+        val w = sequence.Of(1,3,2,9)
+        val x = sequence.Of(1,3,2,9,7,10)
         val k0 = t.slice(3, 3)
         assertTrue(k0.isEmpty)
         assertTrue(k0.isEmpty)

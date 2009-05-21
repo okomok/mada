@@ -17,20 +17,20 @@ class SortedTest {
 
     def testMerge: Unit = {
         new NotStartable[Int]() merge new NotStartable[Int]()
-        val A1 = sequence.of(1,6,7,10,14,17)
-        val A2 = sequence.of(2,5,8,11,13,18)
-        val A3 = sequence.of(3,4,9,12,15,16)
-        val AA = sequence.of(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18)
+        val A1 = sequence.Of(1,6,7,10,14,17)
+        val A2 = sequence.Of(2,5,8,11,13,18)
+        val A3 = sequence.Of(3,4,9,12,15,16)
+        val AA = sequence.Of(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18)
         val B1 = A1 merge A2 merge A3
         assertEquals(AA, B1)
         assertEquals(AA, B1) // run again.
     }
 
     def testMergeEmpty: Unit = {
-        val A1 = sequence.of(1,6,7,10,14,17)
-        val A2 = sequence.of(2,5,8,11,13,18)
-        val A3 = sequence.of(3,4,9,12,15,16)
-        val AA = sequence.of(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18)
+        val A1 = sequence.Of(1,6,7,10,14,17)
+        val A2 = sequence.Of(2,5,8,11,13,18)
+        val A3 = sequence.Of(3,4,9,12,15,16)
+        val AA = sequence.Of(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18)
         val B1 = A1 merge A2 merge sequence.empty merge A3 merge sequence.empty
         assertEquals(AA, B1)
         assertEquals(AA, B1) // run again.
@@ -56,18 +56,18 @@ class SortedTest {
 
     def testUnion: Unit = {
         new NotStartable[Int]() union new NotStartable[Int]()
-        val A1 = sequence.of(1,3,5,7,9,11)
-        val A2 = sequence.of(1,1,2,3,5,8,13)
-        val AA = sequence.of(1,1,2,3,5,7,8,9,11,13)
+        val A1 = sequence.Of(1,3,5,7,9,11)
+        val A2 = sequence.Of(1,1,2,3,5,8,13)
+        val AA = sequence.Of(1,1,2,3,5,7,8,9,11,13)
         val B1 = A1 union A2
         assertEquals(AA, B1)
         assertEquals(AA, B1) // run again.
     }
 
     def testUnionEmpty: Unit = {
-        val A1 = sequence.of(1,3,5,7,9,11)
-        val A2 = sequence.of(1,1,2,3,5,8,13)
-        val AA = sequence.of(1,1,2,3,5,7,8,9,11,13)
+        val A1 = sequence.Of(1,3,5,7,9,11)
+        val A2 = sequence.Of(1,1,2,3,5,8,13)
+        val AA = sequence.Of(1,1,2,3,5,7,8,9,11,13)
         val B1 = sequence.emptyOf[Int] union A1 union A2 union sequence.empty
         assertEquals(AA, B1)
         assertEquals(AA, B1) // run again.
@@ -93,18 +93,18 @@ class SortedTest {
 
     def testIntersection: Unit = {
         new NotStartable[Int]() intersection new NotStartable[Int]()
-        val A1 = sequence.of(1,3,5,7,9,11)
-        val A2 = sequence.of(1,1,2,3,5,8,13)
-        val AA = sequence.of(1,3,5)
+        val A1 = sequence.Of(1,3,5,7,9,11)
+        val A2 = sequence.Of(1,1,2,3,5,8,13)
+        val AA = sequence.Of(1,3,5)
         val B1 = A1 intersection A2
         assertEquals(AA, B1)
         assertEquals(AA, B1) // run again.
     }
 
     def testIntersectionEmpty: Unit = {
-        val A1 = sequence.of(1,3,5,7,9,11)
-        val A2 = sequence.of(1,1,2,3,5,8,13)
-        val AA = sequence.of(1,3,5)
+        val A1 = sequence.Of(1,3,5,7,9,11)
+        val A2 = sequence.Of(1,1,2,3,5,8,13)
+        val AA = sequence.Of(1,3,5)
         val B1 = sequence.emptyOf[Int] intersection A1 intersection A2 intersection sequence.empty
         assertTrue( B1.isEmpty )
         assertTrue( B1.isEmpty ) // run again.
@@ -130,18 +130,18 @@ class SortedTest {
 
     def testDifference: Unit = {
         new NotStartable[Int]() difference new NotStartable[Int]()
-        val A1 = sequence.of(1,3,5,7,9,11)
-        val A2 = sequence.of(1,1,2,3,5,8,13)
-        val AA = sequence.of(7,9,11)
+        val A1 = sequence.Of(1,3,5,7,9,11)
+        val A2 = sequence.Of(1,1,2,3,5,8,13)
+        val AA = sequence.Of(7,9,11)
         val B1 = A1 difference A2
         assertEquals(AA, B1)
         assertEquals(AA, B1) // run again.
     }
 
     def testDifferenceEmpty: Unit = {
-        val A1 = sequence.of(1,3,5,7,9,11)
-        val A2 = sequence.of(1,1,2,3,5,8,13)
-        val AA = sequence.of(7,9,11)
+        val A1 = sequence.Of(1,3,5,7,9,11)
+        val A2 = sequence.Of(1,1,2,3,5,8,13)
+        val AA = sequence.Of(7,9,11)
         val B1 = A1 difference sequence.empty difference A2 difference sequence.empty
         assertEquals(AA, B1)
         assertEquals(AA, B1) // run again.
@@ -167,9 +167,9 @@ class SortedTest {
 
     def testSymmetricDifference: Unit = {
         new NotStartable[Int]() symmetricDifference new NotStartable[Int]()
-        val A1 = sequence.of(1,3,5,7,9,11)
-        val A2 = sequence.of(1,1,2,3,5,8,13)
-        val AA = sequence.of(1,2,7,8,9,11,13)
+        val A1 = sequence.Of(1,3,5,7,9,11)
+        val A2 = sequence.Of(1,1,2,3,5,8,13)
+        val AA = sequence.Of(1,2,7,8,9,11,13)
         val B1 = A1 symmetricDifference A2
         assertEquals(AA, B1)
         assertEquals(AA, B1) // run again.
@@ -179,9 +179,9 @@ class SortedTest {
     }
 
     def testSymmetricDifferenceEmpty: Unit = {
-        val A1 = sequence.of(1,3,5,7,9,11)
-        val A2 = sequence.of(1,1,2,3,5,8,13)
-        val AA = sequence.of(1,2,7,8,9,11,13)
+        val A1 = sequence.Of(1,3,5,7,9,11)
+        val A2 = sequence.Of(1,1,2,3,5,8,13)
+        val AA = sequence.Of(1,2,7,8,9,11,13)
         val B1 = A1 symmetricDifference sequence.empty symmetricDifference A2 symmetricDifference sequence.empty
         assertEquals(AA, B1)
         assertEquals(AA, B1) // run again.

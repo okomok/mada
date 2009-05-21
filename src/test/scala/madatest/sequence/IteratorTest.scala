@@ -14,7 +14,7 @@ import junit.framework.Assert._
 
 class TraverserTest {
     def testTrivial: Unit = {
-        val tr = sequence.of(2,4,6)
+        val tr = sequence.Of(2,4,6)
         val t = tr.begin
         assertEquals(2, ~t)
         t.++
@@ -28,7 +28,7 @@ class TraverserTest {
     }
 
     def testIterator: Unit = {
-        val tr = sequence.of(2,4,6)
+        val tr = sequence.Of(2,4,6)
         val i = tr.begin.toSIterator
         assertEquals(2, i.next)
         assertEquals(4, i.next)
@@ -39,7 +39,7 @@ class TraverserTest {
     }
 
     def testFusion: Unit = {
-        val tr = sequence.of(2,4,6)
+        val tr = sequence.Of(2,4,6)
         val i = iterator.fromSIterator(tr.begin.toSIterator).toSIterator
         assertEquals(2, i.next)
         //println("fusion")

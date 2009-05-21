@@ -14,16 +14,16 @@ import junit.framework.Assert._
 class ZipTest {
     def testTrivial: Unit = {
         new NotStartable[Int].zip(new NotStartable[Int])
-        val t = sequence.of(1,2,3)
-        val u = sequence.of("2","3","4")
-        assertEquals(t.zip(u), sequence.of((1,"2"),(2,"3"),(3,"4")))
-        assertEquals(t.zip(u), sequence.of((1,"2"),(2,"3"),(3,"4")))
-        AssertNotEquals(t.zip(u), sequence.of((1,"2"),(2,"3"),(3,"5")))
+        val t = sequence.Of(1,2,3)
+        val u = sequence.Of("2","3","4")
+        assertEquals(t.zip(u), sequence.Of((1,"2"),(2,"3"),(3,"4")))
+        assertEquals(t.zip(u), sequence.Of((1,"2"),(2,"3"),(3,"4")))
+        AssertNotEquals(t.zip(u), sequence.Of((1,"2"),(2,"3"),(3,"5")))
     }
 
     def testEmpty1: Unit = {
         val t = sequence.emptyOf[Int]
-        val u = sequence.of(2,3,4)
+        val u = sequence.Of(2,3,4)
         assertTrue(t.zip(u).isEmpty)
     }
 
@@ -34,9 +34,9 @@ class ZipTest {
     }
 
     def testShorten: Unit = {
-        val t = sequence.of(1,2)
-        val u = sequence.of(2,3,4)
-        assertEquals(t.zip(u), sequence.of((1,2),(2,3)))
-        assertEquals(t.zip(u), sequence.of((1,2),(2,3)))
+        val t = sequence.Of(1,2)
+        val u = sequence.Of(2,3,4)
+        assertEquals(t.zip(u), sequence.Of((1,2),(2,3)))
+        assertEquals(t.zip(u), sequence.Of((1,2),(2,3)))
     }
 }

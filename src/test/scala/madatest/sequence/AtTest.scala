@@ -13,7 +13,7 @@ import junit.framework.Assert._
 
 class AtTest {
     def testTrivial: Unit = {
-        val A1 = sequence.of(1,6,7,10,14,17)
+        val A1 = sequence.Of(1,6,7,10,14,17)
         assertEquals(1, A1.at(0))
         assertEquals(10, A1.at(3))
     }

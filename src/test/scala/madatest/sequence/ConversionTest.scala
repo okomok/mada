@@ -13,7 +13,7 @@ import junit.framework.Assert._
 
 class ConversionTest {
     def testIterable: Unit = {
-        val t = sequence.of(1,2,3)
+        val t = sequence.Of(1,2,3)
         val it = t.toSome
         val i = it.elements
         assertEquals(1, i.next)
@@ -30,7 +30,7 @@ class ConversionTest {
     }
 
     def testVector: Unit = {
-        val t = sequence.of(1,2,3)
+        val t = sequence.Of(1,2,3)
         val v = t.toVector
         assertEquals(1, v(0))
         assertEquals(2, v(1))

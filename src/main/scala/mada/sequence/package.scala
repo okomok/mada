@@ -19,7 +19,7 @@ package object sequence {
     /**
      * Creates a sequence initially containing the specified elements.
      */
-    object of {
+    object Of {
         def apply[A](from: A*): Sequence[A] = fromSIterable(from)
         def unapplySeq[A](from: Sequence[A]): Option[Seq[A]] = Some(from.toSSequence)
     }

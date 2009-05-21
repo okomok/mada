@@ -31,14 +31,14 @@ trait Sequence[+A] {
      */
     def equalsIf[B](that: Sequence[B])(p: (A, B) => Boolean): Boolean = {
         val it = begin
-        val j = that.begin
-        while (it && !j.isEnd) {
-            if (!p(~it, ~j)) {
+        val jt = that.begin
+        while (it && !jt.isEnd) {
+            if (!p(~it, ~jt)) {
                 return false
             }
-            it.++; j.++
+            it.++; jt.++
         }
-        !it && !j
+        !it && !jt
     }
 
     /**
