@@ -14,7 +14,7 @@ import junit.framework.Assert._
 class ToStringTest {
     def testTrivial: Unit = {
         val k: mada.Vector[Char] = mada.vector.from("abcde")
-        println(k.toString)
+       // println(k.toString)
 
         assertEquals(0, "[a, b, c, d, e]".compareTo(mada.vector.from("abcde").toString))
         assertEquals(0, "[a]".compareTo(mada.vector.from("a").toString))
