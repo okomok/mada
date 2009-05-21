@@ -7,8 +7,9 @@
 package mada.sequence
 
 
-case class Force[+A](_1: Sequence[A]) extends Forwarder[A] {
-    override protected lazy val delegate = {
+case class Force[+A](_1: Sequence[A]) extends Sequence[A] {
+    override def begin = k.begin
+    private lazy val k = {
         val r = new java.util.ArrayList[A]
         val it = _1.begin
         while (it) {

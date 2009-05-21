@@ -22,7 +22,8 @@ class MixTest {
 
 //        println(k.toString)
         k match {
-            case Mix(FromJIterable(s) Map f, x) => () // s ==> [4,5,6] as iterable.
+            // expression is implementation defined: especially under Forwarder.
+            case Mix(Force(Of(4,5,6)) Map f, x) => ()
             case _ => fail
         }
 
