@@ -10,12 +10,6 @@ package mada
 package object function {
 
 
-// void
-
-    @aliasOf("()")
-    val void: Unit = ()
-
-
 // type aliases
 
     @aliasOf("Function1[T, T]")
@@ -54,8 +48,7 @@ package object function {
     /**
      * A function returning argument as is
      */
-    def identity[T]: Transform[T] = identityImpl.asInstanceOf[Transform[T]]
-    private val identityImpl: Transform[Any] = { v => v }
+    def identity[T]: Transform[T] = Identity[T]()
 
     /**
      * Converts by-name-parameter to a function returning <code>body</code>.
@@ -68,26 +61,24 @@ package object function {
     def ofLazy[R](body: => R): Function0[R] = new OfLazy(body)
 
     /**
+     * A function calculating <code>body</code> in other threads
+     */
+    def parallel[R](body: => R): Function0[R] = new Parallel(body)
+
+    /**
      * A function calculating <code>body</code> in (possibly) other threads
      */
-    def future[R](body: => R): Function0[R] = Future(body)
+    def future[R](body: => R): Function0[R] = new Future(body)
 
     /**
      * Fixed point combinator
      */
-    def fix[T, R](g: (T => R) => T => R): T => R = { v => fixImpl(g)(v) }
-    private def fixImpl[T, R](g: (T => R) => T => R)(v: T): R = g(fixImpl(g))(v)
+    def fix[T, R](g: (T => R) => T => R): T => R = Fix(g)
 
     /**
      * Memoizes <code>g</code>.
      */
-    def memoize[T, R](g: (T => R) => T => R): T => R = {
-        // See: That about wraps it up --- Using FIX to handle errors without exceptions, and other programming tricks (1997)
-        //      at http://citeseer.ist.psu.edu/51062.html
-        val m = new java.util.concurrent.ConcurrentHashMap[T, () => R]
-        val wrap_g = { (fixed: (T => R)) => (v: T) => assoc.lazyGet(m)(v){ g(fixed)(v) } }
-        fix(wrap_g)
-    }
+    def memoize[T, R](g: (T => R) => T => R): T => R = Memoize(g)
 
 
 // empty
@@ -105,20 +96,23 @@ package object function {
     /**
      * Converts a function into one taking a tuple argument.
      */
-    def fuse1[T1, R](f: Function1[T1, R]): Function1[Tuple1[T1], R] = { v => f(v._1) }
-    def fuse2[T1, T2, R](f: Function2[T1, T2, R]): Function1[Tuple2[T1, T2], R] = { v => f(v._1, v._2) }
-    def fuse3[T1, T2, T3, R](f: Function3[T1, T2, T3, R]): Function1[Tuple3[T1, T2, T3], R] = { v => f(v._1, v._2, v._3) }
+    def fuse1[T1, R](f: Function1[T1, R]): Function1[Tuple1[T1], R] = Fuse1(f)
+    def fuse2[T1, T2, R](f: Function2[T1, T2, R]): Function1[Tuple2[T1, T2], R] = Fuse2(f)
+    def fuse3[T1, T2, T3, R](f: Function3[T1, T2, T3, R]): Function1[Tuple3[T1, T2, T3], R] = Fuse3(f)
 
-    def fuse[T1, R](f: Function1[T1, R]): Function1[Tuple1[T1], R] = fuse1(f)
-    def fuse[T1, T2, R](f: Function2[T1, T2, R]): Function1[Tuple2[T1, T2], R] = fuse2(f)
-    def fuse[T1, T2, T3, R](f: Function3[T1, T2, T3, R]): Function1[Tuple3[T1, T2, T3], R] = fuse3(f)
+    @packageObjectBrokenOverload
+    object fuse {
+        def apply[T1, R](f: Function1[T1, R]) = fuse1(f)
+        def apply[T1, T2, R](f: Function2[T1, T2, R]) = fuse2(f)
+        def apply[T1, T2, T3, R](f: Function3[T1, T2, T3, R]) = fuse3(f)
+    }
 
     /**
      * Reverts <code>fuse</code>.
      */
-    def unfuse1[T1, R](f: Function1[Tuple1[T1], R]): Function1[T1, R] = { v1 => f(Tuple1(v1)) }
-    def unfuse2[T1, T2, R](f: Function1[Tuple2[T1, T2], R]): Function2[T1, T2, R] = { (v1, v2) => f(Tuple2(v1, v2)) }
-    def unfuse3[T1, T2, T3, R](f: Function1[Tuple3[T1, T2, T3], R]): Function3[T1, T2, T3, R] = { (v1, v2, v3) => f(Tuple3(v1, v2, v3)) }
+    def unfuse1[T1, R](f: Function1[Tuple1[T1], R]): Function1[T1, R] = Unfuse1(f)
+    def unfuse2[T1, T2, R](f: Function1[Tuple2[T1, T2], R]): Function2[T1, T2, R] = Unfuse2(f)
+    def unfuse3[T1, T2, T3, R](f: Function1[Tuple3[T1, T2, T3], R]): Function3[T1, T2, T3, R] = Unfuse3(f)
 
 
 // infer
@@ -133,9 +127,9 @@ package object function {
 
     @packageObjectBrokenOverload
     object infer {
-        def apply[T1, R](f: Function1[T1, R]): Function1[T1, R] = infer1(f)
-        def apply[T1, T2, R](f: Function2[T1, T2, R]): Function2[T1, T2, R] = infer2(f)
-        def apply[T1, T2, T3, R](f: Function3[T1, T2, T3, R]): Function3[T1, T2, T3, R] = infer3(f)
+        def apply[T1, R](f: Function1[T1, R]) = infer1(f)
+        def apply[T1, T2, R](f: Function2[T1, T2, R]) = infer2(f)
+        def apply[T1, T2, T3, R](f: Function3[T1, T2, T3, R]) = infer3(f)
     }
 
 
@@ -150,13 +144,30 @@ package object function {
 
     @packageObjectBrokenOverload
     object not {
-        def apply[T1](f: Predicate1[T1]): Predicate1[T1] = not1(f)
-        def apply[T1, T2](f: Predicate2[T1, T2]): Predicate2[T1, T2] = not2(f)
-        def apply[T1, T2, T3](f: Predicate3[T1, T2, T3]): Predicate3[T1, T2, T3] = not3(f)
+        def apply[T1](f: Predicate1[T1]) = not1(f)
+        def apply[T1, T2](f: Predicate2[T1, T2]) = not2(f)
+        def apply[T1, T2, T3](f: Predicate3[T1, T2, T3]) = not3(f)
     }
 
 
-// parameterize
+// synchronize
+
+    /**
+     * Converts a function to synchronized one.
+     */
+    def synchronize1[T1, R](f: Function1[T1, R]): Function1[T1, R] = Synchronize1(f)
+    def synchronize2[T1, T2, R](f: Function2[T1, T2, R]): Function2[T1, T2, R] = Synchronize2(f)
+    def synchronize3[T1, T2, T3, R](f: Function3[T1, T2, T3, R]): Function3[T1, T2, T3, R] = Synchronize3(f)
+
+    @packageObjectBrokenOverload
+    object synchronize {
+        def apply[T1, R](f: Function1[T1, R]) = synchronize1(f)
+        def apply[T1, T2, R](f: Function2[T1, T2, R]) = synchronize2(f)
+        def apply[T1, T2, T3, R](f: Function3[T1, T2, T3, R]) = synchronize3(f)
+    }
+
+
+// parameterize (deprecated with 2.8)
 
     private def getArg[T](ps: Iterable[Parameter[_]], q: Parameter[T]) = ps.find(_.origin eq q.origin).getOrElse(q).argument.asInstanceOf[T]
 
@@ -174,26 +185,9 @@ package object function {
 
     @packageObjectBrokenOverload
     object parameterize {
-        def apply[T1, R](f: Function1[T1, R])(q1: Parameter[T1]): Function1[Iterable[Parameter[_]], R] = parameterize1(f)(q1)
-        def apply[T1, T2, R](f: Function2[T1, T2, R])(q1: Parameter[T1], q2: Parameter[T2]): Function1[Iterable[Parameter[_]], R] = parameterize2(f)(q1, q2)
-        def apply[T1, T2, T3, R](f: Function3[T1, T2, T3, R])(q1: Parameter[T1], q2: Parameter[T2], q3: Parameter[T3]): Function1[Iterable[Parameter[_]], R] = parameterize3(f)(q1, q2, q3)
-    }
-
-
-// synchronize
-
-    /**
-     * Converts a function to synchronized one.
-     */
-    def synchronize1[T1, R](f: Function1[T1, R]): Function1[T1, R] = Synchronize1(f)
-    def synchronize2[T1, T2, R](f: Function2[T1, T2, R]): Function2[T1, T2, R] = Synchronize2(f)
-    def synchronize3[T1, T2, T3, R](f: Function3[T1, T2, T3, R]): Function3[T1, T2, T3, R] = Synchronize3(f)
-
-    @packageObjectBrokenOverload
-    object synchronize {
-        def apply[T1, R](f: Function1[T1, R]): Function1[T1, R] = synchronize1(f)
-        def apply[T1, T2, R](f: Function2[T1, T2, R]): Function2[T1, T2, R] = synchronize2(f)
-        def apply[T1, T2, T3, R](f: Function3[T1, T2, T3, R]): Function3[T1, T2, T3, R] = synchronize3(f)
+        def apply[T1, R](f: Function1[T1, R])(q1: Parameter[T1]) = parameterize1(f)(q1)
+        def apply[T1, T2, R](f: Function2[T1, T2, R])(q1: Parameter[T1], q2: Parameter[T2]) = parameterize2(f)(q1, q2)
+        def apply[T1, T2, T3, R](f: Function3[T1, T2, T3, R])(q1: Parameter[T1], q2: Parameter[T2], q3: Parameter[T3]) = parameterize3(f)(q1, q2, q3)
     }
 
 }
