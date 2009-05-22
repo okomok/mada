@@ -64,7 +64,7 @@ trait Forwarder[+A] extends Sequence[A] with util.Forwarder {
     override def force: Sequence[A] = afterForward(delegate.force)
     override def _flatten[B](_this: Sequence[Sequence[B]]): Sequence[B] = afterForward(delegate.asInstanceOf[Sequence[Sequence[B]]].flatten)
     override def mix(x: Mixin): Sequence[A] = afterForward(delegate.mix(x))
-    override def seal: Sequence[A] = afterForward(delegate.seal)
+    override def seal: Sequence[A] = afterForward(delegate.seal) // wow?
     override def singlePass: Sequence[A] = afterForward(delegate.singlePass)
     override def step(n: Int): Sequence[A] = delegate.step(n)
     override def unique: Sequence[A] = afterForward(delegate.unique)

@@ -13,4 +13,8 @@ package object mixin {
         override def apply[B](seq: Sequence[B]) = seq.force
     }
 
+    val seal = new Mixin {
+        override def apply[B](seq: Sequence[B]) = seq.seal
+    }
+
 }
