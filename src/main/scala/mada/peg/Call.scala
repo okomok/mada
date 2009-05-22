@@ -10,5 +10,5 @@ package mada.peg
 class Call[A](body: => Unit) extends Forwarder[A] {
     val _1 = function.ofName(body)
 
-    override protected val delegate = eps[A] act { _ => body }
+    override protected val delegate = eps[A] act { _ => _1() }
 }

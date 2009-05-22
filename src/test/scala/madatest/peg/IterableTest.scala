@@ -14,7 +14,7 @@ import junit.framework.Assert._
 
 class IterableTest {
     def testTrivial: Unit = {
-        val p = peg.fromIterable(List('a','b','c'))
+        val p = peg.fromSIterable(List('a','b','c'))
         assertTrue("123" >> p >> "XYZ" matches "123abcXYZ")
         assertTrue("123" >> p matches "123abc")
         assertFalse("123" >> p matches "123ab")

@@ -13,5 +13,6 @@ case class Bind[+A](_1: Iterator[A]) extends Sequence[A] {
 
 class BindName[+A](it: => Iterator[A]) extends Sequence[A] {
     val _1 = function.ofName(it)
+
     override def begin = _1()
 }

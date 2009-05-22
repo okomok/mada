@@ -21,6 +21,9 @@ package object peg {
     @aliasOf("vector.Func3[A, Unit]")
     type Action3[A] = vector.Func3[A, Unit]
 
+    @compatibles
+    val compatibles: Compatibles = Peg
+
 
 // constants
 

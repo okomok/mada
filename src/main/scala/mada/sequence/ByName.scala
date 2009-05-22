@@ -9,5 +9,6 @@ package mada.sequence
 
 class ByName[+A](seq: => Sequence[A]) extends Forwarder[A] {
     val _1 = function.ofName(seq)
+
     override protected def delegate = _1()
 }

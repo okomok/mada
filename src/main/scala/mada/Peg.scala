@@ -404,8 +404,7 @@ trait Peg[A] {
 }
 
 
-object Peg {
-
+object Peg extends peg.Compatibles {
 
 // methodization
 
@@ -413,15 +412,5 @@ object Peg {
         def lowerCaseRead: Peg[Char] = _this._lowerCaseRead(_this)
     }
     implicit def ofChar(_this: Peg[Char]): OfChar = new OfChar(_this)
-
-
-// compatibles
-
-    implicit def madaPegFromChar(from: Char): Peg[Char] = fromChar(from)
-    implicit def madaPegFromRegexPattern(from: java.util.regex.Pattern): Peg[Char] = fromRegexPattern(from)
-    implicit def madaPegUnstringize(from: String): Peg[Char] = unstringize(from)
-    implicit def madaPegFromVector[A](from: Vector[A]): Peg[A] = fromVector(from)
-    implicit def madaPegFromSIterable[A](from: scala.Iterable[A]): Peg[A] = fromSIterable(from)
-    implicit def madaPegFromSRegex(from: scala.util.matching.Regex): Peg[Char] = fromSRegex(from)
 
 }

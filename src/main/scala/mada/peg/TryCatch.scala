@@ -7,36 +7,23 @@
 package mada.peg
 
 
-private[mada] object Try {
-    def apply[A](p: Peg[A]): Try[A] = new Try(p)
+case class Try[A](_1: Peg[A]) {
+    def `catch`(f: Throwable => Peg[A]) = TryCatch(_1, f)
 }
 
-/**
- * Intermediate class for pseudo try-catch expression.
- */
-sealed class Try[A](p: Peg[A]) {
-    /**
-     * @return  <code>new TryCatch(p, f)</code>.
-     */
-    def `catch`(f: Throwable => Peg[A]): TryCatch[A] = new TryCatch(p, f)
-
-    /**
-     * Intermediate peg for pseudo try-catch-finally expression.
-     */
-    sealed class TryCatch[A](p: Peg[A], f: Throwable => Peg[A]) extends Forwarder[A] {
-        override val delegate = new TryCatchFinallyPeg(p, f, function.empty1)
-        def `finally`(g: Action[A]): Peg[A] = new TryCatchFinallyPeg(p, f, g)
-    }
+case class TryCatch[A](_1: Peg[A], _2: Throwable => Peg[A]) extends Forwarder[A] {
+    override val delegate = TryCatchFinally(_1, _2, function.empty1)
+    def `finally`(g: Action[A]): Peg[A] = TryCatchFinally(_1, _2, g)
 }
 
-private[mada] class TryCatchFinallyPeg[A](p: Peg[A], f: Throwable => Peg[A], g: Action[A]) extends Peg[A] {
+case class TryCatchFinally[A](_1: Peg[A], _2: Throwable => Peg[A], _3: Action[A]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
         try {
-            p.parse(v, start, end)
+            _1.parse(v, start, end)
         } catch {
-            case x: Throwable => f(x).parse(v, start, end)
+            case x: Throwable => _2(x).parse(v, start, end)
         } finally {
-            g(v(start, end))
+            _3(v(start, end))
         }
     }
 }
