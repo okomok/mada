@@ -36,12 +36,12 @@ package object function {
     /**
      * @return  <code>{ (x, y) => x == y }</code>.
      */
-    val equal: Predicate2[Any, Any] = { (x, y) => x == y }
+    val equal: Predicate2[Any, Any] = Equal()
 
     /**
      * @return  <code>{ y => x == y }</code>.
      */
-    def equalTo(x: Any): Predicate1[Any] = { y => x == y }
+    def equalTo(x: Any): Predicate1[Any] = EqualTo(x)
 
 
 // utilities
@@ -49,7 +49,7 @@ package object function {
     /**
      * A function flipping two arguments
      */
-    def flip[T1, T2, R](f: Function2[T1, T2, R]): Function2[T2, T1, R] = { (v2, v1) => f(v1, v2) }
+    def flip[T1, T2, R](f: Function2[T1, T2, R]): Function2[T2, T1, R] = Flip(f)
 
     /**
      * A function returning argument as is
@@ -60,15 +60,12 @@ package object function {
     /**
      * Converts by-name-parameter to a function returning <code>body</code>.
      */
-    def ofName[R](body: => R): Function0[R] = { () => body }
+    def ofName[R](body: => R): Function0[R] = new OfName(body)
 
     /**
      * A function calculating <code>body</code> by <code>lazy</code>
      */
-    def ofLazy[R](body: => R): Function0[R] = new Function0[R] {
-        private lazy val _v = body
-        override def apply() = _v
-    }
+    def ofLazy[R](body: => R): Function0[R] = new OfLazy(body)
 
     /**
      * A function calculating <code>body</code> in (possibly) other threads
@@ -98,9 +95,9 @@ package object function {
     /**
      * Returns a function doing nothing.
      */
-    val empty1: Function1[Any, Unit] = { v1 => () }
-    val empty2: Function2[Any, Any, Unit] = { (v1, v2) => () }
-    val empty3: Function3[Any, Any, Any, Unit] = { (v1, v2, v3) => () }
+    val empty1: Function1[Any, Unit] = Empty1()
+    val empty2: Function2[Any, Any, Unit] = Empty2()
+    val empty3: Function3[Any, Any, Any, Unit] = Empty3()
 
 
 // fuse
@@ -147,9 +144,9 @@ package object function {
     /**
      * Negates a predicate.
      */
-    def not1[T1](f: Predicate1[T1]): Predicate1[T1] = { v1 => !f(v1) }
-    def not2[T1, T2](f: Predicate2[T1, T2]): Predicate2[T1, T2] = { (v1, v2) => !f(v1, v2) }
-    def not3[T1, T2, T3](f: Predicate3[T1, T2, T3]): Predicate3[T1, T2, T3] = { (v1, v2, v3) => !f(v1, v2, v3) }
+    def not1[T1](f: Predicate1[T1]): Predicate1[T1] = Not1(f)
+    def not2[T1, T2](f: Predicate2[T1, T2]): Predicate2[T1, T2] = Not2(f)
+    def not3[T1, T2, T3](f: Predicate3[T1, T2, T3]): Predicate3[T1, T2, T3] = Not3(f)
 
     @packageObjectBrokenOverload
     object not {
@@ -188,17 +185,9 @@ package object function {
     /**
      * Converts a function to synchronized one.
      */
-    def synchronize1[T1, R](f: Function1[T1, R]): Function1[T1, R] = new Function1[T1, R] {
-        override def apply(v1: T1) = synchronized { f(v1) }
-    }
-
-    def synchronize2[T1, T2, R](f: Function2[T1, T2, R]): Function2[T1, T2, R] = new Function2[T1, T2, R] {
-        override def apply(v1: T1, v2: T2) = synchronized { f(v1, v2) }
-    }
-
-    def synchronize3[T1, T2, T3, R](f: Function3[T1, T2, T3, R]): Function3[T1, T2, T3, R] = new Function3[T1, T2, T3, R] {
-        override def apply(v1: T1, v2: T2, v3: T3) = synchronized { f(v1, v2, v3) }
-    }
+    def synchronize1[T1, R](f: Function1[T1, R]): Function1[T1, R] = Synchronize1(f)
+    def synchronize2[T1, T2, R](f: Function2[T1, T2, R]): Function2[T1, T2, R] = Synchronize2(f)
+    def synchronize3[T1, T2, T3, R](f: Function3[T1, T2, T3, R]): Function3[T1, T2, T3, R] = Synchronize3(f)
 
     @packageObjectBrokenOverload
     object synchronize {
