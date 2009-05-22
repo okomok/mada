@@ -204,7 +204,7 @@ trait Peg[A] {
     /**
      * Matches if matched region meets condition <code>pred</code>.
      */
-    final def andIf(pred: vector.Pred[A]): Peg[A] = AndIf3(this, vector.triplify(pred))
+    final def andIf(pred: vector.Pred[A]): Peg[A] = AndIf(this, pred)
 
     /**
      * Matches if matched region meets condition <code>pred</code>. (no heap allocations)
@@ -275,7 +275,7 @@ trait Peg[A] {
     /**
      * Splits input using this peg.
      */
-    final def split(v: Vector[A]): Sequence[Vector[A]] = { throwIfZeroWidth("split"); Split(this, v) }
+    final def split(v: Vector[A]): Sequence[Vector[A]] = Split(this, v)
 
     /**
      * Tokenizes input using this peg.
@@ -379,14 +379,6 @@ trait Peg[A] {
      */
     final def inCase(e: A): (A, Peg[A]) = (e, this)
 
-
-// implementation helpers
-
-    private def throwIfZeroWidth(method: String): Unit = {
-        if (IsZeroWidth(this)) {
-            throw new IllegalArgumentException(method + " doesn't allow zero-width")
-        }
-    }
 }
 
 

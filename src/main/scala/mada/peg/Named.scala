@@ -7,10 +7,7 @@
 package mada.peg
 
 
-private[mada] object Named {
-    def apply[A](p: Peg[A], name: String): Peg[A] = new NamedPeg(p, name)
-}
-
-private[mada] class NamedPeg[A](override val delegate: Peg[A], name: String) extends Forwarder[A] {
-    override def toString = name
+case class Named[A](_1: Peg[A], _2: String) extends Forwarder[A] {
+    override protected val delegate = _1
+    override def toString = _2
 }

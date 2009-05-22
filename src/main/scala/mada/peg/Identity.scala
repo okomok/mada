@@ -7,8 +7,6 @@
 package mada.peg
 
 
-private[mada] object Identity {
-    def apply[A](p: Peg[A]): Peg[A] = new IdentityPeg(p)
+case class Identity[A](_1: Peg[A]) extends Forwarder[A] {
+    override protected val delegate = _1
 }
-
-private[mada] class IdentityPeg[A](override val delegate: Peg[A]) extends Forwarder[A]

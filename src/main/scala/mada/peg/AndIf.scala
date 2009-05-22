@@ -7,17 +7,19 @@
 package mada.peg
 
 
-private[mada] object AndIf3 {
-    def apply[A](p: Peg[A], pred: vector.Pred3[A]): Peg[A] = new AndIf3Peg(p, pred)
+case class AndIf[A](_1: Peg[A], _2: vector.Pred[A]) extends Forwarder[A] {
+    override protected val delegate = _1.andIf3(vector.triplify(_2))
 }
 
-private[mada] class AndIf3Peg[A](override val delegate: Peg[A], pred: vector.Pred3[A]) extends Forwarder[A] {
+case class AndIf3[A](_1: Peg[A], _2: vector.Pred3[A]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
-        val cur = delegate.parse(v, start, end)
-        if (cur == FAILURE || !pred(v, start, cur)) {
+        val cur = _1.parse(v, start, end)
+        if (cur == FAILURE || !_2(v, start, cur)) {
             FAILURE
         } else {
             cur
         }
     }
+
+    override def width = _1.width
 }
