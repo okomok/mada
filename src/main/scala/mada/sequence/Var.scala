@@ -10,12 +10,8 @@ package mada.sequence
 /**
  * The mutable forwarder for sequence.
  */
-class Var[A](@volatile private var seq: Sequence[A]) extends Forwarder[A] {
+class Var[A](@volatile private var seq: Sequence[A]) extends Forwarder[A] with util.Var[Sequence[A]] {
     def this() = this(null)
     override protected def delegate = seq
-    final def isNull: Boolean = seq eq null
-    final def assign(that: Sequence[A]): Unit = { seq = that }
-
-    @aliasOf("assign")
-    final def :=(that: Sequence[A]): Unit = assign(that)
+    override def assign(that: Sequence[A]): Unit = { seq = that }
 }
