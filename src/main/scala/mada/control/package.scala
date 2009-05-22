@@ -19,7 +19,7 @@ package object control {
     /**
      * Evaluates <code>body</code> <code>n</code> times.
      */
-    def repeat[R](body: => R, n: Int): Unit = {
+    def times[R](body: => R, n: Int): Unit = {
         var i = 0
         while (i != n) {
             body
