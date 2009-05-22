@@ -7,14 +7,10 @@
 package mada.peg
 
 
-private[mada] object Lookback {
-    def apply[A](p: Peg[A]): Peg[A] = new LookbackPeg(p)
-}
-
-private[mada] class LookbackPeg[A](p: Peg[A]) extends Peg[A] with ZeroWidth[A] {
+case class Lookback[A](_1: Peg[A]) extends Peg[A] with ZeroWidth[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
         val x = v.reverse
-        if (p.parse(x, x.end - (start - v.start), x.end) == FAILURE) {
+        if (_1.parse(x, x.end - (start - v.start), x.end) == FAILURE) {
             FAILURE
         } else {
             start

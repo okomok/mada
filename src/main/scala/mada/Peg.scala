@@ -127,7 +127,7 @@ trait Peg[A] {
      * @pre     <code>this</code> is not instance of <code>ZeroWidth</code>.
      * @see     * as alias.
      */
-    final def star: Quantified[A] = { throwIfZeroWidth("star"); repeat(0, ()) }
+    final def star: Quantified[A] = Star(this)
 
     /**
      * One-or-more
@@ -135,14 +135,14 @@ trait Peg[A] {
      * @pre     <code>this</code> is not instance of <code>ZeroWidth</code>.
      * @see     + as alias.
      */
-    final def plus: Quantified[A] = { throwIfZeroWidth("plus"); repeat(1, ()) }
+    final def plus: Quantified[A] = Plus(this)
 
     /**
      * Optional
      *
      * @see     ? as alias.
      */
-    final def opt: Quantified[A] = repeat(0, 1)
+    final def opt: Quantified[A] = Opt(this)
 
     /**
      * Repeats exactly <code>n</code> times.
@@ -191,7 +191,7 @@ trait Peg[A] {
      *
      * @see     apply as alias.
      */
-    final def act(f: peg.Action[A]): Peg[A] = Act3(this, vector.triplify(f))
+    final def act(f: peg.Action[A]): Peg[A] = Act(this, f)
 
     /**
      * Associates semantic action. (no heap allocations)

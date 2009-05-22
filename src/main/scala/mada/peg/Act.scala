@@ -7,16 +7,18 @@
 package mada.peg
 
 
-private[mada] object Act3 {
-    def apply[A](p: Peg[A], f: Action3[A]): Peg[A] = new Act3Peg(p, f)
+case class Act[A](_1: Peg[A], _2: Action[A]) extends Forwarder[A] {
+    override protected val delegate = _1.act3(vector.triplify(_2))
 }
 
-private[mada] class Act3Peg[A](override val delegate: Peg[A], f: Action3[A]) extends Forwarder[A] {
+case class Act3[A](_1: Peg[A], _2: Action3[A]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
-        val cur = delegate.parse(v, start, end)
+        val cur = _1.parse(v, start, end)
         if (cur != FAILURE) {
-            f(v, start, cur)
+            _2(v, start, cur)
         }
         cur
     }
+
+    override def width = _1.width
 }

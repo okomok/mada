@@ -7,28 +7,23 @@
 package mada.peg
 
 
-private[mada] object Repeat {
-    def apply[A](p: Peg[A], n: Int, m: Int): Quantified[A] = {
-        if (n < 0 || n > m) {
-            throw new IllegalArgumentException("repeat" + (n, m))
-        }
-        new RepeatPeg(p, n, m)
+case class Repeat[A](_1: Peg[A], _2: Int, _3: Int) extends Forwarder[A] with Quantified[A] {
+    if (_2 < 0 || _2 > _3) {
+        throw new IllegalArgumentException("repeat" + (_2, _3))
     }
+
+    private val prefix = new RepeatExactly(_1, _2)
+    override val delegate = prefix >> new RepeatAtMost(_1, _3 - _2)
+    override def until(that: Peg[A]) = prefix >> new RepeatAtMostUntil(_1, _3 - _2, that)
 }
 
 
-private[mada] class RepeatPeg[A](p: Peg[A], n: Int, m: Int) extends Forwarder[A] with Quantified[A] {
-    private val prefix = new RepeatExactlyPeg(p, n)
-    override val delegate = prefix >> new RepeatAtMostPeg(p, m - n)
-    override def until(that: Peg[A]) = prefix >> new RepeatAtMostUntilPeg(p, m - n, that)
-}
-
-private[mada] class RepeatExactlyPeg[A](p: Peg[A], n: Int) extends Peg[A] {
+private[mada] class RepeatExactly[A](_1: Peg[A], _2: Int) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int): Int = {
         var cur = start
         var i = 0
-        while (i != n) {
-            cur = p.parse(v, cur, end)
+        while (i != _2) {
+            cur = _1.parse(v, cur, end)
             if (cur == FAILURE) {
                 return FAILURE
             }
@@ -37,16 +32,17 @@ private[mada] class RepeatExactlyPeg[A](p: Peg[A], n: Int) extends Peg[A] {
         cur
     }
 
-    override def width = p.width * n
+    override def width = _1.width * _2
 }
 
-private[mada] class RepeatAtMostPeg[A](p: Peg[A], n: Int) extends Peg[A] {
-    // RepeatAtMostUntilPeg(p, n, !p) would include redundant parsing.
+
+private[mada] class RepeatAtMost[A](_1: Peg[A], _2: Int) extends Peg[A] {
+    // RepeatAtMostUntil(_1, _2, !_1) would include redundant parsing.
     override def parse(v: Vector[A], start: Int, end: Int): Int = {
         var cur = start
         var i = 0
-        while (i != n && cur != end) {
-            val next = p.parse(v, cur, end)
+        while (i != _2 && cur != end) {
+            val next = _1.parse(v, cur, end)
             if (next == FAILURE) {
                 return cur
             }
@@ -57,21 +53,22 @@ private[mada] class RepeatAtMostPeg[A](p: Peg[A], n: Int) extends Peg[A] {
     }
 }
 
-private[mada] class RepeatAtMostUntilPeg[A](p: Peg[A], n: Int, q: Peg[A]) extends Peg[A] {
+
+private[mada] class RepeatAtMostUntil[A](_1: Peg[A], _2: Int, _3: Peg[A]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = parseImpl(v, start, end)._3
 
     def parseImpl(v: Vector[A], start: Int, end: Int): (Int, Int, Int) = {
         var cur = start
         var i = 0
-        var next = q.parse(v, cur, end)
-        while (i != n && next == FAILURE) {
-            next = p.parse(v, cur, end)
+        var next = _3.parse(v, cur, end)
+        while (i != _2 && next == FAILURE) {
+            next = _1.parse(v, cur, end)
             if (next == FAILURE) {
                 return (start, cur, FAILURE)
             }
             cur = next
             i += 1
-            next = q.parse(v, cur, end)
+            next = _3.parse(v, cur, end)
         }
         (start, cur, next)
     }

@@ -21,3 +21,10 @@ trait Quantified[A] extends Peg[A] {
     @aliasOf("until")
     final def >>>(that: Peg[A]) = until(that)
 }
+
+
+trait QuantifiedForwarder[A] extends Forwarder[A] with Quantified[A] {
+    override protected def delegate: Quantified[A]
+
+    override def until(that: Peg[A]) = delegate.until(that)
+}

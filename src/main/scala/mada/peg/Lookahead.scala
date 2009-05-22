@@ -7,13 +7,9 @@
 package mada.peg
 
 
-private[mada] object Lookahead {
-    def apply[A](p: Peg[A]): Peg[A] = new LookaheadPeg(p)
-}
-
-private[mada] class LookaheadPeg[A](p: Peg[A]) extends Peg[A] with ZeroWidth[A] {
+case class Lookahead[A](_1: Peg[A]) extends Peg[A] with ZeroWidth[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
-        if (p.parse(v, start, end) != FAILURE) {
+        if (_1.parse(v, start, end) != FAILURE) {
             start
         } else {
             FAILURE
