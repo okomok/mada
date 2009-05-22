@@ -50,22 +50,14 @@ package object peg {
     def advance[A](n: Int): Peg[A] = Advance[A](n)
 
     /**
-     * Matches any one element.
-     */
-    def any[A]: Peg[A] = anyImpl.asInstanceOf[Peg[A]]
-    private val anyImpl: Peg[Any] = advance(1)
-
-    /**
      * Matches the beginning of input.
      */
-    def begin[A]: Peg[A] = beginImpl.asInstanceOf[Peg[A]]
-    private val beginImpl: Peg[Any] = lookaround3 { (v, i, _) => i == v.start }
+    def begin[A]: Peg[A] = Begin[A]()
 
     /**
      * Matches the end of input.
      */
-    def end[A]: Peg[A] = endImpl.asInstanceOf[Peg[A]]
-    private val endImpl: Peg[Any] = lookaround3 { (v, i, _) => i == v.end }
+    def end[A]: Peg[A] = End[A]()
 
     /**
      * @return  <code>eps[A] act { _ => f() }</code>.
@@ -73,10 +65,14 @@ package object peg {
     def call[A](f: Unit => Unit): Peg[A] = eps[A] act { _ => f() }
 
     /**
+     * Matches any one element.
+     */
+    def dot[A]: Peg[A] = Dot[A]()
+
+    /**
      * Epsilon; Matches an empty input.
      */
-    def eps[A]: Peg[A] = epsImpl.asInstanceOf[Peg[A]]
-    private val epsImpl: Peg[Any] = lookaround3 { (_, _, _) => true }
+    def eps[A]: Peg[A] = Eps[A]()
 
     /**
      * Always throws an Error.
@@ -86,8 +82,7 @@ package object peg {
     /**
      * Doesn't match any input.
      */
-    def fail[A]: Peg[A] = failImpl.asInstanceOf[Peg[A]]
-    private val failImpl: Peg[Any] = lookaround3 { (_, _, _) => false }
+    def fail[A]: Peg[A] = Fail[A]()
 
     /**
      * Mathches case-insensitively.
@@ -97,7 +92,7 @@ package object peg {
     /**
      * Zero-width assertion if region meets condition <code>pred</code>
      */
-    def lookaround[A](pred: vector.Pred[A]): Peg[A] = Lookaround3(vector.triplify(pred))
+    def lookaround[A](pred: vector.Pred[A]): Peg[A] = Lookaround(pred)
 
     /**
      * Zero-width assertion if region meets condition <code>pred</code> (no heap allocations)

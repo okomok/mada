@@ -34,11 +34,11 @@ class StarTest {
 
     def testBefore: Unit = {
         val sample = mada.vector.unstringize("/*hello*/")
-        assertTrue((unstringize("/*") >> (any.* >>> ~unstringize("*/")) >> unstringize("*/")).matches(sample))
+        assertTrue((unstringize("/*") >> (dot.* >>> ~unstringize("*/")) >> unstringize("*/")).matches(sample))
     }
 
     def testUntil: Unit = {
         val sample = mada.vector.unstringize("/*hello*/")
-        assertTrue((unstringize("/*") >> (any.* >>> unstringize("*/"))).matches(sample))
+        assertTrue((unstringize("/*") >> (dot.* >>> unstringize("*/"))).matches(sample))
     }
 }

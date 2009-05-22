@@ -46,7 +46,7 @@ class RepeatTest {
 
 
 class RepeatUntilTest {
-    val any3 = peg.any[Char] >> peg.any[Char] >> peg.any[Char]
+    val any3 = peg.dot[Char] >> peg.dot[Char] >> peg.dot[Char]
 
     def testRepeat: Unit = {
         assertTrue(any3.repeat(2, 4).until("DE") matches "abcabcDE")

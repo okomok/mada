@@ -15,7 +15,7 @@ import mada.peg.compatibles._
 class LookTest {
     def testAhead: Unit = {
         assertTrue("abc" >> ~"def" >> "def" matches "abcdef")
-        assertTrue("abc" >> ~(any.*) >> "def" matches "abcdef")
+        assertTrue("abc" >> ~(dot.*) >> "def" matches "abcdef")
         assertTrue("abc" >> !"xxx" >> "def" matches "abcdef")
     }
 
@@ -27,7 +27,7 @@ class LookTest {
     def testBack: Unit = {
         assertTrue("abc" >> "cba".<<~ >> "defg" matches "abcdefg")
         assertTrue("abc" >> ("cba" >> end).<<~ >> "defg" matches "abcdefg")
-        assertTrue("abc" >> any.*.<<~ >> "defg" matches "abcdefg")
+        assertTrue("abc" >> dot.*.<<~ >> "defg" matches "abcdefg")
         assertTrue("abc" >> "abc".<<! >> "defg" matches "abcdefg")
 
         assertTrue("abc" >> ("d".<=~ >> "cb" >> ~"a").<<~ >> "defg" matches "abcdefg")
