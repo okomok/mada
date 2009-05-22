@@ -7,16 +7,12 @@
 package mada.peg
 
 
-private[mada] object Negate {
-    def apply[A](p: Peg[A]): Peg[A] = new NegatePeg(p)
-}
-
-private[mada] class NegatePeg[A](p: Peg[A]) extends Peg[A] {
+case class Negate[A](_1: Peg[A]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
-        if (p.parse(v, start, end) != FAILURE) {
+        if (_1.parse(v, start, end) != FAILURE) {
             FAILURE
         } else {
-            val cur = start + p.width
+            val cur = start + _1.width
             if (cur <= end) {
                 cur
             } else {
@@ -25,5 +21,5 @@ private[mada] class NegatePeg[A](p: Peg[A]) extends Peg[A] {
         }
     }
 
-    override def width = p.width
+    override def width = _1.width
 }

@@ -7,24 +7,20 @@
 package mada.peg
 
 
-private[mada] object Minus {
-    def apply[A](p: Peg[A], q: Peg[A]): Peg[A] = new MinusPeg(p, q)
-}
-
-private[mada] class MinusPeg[A](p: Peg[A], q: Peg[A]) extends Peg[A] {
+case class Minus[A](_1: Peg[A], _2: Peg[A]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
-        val pcur = p.parse(v, start, end)
-        if (pcur == FAILURE) {
+        val cur1 = _1.parse(v, start, end)
+        if (cur1 == FAILURE) {
             FAILURE
         } else {
-            val qcur = q.parse(v, start, end)
-            if (qcur == FAILURE || qcur < pcur) {
-                pcur
+            val cur2 = _2.parse(v, start, end)
+            if (cur2 == FAILURE || cur2 < cur1) {
+                cur1
             } else {
                 FAILURE
             }
         }
     }
 
-    override def width = p.width
+    override def width = _1.width
 }

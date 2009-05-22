@@ -7,17 +7,13 @@
 package mada.peg
 
 
-private[mada] object And {
-    def apply[A](p: Peg[A], q: Peg[A]): Peg[A] = new AndPeg(p, q)
-}
-
-private[mada] class AndPeg[A](p: Peg[A], q: Peg[A]) extends Peg[A] {
+case class And[A](_1: Peg[A], _2: Peg[A]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
-        val pcur = p.parse(v, start, end)
-        if (pcur != FAILURE) {
-            val qcur = q.parse(v, start, end) // short-circuit
-            if (pcur == qcur) {
-                pcur
+        val cur1 = _1.parse(v, start, end)
+        if (cur1 != FAILURE) {
+            val cur2 = _2.parse(v, start, end) // short-circuit
+            if (cur1 == cur2) {
+                cur1
             } else {
                 FAILURE
             }
@@ -26,5 +22,5 @@ private[mada] class AndPeg[A](p: Peg[A], q: Peg[A]) extends Peg[A] {
         }
     }
 
-    override def width = p.width
+    override def width = _1.width
 }

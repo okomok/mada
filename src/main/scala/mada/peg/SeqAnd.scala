@@ -7,19 +7,15 @@
 package mada.peg
 
 
-private[mada] object SeqAnd {
-    def apply[A](p: Peg[A], q: Peg[A]): Peg[A] = new SeqAndPeg(p, q)
-}
-
-private[mada] class SeqAndPeg[A](p: Peg[A], q: Peg[A]) extends Peg[A] {
+case class SeqAnd[A](_1: Peg[A], _2: Peg[A]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
-        var cur = p.parse(v, start, end)
+        var cur = _1.parse(v, start, end)
         if (cur == FAILURE) {
             FAILURE
         } else {
-            q.parse(v, cur, end)
+            _2.parse(v, cur, end)
         }
     }
 
-    override def width = p.width + q.width
+    override def width = _1.width + _2.width
 }

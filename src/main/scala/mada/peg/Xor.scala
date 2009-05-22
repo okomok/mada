@@ -7,22 +7,18 @@
 package mada.peg
 
 
-private[mada] object Xor {
-    def apply[A](p: Peg[A], q: Peg[A]): Peg[A] = new XorPeg(p, q)
-}
-
-private[mada] class XorPeg[A](p: Peg[A], q: Peg[A]) extends Peg[A] {
+case class Xor[A](_1: Peg[A], _2: Peg[A]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
-        val pcur = p.parse(v, start, end)
-        val qcur = q.parse(v, start, end)
+        val cur1 = _1.parse(v, start, end)
+        val cur2 = _2.parse(v, start, end)
 
-        val pok = pcur != FAILURE
-        if (pok && qcur != FAILURE) {
+        val ok1 = cur1 != FAILURE
+        if (ok1 && cur2 != FAILURE) {
             FAILURE
-        } else if (pok) {
-            pcur
+        } else if (ok1) {
+            cur1
         } else {
-            qcur
+            cur2
         }
     }
 }

@@ -45,7 +45,7 @@ trait Peg[A] {
      *
      * @throws  NotConstantWidth if this peg doesn't have constant width.
      */
-    def width: Int = throw new peg.NotConstantWidth("peg.unknown")
+    def width: Int = throw new NotConstantWidth("peg.unknown")
 
 
 // set
@@ -70,7 +70,7 @@ trait Peg[A] {
      *
      * @see     - as alias.
      */
-    final def minus(that: Peg[A]) = Minus(this, that)
+    final def minus(that: Peg[A]): Peg[A] = Minus(this, that)
 
     /**
      * Matches <code>this</code> or <code>that</code>, but not both.
@@ -101,7 +101,7 @@ trait Peg[A] {
      * @return  <code>(this >> that.?) | that</code>.
      * @see     >|> as alias.
      */
-    final def seqOr(that: Peg[A]): Peg[A] = (this >> that.?) | that
+    final def seqOr(that: Peg[A]): Peg[A] = SeqOr(this, that)
 
     /**
      * Equivalent to <code>!this | this >> that</code>, but parses <code>this</code> once.
@@ -116,7 +116,7 @@ trait Peg[A] {
      * @return  <code>that >> this.?</code>.
      * @see     >?>: as alias.
      */
-    final def seqOpt_:(that: Peg[A]): Peg[A] = that >> this.?
+    final def seqOpt_:(that: Peg[A]): Peg[A] = SeqOpt(this, that)
 
 
 // quantifiers
@@ -219,7 +219,7 @@ trait Peg[A] {
     /**
      * Overrides <code>toString</code> to return <code>name</code>.
      */
-    final def named(name: String) = Named(this, name)
+    final def named(name: String): Peg[A] = Named(this, name)
 
     /**
      * Temporarily converts input using one-to-one projection <code>f</code>.
@@ -255,12 +255,22 @@ trait Peg[A] {
     /**
      * Returns position where parsing succeeds.
      */
-    final def lookingAt(v: Vector[A]): Option[Int] = LookingAt(this, v)
+    final def lookingAt(v: Vector[A]): Option[Int] = {
+        val cur = parse(v, v.start, v.end)
+        if (cur == FAILURE) {
+            None
+        } else {
+            Some(cur)
+        }
+    }
 
     /**
      * Returns true iif input is fully matched.
      */
-    final def matches(v: Vector[A]): Boolean = Matches(this, v)
+    final def matches(v: Vector[A]): Boolean = {
+        val e = v.end
+        e == parse(v, v.start, e)
+    }
 
     /**
      * Splits input using this peg.
@@ -284,13 +294,15 @@ trait Peg[A] {
     final def apply(f: peg.Action[A]): Peg[A] = act(f)
 
     /**
-     * And-predicate; alias of <code>lookahead</code>
+     * And-predicate
      */
+    @aliasOf("lookahead")
     final def unary_~ : Peg[A] = lookahead
 
     /**
-     * Not-predicate; alias of <code>lookahead.negate</code>
+     * Not-predicate
      */
+    @aliasOf("lookahead.negate")
     final def unary_! : Peg[A] = lookahead.negate
 
     @aliasOf("negate")
@@ -300,8 +312,9 @@ trait Peg[A] {
     final def &(that: Peg[A]): Peg[A] = and(that)
 
     /**
-     * Ordered choice; alias of <code>or</code>
+     * Ordered choice
      */
+    @aliasOf("or")
     final def |(that: Peg[A]): Peg[A] = or(that)
 
     @aliasOf("minus")
@@ -311,8 +324,9 @@ trait Peg[A] {
     final def ^(that: Peg[A]): Peg[A] = xor(that)
 
     /**
-     * Sequence; alias of <code>seqAnd</code>
+     * Sequence
      */
+    @aliasOf("seqAnd")
     final def >>(that: Peg[A]): Peg[A] = seqAnd(that)
 
     @aliasOf("seqOr")
@@ -325,18 +339,21 @@ trait Peg[A] {
     final def >?>:(that: Peg[A]): Peg[A] = seqOpt_:(that)
 
     /**
-     * Zero-or-more; alias of <code>star</code>
+     * Zero-or-more
      */
+    @aliasOf("star")
     final def * : Quantified[A] = star
 
     /**
-     * One-or-more; alias of <code>plus</code>
+     * One-or-more
      */
+    @aliasOf("plus")
     final def + : Quantified[A] = plus
 
     /**
-     * Optional; alias of <code>opt</code>
+     * Optional
      */
+    @aliasOf("opt")
     final def ? : Quantified[A] = opt
 
     @aliasOf("lookbehind")
@@ -375,9 +392,16 @@ trait Peg[A] {
 
 object Peg extends peg.Compatibles {
 
+
+// methodization
+
     sealed class OfChar(_this: Peg[Char]) {
         def lowerCaseRead: Peg[Char] = _this._lowerCaseRead(_this)
     }
     implicit def ofChar(_this: Peg[Char]): OfChar = new OfChar(_this)
+
+
+// compatibles
+
 
 }

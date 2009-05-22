@@ -225,4 +225,12 @@ package object peg {
      */
     def fromVectorBy[A](from: Vector[A])(pred: (A, A) => Boolean): Peg[A] = FromVector(from, pred)
 
+
+// detail
+
+    private[mada] def throwIfZeroWidth[A](p: Peg[A], method: String): Unit = {
+        if (IsZeroWidth(p)) {
+            throw new IllegalArgumentException(method + " doesn't allow zero-width")
+        }
+    }
 }
