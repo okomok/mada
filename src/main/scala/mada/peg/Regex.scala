@@ -7,16 +7,13 @@
 package mada.peg
 
 
-import java.util.regex.Pattern
-
-
-private[mada] object FromRegexPattern {
-    def apply(pat: Pattern): Peg[Char] = new RegexPatternPeg(pat)
+case class Regex(_1: String) extends Forwarder[Char] {
+    override protected val delegate = fromRegexPattern(java.util.regex.Pattern.compile(_1))
 }
 
-private[mada] class RegexPatternPeg(pat: Pattern) extends Peg[Char] {
+case class FromRegexPattern(_1: java.util.regex.Pattern) extends Peg[Char] {
     override def parse(v: Vector[Char], start: Int, end: Int) = {
-        val mat = pat.matcher(v)
+        val mat = _1.matcher(v)
         mat.region(start - v.start, end - v.start)
         mat.useTransparentBounds(true)
         if (mat.lookingAt) {

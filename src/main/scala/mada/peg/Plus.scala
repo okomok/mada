@@ -1,0 +1,13 @@
+
+
+// Copyright Shunsuke Sogame 2008-2009.
+// Distributed under the terms of an MIT-style license.
+
+
+package mada.peg
+
+
+case class Plus[A](_1: Peg[A]) extends QuantifiedForwarder[A] {
+    throwIfZeroWidth(_1, "plus")
+    override protected val delegate = _1.repeat(1, ())
+}

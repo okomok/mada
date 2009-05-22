@@ -7,22 +7,21 @@
 package mada.peg
 
 
-private[mada] object FromVector {
-    def apply[A](from: Vector[A]): Peg[A] = apply(from, function.equal)
-    def apply[A](from: Vector[A], pred: (A, A) => Boolean): Peg[A] = new VectorPeg(from, pred)
+case class FromVector[A](_1: Vector[A]) extends Forwarder[A] {
+    override protected val delegate = fromVectorBy(_1)(function.equal)
 }
 
-private[mada] class VectorPeg[A](from: Vector[A], pred: (A, A) => Boolean) extends Peg[A] {
+case class FromVectorBy[A](_1: Vector[A], _2: (A, A) => Boolean) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
-        val wsize = from.size
+        val wsize = _1.size
         if (end - start < wsize) {
             FAILURE
-        } else if (vector.stl.Equal(from, from.start, from.end, v, start, pred)) {
+        } else if (vector.stl.Equal(_1, _1.start, _1.end, v, start, _2)) {
             start + wsize
         } else {
             FAILURE
         }
     }
 
-    override def width = from.size
+    override def width = _1.size
 }

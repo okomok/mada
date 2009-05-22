@@ -15,9 +15,6 @@ package object peg {
     @aliasOf("Peg")
     type Type[A] = Peg[A]
 
-    @aliasOf("Peg")
-    val compatibles: Compatibles = Peg
-
     @aliasOf("vector.Func[A, Unit]")
     type Action[A] = vector.Func[A, Unit]
 
@@ -60,9 +57,9 @@ package object peg {
     def end[A]: Peg[A] = End[A]()
 
     /**
-     * @return  <code>eps[A] act { _ => f() }</code>.
+     * @return  <code>eps[A] act { _ => body }</code>.
      */
-    def call[A](f: Unit => Unit): Peg[A] = eps[A] act { _ => f() }
+    def call[A](body: => Unit): Peg[A] = new Call[A](body)
 
     /**
      * Matches any one element.
@@ -87,7 +84,7 @@ package object peg {
     /**
      * Mathches case-insensitively.
      */
-    def icase(v: Vector[Char]): Peg[Char] = fromVector(vector.lowerCase(v)).lowerCaseRead
+    def icase(v: Vector[Char]): Peg[Char] = Icase(v)
 
     /**
      * Zero-width assertion if region meets condition <code>pred</code>
@@ -108,7 +105,7 @@ package object peg {
      * @return  <code>fromRegexPattern(java.util.regex.Pattern.compile(str))</code>.
      * @see     java.util.regex
      */
-    def regex(str: String): Peg[Char] = fromRegexPattern(java.util.regex.Pattern.compile(str))
+    def regex(str: String): Peg[Char] = Regex(str)
 
     /**
      * Matches specified one element.
@@ -198,27 +195,27 @@ package object peg {
 
 // conversions
 
-    def fromChar(from: Char): Peg[Char] = Single(from)
-    def fromIterable[A](from: Iterable[A]): Peg[A] = FromIterable(from)
-    def fromRegex(from: scala.util.matching.Regex): Peg[Char] = FromRegexPattern(from.pattern)
+    def fromChar(from: Char): Peg[Char] = FromChar(from)
+    def unstringize(from: String): Peg[Char] = Unstringize(from)
     def fromRegexPattern(from: java.util.regex.Pattern): Peg[Char] = FromRegexPattern(from)
-    def unstringize(from: String): Peg[Char] = FromVector(vector.unstringize(from))
     def fromVector[A](from: Vector[A]): Peg[A] = FromVector(from)
+    def fromSIterable[A](from: scala.Iterable[A]): Peg[A] = FromSIterable(from)
+    def fromSRegex(from: scala.util.matching.Regex): Peg[Char] = FromSRegex(from)
 
     /**
      * Tries to match <code>from</code> using the predicate.
      */
-    def fromIterableBy[A](from: Iterable[A])(pred: (A, A) => Boolean): Peg[A] = FromIterable(from, pred)
+    def unstringizeBy(from: String)(pred: (Char, Char) => Boolean): Peg[Char] = UnstringizeBy(from, pred)
 
     /**
      * Tries to match <code>from</code> using the predicate.
      */
-    def unstringizeBy(from: String)(pred: (Char, Char) => Boolean): Peg[Char] = FromVector(vector.unstringize(from), pred)
+    def fromVectorBy[A](from: Vector[A])(pred: (A, A) => Boolean): Peg[A] = FromVectorBy(from, pred)
 
     /**
      * Tries to match <code>from</code> using the predicate.
      */
-    def fromVectorBy[A](from: Vector[A])(pred: (A, A) => Boolean): Peg[A] = FromVector(from, pred)
+    def fromSIterableBy[A](from: Iterable[A])(pred: (A, A) => Boolean): Peg[A] = FromSIterableBy(from, pred)
 
 
 // detail
