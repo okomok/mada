@@ -7,11 +7,7 @@
 package mada.peg
 
 
-private[mada] object Synchronize {
-    def apply[A](p: Peg[A]): Peg[A] = new SynchronizePeg(p)
-}
-
-private[mada] class SynchronizePeg[A](override val delegate: Peg[A]) extends Forwarder[A] {
-    override def parse(v: Vector[A], start: Int, end: Int) = synchronized { delegate.parse(v, start, end) }
-    override def width = synchronized { delegate.width }
+case class Synchronize[A](_1: Peg[A]) extends Peg[A] {
+    override def parse(v: Vector[A], start: Int, end: Int) = synchronized { _1.parse(v, start, end) }
+    override def width = synchronized { _1.width }
 }

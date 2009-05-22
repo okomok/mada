@@ -231,13 +231,13 @@ trait Peg[A] {
     /**
      * @return  <code>readMap{ v => v.map(f) }</code>.
      */
-    final def unmap[Z](f: Z => A): Peg[Z] = readMap{ v => v.map(f) }
+    final def unmap[Z](f: Z => A): Peg[Z] = Unmap(this, f)
 
     /**
      * Reads input as lower cases, then tries to match.
      */
     @methodized
-    final def _lowerCaseRead(_this: Peg[Char]): Peg[Char] = _this.readMap{ v => vector.lowerCase(v) }
+    final def _lowerCaseRead(_this: Peg[Char]): Peg[Char] = LowerCaseRead(_this)
 
     /**
      * Returns synchronized one.
@@ -250,7 +250,29 @@ trait Peg[A] {
     /**
      * Finds <code>vector.Region</code> which this peg matches.
      */
-    final def find(v: Vector[A]): Option[Vector[A]] = Find(this, v)
+    final def find(v: Vector[A]): Option[Vector[A]] = {
+        val (i, j) = findRange(v, v.start, v.end)
+        if (j == FAILURE) {
+            None
+        } else {
+            Some(v(i, j))
+        }
+    }
+
+    /**
+     * Finds a range of vector.
+     */
+    final def findRange(v: Vector[A], _start: Int, end: Int): (Int, Int) = {
+        var start = _start
+        while (start != end) {
+            val cur = parse(v, start, end)
+            if (cur != FAILURE) {
+                return (start, cur)
+            }
+            start += 1
+        }
+        (start, FAILURE)
+    }
 
     /**
      * Returns position where parsing succeeds.

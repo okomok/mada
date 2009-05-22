@@ -9,7 +9,7 @@ package mada.peg
 
 case class Tokenize[A](_1: Peg[A], _2: Vector[A]) extends Sequence[Vector[A]] {
     override def begin = new sequence.Iterator[Vector[A]] {
-        private var (k, l) = Find.impl(_1, _2, _2.start, _2.end)
+        private var (k, l) = _1.findRange(_2, _2.start, _2.end)
 
         override def isEnd = l == FAILURE
         override def deref = {
@@ -18,7 +18,7 @@ case class Tokenize[A](_1: Peg[A], _2: Vector[A]) extends Sequence[Vector[A]] {
         }
         override def increment = {
             preIncrement
-            k_l_assign(Find.impl(_1, _2, l, _2.end))
+            k_l_assign(_1.findRange(_2, l, _2.end))
         }
 
         private def k_l_assign(r: (Int, Int)): Unit = {

@@ -6,15 +6,10 @@
 
 package mada.peg
 
-
-private[mada] object ReadMap {
-    def apply[Z, A](p: Peg[A], f: Vector[Z] => Vector[A]): Peg[Z] = new ReadMapPeg(p, f)
-}
-
-private[mada] class ReadMapPeg[Z, A](p: Peg[A], f: Vector[Z] => Vector[A]) extends Peg[Z] {
+case class ReadMap[Z, A](_1: Peg[A], _2: Vector[Z] => Vector[A]) extends Peg[Z] {
     override def parse(v: Vector[Z], start: Int, end: Int) = {
-        p.parse(f(v), start, end) // f must return one-to-one view of Vector
+        _1.parse(_2(v), start, end) // _2 must return one-to-one view of Vector
     }
 
-    override def width = p.width
+    override def width = _1.width
 }
