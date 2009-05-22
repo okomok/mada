@@ -6,14 +6,6 @@
 
     Blending meta into runtime
 
-- `compare`
-
-    Strict weak ordering
-
-- `function`
-
-    Utility methods for functions
-
 - `meta`
 
     Metaprogramming toys
@@ -22,21 +14,13 @@
 
     Lightweight [PEG] parser combinators
 
-- `traversable`
+- `sequence`
 
     Yet another iterable
 
 - `vector`
 
     Structurally-unmodifiable writable array
-
-
-
-## `compare`
-
-
-
-## `function`
 
 
 
