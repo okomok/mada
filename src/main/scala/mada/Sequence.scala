@@ -123,12 +123,12 @@ trait Sequence[+A] {
     def flatMap[B](f: A => Sequence[B]): Sequence[B] = _flatten(map(f))
 
     /**
-     * Filters elements using <code>f</code>.
+     * Filters elements using <code>p</code>.
      */
     def filter(p: A => Boolean): Sequence[A] = Filter(this, p)
 
     /**
-     * Filters elements using <code>funtion.not(f)</code>.
+     * Filters elements using <code>funtion.not(p)</code>.
      */
     def filterNot(p: A => Boolean): Sequence[A] = FilterNot(this, p)
 
