@@ -7,16 +7,9 @@
 package mada.peg
 
 
-import scala.collection.Set
-
-
-private[mada] object Multiple {
-    def apply[A](es: Set[A]): Peg[A] = new MultiplePeg(es)
-}
-
-private[mada] class MultiplePeg[A](es: Set[A]) extends Peg[A] {
+case class Multiple[A](_1: scala.collection.Set[A]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
-        if (start == end || !es.contains(v(start))) {
+        if (start == end || !_1.contains(v(start))) {
             FAILURE
         } else {
             start + 1

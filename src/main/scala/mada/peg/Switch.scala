@@ -7,19 +7,12 @@
 package mada.peg
 
 
-import scala.collection.Map
-
-
-private[mada] object Switch {
-    def apply[A](es: Map[A, Peg[A]]): Peg[A] = new SwitchPeg(es)
-}
-
-private[mada] class SwitchPeg[A](es: Map[A, Peg[A]]) extends Peg[A] {
+case class Switch[A](_1: scala.collection.Map[A, Peg[A]]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
         if (start == end) {
             FAILURE
         } else {
-            val p = es.get(v(start))
+            val p = _1.get(v(start))
             if (p.isEmpty) {
                 FAILURE
             } else {

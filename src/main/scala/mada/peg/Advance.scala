@@ -7,21 +7,16 @@
 package mada.peg
 
 
-private[mada] object Advance {
-    def apply[A](n: Int): Peg[A] = new AdvancePeg[A](n)
-}
-
-private[mada] class AdvancePeg[A](n: Int) extends Peg[A] {
-    util.assert(n >= 0)
+case class Advance[A](_1: Int) extends Peg[A] {
+    util.assert(_1 >= 0)
 
     override def parse(v: Vector[A], start: Int, end: Int) = {
-        val cur = start + n
+        val cur = start + _1
         if (cur <= end) {
             cur
         } else {
             FAILURE
         }
     }
-
-    override def width = n
+    override def width = _1
 }

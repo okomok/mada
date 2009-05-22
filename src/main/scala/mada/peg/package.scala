@@ -81,7 +81,7 @@ package object peg {
     /**
      * Always throws an Error.
      */
-    def error[A]: Peg[A] = Error[A]
+    def error[A]: Peg[A] = Error[A]()
 
     /**
      * Doesn't match any input.
@@ -126,7 +126,7 @@ package object peg {
     /**
      * Constructs a lazy Peg object.
      */
-    def byLazy[A](p: => Peg[A]): Peg[A] = ByLazy(p)
+    def byLazy[A](p: => Peg[A]): Peg[A] = new ByLazy(p)
 
     /**
      * Constructs a pseudo try-catch expression in

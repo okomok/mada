@@ -7,25 +7,20 @@
 package mada.peg
 
 
-private[mada] object Range {
-    def apply[A](i: A, j: A, c: Compare[A]): Peg[A] = new RangePeg(i, j, c)
-}
-
-private[mada] class RangePeg[A](i: A, j: A, c: Compare[A]) extends Peg[A] {
-    private val ord = c.toOrdering
+case class Range[A](_1: A, _2: A, _3: Compare[A]) extends Peg[A] {
+    private val ord = _3.toOrdering
 
     override def parse(v: Vector[A], start: Int, end: Int) = {
         if (start == end) {
             FAILURE
         } else {
             val e = v(start)
-            if (ord.lteq(i, e) && ord.lteq(e, j)) {
+            if (ord.lteq(_1, e) && ord.lteq(e, _2)) {
                 start + 1
             } else {
                 FAILURE
             }
         }
     }
-
     override def width = 1
 }

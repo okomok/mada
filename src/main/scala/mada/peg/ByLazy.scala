@@ -7,10 +7,7 @@
 package mada.peg
 
 
-private[mada] object ByLazy {
-    def apply[A](p: => Peg[A]): Peg[A] = new ByLazyPeg(p)
-}
-
-private[mada] class ByLazyPeg[A](p: => Peg[A]) extends Forwarder[A] {
-    override lazy val delegate = p
+class ByLazy[A](p: => Peg[A]) extends Forwarder[A] {
+    val _1 = function.ofLazy(p)
+    override lazy val delegate = _1()
 }

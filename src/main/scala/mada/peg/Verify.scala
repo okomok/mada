@@ -13,16 +13,13 @@ package mada.peg
 case class VerificationException[A](peg: Peg[A], vector: Vector[A]) extends RuntimeException
 
 
-private[mada] object Verify {
-    def apply[A](p: Peg[A]): Peg[A] = new VerifyPeg(p)
-}
-
-private[mada] class VerifyPeg[A](override val delegate: Peg[A]) extends Forwarder[A] {
+case class Verify[A](_1: Peg[A]) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
-        val cur = delegate.parse(v, start, end)
+        val cur = _1.parse(v, start, end)
         if (cur == FAILURE) {
-            throw new VerificationException(delegate, v(start, end))
+            throw new VerificationException(_1, v(start, end))
         }
         cur
     }
+    override def width = _1.width
 }
