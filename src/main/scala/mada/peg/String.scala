@@ -17,5 +17,5 @@ case class Unstringize(_1: String) extends Forwarder[Char] {
 }
 
 case class UnstringizeBy(_1: String, _2: (Char, Char) => Boolean) extends Forwarder[Char] {
-    override protected val delegate = fromVectorBy(vector.unstringize(_1))(_2)
+    override protected val delegate = fromSequenceBy(vector.unstringize(_1))(_2)
 }

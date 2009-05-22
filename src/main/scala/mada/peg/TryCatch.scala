@@ -12,7 +12,7 @@ case class Try[A](_1: Peg[A]) {
 }
 
 case class TryCatch[A](_1: Peg[A], _2: Throwable => Peg[A]) extends Forwarder[A] {
-    override val delegate = TryCatchFinally(_1, _2, function.empty1)
+    override protected val delegate: Peg[A] = TryCatchFinally(_1, _2, function.empty1)
     def `finally`(g: Action[A]): Peg[A] = TryCatchFinally(_1, _2, g)
 }
 

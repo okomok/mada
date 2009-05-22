@@ -33,6 +33,6 @@ class CapturingGroups[K, A](val map: scala.collection.mutable.Map[K, Vector[A]])
     def backref(k: K): Peg[A] = new BackrefPeg(k)
 
     private class BackrefPeg(k: K) extends Forwarder[A] {
-        override def delegate = fromVector(map(k))
+        override def delegate = fromSequence(map(k))
     }
 }

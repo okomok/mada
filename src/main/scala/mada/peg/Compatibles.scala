@@ -12,7 +12,7 @@ trait Compatibles { this: Peg.type =>
     implicit def madaPegFromChar(from: Char): Peg[Char] = fromChar(from)
     implicit def madaPegFromRegexPattern(from: java.util.regex.Pattern): Peg[Char] = fromRegexPattern(from)
     implicit def madaPegUnstringize(from: String): Peg[Char] = unstringize(from)
-    implicit def madaPegFromVector[A](from: Vector[A]): Peg[A] = fromVector(from)
+    implicit def madaPegFromSequence[A](from: Sequence[A]): Peg[A] = fromSequence(from)
     implicit def madaPegFromSIterable[A](from: scala.Iterable[A]): Peg[A] = fromSIterable(from)
     implicit def madaPegFromSRegex(from: scala.util.matching.Regex): Peg[Char] = fromSRegex(from)
 }

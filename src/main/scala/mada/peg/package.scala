@@ -201,7 +201,7 @@ package object peg {
     def fromChar(from: Char): Peg[Char] = FromChar(from)
     def unstringize(from: String): Peg[Char] = Unstringize(from)
     def fromRegexPattern(from: java.util.regex.Pattern): Peg[Char] = FromRegexPattern(from)
-    def fromVector[A](from: Vector[A]): Peg[A] = FromVector(from)
+    def fromSequence[A](from: Sequence[A]): Peg[A] = FromSequence(from)
     def fromSIterable[A](from: scala.Iterable[A]): Peg[A] = FromSIterable(from)
     def fromSRegex(from: scala.util.matching.Regex): Peg[Char] = FromSRegex(from)
 
@@ -213,7 +213,7 @@ package object peg {
     /**
      * Tries to match <code>from</code> using the predicate.
      */
-    def fromVectorBy[A](from: Vector[A])(pred: (A, A) => Boolean): Peg[A] = FromVectorBy(from, pred)
+    def fromSequenceBy[A](from: Sequence[A])(pred: (A, A) => Boolean): Peg[A] = FromSequenceBy(from, pred)
 
     /**
      * Tries to match <code>from</code> using the predicate.
