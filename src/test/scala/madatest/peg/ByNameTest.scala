@@ -17,7 +17,7 @@ import junit.framework.Assert._
 import mada.peg.compatibles._
 
 
-class ByLazyTest {
+class ByNameTest {
     val S = new StackActions[Char, Int]
 
     lazy val expr = term >>
@@ -27,9 +27,9 @@ class ByLazyTest {
                 ( ('*' >> factor){S{ (_, x, y) => x * y }} |
                   ('/' >> factor){S{ (_, x, y) => x / y }} ).*
     lazy val factor: Peg[Char] = integer |
-                ('(' >> byLazy(expr) >> ')') |
-                ('-' >> byLazy(factor)){S{ (_, x) => -x }} |
-                ('+' >> byLazy(factor))
+                ('(' >> byName(expr) >> ')') |
+                ('-' >> byName(factor)){S{ (_, x) => -x }} |
+                ('+' >> byName(factor))
     lazy val integer = (digit.+){S{ v => vector.lexical.toInt(v) }}
     lazy val digit   = "[0-9]".r
 

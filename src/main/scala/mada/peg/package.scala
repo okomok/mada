@@ -119,9 +119,14 @@ package object peg {
 // pseudo
 
     /**
-     * Constructs a lazy Peg object.
+     * Constructs a Peg by-lazy.
      */
     def byLazy[A](p: => Peg[A]): Peg[A] = new ByLazy(p)
+
+    /**
+     * Constructs a Peg by-name.
+     */
+    def byName[A](p: => Peg[A]): Peg[A] = new ByName(p)
 
     /**
      * Constructs a pseudo try-catch expression in
