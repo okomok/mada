@@ -8,14 +8,15 @@ package mada.function
 
 
 import java.util.concurrent
+import parallels.executor
 
 
 class Parallel[R](body: => R) extends Function0[R] {
-    val _1 = ofName(body)
+    val _1: Function0[R] = this
 
     private val u = {
         val c = new concurrent.Callable[R] { override def call() = body }
-        para.executor.synchronized { para.executor.submit(c) }
+        executor.synchronized { executor.submit(c) }
     }
     override def apply() = {
         try {

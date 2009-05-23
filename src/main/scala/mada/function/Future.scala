@@ -8,6 +8,8 @@ package mada.function
 
 
 class Future[+R](body: => R) extends Function0[R] {
+    val _1: Function0[R] = this
+
     private val f = {
         try {
             parallel(body)

@@ -10,7 +10,7 @@ package mada.function
 import java.util.concurrent._
 
 
-package object para {
+package object parallels {
 
     val POOL_SIZE = 2 * java.lang.Runtime.getRuntime.availableProcessors
 
