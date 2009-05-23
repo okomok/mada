@@ -22,7 +22,7 @@ trait Forwarder[+A] extends Sequence[A] with util.Forwarder {
 
     override def isEmpty: Boolean = delegate.isEmpty
     override def size: Int = delegate.size
-    override def append[B >: A](that: Sequence[B]): Sequence[B] = afterForward(delegate.append(that))
+    override def ++[B >: A](that: Sequence[B]): Sequence[B] = afterForward(delegate.++(that))
     override def map[B](f: A => B): Sequence[B] = afterForward(delegate.map(f))
     override def flatMap[B](f: A => Sequence[B]): Sequence[B] = afterForward(delegate.flatMap(f))
     override def filter(p: A => Boolean): Sequence[A] = afterForward(delegate.filter(p))

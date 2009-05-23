@@ -107,10 +107,7 @@ trait Sequence[+A] {
     /**
      * Appends <code>that</code>.
      */
-    def append[B >: A](that: Sequence[B]): Sequence[B] = Append[B](this, that)
-
-    @aliasOf("append")
-    final def ++[B >: A](that: Sequence[B]) = append(that)
+    def ++[B >: A](that: Sequence[B]): Sequence[B] = Append[B](this, that)
 
     /**
      * Maps elements using <code>f</code>.

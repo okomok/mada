@@ -16,6 +16,6 @@ private[mada] object ToString {
             vector.unsplit(from.map{ (e: A) => vector.unstringize(e.toString) })(vector.unstringize(", "))
         ))
     }
-    private def wrap(from: Vector[Char]) = vector.unstringize("[").append(from.drop(2)).append(vector.unstringize("]"))
+    private def wrap(from: Vector[Char]) = vector.unstringize("[") ++ from.drop(2) ++ vector.unstringize("]")
 */
 }

@@ -65,8 +65,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
      */
     override def size: Int = end - start
 
-    @overload def append(that: Vector[A]): Vector[A] = Append(this, that)
-    @aliasOf("append") @overload final def ++(that: Vector[A]): Vector[A] = append(that)
+    @overload def ++(that: Vector[A]): Vector[A] = Append(this, that)
     override def map[B](f: A => B): Vector[B] = Map(this, f)
     override def flatMap[B](f: A => Sequence[B]): Vector[B] = vector.flatten(map(f))
     override def filter(p: A => Boolean): Vector[A] = Filter(this, p)

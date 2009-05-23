@@ -16,7 +16,7 @@ trait Forwarder[A] extends sequence.Forwarder[A] with Adapter.Transform[A]  {
 
 // sequence
     override def equalsIf[B](that: Vector[B])(p: (A, B) => Boolean): Boolean = delegate.equalsIf(that)(p)
-    override def append(that: Vector[A]): Vector[A] = afterForward(delegate.append(that))
+    override def ++(that: Vector[A]): Vector[A] = afterForward(delegate.++(that))
     override def map[B](f: A => B): Vector[B] = afterForward(delegate.map(f))
     override def flatMap[B](f: A => Sequence[B]): Vector[B] = afterForward(delegate.flatMap(f))
     override def filter(p: A => Boolean): Vector[A] = afterForward(delegate.filter(p))
