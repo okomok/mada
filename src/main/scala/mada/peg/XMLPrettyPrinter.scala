@@ -87,14 +87,14 @@ private[mada] class XMLPrettyPrinter(val out: java.io.Writer, val indentWidth: I
         out.close
     }
 
-    override def print[A](p: Peg[A]): Peg[A] = new ElementPeg(p)
+    override def print[A](p: Peg[A]): Peg[A] = Print(p)
 
-    private class ElementPeg[A](override val delegate: Peg[A]) extends Forwarder[A] {
+    case class Print[A](_1: Peg[A]) extends Peg[A] {
         override def parse(v: Vector[A], start: Int, end: Int) = {
-            writeStartElement(delegate)
+            writeStartElement(_1)
 
             writeElement("parsing", v(start, end))
-            val cur = delegate.parse(v, start, end)
+            val cur = _1.parse(v, start, end)
             if (cur == FAILURE) {
                 writeElement("parsed", "FAILURE")
             } else {
@@ -104,5 +104,6 @@ private[mada] class XMLPrettyPrinter(val out: java.io.Writer, val indentWidth: I
             writeEndElement
             cur
         }
+        override def width = _1.width
     }
 }

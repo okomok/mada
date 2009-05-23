@@ -20,17 +20,18 @@ class Memoizer[A](val input: Vector[A]) {
     /**
      * A peg to return the memoized result when input vector is the same.
      */
-    def memoize(p: Peg[A]): Peg[A] = new MemoizePeg(p)
+    def memoize(p: Peg[A]): Peg[A] = Memoize(p)
 
-    private class MemoizePeg(override val delegate: Peg[A]) extends Forwarder[A] {
+    case class Memoize(_1: Peg[A]) extends Peg[A] {
         private val memoTable = new java.util.concurrent.ConcurrentHashMap[Pair[Int, Int], () => Int]
 
         override def parse(v: Vector[A], start: Int, end: Int) = {
             if (v.regionBase eq input.regionBase) {
-                assoc.lazyGet(memoTable)(Pair(start, end)){ delegate.parse(v, start, end) }
+                assoc.lazyGet(memoTable)(Pair(start, end)){ _1.parse(v, start, end) }
             } else {
-                delegate.parse(v, start, end)
+                _1.parse(v, start, end)
             }
         }
+        override def width = _1.width
     }
 }

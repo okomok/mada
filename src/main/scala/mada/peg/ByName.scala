@@ -10,5 +10,5 @@ package mada.peg
 class ByName[A](p: => Peg[A]) extends Forwarder[A] {
     val _1 = function.ofName(p)
 
-    override lazy val delegate = _1()
+    override protected def delegate = _1()
 }

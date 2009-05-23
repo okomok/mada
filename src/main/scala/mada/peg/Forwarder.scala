@@ -7,13 +7,12 @@
 package mada.peg
 
 
-trait Forwarder[A] extends Peg[A] with mada.util.Forwarder {
+trait Forwarder[A] extends Peg[A] with util.Forwarder {
     override protected def delegate: Peg[A]
 
-    protected def beforeForward[B](that: Peg[B]): Peg[B] = that
+    final override def parse(v: Vector[A], start: Int, end: Int) = delegate.parse(v, start, end)
+    final override def width = delegate.width
 
-    override def parse(v: Vector[A], start: Int, end: Int) = beforeForward(delegate).parse(v, start, end)
-    override def width = beforeForward(delegate).width
-
-    override def toString: String = beforeForward(delegate).toString
+    // Should not be forwarded? every peg is a case class, expression.
+    // override def toString: String = delegate.toString
 }

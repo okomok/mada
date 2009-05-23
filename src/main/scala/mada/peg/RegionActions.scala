@@ -16,9 +16,9 @@ class RegionActions[A] {
     /**
      * Marks starting point of actions.
      */
-    val startAt: Peg[A] = new StartAtPeg
+    val startAt: Peg[A] = StartAt()
 
-    private class StartAtPeg extends Peg[A] with ZeroWidth[A] {
+    case class StartAt() extends Peg[A] with ZeroWidth[A] {
         override def parse(v: Vector[A], start: Int, end: Int) = {
             stack.push(start)
             start
@@ -31,11 +31,11 @@ class RegionActions[A] {
     /**
      * Triggers the action.
      */
-    def endWith(f: Action[A]): Peg[A] = new EndWithPeg(f)
+    def endWith(f: Action[A]): Peg[A] = EndWith(f)
 
-    private class EndWithPeg(f: Action[A]) extends Peg[A] with ZeroWidth[A] {
+    case class EndWith(_1: Action[A]) extends Peg[A] with ZeroWidth[A] {
         override def parse(v: Vector[A], start: Int, end: Int) = {
-            f(v(stack.pop, start))
+            _1(v(stack.pop, start))
             start
         }
     }

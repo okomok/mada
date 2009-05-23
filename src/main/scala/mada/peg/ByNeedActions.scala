@@ -26,17 +26,18 @@ class ByNeedActions[A] {
     /**
      * Creates a <code>Peg</code> which triggers queued actions.
      */
-    def need(p: Peg[A]): Peg[A] = new NeedPeg(p)
+    def need(p: Peg[A]): Peg[A] = Need(p)
 
-    private class NeedPeg(override val delegate: Peg[A]) extends Forwarder[A] {
+    case class Need(_1: Peg[A]) extends Peg[A] {
         override def parse(v: Vector[A], start: Int, end: Int) = {
-            val cur = delegate.parse(v, start, end)
+            val cur = _1.parse(v, start, end)
             if (cur != FAILURE) {
                 fireActions
             }
             queue.clear
             cur
         }
+        override def width = _1.width
     }
 
     private def fireActions: Unit = {

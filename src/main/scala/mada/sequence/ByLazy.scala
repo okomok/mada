@@ -7,7 +7,6 @@
 package mada.sequence
 
 
-// In fact, most of all views are inherently lazy.
 class ByLazy[+A](seq: => Sequence[A]) extends Forwarder[A] {
     val _1 = function.ofLazy(seq)
 
