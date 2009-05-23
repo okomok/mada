@@ -79,6 +79,11 @@ package object util {
      */
     def nullOf[A >: Null]: A = null
 
+    /**
+     * @return  <code>null.asInstanceOf[A]</code>.
+     */
+    def nullInstance[A]: A = null.asInstanceOf[A]
+
 
 // hash code
 

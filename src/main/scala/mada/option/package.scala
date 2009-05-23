@@ -14,4 +14,9 @@ package object option {
      */
     def NoneOf[A]: Option[A] = None
 
+    /**
+     * @return  <code>if (e eq null) None else Some(e)</code>.
+     */
+    def fromRef[A <: AnyRef](e: A): Option[A] = if (e eq null) None else Some(e)
+
 }
