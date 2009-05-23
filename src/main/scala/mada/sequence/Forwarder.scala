@@ -13,7 +13,7 @@ trait Forwarder[+A] extends Sequence[A] with util.Forwarder {
     protected def afterForward[B](that: Sequence[B]): Sequence[B] = that
     private def afterForward2[B](that: (Sequence[B], Sequence[B])): (Sequence[B], Sequence[B]) = (afterForward(that._1), afterForward(that._2))
 
-    override def begin: Iterator[A] = delegate.begin
+    @quasiFinal override def begin: Iterator[A] = delegate.begin
 
     override def equalsIf[B](that: Sequence[B])(p: (A, B) => Boolean): Boolean = delegate.equalsIf(that)(p)
     override def equals(that: Any): Boolean = delegate.equals(that)
