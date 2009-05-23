@@ -69,7 +69,7 @@ sealed trait List { // this: `this` =>
     /**
      * Returns the last element.
      */
-    final def last(implicit _last: Last[`this`, meta.error]): last = _last(_this, meta.instance[meta.error])
+    final def last(implicit _last: Last[`this`, meta.error]): last = _last(_this, util.nullInstance[meta.error])
     final type last = Last.result[`this`, meta.error]
 
     /**

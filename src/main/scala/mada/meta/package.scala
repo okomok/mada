@@ -23,17 +23,12 @@ package object meta {
     type error = Nothing
 
 
-// misc
+// unmeta
 
     /**
      * Returns corresponding runtime value.
      */
     def unmeta[From, To](implicit _unmeta: Unmeta[From, To]): To = _unmeta()
-
-    /**
-     * @return  <code>null.asInstanceOf[a]</code>.
-     */
-    def instance[a]: a = null.asInstanceOf[a]
 
 
 // operators
