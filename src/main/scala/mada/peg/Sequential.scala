@@ -20,7 +20,6 @@ case class SeqAnd[A](_1: Peg[A], _2: Peg[A]) extends Peg[A] {
     override def width = _1.width + _2.width
 }
 
-
 case class SeqOr[A](_1: Peg[A], _2: Peg[A]) extends Forwarder[A] {
     override protected val delegate = (_1 >> _2.?) | _2
 }
