@@ -19,7 +19,7 @@ trait Quantified[A] extends Peg[A] {
     def until(that: Peg[A]): Peg[A]
 
     @aliasOf("until")
-    final def >>>(that: Peg[A]) = until(that)
+    final def >>>(that: Peg[A]): Peg[A] = until(that)
 }
 
 

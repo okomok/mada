@@ -8,7 +8,7 @@ package mada.peg
 
 
 case class Try[A](_1: Peg[A]) {
-    def `catch`(f: Throwable => Peg[A]) = TryCatch(_1, f)
+    def `catch`(f: Throwable => Peg[A]): TryCatch[A] = TryCatch(_1, f)
 }
 
 case class TryCatch[A](_1: Peg[A], _2: Throwable => Peg[A]) extends Forwarder[A] {

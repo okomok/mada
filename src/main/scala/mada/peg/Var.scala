@@ -13,17 +13,17 @@ package mada.peg
  *
  * @param   p   assigned to <code>delegate</code>
  */
-class Var[A](private var p: Peg[A]) extends Forwarder[A] {
+class Var[A](@volatile private var p: Peg[A]) extends Forwarder[A] with util.Var[Peg[A]] {
     def this() = this(null)
+
     override protected def delegate = p
-    final def isNull = p eq null
-    final def assign(that: Peg[A]) = p = that
+    override def assign(that: Peg[A]) = { p = that }
 
     @aliasOf("assign")
-    final def ::=(that: Peg[A]): Unit = p = that
+    final def ::=(that: Peg[A]): Unit = { p = that }
 
     @aliasOf("assign")
-    final def <--(that: Peg[A]): Unit = p = that
+    final def <--(that: Peg[A]): Unit = { p = that }
 
     /**
      * Returns a shallow copy. (The <code>delegate</code> is not copied.)
