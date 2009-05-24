@@ -63,10 +63,10 @@ class TSTree[A, V](_lt: compare.Func[A]) {
     }
 
     override def toString: String = {
-        val out = new XMLPrettyPrinter(new java.io.StringWriter)
+        val out = prettyprinter.Xml(new java.io.StringWriter, prettyprinter.defaultIndentWidth)
         print(out)
         out.close
-        out.out.toString
+        out._1.toString
     }
 
     def get(key: Vector[A], start: Int, end: Int): Option[V] = {
@@ -120,7 +120,7 @@ class TSTree[A, V](_lt: compare.Func[A]) {
         }
     }
 
-    def print(out: XMLPrettyPrinter): Unit = {
+    def print(out: prettyprinter.Xml): Unit = {
         out.writeStartElement("tstree")
         if (rootNode ne null) {
             rootNode.print(out)
@@ -238,7 +238,7 @@ private[mada] class TSTreeNode[A, V](val elem: A, val parent: TSTreeNode[A, V]) 
         }
     }
 
-    def print(out: XMLPrettyPrinter): Unit = {
+    def print(out: prettyprinter.Xml): Unit = {
         def _print(c: TSTreeNode[A, V], s: String) = {
             if (c ne null) {
                 out.writeStartElement(s)

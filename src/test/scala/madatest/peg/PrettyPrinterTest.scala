@@ -16,8 +16,8 @@ import mada.peg.compatibles._
 class PrettyPrinterTest {
     val expr, term, factor, digit = new Var[Char]
     val out
-//         = PrettyPrinter.xml
-         = PrettyPrinter.trash
+//         = prettyprinter.xml
+         = prettyprinter.trash
 
     expr    <-- out("expr")   { term >> (( '+' >> term | '-' >> term )*) }
     term    <-- out("term")   { factor >> ( '*' >> factor | '/' >> factor ).* }

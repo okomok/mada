@@ -28,18 +28,3 @@ trait QuantifiedForwarder[A] extends Forwarder[A] with Quantified[A] {
 
     override def until(that: Peg[A]) = delegate.until(that)
 }
-
-
-case class Opt[A](_1: Peg[A]) extends QuantifiedForwarder[A] {
-    override protected val delegate = _1.repeat(0, 1)
-}
-
-case class Plus[A](_1: Peg[A]) extends QuantifiedForwarder[A] {
-    throwIfZeroWidth(_1, "plus")
-    override protected val delegate = _1.repeat(1, ())
-}
-
-case class Star[A](_1: Peg[A]) extends QuantifiedForwarder[A] {
-    throwIfZeroWidth(_1, "star")
-    override protected val delegate = _1.repeat(0, ())
-}
