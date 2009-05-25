@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.peg.symbol
+package mada.peg
 
 
 // See: Plant your data in a ternary search tre

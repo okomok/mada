@@ -4,10 +4,34 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.peg.symbol.set
+package mada.peg
 
 
-case class Default[A](_1: compare.Func[A]) extends Set[A] {
+object SymbolSet {
+
+    /**
+     * @return  <code>fromIterable(vs)(c)</code>.
+     */
+    def apply[A](vs: Vector[A]*)(implicit c: Compare[A]): SymbolSet[A] = fromIterable(vs)(c)
+
+    /**
+     * Constructs <code>Set</code> containing <code>vs</code> as elements.
+     */
+    def fromIterable[A](vs: Iterable[Vector[A]])(lt: compare.Func[A]): SymbolSet[A] = {
+        val r = new SymbolSet(lt)
+        for (v <- vs.view) {
+            r += v
+        }
+        r
+    }
+
+}
+
+
+/**
+ * A <code>Peg</code> to optimize the form <code>k1|k2|k3|...</code>.
+ */
+class SymbolSet[A](_1: compare.Func[A]) extends Peg[A] with scala.collection.mutable.Set[Vector[A]] {
 
     private val tree = new TSTree[A, Unit](_1)
 

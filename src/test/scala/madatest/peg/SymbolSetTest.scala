@@ -16,16 +16,16 @@ import mada.vector.compatibles._
 
 class SymbolSetTest {
     def testTrivial: Unit = {
-        val i = ("abc" >> symbol.set.Of("to", "too", "tot", "tab", "so")).lookingAt("abcto".nth).get
+        val i = ("abc" >> SymbolSet("to", "too", "tot", "tab", "so")).lookingAt("abcto".nth).get
         assertEquals(5, i)
     }
 
     def testLongestMatch: Unit = {
-        assertTrue(("abc" >> symbol.set.Of("to", "too", "tot", "tab", "so")) matches "abctoo")
+        assertTrue(("abc" >> SymbolSet("to", "too", "tot", "tab", "so")) matches "abctoo")
     }
 
     def testMethods: Unit = {
-        val set = symbol.set.Of("to", "too", "tot", "tab", "so")
+        val set = SymbolSet("to", "too", "tot", "tab", "so")
         //assertFalse(set.+=("to"))
         //assertTrue(set.-=("too"))
         ()
