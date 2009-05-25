@@ -20,7 +20,6 @@ object Prepend {
         override type visitCons[h, t <: List] = Cons[h, t#accept[vt[r]]]
     }
 
-
     implicit def ofNil[r <: List] = new Prepend[r, Nil] {
         override def apply(_r: r, _l: Nil) = _r
     }

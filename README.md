@@ -1,5 +1,7 @@
 # `Mada` 0.90
 
+
+
 `Mada` is a set of packages for Scala:
 
 - `blend`
@@ -21,6 +23,25 @@
 - `vector`
 
     Structurally-unmodifiable writable array
+
+
+
+## `blend`
+
+`blend` contains heterogeneous-list implementation originally written in [Metascala].
+
+    import mada.meta.literal.nat._
+    import mada.blend._
+    import junit.framework.Assert._
+
+    class DocTest {
+        def testTrivial: Unit = {
+            type l = String :: Boolean :: Char :: Int :: Nil
+            val l: l = "hetero" :: true :: 'L' :: 7 :: Nil
+            val i: l#at[_3N] = l.at[_3N]
+            assertEquals(10, i + 3)
+        }
+    }
 
 
 
