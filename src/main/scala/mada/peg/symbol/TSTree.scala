@@ -4,15 +4,14 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.peg
+package mada.peg.symbol
 
 
-/**
- * Ternary search tree implementation internally used in <code>mada.Peg</code>.
- * Should not be used directly.
- *
- * @see <a href="http://www.javaworld.com/javaworld/jw-02-2001/jw-0216-ternary.html">Plant your data in a ternary search tree</a>
- */
+// See: Plant your data in a ternary search tre
+//      at http://www.javaworld.com/javaworld/jw-02-2001/jw-0216-ternary.html
+
+
+@visibleForTesting
 class TSTree[A, V](_lt: compare.Func[A]) {
     private var rootNode: TSTreeNode[A, V] = null
 
@@ -193,7 +192,7 @@ class TSTree[A, V](_lt: compare.Func[A]) {
 }
 
 
-private[mada] class TSTreeNode[A, V](val elem: A, val parent: TSTreeNode[A, V]) {
+private class TSTreeNode[A, V](val elem: A, val parent: TSTreeNode[A, V]) {
     var data: Option[V] = None
     var left: TSTreeNode[A, V] = null
     var middle: TSTreeNode[A, V] = null
@@ -261,7 +260,7 @@ private[mada] class TSTreeNode[A, V](val elem: A, val parent: TSTreeNode[A, V]) 
 }
 
 
-private[mada] class TSTreeNodeIterator[A, V](parentKey: Vector[A], node: TSTreeNode[A, V]) extends sequence.SIteratorForwarder[(Vector[A], TSTreeNode[A, V])] {
+private class TSTreeNodeIterator[A, V](parentKey: Vector[A], node: TSTreeNode[A, V]) extends sequence.SIteratorForwarder[(Vector[A], TSTreeNode[A, V])] {
     private val me = scala.Iterator.single((lowerKey, node))
     override protected val delegate = me ++ children(node.left) ++ children(node.middle) ++ children(node.right)
 

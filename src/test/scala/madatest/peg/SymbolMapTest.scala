@@ -17,7 +17,7 @@ import mada.vector.compatibles._
 
 class SymbolMapTest {
     def testTrivial: Unit = {
-        val g = SymbolMap("e" --> "z", "ef" --> "g", /* "" --> "DEFAULT", */ "wx" --> "wy", "w" --> "xyz")
+        val g = symbol.map.Of("e" --> "z", "ef" --> "g", /* "" --> "DEFAULT", */ "wx" --> "wy", "w" --> "xyz")
         assertTrue("abc" >> g >> "LL"  matches "abcezLL")
         assertTrue("abc" >> g >> "LL"  matches "abcefgLL")
         assertTrue("abc" >> g >> "LL"  matches "abcwxwyLL")
@@ -26,12 +26,12 @@ class SymbolMapTest {
     }
 
     def testTrivial2: Unit = {
-        val g = SymbolMap(mada.vector.unstringize("e") -> mada.peg.unstringize("z"), mada.vector.unstringize("ef") -> mada.peg.unstringize("g"))
+        val g = symbol.map.Of(mada.vector.unstringize("e") -> mada.peg.unstringize("z"), mada.vector.unstringize("ef") -> mada.peg.unstringize("g"))
         assertTrue("abc" >> g  matches "abcez")
     }
 
     def testIterator: Unit = {
-        val g = SymbolMap("e" --> "z", "ef" --> "g", "wx" --> "wy", "w" --> "xyz")
+        val g = symbol.map.Of("e" --> "z", "ef" --> "g", "wx" --> "wy", "w" --> "xyz")
         for (n <- g.elements) {
             // println(n)
         }

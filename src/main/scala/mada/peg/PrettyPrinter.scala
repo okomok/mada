@@ -11,6 +11,7 @@ package mada.peg
  * Prints matched input information.
  */
 trait PrettyPrinter {
+
     /**
      * Closes output resource.
      */
@@ -31,4 +32,5 @@ trait PrettyPrinter {
 
     @aliasOf("print")
     final def apply[A](name: String)(p: Peg[A]): Peg[A] = print(name)(p)
+
 }
