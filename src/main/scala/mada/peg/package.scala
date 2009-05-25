@@ -129,7 +129,7 @@ package object peg {
     def byName[A](p: => Peg[A]): Peg[A] = new ByName(p)
 
     /**
-     * Constructs a pseudo try-catch expression in
+     * Constructs a pseudo try-catch expression.
      */
     def `try`[A](p: Peg[A]): Try[A] = Try(p)
 
@@ -141,12 +141,12 @@ package object peg {
         /**
          * Chooses the longest match.
          */
-        def apply[A](ps: Peg[A]*): Peg[A] = Longest(ps)
+        def apply[A](ps: Peg[A]*): Peg[A] = Longest(sequence.from(ps))
 
         /**
          * Chooses the longest match.
          */
-        def apply[A](ps: Iterable[Peg[A]]): Peg[A] = Longest(ps)
+        def apply[A](ps: Sequence[Peg[A]]): Peg[A] = Longest(ps)
     }
 
 
@@ -155,12 +155,12 @@ package object peg {
         /**
          * Chooses the shortest match.
          */
-        def apply[A](ps: Peg[A]*): Peg[A] = Shortest(ps)
+        def apply[A](ps: Peg[A]*): Peg[A] = Shortest(sequence.from(ps))
 
         /**
          * Chooses the shortest match.
          */
-        def apply[A](ps: Iterable[Peg[A]]): Peg[A] = Shortest(ps)
+        def apply[A](ps: Sequence[Peg[A]]): Peg[A] = Shortest(ps)
     }
 
 
@@ -171,7 +171,7 @@ package object peg {
         /**
          * Matches any element of set.
          */
-        def apply[A](es: A*): Peg[A] = Multiple(sequence.fromSIterable(es).toSHashSet)
+        def apply[A](es: A*): Peg[A] = Multiple(sequence.from(es).toSHashSet)
 
         /**
          * Matches any element of set.
@@ -184,12 +184,57 @@ package object peg {
         /**
          * Matches a key, then tries to match its value.
          */
-        def apply[A](es: (A, Peg[A])*): Peg[A] = Switch(sequence.fromSIterable(es).toSHashMap)
+        def apply[A](es: (A, Peg[A])*): Peg[A] = Switch(sequence.from(es).toSHashMap)
 
         /**
          * Matches a key, then tries to match its value.
          */
         def apply[A](es: scala.collection.Map[A, Peg[A]]): Peg[A] = Switch(es)
+    }
+
+
+// symbol
+
+    type SymbolSet[A] = Peg[A] with scala.collection.mutable.Set[Vector[A]]
+
+    @packageObjectBrokenOverload
+    object symbolSet {
+        /**
+         * @return  <code>symbolSet(vs)(c)</code>.
+         */
+        def apply[A](vs: Vector[A]*)(implicit c: Compare[A]): SymbolSet[A] = symbolSet(sequence.from(vs))(c)
+
+        /**
+         * Returns a peg to optimize the form <code>k1|k2|k3|...</code>.
+         */
+        def apply[A](vs: Sequence[Vector[A]])(lt: compare.Func[A]): SymbolSet[A] = {
+            val r = new TheSymbolSet(new TSTree[A, Unit](lt))
+            for (v <- vs) {
+                r += v
+            }
+            r
+        }
+    }
+
+    type SymbolMap[A] = Peg[A] with scala.collection.mutable.Map[Vector[A], Peg[A]]
+
+    @packageObjectBrokenOverload
+    object symbolMap {
+        /**
+         * @return  <code>symbolMap(es)(c)</code>.
+         */
+        def apply[A](es: (Vector[A], Peg[A])*)(implicit c: Compare[A]): SymbolMap[A] = symbolMap(sequence.from(es))(c)
+
+        /**
+         * Returns a peg to optimize the form <code>(k1 >> p1)|(k2 >> p2)|(k3 >> p3)|...</code>.
+         */
+        def apply[A](es: Sequence[(Vector[A], Peg[A])])(lt: compare.Func[A]): SymbolMap[A] = {
+            val r = new TheSymbolMap(new TSTree[A, Peg[A]](lt))
+            for (e <- es) {
+                r += Tuple2(e._1, e._2)
+            }
+            r
+        }
     }
 
 
@@ -233,4 +278,5 @@ package object peg {
             throw new IllegalArgumentException(method + " doesn't allow zero-width")
         }
     }
+
 }

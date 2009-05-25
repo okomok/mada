@@ -7,18 +7,18 @@
 package mada.peg
 
 
-case class Longest[A](_1: Iterable[Peg[A]]) extends Forwarder[A] {
+case class Longest[A](_1: Sequence[Peg[A]]) extends Forwarder[A] {
     override protected val delegate: Peg[A] = new Best(_1, Math.max)
 }
 
-case class Shortest[A](_1: Iterable[Peg[A]]) extends Forwarder[A] {
+case class Shortest[A](_1: Sequence[Peg[A]]) extends Forwarder[A] {
     override protected val delegate: Peg[A] = new Best(_1, Math.min)
 }
 
 
-private class Best[A](_1: Iterable[Peg[A]], _2: (Int, Int) => Int) extends Peg[A] {
+private class Best[A](_1: Sequence[Peg[A]], _2: (Int, Int) => Int) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
-        val curs = _1.view.map{ p => p.parse(v, start, end) }.filter{ i => i != FAILURE }
+        val curs = _1.map{ p => p.parse(v, start, end) }.filter{ i => i != FAILURE }
         if (curs.isEmpty) FAILURE else curs.reduceLeft(_2)
     }
 }
