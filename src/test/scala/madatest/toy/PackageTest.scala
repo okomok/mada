@@ -12,7 +12,7 @@ import junit.framework.Assert._
 
 package your {
     object My {
-        private val P = my.`package`
+        val P = my.`package`
     }
 
    // trait My[A]
@@ -32,6 +32,7 @@ import your.My._
 class PackageTest {
     def buz = {
      //   foo(3)
+     your.My.P.foo(3)
      ()
     }
 }

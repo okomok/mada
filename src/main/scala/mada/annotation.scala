@@ -94,3 +94,9 @@ class compilerWorkaround extends StaticAnnotation
  * In package object, overload resolution is broken in 2.8.
  */
 class packageObjectBrokenOverload extends compilerWorkaround
+
+
+/**
+ * Visible only for testing: don't touch this.
+ */
+class visibleForTesting extends compilerWorkaround
