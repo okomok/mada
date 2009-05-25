@@ -248,11 +248,22 @@ package object peg {
 
 // conversions
 
+    @compatibleConversion
     def fromChar(from: Char): Peg[Char] = FromChar(from)
+
+    @compatibleConversion
     def unstringize(from: String): Peg[Char] = Unstringize(from)
+
+    @compatibleConversion
     def fromRegexPattern(from: java.util.regex.Pattern): Peg[Char] = FromRegexPattern(from)
+
+    @compatibleConversion
     def fromSequence[A](from: Sequence[A]): Peg[A] = FromSequence(from)
+
+    @compatibleConversion
     def fromSIterable[A](from: scala.Iterable[A]): Peg[A] = FromSIterable(from)
+
+    @compatibleConversion
     def fromSRegex(from: scala.util.matching.Regex): Peg[Char] = FromSRegex(from)
 
     /**
@@ -273,8 +284,10 @@ package object peg {
 
 // detail
 
+    private[mada] def isZeroWidth[A](p: Peg[A]): Boolean = p.isInstanceOf[ZeroWidth[_]]
+
     private[mada] def throwIfZeroWidth[A](p: Peg[A], method: String): Unit = {
-        if (IsZeroWidth(p)) {
+        if (isZeroWidth(p)) {
             throw new IllegalArgumentException(method + " doesn't allow zero-width")
         }
     }
