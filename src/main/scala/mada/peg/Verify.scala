@@ -21,5 +21,6 @@ case class Verify[A](_1: Peg[A]) extends Peg[A] {
         }
         cur
     }
+
     override def width = _1.width
 }

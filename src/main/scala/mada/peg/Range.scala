@@ -22,5 +22,6 @@ case class Range[A](_1: A, _2: A, _3: Compare[A]) extends Peg[A] {
             }
         }
     }
+
     override def width = 1
 }

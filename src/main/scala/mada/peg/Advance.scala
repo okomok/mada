@@ -18,5 +18,6 @@ case class Advance[A](_1: Int) extends Peg[A] {
             FAILURE
         }
     }
+
     override def width = _1
 }

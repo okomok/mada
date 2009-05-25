@@ -7,8 +7,8 @@
 package mada.peg
 
 
-case class Error[A]() extends Peg[A] {
+case class Undefined[A]() extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int) = {
-        throw new java.lang.AssertionError("error")
+        throw new java.lang.AssertionError("undefined")
     }
 }

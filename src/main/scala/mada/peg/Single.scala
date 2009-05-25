@@ -15,5 +15,6 @@ case class Single[A](_1: A) extends Peg[A] {
             start + 1
         }
     }
+
     override def width = 1
 }

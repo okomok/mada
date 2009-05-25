@@ -15,5 +15,6 @@ case class Multiple[A](_1: scala.collection.Set[A]) extends Peg[A] {
             start + 1
         }
     }
+
     override def width = 1
 }

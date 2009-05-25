@@ -17,7 +17,7 @@ import mada.peg._
 class TryTest {
     def testTrivial: Unit = {
         var thrown = false
-        val p = `try` { "abc" >> error >> "d" } `catch` { case _: java.lang.AssertionError => thrown = true; "abcd" }
+        val p = `try` { "abc" >> undefined >> "d" } `catch` { case _: java.lang.AssertionError => thrown = true; "abcd" }
         assertFalse(thrown)
         assertTrue(p matches "abcd")
         assertTrue(thrown)
@@ -35,7 +35,7 @@ class TryTest {
     def testFinally: Unit = {
         var thrown = false
         var final_ = false
-        val p = `try` { "abc" >> error >> "d" } `catch` { case _: java.lang.AssertionError => thrown = true; "abcd" } `finally` { case _ => final_ = true }
+        val p = `try` { "abc" >> undefined >> "d" } `catch` { case _: java.lang.AssertionError => thrown = true; "abcd" } `finally` { case _ => final_ = true }
         assertFalse(thrown)
         assertFalse(final_)
         assertTrue(p matches "abcd")

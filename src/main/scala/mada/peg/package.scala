@@ -75,11 +75,6 @@ package object peg {
     def eps[A]: Peg[A] = Eps[A]()
 
     /**
-     * Always throws an Error.
-     */
-    def error[A]: Peg[A] = Error[A]()
-
-    /**
      * Doesn't match any input.
      */
     def fail[A]: Peg[A] = Fail[A]()
@@ -114,6 +109,11 @@ package object peg {
      * Matches specified one element.
      */
     def single[A](e: A): Peg[A] = Single(e)
+
+    /**
+     * Always results in assertion failure.
+     */
+    def undefined[A]: Peg[A] = Undefined[A]()
 
 
 // pseudo
