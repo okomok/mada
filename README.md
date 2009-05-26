@@ -126,10 +126,11 @@ Scala metaprogramming seems to put several restrictions:
 `peg` package provides "pure" [PEG] parser combinators:
 
     import mada.peg._
+    import mada.peg.compatibles._
     import junit.framework.Assert._
 
     class DocTest {
-        val S, A, B = new Rule[Char]
+        val S, A, B = new Rec[Char]
 
         S ::= ~(A >> !"b") >> from("a").+ >> B >> !("a"|"b"|"c")
         A ::= "a" >> A.? >> "b"
@@ -147,9 +148,9 @@ You might notice that:
 
 1. *Sequence* is represented by `>>`, because Scala doesn't have "blank" operator.
 1. *And-predicate* is represented by `~`, because Scala doesn't have unary `&` operator.
-1. `Peg.from` may be needed to bust ambiguity.
+1. `peg.from` may be needed to bust ambiguity.
 1. No scanners.
-1. `Peg.Rule` is used to represent recursive grammars. (`lazy val` isn't used.)
+1. `peg.Rec` is used to represent recursive grammars. (`lazy val` isn't used.)
 1. *Semantic Action* is passed using `{...}`. (`(...)` too can be used.)
 
 
@@ -180,7 +181,7 @@ You might notice that:
 
     class DocTest {
         def testTrivial: Unit = {
-            val v = vector.of(0,1,2,3,4)
+            val v = vector.Of(0,1,2,3,4)
             v.parallel.map(_ + 10).parallel.seek(_ == 13) match {
                 case Some(e) => assertEquals(13, e)
                 case None => fail("doh")
