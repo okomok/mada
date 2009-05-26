@@ -23,7 +23,7 @@ class Rec[A] extends Sequence[A] {
     }
 
     // memoize and init guarantees method invocation to be constant amortized time;
-    // otherwise, any trivial expression may result in an exponential series of method-calls.
+    // otherwise, any trivial expression may result in an exponential series of "begin".
     override def begin = new Iterator[A] {
         private var i = 0
         private var t: Iterator[A] = null
@@ -40,7 +40,7 @@ class Rec[A] extends Sequence[A] {
 
         private def init: Unit = {
             if (t eq null) {
-                t = f().begin
+                t = f().begin // begin too is "memoized" by memoized deref.
                 t.advance(i)
             }
         }
