@@ -28,6 +28,7 @@ class RecTest {
         fibs := Of(0, 1) ++ fibs.zipBy(fibs.tail)(_ + _)
         assertEquals(_Rec.theFibs, fibs.take(_Rec.theFibs.size))
     }
+
 }
 
 

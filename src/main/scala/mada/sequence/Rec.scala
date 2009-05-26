@@ -13,7 +13,7 @@ package mada.sequence
  * @pre A recursive sequence expression shall not contain side-effects.
  */
 class Rec[A] extends Sequence[A] {
-    private var f: Function0[Sequence[A]] = null
+    @volatile private var f: Function0[Sequence[A]] = null
 
     /**
      * Assigns <code>that</code>.
