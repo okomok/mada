@@ -7,8 +7,8 @@
 package mada.sequence
 
 
-case class FolderLeft[A, B](_1: Sequence[A], _2: B, _3: (B, A) => B) extends Sequence[B] {
-    override def begin = (single(_2) ++ new _FolderLeft(_1, _2, _3)).begin
+case class FolderLeft[A, B](_1: Sequence[A], _2: B, _3: (B, A) => B) extends Forwarder[B] {
+    override protected val delegate = single(_2) ++ new _FolderLeft(_1, _2, _3)
 }
 
 private class _FolderLeft[A, B](_1: Sequence[A], _2: B, _3: (B, A) => B) extends Sequence[B] {
@@ -28,7 +28,7 @@ private class _FolderLeft[A, B](_1: Sequence[A], _2: B, _3: (B, A) => B) extends
 
 case class ReducerLeft[A, B >: A](_1: Sequence[A], _2: (B, A) => B) extends Sequence[B] {
     override def begin = {
-        val it = _1.begin
+        val it = _1.begin // needs a fresh iterator every time.
         if (!it) {
             throw new UnsupportedOperationException("reducerLeft on empty sequence")
         }
@@ -36,15 +36,4 @@ case class ReducerLeft[A, B >: A](_1: Sequence[A], _2: (B, A) => B) extends Sequ
         it.++
         bind(it).folderLeft[B](e)(_2).begin
     }
-/*
-    override protected val delegate = {
-        val it = _1.begin
-        if (!it) {
-            throw new UnsupportedOperationException("reducerLeft on empty sequence")
-        }
-        val e = ~it // too early?, but lazyness can'it always be feasible. (BTW, Vector is usually infeasible.)
-        it.++
-        bind(it).folderLeft[B](e)(_2)
-    }
-*/
 }

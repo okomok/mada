@@ -113,7 +113,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
     override def force: Vector[A] = Force(this)
     @overload def mix(x: Mixin): Vector[A] = Mix(this, x)
     override def step(n: Int): Vector[A] = Step(this, n)
-    @optimize override def _toVector[B](_this: Sequence[B]): Vector[B] = this.asInstanceOf[Vector[B]].readOnly
+//    @optimize override def _toVector[B](_this: Sequence[B]): Vector[B] = this.asInstanceOf[Vector[B]].readOnly // writable guarantee.
     @overload def zip[B](that: Vector[B]): Vector[(A, B)] = Zip(this, that)
 
 

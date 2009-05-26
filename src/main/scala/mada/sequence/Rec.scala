@@ -15,6 +15,9 @@ package mada.sequence
 class Rec[A] extends Sequence[A] {
     private var f: Function0[Sequence[A]] = null
 
+    /**
+     * Assigns <code>that</code>.
+     */
     def :=(that: => Sequence[A]): Unit = {
         f = function.ofLazy(that.memoize)
     }

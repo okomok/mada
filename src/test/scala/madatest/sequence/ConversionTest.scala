@@ -36,10 +36,8 @@ class ConversionTest {
         assertEquals(2, v(1))
         assertEquals(3, v(2))
 
-        /* no longer writable.
-        v(0) = 9 // guarantees writable.
+        v(0) = 9 // guarantees newly writable one allocated.
         assertEquals(9, v(0))
-        */
     }
 
     def testVector0: Unit = {

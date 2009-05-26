@@ -15,6 +15,6 @@ case class ToVector[A](_1: Sequence[A]) extends vector.Forwarder[A] {
             a.add(~it)
             it.++
         }
-        vector.fromJclList(a).readOnly
+        vector.fromJclList(a)
     }
 }

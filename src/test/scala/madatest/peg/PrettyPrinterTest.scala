@@ -14,7 +14,7 @@ import mada.peg.compatibles._
 
 
 class PrettyPrinterTest {
-    val expr, term, factor, digit = new Var[Char]
+    val expr, term, factor, digit = new Rec[Char]
     val out
 //         = prettyprinter.xml
          = prettyprinter.trash
