@@ -27,7 +27,9 @@ trait Sequence[+A] {
 // as value
 
     /**
-     * Equals <code>that</code> iif they has the same length and <code>p</code> meets.
+     * Returns true if and only if both sequences have the same size,
+     * and all corresponding pairs of elements in the two sequences
+     * satisfy the predicate <code>p</code>.
      */
     def equalsIf[B](that: Sequence[B])(p: (A, B) => Boolean): Boolean = {
         val it = begin
@@ -46,8 +48,9 @@ trait Sequence[+A] {
      * Returns true if and only if the specified object is also a sequence,
      * both sequences have the same size, and all corresponding pairs of
      * elements in the two sequences are equal.
-     * For <code>Forwarder</code> to correctly work, you shall not override
-     * this in a purpose except optimization.
+     * You shall not override this in a purpose except optimization.
+     *
+     * @see Effective Java 2nd Edition - Item 8
      */
     override def equals(that: Any) = that match {
         case that: Sequence[_] => equalsIf(that)(function.equal)
@@ -64,6 +67,7 @@ trait Sequence[+A] {
         r
     }
 
+    // probably removed so that case-class-toString is turned on.
     override def toString = {
         val sb = new StringBuilder
         sb.append('[')
