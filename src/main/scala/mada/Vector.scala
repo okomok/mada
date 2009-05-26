@@ -352,7 +352,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
     /**
      * Returns a vector whose elements are lazy.
      */
-    def memoize: Vector[A] = Memoize(this)
+    override def memoize: Vector[A] = Memoize(this)
 
     /**
      * Creates a vector whose <code>isDefinedAt(i)</code> returns true

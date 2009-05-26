@@ -373,6 +373,11 @@ trait Sequence[+A] {
     def _flatten[B](_this: Sequence[Sequence[B]]): Sequence[B] = Flatten(_this)
 
     /**
+     * Makes every element access be lazy.
+     */
+    def memoize: Sequence[A] = Memoize(this)
+
+    /**
      * Transforms sequence-to-sequence expression `seq.f.g.h` to `seq.x.f.x.g.x.h`.
      */
     def mix(x: Mixin): Sequence[A] = Mix(this, x)
@@ -448,6 +453,11 @@ trait Sequence[+A] {
      * Zips <code>this</code> and <code>that</code>.
      */
     def zip[B](that: Sequence[B]): Sequence[(A, B)] = Zip(this, that)
+
+    /**
+     * Zips <code>this</code> and <code>that</code> applying <code>f</code>.
+     */
+    def zipBy[B, C](that: Sequence[B])(f: (A, B) => C): Sequence[C] = ZipBy(this, that, f)
 
     @returnThis
     final def asSequence: Sequence[A] = this

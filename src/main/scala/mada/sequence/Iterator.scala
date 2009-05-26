@@ -72,7 +72,7 @@ trait Iterator[+A] {
         }
     }
 
-    final def memoize: Iterator[A] = Memoize(this)
+    final def memoize: Iterator[A] = iterator.Memoize(this)
 /*
     // (Probably efficiently) compiles without:
     final def &&(p: => Boolean): Boolean = if (!isEnd) p else false

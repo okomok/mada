@@ -63,6 +63,7 @@ trait Forwarder[+A] extends Sequence[A] with util.Forwarder {
     override def times(n: Int): Sequence[A] = delegate.times(n)
     override def force: Sequence[A] = afterForward(delegate.force)
     override def _flatten[B](_this: Sequence[Sequence[B]]): Sequence[B] = afterForward(delegate.asInstanceOf[Sequence[Sequence[B]]].flatten)
+    override def memoize: Sequence[A] = afterForward(delegate.memoize)
     override def mix(x: Mixin): Sequence[A] = afterForward(delegate.mix(x))
     override def seal: Sequence[A] = afterForward(delegate.seal) // wow?
     override def singlePass: Sequence[A] = afterForward(delegate.singlePass)
@@ -76,6 +77,7 @@ trait Forwarder[+A] extends Sequence[A] with util.Forwarder {
     override def _toJIterable[B](_this: Sequence[B]): java.lang.Iterable[B] = delegate.asInstanceOf[Sequence[B]].toJIterable
     override def _toVector[B](_this: Sequence[B]): Vector[B] = delegate.asInstanceOf[Sequence[B]].toVector
     override def zip[B](that: Sequence[B]): Sequence[(A, B)] = afterForward(delegate.zip(that))
+    override def zipBy[B, C](that: Sequence[B])(f: (A, B) => C): Sequence[C] = afterForward(delegate.zipBy(that)(f))
 
     override def merge[B >: A](that: Sequence[B])(implicit c: Compare[B]): Sequence[B] = afterForward(delegate.merge(that)(c))
     override def mergeBy[B >: A](that: Sequence[B])(lt: compare.Func[B]): Sequence[B] = afterForward(delegate.mergeBy(that)(lt))

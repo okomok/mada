@@ -7,6 +7,7 @@
 package mada.sequence.iterator
 
 
+// unused: remove me.
 case class Memoize[A](_1: Iterator[A]) extends Iterator[A] {
     private var e = option.NoneOf[A]
 
