@@ -24,6 +24,11 @@ class OfTest {
             case sequence.Of(x1,2,x3,4,x5) => ()
             case _ => fail("doh")
         }
+
+        a match {
+            case sequence.Of(1,2,_*) => ()
+            case _ => fail("doh")
+        }
         ()
     }
 
