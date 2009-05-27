@@ -17,7 +17,7 @@ import mada.peg.compatibles._
 
 
 class StackActionsTest {
-    val expr, term, factor, integer, digit = new Rec[Char]
+    val expr, term, factor, integer, digit = new Rule[Char]
 
     val S = new StackActions[Char, Int]
 

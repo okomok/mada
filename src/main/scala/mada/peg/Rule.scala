@@ -10,7 +10,7 @@ package mada.peg
 /**
  * Helps to define recursive grammars.
  */
-class Rec[A] extends Peg[A] { // essentially shall not be a forwarder.
+class Rule[A] extends Peg[A] { // essentially shall not be a forwarder.
     @volatile private var f: Function0[Peg[A]] = null
 
     /**

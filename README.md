@@ -130,7 +130,7 @@ Scala metaprogramming seems to put several restrictions:
     import junit.framework.Assert._
 
     class DocTest {
-        val S, A, B = new Rec[Char]
+        val S, A, B = new Rule[Char]
 
         S ::= ~(A >> !"b") >> from("a").+ >> B >> !("a"|"b"|"c")
         A ::= "a" >> A.? >> "b"
@@ -150,7 +150,7 @@ You might notice that:
 1. *And-predicate* is represented by `~`, because Scala doesn't have unary `&` operator.
 1. `peg.from` may be needed to bust ambiguity.
 1. No scanners.
-1. `peg.Rec` is used to represent recursive grammars. (`lazy val` isn't used.)
+1. `peg.Rule` is used to represent recursive grammars. (`lazy val` isn't used.)
 1. *Semantic Action* is passed using `{...}`. (`(...)` too can be used.)
 
 

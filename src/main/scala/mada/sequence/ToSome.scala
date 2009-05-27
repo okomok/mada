@@ -10,7 +10,7 @@ package mada.sequence
 class ToSome[+A](val _1: Sequence[A]) extends Forwarder[A] {
     override protected val delegate = _1
 
-    override def toSome = _1.toSome // toSome-toSome fusion
+    override def toSome: ToSome[A] = this // toSome-toSome fusion
 }
 
 object ToSome {

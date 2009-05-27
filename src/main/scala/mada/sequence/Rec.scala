@@ -50,4 +50,5 @@ class Rec[A] extends Sequence[A] {
         override protected lazy val delegate = f().begin
     }
 */
+    override def memoize: Sequence[A] = this // memoize-memoize fusion
 }

@@ -19,5 +19,5 @@ case class Force[+A](_1: Sequence[A]) extends Sequence[A] {
         fromJIterable(r)
     }
 
-    override def force = _1.force // force-force fusion
+    override def force: Sequence[A] = this // force-force fusion
 }

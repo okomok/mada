@@ -18,7 +18,7 @@ import mada.peg.compatibles._
 
 
 class CalcTest {
-    val expr, term, factor, integer, digit = new Rec[Char]
+    val expr, term, factor, integer, digit = new Rule[Char]
 
     val stack = new java.util.ArrayDeque[Int]
     import stack.{ push, pop }

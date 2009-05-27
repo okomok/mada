@@ -12,7 +12,7 @@ package madatest.pegtest
     import junit.framework.Assert._
 
     class DocTest {
-        val S, A, B = new Rec[Char]
+        val S, A, B = new Rule[Char]
 
         S ::= ~(A >> !"b") >> from("a").+ >> B >> !("a"|"b"|"c")
         A ::= "a" >> A.? >> "b"

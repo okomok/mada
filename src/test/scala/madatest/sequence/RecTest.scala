@@ -29,6 +29,12 @@ class RecTest {
         assertEquals(_Rec.theFibs, fibs.take(_Rec.theFibs.size))
     }
 
+    def testFibsIndirect: Unit = {
+        val fibs, fibs_tail = new Rec[Int]
+        fibs := Of(0, 1) ++ fibs.zipBy(fibs_tail)(_ + _)
+        fibs_tail := fibs.tail
+        assertEquals(_Rec.theFibs.step(3), fibs.take(_Rec.theFibs.size).step(3))
+    }
 }
 
 

@@ -9,6 +9,8 @@ package mada.sequence
 
 case class Unique[+A](_1: Sequence[A]) extends Forwarder[A] {
     override protected val delegate = _1.uniqueBy(function.equal)
+
+    override def unique: Sequence[A] = this // unique-unique fusion
 }
 
 case class UniqueBy[A](_1: Sequence[A], _2: (A, A) => Boolean) extends Sequence[A] {
@@ -23,6 +25,4 @@ case class UniqueBy[A](_1: Sequence[A], _2: (A, A) => Boolean) extends Sequence[
             it.advanceWhile{ e => _2(tmp, e) }
         }
     }
-
-    override def unique = _1.unique // unique-unique fusion
 }
