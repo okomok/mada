@@ -7,6 +7,9 @@
 package madatest.vectortest
 
 
+import mada.Compare.madaCompareFromGetOrdered
+
+
 import mada.{Vector, vector}
 import junit.framework.Assert._
 import madatest.vectortest.detail.Example._

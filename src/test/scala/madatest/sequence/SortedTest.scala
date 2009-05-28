@@ -7,6 +7,9 @@
 package madatest.sequencetest
 
 
+import mada.Compare.madaCompareFromGetOrdered
+
+
 import mada.sequence
 import junit.framework.Assert._
 

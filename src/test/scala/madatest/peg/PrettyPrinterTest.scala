@@ -7,6 +7,10 @@
 package madatest.pegtest
 
 
+import mada.Compare.madaCompareFromGetOrdered
+
+
+
 import mada.{Vector, vector}
 import mada.peg._
 import junit.framework.Assert._

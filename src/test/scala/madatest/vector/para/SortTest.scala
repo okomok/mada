@@ -7,6 +7,9 @@
 package madatest.vectortest.para
 
 
+import mada.Compare.madaCompareFromGetOrdered
+
+
 import mada.control
 import mada.{Vector, vector}
 import mada.vector._
