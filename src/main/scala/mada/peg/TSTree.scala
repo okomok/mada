@@ -12,7 +12,7 @@ package mada.peg
 
 
 @visibleForTesting
-class TSTree[A, V](_lt: compare.Func[A]) {
+class TSTree[A, V](_lt: compare.Func[A]) extends java.lang.Cloneable {
     private var rootNode: TSTreeNode[A, V] = null
 
     def clear: Unit = {
@@ -20,9 +20,9 @@ class TSTree[A, V](_lt: compare.Func[A]) {
     }
 
     override def clone: TSTree[A, V] = {
-        val that = new TSTree[A, V](_lt)
+        val that = super.clone.asInstanceOf[TSTree[A, V]]
         if (rootNode ne null) {
-            that.rootNode = rootNode.clone(null)
+            that.rootNode = rootNode.copy(null)
         }
         that
     }
@@ -198,13 +198,13 @@ private class TSTreeNode[A, V](val elem: A, val parent: TSTreeNode[A, V]) {
     var middle: TSTreeNode[A, V] = null
     var right: TSTreeNode[A, V] = null
 
-    def clone(parent: TSTreeNode[A, V]): TSTreeNode[A, V] = {
+    def copy(parent: TSTreeNode[A, V]): TSTreeNode[A, V] = {
         val node = new TSTreeNode[A, V](elem, parent)
-        def _clone(c: TSTreeNode[A, V]) = if (c eq null) null else c.clone(node)
+        def _copy(c: TSTreeNode[A, V]) = if (c eq null) null else c.copy(node)
         node.data = data
-        node.left = _clone(left)
-        node.middle = _clone(middle)
-        node.right = _clone(right)
+        node.left = _copy(left)
+        node.middle = _copy(middle)
+        node.right = _copy(right)
         node
     }
 
