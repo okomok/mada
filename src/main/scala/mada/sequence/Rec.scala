@@ -10,7 +10,6 @@ package mada.sequence
 /**
  * Helps to implement recursive(infinite) sequences.
  *
- * @pre A recursive sequence expression shall not contain side-effects.
  */
 class Rec[A] extends Sequence[A] {
     @volatile private var f: Function0[Sequence[A]] = null
@@ -19,9 +18,14 @@ class Rec[A] extends Sequence[A] {
      * Assigns <code>that</code>.
      */
     def :=(that: => Sequence[A]): Unit = {
-        f = function.ofLazy(that.memoize)
+        f = function.ofLazy(that)//.memoize)
     }
 
+    override def begin = new iterator.Forwarder[A] {
+        override protected lazy val delegate = f().begin
+    }
+
+    /*
     // memoize and init guarantees method invocation to be constant amortized time;
     // otherwise, any trivial expression may result in an exponential series of "begin".
     override def begin = new Iterator[A] {
@@ -45,10 +49,6 @@ class Rec[A] extends Sequence[A] {
             }
         }
     }
-/*
-    override def begin = new iterator.Forwarder[A] {
-        override protected lazy val delegate = f().begin
-    }
-*/
-    override def memoize: Sequence[A] = this // memoize-memoize fusion
+    */
+//    override def memoize: Sequence[A] = this // memoize-memoize fusion
 }

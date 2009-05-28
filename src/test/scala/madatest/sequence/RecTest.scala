@@ -12,15 +12,22 @@ import junit.framework.Assert._
 
 
 object _Rec {
-   val theFibs = Of(0,1,1,2,3,5,8,13,21,34,55,89,144,233,377, 610,987,1597,2584,4181,6765,10946,17711,28657,46368,75025,121393,196418,317811,514229,832040)
+   val theFibs = Of(0,1,1,2,3,5,8,13,21,34)
+   val theLongFibs = Of(0,1,1,2,3,5,8,13,21,34,55,89,144,233,377, 610,987,1597,2584,4181,6765,10946,17711,28657,46368,75025,121393,196418,317811,514229,832040)
 }
 
 class RecTest {
 
     def testTrivial: Unit = {
         val tr = new Rec[Int]
-        tr := Of(1,2,3) ++ tr
+        tr := Of(1,2,3) ++ tr // infinite
         assertEquals(Of(1,2,3,1,2,3,1,2,3,1), tr.take(10))
+    }
+
+    def testTrivial2: Unit = {
+        val tr = new Rec[Int]
+        tr := Of(1,2,3) ++ tr.take(2) // finite
+        assertEquals(Of(1,2,3,1,2), tr)
     }
 
     def testFibs: Unit = {
@@ -35,6 +42,14 @@ class RecTest {
         fibs_tail := fibs.tail
         assertEquals(_Rec.theFibs.step(3), fibs.take(_Rec.theFibs.size).step(3))
     }
+
+/*
+    def testLongFibs: Unit = {
+        val fibs = new Rec[Int]()
+        fibs := Of(0, 1) ++ fibs.zipBy(fibs.tail)(_ + _)
+        assertEquals(_Rec.theLongFibs, fibs.take(_Rec.theLongFibs.size))
+    }
+*/
 }
 
 
