@@ -15,6 +15,6 @@ private[mada] object ToLinearAccessSeq {
 
 private[mada] class VectorLinearAccessSeq[A](from: Vector[A]) extends Seq[A] {
     override def apply(i: Int) = from(i)
-    override def elements = from.elements
+    override def iterator = from.iterator
     override val length = from.size
 }

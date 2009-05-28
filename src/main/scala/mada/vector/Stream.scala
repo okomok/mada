@@ -31,7 +31,7 @@ private[mada] class VectorStream[A](v: Vector[A]) extends Stream.Definite[A] {
 
     // optimizations
     override def length = v.size
-    override def elements = v.elements
+    override def iterator = v.iterator
     override def init = new VectorStream(v.init)
     override def apply(n: Int) = v(n)
     override def take(n: Int) = new VectorStream(v.take(n))

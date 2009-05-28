@@ -156,7 +156,7 @@ case class IdentityExpr[A](_1: Expr.Terminal[A]) extends Expr.Terminal[A] {
 
 class ExprTest {
     def aList = Array(1,2,3,4,5).toList
-    def anIterator = aList.elements
+    def anIterator = aList.iterator
 
     def testConstant: Unit = {
         assertEquals(10, Expr.Constant(10).eval)

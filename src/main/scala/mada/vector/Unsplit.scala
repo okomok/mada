@@ -13,7 +13,7 @@ private[mada] object Unsplit {
     def apply[A](vs: Iterable[Vector[A]], sep: Vector[A]): Vector[A] = {
         val ar = new ArrayList[A]
 
-        val it = vs.elements
+        val it = vs.iterator
         if (it.hasNext) {
             addVector(it.next, ar)
         }

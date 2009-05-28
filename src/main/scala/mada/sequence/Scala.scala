@@ -17,11 +17,11 @@ case class FromSIterable[+A](_1: Iterable[A]) extends Forwarder[A] {
 }*/
 
 case class FromSIterable[+A](_1: Iterable[A]) extends Sequence[A] {
-    override def begin = iterator.fromSIterator(_1.elements)
+    override def begin = iterator.fromSIterator(_1.iterator)
 }
 
 case class ToSSequence[+A](_1: Sequence[A]) extends scala.collection.Sequence[A] {
-    override def elements = _1.begin.toSIterator
+    override def iterator = _1.begin.toSIterator
     override def apply(n: Int) = _1.at(n)
     override def length = _1.size
 }

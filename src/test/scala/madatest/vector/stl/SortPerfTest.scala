@@ -42,7 +42,7 @@ class SortPerfTest {
 
     def testSpeedScala: Unit = { // 6.8 times slower
         println("scala-sort")
-        val e = fromJclList(longExampleArrayList1).times(cycleCount).toArray.elements.toList
+        val e = fromJclList(longExampleArrayList1).times(cycleCount).toArray.iterator.toList
         val c: (Integer, Integer) => Boolean = _.intValue < _.intValue
         val start = java.lang.System.currentTimeMillis
         e.sortBy(c)

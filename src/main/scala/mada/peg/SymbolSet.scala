@@ -18,7 +18,7 @@ private[mada] class TheSymbolSet[A](tree: TSTree[A, Unit]) extends Peg[A] with s
     }
 
 // scala.collection.Set
-    override def elements = tree.elements.map{ n => n._1 }
+    override def iterator = tree.iterator.map{ n => n._1 }
 
     override def contains(v: Vector[A]) = tree.containsKey(v)
     override def hashCode = tree.hashCode

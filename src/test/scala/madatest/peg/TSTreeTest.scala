@@ -141,7 +141,7 @@ class TSTreeTest {
         tree.put("tab", "tab")
         tree.put("so", "so")
 
-        for (n <- tree.elements) {
+        for (n <- tree.iterator) {
             assertTrue(tree.containsKey(n._2))
             //println(n)
         }
@@ -149,12 +149,12 @@ class TSTreeTest {
 
     def testIteratorBound: Unit = {
         val tree = new mada.peg.TSTree[Char, String](mada.compare.fromGetOrdered[Char])
-        assertFalse(tree.elements.hasNext)
+        assertFalse(tree.iterator.hasNext)
 
         tree.put("t", "t")
 
         var c = 0
-        for (n <- tree.elements) {
+        for (n <- tree.iterator) {
             assertEquals(mada.vector.from("t"), n._1)
             c += 1
         }

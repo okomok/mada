@@ -35,7 +35,7 @@ class SymbolMapTest {
 
     def testIterator: Unit = {
         val g = symbolMap("e" --> "z", "ef" --> "g", "wx" --> "wy", "w" --> "xyz")
-        for (n <- g.elements) {
+        for (n <- g.iterator) {
             // println(n)
         }
     }

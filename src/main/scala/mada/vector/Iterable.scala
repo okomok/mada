@@ -20,7 +20,7 @@ private[mada] object FromIterable {
 
 private[mada] object ToIterable {
     def apply[A](from: Vector[A]): Iterable[A] = new Iterable[A] {
-        override def elements = new VectorIterator(from)
+        override def iterator = new VectorIterator(from)
     }
 }
 

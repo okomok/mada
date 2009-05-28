@@ -18,7 +18,7 @@ private[mada] class TheSymbolMap[A](tree: TSTree[A, Peg[A]]) extends Peg[A] with
     }
 
 // scala.colletion.Map
-    override def elements = tree.elements.map{ n => (n._1, n._2) }
+    override def iterator = tree.iterator.map{ n => (n._1, n._2) }
 
     override def get(key: Vector[A]) = tree.get(key)
     override def hashCode = tree.hashCode

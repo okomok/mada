@@ -31,7 +31,7 @@ class TSTree[A, V](_lt: compare.Func[A]) {
         !get(key).isEmpty
     }
 
-    def elements: Iterator[(Vector[A], V)] = {
+    def iterator: Iterator[(Vector[A], V)] = {
         if (rootNode eq null) {
             Iterator.empty
         } else {
