@@ -8,31 +8,25 @@ package mada.sequence
 
 
 /**
- * Helps to implement recursive(infinite) sequences.
- *
+ * Helps to implement recursive infinite sequences.
+ * This sequence is implicitly memoized.
  */
-class Rec[A] extends Sequence[A] {
+class Infinite[A] extends Sequence[A] {
     @volatile private var f: Function0[Sequence[A]] = null
 
     /**
      * Assigns <code>that</code>.
      */
     def :=(that: => Sequence[A]): Unit = {
-        f = function.ofLazy(that)//.memoize)
+        f = function.ofLazy(that.memoize)
     }
 
-    override def begin = new iterator.Forwarder[A] {
-        override protected lazy val delegate = f().begin
-    }
-
-    /*
-    // memoize and init guarantees method invocation to be constant amortized time;
-    // otherwise, any trivial expression may result in an exponential series of "begin".
+    // init-memoize guarantees number of iterators never be exponential growth.
     override def begin = new Iterator[A] {
         private var i = 0
         private var t: Iterator[A] = null
 
-        override def isEnd = false // { init; !t }
+        override def isEnd = false // infinite
         override def deref = { init; ~t }
         override def increment = {
             if (t eq null) {
@@ -44,11 +38,11 @@ class Rec[A] extends Sequence[A] {
 
         private def init: Unit = {
             if (t eq null) {
-                t = f().begin // begin too is "memoized" by memoized deref.
+                t = f().begin // begin too is "memoized".
                 t.advance(i)
             }
         }
     }
-    */
-//    override def memoize: Sequence[A] = this // memoize-memoize fusion
+
+    override def memoize: Sequence[A] = this // memoize-memoize fusion
 }
