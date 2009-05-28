@@ -20,7 +20,7 @@ class MixinTest {
         val v = vector.from(Array(0,18,14,17)).mix(vector.mixin.readOnly)
         var thrown = false
         try {
-            v.clone.sort
+            v.copy.sort
         } catch {
             case _: vector.NotWritableException[_] => thrown = true
         }

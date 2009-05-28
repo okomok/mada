@@ -36,7 +36,7 @@ class DivideTest {
     def testRegion: Unit = {
         // 0  1  2   3    4  5  6  7    8  9 10
         // 14,17,19, 8,  13, 6, 4,23,   0,12,15
-        val actual = mada.vector.from(example1).clone.region(2, 13).divide(4)
+        val actual = mada.vector.from(example1).copy.region(2, 13).divide(4)
         assertEquals(3, actual.size)
         detail.TestVectorReadWrite(Array(14,17,19, 8), actual.nth(0))
         detail.TestVectorReadWrite(Array(13, 6, 4,23), actual.nth(1))
@@ -53,7 +53,7 @@ class DivideTest {
     }
 
     def testUndivide: Unit = {
-        val actual = vector.undivide(mada.vector.from(example1).clone.divide(6).seal)
+        val actual = vector.undivide(mada.vector.from(example1).copy.divide(6).seal)
         assertEquals(15, actual.size)
         detail.TestVectorReadWrite(example1, actual)
     }
@@ -81,7 +81,7 @@ class DivideTest {
     }
 
     def testUndivideRegion: Unit = {
-        val dv =mada.vector.from(example1).clone.divide(6).seal.region(1, 2)
+        val dv =mada.vector.from(example1).copy.divide(6).seal.region(1, 2)
         val actual = vector.undivide(dv)
         assertEquals(6, actual.size)
         detail.TestVectorReadWrite(Array(13, 6, 4,23, 0,12), actual)

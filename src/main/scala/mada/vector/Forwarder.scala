@@ -80,7 +80,7 @@ trait Forwarder[A] extends sequence.Forwarder[A] with Adapter.Transform[A]  {
     override def identity: Vector[A] = afterForward(delegate.identity)
   // copy
     override def copyTo[B >: A](that: Vector[B]): Vector[A] = afterForward(delegate.copyTo(that))
-    override def clone: Vector[A] = afterForward(delegate.clone)
+    override def copy: Vector[A] = afterForward(delegate.copy)
   // parallel support
     override def parallel(_grainSize: Int): Vector[A] = afterForward(delegate.parallel(_grainSize))
     override def grainSize: Int = delegate.grainSize

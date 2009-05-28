@@ -24,8 +24,8 @@ class SortTest {
     }
 
     def testLong: Unit = {
-        val actual = longSample1.clone.parallel.sortBy(_ < _)
-        assertEquals(longSample1.clone.sortBy(_ < _), actual)
+        val actual = longSample1.copy.parallel.sortBy(_ < _)
+        assertEquals(longSample1.copy.sortBy(_ < _), actual)
     }
 
     def testImplicit: Unit = {
@@ -51,20 +51,20 @@ class SortTest {
 
 class SortParallelPerfTest extends NoBenchmark {
     override def run = {
-        longSample1.clone.parallel.sortBy{ (x, y) => control.times(longCalc, 5); x < y }
+        longSample1.copy.parallel.sortBy{ (x, y) => control.times(longCalc, 5); x < y }
     }
     override val grainCount = 1
 }
 
 class SortNonParallelPerfTest extends NoBenchmark {
     override def run = {
-        longSample1.clone.sortBy{ (x, y) => control.times(longCalc, 5); x < y }
+        longSample1.copy.sortBy{ (x, y) => control.times(longCalc, 5); x < y }
     }
     override val grainCount = 1
 }
 
 class SortParallelPartitionTest extends NoBenchmark {
     override def run = {
-        // mada.vector.parallel.SortBy.partition(longSample1.clone, (_: Int) < (_: Int), mada.vector.parallel.DefaultGrainSize(longSample1))
+        // mada.vector.parallel.SortBy.partition(longSample1.copy, (_: Int) < (_: Int), mada.vector.parallel.DefaultGrainSize(longSample1))
     }
 }

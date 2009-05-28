@@ -401,7 +401,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
      *
      * @return  a writable clone of this vector.
      */
-    override def clone: Vector[A] = vector.fromArray(toArray)
+    def copy: Vector[A] = vector.fromArray(toArray)
 
     /**
      * @return  <code>writer(start)</code>

@@ -31,7 +31,7 @@ private[mada] class ParallelVector[A](override val delegate: Vector[A], override
     override def sortBy(lt: compare.Func[A]) = para.Sort(delegate, lt, grainSize)
   // copy
     override def copyTo[B >: A](that: Vector[B]): Vector[A] = para.CopyTo(delegate, that, grainSize)
-    override def clone: Vector[A] = vector.fromArray(ToArray(this))
+    override def copy: Vector[A] = vector.fromArray(ToArray(this))
   // parallel support
     override def parallel(_grainSize: Int): Vector[A] = { // parallel-parallel fusion
       if (_grainSize == grainSize) this else delegate.parallel(_grainSize)

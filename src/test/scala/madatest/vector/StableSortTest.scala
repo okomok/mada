@@ -42,7 +42,7 @@ class StableSortTest {
     def testStablity: Unit = {
         val ex1 = Array( 0,18,14,17,19, 8,13, 6, 4,23, 0,12,15,11, 4) // 15 elements
         val ex2 = Array(18, 8, 0,14,17,19, 4,15,12, 6,23, 0, 11, 4,13) // 15 elements
-        val ex = vector.from(ex1).zip(ex2).clone
+        val ex = vector.from(ex1).zip(ex2).copy
         ex.stableSortBy{ case (x, y) => x._1 < y._1 }
         assertTrue(mada.vector.stl.isSortedBy(ex, ex.start, ex.end){ case (x, y) => x._1 < y._1 })
         assertEquals( Vector(18,23), ex.filter{ x => x._1 == 0 }.map{ _._2 } )
@@ -52,7 +52,7 @@ class StableSortTest {
     def testStablity2: Unit = {
         val ex1 = Array(12,18,12,17,12, 8,12, 6,12,23, 0,12,15,12, 4) // 15 elements
         val ex2 = Array(18, 8, 0,14,17,19, 4,15,12, 6, 23,0,11, 4,13) // 15 elements
-        val ex = vector.from(ex1).zip(ex2).clone
+        val ex = vector.from(ex1).zip(ex2).copy
         ex.stableSortBy{ case (x, y) => x._1 < y._1 }
         assertTrue(mada.vector.stl.isSortedBy(ex, ex.start, ex.end){ case (x, y) => x._1 < y._1 })
         assertEquals( Vector(18,0,17,4,12,0,4), ex.filter{ x => x._1 == 12 }.map{ _._2 } )

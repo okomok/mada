@@ -16,7 +16,7 @@ import madatest.vectortest.detail._
 
 class CloneTest {
     def testTrivial: Unit = {
-        val actual = mada.vector.from(example1).parallel.clone
+        val actual = mada.vector.from(example1).parallel.copy
         detail.TestVectorReadWrite(example1, actual)
     }
 }

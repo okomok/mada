@@ -28,7 +28,7 @@ class TryTest {
         val q = "abc" >> verify("R") >> "d"
         val p = `try` { q } `catch` { case VerificationException(_, v) => thrown = true; v(3) = 'R'; q }
         assertFalse(thrown)
-        assertTrue(p matches mada.vector.from("abcLd").clone)
+        assertTrue(p matches mada.vector.from("abcLd").copy)
         assertTrue(thrown)
     }
 

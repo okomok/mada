@@ -10,7 +10,7 @@ package mada.vector.para
 private[mada] object Filter {
     def apply[A](v: Vector[A], p: A => Boolean, grainSize: Int): Vector[A] = {
         util.assert(!IsParallel(v))
-        v.clone.parallel(grainSize).mutatingFilter(p).readOnly
+        v.copy.parallel(grainSize).mutatingFilter(p).readOnly
     }
 }
 
