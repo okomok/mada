@@ -28,7 +28,7 @@ class Rec[A] extends Sequence[A] {
         private var i = 0
         private var t: Iterator[A] = null
 
-        override def isEnd = false
+        override def isEnd = { init; !t }
         override def deref = { init; ~t }
         override def increment = {
             if (t eq null) {
