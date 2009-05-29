@@ -55,6 +55,15 @@ class RecursiveTest {
         assertEquals(_Recursive.theLongFibs, fibs.take(_Recursive.theLongFibs.size))
     }
 /*
+    def testLongFibs2: Unit = {
+        val fibs = new Infinite[Int]()
+        // hmm, delayed-begin trick doesn't work.
+        // After all, iterator object too must be lazy: infeasible in strict language.
+        fibs := Of(0, 1) ++ fibs.takeWhile(_ => true).zipBy(fibs.takeWhile(_ => true).tail)(_ + _)
+        assertEquals(_Recursive.theLongFibs, fibs.take(_Recursive.theLongFibs.size))
+    }
+*/
+/*
     def testInfinitize: Unit = {
         val tr = new Recursive[Int]
         tr := Of(1,2,3) ++ tr.take(2) // finite
