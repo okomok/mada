@@ -16,11 +16,11 @@ case class Memoize[A](_1: Sequence[A]) extends Sequence[A] {
 
     override def begin = new Iterator[A] {
         private var i = 0
-        private val t = _1.begin
+        private val it = _1.begin
 
-        override def isEnd = !t //assoc.lazyGet(isEndMemo)(i)(!t)
-        override def deref = assoc.lazyGet(derefMemo)(i)(~t)
-        override def increment = { i += 1; t.++ }
+        override def isEnd = !it //assoc.lazyGet(isEndMemo)(i)(!it)
+        override def deref = assoc.lazyGet(derefMemo)(i)(~it)
+        override def increment = { i += 1; it.++ }
     }
 
     override def memoize: Sequence[A] = this // memoize-memoize fusion

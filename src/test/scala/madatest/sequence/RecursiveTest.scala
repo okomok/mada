@@ -43,13 +43,22 @@ class RecursiveTest {
         assertEquals(_Recursive.theFibs.step(3), fibs.take(_Recursive.theFibs.size).step(3))
     }
 
-
     def testLongFibs: Unit = {
         val fibs = new Infinite[Int]()
         fibs := Of(0, 1) ++ fibs.zipBy(fibs.tail)(_ + _)
         assertEquals(_Recursive.theLongFibs, fibs.take(_Recursive.theLongFibs.size))
     }
+/*
+    def testInfinitize: Unit = {
+        val tr = new Recursive[Int]
+        tr := Of(1,2,3) ++ tr.take(2) // finite
+        println(Infinitize(tr).take(30))
+    }
 
+    def testInfinitize0: Unit = {
+        println(Infinitize(emptyOf[Int]).take(30))
+    }
+*/
 }
 
 

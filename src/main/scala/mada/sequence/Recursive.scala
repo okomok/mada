@@ -20,7 +20,5 @@ class Recursive[A] extends Sequence[A] {
         f = function.ofLazy(that)
     }
 
-    override def begin: Iterator[A] = new iterator.Forwarder[A] {
-        override protected lazy val delegate = f().begin
-    }
+    override def begin: Iterator[A] = f().begin
 }
