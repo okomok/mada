@@ -20,5 +20,8 @@ class Recursive[A] extends Sequence[A] {
         f = function.ofLazy(that)
     }
 
+    // For Recursive to correctly work,
+    // Sequence constructors shall not call begin of underlying one.
+    // Otherwise, it simply results in stack overflow by infinite begins.
     override def begin: Iterator[A] = f().begin
 }

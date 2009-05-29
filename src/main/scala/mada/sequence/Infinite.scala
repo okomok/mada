@@ -38,7 +38,7 @@ class Infinite[A] extends Sequence[A] {
 
         private def init: Unit = {
             if (it eq null) {
-                it = f().begin // begin too is "memoized".
+                it = f().begin // wrapped around memoized deref.
                 it.advance(i)
             }
         }

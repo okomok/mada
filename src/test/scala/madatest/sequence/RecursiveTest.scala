@@ -30,6 +30,12 @@ class RecursiveTest {
         assertEquals(Of(1,2,3,1,2), tr)
     }
 
+    def testTrivial3: Unit = {
+        val tr = new Recursive[Int]
+        tr := Of(1,2,3) ++ tr.takeWhile(_ != 3) // finite
+        assertEquals(Of(1,2,3,1,2), tr)
+    }
+
     def testFibs: Unit = {
         val fibs = new Recursive[Int]
         fibs := Of(0, 1) ++ fibs.zipBy(fibs.tail)(_ + _)
