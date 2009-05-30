@@ -7,7 +7,7 @@
 package mada.peg
 
 
-case class Tokenize[A](_1: Peg[A], _2: Vector[A]) extends Sequence[Vector[A]] {
+case class Tokenize[A](_1: Peg[A], _2: Vector[A]) extends sequence.Iterative[Vector[A]] {
     override def begin = new sequence.Iterator[Vector[A]] {
         private var (k, l) = _1.findRange(_2, _2.start, _2.end)
 

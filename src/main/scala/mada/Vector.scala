@@ -20,7 +20,7 @@ import vector._
  *
  * Unless otherwise specified, these methods return projections to keep readability and writability.
  */
-trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
+trait Vector[A] extends PartialFunction[Int, A] with sequence.Iterative[A] {
 
 
 // sequence
@@ -67,7 +67,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
 
     @overload def ++(that: Vector[A]): Vector[A] = Append(this, that)
     override def map[B](f: A => B): Vector[B] = Map(this, f)
-    override def flatMap[B](f: A => Sequence[B]): Vector[B] = vector.flatten(map(f))
+    override def flatMap[B](f: A => sequence.Iterative[B]): Vector[B] = vector.flatten(map(f))
     override def filter(p: A => Boolean): Vector[A] = Filter(this, p)
     override def filterNot(p: A => Boolean): Vector[A] = filter(function.not(p))
     override def partition(p: A => Boolean): (Vector[A], Vector[A]) = (filter(p), filterNot(p))
@@ -113,7 +113,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
     override def force: Vector[A] = Force(this)
     @overload def mix(x: Mixin): Vector[A] = Mix(this, x)
     override def step(n: Int): Vector[A] = Step(this, n)
-//    @optimize override def _toVector[B](_this: Sequence[B]): Vector[B] = this.asInstanceOf[Vector[B]].readOnly // writable guarantee.
+//    @optimize override def _toVector[B](_this: sequence.Iterative[B]): Vector[B] = this.asInstanceOf[Vector[B]].readOnly // writable guarantee.
     @overload def zip[B](that: Vector[B]): Vector[(A, B)] = Zip(this, that)
 
 

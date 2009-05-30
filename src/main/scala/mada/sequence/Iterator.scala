@@ -11,7 +11,7 @@ import iterator._
 
 
 /**
- * Yet another Iterator: backend of <code>Sequence</code>.
+ * Yet another Iterator: backend of <code>sequence.Iterative</code>.
  * Unlike <code>Iterator</code>, this separates element-access and traversing method.
  * (E.g. <code>.map(f).length</code> is inefficient in SIterator abstraction.)
  */

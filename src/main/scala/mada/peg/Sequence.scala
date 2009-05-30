@@ -7,11 +7,11 @@
 package mada.peg
 
 
-case class FromSequence[A](_1: Sequence[A]) extends Forwarder[A] {
+case class FromSequence[A](_1: sequence.Iterative[A]) extends Forwarder[A] {
     override protected val delegate = fromSequenceBy(_1)(function.equal)
 }
 
-case class FromSequenceBy[A](_1: Sequence[A], _2: (A, A) => Boolean) extends Forwarder[A] {
+case class FromSequenceBy[A](_1: sequence.Iterative[A], _2: (A, A) => Boolean) extends Forwarder[A] {
     override protected val delegate: Peg[A] = _1 match {
         case _1: Vector[_] => new _FromVectorBy(_1.asInstanceOf[Vector[A]], _2)
         case _ => new _FromSequenceBy(_1, _2)
@@ -19,7 +19,7 @@ case class FromSequenceBy[A](_1: Sequence[A], _2: (A, A) => Boolean) extends For
 }
 
 
-private class _FromSequenceBy[A](_1: Sequence[A], _2: (A, A) => Boolean) extends Peg[A] {
+private class _FromSequenceBy[A](_1: sequence.Iterative[A], _2: (A, A) => Boolean) extends Peg[A] {
     override def parse(v: Vector[A], start: Int, end: Int): Int = {
         val it = _1.begin
         var cur = start

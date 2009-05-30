@@ -12,10 +12,10 @@ package object iterator {
 
 // aliases
 
-    @aliasOf("Sequence")
+    @aliasOf("Iterator")
     type Type[+A] = Iterator[A]
 
-    @aliasOf("Sequence")
+    @aliasOf("Iterator")
     val compatibles: Compatibles = Iterator
 
 

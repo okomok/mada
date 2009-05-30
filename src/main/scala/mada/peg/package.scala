@@ -141,12 +141,12 @@ package object peg {
         /**
          * Chooses the longest match.
          */
-        def apply[A](ps: Peg[A]*): Peg[A] = Longest(sequence.from(ps))
+        def apply[A](ps: Peg[A]*): Peg[A] = Longest(sequence.iterative.from(ps))
 
         /**
          * Chooses the longest match.
          */
-        def apply[A](ps: Sequence[Peg[A]]): Peg[A] = Longest(ps)
+        def apply[A](ps: sequence.Iterative[Peg[A]]): Peg[A] = Longest(ps)
     }
 
 
@@ -155,12 +155,12 @@ package object peg {
         /**
          * Chooses the shortest match.
          */
-        def apply[A](ps: Peg[A]*): Peg[A] = Shortest(sequence.from(ps))
+        def apply[A](ps: Peg[A]*): Peg[A] = Shortest(sequence.iterative.from(ps))
 
         /**
          * Chooses the shortest match.
          */
-        def apply[A](ps: Sequence[Peg[A]]): Peg[A] = Shortest(ps)
+        def apply[A](ps: sequence.Iterative[Peg[A]]): Peg[A] = Shortest(ps)
     }
 
 
@@ -171,7 +171,7 @@ package object peg {
         /**
          * Matches any element of set.
          */
-        def apply[A](es: A*): Peg[A] = Multiple(sequence.from(es).toSHashSet)
+        def apply[A](es: A*): Peg[A] = Multiple(sequence.iterative.from(es).toSHashSet)
 
         /**
          * Matches any element of set.
@@ -184,7 +184,7 @@ package object peg {
         /**
          * Matches a key, then tries to match its value.
          */
-        def apply[A](es: (A, Peg[A])*): Peg[A] = Switch(sequence.from(es).toSHashMap)
+        def apply[A](es: (A, Peg[A])*): Peg[A] = Switch(sequence.iterative.from(es).toSHashMap)
 
         /**
          * Matches a key, then tries to match its value.
@@ -202,12 +202,12 @@ package object peg {
         /**
          * @return  <code>symbolSet(vs)(c)</code>.
          */
-        def apply[A](vs: Vector[A]*)(implicit c: Compare[A]): SymbolSet[A] = symbolSet(sequence.from(vs))(c)
+        def apply[A](vs: Vector[A]*)(implicit c: Compare[A]): SymbolSet[A] = symbolSet(sequence.iterative.from(vs))(c)
 
         /**
          * Returns a peg to optimize the form <code>k1|k2|k3|...</code>.
          */
-        def apply[A](vs: Sequence[Vector[A]])(lt: compare.Func[A]): SymbolSet[A] = {
+        def apply[A](vs: sequence.Iterative[Vector[A]])(lt: compare.Func[A]): SymbolSet[A] = {
             val r = new TheSymbolSet(new TSTree[A, Unit](lt))
             for (v <- vs) {
                 r += v
@@ -223,12 +223,12 @@ package object peg {
         /**
          * @return  <code>symbolMap(es)(c)</code>.
          */
-        def apply[A](es: (Vector[A], Peg[A])*)(implicit c: Compare[A]): SymbolMap[A] = symbolMap(sequence.from(es))(c)
+        def apply[A](es: (Vector[A], Peg[A])*)(implicit c: Compare[A]): SymbolMap[A] = symbolMap(sequence.iterative.from(es))(c)
 
         /**
          * Returns a peg to optimize the form <code>(k1 >> p1)|(k2 >> p2)|(k3 >> p3)|...</code>.
          */
-        def apply[A](es: Sequence[(Vector[A], Peg[A])])(lt: compare.Func[A]): SymbolMap[A] = {
+        def apply[A](es: sequence.Iterative[(Vector[A], Peg[A])])(lt: compare.Func[A]): SymbolMap[A] = {
             val r = new TheSymbolMap(new TSTree[A, Peg[A]](lt))
             for (e <- es) {
                 r += Tuple2(e._1, e._2)
@@ -258,7 +258,7 @@ package object peg {
     def fromRegexPattern(from: java.util.regex.Pattern): Peg[Char] = FromRegexPattern(from)
 
     @compatibleConversion
-    def fromSequence[A](from: Sequence[A]): Peg[A] = FromSequence(from)
+    def fromSequence[A](from: sequence.Iterative[A]): Peg[A] = FromSequence(from)
 
     @compatibleConversion
     def fromSIterable[A](from: scala.Iterable[A]): Peg[A] = FromSIterable(from)
@@ -274,7 +274,7 @@ package object peg {
     /**
      * Tries to match <code>from</code> using the predicate.
      */
-    def fromSequenceBy[A](from: Sequence[A])(pred: (A, A) => Boolean): Peg[A] = FromSequenceBy(from, pred)
+    def fromSequenceBy[A](from: sequence.Iterative[A])(pred: (A, A) => Boolean): Peg[A] = FromSequenceBy(from, pred)
 
     /**
      * Tries to match <code>from</code> using the predicate.

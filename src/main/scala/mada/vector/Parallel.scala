@@ -21,7 +21,7 @@ private[mada] class ParallelVector[A](override val delegate: Vector[A], override
     override def mutatingFilter(p: A => Boolean): Vector[A] = para.MutatingFilter(delegate, p, grainSize)
   // map
     override def map[B](f: A => B): Vector[B] = para.Map(delegate, f, grainSize)
-    override def flatMap[B](f: A => Sequence[B]): Vector[B] = vector.flatten(map(f))
+    override def flatMap[B](f: A => sequence.Iterative[B]): Vector[B] = vector.flatten(map(f))
   // loop
     override def each(f: A => Unit) = para.Each(delegate, f, grainSize)
   // search

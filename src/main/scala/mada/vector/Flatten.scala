@@ -8,7 +8,7 @@ package mada.vector
 
 
 private[mada] object Flatten {
-    def apply[A](vs: Sequence[Sequence[A]]): Vector[A] = {
+    def apply[A](vs: sequence.Iterative[sequence.Iterative[A]]): Vector[A] = {
         val ar = new java.util.ArrayList[A]
         for (v <- vs) {
             for (e <- v) {

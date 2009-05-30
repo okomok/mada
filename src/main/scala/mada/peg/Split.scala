@@ -7,7 +7,7 @@
 package mada.peg
 
 
-case class Split[A](_1: Peg[A], _2: Vector[A]) extends Sequence[Vector[A]] {
+case class Split[A](_1: Peg[A], _2: Vector[A]) extends sequence.Iterative[Vector[A]] {
     throwIfZeroWidth(_1, "split")
 
     override def begin = new sequence.Iterator[Vector[A]] {

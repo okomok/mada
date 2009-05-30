@@ -12,7 +12,7 @@ case class FromSIterable[A](_1: scala.Iterable[A]) extends Forwarder[A] {
 }
 
 case class FromSIterableBy[A](_1: scala.Iterable[A], _2: (A, A) => Boolean) extends Forwarder[A] {
-    override protected val delegate = fromSequenceBy(sequence.fromSIterable(_1))(_2)
+    override protected val delegate = fromSequenceBy(sequence.iterative.from(_1))(_2)
 }
 
 

@@ -7,18 +7,18 @@
 package mada.vector
 
 
-trait Forwarder[A] extends sequence.Forwarder[A] with Adapter.Transform[A]  {
+trait Forwarder[A] extends sequence.iterative.Forwarder[A] with Adapter.Transform[A]  {
     override protected def delegate: Vector[A]
     protected def afterForward[B](that: Vector[B]): Vector[B] = that
     private def afterForward2[B](that: (Vector[B], Vector[B])): (Vector[B], Vector[B]) = (afterForward(that._1), afterForward(that._2))
-    final override def afterForward[B](that: Sequence[B]): Sequence[B] = throw new Error
+    final override def afterForward[B](that: sequence.Iterative[B]): sequence.Iterative[B] = throw new Error
     final override def underlying = delegate
 
 // sequence
     override def equalsIf[B](that: Vector[B])(p: (A, B) => Boolean): Boolean = delegate.equalsIf(that)(p)
     override def ++(that: Vector[A]): Vector[A] = afterForward(delegate.++(that))
     override def map[B](f: A => B): Vector[B] = afterForward(delegate.map(f))
-    override def flatMap[B](f: A => Sequence[B]): Vector[B] = afterForward(delegate.flatMap(f))
+    override def flatMap[B](f: A => sequence.Iterative[B]): Vector[B] = afterForward(delegate.flatMap(f))
     override def filter(p: A => Boolean): Vector[A] = afterForward(delegate.filter(p))
     override def filterNot(p: A => Boolean): Vector[A] = afterForward(delegate.filterNot(p))
     override def partition(p: A => Boolean): (Vector[A], Vector[A]) = afterForward2(delegate.partition(p))

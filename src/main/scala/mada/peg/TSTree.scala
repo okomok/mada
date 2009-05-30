@@ -260,7 +260,7 @@ private class TSTreeNode[A, V](val elem: A, val parent: TSTreeNode[A, V]) {
 }
 
 
-private class TSTreeNodeIterator[A, V](parentKey: Vector[A], node: TSTreeNode[A, V]) extends sequence.SIteratorForwarder[(Vector[A], TSTreeNode[A, V])] {
+private class TSTreeNodeIterator[A, V](parentKey: Vector[A], node: TSTreeNode[A, V]) extends sequence.iterator.SIteratorForwarder[(Vector[A], TSTreeNode[A, V])] {
     private val me = scala.Iterator.single((lowerKey, node))
     override protected val delegate = me ++ children(node.left) ++ children(node.middle) ++ children(node.right)
 

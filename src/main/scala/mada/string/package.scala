@@ -12,7 +12,7 @@ package object string {
     /**
      * Concatenates all the arguments of a given sequence of objects.
      */
-    def flatten(ss: Sequence[Any]): String = {
+    def flatten(ss: sequence.Iterative[Any]): String = {
         val sb = new StringBuilder
         for (s <- ss) {
             sb.append(s.toString)
