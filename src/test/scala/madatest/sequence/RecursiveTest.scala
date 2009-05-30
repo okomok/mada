@@ -58,9 +58,33 @@ class RecursiveTest {
     def testLongFibs2: Unit = {
         val fibs = new Infinite[Int]()
         // hmm, delayed-begin trick doesn't work.
-        // After all, iterator object too must be lazy: infeasible in strict language.
+        // After all, iterator object too must be lazy: infeasible in iterator abstraction.
         fibs := Of(0, 1) ++ fibs.takeWhile(_ => true).zipBy(fibs.takeWhile(_ => true).tail)(_ + _)
         assertEquals(_Recursive.theLongFibs, fibs.take(_Recursive.theLongFibs.size))
+    }
+*/
+/*
+    def testStream: Unit = {
+        // This is the bug of 2.8.
+        // Iterator eagerly evaluates stream-tail.
+        lazy val fib: Stream[Int] = Stream.cons(0, Stream.cons(1, fib.zip(fib.tail).map(p => p._1 + p._2)))
+        println("go")
+        for (e <- fib.take(30)) {
+            println(e)
+        }
+    }
+*/
+/*
+    def testStream2: Unit = {
+       def from(n: Int): Stream[Int] =
+         Stream.cons(n, from(n + 1))
+
+       def sieve(s: Stream[Int]): Stream[Int] =
+         Stream.cons(s.head, sieve(s.tail filter { _ % s.head != 0 }))
+
+       def primes = sieve(from(2))
+
+       primes take 10 print
     }
 */
 /*
@@ -76,6 +100,23 @@ class RecursiveTest {
 */
 }
 
+/*
+class FibTest {
+
+    def myZip[A, B](_this: Stream[A], that: Stream[B]): Stream[(A, B)] = {
+        if (_this.isEmpty || that.isEmpty) Stream.empty
+        else Stream.cons((_this.head, that.head), myZip(_this.tail, that.tail))
+    }
+
+    lazy val fibs: Stream[Int] = Stream.cons(1, Stream.cons(1, myZip(fibs, fibs.tail).map{case (x, y) => x + y }))
+
+    def testTrivial: Unit = {
+        for (e <- fibs.take(30)) {
+            println(e)
+        }
+    }
+}
+*/
 
 
 /*
