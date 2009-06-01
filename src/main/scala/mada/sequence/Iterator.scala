@@ -11,9 +11,9 @@ import iterator._
 
 
 /**
- * Yet another Iterator: backend of <code>sequence.Iterative</code>.
+ * Yet another Iterator: backend of <code>Iterative</code>.
  * Unlike <code>Iterator</code>, this separates element-access and traversing method.
- * (E.g. <code>.map(f).length</code> is inefficient in SIterator abstraction.)
+ * (E.g. <code>.map(f).length</code> is inefficient in scala.Iterator abstraction.)
  */
 @notThreadSafe
 trait Iterator[+A] {

@@ -7,8 +7,6 @@
 package mada.sequence.iterative
 
 
-class ByLazy[+A](seq: => Iterative[A]) extends Forwarder[A] {
-    val _1 = function.ofLazy(seq)
-
+case class ByLazy[+A](_1: () => Iterative[A]) extends Forwarder[A] {
     override protected def delegate = _1()
 }

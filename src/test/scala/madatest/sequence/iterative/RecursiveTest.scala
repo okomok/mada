@@ -29,7 +29,13 @@ class RecursiveTest {
         tr := Of(1,2,3) ++ tr.take(2) // finite
         assertEquals(Of(1,2,3,1,2), tr)
     }
-
+/*
+    malformed.
+    def testTrivialVal: Unit = {
+        val tr :Type[Int] = Of(1,2,3) ++ byLazy(tr) // finite
+        assertEquals(Of(1,2,3,1,2), tr)
+    }
+*/
     def testTrivial3: Unit = {
         val tr = new Recursive[Int]
         tr := Of(1,2,3) ++ tr.takeWhile(_ != 3) // finite

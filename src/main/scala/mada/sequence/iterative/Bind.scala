@@ -11,8 +11,6 @@ case class Bind[+A](_1: Iterator[A]) extends Iterative[A] {
     override def begin = _1
 }
 
-class BindName[+A](it: => Iterator[A]) extends Iterative[A] {
-    val _1 = function.ofName(it)
-
+case class BindName[+A](_1: () => Iterator[A]) extends Iterative[A] {
     override def begin = _1()
 }
