@@ -53,12 +53,12 @@ package object function {
     /**
      * Converts by-name-parameter to a function returning <code>body</code>.
      */
-    def ofName[R](body: => R): Function0[R] = new OfName(body)
+    def ofName[R](body: => R): OfName[R] = new OfName(body)
 
     /**
      * A function calculating <code>body</code> by <code>lazy</code>
      */
-    def ofLazy[R](body: => R): Function0[R] = new OfLazy(body)
+    def ofLazy[R](body: => R): OfLazy[R] = new OfLazy(body)
 
     /**
      * A function calculating <code>body</code> in other threads

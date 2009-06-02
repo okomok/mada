@@ -7,7 +7,7 @@
 package mada.sequence.list
 
 
-case class Cons[+A](_1: () => A, _2: () => List[A]) extends List[A] {
+case class Cons[+A](_1: function.OfLazy[A], _2: function.OfLazy[List[A]]) extends List[A] {
     override def isEmpty = false
     override def head = _1()
     override def tail = _2()

@@ -7,6 +7,6 @@
 package mada.sequence.iterative
 
 
-case class ByName[+A](_1: () => Iterative[A]) extends Forwarder[A] {
+case class ByName[+A](_1: function.OfName[Iterative[A]]) extends Forwarder[A] {
     override protected def delegate = _1()
 }
