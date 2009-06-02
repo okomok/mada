@@ -33,7 +33,10 @@ trait List[+A] {
      * The remaining elements after the first one.
      */
     def tail: List[A]
-/*
+
+    protected def preHead: Unit = if (isEmpty) throw new NoSuchElementException("head on empty list")
+    protected def preTail: Unit = if (isEmpty) throw new UnsupportedOperationException("tail on empty list")
+
 
 // as value
 
@@ -42,16 +45,16 @@ trait List[+A] {
      * and all corresponding pairs of elements in the two sequences
      * satisfy the predicate <code>p</code>.
      */
-    def equalsIf[B](that: List[B])(p: (A, B) => Boolean): Boolean = {
-        val it = begin
-        val jt = that.begin
-        while (it && !jt.isEnd) {
-            if (!p(~it, ~jt)) {
+    def equalsIf[B](that: => List[B])(p: (A, B) => Boolean): Boolean = {
+        var it = this
+        var jt = that
+        while (!it.isEmpty && !jt.isEmpty) {
+            if (!p(it.head, jt.head)) {
                 return false
             }
-            it.++; jt.++
+            it = it.tail; jt = jt.tail
         }
-        !it && !jt
+        it.isEmpty && jt.isEmpty
     }
 
     /**
@@ -64,38 +67,18 @@ trait List[+A] {
      * @see Effective Java 2nd Edition - Item 8
      */
     override def equals(that: Any) = that match {
-        case that: Iterative[_] => equalsIf(that)(function.equal)
+        case that: List[_] => equalsIf(that)(function.equal)
         case _ => false
     }
 
     override def hashCode = {
         var r = 1
-        val it = begin
-        while (it) {
-            r = 31 * r + (~it).hashCode
-            it.++
+        var it = this
+        while (!it.isEmpty) {
+            r = 31 * r + it.head.hashCode
+            it = it.tail
         }
         r
-    }
-
-    // probably removed so that case-class-toString is turned on.
-    override def toString = {
-        val sb = new StringBuilder
-        sb.append('[')
-
-        val it = begin
-        if (it) {
-            sb.append(~it)
-            it.++
-        }
-        while (it) {
-            sb.append(", ")
-            sb.append(~it)
-            it.++
-        }
-
-        sb.append(']')
-        sb.toString
     }
 
 
@@ -105,49 +88,50 @@ trait List[+A] {
      * Returns the size.
      */
     def size: Int = {
-        var i = 0
-        val it = begin
-        while (it) {
-            i += 1
-            it.++
+        var r = 0
+        var it = this
+        while (!it.isEmpty) {
+            r += 1
+            it = it.tail
         }
-        i
+        r
     }
+
 
     /**
      * Appends <code>that</code>.
      */
-    def ++[B >: A](that: Iterative[B]): Iterative[B] = Append[B](this, that)
+//    def ++[B >: A](that: => List[B]): List[B] = Append[B](this, that)
 
     /**
      * Maps elements using <code>f</code>.
      */
-    def map[B](f: A => B): Iterative[B] = Map(this, f)
-
+    def map[B](f: A => B): List[B] = Map(this, f)
+/*
     /**
      * @return  <code>map(f).flatten</code>.
      */
-    def flatMap[B](f: A => Iterative[B]): Iterative[B] = _flatten(map(f))
+    def flatMap[B](f: A => List[B]): List[B] = _flatten(map(f))
 
     /**
      * Filters elements using <code>p</code>.
      */
-    def filter(p: A => Boolean): Iterative[A] = Filter(this, p)
+    def filter(p: A => Boolean): List[A] = Filter(this, p)
 
     /**
      * Filters elements using <code>funtion.not(p)</code>.
      */
-    def filterNot(p: A => Boolean): Iterative[A] = FilterNot(this, p)
+    def filterNot(p: A => Boolean): List[A] = FilterNot(this, p)
 
     /**
      * @return  <code>(filter(p), filterNot(p))</code>.
      */
-    def partition(p: A => Boolean): (Iterative[A], Iterative[A]) = (filter(p), filterNot(p))
+    def partition(p: A => Boolean): (List[A], List[A]) = (filter(p), filterNot(p))
 
     /**
      * What?
      */
-    def groupBy[K](f: A => K): scala.collection.Map[K, Iterative[A]] = throw new Error
+    def groupBy[K](f: A => K): scala.collection.Map[K, List[A]] = throw new Error
 
     /**
      * Applies <code>f</code> to each element.
@@ -232,12 +216,12 @@ trait List[+A] {
     /**
      * Prefix sum folding left to right.
      */
-    def folderLeft[B](z: B)(op: (B, A) => B): Iterative[B] = FolderLeft(this, z, op)
+    def folderLeft[B](z: B)(op: (B, A) => B): List[B] = FolderLeft(this, z, op)
 
     /**
      * Prefix sum reducing left to right.
      */
-    def reducerLeft[B >: A](op: (B, A) => B): Iterative[B] = ReducerLeft(this, op)
+    def reducerLeft[B >: A](op: (B, A) => B): List[B] = ReducerLeft(this, op)
 
     /**
      * Optionally returns the first element.
@@ -282,37 +266,37 @@ trait List[+A] {
     /**
      * Takes at most <code>n</code> elements.
      */
-    def take(n: Int): Iterative[A] = Take(this, n)
+    def take(n: Int): List[A] = Take(this, n)
 
     /**
      * Drops at most <code>n</code> elements.
      */
-    def drop(n: Int): Iterative[A] = Drop(this, n)
+    def drop(n: Int): List[A] = Drop(this, n)
 
     /**
      * @return  <code>drop(n).take(n - m)</code>.
      */
-    def slice(from: Int, until: Int): Iterative[A] = Slice(this, from, until)
+    def slice(from: Int, until: Int): List[A] = Slice(this, from, until)
 
     /**
      * Takes elements while <code>p</code> meets.
      */
-    def takeWhile(p: A => Boolean): Iterative[A] = TakeWhile(this, p)
+    def takeWhile(p: A => Boolean): List[A] = TakeWhile(this, p)
 
     /**
      * Drops elements while <code>p</code> meets.
      */
-    def dropWhile(p: A => Boolean): Iterative[A] = DropWhile(this, p)
+    def dropWhile(p: A => Boolean): List[A] = DropWhile(this, p)
 
     /**
      * @return  <code>(takeWhile(p), dropWhile(p))</code>.
      */
-    def span(p: A => Boolean): (Iterative[A], Iterative[A]) = (takeWhile(p), dropWhile(p))
+    def span(p: A => Boolean): (List[A], List[A]) = (takeWhile(p), dropWhile(p))
 
     /**
      * @return  <code>(take(n), drop(n))</code>.
      */
-    def splitAt(n: Int): (Iterative[A], Iterative[A]) = {
+    def splitAt(n: Int): (List[A], List[A]) = {
         throwIfNegative(n, "splitAt")
         (take(n), drop(n))
     }
@@ -348,167 +332,60 @@ trait List[+A] {
     /**
      * Repeats infinitely.
      */
-    def cycle: Iterative[A] = Cycle(this)
+    def cycle: List[A] = Cycle(this)
 
     /**
      * Repeats <code>n</code> times
      */
-    def times(n: Int): Iterative[A] = Times(this, n)
+    def times(n: Int): List[A] = Times(this, n)
 
     /**
      * Cuts projection. (A result sequence is always readOnly.)
      */
-    def force: Iterative[A] = Force(this)
+    def force: List[A] = Force(this)
 
     /**
      * Turns a sequence of sequences into flat sequence.
      */
     @methodized
-    def _flatten[B](_this: Iterative[Iterative[B]]): Iterative[B] = Flatten(_this)
-
-    /**
-     * Makes every element access be lazy.
-     */
-    def memoize: Iterative[A] = Memoize(this)
+    def _flatten[B](_this: List[List[B]]): List[B] = Flatten(_this)
 
     /**
      * Transforms sequence-to-sequence expression `seq.f.g.h` to `seq.x.f.x.g.x.h`.
      */
-    def mix(x: Mixin): Iterative[A] = Mix(this, x)
+    def mix(x: Mixin): List[A] = Mix(this, x)
 
     /**
      * Disables overrides.
      */
-    def seal: Iterative[A] = Seal(this)
-
-    /**
-     * Disables retraversing.
-     */
-    def singlePass: Iterative[A] = SinglePass(this)
+    def seal: List[A] = Seal(this)
 
     /**
      * Steps by the specified stride.
      */
-    def step(n: Int): Iterative[A] = Step(this, n)
+    def step(n: Int): List[A] = Step(this, n)
 
     /**
      * Removes duplicates using <code>==</code>.
      */
-    def unique: Iterative[A] = Unique(this)
+    def unique: List[A] = Unique(this)
 
     /**
      * Removes duplicates using the predicate.
      */
-    def uniqueBy(p: (A, A) => Boolean): Iterative[A] = UniqueBy(this, p)
-
-    @compatibleConversion
-    def toSome: ToSome[A] = new ToSome(this)
-
-    @methodized @conversion
-    def _stringize(_this: Iterative[Char]): String = {
-        val sb = new StringBuilder
-        val it = begin
-        while (it) {
-            sb.append(~it)
-            it.++
-        }
-        sb.toString
-    }
-
-    @methodized @conversion
-    def _toSHashMap[K, V](_this: Iterative[(K, V)]): scala.collection.Map[K, V] = {
-        val r = new scala.collection.mutable.HashMap[K, V]
-        val it = _this.begin
-        while (it) {
-            r += ~it
-            it.++
-        }
-        r
-    }
-
-    @methodized @conversion
-    def _toSHashSet[B](_this: Iterative[B]): scala.collection.Set[B] = {
-        val r = new scala.collection.mutable.HashSet[B]
-        val it = _this.begin
-        while (it) {
-            r += ~it
-            it.++
-        }
-        r
-    }
-
-    @methodized @compatibleConversion
-    def _toJIterable[B](_this: Iterative[B]): java.lang.Iterable[B] = ToJIterable(_this)
-
-    @methodized @conversion
-    def _toVector[B](_this: Iterative[B]): Vector[B] = ToVector(_this)
-
+    def uniqueBy(p: (A, A) => Boolean): List[A] = UniqueBy(this, p)
+*/
     /**
      * Zips <code>this</code> and <code>that</code>.
      */
-    def zip[B](that: Iterative[B]): Iterative[(A, B)] = Zip(this, that)
+    def zip[B](that: => List[B]): List[(A, B)] = Zip(this, function.ofLazy(that))
 
     /**
      * Zips <code>this</code> and <code>that</code> applying <code>f</code>.
      */
-    def zipBy[B, C](that: Iterative[B])(f: (A, B) => C): Iterative[C] = ZipBy(this, that, f)
+    def zipBy[B, C](that: => List[B])(f: (A, B) => C): List[C] = ZipBy(this, function.ofLazy(that), f)
 
     @returnThis
-    final def asIterative: Iterative[A] = this
+    final def asList: List[A] = this
 
-
-// sorted
-
-    /**
-     * @return  <code>mergeBy(that)(c)</code>.
-     */
-    def merge[B >: A](that: Iterative[B])(implicit c: Compare[B]): Iterative[B] = Merge[B](this, that, c)
-
-    /**
-     * Combines the elements in the sorted sequences, into a new sequence with its elements sorted.
-     */
-    def mergeBy[B >: A](that: Iterative[B])(lt: compare.Func[B]): Iterative[B] = MergeBy[B](this, that, lt)
-
-    /**
-     * @return  <code>unionBy(that)(c)</code>.
-     */
-    def union[B >: A](that: Iterative[B])(implicit c: Compare[B]): Iterative[B] = Union[B](this, that, c)
-
-    /**
-     * Combines the elements in the sorted sequences, into a new sequence with its elements sorted.
-     */
-    def unionBy[B >: A](that: Iterative[B])(lt: compare.Func[B]): Iterative[B] = UnionBy[B](this, that, lt)
-
-    /**
-     * @return  <code>intersectionBy(that)(c)</code>.
-     */
-    def intersection[B >: A](that: Iterative[B])(implicit c: Compare[B]): Iterative[B] = Intersection[B](this, that, c)
-
-    /**
-     * Constructs a sorted iterable with the set intersection of the two sorted iterables.
-     */
-    def intersectionBy[B >: A](that: Iterative[B])(lt: compare.Func[B]): Iterative[B] = IntersectionBy[B](this, that, lt)
-
-    /**
-     * @return  <code>differenceBy(that)(c)</code>.
-     */
-    def difference[B >: A](that: Iterative[B])(implicit c: Compare[B]): Iterative[B] = Difference[B](this, that, c)
-
-    /**
-     * Constructs a sorted iterable with the set difference of the two sorted iterables.
-     */
-    def differenceBy[B >: A](that: Iterative[B])(lt: compare.Func[B]): Iterative[B] = DifferenceBy[B](this, that, lt)
-
-    /**
-     * @return  <code>symmetricDifferenceBy(that)(c)</code>.
-     */
-    def symmetricDifference[B >: A](that: Iterative[B])(implicit c: Compare[B]): Iterative[B] = SymmetricDifference[B](this, that, c)
-
-    /**
-     * Constructs a sorted iterable with the set symmetric difference of the two sorted iterables.
-     */
-    def symmetricDifferenceBy[B >: A](that: Iterative[B])(lt: compare.Func[B]): Iterative[B] = SymmetricDifferenceBy[B](this, that, lt)
-
-    */
 }
-

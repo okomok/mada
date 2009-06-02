@@ -34,7 +34,7 @@ trait Iterative[+A] {
     def equalsIf[B](that: Iterative[B])(p: (A, B) => Boolean): Boolean = {
         val it = begin
         val jt = that.begin
-        while (it && !jt.isEnd) {
+        while (it && jt) {
             if (!p(~it, ~jt)) {
                 return false
             }
@@ -99,13 +99,13 @@ trait Iterative[+A] {
      * Returns the size.
      */
     def size: Int = {
-        var i = 0
+        var r = 0
         val it = begin
         while (it) {
-            i += 1
+            r += 1
             it.++
         }
-        i
+        r
     }
 
     /**

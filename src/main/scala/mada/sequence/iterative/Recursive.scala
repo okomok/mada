@@ -25,3 +25,17 @@ class Recursive[A] extends Iterative[A] {
     // Otherwise, it simply results in stack overflow by infinite begins.
     override def begin: Iterator[A] = f().begin
 }
+
+
+class RecursiveForwarder[A] extends Forwarder[A] {
+    @volatile private var f: Function0[Iterative[A]] = null
+
+    /**
+     * Assigns <code>that</code>.
+     */
+    def :=(that: => Iterative[A]): Unit = {
+        f = function.ofLazy(that)
+    }
+
+    override protected def delegate = f()
+}
