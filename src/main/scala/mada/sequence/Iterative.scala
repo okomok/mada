@@ -552,6 +552,7 @@ object Iterative {
 
 // compatibles
 
+    implicit def madaIterativeFromVector[A](from: Vector[A]): Iterative[A] = fromVector(from)
     implicit def madaIterativeFromSIterable[A](from: Iterable[A]): Iterative[A] = fromSIterable(from)
     implicit def madaIterativeFromJIterable[A](from: java.lang.Iterable[A]): Iterative[A] = fromJIterable(from)
     implicit def madaIterativeUnstringize(from: String): Iterative[Char] = Unstringize(from)

@@ -17,33 +17,33 @@ import mada.sequence.{Vector, vector}
 class SplitTest {
     def testTrivial: Unit = {
         assertEquals(
-            Vector(vector.from("ab"), vector.from("cdef"), vector.from("gh")),
+            mada.sequence.Iterative(vector.from("ab"), vector.from("cdef"), vector.from("gh")),
             peg.from(":").split(vector.from("ab:cdef:gh")) )
 
         assertEquals(
-            Vector(vector.from(""), vector.from("ab"), vector.from("cdef"), vector.from("gh")),
+            mada.sequence.Iterative(vector.from(""), vector.from("ab"), vector.from("cdef"), vector.from("gh")),
             peg.from(":").split(vector.from(":ab:cdef:gh")) )
 
         assertEquals(
-            Vector(vector.from(""), vector.from("ab"), vector.from("cdef"), vector.from("gh")),
+            mada.sequence.Iterative(vector.from(""), vector.from("ab"), vector.from("cdef"), vector.from("gh")),
             peg.from(":").split(vector.from(":ab:cdef:gh:")) )
 
         assertEquals(
-            Vector(vector.from("ab"), vector.from(""), vector.from("cdef"), vector.from("gh"), vector.from("")),
+            mada.sequence.Iterative(vector.from("ab"), vector.from(""), vector.from("cdef"), vector.from("gh"), vector.from("")),
             peg.from(":").split(vector.from("ab::cdef:gh::")) )
     }
 
     def testBound: Unit = {
         assertEquals(
-            Vector(vector.from("ab")),
+            mada.sequence.Iterative(vector.from("ab")),
             peg.from(":").split(vector.from("ab")) )
 
         assertEquals(
-            Vector(vector.from("ab")),
+            mada.sequence.Iterative(vector.from("ab")),
             peg.from(":").split(vector.from("ab:")) )
 
         assertEquals(
-            Vector(vector.from(""), vector.from("ab")),
+            mada.sequence.Iterative(vector.from(""), vector.from("ab")),
             peg.from(":").split(vector.from(":ab:")) )
 
         assertTrue(

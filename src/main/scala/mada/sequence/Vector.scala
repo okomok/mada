@@ -20,112 +20,10 @@ import vector._
  *
  * Unless otherwise specified, these methods return projections to keep readability and writability.
  */
-trait Vector[A] extends PartialFunction[Int, A] with Iterative[A] {
+trait Vector[A] extends PartialFunction[Int, A] {
 
 
-// sequence
-
-    override def begin = new Iterator[A] {
-        private var i = start
-        override def isEnd = i == end
-        override def deref = { preDeref; Vector.this(i) }
-        override def increment = { preIncrement; i += 1 }
-    }
-
-    @overload def equalsIf[B](that: Vector[B])(p: (A, B) => Boolean): Boolean = {
-        if (size != that.size) {
-            false
-        } else {
-            stl.Equal(this, start, end, that, that.start, p)
-        }
-    }
-
-    @optimize override def equals(that: Any): Boolean = that match {
-        case that: Vector[_] => equalsIf(that)(function.equal)
-        case _ => super.equals(that)
-    }
-
-    @optimize override def hashCode: Int = {
-        var r = 1
-        var i = start; val j = end
-        while (i != j) {
-            r = 31 * r + this(i).hashCode
-            i += 1
-        }
-        r
-    }
-
-    /**
-     * @return  <code>start == end</code>.
-     */
-    @optimize final override def isEmpty: Boolean = start == end
-
-    /**
-     * Guarantees constant-time.
-     */
-    override def size: Int = end - start
-
-    @overload def ++(that: Vector[A]): Vector[A] = Append(this, that)
-    override def map[B](f: A => B): Vector[B] = Map(this, f)
-    override def flatMap[B](f: A => Iterative[B]): Vector[B] = vector.flatten(map(f))
-    override def filter(p: A => Boolean): Vector[A] = Filter(this, p)
-    override def remove(p: A => Boolean): Vector[A] = filter(function.not(p))
-    override def partition(p: A => Boolean): (Vector[A], Vector[A]) = (filter(p), remove(p))
-    @optimize final override def foreach(f: A => Unit): Unit = stl.ForEach(this, start, end, f)
-    @optimize final override def forall(p: A => Boolean): Boolean = seek(function.not(p)).isEmpty
-    @optimize final override def exists(p: A => Boolean): Boolean = !seek(p).isEmpty
-    @optimize override def count(p: A => Boolean): Int = stl.CountIf(this, start, end, p)
-
-    @optimize final override def find(p: A => Boolean): Option[A] = {
-        val i = stl.FindIf(this, start, end, p)
-        if (i == end) {
-            None
-        } else {
-            Some(this(i))
-        }
-    }
-
-    @optimize override def foldLeft[B](z: B)(op: (B, A) => B): B = stl.Accumulate(this, start, end, z, op)
-    @optimize override def reduceLeft[B >: A](op: (B, A) => B): B = tail.foldLeft[B](head)(op)
-    override def folderLeft[B](z: B)(op: (B, A) => B): Vector[B] = FolderLeft(this, z, op)
-    override def reducerLeft[B >: A](op: (B, A) => B): Vector[B] = tail.folderLeft[B](head)(op)
-    @optimize override def head: A = { throwIfEmpty("head"); this(start) }
-    @optimize override def headOption: Option[A] = FirstOption(this)
-    override def tail: Vector[A] = { throwIfEmpty("tail"); this(start + 1, end) }
-    @optimize override def last: A = { throwIfEmpty("last"); this(end - 1) }
-    @optimize override def lastOption: Option[A] = LastOption(this)
-    override def drop(n: Int): Vector[A] = this(Math.min(start + n, end), end)
-    override def take(n: Int): Vector[A] = this(start, Math.min(start + n, end))
-    override def slice(n: Int, m: Int): Vector[A] = drop(n).take(m - n)
-    override def dropWhile(p: A => Boolean): Vector[A] = DropWhile(this, p)
-    override def takeWhile(p: A => Boolean): Vector[A] = TakeWhile(this, p)
-
-    override def span(p: A => Boolean): (Vector[A], Vector[A]) = {
-        val middle = stl.FindIf(this, start, end, function.not(p))
-        (this(start, middle), this(middle, end))
-    }
-
-    override def splitAt(i: Int): (Vector[A], Vector[A]) = {
-        val middle = Math.min(start + i, end)
-        (this(start, middle), this(middle, end))
-    }
-
-    /**
-     * Guarantees constant-time.
-     */
-    override def at(n: Int): A = nth(n)
-
-    @optimize override def contains(e: Any): Boolean = exists(function.equalTo(e))
-    override def seal: Vector[A] = Seal(this)
-    override def times(n: Int): Vector[A] = Times(this, n)
-    override def force: Vector[A] = Force(this)
-    @overload def mix(x: Mixin): Vector[A] = Mix(this, x)
-    override def step(n: Int): Vector[A] = Step(this, n)
-//    @optimize override def _toVector[B](_this: Iterative[B]): Vector[B] = this.asInstanceOf[Vector[B]].readOnly // writable guarantee.
-    @overload def zip[B](that: Vector[B]): Vector[(A, B)] = Zip(this, that)
-
-
-// kernel interface
+// kernel
 
     /**
      * @return  start index of this vector, which is NOT guaranteed to be <code>0</code>.
@@ -162,6 +60,259 @@ trait Vector[A] extends PartialFunction[Int, A] with Iterative[A] {
      * @return  <code>(start <= i) && (i < end)</code>, possibly overridden in subclasses.
      */
     override def isDefinedAt(i: Int): Boolean = (start <= i) && (i < end)
+
+
+// iterative
+
+    @conversion
+    def toIterative: Iterative[A] = ToIterative(this)
+
+    /**
+     * Returns true if and only if both sequences have the same size,
+     * and all corresponding pairs of elements in the two sequences
+     * satisfy the predicate <code>p</code>.
+     */
+    def equalsIf[B](that: Vector[B])(p: (A, B) => Boolean): Boolean = {
+        if (size != that.size) {
+            false
+        } else {
+            stl.Equal(this, start, end, that, that.start, p)
+        }
+    }
+
+    /**
+     * Compares the specified object with this sequence for equality.
+     * Returns true if and only if the specified object is also a sequence,
+     * both sequences have the same size, and all corresponding pairs of
+     * elements in the two sequences are equal.
+     * You shall not override this in a purpose except optimization.
+     *
+     * @see Effective Java 2nd Edition - Item 8
+     */
+    override def equals(that: Any): Boolean = that match {
+        case that: Vector[_] => equalsIf(that)(function.equal)
+        case _ => super.equals(that)
+    }
+
+    override def hashCode: Int = {
+        var r = 1
+        var i = start; val j = end
+        while (i != j) {
+            r = 31 * r + this(i).hashCode
+            i += 1
+        }
+        r
+    }
+
+    override def toString = toJclArrayList.toString
+
+    /**
+     * @return  <code>start == end</code>.
+     */
+    final def isEmpty: Boolean = start == end
+
+    /**
+     * Returns the size.
+     */
+    final def size: Int = end - start
+
+    /**
+     * Appends <code>that</code>.
+     */
+    def ++(that: Vector[A]): Vector[A] = Append(this, that)
+
+    /**
+     * Maps elements using <code>f</code>.
+     */
+    def map[B](f: A => B): Vector[B] = Map(this, f)
+
+    /**
+     * @return  <code>map(f).flatten</code>.
+     */
+    def flatMap[B](f: A => Iterative[B]): Vector[B] = vector.flatten(map(f).toIterative)
+
+    /**
+     * Filters elements using <code>p</code>.
+     */
+    def filter(p: A => Boolean): Vector[A] = Filter(this, p)
+
+    /**
+     * Filters elements using <code>funtion.not(p)</code>.
+     */
+    def remove(p: A => Boolean): Vector[A] = Remove(this, p)
+
+    /**
+     * @return  <code>(filter(p), remove(p))</code>.
+     */
+    def partition(p: A => Boolean): (Vector[A], Vector[A]) = (filter(p), remove(p))
+
+    /**
+     * Applies <code>f</code> to each element.
+     */
+    def foreach(f: A => Unit): Unit = stl.ForEach(this, start, end, f)
+
+    /**
+     * Does <code>p</code> meet for any element?
+     */
+    def forall(p: A => Boolean): Boolean = seek(function.not(p)).isEmpty
+
+    /**
+     * Does an element exists which <code>p</code> meets?
+     */
+    def exists(p: A => Boolean): Boolean = !seek(p).isEmpty
+
+    /**
+     * Counts elements <code>p</code> meets.
+     */
+    def count(p: A => Boolean): Int = stl.CountIf(this, start, end, p)
+
+    /**
+     * Finds an element <code>p</code> meets.
+     */
+    def find(p: A => Boolean): Option[A] = {
+        val i = stl.FindIf(this, start, end, p)
+        if (i == end) {
+            None
+        } else {
+            Some(this(i))
+        }
+    }
+
+    /**
+     * Folds left to right.
+     */
+    def foldLeft[B](z: B)(op: (B, A) => B): B = stl.Accumulate(this, start, end, z, op)
+
+    @aliasOf("foldLeft")
+    final def /:[B](z: B)(op: (B, A) => B): B = foldLeft(z)(op)
+
+    /**
+     * Reduces left to right.
+     */
+    def reduceLeft[B >: A](op: (B, A) => B): B = tail.foldLeft[B](head)(op)
+
+    /**
+     * Prefix sum folding left to right.
+     */
+    def folderLeft[B](z: B)(op: (B, A) => B): Vector[B] = FolderLeft(this, z, op)
+
+    /**
+     * Prefix sum reducing left to right.
+     */
+    def reducerLeft[B >: A](op: (B, A) => B): Vector[B] = tail.folderLeft[B](head)(op)
+
+    /**
+     * Returns the first element.
+     */
+    def head: A = { throwIfEmpty("head"); this(start) }
+
+    /**
+     * Optionally returns the first element.
+     */
+    def headOption: Option[A] = FirstOption(this)
+
+    /**
+     * Returns all the elements without the first one.
+     */
+    def tail: Vector[A] = { throwIfEmpty("tail"); this(start + 1, end) }
+
+    /**
+     * Returns the last element.
+     */
+    def last: A = { throwIfEmpty("last"); this(end - 1) }
+
+    /**
+     * Optionally returns the last element.
+     */
+    def lastOption: Option[A] = LastOption(this)
+
+    /**
+     * Takes at most <code>n</code> elements.
+     */
+    def take(n: Int): Vector[A] = this(start, Math.min(start + n, end))
+
+    /**
+     * Drops at most <code>n</code> elements.
+     */
+    def drop(n: Int): Vector[A] = this(Math.min(start + n, end), end)
+
+    /**
+     * @return  <code>drop(n).take(n - m)</code>.
+     */
+    def slice(n: Int, m: Int): Vector[A] = drop(n).take(m - n)
+
+    /**
+     * Takes elements while <code>p</code> meets.
+     */
+    def takeWhile(p: A => Boolean): Vector[A] = TakeWhile(this, p)
+
+    /**
+     * Drops elements while <code>p</code> meets.
+     */
+    def dropWhile(p: A => Boolean): Vector[A] = DropWhile(this, p)
+
+    /**
+     * @return  <code>(takeWhile(p), dropWhile(p))</code>.
+     */
+    def span(p: A => Boolean): (Vector[A], Vector[A]) = {
+        val middle = stl.FindIf(this, start, end, function.not(p))
+        (this(start, middle), this(middle, end))
+    }
+
+    /**
+     * @return  <code>(take(n), drop(n))</code>.
+     */
+    def splitAt(i: Int): (Vector[A], Vector[A]) = {
+        val middle = Math.min(start + i, end)
+        (this(start, middle), this(middle, end))
+    }
+
+    /**
+     * Returns the <code>n</code>-th element.
+     */
+    def at(n: Int): A = nth(n)
+
+    /**
+     * Does this contain the element?
+     */
+    def contains(e: Any): Boolean = exists(function.equalTo(e))
+
+    /**
+     * Repeats <code>n</code> times
+     */
+    def times(n: Int): Vector[A] = Times(this, n)
+
+    /**
+     * Cuts projection. (A result sequence is always readOnly.)
+     */
+    def force: Vector[A] = Force(this)
+
+    /**
+     * Returns a vector whose elements are lazy.
+     */
+    def memoize: Vector[A] = Memoize(this)
+
+    /**
+     * Transforms sequence-to-sequence expression `seq.f.g.h` to `seq.x.f.x.g.x.h`.
+     */
+    def mix(x: Mixin): Vector[A] = Mix(this, x)
+
+    /**
+     * Disables overrides.
+     */
+    def seal: Vector[A] = Seal(this)
+
+    /**
+     * Steps by the specified stride.
+     */
+    def step(n: Int): Vector[A] = Step(this, n)
+
+//    @optimize override def _toVector[B](_this: Iterative[B]): Vector[B] = this.asInstanceOf[Vector[B]].readOnly // writable guarantee.
+
+    /**
+     * Zips <code>this</code> and <code>that</code>.
+     */
+    def zip[B](that: Vector[B]): Vector[(A, B)] = Zip(this, that)
 
 
 // regions
@@ -360,11 +511,6 @@ trait Vector[A] extends PartialFunction[Int, A] with Iterative[A] {
 // attributes
 
     /**
-     * Returns a vector whose elements are lazy.
-     */
-    override def memoize: Vector[A] = Memoize(this)
-
-    /**
      * Creates a vector whose <code>isDefinedAt(i)</code> returns true
      * iif <code>start <= i && i < end</code>.
      */
@@ -547,12 +693,6 @@ object Vector extends vector.Compatibles {
 
 
 // operators
-
-    sealed class MadaVectorIterableVector[A](_1: Iterable[Vector[A]]) {
-        def flatten = vector.flatten(_1)
-        def unsplit(_2: Vector[A]) = vector.unsplit(_1)(_2)
-    }
-    implicit def madaVectorIterableVector[A](_1: Iterable[Vector[A]]): MadaVectorIterableVector[A] = new MadaVectorIterableVector(_1)
 
     sealed class MadaVectorEither[A, B](_1: Vector[Either[A, B]]) {
         def lefts = vector.lefts(_1)
