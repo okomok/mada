@@ -7,11 +7,7 @@
 package mada.sequence.vector
 
 
-private[mada] object Times {
-    def apply[A](v: Vector[A], n: Int): Vector[A] = new TimesVector(v, n)
-}
-
-private[mada] class TimesVector[A](v: Vector[A], n: Int) extends Forwarder[A] {
-    override val delegate = v.permutation{ i => Div.remainder(i, v.size) }.nth(0, v.size * n).readOnly
-    override def times(_n: Int) = v.times(n * _n) // times-times fusion
+case class Times[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
+    override protected val delegate = _1.permutation{ i => Div.remainder(i, _1.size) }.nth(0, _1.size * _2).readOnly
+    override def times(_n: Int) = _1.times(_2 * _n) // times-times fusion
 }

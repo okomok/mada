@@ -7,18 +7,19 @@
 package mada.sequence.vector
 
 
-private[mada] object Unsplit {
-    import java.util.ArrayList
+import java.util.ArrayList
 
-    def apply[A](vs: Iterable[Vector[A]], sep: Vector[A]): Vector[A] = {
+
+case class Unsplit[A](_1: Iterable[Vector[A]], _2: Vector[A]) extends Forwarder[A] {
+    override protected val delegate = {
         val ar = new ArrayList[A]
 
-        val it = vs.iterator
+        val it = _1.iterator
         if (it.hasNext) {
             addVector(it.next, ar)
         }
         while (it.hasNext) {
-            addVector(sep, ar)
+            addVector(_2, ar)
             addVector(it.next, ar)
         }
 

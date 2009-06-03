@@ -7,16 +7,16 @@
 package mada.sequence.vector
 
 
-private[mada] object Sort {
-    def apply[A](v: Vector[A], lt: compare.Func[A]): Vector[A] = {
-        stl.Sort(v, v.start, v.end, lt)
-        v
+case class Sort[A](_1: Vector[A], _2: compare.Func[A]) extends Forwarder[A] {
+    override protected val delegate = {
+        stl.Sort(_1, _1.start, _1.end, _2)
+        _1
     }
 }
 
-private[mada] object StableSort {
-    def apply[A](v: Vector[A], lt: compare.Func[A]): Vector[A] = {
-        stl.StableSort(v, v.start, v.end, lt)
-        v
+case class StableSort[A](_1: Vector[A], _2: compare.Func[A]) extends Forwarder[A] {
+    override protected val delegate = {
+        stl.StableSort(_1, _1.start, _1.end, _2)
+        _1
     }
 }

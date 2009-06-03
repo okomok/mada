@@ -7,11 +7,7 @@
 package mada.sequence.vector
 
 
-private[mada] object Reverse {
-    def apply[A](v: Vector[A]): Vector[A] = new ReverseVector(v)
-}
-
-private[mada] class ReverseVector[A](v: Vector[A]) extends Forwarder[A] {
-    override val delegate = v.permutation{ i => v.size - i - 1 }
-    override def reverse = v // reverse-reverse fusion
+case class Reverse[A](_1: Vector[A]) extends Forwarder[A] {
+    override protected val delegate = _1.permutation{ i => _1.size - i - 1 }
+    override def reverse = _1 // reverse-reverse fusion
 }

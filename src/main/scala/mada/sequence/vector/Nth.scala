@@ -7,17 +7,13 @@
 package mada.sequence.vector
 
 
-private[mada] object Nth {
-    def apply[A](v: Vector[A]): Vector[A] = new NthVector(v)
-}
-
-private[mada] class NthVector[A](v: Vector[A]) extends Vector[A] {
+case class Nth[A](_1: Vector[A]) extends Vector[A] {
     override def start = 0
-    override def end = v.size
+    override def end = _1.size
 
-    override def apply(i: Int) = v(v.start + i)
-    override def update(i: Int, e: A) = v(v.start + i) = e
-    override def isDefinedAt(i: Int) = v.isDefinedAt(v.start + i)
+    override def apply(i: Int) = _1(_1.start + i)
+    override def update(i: Int, e: A) = _1(_1.start + i) = e
+    override def isDefinedAt(i: Int) = _1.isDefinedAt(_1.start + i)
 
     override def nth = this // nth-nth fusion
 }

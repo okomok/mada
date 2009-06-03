@@ -7,8 +7,6 @@
 package mada.sequence.vector
 
 
-private[mada] object ReadOnly {
-    def apply[A](v: Vector[A]): Vector[A] = new ReadOnlyVector(v)
+case class ReadOnly[A](_1: Vector[A]) extends Adapter.Transform[A] with Adapter.NotWritable[A] {
+    override val underlying = _1
 }
-
-private[mada] class ReadOnlyVector[A](override val underlying: Vector[A]) extends Adapter.Transform[A] with Adapter.NotWritable[A]

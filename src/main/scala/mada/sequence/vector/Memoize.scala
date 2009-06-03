@@ -7,11 +7,9 @@
 package mada.sequence.vector
 
 
-private[mada] object Memoize {
-    def apply[A](v: Vector[A]): Vector[A] = new MemoizeVector(v)
-}
+case class Memoize[A](_1: Vector[A]) extends Adapter.Transform[A] with Adapter.NotWritable[A] {
+    override val underlying = _1
 
-private[mada] class MemoizeVector[A](override val underlying: Vector[A]) extends Adapter.Transform[A] with Adapter.NotWritable[A] {
     private val table = new java.util.concurrent.ConcurrentHashMap[Int, () => A]
     override def apply(i: Int) = assoc.lazyGet(table)(i){ underlying(i) }
     override def memoize = this // memoize-memoize fusion

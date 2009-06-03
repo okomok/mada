@@ -7,13 +7,9 @@
 package mada.sequence.vector
 
 
-private[mada] object Single {
-    def apply[A](from: A): Vector[A] = new SingleVector(from)
-}
-
-private[mada] class SingleVector[A](private var from: A) extends Vector[A] {
+case class Single[A](var _1: A) extends Vector[A] {
     override def start = 0
     override def end = 1
-    override def apply(i: Int) = from
-    override def update(i: Int, e: A) = from = e
+    override def apply(i: Int) = _1
+    override def update(i: Int, e: A) = _1 = e
 }

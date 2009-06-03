@@ -7,8 +7,6 @@
 package mada.sequence.vector
 
 
-private[mada] object TakeWhile {
-    def apply[A](v: Vector[A], p: A => Boolean): Vector[A] = {
-        v(v.start, stl.FindIf(v, v.start, v.end, function.not(p)))
-    }
+case class TakeWhile[A](_1: Vector[A], _2: A => Boolean) extends Forwarder[A] {
+    override protected val delegate = _1(_1.start, stl.FindIf(_1, _1.start, _1.end, function.not(_2)))
 }

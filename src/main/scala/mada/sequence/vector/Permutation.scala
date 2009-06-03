@@ -7,14 +7,10 @@
 package mada.sequence.vector
 
 
-private[mada] object Permutation {
-    def apply[A](v: Vector[A], f: Int => Int): Vector[A] = new PermutationVector(v, f)
-}
+case class Permutation[A](_1: Vector[A], _2: Int => Int) extends Adapter.Transform[A] {
+    override val underlying = _1.nth
 
-private[mada] class PermutationVector[A](v: Vector[A], f: Int => Int) extends Adapter.Transform[A] {
-    override val underlying = v.nth
-
-    override def apply(i: Int) = underlying(f(i))
-    override def update(i: Int, e: A) = underlying(f(i)) = e
-    override def isDefinedAt(i: Int) = underlying.isDefinedAt(f(i))
+    override def apply(i: Int) = underlying(_2(i))
+    override def update(i: Int, e: A) = underlying(_2(i)) = e
+    override def isDefinedAt(i: Int) = underlying.isDefinedAt(_2(i))
 }

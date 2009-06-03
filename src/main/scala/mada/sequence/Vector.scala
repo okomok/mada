@@ -99,8 +99,16 @@ trait Vector[A] extends PartialFunction[Int, A] with Iterative[A] {
     override def slice(n: Int, m: Int): Vector[A] = drop(n).take(m - n)
     override def dropWhile(p: A => Boolean): Vector[A] = DropWhile(this, p)
     override def takeWhile(p: A => Boolean): Vector[A] = TakeWhile(this, p)
-    override def span(p: A => Boolean): (Vector[A], Vector[A]) = Span(this, p)
-    override def splitAt(i: Int): (Vector[A], Vector[A]) = SplitAt(this, i)
+
+    override def span(p: A => Boolean): (Vector[A], Vector[A]) = {
+        val middle = stl.FindIf(this, start, end, function.not(p))
+        (this(start, middle), this(middle, end))
+    }
+
+    override def splitAt(i: Int): (Vector[A], Vector[A]) = {
+        val middle = Math.min(start + i, end)
+        (this(start, middle), this(middle, end))
+    }
 
     /**
      * Guarantees constant-time.
@@ -244,7 +252,14 @@ trait Vector[A] extends PartialFunction[Int, A] with Iterative[A] {
     /**
      * Similar to <code>foreach</code>, but loop is breakable by <code>f</code> returning <code>false</code>.
      */
-    def loop[F <: (A => Boolean)](i: Int, j: Int, f: F): F = Loop(this, i, j, f)
+    def loop[F <: (A => Boolean)](i: Int, j: Int, f: F): F = {
+        var __first = i
+
+        while (__first != j && f(this(__first))) {
+            __first += 1
+        }
+        f
+    }
 
 
     /**

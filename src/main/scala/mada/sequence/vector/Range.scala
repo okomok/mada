@@ -7,10 +7,8 @@
 package mada.sequence.vector
 
 
-private[mada] object Range {
-    def apply(start: Int, end: Int): Vector[Int] = new RangeVector(start, end)
-}
-
-private[mada] class RangeVector(override val start: Int, override val end: Int) extends Vector[Int] {
+case class Range(_1: Int, _2: Int) extends Vector[Int] {
+    override val start = _1
+    override val end = _2
     override def apply(i: Int) = i
 }
