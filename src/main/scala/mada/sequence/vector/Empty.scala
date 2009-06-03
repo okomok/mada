@@ -7,12 +7,7 @@
 package mada.sequence.vector
 
 
-private[mada] object Empty {
-    def apply[A]: Vector[A] = impl.asInstanceOf[Vector[A]]
-    private val impl: Vector[Any] = new EmptyVector[Any]
-}
-
-private[mada] class EmptyVector[A] extends Vector[A] {
+case class Empty[A]() extends Vector[A] {
     override def start = 0
     override def end = 0
 }

@@ -7,17 +7,13 @@
 package mada.sequence.vector
 
 
-private[mada] object Divide {
-    def apply[A](v: Vector[A], n: Int): Vector[Vector[A]] = new DivideVector(v, n)
-}
-
-private[mada] class DivideVector[A](val dividend: Vector[A], stride: Int) extends Vector[Vector[A]] {
-    ThrowIf.nonpositive(stride, "stride")
+case class Divide[A](val _1: Vector[A], _2: Int) extends Vector[Vector[A]] {
+    ThrowIf.nonpositive(_2, "_2")
     override def start = 0
-    override def end = Step.count(dividend.start, dividend.end, stride)
+    override def end = Step.count(_1.start, _1.end, _2)
     override def apply(i: Int) = {
-        val cur = dividend.start + i * stride
-        new Region(dividend, cur, Math.min(cur + stride, dividend.end))
+        val cur = _1.start + i * _2
+        new Region(_1, cur, Math.min(cur + _2, _1.end))
     }
-    // isDefinedAt is restrictive because dividend.end affects.
+    // isDefinedAt is restrictive because _1.end affects.
 }

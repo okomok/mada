@@ -7,16 +7,11 @@
 package mada.sequence.vector
 
 
-private[mada] object Filter {
-    def apply[A](v: Vector[A], p: A => Boolean): Vector[A] = new FilterVector(v, p)
+case class Filter[A](_1: Vector[A], _2: A => Boolean) extends Forwarder[A] {
+    override protected lazy val delegate = _1.copy.mutatingFilter(_2).readOnly
+    override def filter(_p: A => Boolean) = _1.filter{ e => _2(e) && _p(e) } // filter-filter fusion
 }
 
-private[mada] class FilterVector[A](v: Vector[A], p: A => Boolean) extends Forwarder[A] {
-    override lazy val delegate = v.copy.mutatingFilter(p).readOnly
-    override def filter(_p: A => Boolean) = v.filter{ e => p(e) && _p(e) } // filter-filter fusion
-}
-
-
-private[mada] object MutatingFilter {
-    def apply[A](v: Vector[A], p: A => Boolean): Vector[A] = v(v.start, stl.RemoveIf(v, v.start, v.end, function.not(p)))
+case class MutatingFilter[A](_1: Vector[A], _2: A => Boolean) extends Forwarder[A] {
+    override protected val delegate = _1(_1.start, stl.RemoveIf(_1, _1.start, _1.end, function.not(_2)))
 }

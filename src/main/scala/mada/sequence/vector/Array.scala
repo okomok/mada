@@ -10,18 +10,14 @@ package mada.sequence.vector
 import java.util.Arrays
 
 
-private[mada] object FromArray {
-    def apply[A](from: Array[A]): Vector[A] = new ArrayVector(from)
-}
-
-private[mada] class ArrayVector[A](from: Array[A]) extends Vector[A] {
+case class FromArray[A](_1: Array[A]) extends Vector[A] {
     override def start = 0
-    override def end = from.length
-    override def apply(i: Int) = from(i)
-    override def update(i: Int, e: A) = from(i) = e
+    override def end = _1.length
+    override def apply(i: Int) = _1(i)
+    override def update(i: Int, e: A) = _1(i) = e
 
 //    This requires IntFromArray for correct overload resolution.
-//    override def sortBy(lt: compare.Func[A]) = { Arrays.sort(from, LessComparator(lt)); this }
+//    override def sortBy(lt: compare.Func[A]) = { Arrays.sort(_1, LessComparator(lt)); this }
 }
 
 

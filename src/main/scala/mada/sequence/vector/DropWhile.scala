@@ -7,8 +7,6 @@
 package mada.sequence.vector
 
 
-private[mada] object DropWhile {
-    def apply[A](v: Vector[A], p: A => Boolean): Vector[A] = {
-        v(stl.FindIf(v, v.start, v.end, function.not(p)), v.end)
-    }
+case class DropWhile[A](_1: Vector[A], _2: A => Boolean) extends Forwarder[A] {
+    override protected val delegate = _1(stl.FindIf(_1, _1.start, _1.end, function.not(_2)), _1.end)
 }

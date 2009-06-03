@@ -7,11 +7,7 @@
 package mada.sequence.vector
 
 
-private[mada] object Force {
-    def apply[A](v: Vector[A]): Vector[A] = new ForceVector(v)
-}
-
-private[mada] class ForceVector[A](v: Vector[A]) extends Adapter.Transform[A] with Adapter.NotWritable[A] {
-    override val underlying = vector.fromArray(v.toArray)
+case class Force[A](_1: Vector[A]) extends Adapter.Transform[A] with Adapter.NotWritable[A] {
+    override val underlying = vector.fromArray(_1.toArray)
     override def force = this // force-force fusion
 }

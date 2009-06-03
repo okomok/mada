@@ -7,11 +7,9 @@
 package mada.sequence.vector
 
 
-private[mada] object Bounds {
-    def apply[A](v: Vector[A]): Vector[A] = new BoundsVector(v)
-}
+case class Bounds[A](_1: Vector[A]) extends Adapter.Transform[A] {
+    override val underlying = _1
 
-private[mada] class BoundsVector[A](override val underlying: Vector[A]) extends Adapter.Transform[A] {
     override def apply(i: Int) = { throwIfOutOfBounds(i); underlying.apply(i) }
     override def update(i: Int, e: A) = { throwIfOutOfBounds(i);  underlying(i) = e }
     override def isDefinedAt(i: Int) = underlying.start <= i && i < underlying.end

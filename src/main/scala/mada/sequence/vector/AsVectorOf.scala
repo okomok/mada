@@ -7,8 +7,6 @@
 package mada.sequence.vector
 
 
-private[mada] object AsVectorOf {
-    def apply[A, B](v: Vector[A]): Vector[B] = new AsVectorOfVector[A, B](v)
+case class AsVectorOf[A, B](_1: Vector[A]) extends Adapter[A, B] {
+    override val underlying = _1
 }
-
-private[mada] class AsVectorOfVector[A, B](override val underlying: Vector[A]) extends Adapter[A, B]

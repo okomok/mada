@@ -7,10 +7,10 @@
 package mada.sequence.vector
 
 
-private[mada] object Flatten {
-    def apply[A](vs: Iterative[Iterative[A]]): Vector[A] = {
+case class Flatten[A](_1: Iterative[Iterative[A]]) extends Forwarder[A] {
+    override protected val delegate = {
         val ar = new java.util.ArrayList[A]
-        for (v <- vs) {
+        for (v <- _1) {
             for (e <- v) {
                 ar.add(e)
             }

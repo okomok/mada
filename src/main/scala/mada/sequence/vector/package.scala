@@ -120,7 +120,7 @@ package object vector {
     /**
      * Creates a <code>lazy</code> vector.
      */
-    def byLazy[A](v: => Vector[A]) = ByLazy(v)
+    def byLazy[A](v: => Vector[A]) = ByLazy(function.ofLazy(v))
 
 
 // triplify
@@ -173,7 +173,6 @@ package object vector {
     def toRandomAccessSeq[A](from: Vector[A]): scala.collection.mutable.Vector[A] = ToRandomAccessSeq(from)
     def toLinearAccessSeq[A](from: Vector[A]): Seq[A] = ToLinearAccessSeq(from)
     def toProduct[A](from: Vector[A]): Product = ToProduct(from)
-    def toStream[A](from: Vector[A]): Stream[A] = ToStream(from)
     def toOrdered[A](from: Vector[A])(implicit c: compare.GetOrdered[A]): Ordered[Vector[A]] = ToOrdered(from, c)
 
   // incompatibles

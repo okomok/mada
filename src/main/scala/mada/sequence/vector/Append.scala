@@ -7,33 +7,29 @@
 package mada.sequence.vector
 
 
-private[mada] object Append {
-    def apply[A](v: Vector[A], w: Vector[A]): Vector[A] = new AppendVector(v, w)
-}
-
-private[mada] class AppendVector[A](v: Vector[A], w: Vector[A]) extends Vector[A] {
+case class Append[A](_1: Vector[A], _2: Vector[A]) extends Vector[A] {
     override def start = 0
-    override def end = v.nth.size + w.nth.size
+    override def end = _1.nth.size + _2.nth.size
 
     override def apply(i: Int) = {
-        if (i < v.nth.size) {
-            v.nth(i)
+        if (i < _1.nth.size) {
+            _1.nth(i)
         } else {
-            w.nth(i - v.nth.size)
+            _2.nth(i - _1.nth.size)
         }
     }
     override def update(i: Int, e: A) = {
-        if (i < v.nth.size) {
-            v.nth(i) = e
+        if (i < _1.nth.size) {
+            _1.nth(i) = e
         } else {
-            w.nth(i - v.nth.size) = e
+            _2.nth(i - _1.nth.size) = e
         }
     }
     override def isDefinedAt(i: Int) = {
-        if (i < v.nth.size) {
-            v.nth.isDefinedAt(i)
+        if (i < _1.nth.size) {
+            _1.nth.isDefinedAt(i)
         } else {
-            w.nth.isDefinedAt(i - v.nth.size)
+            _2.nth.isDefinedAt(i - _1.nth.size)
         }
     }
 }

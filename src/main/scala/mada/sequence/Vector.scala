@@ -366,12 +366,6 @@ trait Vector[A] extends PartialFunction[Int, A] with Iterative[A] {
     def readOnly: Vector[A] = ReadOnly(this)
 
     /**
-     * @return  an alias of this vector.
-     */
-    def identity: Vector[A] = Identity(this)
-
-
-    /**
      * Returns synchronized one.
      */
     def synchronize: Vector[A] = throw new Error("sync not yet")
@@ -501,21 +495,11 @@ trait Vector[A] extends PartialFunction[Int, A] with Iterative[A] {
      */
     final def toRandomAccessSeq: scala.collection.mutable.Vector[A] = vector.toRandomAccessSeq(this)
 
-    /**
-     * @return  <code>vector.toStream(this)</code>.
-     */
-    final def toStream: Stream[A] = vector.toStream(this)
-
 
 // trivials
 
     @returnThis
     final def asVector: Vector[A] = this
-
-    /**
-     * @return  <code>that</code>.
-     */
-    final def always[B](that: Vector[B]): Vector[B] = that
 
     /**
      * @return  <code>f(this); this</code>.
@@ -576,6 +560,7 @@ object Vector extends vector.Compatibles {
     }
     implicit def madaVectorPair[A, B](_1: Vector[(A, B)]): MadaVectorPair[A, B] = new MadaVectorPair(_1)
 
+    // remove me.
     sealed class MadaVectorByName[A](_1: => Vector[A]) {
         def byLazy = vector.byLazy(_1)
     }

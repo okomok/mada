@@ -77,7 +77,6 @@ trait Forwarder[A] extends iterative.Forwarder[A] with Adapter.Transform[A]  {
     override def memoize : Vector[A] = afterForward(delegate.memoize)
     override def bounds: Vector[A] = afterForward(delegate.bounds)
     override def readOnly: Vector[A] = afterForward(delegate.readOnly)
-    override def identity: Vector[A] = afterForward(delegate.identity)
   // copy
     override def copyTo[B >: A](that: Vector[B]): Vector[A] = afterForward(delegate.copyTo(that))
     override def copy: Vector[A] = afterForward(delegate.copy)

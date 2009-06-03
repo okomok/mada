@@ -7,10 +7,6 @@
 package mada.sequence.vector
 
 
-private[mada] object ByLazy {
-    def apply[A](v: => Vector[A]): Vector[A] = new ByLazyVector(v)
-}
-
-private[mada] class ByLazyVector[A](v: => Vector[A]) extends Forwarder[A] {
-    override lazy val delegate = v
+case class ByLazy[A](_1: function.OfLazy[Vector[A]]) extends Forwarder[A] {
+    override lazy val delegate = _1()
 }

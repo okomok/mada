@@ -7,40 +7,40 @@
 package mada.sequence.vector
 
 
-private[mada] object Undivide {
-    def apply[A](vv: Vector[Vector[A]]): Vector[A] = vv match {
-        case vv: DivideVector[_] => vv.dividend // undivide-divide fusion
+case class Undivide[A](_1: Vector[Vector[A]]) extends Forwarder[A] {
+    override protected val delegate: Vector[A] = _1 match {
+        case Divide(dividend, _) => dividend // undivide-divide fusion
         case _ => {
-            if (vv.isEmpty) {
+            if (_1.isEmpty) {
                 vector.empty[A]
             } else {
-                new UndivideVector(vv)
+                new _Undivide(_1)
             }
         }
     }
 }
 
-private[mada] class UndivideVector[A](vv: Vector[Vector[A]]) extends Vector[A] {
-    util.assert(!vv.isEmpty)
+private[mada] class _Undivide[A](_1: Vector[Vector[A]]) extends Vector[A] {
+    util.assert(!_1.isEmpty)
 
     override def start = 0
     override def end = (quotient * divisor) + remainder
 
     override def apply(i: Int) = {
         val d = divisor
-        vv.nth(Div.quotient(i, d)).nth(Div.remainder(i, d))
+        _1.nth(Div.quotient(i, d)).nth(Div.remainder(i, d))
     }
     override def update(i: Int, e: A) = {
         val d = divisor
-        vv.nth(Div.quotient(i, d)).nth(Div.remainder(i, d)) = e
+        _1.nth(Div.quotient(i, d)).nth(Div.remainder(i, d)) = e
     }
     override def isDefinedAt(i: Int) = {
         val d = divisor
-        vv.nth.isDefinedAt(Div.quotient(i, d)) &&
-        vv.nth(Div.quotient(i, d)).nth.isDefinedAt(Div.remainder(i, d))
+        _1.nth.isDefinedAt(Div.quotient(i, d)) &&
+        _1.nth(Div.quotient(i, d)).nth.isDefinedAt(Div.remainder(i, d))
     }
 
-    private def quotient: Int = vv.nth.size - 1
-    private def divisor: Int = vv.nth.head.size
-    private def remainder: Int = vv.nth.last.size
+    private def quotient: Int = _1.nth.size - 1
+    private def divisor: Int = _1.nth.head.size
+    private def remainder: Int = _1.nth.last.size
 }
