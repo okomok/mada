@@ -58,7 +58,7 @@ trait Forwarder[+A] extends Iterative[A] with sequence.Forwarder[A] {
     override def cycle: Iterative[A] = afterForward(delegate.cycle)
     override def times(n: Int): Iterative[A] = delegate.times(n)
     override def force: Iterative[A] = afterForward(delegate.force)
-    override def _flatten[B](_this: Iterative[Iterative[B]]): Iterative[B] = afterForward(delegate.asInstanceOf[Iterative[Iterative[B]]].flatten)
+    override def _flatten[B](_this: Iterative[Sequence[B]]): Iterative[B] = afterForward(delegate.asInstanceOf[Iterative[Sequence[B]]].flatten)
     override def memoize: Iterative[A] = afterForward(delegate.memoize)
     override def mix(x: Mixin): Iterative[A] = afterForward(delegate.mix(x))
     override def seal: Iterative[A] = afterForward(delegate.seal) // wow?

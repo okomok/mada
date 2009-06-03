@@ -333,7 +333,7 @@ trait Iterative[+A] extends Sequence[A] {
      * Turns a sequence of sequences into flat sequence.
      */
     @methodized
-    def _flatten[B](_this: Iterative[Iterative[B]]): Iterative[B] = Flatten(_this)
+    def _flatten[B](_this: Iterative[Sequence[B]]): Iterative[B] = Flatten(_this)
 
     /**
      * Makes every element access be lazy.
@@ -493,10 +493,10 @@ object Iterative {
     }
     implicit def ofInvariant[A](_this: Iterative[A]): OfInvariant[A] = new OfInvariant(_this)
 
-    sealed class OfIterative[A](_this: Iterative[Iterative[A]]) {
+    sealed class OfSequence[A](_this: Iterative[Sequence[A]]) {
         def flatten: Iterative[A] = _this._flatten(_this)
     }
-    implicit def ofIterative[A](_this: Iterative[Iterative[A]]): OfIterative[A] = new OfIterative(_this)
+    implicit def ofSequence[A](_this: Iterative[Sequence[A]]): OfSequence[A] = new OfSequence(_this)
 
     sealed class OfTuple2[T1, T2](_this: Iterative[(T1, T2)]) {
         def toSHashMap: scala.collection.Map[T1, T2] = _this._toSHashMap(_this)

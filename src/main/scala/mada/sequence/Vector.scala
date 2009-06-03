@@ -120,9 +120,9 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
     def map[B](f: A => B): Vector[B] = Map(this, f)
 
     /**
-     * @return  <code>map(f).flatten</code>.
+     * @return  <code>vector.flatten(map(f))</code>.
      */
-    def flatMap[B](f: A => Iterative[B]): Vector[B] = vector.flatten(map(f).toIterative)
+    def flatMap[B](f: A => Vector[B]): Vector[B] = vector.flatten(map(f))
 
     /**
      * Filters elements using <code>p</code>.

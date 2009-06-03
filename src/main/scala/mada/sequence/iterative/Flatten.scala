@@ -7,7 +7,7 @@
 package mada.sequence.iterative
 
 
-case class Flatten[+A](_1: Iterative[Iterative[A]]) extends Iterative[A] {
+case class Flatten[+A](_1: Iterative[Sequence[A]]) extends Iterative[A] {
     override def begin = new Iterator[A] {
         private val ii = _1.begin
         private var it = ready
@@ -24,7 +24,7 @@ case class Flatten[+A](_1: Iterative[Iterative[A]]) extends Iterative[A] {
 
         private def ready: Iterator[A] = {
             while (ii) {
-                val jt = (~ii).begin
+                val jt = (~ii).toIterative.begin
                 if (jt) {
                     return jt
                 }
