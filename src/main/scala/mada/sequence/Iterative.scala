@@ -131,12 +131,12 @@ trait Iterative[+A] {
     /**
      * Filters elements using <code>funtion.not(p)</code>.
      */
-    def filterNot(p: A => Boolean): Iterative[A] = FilterNot(this, p)
+    def remove(p: A => Boolean): Iterative[A] = Remove(this, p)
 
     /**
-     * @return  <code>(filter(p), filterNot(p))</code>.
+     * @return  <code>(filter(p), remove(p))</code>.
      */
-    def partition(p: A => Boolean): (Iterative[A], Iterative[A]) = (filter(p), filterNot(p))
+    def partition(p: A => Boolean): (Iterative[A], Iterative[A]) = (filter(p), remove(p))
 
     /**
      * What?

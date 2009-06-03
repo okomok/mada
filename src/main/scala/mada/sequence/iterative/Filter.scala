@@ -30,6 +30,6 @@ case class Filter[A](_1: Iterative[A], _2: A => Boolean) extends Iterative[A] {
 }
 
 
-case class FilterNot[A](_1: Iterative[A], _2: A => Boolean) extends Forwarder[A] {
+case class Remove[A](_1: Iterative[A], _2: A => Boolean) extends Forwarder[A] {
     override protected val delegate = _1.filter(function.not(_2))
 }

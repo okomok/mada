@@ -21,12 +21,12 @@ class FilterTest {
     def testRemove {
         val v = vector.range(0, 10).copy
         val e = vector.of(0,2,4,6,8)
-        assertEquals(e, v.filterNot(_ % 2 != 0))
+        assertEquals(e, v.remove(_ % 2 != 0))
     }
 
     def testFusion {
         val v = vector.range(0, 10).copy
         val e = vector.of(0,4,6,8)
-        assertEquals(e, v.filterNot(_ % 2 != 0).filter(_ != 2))
+        assertEquals(e, v.remove(_ % 2 != 0).filter(_ != 2))
     }
 }

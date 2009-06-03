@@ -121,12 +121,12 @@ trait List[+A] {
     /**
      * Filters elements using <code>funtion.not(p)</code>.
      */
-    def filterNot(p: A => Boolean): List[A] = FilterNot(this, p)
+    def remove(p: A => Boolean): List[A] = Remove(this, p)
 
     /**
-     * @return  <code>(filter(p), filterNot(p))</code>.
+     * @return  <code>(filter(p), remove(p))</code>.
      */
-    def partition(p: A => Boolean): (List[A], List[A]) = (filter(p), filterNot(p))
+    def partition(p: A => Boolean): (List[A], List[A]) = (filter(p), remove(p))
 
     /**
      * What?

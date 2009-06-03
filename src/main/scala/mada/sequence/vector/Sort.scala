@@ -7,14 +7,23 @@
 package mada.sequence.vector
 
 
-case class Sort[A](_1: Vector[A], _2: compare.Func[A]) extends Forwarder[A] {
+case class Sort[A](_1: Vector[A], _2: Compare[A]) extends Forwarder[A] {
+    override protected val delegate = _1.sortBy(_2)
+}
+
+case class SortBy[A](_1: Vector[A], _2: compare.Func[A]) extends Forwarder[A] {
     override protected val delegate = {
         stl.Sort(_1, _1.start, _1.end, _2)
         _1
     }
 }
 
-case class StableSort[A](_1: Vector[A], _2: compare.Func[A]) extends Forwarder[A] {
+
+case class StableSort[A](_1: Vector[A], _2: Compare[A]) extends Forwarder[A] {
+    override protected val delegate = _1.stableSortBy(_2)
+}
+
+case class StableSortBy[A](_1: Vector[A], _2: compare.Func[A]) extends Forwarder[A] {
     override protected val delegate = {
         stl.StableSort(_1, _1.start, _1.end, _2)
         _1

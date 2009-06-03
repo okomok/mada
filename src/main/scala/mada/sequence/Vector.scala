@@ -69,8 +69,8 @@ trait Vector[A] extends PartialFunction[Int, A] with Iterative[A] {
     override def map[B](f: A => B): Vector[B] = Map(this, f)
     override def flatMap[B](f: A => Iterative[B]): Vector[B] = vector.flatten(map(f))
     override def filter(p: A => Boolean): Vector[A] = Filter(this, p)
-    override def filterNot(p: A => Boolean): Vector[A] = filter(function.not(p))
-    override def partition(p: A => Boolean): (Vector[A], Vector[A]) = (filter(p), filterNot(p))
+    override def remove(p: A => Boolean): Vector[A] = filter(function.not(p))
+    override def partition(p: A => Boolean): (Vector[A], Vector[A]) = (filter(p), remove(p))
     @optimize final override def foreach(f: A => Unit): Unit = stl.ForEach(this, start, end, f)
     @optimize final override def forall(p: A => Boolean): Boolean = seek(function.not(p)).isEmpty
     @optimize final override def exists(p: A => Boolean): Boolean = !seek(p).isEmpty
@@ -167,8 +167,10 @@ trait Vector[A] extends PartialFunction[Int, A] with Iterative[A] {
 // regions
 
     /**
-     * @return  <code>Region(this, _start, _end)</code>.
-     * @see     apply as alias.
+     * Replaces <code>start</code> and <code>end</code> of this vector.
+     * Note that a larger vector than <code>this</code> is ALLOWED as far as <code>isDefinedAt</code> says ok.
+     *
+     * @pre <code>start <= end</code>
      */
     def region(_start: Int, _end: Int): Vector[A] = Region(this, _start, _end)
 
@@ -179,35 +181,30 @@ trait Vector[A] extends PartialFunction[Int, A] with Iterative[A] {
     final def apply(_start: Int, _end: Int): Vector[A] = region(_start, _end)
 
     /**
-     * @return  <code>(regionBase eq that.regionBase) && (start == that.start) && (end == that.end)</code>.
-     */
-    def shallowEquals[B](that: Vector[B]): Boolean = (regionBase eq that.regionBase) && (start == that.start) && (end == that.end)
-
-    /**
      * @pre     <code>!isEmpty</code>
      * @return  <code>this(start, end - 1)</code>.
      */
-    def init: Vector[A] = { throwIfEmpty("init"); this(start, end - 1) }
+    def init: Vector[A] = Init(this)
 
     /**
      * @return  <code>this(start, start)</code>
      */
-    def clear: Vector[A] = this(start, start)
+    def clear: Vector[A] = Clear(this)
 
     /**
      * @return  <code>this(start + n, start + m)</code>.
      */
-    def window(n: Int, m: Int): Vector[A] = this(start + n, start + m)
+    def window(n: Int, m: Int): Vector[A] = Window(this, n, m)
 
     /**
      * @return  <code>this(start + i, end + j)</code>.
      */
-    def offset(i: Int, j: Int): Vector[A] = this(start + i, end + j)
+    def offset(i: Int, j: Int): Vector[A] = Offset(this, i, j)
 
     /**
-     * @return  <code>slice(n, end)</code>.
+     * @return  <code>(regionBase eq that.regionBase) && (start == that.start) && (end == that.end)</code>.
      */
-    def slice(n: Int): Vector[A] = slice(n, end)
+    def shallowEquals[B](that: Vector[B]): Boolean = (regionBase eq that.regionBase) && (start == that.start) && (end == that.end)
 
 
 // division
@@ -231,7 +228,6 @@ trait Vector[A] extends PartialFunction[Int, A] with Iterative[A] {
 // filter
 
     def mutatingFilter(p: A => Boolean): Vector[A] = MutatingFilter(this, p)
-
 
     /**
      * @return  <code>mutatingFilter(function.not(p))</code>.
@@ -260,7 +256,6 @@ trait Vector[A] extends PartialFunction[Int, A] with Iterative[A] {
         }
         f
     }
-
 
     /**
      * Apply a function <code>f</code> to all elements of this vector.
@@ -312,7 +307,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Iterative[A] {
     /**
      * @return  <code>sortBy(c)</code>.
      */
-    final def sort(implicit c: Compare[A]): Vector[A] = sortBy(c)
+    final def sort(implicit c: Compare[A]): Vector[A] = Sort(this, c)
 
     /**
      * Sort this vector according to the comparison function <code>lt</code>.
@@ -321,12 +316,12 @@ trait Vector[A] extends PartialFunction[Int, A] with Iterative[A] {
      * @param   lt  strict weak ordering
      * @return  this vector sorted according to <code>lt</code>.
      */
-    def sortBy(lt: compare.Func[A]): Vector[A] = Sort(this, lt)
+    def sortBy(lt: compare.Func[A]): Vector[A] = SortBy(this, lt)
 
     /**
      * @return  <code>stableSortBy(c)</code>.
      */
-    final def stableSort(implicit c: Compare[A]): Vector[A] = stableSortBy(c)
+    final def stableSort(implicit c: Compare[A]): Vector[A] = StableSort(this, c)
 
     /**
      * Stable sort this vector according to the comparison function <code>lt</code>.
@@ -335,7 +330,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Iterative[A] {
      * @param   lt  strict weak ordering
      * @return  this vector sorted according to <code>lt</code>.
      */
-    def stableSortBy(lt: compare.Func[A]): Vector[A] = StableSort(this, lt)
+    def stableSortBy(lt: compare.Func[A]): Vector[A] = StableSortBy(this, lt)
 
 
 // permutation
@@ -359,7 +354,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Iterative[A] {
     /**
      * @return  <code>this(i, end) ++ this(start, i)</code>.
      */
-    def rotate(i: Int): Vector[A] = this(start + i, end) ++ this(start, start + i)
+    def rotate(i: Int): Vector[A] = Rotate(this, i)
 
 
 // attributes

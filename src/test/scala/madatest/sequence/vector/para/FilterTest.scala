@@ -22,14 +22,14 @@ class FilterTest {
     def testRemove {
         val v = vector.range(0, 10)
         val e = vector.of(0,2,4,6,8)
-        assertEquals(e, v.parallel.filterNot(_ % 2 != 0))
+        assertEquals(e, v.parallel.remove(_ % 2 != 0))
     }
 
     def testFusion {
         val v = vector.range(0, 10)
         val e = vector.of(0,4,6,8)
-        assertEquals(e, v.parallel.filterNot(_ % 2 != 0).filter(_ != 2))
-        assertEquals(e.reduce(_ + _), checkParallel(v.parallel.filterNot(_ % 2 != 0).filter(_ != 2)).reduce(_ + _))
+        assertEquals(e, v.parallel.remove(_ % 2 != 0).filter(_ != 2))
+        assertEquals(e.reduce(_ + _), checkParallel(v.parallel.remove(_ % 2 != 0).filter(_ != 2)).reduce(_ + _))
     }
 
     def checkParallel[A](v: Vector[A]): Vector[A] = {

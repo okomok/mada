@@ -20,7 +20,7 @@ trait Forwarder[A] extends iterative.Forwarder[A] with Adapter.Transform[A]  {
     override def map[B](f: A => B): Vector[B] = afterForward(delegate.map(f))
     override def flatMap[B](f: A => Iterative[B]): Vector[B] = afterForward(delegate.flatMap(f))
     override def filter(p: A => Boolean): Vector[A] = afterForward(delegate.filter(p))
-    override def filterNot(p: A => Boolean): Vector[A] = afterForward(delegate.filterNot(p))
+    override def remove(p: A => Boolean): Vector[A] = afterForward(delegate.remove(p))
     override def partition(p: A => Boolean): (Vector[A], Vector[A]) = afterForward2(delegate.partition(p))
     override def folderLeft[B](z: B)(op: (B, A) => B): Vector[B] = afterForward(delegate.folderLeft(z)(op))
     override def reducerLeft[B >: A](op: (B, A) => B): Vector[B] = afterForward(delegate.reducerLeft(op))
@@ -43,12 +43,11 @@ trait Forwarder[A] extends iterative.Forwarder[A] with Adapter.Transform[A]  {
   // regions
     override def region(_start: Int, _end: Int): Vector[A] = afterForward(delegate.region(_start, _end))
     override def regionBase: Vector[A] = afterForward(delegate.regionBase)
-    override def shallowEquals[B](that: Vector[B]): Boolean = delegate.shallowEquals(that)
     override def init: Vector[A] = afterForward(delegate.init)
     override def clear: Vector[A] = afterForward(delegate.clear)
     override def window(n: Int, m: Int): Vector[A] = afterForward(delegate.window(n, m))
     override def offset(i: Int, j: Int): Vector[A] = afterForward(delegate.offset(i, j))
-    override def slice(n: Int): Vector[A] = afterForward(delegate.slice(n))
+    override def shallowEquals[B](that: Vector[B]): Boolean = delegate.shallowEquals(that)
   // division
     override def divide(n: Int): Vector[Vector[A]] = afterForward(delegate.divide(n))
     override def break(p: A => Boolean): (Vector[A], Vector[A]) = afterForward2(delegate.break(p))

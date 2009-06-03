@@ -26,7 +26,7 @@ trait Forwarder[+A] extends Iterative[A] with util.Forwarder {
     override def map[B](f: A => B): Iterative[B] = afterForward(delegate.map(f))
     override def flatMap[B](f: A => Iterative[B]): Iterative[B] = afterForward(delegate.flatMap(f))
     override def filter(p: A => Boolean): Iterative[A] = afterForward(delegate.filter(p))
-    override def filterNot(p: A => Boolean): Iterative[A] = afterForward(delegate.filterNot(p))
+    override def remove(p: A => Boolean): Iterative[A] = afterForward(delegate.remove(p))
     override def partition(p: A => Boolean): (Iterative[A], Iterative[A]) = afterForward2(delegate.partition(p))
     override def groupBy[K](f: A => K): scala.collection.Map[K, Iterative[A]] = delegate.groupBy(f)
     override def foreach(f: A => Unit): Unit = delegate.foreach(f)
