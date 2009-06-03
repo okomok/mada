@@ -27,21 +27,21 @@ class TSTree[A, V](_lt: compare.Func[A]) extends java.lang.Cloneable {
         that
     }
 
-    def containsKey(key: Vector[A]): Boolean = {
+    def containsKey(key: sequence.Vector[A]): Boolean = {
         !get(key).isEmpty
     }
 
-    def iterator: Iterator[(Vector[A], V)] = {
+    def iterator: Iterator[(sequence.Vector[A], V)] = {
         if (rootNode eq null) {
             Iterator.empty
         } else {
-            val it = new TSTreeNodeIterator(vector.empty, rootNode)
+            val it = new TSTreeNodeIterator(sequence.vector.empty, rootNode)
             for ((key, node) <- it if (!node.data.isEmpty))
                 yield (key.force, node.data.get) // force now!
         }
     }
 
-    def get(key: Vector[A]): Option[V] = {
+    def get(key: sequence.Vector[A]): Option[V] = {
         get(key, key.start, key.end)
     }
 
@@ -49,11 +49,11 @@ class TSTree[A, V](_lt: compare.Func[A]) extends java.lang.Cloneable {
         (rootNode eq null) || rootNode.isGarbage
     }
 
-    def put(key: Vector[A], value: V): Option[V] = {
+    def put(key: sequence.Vector[A], value: V): Option[V] = {
         put(key, key.start, key.end, value)
     }
 
-    def remove(key: Vector[A]): Option[V] = {
+    def remove(key: sequence.Vector[A]): Option[V] = {
         remove(key, key.start, key.end)
     }
 
@@ -68,7 +68,7 @@ class TSTree[A, V](_lt: compare.Func[A]) extends java.lang.Cloneable {
         out._1.toString
     }
 
-    def get(key: Vector[A], start: Int, end: Int): Option[V] = {
+    def get(key: sequence.Vector[A], start: Int, end: Int): Option[V] = {
         if ((rootNode eq null) || start == end) {
             return None
         }
@@ -79,9 +79,9 @@ class TSTree[A, V](_lt: compare.Func[A]) extends java.lang.Cloneable {
         }
     }
 
-    def put(key: Vector[A], start: Int, end: Int, value: V): Option[V] = {
+    def put(key: sequence.Vector[A], start: Int, end: Int, value: V): Option[V] = {
         if (start == end) {
-            throw new UnsupportedOperationException("An empty Vector can't be a key.")
+            throw new UnsupportedOperationException("An empty sequence.Vector can't be a key.")
         }
 
         if (rootNode eq null) {
@@ -94,7 +94,7 @@ class TSTree[A, V](_lt: compare.Func[A]) extends java.lang.Cloneable {
         old
     }
 
-    def remove(key: Vector[A], start: Int, end: Int): Option[V] = {
+    def remove(key: sequence.Vector[A], start: Int, end: Int): Option[V] = {
         if ((rootNode eq null) || start == end) {
             return None
         }
@@ -106,7 +106,7 @@ class TSTree[A, V](_lt: compare.Func[A]) extends java.lang.Cloneable {
         old
     }
 
-    def parse(key: Vector[A], start: Int, end: Int): Option[(V, Int)] = {
+    def parse(key: sequence.Vector[A], start: Int, end: Int): Option[(V, Int)] = {
         if ((rootNode eq null) || start == end) {
             return None
         }
@@ -127,7 +127,7 @@ class TSTree[A, V](_lt: compare.Func[A]) extends java.lang.Cloneable {
         out.writeEndElement
     }
 
-    private def copyInto(key: Vector[A], _first: Int, last: Int, _result: TSTreeNode[A, V]): TSTreeNode[A, V] = {
+    private def copyInto(key: sequence.Vector[A], _first: Int, last: Int, _result: TSTreeNode[A, V]): TSTreeNode[A, V] = {
         util.assert(_first != last)
         util.assert(_result ne null)
         var first = _first
@@ -162,7 +162,7 @@ class TSTree[A, V](_lt: compare.Func[A]) extends java.lang.Cloneable {
         result
     }
 
-    private def search(_first1: TSTreeNode[A, V], key2: Vector[A], _first2: Int, last2: Int): (TSTreeNode[A, V], Int) = {
+    private def search(_first1: TSTreeNode[A, V], key2: sequence.Vector[A], _first2: Int, last2: Int): (TSTreeNode[A, V], Int) = {
         util.assert(_first1 ne null)
         util.assert(_first2 != last2)
         var first1 = _first1
@@ -260,7 +260,7 @@ private class TSTreeNode[A, V](val elem: A, val parent: TSTreeNode[A, V]) {
 }
 
 
-private class TSTreeNodeIterator[A, V](parentKey: Vector[A], node: TSTreeNode[A, V]) extends scala.Iterator[(Vector[A], TSTreeNode[A, V])] {
+private class TSTreeNodeIterator[A, V](parentKey: sequence.Vector[A], node: TSTreeNode[A, V]) extends scala.Iterator[(sequence.Vector[A], TSTreeNode[A, V])] {
     private val me = scala.Iterator.single((lowerKey, node))
     private val delegate = me ++ children(node.left) ++ children(node.middle) ++ children(node.right)
 
@@ -279,5 +279,5 @@ private class TSTreeNodeIterator[A, V](parentKey: Vector[A], node: TSTreeNode[A,
         }
     }
 
-    private def lowerKey = parentKey ++ vector.single(node.elem)
+    private def lowerKey = parentKey ++ sequence.vector.single(node.elem)
 }

@@ -13,32 +13,32 @@ import junit.framework.Assert._
 
 class StarTest {
     def testStar: Unit = {
-        val sample = mada.vector.unstringize("aaaaaaa")
+        val sample = mada.sequence.vector.unstringize("aaaaaaa")
         assertTrue((unstringize("a")*).matches(sample))
     }
 
     def testStar2: Unit = {
-        val sample = mada.vector.unstringize("aaaaaaab")
+        val sample = mada.sequence.vector.unstringize("aaaaaaab")
         assertTrue((unstringize("a").* >> unstringize("b")).matches(sample))
     }
 
     def testStar3: Unit = {
-        val sample = mada.vector.unstringize("b")
+        val sample = mada.sequence.vector.unstringize("b")
         assertTrue((unstringize("a").* >> unstringize("b")).matches(sample))
     }
 
     def testStar4: Unit = {
-        val sample = mada.vector.unstringize("Aabababab")
+        val sample = mada.sequence.vector.unstringize("Aabababab")
         assertTrue(  (unstringize("A") >> (unstringize("a") >> unstringize("b")).* ).matches(sample)  ) // `.` is needed.
     }
 
     def testBefore: Unit = {
-        val sample = mada.vector.unstringize("/*hello*/")
+        val sample = mada.sequence.vector.unstringize("/*hello*/")
         assertTrue((unstringize("/*") >> (dot.* >>> ~unstringize("*/")) >> unstringize("*/")).matches(sample))
     }
 
     def testUntil: Unit = {
-        val sample = mada.vector.unstringize("/*hello*/")
+        val sample = mada.sequence.vector.unstringize("/*hello*/")
         assertTrue((unstringize("/*") >> (dot.* >>> unstringize("*/"))).matches(sample))
     }
 }

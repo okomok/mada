@@ -8,7 +8,7 @@ package madatest.pegtest
 
 
 import junit.framework.Assert._
-import mada.{Vector, vector}
+import mada.sequence.{Vector, vector}
 
 import mada.peg.compatibles._
 import mada.peg._
@@ -17,7 +17,7 @@ import mada.peg._
 class IterateTest {
     def testTrivial: Unit = {
         val sb = new StringBuilder
-        val w = mada.vector.from("XXabcXXabcXXabcXXabc").nth
+        val w = mada.sequence.vector.from("XXabcXXabcXXabcXXabc").nth
 
         val p = (-single('X')).+ until ~("X"|end)
         var k = 0
@@ -28,6 +28,6 @@ class IterateTest {
             k = j
         }
 
-        assertEquals(w, mada.vector.from(sb.toString))
+        assertEquals(w, mada.sequence.vector.from(sb.toString))
     }
 }

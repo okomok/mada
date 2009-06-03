@@ -8,7 +8,7 @@ package mada.peg
 
 
 case class Switch[A](_1: scala.collection.Map[A, Peg[A]]) extends Peg[A] {
-    override def parse(v: Vector[A], start: Int, end: Int) = {
+    override def parse(v: sequence.Vector[A], start: Int, end: Int) = {
         if (start == end) {
             FAILURE
         } else {

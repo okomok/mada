@@ -14,7 +14,7 @@ import junit.framework.Assert._
 
 class VectorTest {
     def testTrivial: Unit = {
-        val p = peg.from(Vector('a','b','c'))
+        val p = peg.from(sequence.Vector('a','b','c'))
         assertTrue("123" >> p >> "XYZ" matches "123abcXYZ")
         assertTrue("123" >> p matches "123abc")
         assertFalse("123" >> p matches "123ab")
@@ -23,7 +23,7 @@ class VectorTest {
     }
 
     def testEmpty: Unit = {
-        val p = peg.from(vector.empty[Char])
+        val p = peg.from(sequence.vector.empty[Char])
         assertTrue("123" >> p >> "XYZ" matches "123XYZ")
         assertFalse("123" >> p >> "XYZ" matches "123aXYZ")
     }

@@ -13,14 +13,14 @@ case class FromSequence[A](_1: sequence.Iterative[A]) extends Forwarder[A] {
 
 case class FromSequenceBy[A](_1: sequence.Iterative[A], _2: (A, A) => Boolean) extends Forwarder[A] {
     override protected val delegate: Peg[A] = _1 match {
-        case _1: Vector[_] => new _FromVectorBy(_1.asInstanceOf[Vector[A]], _2)
+        case _1: sequence.Vector[_] => new _FromVectorBy(_1.asInstanceOf[sequence.Vector[A]], _2)
         case _ => new _FromSequenceBy(_1, _2)
     }
 }
 
 
 private class _FromSequenceBy[A](_1: sequence.Iterative[A], _2: (A, A) => Boolean) extends Peg[A] {
-    override def parse(v: Vector[A], start: Int, end: Int): Int = {
+    override def parse(v: sequence.Vector[A], start: Int, end: Int): Int = {
         val it = _1.begin
         var cur = start
 
@@ -39,12 +39,12 @@ private class _FromSequenceBy[A](_1: sequence.Iterative[A], _2: (A, A) => Boolea
 }
 
 
-private class _FromVectorBy[A](_1: Vector[A], _2: (A, A) => Boolean) extends Peg[A] {
-    override def parse(v: Vector[A], start: Int, end: Int) = {
+private class _FromVectorBy[A](_1: sequence.Vector[A], _2: (A, A) => Boolean) extends Peg[A] {
+    override def parse(v: sequence.Vector[A], start: Int, end: Int) = {
         val wsize = _1.size
         if (end - start < wsize) {
             FAILURE
-        } else if (vector.stl.Equal(_1, _1.start, _1.end, v, start, _2)) {
+        } else if (sequence.vector.stl.Equal(_1, _1.start, _1.end, v, start, _2)) {
             start + wsize
         } else {
             FAILURE

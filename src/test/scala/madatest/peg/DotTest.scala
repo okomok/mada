@@ -13,8 +13,8 @@ import junit.framework.Assert._
 
 class DotTest {
     def testTrivial: Unit = {
-        val sample = mada.vector.unstringize("/")
+        val sample = mada.sequence.vector.unstringize("/")
         assertTrue(dot[Char].matches(sample))
-        assertFalse(dot[Char].matches(mada.vector.empty))
+        assertFalse(dot[Char].matches(mada.sequence.vector.empty))
     }
 }

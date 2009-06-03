@@ -11,7 +11,7 @@ case class Xml(_1: java.io.Writer, _2: Int) extends PrettyPrinter {
     _1.write("<?xml version=\"1.0\" encoding=\"UTF-16\" standalone=\"yes\"?>\n")
 
     private var indentLevel = 0
-    private val indentString = vector.single(' ').times(_2)
+    private val indentString = sequence.vector.single(' ').times(_2)
     private def indent = indentString.times(indentLevel)
     private val stack = new java.util.ArrayDeque[Any]
 
@@ -20,7 +20,7 @@ case class Xml(_1: java.io.Writer, _2: Int) extends PrettyPrinter {
      */
     def writeStartElement(tag: Any): Unit = {
         stack.push(tag)
-        _1.write(vector.stringize(indent ++ "<" ++ tag.toString ++ ">\n"))
+        _1.write(sequence.vector.stringize(indent ++ "<" ++ tag.toString ++ ">\n"))
         _1.flush
         indentLevel += 1
     }
@@ -30,7 +30,7 @@ case class Xml(_1: java.io.Writer, _2: Int) extends PrettyPrinter {
      */
     def writeEndElement: Unit = {
         indentLevel -= 1
-        _1.write(vector.stringize(indent ++ "</" ++ stack.pop.toString ++ ">\n"))
+        _1.write(sequence.vector.stringize(indent ++ "</" ++ stack.pop.toString ++ ">\n"))
         _1.flush
     }
 
@@ -38,7 +38,7 @@ case class Xml(_1: java.io.Writer, _2: Int) extends PrettyPrinter {
      * Writes element without new line.
      */
     def writeElement(tag: Any, chars: Any): Unit = {
-        _1.write(vector.stringize(indent ++ "<" ++ tag.toString ++ ">" ++ chars.toString ++ "</" ++ tag.toString ++ ">\n"))
+        _1.write(sequence.vector.stringize(indent ++ "<" ++ tag.toString ++ ">" ++ chars.toString ++ "</" ++ tag.toString ++ ">\n"))
         _1.flush
     }
 
@@ -53,7 +53,7 @@ case class Xml(_1: java.io.Writer, _2: Int) extends PrettyPrinter {
     override def print[A](p: Peg[A]): Peg[A] = Print(p)
 
     case class Print[A](_1: Peg[A]) extends Peg[A] {
-        override def parse(v: Vector[A], start: Int, end: Int) = {
+        override def parse(v: sequence.Vector[A], start: Int, end: Int) = {
             writeStartElement(_1)
 
             writeElement("parsing", v(start, end))

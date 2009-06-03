@@ -33,12 +33,12 @@ trait Peg[A] {
 // kernel interface
 
     /**
-     * Parses specified region of input vector.
+     * Parses specified region of input sequence.vector.
      * This apparently legacy interface is designed so that heap-allocation is removal.
      *
      * @return  next position if parsing succeeds, <code>peg.FAILURE</code> otherwise.
      */
-    def parse(v: Vector[A], first: Int, last: Int): Int
+    def parse(v: sequence.Vector[A], first: Int, last: Int): Int
 
     /**
      * Returns the matched width.
@@ -204,12 +204,12 @@ trait Peg[A] {
     /**
      * Matches if matched region meets condition <code>pred</code>.
      */
-    final def andIf(pred: vector.Pred[A]): Peg[A] = AndIf(this, pred)
+    final def andIf(pred: sequence.vector.Pred[A]): Peg[A] = AndIf(this, pred)
 
     /**
      * Matches if matched region meets condition <code>pred</code>. (no heap allocations)
      */
-    final def andIf3(pred: vector.Pred3[A]): Peg[A] = AndIf3(this, pred)
+    final def andIf3(pred: sequence.vector.Pred3[A]): Peg[A] = AndIf3(this, pred)
 
     /**
      * Returns an alias of this peg.
@@ -226,7 +226,7 @@ trait Peg[A] {
      *
      * @pre     <code>v.size == f(v).size</code> for any <code>v</code>.
      */
-    final def readMap[Z](f: Vector[Z] => Vector[A]): Peg[Z] = ReadMap(this, f)
+    final def readMap[Z](f: sequence.Vector[Z] => sequence.Vector[A]): Peg[Z] = ReadMap(this, f)
 
     /**
      * @return  <code>readMap{ v => v.map(f) }</code>.
@@ -248,9 +248,9 @@ trait Peg[A] {
 // algorithms
 
     /**
-     * Finds <code>vector.Region</code> which this peg matches.
+     * Finds <code>sequence.vector.Region</code> which this peg matches.
      */
-    final def find(v: Vector[A]): Option[Vector[A]] = {
+    final def find(v: sequence.Vector[A]): Option[sequence.Vector[A]] = {
         val (i, j) = findRange(v, v.start, v.end)
         if (j == FAILURE) {
             None
@@ -260,9 +260,9 @@ trait Peg[A] {
     }
 
     /**
-     * Finds a range of vector.
+     * Finds a range of sequence.vector.
      */
-    final def findRange(v: Vector[A], _start: Int, end: Int): (Int, Int) = {
+    final def findRange(v: sequence.Vector[A], _start: Int, end: Int): (Int, Int) = {
         var start = _start
         while (start != end) {
             val cur = parse(v, start, end)
@@ -277,7 +277,7 @@ trait Peg[A] {
     /**
      * Returns position where parsing succeeds.
      */
-    final def lookingAt(v: Vector[A]): Option[Int] = {
+    final def lookingAt(v: sequence.Vector[A]): Option[Int] = {
         val cur = parse(v, v.start, v.end)
         if (cur == FAILURE) {
             None
@@ -289,7 +289,7 @@ trait Peg[A] {
     /**
      * Returns true iif input is fully matched.
      */
-    final def matches(v: Vector[A]): Boolean = {
+    final def matches(v: sequence.Vector[A]): Boolean = {
         val e = v.end
         e == parse(v, v.start, e)
     }
@@ -297,17 +297,17 @@ trait Peg[A] {
     /**
      * Splits input using this peg.
      */
-    final def split(v: Vector[A]): sequence.Iterative[Vector[A]] = Split(this, v)
+    final def split(v: sequence.Vector[A]): sequence.Iterative[sequence.Vector[A]] = Split(this, v)
 
     /**
      * Tokenizes input using this peg.
      */
-    final def tokenize(v: Vector[A]): sequence.Iterative[Vector[A]] = Tokenize(this, v)
+    final def tokenize(v: sequence.Vector[A]): sequence.Iterative[sequence.Vector[A]] = Tokenize(this, v)
 
     /**
      * Filters input using this peg.
      */
-    final def filterFrom(v: Vector[A]): sequence.Iterative[A] = FilterFrom(this, v)
+    final def filterFrom(v: sequence.Vector[A]): sequence.Iterative[A] = FilterFrom(this, v)
 
 
 // aliases

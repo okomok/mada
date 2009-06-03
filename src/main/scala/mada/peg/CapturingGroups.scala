@@ -10,11 +10,11 @@ package mada.peg
 /**
  * Provides capturing groups functionality.
  */
-class CapturingGroups[K, A](val map: scala.collection.mutable.Map[K, Vector[A]]) {
+class CapturingGroups[K, A](val map: scala.collection.mutable.Map[K, sequence.Vector[A]]) {
     /**
      * Constructs from a hash-assoc.
      */
-    def this() = this(new scala.collection.mutable.HashMap[K, Vector[A]])
+    def this() = this(new scala.collection.mutable.HashMap[K, sequence.Vector[A]])
 
     @aliasOf("capture")
     final def apply(k: K, p: Peg[A]): Peg[A] = capture(k, p)

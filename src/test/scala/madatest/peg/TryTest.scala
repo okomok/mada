@@ -8,7 +8,7 @@ package madatest.pegtest
 
 
 import junit.framework.Assert._
-import mada.{Vector, vector}
+import mada.sequence.{Vector, vector}
 
 import mada.peg.compatibles._
 import mada.peg._
@@ -28,7 +28,7 @@ class TryTest {
         val q = "abc" >> verify("R") >> "d"
         val p = `try` { q } `catch` { case VerificationException(_, v) => thrown = true; v(3) = 'R'; q }
         assertFalse(thrown)
-        assertTrue(p matches mada.vector.from("abcLd").copy)
+        assertTrue(p matches mada.sequence.vector.from("abcLd").copy)
         assertTrue(thrown)
     }
 

@@ -8,5 +8,5 @@ package mada.peg
 
 
 case class Unmap[A, Z](_1: Peg[A], _2: Z => A) extends Forwarder[Z] {
-    override protected val delegate = _1.readMap{ (v: Vector[Z]) => v.map(_2) }
+    override protected val delegate = _1.readMap{ (v: sequence.Vector[Z]) => v.map(_2) }
 }

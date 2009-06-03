@@ -7,17 +7,17 @@
 package mada.peg
 
 
-case class Split[A](_1: Peg[A], _2: Vector[A]) extends sequence.Iterative[Vector[A]] {
+case class Split[A](_1: Peg[A], _2: sequence.Vector[A]) extends sequence.Iterative[sequence.Vector[A]] {
     throwIfZeroWidth(_1, "split")
 
-    override def begin = new sequence.Iterator[Vector[A]] {
+    override def begin = new sequence.Iterator[sequence.Vector[A]] {
         private val u = new RepeatAtMostUntil(dot, Math.MAX_INT, end | _1)
         private var (k, b, l) = u.parseImpl(_2, _2.start, _2.end)
 
         override def isEnd = k == l
         override def deref = {
             preDeref
-            new vector.Region(_2, k, b)
+            new sequence.vector.Region(_2, k, b)
         }
         override def increment = {
             preIncrement

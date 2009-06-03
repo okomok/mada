@@ -15,11 +15,11 @@ package object peg {
     @aliasOf("Peg")
     type Type[A] = Peg[A]
 
-    @aliasOf("vector.Func[A, Unit]")
-    type Action[A] = vector.Func[A, Unit]
+    @aliasOf("sequence.vector.Func[A, Unit]")
+    type Action[A] = sequence.vector.Func[A, Unit]
 
-    @aliasOf("vector.Func3[A, Unit]")
-    type Action3[A] = vector.Func3[A, Unit]
+    @aliasOf("sequence.vector.Func3[A, Unit]")
+    type Action3[A] = sequence.vector.Func3[A, Unit]
 
     @compatibles
     val compatibles: Compatibles = Peg
@@ -28,7 +28,7 @@ package object peg {
 // constants
 
     /**
-     * Alias of <code>vector.SINGULAR</code> specifying the parsing failure.
+     * Alias of <code>sequence.vector.SINGULAR</code> specifying the parsing failure.
      */
     final val FAILURE = 0x80000000
 
@@ -82,17 +82,17 @@ package object peg {
     /**
      * Mathches case-insensitively.
      */
-    def icase(v: Vector[Char]): Peg[Char] = Icase(v)
+    def icase(v: sequence.Vector[Char]): Peg[Char] = Icase(v)
 
     /**
      * Zero-width assertion if region meets condition <code>pred</code>
      */
-    def lookaround[A](pred: vector.Pred[A]): Peg[A] = Lookaround(pred)
+    def lookaround[A](pred: sequence.vector.Pred[A]): Peg[A] = Lookaround(pred)
 
     /**
      * Zero-width assertion if region meets condition <code>pred</code> (no heap allocations)
      */
-    def lookaround3[A](pred: vector.Pred3[A]): Peg[A] = Lookaround3(pred)
+    def lookaround3[A](pred: sequence.vector.Pred3[A]): Peg[A] = Lookaround3(pred)
 
     /**
      * Matches range values.
@@ -195,19 +195,19 @@ package object peg {
 
 // symbol
 
-    type SymbolSet[A] = Peg[A] with scala.collection.mutable.Set[Vector[A]]
+    type SymbolSet[A] = Peg[A] with scala.collection.mutable.Set[sequence.Vector[A]]
 
     @packageObjectBrokenOverload
     object symbolSet {
         /**
          * @return  <code>symbolSet(vs)(c)</code>.
          */
-        def apply[A](vs: Vector[A]*)(implicit c: Compare[A]): SymbolSet[A] = symbolSet(sequence.iterative.from(vs))(c)
+        def apply[A](vs: sequence.Vector[A]*)(implicit c: Compare[A]): SymbolSet[A] = symbolSet(sequence.iterative.from(vs))(c)
 
         /**
          * Returns a peg to optimize the form <code>k1|k2|k3|...</code>.
          */
-        def apply[A](vs: sequence.Iterative[Vector[A]])(lt: compare.Func[A]): SymbolSet[A] = {
+        def apply[A](vs: sequence.Iterative[sequence.Vector[A]])(lt: compare.Func[A]): SymbolSet[A] = {
             val r = new TheSymbolSet(new TSTree[A, Unit](lt))
             for (v <- vs) {
                 r += v
@@ -216,19 +216,19 @@ package object peg {
         }
     }
 
-    type SymbolMap[A] = Peg[A] with scala.collection.mutable.Map[Vector[A], Peg[A]]
+    type SymbolMap[A] = Peg[A] with scala.collection.mutable.Map[sequence.Vector[A], Peg[A]]
 
     @packageObjectBrokenOverload
     object symbolMap {
         /**
          * @return  <code>symbolMap(es)(c)</code>.
          */
-        def apply[A](es: (Vector[A], Peg[A])*)(implicit c: Compare[A]): SymbolMap[A] = symbolMap(sequence.iterative.from(es))(c)
+        def apply[A](es: (sequence.Vector[A], Peg[A])*)(implicit c: Compare[A]): SymbolMap[A] = symbolMap(sequence.iterative.from(es))(c)
 
         /**
          * Returns a peg to optimize the form <code>(k1 >> p1)|(k2 >> p2)|(k3 >> p3)|...</code>.
          */
-        def apply[A](es: sequence.Iterative[(Vector[A], Peg[A])])(lt: compare.Func[A]): SymbolMap[A] = {
+        def apply[A](es: sequence.Iterative[(sequence.Vector[A], Peg[A])])(lt: compare.Func[A]): SymbolMap[A] = {
             val r = new TheSymbolMap(new TSTree[A, Peg[A]](lt))
             for (e <- es) {
                 r += Tuple2(e._1, e._2)

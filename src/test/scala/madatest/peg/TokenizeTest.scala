@@ -11,13 +11,13 @@ import mada.peg._
 import junit.framework.Assert._
 import mada.peg.compatibles._
 
-import mada.vector.Region
+import mada.sequence.vector.Region
 
 
 class TokenizeTest {
     def testTrivial: Unit = {
         val pe = mada.peg.from("abcd")
-        val v = mada.vector.from("XabcdXXabcdXX")
+        val v = mada.sequence.vector.from("XabcdXXabcdXX")
         val it = pe.tokenize(v.nth).toSSequence.iterator
         var c = 0
         while (it.hasNext) {
@@ -37,14 +37,14 @@ class TokenizeTest {
 
     def testBound: Unit = {
         val pe = mada.peg.from("abcd")
-        val v = mada.vector.from("qqabqqab")
+        val v = mada.sequence.vector.from("qqabqqab")
         val it = pe.tokenize(v).toSSequence.iterator
         assertFalse(it.hasNext)
     }
 
     def testBound2: Unit = {
         val pe = mada.peg.from("abcd")
-        val v = mada.vector.from("abcd")
+        val v = mada.sequence.vector.from("abcd")
         val it = pe.tokenize(v.nth).toSSequence.iterator
         val Region(_, i, j) = it.next
         assertEquals(0, i)
@@ -55,23 +55,23 @@ class TokenizeTest {
     // seems appropriate.
     def testEmpty: Unit = {
         val pe = mada.peg.from("")
-        val v = mada.vector.from("")
+        val v = mada.sequence.vector.from("")
         val it = pe.tokenize(v).toSSequence.iterator
         assertFalse(it.hasNext)
     }
 
     def testTokens: Unit = {
         val pe = single('a') >> (dot.+ until ~"XX")
-        val v = mada.vector.from("XabcdXXaBCDXX")
+        val v = mada.sequence.vector.from("XabcdXXaBCDXX")
         val it = pe.tokenize(v.nth).toSSequence.iterator
         var c = 0
         while (it.hasNext) {
             val w = it.next
             if (c == 0) {
-                assertEquals(mada.vector.from("abcd"), w)
+                assertEquals(mada.sequence.vector.from("abcd"), w)
             }
             if (c == 1) {
-                assertEquals(mada.vector.from("aBCD"), w)
+                assertEquals(mada.sequence.vector.from("aBCD"), w)
             }
             c += 1
         }

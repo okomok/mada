@@ -8,7 +8,7 @@ package mada.peg
 
 
 case class Negate[A](_1: Peg[A]) extends Peg[A] {
-    override def parse(v: Vector[A], start: Int, end: Int) = {
+    override def parse(v: sequence.Vector[A], start: Int, end: Int) = {
         if (_1.parse(v, start, end) != FAILURE) {
             FAILURE
         } else {

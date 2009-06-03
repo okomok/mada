@@ -7,12 +7,12 @@
 package mada.peg
 
 
-case class Lookaround[A](_1: vector.Pred[A]) extends Forwarder[A] {
-    override protected val delegate = lookaround3(vector.triplify(_1))
+case class Lookaround[A](_1: sequence.vector.Pred[A]) extends Forwarder[A] {
+    override protected val delegate = lookaround3(sequence.vector.triplify(_1))
 }
 
-case class Lookaround3[A](_1: vector.Pred3[A]) extends Peg[A] with ZeroWidth[A] {
-    override def parse(v: Vector[A], start: Int, end: Int) = {
+case class Lookaround3[A](_1: sequence.vector.Pred3[A]) extends Peg[A] with ZeroWidth[A] {
+    override def parse(v: sequence.Vector[A], start: Int, end: Int) = {
         if (_1(v, start, end)) {
             start
         } else {

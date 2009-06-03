@@ -17,7 +17,7 @@ case class Shortest[A](_1: sequence.Iterative[Peg[A]]) extends Forwarder[A] {
 
 
 private class Best[A](_1: sequence.Iterative[Peg[A]], _2: (Int, Int) => Int) extends Peg[A] {
-    override def parse(v: Vector[A], start: Int, end: Int) = {
+    override def parse(v: sequence.Vector[A], start: Int, end: Int) = {
         val curs = _1.map{ p => p.parse(v, start, end) }.filter{ i => i != FAILURE }
         if (curs.isEmpty) FAILURE else curs.reduceLeft(_2)
     }

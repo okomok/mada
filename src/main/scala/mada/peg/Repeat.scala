@@ -34,7 +34,7 @@ case class Repeat[A](_1: Peg[A], _2: Int, _3: Int) extends Forwarder[A] with Qua
 
 
 private[mada] class RepeatExactly[A](_1: Peg[A], _2: Int) extends Peg[A] {
-    override def parse(v: Vector[A], start: Int, end: Int): Int = {
+    override def parse(v: sequence.Vector[A], start: Int, end: Int): Int = {
         var cur = start
         var i = 0
         while (i != _2) {
@@ -53,7 +53,7 @@ private[mada] class RepeatExactly[A](_1: Peg[A], _2: Int) extends Peg[A] {
 
 private[mada] class RepeatAtMost[A](_1: Peg[A], _2: Int) extends Peg[A] {
     // RepeatAtMostUntil(_1, _2, !_1) would include redundant parsing.
-    override def parse(v: Vector[A], start: Int, end: Int): Int = {
+    override def parse(v: sequence.Vector[A], start: Int, end: Int): Int = {
         var cur = start
         var i = 0
         while (i != _2 && cur != end) {
@@ -70,9 +70,9 @@ private[mada] class RepeatAtMost[A](_1: Peg[A], _2: Int) extends Peg[A] {
 
 
 private[mada] class RepeatAtMostUntil[A](_1: Peg[A], _2: Int, _3: Peg[A]) extends Peg[A] {
-    override def parse(v: Vector[A], start: Int, end: Int) = parseImpl(v, start, end)._3
+    override def parse(v: sequence.Vector[A], start: Int, end: Int) = parseImpl(v, start, end)._3
 
-    def parseImpl(v: Vector[A], start: Int, end: Int): (Int, Int, Int) = {
+    def parseImpl(v: sequence.Vector[A], start: Int, end: Int): (Int, Int, Int) = {
         var cur = start
         var i = 0
         var next = _3.parse(v, cur, end)

@@ -8,7 +8,7 @@ package mada.peg
 
 
 case class Minus[A](_1: Peg[A], _2: Peg[A]) extends Peg[A] {
-    override def parse(v: Vector[A], start: Int, end: Int) = {
+    override def parse(v: sequence.Vector[A], start: Int, end: Int) = {
         val cur1 = _1.parse(v, start, end)
         if (cur1 == FAILURE) {
             FAILURE

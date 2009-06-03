@@ -11,7 +11,7 @@ import mada.{Peg, peg}
 import junit.framework.Assert._
 import mada.peg.compatibles._
 
-import mada.{Vector, vector}
+import mada.sequence.{Vector, vector}
 
 
 class SplitTest {

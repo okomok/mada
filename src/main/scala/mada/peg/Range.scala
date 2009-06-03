@@ -10,7 +10,7 @@ package mada.peg
 case class Range[A](_1: A, _2: A, _3: Compare[A]) extends Peg[A] {
     private val ord = _3.toOrdering
 
-    override def parse(v: Vector[A], start: Int, end: Int) = {
+    override def parse(v: sequence.Vector[A], start: Int, end: Int) = {
         if (start == end) {
             FAILURE
         } else {

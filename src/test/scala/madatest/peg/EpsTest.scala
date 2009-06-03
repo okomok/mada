@@ -13,11 +13,11 @@ import junit.framework.Assert._
 
 class EpsTest {
     def testTrivial: Unit = {
-        assertTrue(eps[Int].matches(mada.vector.empty[Int]))
-        assertFalse(eps[Int].matches(mada.vector.of(1,2,3)))
+        assertTrue(eps[Int].matches(mada.sequence.vector.empty[Int]))
+        assertFalse(eps[Int].matches(mada.sequence.vector.of(1,2,3)))
     }
 
-    def testCompile(v: mada.Vector[Char]): Unit = {
+    def testCompile(v: mada.sequence.Vector[Char]): Unit = {
         (unstringize("abcd") >> eps).parse(v, 0, 10)
     }
 }

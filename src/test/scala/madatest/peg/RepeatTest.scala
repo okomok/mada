@@ -8,7 +8,7 @@ package madatest.pegtest
 
 
 import mada.{Peg, peg}
-import mada.{Vector, vector}
+import mada.sequence.{Vector, vector}
 import junit.framework.Assert._
 
 

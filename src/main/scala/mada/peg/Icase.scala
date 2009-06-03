@@ -7,6 +7,6 @@
 package mada.peg
 
 
-case class Icase(_1: Vector[Char]) extends Forwarder[Char] {
-    override protected val delegate = fromSequence(vector.lowerCase(_1)).lowerCaseRead
+case class Icase(_1: sequence.Vector[Char]) extends Forwarder[Char] {
+    override protected val delegate = fromSequence(sequence.vector.lowerCase(_1)).lowerCaseRead
 }

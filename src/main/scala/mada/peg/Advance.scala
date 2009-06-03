@@ -10,7 +10,7 @@ package mada.peg
 case class Advance[A](_1: Int) extends Peg[A] {
     util.assert(_1 >= 0)
 
-    override def parse(v: Vector[A], start: Int, end: Int) = {
+    override def parse(v: sequence.Vector[A], start: Int, end: Int) = {
         val cur = start + _1
         if (cur <= end) {
             cur

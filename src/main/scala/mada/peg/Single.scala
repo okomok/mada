@@ -8,7 +8,7 @@ package mada.peg
 
 
 case class Single[A](_1: A) extends Peg[A] {
-    override def parse(v: Vector[A], start: Int, end: Int) = {
+    override def parse(v: sequence.Vector[A], start: Int, end: Int) = {
         if (start == end || _1 != v(start)) {
             FAILURE
         } else {

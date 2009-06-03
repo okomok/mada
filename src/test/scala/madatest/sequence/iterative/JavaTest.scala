@@ -14,7 +14,7 @@ import junit.framework.Assert._
 class JavaTest {
 
     def testJioReader: Unit = {
-        val arr = mada.Vector('a','b','c').toArray
+        val arr = mada.sequence.Vector('a','b','c').toArray
         val tr = iterative.from(new java.io.CharArrayReader(arr))
         assertEquals(iterative.Of('a','b','c'), tr)
         assertEquals(iterative.Of('a','b','c'), tr) // traverse again.

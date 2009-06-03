@@ -8,7 +8,7 @@ package mada.peg
 
 
 case class SeqAnd[A](_1: Peg[A], _2: Peg[A]) extends Peg[A] {
-    override def parse(v: Vector[A], start: Int, end: Int) = {
+    override def parse(v: sequence.Vector[A], start: Int, end: Int) = {
         var cur = _1.parse(v, start, end)
         if (cur == FAILURE) {
             FAILURE
@@ -25,7 +25,7 @@ case class SeqOr[A](_1: Peg[A], _2: Peg[A]) extends Forwarder[A] {
 }
 
 case class SeqImply[A](_1: Peg[A], _2: Peg[A]) extends Peg[A] {
-    override def parse(v: Vector[A], start: Int, end: Int) = {
+    override def parse(v: sequence.Vector[A], start: Int, end: Int) = {
         val cur = _1.parse(v, start, end)
         if (cur == FAILURE) {
             start

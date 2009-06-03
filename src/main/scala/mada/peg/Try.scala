@@ -17,7 +17,7 @@ case class TryCatch[A](_1: Peg[A], _2: Throwable => Peg[A]) extends Forwarder[A]
 }
 
 case class TryCatchFinally[A](_1: Peg[A], _2: Throwable => Peg[A], _3: Action[A]) extends Peg[A] {
-    override def parse(v: Vector[A], start: Int, end: Int) = {
+    override def parse(v: sequence.Vector[A], start: Int, end: Int) = {
         try {
             _1.parse(v, start, end)
         } catch {

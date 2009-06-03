@@ -8,7 +8,7 @@ package mada.peg
 
 
 case class Lookbehind[A](_1: Peg[A]) extends Peg[A] with ZeroWidth[A] {
-    override def parse(v: Vector[A], start: Int, end: Int) = {
+    override def parse(v: sequence.Vector[A], start: Int, end: Int) = {
         val len = _1.width
         if (start - len < v.start) {
             FAILURE

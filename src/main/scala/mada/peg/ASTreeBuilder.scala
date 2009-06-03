@@ -70,7 +70,7 @@ class ASTreeBuilder[T <: MutableTreeNode](root: T, cloner: T => T) {
     def node[A](p: Peg[A])(f: Action[A]): Peg[A] = Node(p, f)
 
     case class Node[A](_1: Peg[A], _2: Action[A]) extends Peg[A] {
-        override def parse(v: Vector[A], start: Int, end: Int) = {
+        override def parse(v: sequence.Vector[A], start: Int, end: Int) = {
             val n = newNode
             branches.push(n)
             val cur = _1.parse(v, start, end)
@@ -88,7 +88,7 @@ class ASTreeBuilder[T <: MutableTreeNode](root: T, cloner: T => T) {
      * Creates a Peg which appends a leaf node using <code>f</code>.
      */
     def leaf[A](p: Peg[A])(f: Action[A]): Peg[A] = {
-        def _add(v: Vector[A]) = {
+        def _add(v: sequence.Vector[A]) = {
             val n = newNode
             n.setUserObject(f(v))
             addNode(branches.peek, n)

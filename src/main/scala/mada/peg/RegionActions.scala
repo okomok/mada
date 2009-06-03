@@ -19,7 +19,7 @@ class RegionActions[A] {
     val startAt: Peg[A] = StartAt()
 
     case class StartAt() extends Peg[A] with ZeroWidth[A] {
-        override def parse(v: Vector[A], start: Int, end: Int) = {
+        override def parse(v: sequence.Vector[A], start: Int, end: Int) = {
             stack.push(start)
             start
         }
@@ -34,7 +34,7 @@ class RegionActions[A] {
     def endWith(f: Action[A]): Peg[A] = EndWith(f)
 
     case class EndWith(_1: Action[A]) extends Peg[A] with ZeroWidth[A] {
-        override def parse(v: Vector[A], start: Int, end: Int) = {
+        override def parse(v: sequence.Vector[A], start: Int, end: Int) = {
             _1(v(stack.pop, start))
             start
         }

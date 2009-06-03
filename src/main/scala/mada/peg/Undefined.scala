@@ -8,7 +8,7 @@ package mada.peg
 
 
 case class Undefined[A]() extends Peg[A] {
-    override def parse(v: Vector[A], start: Int, end: Int) = {
+    override def parse(v: sequence.Vector[A], start: Int, end: Int) = {
         throw new java.lang.AssertionError("undefined")
     }
 }
