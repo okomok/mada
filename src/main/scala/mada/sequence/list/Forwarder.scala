@@ -7,7 +7,7 @@
 package mada.sequence.list
 
 
-trait Forwarder[+A] extends List[A] with util.Forwarder {
+trait Forwarder[+A] extends List[A] with sequence.Forwarder[A] {
     protected def delegate: List[A]
 
     override def isEmpty = delegate.isEmpty

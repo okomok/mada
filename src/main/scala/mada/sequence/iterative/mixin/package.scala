@@ -10,11 +10,11 @@ package mada.sequence.iterative
 package object mixin {
 
     val force = new Mixin {
-        override def apply[B](seq: Iterative[B]) = seq.force
+        override def apply[B](it: Iterative[B]) = it.force
     }
 
     val seal = new Mixin {
-        override def apply[B](seq: Iterative[B]) = seq.seal
+        override def apply[B](it: Iterative[B]) = it.seal
     }
 
 }

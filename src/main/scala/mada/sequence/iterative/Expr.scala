@@ -22,11 +22,11 @@ private class ExprWrap[+A](_1: Iterative[A]) extends Iterative[A] {
 
 
 object Eval {
-    def apply[A](seq: Iterative[A]): Iterative[A] = seq match {
+    def apply[A](it: Iterative[A]): Iterative[A] = it match {
         case Expr(_1) => Eval(_1)
         case Map(_1, _2) => Eval(_1).map(_2)
         case Slice(_1, _2, _3) => Eval(_1).slice(_2, _3)
         // etc...
-        case _ => seq
+        case _ => it
     }
 }

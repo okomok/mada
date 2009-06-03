@@ -11,12 +11,12 @@ package mada.sequence.iterative
  * Mixin
  */
 trait Mixin { self =>
-    def apply[B](seq: Iterative[B]): Iterative[B]
+    def apply[B](it: Iterative[B]): Iterative[B]
 
     /**
      * Mixin composition
      */
     final def `with`(that: Mixin): Mixin = new Mixin {
-        override def apply[B](seq: Iterative[B]) = that(self(seq))
+        override def apply[B](it: Iterative[B]) = that(self(it))
     }
 }

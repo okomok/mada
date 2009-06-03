@@ -13,21 +13,32 @@ import junit.framework.Assert._
 
 class FlattenTest {
     def testTrivial {
-        val v1 = iterative.from(Array(0,1,2))
+        val v1 = vector.from(Array(0,1,2))
         val v2 = iterative.from(Array(3,4))
-        val v3 = iterative.from(detail.Example.empty1)
+        val v3 = vector.from(detail.Example.empty1)
         val v4 = iterative.from(Array(5,6))
-        val v5 = iterative.from(Array(7,8,9,10))
-        val vv = vector.flatten(iterative.fromSIterable[Iterative[Int]](Array(v1, v2, v3, v4, v5)))
+        val v5 = vector.from(Array(7,8,9,10))
+        val vv = vector.flatten(iterative.from(Array[mada.Sequence[Int]](v1, v2, v3, v4, v5)))
+        val e = vector.range(0, 11)
+        assertEquals(e, vv)
+    }
+
+    def testTrivial2 {
+        val v1 = vector.from(Array(0,1,2))
+        val v2 = iterative.from(Array(3,4))
+        val v3 = vector.from(detail.Example.empty1)
+        val v4 = iterative.from(Array(5,6))
+        val v5 = vector.from(Array(7,8,9,10))
+        val vv = vector.flatten(vector.from(Array[mada.Sequence[Int]](v1, v2, v3, v4, v5)))
         val e = vector.range(0, 11)
         assertEquals(e, vv)
     }
 
     def testEmpty {
-        val v1 = iterative.from(detail.Example.empty1)
+        val v1 = vector.from(detail.Example.empty1)
         val v2 = iterative.from(detail.Example.empty1)
-        val v3 = iterative.from(detail.Example.empty1)
-        val vv = vector.flatten(iterative.fromSIterable[Iterative[Int]](Array(v1, v2, v3)))
+        val v3 = vector.from(detail.Example.empty1)
+        val vv = vector.flatten(iterative.from(Array[mada.Sequence[Int]](v1, v2, v3)))
         detail.TestEmpty(vv)
     }
 

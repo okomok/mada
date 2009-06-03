@@ -7,7 +7,7 @@
 package mada.sequence.iterative
 
 
-trait Forwarder[+A] extends Iterative[A] with util.Forwarder {
+trait Forwarder[+A] extends Iterative[A] with sequence.Forwarder[A] {
     override protected def delegate: Iterative[A]
 
     protected def afterForward[B](that: Iterative[B]): Iterative[B] = that
@@ -16,10 +16,6 @@ trait Forwarder[+A] extends Iterative[A] with util.Forwarder {
     @quasiFinal override def begin: Iterator[A] = delegate.begin
 
     override def equalsIf[B](that: Iterative[B])(p: (A, B) => Boolean): Boolean = delegate.equalsIf(that)(p)
-    override def equals(that: Any): Boolean = delegate.equals(that)
-    override def hashCode: Int = delegate.hashCode
-    override def toString: String = delegate.toString
-
     override def isEmpty: Boolean = delegate.isEmpty
     override def size: Int = delegate.size
     override def ++[B >: A](that: Iterative[B]): Iterative[B] = afterForward(delegate.++(that))

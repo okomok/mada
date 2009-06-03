@@ -45,12 +45,12 @@ package object iterative {
     /**
      * Refers a sequence by lazy.
      */
-    def byLazy[A](seq: => Iterative[A]): Iterative[A] = ByLazy(function.ofLazy(seq))
+    def byLazy[A](it: => Iterative[A]): Iterative[A] = ByLazy(function.ofLazy(it))
 
     /**
      * Refers a sequence by name.
      */
-    def byName[A](seq: => Iterative[A]): Iterative[A] = ByName(function.ofName(seq))
+    def byName[A](it: => Iterative[A]): Iterative[A] = ByName(function.ofName(it))
 
     /**
      * Creates an infinite sequence repeatedly applying <code>op</code>.

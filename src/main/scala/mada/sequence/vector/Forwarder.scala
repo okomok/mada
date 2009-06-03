@@ -7,18 +7,14 @@
 package mada.sequence.vector
 
 
-trait Forwarder[A] extends Adapter.Transform[A] with util.Forwarder {
+trait Forwarder[A] extends Adapter.Transform[A] with sequence.Forwarder[A] {
     override protected def delegate: Vector[A]
     protected def afterForward[B](that: Vector[B]): Vector[B] = that
     private def afterForward2[B](that: (Vector[B], Vector[B])): (Vector[B], Vector[B]) = (afterForward(that._1), afterForward(that._2))
     final override def underlying = delegate
 
 // iterative
-    override def toIterative: Iterative[A] = delegate.toIterative
     override def equalsIf[B](that: Vector[B])(p: (A, B) => Boolean): Boolean = delegate.equalsIf(that)(p)
-    override def equals(that: Any): Boolean = delegate.equals(that)
-    override def hashCode: Int = delegate.hashCode
-    override def toString: String = delegate.toString
     override def ++(that: Vector[A]): Vector[A] = afterForward(delegate.++(that))
     override def map[B](f: A => B): Vector[B] = afterForward(delegate.map(f))
     override def flatMap[B](f: A => Iterative[B]): Vector[B] = afterForward(delegate.flatMap(f))

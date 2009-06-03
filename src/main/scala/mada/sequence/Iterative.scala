@@ -13,7 +13,10 @@ import iterative._
 /**
  * Yet another Iterable
  */
-trait Iterative[+A] {
+trait Iterative[+A] extends Sequence[A] {
+
+
+    override def toIterative = this
 
 
 // begin
@@ -41,50 +44,6 @@ trait Iterative[+A] {
             it.++; jt.++
         }
         !it && !jt
-    }
-
-    /**
-     * Compares the specified object with this sequence for equality.
-     * Returns true if and only if the specified object is also a sequence,
-     * both sequences have the same size, and all corresponding pairs of
-     * elements in the two sequences are equal.
-     * You shall not override this in a purpose except optimization.
-     *
-     * @see Effective Java 2nd Edition - Item 8
-     */
-    override def equals(that: Any) = that match {
-        case that: Iterative[_] => equalsIf(that)(function.equal)
-        case _ => false
-    }
-
-    override def hashCode = {
-        var r = 1
-        val it = begin
-        while (it) {
-            r = 31 * r + (~it).hashCode
-            it.++
-        }
-        r
-    }
-
-    // probably removed so that case-class-toString is turned on.
-    override def toString = {
-        val sb = new StringBuilder
-        sb.append('[')
-
-        val it = begin
-        if (it) {
-            sb.append(~it)
-            it.++
-        }
-        while (it) {
-            sb.append(", ")
-            sb.append(~it)
-            it.++
-        }
-
-        sb.append(']')
-        sb.toString
     }
 
 

@@ -20,7 +20,7 @@ import vector._
  *
  * Unless otherwise specified, these methods return projections to keep readability and writability.
  */
-trait Vector[A] extends PartialFunction[Int, A] {
+trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
 
 
 // kernel
@@ -64,8 +64,7 @@ trait Vector[A] extends PartialFunction[Int, A] {
 
 // iterative
 
-    @conversion
-    def toIterative: Iterative[A] = ToIterative(this)
+    override def toIterative: Iterative[A] = ToIterative(this)
 
     /**
      * Returns true if and only if both sequences have the same size,
@@ -80,20 +79,13 @@ trait Vector[A] extends PartialFunction[Int, A] {
         }
     }
 
-    /**
-     * Compares the specified object with this sequence for equality.
-     * Returns true if and only if the specified object is also a sequence,
-     * both sequences have the same size, and all corresponding pairs of
-     * elements in the two sequences are equal.
-     * You shall not override this in a purpose except optimization.
-     *
-     * @see Effective Java 2nd Edition - Item 8
-     */
+    @optimize
     override def equals(that: Any): Boolean = that match {
         case that: Vector[_] => equalsIf(that)(function.equal)
         case _ => super.equals(that)
     }
 
+    @optimize
     override def hashCode: Int = {
         var r = 1
         var i = start; val j = end
@@ -104,6 +96,7 @@ trait Vector[A] extends PartialFunction[Int, A] {
         r
     }
 
+    @optimize
     override def toString = toJclArrayList.toString
 
     /**

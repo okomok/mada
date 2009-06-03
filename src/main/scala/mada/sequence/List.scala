@@ -14,7 +14,7 @@ import list._
 /**
  * Yet another Stream
  */
-trait List[+A] {
+trait List[+A] extends Sequence[A] {
 
 
 // kernel
@@ -66,11 +66,13 @@ trait List[+A] {
      *
      * @see Effective Java 2nd Edition - Item 8
      */
+    @optimize
     override def equals(that: Any) = that match {
         case that: List[_] => equalsIf(that)(function.equal)
-        case _ => false
+        case _ => super.equals(that)
     }
 
+    @optimize
     override def hashCode = {
         var r = 1
         var it = this
@@ -82,7 +84,9 @@ trait List[+A] {
     }
 
 
-// scala sequence
+// iterative
+
+    override def toIterative: Iterative[A] = throw new Error
 
     /**
      * Returns the size.
@@ -96,7 +100,6 @@ trait List[+A] {
         }
         r
     }
-
 
     /**
      * Appends <code>that</code>.
