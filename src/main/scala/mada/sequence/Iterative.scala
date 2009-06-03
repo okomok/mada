@@ -558,4 +558,13 @@ object Iterative {
     implicit def madaIterativeFromJObjectInput(from: java.io.ObjectInput): Iterative[AnyRef] = fromJObjectInput(from)
     implicit def madaIterativeFromJReader(from: java.io.Reader): Iterative[Char] = fromJReader(from)
 
+
+// pattern matching
+
+    @aliasOf("Of.apply")
+    def apply[A](from: A*): Iterative[A] = Of.apply(from: _*)
+
+    @aliasOf("Of.unapplySeq")
+    def unapplySeq[A](from: Iterative[A]): Option[Seq[A]] = Of.unapplySeq(from)
+
 }

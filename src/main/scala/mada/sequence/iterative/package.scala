@@ -11,6 +11,9 @@ package object iterative {
 
 
     @aliasOf("Iterative")
+    val Type = Iterative
+
+    @aliasOf("Iterative")
     type Type[+A] = Iterative[A]
 
 
