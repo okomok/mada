@@ -14,7 +14,7 @@ import list._
 /**
  * Yet another Stream
  */
-trait List[+A] extends Sequence[A] {
+trait List[+A] extends iterative.Sequence[A] {
 
 
 // kernel

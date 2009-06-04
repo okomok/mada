@@ -7,7 +7,7 @@
 package mada.sequence.vector
 
 
-trait Forwarder[A] extends Adapter.Transform[A] with sequence.Forwarder[A] {
+trait Forwarder[A] extends Adapter.Transform[A] with iterative.SequenceForwarder[A] {
     override protected def delegate: Vector[A]
     protected def afterForward[B](that: Vector[B]): Vector[B] = that
     private def afterForward2[B](that: (Vector[B], Vector[B])): (Vector[B], Vector[B]) = (afterForward(that._1), afterForward(that._2))

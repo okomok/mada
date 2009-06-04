@@ -65,7 +65,7 @@ package object vector {
      *              a new vector whose elements are to be concatenated to the result.
      * @return  the newly created writable vector (not a projection into <code>vs</code>).
      */
-    def flatten[A](its: Iterative[Sequence[A]]): Vector[A] = Flatten(its)
+    def flatten[A](its: Iterative[iterative.Sequence[A]]): Vector[A] = Flatten(its)
 
     /**
      * @return  <code>v.filter(_.isLeft).map(_.left.get)</code>.

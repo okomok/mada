@@ -20,7 +20,7 @@ import vector._
  *
  * Unless otherwise specified, these methods return projections to keep readability and writability.
  */
-trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
+trait Vector[A] extends PartialFunction[Int, A] with iterative.Sequence[A] {
 
 
 // kernel

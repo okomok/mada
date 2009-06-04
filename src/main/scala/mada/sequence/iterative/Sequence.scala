@@ -4,16 +4,16 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada
+package mada.sequence.iterative
 
 
 /**
  * The marker trait of sequences to work around problems around erasure.
  */
-trait Sequence[+A] {
+trait Sequence[+A] { // physical
 
     @conversion
-    def toIterative: sequence.Iterative[A] // The "logical" base trait
+    def toIterative: sequence.Iterative[A] // logical
 
     /**
      * Compares the specified object with this sequence for equality.
@@ -58,4 +58,14 @@ trait Sequence[+A] {
         sb.toString
     }
 
+}
+
+
+trait SequenceForwarder[+A] extends Sequence[A] with util.Forwarder {
+    override protected def delegate: Sequence[A]
+
+    override def toIterative = delegate.toIterative
+    override def equals(that: Any): Boolean = delegate.equals(that)
+    override def hashCode: Int = delegate.hashCode
+    override def toString: String = delegate.toString
 }
