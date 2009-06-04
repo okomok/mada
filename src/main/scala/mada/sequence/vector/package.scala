@@ -103,11 +103,6 @@ package object vector {
     def single[A](e: A): Vector[A] = Single(e)
 
     /**
-     * Flattens <code>vs</code>, each vector appending <code>sep</code> except the last one.
-     */
-    def unsplit[A](vs: Iterative[Vector[A]])(sep: Vector[A]): Vector[A] = Unsplit(vs, sep)
-
-    /**
      * Creates a <code>lazy</code> vector.
      */
     def byLazy[A](v: => Vector[A]) = ByLazy(function.ofLazy(v))

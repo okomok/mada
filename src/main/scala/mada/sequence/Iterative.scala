@@ -370,6 +370,12 @@ trait Iterative[+A] extends Sequence[A] {
      */
     def uniqueBy(p: (A, A) => Boolean): Iterative[A] = UniqueBy(this, p)
 
+    /**
+     * Flattens <code>vs</code>, each vector appending <code>sep</code> except the last one.
+     */
+    @methodized
+    def _unsplit[B](_this: Iterative[Sequence[B]], sep: Iterative[B]): Iterative[B] = Unsplit(_this, sep)
+
     @compatibleConversion
     def toSome: ToSome[A] = new ToSome(this)
 
@@ -500,6 +506,7 @@ object Iterative {
 
     sealed class OfSequence[A](_this: Iterative[Sequence[A]]) {
         def flatten: Iterative[A] = _this._flatten(_this)
+        def unsplit(sep: Iterative[A]): Iterative[A] = _this._unsplit(_this, sep)
     }
     implicit def ofSequence[A](_this: Iterative[Sequence[A]]): OfSequence[A] = new OfSequence(_this)
 

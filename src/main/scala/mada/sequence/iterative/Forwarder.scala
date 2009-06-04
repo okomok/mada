@@ -66,6 +66,7 @@ trait Forwarder[+A] extends Iterative[A] with SequenceForwarder[A] {
     override def step(n: Int): Iterative[A] = delegate.step(n)
     override def unique: Iterative[A] = afterForward(delegate.unique)
     override def uniqueBy(p: (A, A) => Boolean): Iterative[A] = afterForward(delegate.uniqueBy(p))
+    override def _unsplit[B](_this: Iterative[Sequence[B]], sep: Iterative[B]): Iterative[B] = afterForward(delegate.asInstanceOf[Iterative[Sequence[B]]].unsplit(sep))
     override def toSome: ToSome[A] = delegate.toSome
     override def _stringize(_this: Iterative[Char]): String = delegate.asInstanceOf[Iterative[Char]].stringize
     override def _toSHashMap[K, V](_this: Iterative[(K, V)]): scala.collection.Map[K, V] = delegate.asInstanceOf[Iterative[(K, V)]].toSHashMap

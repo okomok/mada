@@ -15,6 +15,9 @@ trait Sequence[+A] { // physical
     @conversion
     def toIterative: sequence.Iterative[A] // logical
 
+    @returnThis
+    final def asSequence: Sequence[A] = this
+
     /**
      * Compares the specified object with this sequence for equality.
      * Returns true if and only if the specified object is also a sequence,
