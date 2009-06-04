@@ -19,6 +19,6 @@ case class ToVector[A](_1: Iterative[A]) extends vector.Forwarder[A] {
             a.add(~it)
             it.++
         }
-        vector.fromJclList(a)
+        vector.fromJList(a)
     }
 }

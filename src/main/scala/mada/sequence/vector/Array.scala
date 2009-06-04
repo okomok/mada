@@ -19,12 +19,3 @@ case class FromArray[A](_1: Array[A]) extends Vector[A] {
 //    This requires IntFromArray for correct overload resolution.
 //    override def sortBy(lt: compare.Func[A]) = { Arrays.sort(_1, LessComparator(lt)); this }
 }
-
-
-private[mada] object ToArray {
-    def apply[A](from: Vector[A]): Array[A] = {
-        val a = new Array[A](from.size)
-        from.copyTo(vector.fromArray(a))
-        a
-    }
-}

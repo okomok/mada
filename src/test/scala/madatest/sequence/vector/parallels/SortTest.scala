@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.sequencetest.vectortest.para
+package madatest.sequencetest.vectortest.parallelstest
 
 
 import mada.Compare.madaCompareFromGetOrdered
@@ -44,7 +44,7 @@ class SortTest {
     }
 
     def testOptimizeArrayList {
-        val actual = fromJclList(fromArray(example1).toJclArrayList).parallel.sortBy(_ < _)
+        val actual = fromJList(fromArray(example1).toJArrayList).parallel.sortBy(_ < _)
         detail.TestVectorReadOnly(example1Sorted, actual)
     }
 }

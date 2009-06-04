@@ -15,6 +15,6 @@ case class Flatten[A](_1: Iterative[iterative.Sequence[A]]) extends Forwarder[A]
                 ar.add(e)
             }
         }
-        vector.fromJclList(ar)
+        vector.fromJList(ar)
     }
 }

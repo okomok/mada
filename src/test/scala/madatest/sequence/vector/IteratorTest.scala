@@ -15,7 +15,7 @@ import detail.Example._
 
 class IteratorTest {
     def testTo: Unit = {
-        val it = fromArray(example1).iterator
+        val it = fromArray(example1).toSIterable.iterator
         var i = 0
         it.foreach({ (e: Int) =>
             assertEquals(example1(i), e)
@@ -24,7 +24,7 @@ class IteratorTest {
     }
 
     def testFrom: Unit = {
-        val ac = vector.fromIterable(example1)
+        val ac = vector.fromSIterable(example1)
         detail.TestVectorReadOnly(example1, ac)
     }
 }

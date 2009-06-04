@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.sequencetest.vectortest.para
+package madatest.sequencetest.vectortest.parallelstest
 
 
 import mada.sequence.{Vector, vector}
@@ -16,22 +16,22 @@ import madatest.sequencetest.vectortest.detail._
 
 class SeekTest {
     def testTrivial: Unit = {
-        val v = vector.of("ab", "cde", "f", "ghij", "kl", "mno", "p", "qrst")
+        val v = vector.Of("ab", "cde", "f", "ghij", "kl", "mno", "p", "qrst")
         assertEquals("kl", v.parallel.seek(_ == "kl").get)
     }
 
     def testTrivial2: Unit = {
-        val v = vector.of("ab", "cde", "f", "ghij", "kl", "mno", "p", "qrst")
+        val v = vector.Of("ab", "cde", "f", "ghij", "kl", "mno", "p", "qrst")
         assertEquals("kl", v.parallel(1).seek(_ == "kl").get)
     }
 
     def testNull: Unit = {
-        val v: Vector[String] = vector.of("ab", "cde", null.asInstanceOf[String], "f", "ghij", "kl", "mno", "p", "qrst")
+        val v: Vector[String] = vector.Of("ab", "cde", null.asInstanceOf[String], "f", "ghij", "kl", "mno", "p", "qrst")
         assertEquals(null.asInstanceOf[String], v.parallel(1).seek((_: String) eq null).get)
     }
 
     def testNotFound: Unit = {
-        val v = vector.of("ab", "cde", "f", "ghij", "kl", "mno", "p", "qrst")
+        val v = vector.Of("ab", "cde", "f", "ghij", "kl", "mno", "p", "qrst")
         assertTrue(v.parallel.seek(_ == "xyz").isEmpty)
     }
 }

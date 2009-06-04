@@ -14,12 +14,13 @@ import junit.framework.Assert._
 
 import mada.peg.compatibles._
 import mada.peg._
-import mada.sequence.vector.compatibles._
+import mada.sequence.vector
+
 
 
 class SymbolSetTest {
     def testTrivial: Unit = {
-        val i = ("abc" >> symbolSet("to", "too", "tot", "tab", "so")).lookingAt("abcto".nth).get
+        val i = (vector.from("abc") >> symbolSet("to", "too", "tot", "tab", "so")).lookingAt(vector.from("abcto").nth).get
         assertEquals(5, i)
     }
 

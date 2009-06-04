@@ -97,7 +97,7 @@ trait Vector[A] extends PartialFunction[Int, A] with iterative.Sequence[A] {
     }
 
     @optimize
-    override def toString = toJclArrayList.toString
+    override def toString = toJArrayList.toString
 
     /**
      * @return  <code>start == end</code>.
@@ -635,30 +635,37 @@ trait Vector[A] extends PartialFunction[Int, A] with iterative.Sequence[A] {
 
 // conversions
 
-    /**
-     * @return  <code>vector.toArray(this)</code>.
-     */
-    final def toArray: Array[A] = vector.toArray(this)
+    @conversion
+    def toArray: Array[A] = {
+        val r = new Array[A](size)
+        copyTo(vector.fromArray(r))
+        r
+    }
 
-    /**
-     * @return  <code>vector.toJclArrayList(this)</code>.
-     */
-    final def toJclArrayList: java.util.ArrayList[A] = vector.toJclArrayList(this)
+    @conversion
+    def toProduct: Product = ToProduct(this)
 
-    /**
-     * @return  <code>vector.toIterator</code>.
-     */
-    final def toLinearAccessSeq: Seq[A] = vector.toLinearAccessSeq(this)
+    @conversion
+    def toOrdered(implicit c: compare.GetOrdered[A]): Ordered[Vector[A]] = ToOrdered(this, c)
 
-    /**
-     * @return  <code>vector.toList(this)</code>.
-     */
-    final def toList: scala.List[A] = vector.toList(this)
+    @conversion
+    def toSList: scala.List[A] = toSIterable.toList
 
-    /**
-     * @return  <code>vector.toRandomAccessSeq(this)</code>.
-     */
-    final def toRandomAccessSeq: scala.collection.mutable.Vector[A] = vector.toRandomAccessSeq(this)
+    @conversion
+    def toSIterable: scala.Iterable[A] = ToSIterable(this)
+
+    @conversion
+    def toSVector: scala.collection.mutable.Vector[A] = ToSVector(this)
+
+    @conversion
+    def toJArrayList: java.util.ArrayList[A] = {
+        val r = new java.util.ArrayList[A](size) // this is capacity.
+        foreach{ e => r.add(e) }
+        r
+    }
+
+    @conversion
+    def toJIterable: java.lang.Iterable[A] = ToJIterable(this)
 
 
 // string
@@ -671,6 +678,9 @@ trait Vector[A] extends PartialFunction[Int, A] with iterative.Sequence[A] {
 
     @methodized @conversion
     def _upperCase(_this: Vector[Char]): Vector[Char] = UpperCase(_this)
+
+    @methodized @conversion
+    def _toJCharSequence(_this: Vector[Char]): java.lang.CharSequence = ToJCharSequence(_this)
 
 
 // trivials
@@ -703,15 +713,7 @@ trait Vector[A] extends PartialFunction[Int, A] with iterative.Sequence[A] {
 }
 
 
-object Vector extends vector.Compatibles {
-
-
-// pattern matching
-
-    @aliasOf("of")
-    def apply[A](from: A*): Vector[A] = of(from: _*)
-
-    def unapplySeq[A](from: Vector[A]): Option[Seq[A]] = Some(toRandomAccessSeq(from))
+object Vector {
 
 
 // methodization
@@ -736,8 +738,21 @@ object Vector extends vector.Compatibles {
         def stringize: String = _this._stringize(_this)
         def lowerCase: Vector[Char] = _this._lowerCase(_this)
         def upperCase: Vector[Char] = _this._upperCase(_this)
+        def toJCharSequence: java.lang.CharSequence = _this._toJCharSequence(_this)
     }
     implicit def ofChar(_this: Vector[Char]): OfChar = new OfChar(_this)
+
+
+// compatibles
+
+    implicit def madaVectorFromArray[A](from: Array[A]): Vector[A] = fromArray(from)
+    implicit def madaVectorFromCell[A](from: Cell[A]): Vector[A] = fromCell(from)
+    implicit def madaVectorFromOption[A](from: Option[A]): Vector[A] = fromOption(from)
+    implicit def madaVectorFromProduct(from: Product): Vector[Any] = fromProduct(from)
+    implicit def madaVectorFromSVector[A](from: scala.collection.Vector[A]): Vector[A] = fromSVector(from)
+    implicit def madaVectorUnstringize(from: String): Vector[Char] = unstringize(from)
+    implicit def madaVectorFromJCharSequence(from: java.lang.CharSequence): Vector[Char] = fromJCharSequence(from)
+    implicit def madaVectorFromJList[A](from: java.util.List[A]): Vector[A] = fromJList(from)
 
 
 // eligibles
@@ -761,5 +776,14 @@ object Vector extends vector.Compatibles {
             stl.LexicographicalCompare3way(v, v.start, v.end, w, w.start, w.end, c)
         }
     }
+
+
+// pattern matching
+
+    @aliasOf("Of.apply")
+    def apply[A](from: A*): Vector[A] = Of.apply(from: _*)
+
+    @aliasOf("Of.unapplySeq")
+    def unapplySeq[A](from: Vector[A]): Option[Seq[A]] = Of.unapplySeq(from)
 
 }

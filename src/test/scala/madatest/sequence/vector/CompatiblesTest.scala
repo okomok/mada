@@ -16,7 +16,7 @@ import madatest.sequencetest.vectortest.detail.Example._
 
 class CompatiblesTest {
     def testCompile(x: Int): Unit = {
-        takeIterable(makeVector)
+        takeIterable(makeVector.toSIterable)
         takeVector(Array(1,2,3))
     }
 

@@ -10,20 +10,22 @@ package mada.sequence.vector
 import java.util.ArrayList
 
 
-case class Unsplit[A](_1: Iterable[Vector[A]], _2: Vector[A]) extends Forwarder[A] {
+case class Unsplit[A](_1: Iterative[Vector[A]], _2: Vector[A]) extends Forwarder[A] {
     override protected val delegate = {
         val ar = new ArrayList[A]
 
-        val it = _1.iterator
-        if (it.hasNext) {
-            addVector(it.next, ar)
+        val it = _1.begin
+        if (it) {
+            addVector(~it, ar)
+            it.++
         }
-        while (it.hasNext) {
+        while (it) {
             addVector(_2, ar)
-            addVector(it.next, ar)
+            addVector(~it, ar)
+            it.++
         }
 
-        vector.fromJclList(ar)
+        vector.fromJList(ar)
     }
 
     private def addVector[A](v: Vector[A], ar: ArrayList[A]): Unit = {

@@ -24,23 +24,21 @@ object Lexical extends LexicalConversions with LexicalCompatibles {
  * Contains explicit conversions around char vector.
  */
 trait LexicalConversions {
-    import vector.stringize
-
 // from
     def fromAny(from: Any): Vector[Char] = vector.unstringize(from.toString)
 
 // to
-    def toBoolean(from: Vector[Char]): Boolean = stringize(from).toBoolean
-    def toByte(from: Vector[Char]): Byte = java.lang.Byte.parseByte(stringize(from))
-    def toByte(from: Vector[Char], radix: Byte): Byte = java.lang.Byte.parseByte(stringize(from), radix)
-    def toShort(from: Vector[Char]): Short = java.lang.Short.parseShort(stringize(from))
-    def toShort(from: Vector[Char], radix: Short): Short = java.lang.Short.parseShort(stringize(from), radix)
-    def toInt(from: Vector[Char]): Int = java.lang.Integer.parseInt(stringize(from))
-    def toInt(from: Vector[Char], radix: Int): Int = java.lang.Integer.parseInt(stringize(from), radix)
-    def toLong(from: Vector[Char]): Long = java.lang.Long.parseLong(stringize(from))
-    def toLong(from: Vector[Char], radix: Int): Long = java.lang.Long.parseLong(stringize(from), radix)
-    def toFloat(from: Vector[Char]): Float = java.lang.Float.parseFloat(stringize(from))
-    def toDouble(from: Vector[Char]): Double = java.lang.Double.parseDouble(stringize(from))
+    def toBoolean(from: Vector[Char]): Boolean = from.stringize.toBoolean
+    def toByte(from: Vector[Char]): Byte = java.lang.Byte.parseByte(from.stringize)
+    def toByte(from: Vector[Char], radix: Byte): Byte = java.lang.Byte.parseByte(from.stringize, radix)
+    def toShort(from: Vector[Char]): Short = java.lang.Short.parseShort(from.stringize)
+    def toShort(from: Vector[Char], radix: Short): Short = java.lang.Short.parseShort(from.stringize, radix)
+    def toInt(from: Vector[Char]): Int = java.lang.Integer.parseInt(from.stringize)
+    def toInt(from: Vector[Char], radix: Int): Int = java.lang.Integer.parseInt(from.stringize, radix)
+    def toLong(from: Vector[Char]): Long = java.lang.Long.parseLong(from.stringize)
+    def toLong(from: Vector[Char], radix: Int): Long = java.lang.Long.parseLong(from.stringize, radix)
+    def toFloat(from: Vector[Char]): Float = java.lang.Float.parseFloat(from.stringize)
+    def toDouble(from: Vector[Char]): Double = java.lang.Double.parseDouble(from.stringize)
 }
 
 

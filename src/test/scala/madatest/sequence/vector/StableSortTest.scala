@@ -35,7 +35,7 @@ class StableSortTest {
     }
 
     def testOptimizeArrayList {
-        val actual = fromJclList(fromArray(example1).toJclArrayList).stableSortBy(_ < _)
+        val actual = fromJList(fromArray(example1).toJArrayList).stableSortBy(_ < _)
         detail.TestVectorReadOnly(example1Sorted, actual)
     }
 

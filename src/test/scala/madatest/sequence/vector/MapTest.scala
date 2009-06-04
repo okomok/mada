@@ -28,6 +28,6 @@ class MapTest {
         val a = new java.util.ArrayList[Int]
         vector.range(0, 10).map(_ + 1).foreach(a.add(_: Int))
         val e = vector.range(1, 11)
-        assertEquals(e, vector.fromJclList(a))
+        assertEquals(e, vector.fromJList(a))
     }
 }

@@ -20,7 +20,7 @@ case class Xml(_1: java.io.Writer, _2: Int) extends PrettyPrinter {
      */
     def writeStartElement(tag: Any): Unit = {
         stack.push(tag)
-        _1.write(sequence.vector.stringize(indent ++ "<" ++ tag.toString ++ ">\n"))
+        _1.write((indent ++ "<" ++ tag.toString ++ ">\n").stringize)
         _1.flush
         indentLevel += 1
     }
@@ -30,7 +30,7 @@ case class Xml(_1: java.io.Writer, _2: Int) extends PrettyPrinter {
      */
     def writeEndElement: Unit = {
         indentLevel -= 1
-        _1.write(sequence.vector.stringize(indent ++ "</" ++ stack.pop.toString ++ ">\n"))
+        _1.write((indent ++ "</" ++ stack.pop.toString ++ ">\n").stringize)
         _1.flush
     }
 
@@ -38,7 +38,7 @@ case class Xml(_1: java.io.Writer, _2: Int) extends PrettyPrinter {
      * Writes element without new line.
      */
     def writeElement(tag: Any, chars: Any): Unit = {
-        _1.write(sequence.vector.stringize(indent ++ "<" ++ tag.toString ++ ">" ++ chars.toString ++ "</" ++ tag.toString ++ ">\n"))
+        _1.write((indent ++ "<" ++ tag.toString ++ ">" ++ chars.toString ++ "</" ++ tag.toString ++ ">\n").stringize)
         _1.flush
     }
 

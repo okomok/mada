@@ -23,8 +23,8 @@ class IterateTest {
         var k = 0
         for (vector.Region(v, i, j) <- p.tokenize(w)) {
             assertSame(w, v)
-            sb append vector.stringize(v(k, i))
-            sb append vector.stringize(v(i, j))
+            sb append v(k, i).stringize
+            sb append v(i, j).stringize
             k = j
         }
 

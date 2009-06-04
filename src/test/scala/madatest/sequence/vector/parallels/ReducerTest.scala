@@ -4,13 +4,13 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.sequencetest.vectortest.para
+package madatest.sequencetest.vectortest.parallelstest
 
 
 import mada.sequence.{Vector, vector}
 import mada.sequence.{Vector, vector}
 import mada.sequence.vector._
-import mada.sequence.vector.compatibles._
+
 import junit.framework.Assert._
 import madatest.sequencetest.vectortest.detail.Example._
 import madatest.sequencetest.vectortest.detail._

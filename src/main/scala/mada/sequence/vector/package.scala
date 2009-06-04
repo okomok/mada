@@ -27,9 +27,6 @@ package object vector {
     @aliasOf("Func3[A, Boolean]")
     type Pred3[A] = Func3[A, Boolean]
 
-    @aliasOf("Vector")
-    val compatibles: Compatibles = Vector
-
 
 // constants
 
@@ -41,8 +38,13 @@ package object vector {
 
 // constructors
 
-    @returnThat
-    def from[A](to: Vector[A]): Vector[A] = to
+    /**
+     * Creates a sequence initially containing the specified elements.
+     */
+    object Of {
+        def apply[A](from: A*): Vector[A] = fromSIterable(from)
+        def unapplySeq[A](from: Vector[A]): Option[Seq[A]] = Some(from.toSVector)
+    }
 
     /**
      * Concatenate all argument sequences into a single vector.
@@ -103,7 +105,7 @@ package object vector {
     /**
      * Flattens <code>vs</code>, each vector appending <code>sep</code> except the last one.
      */
-    def unsplit[A](vs: Iterable[Vector[A]])(sep: Vector[A]): Vector[A] = Unsplit(vs, sep)
+    def unsplit[A](vs: Iterative[Vector[A]])(sep: Vector[A]): Vector[A] = Unsplit(vs, sep)
 
     /**
      * Creates a <code>lazy</code> vector.
@@ -132,38 +134,37 @@ package object vector {
 
 // conversions
 
-  // compatibles
+    @returnThat
+    def from[A](to: Vector[A]): Vector[A] = to
 
-    // from
+    @compatibleConversion
     def fromArray[A](from: Array[A]): Vector[A] = FromArray(from)
+
+    @compatibleConversion
     def fromCell[A](from: Cell[A]): Vector[A] = FromCell(from)
-    def fromJclCharSequence(from: java.lang.CharSequence): Vector[Char] = jcl.CharSequenceToVector(from)
-    def fromJclList[A](from: java.util.List[A]): Vector[A] = jcl.ListToVector(from)
+
+    @compatibleConversion
     def fromOption[A](from: Option[A]): Vector[A] = FromOption(from)
+
+    @compatibleConversion
     def fromProduct(from: Product): Vector[Any] = FromProduct(from)
-    def fromRandomAccessSeq[A](from: scala.collection.Vector[A]): Vector[A] = FromRandomAccessSeq(from)
+
+    @compatibleConversion
+    def fromSVector[A](from: scala.collection.Vector[A]): Vector[A] = FromSVector(from)
+
+    @compatibleConversion
+    def fromJCharSequence(from: java.lang.CharSequence): Vector[Char] = FromJCharSequence(from)
+
+    @compatibleConversion
+    def fromJList[A](from: java.util.List[A]): Vector[A] = FromJList(from)
+
+    @compatibleConversion
     def unstringize(from: String): Vector[Char] = Unstringize(from)
 
-    // to
-    def toJclCharSequence(from: Vector[Char]): java.lang.CharSequence = jcl.CharSequenceFromVector(from)
-    def toIterable[A](from: Vector[A]): Iterable[A] = ToIterable(from)
-    def toJclIterable[A](from: Vector[A]): java.lang.Iterable[A] = jcl.IterableFromVector(from)
-    def toRandomAccessSeq[A](from: Vector[A]): scala.collection.mutable.Vector[A] = ToRandomAccessSeq(from)
-    def toLinearAccessSeq[A](from: Vector[A]): Seq[A] = ToLinearAccessSeq(from)
-    def toProduct[A](from: Vector[A]): Product = ToProduct(from)
-    def toOrdered[A](from: Vector[A])(implicit c: compare.GetOrdered[A]): Ordered[Vector[A]] = ToOrdered(from, c)
+    @conversion
+    def fromSIterable[A](from: Iterable[A]): Vector[A] = FromSIterable(from)
 
-  // incompatibles
-
-    // from
-    def fromIterable[A](from: Iterable[A]): Vector[A] = FromIterable(from)
-    def fromJclIterable[A](from: java.lang.Iterable[A]): Vector[A] = jcl.IterableToVector(from)
-    def of[A](from: A*): Vector[A] = fromIterable(from)
-    def stringize(from: Vector[Char]): String = Stringize(from)
-
-    // to
-    def toList[A](from: Vector[A]): scala.List[A] = from.toIterable.toList
-    def toArray[A](from: Vector[A]): Array[A] = ToArray(from)
-    def toJclArrayList[A](from: Vector[A]): java.util.ArrayList[A] = jcl.ArrayListFromVector(from)
+    @conversion
+    def fromJIterable[A](from: java.lang.Iterable[A]): Vector[A] = FromJIterable(from)
 
 }

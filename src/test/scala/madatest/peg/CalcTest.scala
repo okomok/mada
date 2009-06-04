@@ -33,7 +33,7 @@ class CalcTest {
                 ('(' >> expr >> ')') |
                 ('-' >> factor){ _ => push(-pop) } |
                 ('+' >> factor)
-    integer ::= (digit.+){ v => push(vector.stringize(v).toInt) }
+    integer ::= (digit.+){ v => push(v.stringize.toInt) }
     digit   ::= regex("[0-9]")
 
     def testTrivial: Unit = {

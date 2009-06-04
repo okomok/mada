@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.sequencetest.vectortest.para
+package madatest.sequencetest.vectortest.parallelstest
 
 
 import mada.sequence.vector._

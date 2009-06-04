@@ -14,13 +14,12 @@ import junit.framework.Assert._
 
 import mada.peg.compatibles._
 import mada.peg._
-import mada.sequence.vector._
-import mada.sequence.vector.compatibles._
+import mada.sequence.vector
 
 
 class SymbolMapTest {
     def testTrivial: Unit = {
-        val g = symbolMap("e" --> "z", "ef" --> "g", /* "" --> "DEFAULT", */ "wx" --> "wy", "w" --> "xyz")
+        val g = symbolMap(vector.from("e") --> "z", vector.from("ef") --> "g", /* "" --> "DEFAULT", */ vector.from("wx") --> "wy", vector.from("w") --> "xyz")
         assertTrue("abc" >> g >> "LL"  matches "abcezLL")
         assertTrue("abc" >> g >> "LL"  matches "abcefgLL")
         assertTrue("abc" >> g >> "LL"  matches "abcwxwyLL")
@@ -34,7 +33,7 @@ class SymbolMapTest {
     }
 
     def testIterator: Unit = {
-        val g = symbolMap("e" --> "z", "ef" --> "g", "wx" --> "wy", "w" --> "xyz")
+        val g = symbolMap(vector.from("e") --> "z", vector.from("ef") --> "g", vector.from("wx") --> "wy", vector.from("w") --> "xyz")
         for (n <- g.iterator) {
             // println(n)
         }
