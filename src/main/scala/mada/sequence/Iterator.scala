@@ -79,4 +79,6 @@ trait Iterator[+A] {
 }
 
 
-object Iterator extends iterator.Compatibles
+object Iterator {
+    implicit def madaIteratorToBoolean[A](from: Iterator[A]): Boolean = from.toBoolean
+}

@@ -32,7 +32,7 @@ case class Undivide[A](_1: Vector[Vector[A]]) extends Forwarder[A] {
     }
 }
 
-private[mada] class _Undivide[A](_1: Vector[Vector[A]]) extends Vector[A] {
+private class _Undivide[A](_1: Vector[Vector[A]]) extends Vector[A] {
     util.assert(!_1.isEmpty)
 
     override def start = 0

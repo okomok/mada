@@ -671,7 +671,11 @@ trait Vector[A] extends PartialFunction[Int, A] with iterative.Sequence[A] {
 // string
 
     @methodized @conversion
-    def _stringize(_this: Vector[Char]): String = Stringize(_this)
+    def _stringize(_this: Vector[Char]): String = {
+        val sb = new StringBuilder(size)
+        foreach{ e => sb.append(e) }
+        sb.toString
+    }
 
     @methodized @conversion
     def _lowerCase(_this: Vector[Char]): Vector[Char] = LowerCase(_this)
@@ -698,15 +702,8 @@ trait Vector[A] extends PartialFunction[Int, A] with iterative.Sequence[A] {
      */
     final def indices: Vector[Int] = vector.range(start, end)
 
-    /**
-     * Returns a set entry as pair, which is useful for <code>peg.switch</code>.
-     *
-     * @return  <code>(this, p)</code>
-     */
-    final def -->(p: Peg[A]): (Vector[A], Peg[A]) = (this, p)
 
-
-// implementation helpers
+// detail
 
     private def throwIfEmpty(method: String) = ThrowIf.empty(this, method)
 

@@ -7,30 +7,13 @@
 package mada.sequence.vector
 
 
-private[mada] object Unstringize {
-    def apply(from: String): Vector[Char] = new UnstringizeVector(from)
-}
-
-private[mada] class UnstringizeVector(val from: String) extends Vector[Char] {
+case class Unstringize(_1: String) extends Vector[Char] {
     override def start = 0
-    override def end = from.length
-    override def apply(i: Int) = from.charAt(i)
+    override def end = _1.length
+    override def apply(i: Int) = _1.charAt(i)
 
     override def force = this
-}
-
-
-private[mada] object Stringize {
-    def apply(from: Vector[Char]): String = from match {
-        case from: UnstringizeVector => from.from // conversion fusion
-        case _ => {
-            val sb = new StringBuilder(from.size)
-            for (e <- from) {
-                sb.append(e)
-            }
-            sb.toString
-        }
-    }
+    override def _stringize(_this: Vector[Char]) = _1 // to-from fusion
 }
 
 

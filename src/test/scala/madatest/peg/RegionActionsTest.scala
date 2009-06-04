@@ -17,7 +17,7 @@ class RegionActionsTest {
     def testTrivial: Unit = {
         val R = new peg.RegionActions[Char]
         var w: Vector[Char] = null
-        val g = R.startAt >> peg.symbolMap(vector.from("e") --> "z", vector.from("ef") --> ( R{v => w = v} >> "g" ), vector.from("wx") --> "wy", vector.from("wxyz") --> ( R{v => w = v} >> "123" ) )
+        val g = R.startAt >> peg.symbolMap( peg.entry("e", "z"), peg.entry("ef", R{v => w = v} >> "g"), peg.entry("wx", "wy"), peg.entry("wxyz", R{v => w = v} >> "123") )
         assertTrue("abc" >> g >> "LL"  matches "abcefgLL")
         assertEquals(vector.from("ef"), w)
         assertTrue("abc" >> g >> "LL"  matches "abcwxyz123LL")

@@ -15,9 +15,6 @@ package object iterator {
     @aliasOf("Iterator")
     type Type[+A] = Iterator[A]
 
-    @aliasOf("Iterator")
-    val compatibles: Compatibles = Iterator
-
 
 // methods
 
@@ -39,6 +36,6 @@ package object iterator {
     def fromJIterator[A](from: java.util.Iterator[A]): Iterator[A] = FromJIterator(from)
 
     @conversion
-    final def toJIterator[A](from: Iterator[A]): java.util.Iterator[A] = ToJIterator(from) // invariant can'it be method.
+    def toJIterator[A](from: Iterator[A]): java.util.Iterator[A] = ToJIterator(from) // invariant can't be method.
 
 }

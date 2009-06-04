@@ -237,6 +237,11 @@ package object peg {
         }
     }
 
+    /**
+     * A short-cut to create a symbol entry.
+     */
+    def entry[K, A](k: K, v: Peg[A])(implicit c: K => sequence.Vector[A]): (sequence.Vector[A], Peg[A]) = (c(k), v)
+
 
 // verify
 

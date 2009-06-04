@@ -19,7 +19,7 @@ import mada.sequence.vector
 
 class SymbolMapTest {
     def testTrivial: Unit = {
-        val g = symbolMap(vector.from("e") --> "z", vector.from("ef") --> "g", /* "" --> "DEFAULT", */ vector.from("wx") --> "wy", vector.from("w") --> "xyz")
+        val g = symbolMap(entry(vector.from("e"), "z"), entry("ef", "g"), /* entry("", "DEFAULT"), */ entry("wx", "wy"), entry("w", "xyz"))
         assertTrue("abc" >> g >> "LL"  matches "abcezLL")
         assertTrue("abc" >> g >> "LL"  matches "abcefgLL")
         assertTrue("abc" >> g >> "LL"  matches "abcwxwyLL")
@@ -33,7 +33,7 @@ class SymbolMapTest {
     }
 
     def testIterator: Unit = {
-        val g = symbolMap(vector.from("e") --> "z", vector.from("ef") --> "g", vector.from("wx") --> "wy", vector.from("w") --> "xyz")
+        val g = symbolMap(entry("e", "z"), entry("ef", "g"), entry("wx", "wy"), entry("w", "xyz"))
         for (n <- g.iterator) {
             // println(n)
         }
