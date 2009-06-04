@@ -53,36 +53,36 @@ class DivideTest {
     }
 
     def testUndivide: Unit = {
-        val actual = vector.undivide(mada.sequence.vector.from(example1).copy.divide(6).seal)
+        val actual = mada.sequence.vector.from(example1).copy.divide(6).seal.undivide
         assertEquals(15, actual.size)
         detail.TestVectorReadWrite(example1, actual)
     }
     def testUndivideBound: Unit = {
-        val actual = vector.undivide(mada.sequence.vector.from(example1).divide(1).seal)
+        val actual = mada.sequence.vector.from(example1).divide(1).seal.undivide
         assertEquals(15, actual.size)
         detail.TestVectorReadOnly(example1, actual)
     }
 
     def testUndivideBoundBig: Unit = {
-        val actual = vector.undivide(mada.sequence.vector.from(example1).divide(1000).seal)
+        val actual = mada.sequence.vector.from(example1).divide(1000).seal.undivide
         assertEquals(15, actual.size)
         detail.TestVectorReadOnly(example1, actual)
     }
 
     def testUndivideEmpty: Unit = {
-        val actual = vector.undivide(mada.sequence.vector.from(empty1).divide(10).seal)
+        val actual = mada.sequence.vector.from(empty1).divide(10).seal.undivide
         detail.TestEmpty(actual)
     }
 
     def testUndivideFusion: Unit = {
-        val actual = vector.undivide(mada.sequence.vector.from(example1).divide(1000))
+        val actual = mada.sequence.vector.from(example1).divide(1000).undivide
         assertEquals(15, actual.size)
         detail.TestVectorReadOnly(example1, actual)
     }
 
     def testUndivideRegion: Unit = {
         val dv =mada.sequence.vector.from(example1).copy.divide(6).seal.region(1, 2)
-        val actual = vector.undivide(dv)
+        val actual = dv.undivide
         assertEquals(6, actual.size)
         detail.TestVectorReadWrite(Array(13, 6, 4,23, 0,12), actual)
     }

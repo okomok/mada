@@ -19,11 +19,10 @@ private[mada] class MapVector[Z, A](v: Vector[Z], f: Z => A, grainSize: Int) ext
         if (grainSize == 1) {
             v.map{ e => future(f(e)) }.force.map{ u => u() }
         } else {
-            vector.undivide(
-                v.divide(grainSize).map{ w => future(w.map(f).force) }.
-                    force. // start tasks.
-                        map{ u => u() } // get result by projection.
-            )
+            v.divide(grainSize).map{ w => future(w.map(f).force) }.
+                force. // start tasks.
+                    map{ u => u() }. // get result by projection.
+                        undivide
         }
     }
 

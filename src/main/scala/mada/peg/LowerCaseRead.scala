@@ -6,6 +6,7 @@
 
 package mada.peg
 
+
 case class LowerCaseRead(_1: Peg[Char]) extends Forwarder[Char] {
-    override protected val delegate = _1.readMap{ (v: sequence.Vector[Char]) => sequence.vector.lowerCase(v) }
+    override protected val delegate = _1.readMap{ (v: sequence.Vector[Char]) => v.lowerCase }
 }

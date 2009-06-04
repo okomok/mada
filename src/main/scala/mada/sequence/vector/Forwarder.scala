@@ -10,7 +10,7 @@ package mada.sequence.vector
 trait Forwarder[A] extends Adapter.Transform[A] with iterative.SequenceForwarder[A] {
     override protected def delegate: Vector[A]
     protected def afterForward[B](that: Vector[B]): Vector[B] = that
-    private def afterForward2[B](that: (Vector[B], Vector[B])): (Vector[B], Vector[B]) = (afterForward(that._1), afterForward(that._2))
+    private def afterForward2[B, C](that: (Vector[B], Vector[C])): (Vector[B], Vector[C]) = (afterForward(that._1), afterForward(that._2))
     final override def underlying = delegate
 
 // iterative
@@ -51,6 +51,8 @@ trait Forwarder[A] extends Adapter.Transform[A] with iterative.SequenceForwarder
     override def step(n: Int): Vector[A] = afterForward(delegate.step(n))
     override def seal: Vector[A] = delegate.seal
     override def zip[B](that: Vector[B]): Vector[(A, B)] = afterForward(delegate.zip(that))
+    override def _unzip[B, C](_this: Vector[(B, C)]): (Vector[B], Vector[C]) = afterForward2(delegate.asInstanceOf[Vector[(B, C)]].unzip)
+    override def zipBy[B, C](that: Vector[B])(f: (A, B) => C): Vector[C] = afterForward(delegate.zipBy(that)(f))
 
 // regions
     override def region(_start: Int, _end: Int): Vector[A] = afterForward(delegate.region(_start, _end))
@@ -62,6 +64,7 @@ trait Forwarder[A] extends Adapter.Transform[A] with iterative.SequenceForwarder
     override def shallowEquals[B](that: Vector[B]): Boolean = delegate.shallowEquals(that)
 // division
     override def divide(n: Int): Vector[Vector[A]] = afterForward(delegate.divide(n))
+    override def _undivide[B](_this: Vector[Vector[B]]): Vector[B] = afterForward(delegate.asInstanceOf[Vector[Vector[B]]].undivide)
     override def break(p: A => Boolean): (Vector[A], Vector[A]) = afterForward2(delegate.break(p))
 // filter
     override def mutatingFilter(p: A => Boolean): Vector[A] = afterForward(delegate.mutatingFilter(p))
@@ -97,4 +100,8 @@ trait Forwarder[A] extends Adapter.Transform[A] with iterative.SequenceForwarder
 // associative folding
     override def folder(z: A)(op: (A, A) => A): Vector[A] = afterForward(delegate.folder(z)(op))
     override def reducer(op: (A, A) => A): Vector[A] = afterForward(delegate.reducer(op))
+// string
+    override def _stringize(_this: Vector[Char]): String = delegate.asInstanceOf[Vector[Char]].stringize
+    override def _lowerCase(_this: Vector[Char]): Vector[Char] = delegate.asInstanceOf[Vector[Char]].lowerCase
+    override def _upperCase(_this: Vector[Char]): Vector[Char] = delegate.asInstanceOf[Vector[Char]].upperCase
 }

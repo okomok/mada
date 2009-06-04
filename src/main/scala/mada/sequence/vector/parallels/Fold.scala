@@ -43,8 +43,6 @@ private[mada] object Reducer {
         }
 
         val ls = rss.init.map{ w => w.last }.reducer(op)
-        rss.head ++
-            vector.undivide(
-                (ls zip rss.tail).parallel(1).map{ case (l, rs) => rs.map{ r => op(l, r) } } )
+        rss.head ++ (ls zip rss.tail).parallel(1).map{ case (l, rs) => rs.map{ r => op(l, r) } }.undivide
     }
 }

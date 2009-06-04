@@ -418,6 +418,11 @@ trait Iterative[+A] extends Sequence[A] {
     def zip[B](that: Iterative[B]): Iterative[(A, B)] = Zip(this, that)
 
     /**
+     * Reverts <code>zip</code>.
+     */
+    def _unzip[B, C](_this: Iterative[(B, C)]): (Iterative[B], Iterative[C]) = (_this.map{ bc => bc._1 }, _this.map{ bc => bc._2 })
+
+    /**
      * Zips <code>this</code> and <code>that</code> applying <code>f</code>.
      */
     def zipBy[B, C](that: Iterative[B])(f: (A, B) => C): Iterative[C] = ZipBy(this, that, f)
@@ -498,10 +503,11 @@ object Iterative {
     }
     implicit def ofSequence[A](_this: Iterative[Sequence[A]]): OfSequence[A] = new OfSequence(_this)
 
-    sealed class OfTuple2[T1, T2](_this: Iterative[(T1, T2)]) {
-        def toSHashMap: scala.collection.Map[T1, T2] = _this._toSHashMap(_this)
+    sealed class OfPair[A, B](_this: Iterative[(A, B)]) {
+        def unzip: (Iterative[A], Iterative[B]) = _this._unzip(_this)
+        def toSHashMap: scala.collection.Map[A, B] = _this._toSHashMap(_this)
     }
-    implicit def ofTuple2[T1, T2](_this: Iterative[(T1, T2)]): OfTuple2[T1, T2] = new OfTuple2(_this)
+    implicit def ofPair[A, B](_this: Iterative[(A, B)]): OfPair[A, B] = new OfPair(_this)
 
     sealed class OfChar(_this: Iterative[Char]) {
         def stringize: String = _this._stringize(_this)

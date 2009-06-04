@@ -101,21 +101,9 @@ package object vector {
     def single[A](e: A): Vector[A] = Single(e)
 
     /**
-     * Reverts <code>divide</code>.
-     *
-     * @pre     each vector is the same size except for the last one.
-     */
-    def undivide[A](vv: Vector[Vector[A]]): Vector[A] = Undivide(vv)
-
-    /**
      * Flattens <code>vs</code>, each vector appending <code>sep</code> except the last one.
      */
     def unsplit[A](vs: Iterable[Vector[A]])(sep: Vector[A]): Vector[A] = Unsplit(vs, sep)
-
-    /**
-     * Reverts <code>zip</code>.
-     */
-    def unzip[A, B](v: Vector[(A, B)]): (Vector[A], Vector[B]) = Unzip(v)
 
     /**
      * Creates a <code>lazy</code> vector.
@@ -140,16 +128,6 @@ package object vector {
 
     @aliasOf("vector.Lexical")
     val lexical = vector.Lexical
-
-    /**
-     * Converts to lower case letters.
-     */
-    def lowerCase(v: Vector[Char]): Vector[Char] = v.map(java.lang.Character.toLowerCase(_))
-
-    /**
-     * Converts to upper case letters.
-     */
-    def upperCase(v: Vector[Char]): Vector[Char] = v.map(java.lang.Character.toUpperCase(_))
 
 
 // conversions

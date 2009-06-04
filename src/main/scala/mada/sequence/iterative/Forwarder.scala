@@ -11,7 +11,7 @@ trait Forwarder[+A] extends Iterative[A] with SequenceForwarder[A] {
     override protected def delegate: Iterative[A]
 
     protected def afterForward[B](that: Iterative[B]): Iterative[B] = that
-    private def afterForward2[B](that: (Iterative[B], Iterative[B])): (Iterative[B], Iterative[B]) = (afterForward(that._1), afterForward(that._2))
+    private def afterForward2[B, C](that: (Iterative[B], Iterative[C])): (Iterative[B], Iterative[C]) = (afterForward(that._1), afterForward(that._2))
 
     @quasiFinal override def begin: Iterator[A] = delegate.begin
 
@@ -73,6 +73,7 @@ trait Forwarder[+A] extends Iterative[A] with SequenceForwarder[A] {
     override def _toJIterable[B](_this: Iterative[B]): java.lang.Iterable[B] = delegate.asInstanceOf[Iterative[B]].toJIterable
     override def _toVector[B](_this: Iterative[B]): Vector[B] = delegate.asInstanceOf[Iterative[B]].toVector
     override def zip[B](that: Iterative[B]): Iterative[(A, B)] = afterForward(delegate.zip(that))
+    override def _unzip[B, C](_this: Iterative[(B, C)]): (Iterative[B], Iterative[C]) = afterForward2(delegate.asInstanceOf[Iterative[(B, C)]].unzip)
     override def zipBy[B, C](that: Iterative[B])(f: (A, B) => C): Iterative[C] = afterForward(delegate.zipBy(that)(f))
 
     override def merge[B >: A](that: Iterative[B])(implicit c: Compare[B]): Iterative[B] = afterForward(delegate.merge(that)(c))

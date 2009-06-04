@@ -32,3 +32,12 @@ private[mada] object Stringize {
         }
     }
 }
+
+
+case class LowerCase(_1: Vector[Char]) extends Forwarder[Char] {
+    override protected val delegate = _1.map(java.lang.Character.toLowerCase(_))
+}
+
+case class UpperCase(_1: Vector[Char]) extends Forwarder[Char] {
+    override protected val delegate = _1.map(java.lang.Character.toUpperCase(_))
+}

@@ -300,12 +300,20 @@ trait Vector[A] extends PartialFunction[Int, A] with iterative.Sequence[A] {
      */
     def step(n: Int): Vector[A] = Step(this, n)
 
-//    @optimize override def _toVector[B](_this: Iterative[B]): Vector[B] = this.asInstanceOf[Vector[B]].readOnly // writable guarantee.
-
     /**
      * Zips <code>this</code> and <code>that</code>.
      */
     def zip[B](that: Vector[B]): Vector[(A, B)] = Zip(this, that)
+
+    /**
+     * Reverts <code>zip</code>.
+     */
+    def _unzip[B, C](_this: Vector[(B, C)]): (Vector[B], Vector[C]) = (_this.map{ bc => bc._1 }, _this.map{ bc => bc._2 })
+
+    /**
+     * Zips <code>this</code> and <code>that</code> applying <code>f</code>.
+     */
+    def zipBy[B, C](that: Vector[B])(f: (A, B) => C): Vector[C] = ZipBy(this, that, f)
 
 
 // regions
@@ -362,6 +370,14 @@ trait Vector[A] extends PartialFunction[Int, A] with iterative.Sequence[A] {
      * @see     vector.undivide
      */
     def divide(n: Int): Vector[Vector[A]] = Divide(this, n)
+
+    /**
+     * Reverts <code>divide</code>.
+     *
+     * @pre     each vector is the same size except for the last one.
+     */
+    @methodized
+    def _undivide[B](_this: Vector[Vector[B]]): Vector[B] = Undivide(_this)
 
     /**
      * @return  <code>span(function.not(p))</code>.
@@ -645,6 +661,18 @@ trait Vector[A] extends PartialFunction[Int, A] with iterative.Sequence[A] {
     final def toRandomAccessSeq: scala.collection.mutable.Vector[A] = vector.toRandomAccessSeq(this)
 
 
+// string
+
+    @methodized @conversion
+    def _stringize(_this: Vector[Char]): String = Stringize(_this)
+
+    @methodized @conversion
+    def _lowerCase(_this: Vector[Char]): Vector[Char] = LowerCase(_this)
+
+    @methodized @conversion
+    def _upperCase(_this: Vector[Char]): Vector[Char] = UpperCase(_this)
+
+
 // trivials
 
     @returnThis
@@ -671,6 +699,7 @@ trait Vector[A] extends PartialFunction[Int, A] with iterative.Sequence[A] {
 // implementation helpers
 
     private def throwIfEmpty(method: String) = ThrowIf.empty(this, method)
+
 }
 
 
@@ -685,7 +714,7 @@ object Vector extends vector.Compatibles {
     def unapplySeq[A](from: Vector[A]): Option[Seq[A]] = Some(toRandomAccessSeq(from))
 
 
-// operators
+// methodization
 
     sealed class MadaVectorEither[A, B](_1: Vector[Either[A, B]]) {
         def lefts = vector.lefts(_1)
@@ -693,28 +722,22 @@ object Vector extends vector.Compatibles {
     }
     implicit def madaVectorEither[A, B](_1: Vector[Either[A, B]]): MadaVectorEither[A, B] = new MadaVectorEither(_1)
 
-    sealed class MadaVectorVector[A](_1: Vector[Vector[A]]) {
-        def undivide = vector.undivide(_1)
+    sealed class OfVector[A](_this: Vector[Vector[A]]) {
+        def undivide: Vector[A] = _this._undivide(_this)
     }
-    implicit def madaVectorVector[A](_1: Vector[Vector[A]]): MadaVectorVector[A] = new MadaVectorVector(_1)
+    implicit def ofVector[A](_this: Vector[Vector[A]]): OfVector[A] = new OfVector(_this)
 
-    sealed class MadaVectorPair[A, B](_1: Vector[(A, B)]) {
-        def unzip = vector.unzip(_1)
+    sealed class OfPair[A, B](_this: Vector[(A, B)]) {
+        def unzip: (Vector[A], Vector[B]) = _this._unzip(_this)
     }
-    implicit def madaVectorPair[A, B](_1: Vector[(A, B)]): MadaVectorPair[A, B] = new MadaVectorPair(_1)
+    implicit def ofPair[A, B](_this: Vector[(A, B)]): OfPair[A, B] = new OfPair(_this)
 
-    // remove me.
-    sealed class MadaVectorByName[A](_1: => Vector[A]) {
-        def byLazy = vector.byLazy(_1)
+    sealed class OfChar(_this: Vector[Char]) {
+        def stringize: String = _this._stringize(_this)
+        def lowerCase: Vector[Char] = _this._lowerCase(_this)
+        def upperCase: Vector[Char] = _this._upperCase(_this)
     }
-    implicit def madaVectorByName[A](_1: => Vector[A]): MadaVectorByName[A] = new MadaVectorByName(_1)
-
-    sealed class MadaVectorChar(_1: Vector[Char]) {
-        def lowerCase = vector.lowerCase(_1)
-        def upperCase = vector.upperCase(_1)
-        def stringize = vector.stringize(_1)
-    }
-    implicit def madaVectorChar(_1: Vector[Char]): MadaVectorChar = new MadaVectorChar(_1)
+    implicit def ofChar(_this: Vector[Char]): OfChar = new OfChar(_this)
 
 
 // eligibles
