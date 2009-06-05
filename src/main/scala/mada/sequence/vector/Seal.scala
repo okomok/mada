@@ -7,10 +7,8 @@
 package mada.sequence.vector
 
 
-private[mada] object Seal {
-    def apply[A](v: Vector[A]): Vector[A] = new SealVector(v)
-}
+case class Seal[A](_1: Vector[A]) extends Adapter.Transform[A] {
+    override val underlying = _1
 
-private[mada] sealed class SealVector[A](override val underlying: Vector[A]) extends Adapter.Transform[A] {
     // seal-seal fusion too must be "sealed".
 }

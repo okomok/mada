@@ -32,7 +32,7 @@ package object precondition {
      */
     def range(n: Int, m: Int, msg: String): Unit = {
         if (n > m) {
-            throw new IllegalArgumentException(msg + ": " + Tuple2(n, m) + " shall be range.")
+            throw new IllegalArgumentException(msg + ": " + Tuple2(n, m) + " shall be a valid range.")
         }
     }
 

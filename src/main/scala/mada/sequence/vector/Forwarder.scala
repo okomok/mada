@@ -49,7 +49,6 @@ trait Forwarder[A] extends Adapter.Transform[A] with iterative.SequenceForwarder
     override def memoize : Vector[A] = afterForward(delegate.memoize)
     override def mix(x: Mixin): Vector[A] = afterForward(delegate.mix(x))
     override def step(n: Int): Vector[A] = afterForward(delegate.step(n))
-    override def seal: Vector[A] = delegate.seal
     override def zip[B](that: Vector[B]): Vector[(A, B)] = afterForward(delegate.zip(that))
     override def _unzip[B, C](_this: Vector[(B, C)]): (Vector[B], Vector[C]) = afterForward2(delegate.asInstanceOf[Vector[(B, C)]].unzip)
     override def zipBy[B, C](that: Vector[B])(f: (A, B) => C): Vector[C] = afterForward(delegate.zipBy(that)(f))
@@ -91,8 +90,8 @@ trait Forwarder[A] extends Adapter.Transform[A] with iterative.SequenceForwarder
     override def bounds: Vector[A] = afterForward(delegate.bounds)
     override def readOnly: Vector[A] = afterForward(delegate.readOnly)
 // copy
-    override def copyTo[B >: A](that: Vector[B]): Vector[A] = afterForward(delegate.copyTo(that))
     override def copy: Vector[A] = afterForward(delegate.copy)
+    override def copyTo[B >: A](that: Vector[B]): Unit = delegate.copyTo(that)
 // parallel support
     override def parallel(_grainSize: Int): Vector[A] = afterForward(delegate.parallel(_grainSize))
     override def grainSize: Int = delegate.grainSize

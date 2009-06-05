@@ -133,6 +133,9 @@ package object vector {
     def from[A](to: Vector[A]): Vector[A] = to
 
     @compatibleConversion
+    def unstringize(from: String): Vector[Char] = Unstringize(from)
+
+    @compatibleConversion
     def fromArray[A](from: Array[A]): Vector[A] = FromArray(from)
 
     @compatibleConversion
@@ -152,9 +155,6 @@ package object vector {
 
     @compatibleConversion
     def fromJList[A](from: java.util.List[A]): Vector[A] = FromJList(from)
-
-    @compatibleConversion
-    def unstringize(from: String): Vector[Char] = Unstringize(from)
 
     @conversion
     def fromSIterable[A](from: Iterable[A]): Vector[A] = FromSIterable(from)

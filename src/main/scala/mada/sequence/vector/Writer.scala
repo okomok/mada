@@ -7,6 +7,9 @@
 package mada.sequence.vector
 
 
+// maybe unneeded.
+
+
 private[mada] object Writer {
     def apply[A](v: Vector[A]): Writer[A] = apply(v, v.start)
     def apply[A](v: Vector[A], i: Int): Writer[A] = new Writer(v, i)

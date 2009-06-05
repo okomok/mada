@@ -122,7 +122,7 @@ trait Vector[A] extends PartialFunction[Int, A] with iterative.Sequence[A] {
     /**
      * @return  <code>vector.flatten(map(f))</code>.
      */
-    def flatMap[B](f: A => Vector[B]): Vector[B] = vector.flatten(map(f))
+    def flatMap[B](f: A => Vector[B]): Vector[B] = flatten(map(f))
 
     /**
      * Filters elements using <code>p</code>.
@@ -302,7 +302,7 @@ trait Vector[A] extends PartialFunction[Int, A] with iterative.Sequence[A] {
     /**
      * Disables overrides.
      */
-    def seal: Vector[A] = Seal(this)
+    final def seal: Vector[A] = Seal(this)
 
     /**
      * Steps by the specified stride.
@@ -556,20 +556,23 @@ trait Vector[A] extends PartialFunction[Int, A] with iterative.Sequence[A] {
 // copy
 
     /**
-     * Copies all the elements into another.
-     *
-     * @pre     <code>size == that.size</code>.
-     * @pre     <code>that</code> is writable.
-     * @return  this vector.
-     */
-    def copyTo[B >: A](that: Vector[B]): Vector[A] = CopyTo(this, that)
-
-    /**
      * Returns a shallow copy of this vector. (The elements themselves are not copied.)
      *
-     * @return  a writable clone of this vector.
+     * @return  a writable copy of this vector.
      */
-    def copy: Vector[A] = vector.fromArray(toArray)
+    def copy: Vector[A] = Copy(this)
+
+    /**
+     * Copies all the elements into another.
+     *
+     * @pre     <code>size <= that.size</code>.
+     * @pre     <code>that</code> is writable.
+     */
+    def copyTo[B >: A](that: Vector[B]): Unit = {
+        precondition.sameSize(this, that, "copyTo")
+        val out = that.start
+        that(out, stl.Copy(this, start, end, that, out))
+    }
 
     /**
      * @return  <code>writer(start)</code>
@@ -647,7 +650,7 @@ trait Vector[A] extends PartialFunction[Int, A] with iterative.Sequence[A] {
     @conversion
     def toArray: Array[A] = {
         val r = new Array[A](size)
-        copyTo(vector.fromArray(r))
+        copyTo(fromArray(r))
         r
     }
 
@@ -707,9 +710,9 @@ trait Vector[A] extends PartialFunction[Int, A] with iterative.Sequence[A] {
     final def sideEffect(f: Vector[A] => Unit): Vector[A] = { f(this); this }
 
     /**
-     * @return  <code>vector.range(start, end)</code>.
+     * @return  <code>range(start, end)</code>.
      */
-    final def indices: Vector[Int] = vector.range(start, end)
+    final def indices: Vector[Int] = range(start, end)
 
 }
 
@@ -725,35 +728,35 @@ object Vector {
     }
     implicit def madaVectorEither[A, B](_1: Vector[Either[A, B]]): MadaVectorEither[A, B] = new MadaVectorEither(_1)
 
-    sealed class OfVector[A](_this: Vector[Vector[A]]) {
+    sealed class _OfVector[A](_this: Vector[Vector[A]]) {
         def undivide: Vector[A] = _this._undivide(_this)
     }
-    implicit def ofVector[A](_this: Vector[Vector[A]]): OfVector[A] = new OfVector(_this)
+    implicit def _ofVector[A](_this: Vector[Vector[A]]): _OfVector[A] = new _OfVector(_this)
 
-    sealed class OfPair[A, B](_this: Vector[(A, B)]) {
+    sealed class _OfPair[A, B](_this: Vector[(A, B)]) {
         def unzip: (Vector[A], Vector[B]) = _this._unzip(_this)
     }
-    implicit def ofPair[A, B](_this: Vector[(A, B)]): OfPair[A, B] = new OfPair(_this)
+    implicit def _ofPair[A, B](_this: Vector[(A, B)]): _OfPair[A, B] = new _OfPair(_this)
 
-    sealed class OfChar(_this: Vector[Char]) {
+    sealed class _OfChar(_this: Vector[Char]) {
         def stringize: String = _this._stringize(_this)
         def lowerCase: Vector[Char] = _this._lowerCase(_this)
         def upperCase: Vector[Char] = _this._upperCase(_this)
         def toJCharSequence: java.lang.CharSequence = _this._toJCharSequence(_this)
     }
-    implicit def ofChar(_this: Vector[Char]): OfChar = new OfChar(_this)
+    implicit def _ofChar(_this: Vector[Char]): _OfChar = new _OfChar(_this)
 
 
 // compatibles
 
-    implicit def madaVectorFromArray[A](from: Array[A]): Vector[A] = fromArray(from)
-    implicit def madaVectorFromCell[A](from: Cell[A]): Vector[A] = fromCell(from)
-    implicit def madaVectorFromOption[A](from: Option[A]): Vector[A] = fromOption(from)
-    implicit def madaVectorFromProduct(from: Product): Vector[Any] = fromProduct(from)
-    implicit def madaVectorFromSVector[A](from: scala.collection.Vector[A]): Vector[A] = fromSVector(from)
-    implicit def madaVectorUnstringize(from: String): Vector[Char] = unstringize(from)
-    implicit def madaVectorFromJCharSequence(from: java.lang.CharSequence): Vector[Char] = fromJCharSequence(from)
-    implicit def madaVectorFromJList[A](from: java.util.List[A]): Vector[A] = fromJList(from)
+    implicit def _ustringize(from: String): Vector[Char] = unstringize(from)
+    implicit def _fromArray[A](from: Array[A]): Vector[A] = fromArray(from)
+    implicit def _fromCell[A](from: Cell[A]): Vector[A] = fromCell(from)
+    implicit def _fromOption[A](from: Option[A]): Vector[A] = fromOption(from)
+    implicit def _fromProduct(from: Product): Vector[Any] = fromProduct(from)
+    implicit def _fromSVector[A](from: scala.collection.Vector[A]): Vector[A] = fromSVector(from)
+    implicit def _fromJCharSequence(from: java.lang.CharSequence): Vector[Char] = fromJCharSequence(from)
+    implicit def _fromJList[A](from: java.util.List[A]): Vector[A] = fromJList(from)
 
 
 // eligibles
