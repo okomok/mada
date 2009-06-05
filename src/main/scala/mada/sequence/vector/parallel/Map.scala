@@ -25,7 +25,7 @@ case class ParallelMap[Z, A](_1: Vector[Z], _2: Z => A, _3: Int) extends Forward
     }
 
     override def memoize = delegate // memoize-map fusion
-//    override def map[B](_f: A => B) = _1.parallel(_3).map(_f compose _2) // map-map fusion
+//    override def map[A](_f: A => A) = _1.parallel(_3).map(_f compose _2) // map-map fusion
 //    override def seek(p: A => Boolean) = _1.parallel(_3).seek(p compose _2).map(_2) // seek-map fusion
 
     // Impossible: parallel.reduce is implemented by map-reduce.

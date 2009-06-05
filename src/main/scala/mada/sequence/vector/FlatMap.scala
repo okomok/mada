@@ -7,6 +7,6 @@
 package mada.sequence.vector
 
 
-case class FlatMap[A, B](_1: Vector[A], _2: A => Vector[B]) extends Forwarder[B] {
+case class FlatMap[Z, A](_1: Vector[Z], _2: Z => Vector[A]) extends Forwarder[A] {
     override protected val delegate = flatten(_1.map(_2))
 }

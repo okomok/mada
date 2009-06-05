@@ -476,7 +476,7 @@ trait Vector[A] extends PartialFunction[Int, A] with iterative.Sequence[A] {
     /**
      * @return  <code>sortBy(c)</code>.
      */
-    final def sort(implicit c: Compare[A]): Vector[A] = sortBy(c)
+    def sort(implicit c: Compare[A]): Vector[A] = sortBy(c)
 
     /**
      * Sort this vector according to the comparison function <code>lt</code>.
@@ -490,7 +490,7 @@ trait Vector[A] extends PartialFunction[Int, A] with iterative.Sequence[A] {
     /**
      * @return  <code>stableSortBy(c)</code>.
      */
-    final def stableSort(implicit c: Compare[A]): Vector[A] = stableSortBy(c)
+    def stableSort(implicit c: Compare[A]): Vector[A] = stableSortBy(c)
 
     /**
      * Stable sort this vector according to the comparison function <code>lt</code>.
@@ -612,15 +612,15 @@ trait Vector[A] extends PartialFunction[Int, A] with iterative.Sequence[A] {
 
     /**
      * @pre     <code>op</code> is associative.
-     * @return  <code>folderLeft(z)(op)</code>
-     */
-    def folder(z: A)(op: (A, A) => A): Vector[A] = folderLeft(z)(op)
-
-    /**
-     * @pre     <code>op</code> is associative.
      * @return  <code>reduceLeft(op)</code>
      */
     def reduce(op: (A, A) => A): A = reduceLeft(op)
+
+    /**
+     * @pre     <code>op</code> is associative.
+     * @return  <code>folderLeft(z)(op)</code>
+     */
+    def folder(z: A)(op: (A, A) => A): Vector[A] = folderLeft(z)(op)
 
     /**
      * @pre     <code>op</code> is associative.

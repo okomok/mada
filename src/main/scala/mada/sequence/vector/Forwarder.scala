@@ -79,7 +79,9 @@ trait Forwarder[A] extends TransformAdapter[A] with iterative.SequenceForwarder[
     override def folderRight[B](z: B)(op: (A, B) => B): Vector[B] = afterForward(delegate.folderRight(z)(op))
     override def reducerRight[B >: A](op: (A, B) => B): Vector[B] = afterForward(delegate.reducerRight(op))
 // sort
+    override def sort(implicit c: Compare[A]): Vector[A] = afterForward(delegate.sort(c))
     override def sortBy(lt: compare.Func[A]): Vector[A] = afterForward(delegate.sortBy(lt))
+    override def stableSort(implicit c: Compare[A]): Vector[A] = afterForward(delegate.stableSort(c))
     override def stableSortBy(lt: compare.Func[A]): Vector[A] = afterForward(delegate.stableSortBy(lt))
 // permutation
     override def permutation(f: Int => Int): Vector[A] = afterForward(delegate.permutation(f))
@@ -97,6 +99,8 @@ trait Forwarder[A] extends TransformAdapter[A] with iterative.SequenceForwarder[
     override def grainSize: Int = delegate.grainSize
     override def defaultGrainSize: Int = delegate.defaultGrainSize
 // associative folding
+    override def fold(z: A)(op: (A, A) => A): A = delegate.fold(z)(op)
+    override def reduce(op: (A, A) => A): A = delegate.reduce(op)
     override def folder(z: A)(op: (A, A) => A): Vector[A] = afterForward(delegate.folder(z)(op))
     override def reducer(op: (A, A) => A): Vector[A] = afterForward(delegate.reducer(op))
 // string

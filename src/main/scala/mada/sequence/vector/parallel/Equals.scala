@@ -8,14 +8,14 @@ package mada.sequence.vector
 
 
 private object ParallelEqualsIf {
-    def apply[A, B](v: Vector[A], w: Vector[B], p: (A, B) => Boolean, grainSize: Int): Boolean = {
-        util.assert(!isParallel(v))
+    def apply[A, B](_1: Vector[A], _2: Vector[B], _3: (A, B) => Boolean, _4: Int): Boolean = {
+        util.assert(!isParallel(_1))
 
-        if (v.size != w.size) {
+        if (_1.size != _2.size) {
             false
         } else {
-            val bp = new Breakable2(p, false)
-            (v.divide(grainSize) zip w.divide(grainSize)).
+            val bp = new Breakable2(_3, false)
+            (_1.divide(_4) zip _2.divide(_4)).
                 parallel(1).map{ case (v1, w1) => breakingEquals(v1, w1, bp) }.
                     reduce(_ && _)
         }

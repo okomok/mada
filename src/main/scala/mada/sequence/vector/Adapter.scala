@@ -10,11 +10,11 @@ package mada.sequence.vector
 /**
  * Adapts underlying vector.
  */
-trait Adapter[Z, A] extends Vector[A] {
+trait Adapter[From, To] extends Vector[To] {
     /**
      * Underlying vector, overridden in subclasses.
      */
-    protected def underlying: Vector[Z]
+    protected def underlying: Vector[From]
 
     /**
      * @return  <code>underlying.start</code>.
@@ -27,14 +27,14 @@ trait Adapter[Z, A] extends Vector[A] {
     override def end = underlying.end
 
     /**
-     * @return  <code>underlying(i).asInstanceOf[A]</code>.
+     * @return  <code>underlying(i).asInstanceOf[To]</code>.
      */
-    override def apply(i: Int): A = underlying(i).asInstanceOf[A]
+    override def apply(i: Int): To = underlying(i).asInstanceOf[To]
 
     /**
-     * @return  <code>underlying(i) = e.asInstanceOf[Z]</code>.
+     * @return  <code>underlying(i) = e.asInstanceOf[From]</code>.
      */
-    override def update(i: Int, e: A): Unit = underlying(i) = e.asInstanceOf[Z]
+    override def update(i: Int, e: To): Unit = underlying(i) = e.asInstanceOf[From]
 
     /**
      * @return  <code>underlying.isDefinedAt(i)</code>.

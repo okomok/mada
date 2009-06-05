@@ -12,15 +12,15 @@ import java.util.concurrent.atomic.AtomicMarkableReference
 
 
 private object ParallelSeek {
-    def apply[A](v: Vector[A], p: A => Boolean, grainSize: Int): Option[A] = {
-        util.assert(!isParallel(v))
+    def apply[A](_1: Vector[A], _2: A => Boolean, _3: Int): Option[A] = {
+        util.assert(!isParallel(_1))
 
-        if (v.isEmpty) {
+        if (_1.isEmpty) {
             None
         } else {
             val ar = new AtomicMarkableReference[A](util.nullInstance, false) // mark means "found".
-            val bp = new Breakable1(p, true)
-            v.parallelRegions(grainSize).each{ w => breakingSeek(w, bp, ar) }
+            val bp = new Breakable1(_2, true)
+            _1.parallelRegions(_3).each{ w => breakingSeek(w, bp, ar) }
             if (ar.isMarked) Some(ar.getReference) else None
         }
     }
