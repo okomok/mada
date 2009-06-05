@@ -7,22 +7,11 @@
 package mada.sequence.vector
 
 
-private[mada] case class FromOption[A](from: Option[A]) extends Vector[A] {
+case class FromOption[A](_1: Option[A]) extends Vector[A] {
     override def start = 0
-    override def end = if (from.isEmpty) 0 else 1
-    override def apply(i: Int) = from.get
-}
+    override def end = if (_1.isEmpty) 0 else 1
+    override def apply(i: Int) = _1.get
 
-private[mada] object FirstOption {
-    def apply[A](v: Vector[A]): Option[A] = v match {
-        case FromOption(_from) => _from // conversion fusion
-        case _ => if (v.isEmpty) None else Some(v.head)
-    }
-}
-
-private[mada] object LastOption {
-    def apply[A](v: Vector[A]): Option[A] = v match {
-        case FromOption(_from) => _from // conversion fusion
-        case _ => if (v.isEmpty) None else Some(v.last)
-    }
+    override def headOption = _1 // to-from fusion
+    override def lastOption = _1 // to-from fusion
 }

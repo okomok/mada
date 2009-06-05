@@ -11,24 +11,23 @@ case class Divide[A](val _1: Vector[A], _2: Int) extends Vector[Vector[A]] {
     precondition.positive(_2, "stride")
 
     override def start = 0
-    override def end = Step.count(_1.start, _1.end, _2)
+    override def end = _Step.count(_1.start, _1.end, _2)
     override def apply(i: Int) = {
         val cur = _1.start + i * _2
         new Region(_1, cur, Math.min(cur + _2, _1.end))
     }
     // isDefinedAt is restrictive because _1.end affects.
+
+    override def _undivide[B](_this: Vector[Vector[B]]): Vector[B] = _1.asInstanceOf[Vector[B]] // undivide-divide fusion
 }
 
 
 case class Undivide[A](_1: Vector[Vector[A]]) extends Forwarder[A] {
-    override protected val delegate: Vector[A] = _1 match {
-        case Divide(dividend, _) => dividend // undivide-divide fusion
-        case _ => {
-            if (_1.isEmpty) {
-                vector.empty[A]
-            } else {
-                new _Undivide(_1)
-            }
+    override protected val delegate: Vector[A] = {
+        if (_1.isEmpty) {
+            vector.empty[A]
+        } else {
+            new _Undivide(_1)
         }
     }
 }

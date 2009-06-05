@@ -42,7 +42,7 @@ trait Vector[A] extends PartialFunction[Int, A] with iterative.Sequence[A] {
      * @return  the element at the specified position in this vector.
      * @throws  vector.NotReadableException if not overridden.
      */
-    override def apply(i: Int): A = throw new NotReadableException(this)
+    override def apply(i: Int): A = throw NotReadableException(this)
 
     /**
      * Replaces the element at the specified position in this vector with
@@ -54,7 +54,7 @@ trait Vector[A] extends PartialFunction[Int, A] with iterative.Sequence[A] {
      * @pre     <code>isDefinedAt(i)</code>
      * @throws  vector.NotWritableException if not overridden.
      */
-    def update(i: Int, e: A): Unit = throw new NotWritableException(this)
+    def update(i: Int, e: A): Unit = throw NotWritableException(this)
 
     /**
      * @return  <code>(start <= i) && (i < end)</code>, possibly overridden in subclasses.
@@ -205,7 +205,7 @@ trait Vector[A] extends PartialFunction[Int, A] with iterative.Sequence[A] {
     /**
      * Optionally returns the first element.
      */
-    def headOption: Option[A] = FirstOption(this)
+    def headOption: Option[A] = if (isEmpty) None else Some(head)
 
     /**
      * Returns all the elements without the first one.
@@ -226,22 +226,22 @@ trait Vector[A] extends PartialFunction[Int, A] with iterative.Sequence[A] {
     /**
      * Optionally returns the last element.
      */
-    def lastOption: Option[A] = LastOption(this)
+    def lastOption: Option[A] = if (isEmpty) None else Some(last)
 
     /**
      * Takes at most <code>n</code> elements.
      */
-    def take(n: Int): Vector[A] = this(start, Math.min(start + n, end))
+    def take(n: Int): Vector[A] = Take(this, n)
 
     /**
      * Drops at most <code>n</code> elements.
      */
-    def drop(n: Int): Vector[A] = this(Math.min(start + n, end), end)
+    def drop(n: Int): Vector[A] = Drop(this, n)
 
     /**
      * @return  <code>drop(n).take(n - m)</code>.
      */
-    def slice(n: Int, m: Int): Vector[A] = drop(n).take(m - n)
+    def slice(n: Int, m: Int): Vector[A] = Slice(this, n, m)
 
     /**
      * Takes elements while <code>p</code> meets.
@@ -476,7 +476,7 @@ trait Vector[A] extends PartialFunction[Int, A] with iterative.Sequence[A] {
     /**
      * @return  <code>sortBy(c)</code>.
      */
-    final def sort(implicit c: Compare[A]): Vector[A] = Sort(this, c)
+    final def sort(implicit c: Compare[A]): Vector[A] = sortBy(c)
 
     /**
      * Sort this vector according to the comparison function <code>lt</code>.
@@ -485,12 +485,12 @@ trait Vector[A] extends PartialFunction[Int, A] with iterative.Sequence[A] {
      * @param   lt  strict weak ordering
      * @return  this vector sorted according to <code>lt</code>.
      */
-    def sortBy(lt: compare.Func[A]): Vector[A] = SortBy(this, lt)
+    def sortBy(lt: compare.Func[A]): Vector[A] = { stl.Sort(this, start, end, lt); this }
 
     /**
      * @return  <code>stableSortBy(c)</code>.
      */
-    final def stableSort(implicit c: Compare[A]): Vector[A] = StableSort(this, c)
+    final def stableSort(implicit c: Compare[A]): Vector[A] = stableSortBy(c)
 
     /**
      * Stable sort this vector according to the comparison function <code>lt</code>.
@@ -499,7 +499,7 @@ trait Vector[A] extends PartialFunction[Int, A] with iterative.Sequence[A] {
      * @param   lt  strict weak ordering
      * @return  this vector sorted according to <code>lt</code>.
      */
-    def stableSortBy(lt: compare.Func[A]): Vector[A] = StableSortBy(this, lt)
+    def stableSortBy(lt: compare.Func[A]): Vector[A] = { stl.StableSort(this, start, end, lt); this }
 
 
 // permutation
@@ -539,11 +539,6 @@ trait Vector[A] extends PartialFunction[Int, A] with iterative.Sequence[A] {
      */
     def readOnly: Vector[A] = ReadOnly(this)
 
-    /**
-     * Returns synchronized one.
-     */
-    def synchronize: Vector[A] = throw new Error("sync not yet")
-
 
 // mixin
 
@@ -568,21 +563,10 @@ trait Vector[A] extends PartialFunction[Int, A] with iterative.Sequence[A] {
      * @pre     <code>size <= that.size</code>.
      * @pre     <code>that</code> is writable.
      */
-    def copyTo[B >: A](that: Vector[B]): Unit = {
-        precondition.sameSize(this, that, "copyTo")
-        val out = that.start
-        that(out, stl.Copy(this, start, end, that, out))
+    def copyTo[B >: A](that: Vector[B]): Vector[B] = {
+        precondition.range(this.size, that.size, "copyTo")
+        that(that.start, stl.Copy(this, start, end, that, that.start))
     }
-
-    /**
-     * @return  <code>writer(start)</code>
-     */
-    final def writer: Writer[A] = Writer(this)
-
-    /**
-     * @return  <code>new Writer(this, i)</code>
-     */
-    final def writer(i: Int): Writer[A] = Writer(this, i)
 
 
 // parallel support
@@ -655,7 +639,7 @@ trait Vector[A] extends PartialFunction[Int, A] with iterative.Sequence[A] {
     }
 
     @conversion
-    def toProduct: Product = ToProduct(this)
+    def toProduct: Product = new ToProduct(this)
 
     @conversion
     def toOrdered(implicit c: compare.GetOrdered[A]): Ordered[Vector[A]] = ToOrdered(this, c)

@@ -8,33 +8,13 @@ package mada.sequence.vector
 
 
 /**
- * Contains utility types and methods operating on type <code>Adapter</code>.
- */
-object Adapter {
-    @aliasOf("Adapter[A, A]")
-    type Transform[A] = Adapter[A, A]
-
-    /**
-     * Trivial mixin to define a non-writable vector type.
-     */
-    trait NotWritable[A] extends Vector[A] {
-        /**
-         * Throws <code>NotWritableException</code>.
-         */
-        override def update(i: Int, e: A): Unit = throw new vector.NotWritableException(this)
-
-        override def readOnly = this
-    }
-}
-
-/**
  * Adapts underlying vector.
  */
 trait Adapter[Z, A] extends Vector[A] {
     /**
      * Underlying vector, overridden in subclasses.
      */
-    def underlying: Vector[Z]
+    protected def underlying: Vector[Z]
 
     /**
      * @return  <code>underlying.start</code>.

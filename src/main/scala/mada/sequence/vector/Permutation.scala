@@ -7,8 +7,8 @@
 package mada.sequence.vector
 
 
-case class Permutation[A](_1: Vector[A], _2: Int => Int) extends Adapter.Transform[A] {
-    override val underlying = _1.nth
+case class Permutation[A](_1: Vector[A], _2: Int => Int) extends TransformAdapter[A] {
+    override protected val underlying = _1.nth
 
     override def apply(i: Int) = underlying(_2(i))
     override def update(i: Int, e: A) = underlying(_2(i)) = e

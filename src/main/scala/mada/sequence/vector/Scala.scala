@@ -10,7 +10,7 @@ package mada.sequence.vector
 // Iterable
 
 case class FromSIterable[A](_1: scala.Iterable[A]) extends Forwarder[A] {
-    override protected val delegate = {
+    override protected lazy val delegate = {
         val r = new java.util.ArrayList[A]
         for (e <- _1.view) {
             r.add(e)

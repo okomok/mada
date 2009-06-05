@@ -9,7 +9,7 @@ package mada.sequence.vector
 
 // Java guarantees positive remainder?
 
-private[mada] object Div { // doesn't return a tuple to need heap-allocation.
+private object Div { // doesn't return a tuple to need heap-allocation.
     def quotient(a: Int, b: Int): Int = {
         util.assert(b > 0)
         val q = a / b

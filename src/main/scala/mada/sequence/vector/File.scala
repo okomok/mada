@@ -12,7 +12,7 @@ import java.io.{ File, RandomAccessFile, Closeable }
 
 // Char
 
-class CharFileVector private (val randomAccessFile: RandomAccessFile) extends Vector[Char] with Closeable {
+class CharFile private (val randomAccessFile: RandomAccessFile) extends Vector[Char] with Closeable {
     def this(file: File, mode: String) = this(new RandomAccessFile(file, mode))
     def this(name: String, mode: String) = this(new RandomAccessFile(name, mode))
 
@@ -27,7 +27,7 @@ class CharFileVector private (val randomAccessFile: RandomAccessFile) extends Ve
 
 // Int
 
-class IntFileVector private (val randomAccessFile: RandomAccessFile) extends Vector[Int] with Closeable {
+class IntFile private (val randomAccessFile: RandomAccessFile) extends Vector[Int] with Closeable {
     def this(file: File, mode: String) = this(new RandomAccessFile(file, mode))
     def this(name: String, mode: String) = this(new RandomAccessFile(name, mode))
 
@@ -42,7 +42,7 @@ class IntFileVector private (val randomAccessFile: RandomAccessFile) extends Vec
 
 // Long
 
-class LongFileVector private (val randomAccessFile: RandomAccessFile) extends Vector[Long] with Closeable {
+class LongFile private (val randomAccessFile: RandomAccessFile) extends Vector[Long] with Closeable {
     def this(file: File, mode: String) = this(new RandomAccessFile(file, mode))
     def this(name: String, mode: String) = this(new RandomAccessFile(name, mode))
 

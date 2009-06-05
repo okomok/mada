@@ -7,8 +7,8 @@
 package mada.sequence.vector
 
 
-case class Seal[A](_1: Vector[A]) extends Adapter.Transform[A] {
-    override val underlying = _1
+case class Seal[A](_1: Vector[A]) extends TransformAdapter[A] {
+    override protected val underlying = _1
 
     // seal-seal fusion too must be "sealed".
 }

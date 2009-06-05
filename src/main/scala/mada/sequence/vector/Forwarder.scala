@@ -7,7 +7,7 @@
 package mada.sequence.vector
 
 
-trait Forwarder[A] extends Adapter.Transform[A] with iterative.SequenceForwarder[A] {
+trait Forwarder[A] extends TransformAdapter[A] with iterative.SequenceForwarder[A] {
     override protected def delegate: Vector[A]
     protected def afterForward[B](that: Vector[B]): Vector[B] = that
     private def afterForward2[B, C](that: (Vector[B], Vector[C])): (Vector[B], Vector[C]) = (afterForward(that._1), afterForward(that._2))
@@ -91,7 +91,7 @@ trait Forwarder[A] extends Adapter.Transform[A] with iterative.SequenceForwarder
     override def readOnly: Vector[A] = afterForward(delegate.readOnly)
 // copy
     override def copy: Vector[A] = afterForward(delegate.copy)
-    override def copyTo[B >: A](that: Vector[B]): Unit = delegate.copyTo(that)
+    override def copyTo[B >: A](that: Vector[B]): Vector[B] = delegate.copyTo(that)
 // parallel support
     override def parallel(_grainSize: Int): Vector[A] = afterForward(delegate.parallel(_grainSize))
     override def grainSize: Int = delegate.grainSize

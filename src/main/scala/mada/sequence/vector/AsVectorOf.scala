@@ -8,5 +8,5 @@ package mada.sequence.vector
 
 
 case class AsVectorOf[A, B](_1: Vector[A]) extends Adapter[A, B] {
-    override val underlying = _1
+    override protected val underlying = _1
 }

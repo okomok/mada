@@ -7,29 +7,25 @@
 package mada.sequence.vector
 
 
-private[mada] object FromProduct {
-    def apply(from: Product): Vector[Any] = from match {
-        case from: VectorProduct[_] => from.v.asVectorOf[Any]
-        case _ => new ProductVector(from)
+case class FromProduct(_1: Product) extends Forwarder[Any] {
+    override protected val delegate = _1 match {
+        case _1: ToProduct => _1.a1.asVectorOf[Any] // from-to fusion
+        case _ => new _FromProduct(_1)
     }
 }
 
-private[mada] class ProductVector(val from: Product) extends Vector[Any] {
+private class _FromProduct(_1: Product) extends Vector[Any] {
     override def start = 0
-    override def end = from.productArity
-    override def apply(i: Int) = from.productElement(i)
+    override def end = _1.productArity
+    override def apply(i: Int) = _1.productElement(i)
+
+    override def toProduct = _1 // to-from fusion
 }
 
 
-private[mada] object ToProduct {
-    def apply[A](from: Vector[A]): Product = from match {
-        case from: ProductVector => from.from
-        case _ => new VectorProduct(from)
-    }
-}
-
-private[mada] class VectorProduct[A](val v: Vector[A]) extends Product {
-    override def productElement(n: Int) = v.nth(n)
-    override def productArity = v.nth.size
+// A `case class` is an implicit subclass of Product.
+class ToProduct(val a1: Vector[_]) extends Product {
+    override def productElement(n: Int): Any = a1.nth(n)
+    override def productArity = a1.nth.size
     override def productPrefix = "VectorProduct"
 }

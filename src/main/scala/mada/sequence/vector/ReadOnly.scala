@@ -7,6 +7,6 @@
 package mada.sequence.vector
 
 
-case class ReadOnly[A](_1: Vector[A]) extends Adapter.Transform[A] with Adapter.NotWritable[A] {
-    override val underlying = _1
+case class ReadOnly[A](_1: Vector[A]) extends TransformAdapter[A] with NotWritable[A] {
+    override protected val underlying = _1
 }

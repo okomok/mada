@@ -9,9 +9,7 @@ package mada.sequence.iterative
 
 case class Cycle[+A](_1: Iterative[A]) extends Forwarder[A] {
     override protected lazy val delegate = {
-        if (_1.isEmpty) {
-            throw new UnsupportedOperationException("cycle on empty sequence")
-        }
+        precondition.notEmpty(_1, "cycle")
         repeat(()).flatMap{ (u: Unit) => _1 }
     }
 }

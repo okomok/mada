@@ -8,5 +8,5 @@ package mada.sequence.vector
 
 
 case class ByLazy[A](_1: function.OfLazy[Vector[A]]) extends Forwarder[A] {
-    override lazy val delegate = _1()
+    override protected lazy val delegate = _1()
 }

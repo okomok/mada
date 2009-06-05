@@ -10,9 +10,9 @@ package mada.sequence.vector
 /**
  * Thrown if vector is not readable.
  */
-class NotReadableException[A](val vector: Vector[A]) extends RuntimeException
+case class NotReadableException[A](_1: Vector[A]) extends UnsupportedOperationException("not readable")
 
 /**
  * Thrown if vector is not writable.
  */
-class NotWritableException[A](val vector: Vector[A]) extends RuntimeException
+case class NotWritableException[A](_1: Vector[A]) extends UnsupportedOperationException("not writable")

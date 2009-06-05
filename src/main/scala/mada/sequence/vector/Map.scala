@@ -7,11 +7,11 @@
 package mada.sequence.vector
 
 
-case class Map[Z, A](_1: Vector[Z], _2: Z => A) extends Adapter[Z, A] with Adapter.NotWritable[A] {
-    override val underlying = _1
+case class Map[Z, A](_1: Vector[Z], _2: Z => A) extends Adapter[Z, A] with NotWritable[A] {
+    override protected val underlying = _1
 
-    override def apply(i: Int) = _2(_1(i))
+    override def apply(i: Int) = _2(underlying(i))
 
-    override def map[B](_f: A => B) = _1.map(_f compose _2) // map-map fusion
-    override def loop[F <: (A => Boolean)](i: Int, j: Int, _f: F) = { _1.loop(i, j, _f compose _2); _f } // loop-map fusion
+    override def map[B](_f: A => B) = underlying.map(_f compose _2) // map-map fusion
+    override def loop[F <: (A => Boolean)](i: Int, j: Int, _f: F) = { underlying.loop(i, j, _f compose _2); _f } // loop-map fusion
 }

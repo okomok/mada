@@ -27,6 +27,9 @@ package object vector {
     @aliasOf("Func3[A, Boolean]")
     type Pred3[A] = Func3[A, Boolean]
 
+    @aliasOf("Adapter[A, A]")
+    type TransformAdapter[A] = Adapter[A, A]
+
 
 // constants
 
@@ -47,17 +50,17 @@ package object vector {
     }
 
     /**
+     * @return  an empty vector.
+     */
+    def empty[A]: Vector[A] = Empty.apply[A]
+
+    /**
      * Concatenate all argument sequences into a single vector.
      *
      * @param   vs  the given argument sequences
      * @return  the projection vector created from the concatenated arguments
      */
-    def concat[A](vs: Vector[A]*): Vector[A] = Concat(vs: _*)
-
-    /**
-     * @return  an empty vector.
-     */
-    def empty[A]: Vector[A] = Empty.apply[A]
+    def concat[A](vs: Vector[A]*): Vector[A] = Concat(vs)
 
     /**
      * Create a vector that is the concantenation of all vectors
