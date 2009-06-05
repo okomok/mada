@@ -165,4 +165,9 @@ package object vector {
     @conversion
     def fromJIterable[A](from: java.lang.Iterable[A]): Vector[A] = FromJIterable(from)
 
+
+// detail
+
+    private[mada] def isParallel[A](v: Vector[A]): Boolean = v.isInstanceOf[Parallel[_]]
+
 }

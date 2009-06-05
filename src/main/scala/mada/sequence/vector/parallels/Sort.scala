@@ -15,7 +15,7 @@ import function.future
 
 private[mada] object Sort {
     def apply[A](v: Vector[A], lt: compare.Func[A], grainSize: Int): Vector[A] = {
-        util.assert(!IsParallel(v))
+        util.assert(!isParallel(v))
         impl(v, v.start, v.end, lt, grainSize * 2) // best grain size?
         v
     }
@@ -24,7 +24,7 @@ private[mada] object Sort {
         if (first != last) {
             val rs = new ArrayList[Vector[A]]
             loop(v, first, last, depthLimit(first, last), lt, grainSize, rs)
-            vector.fromJList(rs).parallel(1).each{ r => r.sortBy(lt) }
+            fromJList(rs).parallel(1).each{ r => r.sortBy(lt) }
         }
     }
 

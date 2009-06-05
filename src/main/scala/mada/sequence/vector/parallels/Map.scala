@@ -7,19 +7,17 @@
 package mada.sequence.vector.parallels
 
 
-private[mada] object Map {
-    def apply[Z, A](v: Vector[Z], f: Z => A, grainSize: Int): Vector[A] = new MapVector(v, f, grainSize)
-}
+import function.future
 
-private[mada] class MapVector[Z, A](v: Vector[Z], f: Z => A, grainSize: Int) extends Forwarder[A] {
-    util.assert(!IsParallel(v))
-    import function.future
 
-    override lazy val delegate = {
-        if (grainSize == 1) {
-            v.map{ e => future(f(e)) }.force.map{ u => u() }
+case class Map[Z, A](_1: Vector[Z], _2: Z => A, _3: Int) extends Forwarder[A] {
+    util.assert(!isParallel(_1))
+
+    override protected val delegate = {
+        if (_3 == 1) {
+            _1.map{ e => future(_2(e)) }.force.map{ u => u() }
         } else {
-            v.divide(grainSize).map{ w => future(w.map(f).force) }.
+            _1.divide(_3).map{ w => future(w.map(_2).force) }.
                 force. // start tasks.
                     map{ u => u() }. // get result by projection.
                         undivide
@@ -27,9 +25,9 @@ private[mada] class MapVector[Z, A](v: Vector[Z], f: Z => A, grainSize: Int) ext
     }
 
     override def memoize = delegate // memoize-map fusion
-//    override def map[B](_f: A => B) = v.parallel(grainSize).map(_f compose f) // map-map fusion
-//    override def seek(p: A => Boolean) = v.parallel(grainSize).seek(p compose f).map(f) // seek-map fusion
+//    override def map[B](_f: A => B) = _1.parallel(_3).map(_f compose _2) // map-map fusion
+//    override def seek(p: A => Boolean) = _1.parallel(_3).seek(p compose _2).map(_2) // seek-map fusion
 
-    // parallel.reduce is implemented by assoc.reduce.
-    // override def reduce(op: (A, A) => A) = v.map(f).parallel(grainSize).reduce(op) // reduce-map fusion
+    // Impossible: parallel.reduce is implemented by map-reduce.
+    // override def reduce(op: (A, A) => A) = _1.map(_2).parallel(_3).reduce(op) // reduce-map fusion
 }

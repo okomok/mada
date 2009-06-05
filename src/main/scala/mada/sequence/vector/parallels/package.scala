@@ -7,6 +7,7 @@
 package mada.sequence.vector
 
 
-case class Copy[A](_1: Vector[A]) extends Forwarder[A] {
-    override protected val delegate = fromArray(_1.toArray)
+package object parallels {
+
+
 }

@@ -122,7 +122,7 @@ trait Vector[A] extends PartialFunction[Int, A] with iterative.Sequence[A] {
     /**
      * @return  <code>vector.flatten(map(f))</code>.
      */
-    def flatMap[B](f: A => Vector[B]): Vector[B] = flatten(map(f))
+    def flatMap[B](f: A => Vector[B]): Vector[B] = FlatMap(this, f)
 
     /**
      * Filters elements using <code>p</code>.
@@ -396,7 +396,7 @@ trait Vector[A] extends PartialFunction[Int, A] with iterative.Sequence[A] {
 
 // filter
 
-    def mutatingFilter(p: A => Boolean): Vector[A] = MutatingFilter(this, p)
+    def mutatingFilter(p: A => Boolean): Vector[A] = this(start, stl.RemoveIf(this, start, end, function.not(p)))
 
     /**
      * @return  <code>mutatingFilter(function.not(p))</code>.

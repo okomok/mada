@@ -8,7 +8,7 @@ package mada.sequence.vector
 
 
 case class Force[A](_1: Vector[A]) extends TransformAdapter[A] with NotWritable[A] {
-    override protected val underlying = vector.fromArray(_1.toArray)
+    override protected val underlying = fromArray(_1.toArray)
 
     override def force: Vector[A] = this // force-force fusion
 }

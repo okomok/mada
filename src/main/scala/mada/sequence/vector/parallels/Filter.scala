@@ -7,19 +7,7 @@
 package mada.sequence.vector.parallels
 
 
-private[mada] object Filter {
-    def apply[A](v: Vector[A], p: A => Boolean, grainSize: Int): Vector[A] = {
-        util.assert(!IsParallel(v))
-        v.copy.parallel(grainSize).mutatingFilter(p).readOnly
-    }
-}
-
-private[mada] object MutatingFilter {
-    def apply[A](v: Vector[A], p: A => Boolean, grainSize: Int): Vector[A] = {
-        util.assert(!IsParallel(v))
-
-        vector.flatten(
-            v.parallelRegions(grainSize).map{ w => w.mutatingFilter(p).toIterative }
-        )
-    }
+case class Filter[A](_1: Vector[A], _2: A => Boolean, _3: Int) extends Forwarder[A] {
+    util.assert(!isParallel(_1))
+    override protected val delegate = _1.copy.parallel(_3).mutatingFilter(_2).readOnly
 }

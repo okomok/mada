@@ -70,13 +70,13 @@ private class _JListIterator[A](v: Vector[A]) extends java.util.ListIterator[A] 
 }
 
 case class FromJIterable[A](_1: java.lang.Iterable[A]) extends Forwarder[A] {
-    override protected lazy val delegate = {
+    override protected val delegate = {
         val r = new java.util.ArrayList[A]
         val it = _1.iterator
         while (it.hasNext) {
             r.add(it.next)
         }
-        vector.fromJList(r)
+        fromJList(r)
     }
 }
 

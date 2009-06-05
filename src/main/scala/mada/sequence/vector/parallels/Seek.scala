@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicMarkableReference
 
 private[mada] object Seek {
     def apply[A](v: Vector[A], p: A => Boolean, grainSize: Int): Option[A] = {
-        util.assert(!IsParallel(v))
+        util.assert(!isParallel(v))
 
         if (v.isEmpty) {
             None

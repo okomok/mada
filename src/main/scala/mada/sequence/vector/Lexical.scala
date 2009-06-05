@@ -25,7 +25,7 @@ object Lexical extends LexicalConversions with LexicalCompatibles {
  */
 trait LexicalConversions {
 // from
-    def fromAny(from: Any): Vector[Char] = vector.unstringize(from.toString)
+    def fromAny(from: Any): Vector[Char] = unstringize(from.toString)
 
 // to
     def toBoolean(from: Vector[Char]): Boolean = from.stringize.toBoolean

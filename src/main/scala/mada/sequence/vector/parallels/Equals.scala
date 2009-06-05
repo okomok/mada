@@ -9,7 +9,7 @@ package mada.sequence.vector.parallels
 
 private[mada] object EqualsIf {
     def apply[A, B](v: Vector[A], w: Vector[B], p: (A, B) => Boolean, grainSize: Int): Boolean = {
-        util.assert(!IsParallel(v))
+        util.assert(!isParallel(v))
 
         if (v.size != w.size) {
             false

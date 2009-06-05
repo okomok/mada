@@ -25,7 +25,7 @@ case class Divide[A](val _1: Vector[A], _2: Int) extends Vector[Vector[A]] {
 case class Undivide[A](_1: Vector[Vector[A]]) extends Forwarder[A] {
     override protected val delegate: Vector[A] = {
         if (_1.isEmpty) {
-            vector.empty[A]
+            empty[A]
         } else {
             new _Undivide(_1)
         }

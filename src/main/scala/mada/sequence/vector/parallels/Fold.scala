@@ -7,42 +7,23 @@
 package mada.sequence.vector.parallels
 
 
-private[mada] object Fold {
-    def apply[A](v: Vector[A], z: A, op: (A, A) => A, grainSize: Int): A = {
-        util.assert(!IsParallel(v))
-        (vector.single(z) ++ v).parallel(grainSize).reduce(op)
-    }
-}
-
-private[mada] object Folder {
-    def apply[A](v: Vector[A], z: A, op: (A, A) => A, grainSize: Int): Vector[A] = {
-        util.assert(!IsParallel(v))
-        (vector.single(z) ++ v).parallel(grainSize).reducer(op)
-    }
+case class Folder[A](_1: Vector[A], _2: A, _3: (A, A) => A, _4: Int) extends Forwarder[A] {
+    util.assert(!isParallel(_1))
+    override protected val delegate = (single(_2) ++ _1).parallel(_4).reducer(_3)
 }
 
 
-private[mada] object Reduce {
-    def apply[A](v: Vector[A], op: (A, A) => A, grainSize: Int): A = {
-        util.assert(!IsParallel(v))
-        precondition.notEmpty(v, "paralell.reduce")
+case class Reducer[A](_1: Vector[A], _2: (A, A) => A, _3: Int) extends Forwarder[A] {
+    util.assert(!isParallel(_1))
+    precondition.notEmpty(_1, "paralell.reducer")
 
-        v.parallelRegions(grainSize).map{ w => w.reduce(op) }.
-            reduce(op)
-    }
-}
-
-private[mada] object Reducer {
-    def apply[A](v: Vector[A], op: (A, A) => A, grainSize: Int): Vector[A] = {
-        util.assert(!IsParallel(v))
-        precondition.notEmpty(v, "paralell.reducer")
-
-        val rss = v.parallelRegions(grainSize).map{ w => w.reducer(op) }
+    override protected val delegate = {
+        val rss = _1.parallelRegions(_3).map{ w => w.reducer(_2) }
         if (rss.size == 1) {
-            return rss.head
+            rss.head
+        } else {
+            val ls = rss.init.map{ w => w.last }.reducer(_2)
+            rss.head ++ (ls zip rss.tail).parallel(1).map{ case (l, rs) => rs.map{ r => _2(l, r) } }.undivide
         }
-
-        val ls = rss.init.map{ w => w.last }.reducer(op)
-        rss.head ++ (ls zip rss.tail).parallel(1).map{ case (l, rs) => rs.map{ r => op(l, r) } }.undivide
     }
 }

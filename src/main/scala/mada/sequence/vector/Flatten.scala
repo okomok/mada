@@ -8,13 +8,13 @@ package mada.sequence.vector
 
 
 case class Flatten[A](_1: Iterative[iterative.Sequence[A]]) extends Forwarder[A] {
-    override protected lazy val delegate = {
+    override protected val delegate = {
         val ar = new java.util.ArrayList[A]
         for (seq <- _1) {
             for (e <- seq.toIterative) {
                 ar.add(e)
             }
         }
-        vector.fromJList(ar)
+        fromJList(ar)
     }
 }
