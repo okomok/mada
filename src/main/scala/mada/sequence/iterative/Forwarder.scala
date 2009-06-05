@@ -31,7 +31,6 @@ trait Forwarder[+A] extends Iterative[A] with SequenceForwarder[A] {
     override def count(p: A => Boolean): Int = delegate.count(p)
     override def find(p: A => Boolean): Option[A] = delegate.find(p)
     override def foldLeft[B](z: B)(op: (B, A) => B): B = delegate.foldLeft(z)(op)
-    //override def /:[B](z: B)(op: (B, A) => B): B = delegate./:(z)(op)
     override def reduceLeft[B >: A](op: (B, A) => B): B = delegate.reduceLeft(op)
     override def folderLeft[B](z: B)(op: (B, A) => B): Iterative[B] = afterForward(delegate.folderLeft(z)(op))
     override def reducerLeft[B >: A](op: (B, A) => B): Iterative[B] = afterForward(delegate.reducerLeft(op))
@@ -47,11 +46,6 @@ trait Forwarder[+A] extends Iterative[A] with SequenceForwarder[A] {
     override def dropWhile(p: A => Boolean): Iterative[A] = afterForward(delegate.dropWhile(p))
     override def span(p: A => Boolean): (Iterative[A], Iterative[A]) = afterForward2(delegate.span(p))
     override def splitAt(n: Int): (Iterative[A], Iterative[A]) = afterForward2(delegate.splitAt(n))
-    //override def copyToBuffer[B >: A](dest: Buffer[B]) = delegate.copyToBuffer(dest)
-    //override def copyToArray[B >: A](xs: Array[B], begin: Int, len: Int) = delegate.copyToArray(xs, begin, len)
-    //override def copyToArray[B >: A](xs: Array[B], begin: Int) = delegate.copyToArray(xs, begin)
-    //override def toArray[B >: A]: Array[B] = delegate.toArray
-    override def toSSequence: scala.collection.Sequence[A] = delegate.toSSequence
 
     override def at(n: Int): A = delegate.at(n)
     override def contains(e: Any): Boolean = delegate.contains(e)
@@ -61,21 +55,21 @@ trait Forwarder[+A] extends Iterative[A] with SequenceForwarder[A] {
     override def _flatten[B](_this: Iterative[Sequence[B]]): Iterative[B] = afterForward(delegate.asInstanceOf[Iterative[Sequence[B]]].flatten)
     override def memoize: Iterative[A] = afterForward(delegate.memoize)
     override def mix(x: Mixin): Iterative[A] = afterForward(delegate.mix(x))
-    override def seal: Iterative[A] = afterForward(delegate.seal) // wow?
     override def singlePass: Iterative[A] = afterForward(delegate.singlePass)
     override def step(n: Int): Iterative[A] = delegate.step(n)
     override def unique: Iterative[A] = afterForward(delegate.unique)
     override def uniqueBy(p: (A, A) => Boolean): Iterative[A] = afterForward(delegate.uniqueBy(p))
     override def _unsplit[B](_this: Iterative[Sequence[B]], sep: Iterative[B]): Iterative[B] = afterForward(delegate.asInstanceOf[Iterative[Sequence[B]]].unsplit(sep))
-    override def toSome: ToSome[A] = delegate.toSome
-    override def _stringize(_this: Iterative[Char]): String = delegate.asInstanceOf[Iterative[Char]].stringize
-    override def _toSHashMap[K, V](_this: Iterative[(K, V)]): scala.collection.Map[K, V] = delegate.asInstanceOf[Iterative[(K, V)]].toSHashMap
-    override def _toSHashSet[B](_this: Iterative[B]): scala.collection.Set[B] = delegate.asInstanceOf[Iterative[B]].toSHashSet
-    override def _toJIterable[B](_this: Iterative[B]): java.lang.Iterable[B] = delegate.asInstanceOf[Iterative[B]].toJIterable
-    override def _toVector[B](_this: Iterative[B]): Vector[B] = delegate.asInstanceOf[Iterative[B]].toVector
     override def zip[B](that: Iterative[B]): Iterative[(A, B)] = afterForward(delegate.zip(that))
     override def _unzip[B, C](_this: Iterative[(B, C)]): (Iterative[B], Iterative[C]) = afterForward2(delegate.asInstanceOf[Iterative[(B, C)]].unzip)
     override def zipBy[B, C](that: Iterative[B])(f: (A, B) => C): Iterative[C] = afterForward(delegate.zipBy(that)(f))
+    override def _stringize(_this: Iterative[Char]): String = delegate.asInstanceOf[Iterative[Char]].stringize
+    override def toSome: ToSome[A] = delegate.toSome
+    override def _toVector[B](_this: Iterative[B]): Vector[B] = delegate.asInstanceOf[Iterative[B]].toVector
+    override def _toSHashMap[K, V](_this: Iterative[(K, V)]): scala.collection.Map[K, V] = delegate.asInstanceOf[Iterative[(K, V)]].toSHashMap
+    override def _toSHashSet[B](_this: Iterative[B]): scala.collection.Set[B] = delegate.asInstanceOf[Iterative[B]].toSHashSet
+    override def toSSequence: scala.collection.Sequence[A] = delegate.toSSequence
+    override def _toJIterable[B](_this: Iterative[B]): java.lang.Iterable[B] = delegate.asInstanceOf[Iterative[B]].toJIterable
 
     override def merge[B >: A](that: Iterative[B])(implicit c: Compare[B]): Iterative[B] = afterForward(delegate.merge(that)(c))
     override def mergeBy[B >: A](that: Iterative[B])(lt: compare.Func[B]): Iterative[B] = afterForward(delegate.mergeBy(that)(lt))

@@ -18,6 +18,9 @@ trait Iterative[+A] extends Sequence[A] {
 
     override def toIterative = this
 
+    @returnThis
+    final def asIterative: Iterative[A] = this
+
 
 // begin
 
@@ -80,7 +83,7 @@ trait Iterative[+A] extends Sequence[A] {
     /**
      * @return  <code>map(f).flatten</code>.
      */
-    def flatMap[B](f: A => Iterative[B]): Iterative[B] = _flatten(map(f))
+    def flatMap[B](f: A => Iterative[B]): Iterative[B] = FlatMap(this, f)
 
     /**
      * Filters elements using <code>p</code>.
@@ -286,9 +289,6 @@ trait Iterative[+A] extends Sequence[A] {
         (take(n), drop(n))
     }
 
-    @compatibleConversion
-    def toSSequence: scala.collection.Sequence[A] = ToSSequence(this)
-
 
 // misc
 
@@ -348,10 +348,10 @@ trait Iterative[+A] extends Sequence[A] {
     /**
      * Disables overrides.
      */
-    def seal: Iterative[A] = Seal(this)
+    final def seal: Iterative[A] = Seal(this)
 
     /**
-     * Disables retraversing.
+     * Disables reiteration.
      */
     def singlePass: Iterative[A] = SinglePass(this)
 
@@ -376,8 +376,23 @@ trait Iterative[+A] extends Sequence[A] {
     @methodized
     def _unsplit[B](_this: Iterative[Sequence[B]], sep: Iterative[B]): Iterative[B] = Unsplit(_this, sep)
 
-    @compatibleConversion
-    def toSome: ToSome[A] = new ToSome(this)
+    /**
+     * Zips <code>this</code> and <code>that</code>.
+     */
+    def zip[B](that: Iterative[B]): Iterative[(A, B)] = Zip(this, that)
+
+    /**
+     * Reverts <code>zip</code>.
+     */
+    def _unzip[B, C](_this: Iterative[(B, C)]): (Iterative[B], Iterative[C]) = (_this.map{ bc => bc._1 }, _this.map{ bc => bc._2 })
+
+    /**
+     * Zips <code>this</code> and <code>that</code> applying <code>f</code>.
+     */
+    def zipBy[B, C](that: Iterative[B])(f: (A, B) => C): Iterative[C] = ZipBy(this, that, f)
+
+
+// conversions
 
     @methodized @conversion
     def _stringize(_this: Iterative[Char]): String = {
@@ -389,6 +404,12 @@ trait Iterative[+A] extends Sequence[A] {
         }
         sb.toString
     }
+
+    @conversion
+    def toSome: ToSome[A] = new ToSome(this)
+
+    @methodized @conversion
+    def _toVector[B](_this: Iterative[B]): Vector[B] = ToVector(_this)
 
     @methodized @conversion
     def _toSHashMap[K, V](_this: Iterative[(K, V)]): scala.collection.Map[K, V] = {
@@ -412,29 +433,11 @@ trait Iterative[+A] extends Sequence[A] {
         r
     }
 
+    @conversion
+    def toSSequence: scala.collection.Sequence[A] = ToSSequence(this)
+
     @methodized @compatibleConversion
     def _toJIterable[B](_this: Iterative[B]): java.lang.Iterable[B] = ToJIterable(_this)
-
-    @methodized @conversion
-    def _toVector[B](_this: Iterative[B]): Vector[B] = ToVector(_this)
-
-    /**
-     * Zips <code>this</code> and <code>that</code>.
-     */
-    def zip[B](that: Iterative[B]): Iterative[(A, B)] = Zip(this, that)
-
-    /**
-     * Reverts <code>zip</code>.
-     */
-    def _unzip[B, C](_this: Iterative[(B, C)]): (Iterative[B], Iterative[C]) = (_this.map{ bc => bc._1 }, _this.map{ bc => bc._2 })
-
-    /**
-     * Zips <code>this</code> and <code>that</code> applying <code>f</code>.
-     */
-    def zipBy[B, C](that: Iterative[B])(f: (A, B) => C): Iterative[C] = ZipBy(this, that, f)
-
-    @returnThis
-    final def asIterative: Iterative[A] = this
 
 
 // sorted
