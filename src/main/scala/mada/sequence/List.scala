@@ -300,7 +300,7 @@ trait List[+A] extends iterative.Sequence[A] {
      * @return  <code>(take(n), drop(n))</code>.
      */
     def splitAt(n: Int): (List[A], List[A]) = {
-        throwIfNegative(n, "splitAt")
+        precondition.nonnegative(n, "splitAt")
         (take(n), drop(n))
     }
 
@@ -314,7 +314,7 @@ trait List[+A] extends iterative.Sequence[A] {
      * Returns the <code>n</code>-th element.
      */
     def at(n: Int): A = {
-        throwIfNegative(n, "at")
+        precondition.nonnegative(n, "at")
         var i = n
         val it = begin
         while (it) {

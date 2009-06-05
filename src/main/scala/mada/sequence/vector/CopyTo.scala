@@ -9,7 +9,7 @@ package mada.sequence.vector
 
 private[mada] object CopyTo {
     def apply[A, B >: A](v: Vector[A], w: Vector[B]): Vector[A] = {
-        ThrowIf.differentSize(v, w, "copyTo")
+        precondition.sameSize(v, w, "copyTo")
         stl.Copy(v, v.start, v.end, w, w.start)
         v
     }

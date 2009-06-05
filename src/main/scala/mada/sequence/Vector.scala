@@ -197,7 +197,10 @@ trait Vector[A] extends PartialFunction[Int, A] with iterative.Sequence[A] {
     /**
      * Returns the first element.
      */
-    def head: A = { throwIfEmpty("head"); this(start) }
+    def head: A = {
+        precondition.notEmpty(this, "head")
+        this(start)
+    }
 
     /**
      * Optionally returns the first element.
@@ -207,12 +210,18 @@ trait Vector[A] extends PartialFunction[Int, A] with iterative.Sequence[A] {
     /**
      * Returns all the elements without the first one.
      */
-    def tail: Vector[A] = { throwIfEmpty("tail"); this(start + 1, end) }
+    def tail: Vector[A] = {
+        precondition.notEmpty(this, "tail")
+        this(start + 1, end)
+    }
 
     /**
      * Returns the last element.
      */
-    def last: A = { throwIfEmpty("last"); this(end - 1) }
+    def last: A = {
+        precondition.notEmpty(this, "last")
+        this(end - 1)
+    }
 
     /**
      * Optionally returns the last element.
@@ -701,11 +710,6 @@ trait Vector[A] extends PartialFunction[Int, A] with iterative.Sequence[A] {
      * @return  <code>vector.range(start, end)</code>.
      */
     final def indices: Vector[Int] = vector.range(start, end)
-
-
-// detail
-
-    private def throwIfEmpty(method: String) = ThrowIf.empty(this, method)
 
 }
 

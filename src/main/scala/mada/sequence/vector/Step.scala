@@ -20,7 +20,7 @@ private[mada] object Step {
 }
 
 private[mada] class StepVector[A](v: Vector[A], stride: Int) extends Forwarder[A] {
-    ThrowIf.nonpositive(stride, "step stride")
+    precondition.positive(stride, "step")
     // This can't keep writability.
     // override val delegate = vector.range(0, Step.count(v.start, v.end, stride)).map{ i => v.nth(i * stride) }
     override val delegate = v.permutation{ i => i * stride }.nth(0, Step.count(v.start, v.end, stride))

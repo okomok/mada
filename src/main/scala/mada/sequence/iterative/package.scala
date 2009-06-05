@@ -109,13 +109,4 @@ package object iterative {
     @compatibleConversion
     def fromJReader(from: java.io.Reader): Iterative[Char] = FromJReader(from)
 
-
-// detail
-
-    private[mada] def throwIfNegative(n: Int, method: String): Unit = {
-        if (n < 0) {
-            throw new IllegalArgumentException("sequence." + method + Tuple1(n))
-        }
-    }
-
 }
