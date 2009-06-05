@@ -4,13 +4,13 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.sequence.vector.parallels
+package mada.sequence.vector
 
 
 import function.future
 
 
-case class Map[Z, A](_1: Vector[Z], _2: Z => A, _3: Int) extends Forwarder[A] {
+case class ParallelMap[Z, A](_1: Vector[Z], _2: Z => A, _3: Int) extends Forwarder[A] {
     util.assert(!isParallel(_1))
 
     override protected val delegate = {

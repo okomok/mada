@@ -4,14 +4,14 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.sequence.vector.parallels
+package mada.sequence.vector
 
 
 // AtomicReference isn't enough because null is a valid element of vector.
 import java.util.concurrent.atomic.AtomicMarkableReference
 
 
-private[mada] object Seek {
+private object ParallelSeek {
     def apply[A](v: Vector[A], p: A => Boolean, grainSize: Int): Option[A] = {
         util.assert(!isParallel(v))
 

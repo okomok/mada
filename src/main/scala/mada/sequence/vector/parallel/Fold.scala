@@ -4,16 +4,16 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.sequence.vector.parallels
+package mada.sequence.vector
 
 
-case class Folder[A](_1: Vector[A], _2: A, _3: (A, A) => A, _4: Int) extends Forwarder[A] {
+case class ParallelFolder[A](_1: Vector[A], _2: A, _3: (A, A) => A, _4: Int) extends Forwarder[A] {
     util.assert(!isParallel(_1))
     override protected val delegate = (single(_2) ++ _1).parallel(_4).reducer(_3)
 }
 
 
-case class Reducer[A](_1: Vector[A], _2: (A, A) => A, _3: Int) extends Forwarder[A] {
+case class ParallelReducer[A](_1: Vector[A], _2: (A, A) => A, _3: Int) extends Forwarder[A] {
     util.assert(!isParallel(_1))
     precondition.notEmpty(_1, "paralell.reducer")
 

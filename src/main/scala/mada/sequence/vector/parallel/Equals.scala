@@ -4,10 +4,10 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.sequence.vector.parallels
+package mada.sequence.vector
 
 
-private[mada] object EqualsIf {
+private object ParallelEqualsIf {
     def apply[A, B](v: Vector[A], w: Vector[B], p: (A, B) => Boolean, grainSize: Int): Boolean = {
         util.assert(!isParallel(v))
 

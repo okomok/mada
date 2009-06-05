@@ -19,10 +19,10 @@ case class Parallel[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
     }
 
 // value semantics
-    override def equalsIf[B](that: Vector[B])(p: (A, B) => Boolean): Boolean = parallels.EqualsIf(delegate, that, p, grainSize)
+    override def equalsIf[B](that: Vector[B])(p: (A, B) => Boolean): Boolean = ParallelEqualsIf(delegate, that, p, grainSize)
 
 // filter
-    override def filter(p: A => Boolean): Vector[A] = parallels.Filter(delegate, p, grainSize)
+    override def filter(p: A => Boolean): Vector[A] = ParallelFilter(delegate, p, grainSize)
 
     override def mutatingFilter(p: A => Boolean): Vector[A] = {
         flatten(
@@ -31,7 +31,7 @@ case class Parallel[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
     }
 
 // map
-    override def map[B](f: A => B): Vector[B] = parallels.Map(delegate, f, grainSize)
+    override def map[B](f: A => B): Vector[B] = ParallelMap(delegate, f, grainSize)
     override def flatMap[B](f: A => Vector[B]): Vector[B] = FlatMap(this, f)
 
 // loop
@@ -48,7 +48,7 @@ case class Parallel[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
     }
 
 // search
-    override def seek(p: A => Boolean) = parallels.Seek(delegate, p, grainSize)
+    override def seek(p: A => Boolean) = ParallelSeek(delegate, p, grainSize)
 
     override def count(p: A => Boolean): Int = {
         delegate.parallelRegions(grainSize).map{ w => w.count(p) }.
@@ -56,7 +56,7 @@ case class Parallel[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
     }
 
 // sort
-    override def sortBy(lt: compare.Func[A]): Vector[A] = parallels.Sort(delegate, lt, grainSize)
+    override def sortBy(lt: compare.Func[A]): Vector[A] = ParallelSort(delegate, lt, grainSize)
 
 // copy
     override def copy: Vector[A] = Copy(this)
@@ -75,7 +75,7 @@ case class Parallel[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
         (single(z) ++ delegate).parallel(grainSize).reduce(op)
     }
 
-    override def folder(z: A)(op: (A, A) => A) = parallels.Folder(delegate, z, op, grainSize)
+    override def folder(z: A)(op: (A, A) => A) = ParallelFolder(delegate, z, op, grainSize)
 
     override def reduce(op: (A, A) => A): A = {
         precondition.notEmpty(delegate, "paralell.reduce")
@@ -83,5 +83,5 @@ case class Parallel[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
             reduce(op)
     }
 
-    override def reducer(op: (A, A) => A): Vector[A] = parallels.Reducer(delegate, op, grainSize)
+    override def reducer(op: (A, A) => A): Vector[A] = ParallelReducer(delegate, op, grainSize)
 }

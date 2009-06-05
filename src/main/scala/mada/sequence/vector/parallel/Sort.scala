@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.sequence.vector.parallels
+package mada.sequence.vector
 
 
 import java.util.ArrayList
@@ -13,7 +13,7 @@ import stl.{ UnguardedPartition, Median }
 import function.future
 
 
-private[mada] object Sort {
+private object ParallelSort {
     def apply[A](v: Vector[A], lt: compare.Func[A], grainSize: Int): Vector[A] = {
         util.assert(!isParallel(v))
         impl(v, v.start, v.end, lt, grainSize * 2) // best grain size?
