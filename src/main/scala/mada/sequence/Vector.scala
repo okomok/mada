@@ -20,7 +20,13 @@ import vector._
  *
  * Unless otherwise specified, these methods return projections to keep readability and writability.
  */
-trait Vector[A] extends PartialFunction[Int, A] with iterative.Sequence[A] {
+trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
+
+
+    override def toVector = this
+
+    @returnThis
+    final def asVector: Vector[A] = this
 
 
 // kernel
@@ -78,26 +84,6 @@ trait Vector[A] extends PartialFunction[Int, A] with iterative.Sequence[A] {
             stl.Equal(this, start, end, that, that.start, p)
         }
     }
-
-    @optimize
-    override def equals(that: Any): Boolean = that match {
-        case that: Vector[_] => equalsIf(that)(function.equal)
-        case _ => super.equals(that)
-    }
-
-    @optimize
-    override def hashCode: Int = {
-        var r = 1
-        var i = start; val j = end
-        while (i != j) {
-            r = 31 * r + this(i).hashCode
-            i += 1
-        }
-        r
-    }
-
-    @optimize
-    override def toString = toJArrayList.toString
 
     /**
      * @return  <code>start == end</code>.
@@ -684,9 +670,6 @@ trait Vector[A] extends PartialFunction[Int, A] with iterative.Sequence[A] {
 
 
 // trivials
-
-    @returnThis
-    final def asVector: Vector[A] = this
 
     /**
      * @return  <code>f(this); this</code>.

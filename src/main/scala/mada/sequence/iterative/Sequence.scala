@@ -13,10 +13,7 @@ package mada.sequence.iterative
 trait Sequence[+A] { // physical
 
     @conversion
-    def toIterative: sequence.Iterative[A] // logical
-
-    @returnThis
-    final def asSequence: Sequence[A] = this
+    def toIterative: Iterative[A] // logical
 
     /**
      * Compares the specified object with this sequence for equality.

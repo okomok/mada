@@ -7,7 +7,7 @@
 package mada.sequence.vector
 
 
-trait Forwarder[A] extends TransformAdapter[A] with iterative.SequenceForwarder[A] {
+trait Forwarder[A] extends TransformAdapter[A] with SequenceForwarder[A] {
     override protected def delegate: Vector[A]
     final override def underlying = delegate
 
