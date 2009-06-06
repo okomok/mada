@@ -18,11 +18,7 @@
 
 - `sequence`
 
-    Yet another iterable
-
-- `vector`
-
-    Structurally-unmodifiable writable array
+    Yet another collection library
 
 
 
@@ -157,26 +153,9 @@ You might notice that:
 
 ## `sequence`
 
-`Sequence` is yet another iterable.
+`sequence` provides `vector` which supports parallel algorithms.
 
-    import mada.sequence
-    import junit.framework.Assert._
-
-    class DocTest {
-        def testFibs: Unit = {
-            val fibs = new sequence.Rec[Int]
-            fibs := sequence.Of(0, 1) ++ fibs.zipBy(fibs.tail)(_ + _)
-            assertEquals(sequence.Of(0,1,1,2,3,5,8,13,21,34), fibs.take(10))
-        }
-    }
-
-
-
-## `vector`
-
-`Vector` is random access sequence which supports parallel algorithms.
-
-    import mada.vector
+    import mada.sequence.vector
     import junit.framework.Assert._
 
     class DocTest {
