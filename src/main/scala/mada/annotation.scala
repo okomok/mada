@@ -37,12 +37,6 @@ class detail extends StaticAnnotation
 
 
 /**
- * Should be final.
- */
-class quasiFinal extends StaticAnnotation
-
-
-/**
  * Provides pseudo methods to work around type constraints.
  */
 class methodized extends StaticAnnotation

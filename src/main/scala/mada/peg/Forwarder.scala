@@ -10,8 +10,8 @@ package mada.peg
 trait Forwarder[A] extends Peg[A] with util.Forwarder {
     override protected def delegate: Peg[A]
 
-    @quasiFinal override def parse(v: sequence.Vector[A], start: Int, end: Int) = delegate.parse(v, start, end)
-    @quasiFinal override def width = delegate.width
+    override def parse(v: sequence.Vector[A], start: Int, end: Int) = delegate.parse(v, start, end)
+    override def width = delegate.width
 
     // Should not be forwarded? every peg is a case class, expression.
     // override def toString: String = delegate.toString

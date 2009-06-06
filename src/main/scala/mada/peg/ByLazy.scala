@@ -7,8 +7,6 @@
 package mada.peg
 
 
-class ByLazy[A](p: => Peg[A]) extends Forwarder[A] {
-    val _1 = function.ofLazy(p)
-
+case class ByLazy[A](_1: function.OfLazy[Peg[A]]) extends Forwarder[A] {
     override protected def delegate = _1()
 }
