@@ -14,7 +14,7 @@ import junit.framework.Assert._
 class MixTest {
     def testTrivial: Unit = {
         val t = Of(1,2,3)
-        val m = t.mix(mixin.force)
+        val m = t.mix(Mixin.force)
         val k = m.map(_ + 1).map(_ + 2).map(_ + 3)
         val u = Of(7,8,9)
 
@@ -49,13 +49,13 @@ class MixTest {
 
     def testSeal: Unit = {
         val t = Of(1,2,3)
-        val m = t.mix(mixin.seal)
+        val m = t.mix(Mixin.seal)
         val k = m.map(_ + 1).map(_ + 2).slice(0,2).map(_ + 3)
         val u = Of(7,8)
 
 /*
-        println(t.mix(mixin.seal).slice(0,2))
-        println(t.seal.slice(0,2).seal.mix(mixin.seal))
+        println(t.mix(Mixin.seal).slice(0,2))
+        println(t.seal.slice(0,2).seal.mix(Mixin.seal))
 
         println(k.toString)
         k match {

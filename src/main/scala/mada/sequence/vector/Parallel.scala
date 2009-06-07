@@ -55,7 +55,6 @@ case class Parallel[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
         ParallelCopyTo(delegate, fromArray(r), grainSize)
         r
     }
-
 }
 
 

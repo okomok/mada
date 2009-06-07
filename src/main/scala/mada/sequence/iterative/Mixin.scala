@@ -21,6 +21,19 @@ trait Mixin { self =>
     }
 }
 
+/**
+ * Contains concrete mixins.
+ */
+object Mixin {
+    val force = new Mixin {
+        override def apply[B](it: Iterative[B]) = it.force
+    }
+
+    val seal = new Mixin {
+        override def apply[B](it: Iterative[B]) = it.seal
+    }
+}
+
 
 case class Mix[+A](_1: Iterative[A], _2: Mixin) extends Forwarder[A] {
     override protected lazy val delegate = _2(_1)
