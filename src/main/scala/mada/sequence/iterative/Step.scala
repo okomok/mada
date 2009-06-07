@@ -8,7 +8,7 @@ package mada.sequence.iterative
 
 
 case class Step[+A](_1: Iterative[A], _2: Int) extends Iterative[A] {
-    precondition.nonnegative(_2, "step")
+    Precondition.nonnegative(_2, "step")
 
     override def begin = new Iterator[A] {
         private val it = _1.begin

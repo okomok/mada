@@ -286,15 +286,4 @@ package object peg {
      */
     def fromSIterableBy[A](from: Iterable[A])(pred: (A, A) => Boolean): Peg[A] = FromSIterableBy(from, pred)
 
-
-// detail
-
-    private[mada] def isZeroWidth[A](p: Peg[A]): Boolean = p.isInstanceOf[ZeroWidth[_]]
-
-    private[mada] def throwIfZeroWidth[A](p: Peg[A], method: String): Unit = {
-        if (isZeroWidth(p)) {
-            throw new IllegalArgumentException(method + " doesn't allow zero-width")
-        }
-    }
-
 }

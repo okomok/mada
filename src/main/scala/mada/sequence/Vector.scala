@@ -184,7 +184,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
      * Returns the first element.
      */
     def head: A = {
-        precondition.notEmpty(this, "head")
+        Precondition.notEmpty(this, "head")
         this(start)
     }
 
@@ -197,7 +197,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
      * Returns all the elements without the first one.
      */
     def tail: Vector[A] = {
-        precondition.notEmpty(this, "tail")
+        Precondition.notEmpty(this, "tail")
         this(start + 1, end)
     }
 
@@ -205,7 +205,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
      * Returns the last element.
      */
     def last: A = {
-        precondition.notEmpty(this, "last")
+        Precondition.notEmpty(this, "last")
         this(end - 1)
     }
 
@@ -550,7 +550,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
      * @pre     <code>that</code> is writable.
      */
     def copyTo[B >: A](that: Vector[B]): Vector[B] = {
-        precondition.range(this.size, that.size, "copyTo")
+        Precondition.range(this.size, that.size, "copyTo")
         that(that.start, stl.Copy(this, start, end, that, that.start))
     }
 

@@ -8,7 +8,7 @@ package mada.sequence.iterative
 
 
 case class Drop[+A](_1: Iterative[A], _2: Int) extends Iterative[A] {
-    precondition.nonnegative(_2, "drop")
+    Precondition.nonnegative(_2, "drop")
 
     override def begin = {
         val it = _1.begin

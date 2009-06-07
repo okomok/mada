@@ -8,8 +8,8 @@ package mada.sequence.vector
 
 
 case class Parallel[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
-    util.assert(!isParallel(_1))
-    precondition.positive(_2, "grain size")
+    util.assert(!IsParallel(_1))
+    Precondition.positive(_2, "grain size")
 
     override protected val delegate = _1
 
@@ -56,4 +56,9 @@ case class Parallel[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
         r
     }
 
+}
+
+
+private object IsParallel {
+    def apply[A](v: Vector[A]): Boolean = v.isInstanceOf[Parallel[_]]
 }

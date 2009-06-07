@@ -11,7 +11,7 @@ import function.future
 
 
 case class ParallelMap[Z, A](_1: Vector[Z], _2: Z => A, _3: Int) extends Forwarder[A] {
-    util.assert(!isParallel(_1))
+    util.assert(!IsParallel(_1))
 
     override protected val delegate = {
         if (_3 == 1) {

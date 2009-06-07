@@ -8,6 +8,6 @@ package mada.sequence.vector
 
 
 case class ParallelFlatMap[Z, A](_1: Vector[Z], _2: Z => Vector[A], _3: Int) extends Forwarder[A] {
-    util.assert(!isParallel(_1))
+    util.assert(!IsParallel(_1))
     override protected val delegate = flatten(_1.parallel(_3).map(_2))
 }

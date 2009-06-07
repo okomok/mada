@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicMarkableReference
 
 private object ParallelSeek {
     def apply[A](_1: Vector[A], _2: A => Boolean, _3: Int): Option[A] = {
-        util.assert(!isParallel(_1))
+        util.assert(!IsParallel(_1))
 
         if (_1.isEmpty) {
             None

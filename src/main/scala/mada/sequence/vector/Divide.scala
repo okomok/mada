@@ -8,7 +8,7 @@ package mada.sequence.vector
 
 
 case class Divide[A](val _1: Vector[A], _2: Int) extends Vector[Vector[A]] {
-    precondition.positive(_2, "stride")
+    Precondition.positive(_2, "stride")
 
     override def start = 0
     override def end = _Step.count(_1.start, _1.end, _2)

@@ -8,7 +8,7 @@ package mada.sequence.vector
 
 
 case class Region[A](_1: Vector[A], _2: Int, _3: Int) extends TransformAdapter[A] {
-    precondition.range(_2, _3, "Region")
+    Precondition.range(_2, _3, "Region")
 
     override protected val underlying = _1
     override val start = _2
@@ -47,7 +47,7 @@ case class Slice[A](_1: Vector[A], _2: Int, _3: Int) extends Forwarder[A] {
 
 
 case class Init[A](_1: Vector[A]) extends Forwarder[A] {
-    precondition.notEmpty(_1, "init")
+    Precondition.notEmpty(_1, "init")
     override protected val delegate = _1(_1.start, _1.end - 1)
 }
 

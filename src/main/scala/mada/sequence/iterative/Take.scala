@@ -8,7 +8,7 @@ package mada.sequence.iterative
 
 
 case class Take[+A](_1: Iterative[A], _2: Int) extends Iterative[A] {
-    precondition.nonnegative(_2, "take")
+    Precondition.nonnegative(_2, "take")
 
     override def begin = new Iterator[A] {
         private var it = _1.begin

@@ -15,7 +15,7 @@ import function.future
 
 private object ParallelSort {
     def apply[A](_1: Vector[A], _2: compare.Func[A], _3: Int): Vector[A] = {
-        util.assert(!isParallel(_1))
+        util.assert(!IsParallel(_1))
         impl(_1, _1.start, _1.end, _2, _3 * 2) // best grain size?
         _1
     }

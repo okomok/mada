@@ -8,7 +8,7 @@ package mada.peg
 
 
 case class Split[A](_1: Peg[A], _2: sequence.Vector[A]) extends sequence.Iterative[sequence.Vector[A]] {
-    throwIfZeroWidth(_1, "split")
+    Precondition.zeroWidth(_1, "split")
 
     override def begin = new sequence.Iterator[sequence.Vector[A]] {
         private val u = new RepeatAtMostUntil(dot, Math.MAX_INT, end | _1)

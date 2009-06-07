@@ -9,7 +9,7 @@ package mada.sequence.vector
 
 private object ParallelCount {
     def apply[A](_1: Vector[A], _2: A => Boolean, _3: Int): Int = {
-        util.assert(!isParallel(_1))
+        util.assert(!IsParallel(_1))
         _1.parallelRegions(_3).map{ w => w.count(_2) }.reduce(_ + _)
     }
 }

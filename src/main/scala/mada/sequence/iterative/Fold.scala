@@ -28,7 +28,7 @@ private class _FolderLeft[A, B](_1: Iterative[A], _2: B, _3: (B, A) => B) extend
 
 case class ReducerLeft[A, B >: A](_1: Iterative[A], _2: (B, A) => B) extends Iterative[B] {
     override def begin = {
-        precondition.notEmpty(_1, "reduceLeft")
+        Precondition.notEmpty(_1, "reduceLeft")
         val it = _1.begin // needs a fresh iterator every time.
         val e = ~it
         it.++
