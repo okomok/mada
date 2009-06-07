@@ -498,33 +498,6 @@ trait Iterative[+A] extends Sequence[A] {
 object Iterative {
 
 
-// methodization
-
-    sealed class _OfInvariant[A](_this: Iterative[A]) {
-        def toSHashSet: scala.collection.Set[A] = _this._toSHashSet(_this)
-        def toJIterable: java.lang.Iterable[A] = _this._toJIterable(_this)
-        def toVector: Vector[A] = _this._toVector(_this)
-    }
-    implicit def _ofInvariant[A](_this: Iterative[A]): _OfInvariant[A] = new _OfInvariant(_this)
-
-    sealed class _OfSequence[A](_this: Iterative[Sequence[A]]) {
-        def flatten: Iterative[A] = _this._flatten(_this)
-        def unsplit(sep: Iterative[A]): Iterative[A] = _this._unsplit(_this, sep)
-    }
-    implicit def _ofSequence[A](_this: Iterative[Sequence[A]]): _OfSequence[A] = new _OfSequence(_this)
-
-    sealed class _OfPair[A, B](_this: Iterative[(A, B)]) {
-        def unzip: (Iterative[A], Iterative[B]) = _this._unzip(_this)
-        def toSHashMap: scala.collection.Map[A, B] = _this._toSHashMap(_this)
-    }
-    implicit def _ofPair[A, B](_this: Iterative[(A, B)]): _OfPair[A, B] = new _OfPair(_this)
-
-    sealed class _OfChar(_this: Iterative[Char]) {
-        def stringize: String = _this._stringize(_this)
-    }
-    implicit def _ofChar(_this: Iterative[Char]): _OfChar = new _OfChar(_this)
-
-
 // compatibles
 
     implicit def _unstringize(from: String): Iterative[Char] = unstringize(from)

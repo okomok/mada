@@ -4,13 +4,13 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.sequence.vector
+package mada.sequence.iterative
 
 
 /**
  * Provides lexical conversions.
  */
-case class Lexical(_1: Vector[Char]) {
+case class Lexical(_1: Iterative[Char]) {
     def toBoolean: Boolean = _1.stringize.toBoolean
     def toByte: Byte = java.lang.Byte.parseByte(_1.stringize)
     def toByte(radix: Byte): Byte = java.lang.Byte.parseByte(_1.stringize, radix)
