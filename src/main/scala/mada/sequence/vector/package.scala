@@ -129,12 +129,6 @@ package object vector {
     def untriplify[A, B](f: Func3[A, B]): Func[A, B] = Untriplify(f)
 
 
-// Char vector
-
-    @aliasOf("vector.Lexical")
-    val lexical = vector.Lexical
-
-
 // conversions
 
     @returnThat

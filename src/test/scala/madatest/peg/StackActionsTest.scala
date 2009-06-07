@@ -31,7 +31,7 @@ class StackActionsTest {
                 ('(' >> expr >> ')') |
                 ('-' >> factor){S{ (_, x) => -x }} |
                 ('+' >> factor)
-    integer ::= (digit.+){S{ v => vector.lexical.toInt(v) }}
+    integer ::= (digit.+){S{ v => v.lexical.toInt }}
     digit   ::= "[0-9]".r
 
     def testTrivial: Unit = {

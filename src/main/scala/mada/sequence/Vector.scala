@@ -710,6 +710,7 @@ object Vector {
         def lowerCase: Vector[Char] = _this._lowerCase(_this)
         def upperCase: Vector[Char] = _this._upperCase(_this)
         def toJCharSequence: java.lang.CharSequence = _this._toJCharSequence(_this)
+        def lexical: Lexical = Lexical(_this)
     }
     implicit def _ofChar(_this: Vector[Char]): _OfChar = new _OfChar(_this)
 

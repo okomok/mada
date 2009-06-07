@@ -30,7 +30,7 @@ class ByNameTest {
                 ('(' >> byName(expr) >> ')') |
                 ('-' >> byName(factor)){S{ (_, x) => -x }} |
                 ('+' >> byName(factor))
-    lazy val integer = (digit.+){S{ v => vector.lexical.toInt(v) }}
+    lazy val integer = (digit.+){S{ v => v.lexical.toInt }}
     lazy val digit   = "[0-9]".r
 
     def testTrivial: Unit = {
