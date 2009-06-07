@@ -8,7 +8,7 @@ package mada.sequence.iterative
 
 
 /**
- * The marker trait of sequences to work around problems around erasure.
+ * The bridge between phisical and logical hierarchy
  */
 trait Sequence[+A] { // physical
 
@@ -63,6 +63,7 @@ trait Sequence[+A] { // physical
 
 object Sequence {
 
+// methodization
     sealed class _OfInvariant[A](_this: Iterative[A]) {
         def toSHashSet: scala.collection.Set[A] = _this._toSHashSet(_this)
         def toJIterable: java.lang.Iterable[A] = _this._toJIterable(_this)

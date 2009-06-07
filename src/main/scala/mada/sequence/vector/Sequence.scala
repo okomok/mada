@@ -8,7 +8,7 @@ package mada.sequence.vector
 
 
 /**
- * The marker trait of sequences to work around problems around erasure.
+ * The bridge between phisical and logical hierarchy
  */
 trait Sequence[A] extends iterative.Sequence[A] { // physical
 
@@ -41,16 +41,15 @@ trait Sequence[A] extends iterative.Sequence[A] { // physical
 
 object Sequence {
 
-    sealed class MadaVectorEither[A, B](_1: Vector[Either[A, B]]) {
-        def lefts = vector.lefts(_1)
-        def rights = vector.rights(_1)
-    }
-    implicit def madaVectorEither[A, B](_1: Sequence[Either[A, B]]): MadaVectorEither[A, B] = new MadaVectorEither(_1.toVector)
+// logical hierarchy
+    implicit def _toIterative[A](from: Sequence[A]): Iterative[A] = from.toIterative
 
+// methodization
     sealed class _OfVector[A](_this: Vector[Vector[A]]) {
         def undivide: Vector[A] = _this._undivide(_this)
     }
     implicit def _ofVector[A](_this: Sequence[Vector[A]]): _OfVector[A] = new _OfVector(_this.toVector)
+    implicit def _ofSequence[A](_this: Sequence[Sequence[A]]): _OfVector[A] = new _OfVector(_this.toVector.map(_.toVector))
 
     sealed class _OfPair[A, B](_this: Vector[(A, B)]) {
         def unzip: (Vector[A], Vector[B]) = _this._unzip(_this)

@@ -72,16 +72,6 @@ package object vector {
      */
     def flatten[A](its: Iterative[iterative.Sequence[A]]): Vector[A] = Flatten(its)
 
-    /**
-     * @return  <code>v.filter(_.isLeft).map(_.left.get)</code>.
-     */
-    def lefts[A, B](v: Vector[Either[A, B]]): Vector[A] = v.filter(_.isLeft).map(_.left.get)
-
-    /**
-     * @return  <code>v.filter(_.isRight).map(_.right.get)</code>.
-     */
-    def rights[A, B](v: Vector[Either[A, B]]): Vector[B] = v.filter(_.isRight).map(_.right.get)
-
     @packageObjectBrokenOverload
     object range {
         /**

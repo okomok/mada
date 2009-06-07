@@ -95,9 +95,6 @@ package object iterative {
     def unstringize(from: String): Iterative[Char] = Unstringize(from)
 
     @compatibleConversion
-    def fromVector[A](from: Vector[A]): Iterative[A] = FromVector(from)
-
-    @compatibleConversion
     def fromSIterable[A](from: Iterable[A]): Iterative[A] = FromSIterable(from)
 
     @compatibleConversion

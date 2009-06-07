@@ -501,7 +501,6 @@ object Iterative {
 // compatibles
 
     implicit def _unstringize(from: String): Iterative[Char] = unstringize(from)
-    implicit def _fromVector[A](from: Vector[A]): Iterative[A] = fromVector(from)
     implicit def _fromSIterable[A](from: Iterable[A]): Iterative[A] = fromSIterable(from)
     implicit def _fromJIterable[A](from: java.lang.Iterable[A]): Iterative[A] = fromJIterable(from)
     implicit def _fromJObjectInput(from: java.io.ObjectInput): Iterative[AnyRef] = fromJObjectInput(from)

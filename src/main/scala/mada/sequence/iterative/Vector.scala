@@ -7,10 +7,6 @@
 package mada.sequence.iterative
 
 
-case class FromVector[A](_1: Vector[A]) extends Forwarder[A] {
-    override protected lazy val delegate = _1.toIterative
-}
-
 case class ToVector[A](_1: Iterative[A]) extends vector.Forwarder[A] {
     override protected lazy val delegate = {
         val it = _1.begin

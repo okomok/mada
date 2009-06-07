@@ -526,14 +526,6 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
     def readOnly: Vector[A] = ReadOnly(this)
 
 
-// mixin
-
-    /**
-     * Reverts <code>mixin</code>.
-     */
-    def unmix: Vector[A] = this
-
-
 // copy
 
     /**
