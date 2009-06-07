@@ -70,11 +70,11 @@ object Sequence {
     }
     implicit def _ofInvariant[A](_this: Sequence[A]): _OfInvariant[A] = new _OfInvariant(_this.toIterative)
 
-    sealed class _OfSequence[A](_this: Iterative[Sequence[A]]) {
+    sealed class _OfSequence[A](_this: Iterative[Iterative[A]]) {
         def flatten: Iterative[A] = _this._flatten(_this)
         def unsplit(sep: Iterative[A]): Iterative[A] = _this._unsplit(_this, sep)
     }
-    implicit def _ofSequence[A](_this: Sequence[Sequence[A]]): _OfSequence[A] = new _OfSequence(_this.toIterative)
+    implicit def _ofSequence[A](_this: Sequence[Sequence[A]]): _OfSequence[A] = new _OfSequence(_this.toIterative.map(_.toIterative))
 
     sealed class _OfPair[A, B](_this: Iterative[(A, B)]) {
         def unzip: (Iterative[A], Iterative[B]) = _this._unzip(_this)

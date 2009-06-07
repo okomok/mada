@@ -333,7 +333,7 @@ trait Iterative[+A] extends Sequence[A] {
      * Turns a sequence of sequences into flat sequence.
      */
     @methodized
-    def _flatten[B](_this: Iterative[Sequence[B]]): Iterative[B] = Flatten(_this)
+    def _flatten[B](_this: Iterative[Iterative[B]]): Iterative[B] = Flatten(_this)
 
     /**
      * Makes every element access be lazy.
@@ -374,7 +374,7 @@ trait Iterative[+A] extends Sequence[A] {
      * Flattens <code>vs</code>, each vector appending <code>sep</code> except the last one.
      */
     @methodized
-    def _unsplit[B](_this: Iterative[Sequence[B]], sep: Iterative[B]): Iterative[B] = Unsplit(_this, sep)
+    def _unsplit[B](_this: Iterative[Iterative[B]], sep: Iterative[B]): Iterative[B] = Unsplit(_this, sep)
 
     /**
      * Zips <code>this</code> and <code>that</code>.

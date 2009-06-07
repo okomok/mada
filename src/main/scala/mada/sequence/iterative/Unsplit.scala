@@ -7,7 +7,7 @@
 package mada.sequence.iterative
 
 
-case class Unsplit[A](_1: Iterative[Sequence[A]], _2: Iterative[A]) extends Iterative[A] {
+case class Unsplit[A](_1: Iterative[Iterative[A]], _2: Iterative[A]) extends Iterative[A] {
     override def begin: Iterator[A] = {
         val ii = _1.begin // needs a fresh iterator every time.
         if (!ii) {
@@ -15,7 +15,7 @@ case class Unsplit[A](_1: Iterative[Sequence[A]], _2: Iterative[A]) extends Iter
         } else {
             val h = (~ii).toIterative
             ii.++
-            (h ++ bind(ii).map{ s => _2 ++ s.toIterative }.flatten).begin
+            (h ++ bind(ii).map{ s => _2 ++ s }.flatten).begin
         }
     }
 }
