@@ -7,6 +7,45 @@
 package mada.sequence.vector
 
 
+// List
+
+case class FromJList[A](_1: java.util.List[A]) extends Forwarder[A] {
+    override protected val delegate: Vector[A] = _1 match {
+        case ToJList(from) => from // from-to fusion
+        case _ => new _FromJList(_1)
+    }
+}
+
+class _FromJList[A](_1: java.util.List[A]) extends Vector[A] {
+    override def start = 0
+    override def end = _1.size
+    override def apply(i: Int) = _1.get(i)
+    override def update(i: Int, e: A) = _1.set(i, e)
+
+    override def sortBy(lt: compare.Func[A]) = {
+        java.util.Collections.sort(_1, compare.from(lt).toJComparator)
+        this
+    }
+
+    override def stableSortBy(lt: compare.Func[A]) = {
+        java.util.Collections.sort(_1, compare.from(lt).toJComparator)
+        this
+    }
+
+    override def toJList = _1 // to-from fusion
+}
+
+case class ToJList[A](_1: Vector[A]) extends java.util.AbstractList[A] {
+    override def get(index: Int) = _1.nth(index)
+    override def set(index: Int, element: A) = {
+        val old = _1.nth(index)
+        _1.nth(index) = element
+        old
+    }
+    override def size() = _1.size
+}
+
+
 // CharSequence
 
 case class FromJCharSequence(_1: java.lang.CharSequence) extends Forwarder[Char] {
@@ -29,73 +68,4 @@ case class ToJCharSequence(_1: Vector[Char]) extends java.lang.CharSequence {
     override def length = _1.nth.size
     override def subSequence(start: Int, end: Int): java.lang.CharSequence = new ToJCharSequence(_1.nth(start, end))
     override def toString = _1.nth.stringize
-}
-
-
-// Iterable
-
-case class ToJIterable[A](_1: Vector[A]) extends java.lang.Iterable[A] {
-    override def iterator: java.util.Iterator[A] = new _JListIterator(_1)
-}
-
-private class _JListIterator[A](v: Vector[A]) extends java.util.ListIterator[A] {
-    private var cur = v.start
-
-    override def add(e: A) = throw new UnsupportedOperationException
-    override def hasNext = cur != v.end
-    override def hasPrevious = cur != v.start
-
-    override def next = {
-        if (!hasNext) {
-            throw new NoSuchElementException("next")
-        }
-        val tmp = v(cur)
-        cur += 1
-        tmp
-    }
-
-    override def nextIndex = cur
-
-    override def previous = {
-        if (!hasPrevious) {
-            throw new NoSuchElementException("previous")
-        }
-        cur -= 1
-        v(cur)
-    }
-
-    override def previousIndex = cur - 1
-    override def remove = throw new UnsupportedOperationException("JListIterator.remove")
-    override def set(e: A) = throw new UnsupportedOperationException("JListIterator.set")
-}
-
-case class FromJIterable[A](_1: java.lang.Iterable[A]) extends Forwarder[A] {
-    override protected val delegate = {
-        val r = new java.util.ArrayList[A]
-        val it = _1.iterator
-        while (it.hasNext) {
-            r.add(it.next)
-        }
-        fromJList(r)
-    }
-}
-
-
-// List
-
-case class FromJList[A](_1: java.util.List[A]) extends Vector[A] {
-    override def start = 0
-    override def end = _1.size
-    override def apply(i: Int) = _1.get(i)
-    override def update(i: Int, e: A) = _1.set(i, e)
-
-    override def sortBy(lt: compare.Func[A]) = {
-        java.util.Collections.sort(_1, compare.from(lt).toJComparator)
-        this
-    }
-
-    override def stableSortBy(lt: compare.Func[A]) = {
-        java.util.Collections.sort(_1, compare.from(lt).toJComparator)
-        this
-    }
 }

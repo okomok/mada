@@ -45,7 +45,7 @@ package object vector {
      * Creates a sequence initially containing the specified elements.
      */
     object Of {
-        def apply[A](from: A*): Vector[A] = fromSIterable(from)
+        def apply[A](from: A*): Vector[A] = iterative.fromSIterable(from).toVector
         def unapplySeq[A](from: Vector[A]): Option[Seq[A]] = Some(from.toSVector)
     }
 
@@ -143,15 +143,9 @@ package object vector {
     def fromSVector[A](from: scala.collection.Vector[A]): Vector[A] = FromSVector(from)
 
     @compatibleConversion
-    def fromJCharSequence(from: java.lang.CharSequence): Vector[Char] = FromJCharSequence(from)
-
-    @compatibleConversion
     def fromJList[A](from: java.util.List[A]): Vector[A] = FromJList(from)
 
-    @conversion
-    def fromSIterable[A](from: Iterable[A]): Vector[A] = FromSIterable(from)
-
-    @conversion
-    def fromJIterable[A](from: java.lang.Iterable[A]): Vector[A] = FromJIterable(from)
+    @compatibleConversion
+    def fromJCharSequence(from: java.lang.CharSequence): Vector[Char] = FromJCharSequence(from)
 
 }

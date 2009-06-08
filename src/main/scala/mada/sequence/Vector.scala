@@ -626,14 +626,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
     def toSVector: scala.collection.mutable.Vector[A] = ToSVector(this)
 
     @conversion
-    def toJArrayList: java.util.ArrayList[A] = {
-        val r = new java.util.ArrayList[A](size) // this is capacity.
-        foreach{ e => r.add(e) }
-        r
-    }
-
-    @conversion
-    def toJIterable: java.lang.Iterable[A] = ToJIterable(this)
+    def toJList: java.util.List[A] = ToJList(this)
 
 
 // string

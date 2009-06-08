@@ -34,7 +34,7 @@ trait Sequence[A] extends iterative.Sequence[A] { // physical
     }
 
     @optimize
-    override def toString = toVector.toJArrayList.toString
+    override def toString = toVector.toJList.toString
 
 }
 

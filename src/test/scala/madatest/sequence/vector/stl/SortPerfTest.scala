@@ -24,7 +24,7 @@ class SortPerfTest {
 
     def testSpeedJava: Unit = {
         println("java-sort")
-        val e = fromJList(longExampleArrayList1).times(cycleCount).toJArrayList
+        val e = fromJList(longExampleArrayList1).times(cycleCount).toJList
         val c = new java.util.Comparator[java.lang.Integer] { override def compare(x: Integer, y: Integer): Int = { x.intValue - y.intValue } }
         val start = java.lang.System.currentTimeMillis
         java.util.Collections.sort(e, c)

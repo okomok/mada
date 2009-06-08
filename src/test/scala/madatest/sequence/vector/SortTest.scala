@@ -38,7 +38,7 @@ class SortTest {
     }
 
     def testOptimizeArrayList {
-        val actual = fromJList(fromArray(example1).toJArrayList).sortBy(_ < _)
+        val actual = fromJList(fromArray(example1).toJList).sortBy(_ < _)
         detail.TestVectorReadOnly(example1Sorted, actual)
     }
 }
