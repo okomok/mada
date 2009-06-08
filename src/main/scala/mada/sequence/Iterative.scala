@@ -405,6 +405,9 @@ trait Iterative[+A] extends Sequence[A] {
     @conversion
     def toSome: ToSome[A] = new ToSome(this)
 
+    @conversion
+    def toList: List[A] = ToList(this)
+
     @methodized @conversion
     def _toVector[B](_this: Iterative[B]): Vector[B] = ToVector(_this)
 

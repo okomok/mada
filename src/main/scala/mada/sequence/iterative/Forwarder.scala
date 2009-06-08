@@ -68,6 +68,7 @@ trait Forwarder[+A] extends Iterative[A] with SequenceForwarder[A] {
     override def zipBy[B, C](that: Iterative[B])(f: (A, B) => C): Iterative[C] = around(delegate.zipBy(that)(f))
     override def _stringize(_this: Iterative[Char]): String = delegate.asInstanceOf[Iterative[Char]].stringize
     override def toSome: ToSome[A] = delegate.toSome
+    override def toList: List[A] = delegate.toList
     override def _toVector[B](_this: Iterative[B]): Vector[B] = delegate.asInstanceOf[Iterative[B]].toVector
     override def _toSHashMap[K, V](_this: Iterative[(K, V)]): scala.collection.Map[K, V] = delegate.asInstanceOf[Iterative[(K, V)]].toSHashMap
     override def _toSHashSet[B](_this: Iterative[B]): scala.collection.Set[B] = delegate.asInstanceOf[Iterative[B]].toSHashSet

@@ -14,7 +14,7 @@ import list._
 /**
  * Yet another Stream
  */
-trait List[+A] extends iterative.Sequence[A] {
+trait List[+A] extends Sequence[A] {
 
 
 // kernel
@@ -38,7 +38,7 @@ trait List[+A] extends iterative.Sequence[A] {
     protected def preTail: Unit = if (isEmpty) throw new UnsupportedOperationException("tail on empty list")
 
 
-// as value
+// iterative
 
     /**
      * Returns true if and only if both sequences have the same size,
@@ -56,37 +56,6 @@ trait List[+A] extends iterative.Sequence[A] {
         }
         it.isEmpty && jt.isEmpty
     }
-
-    /**
-     * Compares the specified object with this sequence for equality.
-     * Returns true if and only if the specified object is also a sequence,
-     * both sequences have the same size, and all corresponding pairs of
-     * elements in the two sequences are equal.
-     * You shall not override this in a purpose except optimization.
-     *
-     * @see Effective Java 2nd Edition - Item 8
-     */
-    @optimize
-    override def equals(that: Any) = that match {
-        case that: List[_] => equalsIf(that)(function.equal)
-        case _ => super.equals(that)
-    }
-
-    @optimize
-    override def hashCode = {
-        var r = 1
-        var it = this
-        while (!it.isEmpty) {
-            r = 31 * r + it.head.hashCode
-            it = it.tail
-        }
-        r
-    }
-
-
-// iterative
-
-    override def asIterative: Iterative[A] = throw new Error
 
     /**
      * Returns the size.
@@ -219,7 +188,7 @@ trait List[+A] extends iterative.Sequence[A] {
     /**
      * Prefix sum folding left to right.
      */
-    def folderLeft[B](z: B)(op: (B, A) => B): List[B] = FolderLeft(this, z, op)
+    def folderLeft[B](z: => B)(op: (B, A) => B): List[B] = FolderLeft(this, z, op)
 
     /**
      * Prefix sum reducing left to right.
@@ -269,17 +238,17 @@ trait List[+A] extends iterative.Sequence[A] {
     /**
      * Takes at most <code>n</code> elements.
      */
-    def take(n: Int): List[A] = Take(this, n)
+    def take(n: => Int): List[A] = Take(this, n)
 
     /**
      * Drops at most <code>n</code> elements.
      */
-    def drop(n: Int): List[A] = Drop(this, n)
+    def drop(n: => Int): List[A] = Drop(this, n)
 
     /**
      * @return  <code>drop(n).take(n - m)</code>.
      */
-    def slice(from: Int, until: Int): List[A] = Slice(this, from, until)
+    def slice(from: => Int, until: => Int): List[A] = Slice(this, from, until)
 
     /**
      * Takes elements while <code>p</code> meets.
@@ -299,7 +268,7 @@ trait List[+A] extends iterative.Sequence[A] {
     /**
      * @return  <code>(take(n), drop(n))</code>.
      */
-    def splitAt(n: Int): (List[A], List[A]) = {
+    def splitAt(n: => Int): (List[A], List[A]) = {
         Precondition.nonnegative(n, "splitAt")
         (take(n), drop(n))
     }
