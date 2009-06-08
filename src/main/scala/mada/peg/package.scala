@@ -251,7 +251,7 @@ package object peg {
     def verify[A](p: Peg[A]): Peg[A] = Verify(p)
 
 
-// conversions
+// conversion
 
     @compatibleConversion
     def fromChar(from: Char): Peg[Char] = FromChar(from)

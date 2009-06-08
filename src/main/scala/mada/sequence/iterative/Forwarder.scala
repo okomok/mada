@@ -71,6 +71,7 @@ trait Forwarder[+A] extends Iterative[A] with SequenceForwarder[A] {
     override def _toVector[B](_this: Iterative[B]): Vector[B] = delegate.asInstanceOf[Iterative[B]].toVector
     override def _toSHashMap[K, V](_this: Iterative[(K, V)]): scala.collection.Map[K, V] = delegate.asInstanceOf[Iterative[(K, V)]].toSHashMap
     override def _toSHashSet[B](_this: Iterative[B]): scala.collection.Set[B] = delegate.asInstanceOf[Iterative[B]].toSHashSet
+    override def toSList: scala.collection.immutable.List[A] = delegate.toSList
     override def toSSequence: scala.collection.Sequence[A] = delegate.toSSequence
     override def _toJIterable[B](_this: Iterative[B]): java.lang.Iterable[B] = delegate.asInstanceOf[Iterative[B]].toJIterable
 

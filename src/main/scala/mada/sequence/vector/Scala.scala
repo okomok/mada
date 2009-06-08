@@ -19,16 +19,6 @@ case class FromSIterable[A](_1: scala.Iterable[A]) extends Forwarder[A] {
     }
 }
 
-case class ToSIterable[A](_1: Vector[A]) extends scala.Iterable[A] {
-    override def iterator: scala.Iterator[A] = new _SIterableIterator(_1)
-}
-
-private class _SIterableIterator[A](v: Vector[A]) extends scala.Iterator[A] {
-    private var i = v.start
-    override def hasNext = i != v.end
-    override def next = { val tmp = v(i); i += 1; tmp }
-}
-
 
 // Vector
 

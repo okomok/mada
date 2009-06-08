@@ -6,15 +6,6 @@
 
 package mada.sequence.iterative
 
-/*
-case class FromSIterable[+A](_1: Iterable[A]) extends Forwarder[A] {
-    override protected val delegate: Iterative[A] = _1 match {
-        case ToSIterable(from) => from // from-to fusion
-        case _ => new _FromSIterable(_1)
-    }
-
-    override def toSIterable = _1 // to-from fusion
-}*/
 
 case class FromSIterable[+A](_1: Iterable[A]) extends Iterative[A] {
     override def begin = iterator.fromSIterator(_1.iterator)

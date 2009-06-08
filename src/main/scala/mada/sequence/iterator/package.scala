@@ -24,7 +24,7 @@ package object iterator {
     val theEnd: Iterator[Nothing] = TheEnd
 
 
-// conversions
+// conversion
 
     @returnThat
     def from[A](to: Iterator[A]) = to

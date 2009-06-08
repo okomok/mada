@@ -119,7 +119,7 @@ package object vector {
     def untriplify[A, B](f: Func3[A, B]): Func[A, B] = Untriplify(f)
 
 
-// conversions
+// conversion
 
     @returnThat
     def from[A](to: Vector[A]): Vector[A] = to

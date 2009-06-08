@@ -607,7 +607,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
     def reducer(op: (A, A) => A): Vector[A] = reducerLeft(op)
 
 
-// conversions
+// conversion
 
     @conversion
     def toArray: Array[A] = {
@@ -621,12 +621,6 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
 
     @conversion
     def toOrdered(implicit c: compare.GetOrdered[A]): Ordered[Vector[A]] = ToOrdered(this, c)
-
-    @conversion
-    def toSList: scala.List[A] = toSIterable.toList
-
-    @conversion
-    def toSIterable: scala.Iterable[A] = ToSIterable(this)
 
     @conversion
     def toSVector: scala.collection.mutable.Vector[A] = ToSVector(this)

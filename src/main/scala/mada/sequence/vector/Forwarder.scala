@@ -107,6 +107,13 @@ trait Forwarder[A] extends TransformAdapter[A] with SequenceForwarder[A] {
     override def reduce(op: (A, A) => A): A = delegate.reduce(op)
     override def folder(z: A)(op: (A, A) => A): Vector[A] = around(delegate.folder(z)(op))
     override def reducer(op: (A, A) => A): Vector[A] = around(delegate.reducer(op))
+// conversion
+    override def toArray: Array[A] = delegate.toArray
+    override def toProduct: Product = delegate.toProduct
+    override def toOrdered(implicit c: compare.GetOrdered[A]): Ordered[Vector[A]] = delegate.toOrdered(c)
+    override def toSVector: scala.collection.mutable.Vector[A] = delegate.toSVector
+    override def toJArrayList: java.util.ArrayList[A] = delegate.toJArrayList
+    override def toJIterable: java.lang.Iterable[A] = delegate.toJIterable
 // string
     override def _stringize(_this: Vector[Char]): String = delegate.asInstanceOf[Vector[Char]].stringize
     override def _lowerCase(_this: Vector[Char]): Vector[Char] = delegate.asInstanceOf[Vector[Char]].lowerCase

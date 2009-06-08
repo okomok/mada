@@ -86,7 +86,7 @@ package object iterative {
     type Yield[-A] = Function1[A, Unit]
 
 
-// conversions
+// conversion
 
     @returnThat
     def from[A](to: Iterative[A]): Iterative[A] = to

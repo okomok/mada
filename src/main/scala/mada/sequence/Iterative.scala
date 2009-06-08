@@ -392,7 +392,7 @@ trait Iterative[+A] extends Sequence[A] {
     def zipBy[B, C](that: Iterative[B])(f: (A, B) => C): Iterative[C] = ZipBy(this, that, f)
 
 
-// conversions
+// conversion
 
     @methodized @conversion
     def _stringize(_this: Iterative[Char]): String = {
@@ -434,9 +434,12 @@ trait Iterative[+A] extends Sequence[A] {
     }
 
     @conversion
+    def toSList: scala.collection.immutable.List[A] = toSSequence.toList
+
+    @conversion
     def toSSequence: scala.collection.Sequence[A] = ToSSequence(this)
 
-    @methodized @compatibleConversion
+    @methodized @conversion
     def _toJIterable[B](_this: Iterative[B]): java.lang.Iterable[B] = ToJIterable(_this)
 
 

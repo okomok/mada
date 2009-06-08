@@ -26,7 +26,7 @@ package object list {
     val nil: List[Nothing] = Nil()
 
 
-// conversions
+// conversion
 
 
 // detail

@@ -23,7 +23,7 @@ package object compare {
     def by[A](p: Func[A]): Compare[A] = fromFunc(p)
 
 
-// conversions
+// conversion
 
     @returnThat
     def from[A](to: Compare[A]): Compare[A] = to
