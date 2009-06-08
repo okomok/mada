@@ -8,11 +8,7 @@ package mada.util
 
 
 /**
- * Forwards all calls to methods of class <code>Any</code> to another object <code>delegate</code>.
- * All the forwarding methods are placed in subclasses. For a forwarder to keep <code>equals</code> symmetric,
- * <code>equals</code>(<code>hashCode</code> too) shall not be overriden for purposes other than optimization.
- * In this regard, JCL hierarchy is broken. E.g. <code>unmodifiableCollection</code> can't forward <code>equals</code>.
- * Probably <code>List/Set</code> should have not been a subclass of <code>Collection</code>.
+ * Equivalent to <code>scala.Proxy</code> (with slightly different names).
  *
  * @see <a href>http://java.sun.com/javase/6/docs/api/java/util/Collections.html#unmodifiableCollection(java.util.Collection)</a>
  * @see <a href>http://google-collections.googlecode.com/svn/trunk/javadoc/com/google/common/collect/ForwardingObject.html</a>
@@ -23,5 +19,24 @@ trait Forwarder {
      * Returns the backing delegate instance that methods are forwarded to.
      */
     protected def delegate: Any
+
+    /**
+     * Returns <code>true</code> iif the specified object is also a forwarder
+     * and <code>delegate.equals(that.delegate)</code> returns <code>true</code>.
+     */
+    override def equals(that: Any): Boolean = that match {
+        case that: Forwarder => delegate.equals(that.delegate) // makes `equals` symmetric.
+        case _ => false
+    }
+
+    /**
+     * @return  <code>delegate.hashCode</code>.
+     */
+    override def hashCode: Int = delegate.hashCode
+
+    /**
+     * @return  <code>delegate.toString</code>.
+     */
+    override def toString: String = delegate.toString
 
 }

@@ -21,6 +21,8 @@ trait Sequence[+A] { // physical
      * both sequences have the same size, and all corresponding pairs of
      * elements in the two sequences are equal.
      * You shall not override this in a purpose except optimization.
+     * (In this regard, JCL hierarchy is broken. E.g. <code>unmodifiableCollection</code> can't forward <code>equals</code>.
+     * Probably <code>List/Set</code> shouldn't have been a subclass of <code>Collection</code>.)
      *
      * @see Effective Java 2nd Edition - Item 8
      */
@@ -97,6 +99,4 @@ trait SequenceForwarder[+A] extends Sequence[A] with util.Forwarder {
 
     override def asIterative = delegate.asIterative
     override def equals(that: Any): Boolean = delegate.equals(that)
-    override def hashCode: Int = delegate.hashCode
-    override def toString: String = delegate.toString
 }

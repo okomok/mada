@@ -18,5 +18,4 @@ trait Forwarder[A] extends Stack[A] with util.Forwarder {
     override def clear: Unit = delegate.clear
 
     override def toSome: ToSome[A] = delegate.toSome
-    override def toString: String = delegate.toString
 }

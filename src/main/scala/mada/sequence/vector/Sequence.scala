@@ -12,10 +12,10 @@ package mada.sequence.vector
  */
 trait Sequence[A] extends iterative.Sequence[A] { // physical
 
-    override def asIterative: Iterative[A] = AsIterative(asVector) // logical super
-
     @conversion
     def asVector: Vector[A] // logical
+
+    override def asIterative: Iterative[A] = AsIterative(asVector) // logical super
 
     @optimize
     override def equals(that: Any): Boolean = that match {
