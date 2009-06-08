@@ -13,7 +13,7 @@ case class Unsplit[A](_1: Iterative[Iterative[A]], _2: Iterative[A]) extends Ite
         if (!ii) {
             iterator.theEnd
         } else {
-            val h = (~ii).toIterative
+            val h = (~ii)
             ii.++
             (h ++ bind(ii).map{ s => _2 ++ s }.flatten).begin
         }

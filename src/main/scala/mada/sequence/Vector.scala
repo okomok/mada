@@ -23,10 +23,7 @@ import vector._
 trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
 
 
-    override def toVector = this
-
-    @returnThis
-    final def asVector: Vector[A] = this
+    override def asVector: Vector[A] = this
 
 
 // kernel
@@ -70,8 +67,6 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
 
 // iterative
 
-    override def toIterative: Iterative[A] = ToIterative(this)
-
     /**
      * Returns true if and only if both sequences have the same size,
      * and all corresponding pairs of elements in the two sequences
@@ -106,7 +101,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
     def map[B](f: A => B): Vector[B] = Map(this, f)
 
     /**
-     * @return  <code>vector.flatten(map(f))</code>.
+     * Flattens this vector using <code>f</code>.
      */
     def flatMap[B](f: A => Vector[B]): Vector[B] = FlatMap(this, f)
 

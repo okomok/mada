@@ -18,7 +18,7 @@ class FlattenTest {
         val v3 = vector.from(detail.Example.empty1)
         val v4 = iterative.from(Array(5,6))
         val v5 = vector.from(Array(7,8,9,10))
-        val vv = vector.flatten(iterative.from(Array[iterative.Sequence[Int]](v1, v2, v3, v4, v5)))
+        val vv = iterative.from(Array[iterative.Sequence[Int]](v1, v2, v3, v4, v5)).flatten.toVector
         val e = vector.range(0, 11)
         assertEquals(e, vv)
     }
@@ -29,7 +29,7 @@ class FlattenTest {
         val v3 = vector.from(detail.Example.empty1)
         val v4 = iterative.from(Array(5,6))
         val v5 = vector.from(Array(7,8,9,10))
-        val vv = vector.flatten(vector.from(Array[iterative.Sequence[Int]](v1, v2, v3, v4, v5)))
+        val vv = vector.from(Array[iterative.Sequence[Int]](v1, v2, v3, v4, v5)).flatten.toVector
         val e = vector.range(0, 11)
         assertEquals(e, vv)
     }
@@ -38,7 +38,7 @@ class FlattenTest {
         val v1 = vector.from(detail.Example.empty1)
         val v2 = iterative.from(detail.Example.empty1)
         val v3 = vector.from(detail.Example.empty1)
-        val vv = vector.flatten(iterative.from(Array[iterative.Sequence[Int]](v1, v2, v3)))
+        val vv = iterative.from(Array[iterative.Sequence[Int]](v1, v2, v3)).flatten.toVector
         detail.TestEmpty(vv)
     }
 

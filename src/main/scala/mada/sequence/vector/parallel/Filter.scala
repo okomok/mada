@@ -15,6 +15,6 @@ case class ParallelFilter[A](_1: Vector[A], _2: A => Boolean, _3: Int) extends F
 private object ParallelMutatingFilter {
     def apply[A](_1: Vector[A], _2: A => Boolean, _3: Int): Vector[A] = {
         util.assert(!IsParallel(_1))
-        flatten(_1.parallelRegions(_3).map{ w => w.mutatingFilter(_2).toIterative })
+        _1.parallelRegions(_3).map{ w => w.mutatingFilter(_2) }.flatten.toVector
     }
 }

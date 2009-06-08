@@ -62,16 +62,6 @@ package object vector {
      */
     def concat[A](vs: Vector[A]*): Vector[A] = Concat(vs)
 
-    /**
-     * Create a vector that is the concantenation of all vectors
-     * returned by a given vector of vectors.
-     *
-     * @param   vs  The iterator which returns on each call to next
-     *              a new vector whose elements are to be concatenated to the result.
-     * @return  the newly created writable vector (not a projection into <code>vs</code>).
-     */
-    def flatten[A](its: Iterative[iterative.Sequence[A]]): Vector[A] = Flatten(its)
-
     @packageObjectBrokenOverload
     object range {
         /**

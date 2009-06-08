@@ -86,7 +86,7 @@ trait List[+A] extends iterative.Sequence[A] {
 
 // iterative
 
-    override def toIterative: Iterative[A] = throw new Error
+    override def asIterative: Iterative[A] = throw new Error
 
     /**
      * Returns the size.

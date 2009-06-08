@@ -13,7 +13,7 @@ package mada.sequence.iterative
 trait Sequence[+A] { // physical
 
     @conversion
-    def toIterative: Iterative[A] // logical
+    def asIterative: Iterative[A] // logical
 
     /**
      * Compares the specified object with this sequence for equality.
@@ -25,13 +25,13 @@ trait Sequence[+A] { // physical
      * @see Effective Java 2nd Edition - Item 8
      */
     override def equals(that: Any) = that match {
-        case that: Sequence[_] => toIterative.equalsIf(that.toIterative)(function.equal)
+        case that: Sequence[_] => asIterative.equalsIf(that.asIterative)(function.equal)
         case _ => false
     }
 
     override def hashCode = {
         var r = 1
-        val it = toIterative.begin
+        val it = asIterative.begin
         while (it) {
             r = 31 * r + (~it).hashCode
             it.++
@@ -43,7 +43,7 @@ trait Sequence[+A] { // physical
         val sb = new StringBuilder
         sb.append('[')
 
-        val it = toIterative.begin
+        val it = asIterative.begin
         if (it) {
             sb.append(~it)
             it.++
@@ -69,25 +69,25 @@ object Sequence {
         def toJIterable: java.lang.Iterable[A] = _this._toJIterable(_this)
         def toVector: Vector[A] = _this._toVector(_this)
     }
-    implicit def _ofInvariant[A](_this: Sequence[A]): _OfInvariant[A] = new _OfInvariant(_this.toIterative)
+    implicit def _ofInvariant[A](_this: Sequence[A]): _OfInvariant[A] = new _OfInvariant(_this.asIterative)
 
     sealed class _OfSequence[A](_this: Iterative[Iterative[A]]) {
         def flatten: Iterative[A] = _this._flatten(_this)
         def unsplit(sep: Iterative[A]): Iterative[A] = _this._unsplit(_this, sep)
     }
-    implicit def _ofSequence[A](_this: Sequence[Sequence[A]]): _OfSequence[A] = new _OfSequence(_this.toIterative.map(_.toIterative))
+    implicit def _ofSequence[A](_this: Sequence[Sequence[A]]): _OfSequence[A] = new _OfSequence(_this.asIterative.map(_.asIterative))
 
     sealed class _OfPair[A, B](_this: Iterative[(A, B)]) {
         def unzip: (Iterative[A], Iterative[B]) = _this._unzip(_this)
         def toSHashMap: scala.collection.Map[A, B] = _this._toSHashMap(_this)
     }
-    implicit def _ofPair[A, B](_this: Sequence[(A, B)]): _OfPair[A, B] = new _OfPair(_this.toIterative)
+    implicit def _ofPair[A, B](_this: Sequence[(A, B)]): _OfPair[A, B] = new _OfPair(_this.asIterative)
 
     sealed class _OfChar(_this: Iterative[Char]) {
         def stringize: String = _this._stringize(_this)
         def lexical: Lexical = Lexical(_this)
     }
-    implicit def _ofChar(_this: Sequence[Char]): _OfChar = new _OfChar(_this.toIterative)
+    implicit def _ofChar(_this: Sequence[Char]): _OfChar = new _OfChar(_this.asIterative)
 
 }
 
@@ -95,7 +95,7 @@ object Sequence {
 trait SequenceForwarder[+A] extends Sequence[A] with util.Forwarder {
     override protected def delegate: Sequence[A]
 
-    override def toIterative = delegate.toIterative
+    override def asIterative = delegate.asIterative
     override def equals(that: Any): Boolean = delegate.equals(that)
     override def hashCode: Int = delegate.hashCode
     override def toString: String = delegate.toString

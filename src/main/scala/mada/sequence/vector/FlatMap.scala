@@ -8,5 +8,5 @@ package mada.sequence.vector
 
 
 case class FlatMap[Z, A](_1: Vector[Z], _2: Z => Vector[A]) extends Forwarder[A] {
-    override protected val delegate = flatten(_1.map(_2))
+    override protected val delegate = _1.map(_2).flatten.toVector
 }

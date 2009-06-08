@@ -28,7 +28,7 @@ private object Precondition {
     }
 
     def notEmpty[A](s: iterative.Sequence[A], msg: String): Unit = {
-        if (s.toIterative.isEmpty) {
+        if (s.asIterative.isEmpty) {
             throw new UnsupportedOperationException(msg + ": sequence shall not be empty.")
         }
     }
