@@ -83,12 +83,12 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
     /**
      * @return  <code>start == end</code>.
      */
-    final def isEmpty: Boolean = start == end
+    def isEmpty: Boolean = start == end
 
     /**
      * Returns the size.
      */
-    final def size: Int = end - start
+    def size: Int = end - start
 
     /**
      * Appends <code>that</code>.
@@ -433,21 +433,23 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
 // folding
 
 
-    @aliasOf("elements.foldRight")
-    final def foldRight[B](z: B)(op: (A, B) => B): B = reverse.foldLeft(z)(function.flip(op))
-
     /**
-     * @return  <code>reverse.reduceLeft(function.flip(op))</code>.
+     * Folds right to left.
      */
-    final def reduceRight[B >: A](op: (A, B) => B): B = reverse.reduceLeft(function.flip(op))
+    def foldRight[B](z: B)(op: (A, B) => B): B = reverse.foldLeft(z)(function.flip(op))
 
     /**
-     * @return  <code>reverse.folderLeft(z)(function.flip(op))</code>.
+     * Reduces right to left.
+     */
+    def reduceRight[B >: A](op: (A, B) => B): B = reverse.reduceLeft(function.flip(op))
+
+    /**
+     * Prefix sum folding right to left
      */
     def folderRight[B](z: B)(op: (A, B) => B): Vector[B] = reverse.folderLeft(z)(function.flip(op))
 
     /**
-     * @return  <code>reverse.reducerLeft(function.flip(op))</code>.
+     * Prefix sum reducing right to left.
      */
     def reducerRight[B >: A](op: (A, B) => B): Vector[B] = reverse.reducerLeft(function.flip(op))
 

@@ -19,6 +19,8 @@ trait Forwarder[A] extends TransformAdapter[A] with SequenceForwarder[A] {
 
 // iterative
     override def equalsIf[B](that: Vector[B])(p: (A, B) => Boolean): Boolean = delegate.equalsIf(that)(p)
+    override def isEmpty: Boolean = delegate.isEmpty
+    override def size: Int = delegate.size
     override def ++(that: Vector[A]): Vector[A] = around(delegate.++(that))
     override def map[B](f: A => B): Vector[B] = around(delegate.map(f))
     override def flatMap[B](f: A => Vector[B]): Vector[B] = around(delegate.flatMap(f))
@@ -73,13 +75,15 @@ trait Forwarder[A] extends TransformAdapter[A] with SequenceForwarder[A] {
     override def mutatingFilter(p: A => Boolean): Vector[A] = around(delegate.mutatingFilter(p))
     override def mutatingRemove(p: A => Boolean): Vector[A] = around(delegate.mutatingRemove(p))
 // map
-   override def asVectorOf[B]: Vector[B] = around(delegate.asVectorOf[B])
+    override def asVectorOf[B]: Vector[B] = around(delegate.asVectorOf[B])
 // loop
     override def loop[F <: (A => Boolean)](i: Int, j: Int, f: F): F = delegate.loop(i, j, f)
     override def each(f: A => Unit): Unit = delegate.each(f)
 // search
     override def seek(p: A => Boolean): Option[A] = delegate.seek(p)
 // folding
+    override def foldRight[B](z: B)(op: (A, B) => B): B = delegate.foldRight(z)(op)
+    override def reduceRight[B >: A](op: (A, B) => B): B = delegate.reduceRight(op)
     override def folderRight[B](z: B)(op: (A, B) => B): Vector[B] = around(delegate.folderRight(z)(op))
     override def reducerRight[B >: A](op: (A, B) => B): Vector[B] = around(delegate.reducerRight(op))
 // sort
