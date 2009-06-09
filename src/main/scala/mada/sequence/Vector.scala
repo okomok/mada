@@ -186,7 +186,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
     /**
      * Optionally returns the first element.
      */
-    def headOption: Option[A] = if (isEmpty) None else Some(head)
+    def headOption: Option[A] = if (isEmpty) None else Some(this(start))
 
     /**
      * Returns all the elements without the first one.
@@ -207,7 +207,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
     /**
      * Optionally returns the last element.
      */
-    def lastOption: Option[A] = if (isEmpty) None else Some(last)
+    def lastOption: Option[A] = if (isEmpty) None else Some(this(end - 1))
 
     /**
      * Takes at most <code>n</code> elements.

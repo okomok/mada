@@ -12,17 +12,26 @@ import list._
 
 
 /**
- * Yet another Stream
+ * Yet another Stream:
+ * <ul>
+ * <li/>Backtrackable to any subsequence, while <code>Iterative</code> is backtrackable only to "begin".
+ * <li/>No intermediate objects, while number of iterator objects may be exponential growth in recursive <code>Iterative</code>.
+ * <li/>Needs an entire copy to convert. It can be lazy, though.
+ * <li/><code>filter</code> requires no copy, while <code>Vector</code> requires copy.
+ * </ul>
  */
 trait List[+A] extends Sequence[A] {
+
+
+    override def asList: List[A] = this
 
 
 // kernel
 
     /**
-     * Is <code>this</code> empty?
+     * Is <code>this</code> nil?
      */
-    def isEmpty: Boolean
+    def isNil: Boolean
 
     /**
      * The first element
@@ -34,8 +43,15 @@ trait List[+A] extends Sequence[A] {
      */
     def tail: List[A]
 
-    protected def preHead: Unit = if (isEmpty) throw new NoSuchElementException("head on empty list")
-    protected def preTail: Unit = if (isEmpty) throw new UnsupportedOperationException("tail on empty list")
+    /**
+     * The precondition of <code>head</code>
+     */
+    protected def preHead: Unit = if (isNil) throw new NoSuchElementException("head on empty list")
+
+    /**
+     * The precondition of <code>tail</code>
+     */
+    protected def preTail: Unit = if (isNil) throw new UnsupportedOperationException("tail on empty list")
 
 
 // iterative
@@ -45,17 +61,21 @@ trait List[+A] extends Sequence[A] {
      * and all corresponding pairs of elements in the two sequences
      * satisfy the predicate <code>p</code>.
      */
-    def equalsIf[B](that: => List[B])(p: (A, B) => Boolean): Boolean = {
+    def equalsIf[B](that: List[B])(p: (A, B) => Boolean): Boolean = {
         var it = this
         var jt = that
-        while (!it.isEmpty && !jt.isEmpty) {
+        while (!it.isNil && !jt.isNil) {
             if (!p(it.head, jt.head)) {
                 return false
             }
             it = it.tail; jt = jt.tail
         }
-        it.isEmpty && jt.isEmpty
+        it.isNil && jt.isNil
     }
+
+
+    @aliasOf("isNil")
+    final def isEmpty: Boolean = isNil
 
     /**
      * Returns the size.
@@ -63,7 +83,7 @@ trait List[+A] extends Sequence[A] {
     def size: Int = {
         var r = 0
         var it = this
-        while (!it.isEmpty) {
+        while (!it.isNil) {
             r += 1
             it = it.tail
         }
@@ -73,7 +93,7 @@ trait List[+A] extends Sequence[A] {
     /**
      * Appends <code>that</code>.
      */
-//    def ++[B >: A](that: => List[B]): List[B] = Append[B](this, that)
+    def ++[B >: A](that: => List[B]): List[B] = Append[B](this, that)
 
     /**
      * Maps elements using <code>f</code>.
@@ -83,13 +103,13 @@ trait List[+A] extends Sequence[A] {
     /**
      * @return  <code>map(f).flatten</code>.
      */
-    def flatMap[B](f: A => List[B]): List[B] = _flatten(map(f))
-
+    def flatMap[B](f: A => List[B]): List[B] = FlatMap(this, f)
+*/
     /**
      * Filters elements using <code>p</code>.
      */
     def filter(p: A => Boolean): List[A] = Filter(this, p)
-
+/*
     /**
      * Filters elements using <code>funtion.not(p)</code>.
      */
@@ -109,10 +129,10 @@ trait List[+A] extends Sequence[A] {
      * Applies <code>f</code> to each element.
      */
     def foreach(f: A => Unit): Unit = {
-        val it = begin
-        while (it) {
-            f(~it)
-            it.++
+        var it = this
+        while (!it.isNil) {
+            f(it.head)
+            it = it.tail
         }
     }
 
@@ -131,12 +151,12 @@ trait List[+A] extends Sequence[A] {
      */
     def count(p: A => Boolean): Int = {
         var i = 0
-        val it = begin
-        while (it) {
-            if (p(~it)) {
+        var it = this
+        while (!it.isNil) {
+            if (p(it.head)) {
                 i += 1
             }
-            it.++
+            it = it.tail
         }
         i
     }
@@ -145,13 +165,13 @@ trait List[+A] extends Sequence[A] {
      * Finds an element <code>p</code> meets.
      */
     def find(p: A => Boolean): Option[A] = {
-        val it = begin
-        while (it) {
-            val e = ~it
+        var it = this
+        while (!it.isNil) {
+            val e = it.head
             if (p(e)) {
                 return Some(e)
             }
-            it.++
+            it = it.tail
         }
         None
     }
@@ -161,10 +181,10 @@ trait List[+A] extends Sequence[A] {
      */
     def foldLeft[B](z: B)(op: (B, A) => B): B = {
         var acc = z
-        val it = begin
-        while (it) {
-            acc = op(acc, ~it)
-            it.++
+        var it = this
+        while (!it.isNil) {
+            acc = op(acc, it.head)
+            it = it.tail
         }
         acc
     }
@@ -176,13 +196,8 @@ trait List[+A] extends Sequence[A] {
      * Reduces left to right.
      */
     def reduceLeft[B >: A](op: (B, A) => B): B = {
-        val it = begin
-        if (!it) {
-            throw new UnsupportedOperationException("reduceLeft on empty sequence")
-        }
-        val e = ~it
-        it.++
-        bind(it).foldLeft[B](e)(op)
+        Precondition.notEmpty(this, "reduceLeft")
+        it.tail.foldLeft[B](it.head)(op)
     }
 
     /**
@@ -198,29 +213,14 @@ trait List[+A] extends Sequence[A] {
     /**
      * Optionally returns the first element.
      */
-    def headOption: Option[A] = {
-        val it = begin
-        if (!it) {
-            None
-        } else {
-            Some(~it)
-        }
-    }
+    def headOption: Option[A] = if (isNil) None else Some(head)
 
     /**
      * Returns the last element.
      */
     def last: A = {
-        val it = begin
-        if (!it) {
-            throw new NoSuchElementException("last on empty sequence")
-        }
-        var e = ~it
-        it.++
-        while (it) {
-            e = ~it
-        }
-        e
+        Precondition.notEmpty(this, "last")
+        lastOption.get
     }
 
     /**
@@ -228,9 +228,10 @@ trait List[+A] extends Sequence[A] {
      */
     def lastOption: Option[A] = {
         var e = option.NoneOf[A]
-        val it = begin
-        while (it) {
-            e = Some(~it)
+        var it = this
+        while (!it.isNil) {
+            e = Some(it.head)
+            it = it.tail
         }
         e
     }
@@ -238,17 +239,17 @@ trait List[+A] extends Sequence[A] {
     /**
      * Takes at most <code>n</code> elements.
      */
-    def take(n: => Int): List[A] = Take(this, n)
+    def take(n: Int): List[A] = Take(this, n)
 
     /**
      * Drops at most <code>n</code> elements.
      */
-    def drop(n: => Int): List[A] = Drop(this, n)
+    def drop(n: Int): List[A] = Drop(this, n)
 
     /**
      * @return  <code>drop(n).take(n - m)</code>.
      */
-    def slice(from: => Int, until: => Int): List[A] = Slice(this, from, until)
+    def slice(from: Int, until: Int): List[A] = Slice(this, from, until)
 
     /**
      * Takes elements while <code>p</code> meets.
@@ -268,7 +269,7 @@ trait List[+A] extends Sequence[A] {
     /**
      * @return  <code>(take(n), drop(n))</code>.
      */
-    def splitAt(n: => Int): (List[A], List[A]) = {
+    def splitAt(n: Int): (List[A], List[A]) = {
         Precondition.nonnegative(n, "splitAt")
         (take(n), drop(n))
     }
@@ -285,13 +286,13 @@ trait List[+A] extends Sequence[A] {
     def at(n: Int): A = {
         Precondition.nonnegative(n, "at")
         var i = n
-        val it = begin
-        while (it) {
+        var it = this
+        while (!it.isNil) {
             if (i == 0) {
-                return ~it
+                return it.head
             }
             i -= 1
-            it.++
+            it = it.tail
         }
         throw new NoSuchElementException("at" + Tuple1(n))
     }
@@ -350,14 +351,11 @@ trait List[+A] extends Sequence[A] {
     /**
      * Zips <code>this</code> and <code>that</code>.
      */
-    def zip[B](that: => List[B]): List[(A, B)] = Zip(this, function.ofLazy(that))
+    def zip[B](that: List[B]): List[(A, B)] = Zip(this, that)
 
     /**
      * Zips <code>this</code> and <code>that</code> applying <code>f</code>.
      */
-    def zipBy[B, C](that: => List[B])(f: (A, B) => C): List[C] = ZipBy(this, function.ofLazy(that), f)
-
-    @returnThis
-    final def asList: List[A] = this
+    def zipBy[B, C](that: List[B])(f: (A, B) => C): List[C] = ZipBy(this, that, f)
 
 }

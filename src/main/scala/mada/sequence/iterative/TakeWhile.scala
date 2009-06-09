@@ -21,7 +21,7 @@ case class TakeWhile[A](_1: Iterative[A], _2: A => Boolean) extends Iterative[A]
 
         private def ready: Unit = {
             if (it && !_2(~it)) {
-                it = iterator.theEnd
+                it = iterator.end
             }
         }
     }

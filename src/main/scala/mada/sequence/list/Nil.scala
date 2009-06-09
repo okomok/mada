@@ -8,7 +8,7 @@ package mada.sequence.list
 
 
 case class Nil() extends List[Nothing] {
-    override def isEmpty = true
+    override def isNil = true
     override def head = throw new NoSuchElementException("head on nil")
     override def tail =  throw new UnsupportedOperationException("tail on nil")
 }

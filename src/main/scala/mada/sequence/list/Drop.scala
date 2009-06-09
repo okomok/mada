@@ -6,8 +6,7 @@
 
 package mada.sequence.list
 
-/*
-class List[+A](_1: List[A], _2: Int) extends Forwarder[A] {
-    override protected lazy val delegate = if (_1.isEmpty || n <= 0) this else _1.tail.drop(n - 1)
+
+case class Drop[+A](_1: List[A], _2: Int) extends Forwarder[A] {
+    override protected val delegate = throw new Error//if (_1.isNil || n <= 0) _1 else _1.drop(n - 1)
 }
-*/

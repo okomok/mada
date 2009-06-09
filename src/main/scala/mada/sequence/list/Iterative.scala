@@ -14,4 +14,6 @@ case class AsIterative[A](_1: List[A]) extends Iterative[A] {
         override def deref = { preDeref; it.head }
         override def increment = { preIncrement; it = it.tail }
     }
+
+    override def isEmpty = _1.isEmpty
 }

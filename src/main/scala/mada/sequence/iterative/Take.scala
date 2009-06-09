@@ -25,7 +25,7 @@ case class Take[+A](_1: Iterative[A], _2: Int) extends Iterative[A] {
 
         private def ready: Unit = {
             if (i == 0) {
-                it = iterator.theEnd
+                it = iterator.end
             }
         }
     }

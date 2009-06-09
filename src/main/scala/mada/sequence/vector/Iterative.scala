@@ -16,4 +16,5 @@ case class AsIterative[A](_1: Vector[A]) extends Iterative[A] {
     }
 
     // TODO: override optimizable methods.
+    override def isEmpty = _1.isEmpty
 }

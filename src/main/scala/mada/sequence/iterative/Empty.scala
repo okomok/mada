@@ -9,5 +9,5 @@ package mada.sequence.iterative
 
 // not object for inheritance
 case class Empty() extends Iterative[Nothing] {
-    override def begin = iterator.theEnd
+    override def begin = iterator.end
 }

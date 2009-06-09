@@ -7,6 +7,9 @@
 package mada.sequence
 
 
+import function.ofLazy
+
+
 package object list {
 
 
@@ -18,9 +21,9 @@ package object list {
 
     object cons {
         /**
-         * Prepends <code>h</code> to <code>t</code> by lazy evaluation.
+         * Prepends <code>x</code> to <code>xs</code> by lazy evaluation.
          */
-        def apply[A](h: => A, t: => List[A]): List[A] = Cons(function.ofLazy(h), function.ofLazy(t))
+        def apply[A](x: => A, xs: => List[A]): List[A] = Cons(ofLazy(x), ofLazy(xs))
     }
 
     val nil: List[Nothing] = Nil()

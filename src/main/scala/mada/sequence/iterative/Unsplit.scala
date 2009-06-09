@@ -11,7 +11,7 @@ case class Unsplit[A](_1: Iterative[Iterative[A]], _2: Iterative[A]) extends Ite
     override def begin: Iterator[A] = {
         val ii = _1.begin // needs a fresh iterator every time.
         if (!ii) {
-            iterator.theEnd
+            iterator.end
         } else {
             val h = (~ii)
             ii.++

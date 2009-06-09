@@ -9,7 +9,7 @@ package mada.sequence.iterative
 
 case class ToList[A](_1: Iterative[A]) extends List[A] {
     private var it = _1.begin
-    override def isEmpty = !it
+    override def isNil = !it
     override def head = {
         preHead
         ~it

@@ -30,7 +30,7 @@ case class Flatten[+A](_1: Iterative[Iterative[A]]) extends Iterative[A] {
                 }
                 ii.++
             }
-            iterator.theEnd
+            iterator.end
         }
     }
 }

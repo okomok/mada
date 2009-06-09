@@ -7,7 +7,7 @@
 package mada.sequence.iterator
 
 
-case object TheEnd extends Iterator[Nothing] {
+case class End() extends Iterator[Nothing] {
     override def isEnd = true
     override def deref = throw new NoSuchElementException("deref on end iterator")
     override def increment = throw new UnsupportedOperationException("increment on end iterator")

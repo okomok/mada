@@ -21,7 +21,7 @@ package object iterator {
     /**
      * The universal end iterator
      */
-    val theEnd: Iterator[Nothing] = TheEnd
+    val end: Iterator[Nothing] = End()
 
 
 // conversion
