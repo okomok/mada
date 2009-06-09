@@ -7,6 +7,9 @@
 package mada.sequence.iterative
 
 
+// will be rejected.
+
+
 class ToSome[+A](val _1: Iterative[A]) extends Forwarder[A] {
     override protected val delegate = _1
 

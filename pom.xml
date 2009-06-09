@@ -9,7 +9,7 @@
     <inceptionYear>2008</inceptionYear>
 
     <description>
-Mada is a library.
+Mada is a utility library for Scala.
     </description>
 
     <licenses>
@@ -56,6 +56,11 @@ Mada is a library.
     </repositories>
 
     <dependencies>
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-compiler</artifactId>
+            <version>${scala.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-library</artifactId>
