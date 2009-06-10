@@ -7,11 +7,8 @@
 package mada.util
 
 
-trait ByName[+R] extends Function0[R]
-
-
-class ByNameOf[+R](body: => R) extends ByName[R] {
-    val _1: ByName[R] = this
+class ByName[+R](body: => R) extends Function0[R] {
+    val _1: Function0[R] = this
 
     override def apply() = body
 }

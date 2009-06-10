@@ -90,12 +90,12 @@ package object util {
     /**
      * A function calculating <code>body</code> by <code>name</code>.
      */
-    def byName[R](body: => R): ByName[R] = new ByNameOf(body)
+    def byName[R](body: => R): ByName[R] = new ByName(body)
 
     /**
      * A function calculating <code>body</code> by <code>lazy</code>.
      */
-    def byLazy[R](body: => R): ByLazy[R] = new ByLazyOf(body)
+    def byLazy[R](body: => R): ByLazy[R] = new ByLazy(body)
 
     /**
      * A function calculating <code>body</code> in (possibly) other threads.

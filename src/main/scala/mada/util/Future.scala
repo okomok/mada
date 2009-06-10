@@ -7,8 +7,8 @@
 package mada.util
 
 
-class Future[+R](body: => R) extends ByLazy[R] {
-    val _1: ByLazy[R] = this
+class Future[+R](body: => R) extends Function0[R] {
+    val _1: Function0[R] = this
 
     private val f = {
         try {

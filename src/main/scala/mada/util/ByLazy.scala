@@ -7,11 +7,8 @@
 package mada.util
 
 
-trait ByLazy[+R] extends Function0[R]
-
-
-class ByLazyOf[+R](body: => R) extends ByLazy[R] {
-    val _1: ByLazy[R] = this
+class ByLazy[+R](body: => R) extends Function0[R] {
+    val _1: Function0[R] = this
 
     private lazy val v = body
     override def apply() = v

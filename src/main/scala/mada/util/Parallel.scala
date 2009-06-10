@@ -10,8 +10,8 @@ package mada.util
 import java.util.concurrent
 
 
-class Parallel[R](body: => R) extends ByLazy[R] {
-    val _1: ByLazy[R] = this
+class Parallel[R](body: => R) extends Function0[R] {
+    val _1: Function0[R] = this
 
     private val u = {
         val c = new concurrent.Callable[R] { override def call() = body }
