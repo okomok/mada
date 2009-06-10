@@ -201,6 +201,7 @@ trait List[+A] extends Sequence[A] {
         Precondition.notEmpty(this, "reduceLeft")
         tail.foldLeft[B](head)(op)
     }
+
     /**
      * Prefix sum folding left to right.
      */
@@ -299,7 +300,7 @@ trait List[+A] extends Sequence[A] {
      * Does this contain the element?
      */
     def contains(e: Any): Boolean = exists(function.equalTo(e))
-/*
+
     /**
      * Repeats infinitely.
      */
@@ -309,7 +310,7 @@ trait List[+A] extends Sequence[A] {
      * Repeats <code>n</code> times
      */
     def times(n: Int): List[A] = Times(this, n)
-
+/*
     /**
      * Cuts projection. (A result sequence is always readOnly.)
      */

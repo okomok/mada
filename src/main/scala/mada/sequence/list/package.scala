@@ -28,6 +28,16 @@ package object list {
 
     val nil: List[Nothing] = Nil()
 
+    /**
+     * Refers a list by lazy.
+     */
+    def byLazy[A](xs: => List[A]): List[A] = ByLazy(function.ofLazy(xs))
+
+    /**
+     * Refers a list by name.
+     */
+    def byName[A](xs: => List[A]): List[A] = ByName(function.ofName(xs))
+
 
 // conversion
 
