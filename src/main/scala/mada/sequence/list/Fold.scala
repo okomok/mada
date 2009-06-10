@@ -8,7 +8,16 @@ package mada.sequence.list
 
 
 case class FolderLeft[A, B](_1: List[A], _2: B, _3: (B, A) => B) extends Forwarder[B] {
-    override protected val delegate = cons(_2, if (_1.isNil) nil else _1.tail.folderLeft(_3(_2, _1.head))(_3))
+    override protected val delegate = {
+        cons(
+            _2,
+            if (_1.isNil) {
+                nil
+            } else {
+                _1.tail.folderLeft(_3(_2, _1.head))(_3)
+            }
+        )
+    }
 }
 
 case class ReducerLeft[A, B >: A](_1: List[A], _2: (B, A) => B) extends Forwarder[B] {

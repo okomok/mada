@@ -191,6 +191,17 @@ trait List[+A] extends Sequence[A] {
         acc
     }
 
+    /**
+     * Folds right to left.
+     */
+    def foldRight[B](z: B)(op: (A, B) => B): B = {
+        if (isNil) {
+            z
+        } else {
+            op(head, tail.foldRight(z)(op)) // hmm, arguments are evaluated.
+        }
+    }
+
     @aliasOf("foldLeft")
     final def /:[B](z: B)(op: (B, A) => B): B = foldLeft(z)(op)
 
@@ -200,6 +211,18 @@ trait List[+A] extends Sequence[A] {
     def reduceLeft[B >: A](op: (B, A) => B): B = {
         Precondition.notEmpty(this, "reduceLeft")
         tail.foldLeft[B](head)(op)
+    }
+
+    /**
+     * Reduces right to left.
+     */
+    def reduceRight[B >: A](op: (A, B) => B): B = {
+        Precondition.notEmpty(this, "reduceRight")
+        if (tail.isNil) {
+            head
+        } else {
+            op(head, tail.reduceRight(op))
+        }
     }
 
     /**
@@ -310,7 +333,6 @@ trait List[+A] extends Sequence[A] {
      * Repeats <code>n</code> times
      */
     def times(n: Int): List[A] = Times(this, n)
-/*
     /**
      * Cuts projection. (A result sequence is always readOnly.)
      */
@@ -322,10 +344,16 @@ trait List[+A] extends Sequence[A] {
     @methodized
     def _flatten[B](_this: List[List[B]]): List[B] = Flatten(_this)
 
+/*
     /**
      * Transforms sequence-to-sequence expression `seq.f.g.h` to `seq.x.f.x.g.x.h`.
      */
     def mix(x: Mixin): List[A] = Mix(this, x)
+
+    /**
+     * Reverses.
+     */
+    def reverse: List[A] = Reverse(this)
 
     /**
      * Disables overrides.

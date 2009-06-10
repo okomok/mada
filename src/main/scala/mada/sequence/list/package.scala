@@ -24,9 +24,20 @@ package object list {
          * Prepends <code>x</code> to <code>xs</code> by lazy evaluation.
          */
         def apply[A](x: => A, xs: => List[A]): List[A] = Cons(ofLazy(x), ofLazy(xs))
+
+        // TODO
+        // unapply?, but can be lazy?: cons(x, _) // _ is evaluated?
     }
 
+    /**
+     * The universal nil
+     */
     val nil: List[Nothing] = Nil()
+
+    /**
+     * A typed nil
+     */
+    def nilOf[A]: List[A] = Nil()
 
     /**
      * Refers a list by lazy.
