@@ -18,3 +18,7 @@ case class Filter[A](_1: List[A], _2: A => Boolean) extends Forwarder[A] {
         }
     }
 }
+
+case class Remove[A](_1: List[A], _2: A => Boolean) extends Forwarder[A] {
+    override protected val delegate = _1.filter(function.not(_2))
+}

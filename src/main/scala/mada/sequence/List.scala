@@ -16,8 +16,7 @@ import list._
  * <ul>
  * <li/>Backtrackable to any subsequence, while <code>Iterative</code> is backtrackable only to "begin".
  * <li/>No intermediate objects, while number of iterator objects may be exponential growth in recursive <code>Iterative</code>.
- * <li/>Needs an entire copy to convert. It can be lazy, though.
- * <li/><code>filter</code> requires no copy, while <code>Vector</code> requires copy.
+ * <li/>A projection method usually need an entire copy. It can be lazy, though.
  * </ul>
  */
 trait List[+A] extends Sequence[A] {
@@ -93,23 +92,26 @@ trait List[+A] extends Sequence[A] {
     /**
      * Appends <code>that</code>.
      */
-    def ++[B >: A](that: => List[B]): List[B] = Append[B](this, that)
+    def append[B >: A](that: List[B]): List[B] = Append[B](this, that)
+
+    @aliasOf("append")
+    final def ++[B >: A](that: List[B]): List[B] = append(that)
 
     /**
      * Maps elements using <code>f</code>.
      */
     def map[B](f: A => B): List[B] = Map(this, f)
-/*
+
     /**
      * @return  <code>map(f).flatten</code>.
      */
     def flatMap[B](f: A => List[B]): List[B] = FlatMap(this, f)
-*/
+
     /**
      * Filters elements using <code>p</code>.
      */
     def filter(p: A => Boolean): List[A] = Filter(this, p)
-/*
+
     /**
      * Filters elements using <code>funtion.not(p)</code>.
      */
@@ -197,9 +199,8 @@ trait List[+A] extends Sequence[A] {
      */
     def reduceLeft[B >: A](op: (B, A) => B): B = {
         Precondition.notEmpty(this, "reduceLeft")
-        it.tail.foldLeft[B](it.head)(op)
+        tail.foldLeft[B](head)(op)
     }
-
     /**
      * Prefix sum folding left to right.
      */
@@ -274,9 +275,6 @@ trait List[+A] extends Sequence[A] {
         (take(n), drop(n))
     }
 
-    @compatibleConversion
-    def toSSequence: scala.collection.Sequence[A] = ToSSequence(this)
-
 
 // misc
 
@@ -301,7 +299,7 @@ trait List[+A] extends Sequence[A] {
      * Does this contain the element?
      */
     def contains(e: Any): Boolean = exists(function.equalTo(e))
-
+/*
     /**
      * Repeats infinitely.
      */
@@ -331,7 +329,7 @@ trait List[+A] extends Sequence[A] {
     /**
      * Disables overrides.
      */
-    def seal: List[A] = Seal(this)
+    final def seal: List[A] = Seal(this)
 
     /**
      * Steps by the specified stride.

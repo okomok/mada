@@ -93,7 +93,10 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
     /**
      * Appends <code>that</code>.
      */
-    def ++(that: Vector[A]): Vector[A] = Append(this, that)
+    def append(that: Vector[A]): Vector[A] = Append(this, that)
+
+    @aliasOf("append")
+    final def ++(that: Vector[A]): Vector[A] = append(that)
 
     /**
      * Maps elements using <code>f</code>.

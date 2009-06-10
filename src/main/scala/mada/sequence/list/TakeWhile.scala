@@ -7,14 +7,14 @@
 package mada.sequence.list
 
 
-case class Drop[+A](_1: List[A], _2: Int) extends Forwarder[A] {
+case class TakeWhile[A](_1: List[A], _2: A => Boolean) extends Forwarder[A] {
     override protected val delegate: List[A] = {
-        if (_2 <= 0) {
-            _1
-        } else if (_1.isNil) {
+        if (_1.isNil) {
             nil
+        } else if (_2(_1.head)) {
+            cons(_1.head, _1.tail.takeWhile(_2))
         } else {
-            _1.tail.drop(_2 - 1)
+            nil
         }
     }
 }

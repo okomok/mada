@@ -21,7 +21,7 @@ trait Forwarder[+A] extends Iterative[A] with SequenceForwarder[A] {
     override def equalsIf[B](that: Iterative[B])(p: (A, B) => Boolean): Boolean = delegate.equalsIf(that)(p)
     override def isEmpty: Boolean = delegate.isEmpty
     override def size: Int = delegate.size
-    override def ++[B >: A](that: Iterative[B]): Iterative[B] = around(delegate.++(that))
+    override def append[B >: A](that: Iterative[B]): Iterative[B] = around(delegate.append(that))
     override def map[B](f: A => B): Iterative[B] = around(delegate.map(f))
     override def flatMap[B](f: A => Iterative[B]): Iterative[B] = around(delegate.flatMap(f))
     override def filter(p: A => Boolean): Iterative[A] = around(delegate.filter(p))

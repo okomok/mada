@@ -70,7 +70,10 @@ trait Iterative[+A] extends Sequence[A] {
     /**
      * Appends <code>that</code>.
      */
-    def ++[B >: A](that: Iterative[B]): Iterative[B] = Append[B](this, that)
+    def append[B >: A](that: Iterative[B]): Iterative[B] = Append[B](this, that)
+
+    @aliasOf("append")
+    final def ++[B >: A](that: Iterative[B]): Iterative[B] = append(that)
 
     /**
      * Maps elements using <code>f</code>.
