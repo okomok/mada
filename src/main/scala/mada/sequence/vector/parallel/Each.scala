@@ -7,7 +7,7 @@
 package mada.sequence.vector
 
 
-import function.future
+import util.future
 
 
 private object ParallelEach {

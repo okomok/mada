@@ -567,7 +567,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
     /**
      * Specifies the default grain size.
      */
-    def defaultGrainSize: Int = Math.max(1, size / function.parallels.POOL_SIZE)
+    def defaultGrainSize: Int = Math.max(1, size / util.Parallels.poolSize)
 
     /**
      * Waits for parallel element calculations over.

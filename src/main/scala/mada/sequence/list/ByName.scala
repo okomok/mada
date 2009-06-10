@@ -7,6 +7,6 @@
 package mada.sequence.list
 
 
-case class ByName[+A](_1: function.OfName[List[A]]) extends Forwarder[A] {
+case class ByName[+A](_1: util.ByName[List[A]]) extends Forwarder[A] {
     override protected def delegate = _1()
 }

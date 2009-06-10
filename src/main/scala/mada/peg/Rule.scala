@@ -16,7 +16,7 @@ class Rule[A] extends Peg[A] { // essentially shall not be a forwarder.
     /**
      * Assigns <code>that</code>.
      */
-    final def ::=(that: => Peg[A]): Unit = { f = function.ofLazy(that) }
+    final def ::=(that: => Peg[A]): Unit = { f = util.byLazy(that) }
 
     override def parse(v: sequence.Vector[A], start: Int, end: Int) = f().parse(v, start, end)
     override def width = f().width

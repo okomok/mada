@@ -85,6 +85,29 @@ package object util {
     def nullInstance[A]: A = null.asInstanceOf[A]
 
 
+// evaluation strategy
+
+    /**
+     * A function calculating <code>body</code> by <code>name</code>.
+     */
+    def byName[R](body: => R): ByName[R] = new ByNameOf(body)
+
+    /**
+     * A function calculating <code>body</code> by <code>lazy</code>.
+     */
+    def byLazy[R](body: => R): ByLazy[R] = new ByLazyOf(body)
+
+    /**
+     * A function calculating <code>body</code> in (possibly) other threads.
+     */
+    def future[R](body: => R): Future[R] = new Future(body)
+
+    /**
+     * A function calculating <code>body</code> in other threads.
+     */
+    def parallel[R](body: => R): Parallel[R] = new Parallel(body)
+
+
 // hash code
 
     /**

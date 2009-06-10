@@ -51,26 +51,6 @@ package object function {
     def identity[T]: Transform[T] = Identity[T]()
 
     /**
-     * Converts by-name-parameter to a function returning <code>body</code>.
-     */
-    def ofName[R](body: => R): OfName[R] = new OfName(body)
-
-    /**
-     * A function calculating <code>body</code> by <code>lazy</code>
-     */
-    def ofLazy[R](body: => R): OfLazy[R] = new OfLazy(body)
-
-    /**
-     * A function calculating <code>body</code> in other threads
-     */
-    def parallel[R](body: => R): Function0[R] = new Parallel(body)
-
-    /**
-     * A function calculating <code>body</code> in (possibly) other threads
-     */
-    def future[R](body: => R): Function0[R] = new Future(body)
-
-    /**
      * Fixed point combinator
      */
     def fix[T, R](g: (T => R) => T => R): T => R = Fix(g)

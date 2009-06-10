@@ -91,12 +91,12 @@ package object vector {
     /**
      * Returns by-lazy vector.
      */
-    def byLazy[A](v: => Vector[A]) = ByLazy(function.ofLazy(v))
+    def byLazy[A](v: => Vector[A]) = ByLazy(util.byLazy(v))
 
     /**
      * Returns by-name vector.
      */
-    def byName[A](v: => Vector[A]) = ByName(function.ofName(v))
+    def byName[A](v: => Vector[A]) = ByName(util.byName(v))
 
 
 // triplify

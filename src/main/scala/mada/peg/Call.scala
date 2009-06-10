@@ -7,6 +7,6 @@
 package mada.peg
 
 
-case class Call[A](_1: function.OfName[Unit]) extends Forwarder[A] {
+case class Call[A](_1: util.ByName[Unit]) extends Forwarder[A] {
     override protected val delegate = eps[A] act { _ => _1() }
 }

@@ -7,6 +7,6 @@
 package mada.sequence.vector
 
 
-case class ByName[A](_1: function.OfName[Vector[A]]) extends Forwarder[A] {
+case class ByName[A](_1: util.ByName[Vector[A]]) extends Forwarder[A] {
     override protected def delegate = _1()
 }

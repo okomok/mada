@@ -4,17 +4,17 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.function
+package mada.util
 
 
-class Future[+R](body: => R) extends Function0[R] {
-    val _1: Function0[R] = this
+class Future[+R](body: => R) extends ByLazy[R] {
+    val _1: ByLazy[R] = this
 
     private val f = {
         try {
             parallel(body)
         } catch {
-            case _: java.util.concurrent.RejectedExecutionException => ofLazy(body)
+            case _: java.util.concurrent.RejectedExecutionException => byLazy(body)
         }
     }
     override def apply() = f()

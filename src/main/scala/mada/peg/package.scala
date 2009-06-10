@@ -62,7 +62,7 @@ package object peg {
     /**
      * @return  <code>eps[A] act { _ => body }</code>.
      */
-    def call[A](body: => Unit): Peg[A] = Call[A](function.ofName(body))
+    def call[A](body: => Unit): Peg[A] = Call[A](util.byName(body))
 
     /**
      * Matches any one element.
@@ -121,12 +121,12 @@ package object peg {
     /**
      * Constructs a Peg by-lazy.
      */
-    def byLazy[A](p: => Peg[A]): Peg[A] = ByLazy(function.ofLazy(p))
+    def byLazy[A](p: => Peg[A]): Peg[A] = ByLazy(util.byLazy(p))
 
     /**
      * Constructs a Peg by-name.
      */
-    def byName[A](p: => Peg[A]): Peg[A] = ByName(function.ofName(p))
+    def byName[A](p: => Peg[A]): Peg[A] = ByName(util.byName(p))
 
     /**
      * Constructs a pseudo try-catch expression.

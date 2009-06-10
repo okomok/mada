@@ -10,7 +10,7 @@ package mada.sequence.vector
 import java.util.ArrayList
 import stl.IntroSort.depthLimit
 import stl.{ UnguardedPartition, Median }
-import function.future
+import util.future
 
 
 private object ParallelSort {

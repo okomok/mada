@@ -4,10 +4,10 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.func
+package madatest.utiltest
 
 
-import mada.function
+import mada.util
 import junit.framework.Assert._
 
 
@@ -15,13 +15,13 @@ class FutureTest {
     class Wrap(val i: Int) extends RuntimeException
 
     def testTrivial: Unit = {
-        val a = function.future(new Wrap(11))
+        val a = util.future(new Wrap(11))
         assertEquals(11, a().i)
         assertSame(a(), a())
     }
 
     def testThrow: Unit = {
-        val a = function.future{throw new Wrap(11); 12}
+        val a = util.future{throw new Wrap(11); 12}
         var thrown = false
         try {
             a()

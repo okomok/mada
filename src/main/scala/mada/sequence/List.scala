@@ -8,6 +8,10 @@ package mada.sequence
 
 
 
+// broken.
+
+
+
 import list._
 
 
@@ -194,11 +198,11 @@ trait List[+A] extends Sequence[A] {
     /**
      * Folds right to left.
      */
-    def foldRight[B](z: B)(op: (A, B) => B): B = {
+    def foldRight[B](z: B)(op: (util.ByLazy[A], util.ByLazy[B]) => B): B = {
         if (isNil) {
             z
         } else {
-            op(head, tail.foldRight(z)(op)) // hmm, arguments are evaluated.
+            op(util.byLazy(head), util.byLazy(tail.foldRight(z)(op)))
         }
     }
 
@@ -216,12 +220,12 @@ trait List[+A] extends Sequence[A] {
     /**
      * Reduces right to left.
      */
-    def reduceRight[B >: A](op: (A, B) => B): B = {
+    def reduceRight[B >: A](op: (util.ByLazy[A], util.ByLazy[B]) => B): B = {
         Precondition.notEmpty(this, "reduceRight")
         if (tail.isNil) {
             head
         } else {
-            op(head, tail.reduceRight(op))
+            op(util.byLazy(head), util.byLazy(tail.reduceRight(op)))
         }
     }
 

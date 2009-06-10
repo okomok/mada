@@ -7,7 +7,7 @@
 package mada.sequence.vector
 
 
-import function.future
+import util.future
 
 
 case class ParallelMap[Z, A](_1: Vector[Z], _2: Z => A, _3: Int) extends Forwarder[A] {

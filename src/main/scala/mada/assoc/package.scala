@@ -18,7 +18,7 @@ package object assoc {
     def lazyGet[K, V](m: java.util.concurrent.ConcurrentMap[K, () => V])(key: K)(value: => V): V = {
         // See: Java Concurrency in Practice - Listing 5.19
         option.fromRef(m.get(key)).getOrElse{
-            val v = function.ofLazy(value)
+            val v = util.byLazy(value)
             option.fromRef(m.putIfAbsent(key, v)).getOrElse{
                 v
             }

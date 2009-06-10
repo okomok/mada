@@ -7,9 +7,6 @@
 package mada.sequence
 
 
-import function.ofLazy
-
-
 package object list {
 
 
@@ -23,7 +20,7 @@ package object list {
         /**
          * Prepends <code>x</code> to <code>xs</code> by lazy evaluation.
          */
-        def apply[A](x: => A, xs: => List[A]): List[A] = Cons(ofLazy(x), ofLazy(xs))
+        def apply[A](x: => A, xs: => List[A]): List[A] = Cons(util.byLazy(x), util.byLazy(xs))
 
         // TODO
         // unapply?, but can be lazy?: cons(x, _) // _ is evaluated?
@@ -42,12 +39,12 @@ package object list {
     /**
      * Refers a list by lazy.
      */
-    def byLazy[A](xs: => List[A]): List[A] = ByLazy(function.ofLazy(xs))
+    def byLazy[A](xs: => List[A]): List[A] = ByLazy(util.byLazy(xs))
 
     /**
      * Refers a list by name.
      */
-    def byName[A](xs: => List[A]): List[A] = ByName(function.ofName(xs))
+    def byName[A](xs: => List[A]): List[A] = ByName(util.byName(xs))
 
 
 // conversion
