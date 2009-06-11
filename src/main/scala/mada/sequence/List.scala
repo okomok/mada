@@ -26,9 +26,9 @@ case object Nil extends List[Nothing] {
  * The cons list
  */
 final case class Cons[+A](_1: util.ByLazy[A], _2: util.ByLazy[List[A]]) extends List[A] {
-    override def isNil: Boolean = false
-    override def head: A = _1()
-    override def tail: List[A] = _2()
+    override def isNil = false
+    override def head = _1()
+    override def tail = _2()
 }
 
 
@@ -236,7 +236,7 @@ sealed trait List[+A] extends Sequence[A] {
      * Reduces right to left.
      */
     def reduceRight[B >: A](f: (util.ByLazy[A], util.ByLazy[B]) => B): B = this match {
-        case x :: Nil => x
+        case StrictCons(x, Nil) => x
         case Cons(x, xs) => f(x, util.byLazy(xs().reduceRight(f)))
         case Nil => throw new UnsupportedOperationException("reduceRight on empty list")
     }
