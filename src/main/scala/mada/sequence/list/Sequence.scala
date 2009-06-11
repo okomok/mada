@@ -41,6 +41,12 @@ object Sequence {
 // logical hierarchy
     implicit def _asIterative[A](from: Sequence[A]): Iterative[A] = from.asIterative
 
+// methodization
+    sealed class _OfSequence[A](_this: List[List[A]]) {
+        def flatten: List[A] = _this.foldRight(nilOf[A])(_() ++ _())
+    }
+    implicit def _ofSequence[A](_this: Sequence[Sequence[A]]): _OfSequence[A] = new _OfSequence(_this.asList.map(_.asList))
+
 }
 
 
