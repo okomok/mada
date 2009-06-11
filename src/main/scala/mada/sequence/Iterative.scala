@@ -410,9 +410,9 @@ trait Iterative[+A] extends Sequence[A] {
         if (it) {
             val e = ~it
             it.++
-            list.cons(e, bind(it).toList)
+            Cons(e, bind(it).toList)
         } else {
-            list.nil
+            Nil
         }
     }
 

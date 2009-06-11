@@ -7,13 +7,13 @@
 package madatest.sequencetest.listtest
 
 
-import mada.sequence.list._
+import mada.sequence._
 import junit.framework.Assert._
 
 
 class ZipTest {
     def testFibs: Unit = {
-        lazy val fibs: Type[Int] = cons(0, cons(1, fibs.zipBy(fibs.tail)(_ + _)))
+        lazy val fibs: List[Int] = Cons(0, Cons(1, fibs.zipBy(fibs.tail)(_ + _)))
         assertEquals(832040, fibs.at(30))
     }
 }

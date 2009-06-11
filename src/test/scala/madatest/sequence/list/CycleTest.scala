@@ -7,14 +7,14 @@
 package madatest.sequencetest.listtest
 
 
-import mada.sequence.list._
+import mada.sequence._
 import junit.framework.Assert._
 
 
 class CycleTest {
     def testTrivial: Unit = {
-        val L = (1 :: 2 :: 3 :: nil).cycle
-        val A = 1 :: 2 :: 3 :: 1 :: 2 :: 3 :: 1 :: 2 :: nil
+        val L = (1 :: 2 :: 3 :: Nil).cycle
+        val A = 1 :: 2 :: 3 :: 1 :: 2 :: 3 :: 1 :: 2 :: Nil
         assertEquals(A, L.take(8))
         assertEquals(A, L.take(8))
     }

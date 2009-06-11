@@ -13,8 +13,10 @@ import list._
 // See: http://www.haskell.org/onlinereport/standard-prelude.html
 
 
+// Nil
+
 /**
- * The Nil list
+ * The nil list
  */
 case object Nil extends List[Nothing] {
     override def isNil = true
@@ -22,15 +24,49 @@ case object Nil extends List[Nothing] {
     override def tail =  throw new UnsupportedOperationException("tail on Nil")
 }
 
+
+// Cons
+
 /**
  * The cons list
  */
-final case class Cons[+A](_1: util.ByLazy[A], _2: util.ByLazy[List[A]]) extends List[A] {
+final class Cons[+A](val _1: util.ByLazy[A], val _2: util.ByLazy[List[A]]) extends List[A] {
     override def isNil = false
     override def head = _1()
     override def tail = _2()
 }
 
+/**
+ * The matcher for cons list
+ */
+object Cons {
+
+    def apply[A](x: => A, xs: => List[A]): List[A] = new Cons(util.byLazy(x), util.byLazy(xs))
+
+    def unapply[A](xs: List[A]): Option[(util.ByLazy[A], util.ByLazy[List[A]])] = {
+        if (xs.isNil) {
+            None
+        } else {
+            Some(util.byLazy(xs.head), util.byLazy(xs.tail))
+        }
+    }
+
+}
+
+/**
+ * The strict matcher for cons list
+ */
+object :: {
+
+    def unapply[A](xs: List[A]): Option[(A, List[A])] = xs match {
+        case Nil => None
+        case Cons(x, xs) => Some(x(), xs())
+    }
+
+}
+
+
+// List
 
 /**
  * Lazy list
@@ -62,6 +98,14 @@ sealed trait List[+A] extends Sequence[A] {
      * The remaining elements after the first one.
      */
     def tail: List[A]
+
+
+// strict cons
+
+    /**
+     * @return  <code>Cons(x, this)</code>.
+     */
+    def ::[B >: A](x: B): List[B] = Cons(x, this)
 
 
 // iterative
@@ -101,7 +145,7 @@ sealed trait List[+A] extends Sequence[A] {
 
     def append[B >: A](ys: => List[B]): List[B] = this match {
         case Nil => ys
-        case Cons(x, xs) => cons(x(), xs() append ys)
+        case Cons(x, xs) => Cons(x(), xs() append ys)
     }
 
     @aliasOf("append")
@@ -112,7 +156,7 @@ sealed trait List[+A] extends Sequence[A] {
      */
     def map[B](f: A => B): List[B] = this match {
         case Nil => Nil
-        case Cons(x, xs) => cons(f(x()), xs().map(f))
+        case Cons(x, xs) => Cons(f(x()), xs().map(f))
     }
 
     /**
@@ -127,7 +171,7 @@ sealed trait List[+A] extends Sequence[A] {
         case Nil => Nil
         case Cons(x, xs) => {
             if (p(x())) {
-                cons(x(), xs().filter(p))
+                Cons(x(), xs().filter(p))
             } else {
                 xs().filter(p)
             }
@@ -245,7 +289,7 @@ sealed trait List[+A] extends Sequence[A] {
      * Prefix sum folding left to right. (a.k.a. scanl)
      */
     def folderLeft[B](q: => B)(f: (B, A) => B): List[B] = {
-        cons(q, this match {
+        Cons(q, this match {
             case Nil => Nil
             case Cons(x, xs) => xs().folderLeft(f(q, x()))(f)
         })
@@ -258,7 +302,7 @@ sealed trait List[+A] extends Sequence[A] {
         case Nil => Single(q0)
         case Cons(x, xs) => {
             lazy val qs = xs().folderRight(q0)(f)
-            cons(f(x, util.byLazy(qs.head)), qs)
+            Cons(f(x, util.byLazy(qs.head)), qs)
         }
     }
 
@@ -278,7 +322,7 @@ sealed trait List[+A] extends Sequence[A] {
         case Single(x) => Single(x())
         case Cons(x, xs) => {
             lazy val qs = xs().reducerRight(f)
-            cons(f(x, util.byLazy(qs.head)), qs)
+            Cons(f(x, util.byLazy(qs.head)), qs)
         }
     }
 
@@ -317,7 +361,7 @@ sealed trait List[+A] extends Sequence[A] {
         } else {
             this match {
                 case Nil => Nil
-                case Cons(x, xs) => cons(x(), xs().take(n - 1))
+                case Cons(x, xs) => Cons(x(), xs().take(n - 1))
             }
         }
     }
@@ -348,7 +392,7 @@ sealed trait List[+A] extends Sequence[A] {
         case Nil => Nil
         case Cons(x, xs) => {
             if (p(x())) {
-                cons(x(), xs().takeWhile(p))
+                Cons(x(), xs().takeWhile(p))
             } else {
                 Nil
             }
@@ -381,11 +425,6 @@ sealed trait List[+A] extends Sequence[A] {
 
 
 // misc
-
-    /**
-     * @return  <code>StrictCons(x, this)</code>
-     */
-    def ::[B >: A](x: B): List[B] = StrictCons(x, this)
 
     /**
      * Returns the <code>n</code>-th element.
@@ -439,7 +478,7 @@ sealed trait List[+A] extends Sequence[A] {
     /**
      * Reverses.
      */
-    def reverse: List[A] = foldLeft(nilOf[A]){ (xs, x) => cons(x, xs) }
+    def reverse: List[A] = foldLeft(NilOf[A]){ (xs, x) => Cons(x, xs) }
 /*
     /**
      * Disables overrides.
@@ -473,7 +512,7 @@ sealed trait List[+A] extends Sequence[A] {
         case Nil => Nil
         case Cons(a, as) => ys match {
             case Nil => Nil
-            case Cons(b, bs) => cons(f(a(), b()), as().zipBy(bs())(f))
+            case Cons(b, bs) => Cons(f(a(), b()), as().zipBy(bs())(f))
         }
     }
 }

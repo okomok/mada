@@ -4,15 +4,14 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.sequence
+package mada
 
 
-package object list {
+package object sequence {
 
-// alias
-
-    @aliasOf("List")
-    type Type[+A] = List[A]
-
+    /**
+     * A typed Nil
+     */
+    def NilOf[A]: List[A] = Nil
 
 }
