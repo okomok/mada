@@ -405,7 +405,16 @@ trait Iterative[+A] extends Sequence[A] {
     def toSome: ToSome[A] = new ToSome(this)
 
     @conversion
-    def toList: List[A] = ToList(this)
+    def toList: List[A] = {
+        val it = begin
+        if (it) {
+            val e = ~it
+            it.++
+            list.cons(e, bind(it).toList)
+        } else {
+            list.nil
+        }
+    }
 
     @methodized @conversion
     def _toVector[B](_this: Iterative[B]): Vector[B] = ToVector(_this)

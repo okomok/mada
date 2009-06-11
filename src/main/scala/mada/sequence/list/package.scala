@@ -10,42 +10,58 @@ package mada.sequence
 package object list {
 
 
+// alias
+
     @aliasOf("List")
     type Type[+A] = List[A]
 
 
-// constructors
+// constructor
 
-    object cons {
-        /**
-         * Prepends <code>x</code> to <code>xs</code> by lazy evaluation.
-         */
-        def apply[A](x: => A, xs: => List[A]): List[A] = Cons(util.byLazy(x), util.byLazy(xs))
+    @aliasOf("Nil")
+    val nil = Nil
 
-        // TODO
-        // unapply?, but can be lazy?: cons(x, _) // _ is evaluated?
+    /**
+     * A typed Nil
+     */
+    def nilOf[A]: List[A] = Nil
+
+    /**
+     * @return  <code>Cons(util.byLazy(x), util.byLazy(xs))</code>
+     */
+    def cons[A](x: => A, xs: => List[A]): List[A] = Cons(util.byLazy(x), util.byLazy(xs))
+
+
+// algorithm
+
+    /**
+     * Returns the size.
+     */
+    def size[A](xs: List[A]): Int = {
+        var r = 0
+        var it = xs
+        while (!it.isNil) {
+            r += 1
+            it = it.tail
+        }
+        r
+    }
+
+    def append[A](xs: => List[A], ys: => List[A]): List[A] = xs match {
+        case Nil => ys
+        case Cons(x, xs) => cons(x(), append(xs(), ys))
     }
 
     /**
-     * The universal nil
+     * Applies <code>f</code> to each element.
      */
-    val nil: List[Nothing] = Nil()
-
-    /**
-     * A typed nil
-     */
-    def nilOf[A]: List[A] = Nil()
-
-    /**
-     * Refers a list by lazy.
-     */
-    def byLazy[A](xs: => List[A]): List[A] = ByLazy(util.byLazy(xs))
-
-    /**
-     * Refers a list by name.
-     */
-    def byName[A](xs: => List[A]): List[A] = ByName(util.byName(xs))
-
+    def foreach[A](xs: List[A])(f: A => Unit): Unit = {
+        var it = xs
+        while (!it.isNil) {
+            f(it.head)
+            it = it.tail
+        }
+    }
 
 // conversion
 
