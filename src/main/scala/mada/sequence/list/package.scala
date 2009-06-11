@@ -15,6 +15,9 @@ package object list {
     @aliasOf("List")
     type Type[+A] = List[A]
 
+    @aliasOf("StrictCons")
+    val :: = StrictCons
+
 
 // constructor
 
@@ -30,6 +33,11 @@ package object list {
      * @return  <code>Cons(util.byLazy(x), util.byLazy(xs))</code>
      */
     def cons[A](x: => A, xs: => List[A]): List[A] = Cons(util.byLazy(x), util.byLazy(xs))
+
+    /**
+     * A list containing one element.
+     */
+    def single[A](x: => A): List[A] = cons(x, nil)
 
 
 // conversion

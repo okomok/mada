@@ -20,14 +20,6 @@ package object iterative {
 // constructors
 
     /**
-     * Creates a sequence initially containing the specified elements.
-     */
-    object Of {
-        def apply[A](from: A*): Iterative[A] = fromSIterable(from)
-        def unapplySeq[A](from: Iterative[A]): Option[Seq[A]] = Some(from.toSSequence)
-    }
-
-    /**
      * The empty sequence
      */
     val empty: Iterative[Nothing] = Empty()

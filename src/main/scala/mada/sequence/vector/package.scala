@@ -42,14 +42,6 @@ package object vector {
 // constructors
 
     /**
-     * Creates a sequence initially containing the specified elements.
-     */
-    object Of {
-        def apply[A](from: A*): Vector[A] = iterative.fromSIterable(from).toVector
-        def unapplySeq[A](from: Vector[A]): Option[Seq[A]] = Some(from.toSVector)
-    }
-
-    /**
      * @return  an empty vector.
      */
     def empty[A]: Vector[A] = Empty.apply[A]

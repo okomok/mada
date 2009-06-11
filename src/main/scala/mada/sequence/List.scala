@@ -236,10 +236,8 @@ sealed trait List[+A] extends Sequence[A] {
      * Reduces right to left.
      */
     def reduceRight[B >: A](f: (util.ByLazy[A], util.ByLazy[B]) => B): B = this match {
-        case Cons(x, xs) => xs() match {
-            case Nil => x()
-            case _ => f(x, util.byLazy(xs().reduceRight(f)))
-        }
+        case x :: Nil => x
+        case Cons(x, xs) => f(x, util.byLazy(xs().reduceRight(f)))
         case Nil => throw new UnsupportedOperationException("reduceRight on empty list")
     }
 
@@ -360,6 +358,11 @@ sealed trait List[+A] extends Sequence[A] {
 
 
 // misc
+
+    /**
+     * @return  <code>StrictCons(x, this)</code>
+     */
+    def ::[B >: A](x: B): List[B] = StrictCons(x, this)
 
     /**
      * Returns the <code>n</code>-th element.
