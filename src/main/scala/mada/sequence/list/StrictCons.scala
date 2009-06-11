@@ -8,12 +8,15 @@ package mada.sequence.list
 
 
 /**
- * Strict matcher for cons list.
+ * The strict matcher for cons list.
  */
 object StrictCons {
+
     def apply[A](x: A, xs: List[A]): List[A] = cons(x, xs)
+
     def unapply[A](xs: List[A]): Option[(A, List[A])] = xs match {
         case Nil => None
         case Cons(x, xs) => Some(x(), xs())
     }
+
 }

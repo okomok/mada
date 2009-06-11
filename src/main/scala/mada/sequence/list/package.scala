@@ -15,14 +15,14 @@ package object list {
     @aliasOf("List")
     type Type[+A] = List[A]
 
+    @aliasOf("Nil")
+    val nil = Nil
+
     @aliasOf("StrictCons")
     val :: = StrictCons
 
 
 // constructor
-
-    @aliasOf("Nil")
-    val nil = Nil
 
     /**
      * A typed Nil
@@ -30,14 +30,9 @@ package object list {
     def nilOf[A]: List[A] = Nil
 
     /**
-     * @return  <code>Cons(util.byLazy(x), util.byLazy(xs))</code>
+     * @return  <code>Cons(util.byLazy(x), util.byLazy(xs))</code>.
      */
     def cons[A](x: => A, xs: => List[A]): List[A] = Cons(util.byLazy(x), util.byLazy(xs))
-
-    /**
-     * A list containing one element.
-     */
-    def single[A](x: => A): List[A] = cons(x, nil)
 
 
 // conversion
