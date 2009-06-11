@@ -7,6 +7,7 @@
 package mada.sequence
 
 
+import annotation.tailrec
 import list._
 
 
@@ -20,8 +21,8 @@ import list._
  */
 case object Nil extends List[Nothing] {
     override def isNil = true
-    override def head = throw new NoSuchElementException("head on Nil")
-    override def tail =  throw new UnsupportedOperationException("tail on Nil")
+    override def head = throw new NoSuchElementException("head on empty list")
+    override def tail =  throw new UnsupportedOperationException("tail on empty list")
 }
 
 
@@ -30,9 +31,9 @@ case object Nil extends List[Nothing] {
 /**
  * The cons list
  */
-final class Cons[+A](val _1: util.ByLazy[A], val _2: util.ByLazy[List[A]]) extends List[A] {
+final class Cons[+A](val _1: A, val _2: util.ByLazy[List[A]]) extends List[A] {
     override def isNil = false
-    override def head = _1()
+    override def head = _1
     override def tail = _2()
 }
 
@@ -41,13 +42,13 @@ final class Cons[+A](val _1: util.ByLazy[A], val _2: util.ByLazy[List[A]]) exten
  */
 object Cons {
 
-    def apply[A](x: => A, xs: => List[A]): List[A] = new Cons(util.byLazy(x), util.byLazy(xs))
+    def apply[A](x: A, xs: => List[A]): List[A] = new Cons(x, util.byLazy(xs))
 
-    def unapply[A](xs: List[A]): Option[(util.ByLazy[A], util.ByLazy[List[A]])] = {
+    def unapply[A](xs: List[A]): Option[(A, util.ByLazy[List[A]])] = {
         if (xs.isNil) {
             None
         } else {
-            Some(util.byLazy(xs.head), util.byLazy(xs.tail))
+            Some(xs.head, util.byLazy(xs.tail))
         }
     }
 
@@ -60,7 +61,7 @@ object :: {
 
     def unapply[A](xs: List[A]): Option[(A, List[A])] = xs match {
         case Nil => None
-        case Cons(x, xs) => Some(x(), xs())
+        case Cons(x, xs) => Some(x, xs())
     }
 
 }
@@ -143,20 +144,20 @@ sealed trait List[+A] extends Sequence[A] {
         r
     }
 
-    def append[B >: A](ys: => List[B]): List[B] = this match {
-        case Nil => ys
-        case Cons(x, xs) => Cons(x(), xs() append ys)
+    def append[B >: A](that: => List[B]): List[B] = this match {
+        case Nil => that
+        case Cons(x, xs) => Cons(x, xs() append that)
     }
 
     @aliasOf("append")
-    final def ++[B >: A](ys: => List[B]): List[B] = append(ys)
+    final def ++[B >: A](that: => List[B]): List[B] = append(that)
 
     /**
      * Maps elements using <code>f</code>.
      */
     def map[B](f: A => B): List[B] = this match {
         case Nil => Nil
-        case Cons(x, xs) => Cons(f(x()), xs().map(f))
+        case Cons(x, xs) => Cons(f(x), xs().map(f))
     }
 
     /**
@@ -170,8 +171,8 @@ sealed trait List[+A] extends Sequence[A] {
     def filter(p: A => Boolean): List[A] = this match {
         case Nil => Nil
         case Cons(x, xs) => {
-            if (p(x())) {
-                Cons(x(), xs().filter(p))
+            if (p(x)) {
+                Cons(x, xs().filter(p))
             } else {
                 xs().filter(p)
             }
@@ -215,7 +216,7 @@ sealed trait List[+A] extends Sequence[A] {
     def exists(p: A => Boolean): Boolean = !find(p).isEmpty
 
     /**
-     * Counts elements <code>p</code> meets.
+     * Counts elements satisfying <code>p</code>.
      */
     def count(p: A => Boolean): Int = {
         var i = 0
@@ -230,31 +231,20 @@ sealed trait List[+A] extends Sequence[A] {
     }
 
     /**
-     * Finds an element <code>p</code> meets.
+     * Finds an element satisfying <code>p</code>.
      */
-    def find(p: A => Boolean): Option[A] = {
-        var it = this
-        while (!it.isNil) {
-            val e = it.head
-            if (p(e)) {
-                return Some(e)
-            }
-            it = it.tail
-        }
-        None
+    def find(p: A => Boolean): Option[A] = dropWhile(function.not(p)) match {
+        case Nil => None
+        case Cons(x, xs) => Some(x)
     }
 
     /**
      * Folds left to right. (a.k.a. foldl)
      */
-    def foldLeft[B](z: B)(f: (B, A) => B): B = {
-        var acc = z
-        var it = this
-        while (!it.isNil) {
-            acc = f(acc, it.head)
-            it = it.tail
-        }
-        acc
+    @tailrec
+    final def foldLeft[B](z: B)(f: (B, A) => B): B = this match {
+        case Nil => z
+        case Cons(x, xs) => xs().foldLeft(f(z, x))(f)
     }
 
     @aliasOf("foldLeft")
@@ -263,7 +253,7 @@ sealed trait List[+A] extends Sequence[A] {
     /**
      * Folds right to left. (a.k.a. foldr)
      */
-    def foldRight[B](z: B)(f: (util.ByLazy[A], util.ByLazy[B]) => B): B = this match {
+    def foldRight[B](z: B)(f: (A, util.ByLazy[B]) => B): B = this match {
         case Nil => z
         case Cons(x, xs) => f(x, util.byLazy(xs().foldRight(z)(f)))
     }
@@ -272,15 +262,15 @@ sealed trait List[+A] extends Sequence[A] {
      * Reduces left to right. (a.k.a. foldl1)
      */
     def reduceLeft[B >: A](f: (B, A) => B): B = this match {
-        case Cons(x, xs) => xs().foldLeft[B](x())(f)
+        case Cons(x, xs) => xs().foldLeft[B](x)(f)
         case Nil => throw new UnsupportedOperationException("reduceLeft on empty list")
     }
 
     /**
      * Reduces right to left. (a.k.a. foldr1)
      */
-    def reduceRight[B >: A](f: (util.ByLazy[A], util.ByLazy[B]) => B): B = this match {
-        case Single(x) => x()
+    def reduceRight[B >: A](f: (A, util.ByLazy[B]) => B): B = this match {
+        case Single(x) => x
         case Cons(x, xs) => f(x, util.byLazy(xs().reduceRight(f)))
         case Nil => throw new UnsupportedOperationException("reduceRight on empty list")
     }
@@ -291,14 +281,14 @@ sealed trait List[+A] extends Sequence[A] {
     def folderLeft[B](q: => B)(f: (B, A) => B): List[B] = {
         Cons(q, this match {
             case Nil => Nil
-            case Cons(x, xs) => xs().folderLeft(f(q, x()))(f)
+            case Cons(x, xs) => xs().folderLeft(f(q, x))(f)
         })
     }
 
     /**
      * Prefix sum folding right to left. (a.k.a. scanr)
      */
-    def folderRight[B](q0: B)(f: (util.ByLazy[A], util.ByLazy[B]) => B): List[B] = this match {
+    def folderRight[B](q0: B)(f: (A, util.ByLazy[B]) => B): List[B] = this match {
         case Nil => Single(q0)
         case Cons(x, xs) => {
             lazy val qs = xs().folderRight(q0)(f)
@@ -310,16 +300,16 @@ sealed trait List[+A] extends Sequence[A] {
      * Prefix sum reducing left to right. (a.k.a. scanl1)
      */
     def reducerLeft[B >: A](f: (B, A) => B): List[B] = this match {
-        case Cons(x, xs) => xs().folderLeft[B](x())(f)
+        case Cons(x, xs) => xs().folderLeft[B](x)(f)
         case Nil => Nil
     }
 
     /**
      * Reduces right to left. (a.k.a. scanr1)
      */
-    def reducerRight[B >: A](f: (util.ByLazy[A], util.ByLazy[B]) => B): List[B] = this match {
+    def reducerRight[B >: A](f: (A, util.ByLazy[B]) => B): List[B] = this match {
         case Nil => Nil
-        case Single(x) => Single(x())
+        case Single(x) => Single(x)
         case Cons(x, xs) => {
             lazy val qs = xs().reducerRight(f)
             Cons(f(x, util.byLazy(qs.head)), qs)
@@ -329,55 +319,57 @@ sealed trait List[+A] extends Sequence[A] {
     /**
      * Optionally returns the first element.
      */
-    def headOption: Option[A] = if (isNil) None else Some(head)
+    def headOption: Option[A] = this match {
+        case Cons(x, _) => Some(x)
+        case Nil => None
+    }
+
+    /**
+     * Removes the last element.
+     */
+    def init: List[A] = this match {
+        case Single(x) => Nil
+        case Cons(x, xs) => Cons(x, xs().init)
+        case Nil => throw new UnsupportedOperationException("init on empty list")
+    }
 
     /**
      * Returns the last element.
      */
-    def last: A = {
-        Precondition.notEmpty(this, "last")
-        lastOption.get
+    @tailrec
+    final def last: A = this match {
+        case Single(x) => x
+        case Cons(_, xs) => xs().last
+        case Nil => throw new UnsupportedOperationException("last on empty list")
     }
 
     /**
      * Optionally returns the last element.
      */
-    def lastOption: Option[A] = {
-        var e = option.NoneOf[A]
-        var it = this
-        while (!it.isNil) {
-            e = Some(it.head)
-            it = it.tail
-        }
-        e
+    @tailrec
+    final def lastOption: Option[A] = this match {
+        case Single(x) => Some(x)
+        case Cons(_, xs) => xs().lastOption
+        case Nil => None
     }
 
     /**
      * Takes at most <code>n</code> elements.
      */
-    def take(n: Int): List[A] = {
-        if (n <= 0) {
-            Nil
-        } else {
-            this match {
-                case Nil => Nil
-                case Cons(x, xs) => Cons(x(), xs().take(n - 1))
-            }
-        }
+    def take(n: Int): List[A] = (n, this) match {
+        case (n, _) if n <= 0 => Nil
+        case (_, Nil) => Nil
+        case (n, Cons(x, xs)) => Cons(x, xs().take(n - 1))
     }
 
     /**
      * Drops at most <code>n</code> elements.
      */
-    def drop(n: Int): List[A] = {
-        if (n <= 0) {
-            this
-        } else {
-            this match {
-                case Nil => Nil
-                case Cons(_, xs) => xs().drop(n - 1)
-            }
-        }
+    @tailrec
+    final def drop(n: Int): List[A] = (n, this) match {
+        case (n, xs) if n <= 0 => xs
+        case (_, Nil) => Nil
+        case (n, Cons(_, xs)) => xs().drop(n - 1)
     }
 
     /**
@@ -391,8 +383,8 @@ sealed trait List[+A] extends Sequence[A] {
     def takeWhile(p: A => Boolean): List[A] = this match {
         case Nil => Nil
         case Cons(x, xs) => {
-            if (p(x())) {
-                Cons(x(), xs().takeWhile(p))
+            if (p(x)) {
+                Cons(x, xs().takeWhile(p))
             } else {
                 Nil
             }
@@ -402,10 +394,11 @@ sealed trait List[+A] extends Sequence[A] {
     /**
      * Drops elements while <code>p</code> meets.
      */
-    def dropWhile(p: A => Boolean): List[A] = this match {
+    @tailrec
+    final def dropWhile(p: A => Boolean): List[A] = this match {
         case Nil => Nil
         case Cons(x, xs) => {
-            if (p(x())) {
+            if (p(x)) {
                 xs().dropWhile(p)
             } else {
                 this
@@ -429,18 +422,12 @@ sealed trait List[+A] extends Sequence[A] {
     /**
      * Returns the <code>n</code>-th element.
      */
-    def at(n: Int): A = {
-        Precondition.nonnegative(n, "at")
-        var i = n
-        var it = this
-        while (!it.isNil) {
-            if (i == 0) {
-                return it.head
-            }
-            i -= 1
-            it = it.tail
-        }
-        throw new NoSuchElementException("at" + Tuple1(n))
+    @tailrec
+    final def at(n: Int): A = (this, n) match {
+        case (_, n) if n < 0 => throw new IllegalArgumentException("negative index")
+        case (Nil, n) => throw new NoSuchElementException("index too large")
+        case (Cons(x, _), 0) => x
+        case (Cons(_, xs), n) => xs().at(n - 1)
     }
 
     /**
@@ -469,22 +456,12 @@ sealed trait List[+A] extends Sequence[A] {
      */
     def force: List[A] = this
 
-/*
-    /**
-     * Transforms sequence-to-sequence expression `seq.f.g.h` to `seq.x.f.x.g.x.h`.
-     */
-    def mix(x: Mixin): List[A] = Mix(this, x)
-*/
     /**
      * Reverses.
      */
     def reverse: List[A] = foldLeft(NilOf[A]){ (xs, x) => Cons(x, xs) }
-/*
-    /**
-     * Disables overrides.
-     */
-    final def seal: List[A] = Seal(this)
 
+/*
     /**
      * Steps by the specified stride.
      */
@@ -500,19 +477,18 @@ sealed trait List[+A] extends Sequence[A] {
      */
     def uniqueBy(p: (A, A) => Boolean): List[A] = UniqueBy(this, p)
 */
+
     /**
      * Zips <code>this</code> and <code>that</code>.
      */
-    def zip[B](ys: List[B]): List[(A, B)] = zipBy(ys){ (a, b) => (a, b) }
+    def zip[B](that: List[B]): List[(A, B)] = zipBy(that){ (a, b) => (a, b) }
 
     /**
      * Zips <code>this</code> and <code>that</code> applying <code>f</code>.
      */
-    def zipBy[B, C](ys: List[B])(f: (A, B) => C): List[C] = this match {
-        case Nil => Nil
-        case Cons(a, as) => ys match {
-            case Nil => Nil
-            case Cons(b, bs) => Cons(f(a(), b()), as().zipBy(bs())(f))
-        }
+    def zipBy[B, C](that: List[B])(f: (A, B) => C): List[C] = (this, that) match {
+        case (Cons(a, as), Cons(b, bs)) => Cons(f(a, b), as().zipBy(bs())(f))
+        case _ => Nil
     }
+
 }

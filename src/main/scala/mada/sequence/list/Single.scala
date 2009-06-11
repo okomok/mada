@@ -12,9 +12,9 @@ package mada.sequence.list
  */
 object Single {
 
-    def apply[A](x: => A): List[A] = Cons(x, Nil)
+    def apply[A](x: A): List[A] = Cons(x, Nil)
 
-    def unapply[A](xs: List[A]): Option[util.ByLazy[A]] = xs match {
+    def unapply[A](xs: List[A]): Option[A] = xs match {
         case Cons(x, xs) if xs().isNil => Some(x)
         case _ => None
     }
