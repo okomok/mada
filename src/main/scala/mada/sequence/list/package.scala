@@ -9,10 +9,39 @@ package mada.sequence
 
 package object list {
 
+
 // alias
 
     @aliasOf("List")
     type Type[+A] = List[A]
 
+
+// algorithm
+
+    /**
+     * Unfolds right to left.
+     */
+    def unfoldRight[A, B](x: A)(f: A => Option[(B, A)]): List[B] = f(x) match {
+        case None => Nil
+        case Some((y, x)) => Cons(y, unfoldRight(x)(f))
+    }
+
+    /**
+     * An infinite list of repeated applications of <code>f</code> to <code>x</code>.
+     */
+    def iterate[A](x: A)(f: A => A): List[A] = Cons(x, iterate(f(x))(f))
+
+    /**
+     * An infinite list, with <code>x</code> the value of every element.
+     */
+    def repeat[A](x: A): List[A] = {
+        lazy val xs: List[A] = Cons(x, xs)
+        xs
+    }
+
+    /**
+     * A list of length <code>n</code> with <code>x</code> the value of every element.
+     */
+    def replicate[A](n: Int, x: A): List[A] = repeat(x).take(n)
 
 }

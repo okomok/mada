@@ -41,7 +41,6 @@ final class Cons[+A](val _1: A, val _2: util.ByLazy[List[A]]) extends List[A] {
  * The matcher for cons list
  */
 object Cons {
-
     def apply[A](x: A, xs: => List[A]): List[A] = new Cons(x, util.byLazy(xs))
 
     def unapply[A](xs: List[A]): Option[(A, util.ByLazy[List[A]])] = {
@@ -51,7 +50,6 @@ object Cons {
             Some(xs.head, util.byLazy(xs.tail))
         }
     }
-
 }
 
 /**
@@ -153,6 +151,18 @@ sealed trait List[+A] extends Sequence[A] {
     final def ++[B >: A](that: => List[B]): List[B] = append(that)
 
     /**
+     * @return  efficient <code>reverse.append(that)</code>.
+     */
+    @tailrec
+    final def reverseAppend[B >: A](that: => List[B]): List[B] = this match {
+        case Nil => that
+        case Cons(x, xs) => xs().reverseAppend(Cons[B](x, that))
+    }
+
+    @aliasOf("reverseAppend")
+    final def reverse_++[B >: A](that: => List[B]): List[B] = reverseAppend(that)
+
+    /**
      * Maps elements using <code>f</code>.
      */
     def map[B](f: A => B): List[B] = this match {
@@ -208,12 +218,12 @@ sealed trait List[+A] extends Sequence[A] {
     /**
      * Does <code>p</code> meet for any element?
      */
-    def forall(p: A => Boolean): Boolean = find(function.not(p)).isEmpty
+    def forall(p: A => Boolean): Boolean = map(p).and // find(function.not(p)).isEmpty
 
     /**
      * Does an element exists which <code>p</code> meets?
      */
-    def exists(p: A => Boolean): Boolean = !find(p).isEmpty
+    def exists(p: A => Boolean): Boolean = map(p).or // !find(p).isEmpty
 
     /**
      * Counts elements satisfying <code>p</code>.
@@ -270,7 +280,7 @@ sealed trait List[+A] extends Sequence[A] {
      * Reduces right to left. (a.k.a. foldr1)
      */
     def reduceRight[B >: A](f: (A, util.ByLazy[B]) => B): B = this match {
-        case Single(x) => x
+        case x :: Nil => x
         case Cons(x, xs) => f(x, util.byLazy(xs().reduceRight(f)))
         case Nil => throw new UnsupportedOperationException("reduceRight on empty list")
     }
@@ -289,7 +299,7 @@ sealed trait List[+A] extends Sequence[A] {
      * Prefix sum folding right to left. (a.k.a. scanr)
      */
     def folderRight[B](q0: B)(f: (A, util.ByLazy[B]) => B): List[B] = this match {
-        case Nil => Single(q0)
+        case Nil => q0 :: Nil
         case Cons(x, xs) => {
             lazy val qs = xs().folderRight(q0)(f)
             Cons(f(x, util.byLazy(qs.head)), qs)
@@ -309,7 +319,7 @@ sealed trait List[+A] extends Sequence[A] {
      */
     def reducerRight[B >: A](f: (A, util.ByLazy[B]) => B): List[B] = this match {
         case Nil => Nil
-        case Single(x) => Single(x)
+        case x :: Nil => x :: Nil
         case Cons(x, xs) => {
             lazy val qs = xs().reducerRight(f)
             Cons(f(x, util.byLazy(qs.head)), qs)
@@ -328,7 +338,7 @@ sealed trait List[+A] extends Sequence[A] {
      * Removes the last element.
      */
     def init: List[A] = this match {
-        case Single(x) => Nil
+        case x :: Nil => Nil
         case Cons(x, xs) => Cons(x, xs().init)
         case Nil => throw new UnsupportedOperationException("init on empty list")
     }
@@ -338,7 +348,7 @@ sealed trait List[+A] extends Sequence[A] {
      */
     @tailrec
     final def last: A = this match {
-        case Single(x) => x
+        case x :: Nil => x
         case Cons(_, xs) => xs().last
         case Nil => throw new UnsupportedOperationException("last on empty list")
     }
@@ -348,7 +358,7 @@ sealed trait List[+A] extends Sequence[A] {
      */
     @tailrec
     final def lastOption: Option[A] = this match {
-        case Single(x) => Some(x)
+        case x :: Nil => Some(x)
         case Cons(_, xs) => xs().lastOption
         case Nil => None
     }
@@ -433,7 +443,7 @@ sealed trait List[+A] extends Sequence[A] {
     /**
      * Does this contain the element?
      */
-    def contains(e: Any): Boolean = exists(function.equalTo(e))
+    def contains(x: Any): Boolean = exists(function.equalTo(x))
 
     /**
      * Repeats infinitely.

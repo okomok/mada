@@ -13,3 +13,11 @@ class ByLazy[+R](body: => R) extends Function0[R] {
     private lazy val v = body
     override def apply() = v
 }
+
+
+object ByLazy {
+    def unapply[R](that: Function0[R]): Option[Function0[R]] = that match {
+        case that: ByLazy[_] => Some(that._1)
+        case _ => None
+    }
+}
