@@ -71,7 +71,7 @@ object :: {
  * Lazy list
  * <ul>
  * <li/>Backtrackable to any subsequence, while <code>Iterative</code> is backtrackable only to "begin".
- * <li/>No intermediate objects, while number of iterator objects may be exponential growth in recursive <code>Iterative</code>.
+ * <li/>No iterators, while number of iterator objects may be exponential growth in recursive <code>Iterative</code>.
  * <li/>A projection method usually need an entire copy. It can be lazy, though.
  * </ul>
  */
@@ -241,9 +241,10 @@ sealed trait List[+A] extends Sequence[A] {
     /**
      * Finds an element satisfying <code>p</code>.
      */
-    def find(p: A => Boolean): Option[A] = dropWhile(function.not(p)) match {
+    @tailrec
+    final def find(p: A => Boolean): Option[A] = this match {
         case Nil => None
-        case Cons(x, xs) => Some(x)
+        case Cons(x, xs) => if (p(x)) Some(x) else xs().find(p)
     }
 
     /**
@@ -259,7 +260,7 @@ sealed trait List[+A] extends Sequence[A] {
     final def /:[B](z: B)(f: (B, A) => B): B = foldLeft(z)(f)
 
     /**
-     * Folds right-associative. (a.k.a. foldr)
+     * Folds right to left. (a.k.a. foldr)
      */
     def foldRight[B](z: B)(f: (A, util.ByLazy[B]) => B): B = this match {
         case Nil => z
@@ -275,7 +276,7 @@ sealed trait List[+A] extends Sequence[A] {
     }
 
     /**
-     * Reduces right-associative. (a.k.a. foldr1)
+     * Reduces right to left. (a.k.a. foldr1)
      */
     def reduceRight[B >: A](f: (A, util.ByLazy[B]) => B): B = this match {
         case x :: Nil => x
@@ -294,7 +295,7 @@ sealed trait List[+A] extends Sequence[A] {
     }
 
     /**
-     * Prefix sum folding right-associative. (a.k.a. scanr)
+     * Prefix sum folding right to left. (a.k.a. scanr)
      */
     def folderRight[B](q0: B)(f: (A, util.ByLazy[B]) => B): List[B] = this match {
         case Nil => q0 :: Nil
@@ -313,7 +314,7 @@ sealed trait List[+A] extends Sequence[A] {
     }
 
     /**
-     * Reduces right-associative. (a.k.a. scanr1)
+     * Reduces right to left. (a.k.a. scanr1)
      */
     def reducerRight[B >: A](f: (A, util.ByLazy[B]) => B): List[B] = this match {
         case Nil => Nil
