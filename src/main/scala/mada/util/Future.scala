@@ -7,15 +7,13 @@
 package mada.util
 
 
-class Future[+R](body: => R) extends Function0[R] {
-    val _1: Function0[R] = this
-
+case class Future[+R](_1: Function0[R]) extends Function0[R] {
     private val f = {
         try {
-            parallel(body)
+            Parallel(_1)
         } catch {
-            case _: java.util.concurrent.RejectedExecutionException => byLazy(body)
+            case _: java.util.concurrent.RejectedExecutionException => ByLazy(_1)
         }
     }
-    override def apply() = f()
+    override def apply = f()
 }

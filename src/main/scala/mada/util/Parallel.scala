@@ -10,11 +10,9 @@ package mada.util
 import java.util.concurrent
 
 
-class Parallel[R](body: => R) extends Function0[R] {
-    val _1: Function0[R] = this
-
+case class Parallel[R](_1: Function0[R]) extends Function0[R] {
     private val u = {
-        val c = new concurrent.Callable[R] { override def call() = body }
+        val c = new concurrent.Callable[R] { override def call() = _1() }
         Parallels.executor.synchronized { Parallels.executor.submit(c) }
     }
     override def apply() = {

@@ -90,22 +90,22 @@ package object util {
     /**
      * A function calculating <code>body</code> by <code>name</code>.
      */
-    def byName[R](body: => R): ByName[R] = new ByName(body)
+    def byName[R](body: => R): ByName[R] = ByName{ () => body }
 
     /**
      * A function calculating <code>body</code> by <code>lazy</code>.
      */
-    def byLazy[R](body: => R): ByLazy[R] = new ByLazy(body)
+    def byLazy[R](body: => R): ByLazy[R] = ByLazy{ () => body }
 
     /**
      * A function calculating <code>body</code> in (possibly) other threads.
      */
-    def future[R](body: => R): Future[R] = new Future(body)
+    def future[R](body: => R): Future[R] = Future{ () => body }
 
     /**
      * A function calculating <code>body</code> in other threads.
      */
-    def parallel[R](body: => R): Parallel[R] = new Parallel(body)
+    def parallel[R](body: => R): Parallel[R] = Parallel{ () => body }
 
 
 // hash code

@@ -7,17 +7,7 @@
 package mada.util
 
 
-class ByLazy[+R](body: => R) extends Function0[R] {
-    val _1: Function0[R] = this
-
-    private lazy val v = body
+case class ByLazy[+R](_1: Function0[R]) extends Function0[R] {
+    private lazy val v = _1()
     override def apply() = v
-}
-
-
-object ByLazy {
-    def unapply[R](that: Function0[R]): Option[Function0[R]] = that match {
-        case that: ByLazy[_] => Some(that._1)
-        case _ => None
-    }
 }

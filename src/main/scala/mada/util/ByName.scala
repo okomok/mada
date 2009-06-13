@@ -7,8 +7,6 @@
 package mada.util
 
 
-class ByName[+R](body: => R) extends Function0[R] {
-    val _1: Function0[R] = this
-
-    override def apply() = body
+case class ByName[+R](_1: Function0[R]) extends Function0[R] {
+    override def apply = _1()
 }
