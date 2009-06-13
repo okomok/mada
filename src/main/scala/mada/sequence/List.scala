@@ -207,12 +207,10 @@ sealed trait List[+A] extends Sequence[A] {
     /**
      * Applies <code>f</code> to each element.
      */
-    def foreach(f: A => Unit): Unit = {
-        var it = this
-        while (!it.isNil) {
-            f(it.head)
-            it = it.tail
-        }
+    @tailrec
+    final def foreach(f: A => Unit): Unit = this match {
+        case Nil => ()
+        case Cons(x, xs) => { f(x); xs().foreach(f) }
     }
 
     /**
@@ -383,9 +381,9 @@ sealed trait List[+A] extends Sequence[A] {
     }
 
     /**
-     * @return  <code>drop(n).take(n - m)</code>.
+     * @return  <code>drop(n).take(m - n)</code>.
      */
-    def slice(n: Int, m: Int): List[A] = drop(n).take(n - m)
+    def slice(n: Int, m: Int): List[A] = drop(n).take(m - n)
 
     /**
      * Takes elements while <code>p</code> meets.

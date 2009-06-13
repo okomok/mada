@@ -4,19 +4,18 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.sequencetest.iterativetest
+package madatest.sequencetest.listtest
 
 
-import mada.sequence.iterative
+import mada.sequence._
 import junit.framework.Assert._
 
 
 class TakeTest {
     def testTrivial: Unit = {
-        new NotStartable[Int].take(10)
-        val t = iterative.Of(4,5,1,3,2,9,7,10)
-        val u = iterative.Of(4,5,1)
-        val v = iterative.Of(4,5,1,3,2,9,7,10)
+        val t = list.Of(4,5,1,3,2,9,7,10)
+        val u = list.Of(4,5,1)
+        val v = list.Of(4,5,1,3,2,9,7,10)
         val k0 = t.take(0)
         assertTrue(k0.isEmpty)
         assertTrue(k0.isEmpty)
@@ -32,9 +31,9 @@ class TakeTest {
     }
 
     def testTrivial2: Unit = {
-        val t = iterative.Of(14,15,11,3,2,9,7,10)
-        val u = iterative.Of(14,15,11)
-        val v = iterative.Of(14,15,11,3,2,9,7,10)
+        val t = list.Of(14,15,11,3,2,9,7,10)
+        val u = list.Of(14,15,11)
+        val v = list.Of(14,15,11,3,2,9,7,10)
         val k0 = t.takeWhile(_ > 100)
         assertTrue(k0.isEmpty)
         assertTrue(k0.isEmpty)
@@ -46,18 +45,18 @@ class TakeTest {
         assertEquals(v, k2)
     }
 
-    def testFusion: Unit = {
-        val t = iterative.Of(9,7,10,1,2)
-        val u = iterative.Of(9,7)
+    def testTakeTake: Unit = {
+        val t = list.Of(9,7,10,1,2)
+        val u = list.Of(9,7)
         val k = t.take(2).take(3)
         assertEquals(k, u)
     }
 
     def testEmpty: Unit = {
-        val k = iterative.emptyOf[Int].take(2)
+        val k = list.emptyOf[Int].take(2)
         assertTrue(k.isEmpty)
         assertTrue(k.isEmpty)
-        val k2 = iterative.emptyOf[Int].take(0)
+        val k2 = list.emptyOf[Int].take(0)
         assertTrue(k2.isEmpty)
         assertTrue(k2.isEmpty)
     }

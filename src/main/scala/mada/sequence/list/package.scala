@@ -16,6 +16,20 @@ package object list {
     type Type[+A] = List[A]
 
 
+// trivial
+
+    @aliasOf("Nil")
+    val empty = Nil
+
+    @aliasOf("NilOf")
+    def emptyOf[A] = NilOf[A]
+
+    /**
+     * @return  <code>x :: Nil</code>.
+     */
+    def single[A](x: A): List[A] = x :: Nil
+
+
 // algorithm
 
     /**

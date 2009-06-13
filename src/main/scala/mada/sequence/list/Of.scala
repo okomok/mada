@@ -4,13 +4,13 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.sequence.iterative
+package mada.sequence.list
 
 
 /**
  * Creates a sequence initially containing the specified elements.
  */
 object Of {
-    def apply[A](from: A*): Iterative[A] = fromSIterable(from)
-    def unapplySeq[A](from: Iterative[A]): Option[Seq[A]] = Some(from.toSSequence)
+    def apply[A](from: A*): List[A] = iterative.fromSIterable(from).toList
+    def unapplySeq[A](from: List[A]): Option[Seq[A]] = Some(from.toSSequence)
 }
