@@ -7,6 +7,6 @@
 package mada.sequence.vector
 
 
-case class Concat[A](_1: scala.collection.Sequence[Vector[A]]) extends Forwarder[A] {
+case class Concat[A](_1: Seq[Vector[A]]) extends Forwarder[A] {
     override protected val delegate = _1.foldLeft(empty[A]){ (r, v) => r ++ v }
 }

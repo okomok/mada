@@ -511,3 +511,16 @@ sealed trait List[+A] extends Sequence[A] {
     }
 
 }
+
+
+object List {
+
+// pattern matching
+
+    @aliasOf("Of.apply")
+    def apply[A](from: A*): List[A] = Of.apply(from: _*)
+
+    @aliasOf("Of.unapplySeq")
+    def unapplySeq[A](from: List[A]): Option[Seq[A]] = Of.unapplySeq(from)
+
+}

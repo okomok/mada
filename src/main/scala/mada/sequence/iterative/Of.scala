@@ -12,5 +12,5 @@ package mada.sequence.iterative
  */
 object Of {
     def apply[A](from: A*): Iterative[A] = fromSIterable(from)
-    def unapplySeq[A](from: Iterative[A]): Option[Seq[A]] = Some(from.toSSequence)
+    def unapplySeq[A](from: Iterative[A]): Option[Seq[A]] = Some(from.toSeq)
 }

@@ -17,6 +17,6 @@ class ToSome[+A](val _1: Iterative[A]) extends Forwarder[A] {
 }
 
 object ToSome {
-    implicit def madaToSomeToSSequence[A](from: ToSome[A]): scala.collection.Sequence[A] = from.toSSequence
+    implicit def madaToSomeToSeq[A](from: ToSome[A]): Seq[A] = from.toSeq
     implicit def madaToSomeToJIterable[A](from: ToSome[A]): java.lang.Iterable[A] = from.toJIterable
 }

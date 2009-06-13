@@ -70,10 +70,10 @@ trait Forwarder[+A] extends Iterative[A] with SequenceForwarder[A] {
     override def toSome: ToSome[A] = delegate.toSome
     override def toList: List[A] = delegate.toList
     override def _toVector[B](_this: Iterative[B]): Vector[B] = delegate.asInstanceOf[Iterative[B]].toVector
+    override def toSeq: Seq[A] = delegate.toSeq
+    override def toSList: scala.collection.immutable.List[A] = delegate.toSList
     override def _toSHashMap[K, V](_this: Iterative[(K, V)]): scala.collection.Map[K, V] = delegate.asInstanceOf[Iterative[(K, V)]].toSHashMap
     override def _toSHashSet[B](_this: Iterative[B]): scala.collection.Set[B] = delegate.asInstanceOf[Iterative[B]].toSHashSet
-    override def toSList: scala.collection.immutable.List[A] = delegate.toSList
-    override def toSSequence: scala.collection.Sequence[A] = delegate.toSSequence
     override def _toJIterable[B](_this: Iterative[B]): java.lang.Iterable[B] = delegate.asInstanceOf[Iterative[B]].toJIterable
 
     override def merge[B >: A](that: Iterative[B])(implicit c: Compare[B]): Iterative[B] = around(delegate.merge(that)(c))

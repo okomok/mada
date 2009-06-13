@@ -419,6 +419,12 @@ trait Iterative[+A] extends Sequence[A] {
     @methodized @conversion
     def _toVector[B](_this: Iterative[B]): Vector[B] = ToVector(_this)
 
+    @conversion
+    def toSeq: Seq[A] = ToSeq(this)
+
+    @conversion
+    def toSList: scala.collection.immutable.List[A] = toSeq.toList
+
     @methodized @conversion
     def _toSHashMap[K, V](_this: Iterative[(K, V)]): scala.collection.Map[K, V] = {
         val r = new scala.collection.mutable.HashMap[K, V]
@@ -440,12 +446,6 @@ trait Iterative[+A] extends Sequence[A] {
         }
         r
     }
-
-    @conversion
-    def toSList: scala.collection.immutable.List[A] = toSSequence.toList
-
-    @conversion
-    def toSSequence: scala.collection.Sequence[A] = ToSSequence(this)
 
     @methodized @conversion
     def _toJIterable[B](_this: Iterative[B]): java.lang.Iterable[B] = ToJIterable(_this)

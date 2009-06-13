@@ -13,12 +13,12 @@ import junit.framework.Assert._
 
 class EqualsTest {
     def testTrivial: Unit = {
-        val I1: Iterative[Int] = iterative.Of(27,10,14,7,4,1,2)
-        val I2: Iterative[Int] = iterative.Of(27,10,14,7,4,1,2)
-        val V1: Vector[Int] = vector.Of(27,10,14,7,4,1,2)
-        val V2: Vector[Int] = vector.Of(27,10,14,7,4,1,2)
-        val L1: List[Int] = list.Of(27,10,14,7,4,1,2)
-        val L2: List[Int] = list.Of(27,10,14,7,4,1,2)
+        val I1: Iterative[Int] = Iterative(27,10,14,7,4,1,2)
+        val I2: Iterative[Int] = Iterative(27,10,14,7,4,1,2)
+        val V1: Vector[Int] = Vector(27,10,14,7,4,1,2)
+        val V2: Vector[Int] = Vector(27,10,14,7,4,1,2)
+        val L1: List[Int] = List(27,10,14,7,4,1,2)
+        val L2: List[Int] = List(27,10,14,7,4,1,2)
 
         assertEquals(I1, I2)
         assertEquals(I1, V2)
@@ -34,12 +34,12 @@ class EqualsTest {
     }
 
     def testNot: Unit = {
-        val I1: Iterative[Int] = iterative.Of(27,10,14,7,4,1,2)
-        val I2: Iterative[Int] = iterative.Of(27,10,14,7,40,1,2)
-        val V1: Vector[Int] = vector.Of(27,10,14,7,4,1,2)
-        val V2: Vector[Int] = vector.Of(27,10,14,7,40,1,2)
-        val L1: List[Int] = list.Of(27,10,14,7,4,1,2)
-        val L2: List[Int] = list.Of(27,10,14,7,40,1,2)
+        val I1: Iterative[Int] = Iterative(27,10,14,7,4,1,2)
+        val I2: Iterative[Int] = Iterative(27,10,14,7,40,1,2)
+        val V1: Vector[Int] = Vector(27,10,14,7,4,1,2)
+        val V2: Vector[Int] = Vector(27,10,14,7,40,1,2)
+        val L1: List[Int] = List(27,10,14,7,4,1,2)
+        val L2: List[Int] = List(27,10,14,7,40,1,2)
 
         AssertNotEquals(I1, I2)
         AssertNotEquals(I1, V2)
