@@ -57,4 +57,10 @@ class FlattenTest {
         assertEquals(t, a)
         assertEquals(t, a)
     }
+
+    def testInfinite: Unit = {
+        val L = list.repeat(list.Of(1,2,3,4,5)).flatten
+        val A = list.Of(1,2,3,4,5,1,2,3,4,5,1,2,3)
+        assertEquals(A, L.take(13))
+    }
 }
