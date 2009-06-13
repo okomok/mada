@@ -55,7 +55,7 @@ package object iterative {
     def repeat[A](e: A): Iterative[A] = Repeat(e)
 
     /**
-     * Unfolds right to left.
+     * Unfolds right-associative.
      */
     def unfoldRight[A, B](z: A)(op: A => Option[(B, A)]): Iterative[B] = UnfoldRight(z, op)
 

@@ -33,7 +33,7 @@ package object list {
 // algorithm
 
     /**
-     * Unfolds right to left.
+     * Unfolds right-associative.
      */
     def unfoldRight[A, B](x: A)(f: A => Option[(B, A)]): List[B] = f(x) match {
         case None => Nil

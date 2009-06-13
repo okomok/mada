@@ -156,7 +156,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
     }
 
     /**
-     * Folds left to right.
+     * Folds left-associative.
      */
     def foldLeft[B](z: B)(op: (B, A) => B): B = stl.Accumulate(this, start, end, z, op)
 
@@ -164,17 +164,17 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
     final def /:[B](z: B)(op: (B, A) => B): B = foldLeft(z)(op)
 
     /**
-     * Reduces left to right.
+     * Reduces left-associative.
      */
     def reduceLeft[B >: A](op: (B, A) => B): B = tail.foldLeft[B](head)(op)
 
     /**
-     * Prefix sum folding left to right.
+     * Prefix sum folding left-associative.
      */
     def folderLeft[B](z: B)(op: (B, A) => B): Vector[B] = FolderLeft(this, z, op)
 
     /**
-     * Prefix sum reducing left to right.
+     * Prefix sum reducing left-associative.
      */
     def reducerLeft[B >: A](op: (B, A) => B): Vector[B] = tail.folderLeft[B](head)(op)
 
@@ -437,22 +437,22 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
 
 
     /**
-     * Folds right to left.
+     * Folds right-associative.
      */
     def foldRight[B](z: B)(op: (A, B) => B): B = reverse.foldLeft(z)(function.flip(op))
 
     /**
-     * Reduces right to left.
+     * Reduces right-associative.
      */
     def reduceRight[B >: A](op: (A, B) => B): B = reverse.reduceLeft(function.flip(op))
 
     /**
-     * Prefix sum folding right to left
+     * Prefix sum folding right-associative
      */
     def folderRight[B](z: B)(op: (A, B) => B): Vector[B] = reverse.folderLeft(z)(function.flip(op))
 
     /**
-     * Prefix sum reducing right to left.
+     * Prefix sum reducing right-associative.
      */
     def reducerRight[B >: A](op: (A, B) => B): Vector[B] = reverse.reducerLeft(function.flip(op))
 

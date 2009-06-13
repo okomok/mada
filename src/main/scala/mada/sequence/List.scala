@@ -247,7 +247,7 @@ sealed trait List[+A] extends Sequence[A] {
     }
 
     /**
-     * Folds left to right. (a.k.a. foldl)
+     * Folds left-associative. (a.k.a. foldl)
      */
     @tailrec
     final def foldLeft[B](z: B)(f: (B, A) => B): B = this match {
@@ -259,7 +259,7 @@ sealed trait List[+A] extends Sequence[A] {
     final def /:[B](z: B)(f: (B, A) => B): B = foldLeft(z)(f)
 
     /**
-     * Folds right to left. (a.k.a. foldr)
+     * Folds right-associative. (a.k.a. foldr)
      */
     def foldRight[B](z: B)(f: (A, util.ByLazy[B]) => B): B = this match {
         case Nil => z
@@ -267,7 +267,7 @@ sealed trait List[+A] extends Sequence[A] {
     }
 
     /**
-     * Reduces left to right. (a.k.a. foldl1)
+     * Reduces left-associative. (a.k.a. foldl1)
      */
     def reduceLeft[B >: A](f: (B, A) => B): B = this match {
         case Cons(x, xs) => xs().foldLeft[B](x)(f)
@@ -275,7 +275,7 @@ sealed trait List[+A] extends Sequence[A] {
     }
 
     /**
-     * Reduces right to left. (a.k.a. foldr1)
+     * Reduces right-associative. (a.k.a. foldr1)
      */
     def reduceRight[B >: A](f: (A, util.ByLazy[B]) => B): B = this match {
         case x :: Nil => x
@@ -284,7 +284,7 @@ sealed trait List[+A] extends Sequence[A] {
     }
 
     /**
-     * Prefix sum folding left to right. (a.k.a. scanl)
+     * Prefix sum folding left-associative. (a.k.a. scanl)
      */
     def folderLeft[B](q: => B)(f: (B, A) => B): List[B] = {
         Cons(q, this match {
@@ -294,7 +294,7 @@ sealed trait List[+A] extends Sequence[A] {
     }
 
     /**
-     * Prefix sum folding right to left. (a.k.a. scanr)
+     * Prefix sum folding right-associative. (a.k.a. scanr)
      */
     def folderRight[B](q0: B)(f: (A, util.ByLazy[B]) => B): List[B] = this match {
         case Nil => q0 :: Nil
@@ -305,7 +305,7 @@ sealed trait List[+A] extends Sequence[A] {
     }
 
     /**
-     * Prefix sum reducing left to right. (a.k.a. scanl1)
+     * Prefix sum reducing left-associative. (a.k.a. scanl1)
      */
     def reducerLeft[B >: A](f: (B, A) => B): List[B] = this match {
         case Cons(x, xs) => xs().folderLeft[B](x)(f)
@@ -313,7 +313,7 @@ sealed trait List[+A] extends Sequence[A] {
     }
 
     /**
-     * Reduces right to left. (a.k.a. scanr1)
+     * Reduces right-associative. (a.k.a. scanr1)
      */
     def reducerRight[B >: A](f: (A, util.ByLazy[B]) => B): List[B] = this match {
         case Nil => Nil

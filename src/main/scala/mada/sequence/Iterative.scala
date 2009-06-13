@@ -157,7 +157,7 @@ trait Iterative[+A] extends Sequence[A] {
     }
 
     /**
-     * Folds left to right.
+     * Folds left-associative.
      */
     def foldLeft[B](z: B)(op: (B, A) => B): B = {
         var acc = z
@@ -173,7 +173,7 @@ trait Iterative[+A] extends Sequence[A] {
     final def /:[B](z: B)(op: (B, A) => B): B = foldLeft(z)(op)
 
     /**
-     * Reduces left to right.
+     * Reduces left-associative.
      */
     def reduceLeft[B >: A](op: (B, A) => B): B = {
         val it = begin
@@ -186,12 +186,12 @@ trait Iterative[+A] extends Sequence[A] {
     }
 
     /**
-     * Prefix sum folding left to right.
+     * Prefix sum folding left-associative.
      */
     def folderLeft[B](z: B)(op: (B, A) => B): Iterative[B] = FolderLeft(this, z, op)
 
     /**
-     * Prefix sum reducing left to right.
+     * Prefix sum reducing left-associative.
      */
     def reducerLeft[B >: A](op: (B, A) => B): Iterative[B] = ReducerLeft(this, op)
 
