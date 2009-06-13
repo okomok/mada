@@ -23,6 +23,7 @@ trait Sequence[+A] extends iterative.Sequence[A] { // physical
         case _ => super.equals(that)
     }
 
+    @optimize
     override def hashCode = {
         var r = 1
         var it = asList

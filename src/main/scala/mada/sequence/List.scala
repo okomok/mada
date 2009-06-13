@@ -319,7 +319,7 @@ sealed trait List[+A] extends Sequence[A] {
      */
     def reducerRight[B >: A](f: (A, util.ByLazy[B]) => B): List[B] = this match {
         case Nil => Nil
-        case x :: Nil => x :: Nil
+        case x :: Nil => this
         case Cons(x, xs) => {
             lazy val qs = xs().reducerRight(f)
             Cons(f(x, util.byLazy(qs.head)), qs)
@@ -459,7 +459,7 @@ sealed trait List[+A] extends Sequence[A] {
     /**
      * Repeats <code>n</code> times.
      */
-    def times(n: Int): List[A] = throw new Error
+    def times(n: Int): List[A] = repeat(()).take(n).flatMap{ _ => this }
 
     /**
      * Cuts projection. (A result sequence is always readOnly.)
@@ -471,22 +471,33 @@ sealed trait List[+A] extends Sequence[A] {
      */
     def reverse: List[A] = foldLeft(NilOf[A]){ (xs, x) => Cons(x, xs) }
 
-/*
     /**
      * Steps by the specified stride.
      */
-    def step(n: Int): List[A] = Step(this, n)
+    def step(n: Int): List[A] = if (n <= 0) step0 else step1(n)
+
+    private def step0: List[A] = this match {
+        case Nil => Nil
+        case Cons(x, _) => repeat(x)
+    }
+
+    private def step1(n: Int): List[A] = this match {
+        case Nil => Nil
+        case Cons(x, xs) => Cons(x, xs().drop(n - 1).step1(n))
+    }
 
     /**
-     * Removes duplicates using <code>==</code>.
+     * @return  <code>uniqueBy(function.equal)</code>.
      */
-    def unique: List[A] = Unique(this)
+    def unique: List[A] = uniqueBy(function.equal)
 
     /**
-     * Removes duplicates using the predicate.
+     * Removes adjacent duplicates by the predicate.
      */
-    def uniqueBy(p: (A, A) => Boolean): List[A] = UniqueBy(this, p)
-*/
+    def uniqueBy(p: (A, A) => Boolean): List[A] = this match {
+        case Nil => Nil
+        case Cons(x, xs) => Cons(x, xs().dropWhile(p(x, _)).uniqueBy(p))
+    }
 
     /**
      * Zips <code>this</code> and <code>that</code>.
