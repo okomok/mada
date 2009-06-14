@@ -32,4 +32,9 @@ class FindTest {
         val tr = list.Of(2,4,6)
         assertTrue(tr.exists(_ == 6))
     }
+
+    def testCount: Unit = {
+        val tr = list.Of(2,7,4,1,6)
+        assertEquals(3, tr.count(_ % 2 == 0))
+    }
 }
