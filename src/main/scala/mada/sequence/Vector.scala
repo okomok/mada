@@ -579,6 +579,11 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
      */
     final def parallelRegions(grainSize: Int): Vector[Vector[A]] = divide(grainSize).parallel(1)
 
+    /**
+     * @return  <code>mix(Mixin.parallel)</code>.
+     */
+    final def toParallel: Vector[A] = mix(Mixin.parallel)
+
 
 // associative folding
 
