@@ -460,10 +460,11 @@ sealed trait List[+A] extends Sequence[A] {
      */
     def times(n: Int): List[A] = repeat(()).take(n).flatMap{ _ => this }
 
-    /**
-     * Cuts projection. (A result sequence is always readOnly.)
-     */
+    @returnThis
     def force: List[A] = this
+
+    @returnThis
+    def memoize: List[A] = this
 
     /**
      * Reverses.
