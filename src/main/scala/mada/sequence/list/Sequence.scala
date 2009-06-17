@@ -43,6 +43,12 @@ object Sequence {
     implicit def _asIterative[A](from: Sequence[A]): Iterative[A] = from.asIterative
 
 // methodization
+    sealed class _OfName[A](_this: => List[A]) {
+        def #::(x: A): List[A] = new Cons(x, util.byLazy(_this))
+        def #:::(prefix: List[A]): List[A] = prefix append _this
+    }
+    implicit def _ofName[A](_this: => Sequence[A]): _OfName[A] = new _OfName(_this.asList)
+
     sealed class _OfSequence[A](_this: List[List[A]]) {
         def flatten: List[A] = _this.foldRight(NilOf[A])(_ ++ _())
     }
@@ -55,7 +61,7 @@ object Sequence {
     implicit def _ofBoolean(_this: Sequence[Boolean]): _OfBoolean = new _OfBoolean(_this.asList)
 
     sealed class _OfPair[A, B](_this: List[(A, B)]) {
-        def unzip: (List[A], List[B]) = _this.foldRight((NilOf[A], NilOf[B])){ (ab, abs) => (Cons(ab._1, abs()._1), Cons(ab._2, abs()._2)) }
+        def unzip: (List[A], List[B]) = _this.foldRight((NilOf[A], NilOf[B])){ (ab, abs) => (ab._1 #:: abs()._1, ab._2 #:: abs()._2) }
     }
     implicit def _ofPair[A, B](_this: Sequence[(A, B)]): _OfPair[A, B] = new _OfPair(_this.asList)
 

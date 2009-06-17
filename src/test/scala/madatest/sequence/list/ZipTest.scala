@@ -13,7 +13,7 @@ import junit.framework.Assert._
 
 class ZipTest {
     def testFibs: Unit = {
-        lazy val fibs: List[Int] = Cons(0, Cons(1, fibs.zipBy(fibs.tail)(_ + _)))
+        lazy val fibs: List[Int] = 0 #:: 1 #:: fibs.zipBy(fibs.tail)(_ + _)
         assertEquals(832040, fibs.at(30))
     }
 

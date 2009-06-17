@@ -14,7 +14,7 @@ import junit.framework.Assert._
 class MatcherTest {
 
     def testLazy: Unit = {
-        val Cons(x, xs) = 1 :: 2 :: 3 :: 4 :: 5 :: Nil
+        val x #:: xs = 1 :: 2 :: 3 :: 4 :: 5 :: Nil
         assertEquals(1, x)
         assertEquals(2 :: 3 :: 4 :: 5 :: Nil, xs())
     }
@@ -27,7 +27,7 @@ class MatcherTest {
     }
 
     def testJumble: Unit = {
-        val x :: y :: Cons(z, zs) = 1 :: 2 :: 3 :: 4 :: 5 :: Nil
+        val x :: y :: z #:: zs = 1 :: 2 :: 3 :: 4 :: 5 :: Nil
         assertEquals(1, x)
         assertEquals(2, y)
         assertEquals(3, z)
