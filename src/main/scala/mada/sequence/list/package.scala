@@ -37,19 +37,19 @@ package object list {
      */
     def unfoldRight[A, B](x: A)(f: A => Option[(B, A)]): List[B] = f(x) match {
         case None => Nil
-        case Some((y, x)) => y #:: unfoldRight(x)(f)
+        case Some((y, x)) => y :: unfoldRight(x)(f)
     }
 
     /**
      * An infinite list of repeated applications of <code>f</code> to <code>x</code>.
      */
-    def iterate[A](x: A)(f: A => A): List[A] = x #:: iterate(f(x))(f)
+    def iterate[A](x: A)(f: A => A): List[A] = x :: iterate(f(x))(f)
 
     /**
      * An infinite list, with <code>x</code> the value of every element.
      */
     def repeat[A](x: A): List[A] = {
-        lazy val xs: List[A] = x #:: xs
+        lazy val xs: List[A] = x :: xs
         xs
     }
 

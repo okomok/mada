@@ -7,7 +7,7 @@
 package madatest.sequencetest.listtest
 
 
-import mada.sequence.list
+import mada.sequence._
 import junit.framework.Assert._
 
 
@@ -17,13 +17,13 @@ class AppendTest {
         val t = list.Of(4,5,1,3)
         val u = list.Of(9,7,10)
         val v = list.Of(4,5,1,3,9,7,10)
-        val k = t ++ u
+        val k = t ::: u
         assertEquals(v, k)
         assertEquals(v, k)
     }
 
     def testEmpty: Unit = {
-        val k = list.emptyOf[Int] ++ list.emptyOf[Int]
+        val k = list.emptyOf[Int] ::: list.emptyOf[Int]
         assertEquals(list.emptyOf[Int], k)
         assertEquals(list.emptyOf[Int], k)
     }
@@ -31,7 +31,7 @@ class AppendTest {
     def testEmpty2: Unit = {
         val t = list.Of(4,5,1,3)
         val t_  = list.Of(4,5,1,3)
-        val k = list.emptyOf[Int] ++ t
+        val k = list.emptyOf[Int] ::: t
         assertEquals(t_, k)
         assertEquals(t_, k)
     }
@@ -39,7 +39,7 @@ class AppendTest {
     def testEmpty3: Unit = {
         val t = list.Of(4,5,1,3)
         val t_  = list.Of(4,5,1,3)
-        val k = t ++ list.emptyOf[Int]
+        val k = t ::: list.emptyOf[Int]
         assertEquals(t_, k)
         assertEquals(t_, k)
     }
@@ -51,7 +51,16 @@ class AppendTest {
         val t4 = list.emptyOf[Int]
         val t5 = list.Of(7,10,11)
         val v = list.Of(4,5,1,3,9,7,10,11)
-        val k = t1 ++ t2 ++ t3 ++ t4 ++ t5
+        val k = t1 ::: t2 ::: t3 ::: t4 ::: t5
+        assertEquals(v, k)
+        assertEquals(v, k)
+    }
+
+    def testReverse: Unit = {
+        val t = list.Of(4,5,1,3)
+        val u = list.Of(9,7,10)
+        val v = list.Of(3,1,5,4,9,7,10)
+        val k = t reverse_::: u
         assertEquals(v, k)
         assertEquals(v, k)
     }

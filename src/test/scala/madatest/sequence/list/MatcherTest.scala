@@ -14,24 +14,24 @@ import junit.framework.Assert._
 class MatcherTest {
 
     def testLazy: Unit = {
-        val x #:: xs = 1 :: 2 :: 3 :: 4 :: 5 :: Nil
+        val x :: xs = 1 #:: 2 #:: 3 #:: 4 #:: 5 #:: Nil
         assertEquals(1, x)
-        assertEquals(2 :: 3 :: 4 :: 5 :: Nil, xs())
+        assertEquals(2 #:: 3 #:: 4 #:: 5 #:: Nil, xs())
     }
 
     def testStrict: Unit = {
-        val x :: y :: ys = 1 :: 2 :: 3 :: 4 :: 5 :: Nil
+        val x #:: y #:: ys = 1 #:: 2 #:: 3 #:: 4 #:: 5 #:: Nil
         assertEquals(1, x)
         assertEquals(2, y)
-        assertEquals(3 :: 4 :: 5 :: Nil, ys)
+        assertEquals(3 #:: 4 #:: 5 #:: Nil, ys)
     }
 
     def testJumble: Unit = {
-        val x :: y :: z #:: zs = 1 :: 2 :: 3 :: 4 :: 5 :: Nil
+        val x #:: y #:: (z :: zs) = 1 #:: 2 #:: 3 #:: 4 #:: 5 #:: Nil
         assertEquals(1, x)
         assertEquals(2, y)
         assertEquals(3, z)
-        assertEquals(4 :: 5 :: Nil, zs())
+        assertEquals(4 #:: 5 #:: Nil, zs())
     }
 
 }
