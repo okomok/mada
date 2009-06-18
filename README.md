@@ -159,16 +159,33 @@ You might notice that:
 ### `Iterative`
 
 `Iterative` is yet another `Iterable`.
+Any method is build upon the iterator abstraction.
+Unlike scala library, `Iterative` is always projection (a.k.a. view).
 
 
 ### `List`
 
-`List` emulates lazily-evaluated list like haskell's one.
+`List` emulates lazily-evaluated list like haskell's one,
+which is useful to build recursive sequences:
+
+    import mada.sequence._
+    import junit.framework.Assert._
+
+    class DocTest {
+        def testTrivial: Unit = {
+            lazy val fibs: List[Int] = 0 :: 1 :: fibs.zipBy(fibs.tail)(_ + _)
+            assertEquals(832040, fibs.at(30))
+        }
+    }
+
+In fact, you could build recursive sequences using only iterator abstraction,
+but number of iterator instances would be exponential-growth in a recursive sequence like above.
 
 
 ### `vector`
 
 `vector` represents random access sequence which supports parallel algorithms.
+Parallelization is explicit but transparent.
 
     import mada.sequence._
     import junit.framework.Assert._
