@@ -23,10 +23,6 @@ trait Forwarder[A] extends TransformAdapter[A] with SequenceForwarder[A] {
     override def size: Int = delegate.size
     override def append(that: Vector[A]): Vector[A] = around(delegate.append(that))
     override def map[B](f: A => B): Vector[B] = around(delegate.map(f))
-    override def flatMap[B](f: A => Vector[B]): Vector[B] = around(delegate.flatMap(f))
-    override def filter(p: A => Boolean): Vector[A] = around(delegate.filter(p))
-    override def remove(p: A => Boolean): Vector[A] = around(delegate.remove(p))
-    override def partition(p: A => Boolean): (Vector[A], Vector[A]) = around2(delegate.partition(p))
     override def foreach(f: A => Unit): Unit = delegate.foreach(f)
     override def forall(p: A => Boolean): Boolean = delegate.forall(p)
     override def exists(p: A => Boolean): Boolean = delegate.exists(p)

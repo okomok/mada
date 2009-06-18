@@ -43,7 +43,7 @@ class FlattenTest {
     }
 
     def testFlatMap: Unit = {
-        val v = vector.from(detail.Example.example1).flatMap(vector.single(_: Int))
+        val v = vector.from(detail.Example.example1).flatMap(vector.single(_: Int)).toVector
         detail.TestVectorReadOnly(detail.Example.example1, v)
     }
 }

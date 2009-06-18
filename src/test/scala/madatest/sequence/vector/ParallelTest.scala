@@ -37,9 +37,9 @@ class ParallelTest {
     def testParaPara: Unit = {
         for (i <- (0 until 100)) {
             // println(i)
-            val z = vector.range(1, 10).parallel.flatMap {
-                case i => vector.range(1, i).parallel.filter{ j => i+j >= 5 }.parallel.map{ case j => (i, j) }
-            }
+            val z = vector.range(1, 10).parallel.map {
+                case i => vector.range(1, i).copy.parallel.mutatingFilter{ j => i+j >= 5 }.parallel.map{ case j => (i, j) }
+            }.flatten
             ()
         }
         ()

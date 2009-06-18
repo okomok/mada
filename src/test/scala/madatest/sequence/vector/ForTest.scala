@@ -23,6 +23,8 @@ class ForTest {
     def testFilter: Unit = {
         val v = vector.fromArray(example1)
         val w = for (e <- v; if (e < 999)) yield e
+        assertFalse(w.isInstanceOf[Vector[_]])
+        assertTrue(w.isInstanceOf[Iterative[_]])
         assertEquals(v, w)
     }
 

@@ -450,8 +450,10 @@ sealed trait List[+A] extends iterative.Sequence[A] {
      */
     def times(n: Int): List[A] = repeat(()).take(n).flatMap{ _ => this }
 
-    @returnThis
-    def force: List[A] = this
+    /**
+     * Forces evaluation of the whole list.
+     */
+    def force: List[A] = { foreach{ _ => () }; this }
 
     @returnThis
     def memoize: List[A] = this

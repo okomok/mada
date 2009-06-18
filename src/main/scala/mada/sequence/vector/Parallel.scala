@@ -19,11 +19,9 @@ case class Parallel[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
 // value semantics
     override def equalsIf[B](that: Vector[B])(p: (A, B) => Boolean): Boolean = ParallelEqualsIf(delegate, that, p, grainSize)
 // filter
-    override def filter(p: A => Boolean): Vector[A] = ParallelFilter(delegate, p, grainSize)
     override def mutatingFilter(p: A => Boolean): Vector[A] = ParallelMutatingFilter(delegate, p, grainSize)
 // map
     override def map[B](f: A => B): Vector[B] = ParallelMap(delegate, f, grainSize)
-    override def flatMap[B](f: A => Vector[B]): Vector[B] = ParallelFlatMap(delegate, f, grainSize)
 // loop
     override def each(f: A => Unit): Unit = ParallelEach(delegate, f, grainSize)
 // search

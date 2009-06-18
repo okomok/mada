@@ -104,26 +104,6 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
     def map[B](f: A => B): Vector[B] = Map(this, f)
 
     /**
-     * Flattens this vector using <code>f</code>.
-     */
-    def flatMap[B](f: A => Vector[B]): Vector[B] = FlatMap(this, f)
-
-    /**
-     * Filters elements using <code>p</code>.
-     */
-    def filter(p: A => Boolean): Vector[A] = Filter(this, p)
-
-    /**
-     * Filters elements using <code>funtion.not(p)</code>.
-     */
-    def remove(p: A => Boolean): Vector[A] = Remove(this, p)
-
-    /**
-     * @return  <code>(filter(p), remove(p))</code>.
-     */
-    def partition(p: A => Boolean): (Vector[A], Vector[A]) = (filter(p), remove(p))
-
-    /**
      * Applies <code>f</code> to each element.
      */
     def foreach(f: A => Unit): Unit = stl.ForEach(this, start, end, f)
@@ -578,6 +558,11 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
      * @return  <code>divide(grainSize).parallel(1)</code>.
      */
     final def parallelRegions(grainSize: Int): Vector[Vector[A]] = divide(grainSize).parallel(1)
+
+    /**
+     * @return  <code>mix(Mixin.parallel)</code>.
+     */
+    final def parallelize: Vector[A] = mix(Mixin.parallel)
 
 
 // associative folding
