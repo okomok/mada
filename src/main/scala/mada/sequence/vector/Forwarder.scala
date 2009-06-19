@@ -30,8 +30,6 @@ trait Forwarder[A] extends TransformAdapter[A] with SequenceForwarder[A] {
     override def find(p: A => Boolean): Option[A] = delegate.find(p)
     override def foldLeft[B](z: B)(op: (B, A) => B): B = delegate.foldLeft(z)(op)
     override def reduceLeft[B >: A](op: (B, A) => B): B = delegate.reduceLeft(op)
-    override def folderLeft[B](z: B)(op: (B, A) => B): Vector[B] = around(delegate.folderLeft(z)(op))
-    override def reducerLeft[B >: A](op: (B, A) => B): Vector[B] = around(delegate.reducerLeft(op))
     override def head: A = delegate.head
     override def headOption: Option[A] = delegate.headOption
     override def tail: Vector[A] = around(delegate.tail)
@@ -80,8 +78,6 @@ trait Forwarder[A] extends TransformAdapter[A] with SequenceForwarder[A] {
 // folding
     override def foldRight[B](z: B)(op: (A, B) => B): B = delegate.foldRight(z)(op)
     override def reduceRight[B >: A](op: (A, B) => B): B = delegate.reduceRight(op)
-    override def folderRight[B](z: B)(op: (A, B) => B): Vector[B] = around(delegate.folderRight(z)(op))
-    override def reducerRight[B >: A](op: (A, B) => B): Vector[B] = around(delegate.reducerRight(op))
 // sort
     override def sort(implicit c: Compare[A]): Vector[A] = around(delegate.sort(c))
     override def sortBy(lt: compare.Func[A]): Vector[A] = around(delegate.sortBy(lt))
@@ -105,8 +101,6 @@ trait Forwarder[A] extends TransformAdapter[A] with SequenceForwarder[A] {
 // associative folding
     override def fold(z: A)(op: (A, A) => A): A = delegate.fold(z)(op)
     override def reduce(op: (A, A) => A): A = delegate.reduce(op)
-    override def folder(z: A)(op: (A, A) => A): Vector[A] = around(delegate.folder(z)(op))
-    override def reducer(op: (A, A) => A): Vector[A] = around(delegate.reducer(op))
 // conversion
     override def toArray: Array[A] = delegate.toArray
     override def toProduct: Product = delegate.toProduct

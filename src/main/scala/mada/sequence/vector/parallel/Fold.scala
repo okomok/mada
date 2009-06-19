@@ -23,6 +23,7 @@ private object ParallelReduce {
 }
 
 
+/*
 case class ParallelFolder[A](_1: Vector[A], _2: A, _3: (A, A) => A, _4: Int) extends Forwarder[A] {
     util.assert(!IsParallel(_1))
     override protected val delegate = (single(_2) ++ _1).parallel(_4).reducer(_3)
@@ -33,7 +34,7 @@ case class ParallelReducer[A](_1: Vector[A], _2: (A, A) => A, _3: Int) extends F
     Precondition.notEmpty(_1, "paralell.reducer")
 
     override protected val delegate = {
-        val rss = _1.parallelRegions(_3).map{ w => w.reducer(_2) }
+        val rss = ParallelMap1(_1.divide(_3))(_.reducer(_2))
         if (rss.size == 1) {
             rss.head
         } else {
@@ -42,3 +43,4 @@ case class ParallelReducer[A](_1: Vector[A], _2: (A, A) => A, _3: Int) extends F
         }
     }
 }
+*/

@@ -10,6 +10,6 @@ package mada.sequence.vector
 private object ParallelMutatingFilter {
     def apply[A](_1: Vector[A], _2: A => Boolean, _3: Int): Vector[A] = {
         util.assert(!IsParallel(_1))
-        _1.parallelRegions(_3).map{ w => w.mutatingFilter(_2) }.flatten.toVector
+        ParallelMap1(_1.divide(_3))(_.mutatingFilter(_2)).flatten.toVector
     }
 }

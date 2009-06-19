@@ -20,7 +20,7 @@ private object ParallelSeek {
         } else {
             val ar = new AtomicMarkableReference[A](util.nullInstance, false) // mark means "found".
             val bp = new Breakable1(_2, true)
-            _1.parallelRegions(_3).each{ w => breakingSeek(w, bp, ar) }
+            _1.divide(_3).parallel(1).each{ w => breakingSeek(w, bp, ar) }
             if (ar.isMarked) Some(ar.getReference) else None
         }
     }

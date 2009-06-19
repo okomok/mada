@@ -38,7 +38,7 @@ private object ParallelMap1 {
         util.assert(!IsParallel(_1))
 
         _1.map{ e => util.future(_2(e)) }.
-            force. // starts tasks.
-                map{ u => u() } // gets results.
+            force. // start tasks.
+                map{ u => u() } // get results.
     }
 }

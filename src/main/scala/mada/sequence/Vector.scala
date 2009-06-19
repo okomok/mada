@@ -149,16 +149,6 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
     def reduceLeft[B >: A](op: (B, A) => B): B = tail.foldLeft[B](head)(op)
 
     /**
-     * Prefix sum folding left-associative.
-     */
-    def folderLeft[B](z: B)(op: (B, A) => B): Vector[B] = FolderLeft(this, z, op)
-
-    /**
-     * Prefix sum reducing left-associative.
-     */
-    def reducerLeft[B >: A](op: (B, A) => B): Vector[B] = tail.folderLeft[B](head)(op)
-
-    /**
      * Returns the first element.
      */
     def head: A = {
@@ -426,16 +416,6 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
      */
     def reduceRight[B >: A](op: (A, B) => B): B = reverse.reduceLeft(function.flip(op))
 
-    /**
-     * Prefix sum folding right-associative
-     */
-    def folderRight[B](z: B)(op: (A, B) => B): Vector[B] = reverse.folderLeft(z)(function.flip(op))
-
-    /**
-     * Prefix sum reducing right-associative.
-     */
-    def reducerRight[B >: A](op: (A, B) => B): Vector[B] = reverse.reducerLeft(function.flip(op))
-
 
 // sort
 
@@ -550,16 +530,6 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
     def defaultGrainSize: Int = Math.max(1, size / util.Parallels.poolSize)
 
     /**
-     * Waits for parallel element calculations over.
-     */
-    final def join: Unit = foreach{ e => () }
-
-    /**
-     * @return  <code>divide(grainSize).parallel(1)</code>.
-     */
-    final def parallelRegions(grainSize: Int): Vector[Vector[A]] = divide(grainSize).parallel(1)
-
-    /**
      * @return  <code>mix(Mixin.parallel)</code>.
      */
     final def parallelize: Vector[A] = mix(Mixin.parallel)
@@ -578,18 +548,6 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
      * @return  <code>reduceLeft(op)</code>
      */
     def reduce(op: (A, A) => A): A = reduceLeft(op)
-
-    /**
-     * @pre     <code>op</code> is associative.
-     * @return  <code>folderLeft(z)(op)</code>
-     */
-    def folder(z: A)(op: (A, A) => A): Vector[A] = folderLeft(z)(op)
-
-    /**
-     * @pre     <code>op</code> is associative.
-     * @return  <code>reducerLeft(op)</code>
-     */
-    def reducer(op: (A, A) => A): Vector[A] = reducerLeft(op)
 
 
 // conversion

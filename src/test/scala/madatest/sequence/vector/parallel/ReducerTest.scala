@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.sequencetest.vectortest.parallelstest
+package madatest.sequencetest.vectortest.paralleltest
 
 
 import mada.sequence.{Vector, vector}
@@ -17,6 +17,7 @@ import madatest.sequencetest.vectortest.detail._
 
 
 class ReducerTest {
+/*
     def testTrivial: Unit = {
 
         val v: Vector[Int] = Array(1,2,3,4,5,6,7,8,9,10,11)
@@ -34,4 +35,5 @@ class ReducerTest {
         val v: Vector[Int] = Array(1,2,3,4)
         assertEquals(v.reducer(_ + _), v.parallel(2).reducer(_ + _))
     }
+*/
 }
