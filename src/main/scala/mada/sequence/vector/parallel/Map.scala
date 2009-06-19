@@ -9,7 +9,7 @@ package mada.sequence.vector
 
 import util.future
 
-
+/*
 case class ParallelMap[Z, A](_1: Vector[Z], _2: Z => A, _3: Int) extends Forwarder[A] {
     util.assert(!IsParallel(_1))
 
@@ -30,4 +30,15 @@ case class ParallelMap[Z, A](_1: Vector[Z], _2: Z => A, _3: Int) extends Forward
 
     // Impossible: parallel.reduce is implemented by map-reduce.
     // override def reduce(op: (A, A) => A) = _1.map(_2).parallel(_3).reduce(op) // reduce-map fusion
+}
+*/
+
+private object ParallelMap1 {
+    def apply[A, B](_1: Vector[A])(_2: A => B): Vector[B] = {
+        util.assert(!IsParallel(_1))
+
+        _1.map{ e => util.future(_2(e)) }.
+            force. // starts tasks.
+                map{ u => u() } // gets results.
+    }
 }

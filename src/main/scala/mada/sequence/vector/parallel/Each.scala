@@ -17,7 +17,7 @@ private object ParallelEach {
         if (_3 == 1) {
             _1.map{ e => future(_2(e)) }.force.foreach{ u => u() }
         } else {
-            _1.parallelRegions(_3).map{ w => future(w.foreach(_2)) }.
+            _1.divide(_3).map{ w => future(w.foreach(_2)) }.
                 force. // start tasks.
                     foreach{ u => u() } // join all.
         }
