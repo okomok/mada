@@ -18,7 +18,7 @@ private object ParallelReduce {
     def apply[A](_1: Vector[A], _2: (A, A) => A, _3: Int): A = {
         util.assert(!IsParallel(_1))
         Precondition.notEmpty(_1, "paralell.reduce")
-        ParallelMap1(_1.divide(_3))(_.reduce(_2)).reduce(_2)
+        _1.parallel(_3).collect(_.reduce(_2)).reduce(_2)
     }
 }
 

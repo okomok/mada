@@ -69,6 +69,8 @@ trait Forwarder[A] extends TransformAdapter[A] with SequenceForwarder[A] {
     override def mutatingFilter(p: A => Boolean): Vector[A] = around(delegate.mutatingFilter(p))
     override def mutatingRemove(p: A => Boolean): Vector[A] = around(delegate.mutatingRemove(p))
 // map
+    override def collect[B](f: Vector[A] => B): Vector[B] = around(delegate.collect(f))
+    override def zipCollect[B, C](that: Vector[B])(f: (Vector[A], Vector[B]) => C): Vector[C] = around(delegate.zipCollect(that)(f))
     override def asVectorOf[B]: Vector[B] = around(delegate.asVectorOf[B])
 // loop
     override def loop[F <: (A => Boolean)](i: Int, j: Int, f: F): F = delegate.loop(i, j, f)

@@ -10,6 +10,6 @@ package mada.sequence.vector
 private object ParallelCount {
     def apply[A](_1: Vector[A], _2: A => Boolean, _3: Int): Int = {
         util.assert(!IsParallel(_1))
-        ParallelMap1(_1.divide(_3))(_.count(_2)).reduce(_ + _)
+        _1.parallel(_3).collect(_.count(_2)).reduce(_ + _)
     }
 }
