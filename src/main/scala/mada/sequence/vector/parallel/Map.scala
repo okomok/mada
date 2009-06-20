@@ -7,31 +7,9 @@
 package mada.sequence.vector
 
 
-case class ParallelCollect[Z, A](_1: Vector[Z], _2: Vector[Z] => A, _3: Int) extends Forwarder[A] {
-    util.assert(!IsParallel(_1))
-
-    override protected val delegate = {
-        _1.divide(_3).map{ w => util.future(_2(w)) }.
-            force. // start tasks.
-                map{ u => u() }. // get result.
-                    force // join!
-    }
-}
+import util.future
 
 
-case class ParallelZipCollect[Z1, Z2, A](_1: Vector[Z1], _2: Vector[Z2], _3: (Vector[Z1], Vector[Z2]) => A, _4: Int) extends Forwarder[A] {
-    util.assert(!IsParallel(_1))
-
-    override protected val delegate = {
-        (_1.divide(_4) zip _2.divide(_4)).map{ case (v1, v2) => util.future(_3(v1, v2)) }.
-            force. // start tasks.
-                map{ u => u() }. // get result.
-                    force // join!
-    }
-}
-
-
-/*
 case class ParallelMap[Z, A](_1: Vector[Z], _2: Z => A, _3: Int) extends Forwarder[A] {
     util.assert(!IsParallel(_1))
 
@@ -53,4 +31,3 @@ case class ParallelMap[Z, A](_1: Vector[Z], _2: Z => A, _3: Int) extends Forward
     // Impossible: parallel.reduce is implemented by map-reduce.
     // override def reduce(op: (A, A) => A) = _1.map(_2).parallel(_3).reduce(op) // reduce-map fusion
 }
-*/

@@ -15,7 +15,7 @@ private object ParallelEqualsIf {
             false
         } else {
             val bp = new Breakable2(_3, false)
-            _1.parallel(_4).zipCollect(_2){ case (v, w) => breakingEquals(v, w, bp) }.
+            (_1.divide(_4) zip _2.divide(_4)).parallel(1).map{ case (v, w) => breakingEquals(v, w, bp) }.
                 reduce(_ && _)
         }
     }

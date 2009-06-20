@@ -361,16 +361,6 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
 // map
 
     /**
-     * @return  <code>single(f(this))</code>.
-     */
-    def collect[B](f: Vector[A] => B): Vector[B] = Collect(this, f)
-
-    /**
-     * @return  <code>single(f(this, that))</code>.
-     */
-    def zipCollect[B, C](that: Vector[B])(f: (Vector[A], Vector[B]) => C): Vector[C] = ZipCollect(this, that, f)
-
-    /**
      * Casts element to type <code>B</code>.
      */
     def asVectorOf[B]: Vector[B] = AsVectorOf[A, B](this)
@@ -543,6 +533,11 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
      * @return  <code>mix(Mixin.parallel)</code>.
      */
     final def parallelize: Vector[A] = mix(Mixin.parallel)
+
+    /**
+     * @return  <code>foreach{ _ => () }; this</code>.
+     */
+    final def join: Vector[A] = { foreach{ _ => () }; this }
 
 
 // associative folding

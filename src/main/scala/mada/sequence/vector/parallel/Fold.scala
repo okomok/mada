@@ -18,7 +18,7 @@ private object ParallelReduce {
     def apply[A](_1: Vector[A], _2: (A, A) => A, _3: Int): A = {
         util.assert(!IsParallel(_1))
         Precondition.notEmpty(_1, "paralell.reduce")
-        _1.parallel(_3).collect(_.reduce(_2)).reduce(_2)
+        _1.divide(_3).parallel(1).map(_.reduce(_2)).reduce(_2)
     }
 }
 
@@ -34,7 +34,7 @@ case class ParallelReducer[A](_1: Vector[A], _2: (A, A) => A, _3: Int) extends F
     Precondition.notEmpty(_1, "paralell.reducer")
 
     override protected val delegate = {
-        val rss = ParallelMap1(_1.divide(_3))(_.reducer(_2))
+        val rss = _1.divide(_3).parallel(1).map(_.reducer(_2))
         if (rss.size == 1) {
             rss.head
         } else {
