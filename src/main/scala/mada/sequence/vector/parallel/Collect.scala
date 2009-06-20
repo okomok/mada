@@ -13,7 +13,8 @@ case class ParallelCollect[Z, A](_1: Vector[Z], _2: Vector[Z] => A, _3: Int) ext
     override protected val delegate = {
         _1.divide(_3).map{ w => util.future(_2(w)) }.
             force. // start tasks.
-                map{ u => u() } // get result by lazy.
+                map{ u => u() }. // get result.
+                    force // join!
     }
 }
 
@@ -24,7 +25,8 @@ case class ParallelZipCollect[Z1, Z2, A](_1: Vector[Z1], _2: Vector[Z2], _3: (Ve
     override protected val delegate = {
         (_1.divide(_4) zip _2.divide(_4)).map{ case (v1, v2) => util.future(_3(v1, v2)) }.
             force. // start tasks.
-                map{ u => u() } // get result by lazy.
+                map{ u => u() }. // get result.
+                    force // join!
     }
 }
 
