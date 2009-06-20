@@ -12,7 +12,6 @@ import junit.framework.Assert._
 
 
 class MapTest {
-/*
     def testTrivial: Unit = {
         val v = vector.range(0, 10)
         val e = vector.range(1, 11)
@@ -49,5 +48,4 @@ class MapTest {
         assertEquals(e, v.parallel(1).map{ x => x + 2 })
         assertEquals(e, v.parallel(3).map{ x => x + 2 } )
     }
-*/
 }
