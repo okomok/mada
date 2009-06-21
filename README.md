@@ -163,6 +163,7 @@ Any method is build upon the iterator abstraction.
 Unlike scala library, `Iterative` is always projection (a.k.a. view).
 
 `Iterative` summary:
+
 * Conversion from "iterable" sequence is lightweight.
 * (Possibly) backtrackable only to the whole sequence.
 * `filter` and `map` is lightweight.
@@ -188,6 +189,7 @@ In fact, you could build recursive sequences using only iterator abstraction,
 but number of iterator instances would be exponential-growth in a recursive sequence like above.
 
 `List` summary:
+
 * Sealed. Conversion from "iterable" sequence is heavyweight.
 * Backtrackable to any subsequence.
 * `map` and `filter` is middleweight.
@@ -219,6 +221,7 @@ Parallelization is explicit but transparent.
     }
 
 `Vector` summary:
+
 * Random access to any subsequence.
 * `map` is lightweight, but `filter` is not available.
 * Parallel algorithm support.
