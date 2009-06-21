@@ -191,7 +191,7 @@ but number of iterator instances would be exponential-growth in a recursive sequ
 `List` summary:
 
 * Sealed. Conversion from "iterable" sequence is heavyweight.
-* Backtrackable to any subsequence.
+* Backtrackable to any "tail" sequence.
 * `map` and `filter` is middleweight.
 * Good at recursive sequence.
 
