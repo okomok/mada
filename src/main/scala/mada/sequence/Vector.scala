@@ -535,7 +535,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
     final def parallelize: Vector[A] = mix(Mixin.parallel)
 
     /**
-     * @return  <code>foreach{ _ => () }; this</code>.
+     * Makes parallel map computation join.
      */
     final def join: Vector[A] = { foreach{ _ => () }; this }
 
@@ -544,15 +544,27 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
 
     /**
      * @pre     <code>op</code> is associative.
-     * @return  <code>foldLeft(z)(op)</code>
+     * @return  <code>foldLeft(z)(op)</code>.
      */
     def fold(z: A)(op: (A, A) => A): A = foldLeft(z)(op)
 
     /**
      * @pre     <code>op</code> is associative.
-     * @return  <code>reduceLeft(op)</code>
+     * @return  <code>reduceLeft(op)</code>.
      */
     def reduce(op: (A, A) => A): A = reduceLeft(op)
+
+    /**
+     * @pre     <code>op</code> is associative.
+     * @return  <code>asIterative.folderLeft(z)(op).toVector</code>.
+     */
+    def folder(z: A)(op: (A, A) => A): Vector[A] = Folder(this, z, op)
+
+    /**
+     * @pre     <code>op</code> is associative.
+     * @return  <code>asIterative.reducerLeft(op).toVector</code>.
+     */
+    def reducer(op: (A, A) => A): Vector[A] = Reducer(this, op)
 
 
 // conversion
