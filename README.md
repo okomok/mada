@@ -161,8 +161,8 @@ These construct a loosely arranged hierarchy:
 ### `Iterative`
 
 `Iterative` is yet another `Iterable`: any method is build upon the iterator abstraction.
-Unlike the scala library, `Iterative` is always projection (a.k.a. view).
-When you need strictly-evaluated one, call method `mix(Mixin.force)`.
+Unlike the scala library, `Iterative` is projection (a.k.a. view) by default.
+When you need strictly-evaluated one, apply method `mix(Mixin.force)`.
 
 `Iterative` summary:
 
