@@ -11,7 +11,7 @@ import auto._
 
 
 /**
- * Trait for automatically called methods
+ * Trait for "automatic variable"
  */
 trait Auto[-A] {
 
@@ -30,22 +30,28 @@ trait Auto[-A] {
 
 object Auto {
 
+
+// eligibles
+
     import java.io.Closeable
     import java.util.concurrent.locks.Lock
 
-    implicit object ofInterface extends Auto[Interface] {
+    implicit object _ofInterface extends Auto[Interface] {
         override def begin(e: Interface) = e.begin
         override def end(e: Interface) = e.end
     }
 
-    implicit object ofCloseable extends Auto[Closeable] {
+    implicit object _ofCloseable extends Auto[Closeable] {
         override def end(e: Closeable) = e.close
     }
 
-    implicit object ofLock extends Auto[Lock] {
+    implicit object _ofLock extends Auto[Lock] {
         override def begin(e: Lock) = e.lock
         override def end(e: Lock) = e.unlock
     }
+
+
+// apply
 
     @aliasOf("auto.using")
     def apply[A, B](e: A)(f: A => B)(implicit a: Auto[A]): B = using(e)(f)(a)

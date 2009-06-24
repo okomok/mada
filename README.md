@@ -154,13 +154,15 @@ You might notice that:
 ## `sequence`
 
 `sequence` provides three sequences: `Iterative`, `List`, and `Vector`.
+These construct a loosely arranged hierarchy:
+`List` and `Vector` isn't subtype of `Iterative` but implicitly-convertible to it.
 
 
 ### `Iterative`
 
-`Iterative` is yet another `Iterable`.
-Any method is build upon the iterator abstraction.
-Unlike scala library, `Iterative` is always projection (a.k.a. view).
+`Iterative` is yet another `Iterable`: any method is build upon the iterator abstraction.
+Unlike the scala library, `Iterative` is always projection (a.k.a. view).
+When you need strictly-evaluated one, call method `mix(Mixin.force)`.
 
 `Iterative` summary:
 
@@ -196,10 +198,10 @@ but number of iterator instances would be exponential-growth in a recursive sequ
 * Good at recursive sequence.
 
 
-### `vector`
+### `Vector`
 
-`vector` represents random access sequence which supports parallel algorithms.
-Parallelization is explicit but transparent.
+`Vector` represents (optionally writable) random access sequence, that is, "array".
+It supports also parallel algorithms. Parallelization is explicit but transparent:
 
     import mada.sequence._
     import junit.framework.Assert._
@@ -223,8 +225,8 @@ Parallelization is explicit but transparent.
 `Vector` summary:
 
 * Random access to any subsequence.
-* `map` is lightweight, but `filter` is not available.
-* Parallel algorithm support.
+* `map` is lightweight, but `filter` is not available. (`mutatingFilter` is provided instead.)
+* Parallel algorithm support. (`fold`, `seek`, and `sort` etc.)
 * Recursive sequence is infeasible.
 
 

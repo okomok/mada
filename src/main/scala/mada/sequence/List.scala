@@ -40,7 +40,6 @@ final class Cons[+A](val _1: A, val _2: util.ByLazy[List[A]]) extends List[A] {
 }
 
 
-
 // List
 
 /**
