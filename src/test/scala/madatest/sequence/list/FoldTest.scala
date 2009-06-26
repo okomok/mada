@@ -15,7 +15,7 @@ class FoldTest {
 
     def testRight: Unit = {
         val A: List[Int] = (1 :: 3 :: 4 :: Nil).cycle // infinite
-        val B: List[Int] = A.foldRight(NilOf[Int]){ (x, xs) => new Cons(x, xs) }
+        val B: List[Int] = A.foldRight(NilOf[Int])(new Cons(_, _))
         assertEquals(A.take(30), B.take(30))
     }
 
