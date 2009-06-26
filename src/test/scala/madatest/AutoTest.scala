@@ -24,7 +24,7 @@ class MyFile {
 
 class HisFile[A] extends auto.Interface {
     var disposed = false
-    override def end = disposed = true
+    override def autoEnd = disposed = true
     def read: Unit = { }
 }
 

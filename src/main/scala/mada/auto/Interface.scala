@@ -11,6 +11,6 @@ package mada.auto
  * Can be used instead of implicit objects.
  */
 trait Interface {
-    def begin: Unit = ()
-    def end: Unit = ()
+    def autoBegin: Unit = ()
+    def autoEnd: Unit = ()
 }

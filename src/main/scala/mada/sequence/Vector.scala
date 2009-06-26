@@ -620,6 +620,11 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
      */
     final def indices: Vector[Int] = range(start, end)
 
+    /**
+     * Installs auto relation.
+     */
+    final def autoBy[X](x: X)(implicit a: Auto[X]): AutoBy[A, X] = AutoBy(this, x, a)
+
 }
 
 

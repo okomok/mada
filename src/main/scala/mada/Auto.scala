@@ -37,8 +37,8 @@ object Auto {
     import java.util.concurrent.locks.Lock
 
     implicit object _ofInterface extends Auto[Interface] {
-        override def begin(e: Interface) = e.begin
-        override def end(e: Interface) = e.end
+        override def begin(e: Interface) = e.autoBegin
+        override def end(e: Interface) = e.autoEnd
     }
 
     implicit object _ofCloseable extends Auto[Closeable] {
