@@ -67,6 +67,7 @@ object Sequence {
 
 // methodization
     sealed class _OfInvariant[A](_this: Iterative[A]) {
+        def groupBy[K](f: A => K): scala.collection.Map[K, Vector[A]] = _this._groupBy(_this, f)
         def toSHashSet: scala.collection.Set[A] = _this._toSHashSet(_this)
         def toJIterable: java.lang.Iterable[A] = _this._toJIterable(_this)
         def toVector: Vector[A] = _this._toVector(_this)

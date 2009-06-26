@@ -12,17 +12,36 @@ package mada
  */
 package object assoc {
 
-    /**
-     * Puts only if <code>key</code> is not contained, then gets.
-     */
-    def lazyGet[K, V](m: java.util.concurrent.ConcurrentMap[K, () => V])(key: K)(value: => V): V = {
-        // See: Java Concurrency in Practice - Listing 5.19
-        option.fromRef(m.get(key)).getOrElse{
-            val v = util.byLazy(value)
-            option.fromRef(m.putIfAbsent(key, v)).getOrElse{
+
+    @packageObjectBrokenOverload
+    object lazyGet {
+
+        /**
+         * Gets the value: puts only if <code>key</code> is not contained.
+         */
+        @notThreadSafe
+        def apply[K, V](m: scala.collection.mutable.Map[K, V])(key: K)(value: => V): V = m.get(key) match {
+            case None => {
+                val v = value
+                m += ((key, v))
                 v
             }
-        }.apply()
+            case Some(v) => v
+        }
+
+        /**
+         * Gets the value: puts only if <code>key</code> is not contained.
+         */
+        def apply[K, V](m: java.util.concurrent.ConcurrentMap[K, () => V])(key: K)(value: => V): V = {
+            // See: Java Concurrency in Practice - Listing 5.19
+            option.fromRef(m.get(key)).getOrElse{
+                val v = util.byLazy(value)
+                option.fromRef(m.putIfAbsent(key, v)).getOrElse{
+                    v
+                }
+            }.apply()
+        }
+
     }
 
 }

@@ -27,7 +27,7 @@ trait Forwarder[+A] extends Iterative[A] with SequenceForwarder[A] {
     override def filter(p: A => Boolean): Iterative[A] = around(delegate.filter(p))
     override def remove(p: A => Boolean): Iterative[A] = around(delegate.remove(p))
     override def partition(p: A => Boolean): (Iterative[A], Iterative[A]) = around2(delegate.partition(p))
-    override def groupBy[K](f: A => K): scala.collection.Map[K, Iterative[A]] = delegate.groupBy(f)
+    override def _groupBy[B, K](_this: Iterative[B], f: B => K): scala.collection.Map[K, Vector[B]] = delegate.asInstanceOf[Iterative[B]].groupBy(f)
     override def foreach(f: A => Unit): Unit = delegate.foreach(f)
     override def forall(p: A => Boolean): Boolean = delegate.forall(p)
     override def exists(p: A => Boolean): Boolean = delegate.exists(p)
