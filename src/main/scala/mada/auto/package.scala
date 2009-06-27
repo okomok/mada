@@ -19,14 +19,7 @@ package object auto {
      */
     @packageObjectBrokenOverload
     object using {
-        def apply[A1, B](a1: Auto[A1])(f: A1 => B): B = {
-            a1.begin
-            try {
-                f(a1.get)
-            } finally {
-                a1.end
-            }
-        }
+        def apply[A1, B](a1: Auto[A1])(f: A1 => B): B = a1.usedBy(f)
 
         def apply[A1, A2, B](a1: Auto[A1], a2: Auto[A2])(f: (A1, A2) => B): B = {
             using(a1) { e1 =>
@@ -59,7 +52,14 @@ package object auto {
                 }
             }
         }
+
     }
+
+
+    /**
+     * Returns an auto reference where <code>as</code> is used by <code>x</code>.
+     */
+    def usedWith[A](as: Seq[Auto[_]], e: A): Auto[A] = UsedWith(as, e)
 
 
 // conversion

@@ -281,7 +281,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
     /**
      * Installs auto relation.
      */
-    final def using(as: Auto[_]*): Auto[Vector[A]] = Using(this, as)
+    final def using(as: Auto[_]*): Auto[Vector[A]] = auto.usedWith(as, this)
 
 
 // regions

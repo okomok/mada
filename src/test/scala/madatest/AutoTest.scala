@@ -41,6 +41,7 @@ class MaybeThrow(b: Boolean) extends Auto[MaybeThrow] {
 
 
 class AutoTest {
+
     def testTrivial: Unit = {
         val file = new MyFile
         assertFalse(file.disposed)
@@ -107,4 +108,15 @@ class AutoTest {
         assertTrue(t1.disposed)
         assertTrue(t2.disposed)
     }
+
+    def testUsedWith: Unit = {
+        val file1, file2, file3 = new MyFile
+        auto.using(auto.usedWith(List(file1, file2, file3), 10)) { e =>
+            assertEquals(10, e)
+        }
+        assertTrue(file1.disposed)
+        assertTrue(file2.disposed)
+        assertTrue(file3.disposed)
+    }
+
 }

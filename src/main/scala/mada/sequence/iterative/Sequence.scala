@@ -71,7 +71,7 @@ object Sequence {
         def toSHashSet: scala.collection.Set[A] = _this._toSHashSet(_this)
         def toJIterable: java.lang.Iterable[A] = _this._toJIterable(_this)
         def toVector: Vector[A] = _this._toVector(_this)
-        def using(as: Auto[_]*): Auto[Iterative[A]] = Using(_this, as) // final
+        def using(as: Auto[_]*): Auto[Iterative[A]] = auto.usedWith(as, _this) // final
     }
     implicit def _ofInvariant[A](_this: Sequence[A]): _OfInvariant[A] = new _OfInvariant(_this.asIterative)
 
