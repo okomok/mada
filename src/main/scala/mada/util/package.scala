@@ -125,4 +125,12 @@ package object util {
      */
     def hashCodeOfRef(x: AnyRef): Int = java.lang.System.identityHashCode(x)
 
+
+// pipeline
+
+    sealed class ForwardPipe[A](x: A) {
+        def |>[B](f: A => B): B = f(x)
+    }
+    implicit def |>[A](x: A): ForwardPipe[A] = new ForwardPipe(x)
+
 }
