@@ -106,14 +106,27 @@ package object vector {
 
 // file
 
-    def charFile(f: java.io.File, m: String): Auto[Vector[Char]] = CharFile(new java.io.RandomAccessFile(f, m))
-    def charFile(n: String, m: String): Auto[Vector[Char]] = CharFile(new java.io.RandomAccessFile(n, m))
+    /**
+     * Creates a file vector with the specified primitive type.
+     */
+    def file[A](f: java.io.RandomAccessFile)(implicit rm: scala.reflect.Manifest[A]): Auto[Vector[A]] = {
+        (rm.toString match {
+            case "char" => CharFile(f)
+            case "int" => IntFile(f)
+            case "long" => LongFile(f)
+            case _ => throw new UnsupportedOperationException("coming soon")
+        }).asInstanceOf[Auto[Vector[A]]]
+    }
 
-    def intFile(f: java.io.File, m: String): Auto[Vector[Int]] = IntFile(new java.io.RandomAccessFile(f, m))
-    def intFile(n: String, m: String): Auto[Vector[Int]] = IntFile(new java.io.RandomAccessFile(n, m))
+    /**
+     * @return  <code>file[A](new java.io.RandomAccessFile(f, m))(rm)</code>.
+     */
+    def file[A](f: java.io.File, m: String)(implicit rm: scala.reflect.Manifest[A]): Auto[Vector[A]] = file[A](new java.io.RandomAccessFile(f, m))(rm)
 
-    def longFile(f: java.io.File, m: String): Auto[Vector[Long]] = LongFile(new java.io.RandomAccessFile(f, m))
-    def longFile(n: String, m: String): Auto[Vector[Long]] = LongFile(new java.io.RandomAccessFile(n, m))
+    /**
+     * @return  <code>file[A](new java.io.RandomAccessFile(n, m))(rm)</code>.
+     */
+    def file[A](n: String, m: String)(implicit rm: scala.reflect.Manifest[A]): Auto[Vector[A]] = file[A](new java.io.RandomAccessFile(n, m))(rm)
 
 
 // conversion
