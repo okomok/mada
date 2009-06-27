@@ -104,6 +104,18 @@ package object vector {
     def untriplify[A, B](f: Func3[A, B]): Func[A, B] = Untriplify(f)
 
 
+// file
+
+    def charFile(f: java.io.File, m: String): Auto[Vector[Char]] = CharFile(new java.io.RandomAccessFile(f, m))
+    def charFile(n: String, m: String): Auto[Vector[Char]] = CharFile(new java.io.RandomAccessFile(n, m))
+
+    def intFile(f: java.io.File, m: String): Auto[Vector[Int]] = IntFile(new java.io.RandomAccessFile(f, m))
+    def intFile(n: String, m: String): Auto[Vector[Int]] = IntFile(new java.io.RandomAccessFile(n, m))
+
+    def longFile(f: java.io.File, m: String): Auto[Vector[Long]] = LongFile(new java.io.RandomAccessFile(f, m))
+    def longFile(n: String, m: String): Auto[Vector[Long]] = LongFile(new java.io.RandomAccessFile(n, m))
+
+
 // conversion
 
     @returnThat

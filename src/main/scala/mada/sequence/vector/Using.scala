@@ -7,8 +7,8 @@
 package mada.sequence.vector
 
 
-case class Using[A, E](_1: Vector[A], _2: Auto[E]) extends Auto[Vector[A]] {
+case class Using[A](_1: Vector[A], _2: Seq[Auto[_]]) extends Auto[Vector[A]] {
     override def autoRef = _1
-    override def autoBegin = _2.autoBegin
-    override def autoEnd = _2.autoEnd
+    override def autoBegin = _2.foreach(_.autoBegin)
+    override def autoEnd = _2.reverse.foreach(_.autoEnd)
 }

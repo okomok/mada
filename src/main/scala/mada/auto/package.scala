@@ -85,4 +85,13 @@ package object auto {
         }
     }
 
+
+// conversion
+
+    @compatibleConversion
+    def fromJCloseable[A <: java.io.Closeable](from: A): Auto[A] = FromJCloseable(from)
+
+    @compatibleConversion
+    def fromJLock[A <: java.util.concurrent.locks.Lock](from: A): Auto[A] = FromJLock(from)
+
 }

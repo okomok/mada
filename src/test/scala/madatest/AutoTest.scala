@@ -68,9 +68,9 @@ class AutoTest {
         assertTrue(file.disposed)
     }
 
-    def testKeepType: Unit = {
+    def testCloseable: Unit = {
         auto.using(new java.io.StringReader("abc")){ r =>
-            val k: java.io.StringReader = r
+            val k: java.io.StringReader = r // keeps type.
             ()
         }
     }

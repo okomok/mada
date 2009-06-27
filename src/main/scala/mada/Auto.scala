@@ -38,16 +38,8 @@ object Auto {
 
 // compatibles
 
-    implicit def _fromJCloseable[A <: java.io.Closeable](from: A): Auto[A] = new Auto[A] {
-        override def autoRef = from
-        override def autoEnd = from.close
-    }
-
-    implicit def _fromJLock[A <: java.util.concurrent.locks.Lock](from: A): Auto[A] = new Auto[A] {
-        override def autoRef = from
-        override def autoBegin = from.lock
-        override def autoEnd = from.unlock
-    }
+    implicit def _fromJCloseable[A <: java.io.Closeable](from: A): Auto[A] = fromJCloseable(from)
+    implicit def _fromJLock[A <: java.util.concurrent.locks.Lock](from: A): Auto[A] = fromJLock(from)
 
 
 // apply

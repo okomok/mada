@@ -7,8 +7,8 @@
 package mada.sequence.iterative
 
 
-case class Using[+A, E](_1: Iterative[A], _2: Auto[E]) extends Auto[Iterative[A]] {
+case class Using[+A](_1: Iterative[A], _2: Seq[Auto[_]]) extends Auto[Iterative[A]] {
     override def autoRef = _1
-    override def autoBegin = _2.autoBegin
-    override def autoEnd = _2.autoEnd
+    override def autoBegin = _2.foreach(_.autoBegin)
+    override def autoEnd = _2.reverse.foreach(_.autoEnd)
 }

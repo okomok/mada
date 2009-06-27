@@ -21,7 +21,7 @@ class FileTest {
             f.writeChars("abcde")
         }
 
-        using(new CharFile(n, "r")) { v =>
+        using(charFile(n, "r")) { v =>
             assertEquals('c', v.nth(2))
             assertEquals(from("abcde"), v)
 
@@ -37,11 +37,11 @@ class FileTest {
             f.writeChars("abcde")
         }
 
-        using(new CharFile(n, "rw")) { v =>
+        using(charFile(n, "rw")) { v =>
             v.nth(2) = 'C'
         }
 
-        using(new CharFile(n, "r")) { v =>
+        using(charFile(n, "r")) { v =>
             assertEquals('C', v.nth(2))
             assertEquals(from("abCde"), v)
         }
@@ -55,8 +55,8 @@ class FileTest {
         }
 
         def aSeq = {
-            val f = new CharFile(n, "r")
-            f.map(e => e).using(f)
+            val f = charFile(n, "r")
+            f.autoRef.map(e => e).using(f)
         }
 
         using(aSeq) { v =>
