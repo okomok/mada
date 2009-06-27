@@ -56,7 +56,7 @@ class FileTest {
 
         def aSeq = {
             val f = charFile(n, "r")
-            f.autoRef.map(e => e).using(f)
+            f.get.map(e => e).using(f)
         }
 
         using(aSeq) { v =>

@@ -20,67 +20,43 @@ package object auto {
     @packageObjectBrokenOverload
     object using {
         def apply[A1, B](a1: Auto[A1])(f: A1 => B): B = {
-            a1.autoBegin
+            a1.begin
             try {
-                f(a1.autoRef)
+                f(a1.get)
             } finally {
-                a1.autoEnd
+                a1.end
             }
         }
 
         def apply[A1, A2, B](a1: Auto[A1], a2: Auto[A2])(f: (A1, A2) => B): B = {
-            a1.autoBegin
-            a2.autoBegin
-            try {
-                f(a1.autoRef, a2.autoRef)
-            } finally {
-                a2.autoEnd
-                a1.autoEnd
+            using(a1) { e1 =>
+                using(a2) { e2 =>
+                    f(e1, e2)
+                }
             }
         }
 
         def apply[A1, A2, A3, B](a1: Auto[A1], a2: Auto[A2], a3: Auto[A3])(f: (A1, A2, A3) => B): B = {
-            a1.autoBegin
-            a2.autoBegin
-            a3.autoBegin
-            try {
-                f(a1.autoRef, a2.autoRef, a3.autoRef)
-            } finally {
-                a3.autoEnd
-                a2.autoEnd
-                a1.autoEnd
+            using(a1) { e1 =>
+                using(a2, a3) { (e2, e3) =>
+                    f(e1, e2, e3)
+                }
             }
         }
 
         def apply[A1, A2, A3, A4, B](a1: Auto[A1], a2: Auto[A2], a3: Auto[A3], a4: Auto[A4])(f: (A1, A2, A3, A4) => B): B = {
-            a1.autoBegin
-            a2.autoBegin
-            a3.autoBegin
-            a4.autoBegin
-            try {
-                f(a1.autoRef, a2.autoRef, a3.autoRef, a4.autoRef)
-            } finally {
-                a4.autoEnd
-                a3.autoEnd
-                a2.autoEnd
-                a1.autoEnd
+            using(a1) { e1 =>
+                using(a2, a3, a4) { (e2, e3, e4) =>
+                    f(e1, e2, e3, e4)
+                }
             }
         }
 
         def apply[A1, A2, A3, A4, A5, B](a1: Auto[A1], a2: Auto[A2], a3: Auto[A3], a4: Auto[A4], a5: Auto[A5])(f: (A1, A2, A3, A4, A5) => B): B = {
-            a1.autoBegin
-            a2.autoBegin
-            a3.autoBegin
-            a4.autoBegin
-            a5.autoBegin
-            try {
-                f(a1.autoRef, a2.autoRef, a3.autoRef, a4.autoRef, a5.autoRef)
-            } finally {
-                a5.autoEnd
-                a4.autoEnd
-                a3.autoEnd
-                a2.autoEnd
-                a1.autoEnd
+            using(a1) { e1 =>
+                using(a2, a3, a4, a5) { (e2, e3, e4, e5) =>
+                    f(e1, e2, e3, e4, e5)
+                }
             }
         }
     }

@@ -18,17 +18,17 @@ trait Auto[+A] {
     /**
      * Returns the associated reference.
      */
-    def autoRef: A
+    def get: A
 
     /**
      * Called when block begins.
      */
-    def autoBegin: Unit = ()
+    def begin: Unit = ()
 
     /**
      * Called when block ends.
      */
-    def autoEnd: Unit = ()
+    def end: Unit = ()
 
 }
 

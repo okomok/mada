@@ -13,8 +13,8 @@ import java.io.{File, RandomAccessFile, Closeable}
 // Char
 
 case class CharFile(_1: RandomAccessFile) extends Auto[Vector[Char]] {
-    override def autoRef: Vector[Char] = new CharFileVector(_1)
-    override def autoEnd = _1.close
+    override def get: Vector[Char] = new CharFileVector(_1)
+    override def end = _1.close
 }
 
 private class CharFileVector(_1: RandomAccessFile) extends Vector[Char] {
@@ -28,8 +28,8 @@ private class CharFileVector(_1: RandomAccessFile) extends Vector[Char] {
 // Int
 
 case class IntFile(_1: RandomAccessFile) extends Auto[Vector[Int]] {
-    override def autoRef: Vector[Int] = new IntFileVector(_1)
-    override def autoEnd = _1.close
+    override def get: Vector[Int] = new IntFileVector(_1)
+    override def end = _1.close
 }
 
 private class IntFileVector(_1: RandomAccessFile) extends Vector[Int] {
@@ -43,8 +43,8 @@ private class IntFileVector(_1: RandomAccessFile) extends Vector[Int] {
 // Long
 
 case class LongFile(_1: RandomAccessFile) extends Auto[Vector[Long]] {
-    override def autoRef: Vector[Long] = new LongFileVector(_1)
-    override def autoEnd = _1.close
+    override def get: Vector[Long] = new LongFileVector(_1)
+    override def end = _1.close
 }
 
 private class LongFileVector(_1: RandomAccessFile) extends Vector[Long] {

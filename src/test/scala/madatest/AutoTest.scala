@@ -13,8 +13,8 @@ import junit.framework.Assert._
 
 object MyFile {
     implicit def _toAuto(from: MyFile): Auto[MyFile] = new Auto[MyFile] {
-        override def autoRef = from
-        override def autoEnd = from.disposed = true
+        override def get = from
+        override def end = from.disposed = true
     }
 }
 class MyFile {
@@ -25,10 +25,19 @@ class MyFile {
 
 class HisFile[A] extends Auto[HisFile[A]] {
     var disposed = false
-    override def autoRef = this // bad way
-    override def autoEnd = disposed = true
+    override def get = this // bad way
+    override def end = disposed = true
     def read: Unit = { }
 }
+
+
+class MaybeThrow(b: Boolean) extends Auto[MaybeThrow] {
+    var disposed = false
+    override def get = this
+    override def begin = if (b) throw new Error // might throw.
+    override def end = disposed = true // Note `end` shall not throw.
+}
+
 
 
 class AutoTest {
@@ -83,5 +92,19 @@ class AutoTest {
         assertTrue(file1.disposed)
         assertTrue(file2.disposed)
         assertTrue(file3.disposed)
+    }
+
+    def testExceptionSafe: Unit = {
+        val t1, t2 = new MaybeThrow(false)
+        val t3, t4, t5 = new MaybeThrow(true)
+        try {
+            auto.using(t1, t2, t3, t4, t5) { (e1, e2, e3, e4, e5) =>
+                ()
+            }
+        } catch {
+            case e: Error => ()
+        }
+        assertTrue(t1.disposed)
+        assertTrue(t2.disposed)
     }
 }
