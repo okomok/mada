@@ -11,19 +11,24 @@ import auto._
 
 
 /**
- * Trait for "automatic variable"
+ * Trait for "automatic reference"
  */
-trait Auto[-A] {
+trait Auto[+A] {
+
+    /**
+     * Returns the associated reference.
+     */
+    def autoRef: A
 
     /**
      * Called when block begins.
      */
-    def begin(e: A): Unit = ()
+    def autoBegin: Unit = ()
 
     /**
      * Called when block ends.
      */
-    def end(e: A): Unit = ()
+    def autoEnd: Unit = ()
 
 }
 
@@ -31,37 +36,31 @@ trait Auto[-A] {
 object Auto {
 
 
-// eligibles
+// compatibles
 
-    import java.io.Closeable
-    import java.util.concurrent.locks.Lock
-
-    implicit object _ofInterface extends Auto[Interface] {
-        override def begin(e: Interface) = e.autoBegin
-        override def end(e: Interface) = e.autoEnd
+    implicit def _fromJCloseable[A <: java.io.Closeable](from: A): Auto[A] = new Auto[A] {
+        override def autoRef = from
+        override def autoEnd = from.close
     }
 
-    implicit object _ofCloseable extends Auto[Closeable] {
-        override def end(e: Closeable) = e.close
-    }
-
-    implicit object _ofLock extends Auto[Lock] {
-        override def begin(e: Lock) = e.lock
-        override def end(e: Lock) = e.unlock
+    implicit def _fromJLock[A <: java.util.concurrent.locks.Lock](from: A): Auto[A] = new Auto[A] {
+        override def autoRef = from
+        override def autoBegin = from.lock
+        override def autoEnd = from.unlock
     }
 
 
 // apply
 
     @aliasOf("auto.using")
-    def apply[A1, B](e1: A1)(f: A1 => B)(implicit a1: Auto[A1]): B = using(e1)(f)(a1)
+    def apply[A1, B](a1: Auto[A1])(f: A1 => B): B = using(a1)(f)
     @aliasOf("auto.using")
-    def apply[A1, A2, B](e1: A1, e2: A2)(f: (A1, A2) => B)(implicit a1: Auto[A1], a2: Auto[A2]): B = using(e1, e2)(f)(a1, a2)
+    def apply[A1, A2, B](a1: Auto[A1], a2: Auto[A2])(f: (A1, A2) => B): B = using(a1, a2)(f)
     @aliasOf("auto.using")
-    def apply[A1, A2, A3, B](e1: A1, e2: A2, e3: A3)(f: (A1, A2, A3) => B)(implicit a1: Auto[A1], a2: Auto[A2], a3: Auto[A3]): B = using(e1, e2, e3)(f)(a1, a2, a3)
+    def apply[A1, A2, A3, B](a1: Auto[A1], a2: Auto[A2], a3: Auto[A3])(f: (A1, A2, A3) => B): B = using(a1, a2, a3)(f)
     @aliasOf("auto.using")
-    def apply[A1, A2, A3, A4, B](e1: A1, e2: A2, e3: A3, e4: A4)(f: (A1, A2, A3, A4) => B)(implicit a1: Auto[A1], a2: Auto[A2], a3: Auto[A3], a4: Auto[A4]): B = using(e1, e2, e3, e4)(f)(a1, a2, a3, a4)
+    def apply[A1, A2, A3, A4, B](a1: Auto[A1], a2: Auto[A2], a3: Auto[A3], a4: Auto[A4])(f: (A1, A2, A3, A4) => B): B = using(a1, a2, a3, a4)(f)
     @aliasOf("auto.using")
-    def apply[A1, A2, A3, A4, A5, B](e1: A1, e2: A2, e3: A3, e4: A4, e5: A5)(f: (A1, A2, A3, A4, A5) => B)(implicit a1: Auto[A1], a2: Auto[A2], a3: Auto[A3], a4: Auto[A4], a5: Auto[A5]): B = using(e1, e2, e3, e4, e5)(f)(a1, a2, a3, a4, a5)
+    def apply[A1, A2, A3, A4, A5, B](a1: Auto[A1], a2: Auto[A2], a3: Auto[A3], a4: Auto[A4], a5: Auto[A5])(f: (A1, A2, A3, A4, A5) => B): B = using(a1, a2, a3, a4, a5)(f)
 
 }

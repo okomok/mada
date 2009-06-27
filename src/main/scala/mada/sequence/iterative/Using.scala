@@ -7,9 +7,8 @@
 package mada.sequence.iterative
 
 
-case class Using[+A, X](_1: Iterative[A], _2: X, _3: Auto[X]) extends Forwarder[A] with auto.Interface {
-    override protected val delegate = _1
-
-    override def autoBegin = _3.begin(_2)
-    override def autoEnd = _3.end(_2)
+case class Using[+A, E](_1: Iterative[A], _2: Auto[E]) extends Auto[Iterative[A]] {
+    override def autoRef = _1
+    override def autoBegin = _2.autoBegin
+    override def autoEnd = _2.autoEnd
 }

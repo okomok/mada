@@ -11,7 +11,7 @@ package object auto {
 
 
     @aliasOf("Auto")
-    type Type[-A] = Auto[A]
+    type Type[+A] = Auto[A]
 
 
     /**
@@ -19,68 +19,68 @@ package object auto {
      */
     @packageObjectBrokenOverload
     object using {
-        def apply[A1, B](e1: A1)(f: A1 => B)(implicit a1: Auto[A1]): B = {
-            a1.begin(e1)
+        def apply[A1, B](a1: Auto[A1])(f: A1 => B): B = {
+            a1.autoBegin
             try {
-                f(e1)
+                f(a1.autoRef)
             } finally {
-                a1.end(e1)
+                a1.autoEnd
             }
         }
 
-        def apply[A1, A2, B](e1: A1, e2: A2)(f: (A1, A2) => B)(implicit a1: Auto[A1], a2: Auto[A2]): B = {
-            a1.begin(e1)
-            a2.begin(e2)
+        def apply[A1, A2, B](a1: Auto[A1], a2: Auto[A2])(f: (A1, A2) => B): B = {
+            a1.autoBegin
+            a2.autoBegin
             try {
-                f(e1, e2)
+                f(a1.autoRef, a2.autoRef)
             } finally {
-                a2.end(e2)
-                a1.end(e1)
+                a2.autoEnd
+                a1.autoEnd
             }
         }
 
-        def apply[A1, A2, A3, B](e1: A1, e2: A2, e3: A3)(f: (A1, A2, A3) => B)(implicit a1: Auto[A1], a2: Auto[A2], a3: Auto[A3]): B = {
-            a1.begin(e1)
-            a2.begin(e2)
-            a3.begin(e3)
+        def apply[A1, A2, A3, B](a1: Auto[A1], a2: Auto[A2], a3: Auto[A3])(f: (A1, A2, A3) => B): B = {
+            a1.autoBegin
+            a2.autoBegin
+            a3.autoBegin
             try {
-                f(e1, e2, e3)
+                f(a1.autoRef, a2.autoRef, a3.autoRef)
             } finally {
-                a3.end(e3)
-                a2.end(e2)
-                a1.end(e1)
+                a3.autoEnd
+                a2.autoEnd
+                a1.autoEnd
             }
         }
 
-        def apply[A1, A2, A3, A4, B](e1: A1, e2: A2, e3: A3, e4: A4)(f: (A1, A2, A3, A4) => B)(implicit a1: Auto[A1], a2: Auto[A2], a3: Auto[A3], a4: Auto[A4]): B = {
-            a1.begin(e1)
-            a2.begin(e2)
-            a3.begin(e3)
-            a4.begin(e4)
+        def apply[A1, A2, A3, A4, B](a1: Auto[A1], a2: Auto[A2], a3: Auto[A3], a4: Auto[A4])(f: (A1, A2, A3, A4) => B): B = {
+            a1.autoBegin
+            a2.autoBegin
+            a3.autoBegin
+            a4.autoBegin
             try {
-                f(e1, e2, e3, e4)
+                f(a1.autoRef, a2.autoRef, a3.autoRef, a4.autoRef)
             } finally {
-                a4.end(e4)
-                a3.end(e3)
-                a2.end(e2)
-                a1.end(e1)
+                a4.autoEnd
+                a3.autoEnd
+                a2.autoEnd
+                a1.autoEnd
             }
         }
 
-        def apply[A1, A2, A3, A4, A5, B](e1: A1, e2: A2, e3: A3, e4: A4, e5: A5)(f: (A1, A2, A3, A4, A5) => B)(implicit a1: Auto[A1], a2: Auto[A2], a3: Auto[A3], a4: Auto[A4], a5: Auto[A5]): B = {
-            a1.begin(e1)
-            a2.begin(e2)
-            a3.begin(e3)
-            a4.begin(e4)
-            a5.begin(e5)
+        def apply[A1, A2, A3, A4, A5, B](a1: Auto[A1], a2: Auto[A2], a3: Auto[A3], a4: Auto[A4], a5: Auto[A5])(f: (A1, A2, A3, A4, A5) => B): B = {
+            a1.autoBegin
+            a2.autoBegin
+            a3.autoBegin
+            a4.autoBegin
+            a5.autoBegin
             try {
-                f(e1, e2, e3, e4, e5)
+                f(a1.autoRef, a2.autoRef, a3.autoRef, a4.autoRef, a5.autoRef)
             } finally {
-                a5.end(e5)
-                a4.end(e4)
-                a3.end(e3)
-                a2.end(e2)
-                a1.end(e1)
+                a5.autoEnd
+                a4.autoEnd
+                a3.autoEnd
+                a2.autoEnd
+                a1.autoEnd
             }
         }
     }

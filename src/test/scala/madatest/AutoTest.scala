@@ -12,8 +12,9 @@ import junit.framework.Assert._
 
 
 object MyFile {
-    implicit object myauto extends auto.Type[MyFile] {
-        override def end(x: MyFile) = x.disposed = true
+    implicit def _toAuto(from: MyFile): Auto[MyFile] = new Auto[MyFile] {
+        override def autoRef = from
+        override def autoEnd = from.disposed = true
     }
 }
 class MyFile {
@@ -22,52 +23,12 @@ class MyFile {
 }
 
 
-class HisFile[A] extends auto.Interface {
+class HisFile[A] extends Auto[HisFile[A]] {
     var disposed = false
+    override def autoRef = this // bad way
     override def autoEnd = disposed = true
     def read: Unit = { }
 }
-
-
-object HerFile {
-/*
-    // "implicit class" might have been better.
-    implicit object myauto extends auto.Type[HerFile[_]] {
-        override def end(x: HerFile[_]) = x.disposed = true
-    }
-*/
-    implicit def toautoType[A]/*(implicit c: A => A)*/: auto.Type[HerFile[A]] = new auto.Type[HerFile[A]] {
-        override def end(x: HerFile[A]) = x.disposed = true
-    }
-}
-
-class HerFile[A] {
-    var disposed = false
-    def read: Unit = { }
-}
-
-
-/*
-class LalalaTest {
-      trait Show[T] { def show(t: T): String }
-
-  implicit object ShowString extends Show[String] { def show(s: String) = s }
-
-  def willShow[T](t: T)(implicit showT: Show[T]) = showT.show(t)
-
-  def testMe {
-
-  implicit def showInstList[T](implicit showT: Show[T]): Show[List[T]] =
-    new Show[List[T]] {
-      def show(ts: List[T]) = ts.map(showT.show(_)).mkString("[", ",", "]")
-    }
-
-  println(willShow("hi"))
-  println(willShow(List("hi", "there")))
-  println(willShow(List(List("hi", "there"), List("blah"))))
-  }
-}
-*/
 
 
 class AutoTest {
@@ -90,15 +51,6 @@ class AutoTest {
         assertEquals(3, tmp)
     }
 
-    def testHer: Unit = {
-        val file = new HerFile[Int]
-        assertFalse(file.disposed)
-        Auto(file){
-            _.read
-        }//(file)
-        assertTrue(file.disposed)
-    }
-
     def testThrow: Unit = {
         val file = new MyFile
         var thrown = false
@@ -116,8 +68,9 @@ class AutoTest {
         assertTrue(file.disposed)
     }
 
-    def testEligibles: Unit = {
+    def testKeepType: Unit = {
         auto.using(new java.io.StringReader("abc")){ r =>
+            val k: java.io.StringReader = r
             ()
         }
     }
