@@ -121,4 +121,14 @@ class AutoTest {
             ()
         }
     }
+
+    def testVarArg: Unit = {
+        val file1, file2, file3 = new MyFile
+        auto.using(file1, file2, file3) { (f1, f2, f3) =>
+            ()
+        }
+        assertTrue(file1.disposed)
+        assertTrue(file2.disposed)
+        assertTrue(file3.disposed)
+    }
 }

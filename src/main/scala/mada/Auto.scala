@@ -54,6 +54,14 @@ object Auto {
 // apply
 
     @aliasOf("auto.using")
-    def apply[A, B](e: A)(f: A => B)(implicit a: Auto[A]): B = using(e)(f)(a)
+    def apply[A1, B](e1: A1)(f: A1 => B)(implicit a1: Auto[A1]): B = using(e1)(f)(a1)
+    @aliasOf("auto.using")
+    def apply[A1, A2, B](e1: A1, e2: A2)(f: (A1, A2) => B)(implicit a1: Auto[A1], a2: Auto[A2]): B = using(e1, e2)(f)(a1, a2)
+    @aliasOf("auto.using")
+    def apply[A1, A2, A3, B](e1: A1, e2: A2, e3: A3)(f: (A1, A2, A3) => B)(implicit a1: Auto[A1], a2: Auto[A2], a3: Auto[A3]): B = using(e1, e2, e3)(f)(a1, a2, a3)
+    @aliasOf("auto.using")
+    def apply[A1, A2, A3, A4, B](e1: A1, e2: A2, e3: A3, e4: A4)(f: (A1, A2, A3, A4) => B)(implicit a1: Auto[A1], a2: Auto[A2], a3: Auto[A3], a4: Auto[A4]): B = using(e1, e2, e3, e4)(f)(a1, a2, a3, a4)
+    @aliasOf("auto.using")
+    def apply[A1, A2, A3, A4, A5, B](e1: A1, e2: A2, e3: A3, e4: A4, e5: A5)(f: (A1, A2, A3, A4, A5) => B)(implicit a1: Auto[A1], a2: Auto[A2], a3: Auto[A3], a4: Auto[A4], a5: Auto[A5]): B = using(e1, e2, e3, e4, e5)(f)(a1, a2, a3, a4, a5)
 
 }
