@@ -56,11 +56,11 @@ class FileTest {
 
         def aSeq = {
             val f = new CharFile(n, "r")
-            f.filter(_ != 'c').autoBy(f)
+            f.map(e => e).using(f)
         }
 
-        using(aSeq) {
-            assertEquals(from("abde"), aSeq)
+        using(aSeq) { v =>
+            assertEquals(from("abcde"), v)
         }
     }
 

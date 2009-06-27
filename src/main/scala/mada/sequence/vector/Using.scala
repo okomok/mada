@@ -7,7 +7,7 @@
 package mada.sequence.vector
 
 
-case class AutoBy[A, X](_1: Vector[A], _2: X, _3: Auto[X]) extends Forwarder[A] with auto.Interface {
+case class Using[A, X](_1: Vector[A], _2: X, _3: Auto[X]) extends Forwarder[A] with auto.Interface {
     override protected val delegate = _1
 
     override def autoBegin = _3.begin(_2)

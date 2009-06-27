@@ -278,6 +278,11 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
      */
     def zipBy[B, C](that: Vector[B])(f: (A, B) => C): Vector[C] = ZipBy(this, that, f)
 
+    /**
+     * Installs auto relation.
+     */
+    final def using[X](x: X)(implicit a: Auto[X]): Using[A, X] = Using(this, x, a)
+
 
 // regions
 
@@ -619,11 +624,6 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
      * @return  <code>range(start, end)</code>.
      */
     final def indices: Vector[Int] = range(start, end)
-
-    /**
-     * Installs auto relation.
-     */
-    final def autoBy[X](x: X)(implicit a: Auto[X]): AutoBy[A, X] = AutoBy(this, x, a)
 
 }
 
