@@ -70,6 +70,11 @@ package object util {
     def as[A](from: A): A = from
 
     /**
+     * @return  <code>()</code>.
+     */
+    def ignore(x: Any): Unit = ()
+
+    /**
      * @return  <code>!pre || post</code>.
      */
     def implies(pre: Boolean, post: => Boolean): Boolean = !pre || post

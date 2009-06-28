@@ -19,6 +19,7 @@ class PipelineTest {
     def testPipe: Unit = {
         import util.|>
         assertEquals("abc", "hello" |> foo(3) |> bar)
+        assertEquals((), "hello" |> util.ignore)
     }
 
     /*
