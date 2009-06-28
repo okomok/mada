@@ -167,7 +167,7 @@ When you need strictly-evaluated one, apply method `mix(Mixin.force)`.
 `Iterative` summary:
 
 * Conversion from "iterable" sequence is lightweight.
-* (Possibly) backtrackable only to the whole sequence.
+* Optionally backtrackable only to the whole sequence by using method `begin`.
 * `filter` and `map` is lightweight.
 * Recursive sequence can't be built. (See below.)
 
