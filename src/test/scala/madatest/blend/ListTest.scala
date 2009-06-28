@@ -9,7 +9,7 @@ package madatest.blendtest
 
 import mada.blend._
 import mada.meta
-import mada.meta.literal.nat._
+import mada.meta.nat.Literal._
 
 class ListUnmetaTest {
     import junit.framework.Assert._
