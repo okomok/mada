@@ -26,7 +26,7 @@
 
 `blend` contains heterogeneous-list implementation originally written in [Metascala].
 
-    import mada.meta.literal.nat._
+    import mada.meta.nat.Literal._
     import mada.blend._
     import junit.framework.Assert._
 
