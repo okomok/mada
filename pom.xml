@@ -91,9 +91,7 @@ Mada is a utility library for Scala.
                 </executions>
                 <configuration>
                     <args>
-                        <arg>-deprecation</arg>
-                        <arg>-unchecked</arg>
-                        <arg>-"Yrecursion 50"</arg>
+                        <arg>@scalac.arg</arg>
                     </args>
                     <jvmArgs>
                         <jvmArg>-Xmx512m</jvmArg>
