@@ -41,7 +41,7 @@ Mada is a utility library for Scala.
         </pluginRepository>
     </pluginRepositories>
 
-    <repositories>
+    <!-- repositories>
         <repository>
             <id>scala-tools.org</id>
             <name>Scala Tools Maven2 Repository</name>
@@ -53,7 +53,7 @@ Mada is a utility library for Scala.
             <url>http://scala-tools.org/repo-snapshots</url>
             <snapshots />
         </repository>
-    </repositories>
+    </repositories -->
 
     <dependencies>
         <dependency>
@@ -81,6 +81,7 @@ Mada is a utility library for Scala.
             <plugin>
                 <groupId>org.scala-tools</groupId>
                 <artifactId>maven-scala-plugin</artifactId>
+                <version>2.10</version>
                 <executions>
                     <execution>
                         <goals>
@@ -96,7 +97,7 @@ Mada is a utility library for Scala.
                     <jvmArgs>
                         <jvmArg>-Xmx512m</jvmArg>
                     </jvmArgs>
-                    <displayCmd>true</displayCmd>
+                    <displayCmd>false</displayCmd>
                 </configuration>
             </plugin>
             <plugin>
