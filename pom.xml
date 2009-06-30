@@ -131,9 +131,15 @@ Mada is a utility library for Scala.
     
     <distributionManagement>
         <repository>
-            <id>mada</id>
-            <url>gh-pages/maven-repository</url>
+            <id>mada-release-repository</id>
+            <name>Mada Release Repository</name>
+            <url>file:${project.basedir}/gh-pages/maven/release</url>
         </repository>
+        <snapshotRepository>
+            <id>mada-snapshot-repository</id>
+            <name>Mada Snapshot Repository</name>
+            <url>file:${project.basedir}/gh-pages/maven/snapshot</url>
+        </snapshotRepository>
     </distributionManagement>
 
 </project>
