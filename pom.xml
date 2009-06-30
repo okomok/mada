@@ -91,11 +91,12 @@ Mada is a utility library for Scala.
                 </executions>
                 <configuration>
                     <args>
-                        <arg>@scalac.arg</arg>
+                        <arg>@scalac.args</arg>
                     </args>
                     <jvmArgs>
                         <jvmArg>-Xmx512m</jvmArg>
                     </jvmArgs>
+                    <displayCmd>true</displayCmd>
                 </configuration>
             </plugin>
             <plugin>
