@@ -5,7 +5,7 @@
     <artifactId>mada</artifactId>
 
     <name>Mada</name>
-    <version>0.90</version>
+    <version>0.90-SNAPSHOT</version>
     <inceptionYear>2008</inceptionYear>
 
     <description>
@@ -133,12 +133,12 @@ Mada is a utility library for Scala.
         <repository>
             <id>mada-release-repository</id>
             <name>Mada Release Repository</name>
-            <url>file:${project.basedir}/gh-pages/maven/release</url>
+            <url>file:${project.basedir}/maven/release</url>
         </repository>
         <snapshotRepository>
             <id>mada-snapshot-repository</id>
             <name>Mada Snapshot Repository</name>
-            <url>file:${project.basedir}/gh-pages/maven/snapshot</url>
+            <url>file:${project.basedir}/maven/snapshot</url>
         </snapshotRepository>
     </distributionManagement>
 
