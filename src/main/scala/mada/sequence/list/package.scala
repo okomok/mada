@@ -18,13 +18,11 @@ package object list {
 
 // trivial
 
-    /**
-     * @return  <code>Nil</code>.
-     */
+    @aliasOf("Nil")
     val empty: List[Nothing] = Nil
 
-    @aliasOf("NilOf")
-    def emptyOf[A] = NilOf[A]
+    @aliasOf("Nil.of")
+    def emptyOf[A]: List[A] = Nil.of[A]
 
     /**
      * @return  <code>x :: Nil</code>.

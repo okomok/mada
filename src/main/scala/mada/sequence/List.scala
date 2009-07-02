@@ -20,6 +20,9 @@ import list._
  * The nil list
  */
 case object Nil extends List[Nothing] {
+    @returnThis
+    def of[A]: List[A] = this
+
     override def isNil = true
     override def head = throw new NoSuchElementException("head on empty list")
     override def tail =  throw new UnsupportedOperationException("tail on empty list")
@@ -460,7 +463,7 @@ sealed trait List[+A] extends iterative.Sequence[A] {
     /**
      * Reverses.
      */
-    def reverse: List[A] = foldLeft(NilOf[A]){ (xs, x) => x :: xs }
+    def reverse: List[A] = foldLeft(Nil.of[A]){ (xs, x) => x :: xs }
 
     /**
      * Steps by the specified stride.
@@ -525,7 +528,7 @@ object List {
     implicit def _ofName[A](_this: => List[A]): _OfName[A] = new _OfName(_this)
 
     sealed class _OfList[A](_this: List[List[A]]) {
-        def flatten: List[A] = _this.foldRight(NilOf[A])(_ ::: _())
+        def flatten: List[A] = _this.foldRight(Nil.of[A])(_ ::: _())
     }
     implicit def _ofList[A](_this: List[List[A]]): _OfList[A] = new _OfList(_this)
 
@@ -536,7 +539,7 @@ object List {
     implicit def _ofBoolean(_this: List[Boolean]): _OfBoolean = new _OfBoolean(_this)
 
     sealed class _OfPair[A, B](_this: List[(A, B)]) {
-        def unzip: (List[A], List[B]) = _this.foldRight((NilOf[A], NilOf[B])){ (ab, abs) => (ab._1 :: abs()._1, ab._2 :: abs()._2) }
+        def unzip: (List[A], List[B]) = _this.foldRight((Nil.of[A], Nil.of[B])){ (ab, abs) => (ab._1 :: abs()._1, ab._2 :: abs()._2) }
     }
     implicit def _ofPair[A, B](_this: List[(A, B)]): _OfPair[A, B] = new _OfPair(_this)
 

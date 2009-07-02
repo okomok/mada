@@ -8,7 +8,7 @@ package mada.blend
 
 
 // See: HList.scala
-//      at http://www.assembla.com/wiki/show/scala.result
+//      at http://www.assembla.com/wiki/show/metascala
 
 
 import list._
@@ -97,10 +97,10 @@ sealed trait List { // this: `this` =>
     final type reverse = ReversePrepend.result[Nil, `this`]
 
     /**
-     * Converts to <code>scala.List[Any]</code>.
+     * Converts to <code>sequence.List[Any]</code>.
      */
     def untyped: untyped // The implicit way would annoy toString.
-    final type untyped = scala.List[Any]
+    final type untyped = sequence.List[Any]
 
     /**
      * Prepends <code>e</code>.
@@ -125,7 +125,7 @@ sealed trait Nil extends List {
     override type isEmpty = meta.`true`
     override type accept[v <: Visitor] = v#visitNil
 
-    override def untyped = scala.Nil
+    override def untyped = sequence.Nil
 }
 
 private[mada] object NilWrap {
@@ -141,7 +141,7 @@ final case class Cons[h, t <: List](override val head: h, override val tail: t) 
     override type isEmpty = meta.`false`
     override type accept[v <: Visitor] = v#visitCons[h, t]
 
-    override def untyped = scala.::[Any](head, tail.untyped)
+    override def untyped = head :: tail.untyped
 }
 
 

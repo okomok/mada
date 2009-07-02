@@ -39,8 +39,8 @@ class ListUnmetaTest {
     def testTypeErase: Unit = {
         val i = new java.lang.Integer(10)
         val lst = 3 :: "hello" :: i :: 'a' :: Nil
-        assertEquals("List()", Nil.toString)
-        assertEquals("List(3, hello, 10, a)", lst.toString)
+        assertEquals("[]", Nil.toString)
+        assertEquals("[3, hello, 10, a]", lst.toString)
     }
 
     def testEquals: Unit = {
@@ -92,11 +92,12 @@ class ListUnmetaTest {
     }
 
     def testTyped: Unit = {
+        import mada.sequence
         val i = new java.lang.Integer(10)
-        val el: scala.List[Any] = scala.::[Any](3, scala.::[Any]("hello", scala.::[Any](i, scala.::[Any]('a', scala.Nil))))
+        val el: sequence.List[Any] = 3 :: "hello" :: i :: 'a' :: sequence.Nil.of[Any]
         val tl = 3 :: "hello" :: i :: 'a' :: Nil
         assertEquals(tl, list.typed[ Int :: String :: java.lang.Integer :: Char :: Nil](el))
-        assertEquals(Nil, list.typed[Nil](scala.Nil))
+        assertEquals(Nil, list.typed[Nil](sequence.Nil))
         ()
     }
 

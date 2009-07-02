@@ -42,11 +42,11 @@ class StepTest {
     }
 
     def testStepEmpty: Unit = {
-        val tr0 = NilOf[Int].step(0)
+        val tr0 = Nil.of[Int].step(0)
         assertTrue(tr0.isEmpty)
-        val tr1 = NilOf[Int].step(1)
+        val tr1 = Nil.of[Int].step(1)
         assertTrue(tr1.isEmpty)
-        val tr2 = NilOf[Int].step(2)
+        val tr2 = Nil.of[Int].step(2)
         assertTrue(tr2.isEmpty)
     }
 

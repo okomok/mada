@@ -10,8 +10,8 @@ package mada.blend
 package object list {
 
     /**
-     * Creates meta List from <code>scala.List</code>.
+     * Creates a list from <code>sequence.List</code>.
      */
-    def typed[l <: List](from: scala.List[Any])(implicit _typed: Typed[l]) = _typed(from)
+    def typed[l <: List](from: sequence.List[Any])(implicit _typed: Typed[l]) = _typed(from)
 
 }
