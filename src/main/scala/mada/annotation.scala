@@ -8,12 +8,6 @@ package mada
 
 
 /**
- * An alias of a name
- */
-class aliasOf(name: String) extends StaticAnnotation
-
-
-/**
  * Contains implicit conversions. (All the names must be "long".)
  */
 class compatibles extends StaticAnnotation
@@ -27,13 +21,24 @@ class conversion extends StaticAnnotation
 /**
  * A lightweight conversion
  */
-class compatibleConversion extends StaticAnnotation
+class compatibleConversion extends conversion
 
 
 /**
  * Implementation detail. Don't use the name.
  */
 class detail extends StaticAnnotation
+
+
+/**
+ * An equivalent expression
+ */
+class equivalentTo(expr: String) extends StaticAnnotation
+
+/**
+ * An alias of the expression
+ */
+class aliasOf(expr: String) extends equivalentTo(expr)
 
 
 /**

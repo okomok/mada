@@ -126,17 +126,17 @@ trait Iterative[+A] extends Sequence[A] {
     }
 
     /**
-     * Does <code>p</code> meet for any element?
+     * Determines if all the elements satisfy the predicate.
      */
     def forall(p: A => Boolean): Boolean = find(function.not(p)).isEmpty
 
     /**
-     * Does an element exists which <code>p</code> meets?
+     * Determines if any element satisfies the predicate.
      */
     def exists(p: A => Boolean): Boolean = !find(p).isEmpty
 
     /**
-     * Counts elements <code>p</code> meets.
+     * Counts elements which satisfy the predicate.
      */
     def count(p: A => Boolean): Int = {
         var i = 0
@@ -151,7 +151,7 @@ trait Iterative[+A] extends Sequence[A] {
     }
 
     /**
-     * Finds an element <code>p</code> meets.
+     * Finds an element which satisfies the predicate.
      */
     def find(p: A => Boolean): Option[A] = {
         val it = begin
@@ -272,12 +272,12 @@ trait Iterative[+A] extends Sequence[A] {
     def slice(from: Int, until: Int): Iterative[A] = Slice(this, from, until)
 
     /**
-     * Takes elements while <code>p</code> meets.
+     * Returns the longest prefix that satisfies the predicate.
      */
     def takeWhile(p: A => Boolean): Iterative[A] = TakeWhile(this, p)
 
     /**
-     * Drops elements while <code>p</code> meets.
+     * Returns the remaining suffix of <code>takeWhile</code>.
      */
     def dropWhile(p: A => Boolean): Iterative[A] = DropWhile(this, p)
 

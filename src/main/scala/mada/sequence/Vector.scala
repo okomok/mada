@@ -109,22 +109,22 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
     def foreach(f: A => Unit): Unit = stl.ForEach(this, start, end, f)
 
     /**
-     * Does <code>p</code> meet for any element?
+     * Determines if all the elements satisfy the predicate.
      */
     def forall(p: A => Boolean): Boolean = seek(function.not(p)).isEmpty
 
     /**
-     * Does an element exists which <code>p</code> meets?
+     * Determines if any element satisfies the predicate.
      */
     def exists(p: A => Boolean): Boolean = !seek(p).isEmpty
 
     /**
-     * Counts elements <code>p</code> meets.
+     * Counts elements which satisfy the predicate.
      */
     def count(p: A => Boolean): Int = stl.CountIf(this, start, end, p)
 
     /**
-     * Finds an element <code>p</code> meets.
+     * Finds an element which satisfies the predicate.
      */
     def find(p: A => Boolean): Option[A] = {
         val i = stl.FindIf(this, start, end, p)
@@ -198,12 +198,12 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
     def slice(n: Int, m: Int): Vector[A] = Slice(this, n, m)
 
     /**
-     * Takes elements while <code>p</code> meets.
+     * Returns the longest prefix that satisfies the predicate.
      */
     def takeWhile(p: A => Boolean): Vector[A] = TakeWhile(this, p)
 
     /**
-     * Drops elements while <code>p</code> meets.
+     * Returns the remaining suffix of <code>takeWhile</code>.
      */
     def dropWhile(p: A => Boolean): Vector[A] = DropWhile(this, p)
 

@@ -18,4 +18,9 @@ class ConsTest {
         assertEquals(10, x.at(1) + 7)
     }
 
+    def testInferStrict: Unit = {
+        val x: list.Type[Int] = 1 #:: 3 #:: 4 #:: Nil
+        assertEquals(10, x.at(1) + 7)
+    }
+
 }

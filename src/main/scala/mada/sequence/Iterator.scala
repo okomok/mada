@@ -64,7 +64,7 @@ trait Iterator[+A] {
     }
 
     /**
-     * Advances while <code>p</code> meets.
+     * Advances while satisfying the predicate.
      */
     final def advanceWhile(p: A => Boolean): Unit = {
         while (!isEnd && p(deref)) {

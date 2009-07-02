@@ -192,11 +192,6 @@ sealed trait List[+A] extends iterative.Sequence[A] {
     def partition(p: A => Boolean): (List[A], List[A]) = (filter(p), remove(p))
 
     /**
-     * What?
-     */
-    def groupBy[K](f: A => K): scala.collection.Map[K, List[A]] = throw new Error
-
-    /**
      * Applies <code>f</code> to each element.
      */
     @tailrec
@@ -206,12 +201,12 @@ sealed trait List[+A] extends iterative.Sequence[A] {
     }
 
     /**
-     * Does <code>p</code> meet for any element?
+     * Determines if all the elements satisfy the predicate.
      */
     def forall(p: A => Boolean): Boolean = map(p).and // find(function.not(p)).isEmpty
 
     /**
-     * Does an element exists which <code>p</code> meets?
+     * Determines if any element satisfies the predicate.
      */
     def exists(p: A => Boolean): Boolean = map(p).or // !find(p).isEmpty
 
@@ -379,7 +374,7 @@ sealed trait List[+A] extends iterative.Sequence[A] {
     def slice(n: Int, m: Int): List[A] = drop(n).take(m - n)
 
     /**
-     * Takes elements while <code>p</code> meets.
+     * Returns the longest prefix that satisfies the predicate.
      */
     def takeWhile(p: A => Boolean): List[A] = this match {
         case Nil => Nil
@@ -393,7 +388,7 @@ sealed trait List[+A] extends iterative.Sequence[A] {
     }
 
     /**
-     * Drops elements while <code>p</code> meets.
+     * Returns the remaining suffix of <code>takeWhile</code>.
      */
     @tailrec
     final def dropWhile(p: A => Boolean): List[A] = this match {
@@ -407,14 +402,26 @@ sealed trait List[+A] extends iterative.Sequence[A] {
         }
     }
 
-    /**
-     * @return  <code>(takeWhile(p), dropWhile(p))</code>.
-     */
-    def span(p: A => Boolean): (List[A], List[A]) = (takeWhile(p), dropWhile(p))
+    @equivalentTo("(takeWhile(p), dropWhile(p))")
+    def span(p: A => Boolean): (List[A], List[A]) = {
+        var it = this
+        var _1, _2 = Nil.of[A]
 
-    /**
-     * @return  <code>(take(n), drop(n))</code>.
-     */
+        while (!it.isNil) {
+            val x = it.head
+            if (p(x)) {
+                _1 = x #:: _1
+            } else {
+                _2 = it
+                return (_1, _2)
+            }
+            it = it.tail
+        }
+
+        (_1, _2)
+    }
+
+    @equivalentTo("(take(n), drop(n)")
     def splitAt(n: Int): (List[A], List[A]) = (take(n), drop(n))
 
 
