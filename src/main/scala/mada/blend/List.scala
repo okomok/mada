@@ -44,6 +44,8 @@ sealed trait List { // this: `this` =>
 
     /**
      * Returns the <code>n</code>-th element.
+     *
+     * @pre <code>0 <= n <= size</code>.
      */
     final def at[n <: meta.Nat](implicit _at: At[`this`, n]): at[n] = _at(_this)
     final type at[n <: meta.Nat] = At.result[`this`, n]
@@ -65,16 +67,16 @@ sealed trait List { // this: `this` =>
     final type slice[n <: meta.Nat, m <: meta.Nat] = Slice.result[`this`, n, m]
 
     /**
-     * Returns the last element.
+     * Returns the last element if not empty; <code>a</code> otherwise.
      */
-    final def last(implicit _last: Last[`this`, meta.error]): last = _last(_this, util.nullInstance[meta.error])
-    final type last = Last.result[`this`, meta.error]
+    final def lastOrElse[a](_a: a)(implicit _last: LastOrElse[`this`, a]): lastOrElse[a] = _last(_this, _a)
+    final type lastOrElse[a] = LastOrElse.result[`this`, a]
 
     /**
-     * Returns the length.
+     * Returns the size.
      */
-    final type length = Length.result[`this`]
-    final def length(implicit _unmeta: meta.Unmeta[length, scala.Int]): scala.Int = _unmeta() // just for convenience.
+    final type size = Size.result[`this`]
+    final def size(implicit _unmeta: meta.Unmeta[size, scala.Int]): scala.Int = _unmeta() // just for convenience.
 
     /**
      * Prepends <code>that</code>.
@@ -95,12 +97,6 @@ sealed trait List { // this: `this` =>
     final type reverse = ReversePrepend.result[Nil, `this`]
 
     /**
-     * Finds the first element whose type is <code>k</code>.
-     */
-    final def findType[k](implicit _findType: FindType[`this`, k]): findType[k] = _findType(_this)
-    final type findType[k] = FindType.result[`this`, k]
-
-    /**
      * Converts to <code>sequence.List[Any]</code>.
      */
     def untyped: untyped // The implicit way would annoy toString.
@@ -112,6 +108,13 @@ sealed trait List { // this: `this` =>
     final def ::[A](e: A): Cons[A, `this`] = Cons(e, _this)
 
     final override def toString = untyped.toString
+
+    /**
+     * Returns the first element whose type is <code>k</code>.
+     *
+     * @pre List contains an element whose type if <code>k</code>.
+     */
+    final def findType[A](implicit _findType: FindType[`this`, A]): A = _findType(_this)
 
 }
 

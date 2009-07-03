@@ -7,20 +7,21 @@
 package mada.blend.list
 
 
+// If metamethod were feasible, it would return `meta.error`.
+
+
 @specializer
-trait FindType[l <: List, k] extends (l => FindType.result[l, k])
+trait FindType[l <: List, a] extends (l => a)
 
 
 object FindType {
 
-    type result[l <: List, k] = k
-
-    implicit def ofCons[h, t <: List, k](implicit _findType: FindType[t, k]) = new FindType[Cons[h, t], k] {
+    implicit def ofCons[h, t <: List, a](implicit _findType: FindType[t, a]) = new FindType[Cons[h, t], a] {
         override def apply(_l: Cons[h, t]) = _findType(_l.tail)
     }
 
-    implicit def ofConsMatch[t <: List, k] = new FindType[Cons[k, t], k] {
-        override def apply(_l: Cons[k, t]) = _l.head
+    implicit def ofConsMatch[t <: List, a] = new FindType[Cons[a, t], a] {
+        override def apply(_l: Cons[a, t]) = _l.head
     }
 
 }

@@ -8,6 +8,6 @@ package mada.blend.list
 
 
 // I don't know the 1-path algorithm.
-// "#take with #length#decrement" doesn't work: #length destroys type identity,
+// "#take with #size#decrement" doesn't work: #size destroys type identity,
 // so that compiler fails to find specializers.
 

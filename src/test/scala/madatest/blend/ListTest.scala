@@ -29,11 +29,11 @@ class ListUnmetaTest {
         assertEquals(10, lst.at[_2N].intValue)
     }
 
-    def testLength: Unit = {
+    def testSize: Unit = {
         val i = new java.lang.Integer(10)
         val lst = 3 :: "hello" :: i :: 'a' :: Nil
-        assertEquals(4, lst.length)
-        assertEquals(0, Nil.length)
+        assertEquals(4, lst.size)
+        assertEquals(0, Nil.size)
     }
 
     def testTypeErase: Unit = {
@@ -68,7 +68,7 @@ class ListUnmetaTest {
         val c = lst.drop[_5N]
 //        val d = lst.drop[_9N]
         assertEquals(a, b)
-//        assertEquals(0, d.length)
+//        assertEquals(0, d.size)
 //        assertEquals(Nil, d)
         assertEquals(3 :: "hello" :: i :: 'a' :: 12 :: Nil, s)
         assertEquals(i :: 'a' :: 12 :: Nil, b)
@@ -139,21 +139,6 @@ class ListUnmetaTest {
         val lst1r_ : Int :: Char :: java.lang.Integer :: String :: Int :: Nil = lst1r
         assertEquals(12 :: 'a' :: i :: "hello" :: 3 :: Nil, lst1r)
         assertEquals(Nil.reverse, Nil)
-    }
-
-    def testLast = {
-        val i = new java.lang.Integer(10)
-        type Lst1 = Int :: String :: java.lang.Integer :: Char :: Int :: Nil
-        val lst1: Lst1 = 3 :: "hello" :: i :: 'a' :: 12 :: Nil
-        val e: Lst1#last = lst1.last
-        val e_ : Int = e
-        assertEquals(12, e_)
-
-        type Lst2 = String :: Nil
-        val lst2: Lst2 = "hello" :: Nil
-        val e2: Lst2#last = lst2.last
-        val e2_ : String = e2
-        assertEquals("hello", e2_)
     }
 
     def testSlice: Unit = {
@@ -229,10 +214,10 @@ class ListmetaTest {
         assertSame[lst#at[_2N#add[_1N]], Char]
     }
 
-    trait testLength {
+    trait testSize {
         type lst = Int :: String :: Double :: Char :: Nil
-        assert[lst#length#equals[_4N]]
-        assert[Nil#length#equals[_0N]]
+        assert[lst#size#equals[_4N]]
+        assert[Nil#size#equals[_0N]]
     }
 
     trait testIsEmpty {

@@ -7,31 +7,28 @@
 package mada.blend.list
 
 
-// lastOption might be better, but compiler can't find specializer for scala.None.type.
-
-
 @specializer
-trait Last[l <: List, z] extends ((l, z) => Last.result[l, z])
+trait LastOrElse[l <: List, a] extends ((l, a) => LastOrElse.result[l, a])
 
 
-object Last {
+object LastOrElse {
 
-    type result[l <: List, z] = l#accept[vt[z]]
+    type result[l <: List, a] = l#accept[vt[a]]
 
-    sealed trait vt[z] extends Visitor {
+    sealed trait vt[a] extends Visitor {
         override type Result = Any
-        override type visitNil = z
+        override type visitNil = a
         override type visitCons[h, t <: List] = t#accept[vt[h]]
     }
 
-    // Synchronizing with Last.result algorithm can remove asInstanceOf.
+    // Synchronizing with LastOrElse.result algorithm can remove asInstanceOf.
 
-    implicit def ofNil[z] = new Last[Nil, z] {
-        override def apply(_l: Nil, _z: z) = _z
+    implicit def ofNil[a] = new LastOrElse[Nil, a] {
+        override def apply(_l: Nil, _a: a) = _a
     }
 
-    implicit def ofCons[h, t <: List, z](implicit _last: Last[t, h]) = new Last[Cons[h, t], z] {
-        override def apply(_l: Cons[h, t], unused: z) = _last(_l.tail, _l.head)
+    implicit def ofCons[h, t <: List, a](implicit _last: LastOrElse[t, h]) = new LastOrElse[Cons[h, t], a] {
+        override def apply(_l: Cons[h, t], unused: a) = _last(_l.tail, _l.head)
     }
 
 }
