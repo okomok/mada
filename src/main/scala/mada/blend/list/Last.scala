@@ -11,27 +11,27 @@ package mada.blend.list
 
 
 @specializer
-trait Last[l <: List, e] extends ((l, e) => Last.result[l, e])
+trait Last[l <: List, z] extends ((l, z) => Last.result[l, z])
 
 
 object Last {
 
-    type result[l <: List, e] = l#accept[vt[e]]
+    type result[l <: List, z] = l#accept[vt[z]]
 
-    sealed trait vt[e] extends Visitor {
+    sealed trait vt[z] extends Visitor {
         override type Result = Any
-        override type visitNil = e
+        override type visitNil = z
         override type visitCons[h, t <: List] = t#accept[vt[h]]
     }
 
     // Synchronizing with Last.result algorithm can remove asInstanceOf.
 
-    implicit def ofNil[e] = new Last[Nil, e] {
-        override def apply(_l: Nil, _e: e) = _e
+    implicit def ofNil[z] = new Last[Nil, z] {
+        override def apply(_l: Nil, _z: z) = _z
     }
 
-    implicit def ofCons[h, t <: List, e](implicit _last: Last[t, h]) = new Last[Cons[h, t], e] {
-        override def apply(_l: Cons[h, t], unused: e) = _last(_l.tail, _l.head)
+    implicit def ofCons[h, t <: List, z](implicit _last: Last[t, h]) = new Last[Cons[h, t], z] {
+        override def apply(_l: Cons[h, t], unused: z) = _last(_l.tail, _l.head)
     }
 
 }

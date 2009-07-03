@@ -95,6 +95,12 @@ sealed trait List { // this: `this` =>
     final type reverse = ReversePrepend.result[Nil, `this`]
 
     /**
+     * Finds the first element whose type is <code>k</code>.
+     */
+    final def findType[k](implicit _findType: FindType[`this`, k]): findType[k] = _findType(_this)
+    final type findType[k] = FindType.result[`this`, k]
+
+    /**
      * Converts to <code>sequence.List[Any]</code>.
      */
     def untyped: untyped // The implicit way would annoy toString.

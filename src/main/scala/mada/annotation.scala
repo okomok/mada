@@ -109,4 +109,4 @@ class packageObjectBrokenOverload extends compilerWorkaround
 /**
  * Visible only for testing: don't touch this.
  */
-class visibleForTesting extends compilerWorkaround
+class visibleForTesting extends StaticAnnotation
