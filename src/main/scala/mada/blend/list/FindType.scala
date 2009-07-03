@@ -13,18 +13,14 @@ trait FindType[l <: List, k] extends (l => FindType.result[l, k])
 
 object FindType {
 
-    type result[l <: List, k] = Option[k]
-
-    implicit def ofNil[k] = new FindType[Nil, k] {
-        override def apply(_l: Nil) = None
-    }
+    type result[l <: List, k] = k
 
     implicit def ofCons[h, t <: List, k](implicit _findType: FindType[t, k]) = new FindType[Cons[h, t], k] {
         override def apply(_l: Cons[h, t]) = _findType(_l.tail)
     }
 
     implicit def ofConsMatch[t <: List, k] = new FindType[Cons[k, t], k] {
-        override def apply(_l: Cons[k, t]) = Some(_l.head)
+        override def apply(_l: Cons[k, t]) = _l.head
     }
 
 }

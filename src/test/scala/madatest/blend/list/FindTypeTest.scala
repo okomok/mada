@@ -19,19 +19,15 @@ class FindTypeTest {
         val i = new java.lang.Integer(10)
         val lst1 = 3.1 :: "hello" :: i :: 9 :: 'a' :: 12 :: Nil
 
-        val e1: Option[Int] = lst1.findType[Int]
-        assertEquals(9, e1.get)
+        val e1: Int = lst1.findType[Int]
+        assertEquals(9, e1)
 
         val e2 = lst1.findType[java.lang.Integer]
-        assertSame(i, e2.get)
+        assertSame(i, e2)
 
-        val e3: Option[scala.List[Int]] = lst1.findType[scala.List[Int]]
-        assertTrue(e3.isEmpty)
-    }
+        // This doesn't complie, in other words, meta-throw.
+        // val e3: scala.List[Int] = lst1.findType[scala.List[Int]]
 
-    def testNil: Unit = {
-        val lst1 = Nil
-        val e3: Option[scala.List[Int]] = lst1.findType[scala.List[Int]]
-        assertTrue(e3.isEmpty)
+        ()
     }
 }
