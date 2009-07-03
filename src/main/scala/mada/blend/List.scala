@@ -32,6 +32,11 @@ sealed trait List { // this: `this` =>
     type tail <: List
 
     /**
+     * Prepends <code>e</code>.
+     */
+    final def ::[A](e: A): Cons[A, `this`] = Cons(e, _this)
+
+    /**
      * Is this list nil?
      */
     type isEmpty <: meta.Boolean
@@ -44,12 +49,16 @@ sealed trait List { // this: `this` =>
 
     /**
      * Drops EXACTLY <code>n</code> elements.
+     *
+     * @pre <code>0 <= n <= size</code>.
      */
     final def drop[n <: meta.Nat](implicit _drop: Drop[`this`, n]): drop[n] = _drop(_this)
     final type drop[n <: meta.Nat] = Drop.result[`this`, n]
 
     /**
      * Takes EXACTLY <code>n</code> elements.
+     *
+     * @pre <code>0 <= n <= size</code>.
      */
     final def take[n <: meta.Nat](implicit _take: Take[`this`, n]): take[n] = _take(_this)
     final type take[n <: meta.Nat] = Take.result[`this`, n]
@@ -59,10 +68,20 @@ sealed trait List { // this: `this` =>
     final type slice[n <: meta.Nat, m <: meta.Nat] = Slice.result[`this`, n, m]
 
     /**
-     * Returns the last element if not empty; <code>a</code> otherwise.
+     * Returns the first element whose type is <code>k</code>.
+     *
+     * @pre List contains an element whose type is <code>k</code>.
      */
-    final def lastOrElse[a](_a: a)(implicit _last: LastOrElse[`this`, a]): lastOrElse[a] = _last(_this, _a)
-    final type lastOrElse[a] = LastOrElse.result[`this`, a]
+    final def elementOf[a](implicit _elementOf: ElementOf[`this`, a]): elementOf[a] = _elementOf(_this)
+    final type elementOf[a] = ElementOf.result[`this`, a]
+
+    /**
+     * Returns the last element.
+     *
+     * @pre <code>!isEmpty</code>.
+     */
+    final def last(implicit _lastOrElse: LastOrElse[`this`, meta.error]): last = _lastOrElse(_this, util.nullInstance[meta.error])
+    final type last = LastOrElse.result[`this`, meta.error]
 
     /**
      * Returns the <code>n</code>-th element.
@@ -102,19 +121,7 @@ sealed trait List { // this: `this` =>
     def untyped: untyped // The implicit way would annoy toString.
     final type untyped = sequence.List[Any]
 
-    /**
-     * Prepends <code>e</code>.
-     */
-    final def ::[A](e: A): Cons[A, `this`] = Cons(e, _this)
-
     final override def toString = untyped.toString
-
-    /**
-     * Returns the first element whose type is <code>k</code>.
-     *
-     * @pre List contains an element whose type if <code>k</code>.
-     */
-    final def findType[A](implicit _findType: FindType[`this`, A]): A = _findType(_this)
 
 }
 
