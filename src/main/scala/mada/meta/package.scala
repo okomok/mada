@@ -12,14 +12,10 @@ package object meta {
 
 // metamethods
 
-    /**
-     * @return  <code>a</code>.
-     */
+    @equivalentTo("a")
     type identity[a] = a
 
-    /**
-     * @return  <code>Nothing</code>.
-     */
+    @equivalentTo("Nothing")
     type error = Nothing
 
 

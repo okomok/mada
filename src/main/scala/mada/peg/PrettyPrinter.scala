@@ -22,9 +22,7 @@ trait PrettyPrinter {
      */
     def print[A](p: Peg[A]): Peg[A]
 
-    /**
-     * @return  <code>print(p.named(name))</code>.
-     */
+    @equivalentTo("print(p.named(name))")
     final def print[A](name: String)(p: Peg[A]): Peg[A] = print(p.named(name))
 
     @aliasOf("print")

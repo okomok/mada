@@ -80,9 +80,7 @@ trait Iterative[+A] extends Sequence[A] {
      */
     def map[B](f: A => B): Iterative[B] = Map(this, f)
 
-    /**
-     * @return  <code>map(f).flatten</code>.
-     */
+    @equivalentTo("map(f).flatten")
     def flatMap[B](f: A => Iterative[B]): Iterative[B] = FlatMap(this, f)
 
     /**
@@ -95,9 +93,7 @@ trait Iterative[+A] extends Sequence[A] {
      */
     def remove(p: A => Boolean): Iterative[A] = Remove(this, p)
 
-    /**
-     * @return  <code>(filter(p), remove(p))</code>.
-     */
+    @equivalentTo("(filter(p), remove(p))")
     def partition(p: A => Boolean): (Iterative[A], Iterative[A]) = (filter(p), remove(p))
 
     /**
@@ -266,9 +262,7 @@ trait Iterative[+A] extends Sequence[A] {
      */
     def drop(n: Int): Iterative[A] = Drop(this, n)
 
-    /**
-     * @return  <code>drop(n).take(n - m)</code>.
-     */
+    @equivalentTo("drop(n).take(n - m)")
     def slice(from: Int, until: Int): Iterative[A] = Slice(this, from, until)
 
     /**
@@ -281,14 +275,10 @@ trait Iterative[+A] extends Sequence[A] {
      */
     def dropWhile(p: A => Boolean): Iterative[A] = DropWhile(this, p)
 
-    /**
-     * @return  <code>(takeWhile(p), dropWhile(p))</code>.
-     */
+    @equivalentTo("(takeWhile(p), dropWhile(p))")
     def span(p: A => Boolean): (Iterative[A], Iterative[A]) = (takeWhile(p), dropWhile(p))
 
-    /**
-     * @return  <code>(take(n), drop(n))</code>.
-     */
+    @equivalentTo("(take(n), drop(n))")
     def splitAt(n: Int): (Iterative[A], Iterative[A]) = {
         Precondition.nonnegative(n, "splitAt")
         (take(n), drop(n))
@@ -462,9 +452,7 @@ trait Iterative[+A] extends Sequence[A] {
 
 // sorted
 
-    /**
-     * @return  <code>mergeBy(that)(c)</code>.
-     */
+    @equivalentTo("mergeBy(that)(c)")
     def merge[B >: A](that: Iterative[B])(implicit c: Compare[B]): Iterative[B] = Merge[B](this, that, c)
 
     /**
@@ -472,9 +460,7 @@ trait Iterative[+A] extends Sequence[A] {
      */
     def mergeBy[B >: A](that: Iterative[B])(lt: compare.Func[B]): Iterative[B] = MergeBy[B](this, that, lt)
 
-    /**
-     * @return  <code>unionBy(that)(c)</code>.
-     */
+    @equivalentTo("unionBy(that)(c)")
     def union[B >: A](that: Iterative[B])(implicit c: Compare[B]): Iterative[B] = Union[B](this, that, c)
 
     /**
@@ -482,9 +468,7 @@ trait Iterative[+A] extends Sequence[A] {
      */
     def unionBy[B >: A](that: Iterative[B])(lt: compare.Func[B]): Iterative[B] = UnionBy[B](this, that, lt)
 
-    /**
-     * @return  <code>intersectionBy(that)(c)</code>.
-     */
+    @equivalentTo("intersectionBy(that)(c)")
     def intersection[B >: A](that: Iterative[B])(implicit c: Compare[B]): Iterative[B] = Intersection[B](this, that, c)
 
     /**
@@ -492,9 +476,7 @@ trait Iterative[+A] extends Sequence[A] {
      */
     def intersectionBy[B >: A](that: Iterative[B])(lt: compare.Func[B]): Iterative[B] = IntersectionBy[B](this, that, lt)
 
-    /**
-     * @return  <code>differenceBy(that)(c)</code>.
-     */
+    @equivalentTo("differenceBy(that)(c)")
     def difference[B >: A](that: Iterative[B])(implicit c: Compare[B]): Iterative[B] = Difference[B](this, that, c)
 
     /**
@@ -502,9 +484,7 @@ trait Iterative[+A] extends Sequence[A] {
      */
     def differenceBy[B >: A](that: Iterative[B])(lt: compare.Func[B]): Iterative[B] = DifferenceBy[B](this, that, lt)
 
-    /**
-     * @return  <code>symmetricDifferenceBy(that)(c)</code>.
-     */
+    @equivalentTo("symmetricDifferenceBy(that)(c)")
     def symmetricDifference[B >: A](that: Iterative[B])(implicit c: Compare[B]): Iterative[B] = SymmetricDifference[B](this, that, c)
 
     /**

@@ -96,9 +96,7 @@ sealed trait List[+A] extends iterative.Sequence[A] {
 
 // strict cons
 
-    /**
-     * @return  <code>x :: this</code>.
-     */
+    @equivalentTo("x :: this")
     def #::[B >: A](x: B): List[B] = x :: this.asInstanceOf[List[B]]
 
 
@@ -162,9 +160,7 @@ sealed trait List[+A] extends iterative.Sequence[A] {
         case x :: xs => f(x) :: xs().map(f)
     }
 
-    /**
-     * @return  <code>map(f).flatten</code>.
-     */
+    @equivalentTo("map(f).flatten")
     def flatMap[B](f: A => List[B]): List[B] = map(f).flatten
 
     /**
@@ -186,9 +182,7 @@ sealed trait List[+A] extends iterative.Sequence[A] {
      */
     def remove(p: A => Boolean): List[A] = filter(function.not(p))
 
-    /**
-     * @return  <code>(filter(p), remove(p))</code>.
-     */
+    @equivalentTo("(filter(p), remove(p))")
     def partition(p: A => Boolean): (List[A], List[A]) = (filter(p), remove(p))
 
     /**
@@ -368,9 +362,7 @@ sealed trait List[+A] extends iterative.Sequence[A] {
         case (n, _ :: xs) => xs().drop(n - 1)
     }
 
-    /**
-     * @return  <code>drop(n).take(m - n)</code>.
-     */
+    @equivalentTo("drop(n).take(m - n)")
     def slice(n: Int, m: Int): List[A] = drop(n).take(m - n)
 
     /**
@@ -487,9 +479,7 @@ sealed trait List[+A] extends iterative.Sequence[A] {
         case x :: xs => x :: xs().drop(n - 1).step1(n)
     }
 
-    /**
-     * @return  <code>uniqueBy(function.equal)</code>.
-     */
+    @equivalentTo("uniqueBy(function.equal)")
     def unique: List[A] = uniqueBy(function.equal)
 
     /**

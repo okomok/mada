@@ -52,14 +52,10 @@ package object util {
 
     @packageObjectBrokenOverload
     object ensure {
-        /**
-         * @return  <code>this(expect(e)); e</code>.
-         */
+        @equivalentTo("this(expect(e)); e")
         def apply[A](e: A)(expect: A => Boolean): A = { util.assert(expect(e)); e }
 
-        /**
-         * @return  <code>this(msg, expect(e)); e</code>.
-         */
+        @equivalentTo("this(msg, expect(e)); e")
         def apply[A](msg: => Any, e: A)(expect: A => Boolean): A = { util.assert(msg, expect(e)); e }
     }
 
@@ -69,14 +65,10 @@ package object util {
     @returnThat
     def as[A](from: A): A = from
 
-    /**
-     * @return  <code>()</code>.
-     */
+    @equivalentTo("()")
     def ignore(x: Any): Unit = ()
 
-    /**
-     * @return  <code>!pre || post</code>.
-     */
+    @equivalentTo("!pre || post")
     def implies(pre: Boolean, post: => Boolean): Boolean = !pre || post
 
     /**
@@ -84,9 +76,7 @@ package object util {
      */
     def nullOf[A >: Null]: A = null
 
-    /**
-     * @return  <code>null.asInstanceOf[A]</code>.
-     */
+    @equivalentTo("null.asInstanceOf[A]")
     def nullInstance[A]: A = null.asInstanceOf[A]
 
 
@@ -125,9 +115,7 @@ package object util {
      */
     def hashCodeOfLong(x: Long): Int = (x ^ (x >>> 32)).toInt
 
-    /**
-     * @return  <code>java.lang.System.idenityHashCode(x)</code>.
-     */
+    @equivalentTo("java.lang.System.idenityHashCode(x)")
     def hashCodeOfRef(x: AnyRef): Int = java.lang.System.identityHashCode(x)
 
 

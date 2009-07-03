@@ -20,9 +20,7 @@ trait Compare[-A] extends Func[A] {
      */
     def apply(x: A, y: A): Boolean
 
-    /**
-     * @return  <code>if (apply(x, y)) -1 else if (apply(y, x)) 1 else 0</code>.
-     */
+    @equivalentTo("if (apply(x, y)) -1 else if (apply(y, x)) 1 else 0")
     def threeWay(x: A, y: A): Int = if (apply(x, y)) -1 else if (apply(y, x)) 1 else 0
 
     @compatibleConversion

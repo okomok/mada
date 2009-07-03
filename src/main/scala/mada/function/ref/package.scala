@@ -12,14 +12,10 @@ package mada.function
  */
 package object ref {
 
-    /**
-     * @return  <code>{ (v1, v2) => v1 eq v2 }</code>.
-     */
+    @equivalentTo("{ (v1, v2) => v1 eq v2 }")
     val equal: Predicate2[AnyRef, AnyRef] = { (v1, v2) => v1 eq v2 }
 
-    /**
-     * @return  <code>{ v2 => v1 eq v2 }</code>.
-     */
+    @equivalentTo("{ v2 => v1 eq v2 }")
     def equalTo(v1: AnyRef): Predicate1[AnyRef] = { v2 => v1 eq v2 }
 
 }

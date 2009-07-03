@@ -20,9 +20,7 @@ package object string {
         sb.toString
     }
 
-    /**
-     * @return  <code>flatten(ss)</code>.
-     */
+    @equivalentTo("flatten(ss)")
     def concat(ss: Any*): String = flatten(ss)
 
 }

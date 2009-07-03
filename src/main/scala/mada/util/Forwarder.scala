@@ -29,14 +29,10 @@ trait Forwarder {
         case _ => false
     }
 
-    /**
-     * @return  <code>delegate.hashCode</code>.
-     */
+    @equivalentTo("delegate.hashCode")
     override def hashCode: Int = delegate.hashCode
 
-    /**
-     * @return  <code>delegate.toString</code>.
-     */
+    @equivalentTo("delegate.toString")
     override def toString: String = delegate.toString
 
 }

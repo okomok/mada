@@ -42,9 +42,7 @@ case class Xml(_1: java.io.Writer, _2: Int) extends PrettyPrinter {
         _1.flush
     }
 
-    /**
-     * @return  <code>_1.close</code>.
-     */
+    @equivalentTo("_1.close")
     override def close: Unit = {
         util.assert(stack.isEmpty)
         _1.close

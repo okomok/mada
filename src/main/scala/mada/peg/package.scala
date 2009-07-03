@@ -59,9 +59,7 @@ package object peg {
      */
     def end[A]: Peg[A] = End[A]()
 
-    /**
-     * @return  <code>eps[A] act { _ => body }</code>.
-     */
+    @equivalentTo("eps[A] act { _ => body }")
     def call[A](body: => Unit): Peg[A] = Call[A](util.byName(body))
 
     /**
@@ -199,9 +197,7 @@ package object peg {
 
     @packageObjectBrokenOverload
     object symbolSet {
-        /**
-         * @return  <code>symbolSet(vs)(c)</code>.
-         */
+        @equivalentTo("symbolSet(vs)(c)")
         def apply[A](vs: sequence.Vector[A]*)(implicit c: Compare[A]): SymbolSet[A] = symbolSet(sequence.iterative.from(vs))(c)
 
         /**
@@ -220,9 +216,7 @@ package object peg {
 
     @packageObjectBrokenOverload
     object symbolMap {
-        /**
-         * @return  <code>symbolMap(es)(c)</code>.
-         */
+        @equivalentTo("symbolMap(es)(c)")
         def apply[A](es: (sequence.Vector[A], Peg[A])*)(implicit c: Compare[A]): SymbolMap[A] = symbolMap(sequence.iterative.from(es))(c)
 
         /**

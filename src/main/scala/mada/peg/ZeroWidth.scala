@@ -11,9 +11,7 @@ package mada.peg
  * Trivial mixin for zero-width peg.
  */
 trait ZeroWidth[A] extends Peg[A] {
-    /**
-     * @return  <code>0</code>.
-     */
+    @equivalentTo("0")
     override def width = 0
 }
 

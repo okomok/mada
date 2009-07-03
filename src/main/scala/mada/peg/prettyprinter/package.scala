@@ -12,32 +12,22 @@ package object prettyprinter {
 
 // constants
 
-    /**
-     * @return  <code>new java.io.OutputStreamWriter(java.lang.System.out)</code>
-     */
+    @equivalentTo("new java.io.OutputStreamWriter(java.lang.System.out)")
     def defaultWriter = new java.io.OutputStreamWriter(java.lang.System.out)
 
-    /**
-     * @return  <code>4</code>.
-     */
+    @equivalentTo("4")
     val defaultIndentWidth = 4
 
 
 // xml
 
-    /**
-     * @return  <code>xml(defaultWriter, defaultIndentWidth)</code>
-     */
+    @equivalentTo("xml(defaultWriter, defaultIndentWidth)")
     def xml: PrettyPrinter = xml(defaultWriter, defaultIndentWidth)
 
-    /**
-     * @return  <code>xml(out, defaultIndentWidth)</code>
-     */
+    @equivalentTo("xml(out, defaultIndentWidth)")
     def xml(out: java.io.Writer): PrettyPrinter = xml(out, defaultIndentWidth)
 
-    /**
-     * @return  <code>xml(defaultWriter, indentWidth)</code>
-     */
+    @equivalentTo("xml(defaultWriter, indentWidth)")
     def xml(indentWidth: Int): PrettyPrinter = xml(defaultWriter, indentWidth)
 
     /**

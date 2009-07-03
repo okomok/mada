@@ -80,9 +80,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
         }
     }
 
-    /**
-     * @return  <code>start == end</code>.
-     */
+    @equivalentTo("start == end")
     def isEmpty: Boolean = start == end
 
     /**
@@ -192,9 +190,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
      */
     def drop(n: Int): Vector[A] = Drop(this, n)
 
-    /**
-     * @return  <code>drop(n).take(n - m)</code>.
-     */
+    @equivalentTo("drop(n).take(n - m)")
     def slice(n: Int, m: Int): Vector[A] = Slice(this, n, m)
 
     /**
@@ -207,17 +203,13 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
      */
     def dropWhile(p: A => Boolean): Vector[A] = DropWhile(this, p)
 
-    /**
-     * @return  <code>(takeWhile(p), dropWhile(p))</code>.
-     */
+    @equivalentTo("(takeWhile(p), dropWhile(p))")
     def span(p: A => Boolean): (Vector[A], Vector[A]) = {
         val middle = stl.FindIf(this, start, end, function.not(p))
         (this(start, middle), this(middle, end))
     }
 
-    /**
-     * @return  <code>(take(n), drop(n))</code>.
-     */
+    @equivalentTo("(take(n), drop(n))")
     def splitAt(i: Int): (Vector[A], Vector[A]) = {
         val middle = Math.min(start + i, end)
         (this(start, middle), this(middle, end))
@@ -306,24 +298,16 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
      */
     def init: Vector[A] = Init(this)
 
-    /**
-     * @return  <code>this(start, start)</code>
-     */
+    @equivalentTo("this(start, start)")
     def clear: Vector[A] = Clear(this)
 
-    /**
-     * @return  <code>this(start + n, start + m)</code>.
-     */
+    @equivalentTo("this(start + n, start + m)")
     def window(n: Int, m: Int): Vector[A] = Window(this, n, m)
 
-    /**
-     * @return  <code>this(start + i, end + j)</code>.
-     */
+    @equivalentTo("this(start + i, end + j)")
     def offset(i: Int, j: Int): Vector[A] = Offset(this, i, j)
 
-    /**
-     * @return  <code>(regionBase eq that.regionBase) && (start == that.start) && (end == that.end)</code>.
-     */
+    @equivalentTo("(regionBase eq that.regionBase) && (start == that.start) && (end == that.end)")
     def shallowEquals[B](that: Vector[B]): Boolean = (regionBase eq that.regionBase) && (start == that.start) && (end == that.end)
 
 
@@ -347,9 +331,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
     @methodized
     def _undivide[B](_this: Vector[Vector[B]]): Vector[B] = Undivide(_this)
 
-    /**
-     * @return  <code>span(function.not(p))</code>.
-     */
+    @equivalentTo("span(function.not(p))")
     def break(p: A => Boolean): (Vector[A], Vector[A]) = span(function.not(p))
 
 
@@ -357,9 +339,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
 
     def mutatingFilter(p: A => Boolean): Vector[A] = this(start, stl.RemoveIf(this, start, end, function.not(p)))
 
-    /**
-     * @return  <code>mutatingFilter(function.not(p))</code>.
-     */
+    @equivalentTo("mutatingFilter(function.not(p))")
     def mutatingRemove(p: A => Boolean): Vector[A] = mutatingFilter(function.not(p))
 
 
@@ -424,9 +404,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
 
 // sort
 
-    /**
-     * @return  <code>sortBy(c)</code>.
-     */
+    @equivalentTo("sortBy(c)")
     def sort(implicit c: Compare[A]): Vector[A] = sortBy(c)
 
     /**
@@ -438,9 +416,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
      */
     def sortBy(lt: compare.Func[A]): Vector[A] = { stl.Sort(this, start, end, lt); this }
 
-    /**
-     * @return  <code>stableSortBy(c)</code>.
-     */
+    @equivalentTo("stableSortBy(c)")
     def stableSort(implicit c: Compare[A]): Vector[A] = stableSortBy(c)
 
     /**
@@ -471,9 +447,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
      */
     def reverse: Vector[A] = Reverse(this)
 
-    /**
-     * @return  <code>this(i, end) ++ this(start, i)</code>.
-     */
+    @equivalentTo("this(i, end) ++ this(start, i)")
     def rotate(i: Int): Vector[A] = Rotate(this, i)
 
 
@@ -514,9 +488,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
 
 // parallel support
 
-    /**
-     * @return  <code>parallel(defaultGrainSize)</code>
-     */
+    @equivalentTo("parallel(defaultGrainSize)")
     final def parallel: Vector[A] = parallel(defaultGrainSize)
 
     /**
@@ -534,9 +506,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
      */
     def defaultGrainSize: Int = Math.max(1, size / util.Parallels.poolSize)
 
-    /**
-     * @return  <code>mix(Mixin.parallel)</code>.
-     */
+    @equivalentTo("mix(Mixin.parallel)")
     final def parallelize: Vector[A] = mix(Mixin.parallel)
 
     /**
@@ -615,14 +585,10 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
 
 // trivials
 
-    /**
-     * @return  <code>f(this); this</code>.
-     */
+    @equivalentTo("f(this); this")
     final def sideEffect(f: Vector[A] => Unit): Vector[A] = { f(this); this }
 
-    /**
-     * @return  <code>range(start, end)</code>.
-     */
+    @equivalentTo("range(start, end)")
     final def indices: Vector[Int] = range(start, end)
 
 }

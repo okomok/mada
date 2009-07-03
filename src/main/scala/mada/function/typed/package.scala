@@ -12,9 +12,7 @@ package mada.function
  */
 package object typed {
 
-    /**
-     * @return  <code>{ (v1, v2) => v1 == v2 }</code>.
-     */
+    @equivalentTo("{ (v1, v2) => v1 == v2 }")
     def equal[T1, T2]: Predicate2[T1, T2] = function.equal.asInstanceOf[Predicate2[T1, T2]]
 
 }

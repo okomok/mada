@@ -15,9 +15,7 @@ package object auto {
     @returnThat
     def use[A](that: Auto[A]): Auto[A] = that
 
-    /**
-     * @return  <code>a.usedBy(f)</code>.
-     */
+    @equivalentTo("a.usedBy(f)")
     @packageObjectBrokenOverload
     def using[A, B](a: Auto[A])(f: A => B): B = a.usedBy(f)
 

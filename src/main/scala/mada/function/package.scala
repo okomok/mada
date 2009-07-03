@@ -27,14 +27,10 @@ package object function {
 
 // equal
 
-    /**
-     * @return  <code>{ (x, y) => x == y }</code>.
-     */
+    @equivalentTo("{ (x, y) => x == y }")
     val equal: Predicate2[Any, Any] = Equal()
 
-    /**
-     * @return  <code>{ y => x == y }</code>.
-     */
+    @equivalentTo("{ y => x == y }")
     def equalTo(x: Any): Predicate1[Any] = EqualTo(x)
 
 

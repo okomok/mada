@@ -60,9 +60,7 @@ sealed trait List { // this: `this` =>
     final def take[n <: meta.Nat](implicit _take: Take[`this`, n]): take[n] = _take(_this)
     final type take[n <: meta.Nat] = Take.result[`this`, n]
 
-    /**
-     * @return <code>drop[n].take[m - n]</code>.
-     */
+    @equivalentTo("drop[n].take[m - n]")
     final def slice[n <: meta.Nat, m <: meta.Nat](implicit _slice: Slice[`this`, n, m]): slice[n, m] = _slice(_this)
     final type slice[n <: meta.Nat, m <: meta.Nat] = Slice.result[`this`, n, m]
 
@@ -150,14 +148,10 @@ object List {
 
     // For some compiler bug, these are placed in companion module.
 
-    /**
-     * @return  <code>r#prepend[l]</code>.
-     */
+    @equivalentTo("r#prepend[l]")
     type :::[l <: List, r <: List] = r#prepend[l]
 
-    /**
-     * @return  <code>r#reversePrepend[l]</code>.
-     */
+    @equivalentTo("r#reversePrepend[l]")
     type reverse_:::[l <: List, r <: List] = r#reversePrepend[l]
 
 }

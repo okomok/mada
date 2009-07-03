@@ -35,22 +35,16 @@ package object blend {
 
 // list
 
-    /**
-     * @return  <code>new Nil{}</code>.
-     */
+    @equivalentTo("new Nil{}")
     val Nil = NilWrap.value
 
     @aliasOf("Cons")
     type ::[h, t <: List] = Cons[h, t]
 
-    /**
-     * @return  <code>r#prepend[l]</code>.
-     */
+    @equivalentTo("r#prepend[l]")
     type :::[l <: List, r <: List] = List.:::[l, r]
 
-    /**
-     * @return  <code>r#reversePrepend[l]</code>.
-     */
+    @equivalentTo("r#reversePrepend[l]")
     type reverse_:::[l <: List, r <: List] = List.reverse_:::[l, r]
 
 }

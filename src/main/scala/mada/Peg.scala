@@ -228,9 +228,7 @@ trait Peg[A] {
      */
     final def readMap[Z](f: sequence.Vector[Z] => sequence.Vector[A]): Peg[Z] = ReadMap(this, f)
 
-    /**
-     * @return  <code>readMap{ v => v.map(f) }</code>.
-     */
+    @equivalentTo("readMap{ v => v.map(f) }")
     final def unmap[Z](f: Z => A): Peg[Z] = Unmap(this, f)
 
     /**
@@ -396,9 +394,7 @@ trait Peg[A] {
     @returnThis
     final def asPeg: Peg[A] = this
 
-    /**
-     * @return  <code>(e, this)</code>.
-     */
+    @equivalentTo("(e, this)")
     final def inCase(e: A): (A, Peg[A]) = (e, this)
 
 }

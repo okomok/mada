@@ -118,14 +118,10 @@ package object vector {
         }).asInstanceOf[Auto[Vector[A]]]
     }
 
-    /**
-     * @return  <code>file[A](new java.io.RandomAccessFile(f, m))(rm)</code>.
-     */
+    @equivalentTo("file[A](new java.io.RandomAccessFile(f, m))(rm)")
     def file[A](f: java.io.File, m: String)(implicit rm: scala.reflect.Manifest[A]): Auto[Vector[A]] = file[A](new java.io.RandomAccessFile(f, m))(rm)
 
-    /**
-     * @return  <code>file[A](new java.io.RandomAccessFile(n, m))(rm)</code>.
-     */
+    @equivalentTo("file[A](new java.io.RandomAccessFile(n, m))(rm)")
     def file[A](n: String, m: String)(implicit rm: scala.reflect.Manifest[A]): Auto[Vector[A]] = file[A](new java.io.RandomAccessFile(n, m))(rm)
 
 

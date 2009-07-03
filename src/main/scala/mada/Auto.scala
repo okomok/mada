@@ -30,9 +30,7 @@ trait Auto[+A] {
      */
     def end: Unit = ()
 
-    /**
-     * @return  <code>begin; try { f(get) } finally { end }</code>.
-     */
+    @equivalentTo("begin; try { f(get) } finally { end }")
     def usedBy[B](f: A => B): B = {
         begin
         try {
