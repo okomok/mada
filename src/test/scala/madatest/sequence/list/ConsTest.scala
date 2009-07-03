@@ -15,12 +15,12 @@ class ConsTest {
 
     def testInfer: Unit = {
         val x: list.Type[Int] = 1 :: 3 :: 4 :: Nil
-        assertEquals(10, x.at(1) + 7)
+        assertEquals(10, x.nth(1) + 7)
     }
 
     def testInferStrict: Unit = {
         val x: list.Type[Int] = 1 #:: 3 #:: 4 #:: Nil
-        assertEquals(10, x.at(1) + 7)
+        assertEquals(10, x.nth(1) + 7)
     }
 
 }

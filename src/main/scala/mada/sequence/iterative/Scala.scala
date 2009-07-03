@@ -13,6 +13,6 @@ case class FromSIterable[+A](_1: Iterable[A]) extends Iterative[A] {
 
 case class ToSeq[+A](_1: Iterative[A]) extends Seq[A] {
     override def iterator = _1.begin.toSIterator
-    override def apply(n: Int) = _1.at(n)
+    override def apply(n: Int) = _1.nth(n)
     override def length = _1.size
 }

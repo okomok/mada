@@ -288,23 +288,6 @@ trait Iterative[+A] extends Sequence[A] {
 // misc
 
     /**
-     * Returns the <code>n</code>-th element.
-     */
-    def at(n: Int): A = {
-        Precondition.nonnegative(n, "at")
-        var i = n
-        val it = begin
-        while (it) {
-            if (i == 0) {
-                return ~it
-            }
-            i -= 1
-            it.++
-        }
-        throw new NoSuchElementException("at" + Tuple1(n))
-    }
-
-    /**
      * Does this contain the element?
      */
     def contains(e: Any): Boolean = exists(function.equalTo(e))
@@ -334,6 +317,23 @@ trait Iterative[+A] extends Sequence[A] {
      * Makes every element access be lazy.
      */
     def memoize: Iterative[A] = Memoize(this)
+
+    /**
+     * Returns the <code>n</code>-th element.
+     */
+    def nth(n: Int): A = {
+        Precondition.nonnegative(n, "nth")
+        var i = n
+        val it = begin
+        while (it) {
+            if (i == 0) {
+                return ~it
+            }
+            i -= 1
+            it.++
+        }
+        throw new NoSuchElementException("nth" + Tuple1(n))
+    }
 
     /**
      * Transforms sequence-to-sequence expression `seq.f.g.h` to `seq.x.f.x.g.x.h`.

@@ -420,17 +420,6 @@ sealed trait List[+A] extends iterative.Sequence[A] {
 // misc
 
     /**
-     * Returns the <code>n</code>-th element.
-     */
-    @tailrec
-    final def at(n: Int): A = (this, n) match {
-        case (_, n) if n < 0 => throw new IllegalArgumentException("negative index")
-        case (Nil, n) => throw new NoSuchElementException("index too large")
-        case (x :: _, 0) => x
-        case (_ :: xs, n) => xs().at(n - 1)
-    }
-
-    /**
      * Does this contain the element?
      */
     def contains(x: Any): Boolean = exists(function.equalTo(x))
@@ -458,6 +447,17 @@ sealed trait List[+A] extends iterative.Sequence[A] {
 
     @returnThis
     def memoize: List[A] = this
+
+    /**
+     * Returns the <code>n</code>-th element.
+     */
+    @tailrec
+    final def nth(n: Int): A = (this, n) match {
+        case (_, n) if n < 0 => throw new IllegalArgumentException("negative index")
+        case (Nil, n) => throw new NoSuchElementException("index too large")
+        case (x :: _, 0) => x
+        case (_ :: xs, n) => xs().nth(n - 1)
+    }
 
     /**
      * Reverses.

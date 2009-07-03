@@ -42,7 +42,6 @@ trait Forwarder[A] extends TransformAdapter[A] with SequenceForwarder[A] {
     override def dropWhile(p: A => Boolean): Vector[A] = around(delegate.dropWhile(p))
     override def span(p: A => Boolean): (Vector[A], Vector[A]) = around2(delegate.span(p))
     override def splitAt(i: Int): (Vector[A], Vector[A]) = around2(delegate.splitAt(i))
-    override def at(n: Int): A = delegate.at(n)
     override def contains(e: Any): Boolean = delegate.contains(e)
     override def times(n: Int): Vector[A] = around(delegate.times(n))
     override def force: Vector[A] = around(delegate.force)

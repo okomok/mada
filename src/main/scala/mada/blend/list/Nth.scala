@@ -11,10 +11,10 @@ package mada.blend.list
 
 
 @specializer
-trait At[l <: List, n <: meta.Nat] extends (l => At.result[l, n])
+trait Nth[l <: List, n <: meta.Nat] extends (l => Nth.result[l, n])
 
 
-object At {
+object Nth {
 
     type result[l <: List, n <: meta.Nat] = n#accept[vt[l]]
 
@@ -24,12 +24,12 @@ object At {
         override type visitSucc[n <: meta.Nat] = n#accept[vt[l#tail]]
     }
 
-    implicit def ofZero[h, t <: List] = new At[Cons[h, t], meta.Zero] {
+    implicit def ofZero[h, t <: List] = new Nth[Cons[h, t], meta.Zero] {
         override def apply(_l: Cons[h, t]) = _l.head
     }
 
-    implicit def ofSucc[h, t <: List, n <: meta.Nat](implicit _at: At[t, n]) = new At[Cons[h, t], meta.Succ[n]] {
-        override def apply(_l: Cons[h, t]) = _at(_l.tail)
+    implicit def ofSucc[h, t <: List, n <: meta.Nat](implicit _nth: Nth[t, n]) = new Nth[Cons[h, t], meta.Succ[n]] {
+        override def apply(_l: Cons[h, t]) = _nth(_l.tail)
     }
 
 }

@@ -216,11 +216,6 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
     }
 
     /**
-     * Returns the <code>n</code>-th element.
-     */
-    def at(n: Int): A = nth(n)
-
-    /**
      * Does this contain the element?
      */
     def contains(e: Any): Boolean = exists(function.equalTo(e))

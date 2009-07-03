@@ -18,15 +18,15 @@ class ListUnmetaTest {
     def testAt = {
         val i = new java.lang.Integer(10)
         val lst = 3 :: "hello" :: i :: 'a' :: Nil
-        val _0N: Int = lst.at[_0N]
+        val _0N: Int = lst.nth[_0N]
         assertEquals(3, _0N)
-        val _1N: String = lst.at[_1N]
+        val _1N: String = lst.nth[_1N]
         assertEquals("hello", _1N)
-        val _2N: java.lang.Integer = lst.at[_2N]
+        val _2N: java.lang.Integer = lst.nth[_2N]
         assertSame(i, _2N)
-        val _3N: Char = lst.at[_3N]
+        val _3N: Char = lst.nth[_3N]
         assertEquals('a', _3N)
-        assertEquals(10, lst.at[_2N].intValue)
+        assertEquals(10, lst.nth[_2N].intValue)
     }
 
     def testSize: Unit = {
@@ -190,7 +190,7 @@ class ListUnmetaTest {
         val lst1: Lst1 = 3 :: "hello" :: i :: 'a' :: 12 :: Nil
         val e: Lst1#init = lst1.init
         val e_ : Int :: String :: java.lang.Integer :: Char :: Nil = e
-        assertEquals(i, e.at[_2N])
+        assertEquals(i, e.nth[_2N])
 
         type Lst2 = String :: Nil
         val lst2: Lst2 = "hello" :: Nil
@@ -207,11 +207,11 @@ class ListmetaTest {
 
     trait testAt {
         type lst = Int :: String :: Double :: Char :: Nil
-        assertSame[lst#at[_0N], Int]
-        assertSame[lst#at[_1N], String]
-        assertSame[lst#at[_2N], Double]
-        assertSame[lst#at[_3N], Char]
-        assertSame[lst#at[_2N#add[_1N]], Char]
+        assertSame[lst#nth[_0N], Int]
+        assertSame[lst#nth[_1N], String]
+        assertSame[lst#nth[_2N], Double]
+        assertSame[lst#nth[_3N], Char]
+        assertSame[lst#nth[_2N#add[_1N]], Char]
     }
 
     trait testSize {

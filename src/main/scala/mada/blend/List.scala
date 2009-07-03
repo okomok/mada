@@ -43,14 +43,6 @@ sealed trait List { // this: `this` =>
     type accept[v <: Visitor] <: v#Result
 
     /**
-     * Returns the <code>n</code>-th element.
-     *
-     * @pre <code>0 <= n <= size</code>.
-     */
-    final def at[n <: meta.Nat](implicit _at: At[`this`, n]): at[n] = _at(_this)
-    final type at[n <: meta.Nat] = At.result[`this`, n]
-
-    /**
      * Drops EXACTLY <code>n</code> elements.
      */
     final def drop[n <: meta.Nat](implicit _drop: Drop[`this`, n]): drop[n] = _drop(_this)
@@ -73,10 +65,12 @@ sealed trait List { // this: `this` =>
     final type lastOrElse[a] = LastOrElse.result[`this`, a]
 
     /**
-     * Returns the size.
+     * Returns the <code>n</code>-th element.
+     *
+     * @pre <code>0 <= n <= size</code>.
      */
-    final type size = Size.result[`this`]
-    final def size(implicit _unmeta: meta.Unmeta[size, scala.Int]): scala.Int = _unmeta() // just for convenience.
+    final def nth[n <: meta.Nat](implicit _nth: Nth[`this`, n]): nth[n] = _nth(_this)
+    final type nth[n <: meta.Nat] = Nth.result[`this`, n]
 
     /**
      * Prepends <code>that</code>.
@@ -95,6 +89,12 @@ sealed trait List { // this: `this` =>
      */
     final def reverse(implicit _reversePrepend: ReversePrepend[Nil, `this`]): reverse = _reversePrepend(Nil, _this)
     final type reverse = ReversePrepend.result[Nil, `this`]
+
+    /**
+     * Returns the size.
+     */
+    final type size = Size.result[`this`]
+    final def size(implicit _unmeta: meta.Unmeta[size, scala.Int]): scala.Int = _unmeta() // just for convenience.
 
     /**
      * Converts to <code>sequence.List[Any]</code>.

@@ -11,10 +11,10 @@ import mada.sequence.list
 import junit.framework.Assert._
 
 
-class AtTest {
+class NthTest {
     def testTrivial: Unit = {
         val A1 = list.Of(1,6,7,10,14,17)
-        assertEquals(1, A1.at(0))
-        assertEquals(10, A1.at(3))
+        assertEquals(1, A1.nth(0))
+        assertEquals(10, A1.nth(3))
     }
 }
