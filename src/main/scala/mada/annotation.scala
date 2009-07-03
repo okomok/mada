@@ -66,6 +66,17 @@ class overload extends StaticAnnotation
 
 
 /**
+ * Precondition
+ */
+class pre(expr: String) extends StaticAnnotation
+
+/**
+ * Postcondition
+ */
+class post(expr: String) extends StaticAnnotation
+
+
+/**
  * Returns <code>this</code>.
  */
 class returnThis extends StaticAnnotation
