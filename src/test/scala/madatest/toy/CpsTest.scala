@@ -155,6 +155,21 @@ class CpsTest {
         assertEquals(70, baz()) // (7)+1)*2 )+1)*2 )+1)*2
     }
 
+    def testPrintf: Unit = {
+        val fromInt = (x: Int) => x.toString
+        val fromStr = (x: String) => x
+
+        def format[A, B](toStr: A => String) = shift { (k: String => B) => (x: A) => k(toStr(x)) }
+        def sprintf[A](str: ControlContext[String, String, A]) = reset(str)
+
+
+        ()
+
+
+
+
+
+    }
 
 
 
