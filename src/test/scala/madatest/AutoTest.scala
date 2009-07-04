@@ -54,6 +54,17 @@ class AutoTest {
         assertTrue(file.ended)
     }
 
+    def testTrivialSugar: Unit = {
+        val file = new MyFile
+        assertFalse(file.ended)
+        for {
+            f <- auto.use(file)
+        } yield {
+            f.read
+        }
+        assertTrue(file.ended)
+    }
+
     def testHis: Unit = {
         val file = new HisFile[Int]
         assertFalse(file.ended)
