@@ -193,8 +193,34 @@ class CpsTest {
         assertEquals("The value of x is 3.", f3("x")(3))
     }
 
+    def testMonad: Unit = {
+        import mada.sequence._ // Scala 2.8 collection flatMap signature is complicated.
 
+        type Monadic[+U, C[_]] = {
+            def flatMap[V](f: U => C[V]): C[V]
+        }
 
+        class Reflective[+A, C[_]](xs: Monadic[A, C]) {
+            def reflect[B](): Shift[A, C[B], C[B]] = shift { (k: A => C[B]) =>
+                xs.flatMap(k)
+            }
+        }
 
+        implicit def reflective[A](xs: List[A]) = new Reflective[A, List](xs)
+
+        val r = reset {
+            val left = List("x", "y", "z")
+            val right = List(4, 5, 6)
+
+            for {
+                l <- left.reflect[Any]
+                r <- right.reflect[Any]
+            } yield {
+                List(Tuple2(l, r))
+            }
+        }
+
+        assertEquals(Tuple2("y", 5), r.nth(4))
+    }
 
 }
