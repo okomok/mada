@@ -37,7 +37,6 @@ object cps {
     }
 
     def shift[A, B, C](fun: (A => B) => C): Shift[A, B, C] = new Shift(fun)
-
     def reset[A, C](c: Shift[A, A, C]): C = c.fun { (x: A) => x }
 
 }
@@ -221,6 +220,89 @@ class CpsTest {
         }
 
         assertEquals(Tuple2("y", 5), r.nth(4))
+    }
+
+    def testYieldReturn: Unit = {
+
+        abstract class YieldReturnIterator[A] extends Iterator[A] {
+            private var nextValue: Option[Option[A]] = None
+            private var getNext: Unit => Unit = { (_: Unit) =>
+                reset {
+                    for {
+                        b <- body
+                    } yield {
+                        b
+                        nextValue = Some(None)
+                        getNext = null
+                    }
+                }
+            }
+
+            protected def yieldReturn(e: A): Shift[Unit, Unit, Unit] = {
+                shift { (k: Unit => Unit) =>
+                    nextValue = Some(Some(e))
+                    getNext = k
+                }
+            }
+
+            protected def body: Shift[Unit, Unit, Unit]
+
+            override def hasNext = {
+                if (nextValue.isEmpty) {
+                    getNext()
+                }
+                !nextValue.get.isEmpty
+            }
+
+            override def next = {
+                if (nextValue.isEmpty) {
+                    getNext()
+                }
+                val e = nextValue.get.get
+                nextValue = None
+                e
+            }
+        }
+
+        class My extends YieldReturnIterator[String] {
+            override def body = {
+                for {
+                    _1 <- yieldReturn("ab")
+                    _2 <- yieldReturn("cdef")
+                    _3 <- yieldReturn("g")
+                } yield {
+                    _1
+                    _2
+                    _3
+                }
+            }
+        }
+
+        val m = new My
+        assertEquals("ab", m.next)
+        assertEquals("cdef", m.next)
+        assertEquals("g", m.next)
+        assertFalse(m.hasNext)
+    }
+
+
+    def testSideEffect: Unit = {
+        var msg: String = ""
+        def _println(s: Any) = { msg = msg + s }
+
+        _println(1)
+        reset {
+            for {
+                _ <- shift { (k: Unit => Unit) =>
+                    k()
+                    k()
+                    _println(2)
+                }
+            } yield {
+                _println(3)
+            }
+        }
+        assertEquals("1332", msg)
     }
 
 }
