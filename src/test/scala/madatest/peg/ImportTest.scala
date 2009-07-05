@@ -10,7 +10,7 @@ package madatest.pegtest
 import junit.framework.Assert._
 
 
-import mada.peg.compatibles._ // "strong" import (not type-sensitive but name-sensitive)
+import mada.peg.Compatibles._ // "strong" import (not type-sensitive but name-sensitive)
 
 class ImportTest {
     def testNotAmbiguous: Unit = {

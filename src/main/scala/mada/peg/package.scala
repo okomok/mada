@@ -22,7 +22,7 @@ package object peg {
     type Action3[A] = sequence.vector.Func3[A, Unit]
 
     @compatibles
-    val compatibles: Compatibles = Peg
+    val Compatibles: Compatibles = Peg
 
 
 // constants
@@ -45,7 +45,7 @@ package object peg {
     /**
      * Matches if it succeeds to advance.
      *
-     * @param   i   the increment count
+     * @param   n   the increment count
      */
     def advance[A](n: Int): Peg[A] = Advance[A](n)
 

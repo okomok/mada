@@ -9,7 +9,7 @@ package madatest.pegtest
 
 import junit.framework.Assert._
 import mada.sequence.{Vector, vector}
-import mada.peg.compatibles._
+import mada.peg.Compatibles._
 import mada.{Peg, peg}
 
 

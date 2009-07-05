@@ -14,7 +14,7 @@ import mada.sequence.{Vector, vector}
 import mada.{Peg, peg}
 import mada.peg._
 import junit.framework.Assert._
-import mada.peg.compatibles._
+import mada.peg.Compatibles._
 
 
 class ByNameTest {
