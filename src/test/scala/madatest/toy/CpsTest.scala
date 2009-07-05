@@ -153,6 +153,47 @@ class CpsTest {
         assertEquals(70, baz()) // (7)+1)*2 )+1)*2 )+1)*2
     }
 
+    def testSideEffect: Unit = {
+        var msg: String = ""
+        def _println(s: Any) = { msg = msg + s }
+
+    // sugar-form
+        _println(1)
+        reset {
+            for {
+                x <- shift { (k: Unit => Unit) =>
+                    k()
+                    k()
+                    _println(2)
+                }
+            } yield {
+                x // Placed only for consistent syntax.
+                _println(3)
+            }
+        }
+        assertEquals("1332", msg)
+        msg = ""
+
+    // desugar-form
+        _println(1)
+        reset {
+            shift { (k: Unit => Unit) =>
+                k()
+                k()
+                _println(2)
+            }.map {
+                x => {
+                    x
+                    _println(3)
+                }
+            }
+        }
+        assertEquals("1332", msg)
+        msg = ""
+
+        ()
+    }
+
     def testPrintf: Unit = {
         val fromInt = (x: Int) => x.toString
         val fromStr = (x: String) => x
@@ -229,9 +270,9 @@ class CpsTest {
             private var getNext: Unit => Unit = { (_: Unit) =>
                 reset {
                     for {
-                        b <- body
+                        x <- body
                     } yield {
-                        b
+                        x // Placed only for consistent syntax.
                         nextValue = Some(None)
                         getNext = null
                     }
@@ -267,13 +308,13 @@ class CpsTest {
         class My extends YieldReturnIterator[String] {
             override def body = {
                 for {
-                    _1 <- yieldReturn("ab")
-                    _2 <- yieldReturn("cdef")
-                    _3 <- yieldReturn("g")
+                    x1 <- yieldReturn("ab")
+                    x2 <- yieldReturn("cdef")
+                    x3 <- yieldReturn("g")
                 } yield {
-                    _1
-                    _2
-                    _3
+                    x1 // Placed only for consistent syntax.
+                    x2 // Placed only for consistent syntax.
+                    x3 // Placed only for consistent syntax.
                 }
             }
         }
@@ -283,26 +324,6 @@ class CpsTest {
         assertEquals("cdef", m.next)
         assertEquals("g", m.next)
         assertFalse(m.hasNext)
-    }
-
-
-    def testSideEffect: Unit = {
-        var msg: String = ""
-        def _println(s: Any) = { msg = msg + s }
-
-        _println(1)
-        reset {
-            for {
-                _ <- shift { (k: Unit => Unit) =>
-                    k()
-                    k()
-                    _println(2)
-                }
-            } yield {
-                _println(3)
-            }
-        }
-        assertEquals("1332", msg)
     }
 
 }
