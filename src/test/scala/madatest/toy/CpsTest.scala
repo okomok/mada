@@ -12,34 +12,33 @@ import junit.framework.Assert._
 
 object cps {
 
-    final class ControlContext[+A,-B,+C](val fun: (A => B) => C) {
+    final class Shift[+A, -B, +C](val fun: (A => B) => C) {
 
-        final def map[A1](f: A => A1): ControlContext[A1,B,C] = {
-            new ControlContext( (k: A1 => B) =>
+        final def map[A1](f: A => A1): Shift[A1, B, C] = {
+            new Shift( (k: A1 => B) =>
                 fun { (x: A) =>
                     k(f(x))
                 }
             )
         }
-/*
-        final def flatMap[A1, B1, C1 <: B](f: A => ControlContext[A1, B1, C1]): ControlContext[A1, B1, C] = {
-            new ControlContext( (k: A1 => B1) =>
+
+        final def flatMap[A1, B1](f: A => Shift[A1, B1, B]): Shift[A1, B1, C] = {
+            new Shift( (k: A1 => B1) =>
                 fun { (x: A) =>
-                    val res: C1 = f(x).fun(k)
-                    res
+                    f(x).fun(k)
                 }
             )
         }
-
+/*
         final def foreach(f: A => B) = {
             fun(f)
         }
 */
     }
 
-    def shift[A, B, C](fun: (A => B) => C): ControlContext[A, B, C] = new ControlContext(fun)
+    def shift[A, B, C](fun: (A => B) => C): Shift[A, B, C] = new Shift(fun)
 
-    def reset[A, C](c: ControlContext[A, A, C]): C = c.fun { (x: A) => x }
+    def reset[A, C](c: Shift[A, A, C]): C = c.fun { (x: A) => x }
 
 }
 
@@ -132,7 +131,7 @@ class CpsTest {
     }
 
     def testFig1_6: Unit = {
-        def foo(): ControlContext[Int, Int, Int] = {
+        def foo(): Shift[Int, Int, Int] = {
             for {
                 x <- shift { (k: Int => Int) => k(k(k(7))) }
             } yield {
@@ -140,7 +139,7 @@ class CpsTest {
             }
         }
 
-        def bar(): ControlContext[Int, Int, Int] = {
+        def bar(): Shift[Int, Int, Int] = {
             for {
                 x <- foo()
             } yield {
@@ -159,16 +158,39 @@ class CpsTest {
         val fromInt = (x: Int) => x.toString
         val fromStr = (x: String) => x
 
-        def format[A, B](toStr: A => String) = shift { (k: String => B) => (x: A) => k(toStr(x)) }
-        def sprintf[A](str: ControlContext[String, String, A]) = reset(str)
+        def format[A, B](toStr: A => String): Shift[String, B, A => B] = {
+            shift { (k: String => B) =>
+                (x: A) => k(toStr(x))
+            }
+        }
 
+        def sprintf[A](str: Shift[String, String, A]) = reset(str)
 
-        ()
+        val f1 = sprintf {
+            shift { (k: String => String) =>
+                "Hello World!"
+            }
+        }
+        assertEquals("Hello World!", f1)
 
+        val f2 = sprintf {
+            for {
+                x <- format[String, String](fromStr)
+            } yield {
+                "Hello " + x + "!"
+            }
+        }
+        assertEquals("Hello World!", f2("World"))
 
-
-
-
+        val f3 = sprintf {
+            for {
+                x <- format[String, Int => String](fromStr)
+                y <- format[Int, String](fromInt)
+            } yield {
+                "The value of " + x + " is " + y + "."
+            }
+        }
+        assertEquals("The value of x is 3.", f3("x")(3))
     }
 
 
