@@ -25,6 +25,16 @@ class MatchTest {
                 assertEquals(3, x + 1 - 1)
                 assertEquals("hello", y)
             }
+            case x :: ys => {
+                assertEquals(3, x + 1 - 1)
+                val _l: String :: java.lang.Integer :: Nil = ys
+                _l match {
+                    case y :: zs => {
+                        assertEquals("hello", y)
+                    }
+                    case _ => fail("doh")
+                }
+            }
             case _ => fail("doh")
         }
 
