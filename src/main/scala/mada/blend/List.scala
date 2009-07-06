@@ -121,6 +121,11 @@ sealed trait List { // this: `this` =>
     def untyped: untyped // The implicit way would annoy toString.
     final type untyped = sequence.List[Any]
 
+    final override def equals(that: Any) = that match {
+        case that: List => untyped == that.untyped
+        case _ => false
+    }
+    final override def hashCode = untyped.hashCode
     final override def toString = untyped.toString
 
 }
@@ -199,5 +204,15 @@ object List {
     @compilerWorkaround
     @equivalentTo("r#reversePrepend[l]")
     type reverse_:::[l <: List, r <: List] = r#reversePrepend[l]
+
+}
+
+
+/**
+ * The matcher for cons list
+ */
+object :: {
+
+    def unapply[h, t <: List](xs: Cons[h, t]): Option[(h, t)] = Some(xs.head, xs.tail)
 
 }
