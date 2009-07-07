@@ -50,7 +50,7 @@ sealed trait List { // this: `this` =>
     /**
      * Drops EXACTLY <code>n</code> elements.
      *
-     * @pre <code>0 <= n <= size</code>.
+     * @pre `0 <= n <= size`.
      */
     final def drop[n <: meta.Nat](implicit _drop: Drop[`this`, n]): drop[n] = _drop(_this)
     final type drop[n <: meta.Nat] = Drop.result[`this`, n]
@@ -58,7 +58,7 @@ sealed trait List { // this: `this` =>
     /**
      * Takes EXACTLY <code>n</code> elements.
      *
-     * @pre <code>0 <= n <= size</code>.
+     * @pre `0 <= n <= size`.
      */
     final def take[n <: meta.Nat](implicit _take: Take[`this`, n]): take[n] = _take(_this)
     final type take[n <: meta.Nat] = Take.result[`this`, n]
@@ -86,7 +86,7 @@ sealed trait List { // this: `this` =>
     /**
      * Returns the <code>n</code>-th element.
      *
-     * @pre <code>0 <= n <= size</code>.
+     * @pre `0 <= n <= size`.
      */
     final def nth[n <: meta.Nat](implicit _nth: Nth[`this`, n]): nth[n] = _nth(_this)
     final type nth[n <: meta.Nat] = Nth.result[`this`, n]
@@ -96,6 +96,14 @@ sealed trait List { // this: `this` =>
      */
     final def :::[that <: List](_that: that)(implicit _prepend: Prepend[`this`, that]): prepend[that] = _prepend(_this, _that)
     final type prepend[that <: List] = Prepend.result[`this`, that]
+
+    /**
+     * Returns a new list whose <code>n</code>-th element is replaced by <code>_a</code>.
+     *
+     * @pre `0 <= n <= size`.
+     */
+    final def replace[n <: meta.Nat, a](_a: a)(implicit _replace: Replace[`this`, n, a]): replace[n, a] = _replace(_this, _a)
+    final type replace[n <: meta.Nat, a] = Replace.result[`this`, n, a]
 
     /**
      * Prepends reversed <code>that</code>.

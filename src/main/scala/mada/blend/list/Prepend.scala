@@ -10,6 +10,7 @@ package mada.blend.list
 @specializer
 trait Prepend[r <: List, l <: List] extends ((r, l) => Prepend.result[r, l])
 
+
 object Prepend {
 
     type result[r <: List, l <: List] = l#accept[vt[r]]
