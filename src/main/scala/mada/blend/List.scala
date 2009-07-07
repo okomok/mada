@@ -76,6 +76,14 @@ sealed trait List { // this: `this` =>
     final type elementOf[a] = ElementOf.result[`this`, a]
 
     /**
+     * Inserts all the elements of <code>_that</code>, starting at the specified position.
+     *
+     * @pre `0 <= n <= size`.
+     */
+    final def insert[n <: meta.Nat, that <: List](_that: that)(implicit _insert: Insert[`this`, n, that]): insert[n, that] = _insert(_this, _that)
+    final type insert[n <: meta.Nat, that <: List] = Insert.result[`this`, n, that]
+
+    /**
      * Returns the last element.
      *
      * @pre <code>!isEmpty</code>.
@@ -98,7 +106,15 @@ sealed trait List { // this: `this` =>
     final type prepend[that <: List] = Prepend.result[`this`, that]
 
     /**
-     * Returns a new list whose <code>n</code>-th element is replaced by <code>_a</code>.
+     * Removes <code>n</code>-th element.
+     *
+     * @pre `0 <= n <= size`.
+     */
+    final def remove[n <: meta.Nat](implicit _remove: Remove[`this`, n]): remove[n] = _remove(_this)
+    final type remove[n <: meta.Nat] = Remove.result[`this`, n]
+
+    /**
+     * Replaces <code>n</code>-th element with <code>_a</code>.
      *
      * @pre `0 <= n <= size`.
      */
