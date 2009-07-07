@@ -76,11 +76,13 @@ sealed trait List { // this: `this` =>
     final type elementOf[a] = ElementOf.result[`this`, a]
 
     /**
-     * Inserts all the elements of <code>_that</code>, starting at the specified position.
+     * Inserts all the elements of <code>that</code>, starting at the specified position.
      *
      * @pre `0 <= n <= size`.
      */
-    final def insert[n <: meta.Nat, that <: List](_that: that)(implicit _insert: Insert[`this`, n, that]): insert[n, that] = _insert(_this, _that)
+    final def insert[n <: meta.Nat] = new {
+        def apply[that <: List](_that: that)(implicit _insert: Insert[`this`, n, that]): insert[n, that] = _insert(_this, _that)
+    }
     final type insert[n <: meta.Nat, that <: List] = Insert.result[`this`, n, that]
 
     /**
@@ -118,7 +120,9 @@ sealed trait List { // this: `this` =>
      *
      * @pre `0 <= n <= size`.
      */
-    final def replace[n <: meta.Nat, a](_a: a)(implicit _replace: Replace[`this`, n, a]): replace[n, a] = _replace(_this, _a)
+    final def replace[n <: meta.Nat] = new {
+        def apply[a](_a: a)(implicit _replace: Replace[`this`, n, a]): replace[n, a] = _replace(_this, _a)
+    }
     final type replace[n <: meta.Nat, a] = Replace.result[`this`, n, a]
 
     /**

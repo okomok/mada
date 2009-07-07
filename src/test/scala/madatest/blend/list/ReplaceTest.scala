@@ -21,7 +21,7 @@ class ReplaceTest {
         type l = Int :: String :: java.lang.Integer :: Char :: Int :: Nil
         val l: l = 3 :: "hello" :: i :: 'a' :: 12 :: Nil
 
-        val _m: l#replace[_1N, Char] = l.replace[_1N, Char]('c')
+        val _m: l#replace[_1N, Char] = l.replace[_1N]('c')
         val m: Int :: Char :: java.lang.Integer :: Char :: Int :: Nil = _m
         val e: Char = m.nth[_1N]
         assertEquals('c', e)
