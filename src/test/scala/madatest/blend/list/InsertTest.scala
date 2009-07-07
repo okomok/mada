@@ -38,6 +38,26 @@ class InsertTest {
         assertEquals(a, m)
     }
 
+    def testNilNil: Unit = {
+        type l = Nil
+        val l: l = Nil
+
+        val _m: l#insert[_0N, Nil] = l.insert[_0N, Nil](Nil)
+        val m: Nil = _m
+        val a = Nil
+        assertEquals(a, m)
+    }
+
+    def testNilNotNil: Unit = {
+        type l = Nil
+        val l: l = Nil
+
+        val _m: l#insert[_0N, String :: Tuple1[Int] :: Nil] = l.insert[_0N, String :: Tuple1[Int] :: Nil]("wow" :: Tuple1(10) :: Nil)
+        val m: String :: Tuple1[Int] :: Nil = _m
+        val a = "wow" :: Tuple1(10) :: Nil
+        assertEquals(a, m)
+    }
+
     def testHead: Unit = {
         val i = new java.lang.Integer(10)
         type l = Int :: String :: java.lang.Integer :: Char :: Int :: Nil
