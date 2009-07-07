@@ -140,6 +140,14 @@ sealed trait List { // this: `this` =>
     final def size(implicit _unmeta: meta.Unmeta[size, scala.Int]): scala.Int = _unmeta() // just for convenience.
 
     /**
+     * Zips <code>that</code>.
+     *
+     * @pre `size <= that.size`.
+     */
+    final def zip[that <: List](_that: that)(implicit _zip: Zip[`this`, that]): zip[that] = _zip(_this, _that)
+    final type zip[that <: List] = Zip.result[`this`, that]
+
+    /**
      * Converts to <code>sequence.List[Any]</code>.
      */
     def untyped: untyped // The implicit way would annoy toString.
