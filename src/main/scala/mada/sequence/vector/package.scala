@@ -154,4 +154,19 @@ package object vector {
     @compatibleConversion
     def fromJCharSequence(from: java.lang.CharSequence): Vector[Char] = FromJCharSequence(from)
 
+    @compatibleConversion
+    def fromJByteBuffer(from: java.nio.ByteBuffer): Vector[Byte] = FromJByteBuffer(from)
+    @compatibleConversion
+    def fromJCharBuffer(from: java.nio.CharBuffer): Vector[Char] = FromJCharBuffer(from)
+    @compatibleConversion
+    def fromJDoubleBuffer(from: java.nio.DoubleBuffer): Vector[Double] = FromJDoubleBuffer(from)
+    @compatibleConversion
+    def fromJFloatBuffer(from: java.nio.FloatBuffer): Vector[Float] = FromJFloatBuffer(from)
+    @compatibleConversion
+    def fromJIntBuffer(from: java.nio.IntBuffer): Vector[Int] = FromJIntBuffer(from)
+    @compatibleConversion
+    def fromJLongBuffer(from: java.nio.LongBuffer): Vector[Long] = FromJLongBuffer(from)
+    @compatibleConversion
+    def fromJShortBuffer(from: java.nio.ShortBuffer): Vector[Short] = FromJShortBuffer(from)
+
 }

@@ -603,6 +603,14 @@ object Vector {
     implicit def _fromJCharSequence(from: java.lang.CharSequence): Vector[Char] = fromJCharSequence(from)
     implicit def _fromJList[A](from: java.util.List[A]): Vector[A] = fromJList(from)
 
+    implicit def _fromJByteBuffer(from: java.nio.ByteBuffer): Vector[Byte] = fromJByteBuffer(from)
+    implicit def _fromJCharBuffer(from: java.nio.CharBuffer): Vector[Char] = fromJCharBuffer(from)
+    implicit def _fromJDoubleBuffer(from: java.nio.DoubleBuffer): Vector[Double] = fromJDoubleBuffer(from)
+    implicit def _fromJFloatBuffer(from: java.nio.FloatBuffer): Vector[Float] = fromJFloatBuffer(from)
+    implicit def _fromJIntBuffer(from: java.nio.IntBuffer): Vector[Int] = fromJIntBuffer(from)
+    implicit def _fromJLongBuffer(from: java.nio.LongBuffer): Vector[Long] = fromJLongBuffer(from)
+    implicit def _fromJShortBuffer(from: java.nio.ShortBuffer): Vector[Short] = fromJShortBuffer(from)
+
 
 // eligibles
 
