@@ -184,4 +184,30 @@ class AutoTest {
         assertTrue(F3.ended)
     }
 
+    def testForeachOrder: Unit = {
+        val a = new java.util.ArrayList[Int]
+        val x1 = new Auto[Int] {
+            override def get = 1
+            override def begin = a.add(1)
+            override def end = a.add(9)
+        }
+        val x2 = new Auto[Int] {
+            override def get = 2
+            override def begin = a.add(2)
+            override def end = a.add(8)
+        }
+        val x3 = new Auto[Int] {
+            override def get = 3
+            override def begin = a.add(3)
+            override def end = a.add(7)
+        }
+
+        val r =
+            for (y1 <- use(x1); y2 <- use(x2); y3 <- use(x3)) {
+            }
+
+        import mada.sequence.iterative
+        assertEquals(iterative.Of(1,2,3,7,8,9), iterative.from(a))
+    }
+
 }
