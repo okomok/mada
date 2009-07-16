@@ -20,7 +20,7 @@ package object auto {
     def using[A, B](a: Auto[A])(f: A => B): B = a.usedBy(f)
 
     /**
-     * Returns an auto reference where <code>as</code> is used by <code>x</code>.
+     * Returns an auto reference where <code>as</code> is used by <code>e</code>.
      */
     def usedWith[A](as: Seq[Auto[_]], e: A): Auto[A] = UsedWith(as, e)
 
