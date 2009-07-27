@@ -128,14 +128,14 @@ sealed trait List { // this: `this` =>
     /**
      * Prepends reversed <code>that</code>.
      */
-    final def reverse_:::[that <: List](_that: that)(implicit _reversePrepend: ReversePrepend[`this`, that]): reversePrepend[that] = _reversePrepend(_this, _that)
-    final type reversePrepend[that <: List] = ReversePrepend.result[`this`, that]
+    final def reverse_:::[that <: List](_that: that)(implicit _prependReversed: PrependReversed[`this`, that]): prependReversed[that] = _prependReversed(_this, _that)
+    final type prependReversed[that <: List] = PrependReversed.result[`this`, that]
 
     /**
      * Returns reversed one.
      */
-    final def reverse(implicit _reversePrepend: ReversePrepend[Nil, `this`]): reverse = _reversePrepend(Nil, _this)
-    final type reverse = ReversePrepend.result[Nil, `this`]
+    final def reverse(implicit _prependReversed: PrependReversed[Nil, `this`]): reverse = _prependReversed(Nil, _this)
+    final type reverse = PrependReversed.result[Nil, `this`]
 
     /**
      * Returns the size.
@@ -238,8 +238,8 @@ object List {
     type :::[l <: List, r <: List] = r#prepend[l]
 
     @compilerWorkaround
-    @equivalentTo("r#reversePrepend[l]")
-    type reverse_:::[l <: List, r <: List] = r#reversePrepend[l]
+    @equivalentTo("r#prependReversed[l]")
+    type reverse_:::[l <: List, r <: List] = r#prependReversed[l]
 
 }
 
