@@ -34,4 +34,16 @@ class SeekTest {
         val v = vector.Of("ab", "cde", "f", "ghij", "kl", "mno", "p", "qrst")
         assertTrue(v.parallel.seek(_ == "xyz").isEmpty)
     }
+
+    def testExists: Unit = {
+        val v = vector.range(2, 100).parallel
+        assertTrue(v.exists((_: Int) == 30))
+        assertFalse(v.exists((_: Int) == 200))
+    }
+
+    def testForall: Unit = {
+        val v = vector.range(2, 100).parallel
+        assertTrue(v.forall((_: Int) < 300))
+        assertFalse(v.forall((_: Int) == 50))
+    }
 }
