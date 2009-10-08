@@ -14,7 +14,7 @@ package mada.meta
 import nat._
 
 
-trait Nat extends Operatable {
+sealed trait Nat extends Operatable {
     type `this` <: Nat
 
     type isZero <: Boolean
