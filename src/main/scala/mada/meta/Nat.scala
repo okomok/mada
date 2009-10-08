@@ -18,7 +18,7 @@ trait Nat extends Operatable {
     type `this` <: Nat
 
     type isZero <: Boolean
-    final type equals[that <: Nat] = that#accept[equalsVisitor[`this`]]
+    type equals[that <: Nat] <: Boolean
     final override type Operand_== = Nat
     final override type operator_==[that <: Nat] = equals[that]
 
@@ -44,6 +44,7 @@ trait Nat extends Operatable {
 sealed trait Zero extends Nat {
     override type `this` = Zero
     override type isZero = `true`
+    override type equals[that <: Nat] = that#isZero
     override type increment = Succ[Zero]
     override type decrement = sentinel
     override type add[that <: Nat] = that
@@ -54,6 +55,7 @@ sealed trait Zero extends Nat {
 sealed trait Succ[n <: Nat] extends Nat {
     override type `this` = Succ[n]
     override type isZero = `false`
+    override type equals[that <: Nat] = n#equals[that#decrement]
     override type increment = Succ[`this`]
     override type decrement = n
     override type add[that <: Nat] = Succ[n#add[that]]
@@ -67,6 +69,7 @@ sealed trait Succ[n <: Nat] extends Nat {
 sealed trait sentinel extends Nat {
     override type `this` = sentinel
     override type isZero = `false`
+    override type equals[that <: Nat] = `false`
     override type increment = error
     override type decrement = `this`
     override type add[that <: Nat] = error

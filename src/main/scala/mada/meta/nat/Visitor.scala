@@ -17,12 +17,6 @@ trait Visitor {
     type visitSucc[n <: Nat] <: Result
 }
 
-sealed trait equalsVisitor[x <: Nat] extends Visitor {
-    type Result = Boolean
-    type visitZero = x#isZero
-    type visitSucc[y <: Nat] = y#accept[equalsVisitor[x#decrement]]
-}
-
 sealed trait subtractVisitor[x <: Nat] extends Visitor {
     type Result = Nat
     type visitZero = x
