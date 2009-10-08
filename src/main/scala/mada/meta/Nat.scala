@@ -16,7 +16,9 @@ import nat._
 
 trait Nat extends Operatable {
     type `this` <: Nat
-    final type equals[that <: Nat] = identity#equals[that#identity]
+
+    type isZero <: Boolean
+    final type equals[that <: Nat] = that#accept[equalsVisitor[`this`]]
     final override type Operand_== = Nat
     final override type operator_==[that <: Nat] = equals[that]
 
@@ -33,7 +35,6 @@ trait Nat extends Operatable {
 
     type multiply[that <: Nat] <: Nat
 
-    type identity <: Identity
     type accept[v <: Visitor] <: v#Result // More generic algorithms (fold etc) won't work.
 }
 
@@ -42,21 +43,20 @@ trait Nat extends Operatable {
 
 sealed trait Zero extends Nat {
     override type `this` = Zero
+    override type isZero = `true`
     override type increment = Succ[Zero]
     override type decrement = error
     override type add[that <: Nat] = that
     override type multiply[that <: Nat] = Zero
-    override type identity = nat._0I
     override type accept[v <: Visitor] = v#visitZero
 }
 
-
 sealed trait Succ[n <: Nat] extends Nat {
     override type `this` = Succ[n]
+    override type isZero = `false`
     override type increment = Succ[`this`]
     override type decrement = n
     override type add[that <: Nat] = Succ[n#add[that]]
     override type multiply[that <: Nat] = n#multiply[that]#add[that]
-    override type identity = n#identity#increment
     override type accept[v <: Visitor] = v#visitSucc[n]
 }
