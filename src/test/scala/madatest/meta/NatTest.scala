@@ -20,11 +20,26 @@ class NatTest {
 
     trait testTrivial {
         assert[_0N == _0N]
+
         assert[_0N != _1N]
+        assert[_1N != _0N]
 
         assert[_1N == _1N]
+
         assert[_1N != _2N]
         assert[_1N != _3N]
+        assert[_2N != _1N]
+        assert[_3N != _1N]
+
+        assert[_7N == _7N]
+        assert[_2N != _7N]
+        assert[_7N != _2N]
+        assert[_6N != _7N]
+        assert[_7N != _6N]
+        assert[_0N != _7N]
+        assert[_7N != _0N]
+        assert[_1N != _7N]
+        assert[_7N != _1N]
 
         assert[_1N#increment == _2N]
         assert[_1N#increment#increment == _3N]

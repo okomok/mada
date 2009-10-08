@@ -45,7 +45,7 @@ sealed trait Zero extends Nat {
     override type `this` = Zero
     override type isZero = `true`
     override type increment = Succ[Zero]
-    override type decrement = error
+    override type decrement = sentinel
     override type add[that <: Nat] = that
     override type multiply[that <: Nat] = Zero
     override type accept[v <: Visitor] = v#visitZero
@@ -59,4 +59,17 @@ sealed trait Succ[n <: Nat] extends Nat {
     override type add[that <: Nat] = Succ[n#add[that]]
     override type multiply[that <: Nat] = n#multiply[that]#add[that]
     override type accept[v <: Visitor] = v#visitSucc[n]
+}
+
+
+// sentinel value
+
+sealed trait sentinel extends Nat {
+    override type `this` = sentinel
+    override type isZero = `false`
+    override type increment = error
+    override type decrement = `this`
+    override type add[that <: Nat] = error
+    override type multiply[that <: Nat] = error
+    override type accept[v <: Visitor] = error
 }
