@@ -1,4 +1,3 @@
 .scala_dependencies
 target
 maven
-cmd_.bat
