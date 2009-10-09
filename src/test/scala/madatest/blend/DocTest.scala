@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.blendtest
+package madatest; package blendtest
 
 
     import mada.meta.nat.Literal._

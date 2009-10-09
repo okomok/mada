@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.toy.postfix
+package madatest; package toy; package postfix
 
 
 import junit.framework.Assert._

@@ -30,7 +30,7 @@
  */
 
 
-package mada.sequence.vector.stl
+package mada; package sequence; package vector; package stl
 
 
 private[mada] object IsHeap {

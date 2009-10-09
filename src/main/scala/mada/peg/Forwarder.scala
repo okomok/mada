@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.peg
+package mada; package peg
 
 
 trait Forwarder[A] extends Peg[A] with util.Forwarder {

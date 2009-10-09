@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.compare
+package mada; package compare
 
 
 class ToSome[-A](val _1: Compare[A]) extends Forwarder[A] {

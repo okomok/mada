@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.sequence.iterative
+package mada; package sequence; package iterative
 
 
 case class ByLazy[+A](_1: util.ByLazy[Iterative[A]]) extends Forwarder[A] {

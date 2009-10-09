@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.peg.prettyprinter
+package mada; package peg; package prettyprinter
 
 
 case class Trash() extends PrettyPrinter {

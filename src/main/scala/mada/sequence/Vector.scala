@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.sequence
+package mada; package sequence
 
 
 import vector._
@@ -541,7 +541,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
 
     @conversion
     def toArray: Array[A] = {
-        val r = new Array[A](size)
+        val r = newArray[A](size)
         copyTo(fromArray(r))
         r
     }

@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.blend.list
+package mada; package blend; package list
 
 
 // drop#head can't replace this. The delayed #head destroys type identity.

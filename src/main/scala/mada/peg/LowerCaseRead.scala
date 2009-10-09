@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.peg
+package mada; package peg
 
 
 case class LowerCaseRead(_1: Peg[Char]) extends Forwarder[Char] {

@@ -1,6 +1,6 @@
 
 
-package madatest.defecttest
+package madatest; package defecttest
 
 
 package object overloading {

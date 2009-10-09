@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.compare
+package mada; package compare
 
 
 case class FromGetOrdered[A](_1: GetOrdered[A]) extends Forwarder[A] {

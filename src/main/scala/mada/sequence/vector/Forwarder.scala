@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.sequence.vector
+package mada; package sequence; package vector
 
 
 trait Forwarder[A] extends TransformAdapter[A] with SequenceForwarder[A] {

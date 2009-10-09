@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.toy.methodtest
+package madatest; package toy; package methodtest
 
 
 import junit.framework.Assert._

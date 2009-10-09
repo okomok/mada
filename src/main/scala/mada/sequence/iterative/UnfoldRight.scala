@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.sequence.iterative
+package mada; package sequence; package iterative
 
 
 case class UnfoldRight[A, +B](_1: A, _2: A => Option[(B, A)]) extends Iterative[B] {

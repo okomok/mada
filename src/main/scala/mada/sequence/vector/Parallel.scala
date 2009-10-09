@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.sequence.vector
+package mada; package sequence; package vector
 
 
 case class Parallel[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
@@ -42,7 +42,7 @@ case class Parallel[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
     override def reducer(op: (A, A) => A): Vector[A] = ParallelReducer(delegate, op, grainSize)
 // conversion
     override def toArray: Array[A] = {
-        val r = new Array[A](size)
+        val r = newArray[A](size)
         ParallelCopyTo(delegate, fromArray(r), grainSize)
         r
     }

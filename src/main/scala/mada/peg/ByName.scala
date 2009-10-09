@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.peg
+package mada; package peg
 
 
 case class ByName[A](_1: util.ByName[Peg[A]]) extends Forwarder[A] {

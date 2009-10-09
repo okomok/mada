@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.sequence.list
+package mada; package sequence; package list
 
 
 case class AsIterative[A](_1: List[A]) extends Iterative[A] {

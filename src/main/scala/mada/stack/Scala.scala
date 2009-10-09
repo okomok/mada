@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.stack
+package mada; package stack
 
 
 case class FromSStack[A](_1: scala.collection.mutable.Stack[A]) extends Stack[A] {

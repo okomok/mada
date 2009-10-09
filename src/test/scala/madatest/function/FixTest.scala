@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.functiontest
+package madatest; package functiontest
 
 
 import mada.function

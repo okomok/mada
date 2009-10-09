@@ -30,7 +30,7 @@
  */
 
 
-package mada.sequence.vector.stl
+package mada; package sequence; package vector; package stl
 
 
 private[mada] object StableSort {
@@ -38,7 +38,7 @@ private[mada] object StableSort {
         val __len = (__last - __first + 1) / 2
         val __middle = __first + __len
 
-        val buf = vector.from(new Array[A](__len))
+        val buf = vector.from(newArray[A](__len))
         MergeSortWithBuffer(*, __first, __middle, buf, buf.start, __comp)
         MergeSortWithBuffer(*, __middle, __last, buf, buf.start, __comp)
 

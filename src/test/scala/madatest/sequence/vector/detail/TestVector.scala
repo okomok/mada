@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.sequencetest.vectortest.detail
+package madatest; package sequencetest; package vectortest; package detail
 
 
 import mada.sequence._
@@ -12,7 +12,7 @@ import junit.framework.Assert._
 
 
 object TestVectorReadWrite {
-    def apply[A <% Ordered[A]](expected: Array[A], actual: Vector[A]): Unit = {
+    def apply[A<% Ordered[A] : ClassManifest](expected: Array[A], actual: Vector[A]): Unit = {
         TestVectorReadOnly(expected, actual)
 
         CombSort(actual)

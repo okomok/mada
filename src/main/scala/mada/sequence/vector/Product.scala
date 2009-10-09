@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.sequence.vector
+package mada; package sequence; package vector
 
 
 case class FromProduct(_1: Product) extends Forwarder[Any] {
@@ -28,4 +28,6 @@ class ToProduct(val a1: Vector[_]) extends Product {
     override def productElement(n: Int): Any = a1.nth(n)
     override def productArity = a1.nth.size
     override def productPrefix = "VectorProduct"
+
+    override def canEqual(that: Any) = that.isInstanceOf[ToProduct]
 }

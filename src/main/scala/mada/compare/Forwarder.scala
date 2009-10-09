@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.compare
+package mada; package compare
 
 
 trait Forwarder[-A] extends util.Forwarder with Compare[A] {

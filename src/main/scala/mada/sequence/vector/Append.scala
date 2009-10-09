@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.sequence.vector
+package mada; package sequence; package vector
 
 
 case class Append[A](_1: Vector[A], _2: Vector[A]) extends Vector[A] {

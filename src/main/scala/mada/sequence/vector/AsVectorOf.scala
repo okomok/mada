@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.sequence.vector
+package mada; package sequence; package vector
 
 
 case class AsVectorOf[A, B](_1: Vector[A]) extends Adapter[A, B] {

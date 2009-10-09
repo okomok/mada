@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.peg
+package mada; package peg
 
 
 case class Unmap[A, Z](_1: Peg[A], _2: Z => A) extends Forwarder[Z] {

@@ -4,14 +4,14 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.sequencetest.vectortest.detail
+package madatest; package sequencetest; package vectortest; package detail
 
 
 import junit.framework.Assert._
 
 
 object CopyArray {
-    def apply[A](a: Array[A]): Array[A] = {
+    def apply[A: ClassManifest](a: Array[A]): Array[A] = {
         val b = new Array[A](a.length)
         var i = 0
         for (e <- a) { b(i) = e; i = i + 1 }
@@ -21,7 +21,7 @@ object CopyArray {
 
 
 object CopyReverseArray {
-    def apply[A](a: Array[A]): Array[A] = {
+    def apply[A: ClassManifest](a: Array[A]): Array[A] = {
         val b = new Array[A](a.length)
         a.toList.reverse.iterator.copyToArray(b, 0)
         b

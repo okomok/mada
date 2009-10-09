@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.sequencetest.vectortest
+package madatest; package sequencetest; package vectortest
 
 
 import junit.framework.Assert._

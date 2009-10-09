@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.sequence.vector
+package mada; package sequence; package vector
 
 
 case class Folder[A](_1: Vector[A], _2: A, _3: (A, A) => A) extends Forwarder[A] {

@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.compare
+package mada; package compare
 
 
 case class FromFunc[A](_1: Func[A]) extends Compare[A] {

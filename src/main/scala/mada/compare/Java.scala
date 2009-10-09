@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.compare
+package mada; package compare
 
 
 case class FromJComparator[A](_1: java.util.Comparator[A]) extends Forwarder[A] {

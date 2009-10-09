@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.auto
+package mada; package auto
 
 
 case class UsedWith[A](_1: Seq[Auto[_]], _2: A) extends Auto[A] {

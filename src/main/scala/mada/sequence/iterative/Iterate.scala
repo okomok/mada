@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.sequence.iterative
+package mada; package sequence; package iterative
 
 
 case class Iterate[A](_1: A, _2: A => A) extends Iterative[A] {

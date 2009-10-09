@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.sequence
+package mada; package sequence
 
 
 import iterative._
@@ -501,6 +501,7 @@ object Iterative {
 // compatibles
 
     implicit def _unstringize(from: String): Iterative[Char] = unstringize(from)
+    implicit def _fromArray[A](from: Array[A]): Iterative[A] = fromArray(from)
     implicit def _fromSIterable[A](from: Iterable[A]): Iterative[A] = fromSIterable(from)
     implicit def _fromJIterable[A](from: java.lang.Iterable[A]): Iterative[A] = fromJIterable(from)
     implicit def _fromJObjectInput(from: java.io.ObjectInput): Iterative[AnyRef] = fromJObjectInput(from)

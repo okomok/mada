@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.pegtest
+package madatest; package pegtest
 
 
 import junit.framework.Assert._

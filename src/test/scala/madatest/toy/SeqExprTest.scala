@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.toy.seqexpr
+package madatest; package toy; package seqexpr
 
 
 import junit.framework.Assert._

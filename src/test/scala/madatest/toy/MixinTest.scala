@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.toy.mix
+package madatest; package toy; package mix
 
 
 import junit.framework.Assert._

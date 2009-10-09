@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.stack
+package mada; package stack
 
 
 case class FromJDeque[A](_1: java.util.Deque[A]) extends Stack[A] {

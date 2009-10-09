@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.sequence
+package mada; package sequence
 
 
 package object iterative {
@@ -85,6 +85,9 @@ package object iterative {
 
     @compatibleConversion
     def unstringize(from: String): Iterative[Char] = Unstringize(from)
+
+    @compatibleConversion
+    def fromArray[A](from: Array[A]): Iterative[A] = FromArray(from)
 
     @compatibleConversion
     def fromSIterable[A](from: Iterable[A]): Iterative[A] = FromSIterable(from)

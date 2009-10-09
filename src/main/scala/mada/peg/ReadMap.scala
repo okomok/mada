@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.peg
+package mada; package peg
 
 
 case class ReadMap[Z, A](_1: Peg[A], _2: sequence.Vector[Z] => sequence.Vector[A]) extends Peg[Z] {

@@ -5,7 +5,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.toyexpr2
+package madatest; package toyexpr2
 
 
 import junit.framework.Assert._

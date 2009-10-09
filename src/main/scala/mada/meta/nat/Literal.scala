@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.meta.nat
+package mada; package meta; package nat
 
 
 /**

@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.util
+package mada; package util
 
 
 case class ByLazy[+R](_1: Function0[R]) extends Function0[R] {

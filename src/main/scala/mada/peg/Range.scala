@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.peg
+package mada; package peg
 
 
 case class Range[A](_1: A, _2: A, _3: Compare[A]) extends Peg[A] {

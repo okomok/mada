@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.sequence.vector
+package mada; package sequence; package vector
 
 
 case class Memoize[A](_1: Vector[A]) extends TransformAdapter[A] with NotWritable[A] {

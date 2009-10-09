@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.toy.lazytest2
+package madatest; package toy; package lazytest2
 
 
 import junit.framework.Assert._

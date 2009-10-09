@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.stacktest
+package madatest; package stacktest
 
 
 import mada.stack

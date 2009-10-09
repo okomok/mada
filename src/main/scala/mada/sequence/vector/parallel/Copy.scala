@@ -4,14 +4,14 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.sequence.vector
+package mada; package sequence; package vector
 
 
 case class ParallelCopy[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
     util.assert(!IsParallel(_1))
 
     override protected val delegate = {
-        val r = new Array[A](_1.size)
+        val r = newArray[A](_1.size)
         _1.parallel(_2).copyTo(fromArray(r))
         fromArray(r)
     }

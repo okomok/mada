@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.sequence.iterator
+package mada; package sequence; package iterator
 
 
 case class FromJIterator[A](_1: java.util.Iterator[A]) extends Forwarder[A] {

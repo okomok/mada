@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.peg
+package mada; package peg
 
 
 case class Multiple[A](_1: scala.collection.Set[A]) extends Peg[A] {

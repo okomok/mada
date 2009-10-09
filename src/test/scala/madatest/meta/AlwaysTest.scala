@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.metatest
+package madatest; package metatest
 
 
 import mada.meta._

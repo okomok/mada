@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.function
+package mada; package function
 
 
 case class Synchronize1[-T1, +R](_1: Function1[T1, R]) extends Function1[T1, R] {

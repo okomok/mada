@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.util
+package mada; package util
 
 
 import java.util.concurrent

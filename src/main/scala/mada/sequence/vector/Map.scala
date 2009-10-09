@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.sequence.vector
+package mada; package sequence; package vector
 
 
 case class Map[Z, A](_1: Vector[Z], _2: Z => A) extends Adapter[Z, A] with NotWritable[A] {

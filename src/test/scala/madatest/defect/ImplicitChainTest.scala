@@ -1,6 +1,6 @@
 
 
-package madatest.defecttest.implicitchaintest
+package madatest; package defecttest; package implicitchaintest
 
 
 

@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.toy.implicitresolution
+package madatest; package toy; package implicitresolution
 
 
 import junit.framework.Assert._

@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.defecttest.forwardingjcl
+package madatest; package defecttest; package forwardingjcl
 
 
 import junit.framework.Assert._

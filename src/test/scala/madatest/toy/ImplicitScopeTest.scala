@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.toy.implicitscope
+package madatest; package toy; package implicitscope
 
 
 package my {

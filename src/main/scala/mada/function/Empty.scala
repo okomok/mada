@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.function
+package mada; package function
 
 
 case class Empty1() extends Function1[Any, Unit] {

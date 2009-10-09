@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.sequence.vector
+package mada; package sequence; package vector
 
 
 case class ByLazy[A](_1: util.ByLazy[Vector[A]]) extends Forwarder[A] {

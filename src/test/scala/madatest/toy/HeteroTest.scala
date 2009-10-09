@@ -4,12 +4,13 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.toy
+package madatest; package toy
 
 
 import junit.framework.Assert._
 
 
+/* comment out to suppress warning.
 class HeteroTest {
     case class Cons[A](val car: A, val cdr: Cons[_])
 
@@ -25,3 +26,4 @@ class HeteroTest {
         ()
     }
 }
+*/

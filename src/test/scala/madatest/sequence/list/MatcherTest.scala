@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.sequencetest.listtest
+package madatest; package sequencetest; package listtest
 
 
 import mada.sequence._

@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.toy.parser
+package madatest; package toy; package parser
 
 
 import junit.framework.Assert._

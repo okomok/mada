@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.sequencetest.vectortest.stltest
+package madatest; package sequencetest; package vectortest; package stltest
 
 
 import mada.Compare.madaCompareFromGetOrdered

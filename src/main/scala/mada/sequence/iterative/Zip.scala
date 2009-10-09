@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.sequence.iterative
+package mada; package sequence; package iterative
 
 
 case class Zip[+A, +B](_1: Iterative[A], _2: Iterative[B]) extends Forwarder[(A, B)] {

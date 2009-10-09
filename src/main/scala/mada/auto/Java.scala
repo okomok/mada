@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.auto
+package mada; package auto
 
 
 case class FromJCloseable[A <: java.io.Closeable](_1: A) extends Auto[A] {

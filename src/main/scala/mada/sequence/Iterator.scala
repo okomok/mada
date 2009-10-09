@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.sequence
+package mada; package sequence
 
 
 import iterator._

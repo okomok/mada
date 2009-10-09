@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.bound
+package mada; package bound
 
 
 // See: http://cleverlytitled.blogspot.com/2009/03/disjoint-bounded-views-redux.html

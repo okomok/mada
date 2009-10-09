@@ -4,12 +4,13 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.toy.minivector
+package madatest; package toy; package minivector
 
 
 import junit.framework.Assert._
 
 
+/* comment out to suppress warning
 trait MiniSequence[+A] {
     val tid = 1
     def ++[B >: A](that: MiniSequence[B]): MiniSequence[B] = TAppend[B](this, that)
@@ -61,3 +62,4 @@ class MiniVectorTest {
     }
 
 }
+*/

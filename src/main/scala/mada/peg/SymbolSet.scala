@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.peg
+package mada; package peg
 
 
 private[mada] class TheSymbolSet[A](tree: TSTree[A, Unit]) extends Peg[A] with scala.collection.mutable.Set[sequence.Vector[A]] {

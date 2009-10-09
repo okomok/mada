@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.function
+package mada; package function
 
 
 // See: That about wraps it up --- Using FIX to handle errors without exceptions, and other programming tricks (1997)

@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.toy.trampolinetest
+package madatest; package toy; package trampolinetest
 
 
 import junit.framework.Assert._

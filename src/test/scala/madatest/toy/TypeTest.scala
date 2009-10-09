@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.toy.type_
+package madatest; package toy; package type_
 
 
 import junit.framework.Assert._

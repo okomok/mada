@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.function
+package mada; package function
 
 
 case class Fuse1[-T1, +R](_1: Function1[T1, R]) extends Function1[Tuple1[T1], R] {

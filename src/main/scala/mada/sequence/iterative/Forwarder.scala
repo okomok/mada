@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.sequence.iterative
+package mada; package sequence; package iterative
 
 
 trait Forwarder[+A] extends Iterative[A] with SequenceForwarder[A] {

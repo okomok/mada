@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.blend.list
+package mada; package blend; package list
 
 
 // I don't know the 1-path algorithm.

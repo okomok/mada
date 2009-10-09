@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.function
+package mada; package function
 
 
 case class Fix[T, R](_1: (T => R) => T => R) extends (T => R) {

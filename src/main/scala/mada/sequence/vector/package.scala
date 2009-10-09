@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.sequence
+package mada; package sequence
 
 
 package object vector {
@@ -111,10 +111,10 @@ package object vector {
      */
     def file[A](f: java.io.RandomAccessFile)(implicit rm: scala.reflect.Manifest[A]): Auto[Vector[A]] = {
         (rm.toString match {
-            case "char" => CharFile(f)
-            case "int" => IntFile(f)
-            case "long" => LongFile(f)
-            case _ => throw new UnsupportedOperationException("coming soon")
+            case "Char" => CharFile(f)
+            case "Int" => IntFile(f)
+            case "Long" => LongFile(f)
+            case _ => throw new UnsupportedOperationException("coming soon: " + rm.toString)
         }).asInstanceOf[Auto[Vector[A]]]
     }
 

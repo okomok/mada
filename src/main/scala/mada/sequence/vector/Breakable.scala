@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.sequence.vector
+package mada; package sequence; package vector
 
 
 private class Breakable1[A](p: A => Boolean, ret: Boolean) extends (A => Boolean) {

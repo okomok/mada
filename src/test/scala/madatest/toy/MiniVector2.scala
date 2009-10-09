@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package madatest.toy.minivector2
+package madatest; package toy; package minivector2
 
 
 import junit.framework.Assert._

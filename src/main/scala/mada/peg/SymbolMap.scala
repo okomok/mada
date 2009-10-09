@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada.peg
+package mada; package peg
 
 
 private[mada] class TheSymbolMap[A](tree: TSTree[A, Peg[A]]) extends Peg[A] with scala.collection.mutable.Map[sequence.Vector[A], Peg[A]] {

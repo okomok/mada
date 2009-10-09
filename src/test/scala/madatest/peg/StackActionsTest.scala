@@ -7,7 +7,7 @@
 // See: http://spirit.sourceforge.net/distrib/spirit_1_8_5/libs/spirit/doc/semantic_actions.html
 
 
-package madatest.pegtest
+package madatest; package pegtest
 
 
 import mada.sequence.{Vector, vector}
