@@ -16,9 +16,3 @@ trait Visitor {
     type visitZero <: Result
     type visitSucc[n <: Nat] <: Result
 }
-
-sealed trait subtractVisitor[x <: Nat] extends Visitor {
-    type Result = Nat
-    type visitZero = x
-    type visitSucc[y <: Nat] = y#accept[subtractVisitor[x#decrement]]
-}

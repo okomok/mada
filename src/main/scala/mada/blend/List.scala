@@ -171,7 +171,7 @@ sealed trait List { // this: `this` =>
 // case object Nil; type Nil = Nil.type
 
 sealed trait Nil extends List {
-    private[mada] override type `this` = Nil
+    override private[mada] type `this` = Nil
 
     override def head = throw new NoSuchElementException("head of empty list")
     override type head = meta.error
@@ -189,7 +189,7 @@ private[mada] object NilWrap {
 
 
 final case class Cons[h, t <: List](override val head: h, override val tail: t) extends List {
-    private[mada] override type `this` = Cons[h, t]
+    override private[mada] type `this` = Cons[h, t]
 
     override type head = h
     override type tail = t

@@ -42,13 +42,13 @@ sealed trait `true` extends Boolean {
     override type not = `false`
     override type equals[that <: Boolean] = that#isTrue
 
-    private[mada] override type isTrue = `true`
-    private[mada] override type isFalse = `false`
+    override private[mada] type isTrue = `true`
+    override private[mada] type isFalse = `false`
 
-    private[mada] override type _if[then, _else] <: then
-    // private[mada] override type _if_[then, _else <: then#This] = then#`this`
-    // private[mada] override type ifThen[then] = then
-    private[mada] override type natIf[then <: Nat, _else <: Nat] = then
+    override private[mada] type _if[then, _else] <: then
+    // override private[mada] type _if_[then, _else <: then#This] = then#`this`
+    // override private[mada] type ifThen[then] = then
+    override private[mada] type natIf[then <: Nat, _else <: Nat] = then
 }
 
 /**
@@ -60,11 +60,11 @@ sealed trait `false` extends Boolean {
     override type not = `true`
     override type equals[that <: Boolean] = that#isFalse
 
-    private[mada] override type isTrue = `false`
-    private[mada] override type isFalse = `true`
+    override private[mada] type isTrue = `false`
+    override private[mada] type isFalse = `true`
 
-    private[mada] override type _if[then, _else] <: _else
-    // private[mada] override type _if_[then, _else <: then#This] = _else
-    // private[mada] override type ifThen[then] = Nothing
-    private[mada] override type natIf[then <: Nat, _else <: Nat] = _else
+    override private[mada] type _if[then, _else] <: _else
+    // override private[mada] type _if_[then, _else <: then#This] = _else
+    // override private[mada] type ifThen[then] = Nothing
+    override private[mada] type natIf[then <: Nat, _else <: Nat] = _else
 }
