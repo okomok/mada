@@ -57,22 +57,19 @@ package object vector {
      */
     def concat[A](vs: Vector[A]*): Vector[A] = Concat(vs)
 
-    @packageObjectBrokenOverload
-    object range {
-        /**
-         * Creates a vector containing of successive integers.
-         *
-         * @param   i   the value of the first element of the vector
-         * @param   j   the value of the last element of the vector plus 1
-         * @return  the sorted vector of all integers in range [i, j).
-         */
-        def apply(i: Int, j: Int): Vector[Int] = Range(i, j)
+    /**
+     * Creates a vector containing of successive integers.
+     *
+     * @param   i   the value of the first element of the vector
+     * @param   j   the value of the last element of the vector plus 1
+     * @return  the sorted vector of all integers in range [i, j).
+     */
+    def range(i: Int, j: Int): Vector[Int] = Range(i, j)
 
-        /**
-         * @return  <code>range(i, Math.MAX_INT)</code>.
-         */
-        def apply(i: Int, u: Unit): Vector[Int] = Range(i, Math.MAX_INT)
-    }
+    /**
+     * @return  <code>range(i, Math.MAX_INT)</code>.
+     */
+    def range(i: Int, u: Unit): Vector[Int] = Range(i, Math.MAX_INT)
 
     /**
      * @param   e   the element

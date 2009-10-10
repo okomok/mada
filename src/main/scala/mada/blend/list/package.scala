@@ -24,13 +24,10 @@ package object list {
     def fromTuple4[T1, T2, T3, T4](from: Tuple4[T1, T2, T3, T4]): T1 :: T2 :: T3 :: T4 :: Nil = from._1 :: from._2 :: from._3 :: from._4 :: Nil
     def fromTuple5[T1, T2, T3, T4, T5](from: Tuple5[T1, T2, T3, T4, T5]): T1 :: T2 :: T3 :: T4 :: T5 :: Nil = from._1 :: from._2 :: from._3 :: from._4 :: from._5 :: Nil
 
-    @packageObjectBrokenOverload
-    object fromTuple {
-        def apply[T1](from: Tuple1[T1]): T1 :: Nil = fromTuple1(from)
-        def apply[T1, T2](from: Tuple2[T1, T2]): T1 :: T2 :: Nil = fromTuple2(from)
-        def apply[T1, T2, T3](from: Tuple3[T1, T2, T3]): T1 :: T2 :: T3 :: Nil = fromTuple3(from)
-        def apply[T1, T2, T3, T4](from: Tuple4[T1, T2, T3, T4]): T1 :: T2 :: T3 :: T4 :: Nil = fromTuple4(from)
-        def apply[T1, T2, T3, T4, T5](from: Tuple5[T1, T2, T3, T4, T5]): T1 :: T2 :: T3 :: T4 :: T5 :: Nil = fromTuple5(from)
-    }
+    def fromTuple[T1](from: Tuple1[T1]): T1 :: Nil = fromTuple1(from)
+    def fromTuple[T1, T2](from: Tuple2[T1, T2]): T1 :: T2 :: Nil = fromTuple2(from)
+    def fromTuple[T1, T2, T3](from: Tuple3[T1, T2, T3]): T1 :: T2 :: T3 :: Nil = fromTuple3(from)
+    def fromTuple[T1, T2, T3, T4](from: Tuple4[T1, T2, T3, T4]): T1 :: T2 :: T3 :: T4 :: Nil = fromTuple4(from)
+    def fromTuple[T1, T2, T3, T4, T5](from: Tuple5[T1, T2, T3, T4, T5]): T1 :: T2 :: T3 :: T4 :: T5 :: Nil = fromTuple5(from)
 
 }

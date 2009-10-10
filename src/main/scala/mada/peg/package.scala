@@ -134,101 +134,82 @@ package object peg {
 
 // best
 
-    @packageObjectBrokenOverload
-    object longest {
-        /**
-         * Chooses the longest match.
-         */
-        def apply[A](ps: Peg[A]*): Peg[A] = Longest(sequence.iterative.from(ps))
+    /**
+     * Chooses the longest match.
+     */
+    def longest[A](ps: Peg[A]*): Peg[A] = Longest(sequence.iterative.from(ps))
 
-        /**
-         * Chooses the longest match.
-         */
-        def apply[A](ps: sequence.Iterative[Peg[A]]): Peg[A] = Longest(ps)
-    }
+    /**
+     * Chooses the longest match.
+     */
+    def longest[A](ps: sequence.Iterative[Peg[A]]): Peg[A] = Longest(ps)
 
+    /**
+     * Chooses the shortest match.
+     */
+    def shortest[A](ps: Peg[A]*): Peg[A] = Shortest(sequence.iterative.from(ps))
 
-    @packageObjectBrokenOverload
-    object shortest {
-        /**
-         * Chooses the shortest match.
-         */
-        def apply[A](ps: Peg[A]*): Peg[A] = Shortest(sequence.iterative.from(ps))
-
-        /**
-         * Chooses the shortest match.
-         */
-        def apply[A](ps: sequence.Iterative[Peg[A]]): Peg[A] = Shortest(ps)
-    }
+    /**
+     * Chooses the shortest match.
+     */
+    def shortest[A](ps: sequence.Iterative[Peg[A]]): Peg[A] = Shortest(ps)
 
 
 // set
 
-    @packageObjectBrokenOverload
-    object multiple {
-        /**
-         * Matches any element of set.
-         */
-        def apply[A](es: A*): Peg[A] = Multiple(sequence.iterative.from(es).toSHashSet)
+    /**
+     * Matches any element of set.
+     */
+    def multiple[A](es: A*): Peg[A] = Multiple(sequence.iterative.from(es).toSHashSet)
 
-        /**
-         * Matches any element of set.
-         */
-        def apply[A](es: scala.collection.Set[A]): Peg[A] = Multiple(es)
-    }
+    /**
+     * Matches any element of set.
+     */
+    def multiple[A](es: scala.collection.Set[A]): Peg[A] = Multiple(es)
 
-    @packageObjectBrokenOverload
-    object switch {
-        /**
-         * Matches a key, then tries to match its value.
-         */
-        def apply[A](es: (A, Peg[A])*): Peg[A] = Switch(sequence.iterative.from(es).toSHashMap)
+    /**
+     * Matches a key, then tries to match its value.
+     */
+    def switch[A](es: (A, Peg[A])*): Peg[A] = Switch(sequence.iterative.from(es).toSHashMap)
 
-        /**
-         * Matches a key, then tries to match its value.
-         */
-        def apply[A](es: scala.collection.Map[A, Peg[A]]): Peg[A] = Switch(es)
-    }
+    /**
+     * Matches a key, then tries to match its value.
+     */
+    def switch[A](es: scala.collection.Map[A, Peg[A]]): Peg[A] = Switch(es)
 
 
 // symbol
 
     type SymbolSet[A] = Peg[A] with scala.collection.mutable.Set[sequence.Vector[A]]
 
-    @packageObjectBrokenOverload
-    object symbolSet {
-        @equivalentTo("symbolSet(vs)(c)")
-        def apply[A](vs: sequence.Vector[A]*)(implicit c: Compare[A]): SymbolSet[A] = symbolSet(sequence.iterative.from(vs))(c)
+    @equivalentTo("symbolSet(vs)(c)")
+    def symbolSet[A](vs: sequence.Vector[A]*)(implicit c: Compare[A]): SymbolSet[A] = symbolSet(sequence.iterative.from(vs))(c)
 
-        /**
-         * Returns a peg to optimize the form <code>k1|k2|k3|...</code>.
-         */
-        def apply[A](vs: sequence.Iterative[sequence.Vector[A]])(lt: compare.Func[A]): SymbolSet[A] = {
-            val r = new TheSymbolSet(new TSTree[A, Unit](lt))
-            for (v <- vs) {
-                r += v
-            }
-            r
+    /**
+     * Returns a peg to optimize the form <code>k1|k2|k3|...</code>.
+     */
+    def symbolSet[A](vs: sequence.Iterative[sequence.Vector[A]])(lt: compare.Func[A]): SymbolSet[A] = {
+        val r = new TheSymbolSet(new TSTree[A, Unit](lt))
+        for (v <- vs) {
+            r += v
         }
+        r
     }
 
     type SymbolMap[A] = Peg[A] with scala.collection.mutable.Map[sequence.Vector[A], Peg[A]]
 
-    @packageObjectBrokenOverload
-    object symbolMap {
-        @equivalentTo("symbolMap(es)(c)")
-        def apply[A](es: (sequence.Vector[A], Peg[A])*)(implicit c: Compare[A]): SymbolMap[A] = symbolMap(sequence.iterative.from(es))(c)
+    @equivalentTo("symbolMap(es)(c)")
+    def symbolMap[A](es: (sequence.Vector[A], Peg[A])*)(implicit c: Compare[A]): SymbolMap[A] = symbolMap(sequence.iterative.from(es))(c)
 
-        /**
-         * Returns a peg to optimize the form <code>(k1 >> p1)|(k2 >> p2)|(k3 >> p3)|...</code>.
-         */
-        def apply[A](es: sequence.Iterative[(sequence.Vector[A], Peg[A])])(lt: compare.Func[A]): SymbolMap[A] = {
-            val r = new TheSymbolMap(new TSTree[A, Peg[A]](lt))
-            for (e <- es) {
-                r += Tuple2(e._1, e._2)
-            }
-            r
+    /**
+     * Returns a peg to optimize the form <code>(k1 >> p1)|(k2 >> p2)|(k3 >> p3)|...</code>.
+     */
+    def symbolMap[A](es: sequence.Iterative[(sequence.Vector[A], Peg[A])])(lt: compare.Func[A]): SymbolMap[A] = {
+        val r = new TheSymbolMap(new TSTree[A, Peg[A]](lt))
+        for (e <- es) {
+            r += Tuple2(e._1, e._2)
         }
+        r
     }
 
     /**

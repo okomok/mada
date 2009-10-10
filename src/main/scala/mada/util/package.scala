@@ -12,52 +12,43 @@ package object util {
 
 // assertion
 
-    @packageObjectBrokenOverload
-    object assert {
-        /**
-         * The assert
-         */
-        def apply(cond: => Boolean): Unit = {
-            blend.doIf[isDebug] {
-                if (!cond) {
-                    throw new java.lang.AssertionError("assertion failed")
-                }
-            }
-        }
-
-        /**
-         * assert with message
-         */
-        def apply(msg: => Any, cond: => Boolean): Unit = {
-            blend.doIf[isDebug] {
-                if (!cond) {
-                    throw new java.lang.AssertionError("assertion failed: " + msg)
-                }
+    /**
+     * The assert
+     */
+    def assert(cond: => Boolean): Unit = {
+        blend.doIf[isDebug] {
+            if (!cond) {
+                throw new java.lang.AssertionError("assertion failed")
             }
         }
     }
 
-    @packageObjectBrokenOverload
-    object verify {
-        /**
-         * Alias of <code>apply</code>; <code>cond</code> is evaluated.
-         */
-        def apply(cond: Boolean) = util.assert(cond)
-
-        /**
-         * Alias of <code>apply</code>; <code>cond</code> is evaluated.
-         */
-        def apply(msg: => Any, cond: Boolean) = util.assert(msg, cond)
+    /**
+     * assert with message
+     */
+    def assert(msg: => Any, cond: => Boolean): Unit = {
+        blend.doIf[isDebug] {
+            if (!cond) {
+                throw new java.lang.AssertionError("assertion failed: " + msg)
+            }
+        }
     }
 
-    @packageObjectBrokenOverload
-    object ensure {
-        @equivalentTo("this(expect(e)); e")
-        def apply[A](e: A)(expect: A => Boolean): A = { util.assert(expect(e)); e }
+    /**
+     * Alias of <code>apply</code>; <code>cond</code> is evaluated.
+     */
+    def verify(cond: Boolean) = util.assert(cond)
 
-        @equivalentTo("this(msg, expect(e)); e")
-        def apply[A](msg: => Any, e: A)(expect: A => Boolean): A = { util.assert(msg, expect(e)); e }
-    }
+    /**
+     * Alias of <code>apply</code>; <code>cond</code> is evaluated.
+     */
+    def verify(msg: => Any, cond: Boolean) = util.assert(msg, cond)
+
+    @equivalentTo("this(expect(e)); e")
+    def ensure[A](e: A)(expect: A => Boolean): A = { util.assert(expect(e)); e }
+
+    @equivalentTo("this(msg, expect(e)); e")
+    def ensure[A](msg: => Any, e: A)(expect: A => Boolean): A = { util.assert(msg, expect(e)); e }
 
 
 // language
