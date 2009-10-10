@@ -16,7 +16,4 @@ package object mada {
      */
     type isDebug = meta.`true`
 
-
-    def newArray[A](c: Int): Array[A] = new Array[AnyRef](c).asInstanceOf[Array[A]]
-
 }

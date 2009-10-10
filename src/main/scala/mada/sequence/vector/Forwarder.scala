@@ -103,7 +103,7 @@ trait Forwarder[A] extends TransformAdapter[A] with SequenceForwarder[A] {
     override def folder(z: A)(op: (A, A) => A): Vector[A] = around(delegate.folder(z)(op))
     override def reducer(op: (A, A) => A): Vector[A] = around(delegate.reducer(op))
 // conversion
-    override def toArray: Array[A] = delegate.toArray
+    override def toArray[B >: A : ClassManifest]: Array[B] = delegate.toArray
     override def toProduct: Product = delegate.toProduct
     override def toOrdered(implicit c: compare.GetOrdered[A]): Ordered[Vector[A]] = delegate.toOrdered(c)
     override def toSVector: scala.collection.mutable.Vector[A] = delegate.toSVector

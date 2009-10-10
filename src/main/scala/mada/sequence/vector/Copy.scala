@@ -8,5 +8,5 @@ package mada; package sequence; package vector
 
 
 case class Copy[A](_1: Vector[A]) extends Forwarder[A] {
-    override protected val delegate = fromArray(_1.toArray)
+    override protected val delegate = fromJList(ToJArrayList(_1))
 }

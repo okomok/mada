@@ -46,6 +46,17 @@ case class ToJList[A](_1: Vector[A]) extends java.util.AbstractList[A] {
 }
 
 
+// ArrayList
+
+private object ToJArrayList {
+    def apply[A](from: Vector[A]): java.util.ArrayList[A] = {
+        val r = new java.util.ArrayList[A](from.size)
+        from.foreach{ e => r.add(e) }
+        r
+    }
+}
+
+
 // CharSequence
 
 case class FromJCharSequence(_1: java.lang.CharSequence) extends Forwarder[Char] {

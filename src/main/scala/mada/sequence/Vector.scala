@@ -540,8 +540,8 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
 // conversion
 
     @conversion
-    def toArray: Array[A] = {
-        val r = newArray[A](size)
+    def toArray[B >: A : ClassManifest]: Array[B] = {
+        val r = new Array[B](size)
         copyTo(fromArray(r))
         r
     }
