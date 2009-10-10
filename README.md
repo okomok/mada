@@ -34,10 +34,13 @@
         def testTrivial: Unit = {
             type l = String :: Boolean :: Char :: Int :: Nil
             val l: l = "hetero" :: true :: 'L' :: 7 :: Nil
-            val i: l#at[_3N] = l.at[_3N]
+            val i: l#nth[_3N] = l.nth[_3N]
             assertEquals(10, i + 3)
         }
     }
+
+While `scala.List` contains elements of the same type, `blend.List` can contain
+elements of different types.
 
 
 
