@@ -18,6 +18,6 @@ class PackageObjectOverloadingTest {
 
     def testTrivial(off: Int): Unit = {
         overloading.foo(1, 2) // assertion failed.
-        // overloading.bar(buz _) // doesn't compile.
+        overloading.bar(buz _) // doesn't compile.
     }
 }

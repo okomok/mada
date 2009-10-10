@@ -7,7 +7,7 @@
 package madatest; package sequencetest; package vectortest; package stltest
 
 
-import mada.Compare.madaCompareFromGetOrdered
+// import mada.Compare.madaCompareFromGetOrdered
 
 
 import mada.sequence.vector._

@@ -7,7 +7,7 @@
 package madatest; package pegtest
 
 
-import mada.Compare.madaCompareFromGetOrdered
+// import mada.Compare.madaCompareFromGetOrdered
 
 
 import junit.framework.Assert._

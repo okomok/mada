@@ -7,7 +7,7 @@
 package madatest; package sequencetest; package vectortest; package paralleltest
 
 
-import mada.Compare.madaCompareFromGetOrdered
+// import mada.Compare.madaCompareFromGetOrdered
 
 
 import mada.control

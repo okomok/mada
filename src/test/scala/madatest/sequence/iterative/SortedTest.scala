@@ -7,7 +7,7 @@
 package madatest; package sequencetest; package iterativetest
 
 
-import mada.Compare.madaCompareFromGetOrdered
+// import mada.Compare.madaCompareFromGetOrdered
 
 
 import mada.sequence.iterative

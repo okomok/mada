@@ -36,6 +36,7 @@ package mmm {
 class ImplicitChainTest {
     def testTrivial: Unit = {
         mmm.peg.range('0', '9')
+        mmm.peg.range('0', '9')
         ()
     }
 }
