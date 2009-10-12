@@ -8,14 +8,14 @@ package mada; package blend; package list
 
 
 @specializer
-trait LastOrElse[l <: List, a] extends ((l, a) => LastOrElse.result[l, a])
+sealed abstract class LastOrElse[l <: List, a] extends ((l, a) => LastOrElse.result[l, a])
 
 
 object LastOrElse {
 
     type result[l <: List, a] = l#accept[vt[a]]
 
-    sealed trait vt[a] extends Visitor {
+    sealed abstract class vt[a] extends Visitor {
         override type Result = Any
         override type visitNil = a
         override type visitCons[h, t <: List] = t#accept[vt[h]]

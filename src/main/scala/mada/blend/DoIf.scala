@@ -12,7 +12,7 @@ package mada; package blend
 
 
 @specializer
-sealed trait DoIf[b <: meta.Boolean] {
+sealed abstract class DoIf[b <: meta.Boolean] {
     def apply(block: => Unit): Unit
 }
 

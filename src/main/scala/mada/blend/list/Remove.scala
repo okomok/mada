@@ -8,14 +8,14 @@ package mada; package blend; package list
 
 
 @specializer
-trait Remove[l <: List, n <: meta.Nat] extends (l => Remove.result[l, n])
+sealed abstract class Remove[l <: List, n <: meta.Nat] extends (l => Remove.result[l, n])
 
 
 object Remove {
 
     type result[l <: List, n <: meta.Nat] = n#accept[vt[l]]
 
-    sealed trait vt[l <: List] extends meta.nat.Visitor {
+    sealed abstract class vt[l <: List] extends meta.nat.Visitor {
         override type Result = List
         override type visitZero = l#tail
         override type visitSucc[n <: meta.Nat] = Cons[l#head, n#accept[vt[l#tail]]]

@@ -8,7 +8,7 @@ package mada; package meta
 
 
 @specializer
-sealed trait Unmeta[From, To] extends scala.Function0[To]
+trait Unmeta[From, To] extends scala.Function0[To]
 
 
 object Unmeta {

@@ -8,14 +8,14 @@ package mada; package blend; package list
 
 
 @specializer
-trait Replace[l <: List, n <: meta.Nat, a] extends ((l, a) => Replace.result[l, n, a])
+sealed abstract class Replace[l <: List, n <: meta.Nat, a] extends ((l, a) => Replace.result[l, n, a])
 
 
 object Replace {
 
     type result[l <: List, n <: meta.Nat, a] = n#accept[vt[l, a]]
 
-    sealed trait vt[l <: List, a] extends meta.nat.Visitor {
+    sealed abstract class vt[l <: List, a] extends meta.nat.Visitor {
         override type Result = List
         override type visitZero = Cons[a, l#tail]
         override type visitSucc[n <: meta.Nat] = Cons[l#head, n#accept[vt[l#tail, a]]]

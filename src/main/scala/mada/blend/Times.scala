@@ -12,7 +12,7 @@ package mada; package blend
 
 
 @specializer
-sealed trait Times[n <: meta.Nat] extends ((Int => Unit, Int) => Unit)
+sealed abstract class Times[n <: meta.Nat] extends ((Int => Unit, Int) => Unit)
 
 
 object Times {

@@ -8,14 +8,14 @@ package mada; package blend; package list
 
 
 @specializer
-trait Slice[l <: List, n <: meta.Nat, m <: meta.Nat] extends (l => Slice.result[l, n, m])
+sealed abstract class Slice[l <: List, n <: meta.Nat, m <: meta.Nat] extends (l => Slice.result[l, n, m])
 
 
 object Slice {
 
     type result[l <: List, n <: meta.Nat, m <: meta.Nat] = n#accept[vt[l, m]]
 
-    sealed trait vt[l <: List, m <: meta.Nat] extends meta.nat.Visitor {
+    sealed abstract class vt[l <: List, m <: meta.Nat] extends meta.nat.Visitor {
         override type Result = List
         override type visitZero = Take.result[l, m]
         override type visitSucc[n <: meta.Nat] = n#accept[vt[l#tail, m#decrement]]

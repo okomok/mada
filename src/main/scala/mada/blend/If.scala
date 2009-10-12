@@ -8,14 +8,14 @@ package mada; package blend
 
 
 @specializer
-sealed trait If[A, b <: meta.Boolean] {
+sealed abstract class If[A, b <: meta.Boolean] {
     def apply(block: => A): Then[A]
 }
 
 /**
  * Intermediate trait for if expressions.
  */
-sealed trait Then[A] {
+sealed abstract class Then[A] {
     def `else`(block: => A): A
     def elseIf[b <: meta.Boolean](block: => A)(implicit _if: If[A, b]): Then[A]
 }

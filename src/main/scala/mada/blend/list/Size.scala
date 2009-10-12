@@ -11,7 +11,7 @@ object Size {
 
     type result[l <: List] = l#accept[vt[meta.Zero]]
 
-    sealed trait vt[n <: meta.Nat] extends Visitor {
+    sealed abstract class vt[n <: meta.Nat] extends Visitor {
         override type Result = meta.Nat
         override type visitNil = n
         override type visitCons[h, t <: List] = t#accept[vt[n#increment]]

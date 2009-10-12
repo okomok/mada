@@ -8,7 +8,7 @@ package mada; package blend; package list
 
 
 @specializer
-trait ElementOf[l <: List, a] extends (l => ElementOf.result[l, a])
+sealed abstract class ElementOf[l <: List, a] extends (l => ElementOf.result[l, a])
 
 
 object ElementOf {

@@ -8,14 +8,14 @@ package mada; package blend; package list
 
 
 @specializer
-trait Zip[l1 <: List, l2 <: List] extends ((l1, l2) => Zip.result[l1, l2])
+sealed abstract class Zip[l1 <: List, l2 <: List] extends ((l1, l2) => Zip.result[l1, l2])
 
 
 object Zip {
 
     type result[l1 <: List, l2 <: List] = l1#accept[vt[l2]]
 
-    sealed trait vt[l2 <: List] extends Visitor {
+    sealed abstract class vt[l2 <: List] extends Visitor {
         override type Result = List
         override type visitNil = Nil
         override type visitCons[h, t <: List] = Cons[Tuple2[h, l2#head], t#accept[vt[l2#tail]]]

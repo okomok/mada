@@ -8,7 +8,7 @@ package mada; package blend; package list
 
 
 @specializer
-trait Typed[l <: List] extends (sequence.List[Any] => l)
+sealed abstract class Typed[l <: List] extends (sequence.List[Any] => l)
 
 
 object Typed {

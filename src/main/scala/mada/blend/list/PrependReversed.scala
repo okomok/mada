@@ -8,13 +8,13 @@ package mada; package blend; package list
 
 
 @specializer
-trait PrependReversed[r <: List, l <: List] extends ((r, l) => PrependReversed.result[r, l])
+sealed abstract class PrependReversed[r <: List, l <: List] extends ((r, l) => PrependReversed.result[r, l])
 
 object PrependReversed {
 
     type result[r <: List, l <: List] = l#accept[vt[r]]
 
-    sealed trait vt[r <: List] extends Visitor {
+    sealed abstract class vt[r <: List] extends Visitor {
         override type Result = List
         override type visitNil = r
         override type visitCons[h, t <: List] = t#accept[vt[Cons[h, r]]]
