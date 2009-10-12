@@ -8,7 +8,7 @@ package mada; package blend; package list
 
 
 // init == reverse.tail.reverse
-// reverse(l) = prependReversed(Nil, l)
+// reverse(l) == prependReversed(Nil, l)
 
 
 @specializer
