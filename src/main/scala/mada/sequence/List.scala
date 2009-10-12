@@ -53,7 +53,7 @@ final class Cons[+A](val _1: A, val _2: util.ByLazy[List[A]]) extends List[A] {
  * <li/>A projection method usually need an entire copy. It can be lazy, though.
  * </ul>
  */
-sealed trait List[+A] extends iterative.Sequence[A] {
+sealed abstract class List[+A] extends iterative.Sequence[A] {
 
 
     override def asIterative: Iterative[A] = AsIterative(this) // logical super
