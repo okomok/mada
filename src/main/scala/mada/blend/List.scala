@@ -76,6 +76,12 @@ sealed trait List { // this: `this` =>
     final type elementOf[a] = ElementOf.result[`this`, a]
 
     /**
+     * Returns a list without the last element.
+     */
+    final def init(implicit _init: Init[Nil, `this`]): init = _init(Nil, _this)
+    final type init = Init.result[Nil, `this`]
+
+    /**
      * Inserts all the elements of <code>that</code>, starting at the specified position.
      *
      * @pre `0 <= n <= size`.
