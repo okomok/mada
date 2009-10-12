@@ -14,7 +14,7 @@ package mada; package blend
 import list._
 
 
-sealed trait List { // this: `this` =>
+sealed abstract class List { // this: `this` =>
 
     private val _this = this.asInstanceOf[`this`]
     private[mada] type `this` <: List
@@ -176,7 +176,7 @@ sealed trait List { // this: `this` =>
 // Compiler will fail to search implicits.
 // case object Nil; type Nil = Nil.type
 
-sealed trait Nil extends List {
+sealed abstract class Nil extends List {
     override private[mada] type `this` = Nil
 
     override def head = throw new NoSuchElementException("head of empty list")
