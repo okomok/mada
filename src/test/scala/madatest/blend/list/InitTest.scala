@@ -27,6 +27,17 @@ class InitTest {
         assertEquals(A, lii)
     }
 
+    def testTrivial2: Unit = {
+        val i = new java.lang.Integer(10)
+        type l = Int :: String :: java.lang.Integer :: Char :: Nil
+        val l: l = 3 :: "hello" :: i :: 'a' :: Nil
+
+        val li: l#init = l.init
+        val lii: Int :: String :: java.lang.Integer :: Nil = li
+        val A = 3 :: "hello" :: i :: Nil
+        assertEquals(A, lii)
+    }
+
     def testOne: Unit = {
         type l = Int :: Nil
         val l: l = 12 :: Nil

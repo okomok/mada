@@ -7,11 +7,6 @@
 package mada; package blend; package list
 
 
-// I don't know the 1-path algorithm.
-// "#take with #size#decrement" doesn't work: #size destroys type identity,
-// so that compiler fails to find specializers.
-
-
 // init == reverse.tail.reverse
 // reverse(l) = prependReversed(Nil, l)
 
