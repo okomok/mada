@@ -13,7 +13,7 @@ object AlwaysWorkaround { // works around some case-insensitive bug in compilati
     /**
      * Metafunction always returning <code>a</code>
      */
-    abstract class Always[T, a <: T] extends Function0 with Function1 with Function2 with Function3 {
+    trait Always[T, a <: T] extends Function0 with Function1 with Function2 with Function3 {
         override type Result0 = T
         override type apply0 = a
 
@@ -36,6 +36,6 @@ object AlwaysWorkaround { // works around some case-insensitive bug in compilati
     /**
      * Constructor of <code>Always</code>
      */
-    sealed abstract class always[a] extends Always[a, a]
+    sealed trait always[a] extends Always[a, a]
 
 }

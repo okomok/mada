@@ -14,7 +14,7 @@ package mada; package meta
 import nat._
 
 
-sealed abstract class Nat extends Operatable {
+sealed trait Nat extends Operatable {
     type `this` <: Nat
 
     private[mada] type isZero <: Boolean
@@ -42,7 +42,7 @@ sealed abstract class Nat extends Operatable {
 
 // "case classes"
 
-sealed abstract class Zero extends Nat {
+sealed trait Zero extends Nat {
     override type `this` = Zero
     override private[mada] type isZero = `true`
     override type equals[that <: Nat] = that#isZero
@@ -54,7 +54,7 @@ sealed abstract class Zero extends Nat {
     override type accept[v <: Visitor] = v#visitZero
 }
 
-sealed abstract class Succ[n <: Nat] extends Nat {
+sealed trait Succ[n <: Nat] extends Nat {
     override type `this` = Succ[n]
     override private[mada] type isZero = `false`
     override type equals[that <: Nat] = n#equals[that#decrement]
@@ -69,7 +69,7 @@ sealed abstract class Succ[n <: Nat] extends Nat {
 
 // sentinel value
 
-sealed abstract class sentinel extends Nat {
+sealed trait sentinel extends Nat {
     override type `this` = sentinel
     override private[mada] type isZero = `false`
     override type equals[that <: Nat] = `false`

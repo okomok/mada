@@ -10,7 +10,7 @@ package mada; package meta
 /**
  * Returns the n-th argument.
  */
-sealed abstract class arg1[T] extends Function1 with Function2 with Function3 {
+sealed trait arg1[T] extends Function1 with Function2 with Function3 {
     override type Argument11 = T
     override type Result1 = T
     override type apply1[v1 <: Argument11] = v1
@@ -27,7 +27,7 @@ sealed abstract class arg1[T] extends Function1 with Function2 with Function3 {
     override type apply3[v1 <: Argument31, v2 <: Argument32, v3 <: Argument33] = v1
 }
 
-sealed abstract class arg2[T] extends Function2 with Function3 {
+sealed trait arg2[T] extends Function2 with Function3 {
     override type Argument21 = Object
     override type Argument22 = T
     override type Result2 = T
@@ -40,7 +40,7 @@ sealed abstract class arg2[T] extends Function2 with Function3 {
     override type apply3[v1 <: Argument31, v2 <: Argument32, v3 <: Argument33] = v2
 }
 
-sealed abstract class arg3[T] extends Function3 {
+sealed trait arg3[T] extends Function3 {
     override type Argument31 = Object
     override type Argument32 = Object
     override type Argument33 = T

@@ -10,7 +10,7 @@ package mada; package meta
 /**
  * The meta Boolean
  */
-sealed abstract class Boolean extends Operatable {
+sealed trait Boolean extends Operatable {
     type and[that <: Boolean] <: Boolean
     type or[that <: Boolean] <: Boolean
     type not <: Boolean
@@ -36,7 +36,7 @@ sealed abstract class Boolean extends Operatable {
 /**
  * The meta true
  */
-sealed abstract class `true` extends Boolean {
+sealed trait `true` extends Boolean {
     override type and[that <: Boolean] = that
     override type or[that <: Boolean] = `true`
     override type not = `false`
@@ -54,7 +54,7 @@ sealed abstract class `true` extends Boolean {
 /**
  * The meta false
  */
-sealed abstract class `false` extends Boolean {
+sealed trait `false` extends Boolean {
     override type and[that <: Boolean] = `false`
     override type or[that <: Boolean] = that
     override type not = `true`
