@@ -18,6 +18,8 @@ sealed trait Nat {
     type add[that <: Nat] <: Nat
 
     type accept[v <: Visitor] <: v#Result
+
+    type acceptOf[R, v <: VisitorOf[R]] <: R // Nothing changes.....
 }
 
 trait Visitor {
@@ -26,11 +28,18 @@ trait Visitor {
     type visitSucc[n <: Nat] <: Result
 }
 
+trait VisitorOf[R] {
+    type visitZero <: R
+    type visitSucc[n <: Nat] <: R
+}
+
 sealed trait Zero extends Nat {
     override type `this` = Zero
     override type increment = Succ[Zero]
     override type add[that <: Nat] = that
     override type accept[v <: Visitor] = v#visitZero
+
+    override type acceptOf[R, v <: VisitorOf[R]] = v#visitZero
 }
 
 sealed trait Succ[n <: Nat] extends Nat {
@@ -38,6 +47,8 @@ sealed trait Succ[n <: Nat] extends Nat {
     override type increment = Succ[`this`]
     override type add[that <: Nat] = Succ[n#add[that]]
     override type accept[v <: Visitor] = v#visitSucc[n]
+
+    override type acceptOf[R, v <: VisitorOf[R]] = v#visitSucc[n]
 }
 
 
@@ -74,6 +85,18 @@ class TypeIdentity2Test {
         type foh[n <: Nat] = n#accept[vt[_2N]]
         assertSame[foh[_3N]#increment, _6N]
        // assertSame[foo[_3N], _6N] // error
+    }
+
+    trait vtOf[m <: Nat] extends VisitorOf[Nat] {
+        type visitZero = m
+        type visitSucc[n <: Nat] = n#accept[vt[Succ[m]]]
+    }
+
+    trait test3 {
+        type foo[n <: Nat] = n#acceptOf[Nat, vtOf[_2N]]#increment
+        type foh[n <: Nat] = n#acceptOf[Nat, vtOf[_2N]]
+        assertSame[foh[_3N]#increment, _6N]
+        // assertSame[foo[_3N], _6N] // error
     }
 
     trait test21 {

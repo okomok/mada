@@ -26,7 +26,7 @@ sealed trait FuncInt extends Func {
 }
 
 sealed trait id[f <: Func] {
-    type what = Func#result
+    type what = f#result
 }
 
 
@@ -45,8 +45,6 @@ sealed trait Func1Id extends Func1 {
 }
 
 
-
-
 class TypeIdentityTest {
 
 
@@ -61,15 +59,12 @@ class TypeIdentityTest {
     assertSame[callFwd111[Func1Id, Double], Double] // ok
 
 
-    val i: FuncInt#result = 3 // ok
     assertSame[FuncInt#result, Int] // ok
 
-    //val j: id[FuncInt]#what = 4 // error
-    //assertSame[id[FuncInt]#what, Int] // error!!!!!! probably because no "dependent" types.
-
+    assertSame[id[FuncInt]#what, Int]
     type callid[f <: Func] = id[f]#what
+    assertSame[callid[FuncInt], Int]
 
-    //assertSame[callid[FuncInt], Int] // error
 
     assertSame[meta.Succ[mada.meta._1N]#equals[meta._2N]#not, meta.`false`]
 

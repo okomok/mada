@@ -91,6 +91,10 @@ class NatTest {
 
         assert[equaL[_3N, _5N]]
         assert[equaL[_4N, _6N]]
+
+        // Must work; Visitor is no longer used.
+        type subsub[n <: Nat, m <: Nat] = n#subtract[m]#subtract[m]
+        assert[subsub[_9N, _2N] == _5N]
     }
 /*
     trait testFoldLeft {
