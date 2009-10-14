@@ -113,10 +113,9 @@ The following example contrasts the non-meta versus meta programming in Scala:
 Scala metaprogramming seems to put several restrictions:
 
 1. Requires -"Yrecursion 50" flag.
-1. Pure: no meta variables.
 1. No metamethod overloading.
-1. meta-eq is infeasible.
-1. meta-if may be infeasible.
+1. Meta-eq is infeasible.
+1. Metamethod can't be generic. (As a result, meta-if is infeasible.)
 
 
 
