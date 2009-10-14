@@ -19,7 +19,9 @@ sealed trait Nat {
 
     type accept[v <: Visitor] <: v#Result
 
-    type acceptOf[R, v <: VisitorOf[R]] <: R // Nothing changes.....
+    type acceptOf[R, v <: VisitorOf[R]] <: R // Nothing changes..... cuz this is generic.
+
+    type acceptNat[v <: VisitorOf[Nat]] <: Nat // OK. not generic.
 }
 
 trait Visitor {
@@ -40,6 +42,8 @@ sealed trait Zero extends Nat {
     override type accept[v <: Visitor] = v#visitZero
 
     override type acceptOf[R, v <: VisitorOf[R]] = v#visitZero
+
+    override type acceptNat[v <: VisitorOf[Nat]] = v#visitZero
 }
 
 sealed trait Succ[n <: Nat] extends Nat {
@@ -49,6 +53,8 @@ sealed trait Succ[n <: Nat] extends Nat {
     override type accept[v <: Visitor] = v#visitSucc[n]
 
     override type acceptOf[R, v <: VisitorOf[R]] = v#visitSucc[n]
+
+    override type acceptNat[v <: VisitorOf[Nat]] = v#visitSucc[n]
 }
 
 
@@ -97,6 +103,13 @@ class TypeIdentity2Test {
         type foh[n <: Nat] = n#acceptOf[Nat, vtOf[_2N]]
         assertSame[foh[_3N]#increment, _6N]
         // assertSame[foo[_3N], _6N] // error
+    }
+
+    trait testOk {
+        type foo[n <: Nat] = n#acceptNat[vtOf[_2N]]#increment
+        type foh[n <: Nat] = n#acceptNat[vtOf[_2N]]
+        assertSame[foh[_3N]#increment, _6N]
+        assertSame[foo[_3N], _6N] // OK!!!
     }
 
     trait test21 {
