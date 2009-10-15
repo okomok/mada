@@ -45,7 +45,7 @@ sealed abstract class List { // this: `this` =>
     /**
      * Supports visitor iteration to return Any.
      */
-    type acceptAny[v <: Visitor[Any]] <: Any
+    type accept_Any[v <: Visitor[Any]] <: Any
 
     /**
      * Supports visitor iteration to return List.
@@ -195,7 +195,7 @@ sealed abstract class Nil extends List {
     override type tail = meta.error // Nil would `List.take` less-restrictive, but less-mathematical.
     override type isEmpty = meta.`true`
 
-    override type acceptAny[v <: Visitor[Any]] = v#visitNil
+    override type accept_Any[v <: Visitor[Any]] = v#visitNil
     override type acceptList[v <: Visitor[List]] = v#visitNil
     override type acceptMetaNat[v <: Visitor[meta.Nat]] = v#visitNil
 
@@ -214,7 +214,7 @@ final case class Cons[h, t <: List](override val head: h, override val tail: t) 
     override type tail = t
     override type isEmpty = meta.`false`
 
-    override type acceptAny[v <: Visitor[Any]] = v#visitCons[h, t]
+    override type accept_Any[v <: Visitor[Any]] = v#visitCons[h, t]
     override type acceptList[v <: Visitor[List]] = v#visitCons[h, t]
     override type acceptMetaNat[v <: Visitor[meta.Nat]] = v#visitCons[h, t]
 

@@ -13,11 +13,11 @@ sealed abstract class Remove[l <: List, n <: meta.Nat] extends (l => Remove.resu
 
 object Remove {
 
-    type result[l <: List, n <: meta.Nat] = n#acceptBlendList[vt[l]]
+    type result[l <: List, n <: meta.Nat] = n#accept_blendList[vt[l]]
 
     sealed abstract class vt[l <: List] extends meta.nat.Visitor[List] {
         override type visitZero = l#tail
-        override type visitSucc[n <: meta.Nat] = Cons[l#head, n#acceptBlendList[vt[l#tail]]]
+        override type visitSucc[n <: meta.Nat] = Cons[l#head, n#accept_blendList[vt[l#tail]]]
     }
 
     implicit def ofZero[h, t <: List] = new Remove[Cons[h, t], meta.Zero] {

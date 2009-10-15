@@ -15,15 +15,15 @@ class NatVisitorTest {
 
     trait vt[m <: Nat] extends nat.Visitor[Nat] {
         type visitZero = m
-        type visitSucc[n <: Nat] = n#acceptNat[vt[Succ[m]]]
+        type visitSucc[n <: Nat] = n#accept_Nat[vt[Succ[m]]]
     }
 
-    type add[n <: Nat, m <: Nat] = n#acceptNat[vt[m]]
+    type add[n <: Nat, m <: Nat] = n#accept_Nat[vt[m]]
 
-    type add1[n <: Nat, m <: Nat] = n#acceptNat[vt[m]]#increment // does work.
+    type add1[n <: Nat, m <: Nat] = n#accept_Nat[vt[m]]#increment // does work.
 
 
-    type add2[n <: Nat, m <: Nat] = n#increment#acceptNat[vt[m#increment]] // works.
+    type add2[n <: Nat, m <: Nat] = n#increment#accept_Nat[vt[m#increment]] // works.
     assertSame[add2[_2N, _3N], _7N]
 
 
@@ -45,11 +45,6 @@ class NatVisitorTest {
 
     assertSame[add[_3N, _0N], _3N]
     assertSame[add[_3N, _2N], _5N]
-
-    def testTrivial: Unit = {
-        // println(unmeta[add1[_3N, _2N], scala.Int]) // could not find implicit value
-        // println(unmeta[add[_3N, _2N]#increment, scala.Int])
-    }
 
     assertSame[add[_3N, _2N]#increment, _6N] // ok
     assertSame[add1[_3N, _2N], _6N] // now no error

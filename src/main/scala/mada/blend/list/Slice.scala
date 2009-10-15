@@ -13,11 +13,11 @@ sealed abstract class Slice[l <: List, n <: meta.Nat, m <: meta.Nat] extends (l 
 
 object Slice {
 
-    type result[l <: List, n <: meta.Nat, m <: meta.Nat] = n#acceptBlendList[vt[l, m]]
+    type result[l <: List, n <: meta.Nat, m <: meta.Nat] = n#accept_blendList[vt[l, m]]
 
     sealed abstract class vt[l <: List, m <: meta.Nat] extends meta.nat.Visitor[List] {
         override type visitZero = Take.result[l, m]
-        override type visitSucc[n <: meta.Nat] = n#acceptBlendList[vt[l#tail, m#decrement]]
+        override type visitSucc[n <: meta.Nat] = n#accept_blendList[vt[l#tail, m#decrement]]
     }
 
     implicit def ofZero[l <: List, m <: meta.Nat](implicit _take: Take[l, m]) = new Slice[l, meta.Zero, m] {

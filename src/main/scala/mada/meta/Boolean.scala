@@ -27,10 +27,9 @@ sealed trait Boolean extends Operatable {
     private[mada] type isTrue <: Boolean
     private[mada] type isFalse <: Boolean
 
-    private[mada] type _if[then, _else]
-    // private[mada] type _if_[then, _else <: then#This] <: then#This // doesn't work in dependent context.
-    // private[mada] type ifThen[then] <: then // doesn't work, too.
-    private[mada] type natIf[then <: Nat, _else <: Nat] <: Nat
+    private[mada] type if_Any[then <: Any, _else <: Any] <: Any
+    private[mada] type if_Boolean[then <: Boolean, _else <: Boolean] <: Boolean
+    private[mada] type if_Nat[then <: Nat, _else <: Nat] <: Nat
 }
 
 /**
@@ -45,10 +44,9 @@ sealed trait `true` extends Boolean {
     override private[mada] type isTrue = `true`
     override private[mada] type isFalse = `false`
 
-    override private[mada] type _if[then, _else] <: then
-    // override private[mada] type _if_[then, _else <: then#This] = then#`this`
-    // override private[mada] type ifThen[then] = then
-    override private[mada] type natIf[then <: Nat, _else <: Nat] = then
+    override private[mada] type if_Any[then <: Any, _else <: Any] = then
+    override private[mada] type if_Boolean[then <: Boolean, _else <: Boolean] = then
+    override private[mada] type if_Nat[then <: Nat, _else <: Nat] = then
 }
 
 /**
@@ -63,8 +61,7 @@ sealed trait `false` extends Boolean {
     override private[mada] type isTrue = `false`
     override private[mada] type isFalse = `true`
 
-    override private[mada] type _if[then, _else] <: _else
-    // override private[mada] type _if_[then, _else <: then#This] = _else
-    // override private[mada] type ifThen[then] = Nothing
-    override private[mada] type natIf[then <: Nat, _else <: Nat] = _else
+    override private[mada] type if_Any[then <: Any, _else <: Any] = _else
+    override private[mada] type if_Boolean[then <: Boolean, _else <: Boolean] = _else
+    override private[mada] type if_Nat[then <: Nat, _else <: Nat] = _else
 }

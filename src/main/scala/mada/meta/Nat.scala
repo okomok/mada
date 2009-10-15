@@ -36,9 +36,9 @@ sealed trait Nat extends Operatable {
 
     type multiply[that <: Nat] <: Nat
 
-    type acceptAny[v <: Visitor[Any]] <: Any
-    type acceptNat[v <: Visitor[Nat]] <: Nat
-    type acceptBlendList[v <: Visitor[blend.List]] <: blend.List
+    type accept_Any[v <: Visitor[Any]] <: Any
+    type accept_Nat[v <: Visitor[Nat]] <: Nat
+    type accept_blendList[v <: Visitor[blend.List]] <: blend.List
 }
 
 
@@ -54,9 +54,9 @@ sealed trait Zero extends Nat {
     override private[mada] type negateAdd[that <: Nat] = that
     override type multiply[that <: Nat] = Zero
 
-    override type acceptAny[v <: Visitor[Any]] = v#visitZero
-    override type acceptNat[v <: Visitor[Nat]] = v#visitZero
-    override type acceptBlendList[v <: Visitor[blend.List]] = v#visitZero
+    override type accept_Any[v <: Visitor[Any]] = v#visitZero
+    override type accept_Nat[v <: Visitor[Nat]] = v#visitZero
+    override type accept_blendList[v <: Visitor[blend.List]] = v#visitZero
 }
 
 sealed trait Succ[n <: Nat] extends Nat {
@@ -69,9 +69,9 @@ sealed trait Succ[n <: Nat] extends Nat {
     override private[mada] type negateAdd[that <: Nat] = n#negateAdd[that#decrement]
     override type multiply[that <: Nat] = n#multiply[that]#add[that]
 
-    override type acceptAny[v <: Visitor[Any]] = v#visitSucc[n]
-    override type acceptNat[v <: Visitor[Nat]] = v#visitSucc[n]
-    override type acceptBlendList[v <: Visitor[blend.List]] = v#visitSucc[n]
+    override type accept_Any[v <: Visitor[Any]] = v#visitSucc[n]
+    override type accept_Nat[v <: Visitor[Nat]] = v#visitSucc[n]
+    override type accept_blendList[v <: Visitor[blend.List]] = v#visitSucc[n]
 }
 
 
@@ -86,6 +86,6 @@ sealed trait sentinel extends Nat {
     override type add[that <: Nat] = error
     override private[mada] type negateAdd[that <: Nat] = error
     override type multiply[that <: Nat] = error
-    override type acceptNat[v <: Visitor[Nat]] = error
-    override type acceptBlendList[v <: Visitor[blend.List]] = error
+    override type accept_Nat[v <: Visitor[Nat]] = error
+    override type accept_blendList[v <: Visitor[blend.List]] = error
 }

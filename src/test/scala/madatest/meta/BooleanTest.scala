@@ -20,11 +20,11 @@ class BooleanTest {
 
     def testTrivial: Unit = {
         assertSame[`true`, `true`]
-        assert[`false` == `if`[`true`, `false`, `true`]]
-        assert[`false` == `if`[`false`, `true`, `false`]]
+        assert[`false` == if_Boolean[`true`, `false`, `true`]]
+        assert[`false` == if_Boolean[`false`, `true`, `false`]]
 
-        //assertSame[`false`, `if`[`true`, `false`, `true`]] // wow, error
-        //assertSame[`false`, `if`[`false`, `true`, `false`]] // wow, error
+        assertSame[`false`, if_Boolean[`true`, `false`, `true`]]
+        assertSame[`false`, if_Boolean[`false`, `true`, `false`]]
     }
 
     assert[`true` == `true`]
@@ -46,10 +46,10 @@ class BooleanTest {
     }
 
     trait testPropagation {
-        type incinc[n <: Nat] = natIf[n == _3N, n#increment, n]#increment
+        type incinc[n <: Nat] = if_Nat[n == _3N, n#increment, n]#increment
         assertLower[incinc[_2N], Nat]
 
-//        assert[`if`[_2N == _3N, _2N#increment, _2N]#increment == _3N]
+        assert[if_Nat[_2N == _3N, _2N#increment, _2N]#increment == _3N]
         assert[incinc[_2N] == _3N]
         assert[incinc[_3N] == _5N]
     }

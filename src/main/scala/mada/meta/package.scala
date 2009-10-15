@@ -42,7 +42,7 @@ package object meta {
 // assertions
 
     // Prefer methods to case classes:
-    //   case classes permit should-be-illegal expression.
+    //   case classes often permit should-be-illegal expression.
 
     /**
      * assertion
@@ -63,12 +63,6 @@ package object meta {
      * assertion if <code>a</code> is upper than <code>b</code>.
      */
     def assertUpper[a >: b, b]: scala.Unit = ()
-
-
-    type `if`[cond <: Boolean, then, _else] = cond#_if[then, _else]
-    // type _if_[cond <: Boolean, then, _else <: then#This] = cond#_if_[then, _else]
-    // type ifThen[cond <: Boolean, then] = cond#ifThen[then]
-    type natIf[cond <: Boolean, then <: Nat, _else <: Nat] = cond#natIf[then, _else]
 
 
 // constructors for type inference
@@ -117,5 +111,23 @@ package object meta {
 
     type Predicate1 = Function1 { type apply1[v1 <: Argument11] <: Boolean }
     type Transform[A] = Function1 { type Argument11 >: A; type apply1[v1 <: Argument11] <: A }
+
+
+// if
+
+    /**
+     * The if-expression to return Any.
+     */
+    type if_Any[cond <: Boolean, then <: Any, _else <: Any] = cond#if_Any[then, _else]
+
+    /**
+     * The if-expression to return Boolean.
+     */
+    type if_Boolean[cond <: Boolean, then <: Boolean, _else <: Boolean] = cond#if_Boolean[then, _else]
+
+    /**
+     * The if-expression to return Nat.
+     */
+    type if_Nat[cond <: Boolean, then <: Nat, _else <: Nat] = cond#if_Nat[then, _else]
 
 }
