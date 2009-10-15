@@ -115,7 +115,7 @@ Scala metaprogramming seems to put several restrictions:
 1. Requires -"Yrecursion 50" flag.
 1. No metamethod overloading.
 1. Meta-eq is infeasible.
-1. Metamethod can't be generic. (As a result, meta-if is infeasible.)
+1. Generic metamethod can't be overridden. (As a result, meta-if is infeasible.)
 
 
 
