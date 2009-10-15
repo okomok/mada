@@ -86,6 +86,8 @@ sealed trait sentinel extends Nat {
     override type add[that <: Nat] = error
     override private[mada] type negateAdd[that <: Nat] = error
     override type multiply[that <: Nat] = error
+
+    override type accept_Any[v <: Visitor[Any]] = error
     override type accept_Nat[v <: Visitor[Nat]] = error
     override type accept_blendList[v <: Visitor[blend.List]] = error
 }

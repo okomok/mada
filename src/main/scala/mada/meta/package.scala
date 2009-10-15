@@ -107,12 +107,6 @@ package object meta {
     type always[a] = AlwaysWorkaround.always[a]
 
 
-// functions
-
-    type Predicate1 = Function1 { type apply1[v1 <: Argument11] <: Boolean }
-    type Transform[A] = Function1 { type Argument11 >: A; type apply1[v1 <: Argument11] <: A }
-
-
 // if
 
     /**
@@ -129,5 +123,40 @@ package object meta {
      * The if-expression to return Nat.
      */
     type if_Nat[cond <: Boolean, then <: Nat, _else <: Nat] = cond#if_Nat[then, _else]
+
+
+// Functions short-cut
+
+    type Func0[R] = Function0 {
+        type Result0 = R
+    }
+
+    type Func1[T1, R] = Function1 {
+        type Argument11 = T1
+        type Result1 = R
+       // type apply1[v1 <: T1] <: R
+    }
+
+    type Func2[T1, T2, R] = Function2 {
+        type Argument21 = T1
+        type Argument22 = T2
+        type Result2 = R
+    }
+
+    type Func3[T1, T2, T3, R] = Function3 {
+        type Argument31 = T1
+        type Argument32 = T2
+        type Argument33 = T3
+        type Result3 = R
+    }
+
+    type Predicate1 = Function1 {
+        type Result1 = Boolean
+    }
+
+    type Transform[A] = Function1 {
+        type Argument11 >: A
+        type Result1 <: A
+    }
 
 }
