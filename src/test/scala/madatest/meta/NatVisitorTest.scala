@@ -10,7 +10,7 @@ package madatest; package metatest
 import mada.meta._
 //import junit.framework.Assert._
 
-
+/*
 class NatVisitorTest {
 
     trait vt[m <: Nat] extends nat.Visitor {
@@ -56,3 +56,4 @@ class NatVisitorTest {
 //    assertSame[add1[_3N, _2N], _6N] // error
 
 }
+*/

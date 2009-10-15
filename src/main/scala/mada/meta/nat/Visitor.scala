@@ -11,8 +11,7 @@ package mada; package meta; package nat
 //      at http://www.assembla.com/wiki/show/metascala
 
 
-trait Visitor {
-    type Result
-    type visitZero <: Result
-    type visitSucc[n <: Nat] <: Result
+trait Visitor[R] {
+    type visitZero <: R
+    type visitSucc[n <: Nat] <: R
 }

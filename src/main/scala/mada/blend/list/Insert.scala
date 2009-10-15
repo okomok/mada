@@ -13,12 +13,11 @@ sealed abstract class Insert[l <: List, n <: meta.Nat, r <: List] extends ((l, r
 
 object Insert {
 
-    type result[l <: List, n <: meta.Nat, r <: List] = n#accept[vt[l, r]]
+    type result[l <: List, n <: meta.Nat, r <: List] = n#acceptBlendList[vt[l, r]]
 
-    sealed abstract class vt[l <: List, r <: List] extends meta.nat.Visitor {
-        override type Result = List
+    sealed abstract class vt[l <: List, r <: List] extends meta.nat.Visitor[List] {
         override type visitZero = Prepend.result[l, r]
-        override type visitSucc[n <: meta.Nat] = Cons[l#head, n#accept[vt[l#tail, r]]]
+        override type visitSucc[n <: meta.Nat] = Cons[l#head, n#acceptBlendList[vt[l#tail, r]]]
     }
 
     implicit def ofZero[l <: List, r <: List](implicit _prepend: Prepend[l, r]) = new Insert[l, meta.Zero, r] {

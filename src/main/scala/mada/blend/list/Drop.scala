@@ -13,12 +13,11 @@ sealed abstract class Drop[l <: List, n <: meta.Nat] extends (l => Drop.result[l
 
 object Drop {
 
-    type result[l <: List, n <: meta.Nat] = n#accept[vt[l]]
+    type result[l <: List, n <: meta.Nat] = n#acceptBlendList[vt[l]]
 
-    sealed abstract class vt[l <: List] extends meta.nat.Visitor {
-        override type Result = List
+    sealed abstract class vt[l <: List] extends meta.nat.Visitor[List] {
         override type visitZero = l
-        override type visitSucc[n <: meta.Nat] = n#accept[vt[l#tail]]
+        override type visitSucc[n <: meta.Nat] = n#acceptBlendList[vt[l#tail]]
     }
 
     implicit def ofZero[l <: List] = new Drop[l, meta.Zero] {

@@ -10,8 +10,7 @@ package mada; package blend; package list
 /**
  * Just like iterator of the meta List.
  */
-trait Visitor {
-    type Result
-    type visitNil <: Result
-    type visitCons[h, t <: List] <: Result
+trait Visitor[R] {
+    type visitNil <: R
+    type visitCons[h, t <: List] <: R
 }

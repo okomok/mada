@@ -43,9 +43,19 @@ sealed abstract class List { // this: `this` =>
     final def isEmpty(implicit _unmeta: meta.Unmeta[isEmpty, scala.Boolean]): scala.Boolean = _unmeta() // just for convenience.
 
     /**
-     * Supports visitor iteration.
+     * Supports visitor iteration to return Any.
      */
-    type accept[v <: Visitor] <: v#Result
+    type acceptAny[v <: Visitor[Any]] <: Any
+
+    /**
+     * Supports visitor iteration to return List.
+     */
+    type acceptList[v <: Visitor[List]] <: List
+
+    /**
+     * Supports visitor iteration to return Nat.
+     */
+    type acceptMetaNat[v <: Visitor[meta.Nat]] <: meta.Nat
 
     /**
      * Drops EXACTLY <code>n</code> elements.
@@ -184,7 +194,10 @@ sealed abstract class Nil extends List {
     override def tail = throw new NoSuchElementException("tail of empty list")
     override type tail = meta.error // Nil would `List.take` less-restrictive, but less-mathematical.
     override type isEmpty = meta.`true`
-    override type accept[v <: Visitor] = v#visitNil
+
+    override type acceptAny[v <: Visitor[Any]] = v#visitNil
+    override type acceptList[v <: Visitor[List]] = v#visitNil
+    override type acceptMetaNat[v <: Visitor[meta.Nat]] = v#visitNil
 
     override def untyped = sequence.Nil
 }
@@ -200,7 +213,10 @@ final case class Cons[h, t <: List](override val head: h, override val tail: t) 
     override type head = h
     override type tail = t
     override type isEmpty = meta.`false`
-    override type accept[v <: Visitor] = v#visitCons[h, t]
+
+    override type acceptAny[v <: Visitor[Any]] = v#visitCons[h, t]
+    override type acceptList[v <: Visitor[List]] = v#visitCons[h, t]
+    override type acceptMetaNat[v <: Visitor[meta.Nat]] = v#visitCons[h, t]
 
     override def untyped = head :: tail.untyped
 }

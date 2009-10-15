@@ -16,12 +16,11 @@ sealed abstract class Nth[l <: List, n <: meta.Nat] extends (l => Nth.result[l, 
 
 object Nth {
 
-    type result[l <: List, n <: meta.Nat] = n#accept[vt[l]]
+    type result[l <: List, n <: meta.Nat] = n#acceptAny[vt[l]]
 
-    sealed abstract class vt[l <: List] extends meta.nat.Visitor {
-        override type Result = Any
+    sealed abstract class vt[l <: List] extends meta.nat.Visitor[Any] {
         override type visitZero = l#head
-        override type visitSucc[n <: meta.Nat] = n#accept[vt[l#tail]]
+        override type visitSucc[n <: meta.Nat] = n#acceptAny[vt[l#tail]]
     }
 
     implicit def ofZero[h, t <: List] = new Nth[Cons[h, t], meta.Zero] {

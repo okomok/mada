@@ -13,12 +13,11 @@ sealed abstract class LastOrElse[l <: List, a] extends ((l, a) => LastOrElse.res
 
 object LastOrElse {
 
-    type result[l <: List, a] = l#accept[vt[a]]
+    type result[l <: List, a] = l#acceptAny[vt[a]]
 
-    sealed abstract class vt[a] extends Visitor {
-        override type Result = Any
+    sealed abstract class vt[a] extends Visitor[Any] {
         override type visitNil = a
-        override type visitCons[h, t <: List] = t#accept[vt[h]]
+        override type visitCons[h, t <: List] = t#acceptAny[vt[h]]
     }
 
     // Synchronize with LastOrElse.result algorithm can remove asInstanceOf.

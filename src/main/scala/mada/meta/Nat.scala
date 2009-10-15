@@ -36,7 +36,9 @@ sealed trait Nat extends Operatable {
 
     type multiply[that <: Nat] <: Nat
 
-    type accept[v <: Visitor] <: v#Result // More generic algorithms (fold etc) won't work.
+    type acceptAny[v <: Visitor[Any]] <: Any
+    type acceptNat[v <: Visitor[Nat]] <: Nat
+    type acceptBlendList[v <: Visitor[blend.List]] <: blend.List
 }
 
 
@@ -51,7 +53,10 @@ sealed trait Zero extends Nat {
     override type add[that <: Nat] = that
     override private[mada] type negateAdd[that <: Nat] = that
     override type multiply[that <: Nat] = Zero
-    override type accept[v <: Visitor] = v#visitZero
+
+    override type acceptAny[v <: Visitor[Any]] = v#visitZero
+    override type acceptNat[v <: Visitor[Nat]] = v#visitZero
+    override type acceptBlendList[v <: Visitor[blend.List]] = v#visitZero
 }
 
 sealed trait Succ[n <: Nat] extends Nat {
@@ -63,7 +68,10 @@ sealed trait Succ[n <: Nat] extends Nat {
     override type add[that <: Nat] = Succ[n#add[that]]
     override private[mada] type negateAdd[that <: Nat] = n#negateAdd[that#decrement]
     override type multiply[that <: Nat] = n#multiply[that]#add[that]
-    override type accept[v <: Visitor] = v#visitSucc[n]
+
+    override type acceptAny[v <: Visitor[Any]] = v#visitSucc[n]
+    override type acceptNat[v <: Visitor[Nat]] = v#visitSucc[n]
+    override type acceptBlendList[v <: Visitor[blend.List]] = v#visitSucc[n]
 }
 
 
@@ -78,5 +86,6 @@ sealed trait sentinel extends Nat {
     override type add[that <: Nat] = error
     override private[mada] type negateAdd[that <: Nat] = error
     override type multiply[that <: Nat] = error
-    override type accept[v <: Visitor] = error
+    override type acceptNat[v <: Visitor[Nat]] = error
+    override type acceptBlendList[v <: Visitor[blend.List]] = error
 }
