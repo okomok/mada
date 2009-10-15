@@ -17,7 +17,9 @@ class ForwardingTest {
     type incre[n <: Nat] = n#increment
     type inc = quote1[incre, Nat, Nat]
 
+    type foo[n <: Nat] = forwarding1[inc]#apply1[n]#increment
+
     trait testTrivial {
-        assert[forwarding1[inc]#apply1[_3N] == _4N]
+        assert[foo[_3N] == _5N]
     }
 }

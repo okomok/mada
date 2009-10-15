@@ -13,11 +13,11 @@ sealed abstract class Prepend[r <: List, l <: List] extends ((r, l) => Prepend.r
 
 object Prepend {
 
-    type result[r <: List, l <: List] = l#acceptList[vt[r]]
+    type result[r <: List, l <: List] = l#accept_List[vt[r]]
 
     sealed abstract class vt[r <: List] extends Visitor[List] {
         override type visitNil = r
-        override type visitCons[h, t <: List] = Cons[h, t#acceptList[vt[r]]]
+        override type visitCons[h, t <: List] = Cons[h, t#accept_List[vt[r]]]
     }
 
     implicit def ofNil[r <: List] = new Prepend[r, Nil] {

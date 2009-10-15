@@ -13,11 +13,11 @@ sealed abstract class Zip[l1 <: List, l2 <: List] extends ((l1, l2) => Zip.resul
 
 object Zip {
 
-    type result[l1 <: List, l2 <: List] = l1#acceptList[vt[l2]]
+    type result[l1 <: List, l2 <: List] = l1#accept_List[vt[l2]]
 
     sealed abstract class vt[l2 <: List] extends Visitor[List] {
         override type visitNil = Nil
-        override type visitCons[h, t <: List] = Cons[Tuple2[h, l2#head], t#acceptList[vt[l2#tail]]]
+        override type visitCons[h, t <: List] = Cons[Tuple2[h, l2#head], t#accept_List[vt[l2#tail]]]
     }
 
     implicit def ofNil[l2 <: List] = new Zip[Nil, l2] {

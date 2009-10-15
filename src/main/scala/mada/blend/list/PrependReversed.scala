@@ -12,11 +12,11 @@ sealed abstract class PrependReversed[r <: List, l <: List] extends ((r, l) => P
 
 object PrependReversed {
 
-    type result[r <: List, l <: List] = l#acceptList[vt[r]]
+    type result[r <: List, l <: List] = l#accept_List[vt[r]]
 
     sealed abstract class vt[r <: List] extends Visitor[List] {
         override type visitNil = r
-        override type visitCons[h, t <: List] = t#acceptList[vt[Cons[h, r]]]
+        override type visitCons[h, t <: List] = t#accept_List[vt[Cons[h, r]]]
     }
 
     implicit def ofNil[r <: List] = new PrependReversed[r, Nil] {

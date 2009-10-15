@@ -50,12 +50,12 @@ sealed abstract class List { // this: `this` =>
     /**
      * Supports visitor iteration to return List.
      */
-    type acceptList[v <: Visitor[List]] <: List
+    type accept_List[v <: Visitor[List]] <: List
 
     /**
      * Supports visitor iteration to return Nat.
      */
-    type acceptMetaNat[v <: Visitor[meta.Nat]] <: meta.Nat
+    type accept_metaNat[v <: Visitor[meta.Nat]] <: meta.Nat
 
     /**
      * Drops EXACTLY <code>n</code> elements.
@@ -180,6 +180,9 @@ sealed abstract class List { // this: `this` =>
     final override def hashCode = untyped.hashCode
     final override def toString = untyped.toString
 
+
+    final type map[A, B, f[_ <: A] <: B] = Map.result[`this`, A, B, f]
+
 }
 
 
@@ -196,8 +199,8 @@ sealed abstract class Nil extends List {
     override type isEmpty = meta.`true`
 
     override type accept_Any[v <: Visitor[Any]] = v#visitNil
-    override type acceptList[v <: Visitor[List]] = v#visitNil
-    override type acceptMetaNat[v <: Visitor[meta.Nat]] = v#visitNil
+    override type accept_List[v <: Visitor[List]] = v#visitNil
+    override type accept_metaNat[v <: Visitor[meta.Nat]] = v#visitNil
 
     override def untyped = sequence.Nil
 }
@@ -215,8 +218,8 @@ final case class Cons[h, t <: List](override val head: h, override val tail: t) 
     override type isEmpty = meta.`false`
 
     override type accept_Any[v <: Visitor[Any]] = v#visitCons[h, t]
-    override type acceptList[v <: Visitor[List]] = v#visitCons[h, t]
-    override type acceptMetaNat[v <: Visitor[meta.Nat]] = v#visitCons[h, t]
+    override type accept_List[v <: Visitor[List]] = v#visitCons[h, t]
+    override type accept_metaNat[v <: Visitor[meta.Nat]] = v#visitCons[h, t]
 
     override def untyped = head :: tail.untyped
 }
