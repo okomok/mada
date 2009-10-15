@@ -16,6 +16,14 @@ class InitTest {
     import junit.framework.Assert._
     assertFalse(scala.Nil eq Nil)
 
+
+    trait testMeta {
+        type initInit[l <: List] = l#init#init
+
+        type l = Int :: String :: java.lang.Integer :: Char :: Int :: Nil
+        meta.assertSame[Int :: String :: java.lang.Integer :: Nil, initInit[l]]
+    }
+
     def testTrivial: Unit = {
         val i = new java.lang.Integer(10)
         type l = Int :: String :: java.lang.Integer :: Char :: Int :: Nil

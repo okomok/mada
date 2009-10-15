@@ -10,21 +10,20 @@ package madatest; package metatest
 import mada.meta._
 //import junit.framework.Assert._
 
-/*
+
 class NatVisitorTest {
 
-    trait vt[m <: Nat] extends nat.Visitor {
-        type Result = Nat
+    trait vt[m <: Nat] extends nat.Visitor[Nat] {
         type visitZero = m
-        type visitSucc[n <: Nat] = n#accept[vt[Succ[m]]]
+        type visitSucc[n <: Nat] = n#acceptNat[vt[Succ[m]]]
     }
 
-    type add[n <: Nat, m <: Nat] = n#accept[vt[m]]
+    type add[n <: Nat, m <: Nat] = n#acceptNat[vt[m]]
 
-    type add1[n <: Nat, m <: Nat] = n#accept[vt[m]]#increment // doesn't work.
+    type add1[n <: Nat, m <: Nat] = n#acceptNat[vt[m]]#increment // does work.
 
 
-    type add2[n <: Nat, m <: Nat] = n#increment#accept[vt[m#increment]] // works.
+    type add2[n <: Nat, m <: Nat] = n#increment#acceptNat[vt[m#increment]] // works.
     assertSame[add2[_2N, _3N], _7N]
 
 
@@ -36,8 +35,8 @@ class NatVisitorTest {
     type addx1[n <: Nat, m <: Nat] = n#add[m]#increment // works!
     assertSame[addx1[_4N, _3N], _8N]
 
-    type addxx1[n <: Nat, m <: Nat] = add[n, m]#increment // doesn't work.
-    // assertSame[addxx1[_4N, _3N], _8N]
+    type addxx1[n <: Nat, m <: Nat] = add[n, m]#increment // now does work.
+    assertSame[addxx1[_4N, _3N], _8N]
 
     type addxxx3[n <: Nat, m <: Nat] = add[n#increment#increment, m#increment] // works.
     assertSame[addxxx3[_2N, _3N], _8N]
@@ -53,7 +52,7 @@ class NatVisitorTest {
     }
 
     assertSame[add[_3N, _2N]#increment, _6N] // ok
-//    assertSame[add1[_3N, _2N], _6N] // error
+    assertSame[add1[_3N, _2N], _6N] // now no error
 
 }
-*/
+
