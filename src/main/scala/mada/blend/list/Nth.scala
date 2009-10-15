@@ -7,9 +7,6 @@
 package mada; package blend; package list
 
 
-// drop#head can't replace this. The delayed #head destroys type identity.
-
-
 @specializer
 sealed abstract class Nth[l <: List, n <: meta.Nat] extends (l => Nth.result[l, n])
 
