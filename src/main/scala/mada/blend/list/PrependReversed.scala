@@ -10,6 +10,7 @@ package mada; package blend; package list
 @specializer
 sealed abstract class PrependReversed[r <: List, l <: List] extends ((r, l) => PrependReversed.result[r, l])
 
+
 object PrependReversed {
 
     type result[r <: List, l <: List] = l#accept_List[vt[r]]
