@@ -23,13 +23,16 @@ class FunctionTest {
         type apply1[v1 <: Argument11] = v1#increment
     }
 
-    //type Func1[T1, R] = Function1 { type Result1 = R; type Argument11 = T1 }//; type apply1[v <: T1] <: R }
+    type Func1[T1, R] = Function1 { type Result1 = R; type Argument11 = T1 }
 
-    //type twice[f <: Func1[Nat, Nat], n <: Nat] = f#apply1[n]#increment
+    type applyx[f <: Func1[Nat, Nat], n <: Nat] = f#apply1[n]
+    type twice[f <: Func1[Nat, Nat], n <: Nat] = f#apply1[n]#increment
 
     trait testTrivial {
         assert[forwarding1[inc]#apply1[_3N] == _4N]
-    //    assert[twice[incf, _3N] == _5N]
-    //    assert[twice[inc, _3N] == _5N]
+        assert[applyx[incf, _3N] == _4N]
+        assert[applyx[inc, _3N] == _4N]
+    //    assert[twice[incf, _3N] == _5N] // error
+    //    assert[twice[inc, _3N] == _5N] // error
     }
 }

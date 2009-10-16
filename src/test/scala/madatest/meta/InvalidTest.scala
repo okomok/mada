@@ -30,3 +30,26 @@ class GenericMethodOverrideTest {
     //assertSame[foo2[d, _2N], _3N]
 
 }
+
+
+class TypeConstraintTest {
+
+    trait B {
+        type R
+        type inc[n <: Nat] <: R
+    }
+
+    trait d extends B {
+        type R = Nat
+        override type inc[n <: Nat] = n#increment
+    }
+
+    // OK
+    type foo1[b <: B { type R = Nat }, n <: Nat] = b#inc[n]
+    assertSame[foo1[d, _2N]#increment, _4N]
+
+    // NO
+    type foo2[b <: B { type R = Nat }, n <: Nat] = b#inc[n]#increment
+    // assertSame[foo2[d, _2N], _4N]
+
+}
