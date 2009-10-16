@@ -15,7 +15,7 @@ import nat._
 
 
 sealed trait Nat extends Operatable {
-    type `this` <: Nat
+    type self <: Nat
 
     private[mada] type isZero <: Boolean
     type equals[that <: Nat] <: Boolean
@@ -30,7 +30,7 @@ sealed trait Nat extends Operatable {
     final override type operator_+[that <: Nat] = add[that]
 
     private[mada] type negateAdd[that <: Nat] <: Nat
-    final type subtract[that <: Nat] = that#negateAdd[`this`]
+    final type subtract[that <: Nat] = that#negateAdd[self]
     final override type Operand_- = Nat
     final override type operator_-[that <: Nat] = subtract[that]
 
@@ -45,7 +45,7 @@ sealed trait Nat extends Operatable {
 // "case classes"
 
 sealed trait Zero extends Nat {
-    override type `this` = Zero
+    override type self = Zero
     override private[mada] type isZero = `true`
     override type equals[that <: Nat] = that#isZero
     override type increment = Succ[Zero]
@@ -60,10 +60,10 @@ sealed trait Zero extends Nat {
 }
 
 sealed trait Succ[n <: Nat] extends Nat {
-    override type `this` = Succ[n]
+    override type self = Succ[n]
     override private[mada] type isZero = `false`
     override type equals[that <: Nat] = n#equals[that#decrement]
-    override type increment = Succ[`this`]
+    override type increment = Succ[self]
     override type decrement = n
     override type add[that <: Nat] = Succ[n#add[that]]
     override private[mada] type negateAdd[that <: Nat] = n#negateAdd[that#decrement]
@@ -78,11 +78,11 @@ sealed trait Succ[n <: Nat] extends Nat {
 // sentinel value
 
 sealed trait sentinel extends Nat {
-    override type `this` = sentinel
+    override type self = sentinel
     override private[mada] type isZero = `false`
     override type equals[that <: Nat] = `false`
     override type increment = error
-    override type decrement = `this`
+    override type decrement = self
     override type add[that <: Nat] = error
     override private[mada] type negateAdd[that <: Nat] = error
     override type multiply[that <: Nat] = error
