@@ -589,7 +589,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
 }
 
 
-object Vector {
+object Vector extends LowPriorityOrderingImplicits {
 
 
 // compatibles
