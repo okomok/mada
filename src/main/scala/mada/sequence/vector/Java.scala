@@ -48,6 +48,7 @@ case class ToJList[A](_1: Vector[A]) extends java.util.AbstractList[A] {
 
 // ArrayList
 
+@deprecated("unused")
 private object ToJArrayList {
     def apply[A](from: Vector[A]): java.util.ArrayList[A] = {
         val r = new java.util.ArrayList[A](from.size)

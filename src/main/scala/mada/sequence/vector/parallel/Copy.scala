@@ -10,11 +10,11 @@ package mada; package sequence; package vector
 case class ParallelCopy[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
     util.assert(!IsParallel(_1))
 
-    override protected val delegate = _1.copy /*{
-        val r = fromArray(newArray[A](_1.size))
+    override protected val delegate = {
+        val r = allocate[A](_1.size)
         _1.parallel(_2).copyTo(r)
         r
-    }*/
+    }
 }
 
 private object ParallelCopyTo {

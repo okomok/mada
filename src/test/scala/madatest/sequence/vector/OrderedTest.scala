@@ -15,6 +15,7 @@ import junit.framework.Assert._
 
 
 class OrderedTest {
+    /*
     def testTrivial: Unit = {
         val v1 = vector.from("ab")
         val v2 = vector.from("")
@@ -29,7 +30,7 @@ class OrderedTest {
     }
 
     def testOrdering: Unit = {
-        implicit val charComp1 = mada.compare.from{ (x: Char, y: Char) => x < y }.toOrdering
+    //    implicit val charComp1 = mada.compare.from{ (x: Char, y: Char) => x < y }.toOrdering // unneeded in 2.8.
     //    implicit val charComp2 = mada.compare.toGetOrdered{ (x: Char, y: Char) => x < y }
         val v1 = vector.from("ab")
         val v2 = vector.from("")
@@ -46,4 +47,5 @@ class OrderedTest {
     def sortByOrdering[A](v: Vector[A])(implicit o: Ordering[A]): Unit = {
         v.sortBy(mada.compare.fromOrdering(o))
     }
+    */
 }

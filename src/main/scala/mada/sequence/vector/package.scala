@@ -42,6 +42,11 @@ package object vector {
 // constructors
 
     /**
+     * @return  an uninitialized vector with the specified size.
+     */
+    def allocate[A](c: Int): Vector[A] = Allocate[A](c)
+
+    /**
      * @return  an empty vector.
      */
     def empty[A]: Vector[A] = Empty.apply[A]
