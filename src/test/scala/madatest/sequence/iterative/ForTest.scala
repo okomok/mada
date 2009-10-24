@@ -16,6 +16,7 @@ class ForTest {
         var limit = 2
         val it = for (i <- iterative.Of(0, 1, 2, 3) if i <= limit; j <- vector.range(0,limit)) yield { limit = 4; (i, j) }
 
+        // This is probably guaranteed: imagine how function-literal is generated.
         it.flatMap(i => vector.range(0, 9))
         val k: Int => Iterative[Int] = i => vector.range(0, 9)
 
