@@ -177,6 +177,9 @@ sealed abstract class List[+A] extends iterative.Sequence[A] {
         }
     }
 
+    @aliasOf("filter")
+    def withFilter(p: A => Boolean): List[A] = filter(p)
+
     /**
      * Filters elements using <code>funtion.not(p)</code>.
      */

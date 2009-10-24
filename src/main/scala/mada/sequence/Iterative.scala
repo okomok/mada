@@ -88,6 +88,9 @@ trait Iterative[+A] extends Sequence[A] {
      */
     def filter(p: A => Boolean): Iterative[A] = Filter(this, p)
 
+    @aliasOf("filter")
+    final def withFilter(p: A => Boolean): Iterative[A] = filter(p)
+
     /**
      * Filters elements using <code>funtion.not(p)</code>.
      */
