@@ -11,5 +11,5 @@ import scala.collection.mutable.GenericArray
 
 
 case class Allocate[A](_1: Int) extends Forwarder[A] {
-    override protected val delegate = fromSVector(new GenericArray[A](_1))
+    override protected val delegate = fromSIndexedSeq(new GenericArray[A](_1))
 }

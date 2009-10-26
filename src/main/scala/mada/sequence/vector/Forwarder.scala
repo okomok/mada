@@ -106,7 +106,7 @@ trait Forwarder[A] extends TransformAdapter[A] with SequenceForwarder[A] {
     override def toArray[B >: A : ClassManifest]: Array[B] = delegate.toArray
     override def toProduct: Product = delegate.toProduct
     override def toOrdered(implicit c: compare.GetOrdered[A]): Ordered[Vector[A]] = delegate.toOrdered(c)
-    override def toSVector: scala.collection.mutable.Vector[A] = delegate.toSVector
+    override def toSIndexedSeq: scala.collection.mutable.IndexedSeq[A] = delegate.toSIndexedSeq
     override def toJList: java.util.List[A] = delegate.toJList
 // string
     override def _stringize(_this: Vector[Char]): String = delegate.asInstanceOf[Vector[Char]].stringize

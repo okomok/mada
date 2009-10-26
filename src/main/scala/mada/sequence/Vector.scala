@@ -553,7 +553,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
     def toOrdered(implicit c: compare.GetOrdered[A]): Ordered[Vector[A]] = ToOrdered(this, c)
 
     @conversion
-    def toSVector: scala.collection.mutable.Vector[A] = ToSVector(this)
+    def toSIndexedSeq: scala.collection.mutable.IndexedSeq[A] = ToSIndexedSeq(this)
 
     @conversion
     def toJList: java.util.List[A] = ToJList(this)
@@ -599,7 +599,7 @@ object Vector extends LowPriorityOrderingImplicits {
     implicit def _fromCell[A](from: Cell[A]): Vector[A] = fromCell(from)
     implicit def _fromOption[A](from: Option[A]): Vector[A] = fromOption(from)
     implicit def _fromProduct(from: Product): Vector[Any] = fromProduct(from)
-    implicit def _fromSVector[A](from: scala.collection.Vector[A]): Vector[A] = fromSVector(from)
+    implicit def _fromSIndexedSeq[A](from: scala.collection.IndexedSeq[A]): Vector[A] = fromSIndexedSeq(from)
     implicit def _fromJCharSequence(from: java.lang.CharSequence): Vector[Char] = fromJCharSequence(from)
     implicit def _fromJList[A](from: java.util.List[A]): Vector[A] = fromJList(from)
 

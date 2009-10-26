@@ -31,13 +31,16 @@ class TSTree[A, V](_lt: compare.Func[A]) extends java.lang.Cloneable {
         !get(key).isEmpty
     }
 
-    def iterator: Iterator[(sequence.Vector[A], V)] = {
+    def iterator: scala.Iterator[(sequence.Vector[A], V)] = {
         if (rootNode eq null) {
-            Iterator.empty
+            scala.Iterator.empty
         } else {
             val it = new TSTreeNodeIterator(sequence.vector.empty, rootNode)
+            it.filter{ case (_, node) => !node.data.isEmpty }.map{ case (key, node) => (key.force, node.data.get) }
+            /* 2.8 is unstable.
             for ((key, node) <- it if (!node.data.isEmpty))
                 yield (key.force, node.data.get) // force now!
+            */
         }
     }
 

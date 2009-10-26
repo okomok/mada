@@ -148,7 +148,7 @@ package object vector {
     def fromProduct(from: Product): Vector[Any] = FromProduct(from)
 
     @compatibleConversion
-    def fromSVector[A](from: scala.collection.Vector[A]): Vector[A] = FromSVector(from)
+    def fromSIndexedSeq[A](from: scala.collection.IndexedSeq[A]): Vector[A] = FromSIndexedSeq(from)
 
     @compatibleConversion
     def fromJList[A](from: java.util.List[A]): Vector[A] = FromJList(from)

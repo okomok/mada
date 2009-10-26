@@ -12,5 +12,5 @@ package mada; package sequence; package vector
  */
 object Of {
     def apply[A](from: A*): Vector[A] = iterative.fromSIterable(from).toVector
-    def unapplySeq[A](from: Vector[A]): Option[Seq[A]] = Some(from.toSVector)
+    def unapplySeq[A](from: Vector[A]): Option[Seq[A]] = Some(from.toSIndexedSeq)
 }

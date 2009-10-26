@@ -20,32 +20,32 @@ case class FromSIterable[A](_1: scala.Iterable[A]) extends Forwarder[A] {
 }
 
 
-// Vector
+// IndexedSeq
 
-case class FromSVector[A](_1: scala.collection.Vector[A]) extends Forwarder[A] {
+case class FromSIndexedSeq[A](_1: scala.collection.IndexedSeq[A]) extends Forwarder[A] {
     override protected val delegate: Vector[A] = _1 match {
-        case ToSVector(from) => from // from-to fusion
-        case _: scala.collection.mutable.Vector[_] => new _FromSMutableVector(_1.asInstanceOf[scala.collection.mutable.Vector[A]])
-        case _ => new _FromSVector(_1)
+        case ToSIndexedSeq(from) => from // from-to fusion
+        case _: scala.collection.mutable.IndexedSeq[_] => new _FromSMutableIndexedSeq(_1.asInstanceOf[scala.collection.mutable.IndexedSeq[A]])
+        case _ => new _FromSIndexedSeq(_1)
     }
 }
 
-private class _FromSVector[A](_1: scala.collection.Vector[A]) extends Vector[A] {
+private class _FromSIndexedSeq[A](_1: scala.collection.IndexedSeq[A]) extends Vector[A] {
     override def start = 0
     override def end = _1.length
     override def apply(i: Int) = _1(i)
 }
 
-private class _FromSMutableVector[A](_1: scala.collection.mutable.Vector[A]) extends Vector[A] {
+private class _FromSMutableIndexedSeq[A](_1: scala.collection.mutable.IndexedSeq[A]) extends Vector[A] {
     override def start = 0
     override def end = _1.length
     override def apply(i: Int) = _1(i)
     override def update(i: Int, e: A) = _1(i) = e
 
-    override def toSVector = _1 // to-from fusion
+    override def toSIndexedSeq = _1 // to-from fusion
 }
 
-case class ToSVector[A](_1: Vector[A]) extends scala.collection.mutable.Vector[A] {
+case class ToSIndexedSeq[A](_1: Vector[A]) extends scala.collection.mutable.IndexedSeq[A] {
     override def length = _1.nth.size
     override def apply(i: Int) = _1.nth(i)
     override def update(i: Int, e: A) = _1.nth(i) = e
