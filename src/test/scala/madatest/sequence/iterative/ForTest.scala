@@ -24,4 +24,15 @@ class ForTest {
         assertEquals(a, it)
 //        assertEquals(a, it) // error, because of the side-effect.
     }
+
+/* Never ends!
+    def testBreak: Unit = {
+        var break = false
+        for (i <- iterative.Of(0, 1, 2).cycle if !break) {
+            if (i == 100) {
+                break = true
+            }
+        }
+    }
+*/
 }
