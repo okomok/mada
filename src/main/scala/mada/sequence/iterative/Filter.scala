@@ -27,6 +27,17 @@ case class Filter[A](_1: Iterative[A], _2: A => Boolean) extends Iterative[A] {
     }
 
     override def filter(p: A => Boolean) = _1.filter{ e => _2(e) && p(e) } // filter-filter fusion
+
+    override def foreach(f: A => Unit): Unit = { // foreach-filter fusion
+        val it = _1.begin
+        while (it) {
+            val e = ~it
+            if (_2(e)) {
+                f(e)
+            }
+            it.++
+        }
+    }
 }
 
 

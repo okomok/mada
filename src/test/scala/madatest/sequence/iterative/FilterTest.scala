@@ -50,4 +50,13 @@ class FilterTest {
         assertEquals(u, k)
         assertEquals(u, k)
     }
+
+    def testFusion2: Unit = {
+        val t = iterative.Of(1,2,2,3,4,5,5,6,7,8,9)
+        val u = iterative.Of(4,8)
+        val k = new java.util.ArrayList[Int]
+        t.filter(_ % 2 == 0).filter(_ % 4 == 0).foreach(k.add(_))
+        assertEquals(u, iterative.from(k))
+        assertEquals(u, iterative.from(k))
+    }
 }
