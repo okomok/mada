@@ -29,6 +29,10 @@ object Mixin {
         override def apply[B](v: Vector[B]) = v.bounds
     }
 
+    val copy: Mixin = new Mixin {
+        override def apply[B](v: Vector[B]) = v.copy
+    }
+
     val force: Mixin = new Mixin {
         override def apply[B](v: Vector[B]) = v.force
     }

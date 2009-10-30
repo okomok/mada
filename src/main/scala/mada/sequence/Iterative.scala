@@ -310,6 +310,9 @@ trait Iterative[+A] extends Sequence[A] {
      */
     def force: Iterative[A] = Force(this)
 
+    @equivalentTo("mix(Mixin.force)")
+    def strict: Iterative[A] = Strict(this)
+
     /**
      * Turns a sequence of sequences into flat sequence.
      */
