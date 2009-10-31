@@ -10,6 +10,7 @@ package mada; package sequence; package iterative
 /**
  * Helps to implement recursive sequences.
  */
+@deprecated("use List instead")
 class Recursive[A] extends Iterative[A] {
     @volatile private var f: Function0[Iterative[A]] = null
 
@@ -27,6 +28,7 @@ class Recursive[A] extends Iterative[A] {
 }
 
 
+@deprecated("use List instead")
 class RecursiveForwarder[A] extends Forwarder[A] {
     @volatile private var f: Function0[Iterative[A]] = null
 

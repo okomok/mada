@@ -8,7 +8,7 @@ package mada; package sequence; package iterative
 
 
 case class Cycle[+A](_1: Iterative[A]) extends Forwarder[A] {
-    override protected lazy val delegate = {
+    override protected val delegate = {
         Precondition.notEmpty(_1, "cycle")
         repeat(()).flatMap{ (u: Unit) => _1 }
     }

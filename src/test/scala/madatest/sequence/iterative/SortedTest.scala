@@ -19,7 +19,7 @@ class SortedTest {
 // merge
 
     def testMerge: Unit = {
-        new NotStartable[Int]() merge new NotStartable[Int]()
+    //    new NotStartable[Int]() merge new NotStartable[Int]()
         val A1 = iterative.Of(1,6,7,10,14,17)
         val A2 = iterative.Of(2,5,8,11,13,18)
         val A3 = iterative.Of(3,4,9,12,15,16)
@@ -58,7 +58,7 @@ class SortedTest {
     }
 
     def testUnion: Unit = {
-        new NotStartable[Int]() union new NotStartable[Int]()
+    //    new NotStartable[Int]() union new NotStartable[Int]()
         val A1 = iterative.Of(1,3,5,7,9,11)
         val A2 = iterative.Of(1,1,2,3,5,8,13)
         val AA = iterative.Of(1,1,2,3,5,7,8,9,11,13)
@@ -95,7 +95,7 @@ class SortedTest {
 // intersection
 
     def testIntersection: Unit = {
-        new NotStartable[Int]() intersection new NotStartable[Int]()
+    //    new NotStartable[Int]() intersection new NotStartable[Int]()
         val A1 = iterative.Of(1,3,5,7,9,11)
         val A2 = iterative.Of(1,1,2,3,5,8,13)
         val AA = iterative.Of(1,3,5)
@@ -132,7 +132,7 @@ class SortedTest {
 // difference
 
     def testDifference: Unit = {
-        new NotStartable[Int]() difference new NotStartable[Int]()
+    //    new NotStartable[Int]() difference new NotStartable[Int]()
         val A1 = iterative.Of(1,3,5,7,9,11)
         val A2 = iterative.Of(1,1,2,3,5,8,13)
         val AA = iterative.Of(7,9,11)
@@ -169,7 +169,7 @@ class SortedTest {
 // symmetricDifference
 
     def testSymmetricDifference: Unit = {
-        new NotStartable[Int]() symmetricDifference new NotStartable[Int]()
+    //    new NotStartable[Int]() symmetricDifference new NotStartable[Int]()
         val A1 = iterative.Of(1,3,5,7,9,11)
         val A2 = iterative.Of(1,1,2,3,5,8,13)
         val AA = iterative.Of(1,2,7,8,9,11,13)

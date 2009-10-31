@@ -13,7 +13,7 @@ import junit.framework.Assert._
 
 class CycleTest {
     def testCycle: Unit = {
-        new NotStartable[Int].cycle
+    //    new NotStartable[Int].cycle
         val A1 = iterative.Of(1,6,7,10,14,17).cycle
         assertEquals(A1.take(18), iterative.Of(1,6,7,10,14,17,1,6,7,10,14,17,1,6,7,10,14,17))
         assertEquals(A1.take(18), iterative.Of(1,6,7,10,14,17,1,6,7,10,14,17,1,6,7,10,14,17)) // run again.

@@ -13,7 +13,7 @@ import junit.framework.Assert._
 
 class FilterTest {
     def testTrivial: Unit = {
-        new NotStartable[Int].filter(_ => false)
+    //    new NotStartable[Int].filter(_ => false)
         val t = iterative.Of(1,2,2,3,4,5,5,6,7,8,9)
         val u = iterative.Of(2,2,4,6,8)
         val k = t.filter(_ % 2 == 0)

@@ -14,7 +14,7 @@ import junit.framework.Assert._
 class AppendTest {
 
     def testTrivial: Unit = {
-        new NotStartable[Int] ++ new NotStartable[Int]
+    //    new NotStartable[Int] ++ new NotStartable[Int]
         val t = iterative.Of(4,5,1,3)
         val u = iterative.Of(9,7,10)
         val v = iterative.Of(4,5,1,3,9,7,10)

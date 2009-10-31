@@ -13,7 +13,7 @@ import junit.framework.Assert._
 
 class ZipTest {
     def testTrivial: Unit = {
-        new NotStartable[Int].zip(new NotStartable[Int])
+    //    new NotStartable[Int].zip(new NotStartable[Int])
         val t = iterative.Of(1,2,3)
         val u = iterative.Of("2","3","4")
         assertEquals(t.zip(u), iterative.Of((1,"2"),(2,"3"),(3,"4")))

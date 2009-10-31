@@ -13,7 +13,7 @@ import junit.framework.Assert._
 
 class FolderTest {
     def testFolderLeft: Unit = {
-        new NotStartable[Int].folderLeft(5)(_ + _)
+    //    new NotStartable[Int].folderLeft(5)(_ + _)
         val t = iterative.Of(1,2,3,4,5,6,7,8)
         val u = iterative.Of(5,6,8,11,15,20,26,33,41)
         val k = t.folderLeft(5)(_ + _)

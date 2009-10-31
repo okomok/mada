@@ -13,7 +13,7 @@ import junit.framework.Assert._
 
 class DropTest {
     def testTrivial: Unit = {
-        new NotStartable[Int].drop(5)
+    //    new NotStartable[Int].drop(5)
         val t = iterative.Of(4,5,1,3,2,9,7,10)
         val u = iterative.Of(9,7,10)
         val v = iterative.Of(10)

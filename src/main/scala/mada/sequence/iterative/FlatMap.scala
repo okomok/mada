@@ -8,5 +8,5 @@ package mada; package sequence; package iterative
 
 
 case class FlatMap[A, +B](_1: Iterative[A], _2: A => Iterative[B]) extends Forwarder[B] {
-    override protected lazy val delegate = _1.map(_2).flatten
+    override protected val delegate = _1.map(_2).flatten
 }

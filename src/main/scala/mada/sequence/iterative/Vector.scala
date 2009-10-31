@@ -8,7 +8,7 @@ package mada; package sequence; package iterative
 
 
 case class ToVector[A](_1: Iterative[A]) extends vector.Forwarder[A] {
-    override protected lazy val delegate = {
+    override protected val delegate = {
         val it = _1.begin
         val a = new java.util.ArrayList[A]
         while (it) {

@@ -8,5 +8,5 @@ package mada; package sequence; package iterative
 
 
 case class SinglePass[+A](_1: Iterative[A]) extends Iterative[A] {
-    override lazy val begin = _1.begin
+    override val begin = _1.begin
 }

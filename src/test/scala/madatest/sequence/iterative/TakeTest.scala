@@ -13,7 +13,7 @@ import junit.framework.Assert._
 
 class TakeTest {
     def testTrivial: Unit = {
-        new NotStartable[Int].take(10)
+    //    new NotStartable[Int].take(10)
         val t = iterative.Of(4,5,1,3,2,9,7,10)
         val u = iterative.Of(4,5,1)
         val v = iterative.Of(4,5,1,3,2,9,7,10)

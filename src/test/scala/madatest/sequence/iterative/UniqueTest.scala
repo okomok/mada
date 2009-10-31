@@ -14,7 +14,7 @@ import junit.framework.Assert._
 class UniqueTest {
 
     def testUnique: Unit = {
-        new NotStartable[Int].unique
+    //    new NotStartable[Int].unique
         val tr = iterative.Of(5,4,4,4,3,2,2,2,2,2,1)
         val sr = tr.unique
         assertEquals(iterative.Of(5,4,3,2,1), sr)

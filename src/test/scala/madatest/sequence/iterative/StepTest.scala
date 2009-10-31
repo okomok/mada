@@ -21,7 +21,7 @@ class StepTest {
     }
 
     def testStep1: Unit = {
-        new NotStartable[Int].step(5)
+    //    new NotStartable[Int].step(5)
         val tr = iterative.Of(1,2,3,4,5,6).step(1)
         assertEquals(tr, iterative.Of(1,2,3,4,5,6))
         assertEquals(tr, iterative.Of(1,2,3,4,5,6))

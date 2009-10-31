@@ -6,7 +6,7 @@
 
 package madatest; package sequencetest; package iterativetest
 
-
+/*
     import mada.sequence.iterative
     import junit.framework.Assert._
 
@@ -17,3 +17,5 @@ package madatest; package sequencetest; package iterativetest
             assertEquals(iterative.Of(0,1,1,2,3,5,8,13,21,34), fibs.take(10))
         }
     }
+*/
+

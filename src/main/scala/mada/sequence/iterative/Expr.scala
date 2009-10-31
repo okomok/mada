@@ -8,7 +8,7 @@ package mada; package sequence; package iterative
 
 
 case class Expr[+A](_1: Iterative[A]) extends Forwarder[A] {
-    override protected lazy val delegate: Iterative[A] = new ExprWrap(_1)
+    override protected val delegate: Iterative[A] = new ExprWrap(_1)
     override protected def around[B](that: => Iterative[B]) = Expr(that)
 }
 

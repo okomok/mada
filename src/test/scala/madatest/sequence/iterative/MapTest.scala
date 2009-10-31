@@ -13,7 +13,7 @@ import junit.framework.Assert._
 
 class MapTest {
     def testTrivial: Unit = {
-        new NotStartable[Int].map(_ + 1)
+    //    new NotStartable[Int].map(_ + 1)
         val t = iterative.Of(1,2,3)
         val u = iterative.Of(2,3,4)
         val k = t.map(_ + 1)
