@@ -17,9 +17,6 @@ import junit.framework.Assert._
 class SortedTest {
 
 
-    import mada.function.toOrdering
-
-
 // merge
 
     def testMerge: Unit = {
@@ -90,7 +87,7 @@ class SortedTest {
         val A1 = "abBBfH"
         val A2 = "ABbCDFFhh"
         val AA = iterative.from("abBBCDfFHh")
-        val B1 = iterative.from(A1).union(A2)(toOrdering(ltNoCase))
+        val B1 = iterative.from(A1).union(A2)(Ordering.fromLessThan(ltNoCase))
         assertEquals(AA, B1)
         assertEquals(AA, B1) // run again.
     }
@@ -127,7 +124,7 @@ class SortedTest {
         val A1 = "abbBBfhH"
         val A2 = "ABBCDFFH"
         val AA = iterative.from("abbfh")
-        val B1 = iterative.from(A1).intersection(A2)(toOrdering(ltNoCase))
+        val B1 = iterative.from(A1).intersection(A2)(Ordering.fromLessThan(ltNoCase))
         assertEquals(AA, B1)
         assertEquals(AA, B1) // run again.
     }
@@ -164,7 +161,7 @@ class SortedTest {
         val A1 = "abbBBfghH"
         val A2 = "ABBCDFFH"
         val AA = iterative.from("BBgH")
-        val B1 = iterative.from(A1).difference(A2)(toOrdering(ltNoCase))
+        val B1 = iterative.from(A1).difference(A2)(Ordering.fromLessThan(ltNoCase))
         assertEquals(AA, B1)
         assertEquals(AA, B1) // run again.
     }
@@ -204,7 +201,7 @@ class SortedTest {
         val A1 = "abbBBfghH"
         val A2 = "ABBCDFFH"
         val AA = iterative.from("BBCDFgH")
-        val B1 = iterative.from(A1).symmetricDifference(A2)(toOrdering(ltNoCase))
+        val B1 = iterative.from(A1).symmetricDifference(A2)(Ordering.fromLessThan(ltNoCase))
         assertEquals(AA, B1)
         assertEquals(AA, B1) // run again.
     }

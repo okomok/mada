@@ -17,9 +17,6 @@ import junit.framework.Assert._
 import madatest.sequencetest.vectortest.detail.Example._
 
 
-import mada.function.toOrdering
-
-
 class SortTest {
     def testTrivial {
         val actual = fromArray(example1).seal.parallel.sort
@@ -54,14 +51,14 @@ class SortTest {
 
 class SortParallelPerfTest extends NoBenchmark {
     override def run = {
-        longSample1.copy.parallel.sort(toOrdering[Int]{ (x, y) => control.times(longCalc, 5); x < y })
+        longSample1.copy.parallel.sort(Ordering.fromLessThan[Int]{ (x, y) => control.times(longCalc, 5); x < y })
     }
     override val grainCount = 1
 }
 
 class SortNonParallelPerfTest extends NoBenchmark {
     override def run = {
-        longSample1.copy.sort(toOrdering[Int]{ (x, y) => control.times(longCalc, 5); x < y })
+        longSample1.copy.sort(Ordering.fromLessThan[Int]{ (x, y) => control.times(longCalc, 5); x < y })
     }
     override val grainCount = 1
 }

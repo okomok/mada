@@ -130,11 +130,6 @@ package object function {
     def synchronize[T1, T2, T3, R](f: Function3[T1, T2, T3, R]) = synchronize3(f)
 
 
-// strict-weak-ordering
-
-    def toOrdering[T](f: Predicate2[T, T]): Ordering[T] = ToOrdering(f)
-
-
 // parameterize (deprecated with 2.8)
 
     private def getArg[T](ps: Iterable[Parameter[_]], q: Parameter[T]) = ps.find(_.origin eq q.origin).getOrElse(q).argument.asInstanceOf[T]
