@@ -171,4 +171,9 @@ package object vector {
     @compatibleConversion
     def fromJShortBuffer(from: java.nio.ShortBuffer): Vector[Short] = FromJShortBuffer(from)
 
+
+// Ordering
+
+    def lexicographicalOrdering[A](implicit c: Ordering[A]): Ordering[Vector[A]] = LexicographicalOrdering(c)
+
 }

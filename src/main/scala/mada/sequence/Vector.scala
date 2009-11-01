@@ -605,10 +605,7 @@ object Vector extends LowPriorityOrderingImplicits {
 
 // eligibles
 
-    // Hmm, Ordering should have taken [-A]?
-    implicit def forOrdering[A](implicit c: Ordering[A]): Ordering[Vector[A]] = new Ordering[Vector[A]] {
-        override def compare(v: Vector[A], w: Vector[A]) = stl.LexicographicalCompare3way(v, v.start, v.end, w, w.start, w.end, c)
-    }
+    implicit def _theOrdering[A](implicit c: Ordering[A]): Ordering[Vector[A]] = lexicographicalOrdering(c)
 
 
 // pattern matching
