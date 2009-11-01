@@ -458,45 +458,30 @@ trait Iterative[+A] extends Sequence[A] {
 
 // sorted
 
-    @equivalentTo("mergeBy(that)(c)")
-    def merge[B >: A](that: Iterative[B])(implicit c: Compare[B]): Iterative[B] = Merge[B](this, that, c)
+    /**
+     * Combines the elements in the sorted sequences, into a new sequence with its elements sorted.
+     */
+    def merge[B >: A](that: Iterative[B])(implicit c: Ordering[B]): Iterative[B] = Merge[B](this, that, c)
 
     /**
      * Combines the elements in the sorted sequences, into a new sequence with its elements sorted.
      */
-    def mergeBy[B >: A](that: Iterative[B])(lt: compare.Func[B]): Iterative[B] = MergeBy[B](this, that, lt)
-
-    @equivalentTo("unionBy(that)(c)")
-    def union[B >: A](that: Iterative[B])(implicit c: Compare[B]): Iterative[B] = Union[B](this, that, c)
-
-    /**
-     * Combines the elements in the sorted sequences, into a new sequence with its elements sorted.
-     */
-    def unionBy[B >: A](that: Iterative[B])(lt: compare.Func[B]): Iterative[B] = UnionBy[B](this, that, lt)
-
-    @equivalentTo("intersectionBy(that)(c)")
-    def intersection[B >: A](that: Iterative[B])(implicit c: Compare[B]): Iterative[B] = Intersection[B](this, that, c)
+    def union[B >: A](that: Iterative[B])(implicit c: Ordering[B]): Iterative[B] = Union[B](this, that, c)
 
     /**
      * Constructs a sorted iterable with the set intersection of the two sorted iterables.
      */
-    def intersectionBy[B >: A](that: Iterative[B])(lt: compare.Func[B]): Iterative[B] = IntersectionBy[B](this, that, lt)
-
-    @equivalentTo("differenceBy(that)(c)")
-    def difference[B >: A](that: Iterative[B])(implicit c: Compare[B]): Iterative[B] = Difference[B](this, that, c)
+    def intersection[B >: A](that: Iterative[B])(implicit c: Ordering[B]): Iterative[B] = Intersection[B](this, that, c)
 
     /**
      * Constructs a sorted iterable with the set difference of the two sorted iterables.
      */
-    def differenceBy[B >: A](that: Iterative[B])(lt: compare.Func[B]): Iterative[B] = DifferenceBy[B](this, that, lt)
-
-    @equivalentTo("symmetricDifferenceBy(that)(c)")
-    def symmetricDifference[B >: A](that: Iterative[B])(implicit c: Compare[B]): Iterative[B] = SymmetricDifference[B](this, that, c)
+    def difference[B >: A](that: Iterative[B])(implicit c: Ordering[B]): Iterative[B] = Difference[B](this, that, c)
 
     /**
      * Constructs a sorted iterable with the set symmetric difference of the two sorted iterables.
      */
-    def symmetricDifferenceBy[B >: A](that: Iterative[B])(lt: compare.Func[B]): Iterative[B] = SymmetricDifferenceBy[B](this, that, lt)
+    def symmetricDifference[B >: A](that: Iterative[B])(implicit c: Ordering[B]): Iterative[B] = SymmetricDifference[B](this, that, c)
 
 }
 

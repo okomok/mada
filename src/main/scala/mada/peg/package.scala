@@ -95,7 +95,7 @@ package object peg {
     /**
      * Matches range values.
      */
-    def range[A](i: A, j: A)(implicit c: Compare[A]): Peg[A] = Range(i, j, c)
+    def range[A](i: A, j: A)(implicit c: Ordering[A]): Peg[A] = Range(i, j, c)
 
     /**
      * @return  <code>fromRegexPattern(java.util.regex.Pattern.compile(str))</code>.
@@ -183,13 +183,13 @@ package object peg {
     type SymbolSet[A] = Peg[A] with scala.collection.mutable.Set[sequence.Vector[A]]
 
     @equivalentTo("symbolSet(vs)(c)")
-    def symbolSet[A](vs: sequence.Vector[A]*)(implicit c: Compare[A]): SymbolSet[A] = symbolSet(sequence.iterative.from(vs))(c)
+    def symbolSet[A](vs: sequence.Vector[A]*)(implicit c: Ordering[A]): SymbolSet[A] = symbolSet(sequence.iterative.from(vs))(c)
 
     /**
      * Returns a peg to optimize the form <code>k1|k2|k3|...</code>.
      */
-    def symbolSet[A](vs: sequence.Iterative[sequence.Vector[A]])(lt: compare.Func[A]): SymbolSet[A] = {
-        val r = new TheSymbolSet(new TSTree[A, Unit](lt))
+    def symbolSet[A](vs: sequence.Iterative[sequence.Vector[A]])(c: Ordering[A]): SymbolSet[A] = {
+        val r = new TheSymbolSet(new TSTree[A, Unit]()(c))
         for (v <- vs) {
             r += v
         }
@@ -199,13 +199,13 @@ package object peg {
     type SymbolMap[A] = Peg[A] with scala.collection.mutable.Map[sequence.Vector[A], Peg[A]]
 
     @equivalentTo("symbolMap(es)(c)")
-    def symbolMap[A](es: (sequence.Vector[A], Peg[A])*)(implicit c: Compare[A]): SymbolMap[A] = symbolMap(sequence.iterative.from(es))(c)
+    def symbolMap[A](es: (sequence.Vector[A], Peg[A])*)(implicit c: Ordering[A]): SymbolMap[A] = symbolMap(sequence.iterative.from(es))(c)
 
     /**
      * Returns a peg to optimize the form <code>(k1 >> p1)|(k2 >> p2)|(k3 >> p3)|...</code>.
      */
-    def symbolMap[A](es: sequence.Iterative[(sequence.Vector[A], Peg[A])])(lt: compare.Func[A]): SymbolMap[A] = {
-        val r = new TheSymbolMap(new TSTree[A, Peg[A]](lt))
+    def symbolMap[A](es: sequence.Iterative[(sequence.Vector[A], Peg[A])])(c: Ordering[A]): SymbolMap[A] = {
+        val r = new TheSymbolMap(new TSTree[A, Peg[A]]()(c))
         for (e <- es) {
             r += Tuple2(e._1, e._2)
         }

@@ -30,8 +30,7 @@ case class Parallel[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
     override def forall(p: A => Boolean): Boolean = ParallelSeek(delegate, function.not(p), grainSize).isEmpty
     override def exists(p: A => Boolean): Boolean = !ParallelSeek(delegate, p, grainSize).isEmpty
 // sort
-    override def sort(implicit c: Compare[A]): Vector[A] = ParallelSort(delegate, c, grainSize)
-    override def sortBy(lt: compare.Func[A]): Vector[A] = ParallelSort(delegate, lt, grainSize)
+    override def sort(implicit c: Ordering[A]): Vector[A] = ParallelSort(delegate, c, grainSize)
 // copy
     override def copy: Vector[A] = ParallelCopy(delegate, grainSize)
     override def copyTo[B >: A](that: Vector[B]): Vector[B] = ParallelCopyTo(delegate, that, grainSize)

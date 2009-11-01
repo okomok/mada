@@ -34,7 +34,7 @@ package mada; package sequence; package vector; package stl
 
 
 private[mada] object MinElement {
-    def apply[A](* : Vector[A], first: Int, __last: Int, __comp: compare.Func[A]): Int = {
+    def apply[A](* : Vector[A], first: Int, __last: Int, __comp: Ordering[A]): Int = {
         var __first = first
 
         if (__first == __last) {
@@ -43,7 +43,7 @@ private[mada] object MinElement {
         var __result = __first
         __first += 1
         while (__first != __last) {
-            if (__comp(*(__first), *(__result))) {
+            if (__comp.lt(*(__first), *(__result))) {
                 __result = __first
             }
             __first += 1
@@ -53,8 +53,8 @@ private[mada] object MinElement {
 }
 
 private[mada] object MaxElement {
-    def apply[A](* : Vector[A], first: Int, __last: Int, __comp: compare.Func[A]): Int = {
-        MinElement(*, first, __last, { (x: A, y: A) => __comp(y, x) })
+    def apply[A](* : Vector[A], first: Int, __last: Int, __comp: Ordering[A]): Int = {
+        MinElement(*, first, __last, __comp.reverse)
     }
 }
 

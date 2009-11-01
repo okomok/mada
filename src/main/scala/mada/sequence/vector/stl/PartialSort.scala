@@ -34,11 +34,11 @@ package mada; package sequence; package vector; package stl
 
 
 private[mada] object PartialSort {
-    def apply[A](* : Vector[A], __first: Int, __middle: Int, __last: Int, __comp: compare.Func[A]): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __middle: Int, __last: Int, __comp: Ordering[A]): Unit = {
         MakeHeap(*, __first, __middle, __comp)
         var __i = __middle
         while (__i < __last) {
-            if (__comp(*(__i), *(__first))) {
+            if (__comp.lt(*(__i), *(__first))) {
                 PopHeap.__apply(*, __first, __middle, __i, *(__i), __comp)
             }
             __i += 1

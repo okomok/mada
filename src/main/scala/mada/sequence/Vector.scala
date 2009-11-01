@@ -399,9 +399,6 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
 
 // sort
 
-    @equivalentTo("sortBy(c)")
-    def sort(implicit c: Compare[A]): Vector[A] = sortBy(c)
-
     /**
      * Sort this vector according to the comparison function <code>lt</code>.
      * Note this vector is mutated.
@@ -409,10 +406,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
      * @param   lt  strict weak ordering
      * @return  this vector sorted according to <code>lt</code>.
      */
-    def sortBy(lt: compare.Func[A]): Vector[A] = { stl.Sort(this, start, end, lt); this }
-
-    @equivalentTo("stableSortBy(c)")
-    def stableSort(implicit c: Compare[A]): Vector[A] = stableSortBy(c)
+    def sort(implicit c: Ordering[A]): Vector[A] = { stl.Sort(this, start, end, c); this }
 
     /**
      * Stable sort this vector according to the comparison function <code>lt</code>.
@@ -421,7 +415,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
      * @param   lt  strict weak ordering
      * @return  this vector sorted according to <code>lt</code>.
      */
-    def stableSortBy(lt: compare.Func[A]): Vector[A] = { stl.StableSort(this, start, end, lt); this }
+    def stableSort(implicit c: Ordering[A]): Vector[A] = { stl.StableSort(this, start, end, c); this }
 
 
 // permutation
@@ -550,9 +544,6 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
     def toProduct: Product = new ToProduct(this)
 
     @conversion
-    def toOrdered(implicit c: compare.GetOrdered[A]): Ordered[Vector[A]] = ToOrdered(this, c)
-
-    @conversion
     def toSIndexedSeq: scala.collection.mutable.IndexedSeq[A] = ToSIndexedSeq(this)
 
     @conversion
@@ -615,23 +606,8 @@ object Vector extends LowPriorityOrderingImplicits {
 // eligibles
 
     // Hmm, Ordering should have taken [-A]?
-    implicit def forOrdering[A](implicit c: Ordering[A]): Ordering[Vector[A]] = {
-        forCompare(compare.fromOrdering(c)).toOrdering
-    }
-
-    /*implicit*/ def forOrdering_[A](implicit c: compare.GetOrdered[A]): Ordering[Vector[A]] = {
-        forCompare(compare.fromGetOrdered(c)).toOrdering
-    }
-
-    // For unambiguous overload resolution, `implicit` is facing the alternative
-    // of `madaVectorToOrdered` or ...
-    /*implicit*/ def forCompare[A](implicit c: Compare[A]): Compare[Vector[A]] = new Compare[Vector[A]] {
-        override def apply(v: Vector[A], w: Vector[A]) = {
-            stl.LexicographicalCompare(v, v.start, v.end, w, w.start, w.end, c)
-        }
-        override def threeWay(v: Vector[A], w: Vector[A]) = {
-            stl.LexicographicalCompare3way(v, v.start, v.end, w, w.start, w.end, c)
-        }
+    implicit def forOrdering[A](implicit c: Ordering[A]): Ordering[Vector[A]] = new Ordering[Vector[A]] {
+        override def compare(v: Vector[A], w: Vector[A]) = stl.LexicographicalCompare3way(v, v.start, v.end, w, w.start, w.end, c)
     }
 
 

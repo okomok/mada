@@ -34,22 +34,22 @@ package mada; package sequence; package vector; package stl
 
 
 private[mada] object LexicographicalCompare {
-    def apply[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int, __comp: compare.Func[A]): Boolean = {
+    def apply[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int, __comp: Ordering[A]): Boolean = {
         if (LexicographicalCompare3way(v1, first1, __last1, v2, first2, __last2, __comp) < 0) true else false
     }
 }
 
 
 private[mada] object LexicographicalCompare3way {
-    def apply[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int, __comp: compare.Func[A]): Int = {
+    def apply[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int, __comp: Ordering[A]): Int = {
         var __first1 = first1
         var __first2 = first2
 
         while ((__first1 != __last1) && (__first2 != __last2)) {
-            if (__comp(v1(__first1), v2(__first2))) {
+            if (__comp.lt(v1(__first1), v2(__first2))) {
                 return -1
             }
-            if (__comp(v2(__first2), v1(__first1))) {
+            if (__comp.lt(v2(__first2), v1(__first1))) {
                 return 1
             }
             __first1 += 1; __first2 += 1

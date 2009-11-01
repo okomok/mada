@@ -17,19 +17,19 @@ import madatest.sequencetest.vectortest.detail._
 class SortTest {
     def testTrivial: Unit = {
         val v = fromArray(example1)
-        mada.sequence.vector.stl.sortBy(v, 0, v.size){ _ < _ }
+        mada.sequence.vector.stl.sort(v, 0, v.size)
         assertEquals(fromArray(example1Sorted), v)
     }
 
     def testBy: Unit = {
         val v = fromArray(example1)
-        mada.sequence.vector.stl.sortBy(v, 0, v.size){ _ > _ }
+        mada.sequence.vector.stl.sort(v, 0, v.size)(Ordering.Int.reverse)
         assertEquals(fromArray(example1ReversedSorted), v)
     }
 
     def testEmpty: Unit = {
         val v = fromArray(empty1)
-        mada.sequence.vector.stl.sortBy(v, 0, v.size){ _ < _ }
+        mada.sequence.vector.stl.sort(v, 0, v.size)
         TestEmpty(v)
     }
 
@@ -39,7 +39,7 @@ class SortTest {
 
     def testLongExample1: Unit = {
         val v = fromArray(longExample1)
-        mada.sequence.vector.stl.sortBy(v, 0, v.size){ _ < _ }
+        mada.sequence.vector.stl.sort(v, 0, v.size)
         assertEquals(vector.range(0, 1000), v)
     }
 /*

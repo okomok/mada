@@ -34,19 +34,15 @@ package mada; package sequence; package vector; package stl
 
 
 private[mada] object IsHeap {
-    def apply[A](v: Vector[A], __first: Int, __last: Int)(implicit c: Compare[A]): Boolean = {
-        apply(v, __first, __last, c)
-    }
-
-    def apply[A](v: Vector[A], __first: Int, __last: Int, __comp: compare.Func[A]): Boolean = {
+    def apply[A](v: Vector[A], __first: Int, __last: Int, __comp: Ordering[A]): Boolean = {
         __apply(v, __first, __comp, __last - __first)
     }
 
-    def __apply[A](* : Vector[A], __first: Int, __comp: compare.Func[A], __n: Int): Boolean = {
+    def __apply[A](* : Vector[A], __first: Int, __comp: Ordering[A], __n: Int): Boolean = {
         var __parent = 0
         var __child = 1
         while (__child < __n) {
-            if (__comp(*(__first + __parent), *(__first + __child))) {
+            if (__comp.lt(*(__first + __parent), *(__first + __child))) {
                 return false
             }
             if ((__child & 1) == 0) {

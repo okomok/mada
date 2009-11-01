@@ -9,34 +9,30 @@ package mada; package sequence; package iterative
 
 private object Sorted {
 
-    def derefBy[A](it1: Iterator[A], it2: Iterator[A], _3: compare.Func[A]): A = {
+    def derefBy[A](it1: Iterator[A], it2: Iterator[A], _3: Ordering[A]): A = {
         if (!it1) {
             ~it2
         } else if (!it2) {
             ~it1
         } else {
-            if (_3(~it2, ~it1)) ~it2 else ~it1
+            if (_3.lt(~it2, ~it1)) ~it2 else ~it1
         }
     }
 
-    def incrementBy[A](it1: Iterator[A], it2: Iterator[A], _3: compare.Func[A]): Unit = {
+    def incrementBy[A](it1: Iterator[A], it2: Iterator[A], _3: Ordering[A]): Unit = {
         if (!it1) {
             it2.++
         } else if (!it2) {
             it1.++
         } else {
-            if (_3(~it2, ~it1)) it2.++ else it1.++
+            if (_3.lt(~it2, ~it1)) it2.++ else it1.++
         }
     }
 
 }
 
 
-case class Merge[A](_1: Iterative[A], _2: Iterative[A], _3: Compare[A]) extends Forwarder[A] {
-    override protected val delegate = _1.mergeBy(_2)(_3)
-}
-
-case class MergeBy[A](_1: Iterative[A], _2: Iterative[A], _3: compare.Func[A]) extends Iterative[A] {
+case class Merge[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) extends Iterative[A] {
     override def begin = new Iterator[A] {
         private val it1 = _1.begin
         private val it2 = _2.begin
@@ -48,11 +44,7 @@ case class MergeBy[A](_1: Iterative[A], _2: Iterative[A], _3: compare.Func[A]) e
 }
 
 
-case class Union[A](_1: Iterative[A], _2: Iterative[A], _3: Compare[A]) extends Forwarder[A] {
-    override protected val delegate = _1.unionBy(_2)(_3)
-}
-
-case class UnionBy[A](_1: Iterative[A], _2: Iterative[A], _3: compare.Func[A]) extends Iterative[A] {
+case class Union[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) extends Iterative[A] {
     override def begin = new Iterator[A] {
         private val it1 = _1.begin
         private val it2 = _2.begin
@@ -69,9 +61,9 @@ case class UnionBy[A](_1: Iterative[A], _2: Iterative[A], _3: compare.Func[A]) e
             } else if (!it2) {
                 it1.++
             } else {
-                if (_3(~it2, ~it1)) {
+                if (_3.lt(~it2, ~it1)) {
                     it2.++
-                } else if (_3(~it1, ~it2)) {
+                } else if (_3.lt(~it1, ~it2)) {
                     it1.++
                 } else {
                     it1.++
@@ -83,11 +75,7 @@ case class UnionBy[A](_1: Iterative[A], _2: Iterative[A], _3: compare.Func[A]) e
 }
 
 
-case class Intersection[A](_1: Iterative[A], _2: Iterative[A], _3: Compare[A]) extends Forwarder[A] {
-    override protected val delegate = _1.intersectionBy(_2)(_3)
-}
-
-case class IntersectionBy[A](_1: Iterative[A], _2: Iterative[A], _3: compare.Func[A]) extends Iterative[A] {
+case class Intersection[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) extends Iterative[A] {
     override def begin = new Iterator[A] {
         private val it1 = _1.begin
         private val it2 = _2.begin
@@ -103,9 +91,9 @@ case class IntersectionBy[A](_1: Iterative[A], _2: Iterative[A], _3: compare.Fun
 
         private def ready: Unit = {
             while (it1 && it2)  {
-                if (_3(~it2, ~it1)) {
+                if (_3.lt(~it2, ~it1)) {
                     it2.++
-                } else if (_3(~it1, ~it2)) {
+                } else if (_3.lt(~it1, ~it2)) {
                     it1.++
                 } else {
                     return
@@ -116,11 +104,7 @@ case class IntersectionBy[A](_1: Iterative[A], _2: Iterative[A], _3: compare.Fun
 }
 
 
-case class Difference[A](_1: Iterative[A], _2: Iterative[A], _3: Compare[A]) extends Forwarder[A] {
-    override protected val delegate = _1.differenceBy(_2)(_3)
-}
-
-case class DifferenceBy[A](_1: Iterative[A], _2: Iterative[A], _3: compare.Func[A]) extends Iterative[A] {
+case class Difference[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) extends Iterative[A] {
     override def begin = new Iterator[A] {
         private val it1 = _1.begin
         private val it2 = _2.begin
@@ -135,9 +119,9 @@ case class DifferenceBy[A](_1: Iterative[A], _2: Iterative[A], _3: compare.Func[
 
         private def ready: Unit = {
             while (it1 && it2)  {
-                if (_3(~it2, ~it1)) {
+                if (_3.lt(~it2, ~it1)) {
                     it2.++
-                } else if (_3(~it1, ~it2)) {
+                } else if (_3.lt(~it1, ~it2)) {
                     return
                 } else {
                     it1.++
@@ -149,11 +133,7 @@ case class DifferenceBy[A](_1: Iterative[A], _2: Iterative[A], _3: compare.Func[
 }
 
 
-case class SymmetricDifference[A](_1: Iterative[A], _2: Iterative[A], _3: Compare[A]) extends Forwarder[A] {
-    override protected val delegate = _1.symmetricDifferenceBy(_2)(_3)
-}
-
-case class SymmetricDifferenceBy[A](_1: Iterative[A], _2: Iterative[A], _3: compare.Func[A]) extends Iterative[A] {
+case class SymmetricDifference[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) extends Iterative[A] {
     override def begin = new Iterator[A] {
         private val it1 = _1.begin
         private val it2 = _2.begin
@@ -172,9 +152,9 @@ case class SymmetricDifferenceBy[A](_1: Iterative[A], _2: Iterative[A], _3: comp
 
         private def ready: Unit = {
             while (it1 && it2)  {
-                if (_3(~it2, ~it1)) {
+                if (_3.lt(~it2, ~it1)) {
                     return
-                } else if (_3(~it1, ~it2)) {
+                } else if (_3.lt(~it1, ~it2)) {
                     return
                 } else {
                     it1.++

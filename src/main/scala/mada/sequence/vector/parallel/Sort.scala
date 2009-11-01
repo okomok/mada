@@ -14,22 +14,22 @@ import util.future
 
 
 private object ParallelSort {
-    def apply[A](_1: Vector[A], _2: compare.Func[A], _3: Int): Vector[A] = {
+    def apply[A](_1: Vector[A], _2: Ordering[A], _3: Int): Vector[A] = {
         util.assert(!IsParallel(_1))
         impl(_1, _1.start, _1.end, _2, _3 * 2) // best grain size?
         _1
     }
 
-    def impl[A](v: Vector[A], first: Int, last: Int, lt: compare.Func[A], grainSize: Int): Unit = {
+    def impl[A](v: Vector[A], first: Int, last: Int, c: Ordering[A], grainSize: Int): Unit = {
         if (first != last) {
             val rs = new ArrayList[Vector[A]]
-            loop(v, first, last, depthLimit(first, last), lt, grainSize, rs)
-            fromJList(rs).parallel(1).each(_.sortBy(lt))
+            loop(v, first, last, depthLimit(first, last), c, grainSize, rs)
+            fromJList(rs).parallel(1).each(_.sort(c))
         }
     }
 
     // See: stl.IntroSort
-    def loop[A](* : Vector[A], __first: Int, last: Int, depth_limit: Int, __comp: compare.Func[A], grainSize: Int, rs: ArrayList[Vector[A]]): Unit = {
+    def loop[A](* : Vector[A], __first: Int, last: Int, depth_limit: Int, __comp: Ordering[A], grainSize: Int, rs: ArrayList[Vector[A]]): Unit = {
         var __last = last
         var __depth_limit = depth_limit
 

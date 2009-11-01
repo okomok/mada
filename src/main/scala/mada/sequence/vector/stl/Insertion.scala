@@ -34,7 +34,7 @@ package mada; package sequence; package vector; package stl
 
 
 private[mada] object InsertionSort {
-    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: compare.Func[A]): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Ordering[A]): Unit = {
         if (__first == __last) {
             return
         }
@@ -47,8 +47,8 @@ private[mada] object InsertionSort {
 }
 
 private[mada] object LinearInsert {
-    def apply[A](* : Vector[A], __first: Int, __last: Int, __val: A, __comp: compare.Func[A]): Unit = {
-        if (__comp(__val, *(__first))) {
+    def apply[A](* : Vector[A], __first: Int, __last: Int, __val: A, __comp: Ordering[A]): Unit = {
+        if (__comp.lt(__val, *(__first))) {
             CopyBackward(*, __first, __last, *, __last + 1)
             *(__first) = __val
         } else {
@@ -59,7 +59,7 @@ private[mada] object LinearInsert {
 
 
 private[mada] object UnguardedInsertionSort {
-    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: compare.Func[A]): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Ordering[A]): Unit = {
         var __i = __first
         while (__i != __last) {
             UnguardedLinearInsert(*, __i, *(__i), __comp)
@@ -69,12 +69,12 @@ private[mada] object UnguardedInsertionSort {
 }
 
 private[mada] object UnguardedLinearInsert {
-    def apply[A](* : Vector[A], last: Int, __val: A, __comp: compare.Func[A]): Unit = {
+    def apply[A](* : Vector[A], last: Int, __val: A, __comp: Ordering[A]): Unit = {
         var __last = last
         var __next = __last
 
         __next -= 1
-        while (__comp(__val, *(__next))) {
+        while (__comp.lt(__val, *(__next))) {
             *(__last) = *(__next)
             __last = __next
             __next -= 1
@@ -85,7 +85,7 @@ private[mada] object UnguardedLinearInsert {
 
 
 private[mada] object ChunkInsertionSort {
-    def apply[A](* : Vector[A], first: Int, __last: Int, __chunk_size: Int, __comp: compare.Func[A]): Unit = {
+    def apply[A](* : Vector[A], first: Int, __last: Int, __chunk_size: Int, __comp: Ordering[A]): Unit = {
         var __first = first
 
         while (__last - __first >= __chunk_size) {

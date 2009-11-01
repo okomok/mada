@@ -34,15 +34,15 @@ package mada; package sequence; package vector; package stl
 
 
 private[mada] object UnguardedPartition {
-    def apply[A](* : Vector[A], first: Int, last: Int, __pivot: A, __comp: compare.Func[A]): Int = {
+    def apply[A](* : Vector[A], first: Int, last: Int, __pivot: A, __comp: Ordering[A]): Int = {
         var __first = first; var __last = last
 
         while (true) {
-            while (__comp(*(__first), __pivot)) {
+            while (__comp.lt(*(__first), __pivot)) {
                 __first += 1
             }
             __last -= 1
-            while (__comp(__pivot, *(__last))) {
+            while (__comp.lt(__pivot, *(__last))) {
                 __last -= 1
             }
             if (!(__first < __last)) {

@@ -20,7 +20,7 @@ import mada.sequence.vector
 
 class TSTreeTest {
     def testTSTree: Unit = {
-        val tree = new mada.peg.TSTree[Char, String](mada.compare.fromGetOrdered[Char])
+        val tree = new mada.peg.TSTree[Char, String]
 
         assertFalse(tree.containsKey("to"))
         assertFalse(tree.containsKey(""))
@@ -60,7 +60,7 @@ class TSTreeTest {
     }
 
     def testBound: Unit = {
-        val tree = new mada.peg.TSTree[Char, String](mada.compare.fromGetOrdered[Char])
+        val tree = new mada.peg.TSTree[Char, String]
 
         tree.put("t", "t")
         assertFalse(tree.containsKey(""))
@@ -79,7 +79,7 @@ class TSTreeTest {
     */
 
     def testRemove: Unit = {
-        val tree = new mada.peg.TSTree[Char, String](mada.compare.fromGetOrdered[Char])
+        val tree = new mada.peg.TSTree[Char, String]
 
         assertEquals(0, tree.size)
         assertTrue(tree.isEmpty)
@@ -134,7 +134,7 @@ class TSTreeTest {
     }
 
     def testIterator: Unit = {
-        val tree = new mada.peg.TSTree[Char, String](mada.compare.fromGetOrdered[Char])
+        val tree = new mada.peg.TSTree[Char, String]
 
         tree.put("to", "to")
         tree.put("too", "too")
@@ -149,7 +149,7 @@ class TSTreeTest {
     }
 
     def testIteratorBound: Unit = {
-        val tree = new mada.peg.TSTree[Char, String](mada.compare.fromGetOrdered[Char])
+        val tree = new mada.peg.TSTree[Char, String]
         assertFalse(tree.iterator.hasNext)
 
         tree.put("t", "t")

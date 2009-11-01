@@ -35,10 +35,8 @@ package object stl {
     def adjacentFind[A](v: Vector[A], first: Int, last: Int): Int = AdjacentFind(v, first, last)
     def adjacentFindIf[A](v: Vector[A], first: Int, last: Int)(binary_pred: (A, A) => Boolean): Int = AdjacentFind(v, first, last, binary_pred)
 
-    def lowerBound[A](v: Vector[A], first: Int, last: Int, value: A)(implicit c: Compare[A]): Int = LowerBound(v, first, last, value, c)
-    def lowerBoundBy[A](v: Vector[A], first: Int, last: Int, value: A)(comp: compare.Func[A]): Int = LowerBound(v, first, last, value, comp)
-    def upperBound[A](v: Vector[A], first: Int, last: Int, value: A)(implicit c: Compare[A]): Int = UpperBound(v, first, last, value, c)
-    def upperBoundBy[A](v: Vector[A], first: Int, last: Int, value: A)(comp: compare.Func[A]): Int = UpperBound(v, first, last, value, comp)
+    def lowerBound[A](v: Vector[A], first: Int, last: Int, value: A)(implicit c: Ordering[A]): Int = LowerBound(v, first, last, value, c)
+    def upperBound[A](v: Vector[A], first: Int, last: Int, value: A)(implicit c: Ordering[A]): Int = UpperBound(v, first, last, value, c)
 
     def copy[A](v : Vector[A], first: Int, last: Int)(^ : Vector[_ >: A], result: Int): Int = Copy(v, first, last, ^, result)
     def copyIf[A](v : Vector[A], first: Int, last: Int)(^ : Vector[_ >: A], result: Int)(pred: A => Boolean): Int = CopyIf(v, first, last, ^, result, pred)
@@ -48,13 +46,10 @@ package object stl {
     def count[A](v: Vector[A], first: Int, last: Int)(e: Any): Int = Count(v, first, last, e)
     def countIf[A](v: Vector[A], first: Int, last: Int)(pred: A => Boolean): Int = CountIf(v, first, last, pred)
 
-    def minElement[A](v: Vector[A], first: Int, last: Int)(implicit c: Compare[A]): Int = MinElement(v, first, last, c)
-    def minElementBy[A](v: Vector[A], first: Int, last: Int)(comp: compare.Func[A]): Int = MinElement(v, first, last, comp)
-    def maxElement[A](v: Vector[A], first: Int, last: Int)(implicit c: Compare[A]): Int = MaxElement(v, first, last, c)
-    def maxElementBy[A](v: Vector[A], first: Int, last: Int)(comp: compare.Func[A]): Int = MaxElement(v, first, last, comp)
+    def minElement[A](v: Vector[A], first: Int, last: Int)(implicit c: Ordering[A]): Int = MinElement(v, first, last, c)
+    def maxElement[A](v: Vector[A], first: Int, last: Int)(implicit c: Ordering[A]): Int = MaxElement(v, first, last, c)
 
-    def median[A](x: A, y: A, z: A)(implicit c: Compare[A]): A = Median(x, y, z, c)
-    def medianBy[A](x: A, y: A, z: A)(comp: compare.Func[A]): A = Median(x, y, z, comp)
+    def median[A](x: A, y: A, z: A)(implicit c: Ordering[A]): A = Median(x, y, z, c)
 
     def equal[A1, A2](v1: Vector[A1], first1: Int, last1: Int)(v2: Vector[A2], first2: Int): Boolean = Equal(v1, first1, last1, v2, first2)
     def equalIf[A1, A2](v1: Vector[A1], first1: Int, last1: Int)(v2: Vector[A2], first2: Int)(binary_pred: (A1, A2) => Boolean): Boolean = Equal(v1, first1, last1, v2, first2, binary_pred)
@@ -69,31 +64,18 @@ package object stl {
     def generate[A](v : Vector[A], first: Int, last: Int)(gen: Unit => A): Unit = Generate(v, first, last, gen)
     def generateN[A](^ : Vector[A], first: Int, n: Int)(gen: Unit => A): Unit = GenerateN(^, first, n, gen)
 
-    def lexicographicalCompare[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int)(implicit c: Compare[A]): Boolean = LexicographicalCompare(v1, first1, __last1, v2, first2, __last2, c)
-    def lexicographicalCompareBy[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int)(__comp: compare.Func[A]): Boolean = LexicographicalCompare(v1, first1, __last1, v2, first2, __last2, __comp)
-    def lexicographicalCompare3way[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int)(implicit c: Compare[A]): Int = LexicographicalCompare3way(v1, first1, __last1, v2, first2, __last2, c)
-    def lexicographicalCompare3wayBy[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int)(__comp: compare.Func[A]): Int = LexicographicalCompare3way(v1, first1, __last1, v2, first2, __last2, __comp)
+    def lexicographicalCompare[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int)(implicit c: Ordering[A]): Boolean = LexicographicalCompare(v1, first1, __last1, v2, first2, __last2, c)
+    def lexicographicalCompare3way[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int)(implicit c: Ordering[A]): Int = LexicographicalCompare3way(v1, first1, __last1, v2, first2, __last2, c)
 
-    def merge[A](v1 : Vector[A], first1: Int, last1: Int)(v2 : Vector[A], first2: Int, last2: Int)(^ : Vector[A], result: Int)(implicit c: Compare[A]): Int = Merge(v1, first1, last1, v2, first2, last2, ^, result, c)
-    def mergeBy[A](v1 : Vector[A], first1: Int, last1: Int)(v2 : Vector[A], first2: Int, last2: Int)(^ : Vector[A], result: Int)(comp: compare.Func[A]): Int = Merge(v1, first1, last1, v2, first2, last2, ^, result, comp)
+    def merge[A](v1 : Vector[A], first1: Int, last1: Int)(v2 : Vector[A], first2: Int, last2: Int)(^ : Vector[A], result: Int)(implicit c: Ordering[A]): Int = Merge(v1, first1, last1, v2, first2, last2, ^, result, c)
 
-    def partialSort[A](v: Vector[A], first: Int, middle: Int, last: Int)(implicit c: Compare[A]): Unit = PartialSort(v, first, middle, last, c)
-    def partialSortBy[A](v: Vector[A], first: Int, middle: Int, last: Int)(comp: compare.Func[A]): Unit = PartialSort(v, first, middle, last, comp)
+    def partialSort[A](v: Vector[A], first: Int, middle: Int, last: Int)(implicit c: Ordering[A]): Unit = PartialSort(v, first, middle, last, c)
 
-    def pushHeap[A](v: Vector[A], first: Int, last: Int)(implicit c: Compare[A]): Unit = PushHeap(v, first, last, c)
-    def pushHeapBy[A](v: Vector[A], first: Int, last: Int)(comp: compare.Func[A]): Unit = PushHeap(v, first, last, comp)
-
-    def popHeap[A](v: Vector[A], first: Int, last: Int)(implicit c: Compare[A]): Unit = PopHeap(v, first, last, c)
-    def popHeapBy[A](v: Vector[A], first: Int, last: Int)(comp: compare.Func[A]): Unit = PopHeap(v, first, last, comp)
-
-    def makeHeap[A](v: Vector[A], first: Int, last: Int)(implicit c: Compare[A]): Unit = MakeHeap(v, first, last, c)
-    def makeHeapBy[A](v: Vector[A], first: Int, last: Int)(comp: compare.Func[A]): Unit = MakeHeap(v, first, last, comp)
-
-    def sortHeap[A](v: Vector[A], first: Int, last: Int)(implicit c: Compare[A]): Unit = SortHeap(v, first, last, c)
-    def sortHeapBy[A](v: Vector[A], first: Int, last: Int)(comp: compare.Func[A]): Unit = SortHeap(v, first, last, comp)
-
-    def isHeap[A](v: Vector[A], first: Int, last: Int)(implicit c: Compare[A]): Unit = IsHeap(v, first, last, c)
-    def isHeapBy[A](v: Vector[A], first: Int, last: Int)(comp: compare.Func[A]): Boolean = IsHeap(v, first, last, comp)
+    def pushHeap[A](v: Vector[A], first: Int, last: Int)(implicit c: Ordering[A]): Unit = PushHeap(v, first, last, c)
+    def popHeap[A](v: Vector[A], first: Int, last: Int)(implicit c: Ordering[A]): Unit = PopHeap(v, first, last, c)
+    def makeHeap[A](v: Vector[A], first: Int, last: Int)(implicit c: Ordering[A]): Unit = MakeHeap(v, first, last, c)
+    def sortHeap[A](v: Vector[A], first: Int, last: Int)(implicit c: Ordering[A]): Unit = SortHeap(v, first, last, c)
+    def isHeap[A](v: Vector[A], first: Int, last: Int)(implicit c: Ordering[A]): Unit = IsHeap(v, first, last, c)
 
     def iterSwap[A](v1: Vector[A], i1: Int)(v2: Vector[A], i2: Int): Unit = IterSwap(v1, i1, v2, i2)
 
@@ -120,14 +102,9 @@ package object stl {
 
     def reverse[A](v: Vector[A], first: Int, last: Int): Unit = Reverse(v, first, last)
 
-    def sort[A](v: Vector[A], first: Int, last: Int)(implicit c: Compare[A]): Unit = Sort(v, first, last, c)
-    def sortBy[A](v: Vector[A], first: Int, last: Int)(comp: compare.Func[A]): Unit = Sort(v, first, last, comp)
-
-    def stableSort[A](v: Vector[A], first: Int, last: Int)(implicit c: Compare[A]): Unit = StableSort(v, first, last, c)
-    def stableSortBy[A](v: Vector[A], first: Int, last: Int)(comp: compare.Func[A]): Unit = StableSort(v, first, last, comp)
-
-    def isSorted[A](v: Vector[A], first: Int, last: Int)(implicit c: Compare[A]): Boolean = IsSorted(v, first, last, c)
-    def isSortedBy[A](v: Vector[A], first: Int, last: Int)(comp: compare.Func[A]): Boolean = IsSorted(v, first, last, comp)
+    def sort[A](v: Vector[A], first: Int, last: Int)(implicit c: Ordering[A]): Unit = Sort(v, first, last, c)
+    def stableSort[A](v: Vector[A], first: Int, last: Int)(implicit c: Ordering[A]): Unit = StableSort(v, first, last, c)
+    def isSorted[A](v: Vector[A], first: Int, last: Int)(implicit c: Ordering[A]): Boolean = IsSorted(v, first, last, c)
 
     def swapRanges[A](v1: Vector[A], first1: Int, last1: Int)(v2: Vector[A], first2: Int): Int = SwapRanges(v1, first1, last1, v2, first2)
 

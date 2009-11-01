@@ -34,7 +34,7 @@ package mada; package sequence; package vector; package stl
 
 
 private[mada] object LowerBound {
-    def apply[A](* : Vector[A], first: Int, __last: Int, __val: A, __comp: compare.Func[A]): Int = {
+    def apply[A](* : Vector[A], first: Int, __last: Int, __val: A, __comp: Ordering[A]): Int = {
         var __first = first
 
         var __len = __last - __first
@@ -45,7 +45,7 @@ private[mada] object LowerBound {
             __half = __len >> 1
             __middle = __first
             __middle += __half
-            if (__comp(*(__middle), __val)) {
+            if (__comp.lt(*(__middle), __val)) {
                 __first = __middle
                 __first += 1
                 __len = __len - __half - 1
@@ -58,7 +58,7 @@ private[mada] object LowerBound {
 }
 
 private[mada] object UpperBound {
-    def apply[A](* : Vector[A], first: Int, __last: Int, __val: A, __comp: compare.Func[A]): Int = {
-        LowerBound(*, first, __last, __val, { (x: A, y: A) => !__comp(y, x) })
+    def apply[A](* : Vector[A], first: Int, __last: Int, __val: A, __comp: Ordering[A]): Int = {
+        LowerBound(*, first, __last, __val, new Ordering[A] { override def compare(x: A, y: A) = - __comp.compare(y, x) })
     }
 }

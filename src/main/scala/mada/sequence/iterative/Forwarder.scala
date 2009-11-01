@@ -77,14 +77,9 @@ trait Forwarder[+A] extends Iterative[A] with SequenceForwarder[A] {
     override def _toSHashSet[B](_this: Iterative[B]): scala.collection.Set[B] = delegate.asInstanceOf[Iterative[B]].toSHashSet
     override def _toJIterable[B](_this: Iterative[B]): java.lang.Iterable[B] = delegate.asInstanceOf[Iterative[B]].toJIterable
 
-    override def merge[B >: A](that: Iterative[B])(implicit c: Compare[B]): Iterative[B] = around(delegate.merge(that)(c))
-    override def mergeBy[B >: A](that: Iterative[B])(lt: compare.Func[B]): Iterative[B] = around(delegate.mergeBy(that)(lt))
-    override def union[B >: A](that: Iterative[B])(implicit c: Compare[B]): Iterative[B] = around(delegate.union(that)(c))
-    override def unionBy[B >: A](that: Iterative[B])(lt: compare.Func[B]): Iterative[B] = around(delegate.unionBy(that)(lt))
-    override def intersection[B >: A](that: Iterative[B])(implicit c: Compare[B]): Iterative[B] = around(delegate.intersection(that)(c))
-    override def intersectionBy[B >: A](that: Iterative[B])(lt: compare.Func[B]): Iterative[B] = around(delegate.intersectionBy(that)(lt))
-    override def difference[B >: A](that: Iterative[B])(implicit c: Compare[B]): Iterative[B] = around(delegate.difference(that)(c))
-    override def differenceBy[B >: A](that: Iterative[B])(lt: compare.Func[B]): Iterative[B] = around(delegate.differenceBy(that)(lt))
-    override def symmetricDifference[B >: A](that: Iterative[B])(implicit c: Compare[B]): Iterative[B] = around(delegate.symmetricDifference(that)(c))
-    override def symmetricDifferenceBy[B >: A](that: Iterative[B])(lt: compare.Func[B]): Iterative[B] = around(delegate.symmetricDifferenceBy(that)(lt))
+    override def merge[B >: A](that: Iterative[B])(implicit c: Ordering[B]): Iterative[B] = around(delegate.merge(that)(c))
+    override def union[B >: A](that: Iterative[B])(implicit c: Ordering[B]): Iterative[B] = around(delegate.union(that)(c))
+    override def intersection[B >: A](that: Iterative[B])(implicit c: Ordering[B]): Iterative[B] = around(delegate.intersection(that)(c))
+    override def difference[B >: A](that: Iterative[B])(implicit c: Ordering[B]): Iterative[B] = around(delegate.difference(that)(c))
+    override def symmetricDifference[B >: A](that: Iterative[B])(implicit c: Ordering[B]): Iterative[B] = around(delegate.symmetricDifference(that)(c))
 }

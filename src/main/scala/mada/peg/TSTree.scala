@@ -12,7 +12,7 @@ package mada; package peg
 
 
 @visibleForTesting
-class TSTree[A, V](_lt: compare.Func[A]) extends java.lang.Cloneable {
+class TSTree[A, V](implicit _cmp: Ordering[A]) extends java.lang.Cloneable {
     private var rootNode: TSTreeNode[A, V] = null
 
     def clear: Unit = {
@@ -138,12 +138,12 @@ class TSTree[A, V](_lt: compare.Func[A]) extends java.lang.Cloneable {
 
         var k = key(first)
         while (true) {
-            if (_lt(k, result.elem)) {
+            if (_cmp.lt(k, result.elem)) {
                 if (result.left eq null) {
                     result.left = new TSTreeNode(k, result)
                 }
                 result = result.left
-            } else if (_lt(result.elem, k)) {
+            } else if (_cmp.lt(result.elem, k)) {
                 if (result.right eq null) {
                     result.right = new TSTreeNode(k, result)
                 }
@@ -174,9 +174,9 @@ class TSTree[A, V](_lt: compare.Func[A]) extends java.lang.Cloneable {
 
         var k2 = key2(first2)
         while (first1 ne null) {
-            if (_lt(k2, first1.elem)) {
+            if (_cmp.lt(k2, first1.elem)) {
                 first1 = first1.left
-            } else if (_lt(first1.elem, k2)) {
+            } else if (_cmp.lt(first1.elem, k2)) {
                 first1 = first1.right
             } else {
                 cur1 = first1

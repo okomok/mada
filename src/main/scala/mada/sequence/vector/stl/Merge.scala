@@ -34,13 +34,13 @@ package mada; package sequence; package vector; package stl
 
 
 private[mada] object Merge {
-    def apply[A](v1 : Vector[A], first1: Int, __last1: Int, v2 : Vector[A], first2: Int, __last2: Int, ^ : Vector[A], result: Int, __comp: compare.Func[A]): Int = {
+    def apply[A](v1 : Vector[A], first1: Int, __last1: Int, v2 : Vector[A], first2: Int, __last2: Int, ^ : Vector[A], result: Int, __comp: Ordering[A]): Int = {
         var __first1 = first1
         var __first2 = first2
         var __result = result
 
         while (__first1 != __last1 && __first2 != __last2) {
-            if (__comp(v2(__first2), v1(__first1))) {
+            if (__comp.lt(v2(__first2), v1(__first1))) {
                 ^(__result) = v2(__first2)
                 __first2 += 1
             } else {
@@ -57,7 +57,7 @@ private[mada] object Merge {
 private[mada] object MergeSortWithBuffer {
     val CHUNK_SIZE = 7
 
-    def apply[A](* : Vector[A], __first: Int, __last: Int, ^ : Vector[A], __buffer: Int, __comp: compare.Func[A]): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __last: Int, ^ : Vector[A], __buffer: Int, __comp: Ordering[A]): Unit = {
         val __len = __last - __first
         val __buffer_last = __buffer + __len
 
@@ -72,7 +72,7 @@ private[mada] object MergeSortWithBuffer {
         }
     }
 
-    def loop[A](* : Vector[A], first: Int, __last: Int, ^ : Vector[A], result: Int, step_size: Int, __comp: compare.Func[A]): Unit = {
+    def loop[A](* : Vector[A], first: Int, __last: Int, ^ : Vector[A], result: Int, step_size: Int, __comp: Ordering[A]): Unit = {
         var __first = first
         var __result = result
         var __step_size = step_size

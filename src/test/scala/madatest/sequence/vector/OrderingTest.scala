@@ -14,7 +14,7 @@ import mada.sequence.{Vector, vector}
 import junit.framework.Assert._
 
 
-class OrderedTest {
+class OrderingTest {
     def testTrivial: Unit = {
         val v1 = vector.from("ab")
         val v2 = vector.from("")
@@ -23,7 +23,7 @@ class OrderedTest {
         val v5 = vector.from("b")
         val v6 = vector.from("abd")
         val vv = Vector(v1, v2, v3, v4, v5, v6)
-        vv.sort//(vector.orderedView[Char])
+        vv.sort
         val ww = Vector(v2, v1, v3, v6, v4, v5)
         assertEquals(ww, vv)
     }
@@ -38,12 +38,8 @@ class OrderedTest {
         val v5 = vector.from("b")
         val v6 = vector.from("abd")
         val vv = Vector(v1, v2, v3, v4, v5, v6)
-        sortByOrdering(vv)
+        vv.sort
         val ww = Vector(v2, v1, v3, v6, v4, v5)
         assertEquals(ww, vv)
-    }
-
-    def sortByOrdering[A](v: Vector[A])(implicit o: Ordering[A]): Unit = {
-        v.sortBy(mada.compare.fromOrdering(o))
     }
 }

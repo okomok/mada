@@ -34,7 +34,7 @@ package mada; package sequence; package vector; package stl
 
 
 private[mada] object IsSorted {
-    def apply[A](* : Vector[A], first: Int, __last: Int, __comp: compare.Func[A]): Boolean = {
+    def apply[A](* : Vector[A], first: Int, __last: Int, __comp: Ordering[A]): Boolean = {
         var __first = first
 
         if (__first == __last) {
@@ -44,7 +44,7 @@ private[mada] object IsSorted {
         var __next = __first
         __next += 1
         while (__next != __last) {
-            if (__comp(*(__next), *(__first))) {
+            if (__comp.lt(*(__next), *(__first))) {
                 return false
             }
             __first = __next

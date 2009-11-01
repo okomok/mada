@@ -13,9 +13,12 @@ import junit.framework.Assert._
 import madatest.sequencetest.vectortest.detail.Example._
 
 
+import mada.function.toOrdering
+
+
 class StableSortTest {
     def testTrivial {
-        val actual = fromArray(example1).seal.stableSortBy(_ < _)
+        val actual = fromArray(example1).seal.stableSort
         detail.TestVectorReadOnly(example1Sorted, actual)
     }
 
@@ -25,17 +28,17 @@ class StableSortTest {
     }
 
     def testOptimizeArray {
-        val actual = fromArray(example1).stableSortBy(_ < _)
+        val actual = fromArray(example1).stableSort
         detail.TestVectorReadOnly(example1Sorted, actual)
     }
 
     def testOptimizeArrayWindow {
-        val actual = fromArray(example1).window(0, 0).window(0, example1.length).stableSortBy(_ < _)
+        val actual = fromArray(example1).window(0, 0).window(0, example1.length).stableSort
         detail.TestVectorReadOnly(example1Sorted, actual)
     }
 
     def testOptimizeArrayList {
-        val actual = fromJList(fromArray(example1).toJList).stableSortBy(_ < _)
+        val actual = fromJList(fromArray(example1).toJList).stableSort
         detail.TestVectorReadOnly(example1Sorted, actual)
     }
 
@@ -43,8 +46,8 @@ class StableSortTest {
         val ex1 = Array( 0,18,14,17,19, 8,13, 6, 4,23, 0,12,15,11, 4) // 15 elements
         val ex2 = Array(18, 8, 0,14,17,19, 4,15,12, 6,23, 0, 11, 4,13) // 15 elements
         val ex = vector.from(ex1).zip(ex2).copy
-        ex.stableSortBy{ case (x, y) => x._1 < y._1 }
-        assertTrue(mada.sequence.vector.stl.isSortedBy(ex, ex.start, ex.end){ case (x, y) => x._1 < y._1 })
+        ex.stableSort(toOrdering[(Int, Int)]{ case (x, y) => x._1 < y._1 })
+        assertTrue(mada.sequence.vector.stl.isSorted(ex, ex.start, ex.end)(toOrdering[(Int, Int)]{ case (x, y) => x._1 < y._1 }))
         assertEquals( Vector(18,23), ex.filter{ x => x._1 == 0 }.map{ _._2 } )
         assertEquals( Vector(12,13), ex.filter{ x => x._1 == 4 }.map{ _._2 } )
     }
@@ -53,8 +56,8 @@ class StableSortTest {
         val ex1 = Array(12,18,12,17,12, 8,12, 6,12,23, 0,12,15,12, 4) // 15 elements
         val ex2 = Array(18, 8, 0,14,17,19, 4,15,12, 6, 23,0,11, 4,13) // 15 elements
         val ex = vector.from(ex1).zip(ex2).copy
-        ex.stableSortBy{ case (x, y) => x._1 < y._1 }
-        assertTrue(mada.sequence.vector.stl.isSortedBy(ex, ex.start, ex.end){ case (x, y) => x._1 < y._1 })
+        ex.stableSort(toOrdering[(Int, Int)]{ case (x, y) => x._1 < y._1 })
+        assertTrue(mada.sequence.vector.stl.isSorted(ex, ex.start, ex.end)(toOrdering[(Int, Int)]{ case (x, y) => x._1 < y._1 }))
         assertEquals( Vector(18,0,17,4,12,0,4), ex.filter{ x => x._1 == 12 }.map{ _._2 } )
     }
 
@@ -62,19 +65,19 @@ class StableSortTest {
 // vector.stl
     def testStlTrivial: Unit = {
         val v = fromArray(example1)
-        mada.sequence.vector.stl.stableSortBy(v, 0, v.size){ _ < _ }
+        mada.sequence.vector.stl.stableSort(v, 0, v.size)
         assertEquals(fromArray(example1Sorted), v)
     }
 
     def testStlBy: Unit = {
         val v = fromArray(example1)
-        mada.sequence.vector.stl.stableSortBy(v, 0, v.size){ _ > _ }
+        mada.sequence.vector.stl.stableSort(v, 0, v.size)(Ordering.Int.reverse)
         assertEquals(fromArray(example1ReversedSorted), v)
     }
 
     def testStlEmpty: Unit = {
         val v = fromArray(empty1)
-        mada.sequence.vector.stl.stableSortBy(v, 0, v.size){ _ < _ }
+        mada.sequence.vector.stl.stableSort(v, 0, v.size)
         detail.TestEmpty(v)
     }
 
@@ -84,7 +87,7 @@ class StableSortTest {
 
     def testStlLongExample1: Unit = {
         val v = fromArray(longExample1)
-        mada.sequence.vector.stl.stableSortBy(v, 0, v.size){ _ < _ }
+        mada.sequence.vector.stl.stableSort(v, 0, v.size)
         assertEquals(vector.range(0, 1000), v)
     }
 }

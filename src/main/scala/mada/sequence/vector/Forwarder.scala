@@ -78,10 +78,8 @@ trait Forwarder[A] extends TransformAdapter[A] with SequenceForwarder[A] {
     override def foldRight[B](z: B)(op: (A, B) => B): B = delegate.foldRight(z)(op)
     override def reduceRight[B >: A](op: (A, B) => B): B = delegate.reduceRight(op)
 // sort
-    override def sort(implicit c: Compare[A]): Vector[A] = around(delegate.sort(c))
-    override def sortBy(lt: compare.Func[A]): Vector[A] = around(delegate.sortBy(lt))
-    override def stableSort(implicit c: Compare[A]): Vector[A] = around(delegate.stableSort(c))
-    override def stableSortBy(lt: compare.Func[A]): Vector[A] = around(delegate.stableSortBy(lt))
+    override def sort(implicit c: Ordering[A]): Vector[A] = around(delegate.sort(c))
+    override def stableSort(implicit c: Ordering[A]): Vector[A] = around(delegate.stableSort(c))
 // permutation
     override def permutation(f: Int => Int): Vector[A] = around(delegate.permutation(f))
     override def nth: Vector[A] = around(delegate.nth)
@@ -105,7 +103,6 @@ trait Forwarder[A] extends TransformAdapter[A] with SequenceForwarder[A] {
 // conversion
     override def toArray[B >: A : ClassManifest]: Array[B] = delegate.toArray
     override def toProduct: Product = delegate.toProduct
-    override def toOrdered(implicit c: compare.GetOrdered[A]): Ordered[Vector[A]] = delegate.toOrdered(c)
     override def toSIndexedSeq: scala.collection.mutable.IndexedSeq[A] = delegate.toSIndexedSeq
     override def toJList: java.util.List[A] = delegate.toJList
 // string

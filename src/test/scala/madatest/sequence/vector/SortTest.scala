@@ -16,9 +16,12 @@ import junit.framework.Assert._
 import madatest.sequencetest.vectortest.detail.Example._
 
 
+import mada.function.toOrdering
+
+
 class SortTest {
     def testTrivial {
-        val actual = fromArray(example1).seal.sortBy(_ < _)
+        val actual = fromArray(example1).seal.sort(toOrdering[Int](_ < _))
         detail.TestVectorReadOnly(example1Sorted, actual)
     }
 
@@ -28,17 +31,17 @@ class SortTest {
     }
 
     def testOptimizeArray {
-        val actual = fromArray(example1).sortBy(_ < _)
+        val actual = fromArray(example1).sort(toOrdering[Int](_ < _))
         detail.TestVectorReadOnly(example1Sorted, actual)
     }
 
     def testOptimizeArrayWindow {
-        val actual = fromArray(example1).window(0, 0).window(0, example1.length).sortBy(_ < _)
+        val actual = fromArray(example1).window(0, 0).window(0, example1.length).sort(toOrdering[Int](_ < _))
         detail.TestVectorReadOnly(example1Sorted, actual)
     }
 
     def testOptimizeArrayList {
-        val actual = fromJList(fromArray(example1).toJList).sortBy(_ < _)
+        val actual = fromJList(fromArray(example1).toJList).sort(toOrdering[Int](_ < _))
         detail.TestVectorReadOnly(example1Sorted, actual)
     }
 }

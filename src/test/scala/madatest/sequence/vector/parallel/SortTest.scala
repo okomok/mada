@@ -17,15 +17,18 @@ import junit.framework.Assert._
 import madatest.sequencetest.vectortest.detail.Example._
 
 
+import mada.function.toOrdering
+
+
 class SortTest {
     def testTrivial {
-        val actual = fromArray(example1).seal.parallel.sortBy(_ < _)
+        val actual = fromArray(example1).seal.parallel.sort
         detail.TestVectorReadOnly(example1Sorted, actual)
     }
 
     def testLong: Unit = {
-        val actual = longSample1.copy.parallel.sortBy(_ < _)
-        assertEquals(longSample1.copy.sortBy(_ < _), actual)
+        val actual = longSample1.copy.parallel.sort
+        assertEquals(longSample1.copy.sort, actual)
     }
 
     def testImplicit: Unit = {
@@ -34,37 +37,37 @@ class SortTest {
     }
 
     def testOptimizeArray {
-        val actual = fromArray(example1).parallel.sortBy(_ < _)
+        val actual = fromArray(example1).parallel.sort
         detail.TestVectorReadOnly(example1Sorted, actual)
     }
 
     def testOptimizeArrayWindow {
-        val actual = fromArray(example1).window(0, 0).window(0, example1.length).parallel.sortBy(_ < _)
+        val actual = fromArray(example1).window(0, 0).window(0, example1.length).parallel.sort
         detail.TestVectorReadOnly(example1Sorted, actual)
     }
 
     def testOptimizeArrayList {
-        val actual = fromJList(fromArray(example1).toJList).parallel.sortBy(_ < _)
+        val actual = fromJList(fromArray(example1).toJList).parallel.sort
         detail.TestVectorReadOnly(example1Sorted, actual)
     }
 }
 
 class SortParallelPerfTest extends NoBenchmark {
     override def run = {
-        longSample1.copy.parallel.sortBy{ (x, y) => control.times(longCalc, 5); x < y }
+        longSample1.copy.parallel.sort(toOrdering[Int]{ (x, y) => control.times(longCalc, 5); x < y })
     }
     override val grainCount = 1
 }
 
 class SortNonParallelPerfTest extends NoBenchmark {
     override def run = {
-        longSample1.copy.sortBy{ (x, y) => control.times(longCalc, 5); x < y }
+        longSample1.copy.sort(toOrdering[Int]{ (x, y) => control.times(longCalc, 5); x < y })
     }
     override val grainCount = 1
 }
 
 class SortParallelPartitionTest extends NoBenchmark {
     override def run = {
-        // mada.sequence.vector.parallel.SortBy.partition(longSample1.copy, (_: Int) < (_: Int), mada.sequence.vector.parallel.DefaultGrainSize(longSample1))
+        // mada.sequence.vector.parallel.Sort.partition(longSample1.copy, (_: Int) < (_: Int), mada.sequence.vector.parallel.DefaultGrainSize(longSample1))
     }
 }

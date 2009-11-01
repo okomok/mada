@@ -34,18 +34,18 @@ package mada; package sequence; package vector; package stl
 
 
 private[mada] object Median {
-    def apply[A](__a: A, __b: A, __c: A, __comp: compare.Func[A]): A = {
-        if (__comp(__a, __b)) {
-            if (__comp(__b, __c)) {
+    def apply[A](__a: A, __b: A, __c: A, __comp: Ordering[A]): A = {
+        if (__comp.lt(__a, __b)) {
+            if (__comp.lt(__b, __c)) {
                 __b
-            } else if (__comp(__a, __c)) {
+            } else if (__comp.lt(__a, __c)) {
                 __c
             } else {
                 __a
             }
-        } else if (__comp(__a, __c)) {
+        } else if (__comp.lt(__a, __c)) {
             __a
-        } else if (__comp(__b, __c)) {
+        } else if (__comp.lt(__b, __c)) {
             __c
         } else {
             __b

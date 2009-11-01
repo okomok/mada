@@ -22,13 +22,13 @@ class _FromJList[A](_1: java.util.List[A]) extends Vector[A] {
     override def apply(i: Int) = _1.get(i)
     override def update(i: Int, e: A) = _1.set(i, e)
 
-    override def sortBy(lt: compare.Func[A]) = {
-        java.util.Collections.sort(_1, compare.from(lt).toJComparator)
+    override def sort(implicit c: Ordering[A]) = {
+        java.util.Collections.sort(_1, c)
         this
     }
 
-    override def stableSortBy(lt: compare.Func[A]) = {
-        java.util.Collections.sort(_1, compare.from(lt).toJComparator)
+    override def stableSort(implicit c: Ordering[A]) = {
+        java.util.Collections.sort(_1, c)
         this
     }
 
