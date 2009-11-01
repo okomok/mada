@@ -10,9 +10,13 @@ package mada; package bound
 // See: http://cleverlytitled.blogspot.com/2009/03/disjoint-bounded-views-redux.html
 
 
-sealed trait ||[T1, T2]
+sealed abstract class ||[T1, T2]
 
 object || {
+
+    // T1 || T2 || T3
+    // --> ||[||[T1, T2], T3]
+    // --> ||[S1, S2] (S1 = ||[T1, T2], S2 = T3)
 
     implicit def of21[T1, T2](from: T1) = new (T1 || T2){}
     implicit def of22[T1, T2](from: T2) = new (T1 || T2){}

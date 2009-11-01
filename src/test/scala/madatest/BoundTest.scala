@@ -44,4 +44,17 @@ class BoundTest {
         //manyOr(Array(3,4))
         ()
     }
+
+    def nested[T <% String || Int](t: Option[T]): Int = t match {
+       case Some(x: String) => 0
+       case Some(x: Int) => 1
+       case _ => 2
+    }
+
+    def testNested: Unit = {
+        assertEquals(0, nested(Some("wow")))
+        assertEquals(1, nested(Some(5)))
+        //nested(Some('c'))
+        ()
+    }
 }
