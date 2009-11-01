@@ -61,9 +61,10 @@ case class Union[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) extends
             } else if (!it2) {
                 it1.++
             } else {
-                if (_3.lt(~it2, ~it1)) {
+                val way = _3.compare(~it2, ~it1)
+                if (way < 0) {
                     it2.++
-                } else if (_3.lt(~it1, ~it2)) {
+                } else if (way > 0) {
                     it1.++
                 } else {
                     it1.++
@@ -91,9 +92,10 @@ case class Intersection[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) 
 
         private def ready: Unit = {
             while (it1 && it2)  {
-                if (_3.lt(~it2, ~it1)) {
+                val way = _3.compare(~it2, ~it1)
+                if (way < 0) {
                     it2.++
-                } else if (_3.lt(~it1, ~it2)) {
+                } else if (way > 0) {
                     it1.++
                 } else {
                     return
@@ -119,9 +121,10 @@ case class Difference[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) ex
 
         private def ready: Unit = {
             while (it1 && it2)  {
-                if (_3.lt(~it2, ~it1)) {
+                val way = _3.compare(~it2, ~it1)
+                if (way < 0) {
                     it2.++
-                } else if (_3.lt(~it1, ~it2)) {
+                } else if (way > 0) {
                     return
                 } else {
                     it1.++
@@ -152,9 +155,10 @@ case class SymmetricDifference[A](_1: Iterative[A], _2: Iterative[A], _3: Orderi
 
         private def ready: Unit = {
             while (it1 && it2)  {
-                if (_3.lt(~it2, ~it1)) {
+                val way = _3.compare(~it2, ~it1)
+                if (way < 0) {
                     return
-                } else if (_3.lt(~it1, ~it2)) {
+                } else if (way > 0) {
                     return
                 } else {
                     it1.++

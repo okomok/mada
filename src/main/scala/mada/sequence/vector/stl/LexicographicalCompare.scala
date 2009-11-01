@@ -46,10 +46,11 @@ private[mada] object LexicographicalCompare3way {
         var __first2 = first2
 
         while ((__first1 != __last1) && (__first2 != __last2)) {
-            if (__comp.lt(v1(__first1), v2(__first2))) {
+            val way = __comp.compare(v1(__first1), v2(__first2))
+            if (way < 0) {
                 return -1
             }
-            if (__comp.lt(v2(__first2), v1(__first1))) {
+            if (way > 0) {
                 return 1
             }
             __first1 += 1; __first2 += 1
