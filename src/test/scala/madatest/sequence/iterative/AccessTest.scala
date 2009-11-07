@@ -27,7 +27,7 @@ class AccessTest {
         assertEquals(1, A1.headOption.get)
         assertEquals(17, A1.lastOption.get)
 
-        val A2 = iterative.emptyOf[Int]
+        val A2 = iterative.empty.of[Int]
         assertEquals(None, A2.headOption)
         assertEquals(None, A2.lastOption)
     }

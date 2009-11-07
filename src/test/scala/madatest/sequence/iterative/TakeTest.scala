@@ -54,10 +54,10 @@ class TakeTest {
     }
 
     def testEmpty: Unit = {
-        val k = iterative.emptyOf[Int].take(2)
+        val k = iterative.empty.of[Int].take(2)
         assertTrue(k.isEmpty)
         assertTrue(k.isEmpty)
-        val k2 = iterative.emptyOf[Int].take(0)
+        val k2 = iterative.empty.of[Int].take(0)
         assertTrue(k2.isEmpty)
         assertTrue(k2.isEmpty)
     }

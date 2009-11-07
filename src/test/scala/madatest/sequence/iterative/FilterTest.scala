@@ -30,7 +30,7 @@ class FilterTest {
     }
 
     def testEmpty: Unit = {
-        val t = iterative.emptyOf[Int]
+        val t = iterative.empty.of[Int]
         val k = t.filter(_ % 2 == 0)
         assertTrue(k.isEmpty)
         assertTrue(k.isEmpty)

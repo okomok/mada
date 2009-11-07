@@ -20,9 +20,6 @@ import list._
  * The nil list
  */
 case object Nil extends List[Nothing] {
-    @returnThis
-    def of[A]: List[A] = this
-
     override def isNil = true
     override def head = throw new NoSuchElementException("head on empty list")
     override def tail =  throw new UnsupportedOperationException("tail on empty list")
@@ -54,6 +51,10 @@ final class Cons[+A](val _1: A, val _2: util.ByLazy[List[A]]) extends List[A] {
  * </ul>
  */
 sealed abstract class List[+A] extends iterative.Sequence[A] {
+
+
+    @returnThis
+    final def of[B >: A]: List[B] = this
 
 
     override def asIterative: Iterative[A] = AsIterative(this) // logical super

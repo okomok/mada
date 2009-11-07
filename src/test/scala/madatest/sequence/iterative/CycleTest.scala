@@ -21,7 +21,7 @@ class CycleTest {
 /*
     unsupported
     def testCycleEmpty: Unit = {
-        val A1 = iterative.emptyOf[Int]
+        val A1 = iterative.empty.of[Int]
         val A2 = iterative.Of(1,2,3)
 
         val I1 = A1.cycle.take(0)
@@ -36,7 +36,7 @@ class CycleTest {
     }
 
     def testTimesEmpty: Unit = {
-        val A1 = iterative.emptyOf[Int]
+        val A1 = iterative.empty.of[Int]
         val A2 = iterative.Of(1,2,3)
 
         val I1 = A1.times(0)

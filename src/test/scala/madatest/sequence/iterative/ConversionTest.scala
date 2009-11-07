@@ -22,7 +22,7 @@ class ConversionTest {
     }
 
     def testIterable0: Unit = {
-        val t = iterative.emptyOf[Int]
+        val t = iterative.empty.of[Int]
         val i = t.toSeq.iterator
         assertFalse(i.hasNext)
     }
@@ -39,7 +39,7 @@ class ConversionTest {
     }
 
     def testVector0: Unit = {
-        val t = iterative.emptyOf[Int]
+        val t = iterative.empty.of[Int]
         val v = t.toVector
         assertTrue(v.isEmpty)
     }

@@ -16,7 +16,7 @@ class FlattenTest {
     //    new NotStartable[iterative.Type[Int]]().flatten
         val t1 = iterative.Of(0,1,2)
         val t2 = iterative.Of(3,4)
-        val t3 = iterative.emptyOf[Int]
+        val t3 = iterative.empty.of[Int]
         val t4 = iterative.Of(5,6)
         val t5 = iterative.Of(7,8,9,10)
         val t = iterative.Of(t1, t2, t3, t4, t5).flatten
@@ -26,10 +26,10 @@ class FlattenTest {
     }
 
     def testEmpty: Unit = {
-        val t1 = iterative.emptyOf[Int]
+        val t1 = iterative.empty.of[Int]
         val t2 = iterative.Of(3,4)
-        val t3 = iterative.emptyOf[Int]
-        val t4 = iterative.emptyOf[Int]
+        val t3 = iterative.empty.of[Int]
+        val t4 = iterative.empty.of[Int]
         val t = iterative.Of(t1, t2, t3, t4).flatten
         val a = iterative.Of(3,4)
         assertEquals(t, a)
@@ -37,16 +37,16 @@ class FlattenTest {
     }
 
     def testEmpty2: Unit = {
-        val t1 = iterative.emptyOf[Int]
-        val t2 = iterative.emptyOf[Int]
-        val t3 = iterative.emptyOf[Int]
+        val t1 = iterative.empty.of[Int]
+        val t2 = iterative.empty.of[Int]
+        val t3 = iterative.empty.of[Int]
         val t = iterative.Of(t1, t2, t3).flatten
         assertTrue(t.isEmpty)
         assertTrue(t.isEmpty)
     }
 
     def testEmpty3: Unit = {
-        val t1 = iterative.emptyOf[Int]
+        val t1 = iterative.empty.of[Int]
         val t = iterative.Of(t1).flatten
         assertTrue(t.isEmpty)
         assertTrue(t.isEmpty)

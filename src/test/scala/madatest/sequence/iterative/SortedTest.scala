@@ -38,14 +38,14 @@ class SortedTest {
         val B1 = A1 merge A2 merge iterative.empty merge A3 merge iterative.empty
         assertEquals(AA, B1)
         assertEquals(AA, B1) // run again.
-        val B2 = iterative.emptyOf[Int] merge A1 merge A2 merge A3 merge iterative.empty
+        val B2 = iterative.empty.of[Int] merge A1 merge A2 merge A3 merge iterative.empty
 //        println(sequence.toString(B2))
         assertEquals(B2, AA)
         assertEquals(B2, AA) // run again.
     }
 
     def testMergeEmpty0: Unit = {
-        val B1 = iterative.emptyOf[Int] merge iterative.empty merge iterative.empty
+        val B1 = iterative.empty.of[Int] merge iterative.empty merge iterative.empty
         assertTrue( B1.isEmpty )
         assertTrue( B1.isEmpty ) // run again.
     }
@@ -72,13 +72,13 @@ class SortedTest {
         val A1 = iterative.Of(1,3,5,7,9,11)
         val A2 = iterative.Of(1,1,2,3,5,8,13)
         val AA = iterative.Of(1,1,2,3,5,7,8,9,11,13)
-        val B1 = iterative.emptyOf[Int] union A1 union A2 union iterative.empty
+        val B1 = iterative.empty.of[Int] union A1 union A2 union iterative.empty
         assertEquals(AA, B1)
         assertEquals(AA, B1) // run again.
     }
 
     def testUnionEmpty0: Unit = {
-        val B1 = iterative.emptyOf[Int] union iterative.empty union iterative.empty
+        val B1 = iterative.empty.of[Int] union iterative.empty union iterative.empty
         assertTrue( B1.isEmpty )
         assertTrue( B1.isEmpty ) // run again.
     }
@@ -109,13 +109,13 @@ class SortedTest {
         val A1 = iterative.Of(1,3,5,7,9,11)
         val A2 = iterative.Of(1,1,2,3,5,8,13)
         val AA = iterative.Of(1,3,5)
-        val B1 = iterative.emptyOf[Int] intersection A1 intersection A2 intersection iterative.empty
+        val B1 = iterative.empty.of[Int] intersection A1 intersection A2 intersection iterative.empty
         assertTrue( B1.isEmpty )
         assertTrue( B1.isEmpty ) // run again.
     }
 
     def testIntersectionEmpty0: Unit = {
-        val B1 = iterative.emptyOf[Int] intersection iterative.empty intersection iterative.empty
+        val B1 = iterative.empty.of[Int] intersection iterative.empty intersection iterative.empty
         assertTrue( B1.isEmpty )
         assertTrue( B1.isEmpty ) // run again.
     }
@@ -152,7 +152,7 @@ class SortedTest {
     }
 
     def testDifferenceEmpty0: Unit = {
-        val B1 = iterative.emptyOf[Int] difference iterative.empty difference iterative.empty
+        val B1 = iterative.empty.of[Int] difference iterative.empty difference iterative.empty
         assertTrue( B1.isEmpty )
         assertTrue( B1.isEmpty ) // run again.
     }
@@ -192,7 +192,7 @@ class SortedTest {
     }
 
     def testSymmetricDifferenceEmpty0: Unit = {
-        val B1 = iterative.emptyOf[Int] symmetricDifference iterative.empty symmetricDifference iterative.empty
+        val B1 = iterative.empty.of[Int] symmetricDifference iterative.empty symmetricDifference iterative.empty
         assertTrue( B1.isEmpty )
         assertTrue( B1.isEmpty ) // run again.
     }

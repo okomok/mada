@@ -22,7 +22,7 @@ class ForeachTest {
     }
 
     def testEmpty: Unit = {
-        val tr = list.emptyOf[Int]
+        val tr = list.empty.of[Int]
         val k1 = new java.util.ArrayList[Int]
         val k2 = new java.util.ArrayList[Int]
         tr.foreach(e => k1.add(e))

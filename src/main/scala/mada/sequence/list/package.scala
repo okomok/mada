@@ -21,9 +21,6 @@ package object list {
     @aliasOf("Nil")
     val empty: List[Nothing] = Nil
 
-    @aliasOf("Nil.of")
-    def emptyOf[A]: List[A] = Nil.of[A]
-
     @equivalentTo("x :: Nil")
     def single[A](x: A): List[A] = x :: Nil
 

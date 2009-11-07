@@ -18,7 +18,7 @@ class FoldTest {
     }
 
     def testFoldLeft0: Unit = {
-        val tr = iterative.emptyOf[Int]
+        val tr = iterative.empty.of[Int]
         assertEquals(1, tr.foldLeft(1)(_ + _))
     }
 

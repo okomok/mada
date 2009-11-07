@@ -16,4 +16,3 @@ package object typed {
     def equal[T1, T2]: Predicate2[T1, T2] = function.equal.asInstanceOf[Predicate2[T1, T2]]
 
 }
-

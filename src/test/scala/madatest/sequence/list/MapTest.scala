@@ -21,8 +21,8 @@ class MapTest {
     }
 
     def testEmpty: Unit = {
-        val t = list.emptyOf[Int]
-        val u = list.emptyOf[Int]
+        val t = list.empty.of[Int]
+        val u = list.empty.of[Int]
         val k = t.map(_ + 1)
         assertEquals(u, k)
         assertEquals(u, k)

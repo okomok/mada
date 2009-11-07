@@ -25,11 +25,6 @@ package object reactive {
     val empty: Reactive[Nothing] = Empty()
 
     /**
-     * Typed <code>empty</code>
-     */
-    def emptyOf[A]: Reactive[A] = empty
-
-    /**
      * A sequence with a single element.
      */
     def single[A](e: A): Reactive[A] = Single(e)

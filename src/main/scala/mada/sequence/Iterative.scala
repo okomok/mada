@@ -16,6 +16,10 @@ import iterative._
 trait Iterative[+A] extends Sequence[A] {
 
 
+    @returnThis
+    final def of[B >: A]: Iterative[B] = this
+
+
     override def asIterative: Iterative[A] = this
 
 

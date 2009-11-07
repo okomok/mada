@@ -22,8 +22,8 @@ class MapTest {
     }
 
     def testEmpty: Unit = {
-        val t = iterative.emptyOf[Int]
-        val u = iterative.emptyOf[Int]
+        val t = iterative.empty.of[Int]
+        val u = iterative.empty.of[Int]
         val k = t.map(_ + 1)
         assertEquals(u, k)
         assertEquals(u, k)

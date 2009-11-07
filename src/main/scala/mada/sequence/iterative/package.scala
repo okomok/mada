@@ -25,11 +25,6 @@ package object iterative {
     val empty: Iterative[Nothing] = Empty()
 
     /**
-     * Typed <code>empty</code>
-     */
-    def emptyOf[A]: Iterative[A] = empty
-
-    /**
      * A sequence with a single element.
      */
     def single[A](e: A): Iterative[A] = Single(e)

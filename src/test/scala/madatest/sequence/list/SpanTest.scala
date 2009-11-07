@@ -20,7 +20,7 @@ class SpanTest {
     }
 
     def testEmpty: Unit = {
-        val (fst, snd) = list.emptyOf[Int].span(_ == 3)
+        val (fst, snd) = list.empty.of[Int].span(_ == 3)
         assertTrue(fst.isEmpty)
         assertTrue(snd.isEmpty)
     }

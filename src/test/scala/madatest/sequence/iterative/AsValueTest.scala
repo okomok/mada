@@ -33,7 +33,7 @@ class AsValueTest {
 
     def testTrivial3: Unit = {
         val t = iterative.Of(1,2,3,4,5)
-        val u = iterative.emptyOf[Int]
+        val u = iterative.empty.of[Int]
         AssertNotEquals(t, u)
     }
 
@@ -44,8 +44,8 @@ class AsValueTest {
     }
 
     def testEmpty: Unit = {
-        val t = iterative.emptyOf[Int]
-        val u = iterative.emptyOf[Int]
+        val t = iterative.empty.of[Int]
+        val u = iterative.empty.of[Int]
         assertEquals(t, u)
         assertEquals(t, u)
     }
@@ -54,7 +54,7 @@ class AsValueTest {
         val t = iterative.Of(1,2,3)
         assertEquals("[1, 2, 3]", t.toString)
         assertEquals("[1, 2, 3]", t.toString)
-        val t0 = iterative.emptyOf[Int]
+        val t0 = iterative.empty.of[Int]
         assertEquals("[]", t0.toString)
         assertEquals("[]", t0.toString)
         val t00 = iterative.Of()
@@ -69,7 +69,7 @@ class AsValueTest {
         val t = iterative.Of('1','2','3')
         assertEquals("123", t.stringize)
         assertEquals("123", t.stringize)
-        val t0 = iterative.emptyOf[Char]
+        val t0 = iterative.empty.of[Char]
         assertEquals("", t0.stringize)
         assertEquals("", t0.stringize)
         val t1 = iterative.Of('1')

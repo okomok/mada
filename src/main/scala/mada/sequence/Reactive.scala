@@ -15,6 +15,11 @@ import reactive._
 
 trait Reactive[+A] extends Runnable {
 
+
+    @returnThis
+    final def of[B >: A]: Reactive[B] = this
+
+
     def subscribe(k: Reactor[A]): Unit
 
     override def run: Unit = foreach{ e => () }

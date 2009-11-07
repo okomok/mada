@@ -23,15 +23,15 @@ class AppendTest {
     }
 
     def testEmpty: Unit = {
-        val k = list.emptyOf[Int] ::: list.emptyOf[Int]
-        assertEquals(list.emptyOf[Int], k)
-        assertEquals(list.emptyOf[Int], k)
+        val k = list.empty.of[Int] ::: list.empty.of[Int]
+        assertEquals(list.empty.of[Int], k)
+        assertEquals(list.empty.of[Int], k)
     }
 
     def testEmpty2: Unit = {
         val t = list.Of(4,5,1,3)
         val t_  = list.Of(4,5,1,3)
-        val k = list.emptyOf[Int] ::: t
+        val k = list.empty.of[Int] ::: t
         assertEquals(t_, k)
         assertEquals(t_, k)
     }
@@ -39,7 +39,7 @@ class AppendTest {
     def testEmpty3: Unit = {
         val t = list.Of(4,5,1,3)
         val t_  = list.Of(4,5,1,3)
-        val k = t ::: list.emptyOf[Int]
+        val k = t ::: list.empty.of[Int]
         assertEquals(t_, k)
         assertEquals(t_, k)
     }
@@ -48,7 +48,7 @@ class AppendTest {
         val t1 = list.Of(4,5)
         val t2 = list.Of(1)
         val t3 = list.Of(3, 9)
-        val t4 = list.emptyOf[Int]
+        val t4 = list.empty.of[Int]
         val t5 = list.Of(7,10,11)
         val v = list.Of(4,5,1,3,9,7,10,11)
         val k = t1 ::: t2 ::: t3 ::: t4 ::: t5

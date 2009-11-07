@@ -22,14 +22,14 @@ class ZipTest {
     }
 
     def testEmpty1: Unit = {
-        val t = iterative.emptyOf[Int]
+        val t = iterative.empty.of[Int]
         val u = iterative.Of(2,3,4)
         assertTrue(t.zip(u).isEmpty)
     }
 
     def testEmpty2: Unit = {
-        val t = iterative.emptyOf[Int]
-        val u = iterative.emptyOf[Int]
+        val t = iterative.empty.of[Int]
+        val u = iterative.empty.of[Int]
         assertTrue(t.zip(u).isEmpty)
     }
 

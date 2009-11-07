@@ -30,7 +30,7 @@ class FolderTest {
     }
 
     def testEmpty: Unit = {
-        assertEquals(iterative.single(0), iterative.emptyOf[Int].folderLeft(0)(_ + _))
+        assertEquals(iterative.single(0), iterative.empty.of[Int].folderLeft(0)(_ + _))
     }
 
     def testReducerLeft: Unit = {

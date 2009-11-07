@@ -42,9 +42,9 @@ class SliceTest {
     }
 
     def testEmpty: Unit = {
-        val k = list.emptyOf[Int].slice(4, 4)
+        val k = list.empty.of[Int].slice(4, 4)
         assertTrue(k.isEmpty)
-        val k0 = list.emptyOf[Int].slice(0, 0)
+        val k0 = list.empty.of[Int].slice(0, 0)
         assertTrue(k0.isEmpty)
     }
 }

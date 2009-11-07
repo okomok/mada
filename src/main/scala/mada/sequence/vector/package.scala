@@ -51,9 +51,6 @@ package object vector {
      */
     def empty[A]: Vector[A] = Empty.apply[A]
 
-    @aliasOf("empty")
-    def emptyOf[A]: Vector[A] = empty[A]
-
     /**
      * Concatenate all argument sequences into a single vector.
      *

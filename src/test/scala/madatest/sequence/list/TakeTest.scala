@@ -53,10 +53,10 @@ class TakeTest {
     }
 
     def testEmpty: Unit = {
-        val k = list.emptyOf[Int].take(2)
+        val k = list.empty.of[Int].take(2)
         assertTrue(k.isEmpty)
         assertTrue(k.isEmpty)
-        val k2 = list.emptyOf[Int].take(0)
+        val k2 = list.empty.of[Int].take(0)
         assertTrue(k2.isEmpty)
         assertTrue(k2.isEmpty)
     }

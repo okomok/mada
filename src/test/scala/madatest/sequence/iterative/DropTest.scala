@@ -46,7 +46,7 @@ class DropTest {
     }
 
     def testEmpty: Unit = {
-        val k = iterative.emptyOf[Int].drop(3)
+        val k = iterative.empty.of[Int].drop(3)
         assertTrue(k.isEmpty)
         assertTrue(k.isEmpty)
     }

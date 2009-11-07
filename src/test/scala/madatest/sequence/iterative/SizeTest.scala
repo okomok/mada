@@ -19,7 +19,7 @@ class SizeTest {
     }
 
     def testEmpty: Unit = {
-        val tr = iterative.emptyOf[Int]
+        val tr = iterative.empty.of[Int]
         assertEquals(0, tr.size)
         assertEquals(0, tr.size)
     }

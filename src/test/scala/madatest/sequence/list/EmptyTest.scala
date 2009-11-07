@@ -13,7 +13,7 @@ import junit.framework.Assert._
 
 class EmptyTest {
     def testTrivial: Unit = {
-        val tr = list.emptyOf[Int]
+        val tr = list.empty.of[Int]
         assertTrue(tr.isEmpty)
         assertTrue(tr.isEmpty)
     }

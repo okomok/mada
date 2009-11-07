@@ -117,7 +117,7 @@ class RecursiveTest {
     }
 
     def testInfinitize0: Unit = {
-        println(Infinitize(emptyOf[Int]).take(30))
+        println(Infinitize(empty.of[Int]).take(30))
     }
 */
 }

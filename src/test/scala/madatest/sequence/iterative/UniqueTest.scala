@@ -29,7 +29,7 @@ class UniqueTest {
     }
 
     def testUnique0: Unit = {
-        val tr = iterative.emptyOf[Int]
+        val tr = iterative.empty.of[Int]
         val sr = tr.unique
         assertTrue(tr.isEmpty)
     }

@@ -48,11 +48,11 @@ class StepTest {
     }
 
     def testStepEmpty: Unit = {
-        val tr0 = iterative.emptyOf[Int].step(0)
+        val tr0 = iterative.empty.of[Int].step(0)
         assertTrue(tr0.isEmpty)
-        val tr1 = iterative.emptyOf[Int].step(1)
+        val tr1 = iterative.empty.of[Int].step(1)
         assertTrue(tr1.isEmpty)
-        val tr2 = iterative.emptyOf[Int].step(2)
+        val tr2 = iterative.empty.of[Int].step(2)
         assertTrue(tr2.isEmpty)
     }
 

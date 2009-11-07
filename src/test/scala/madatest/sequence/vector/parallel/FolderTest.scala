@@ -23,6 +23,6 @@ class FolderTest {
     }
 
     def testBound: Unit = {
-        assertEquals(vector.single(3), emptyOf[Int].parallel.folder(3)(_ + _))
+        assertEquals(vector.single(3), empty.of[Int].parallel.folder(3)(_ + _))
     }
 }

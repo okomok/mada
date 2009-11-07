@@ -24,15 +24,15 @@ class AppendTest {
     }
 
     def testEmpty: Unit = {
-        val k = iterative.emptyOf[Int] ++ iterative.emptyOf[Int]
-        assertEquals(iterative.emptyOf[Int], k)
-        assertEquals(iterative.emptyOf[Int], k)
+        val k = iterative.empty.of[Int] ++ iterative.empty.of[Int]
+        assertEquals(iterative.empty.of[Int], k)
+        assertEquals(iterative.empty.of[Int], k)
     }
 
     def testEmpty2: Unit = {
         val t = iterative.Of(4,5,1,3)
         val t_  = iterative.Of(4,5,1,3)
-        val k = iterative.emptyOf[Int] ++ t
+        val k = iterative.empty.of[Int] ++ t
         assertEquals(t_, k)
         assertEquals(t_, k)
     }
@@ -40,7 +40,7 @@ class AppendTest {
     def testEmpty3: Unit = {
         val t = iterative.Of(4,5,1,3)
         val t_  = iterative.Of(4,5,1,3)
-        val k = t ++ iterative.emptyOf[Int]
+        val k = t ++ iterative.empty.of[Int]
         assertEquals(t_, k)
         assertEquals(t_, k)
     }
@@ -49,7 +49,7 @@ class AppendTest {
         val t1 = iterative.Of(4,5)
         val t2 = iterative.Of(1)
         val t3 = iterative.Of(3, 9)
-        val t4 = iterative.emptyOf[Int]
+        val t4 = iterative.empty.of[Int]
         val t5 = iterative.Of(7,10,11)
         val v = iterative.Of(4,5,1,3,9,7,10,11)
         val k = t1 ++ t2 ++ t3 ++ t4 ++ t5

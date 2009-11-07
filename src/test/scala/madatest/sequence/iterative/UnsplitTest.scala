@@ -15,7 +15,7 @@ class UnsplitTest {
     def testTrivial: Unit = {
         val v1 = iterative.from(Array(0,1,2))
         val v2 = iterative.from(Array(3,4))
-        val v3 = iterative.emptyOf[Int]
+        val v3 = iterative.empty.of[Int]
         val v4 = iterative.from(Array(5,6))
         val v5 = iterative.from(Array(7,8,9,10))
         val v = iterative.from(Array[iterative.Sequence[Int]](v1, v2, v3, v4, v5)).unsplit(iterative.Of(99))

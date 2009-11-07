@@ -28,7 +28,7 @@ class UniqueTest {
     }
 
     def testUnique0: Unit = {
-        val tr = list.emptyOf[Int]
+        val tr = list.empty.of[Int]
         val sr = tr.unique
         assertTrue(tr.isEmpty)
     }
