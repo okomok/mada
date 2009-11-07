@@ -40,4 +40,7 @@ package object reactive {
     @returnThat
     def from[A](to: Reactive[A]): Reactive[A] = to
 
+    @compatibleConversion
+    def fromIterative[A](from: iterative.Sequence[A]): Reactive[A] = FromIterative(from)
+
 }

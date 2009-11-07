@@ -16,8 +16,6 @@ trait Reactor[-A] {
 
     def react(e: A): Unit
 
-  //  def next: Reactor[A] // continuation
-
     final def noEnd = NoEnd(this)
 
 }
