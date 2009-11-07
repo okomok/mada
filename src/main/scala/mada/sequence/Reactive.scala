@@ -13,9 +13,11 @@ package mada; package sequence
 import reactive._
 
 
-trait Reactive[+A] {
+trait Reactive[+A] extends Runnable {
 
     def subscribe(k: Reactor[A]): Unit
+
+    override def run: Unit = foreach{ e => () }
 
     /**
      * Appends <code>that</code>.
@@ -34,13 +36,11 @@ trait Reactive[+A] {
     @aliasOf("filter")
     final def withFilter(p: A => Boolean): Reactive[A] = filter(p)
 
-    def foreach(f: A => Unit): Unit = {
-        val k = new Reactor[A] {
-            override def onEnd = ()
-            override def react(e: A) = f(e)
-        }
-        subscribe(k)
-    }
+    def foreach(f: A => Unit): Unit = subscribe(reactor.by(f))
+
+    def fork(k: Reactor[A]): Reactive[A] = Fork(this, k)
+
+    def forkBy(f: A => Unit): Reactive[A] = ForkBy(this, f)
 
 
 

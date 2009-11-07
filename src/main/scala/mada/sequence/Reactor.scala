@@ -19,3 +19,8 @@ trait Reactor[-A] {
     final def noEnd = NoEnd(this)
 
 }
+
+
+object Reactor {
+
+}
