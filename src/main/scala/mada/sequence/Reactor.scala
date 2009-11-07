@@ -7,10 +7,17 @@
 package mada; package sequence
 
 
+import reactor._
+
+
 trait Reactor[-A] {
 
     def onEnd: Unit
 
     def react(e: A): Unit
+
+  //  def next: Reactor[A] // continuation
+
+    final def noEnd = NoEnd(this)
 
 }

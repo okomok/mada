@@ -11,7 +11,7 @@ case class FlatMap[A, +B](_1: Reactive[A], _2: A => Reactive[B]) extends Reactiv
     override def subscribe(k: Reactor[B]) = {
         val j = new Reactor[A] {
             override def onEnd = k.onEnd
-            override def react(e: A) = _2(e).subscribe(new reactor.NoEnd(k))
+            override def react(e: A) = _2(e).subscribe(k.noEnd)
         }
         _1.subscribe(j)
     }
