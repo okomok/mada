@@ -78,8 +78,8 @@ class EqualsTest {
     def testEmpty: Unit = {
         val I1: Iterative[Int] = iterative.empty.of[Int]
         val I2: Iterative[Int] = iterative.empty.of[Int]
-        val V1: Vector[Int] = vector.empty.of[Int]
-        val V2: Vector[Int] = vector.empty.of[Int]
+        val V1: Vector[Int] = vector.empty[Int]
+        val V2: Vector[Int] = vector.empty[Int]
         val L1: List[Int] = list.empty.of[Int]
         val L2: List[Int] = list.empty.of[Int]
 

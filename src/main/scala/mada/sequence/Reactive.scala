@@ -13,7 +13,7 @@ package mada; package sequence
 import reactive._
 
 
-trait Reactive[+A] extends Runnable {
+trait Reactive[+A] extends Sequence[A] with Runnable {
 
 
     @returnThis

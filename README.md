@@ -232,6 +232,14 @@ It supports also parallel algorithms. Parallelization is explicit but transparen
 * Recursive sequence is infeasible.
 
 
+### `Reactive`
+
+`Reactive` sequence is a sequence-specific `scala.Responder`.
+
+`Reactive` summary:
+
+
+
 ## Links
 
 1. [Browse Source]
