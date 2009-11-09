@@ -69,6 +69,16 @@ trait Reactive[+A] extends Sequence[A] with Runnable {
     def forkBy(f: A => Unit): Reactive[A] = ForkBy(this, f)
 
     /**
+     * Prefix sum folding left-associative.
+     */
+    def folderLeft[B](z: B)(op: (B, A) => B): Reactive[B] = FolderLeft(this, z, op)
+
+    /**
+     * Prefix sum reducing left-associative.
+     */
+    def reducerLeft[B >: A](op: (B, A) => B): Reactive[B] = ReducerLeft(this, op)
+
+    /**
      * Returns all the elements without the first one.
      */
     def tail: Reactive[A] = Tail(this)
@@ -95,6 +105,12 @@ trait Reactive[+A] extends Sequence[A] with Runnable {
      * Returns the remaining suffix of <code>takeWhile</code>.
      */
     def dropWhile(p: A => Boolean): Reactive[A] = DropWhile(this, p)
+
+    /**
+     * Combines the elements unorderly.
+     */
+    def merge[B >: A](that: Reactive[B]): Reactive[B] = Merge[B](this, that)
+
 
 }
 

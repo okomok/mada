@@ -24,6 +24,8 @@ trait Forwarder[+A] extends Reactive[A] with SequenceForwarder[A] {
     override def filter(p: A => Boolean): Reactive[A] = around(delegate.filter(p))
     override def remove(p: A => Boolean): Reactive[A] = around(delegate.remove(p))
     override def foreach(f: A => Unit): Unit = delegate.foreach(f)
+    override def folderLeft[B](z: B)(op: (B, A) => B): Reactive[B] = around(delegate.folderLeft(z)(op))
+    override def reducerLeft[B >: A](op: (B, A) => B): Reactive[B] = around(delegate.reducerLeft(op))
     override def tail: Reactive[A] = around(delegate.tail)
     override def take(n: Int): Reactive[A] = around(delegate.take(n))
     override def drop(n: Int): Reactive[A] = around(delegate.drop(n))
@@ -31,4 +33,5 @@ trait Forwarder[+A] extends Reactive[A] with SequenceForwarder[A] {
     override def takeWhile(p: A => Boolean): Reactive[A] = around(delegate.takeWhile(p))
     override def dropWhile(p: A => Boolean): Reactive[A] = around(delegate.dropWhile(p))
 
+    override def merge[B >: A](that: Reactive[B]): Reactive[B] = around(delegate.merge(that))
 }
