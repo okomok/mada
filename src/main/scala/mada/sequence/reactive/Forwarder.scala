@@ -7,7 +7,7 @@
 package mada; package sequence; package reactive
 
 
-trait Forwarder[+A] extends Reactive[A] with util.Forwarder {
+trait Forwarder[+A] extends Reactive[A] with SequenceForwarder[A] {
     override protected def delegate: Reactive[A]
 
     protected def around[B](that: => Reactive[B]): Reactive[B] = that
@@ -16,8 +16,8 @@ trait Forwarder[+A] extends Reactive[A] with util.Forwarder {
         (around(_that._1), around(_that._2))
     }
 
-    // TODO:
 
     def subscribe(k: Reactor[A]): Unit = delegate.subscribe(k)
+    // TODO...
 
 }

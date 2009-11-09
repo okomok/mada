@@ -20,8 +20,15 @@ trait Reactive[+A] extends Runnable {
     final def of[B >: A]: Reactive[B] = this
 
 
+    override def asReactive: Reactive[A] = this
+
+
+    /**
+     * Registers a reactor.
+     */
     def subscribe(k: Reactor[A]): Unit
 
+    @equivalentTo("foreach{ e => () }")
     override def run: Unit = foreach{ e => () }
 
     /**
@@ -32,15 +39,24 @@ trait Reactive[+A] extends Runnable {
     @aliasOf("append")
     final def ++[B >: A](that: Reactive[B]): Reactive[B] = append(that)
 
+    /**
+     * Maps elements using <code>f</code>.
+     */
     def map[B](f: A => B): Reactive[B] = Map(this, f)
 
     def flatMap[B](f: A => Reactive[B]): Reactive[B] = FlatMap(this, f)
 
+    /**
+     * Filters elements using <code>p</code>.
+     */
     def filter(p: A => Boolean): Reactive[A] = Filter(this, p)
 
     @aliasOf("filter")
     final def withFilter(p: A => Boolean): Reactive[A] = filter(p)
 
+    /**
+     * Applies <code>f</code> to each element.
+     */
     def foreach(f: A => Unit): Unit = subscribe(reactor.by(f))
 
     def fork(k: Reactor[A]): Reactive[A] = Fork(this, k)
@@ -67,7 +83,7 @@ trait Reactive[+A] extends Runnable {
         var x = option.NoneOf[A]
         val j = new Reactor[A] {
             override def onEnd = ()
-            override def react(e: A) = if (x.isEmpty) x = Some(e) else ()
+            override def react(e: A) = if (x.isEmpty) x = Some(e)
         }
         subscribe(j)
         x
