@@ -13,8 +13,8 @@ trait Forwarder[A] extends TransformAdapter[A] with SequenceForwarder[A] {
 
     protected def around[B](that: => Vector[B]): Vector[B] = that
     protected def around2[B, C](that: => (Vector[B], Vector[C])): (Vector[B], Vector[C]) = {
-        val _that = that
-        (around(_that._1), around(_that._2))
+        val (l, r) = that
+        (around(l), around(r))
     }
 
 // iterative

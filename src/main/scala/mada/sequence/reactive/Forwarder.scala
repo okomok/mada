@@ -12,8 +12,8 @@ trait Forwarder[+A] extends Reactive[A] with SequenceForwarder[A] {
 
     protected def around[B](that: => Reactive[B]): Reactive[B] = that
     protected def around2[B, C](that: => (Reactive[B], Reactive[C])): (Reactive[B], Reactive[C]) = {
-        val _that = that
-        (around(_that._1), around(_that._2))
+        val (l, r) = that
+        (around(l), around(r))
     }
 
 

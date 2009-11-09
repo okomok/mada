@@ -12,8 +12,8 @@ trait Forwarder[+A] extends Iterative[A] with SequenceForwarder[A] {
 
     protected def around[B](that: => Iterative[B]): Iterative[B] = that
     protected def around2[B, C](that: => (Iterative[B], Iterative[C])): (Iterative[B], Iterative[C]) = {
-        val _that = that
-        (around(_that._1), around(_that._2))
+        val (l, r) = that
+        (around(l), around(r))
     }
 
     override def begin: Iterator[A] = delegate.begin
