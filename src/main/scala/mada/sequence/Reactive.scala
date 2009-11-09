@@ -106,11 +106,34 @@ trait Reactive[+A] extends Sequence[A] with Runnable {
      */
     def dropWhile(p: A => Boolean): Reactive[A] = DropWhile(this, p)
 
+    @equivalentTo("(takeWhile(p), dropWhile(p))")
+    def span(p: A => Boolean): (Reactive[A], Reactive[A]) = (takeWhile(p), dropWhile(p))
+
+    @equivalentTo("(take(n), drop(n))")
+    def splitAt(n: Int): (Reactive[A], Reactive[A]) = {
+        Precondition.nonnegative(n, "splitAt")
+        (take(n), drop(n))
+    }
+
+    /**
+     * Steps by the specified stride.
+     */
+    def step(n: Int): Reactive[A] = Step(this, n)
+
+    /**
+     * Removes duplicates using <code>==</code>.
+     */
+    def unique: Reactive[A] = Unique(this)
+
+    /**
+     * Removes duplicates using the predicate.
+     */
+    def uniqueBy(p: (A, A) => Boolean): Reactive[A] = UniqueBy(this, p)
+
     /**
      * Combines the elements unorderly.
      */
     def merge[B >: A](that: Reactive[B]): Reactive[B] = Merge[B](this, that)
-
 
 }
 
