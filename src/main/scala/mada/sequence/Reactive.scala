@@ -32,14 +32,6 @@ trait Reactive[+A] extends Sequence[A] with Runnable {
     override def run: Unit = foreach{ e => () }
 
     /**
-     * Appends <code>that</code>.
-     */
-    def append[B >: A](that: Reactive[B]): Reactive[B] = Append[B](this, that) // maybe useless.
-
-    @aliasOf("append")
-    final def ++[B >: A](that: Reactive[B]): Reactive[B] = append(that)
-
-    /**
      * Maps elements using <code>f</code>.
      */
     def map[B](f: A => B): Reactive[B] = Map(this, f)

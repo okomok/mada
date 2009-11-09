@@ -30,13 +30,21 @@ package object reactive {
     def single[A](e: A): Reactive[A] = Single(e)
 
 
+// pseudo
+
+    /**
+     * Constructs a pseudo try-catch expression.
+     */
+    def `try`[A](r: Reactive[A]): Try[A] = Try(r)
+
+
 // conversion
 
     @returnThat
     def from[A](to: Reactive[A]): Reactive[A] = to
 
     @conversion
-    def fromIterative[A](from: iterative.Sequence[A]): Reactive[A] = FromIterative(from)
+    def fromIterative[A](from: iterative.Sequence[A]): Reactive[A] = FromIterative(from.asIterative)
 
     @conversion
     def fromSIterable[A](from: Iterable[A]): Reactive[A] = FromSIterable(from)
