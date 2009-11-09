@@ -35,10 +35,10 @@ package object reactive {
     @returnThat
     def from[A](to: Reactive[A]): Reactive[A] = to
 
-    @compatibleConversion
+    @conversion
     def fromIterative[A](from: iterative.Sequence[A]): Reactive[A] = FromIterative(from)
 
-    @compatibleConversion
+    @conversion
     def fromSIterable[A](from: Iterable[A]): Reactive[A] = FromSIterable(from)
 
 }
