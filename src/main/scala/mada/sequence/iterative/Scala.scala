@@ -8,7 +8,7 @@ package mada; package sequence; package iterative
 
 
 case class FromArray[A](_1: Array[A]) extends Forwarder[A] {
-    override val delegate = fromSIterable(_1)
+    override protected val delegate = fromSIterable(_1)
 }
 
 case class FromSIterable[+A](_1: Iterable[A]) extends Iterative[A] {

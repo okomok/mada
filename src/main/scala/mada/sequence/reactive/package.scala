@@ -38,4 +38,7 @@ package object reactive {
     @compatibleConversion
     def fromIterative[A](from: iterative.Sequence[A]): Reactive[A] = FromIterative(from)
 
+    @compatibleConversion
+    def fromSIterable[A](from: Iterable[A]): Reactive[A] = FromSIterable(from)
+
 }

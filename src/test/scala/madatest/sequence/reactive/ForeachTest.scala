@@ -22,10 +22,21 @@ class ForeachTest {
     def testOnEnd: Unit = {
         val a = iterative.Of(1,6,7,10,14,17)
         val t = new java.util.ArrayList[Int]
+
+        val c = new Call(assertEquals(a, iterative.from(t)))
+
         reactive.fromIterative(a).subscribe(new Reactor[Int] {
-            override def onEnd = t.add(99)
+            override def onEnd = c()
             override def react(e: Int) = t.add(e)
         })
-        assertEquals(a ++ iterative.single(99), iterative.from(t))
+
+        assertTrue(c.isCalled)
+    }
+
+    def testRun: Unit = {
+        val a = iterative.Of(1,6,7,10,14,17)
+        val t = new java.util.ArrayList[Int]
+        reactive.fromIterative(a).forkBy{ e => t.add(e) }.run
+        assertEquals(a, iterative.from(t))
     }
 }

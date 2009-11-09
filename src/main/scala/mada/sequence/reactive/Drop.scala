@@ -7,17 +7,16 @@
 package mada; package sequence; package reactive
 
 
-case class DropWhile[A](_1: Reactive[A], _2: A => Boolean) extends Reactive[A] {
+case class Drop[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
+    Precondition.nonnegative(_2, "drop")
+
     override def subscribe(k: Reactor[A]) = {
         val j = new Reactor[A] {
-            private var begins = false
+            private var c = _2
             override def onEnd = k.onEnd
             override def react(e: A) = {
-                if (!begins) {
-                    if (_2(e)) {
-                        begins = true
-                        k.react(e)
-                    }
+                if (c != 0) {
+                    c -= 1
                 } else {
                     k.react(e)
                 }
@@ -25,4 +24,6 @@ case class DropWhile[A](_1: Reactive[A], _2: A => Boolean) extends Reactive[A] {
         }
         _1.subscribe(j)
     }
+
+    override def drop(n: Int) = _1.drop(_2 + n) // drop-drop fusion
 }

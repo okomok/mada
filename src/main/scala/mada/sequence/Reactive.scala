@@ -34,7 +34,7 @@ trait Reactive[+A] extends Sequence[A] with Runnable {
     /**
      * Appends <code>that</code>.
      */
-    def append[B >: A](that: Reactive[B]): Reactive[B] = Append[B](this, that)
+    def append[B >: A](that: Reactive[B]): Reactive[B] = Append[B](this, that) // maybe useless.
 
     @aliasOf("append")
     final def ++[B >: A](that: Reactive[B]): Reactive[B] = append(that)
@@ -55,68 +55,36 @@ trait Reactive[+A] extends Sequence[A] with Runnable {
     final def withFilter(p: A => Boolean): Reactive[A] = filter(p)
 
     /**
+     * Filters elements using <code>funtion.not(p)</code>.
+     */
+    def remove(p: A => Boolean): Reactive[A] = Remove(this, p)
+
+    /**
      * Applies <code>f</code> to each element.
      */
-    def foreach(f: A => Unit): Unit = subscribe(reactor.by(f))
+    def foreach(f: A => Unit): Unit = subscribe(reactor.make(util.theUnit, f))
 
     def fork(k: Reactor[A]): Reactive[A] = Fork(this, k)
 
     def forkBy(f: A => Unit): Reactive[A] = ForkBy(this, f)
 
-
-
-    /**
-     * Returns the first element.
-     */
-    def head: A = {
-        val e = headOption
-        if (e.isEmpty){
-            throw new NoSuchElementException("head on empty sequence")
-        }
-        e.get
-    }
-
-    /**
-     * Optionally returns the first element.
-     */
-    def headOption: Option[A] = {
-        var x = option.NoneOf[A]
-        val j = new Reactor[A] {
-            override def onEnd = ()
-            override def react(e: A) = if (x.isEmpty) x = Some(e)
-        }
-        subscribe(j)
-        x
-    }
-
     /**
      * Returns all the elements without the first one.
      */
-   // def tail: Iterative[A] = Tail(this)
+    def tail: Reactive[A] = Tail(this)
 
     /**
-     * Returns the last element.
+     * Takes at most <code>n</code> elements.
      */
-    def last: A = {
-        val e = lastOption
-        if (e.isEmpty) {
-            throw new NoSuchElementException("last on empty sequence")
-        }
-        e.get
-    }
+    def take(n: Int): Reactive[A] = Take(this, n)
 
     /**
-     * Optionally returns the last element.
+     * Drops at most <code>n</code> elements.
      */
-    def lastOption: Option[A] = {
-        var x = option.NoneOf[A]
-        val j = new Reactor[A] {
-            override def onEnd = ()
-            override def react(e: A) = x = Some(e)
-        }
-        subscribe(j)
-        x
-    }
+    def drop(n: Int): Reactive[A] = Drop(this, n)
+
+    @equivalentTo("drop(n).take(n - m)")
+    def slice(n: Int, m: Int): Reactive[A] = Slice(this, n, m)
 
     /**
      * Returns the longest prefix that satisfies the predicate.
@@ -127,6 +95,7 @@ trait Reactive[+A] extends Sequence[A] with Runnable {
      * Returns the remaining suffix of <code>takeWhile</code>.
      */
     def dropWhile(p: A => Boolean): Reactive[A] = DropWhile(this, p)
+
 }
 
 

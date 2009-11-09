@@ -7,17 +7,14 @@
 package mada; package sequence; package reactive
 
 
-case class DropWhile[A](_1: Reactive[A], _2: A => Boolean) extends Reactive[A] {
+case class Tail[+A](_1: Reactive[A]) extends Reactive[A] {
     override def subscribe(k: Reactor[A]) = {
         val j = new Reactor[A] {
-            private var begins = false
+            private var isHead = true
             override def onEnd = k.onEnd
             override def react(e: A) = {
-                if (!begins) {
-                    if (_2(e)) {
-                        begins = true
-                        k.react(e)
-                    }
+                if (isHead) {
+                    isHead = false
                 } else {
                     k.react(e)
                 }

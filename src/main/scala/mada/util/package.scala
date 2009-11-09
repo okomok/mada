@@ -53,6 +53,9 @@ package object util {
 
 // language
 
+    @aliasOf("()")
+    val theUnit: Unit = ()
+
     @returnThat
     def as[A](from: A): A = from
 

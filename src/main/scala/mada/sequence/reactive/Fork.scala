@@ -19,5 +19,5 @@ case class Fork[A](_1: Reactive[A], _2: Reactor[A]) extends Reactive[A] {
 
 
 case class ForkBy[A](_1: Reactive[A], _2: A => Unit) extends Forwarder[A] {
-    override protected val delegate = _1.fork(reactor.by(_2))
+    override protected val delegate = _1.fork(reactor.make(util.theUnit, _2))
 }

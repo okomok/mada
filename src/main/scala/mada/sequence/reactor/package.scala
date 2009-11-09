@@ -19,6 +19,6 @@ package object reactor {
 
 // constructors
 
-    def by[A](f: A => Unit): Reactor[A] = By(f)
+    def make[A](z: => Unit, f: A => Unit): Reactor[A] = Make(util.byName(z), f)
 
 }

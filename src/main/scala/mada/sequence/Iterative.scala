@@ -270,7 +270,7 @@ trait Iterative[+A] extends Sequence[A] {
     def drop(n: Int): Iterative[A] = Drop(this, n)
 
     @equivalentTo("drop(n).take(n - m)")
-    def slice(from: Int, until: Int): Iterative[A] = Slice(this, from, until)
+    def slice(n: Int, m: Int): Iterative[A] = Slice(this, n, m)
 
     /**
      * Returns the longest prefix that satisfies the predicate.
