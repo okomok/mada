@@ -13,7 +13,7 @@ case class Fork[A](_1: Reactive[A], _2: Reactor[A]) extends Reactive[A] {
             override def onEnd = { _2.onEnd; k.onEnd }
             override def react(e: A) = { _2.react(e); k.react(e) }
         }
-        _1.subscribe(beforeSubscribe(j))
+        _1.subscribe(_1.beforeSubscribe(j))
     }
 }
 

@@ -13,7 +13,7 @@ case class Filter[A](_1: Reactive[A], _2: A => Boolean) extends Reactive[A] {
             override def onEnd = k.onEnd
             override def react(e: A) = if (_2(e)) k.react(e)
         }
-        _1.subscribe(beforeSubscribe(j))
+        _1.subscribe(_1.beforeSubscribe(j))
     }
 }
 
