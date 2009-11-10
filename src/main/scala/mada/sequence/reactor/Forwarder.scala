@@ -7,6 +7,7 @@
 package mada; package sequence; package reactor
 
 
+// Probably unused.
 trait Forwarder[-A] extends Reactor[A] with util.Forwarder {
     override protected def delegate: Reactor[A]
 

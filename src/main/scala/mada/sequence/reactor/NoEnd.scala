@@ -7,7 +7,7 @@
 package mada; package sequence; package reactor
 
 
-case class NoEnd[-A](_1: Reactor[A]) extends Forwarder[A] {
-    override protected val delegate = _1
+case class NoEnd[-A](_1: Reactor[A]) extends Reactor[A] {
     override def onEnd = ()
+    override def react(e: A) = _1.react(e)
 }
