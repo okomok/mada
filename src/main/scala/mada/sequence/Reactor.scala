@@ -17,6 +17,7 @@ trait Reactor[-A] {
     def react(e: A): Unit
 
     final def noEnd = NoEnd(this)
+    final def toActor = ToActor(this)
 
 }
 
