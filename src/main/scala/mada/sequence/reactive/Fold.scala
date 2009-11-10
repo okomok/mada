@@ -20,7 +20,7 @@ case class FolderLeft[A, B](_1: Reactive[A], _2: B, _3: (B, A) => B) extends Rea
                 z = _3(z, e)
             }
         }
-        _1.subscribe(j)
+        _1.subscribe(beforeSubscribe(j))
     }
 }
 
@@ -42,6 +42,6 @@ case class ReducerLeft[A, B >: A](_1: Reactive[A], _2: (B, A) => B) extends Reac
                 }
             }
         }
-        _1.subscribe(j)
+        _1.subscribe(beforeSubscribe(j))
     }
 }

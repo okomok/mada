@@ -28,6 +28,11 @@ trait Reactive[+A] extends Sequence[A] with Runnable {
      */
     def subscribe(k: Reactor[A]): Unit
 
+    /**
+     * Called before subscribe.
+     */
+    def beforeSubscribe[B](k: Reactor[B]) = k
+
     @equivalentTo("foreach{ e => () }")
     override def run: Unit = foreach{ e => () }
 

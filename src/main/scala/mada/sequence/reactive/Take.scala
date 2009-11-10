@@ -24,7 +24,7 @@ case class Take[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
                 }
             }
         }
-        _1.subscribe(j)
+        _1.subscribe(beforeSubscribe(j))
     }
 
     override def take(n: Int) = _1.take(Math.min(_2, n)) // take-take fusion

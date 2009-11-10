@@ -13,6 +13,6 @@ case class Map[A, +B](_1: Reactive[A], _2: A => B) extends Reactive[B] {
             override def onEnd = k.onEnd
             override def react(e: A) = k.react(_2(e))
         }
-        _1.subscribe(j)
+        _1.subscribe(beforeSubscribe(j))
     }
 }

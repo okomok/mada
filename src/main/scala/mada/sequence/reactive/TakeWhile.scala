@@ -23,6 +23,6 @@ case class TakeWhile[A](_1: Reactive[A], _2: A => Boolean) extends Reactive[A] {
                 }
             }
         }
-        _1.subscribe(j)
+        _1.subscribe(beforeSubscribe(j))
     }
 }

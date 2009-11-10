@@ -22,7 +22,7 @@ case class Drop[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
                 }
             }
         }
-        _1.subscribe(j)
+        _1.subscribe(beforeSubscribe(j))
     }
 
     override def drop(n: Int) = _1.drop(_2 + n) // drop-drop fusion

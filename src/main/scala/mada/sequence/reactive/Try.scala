@@ -30,6 +30,6 @@ case class TryCatchFinally[A](_1: Reactive[A], _2: Throwable => Unit, _3: util.B
                 }
             }
         }
-        _1.subscribe(j)
+        _1.subscribe(beforeSubscribe(j))
     }
 }

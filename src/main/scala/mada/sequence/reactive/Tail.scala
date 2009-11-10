@@ -20,6 +20,6 @@ case class Tail[+A](_1: Reactive[A]) extends Reactive[A] {
                 }
             }
         }
-        _1.subscribe(j)
+        _1.subscribe(beforeSubscribe(j))
     }
 }
