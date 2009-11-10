@@ -13,6 +13,6 @@ case class FlatMap[A, +B](_1: Reactive[A], _2: A => Reactive[B]) extends Reactiv
             override def onEnd = k.onEnd
             override def react(e: A) = _2(e).subscribe(k.noEnd)
         }
-        _1.subscribe(_1.beforeSubscribe(j))
+        _1.subscribe(j)
     }
 }

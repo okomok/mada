@@ -17,18 +17,19 @@ case class TryCatch[A](_1: Reactive[A], _2: Throwable => Unit) extends Forwarder
 }
 
 case class TryCatchFinally[A](_1: Reactive[A], _2: Throwable => Unit, _3: util.ByName[Unit]) extends Reactive[A] {
-    override def subscribe(k: Reactor[A]) = _1.subscribe(k)
-
-    override def beforeSubscribe[B](k: Reactor[B]) = new Reactor[B] {
-        override def onEnd = k.onEnd
-        override def react(e: B) = {
-            try {
-                k.react(e)
-            } catch {
-                case x => _2(x)
-            } finally {
-                _3()
+    override def subscribe(k: Reactor[A]) = {
+        val j = new Reactor[A] {
+            override def onEnd = k.onEnd
+            override def react(e: A) = {
+                try {
+                    k.react(e)
+                } catch {
+                    case x => _2(x)
+                } finally {
+                    _3()
+                }
             }
         }
+        _1.subscribe(j)
     }
 }

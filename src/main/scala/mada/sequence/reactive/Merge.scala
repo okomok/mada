@@ -7,22 +7,22 @@
 package mada; package sequence; package reactive
 
 
+import java.util.concurrent.atomic.AtomicBoolean
+
+
 case class Merge[+A](_1: Reactive[A], _2: Reactive[A]) extends Reactive[A] {
     override def subscribe(k: Reactor[A]) = {
         val j = new Reactor[A] {
-            private var eitherEnds = false
+            private var eitherEnds = new AtomicBoolean(false)
             override def onEnd = {
-                if (eitherEnds) {
+                if (!eitherEnds.compareAndSet(false, true)) {
                     k.onEnd
-                } else {
-                    eitherEnds = true
                 }
             }
             override def react(e: A) = k.react(e)
         }
 
-        val i = _1.beforeSubscribe(j)
-        _1.subscribe(i)
-        _2.subscribe(i)
+        _1.subscribe(j)
+        _2.subscribe(j)
     }
 }

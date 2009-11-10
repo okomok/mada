@@ -8,10 +8,11 @@ package mada; package sequence; package reactive
 
 
 case class Synchronize[+A](_1: Reactive[A]) extends Reactive[A] {
-    override def subscribe(k: Reactor[A]) = _1.subscribe(k)
-
-    override def beforeSubscribe[B](k: Reactor[B]) = new Reactor[B] {
-        override def onEnd = synchronized { k.onEnd }
-        override def react(e: B) = synchronized { k.react(e) }
+    override def subscribe(k: Reactor[A]) = {
+        val j = new Reactor[A] {
+            override def onEnd = synchronized { k.onEnd }
+            override def react(e: A) = synchronized { k.react(e) }
+        }
+        _1.subscribe(j)
     }
 }

@@ -23,6 +23,6 @@ case class DropWhile[A](_1: Reactive[A], _2: A => Boolean) extends Reactive[A] {
                 }
             }
         }
-        _1.subscribe(_1.beforeSubscribe(j))
+        _1.subscribe(j)
     }
 }

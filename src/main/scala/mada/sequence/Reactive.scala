@@ -28,11 +28,6 @@ trait Reactive[+A] extends Sequence[A] with Runnable {
      */
     def subscribe(k: Reactor[A]): Unit
 
-    /**
-     * Called before subscribe.
-     */
-    def beforeSubscribe[B](k: Reactor[B]) = k
-
     @equivalentTo("foreach{ e => () }")
     override def run: Unit = foreach{ e => () }
 
@@ -128,7 +123,7 @@ trait Reactive[+A] extends Sequence[A] with Runnable {
     def uniqueBy(p: (A, A) => Boolean): Reactive[A] = UniqueBy(this, p)
 
     /**
-     * Combines the elements unorderly.
+     * Returns synchronized one.
      */
     def synchronize: Reactive[A] = Synchronize(this)
 

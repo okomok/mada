@@ -24,7 +24,7 @@ case class Step[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
                 }
             }
         }
-        _1.subscribe(_1.beforeSubscribe(j))
+        _1.subscribe(j)
     }
 
     override def step(n: Int) = _1.step(_2 * n) // step-step fusion
