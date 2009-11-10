@@ -11,7 +11,7 @@ import scala.actors.Actor
 
 
 case object OnEnd
-case class React[+A](element: A)
+case class React[+A](_1: A)
 
 
 case class ToActor[-A](_1: Reactor[A]) extends Actor {
