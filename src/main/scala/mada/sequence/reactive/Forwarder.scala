@@ -36,5 +36,6 @@ trait Forwarder[+A] extends Reactive[A] with SequenceForwarder[A] {
     override def step(n: Int): Reactive[A] = delegate.step(n)
     override def unique: Reactive[A] = around(delegate.unique)
     override def uniqueBy(p: (A, A) => Boolean): Reactive[A] = around(delegate.uniqueBy(p))
+    override def synchronize: Reactive[A] = around(delegate.synchronize)
     override def merge[B >: A](that: Reactive[B]): Reactive[B] = around(delegate.merge(that))
 }

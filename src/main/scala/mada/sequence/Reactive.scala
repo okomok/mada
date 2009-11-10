@@ -125,6 +125,11 @@ trait Reactive[+A] extends Sequence[A] with Runnable {
     /**
      * Combines the elements unorderly.
      */
+    def synchronize: Reactive[A] = Synchronize(this)
+
+    /**
+     * Combines the elements unorderly.
+     */
     def merge[B >: A](that: Reactive[B]): Reactive[B] = Merge[B](this, that)
 
 }

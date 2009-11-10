@@ -21,4 +21,9 @@ package object reactor {
 
     def make[A](z: => Unit, f: A => Unit): Reactor[A] = Make(util.byName(z), f)
 
+// conversion
+
+    @conversion
+    def fromActor[A](from: scala.actors.Actor): Reactor[A] = FromActor[A](from)
+
 }
