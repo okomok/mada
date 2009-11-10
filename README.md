@@ -234,7 +234,8 @@ It supports also parallel algorithms. Parallelization is explicit but transparen
 
 ### `Reactive`
 
-`Reactive` sequence is a sequence-specific `scala.Responder`.
+`Reactive` sequence is a coarse-grained `scala.Responder` for sequences,
+or you could say a sequence-specific, thread-less and trivial `scala.Actor`.
 
 `Reactive` summary:
 
