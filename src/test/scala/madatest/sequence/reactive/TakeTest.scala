@@ -80,4 +80,13 @@ class TakeTest {
         ()
     }
 
+    def testBound: Unit = {
+        val src = new IntSenders(ones, ones, ones, ones, ones)
+        val dst = new IntReceiver(vector.single(1).times(20))
+        (src(0) merge src(1) merge src(2) merge src(3) merge src(4)).take(20).subscribe(dst)
+        src.start
+        src.shutdown(dst.assertMe)
+        ()
+    }
+
 }
