@@ -12,17 +12,10 @@ case class Take[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
 
     override def subscribe(k: Reactor[A]) = {
         val j = new Reactor[A] {
-            private var c = _2
-            override def onEnd = ()
-            override def react(e: A) = {
-                if (c != 0) {
-                    k.react(e)
-                    c -= 1
-                    if (c == 0) {
-                        k.onEnd
-                    }
-                }
-            }
+            private val _onEnd = new DoFirstTime[Unit](_ => k.onEnd)
+            private val _react = new DoTimes[A](_2, e => k.react(e), _onEnd)
+            override def onEnd = _onEnd()
+            override def react(e: A) = _react(e)
         }
         _1.subscribe(j)
     }
