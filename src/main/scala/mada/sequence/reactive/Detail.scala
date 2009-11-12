@@ -7,11 +7,11 @@
 package mada; package sequence; package reactive
 
 
-import java.util.concurrent.atomic._
+import java.util.concurrent.atomic
 
 
 private class DoFirstTime[A](f: A => Unit) extends Function1[A, Unit] {
-    private val flip = new AtomicBoolean(false)
+    private val flip = new atomic.AtomicBoolean(false)
 
     override def apply(e: A) = {
         if (flip.compareAndSet(false, true)) {
@@ -20,8 +20,9 @@ private class DoFirstTime[A](f: A => Unit) extends Function1[A, Unit] {
     }
 }
 
+// BUGBUG: onEnd may be called before react...
 private class DoTimes[A](n: Int, f: A => Unit, onEnd: Unit => Unit)  extends Function1[A, Unit] {
-    private val count = new AtomicInteger(n)
+    private val count = new atomic.AtomicInteger(n)
 
     override def apply(e: A): Unit = {
         var old = 0
@@ -38,7 +39,7 @@ private class DoTimes[A](n: Int, f: A => Unit, onEnd: Unit => Unit)  extends Fun
 
 
 private class SkipFirstTime[A](f: A => Unit) extends Function1[A, Unit] {
-    private val flip = new AtomicBoolean(false)
+    private val flip = new atomic.AtomicBoolean(false)
 
     override def apply(e: A) = {
         if (!flip.compareAndSet(false, true)) {
@@ -48,7 +49,7 @@ private class SkipFirstTime[A](f: A => Unit) extends Function1[A, Unit] {
 }
 
 private class SkipTimes[A](n: Int, f: A => Unit) extends Function1[A, Unit] {
-    private val count = new AtomicInteger(n)
+    private val count = new atomic.AtomicInteger(n)
 
     override def apply(e: A): Unit = {
         var old = 0

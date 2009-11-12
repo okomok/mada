@@ -54,15 +54,18 @@ class IntSender(datum: Vector[Int], barrier: CyclicBarrier) extends Reactive[Int
 
 
 class IntReceiver(expected: Vector[Int]) extends Reactor[Int] {
+    import junit.framework.Assert._
+
     private val buf = new ArrayList[Int]
     private var endCount = 0
+    private var sequential = true
 
     override def onEnd = synchronized { endCount += 1 }
-    override def react(e: Int) = synchronized { buf.add(e); }
+    override def react(e: Int) = synchronized {if (endCount!=0) sequential = false; buf.add(e); }
 
     def assertMe = {
-        import junit.framework.Assert._
         assertEquals(1, endCount)
         assertEquals(expected, vector.from(buf).sort)
+        assertTrue(sequential)
     }
 }
