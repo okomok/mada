@@ -12,7 +12,7 @@ case class Drop[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
 
     override def subscribe(k: Reactor[A]) = {
         val j = new Reactor[A] {
-            private var _react = function.skip[A](_2, e => k.react(e))
+            private var _react = new SkipTimes[A](e => k.react(e), _2)
             override def onEnd = k.onEnd
             override def react(e: A) = _react(e)
         }
