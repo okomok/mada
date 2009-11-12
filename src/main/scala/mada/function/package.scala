@@ -56,6 +56,16 @@ package object function {
      */
     def memoize[T, R](g: (T => R) => T => R): T => R = Memoize(g)
 
+    /**
+     * Skips calls n-times.
+     */
+    def skip[T](n: Int, f: Function1[T, Unit]): Function1[T, Unit] = Skip(n, f)
+
+    /**
+     * Skips the first time call.
+     */
+    def skipFirst[T](f: Function1[T, Unit]): Function1[T, Unit] = SkipFirst(f)
+
 
 // empty
 

@@ -7,34 +7,20 @@
 package mada; package sequence; package reactive
 
 
-import java.util.concurrent.atomic
-
-
 case class FolderLeft[A, B](_1: Reactive[A], _2: B, _3: (B, A) => B) extends Reactive[B] {
     override def subscribe(k: Reactor[B]) = {
-        /*
         val j = new Reactor[A] {
-            private val new DoFirsTime[Unit](_ => k.react(z))
-            private val z = atomic.AtomicStampedReference[B](_2, 0)
+            private var z = _2
             override def onEnd = {
                 k.react(z) // delayed reaction may be a problem?
                 k.onEnd
             }
             override def react(e: A) = {
-                var oldRef = z.getReference
-                var oldStamp = z.getStamp
-                while (!z.compareAndSet(oldRef, _3(oldRef, e), oldStamp, oldStamp + 1)) {
-                    oldRef = z.getReference
-                    oldStamp = z.getSamp
-                }
-                k.react(oldRef)
-
                 k.react(z)
                 z = _3(z, e)
             }
         }
         _1.subscribe(j)
-        */
     }
 }
 
