@@ -10,7 +10,7 @@ package mada; package sequence; package reactive
 case class Merge[+A](_1: Reactive[A], _2: Reactive[A]) extends Reactive[A] {
     override def subscribe(k: Reactor[A]) = {
         val j = new Reactor[A] {
-            private val _onEnd = function.skipFirst[Unit](_ => k.onEnd)
+            private val _onEnd = function.skip[Unit](1, _ => k.onEnd)
             override def onEnd = _onEnd()
             override def react(e: A) = k.react(e)
         }

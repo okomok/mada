@@ -11,6 +11,22 @@ import java.util.concurrent.atomic
 
 
 case class Skip[-T](_1: Int, _2: T => Unit) extends Function1[T, Unit] {
+    private val delegate = if (_1 == 1) new SkipFirst(_2) else new SkipTimes(_1, _2)
+    override def apply(x: T) = delegate(x)
+}
+
+
+private class SkipFirst[-T](_1: Function1[T, Unit]) extends Function1[T, Unit] {
+    private val flip = new atomic.AtomicBoolean(false)
+
+    override def apply(x: T) = {
+        if (!flip.compareAndSet(false, true)) {
+            _1(x)
+        }
+    }
+}
+
+private class SkipTimes[-T](_1: Int, _2: T => Unit) extends Function1[T, Unit] {
     private val count = new atomic.AtomicInteger(_1)
 
     override def apply(x: T): Unit = {
@@ -21,16 +37,5 @@ case class Skip[-T](_1: Int, _2: T => Unit) extends Function1[T, Unit] {
                 return _2(x)
             }
         } while (!count.compareAndSet(old, old - 1))
-    }
-}
-
-
-case class SkipFirst[-T](_1: Function1[T, Unit]) extends Function1[T, Unit] {
-    private val flip = new atomic.AtomicBoolean(false)
-
-    override def apply(x: T) = {
-        if (!flip.compareAndSet(false, true)) {
-            _1(x)
-        }
     }
 }

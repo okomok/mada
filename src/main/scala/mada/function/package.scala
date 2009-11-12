@@ -61,11 +61,6 @@ package object function {
      */
     def skip[T](n: Int, f: Function1[T, Unit]): Function1[T, Unit] = Skip(n, f)
 
-    /**
-     * Skips the first time call.
-     */
-    def skipFirst[T](f: Function1[T, Unit]): Function1[T, Unit] = SkipFirst(f)
-
 
 // empty
 
