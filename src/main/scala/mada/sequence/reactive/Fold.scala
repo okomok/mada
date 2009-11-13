@@ -7,17 +7,22 @@
 package mada; package sequence; package reactive
 
 
+// Parallel-safe reaction seems meaningless: fold is essentially sequencial.
+
+
 case class FolderLeft[A, B](_1: Reactive[A], _2: B, _3: (B, A) => B) extends Reactive[B] {
     override def subscribe(k: Reactor[B]) = {
         val j = new Reactor[A] {
+            private var isHead = true
             private var z = _2
-            override def onEnd = {
-                k.react(z) // delayed reaction may be a problem?
-                k.onEnd
-            }
+            override def onEnd = k.onEnd
             override def react(e: A) = {
-                k.react(z)
+                if (isHead) {
+                    isHead = false
+                    k.react(_2)
+                }
                 z = _3(z, e)
+                k.react(z)
             }
         }
         _1.subscribe(j)
@@ -28,18 +33,17 @@ case class FolderLeft[A, B](_1: Reactive[A], _2: B, _3: (B, A) => B) extends Rea
 case class ReducerLeft[A, B >: A](_1: Reactive[A], _2: (B, A) => B) extends Reactive[B] {
     override def subscribe(k: Reactor[B]) = {
         val j = new Reactor[A] {
-            private var z: B = _
             private var isHead = true
+            private var z: B = _
             override def onEnd = k.onEnd
             override def react(e: A) = {
                 if (isHead) {
-                    k.react(e)
-                    z = e
                     isHead = false
+                    z = e
                 } else {
                     z = _2(z, e)
-                    k.react(z)
                 }
+                k.react(z)
             }
         }
         _1.subscribe(j)

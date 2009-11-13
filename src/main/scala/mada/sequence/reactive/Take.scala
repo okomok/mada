@@ -7,13 +7,14 @@
 package mada; package sequence; package reactive
 
 
+// A lock-free algorithm can't be found (as far as you need early onEnd),
+// for onEnd and react must not be overlapped.
+
 case class Take[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
     Precondition.nonnegative(_2, "take")
 
     override def subscribe(k: Reactor[A]) = {
         val j = new Reactor[A] {
-            // A lock-free algorithm can't be found (as far as you need early onEnd),
-            // for onEnd and react must not be overlapped.
             private var count = _2
             private val _onEnd = util.byLazy(k.onEnd)
             override def onEnd = _onEnd()
