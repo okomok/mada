@@ -7,20 +7,22 @@
 package mada; package sequence; package reactive
 
 
+// step 0 is meaningful?
+
 case class Step[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
-    Precondition.nonnegative(_2, "step")
+    Precondition.positive(_2, "step")
 
     override def subscribe(k: Reactor[A]) = {
         val j = new Reactor[A] {
-            private var c = _2
+            private var c = 0
             override def onEnd = k.onEnd
             override def react(e: A) = {
-                if (c == _2) {
+                if (c == 0) {
                     k.react(e)
                 }
-                c -= 1
-                if (c == 0) {
-                    c = _2
+                c += 1
+                if (c == _2) {
+                    c = 0
                 }
             }
         }

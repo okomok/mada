@@ -42,6 +42,16 @@ class StepTest {
         assertEquals(tr, iterative.Of(1,7))
     }
 
+    def testStep02Fusion: Unit = {
+        val tr = iterative.Of(1,2,3,4,5,6).step(0).step(2).take(3)
+        assertEquals(tr, iterative.Of(1,1,1))
+    }
+
+    def testStep20Fusion: Unit = {
+        val tr = iterative.Of(1,2,3,4,5,6).step(2).step(0).take(3)
+        assertEquals(tr, iterative.Of(1,1,1))
+    }
+
     def testStepFusion2: Unit = {
         val tr = iterative.Of(1,2,3,4,5,6,7,8,9,10,11).step(3).step(2)
         assertEquals(tr, iterative.Of(1,2,3,4,5,6,7,8,9,10,11).step(3).seal.step(2))
