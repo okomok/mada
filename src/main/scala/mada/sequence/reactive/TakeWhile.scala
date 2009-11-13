@@ -11,14 +11,15 @@ case class TakeWhile[A](_1: Reactive[A], _2: A => Boolean) extends Reactive[A] {
     override def subscribe(k: Reactor[A]) = {
         val j = new Reactor[A] {
             private var ends = false
-            override def onEnd = ()
+            private val _onEnd = util.byLazy(k.onEnd)
+            override def onEnd = _onEnd()
             override def react(e: A) = {
                 if (!ends) {
                     if (_2(e)) {
                         k.react(e)
                     } else {
                         ends = true
-                        k.onEnd
+                        _onEnd()
                     }
                 }
             }
