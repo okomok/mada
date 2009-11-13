@@ -13,6 +13,26 @@ case class Unique[+A](_1: Reactive[A]) extends Forwarder[A] {
     override def unique: Reactive[A] = this // unique-unique fusion
 }
 
-case class UniqueBy[A](_1: Reactive[A], _2: (A, A) => Boolean) extends Forwarder[A] {
-    override protected val delegate = _1.reducerLeft{ (b, a) => if (_2(b, a)) b else a }
+case class UniqueBy[A](_1: Reactive[A], _2: (A, A) => Boolean) extends Reactive[A] {
+    override def subscribe(k: Reactor[A]) = {
+        val j = new Reactor[A] {
+            private var isHead = true
+            private var u: A = _
+            override def onEnd = k.onEnd
+            override def react(e: A): Unit = {
+                if (isHead) {
+                    isHead = false
+                    u = e
+                } else {
+                    if (_2(u, e)) {
+                        return
+                    } else {
+                        u = e
+                    }
+                }
+                k.react(u)
+            }
+        }
+        _1.subscribe(j)
+    }
 }
