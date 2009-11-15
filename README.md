@@ -1,4 +1,4 @@
-# `Mada` 1.0.0-SNAPSHOT
+# `Mada` 1.0-SNAPSHOT
 
 
 
