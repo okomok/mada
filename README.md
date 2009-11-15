@@ -1,4 +1,4 @@
-# `Mada` 1.0-alpha
+# `Mada` 1.0-SNAPSHO
 
 
 
