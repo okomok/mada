@@ -1,4 +1,4 @@
-# `Mada` 1.0-SNAPSHO
+# `Mada` 1.0.0-SNAPSHOT
 
 
 
@@ -238,6 +238,8 @@ It supports also parallel algorithms. Parallelization is explicit but transparen
 or you could say a sequence-specific, thread-less and trivial `scala.Actor`.
 
 `Reactive` summary:
+
+* TODO.
 
 
 
