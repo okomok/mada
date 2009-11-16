@@ -36,6 +36,7 @@ trait Reactive[+A] extends Sequence[A] with Runnable {
      */
     def map[B](f: A => B): Reactive[B] = Map(this, f)
 
+    @equivalentTo("map(f).flatten")
     def flatMap[B](f: A => Reactive[B]): Reactive[B] = FlatMap(this, f)
 
     /**
@@ -108,6 +109,12 @@ trait Reactive[+A] extends Sequence[A] with Runnable {
     }
 
     /**
+     * Turns a sequence of sequences into flat sequence.
+     */
+    @methodized
+    def _flatten[B](_this: Reactive[Reactive[B]]): Reactive[B] = Flatten(_this)
+
+    /**
      * Steps by the specified stride.
      */
     def step(n: Int): Reactive[A] = Step(this, n)
@@ -121,6 +128,12 @@ trait Reactive[+A] extends Sequence[A] with Runnable {
      * Removes duplicates using the predicate.
      */
     def uniqueBy(p: (A, A) => Boolean): Reactive[A] = UniqueBy(this, p)
+
+    /**
+     * Flattens <code>vs</code>, each reactive appending <code>sep</code> except the last one.
+     */
+    @methodized
+    def _unsplit[B](_this: Reactive[Reactive[B]], sep: Reactive[B]): Reactive[B] = Unsplit(_this, sep)
 
     /**
      * Returns synchronized one.

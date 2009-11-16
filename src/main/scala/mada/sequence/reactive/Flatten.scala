@@ -7,6 +7,6 @@
 package mada; package sequence; package reactive
 
 
-case class FlatMap[A, +B](_1: Reactive[A], _2: A => Reactive[B]) extends Forwarder[B] {
-    override protected val delegate = _1.map(_2).flatten
+case class Flatten[+A](_1: Reactive[Reactive[A]]) extends Forwarder[A] {
+    override protected val delegate = _1.unsplit(empty)
 }

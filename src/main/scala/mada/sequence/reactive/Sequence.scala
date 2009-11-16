@@ -20,6 +20,13 @@ trait Sequence[+A] { // physical
 
 object Sequence {
 
+// methodization
+    sealed class _OfSequence[A](_this: Reactive[Reactive[A]]) {
+        def flatten: Reactive[A] = _this._flatten(_this)
+        def unsplit(sep: Reactive[A]): Reactive[A] = _this._unsplit(_this, sep)
+    }
+    implicit def _ofSequence[A](_this: Sequence[Sequence[A]]): _OfSequence[A] = new _OfSequence(_this.asReactive.map(_.asReactive))
+
 }
 
 
