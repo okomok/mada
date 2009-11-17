@@ -10,9 +10,9 @@ package mada; package sequence; package reactive
 case class Unsplit[A](_1: Reactive[Reactive[A]], _2: Reactive[A]) extends Reactive[A] {
     override def subscribe(k: Reactor[A]) = {
         val j = new Reactor[Reactive[A]] {
-            private val pre = new IfFirst[Unit](_ => (), _ => _2.subscribe(k.noEnd))
+            private val sep = new IfFirst[Unit](_ => (), _ => _2.subscribe(k.noEnd))
             override def onEnd = k.onEnd
-            override def react(e: Reactive[A]) = { pre(); e.subscribe(k.noEnd) }
+            override def react(e: Reactive[A]) = { sep(); e.subscribe(k.noEnd) }
         }
         _1.subscribe(j)
     }
