@@ -19,12 +19,24 @@ private class IfFirst[-T](_then: T => Unit, _else: T => Unit) extends Function1[
         }
         _else(x)
     }
+
+    def isFirstDone: Boolean = !first.get
+}
+
+
+private class OnlyFirst[-T](f: T => Unit) extends Function1[T, Unit] {
+    private val delegate = new IfFirst[T](f, _ => ())
+    override def apply(x: T) = delegate(x)
+
+    def isDone: Boolean = delegate.isFirstDone
 }
 
 
 private class SkipFirst[-T](f: T => Unit) extends Function1[T, Unit] {
     private val delegate = new IfFirst[T](_ => (), f)
     override def apply(x: T) = delegate(x)
+
+    def isSkipped: Boolean = delegate.isFirstDone
 }
 
 private class SkipTimes[-T](f: T => Unit, n: Int) extends Function1[T, Unit] {

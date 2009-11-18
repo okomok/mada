@@ -144,6 +144,21 @@ trait Reactive[+A] extends Sequence[A] with Runnable {
     def _unsplit[B](_this: Reactive[Reactive[B]], sep: Reactive[B]): Reactive[B] = Unsplit(_this, sep)
 
     /**
+     * Zips <code>this</code> and <code>that</code>.
+     */
+    def zip[B](that: Reactive[B]): Reactive[(A, B)] = Zip(this, that)
+
+    /**
+     * Reverts <code>zip</code>.
+     */
+    def _unzip[B, C](_this: Reactive[(B, C)]): (Reactive[B], Reactive[C]) = (_this.map{ bc => bc._1 }, _this.map{ bc => bc._2 })
+
+    /**
+     * Zips <code>this</code> and <code>that</code> applying <code>f</code>.
+     */
+    def zipBy[B, C](that: Reactive[B])(f: (A, B) => C): Reactive[C] = ZipBy(this, that, f)
+
+    /**
      * Returns synchronized one.
      */
     def synchronize: Reactive[A] = Synchronize(this)
