@@ -18,6 +18,7 @@ trait Forwarder[+A] extends Reactive[A] with SequenceForwarder[A] {
 
     override def subscribe(k: Reactor[A]): Unit = delegate.subscribe(k)
 
+    override def append[B >: A](that: Reactive[B]): Reactive[B] = around(delegate.append(that))
     override def map[B](f: A => B): Reactive[B] = around(delegate.map(f))
     override def flatMap[B](f: A => Reactive[B]): Reactive[B] = around(delegate.flatMap(f))
     override def filter(p: A => Boolean): Reactive[A] = around(delegate.filter(p))
