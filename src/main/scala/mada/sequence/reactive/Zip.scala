@@ -27,7 +27,7 @@ case class ZipBy[A, B, +C](_1: Reactive[A], _2: Reactive[B], _3: (A, B) => C) ex
             override def onEnd = {
                 invariant
                 ends1 = true
-                if (ends2) {
+                if (ends2 || q1.isEmpty) {
                     k_onEnd()
                 }
             }
@@ -50,7 +50,7 @@ case class ZipBy[A, B, +C](_1: Reactive[A], _2: Reactive[B], _3: (A, B) => C) ex
             override def onEnd = {
                 invariant
                 ends2 = true
-                if (ends1) {
+                if (ends1 || q2.isEmpty) {
                     k_onEnd()
                 }
             }
