@@ -28,6 +28,10 @@ package object reactive {
      * A sequence with a single element.
      */
     def single[A](e: A): Reactive[A] = Single(e)
+    /**
+     * Unfolds right-associative.
+     */
+    def unfoldRight[A, B](z: A)(op: A => Option[(B, A)]): Reactive[B] = UnfoldRight(z, op)
 
 
 // pseudo

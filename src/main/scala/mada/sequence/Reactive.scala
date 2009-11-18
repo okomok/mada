@@ -65,8 +65,12 @@ trait Reactive[+A] extends Sequence[A] with Runnable {
      */
     def foreach(f: A => Unit): Unit = subscribe(reactor.make(util.theUnit, f))
 
+    /**
+     * Distributes each element to <code>k</code>.
+     */
     def fork(k: Reactor[A]): Reactive[A] = Fork(this, k)
 
+    @equivalentTo("fork(reactor.make((), f))")
     def forkBy(f: A => Unit): Reactive[A] = ForkBy(this, f)
 
     /**
