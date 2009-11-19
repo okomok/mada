@@ -162,6 +162,15 @@ trait Reactive[+A] extends Sequence[A] with Runnable {
      */
     def zipBy[B, C](that: Reactive[B])(f: (A, B) => C): Reactive[C] = ZipBy(this, that, f)
 
+
+// conversion
+
+    @conversion
+    def toIterative: Iterative[A] = ToIterative(this)
+
+
+// misc
+
     /**
      * Returns synchronized one.
      */

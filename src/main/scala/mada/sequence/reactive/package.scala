@@ -28,6 +28,7 @@ package object reactive {
      * A sequence with a single element.
      */
     def single[A](e: A): Reactive[A] = Single(e)
+
     /**
      * Unfolds right-associative.
      */

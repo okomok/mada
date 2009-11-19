@@ -13,3 +13,11 @@ case class FromIterative[+A](_1: Iterative[A]) extends Reactive[A] {
         k.onEnd
     }
 }
+
+
+// TODO: Use ConcurrentLinkedQueue.
+case class ToIterative[+A](_1: Reactive[A]) extends iterative.Forwarder[A] {
+    override protected val delegate = iterative.block[A]{ k =>
+        _1.foreach{ e => k(e) }
+    }
+}
