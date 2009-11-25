@@ -11,7 +11,7 @@ case class Fork[A](_1: Reactive[A], _2: Reactive[A] => Unit) extends Reactive[A]
     override def subscribe(k: Reactor[A]) = {
         var one = _1
         val two = new Reactive[A] {
-            override def subscribe(j: Reactor[A]) = one = _1.forkTo(j)
+            override def subscribe(j: Reactor[A]) = { one = _1.forkTo(j) }
         }
         _2(two)
         one.subscribe(k)
