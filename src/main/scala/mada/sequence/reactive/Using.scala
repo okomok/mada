@@ -7,6 +7,7 @@
 package mada; package sequence; package reactive
 
 
+@notThreadSafe
 case class Using[+A, +B](_1: Reactive[A], _2: Auto[B]) extends Reactive[A] {
     override def subscribe(k: Reactor[A]) = {
         val j = new Reactor[A] {

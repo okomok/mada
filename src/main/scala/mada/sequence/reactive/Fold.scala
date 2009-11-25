@@ -10,6 +10,7 @@ package mada; package sequence; package reactive
 // Parallel-safe reaction seems meaningless: fold is essentially sequencial.
 
 
+@notThreadSafe
 case class FolderLeft[A, B](_1: Reactive[A], _2: B, _3: (B, A) => B) extends Reactive[B] {
     override def subscribe(k: Reactor[B]) = {
         val j = new Reactor[A] {
@@ -30,6 +31,7 @@ case class FolderLeft[A, B](_1: Reactive[A], _2: B, _3: (B, A) => B) extends Rea
 }
 
 
+@notThreadSafe
 case class ReducerLeft[A, B >: A](_1: Reactive[A], _2: (B, A) => B) extends Reactive[B] {
     override def subscribe(k: Reactor[B]) = {
         val j = new Reactor[A] {

@@ -10,6 +10,7 @@ package mada; package sequence; package reactive
 // A lock-free algorithm can't be found (as far as you need early onEnd),
 // for onEnd and react must not be overlapped.
 
+@notThreadSafe
 case class Take[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
     Precondition.nonnegative(_2, "take")
 

@@ -9,6 +9,7 @@ package mada; package sequence; package reactive
 
 // step 0 is meaningful?
 
+@notThreadSafe
 case class Step[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
     Precondition.positive(_2, "step")
 

@@ -7,12 +7,14 @@
 package mada; package sequence; package reactive
 
 
+@notThreadSafe
 case class Unique[+A](_1: Reactive[A]) extends Forwarder[A] {
     override protected val delegate = _1.uniqueBy(function.equal)
 
     override def unique: Reactive[A] = this // unique-unique fusion
 }
 
+@notThreadSafe
 case class UniqueBy[A](_1: Reactive[A], _2: (A, A) => Boolean) extends Reactive[A] {
     override def subscribe(k: Reactor[A]) = {
         val j = new Reactor[A] {
