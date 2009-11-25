@@ -24,6 +24,7 @@ private class IfFirst[-T](_then: T => Unit, _else: T => Unit) extends Function1[
 }
 
 
+// Equivalent to `lazy val` with `isDone`.
 private class OnlyFirst[-T](f: T => Unit) extends Function1[T, Unit] {
     private val delegate = new IfFirst[T](f, _ => ())
     override def apply(x: T) = delegate(x)
