@@ -19,6 +19,7 @@ class UsingTest {
 
         var autoBegin = false
         var autoEnd = false
+        var thrown = false
 
         try {
             t filter {
@@ -39,10 +40,11 @@ class UsingTest {
                 out.add(e)
             }
         } catch {
-            case x: AssertionError =>
+            case x: AssertionError => thrown = true
             case _ => fail("doh")
         }
 
+        assertTrue(thrown)
         assertTrue(autoBegin)
         assertTrue(autoEnd)
         assertEquals(iterative.Of(14,15,16,17), iterative.from(out))
