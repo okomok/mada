@@ -9,7 +9,7 @@ package mada; package sequence; package vector
 
 import java.util.ArrayList
 import stl.IntroSort.depthLimit
-import stl.{ UnguardedPartition, Median }
+import stl.{UnguardedPartition, Median}
 import util.future
 
 

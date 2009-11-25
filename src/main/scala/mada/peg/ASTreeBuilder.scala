@@ -7,7 +7,7 @@
 package mada; package peg
 
 
-import javax.swing.tree.{ MutableTreeNode, DefaultMutableTreeNode }
+import javax.swing.tree.{MutableTreeNode, DefaultMutableTreeNode}
 
 
 /**
