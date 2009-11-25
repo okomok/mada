@@ -187,21 +187,17 @@ trait Reactive[+A] extends Sequence[A] with Runnable { self =>
     def merge[B >: A](that: Reactive[B]): Reactive[B] = Merge[B](this, that)
 
     /**
-     * Manages resource.
+     * Manages resources.
      */
     def using[B](a: Auto[B]): Reactive[A] = Using(this, a)
+
+    /**
+     * Catches exceptions.
+     */
+    def catching(f: Throwable => Unit): Reactive[A] = Catch(this, f)
 
 }
 
 
-
 object Reactive {
-
-
-
-
-
-
-
-
 }

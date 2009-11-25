@@ -44,14 +44,6 @@ package object reactive {
     def selection(s: Selector, t: Long): Reactive[SelectionKey] = Selection2(s, t)
 
 
-// pseudo
-
-    /**
-     * Constructs a pseudo try-catch expression.
-     */
-    def `try`[A](r: Reactive[A]): Try[A] = Try(r)
-
-
 // conversion
 
     @returnThat
