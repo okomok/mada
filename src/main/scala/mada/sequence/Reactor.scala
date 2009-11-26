@@ -10,15 +10,28 @@ package mada; package sequence
 import reactor._
 
 
-trait Reactor[-A] {
+trait Reactor[-A] { self =>
 
+    /**
+     * Called when sequence ends.
+     */
     def onEnd: Unit
 
+    /**
+     * Called when an element passed.
+     */
     def react(e: A): Unit
 
-    final def noEnd = NoEnd(this)
-    final def synchronize = Synchronize(this)
-    final def toActor = ToActor(this)
+    /**
+     * Suppresses <code>onEnd</code>.
+     */
+    final def noEnd: Reactor[A] = NoEnd(this)
+
+    // TODO
+    final def synchronize: Reactor[A] = Synchronize(this)
+
+    @conversion
+    final def toActor: scala.actors.Actor = ToActor(this)
 
 }
 

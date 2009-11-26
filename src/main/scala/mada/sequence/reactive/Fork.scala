@@ -24,3 +24,12 @@ case class ForkTo[A](_1: Reactive[A], _2: Reactor[A]) extends Reactive[A] {
         _1.subscribe(reactor.make(_ => { _2.onEnd; k.onEnd }, e => { _2.react(e); k.react(e) }))
     }
 }
+
+
+case class ForLoop[A](_1: Reactive[A], _2: A => Unit) extends Forwarder[A] {
+    override protected val delegate = _1.forkTo(reactor.make(_ => (), e => _2(e)))
+}
+
+case class EndWith[+A](_1: Reactive[A], _2: util.ByName[Unit]) extends Forwarder[A] {
+    override protected val delegate = _1.forkTo(reactor.make(_ => _2(), _ => ()))
+}

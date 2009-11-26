@@ -76,6 +76,16 @@ trait Reactive[+A] extends Sequence[A] with Runnable { self =>
     def forkTo(k: Reactor[A]): Reactive[A] = ForkTo(this, k)
 
     /**
+     * Loops with evaluating <code>f</code>.
+     */
+    def forLoop(f: A => Unit): Reactive[A] = ForLoop(this, f)
+
+    /**
+     * Ends with evaluating <code>z</code>.
+     */
+    def endWith(z: => Unit): Reactive[A] = EndWith(this, util.byName(z))
+
+    /**
      * Prefix sum folding left-associative.
      */
     def folderLeft[B](z: B)(op: (B, A) => B): Reactive[B] = FolderLeft(this, z, op)
@@ -186,7 +196,7 @@ trait Reactive[+A] extends Sequence[A] with Runnable { self =>
     /**
      * Manages resources.
      */
-    def using[B](a: Auto[B]): Reactive[A] = Using(this, a)
+    def using(a: Auto[Any]): Reactive[A] = Using(this, a)
 
     /**
      * Catches exceptions.

@@ -21,19 +21,7 @@ package object reactor {
 
     @equivalentTo("new Reactor[A] { def onEnd = z(); def react(e: A) = f(e) }")
     def make[A](z: Unit => Unit, f: A => Unit): Reactor[A] = Make(z, f)
-
-    @aliasOf("make(_ => (), f)")
-    def make[A](f: A => Unit): Reactor[A] = make(_ => (), f)
-
-    def React[A](f: A => Unit) = new Reactor[A] {
-        override def onEnd = ()
-        override def react(e: A) = f(e)
-
-        def OnEnd(z: Unit => Unit) = new Reactor[A] {
-            override def onEnd = z()
-            override def react(e: A) = f(e)
-        }
-    }
+    // `z: => Unit` is rejected.
 
 
 // conversion

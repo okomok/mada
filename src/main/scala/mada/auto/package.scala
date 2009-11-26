@@ -9,8 +9,11 @@ package mada
 
 package object auto {
 
+
     @aliasOf("Auto")
     type Type[+A] = Auto[A]
+
+// constructor
 
     @returnThat
     def use[A](that: Auto[A]): Auto[A] = that
@@ -23,7 +26,14 @@ package object auto {
      */
     def usedWith[A](as: Seq[Auto[_]], e: A): Auto[A] = UsedWith(as, e)
 
+    /**
+     * Ends with evaluating <code>f</code>.
+     */
+    def endWith(f: => Unit): Auto[Unit] = EndWith(util.byName(f))
+
+
 // conversion
+
     @compatibleConversion
     def fromJCloseable[A <: java.io.Closeable](from: A): Auto[A] = FromJCloseable(from)
 

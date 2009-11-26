@@ -26,6 +26,8 @@ trait Forwarder[+A] extends Reactive[A] with SequenceForwarder[A] {
     override def foreach(f: A => Unit): Unit = delegate.foreach(f)
     override def fork(f: Reactive[A] => Unit): Reactive[A] = around(delegate.fork(f))
     override def forkTo(k: Reactor[A]): Reactive[A] = around(delegate.forkTo(k))
+    override def forLoop(f: A => Unit): Reactive[A] = around(delegate.forLoop(f))
+    override def endWith(z: => Unit): Reactive[A] = around(delegate.endWith(z))
     override def folderLeft[B](z: B)(op: (B, A) => B): Reactive[B] = around(delegate.folderLeft(z)(op))
     override def reducerLeft[B >: A](op: (B, A) => B): Reactive[B] = around(delegate.reducerLeft(op))
     override def tail: Reactive[A] = around(delegate.tail)
@@ -47,7 +49,7 @@ trait Forwarder[+A] extends Reactive[A] with SequenceForwarder[A] {
     override def toIterative: Iterative[A] = delegate.toIterative
     override def synchronize: Reactive[A] = around(delegate.synchronize)
     override def merge[B >: A](that: Reactive[B]): Reactive[B] = around(delegate.merge(that))
-    override def using[B](a: Auto[B]): Reactive[A] = around(delegate.using(a))
+    override def using(a: Auto[Any]): Reactive[A] = around(delegate.using(a))
     override def catching(f: Throwable => Unit): Reactive[A] = around(delegate.catching(f))
     override def break: Reactive[A] = around(delegate.break)
 }
