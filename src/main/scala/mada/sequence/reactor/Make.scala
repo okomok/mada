@@ -7,7 +7,7 @@
 package mada; package sequence; package reactor
 
 
-case class Make[-A](_1: util.ByName[Unit], _2: A => Unit) extends Reactor[A] {
+case class Make[-A](_1: Unit => Unit, _2: A => Unit) extends Reactor[A] {
     override def onEnd = _1()
     override def react(e: A) = _2(e)
 }

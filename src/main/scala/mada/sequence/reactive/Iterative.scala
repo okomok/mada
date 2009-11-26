@@ -17,6 +17,6 @@ case class FromIterative[+A](_1: Iterative[A]) extends Reactive[A] {
 
 case class ToIterative[A](_1: Reactive[A]) extends iterative.Forwarder[A] {
     private val q = new java.util.concurrent.ConcurrentLinkedQueue[A]
-    _1.subscribe(util.theUnit, e => q.add(e))
+    _1.subscribe(_ => (), e => q.add(e))
     override protected val delegate = iterative.from(q)
 }

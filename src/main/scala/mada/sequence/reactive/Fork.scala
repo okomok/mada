@@ -21,14 +21,10 @@ case class Fork[A](_1: Reactive[A], _2: Reactive[A] => Unit) extends Reactive[A]
 
 case class ForkTo[A](_1: Reactive[A], _2: Reactor[A]) extends Reactive[A] {
     override def subscribe(k: Reactor[A]) = {
-        val j = new Reactor[A] {
-            override def onEnd = { _2.onEnd; k.onEnd }
-            override def react(e: A) = { _2.react(e); k.react(e) }
-        }
-        _1.subscribe(j)
+        _1.subscribe(_ => { _2.onEnd; k.onEnd }, e => { _2.react(e); k.react(e) })
     }
 }
 
 case class ForkBy[A](_1: Reactive[A], _2: A => Unit) extends Forwarder[A] {
-    override protected val delegate = _1.forkTo(reactor.make(util.theUnit, _2))
+    override protected val delegate = _1.forkTo(reactor.make(_ => (), _2))
 }

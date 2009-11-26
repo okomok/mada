@@ -19,7 +19,7 @@ package object reactor {
 
 // constructors
 
-    def make[A](z: => Unit, f: A => Unit): Reactor[A] = Make(util.byName(z), f)
+    def make[A](z: Unit => Unit, f: A => Unit): Reactor[A] = Make(z, f)
 
 // conversion
 

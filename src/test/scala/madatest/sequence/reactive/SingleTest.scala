@@ -15,7 +15,7 @@ class SingleTest {
     def testTrivial: Unit = {
         val t = reactive.single(1)
         val s = new java.util.ArrayList[Int]
-        t.subscribe(reactor.make(s.add(99), s.add(_)))
+        t.subscribe(_ => s.add(99), s.add(_))
         assertEquals(vector.Of(1, 99), vector.from(s))
     }
 }

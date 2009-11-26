@@ -17,7 +17,7 @@ class TakeTest {
     def testTrivial0: Unit = {
         val a = vector.Of(1,2,3,4,5,6)
         val b = new java.util.ArrayList[Int]
-        reactive.fromIterative(a).take(3).subscribe(reactor.make(b.add(99), b.add(_)))
+        reactive.fromIterative(a).take(3).subscribe(_ => b.add(99), b.add(_))
         assertEquals(vector.Of(1,2,3,99), vector.from(b))
     }
 
