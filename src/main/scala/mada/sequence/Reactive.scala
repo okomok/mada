@@ -28,6 +28,9 @@ trait Reactive[+A] extends Sequence[A] with Runnable { self =>
      */
     def subscribe(k: Reactor[A]): Unit
 
+    @equivalentTo("subscribe(reactor.make(z, f))")
+    final def subscribe(z: => Unit, f: A => Unit): Unit = subscribe(reactor.make(z, f))
+
     @equivalentTo("foreach{ e => () }")
     override def run: Unit = foreach{ e => () }
 
@@ -195,6 +198,11 @@ trait Reactive[+A] extends Sequence[A] with Runnable { self =>
      * Catches exceptions.
      */
     def catching(f: Throwable => Unit): Reactive[A] = Catch(this, f)
+
+    /**
+     * Breaks the flow.
+     */
+    def break: Reactive[A] = Break(this)
 
 }
 

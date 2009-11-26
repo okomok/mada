@@ -16,7 +16,7 @@ class UniqueTest {
     def testTrivial: Unit = {
         val tr = reactive.Of(5,4,4,4,3,2,2,2,2,2,1)
         val out = new java.util.ArrayList[Int]
-        tr.unique.subscribe(reactor.make(out.add(99), out.add(_)))
+        tr.unique.subscribe(out.add(99), out.add(_))
         assertEquals(iterative.Of(5,4,3,2,1, 99), iterative.from(out))
     }
 

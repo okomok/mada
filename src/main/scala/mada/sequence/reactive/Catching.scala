@@ -9,17 +9,7 @@ package mada; package sequence; package reactive
 
 case class Catch[A](_1: Reactive[A], _2: Throwable => Unit) extends Reactive[A] {
     override def subscribe(k: Reactor[A]) = {
-        val j = new Reactor[A] {
-            override def onEnd = k.onEnd
-            override def react(e: A) = {
-                try {
-                    k.react(e)
-                } catch {
-                    case x => _2(x)
-                }
-            }
-        }
-        _1.subscribe(j)
+        _1.subscribe(k.onEnd, e => try { k.react(e) } catch { case x => _2(x) })
     }
 }
 

@@ -11,12 +11,7 @@ case class Drop[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
     Precondition.nonnegative(_2, "drop")
 
     override def subscribe(k: Reactor[A]) = {
-        val j = new Reactor[A] {
-            private var _react = new SkipTimes[A](e => k.react(e), _2)
-            override def onEnd = k.onEnd
-            override def react(e: A) = _react(e)
-        }
-        _1.subscribe(j)
+        _1.subscribe(k.onEnd, new SkipTimes[A](e => k.react(e), _2))
     }
 
     override def drop(n: Int) = _1.drop(_2 + n) // drop-drop fusion
