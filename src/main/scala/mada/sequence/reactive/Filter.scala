@@ -9,7 +9,7 @@ package mada; package sequence; package reactive
 
 case class Filter[A](_1: Reactive[A], _2: A => Boolean) extends Reactive[A] {
     override def subscribe(k: Reactor[A]) = {
-        _1.subscribe(_ => k.onEnd, e => if (_2(e)) k.react(e))
+        _1.subscribe(reactor.make(_ => k.onEnd, e => if (_2(e)) k.react(e)))
     }
 }
 

@@ -36,7 +36,7 @@ class ForeachTest {
     def testRun: Unit = {
         val a = iterative.Of(1,6,7,10,14,17)
         val t = new java.util.ArrayList[Int]
-        reactive.fromIterative(a).forkBy{ e => t.add(e) }.run
+        reactive.fromIterative(a).forkTo{ reactor.make(_ => (), e => t.add(e)) }.run
         assertEquals(a, iterative.from(t))
     }
 }

@@ -9,6 +9,6 @@ package mada; package sequence; package reactive
 
 case class DropWhile[A](_1: Reactive[A], _2: A => Boolean) extends Reactive[A] {
     override def subscribe(k: Reactor[A]) = {
-        _1.subscribe(_ => k.onEnd, new SkipWhile[A](e => k.react(e), _2))
+        _1.subscribe(reactor.make(_ => k.onEnd, new SkipWhile[A](e => k.react(e), _2)))
     }
 }

@@ -9,6 +9,6 @@ package mada; package sequence; package reactive
 
 case class Tail[+A](_1: Reactive[A]) extends Reactive[A] {
     override def subscribe(k: Reactor[A]) = {
-        _1.subscribe(_ => k.onEnd, new SkipFirst[A](e => k.react(e)))
+        _1.subscribe(reactor.make(_ => k.onEnd, new SkipFirst[A](e => k.react(e))))
     }
 }

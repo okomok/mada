@@ -14,7 +14,7 @@ import junit.framework.Assert._
 class EmptyTest {
     def testTrivial: Unit = {
         val s = new java.util.ArrayList[Int]
-        reactive.empty.of[Int].subscribe(_ => s.add(99), s.add(_))
+        reactive.empty.of[Int].subscribe(reactor.make(_ => s.add(99), s.add(_)))
         assertEquals(vector.Of(99), vector.from(s))
     }
 }
