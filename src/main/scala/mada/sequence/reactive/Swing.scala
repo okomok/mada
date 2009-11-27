@@ -10,7 +10,24 @@ package mada; package sequence; package reactive
 import java.awt.Component
 
 
-object Swing {
+object Swing { // nightmare...
+
+
+// ActionEvent
+
+    import java.awt.event.{ActionEvent, ActionListener}
+    type ActionEventSource = { def addActionListener(l: ActionListener): Unit }
+
+    def actionPerformed(c: ActionEventSource): Reactive[ActionEvent] = ActionPerformed(c)
+
+    case class ActionPerformed(_1: ActionEventSource) extends Reactive[ActionEvent] {
+        override def subscribe(k: Reactor[ActionEvent]): Unit = {
+            val j = new ActionListener {
+                override def actionPerformed(e: ActionEvent) = k.react(e)
+            }
+            _1.addActionListener(j)
+        }
+    }
 
 
 // MouseEvent
