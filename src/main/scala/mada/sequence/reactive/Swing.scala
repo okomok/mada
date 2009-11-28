@@ -23,9 +23,9 @@ object Swing { // nightmare...
     }
 
     case class ActionPerformed(_1: ActionEventSource) extends Closeable[ActionEvent] {
-        private var l: ActionListener = _
+        private val l = new OneTimeVar[ActionListener]
         override def subscribe(k: Reactor[ActionEvent]) = {
-            l = new ActionListener {
+            l := new ActionListener {
                 override def actionPerformed(e: ActionEvent) = k.react(e)
             }
             _1.addActionListener(l)
@@ -49,9 +49,9 @@ object Swing { // nightmare...
     def mouseReleased(c: Component): Closeable[MouseEvent] = MouseReleased(c)
 
     case class MouseClicked(_1: Component) extends Closeable[MouseEvent] {
-        private var l: MouseInputAdapter = _
+        private val l = new OneTimeVar[MouseInputAdapter]
         override def subscribe(k: Reactor[MouseEvent]) = {
-            l = new MouseInputAdapter {
+            l := new MouseInputAdapter {
                 override def mouseClicked(e: MouseEvent) = k.react(e)
             }
             _1.addMouseListener(l)
@@ -60,9 +60,9 @@ object Swing { // nightmare...
     }
 
     case class MouseEntered(_1: Component) extends Closeable[MouseEvent] {
-        private var l: MouseInputAdapter = _
+        private val l = new OneTimeVar[MouseInputAdapter]
         override def subscribe(k: Reactor[MouseEvent]) = {
-            l = new MouseInputAdapter {
+            l := new MouseInputAdapter {
                 override def mouseEntered(e: MouseEvent) = k.react(e)
             }
             _1.addMouseListener(l)
@@ -71,9 +71,9 @@ object Swing { // nightmare...
     }
 
     case class MouseExited(_1: Component) extends Closeable[MouseEvent] {
-        private var l: MouseInputAdapter = _
+        private val l = new OneTimeVar[MouseInputAdapter]
         override def subscribe(k: Reactor[MouseEvent]) = {
-            l = new MouseInputAdapter {
+            l := new MouseInputAdapter {
                 override def mouseExited(e: MouseEvent) = k.react(e)
             }
             _1.addMouseListener(l)
@@ -82,9 +82,9 @@ object Swing { // nightmare...
     }
 
     case class MousePressed(_1: Component) extends Closeable[MouseEvent] {
-        private var l: MouseInputAdapter = _
+        private val l = new OneTimeVar[MouseInputAdapter]
         override def subscribe(k: Reactor[MouseEvent]) = {
-            l = new MouseInputAdapter {
+            l := new MouseInputAdapter {
                 override def mousePressed(e: MouseEvent) = k.react(e)
             }
             _1.addMouseListener(l)
@@ -93,9 +93,9 @@ object Swing { // nightmare...
     }
 
     case class MouseReleased(_1: Component) extends Closeable[MouseEvent] {
-        private var l: MouseInputAdapter = _
+        private val l = new OneTimeVar[MouseInputAdapter]
         override def subscribe(k: Reactor[MouseEvent]) = {
-            l = new MouseInputAdapter {
+            l := new MouseInputAdapter {
                 override def mouseReleased(e: MouseEvent) = k.react(e)
             }
             _1.addMouseListener(l)
@@ -109,9 +109,9 @@ object Swing { // nightmare...
     def mouseMoved(c: Component): Closeable[MouseEvent] = MouseMoved(c)
 
     case class MouseDragged(_1: Component) extends Closeable[MouseEvent] {
-        private var l: MouseInputAdapter = _
+        private val l = new OneTimeVar[MouseInputAdapter]
         override def subscribe(k: Reactor[MouseEvent]) = {
-            l = new MouseInputAdapter {
+            l := new MouseInputAdapter {
                 override def mouseDragged(e: MouseEvent) = k.react(e)
             }
             _1.addMouseMotionListener(l)
@@ -120,9 +120,9 @@ object Swing { // nightmare...
     }
 
     case class MouseMoved(_1: Component) extends Closeable[MouseEvent] {
-        private var l: MouseInputAdapter = _
+        private val l = new OneTimeVar[MouseInputAdapter]
         override def subscribe(k: Reactor[MouseEvent]) = {
-            l = new MouseInputAdapter {
+            l := new MouseInputAdapter {
                 override def mouseMoved(e: MouseEvent) = k.react(e)
             }
             _1.addMouseMotionListener(l)
@@ -135,9 +135,9 @@ object Swing { // nightmare...
     def mouseWheelMoved(c: Component): Closeable[MouseWheelEvent] = MouseWheelMoved(c)
 
     case class MouseWheelMoved(_1: Component) extends Closeable[MouseWheelEvent] {
-        private var l: MouseInputAdapter = _
+        private val l = new OneTimeVar[MouseInputAdapter]
         override def subscribe(k: Reactor[MouseWheelEvent]) = {
-            l = new MouseInputAdapter {
+            l := new MouseInputAdapter {
                 override def mouseWheelMoved(e: MouseWheelEvent) = k.react(e)
             }
             _1.addMouseWheelListener(l)
@@ -157,9 +157,9 @@ object Swing { // nightmare...
     def keyTyped(c: Component): Closeable[KeyEvent] = KeyTyped(c)
 
     case class KeyPressed(_1: Component) extends Closeable[KeyEvent] {
-        private var l: KeyAdapter = _
+        private val l = new OneTimeVar[KeyAdapter]
         override def subscribe(k: Reactor[KeyEvent]) = {
-            l = new KeyAdapter {
+            l := new KeyAdapter {
                 override def keyPressed(e: KeyEvent) = k.react(e)
             }
             _1.addKeyListener(l)
@@ -168,9 +168,9 @@ object Swing { // nightmare...
     }
 
     case class KeyReleased(_1: Component) extends Closeable[KeyEvent] {
-        private var l: KeyAdapter = _
+        private val l = new OneTimeVar[KeyAdapter]
         override def subscribe(k: Reactor[KeyEvent]) = {
-            l = new KeyAdapter {
+            l := new KeyAdapter {
                 override def keyReleased(e: KeyEvent) = k.react(e)
             }
             _1.addKeyListener(l)
@@ -179,9 +179,9 @@ object Swing { // nightmare...
     }
 
     case class KeyTyped(_1: Component) extends Closeable[KeyEvent] {
-        private var l: KeyAdapter = _
+        private val l = new OneTimeVar[KeyAdapter]
         override def subscribe(k: Reactor[KeyEvent]) = {
-            l = new KeyAdapter {
+            l := new KeyAdapter {
                 override def keyTyped(e: KeyEvent) = k.react(e)
             }
             _1.addKeyListener(l)

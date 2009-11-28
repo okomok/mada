@@ -16,13 +16,15 @@ import javax.swing
 
 class SwingTest {
 
-    def testTrivial: Unit = {
+    def testTrivial(off: Int): Unit = {
         val frame = new swing.JFrame("SwingTest")
         val label = new swing.JLabel("testTrivial")
         frame.getContentPane.add(label)
         frame.setDefaultCloseOperation(swing.JFrame.EXIT_ON_CLOSE)
         frame.pack
         frame.setVisible(true)
+
+        var closed = false
 
         val x = reactive.Swing.mouseClicked(label)
         x.take {
@@ -31,9 +33,11 @@ class SwingTest {
             println("clicked")
         } endWith {
             x.close
+            closed = true
         } run
 
         Thread.sleep(10000)
+        assertTrue(closed)
     }
 
 }
