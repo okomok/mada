@@ -10,7 +10,7 @@ package mada; package sequence; package reactive
 import java.awt.Component
 
 
-object Swing { // nightmare...
+object Swing {
 
 
 // ActionEvent
