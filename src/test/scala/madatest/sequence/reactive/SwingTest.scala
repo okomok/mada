@@ -42,7 +42,7 @@ class SwingTest {
     }
 */
 
-    def testTrivial: Unit = {
+    def testTrivial(off: Int): Unit = {
         val frame = new swing.JFrame("SwingTest")
         val label = new swing.JLabel("testTrivial")
         frame.getContentPane.add(label)
