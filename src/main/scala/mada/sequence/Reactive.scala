@@ -196,7 +196,7 @@ trait Reactive[+A] extends Sequence[A] with Runnable { self =>
     /**
      * Manages resources.
      */
-    def using(a: Auto[Any]): Reactive[A] = Using(this, a)
+    def using(a: => Auto[Any]): Reactive[A] = Using(this, util.byLazy(a))
 
     /**
      * Catches exceptions.

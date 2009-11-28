@@ -8,11 +8,11 @@ package mada; package sequence; package reactive
 
 
 @notThreadSafe
-case class Using[+A](_1: Reactive[A], _2: Auto[Any]) extends Reactive[A] {
+case class Using[+A](_1: Reactive[A], _2: util.ByLazy[Auto[Any]]) extends Reactive[A] {
     override def subscribe(k: Reactor[A]) = {
         val j = new Reactor[A] {
-            private val _autoBegin = util.byLazy(_2.begin)
-            private val _autoEnd = new OnlyFirst[Unit](_ => _2.end)
+            private val _autoBegin = util.byLazy(_2().begin)
+            private val _autoEnd = new OnlyFirst[Unit](_ => _2().end)
             override def onEnd = {
                 if (!_autoEnd.isDone) {
                     k.onEnd
