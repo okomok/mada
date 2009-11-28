@@ -24,9 +24,9 @@ trait Reactive[+A] extends Sequence[A] with Runnable { self =>
 
 
     /**
-     * Registers a reactor.
+     * Starts the reactor.
      */
-    def subscribe(k: Reactor[A]): Unit
+    def start(k: Reactor[A]): Unit
 
     @equivalentTo("foreach{ e => () }")
     override def run: Unit = foreach{ e => () }
@@ -63,7 +63,7 @@ trait Reactive[+A] extends Sequence[A] with Runnable { self =>
     /**
      * Applies <code>f</code> to each element.
      */
-    def foreach(f: A => Unit): Unit = subscribe(reactor.make(_ => (), f))
+    def foreach(f: A => Unit): Unit = start(reactor.make(_ => (), f))
 
     /**
      * Forks.

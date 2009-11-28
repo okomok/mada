@@ -12,7 +12,7 @@ case class FromArray[A](_1: Array[A]) extends Forwarder[A] {
 }
 
 case class FromSIterable[+A](_1: Iterable[A]) extends Reactive[A] {
-    override def subscribe(k: Reactor[A]) = {
+    override def start(k: Reactor[A]) = {
         _1.foreach{ e => k.react(e) }
         k.onEnd
     }

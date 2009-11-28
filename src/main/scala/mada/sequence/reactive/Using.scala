@@ -9,7 +9,7 @@ package mada; package sequence; package reactive
 
 @notThreadSafe
 case class Using[+A](_1: Reactive[A], _2: util.ByLazy[Auto[Any]]) extends Reactive[A] {
-    override def subscribe(k: Reactor[A]) = {
+    override def start(k: Reactor[A]) = {
         val j = new Reactor[A] {
             private val _autoBegin = util.byLazy(_2().begin)
             private val _autoEnd = new OnlyFirst[Unit](_ => _2().end)
@@ -30,6 +30,6 @@ case class Using[+A](_1: Reactive[A], _2: util.ByLazy[Auto[Any]]) extends Reacti
                 }
             }
         }
-        _1.subscribe(j)
+        _1.start(j)
     }
 }

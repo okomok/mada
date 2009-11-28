@@ -17,7 +17,7 @@ case class Zip[+A, +B](_1: Reactive[A], _2: Reactive[B]) extends Forwarder[(A, B
 
 @notThreadSafe
 case class ZipBy[A, B, +C](_1: Reactive[A], _2: Reactive[B], _3: (A, B) => C) extends Reactive[C] {
-    override def subscribe(k: Reactor[C]) = {
+    override def start(k: Reactor[C]) = {
         val k_onEnd = new OnlyFirst[Unit](_ => k.onEnd)
         var ends1 = false
         var ends2 = false
@@ -72,7 +72,7 @@ case class ZipBy[A, B, +C](_1: Reactive[A], _2: Reactive[B], _3: (A, B) => C) ex
             }
         }
 
-        _1.subscribe(j1)
-        _2.subscribe(j2)
+        _1.start(j1)
+        _2.start(j2)
     }
 }

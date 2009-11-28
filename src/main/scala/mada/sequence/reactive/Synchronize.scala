@@ -10,8 +10,8 @@ package mada; package sequence; package reactive
 // TODO
 
 case class Synchronize[+A](_1: Reactive[A]) extends Reactive[A] {
-    override def subscribe(k: Reactor[A]) = {
+    override def start(k: Reactor[A]) = {
         val j = k.synchronize
-        _1.subscribe(j)
+        _1.start(j)
     }
 }

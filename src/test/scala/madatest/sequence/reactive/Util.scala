@@ -36,7 +36,7 @@ class IntSenders(_data: Vector[Int]*) {
 
 
 class IntSender(datum: Vector[Int], barrier: CyclicBarrier) extends Reactive[Int] {
-    override def subscribe(k: Reactor[Int]) = {
+    override def start(k: Reactor[Int]) = {
         new Thread {
             override def run = {
                 barrier.await

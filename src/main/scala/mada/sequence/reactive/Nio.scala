@@ -20,7 +20,7 @@ case class Selection2(_1: Selector, _2: Long) extends Forwarder[SelectionKey] {
 
 
 private class _Selection(_1: Selector, _2: Selector => Long) extends Reactive[SelectionKey] {
-    override def subscribe(k: Reactor[SelectionKey]): Unit = {
+    override def start(k: Reactor[SelectionKey]): Unit = {
         try {
             while (true) {
                 if (_2(_1) != 0) {

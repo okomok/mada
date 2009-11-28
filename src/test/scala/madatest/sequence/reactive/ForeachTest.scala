@@ -25,7 +25,7 @@ class ForeachTest {
 
         val c = new Call(assertEquals(a, iterative.from(t)))
 
-        reactive.fromIterative(a).subscribe(new Reactor[Int] {
+        reactive.fromIterative(a).start(new Reactor[Int] {
             override def onEnd = c()
             override def react(e: Int) = t.add(e)
         })

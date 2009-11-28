@@ -16,7 +16,7 @@ case class Unique[+A](_1: Reactive[A]) extends Forwarder[A] {
 
 @notThreadSafe
 case class UniqueBy[A](_1: Reactive[A], _2: (A, A) => Boolean) extends Reactive[A] {
-    override def subscribe(k: Reactor[A]) = {
+    override def start(k: Reactor[A]) = {
         val j = new Reactor[A] {
             private var isHead = true
             private var u: A = _
@@ -35,6 +35,6 @@ case class UniqueBy[A](_1: Reactive[A], _2: (A, A) => Boolean) extends Reactive[
                 k.react(u)
             }
         }
-        _1.subscribe(j)
+        _1.start(j)
     }
 }
