@@ -12,11 +12,12 @@ import junit.framework.Assert._
 
 
 import javax.swing
+import reactive.Swing
 
 
 class SwingTest {
 
-/*
+
     def testTrivial(off: Int): Unit = {
         val frame = new swing.JFrame("SwingTest")
         val label = new swing.JLabel("testTrivial")
@@ -27,7 +28,7 @@ class SwingTest {
 
         var closed = false
 
-        val x = reactive.Swing.mouseClicked(label)
+        val x = new Swing.MouseClicked(label)
         x.take {
             3
         } forLoop { e =>
@@ -40,8 +41,35 @@ class SwingTest {
         Thread.sleep(10000)
         assertTrue(closed)
     }
-*/
 
+    def testTrivial2(off: Int): Unit = {
+        val frame = new swing.JFrame("SwingTest")
+        val label = new swing.JLabel("testTrivial")
+        frame.getContentPane.add(label)
+        frame.setDefaultCloseOperation(swing.JFrame.EXIT_ON_CLOSE)
+        frame.pack
+        frame.setVisible(true)
+
+        val pressedSeq = new Swing.MousePressed(label)
+
+        pressedSeq forLoop { _ =>
+            println("pressed")
+            val draggedSeq = new Swing.MouseDragged(label)
+            val releasedSeq = new Swing.MouseReleased(label)
+            draggedSeq before {
+                releasedSeq
+            } endWith {
+                println("released")
+                draggedSeq.close
+                releasedSeq.close
+            } run
+        } run
+
+        Thread.sleep(20000)
+        pressedSeq.close
+    }
+
+/*
     def testTrivial(off: Int): Unit = {
         val frame = new swing.JFrame("SwingTest")
         val label = new swing.JLabel("testTrivial")
@@ -74,4 +102,41 @@ class SwingTest {
         assertTrue(closed)
     }
 
+
+    def testTrivial2: Unit = { // broken
+        val frame = new swing.JFrame("SwingTest")
+        val label = new swing.JLabel("testTrivial")
+        frame.getContentPane.add(label)
+        frame.setDefaultCloseOperation(swing.JFrame.EXIT_ON_CLOSE)
+        frame.pack
+        frame.setVisible(true)
+
+        import reactive.Swing
+
+        var closed = false
+
+        val ms = new Swing.MouseEventFrom(label)
+        ms.mousePressed { y =>
+            y.forLoop { e =>
+                println("pressed")
+                val m = new Swing.MouseMotionEventFrom(label)
+                val msr = new Swing.MouseEventFrom(label)
+                m.mouseDragged { k =>
+                    k.until {
+                        msr.mouseReleased { y =>
+                            y.endWith {
+                                print("released")
+                                m.close
+                                msr.close
+                            } run
+                        }
+                    } run
+                } run
+            } run
+        } run
+
+        Thread.sleep(10000)
+        ms.close
+    }
+*/
 }

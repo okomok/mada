@@ -211,7 +211,7 @@ trait Reactive[+A] extends Sequence[A] with Runnable { self =>
     /**
      * Ends if <code>that</code> emits a reaction.
      */
-    def until(that: Reactive[Any]): Reactive[A] = Until(this, that)
+    def before(that: Reactive[Any]): Reactive[A] = Before(this, that)
 
 }
 

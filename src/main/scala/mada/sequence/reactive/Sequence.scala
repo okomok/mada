@@ -43,11 +43,11 @@ object Sequence {
         def caseWrite(f: SelectionKey => Unit): Reactive[SelectionKey] = _this.fork{ r => r.filter(_.isWritable).foreach(f) }
     }
     implicit def _ofSelectionKey(_this: Sequence[SelectionKey]): _OfSelectionKey = new _OfSelectionKey(_this.asReactive)
-
+/*
     implicit def _ofMouseEvent(_this: Sequence[java.awt.event.MouseEvent]): Swing._OfMouseEvent = new Swing._OfMouseEvent(_this.asReactive)
     implicit def _ofMouseWheelEvent(_this: Sequence[java.awt.event.MouseWheelEvent]): Swing._OfMouseWheelEvent = new Swing._OfMouseWheelEvent(_this.asReactive)
     implicit def _ofKeyEvent(_this: Sequence[java.awt.event.KeyEvent]): Swing._OfKeyEvent = new Swing._OfKeyEvent(_this.asReactive)
-
+*/
 }
 
 

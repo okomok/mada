@@ -8,7 +8,7 @@ package mada; package sequence; package reactive
 
 
 @notThreadSafe
-case class Until[+A](_1: Reactive[A], _2: Reactive[Any]) extends Reactive[A] {
+case class Before[+A](_1: Reactive[A], _2: Reactive[Any]) extends Reactive[A] {
     override def start(k: Reactor[A]) = {
         val _onEnd1 = new OnlyFirst[Unit](_ => k.onEnd)
         _2.start(reactor.make(_ => (), _ => _onEnd1()))
