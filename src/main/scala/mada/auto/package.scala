@@ -31,6 +31,11 @@ package object auto {
      */
     def endWith(f: => Unit): Auto[Unit] = EndWith(util.byName(f))
 
+    /**
+     * Uses a variable Auto.
+     */
+    def useVar[A](a: Auto[A]): Auto[Var[A]] = UseVar(a)
+
 
 // conversion
 
