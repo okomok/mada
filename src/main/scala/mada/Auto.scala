@@ -49,6 +49,10 @@ trait Auto[+A] {
     @aliasOf("usedBy")
     final def foreach[B](f: A => B): B = usedBy(f)
 
+    def filter(p: A => Boolean): Auto[A] = Filter(this, p)
+
+    @aliasOf("filter")
+    final def withFilter(p: A => Boolean): Auto[A] = filter(p)
 }
 
 

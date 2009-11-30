@@ -14,7 +14,7 @@ import junit.framework.Assert._
 
 class VarTest {
 
-    class MyFile(name: String) extends java.io.Closeable {
+    class MyFile(val name: String) extends java.io.Closeable {
         var disposed = false
         override def close = {
             assertFalse("disposed twice: " + name, disposed)
@@ -90,5 +90,4 @@ class VarTest {
         assertTrue(f1.disposed)
         assertTrue(f2.disposed)
     }
-
 }
