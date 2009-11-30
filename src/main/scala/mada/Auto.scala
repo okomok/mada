@@ -53,6 +53,7 @@ trait Auto[+A] {
 
     @aliasOf("filter")
     final def withFilter(p: A => Boolean): Auto[A] = filter(p)
+
 }
 
 
