@@ -49,6 +49,9 @@ trait Auto[+A] {
     @aliasOf("usedBy")
     final def foreach[B](f: A => B): B = usedBy(f)
 
+    /**
+     * Triggers begin/end iif <code>p</code> satisfies.
+     */
     def filter(p: A => Boolean): Auto[A] = Filter(this, p)
 
     @aliasOf("filter")

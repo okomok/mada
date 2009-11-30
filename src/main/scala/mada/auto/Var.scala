@@ -8,7 +8,7 @@ package mada; package auto
 
 
 /**
- * Variable Auto.
+ * Variable Auto. (Filter is enough?)
  */
 class Var[A](private var a: Auto[A]) extends Auto[A] {
     def this() = this(null)
