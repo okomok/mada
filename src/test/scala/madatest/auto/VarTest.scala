@@ -71,12 +71,12 @@ class VarTest {
         assertSame(f1, av1.get)
 
         // av1 releases a1 to b1.
-        val b1 = av1.release
+        val b1 = new Var(av1.release)
         assertSame(null, av1.underlying)
         assertSame(f1, b1.get)
 
         // a1 comes back from b1.
-        av1.reset(b1.get)
+        av1.reset(b1.release)
         assertSame(f1, av1.get)
 
         // Now use!

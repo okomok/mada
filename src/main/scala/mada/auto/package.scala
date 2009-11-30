@@ -13,6 +13,7 @@ package object auto {
     @aliasOf("Auto")
     type Type[+A] = Auto[A]
 
+
 // constructor
 
     @returnThat
