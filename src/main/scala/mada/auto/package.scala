@@ -37,8 +37,8 @@ package object auto {
      */
     def useVar[A](a: Auto[A]): Auto[Var[A]] = UseVar(a)
 
-    @equivalentTo("x; true")
-    def doing[A](x: => Unit): Boolean = { x; true }
+    @equivalentTo("scala.Responder.exec")
+    def doing(x: => Unit): Boolean = { x; true }
 
 
 // conversion

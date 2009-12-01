@@ -51,4 +51,26 @@ class FilterTest {
         assertTrue(f1.get.disposed)
         assertFalse(f2.get.disposed)
     }
+
+    def testDoing: Unit = {
+        val f1 = new MyFile("f1")
+        val f2 = new MyFile("f2")
+        var effects = false
+
+        for {
+            _f1 <- use(f1) if (_f1.name == "f1")
+            if doing {
+                effects = true
+            }
+            _f2 <- use(f2) if (_f2.name == "wow")
+        } {
+            assertSame(_f1, f1)
+            assertSame(_f2, f2)
+        }
+
+        assertTrue(effects)
+        assertTrue(f1.disposed)
+        assertFalse(f2.disposed)
+    }
+
 }
