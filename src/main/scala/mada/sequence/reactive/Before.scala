@@ -7,13 +7,11 @@
 package mada; package sequence; package reactive
 
 
-// (Xs before Ys) ++ Ys) == (Xs connect Ys)
-// (Xs before empty) == (Xs connect empty) == Xs
 @notThreadSafe
 case class Before[+A](_1: Reactive[A], _2: Reactive[Any]) extends Reactive[A] {
     override def start(k: Reactor[A]) = {
         val _onEnd1 = new OnlyFirst[Unit](_ => k.onEnd)
-        _2.start(reactor.make(_ => (), _ => _onEnd1()))
+        _2.start(reactor.make(_ => _onEnd1(), _ => _onEnd1()))
         _1.start(reactor.make(_ => _onEnd1(), e => if (!_onEnd1.isDone) k.react(e)))
     }
 }
