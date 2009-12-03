@@ -38,12 +38,6 @@ package object reactive {
     def unfoldRight[A, B](z: A)(op: A => Option[(B, A)]): Reactive[B] = UnfoldRight(z, op)
 
 
-// nio
-
-    def selection(s: Selector): Reactive[SelectionKey] = Selection1(s)
-    def selection(s: Selector, t: Long): Reactive[SelectionKey] = Selection2(s, t)
-
-
 // conversion
 
     @returnThat

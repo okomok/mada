@@ -19,12 +19,14 @@ class NioTest {
 
         val s: Selector = null
 
-        val rx = reactive.selection(s).
-            caseAccept{ key => _accept(key) }.
-            caseRead{ key => _read(key) }
+        reactive.Nio.selection(s) foreach { key =>
+            if (key.isAcceptable) {
+                _accept(key)
+            } else if (key.isReadable) {
+                _read(key)
+            }
+        }
 
-        val th = new Thread(rx)
-        th.start
         s.close
     }
 
@@ -32,9 +34,6 @@ class NioTest {
     }
 
     def _read(key: SelectionKey) {
-
-
-
     }
 
 }
