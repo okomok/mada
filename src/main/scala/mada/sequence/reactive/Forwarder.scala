@@ -53,4 +53,5 @@ trait Forwarder[+A] extends Reactive[A] with SequenceForwarder[A] {
     override def catching(f: Throwable => Unit): Reactive[A] = around(delegate.catching(f))
     override def break: Reactive[A] = around(delegate.break)
     override def before(that: Reactive[Any]) = around(delegate.before(that))
+    override def connect[B >: A](that: Reactive[B]): Reactive[B] = around(delegate.connect(that))
 }

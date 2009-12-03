@@ -7,6 +7,8 @@
 package mada; package sequence; package reactive
 
 
+// (Xs before Ys) ++ Ys) == (Xs connect Ys)
+// (Xs before empty) == (Xs connect empty) == Xs
 @notThreadSafe
 case class Before[+A](_1: Reactive[A], _2: Reactive[Any]) extends Reactive[A] {
     override def start(k: Reactor[A]) = {

@@ -213,6 +213,11 @@ trait Reactive[+A] extends Sequence[A] with Runnable { self =>
      */
     def before(that: Reactive[Any]): Reactive[A] = Before(this, that)
 
+    /**
+     * Changes lane to <code>that</code>.
+     */
+    def connect[B >: A](that: Reactive[B]): Reactive[B] = Connect[B](this, that)
+
 }
 
 
