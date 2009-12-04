@@ -23,6 +23,13 @@ trait Sequence[+A] { // physical
 
 object Sequence {
 
+    trait Forwarder[+A] extends Sequence[A] with util.Forwarder {
+        override protected def delegate: Sequence[A]
+
+        override def asReactive = delegate.asReactive
+        override def equals(that: Any): Boolean = delegate.equals(that)
+    }
+
 // methodization
     sealed class _OfSequence[A](_this: Reactive[Reactive[A]]) {
         def flatten: Reactive[A] = _this._flatten(_this)
@@ -35,12 +42,4 @@ object Sequence {
     }
     implicit def _ofPair[A, B](_this: Sequence[(A, B)]): _OfPair[A, B] = new _OfPair(_this.asReactive)
 
-}
-
-
-trait SequenceForwarder[+A] extends Sequence[A] with util.Forwarder {
-    override protected def delegate: Sequence[A]
-
-    override def asReactive = delegate.asReactive
-    override def equals(that: Any): Boolean = delegate.equals(that)
 }

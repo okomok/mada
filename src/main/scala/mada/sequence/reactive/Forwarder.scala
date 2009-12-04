@@ -7,7 +7,7 @@
 package mada; package sequence; package reactive
 
 
-trait Forwarder[+A] extends Reactive[A] with SequenceForwarder[A] {
+trait Forwarder[+A] extends Reactive[A] with Sequence.Forwarder[A] {
     override protected def delegate: Reactive[A]
 
     protected def around[B](that: => Reactive[B]): Reactive[B] = that

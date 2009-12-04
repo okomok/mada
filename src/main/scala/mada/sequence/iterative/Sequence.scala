@@ -76,6 +76,13 @@ trait Sequence[+A] { // physical
 
 object Sequence {
 
+    trait Forwarder[+A] extends Sequence[A] with util.Forwarder {
+        override protected def delegate: Sequence[A]
+
+        override def asIterative = delegate.asIterative
+        override def equals(that: Any): Boolean = delegate.equals(that)
+    }
+
 // methodization
     sealed class _OfInvariant[A](_this: Iterative[A]) {
         def groupBy[K](f: A => K): scala.collection.Map[K, Vector[A]] = _this._groupBy(_this, f)
@@ -104,12 +111,4 @@ object Sequence {
     }
     implicit def _ofChar(_this: Sequence[Char]): _OfChar = new _OfChar(_this.asIterative)
 
-}
-
-
-trait SequenceForwarder[+A] extends Sequence[A] with util.Forwarder {
-    override protected def delegate: Sequence[A]
-
-    override def asIterative = delegate.asIterative
-    override def equals(that: Any): Boolean = delegate.equals(that)
 }

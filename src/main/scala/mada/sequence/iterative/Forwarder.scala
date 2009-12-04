@@ -7,7 +7,7 @@
 package mada; package sequence; package iterative
 
 
-trait Forwarder[+A] extends Iterative[A] with SequenceForwarder[A] {
+trait Forwarder[+A] extends Iterative[A] with Sequence.Forwarder[A] {
     override protected def delegate: Iterative[A]
 
     protected def around[B](that: => Iterative[B]): Iterative[B] = that

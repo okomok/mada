@@ -43,6 +43,11 @@ trait Sequence[A] extends iterative.Sequence[A] { // physical
 
 object Sequence {
 
+    trait Forwarder[A] extends Sequence[A] with iterative.Sequence.Forwarder[A] {
+        override protected def delegate: Sequence[A]
+        override def asVector = delegate.asVector
+    }
+
 // logical hierarchy
     implicit def _asIterative[A](from: Sequence[A]): Iterative[A] = from.asIterative
 
@@ -66,10 +71,4 @@ object Sequence {
     }
     implicit def _ofChar(_this: Sequence[Char]): _OfChar = new _OfChar(_this.asVector)
 
-}
-
-
-trait SequenceForwarder[A] extends Sequence[A] with iterative.SequenceForwarder[A] {
-    override protected def delegate: Sequence[A]
-    override def asVector = delegate.asVector
 }
