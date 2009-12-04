@@ -99,7 +99,6 @@ class specializer extends StaticAnnotation
  */
 class compilerBug(version: String) extends StaticAnnotation
 
-
 /**
  * An annotation that designates the definition
  * to which it is used to work around a compiler bug.
