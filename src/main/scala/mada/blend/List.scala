@@ -258,11 +258,11 @@ object List {
 
 // For some compiler bug, these are placed in companion module.
 
-    @compilerWorkaround
+    @compilerWorkaround("2.8.0-SNAPSHOT")
     @equivalentTo("r#prepend[l]")
     type :::[l <: List, r <: List] = r#prepend[l]
 
-    @compilerWorkaround
+    @compilerWorkaround("2.8.0-SNAPSHOT")
     @equivalentTo("r#prependReversed[l]")
     type reverse_:::[l <: List, r <: List] = r#prependReversed[l]
 

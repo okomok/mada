@@ -95,10 +95,16 @@ class specializer extends StaticAnnotation
 
 
 /**
+ * Marks an unfixable compiler bug.
+ */
+class compilerBug(version: String) extends StaticAnnotation
+
+
+/**
  * An annotation that designates the definition
  * to which it is used to work around a compiler bug.
  */
-class compilerWorkaround extends StaticAnnotation
+class compilerWorkaround(version: String) extends StaticAnnotation
 
 
 /**

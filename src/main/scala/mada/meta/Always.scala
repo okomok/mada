@@ -7,7 +7,7 @@
 package mada; package meta
 
 
-@compilerWorkaround
+@compilerWorkaround("2.8-SNAPSHOT")
 object AlwaysWorkaround { // works around some case-insensitive bug in compilation.
 
     /**

@@ -7,6 +7,7 @@
 package mada; package sequence; package vector
 
 
+@compilerBug("2.8.0-SNAPSHOT")
 case class Single[A](/*@volatile ..compiler error!*/ var _1: A) extends Vector[A] {
     override def start = 0
     override def end = 1
