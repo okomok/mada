@@ -12,7 +12,7 @@ package mada; package sequence; package reactive
 
 @notThreadSafe
 case class FolderLeft[A, B](_1: Reactive[A], _2: B, _3: (B, A) => B) extends Reactive[B] {
-    override def start(k: Reactor[B]) = {
+    override def subscribe(k: Reactor[B]) = {
         val j = new Reactor[A] {
             private var isHead = true
             private var z = _2
@@ -26,14 +26,14 @@ case class FolderLeft[A, B](_1: Reactive[A], _2: B, _3: (B, A) => B) extends Rea
                 k.react(z)
             }
         }
-        _1.start(j)
+        _1.subscribe(j)
     }
 }
 
 
 @notThreadSafe
 case class ReducerLeft[A, B >: A](_1: Reactive[A], _2: (B, A) => B) extends Reactive[B] {
-    override def start(k: Reactor[B]) = {
+    override def subscribe(k: Reactor[B]) = {
         val j = new Reactor[A] {
             private var isHead = true
             private var z: B = _
@@ -48,6 +48,6 @@ case class ReducerLeft[A, B >: A](_1: Reactive[A], _2: (B, A) => B) extends Reac
                 k.react(z)
             }
         }
-        _1.start(j)
+        _1.subscribe(j)
     }
 }

@@ -24,7 +24,7 @@ class EndWithTest {
             b.add(99)
         } endWith {
             b.add(999)
-        } run
+        } start
 
         assertEquals(vector.Of(1,2,3,4, 99, 999), vector.from(b))
     }

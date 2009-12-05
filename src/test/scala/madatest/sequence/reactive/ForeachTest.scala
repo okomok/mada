@@ -25,7 +25,7 @@ class ForeachTest {
 
         val c = new Call(assertEquals(a, iterative.from(t)))
 
-        reactive.fromIterative(a).start(new Reactor[Int] {
+        reactive.fromIterative(a).subscribe(new Reactor[Int] {
             override def onEnd = c()
             override def react(e: Int) = t.add(e)
         })
@@ -36,7 +36,7 @@ class ForeachTest {
     def testRun: Unit = {
         val a = iterative.Of(1,6,7,10,14,17)
         val t = new java.util.ArrayList[Int]
-        reactive.fromIterative(a).forkTo{ reactor.make(_ => (), e => t.add(e)) }.run
+        reactive.fromIterative(a).forkTo{ reactor.make(_ => (), e => t.add(e)) }.start
         assertEquals(a, iterative.from(t))
     }
 }

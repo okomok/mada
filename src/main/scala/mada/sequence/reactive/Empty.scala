@@ -8,7 +8,7 @@ package mada; package sequence; package reactive
 
 
 case class Empty() extends Reactive[Nothing] {
-    override def start(k: Reactor[Nothing]) = {
+    override def subscribe(k: Reactor[Nothing]) = {
         k.onEnd
     }
 }

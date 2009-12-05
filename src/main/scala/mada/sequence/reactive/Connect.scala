@@ -9,10 +9,10 @@ package mada; package sequence; package reactive
 
 @notThreadSafe
 case class Connect[+A](_1: Reactive[A], _2: Reactive[A]) extends Reactive[A] {
-    override def start(k: Reactor[A]) = {
+    override def subscribe(k: Reactor[A]) = {
         var ends1 = false
         def stop1 = if (!ends1) ends1 = true
-        _2.start(reactor.make(_ => { stop1; k.onEnd }, e => { stop1; k.react(e) }))
-        _1.start(reactor.make(_ => (), e => if (!ends1) k.react(e)))
+        _2.subscribe(reactor.make(_ => { stop1; k.onEnd }, e => { stop1; k.react(e) }))
+        _1.subscribe(reactor.make(_ => (), e => if (!ends1) k.react(e)))
     }
 }

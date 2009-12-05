@@ -36,7 +36,7 @@ class SwingTest {
         } endWith {
             x.close
             closed = true
-        } run
+        } start
 
         Thread.sleep(10000)
         assertTrue(closed)
@@ -62,8 +62,8 @@ class SwingTest {
                 println("released")
                 draggedSeq.close
                 releasedSeq.close
-            } run
-        } run
+            } start
+        } start
 
         Thread.sleep(20000)
         pressedSeq.close
@@ -86,7 +86,7 @@ class SwingTest {
                 3
             } forLoop { e =>
                 println("entered")
-            } run
+            } start
         } mouseClicked { y =>
             y.take {
                 3
@@ -95,8 +95,8 @@ class SwingTest {
             } endWith {
                 x.close
                 closed = true
-            } run
-        } run
+            } start
+        } start
 
         Thread.sleep(10000)
         assertTrue(closed)
@@ -128,12 +128,12 @@ class SwingTest {
                                 print("released")
                                 m.close
                                 msr.close
-                            } run
+                            } start
                         }
-                    } run
-                } run
-            } run
-        } run
+                    } start
+                } start
+            } start
+        } start
 
         Thread.sleep(10000)
         ms.close

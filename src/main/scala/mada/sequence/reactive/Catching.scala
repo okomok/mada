@@ -8,8 +8,8 @@ package mada; package sequence; package reactive
 
 
 case class Catch[A](_1: Reactive[A], _2: Throwable => Unit) extends Reactive[A] {
-    override def start(k: Reactor[A]) = {
-        _1.start(reactor.make(_ => k.onEnd, e => try { k.react(e) } catch { case x => _2(x) }))
+    override def subscribe(k: Reactor[A]) = {
+        _1.subscribe(reactor.make(_ => k.onEnd, e => try { k.react(e) } catch { case x => _2(x) }))
     }
 }
 
@@ -26,7 +26,7 @@ case class TryCatch[A](_1: Reactive[A], _2: Throwable => Unit) extends Forwarder
 }
 
 case class TryCatchFinally[A](_1: Reactive[A], _2: Throwable => Unit, _3: util.ByName[Unit]) extends Reactive[A] {
-    override def start(k: Reactor[A]) = {
+    override def subscribe(k: Reactor[A]) = {
         val j = new Reactor[A] {
             override def onEnd = k.onEnd
             override def react(e: A) = {
@@ -39,7 +39,7 @@ case class TryCatchFinally[A](_1: Reactive[A], _2: Throwable => Unit, _3: util.B
                 }
             }
         }
-        _1.start(j)
+        _1.subscribe(j)
     }
 }
 
