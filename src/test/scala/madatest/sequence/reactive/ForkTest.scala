@@ -16,9 +16,9 @@ class ForkTest {
         val r = reactive.Of(1,2,3,4,5,6)
         val out = new java.util.ArrayList[Int]
         r.
-            fork{r => r.subscribe(reactor.make(_ => out.add(98), e => out.add(e *  2)))}.
+            fork{r => r.activate(reactor.make(_ => out.add(98), e => out.add(e *  2)))}.
             fork{r => ()}.
-            fork{r => r.subscribe(reactor.make(_ => out.add(99), e => out.add(e + 10)))}.
+            fork{r => r.activate(reactor.make(_ => out.add(99), e => out.add(e + 10)))}.
             fork{r => ()}.
             start
 

@@ -8,6 +8,6 @@ package mada; package sequence; package reactive
 
 
 case class Break[+A](_1: Reactive[A]) extends Reactive[A] {
-    override def subscribe(k: Reactor[A]) = _1.start
+    override def activate(k: Reactor[A]) = _1.start
     override def break = _1.break // break-break fusion
 }

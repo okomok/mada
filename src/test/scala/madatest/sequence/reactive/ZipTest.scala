@@ -16,7 +16,7 @@ class ZipTest {
         val t = reactive.Of(1,2,3)
         val u = reactive.Of("2","3","4")
         val out = new java.util.ArrayList[(Int, String)]
-        t.zip(u).subscribe(reactor.make(_ => out.add((99,"99")), out.add(_)))
+        t.zip(u).activate(reactor.make(_ => out.add((99,"99")), out.add(_)))
         assertEquals(iterative.Of((1,"2"),(2,"3"),(3,"4"),(99,"99")), iterative.from(out))
     }
 
@@ -24,7 +24,7 @@ class ZipTest {
         val t = reactive.empty.of[Int]
         val u = reactive.Of("2","3","4")
         val out = new java.util.ArrayList[(Int, String)]
-        t.zip(u).subscribe(reactor.make(_ => out.add((99,"99")), out.add(_)))
+        t.zip(u).activate(reactor.make(_ => out.add((99,"99")), out.add(_)))
         assertEquals(iterative.Of((99,"99")), iterative.from(out))
     }
 
@@ -32,7 +32,7 @@ class ZipTest {
         val t = reactive.empty.of[Int]
         val u = reactive.empty.of[String]
         val out = new java.util.ArrayList[(Int, String)]
-        t.zip(u).subscribe(reactor.make(_ => out.add((99,"99")), out.add(_)))
+        t.zip(u).activate(reactor.make(_ => out.add((99,"99")), out.add(_)))
         assertEquals(iterative.Of((99,"99")), iterative.from(out))
     }
 
@@ -40,7 +40,7 @@ class ZipTest {
         val t = reactive.Of(1,2)
         val u = reactive.Of("2","3","4")
         val out = new java.util.ArrayList[(Int, String)]
-        t.zip(u).subscribe(reactor.make(_ => out.add((99,"99")), out.add(_)))
+        t.zip(u).activate(reactor.make(_ => out.add((99,"99")), out.add(_)))
         assertEquals(iterative.Of((1,"2"),(2,"3"),(99,"99")), iterative.from(out))
     }
 
@@ -48,7 +48,7 @@ class ZipTest {
         val t = reactive.Of(1,2,3)
         val u = reactive.Of("2","3")
         val out = new java.util.ArrayList[(Int, String)]
-        t.zip(u).subscribe(reactor.make(_ => out.add((99,"99")), out.add(_)))
+        t.zip(u).activate(reactor.make(_ => out.add((99,"99")), out.add(_)))
         assertEquals(iterative.Of((1,"2"),(2,"3"),(99,"99")), iterative.from(out))
     }
 
@@ -56,7 +56,7 @@ class ZipTest {
         val t = reactive.Of(1,2)
         val u = reactive.Of("2","3","4","5","6")
         val out = new java.util.ArrayList[(Int, String)]
-        t.zip(u).subscribe(reactor.make(_ => out.add((99,"99")), out.add(_)))
+        t.zip(u).activate(reactor.make(_ => out.add((99,"99")), out.add(_)))
         assertEquals(iterative.Of((1,"2"),(2,"3"),(99,"99")), iterative.from(out))
     }
 
@@ -64,7 +64,7 @@ class ZipTest {
         val t = reactive.Of(1,2,3,4,5,6)
         val u = reactive.Of("2","3")
         val out = new java.util.ArrayList[(Int, String)]
-        t.zip(u).subscribe(reactor.make(_ => out.add((99,"99")), out.add(_)))
+        t.zip(u).activate(reactor.make(_ => out.add((99,"99")), out.add(_)))
         assertEquals(iterative.Of((1,"2"),(2,"3"),(99,"99")), iterative.from(out))
     }
 /*
@@ -72,8 +72,8 @@ class ZipTest {
         for (_ <- 0 to 30) {
             val src = new IntSenders(vector.Of(1,2,3,4,5,6), vector.Of(7,7,7,7))
             val dst = new IntReceiver(vector.Of(8,9,10,11))
-            (src(0).zipBy(src(1))(_ + _)).subscribe(dst)
-            src.subscribe
+            (src(0).zipBy(src(1))(_ + _)).activate(dst)
+            src.activate
             src.shutdown(dst.assertMe)
         }
     }

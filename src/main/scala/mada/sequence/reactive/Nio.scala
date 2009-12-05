@@ -27,7 +27,7 @@ object Nio {
 
 
     private class _Selection(_1: Selector, _2: Selector => Long) extends Reactive[SelectionKey] {
-        override def subscribe(k: Reactor[SelectionKey]): Unit = {
+        override def activate(k: Reactor[SelectionKey]): Unit = {
             try {
                 while (true) {
                     if (_2(_1) != 0) {

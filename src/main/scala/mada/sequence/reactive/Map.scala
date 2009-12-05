@@ -8,7 +8,7 @@ package mada; package sequence; package reactive
 
 
 case class Map[A, +B](_1: Reactive[A], _2: A => B) extends Reactive[B] {
-    override def subscribe(k: Reactor[B]) = {
-        _1.subscribe(reactor.make(_ => k.onEnd, e => k.react(_2(e))))
+    override def activate(k: Reactor[B]) = {
+        _1.activate(reactor.make(_ => k.onEnd, e => k.react(_2(e))))
     }
 }

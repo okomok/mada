@@ -14,7 +14,7 @@ package mada; package sequence; package reactive
 case class Take[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
     Precondition.nonnegative(_2, "take")
 
-    override def subscribe(k: Reactor[A]) = {
+    override def activate(k: Reactor[A]) = {
         val j = new Reactor[A] {
             private var count = _2
             private val _onEnd = util.byLazy(k.onEnd)
@@ -29,7 +29,7 @@ case class Take[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
                 }
             }
         }
-        _1.subscribe(j)
+        _1.activate(j)
     }
 
     override def take(n: Int) = _1.take(Math.min(_2, n)) // take-take fusion

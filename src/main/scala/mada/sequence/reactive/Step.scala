@@ -13,7 +13,7 @@ package mada; package sequence; package reactive
 case class Step[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
     Precondition.positive(_2, "step")
 
-    override def subscribe(k: Reactor[A]) = {
+    override def activate(k: Reactor[A]) = {
         val j = new Reactor[A] {
             private var c = 0
             override def onEnd = k.onEnd
@@ -27,7 +27,7 @@ case class Step[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
                 }
             }
         }
-        _1.subscribe(j)
+        _1.activate(j)
     }
 
     override def step(n: Int) = _1.step(_2 * n) // step-step fusion

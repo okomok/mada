@@ -26,7 +26,7 @@ class IntSenders(_data: Vector[Int]*) {
 
     def apply(n: Int): IntSender = senders.nth(n)
 
-    def subscribe: Unit = barrier.await
+    def activate: Unit = barrier.await
 
     def shutdown(f: => Unit) = {
         barrier.await
@@ -36,7 +36,7 @@ class IntSenders(_data: Vector[Int]*) {
 
 
 class IntSender(datum: Vector[Int], barrier: CyclicBarrier) extends Reactive[Int] {
-    override def subscribe(k: Reactor[Int]) = {
+    override def activate(k: Reactor[Int]) = {
         new Thread {
             override def run = {
                 barrier.await

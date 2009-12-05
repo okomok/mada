@@ -20,8 +20,8 @@ class DropTest {
     def testTrivial: Unit = {
         val src = new IntSenders(ones, ones)
         val dst = new IntReceiver(vector.single(1).times(4*2-2))
-        (src(0) merge src(1)).drop(2).subscribe(dst)
-        src.subscribe
+        (src(0) merge src(1)).drop(2).activate(dst)
+        src.activate
         src.shutdown(dst.assertMe)
         ()
     }
@@ -29,8 +29,8 @@ class DropTest {
     def testNonTrivial: Unit = {
         val src = new IntSenders(ones, ones, ones, ones, ones)
         val dst = new IntReceiver(vector.single(1).times(4*5-9))
-        (src(0) merge src(1) merge src(2) merge src(3) merge src(4)).drop(9).subscribe(dst)
-        src.subscribe
+        (src(0) merge src(1) merge src(2) merge src(3) merge src(4)).drop(9).activate(dst)
+        src.activate
         src.shutdown(dst.assertMe)
         ()
     }
@@ -38,8 +38,8 @@ class DropTest {
     def testFusion: Unit = {
         val src = new IntSenders(ones, ones, ones, ones, ones)
         val dst = new IntReceiver(vector.single(1).times(4*5-9))
-        (src(0) merge src(1) merge src(2) merge src(3) merge src(4)).drop(2).drop(7).subscribe(dst)
-        src.subscribe
+        (src(0) merge src(1) merge src(2) merge src(3) merge src(4)).drop(2).drop(7).activate(dst)
+        src.activate
         src.shutdown(dst.assertMe)
         ()
     }
@@ -47,8 +47,8 @@ class DropTest {
     def testOrder: Unit = {
         val src = new IntSenders(vector.Of(1,2,3,4,5,6))
         val dst = new IntReceiver(vector.Of(5,6))
-        (src(0) merge reactive.empty).drop(4).subscribe(dst)
-        src.subscribe
+        (src(0) merge reactive.empty).drop(4).activate(dst)
+        src.activate
         src.shutdown(dst.assertMe)
         ()
     }
@@ -56,8 +56,8 @@ class DropTest {
     def testEmpty: Unit = {
         val src = new IntSenders(vector.empty[Int], vector.empty[Int])
         val dst = new IntReceiver(vector.empty[Int])
-        (src(0) merge src(1)).drop(3).subscribe(dst)
-        src.subscribe
+        (src(0) merge src(1)).drop(3).activate(dst)
+        src.activate
         src.shutdown(dst.assertMe)
         ()
     }
@@ -65,8 +65,8 @@ class DropTest {
     def testZero: Unit = {
         val src = new IntSenders(ones, ones, ones, ones, ones)
         val dst = new IntReceiver(vector.single(1).times(4*5))
-        (src(0) merge src(1) merge src(2) merge src(3) merge src(4)).drop(0).subscribe(dst)
-        src.subscribe
+        (src(0) merge src(1) merge src(2) merge src(3) merge src(4)).drop(0).activate(dst)
+        src.activate
         src.shutdown(dst.assertMe)
         ()
     }
@@ -74,8 +74,8 @@ class DropTest {
     def testTooMany: Unit = {
         val src = new IntSenders(ones, ones, ones, ones, ones)
         val dst = new IntReceiver(vector.empty[Int])
-        (src(0) merge src(1) merge src(2) merge src(3) merge src(4)).drop(500).subscribe(dst)
-        src.subscribe
+        (src(0) merge src(1) merge src(2) merge src(3) merge src(4)).drop(500).activate(dst)
+        src.activate
         src.shutdown(dst.assertMe)
         ()
     }

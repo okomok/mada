@@ -18,7 +18,7 @@ class ReactorTest {
 
         reactive.fromIterative(a).takeWhile {
             _ <= 4
-        } subscribe {
+        } activate {
             reactor.make(_ => b.add(99), b.add(_))
         }
 

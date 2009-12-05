@@ -13,7 +13,7 @@ package mada; package sequence
 import reactive._
 
 
-trait Reactive[+A] extends Sequence[A] { self =>
+trait Reactive[+A] extends Sequence[A] {
 
 
     @returnThis
@@ -24,9 +24,9 @@ trait Reactive[+A] extends Sequence[A] { self =>
 
 
     /**
-     * Subscribes the reactor.
+     * Activates the reactor.
      */
-    def subscribe(k: Reactor[A]): Unit
+    def activate(k: Reactor[A]): Unit
 
 
     /**
@@ -61,7 +61,7 @@ trait Reactive[+A] extends Sequence[A] { self =>
     /**
      * Applies <code>f</code> to each element.
      */
-    def foreach(f: A => Unit): Unit = subscribe(reactor.make(_ => (), f))
+    def foreach(f: A => Unit): Unit = activate(reactor.make(_ => (), f))
 
     @equivalentTo("foreach{ e => () }")
     def start: Unit = foreach{ e => () }
