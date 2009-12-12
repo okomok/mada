@@ -53,8 +53,7 @@ Mada is a utility library for Scala.
             <name>Scala Tools Maven2 Repository</name>
             <url>http://scala-tools.org/repo-snapshots</url>
             <snapshots>
-                <!-- Package objects are not broken at 20091101.024751. -->
-                <updatePolicy>never</updatePolicy>
+                <updatePolicy>daily</updatePolicy>
             </snapshots>
         </repository>
     </repositories>

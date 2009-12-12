@@ -152,7 +152,7 @@ trait Peg[A] {
     /**
      * Repeats at least <code>n</code> times.
      */
-    final def repeat(n: Int, u: Unit): Quantified[A] = Repeat(this, n, Math.MAX_INT)
+    final def repeat(n: Int, u: Unit): Quantified[A] = Repeat(this, n, java.lang.Integer.MAX_VALUE)
 
     /**
      * Repeats at least <code>n</code> but not more than <code>m</code> times.

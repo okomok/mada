@@ -258,7 +258,12 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
     /**
      * Reverts <code>zip</code>.
      */
-    def _unzip[B, C](_this: Vector[(B, C)]): (Vector[B], Vector[C]) = (_this.map{ bc => bc._1 }, _this.map{ bc => bc._2 })
+    @compilerWorkaround("scala-compiler-2.8.0-20091212.032835-277 needs intermediate vals.")
+    def _unzip[B, C](_this: Vector[(B, C)]): (Vector[B], Vector[C]) = {
+        val l = _this.map{ bc => bc._1 }
+        val r = _this.map{ bc => bc._2 }
+        (l, r)
+    }
 
     /**
      * Zips <code>this</code> and <code>that</code> applying <code>f</code>.
@@ -580,7 +585,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
 }
 
 
-object Vector extends LowPriorityOrderingImplicits {
+object Vector extends math.LowPriorityOrderingImplicits {
 
 
 // compatibles

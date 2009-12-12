@@ -69,9 +69,9 @@ package object vector {
     def range(i: Int, j: Int): Vector[Int] = Range(i, j)
 
     /**
-     * @return  <code>range(i, Math.MAX_INT)</code>.
+     * @return  <code>range(i, java.lang.Integer.MAX_VALUE)</code>.
      */
-    def range(i: Int, u: Unit): Vector[Int] = Range(i, Math.MAX_INT)
+    def range(i: Int, u: Unit): Vector[Int] = Range(i, java.lang.Integer.MAX_VALUE)
 
     /**
      * @param   e   the element

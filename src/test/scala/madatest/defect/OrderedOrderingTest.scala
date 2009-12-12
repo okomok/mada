@@ -6,7 +6,7 @@ package madatest; package defecttest; package orderedorderingtest
 
 class A
 
-object A extends LowPriorityOrderingImplicits {
+object A extends math.LowPriorityOrderingImplicits {
 
    implicit val k: Ordering[A] = throw new Error
 
