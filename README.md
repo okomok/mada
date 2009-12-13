@@ -155,7 +155,13 @@ You might notice that:
 
 ## `sequence`
 
-`sequence` provides three sequences: `Iterative`, `List`, and `Vector`.
+`sequence` provides four sequence types:
+
+1. `Iterative`, single-pass sequence
+1. `List`, recursive sequence
+1. `Vector`, random-access sequence
+1. `Reactive`, reactive sequence
+
 These construct a loosely arranged hierarchy:
 `List` and `Vector` isn't subtype of `Iterative` but implicitly-convertible to it.
 
