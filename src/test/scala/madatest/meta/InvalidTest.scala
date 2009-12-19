@@ -16,7 +16,7 @@ import mada.meta._
 class GenericMethodOverrideTest {
 
     trait B {
-        type foo[T, x <: T] <: T // generic metamethod
+        type foo[T, x <: T] <: T // "generic" metamethod (ie, result metatype depends on arguments.)
     }
 
     trait d extends B {
@@ -29,13 +29,15 @@ class GenericMethodOverrideTest {
 
     // NO
     type foo2[b <: B, x <: Nat] = b#foo[Nat, x]#increment
-    //assertSame[foo2[d, _2N], _3N]
+    // assertSame[foo2[d, _2N], _3N]
 
+    // NO
+    type foo3[b <: B { type foo[Nat, x <: Nat] <: Nat }, x <: Nat] = b#foo[Nat, x]#increment
+    type wow = foo3[d, _2N] // Scala is smart!
+    // assertSame[wow, _3N] // but fails.
 }
 
 
-
-// In summary, metatrait can't be parametarized.
 
 class TypeConstraintTest {
 
@@ -111,5 +113,54 @@ class TypeConstraint4Test {
     // OK
     type foo2[_inc[_ <: Nat] <: Nat, n <: Nat] = _inc[n]#increment
     assertSame[foo2[inc, _2N], _4N]
+
+}
+
+
+class TypeConstraint5Test {
+
+    trait B[R] {
+        type inc[n <: Nat] <: R
+    }
+
+    trait d extends B[Nat] {
+        override type inc[n <: Nat] = n#increment
+    }
+
+    // OK
+    type foo1[b <: B[Nat], n <: Nat] = b#inc[n]
+    assertSame[foo1[d, _2N]#increment, _4N]
+
+    // OK (restate constraint!)
+    // See also: http://lampsvn.epfl.ch/trac/scala/ticket/1786
+    type foo2[b <: B[_] { type inc[n <: Nat] <: Nat }, n <: Nat] = b#inc[n]#increment
+    assertSame[foo2[d, _2N], _4N]
+
+}
+
+
+class TypeConstraint6Test {
+
+    trait B[R] {
+        type inc[n <: Nat] <: R
+    }
+
+    trait d extends B[Nat] {
+        override type inc[n <: Nat] = n#increment
+    }
+
+    // OK
+    type foo1[b <: B[Nat], n <: Nat] = b#inc[n]
+    assertSame[foo1[d, _2N]#increment, _4N]
+
+    // NO
+    trait Base {
+        type foo2[b <: B[Nat], n <: Nat] <: Nat
+    }
+    trait Derived extends Base {
+        override type foo2[b <: B[Nat], n <: Nat] = b#inc[n]#increment
+    }
+    type callfoo2[x <: Base, b <: B[Nat], n <: Nat] = x#foo2[b, n]
+    //assertSame[callfoo2[Derived, d, _2N], _4N]
 
 }

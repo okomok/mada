@@ -15,6 +15,9 @@ class LastTest {
     import junit.framework.Assert._
     assertFalse(scala.Nil eq Nil)
 
+    type lastOf[l <: List] = l#last
+    meta.assertSame[Int, lastOf[Int :: String :: java.lang.Integer :: Char :: Int :: Nil]]
+
     def testTrivial: Unit = {
         val i = new java.lang.Integer(10)
         type Lst1 = Int :: String :: java.lang.Integer :: Char :: Int :: Nil
