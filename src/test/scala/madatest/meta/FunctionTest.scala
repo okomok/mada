@@ -34,7 +34,9 @@ class FunctionTest {
         override type apply[v1 <: Nat] = v1#increment
     }
 
-    type FuncNat = { type Arg1 = Nat; type apply[v <: Arg1] <: Nat }
+    type FuncNat = /*Function1*/ {
+        type Arg1 = Nat; type apply[v <: Arg1] <: Nat
+    }
 
     type applyx[f <: Function1 { type Arg1 = Nat }, n <: Nat] = f#apply[n]
     type twice[f <: FuncNat, n <: Nat] = f#apply[n]#increment
