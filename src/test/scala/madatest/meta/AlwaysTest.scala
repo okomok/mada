@@ -19,13 +19,13 @@ class AlwaysTest {
     final class su extends Strung
 
     def testTrivial: Unit = {
-        type k = always1[Strung, su]#apply[so]
+        type k = always1[su]#apply[so]
         assertSame[su, k]
-        assertSame[su, always0[Strung, su]#apply]
-        assertSame[su, always0[Strung, su]#apply]
-        assertSame[su, always1[Strung, su]#apply[so]]
-        assertSame[su, always2[Strung, su]#apply[scala.Int, so]]
-        assertSame[su, always3[Strung, su]#apply[scala.Int, so, so]]
+        assertSame[su, always0[su]#apply]
+        assertSame[su, always0[su]#apply]
+        assertSame[su, always1[su]#apply[so]]
+        assertSame[su, always2[su]#apply[scala.Int, so]]
+        assertSame[su, always3[su]#apply[scala.Int, so, so]]
         ()
     }
 }

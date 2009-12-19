@@ -15,7 +15,7 @@ class ForwardingTest {
     def testNone: Unit = ()
 
     type incre[n <: Nat] = n#increment
-    type inc = quote1[incre, Nat, Nat]
+    type inc = quote1[incre, Nat]
 
     type foo[n <: Nat] = forwarding1[inc]#apply[n]#increment
 

@@ -61,7 +61,7 @@ package madatest; package metatest
         assert[getAndInc[p] == _8N]
 
         // converts metamethod to metafunction(metavalue).
-        type inc = quote1[increment, Nat, Nat]
+        type inc = quote1[increment, Nat]
 
         // metafunction invocation
         assert[inc#apply[_3N] == _4N]
