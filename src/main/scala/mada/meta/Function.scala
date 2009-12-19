@@ -7,6 +7,8 @@
 package mada; package meta
 
 
+// not work well.
+
 trait Function0 {
     type apply
 }
