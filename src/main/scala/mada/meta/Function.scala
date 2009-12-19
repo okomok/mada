@@ -12,13 +12,22 @@ trait Function0 {
 }
 
 trait Function1 {
-    type apply[v1 <: T1]
+    type __T1
+
+    type apply[v1 <: __A1]
 }
 
 trait Function2 {
-    type apply[v1 <: T1, v2 <: T2]
+    type __T1
+    type __T2
+
+    type apply[v1 <: __T1, v2 <: __T2]
 }
 
 trait Function3 {
-    type apply[v1 <: T1, v2 <: T2, v3 <: T3]
+    type __T1
+    type __T2
+    type __T3
+
+    type apply[v1 <: __T1, v2 <: __T2, v3 <: __T3]
 }
