@@ -24,11 +24,11 @@ class TupleTest {
     trait so2 extends Strong
     trait su2 extends Strung
 
-    type id[p <: Product2 { type _T1 <: Strong; type _T2 <: Strung }] = Pair[Strong, Strung, p#_1, p#_2]
+    type id[p <: Product2 { type _1 <: Strong; type _2 <: Strung }] = Pair[p#_1, p#_2]
 
-    type ok1 = id[Pair[Strong, Strung, so1, su1]]
-    type ok2 = id[Pair[Strong, Strung, so2, su2]]
-    type ok3_ = id[Pair[Strong, Strung, so1, su2]]
+    type ok1 = id[Pair[so1, su1]]
+    type ok2 = id[Pair[so2, su2]]
+    type ok3_ = id[Pair[so1, su2]]
     type ok3  =
         id[ok3_]
         //id[id[pair_[so1, su2]]]
@@ -48,11 +48,11 @@ class TupleTest {
 
     // Hmm...
     import nat.Literal._
-    type get2inc[t <: Tuple2[Strong, Nat, _ <: Strong, _ <: Nat] { type _2 <: Nat }] = t#_2#increment
-    //assertSame[get2inc[Tuple2[Strong, Nat, so1, _3N]], _4N] // fails.
+    type get2inc[t <: Tuple2[_, _ <: Nat] { type _2 <: Nat }] = t#_2#increment
+    //assertSame[get2inc[Tuple2[so1, _3N]], _4N] // fails.
 
     // OK
     type _get2inc[t <: Product2 { type _2 <: Nat }] = t#_2#increment
-    assertSame[_get2inc[Tuple2[Strong, Nat, so1, _3N]], _4N]
+    assertSame[_get2inc[Tuple2[so1, _3N]], _4N]
 
 }

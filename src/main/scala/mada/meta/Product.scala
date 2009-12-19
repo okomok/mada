@@ -13,31 +13,22 @@ trait Product {
 
 
 trait Product1 extends Product {
-    type _T1
-
     override type productArity = _1N
 
-    type _1 <: _T1
+    type _1
 }
 
 trait Product2 extends Product {
-    type _T1
-    type _T2
-
     override type productArity = _2N
 
-    type _1 <: _T1
-    type _2 <: _T2
+    type _1
+    type _2
 }
 
 trait Product3 extends Product {
-    type _T1
-    type _T2
-    type _T3
-
     override type productArity = _3N
 
-    type _1 <: _T1
-    type _2 <: _T2
-    type _3 <: _T3
+    type _1
+    type _2
+    type _3
 }

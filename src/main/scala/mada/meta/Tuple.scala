@@ -7,25 +7,16 @@
 package mada; package meta
 
 
-sealed trait Tuple1[T1, v1 <: T1] extends Product1 {
-    override type _T1 = T1
-
+sealed trait Tuple1[v1] extends Product1 {
     override type _1 = v1
 }
 
-sealed trait Tuple2[T1, T2, v1 <: T1, v2 <: T2] extends Product2 {
-    override type _T1 = T1
-    override type _T2 = T2
-
+sealed trait Tuple2[v1, v2] extends Product2 {
     override type _1 = v1
     override type _2 = v2
 }
 
-sealed trait Tuple3[T1, T2, T3, v1 <: T1, v2 <: T2, v3 <: T3] extends Product3 {
-    override type _T1 = T1
-    override type _T2 = T2
-    override type _T3 = T3
-
+sealed trait Tuple3[v1, v2, v3] extends Product3 {
     override type _1 = v1
     override type _2 = v2
     override type _3 = v3
