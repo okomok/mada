@@ -14,14 +14,14 @@ sealed trait always0[a] extends Function0 {
     override type apply = a
 }
 
-sealed trait always1[a] extends Function1 {
+sealed trait always1[a] extends Function1[Any] {
     override type apply[v1 <: Any] = a
 }
 
-sealed trait always2[a] extends Function2 {
+sealed trait always2[a] extends Function2[Any, Any] {
     override type apply[v1 <: Any, v2 <: Any] = a
 }
 
-sealed trait always3[a] extends Function3 {
+sealed trait always3[a] extends Function3[Any, Any] {
     override type apply[v1 <: Any, v2 <: Any, v3 <: Any] = a
 }
