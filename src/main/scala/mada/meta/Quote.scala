@@ -15,13 +15,19 @@ sealed trait quote0[f] extends Function0 {
 }
 
 sealed trait quote1[f[_ <: T1], T1] extends Function1 {
-    override type apply[v1 <: T1] = f[v1]
+    override type Arg1 = T1
+    override type apply[v1 <: Arg1] = f[v1]
 }
 
 sealed trait quote2[f[_ <: T1, _ <: T2], T1, T2] extends Function2 {
-    override type apply[v1 <: T1, v2 <: T2] = f[v1, v2]
+    override type Arg1 = T1
+    override type Arg2 = T2
+    override type apply[v1 <: Arg1, v2 <: Arg2] = f[v1, v2]
 }
 
 sealed trait quote3[f[_ <: T1, _ <: T2, _ <: T3], T1, T2, T3] extends Function3 {
-    override type apply[v1 <: T1, v2 <: T2, v3 <: T3] = f[v1, v2, v3]
+    override type Arg1 = T1
+    override type Arg2 = T2
+    override type Arg3 = T3
+    override type apply[v1 <: Arg1, v2 <: Arg2, v3 <: Arg3] = f[v1, v2, v3]
 }

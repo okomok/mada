@@ -14,26 +14,39 @@ import mada.meta._
 class FunctionTest {
     def testNone: Unit = ()
 
+
+    trait Func1 {
+        type Arg1
+        type Result
+        type apply[v1 <: Arg1] <: Result
+    }
+    sealed trait _quote1[T1, R1, f[_ <: T1] <: R1] extends Func1 {
+        override type Arg1 = T1
+        override type Result = R1
+        override type apply[v1 <: T1] = f[v1]
+    }
+
     type incre[n <: Nat] = n#increment
     type inc = quote1[incre, Nat]
 
     trait incf extends Function1 {
-        type apply[v1 <: Nat] = v1#increment
+        override type Arg1 = Nat
+        override type apply[v1 <: Nat] = v1#increment
     }
 
-    type applyx[f <: Function1 { type apply[v <: Nat] <: Nat }, n <: Nat] = f#apply[n]
- //   type applyw[f <: Func1[Nat, Nat], n <: Nat] = f#apply[n]
+    type FuncNat = { type Arg1 = Nat; type apply[v <: Arg1] <: Nat }
 
- //   type twice[f <: Func1[Nat, Nat], n <: Nat] = f#apply[n]#increment
+    type applyx[f <: Function1 { type Arg1 = Nat }, n <: Nat] = f#apply[n]
+    type twice[f <: FuncNat, n <: Nat] = f#apply[n]#increment
 
     trait testTrivial {
         assert[forwarding1[inc]#apply[_3N] == _4N]
-   //     assert[applyw[incf, _3N] == _4N]
         assert[applyx[incf, _3N] == _4N]
-
         assert[applyx[inc, _3N] == _4N]
 
-    //    assert[twice[incf, _3N] == _5N] // error
-    //    assert[twice[inc, _3N] == _5N] // error
+        assert[twice[incf, _3N] == _5N]
+
+        //type k = twice[inc, _3N] // error
+        //assert[k == _5N]
     }
 }
