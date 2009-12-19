@@ -14,16 +14,18 @@ import mada.meta._
 class AlwaysTest {
 
     trait Strong
+    trait Strung
     final class so extends Strong
+    final class su extends Strung
 
     def testTrivial: Unit = {
-        type k = always[String]#apply1[so]
-        assertSame[String, k]
-        assertSame[String, Always[String, String]#apply0]
-        assertSame[String, always[String]#apply0]
-        assertSame[String, always[String]#apply1[so]]
-        assertSame[String, always[String]#apply2[scala.Int, so]]
-        assertSame[String, always[String]#apply3[scala.Int, so, so]]
+        type k = always1[Strung, su]#apply[so]
+        assertSame[su, k]
+        assertSame[su, always0[Strung, su]#apply]
+        assertSame[su, always0[Strung, su]#apply]
+        assertSame[su, always1[Strung, su]#apply[so]]
+        assertSame[su, always2[Strung, su]#apply[scala.Int, so]]
+        assertSame[su, always3[Strung, su]#apply[scala.Int, so, so]]
         ()
     }
 }

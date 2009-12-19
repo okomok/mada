@@ -7,35 +7,31 @@
 package mada; package meta
 
 
-@compilerWorkaround("2.8-SNAPSHOT")
-object AlwaysWorkaround { // works around some case-insensitive bug in compilation.
+/**
+ * Metafunction always returning <code>a</code>
+ */
+sealed trait always0[T, a <: T] extends Function0 {
+    override type Result = T
+    override type apply = a
+}
 
-    /**
-     * Metafunction always returning <code>a</code>
-     */
-    trait Always[T, a <: T] extends Function0 with Function1 with Function2 with Function3 {
-        override type Result0 = T
-        override type apply0 = a
+sealed trait always1[T, a <: T] extends Function1 {
+    override type Argument1 = Any
+    override type Result = T
+    override type apply[v1 <: Argument1] = a
+}
 
-        override type Argument11 = Object
-        override type Result1 = T
-        override type apply1[v1 <: Argument11] = a
+sealed trait always2[T, a <: T] extends Function2 {
+    override type Argument1 = Any
+    override type Argument2 = Any
+    override type Result = T
+    override type apply[v1 <: Argument1, v2 <: Argument2] = a
+}
 
-        override type Argument21 = Object
-        override type Argument22 = Object
-        override type Result2 = T
-        override type apply2[v1 <: Argument21, v2 <: Argument22] = a
-
-        override type Argument31 = Object
-        override type Argument32 = Object
-        override type Argument33 = Object
-        override type Result3 = T
-        override type apply3[v1 <: Argument31, v2 <: Argument32, v3 <: Argument33] = a
-    }
-
-    /**
-     * Constructor of <code>Always</code>
-     */
-    sealed trait always[a] extends Always[a, a]
-
+sealed trait always3[T, a <: T] extends Function3 {
+    override type Argument1 = Any
+    override type Argument2 = Any
+    override type Argument3 = Any
+    override type Result = T
+    override type apply[v1 <: Argument1, v2 <: Argument2, v3 <: Argument3] = a
 }

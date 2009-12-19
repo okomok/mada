@@ -10,6 +10,7 @@ package mada; package meta
 /**
  * Returns the n-th argument.
  */
+ /*
 sealed trait arg1[T] extends Function1 with Function2 with Function3 {
     override type Argument11 = T
     override type Result1 = T
@@ -47,3 +48,4 @@ sealed trait arg3[T] extends Function3 {
     override type Result3 = T
     override type apply3[v1 <: Argument31, v2 <: Argument32, v3 <: Argument33] = v3
 }
+ */

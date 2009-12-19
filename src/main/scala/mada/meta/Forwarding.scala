@@ -11,31 +11,31 @@ package mada; package meta
  * Function forwardings
  */
 sealed trait forwarding0[f <: Function0] extends Function0 {
-    override type Result0 = f#Result0
+    override type Result = f#Result
 
-    override type apply0 = f#apply0
+    override type apply = f#apply
 }
 
 sealed trait forwarding1[f <: Function1] extends Function1 {
-    override type Argument11 = f#Argument11
-    override type Result1 = f#Result1
+    override type Argument1 = f#Argument1
+    override type Result = f#Result
 
-    override type apply1[v1 <: Argument11] = f#apply1[v1]
+    override type apply[v1 <: Argument1] = f#apply[v1]
 }
 
 sealed trait forwarding2[f <: Function2] extends Function2 {
-    override type Argument21 = f#Argument21
-    override type Argument22 = f#Argument22
-    override type Result2 = f#Result2
+    override type Argument1 = f#Argument1
+    override type Argument2 = f#Argument2
+    override type Result = f#Result
 
-    override type apply2[v1 <: Argument21, v2 <: Argument22] = f#apply2[v1, v2]
+    override type apply[v1 <: Argument1, v2 <: Argument2] = f#apply[v1, v2]
 }
 
 sealed trait forwarding3[f <: Function3] extends Function3 {
-    override type Argument31 = f#Argument31
-    override type Argument32 = f#Argument32
-    override type Argument33 = f#Argument33
-    override type Result3 = f#Result3
+    override type Argument1 = f#Argument1
+    override type Argument2 = f#Argument2
+    override type Argument3 = f#Argument3
+    override type Result = f#Result
 
-    override type apply3[v1 <: Argument31, v2 <: Argument32, v3 <: Argument33] = f#apply3[v1, v2, v3]
+    override type apply[v1 <: Argument1, v2 <: Argument2, v3 <: Argument3] = f#apply[v1, v2, v3]
 }

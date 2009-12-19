@@ -7,17 +7,10 @@
 package mada; package meta
 
 
-/**
- * Meta product
- */
 trait Product {
     type productArity <: Nat
 }
 
-
-trait Product0 extends Product {
-    override type productArity = _0N
-}
 
 trait Product1 extends Product {
     type _T1

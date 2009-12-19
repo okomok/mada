@@ -18,18 +18,18 @@ class FunctionTest {
     type inc = quote1[incre, Nat, Nat]
 
     trait incf extends Function1 {
-        type Argument11 = Nat
-        type Result1 = Nat
-        type apply1[v1 <: Argument11] = v1#increment
+        type Argument1 = Nat
+        type Result = Nat
+        type apply[v1 <: Argument1] = v1#increment
     }
 
-    type Func1[T1, R] = Function1 { type Result1 = R; type Argument11 = T1 }
+    type Func1[T1, R] = Function1 { type Result = R; type Argument1 = T1 }
 
-    type applyx[f <: Func1[Nat, Nat], n <: Nat] = f#apply1[n]
-    type twice[f <: Func1[Nat, Nat], n <: Nat] = f#apply1[n]#increment
+    type applyx[f <: Func1[Nat, Nat], n <: Nat] = f#apply[n]
+    type twice[f <: Func1[Nat, Nat], n <: Nat] = f#apply[n]#increment
 
     trait testTrivial {
-        assert[forwarding1[inc]#apply1[_3N] == _4N]
+        assert[forwarding1[inc]#apply[_3N] == _4N]
         assert[applyx[incf, _3N] == _4N]
         assert[applyx[inc, _3N] == _4N]
     //    assert[twice[incf, _3N] == _5N] // error

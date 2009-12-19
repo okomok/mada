@@ -65,18 +65,9 @@ package object meta {
     def assertUpper[a >: b, b]: scala.Unit = ()
 
 
-// constructors for type inference
-
-    type tuple0 = Tuple0
-    type tuple1[t1] = Tuple1[t1, t1]
-    type typle2[t1, t2] = Tuple2[t1, t2, t1, t2]
-    type typle3[t1, t2, t3] = Tuple3[t1, t2, t3, t1, t2, t3]
-
-
 // pair
 
     type Pair[T1, T2, v1 <: T1, v2 <: T2] = Tuple2[T1, T2, v1, v2]
-    type pair[t1, t2] = Pair[t1, t2, t1, t2]
 
 
 // Nat literals
@@ -92,19 +83,6 @@ package object meta {
     type _8N = Succ[_7N]
     type _9N = Succ[_8N]
     type _10N = Succ[_9N]
-
-
-// always
-
-    /**
-     * Metafunction always returning <code>a</code>
-     */
-    type Always[T, a <: T] = AlwaysWorkaround.Always[T, a]
-
-    /**
-     * Constructor of <code>Always</code>
-     */
-    type always[a] = AlwaysWorkaround.always[a]
 
 
 // if

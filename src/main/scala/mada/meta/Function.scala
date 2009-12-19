@@ -8,30 +8,30 @@ package mada; package meta
 
 
 trait Function0 {
-    type Result0
-    type apply0
+    type Result
+    type apply
 }
 
 trait Function1 {
-    type Argument11
-    type Result1
+    type Argument1
+    type Result
 
-    type apply1[v1 <: Argument11] <: Result1
+    type apply[v1 <: Argument1] <: Result
 }
 
 trait Function2 {
-    type Argument21
-    type Argument22
-    type Result2
+    type Argument1
+    type Argument2
+    type Result
 
-    type apply2[v1 <: Argument21, v2 <: Argument22] <: Result2
+    type apply[v1 <: Argument1, v2 <: Argument2] <: Result
 }
 
 trait Function3 {
-    type Argument31
-    type Argument32
-    type Argument33
-    type Result3
+    type Argument1
+    type Argument2
+    type Argument3
+    type Result
 
-    type apply3[v1 <: Argument31, v2 <: Argument32, v3 <: Argument33] <: Result3
+    type apply[v1 <: Argument1, v2 <: Argument2, v3 <: Argument3] <: Result
 }

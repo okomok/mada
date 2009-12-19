@@ -64,7 +64,7 @@ package madatest; package metatest
         type inc = quote1[increment, Nat, Nat]
 
         // metafunction invocation
-        assert[inc#apply1[_3N] == _4N]
+        assert[inc#apply[_3N] == _4N]
 
         def testTrivial: Unit = ()
     }
