@@ -15,13 +15,13 @@ sealed trait always0[a] {
 }
 
 sealed trait always1[a] {
-    type apply[v1 <: Any] = a
+    type apply[v1] = a
 }
 
 sealed trait always2[a] {
-    type apply[v1 <: Any, v2 <: Any] = a
+    type apply[v1, v2] = a
 }
 
 sealed trait always3[a] {
-    type apply[v1 <: Any, v2 <: Any, v3 <: Any] = a
+    type apply[v1, v2, v3] = a
 }

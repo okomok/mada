@@ -10,12 +10,7 @@ package mada
 package object meta {
 
 
-// metamethods
-
-    @equivalentTo("a")
-    type identity[a] = a
-
-    @equivalentTo("Nothing")
+    @aliasOf("Nothing")
     type error = Nothing
 
 
@@ -65,11 +60,6 @@ package object meta {
     def assertUpper[a >: b, b]: scala.Unit = ()
 
 
-// pair
-
-    type pair[v1, v2] = tuple2[v1, v2]
-
-
 // Nat literals
 
     type _0N = Zero
@@ -101,5 +91,26 @@ package object meta {
      * The if-expression to return Nat.
      */
     type if_Nat[cond <: Boolean, then <: Nat, _else <: Nat] = cond#if_Nat[then, _else]
+
+
+// functional
+
+    @aliasOf("tuple2")
+    type pair[v1, v2] = tuple2[v1, v2]
+
+    @equivalentTo("a")
+    type identity[a] = a
+
+    @equivalentTo("a")
+    type project1st[a, b] = a
+
+    @equivalentTo("b")
+    type project2nd[a, b] = b
+
+    @equivalentTo("p#_1")
+    type select1st[p <: Product2] = p#_1
+
+    @equivalentTo("p#_2")
+    type select2nd[p <: Product2] = p#_2
 
 }

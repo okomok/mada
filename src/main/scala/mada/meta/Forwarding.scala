@@ -8,26 +8,20 @@ package mada; package meta
 
 
 /**
- * Function forwardings
+ * Function forwardings (who needs?)
  */
-sealed trait forwarding0[f <: Function0] extends Function0 {
-    override type apply = f#apply
+sealed trait forwarding0[f] {
+    type apply = f
 }
 
-sealed trait forwarding1[f <: Function1] extends Function1 {
-    override type Arg1 = f#Arg1
-    override type apply[v1 <: Arg1] = f#apply[v1]
+sealed trait forwarding1[T1, f[_ <: T1]] {
+    type apply[v1 <: T1] = f[v1]
 }
 
-sealed trait forwarding2[f <: Function2] extends Function2 {
-    override type Arg1 = f#Arg1
-    override type Arg2 = f#Arg2
-    override type apply[v1 <: Arg1, v2 <: Arg2] = f#apply[v1, v2]
+sealed trait forwarding2[T1, T2, f[_ <: T1, _ <: T2]] {
+    type apply[v1 <: T1, v2 <: T2] = f[v1, v2]
 }
 
-sealed trait forwarding3[f <: Function3] extends Function3 {
-    override type Arg1 = f#Arg1
-    override type Arg2 = f#Arg2
-    override type Arg3 = f#Arg3
-    override type apply[v1 <: Arg1, v2 <: Arg2, v3 <: Arg3] = f#apply[v1, v2, v3]
+sealed trait forwarding3[T1, T2, T3, f[_ <: T1, _ <: T2, _ <: T3]] {
+    type apply[v1 <: T1, v2 <: T2, v3 <: T3] = f[v1, v2, v3]
 }

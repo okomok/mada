@@ -42,7 +42,7 @@ class FunctionTest {
     type twice[f <: FuncNat, n <: Nat] = f#apply[n]#increment
 
     trait testTrivial {
-        assert[forwarding1[inc]#apply[_3N] == _4N]
+        assert[forwarding1[Nat, incre]#apply[_3N] == _4N]
         assert[applyx[incf, _3N] == _4N]
         assert[applyx[inc, _3N] == _4N]
 
