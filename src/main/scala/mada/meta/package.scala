@@ -67,7 +67,7 @@ package object meta {
 
 // pair
 
-    type Pair[v1, v2] = Tuple2[v1, v2]
+    type pair[v1, v2] = tuple2[v1, v2]
 
 
 // Nat literals

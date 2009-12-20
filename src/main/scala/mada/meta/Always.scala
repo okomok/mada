@@ -8,7 +8,7 @@ package mada; package meta
 
 
 /**
- * Metafunction always returning <code>a</code>
+ * Returns metamethod to always return <code>a</code>.
  */
 sealed trait always0[a] {
     type apply = a
