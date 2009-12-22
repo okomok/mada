@@ -11,7 +11,7 @@ package object meta {
 
 
     @aliasOf("Nothing")
-    type error = Nothing
+    type `null` = Nothing
 
 
 // unmeta

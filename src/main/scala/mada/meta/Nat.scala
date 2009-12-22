@@ -81,13 +81,13 @@ sealed trait sentinel extends Nat {
     override type self = sentinel
     override private[mada] type isZero = `false`
     override type equals[that <: Nat] = `false`
-    override type increment = error
+    override type increment = `null`
     override type decrement = self
-    override type add[that <: Nat] = error
-    override private[mada] type negateAdd[that <: Nat] = error
-    override type multiply[that <: Nat] = error
+    override type add[that <: Nat] = `null`
+    override private[mada] type negateAdd[that <: Nat] = `null`
+    override type multiply[that <: Nat] = `null`
 
-    override type accept_Any[v <: Visitor[Any]] = error
-    override type accept_Nat[v <: Visitor[Nat]] = error
-    override type accept_blendList[v <: Visitor[blend.List]] = error
+    override type accept_Any[v <: Visitor[Any]] = `null`
+    override type accept_Nat[v <: Visitor[Nat]] = `null`
+    override type accept_blendList[v <: Visitor[blend.List]] = `null`
 }

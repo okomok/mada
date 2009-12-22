@@ -27,7 +27,7 @@ sealed trait Option {
 
 sealed trait none extends Option {
     override type isEmpty = `true`
-    override type get = error
+    override type get = `null`
 }
 
 sealed trait some[x] extends Option {

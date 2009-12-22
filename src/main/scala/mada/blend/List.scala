@@ -106,8 +106,8 @@ sealed abstract class List { // this: self =>
      *
      * @pre <code>!isEmpty</code>.
      */
-    final def last(implicit _lastOrElse: LastOrElse[self, meta.error]): last = _lastOrElse(_self, util.nullInstance[meta.error])
-    final type last = LastOrElse.result[self, meta.error]
+    final def last(implicit _lastOrElse: LastOrElse[self, meta.`null`]): last = _lastOrElse(_self, util.nullInstance[meta.`null`])
+    final type last = LastOrElse.result[self, meta.`null`]
 
     /**
      * Returns the <code>n</code>-th element.
@@ -193,9 +193,9 @@ sealed abstract class Nil extends List {
     override private[mada] type self = Nil
 
     override def head = throw new NoSuchElementException("head of empty list")
-    override type head = meta.error
+    override type head = meta.`null`
     override def tail = throw new NoSuchElementException("tail of empty list")
-    override type tail = meta.error // Nil would `List.take` less-restrictive, but less-mathematical.
+    override type tail = meta.`null` // Nil would `List.take` less-restrictive, but less-mathematical.
     override type isEmpty = meta.`true`
 
     override type accept_Any[v <: Visitor[Any]] = v#visitNil
