@@ -35,7 +35,7 @@ class _FromJList[A](_1: java.util.List[A]) extends Vector[A] {
     override def toJList = _1 // to-from fusion
 }
 
-case class ToJList[A](_1: Vector[A]) extends java.util.AbstractList[A] {
+case class ToJList[A](_1: Vector[A]) extends java.util.AbstractList[A] with java.util.RandomAccess {
     override def get(index: Int) = _1.nth(index)
     override def set(index: Int, element: A) = {
         val old = _1.nth(index)
