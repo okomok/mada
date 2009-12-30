@@ -11,7 +11,7 @@ import mada.meta._
 // import junit.framework.Assert._
 
 
-// Generic-metamethod can't be overridden.
+// Overriding generic-metamethod doesn't work.
 
 class GenericMethodOverrideTest {
 
@@ -35,6 +35,24 @@ class GenericMethodOverrideTest {
     type foo3[b <: B { type foo[Nat, x <: Nat] <: Nat }, x <: Nat] = b#foo[Nat, x]#increment
     type wow = foo3[d, _2N] // Scala is smart!
     // assertSame[wow, _3N] // but fails.
+}
+
+class GenericMethodOverride2Test {
+
+    trait B {
+        type foo[x]
+    }
+
+    trait d extends B {
+        override type foo[x] = _3N
+    }
+
+    // OK
+    type foo1[b <: B, x <: Nat] = b#foo[x]
+    assertSame[foo1[d, _2N]#increment, _4N]
+
+    // NO, of course.
+    // type foo2[b <: B, x <: Nat] = b#foo[x]#increment
 }
 
 
