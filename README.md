@@ -4,6 +4,10 @@
 
 `Mada` is a set of packages for Scala:
 
+- `auto`
+
+    Emulating `C# using` statement.
+
 - `blend`
 
     Blending meta into runtime
@@ -19,6 +23,29 @@
 - `sequence`
 
     Yet another collection library
+
+
+
+## `auto`
+
+`auto` provides deterministic resource management within a block.
+
+    import mada.auto._
+    import java.nio.channels
+    import java.nio.channels.Channels
+
+    class DocTest {
+        def teztTrivial: Unit = {
+            for {
+                source <- use(Channels.newChannel(System.in))
+                dest <- use(Channels.newChannel(System.out))
+            } {
+                channelCopy(source, dest)
+            }
+        }
+    }
+
+`dest.close` and `source.close` are automatically invoked in order.
 
 
 
