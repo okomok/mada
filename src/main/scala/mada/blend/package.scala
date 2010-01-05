@@ -42,9 +42,9 @@ package object blend {
     type ::[h, t <: List] = Cons[h, t]
 
     @equivalentTo("r#prepend[l]")
-    type :::[l <: List, r <: List] = List.:::[l, r]
+    type :::[l <: List, r <: List] = r#prepend[l]
 
     @equivalentTo("r#reversePrepend[l]")
-    type reverse_:::[l <: List, r <: List] = List.reverse_:::[l, r]
+    type reverse_:::[l <: List, r <: List] = r#prependReversed[l]
 
 }

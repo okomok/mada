@@ -186,8 +186,8 @@ sealed abstract class List { // this: self =>
 }
 
 
-// Compiler will fail to search implicits.
-// case object Nil; type Nil = Nil.type
+// If you adopt `case object Nil; type Nil = Nil.type`,
+// the compiler fails to search implicits.
 
 sealed abstract class Nil extends List {
     override private[mada] type self = Nil
@@ -195,7 +195,7 @@ sealed abstract class Nil extends List {
     override def head = throw new NoSuchElementException("head of empty list")
     override type head = meta.`null`
     override def tail = throw new NoSuchElementException("tail of empty list")
-    override type tail = meta.`null` // Nil would `List.take` less-restrictive, but less-mathematical.
+    override type tail = meta.`null` // Nil would `List.take` less-restrictive.
     override type isEmpty = meta.`true`
 
     override type accept_Any[v <: Visitor[Any]] = v#visitNil
@@ -205,7 +205,7 @@ sealed abstract class Nil extends List {
     override def untyped = sequence.Nil
 }
 
-private[mada] object NilWrap {
+private[mada] object NilWrap { // works around sealed.
     val value: Nil = new Nil{}
 }
 
@@ -254,17 +254,6 @@ object List {
         def toTuple: Tuple5[a1, a2, a3, a4, a5] = Tuple5(_self.head, _self.tail.head, _self.tail.tail.head, _self.tail.tail.tail.head, _self.tail.tail.tail.tail.head)
     }
     implicit def _of5[a1, a2, a3, a4, a5](_self: a1 :: a2 :: a3 :: a4 :: a5 :: Nil): _Of5[a1, a2, a3, a4, a5] = new _Of5(_self)
-
-
-// For some compiler bug, these are placed in companion module.
-
-    @compilerWorkaround("2.8.0-SNAPSHOT")
-    @equivalentTo("r#prepend[l]")
-    type :::[l <: List, r <: List] = r#prepend[l]
-
-    @compilerWorkaround("2.8.0-SNAPSHOT")
-    @equivalentTo("r#prependReversed[l]")
-    type reverse_:::[l <: List, r <: List] = r#prependReversed[l]
 
 }
 
