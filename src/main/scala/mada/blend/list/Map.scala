@@ -8,6 +8,7 @@ package mada; package blend; package list
 
 
 // originally written by kmizushima.
+// (doesn't work yet.)
 
 
 object Map {
