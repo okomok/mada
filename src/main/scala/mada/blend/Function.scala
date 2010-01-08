@@ -7,6 +7,8 @@
 package mada; package blend
 
 
+// Doesn't work well.
+
 /**
  * Polymorphic function
  */

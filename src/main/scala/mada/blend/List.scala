@@ -34,7 +34,8 @@ sealed abstract class List { // this: self =>
     /**
      * Prepends <code>e</code>.
      */
-    final def ::[A](e: A): Cons[A, self] = Cons(e, _self)
+    final def ::[A](e: A): addFirst[A] = Cons(e, _self)
+    final type addFirst[A] = Cons[A, self]
 
     /**
      * Is this list nil?
