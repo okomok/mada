@@ -51,7 +51,7 @@ case class SingleString(e: String) extends Parser {
     type parse[In <: Input] = Success :: In#tail
     override def parse[In <: Input](in: In): parse[In] = {
         if (in.head.concat("") == e) {
-            new Success() :: in.tail
+            Cons(new Success(), in.tail)
         } else {
             throw new Error
         }
