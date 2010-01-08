@@ -7,6 +7,8 @@
 package madatest; package toytest; package hlistparsertest
 
 
+
+/*
 import mada.blend._
 
 /*
@@ -82,3 +84,4 @@ class HListParserTest {
 //        val out = SingleString("hello").parse(in)
     }
 }
+*/

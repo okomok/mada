@@ -31,8 +31,11 @@ sealed abstract class List { // this: self =>
     def tail: tail
     type tail <: List
 
-    // final def ::[A](e: A): addFirst[A] = Cons(e, _self)
-    // final type addFirst[A] = Cons[A, self]
+    /**
+     * Prepends <code>e</code>.
+     */
+    final def ::[A](e: A): addFirst[A] = Cons(e, _self)
+    final type addFirst[A] = Cons[A, self]
 
     /**
      * Is this list nil?
@@ -201,11 +204,6 @@ sealed abstract class Nil extends List {
     override type accept_metaNat[v <: Visitor[meta.Nat]] = v#visitNil
 
     override def untyped = sequence.Nil
-
-    /**
-     * Prepends <code>e</code>.
-     */
-    def ::[A](e: A): Cons[A, Nil] = Cons(e, this)
 }
 
 private[mada] object NilWrap { // works around sealed.
@@ -225,11 +223,6 @@ final case class Cons[h, t <: List](override val head: h, override val tail: t) 
     override type accept_metaNat[v <: Visitor[meta.Nat]] = v#visitCons[h, t]
 
     override def untyped = head :: tail.untyped
-
-    /**
-     * Prepends <code>e</code>.
-     */
-    def ::[A](e: A): Cons[A, Cons[h, t]] = Cons(e, this)
 }
 
 

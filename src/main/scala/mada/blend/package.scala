@@ -38,8 +38,8 @@ package object blend {
     @equivalentTo("new Nil{}")
     val Nil = NilWrap.value
 
-    @aliasOf("Cons")
-    type ::[h, t <: List] = Cons[h, t]
+    @equivalentTo("t#addFirst[h]")
+    type ::[h, t <: List] = t#addFirst[h]
 
     @equivalentTo("r#prepend[l]")
     type :::[l <: List, r <: List] = r#prepend[l]
