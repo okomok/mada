@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package mada; package meta
+package madatest; package metatest
 
 
 /**

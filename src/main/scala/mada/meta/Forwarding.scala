@@ -8,7 +8,7 @@ package mada; package meta
 
 
 /**
- * Function forwardings (who needs?)
+ * Method forwardings (who needs?)
  */
 sealed trait forwarding0[f] {
     type apply = f

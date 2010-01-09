@@ -181,9 +181,6 @@ sealed abstract class List { // this: self =>
     final override def hashCode = untyped.hashCode
     final override def toString = untyped.toString
 
-
-    final type map[A, B, f[_ <: A] <: B] = Map.result[self, A, B, f]
-
 }
 
 
