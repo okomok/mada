@@ -33,6 +33,9 @@ package object list {
 
 // misc
 
-    def transformer[H2, T2, R](f: (H2, T2) => R) = Transformer(f)
+    /**
+     * Transforms a list.
+     */
+    def transform[H2, T2, R](f: (H2, T2) => R) = Transform(f)
 
 }
