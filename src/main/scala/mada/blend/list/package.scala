@@ -30,4 +30,9 @@ package object list {
     def fromTuple[T1, T2, T3, T4](from: Tuple4[T1, T2, T3, T4]): T1 :: T2 :: T3 :: T4 :: Nil = fromTuple4(from)
     def fromTuple[T1, T2, T3, T4, T5](from: Tuple5[T1, T2, T3, T4, T5]): T1 :: T2 :: T3 :: T4 :: T5 :: Nil = fromTuple5(from)
 
+
+// misc
+
+    def transformer[H2, T2, R](f: (H2, T2) => R) = Transformer(f)
+
 }
