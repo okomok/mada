@@ -56,9 +56,6 @@ package object util {
     @aliasOf("()")
     val theUnit: Unit = ()
 
-    @returnThat
-    def as[A](from: A): A = from
-
     @equivalentTo("()")
     def ignore(x: Any): Unit = ()
 
