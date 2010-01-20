@@ -7,10 +7,6 @@
 package mada; package sequence; package vector
 
 
-// AtomicReference isn't enough because null is a valid element of vector.
-import java.util.concurrent.atomic.AtomicMarkableReference
-
-
 private object ParallelSeek {
     def apply[A](_1: Vector[A], _2: A => Boolean, _3: Int): Option[A] = {
         util.assert(!IsParallel(_1))
@@ -18,18 +14,17 @@ private object ParallelSeek {
         if (_1.isEmpty) {
             None
         } else {
-            val ar = new AtomicMarkableReference[A](util.nullInstance, false) // mark means "found".
-            val bp = new Breakable1(_2, true)
-            _1.divide(_3).parallel(1).each(breakingSeek(_, bp, ar))
-            if (ar.isMarked) Some(ar.getReference) else None
-        }
-    }
-
-    private def breakingSeek[A](v: Vector[A], p: Breakable1[A], ar: AtomicMarkableReference[A]): Unit = {
-        val x = v.seek(p) // can tell a lie after someone wins.
-        if (!x.isEmpty) {
-            ar.compareAndSet(util.nullInstance, x.get, false, true) // try to win the race.
-            p.break
+            var r: Option[A] = None
+            val p = new Breakable1(_2, true)
+            _1.divide(_3).parallel(1).each { v =>
+                val x = v.seek(p)
+                if (!x.isEmpty && !p.breaks) {
+                    // benign data races
+                    r = x
+                    p.break
+                }
+            }
+            r
         }
     }
 }
