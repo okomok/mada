@@ -10,6 +10,7 @@ package mada; package sequence; package vector
 import util.future
 
 
+// Note that parallel.map is projection, that is, non-blocking.
 case class ParallelMap[Z, A](_1: Vector[Z], _2: Z => A, _3: Int) extends Forwarder[A] {
     util.assert(!IsParallel(_1))
 

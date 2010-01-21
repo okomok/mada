@@ -19,7 +19,7 @@ private object ParallelEqualsIf {
                 val x = v.equalsIf(w)(p)
                 if (!x) { p.break }
                 x
-            }.reduce(_ && _)
+            }.reduce(_ && _) // force to join all.
         }
     }
 }
