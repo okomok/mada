@@ -14,8 +14,7 @@ private object ParallelFind {
         if (_1.isEmpty) {
             None
         } else {
-            val r = _1.divide(_3).parallel(1).map(_.find(_2)).find(!_.isEmpty)
-            if (r.isEmpty) None else r.get
+            _1.divide(_3).parallel(1).map(_.find(_2)).find(!_.isEmpty).getOrElse(None)
         }
     }
 }
