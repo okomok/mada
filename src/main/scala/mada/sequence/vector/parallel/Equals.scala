@@ -14,17 +14,12 @@ private object ParallelEqualsIf {
         if (_1.size != _2.size) {
             false
         } else {
-            val bp = new Breakable2(_3, false)
-            (_1.divide(_4) zip _2.divide(_4)).parallel(1).map{ case (v, w) => breakingEquals(v, w, bp) }.
-                reduce(_ && _)
+            val p = new Breakable2(_3, false)
+            (_1.divide(_4) zip _2.divide(_4)).parallel(1).map { case (v, w) =>
+                val x = v.equalsIf(w)(p)
+                if (!x) { p.break }
+                x
+            }.reduce(_ && _)
         }
-    }
-
-    private def breakingEquals[A, B](v: Vector[A], w: Vector[B], p: Breakable2[A, B]): Boolean = {
-        val x = v.equalsIf(w)(p)
-        if (!x) {
-            p.break
-        }
-        x
     }
 }
