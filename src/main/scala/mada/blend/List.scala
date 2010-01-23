@@ -193,7 +193,7 @@ sealed abstract class Nil extends List {
     override def head = throw new NoSuchElementException("head of empty list")
     override type head = meta.`null`
     override def tail = throw new NoSuchElementException("tail of empty list")
-    override type tail = meta.`null` // Nil would `List.take` less-restrictive.
+    override type tail = meta.`null` // `Nil` would make `List.take` less-restrictive.
     override type isEmpty = meta.`true`
 
     override type accept_Any[v <: Visitor[Any]] = v#visitNil

@@ -22,7 +22,7 @@ import list._
 case object Nil extends List[Nothing] {
     override def isNil = true
     override def head = throw new NoSuchElementException("head on empty list")
-    override def tail =  throw new UnsupportedOperationException("tail on empty list")
+    override def tail = throw new UnsupportedOperationException("tail on empty list")
 
     def ::[A](x: A): List[A] = new Cons[A](x, util.byLazy(this))
 }
