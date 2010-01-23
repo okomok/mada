@@ -60,7 +60,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
     def update(i: Int, e: A): Unit = throw NotWritableException(this)
 
     /**
-     * @return  <code>(start <= i) && (i < end)</code>, possibly overridden in subclasses.
+     * @return  <code>i in [start, end)</code>, possibly overridden in subclasses.
      */
     override def isDefinedAt(i: Int): Boolean = (start <= i) && (i < end)
 
@@ -449,7 +449,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
 
     /**
      * Creates a vector whose <code>isDefinedAt(i)</code> returns true
-     * iif <code>start <= i && i < end</code>.
+     * iif <code>i in [start, end)</code>.
      */
     def bounds: Vector[A] = Bounds(this)
 

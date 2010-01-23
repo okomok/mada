@@ -61,7 +61,7 @@ sealed abstract class List { // this: self =>
     /**
      * Drops EXACTLY <code>n</code> elements.
      *
-     * @pre `0 <= n <= size`.
+     * @pre `n in [0, size)`.
      */
     final def drop[n <: meta.Nat](implicit _drop: Drop[self, n]): drop[n] = _drop(_self)
     final type drop[n <: meta.Nat] = Drop.result[self, n]
@@ -69,7 +69,7 @@ sealed abstract class List { // this: self =>
     /**
      * Takes EXACTLY <code>n</code> elements.
      *
-     * @pre `0 <= n <= size`.
+     * @pre `n in [0, size)`.
      */
     final def take[n <: meta.Nat](implicit _take: Take[self, n]): take[n] = _take(_self)
     final type take[n <: meta.Nat] = Take.result[self, n]
@@ -95,7 +95,7 @@ sealed abstract class List { // this: self =>
     /**
      * Inserts all the elements of <code>that</code>, starting at the specified position.
      *
-     * @pre `0 <= n <= size`.
+     * @pre `n in [0, size)`.
      */
     final def insert[n <: meta.Nat] = new {
         def apply[that <: List](_that: that)(implicit _insert: Insert[self, n, that]): insert[n, that] = _insert(_self, _that)
@@ -113,7 +113,7 @@ sealed abstract class List { // this: self =>
     /**
      * Returns the <code>n</code>-th element.
      *
-     * @pre `0 <= n <= size`.
+     * @pre `n in [0, size)`.
      */
     final def nth[n <: meta.Nat](implicit _nth: Nth[self, n]): nth[n] = _nth(_self)
     final type nth[n <: meta.Nat] = Nth.result[self, n]
@@ -127,7 +127,7 @@ sealed abstract class List { // this: self =>
     /**
      * Removes <code>n</code>-th element.
      *
-     * @pre `0 <= n <= size`.
+     * @pre `n in [0, size)`.
      */
     final def remove[n <: meta.Nat](implicit _remove: Remove[self, n]): remove[n] = _remove(_self)
     final type remove[n <: meta.Nat] = Remove.result[self, n]
@@ -135,7 +135,7 @@ sealed abstract class List { // this: self =>
     /**
      * Replaces <code>n</code>-th element with <code>_a</code>.
      *
-     * @pre `0 <= n <= size`.
+     * @pre `n in [0, size)`.
      */
     final def replace[n <: meta.Nat] = new {
         def apply[a](_a: a)(implicit _replace: Replace[self, n, a]): replace[n, a] = _replace(_self, _a)
@@ -163,7 +163,7 @@ sealed abstract class List { // this: self =>
     /**
      * Zips <code>that</code>.
      *
-     * @pre `size <= that.size`.
+     * @pre <code>size</code> is less than or equal to <code>that.size<code>.
      */
     final def zip[that <: List](_that: that)(implicit _zip: Zip[self, that]): zip[that] = _zip(_self, _that)
     final type zip[that <: List] = Zip.result[self, that]
