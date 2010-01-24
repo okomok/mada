@@ -5,6 +5,8 @@
 " Revision   : $Id$
 "        $URL$
 
+" Modified by Shunsuke Sogame 2010
+
 if version < 600
   syntax clear
 elseif exists("b:current_syntax")

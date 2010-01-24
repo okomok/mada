@@ -2,9 +2,11 @@
 " Maintainer:	David Schweikert <dws@ee.ethz.ch>
 " Last Change:	2006 Apr 30
 
+" Modified by Shunsuke Sogame 2010
+
 hi clear
 
-let colors_name = "delek_mod"
+let colors_name = "scala"
 
 " Normal should come first
 hi Normal     guifg=Black  guibg=White
