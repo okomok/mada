@@ -44,10 +44,10 @@ package object util {
      */
     def verify(msg: => Any, cond: Boolean) = util.assert(msg, cond)
 
-    @equivalentTo("this(expect(e)); e")
+    @equivalentTo("assert(expect(e)); e")
     def ensure[A](e: A)(expect: A => Boolean): A = { util.assert(expect(e)); e }
 
-    @equivalentTo("this(msg, expect(e)); e")
+    @equivalentTo("assert(msg, expect(e)); e")
     def ensure[A](msg: => Any, e: A)(expect: A => Boolean): A = { util.assert(msg, expect(e)); e }
 
 
@@ -61,11 +61,6 @@ package object util {
 
     @equivalentTo("!pre || post")
     def implies(pre: Boolean, post: => Boolean): Boolean = !pre || post
-
-    /**
-     * Typed <code>null</code>
-     */
-    def nullOf[A >: Null]: A = null
 
     @equivalentTo("null.asInstanceOf[A]")
     def nullInstance[A]: A = null.asInstanceOf[A]
