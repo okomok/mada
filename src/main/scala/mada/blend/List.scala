@@ -163,7 +163,7 @@ sealed abstract class List { // this: self =>
     /**
      * Zips <code>that</code>.
      *
-     * @pre <code>size</code> is less than or equal to <code>that.size<code>.
+     * @pre <code>size &lt;= that.size<code>.
      */
     final def zip[that <: List](_that: that)(implicit _zip: Zip[self, that]): zip[that] = _zip(_self, _that)
     final type zip[that <: List] = Zip.result[self, that]
@@ -185,7 +185,7 @@ sealed abstract class List { // this: self =>
 
 
 // If you adopt `case object Nil; type Nil = Nil.type`,
-// the compiler fails to search implicits.
+// the compiler fails to lookup implicits.
 
 sealed abstract class Nil extends List {
     override private[mada] type self = Nil
