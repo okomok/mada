@@ -19,7 +19,7 @@ syn sync minlines=50
 " reserved words
 syn keyword scalaKeyword abstract case catch class def do else extends false final finally for forSome if implicit import lazy match new null object override package private protected requires return sealed super this throw trait try true type val var while with yield
 
-syn match scalaAnnotation "@[a-zA-Z0-9]\+"
+syn match scalaAnnotation "@[_a-zA-Z0-9]\+"
 
 " standard types
 syn keyword scalaStandartType Any AnyRef AnyVal Unit Boolean Char Byte short Int Long Float Double ScalaObject String Null Nothing
