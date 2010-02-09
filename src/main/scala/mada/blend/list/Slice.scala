@@ -15,7 +15,7 @@ object Slice {
 
     type result[l <: List, n <: meta.Nat, m <: meta.Nat] = n#accept_blendList[vt[l, m]]
 
-    sealed abstract class vt[l <: List, m <: meta.Nat] extends meta.nat.Visitor[List] {
+    sealed trait vt[l <: List, m <: meta.Nat] extends meta.nat.Visitor[List] {
         override type visitZero = Take.result[l, m]
         override type visitSucc[n <: meta.Nat] = n#accept_blendList[vt[l#tail, m#decrement]]
     }

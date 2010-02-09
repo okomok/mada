@@ -15,7 +15,7 @@ object Drop {
 
     type result[l <: List, n <: meta.Nat] = n#accept_blendList[vt[l]]
 
-    sealed abstract class vt[l <: List] extends meta.nat.Visitor[List] {
+    sealed trait vt[l <: List] extends meta.nat.Visitor[List] {
         override type visitZero = l
         override type visitSucc[n <: meta.Nat] = n#accept_blendList[vt[l#tail]]
     }

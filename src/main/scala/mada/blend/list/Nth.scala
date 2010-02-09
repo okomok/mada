@@ -15,7 +15,7 @@ object Nth {
 
     type result[l <: List, n <: meta.Nat] = n#accept_Any[vt[l]]
 
-    sealed abstract class vt[l <: List] extends meta.nat.Visitor[Any] {
+    sealed trait vt[l <: List] extends meta.nat.Visitor[Any] {
         override type visitZero = l#head
         override type visitSucc[n <: meta.Nat] = n#accept_Any[vt[l#tail]]
     }

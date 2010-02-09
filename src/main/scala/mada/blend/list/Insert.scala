@@ -15,7 +15,7 @@ object Insert {
 
     type result[l <: List, n <: meta.Nat, r <: List] = n#accept_blendList[vt[l, r]]
 
-    sealed abstract class vt[l <: List, r <: List] extends meta.nat.Visitor[List] {
+    sealed trait vt[l <: List, r <: List] extends meta.nat.Visitor[List] {
         override type visitZero = Prepend.result[l, r]
         override type visitSucc[n <: meta.Nat] = Cons[l#head, n#accept_blendList[vt[l#tail, r]]]
     }

@@ -15,7 +15,7 @@ object Replace {
 
     type result[l <: List, n <: meta.Nat, a] = n#accept_blendList[vt[l, a]]
 
-    sealed abstract class vt[l <: List, a] extends meta.nat.Visitor[List] {
+    sealed trait vt[l <: List, a] extends meta.nat.Visitor[List] {
         override type visitZero = Cons[a, l#tail]
         override type visitSucc[n <: meta.Nat] = Cons[l#head, n#accept_blendList[vt[l#tail, a]]]
     }

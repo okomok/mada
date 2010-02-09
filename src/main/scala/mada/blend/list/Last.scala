@@ -15,7 +15,7 @@ object LastOrElse {
 
     type result[l <: List, a] = l#accept_Any[vt[a]]
 
-    sealed abstract class vt[a] extends Visitor[Any] {
+    sealed trait vt[a] extends Visitor[Any] {
         override type visitNil = a
         override type visitCons[h, t <: List] = t#accept_Any[vt[h]]
     }

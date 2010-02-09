@@ -15,7 +15,7 @@ object Prepend {
 
     type result[r <: List, l <: List] = l#accept_List[vt[r]]
 
-    sealed abstract class vt[r <: List] extends Visitor[List] {
+    sealed trait vt[r <: List] extends Visitor[List] {
         override type visitNil = r
         override type visitCons[h, t <: List] = Cons[h, t#accept_List[vt[r]]]
     }

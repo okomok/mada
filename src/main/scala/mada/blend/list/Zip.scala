@@ -15,7 +15,7 @@ object Zip {
 
     type result[l1 <: List, l2 <: List] = l1#accept_List[vt[l2]]
 
-    sealed abstract class vt[l2 <: List] extends Visitor[List] {
+    sealed trait vt[l2 <: List] extends Visitor[List] {
         override type visitNil = Nil
         override type visitCons[h, t <: List] = Cons[Tuple2[h, l2#head], t#accept_List[vt[l2#tail]]]
     }
