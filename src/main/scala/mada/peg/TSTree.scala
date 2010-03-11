@@ -7,7 +7,7 @@
 package mada; package peg
 
 
-// See: Plant your data in a ternary search tre
+// See: Plant your data in a ternary search tree
 //      at http://www.javaworld.com/javaworld/jw-02-2001/jw-0216-ternary.html
 
 
@@ -273,7 +273,7 @@ private class TSTreeNodeIterator[A, V](parentKey: sequence.Vector[A], node: TSTr
 
     private def children(c: TSTreeNode[A, V]) = {
         if (c eq null) {
-            Iterator.empty
+            scala.Iterator.empty
         } else {
             if (c eq node.middle) {
                 new TSTreeNodeIterator(lowerKey, c)
