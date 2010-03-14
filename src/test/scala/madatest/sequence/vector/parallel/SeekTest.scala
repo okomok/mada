@@ -22,12 +22,12 @@ class SeekTest {
 
     def testTrivial2: Unit = {
         val v = vector.Of("ab", "cde", "f", "ghij", "kl", "mno", "p", "qrst")
-        assertEquals("kl", v.parallel(1).seek(_ == "kl").get)
+        assertEquals("kl", v.parallelBy(1).seek(_ == "kl").get)
     }
 
     def testNull: Unit = {
         val v: Vector[String] = vector.Of("ab", "cde", null.asInstanceOf[String], "f", "ghij", "kl", "mno", "p", "qrst")
-        assertEquals(null.asInstanceOf[String], v.parallel(1).seek((_: String) eq null).get)
+        assertEquals(null.asInstanceOf[String], v.parallelBy(1).seek((_: String) eq null).get)
     }
 
     def testNotFound: Unit = {

@@ -34,7 +34,7 @@ package object vector {
 // constants
 
     /**
-     * @return  <code>Math.MIN_INT</code>, which is the reserved index by <code>mada.Vector</code>.
+     * @return  <code>java.lang.Math.MIN_INT</code>, which is the reserved index by <code>mada.Vector</code>.
      */
     final val SINGULAR = 0x80000000
 

@@ -32,11 +32,11 @@ case class Region[A](_1: Vector[A], _2: Int, _3: Int) extends TransformAdapter[A
 
 
 case class Take[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
-    override protected val delegate = _1(_1.start, Math.min(_1.start + _2, _1.end))
+    override protected val delegate = _1(_1.start, java.lang.Math.min(_1.start + _2, _1.end))
 }
 
 case class Drop[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
-    override protected val delegate = _1(Math.min(_1.start + _2, _1.end), _1.end)
+    override protected val delegate = _1(java.lang.Math.min(_1.start + _2, _1.end), _1.end)
 }
 
 case class Slice[A](_1: Vector[A], _2: Int, _3: Int) extends Forwarder[A] {

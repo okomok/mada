@@ -45,8 +45,8 @@ object Mixin {
         override def apply[B](v: Vector[B]) = v.parallel
     }
 
-    def parallel(grainSize: Int): Mixin = new Mixin {
-        override def apply[B](v: Vector[B]) = v.parallel(grainSize)
+    def parallelBy(grainSize: Int): Mixin = new Mixin {
+        override def apply[B](v: Vector[B]) = v.parallelBy(grainSize)
     }
 
     val readOnly: Mixin = new Mixin {

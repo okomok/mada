@@ -78,7 +78,7 @@ package object peg {
     def fail[A]: Peg[A] = Fail[A]()
 
     /**
-     * Mathches case-insensitively.
+     * java.lang.Mathches case-insensitively.
      */
     def icase(v: sequence.Vector[Char]): Peg[Char] = Icase(v)
 

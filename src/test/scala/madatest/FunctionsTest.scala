@@ -15,7 +15,7 @@ class FunctionsTest {
     def testMemoize: Unit = {
         var i = 0
         def heavy(fixed: Int => Int, v: Int) = { i += 1; v * v }
-        val ff: function.Transform[Int => Int] = (heavy _).curry
+        val ff: function.Transform[Int => Int] = (heavy _).curried
         val mf = function.memoize(ff)
         assertEquals(0, i)
         assertEquals(16, mf(4))

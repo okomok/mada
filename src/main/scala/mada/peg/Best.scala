@@ -8,11 +8,11 @@ package mada; package peg
 
 
 case class Longest[A](_1: sequence.Iterative[Peg[A]]) extends Forwarder[A] {
-    override protected val delegate: Peg[A] = new Best(_1, Math.max)
+    override protected val delegate: Peg[A] = new Best(_1, java.lang.Math.max)
 }
 
 case class Shortest[A](_1: sequence.Iterative[Peg[A]]) extends Forwarder[A] {
-    override protected val delegate: Peg[A] = new Best(_1, Math.min)
+    override protected val delegate: Peg[A] = new Best(_1, java.lang.Math.min)
 }
 
 

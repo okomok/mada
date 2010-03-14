@@ -23,15 +23,15 @@ class ContainsTest {
         assertTrue(v.parallel.contains('g'))
         assertFalse(v.parallel.contains('z'))
 
-        assertTrue(v.parallel(1000).contains('a'))
-        assertTrue(v.parallel(1000).contains('e'))
-        assertTrue(v.parallel(1000).contains('g'))
-        assertFalse(v.parallel(1000).contains('z'))
+        assertTrue(v.parallelBy(1000).contains('a'))
+        assertTrue(v.parallelBy(1000).contains('e'))
+        assertTrue(v.parallelBy(1000).contains('g'))
+        assertFalse(v.parallelBy(1000).contains('z'))
 
-        assertTrue(v.parallel(6).contains('a'))
-        assertTrue(v.parallel(6).contains('e'))
-        assertTrue(v.parallel(6).contains('g'))
-        assertFalse(v.parallel(6).contains('z'))
+        assertTrue(v.parallelBy(6).contains('a'))
+        assertTrue(v.parallelBy(6).contains('e'))
+        assertTrue(v.parallelBy(6).contains('g'))
+        assertFalse(v.parallelBy(6).contains('z'))
 
         ()
     }

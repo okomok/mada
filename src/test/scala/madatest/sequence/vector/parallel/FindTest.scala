@@ -18,7 +18,7 @@ class FindTest {
     def testFindFirst: Unit = {
         for (k <- 0 to 50) {
             val v = vector.Of(1,3,102,1,103,3,4,104,8,10,6)
-            assertEquals(102, v.parallel(1).find(_ > 100).get)
+            assertEquals(102, v.parallelBy(1).find(_ > 100).get)
         }
     }
 
@@ -29,12 +29,12 @@ class FindTest {
 
     def testTrivial2: Unit = {
         val v = vector.Of("ab", "cde", "f", "ghij", "kl", "mno", "p", "qrst")
-        assertEquals("kl", v.parallel(1).find(_ == "kl").get)
+        assertEquals("kl", v.parallelBy(1).find(_ == "kl").get)
     }
 
     def testNull: Unit = {
         val v: Vector[String] = vector.Of("ab", "cde", null.asInstanceOf[String], "f", "ghij", "kl", "mno", "p", "qrst")
-        assertEquals(null.asInstanceOf[String], v.parallel(1).find((_: String) eq null).get)
+        assertEquals(null.asInstanceOf[String], v.parallelBy(1).find((_: String) eq null).get)
     }
 
     def testNotFound: Unit = {

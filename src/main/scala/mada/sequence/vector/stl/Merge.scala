@@ -83,7 +83,7 @@ private[mada] object MergeSortWithBuffer {
             __result = Merge(*, __first, __first + __step_size, *, __first + __step_size, __first + __two_step, ^, __result, __comp)
             __first += __two_step;
         }
-        __step_size = Math.min(__last - __first, __step_size)
+        __step_size = java.lang.Math.min(__last - __first, __step_size)
 
         Merge(*, __first, __first + __step_size, *, __first + __step_size, __last, ^, __result, __comp)
     }

@@ -10,6 +10,6 @@ package mada; package sequence; package vector
 private object ParallelCount {
     def apply[A](_1: Vector[A], _2: A => Boolean, _3: Int): Int = {
         util.assert(!IsParallel(_1))
-        _1.divide(_3).parallel(1).map(_.count(_2)).reduce(_ + _)
+        _1.divide(_3).parallelBy(1).map(_.count(_2)).reduce(_ + _)
     }
 }

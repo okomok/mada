@@ -211,7 +211,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
 
     @equivalentTo("(take(n), drop(n))")
     def splitAt(i: Int): (Vector[A], Vector[A]) = {
-        val middle = Math.min(start + i, end)
+        val middle = java.lang.Math.min(start + i, end)
         (this(start, middle), this(middle, end))
     }
 
@@ -258,12 +258,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
     /**
      * Reverts <code>zip</code>.
      */
-    @compilerWorkaround("scala-compiler-2.8.0-20091212.032835-277 needs intermediate vals.")
-    def _unzip[B, C](_this: Vector[(B, C)]): (Vector[B], Vector[C]) = {
-        val l = _this.map{ bc => bc._1 }
-        val r = _this.map{ bc => bc._2 }
-        (l, r)
-    }
+    def _unzip[B, C](_this: Vector[(B, C)]): (Vector[B], Vector[C]) = (_this.map{ bc => bc._1 }, _this.map{ bc => bc._2 })
 
     /**
      * Zips <code>this</code> and <code>that</code> applying <code>f</code>.
@@ -482,13 +477,13 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
 
 // parallel support
 
-    @equivalentTo("parallel(defaultGrainSize)")
-    final def parallel: Vector[A] = parallel(defaultGrainSize)
+    @equivalentTo("parallelBy(defaultGrainSize)")
+    final def parallel: Vector[A] = parallelBy(defaultGrainSize)
 
     /**
      * Requests a vector to perform parallel methods.
      */
-    def parallel(grainSize: Int): Vector[A] = Parallel(this, grainSize)
+    def parallelBy(grainSize: Int): Vector[A] = Parallel(this, grainSize)
 
     /**
      * Specifies the grain size, which is used to divide this vector in parallel methods.
@@ -498,7 +493,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
     /**
      * Specifies the default grain size.
      */
-    def defaultGrainSize: Int = Math.max(1, size / util.Parallels.poolSize)
+    def defaultGrainSize: Int = java.lang.Math.max(1, size / util.Parallels.poolSize)
 
     @equivalentTo("mix(Mixin.parallel)")
     final def parallelize: Vector[A] = mix(Mixin.parallel)

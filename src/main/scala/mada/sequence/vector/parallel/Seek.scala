@@ -16,7 +16,7 @@ private object ParallelSeek {
         } else {
             var r: Option[A] = None
             val p = new Breakable1(_2, true)
-            _1.divide(_3).parallel(1).each { v =>
+            _1.divide(_3).parallelBy(1).each { v =>
                 val x = v.seek(p)
                 if (!x.isEmpty && !p.breaks) {
                     // benign data races

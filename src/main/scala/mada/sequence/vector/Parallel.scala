@@ -14,7 +14,7 @@ case class Parallel[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
     override protected val delegate = _1
 
 // parallel support
-    override def parallel(g: Int): Vector[A] = if (g == grainSize) this else delegate.parallel(g) // parallel-parallel fusion
+    override def parallelBy(g: Int): Vector[A] = if (g == grainSize) this else delegate.parallelBy(g) // parallel-parallel fusion
     override def grainSize: Int = _2
 // value semantics
     override def equalsIf[B](that: Vector[B])(p: (A, B) => Boolean): Boolean = ParallelEqualsIf(delegate, that, p, grainSize)

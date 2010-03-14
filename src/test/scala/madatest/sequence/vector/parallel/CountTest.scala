@@ -18,12 +18,12 @@ class CountTest {
     def testTrivial: Unit = {
         val v = mada.sequence.vector.from("a813a91ng8a89a8")
         assertEquals(4, v.parallel.count(_ == 'a'))
-        assertEquals(4, v.parallel(1000).count(_ == 'a'))
-        assertEquals(4, v.parallel(6).count(_ == 'a'))
+        assertEquals(4, v.parallelBy(1000).count(_ == 'a'))
+        assertEquals(4, v.parallelBy(6).count(_ == 'a'))
 
         assertEquals(0, v.parallel.count(_ == 'z'))
-        assertEquals(0, v.parallel(1000).count(_ == 'z'))
-        assertEquals(0, v.parallel(6).count(_ == 'z'))
+        assertEquals(0, v.parallelBy(1000).count(_ == 'z'))
+        assertEquals(0, v.parallelBy(6).count(_ == 'z'))
     }
 }
 
@@ -47,7 +47,7 @@ class CountParallelCountTest extends NoBenchmark {
 class CountParallelEachTest extends NoBenchmark {
     override def run = {
         val n = new java.util.concurrent.atomic.AtomicInteger(0)
-        longSample1.parallel(longSample1.defaultGrainSize).each({ e => if (e % 2 == 0) n.incrementAndGet })
+        longSample1.parallelBy(longSample1.defaultGrainSize).each({ e => if (e % 2 == 0) n.incrementAndGet })
         n.get
         ()
     }

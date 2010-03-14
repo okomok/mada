@@ -10,7 +10,7 @@ package madatest; package toy; package trampolinetest
 import junit.framework.Assert._
 
 
-import scala.util.control.TailRec
+// import scala.util.control.TailRec
 
 
 sealed trait Tree

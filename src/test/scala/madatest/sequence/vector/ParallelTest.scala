@@ -15,13 +15,13 @@ class ParallelTest {
     def testFusion: Unit = {
         val v = vector.range(0, 10)
         val e = vector.range(1, 11)
-        assertEquals(e, v.parallel(4).parallel(3).parallel(1).map(_ + 1))
+        assertEquals(e, v.parallelBy(4).parallelBy(3).parallelBy(1).map(_ + 1))
     }
 /*
     def testUnparallel: Unit = {
         val v = vector.range(0, 10)
         val e = vector.range(1, 11)
-        val pv = v.parallel(4).parallel(3)
+        val pv = v.parallelBy(4).parallelBy(3)
         assertTrue(pv.isParallel)
         val upv = pv.unparallel
         assertFalse(upv.isParallel)

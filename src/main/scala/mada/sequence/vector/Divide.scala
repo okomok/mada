@@ -14,7 +14,7 @@ case class Divide[A](val _1: Vector[A], _2: Int) extends Vector[Vector[A]] {
     override def end = _Step.count(_1.start, _1.end, _2)
     override def apply(i: Int) = {
         val cur = _1.start + i * _2
-        new Region(_1, cur, Math.min(cur + _2, _1.end))
+        new Region(_1, cur, java.lang.Math.min(cur + _2, _1.end))
     }
     // isDefinedAt is restrictive because _1.end affects.
 

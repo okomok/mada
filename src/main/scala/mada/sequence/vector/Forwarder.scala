@@ -92,7 +92,7 @@ trait Forwarder[A] extends TransformAdapter[A] with Sequence.Forwarder[A] {
     override def copy: Vector[A] = around(delegate.copy)
     override def copyTo[B >: A](that: Vector[B]): Vector[B] = delegate.copyTo(that)
 // parallel support
-    override def parallel(_grainSize: Int): Vector[A] = around(delegate.parallel(_grainSize))
+    override def parallelBy(_grainSize: Int): Vector[A] = around(delegate.parallelBy(_grainSize))
     override def grainSize: Int = delegate.grainSize
     override def defaultGrainSize: Int = delegate.defaultGrainSize
 // associative folding

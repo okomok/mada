@@ -99,7 +99,7 @@ private[mada] object RandomSampleN {
         var __out_ite = out_ite
 
         var __remaining = __last - __first
-        var __m = Math.min(__n, __remaining)
+        var __m = java.lang.Math.min(__n, __remaining)
 
         while (__m > 0) {
             if (__rand(__remaining) < __m) {

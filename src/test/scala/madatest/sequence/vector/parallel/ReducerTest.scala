@@ -30,6 +30,6 @@ class ReducerTest {
 
     def testBound2: Unit = {
         val v: Vector[Int] = Array(1,2,3,4)
-        assertEquals(v.reducer(_ + _), v.parallel(2).reducer(_ + _))
+        assertEquals(v.reducer(_ + _), v.parallelBy(2).reducer(_ + _))
     }
 }

@@ -23,7 +23,7 @@ private object ParallelSort {
         if (first != last) {
             val rs = new ArrayList[Vector[A]]
             loop(v, first, last, depthLimit(first, last), c, grainSize, rs)
-            fromJList(rs).parallel(1).each(_.sort(c))
+            fromJList(rs).parallelBy(1).each(_.sort(c))
         }
     }
 

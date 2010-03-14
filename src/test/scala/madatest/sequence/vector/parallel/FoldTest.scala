@@ -18,7 +18,7 @@ class FoldTest {
     def testTrivial: Unit = {
         val v = mada.sequence.vector.from(example1)
         assertEquals(v.foldLeft(3)(_ + _), v.parallel.fold(3)(_ + _))
-        assertEquals(v.foldLeft(3)(_ + _), v.parallel(6).fold(3)(_ + _))
-        assertEquals(v.foldLeft(3)(_ + _), v.parallel(1000).fold(3)(_ + _))
+        assertEquals(v.foldLeft(3)(_ + _), v.parallelBy(6).fold(3)(_ + _))
+        assertEquals(v.foldLeft(3)(_ + _), v.parallelBy(1000).fold(3)(_ + _))
     }
 }
