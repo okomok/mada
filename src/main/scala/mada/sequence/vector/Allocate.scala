@@ -7,9 +7,9 @@
 package mada; package sequence; package vector
 
 
-import scala.collection.mutable.GenericArray
+import scala.collection.mutable.ArraySeq
 
 
 case class Allocate[A](_1: Int) extends Forwarder[A] {
-    override protected val delegate = fromSIndexedSeq(new GenericArray[A](_1))
+    override protected val delegate = fromSIndexedSeq(new ArraySeq[A](_1))
 }
