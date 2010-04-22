@@ -107,7 +107,7 @@ object SKINonLazyTest {
     }
 }
 
-object SKITestOriginal {
+object SKITest {
 
     trait Term {
       type ap[x <: Term] <: Term
@@ -146,7 +146,7 @@ object SKITestOriginal {
       type eval = x#eval
     }
 
-    // The I combinator
+    // The I combinator#eval
     trait I extends Term {
       type ap[x <: Term] = I1[x]
       type eval = I
@@ -213,11 +213,11 @@ object SKITestOriginal {
       type eval = A0
     }
     trait A1 extends Term {
-      type ap[x <: Term] = x#ap[A0]#eval
+      type ap[x <: Term] = x#ap[A0]
       type eval = A1
     }
     trait A2 extends Term {
-      type ap[x <: Term] = x#ap[A1]#eval
+      type ap[x <: Term] = x#ap[A1]
       type eval = A2
     }
 
@@ -234,7 +234,7 @@ object SKITestOriginal {
     Equals[NN3#eval, c]
 
     trait An extends Term {
-      type ap[x <: Term] = x#ap[An]#eval
+      type ap[x <: Term] = x#ap[An]
       type eval = An
     }
     // Infinite iteration: Smashes scalac's stack
