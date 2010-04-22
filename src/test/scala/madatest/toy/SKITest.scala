@@ -107,138 +107,153 @@ object SKINonLazyTest {
     }
 }
 
+
 object SKITest {
 
     trait Term {
-      type ap[x <: Term] <: Term
+      type apply[x <: Term] <: Term
       type eval
     }
 
+    // Implementation helpers
+    trait Combinator[x <: Term] extends Term {
+        override type eval = x
+    }
+    trait Applicator extends Term {
+        protected type term <: Term
+        override type apply[x <: Term] = term#apply[x]
+        override type eval = term#eval
+    }
+    trait Constant[c <: Term] extends Term {
+        override type apply[x <: Term] = c
+        override type eval = c
+    }
+
     // The S combinator
-    trait S extends Term {
-      type ap[x <: Term] = S1[x]
-      type eval = S
+    trait S extends Combinator[S] {
+        override type apply[x <: Term] = _S1[x]
     }
-    trait S1[x <: Term] extends Term {
-      type ap[y <: Term] = S2[x, y]
-      type eval = S1[x]
+    trait _S1[x <: Term] extends Combinator[_S1[x]] {
+        override type apply[y <: Term] = _S2[x, y]
     }
-    trait S2[x <: Term, y <: Term] extends Term {
-      type ap[z <: Term] = S3[x, y, z]
-      type eval = S2[x, y]
+    trait _S2[x <: Term, y <: Term] extends Combinator[_S2[x, y]] {
+        override type apply[z <: Term] = _S3[x, y, z]
     }
-    trait S3[x <: Term, y <: Term, z <: Term] extends Term {
-      type ap[v <: Term] = x#ap[z]#ap[y#ap[z]]#ap[v] //eval#ap[v]
-      type eval = x#ap[z]#ap[y#ap[z]]#eval
+    trait _S3[x <: Term, y <: Term, z <: Term] extends Applicator {
+        override protected type term = x#apply[z]#apply[y#apply[z]]
     }
 
     // The K combinator
-    trait K extends Term {
-      type ap[x <: Term] = K1[x]
-      type eval = K
+    trait K extends Combinator[K] {
+        override type apply[x <: Term] = _K1[x]
     }
-    trait K1[x <: Term] extends Term {
-      type ap[y <: Term] = K2[x, y]
-      type eval = K1[x]
+    trait _K1[x <: Term] extends Combinator[_K1[x]] {
+        override type apply[y <: Term] = _K2[x, y]
     }
-    trait K2[x <: Term, y <: Term] extends Term {
-      type ap[z <: Term] = x#ap[z] //eval#ap[z]
-      type eval = x#eval
+    trait _K2[x <: Term, y <: Term] extends Applicator {
+        override protected type term = x
     }
 
-    // The I combinator#eval
-    trait I extends Term {
-      type ap[x <: Term] = I1[x]
-      type eval = I
+    // The I combinator
+    trait I extends Combinator[I] {
+        override type apply[x <: Term] = _I1[x]
     }
-    trait I1[x <: Term] extends Term {
-      type ap[y <: Term] = x#ap[y] //eval#ap[y]
-      type eval = x#eval
+    trait _I1[x <: Term] extends Applicator {
+        override protected type term = x
     }
 
-    trait c extends Term {
-      type ap[x <: Term] = c
-      type eval = c
+    // Convenience
+    trait apply0[x0 <: Term] extends Applicator {
+        override protected type term = x0
     }
-    trait d extends Term {
-      type ap[x <: Term] = d
-      type eval = d
+    trait apply1[x0 <: Term, x1 <: Term] extends Applicator {
+        override protected type term = x0#apply[x1]
     }
-    trait e extends Term {
-      type ap[x <: Term] = e
-      type eval = e
+    trait apply2[x0 <: Term, x1 <: Term, x2 <: Term] extends Applicator {
+        override protected type term = x0#apply[x1]#apply[x2]
+    }
+    trait apply3[x0 <: Term, x1 <: Term, x2 <: Term, x3 <: Term] extends Applicator {
+        override protected type term = x0#apply[x1]#apply[x2]#apply[x3]
+    }
+    trait apply4[x0 <: Term, x1 <: Term, x2 <: Term, x3 <: Term, x4 <: Term] extends Applicator {
+        override protected type term = x0#apply[x1]#apply[x2]#apply[x3]#apply[x4]
     }
 
-     def Equals[A >: B <:B , B]=()
 
-    Equals[Int, Int]     // compiles fine
-    //Equals[String, Int] // won't compile
+  // Tests
+
+    trait c extends Constant[c]
+    trait d extends Constant[d]
+    trait e extends Constant[e]
+
+    assertSame[Int, Int]     // compiles fine
+    //assertSame[String, Int] // won't compile
 
     // Ic -> c
-    Equals[I#ap[c]#eval, c]
+    assertSame[apply1[I, c]#eval, c]
 
     // Kcd -> c
-    Equals[K#ap[c]#ap[d]#eval, c]
+    assertSame[apply2[K, c, d]#eval, c]
 
     // KKcde -> d
-    Equals[K#ap[K]#ap[c]#ap[d]#ap[e]#eval, d]
+    assertSame[apply4[K, K, c, d, e]#eval, d]
 
     // SIIIc -> Ic
-    Equals[S#ap[I]#ap[I]#ap[I]#ap[c]#eval, c]
+    assertSame[apply4[S, I, I, I, c]#eval, c]
 
     // SKKc -> Ic
-    Equals[S#ap[K]#ap[K]#ap[c]#eval, c]
+    assertSame[apply3[S, K, K, c]#eval, c]
 
     // SIIKc -> KKc
-    Equals[S#ap[I]#ap[I]#ap[K]#ap[c]#eval, K#ap[K]#ap[c]#eval]
+    assertSame[apply4[S, I, I, K ,c]#eval, apply2[K, K, c]#eval]
 
     // SIKKc -> K(KK)c
-    Equals[S#ap[I]#ap[K]#ap[K]#ap[c]#eval, K#ap[K#ap[K]]#ap[c]#eval]
+    assertSame[apply4[S, I, K, K, c]#eval, apply2[K, apply1[K, K], c]#eval]
 
     // SIKIc -> KIc
-    Equals[S#ap[I]#ap[K]#ap[I]#ap[c]#eval, K#ap[I]#ap[c]#eval]
+    assertSame[apply4[S, I, K, I, c]#eval, apply2[K, I, c]#eval]
 
     // SKIc -> Ic
-    Equals[S#ap[K]#ap[I]#ap[c]#eval, c]
+    assertSame[apply3[S, K, I, c]#eval, apply1[I, c]#eval]
 
     // R = S(K(SI))K  (reverse)
-    type R = S#ap[K#ap[S#ap[I]]]#ap[K]
-    Equals[R#ap[c]#ap[d]#eval, d#ap[c]#eval]
+    type R = apply2[S, apply1[K, apply1[S, I]], K]
+    assertSame[apply2[R, c, d]#eval, apply1[d, c]#eval]
 
     // b(a) = S(Ka)(SII)
-    type b[a <: Term] = S#ap[K#ap[a]]#ap[S#ap[I]#ap[I]]
+    type b[a <: Term] = apply2[S, apply1[K, a], apply2[S, I, I]]
 
     trait A0 extends Term {
-      type ap[x <: Term] = c
+      type apply[x <: Term] = c
       type eval = A0
     }
     trait A1 extends Term {
-      type ap[x <: Term] = x#ap[A0]
+      type apply[x <: Term] = x#apply[A0]
       type eval = A1
     }
     trait A2 extends Term {
-      type ap[x <: Term] = x#ap[A1]
+      type apply[x <: Term] = x#apply[A1]
       type eval = A2
     }
 
     // Single iteration
-    type NN1 = b[R]#ap[b[R]]#ap[A0]
-    Equals[NN1#eval, c]
+    type NN1 = b[R]#apply[b[R]]#apply[A0]
+    assertSame[NN1#eval, c]
 
     // Double iteration
-    type NN2 = b[R]#ap[b[R]]#ap[A1]
-    Equals[NN2#eval, c]
+    type NN2 = b[R]#apply[b[R]]#apply[A1]
+    assertSame[NN2#eval, c]
 
     // Triple iteration
-    type NN3 = b[R]#ap[b[R]]#ap[A2]
-    Equals[NN3#eval, c]
+    type NN3 = b[R]#apply[b[R]]#apply[A2]
+    assertSame[NN3#eval, c]
 
     trait An extends Term {
-      type ap[x <: Term] = x#ap[An]
+      type apply[x <: Term] = x#apply[An]
       type eval = An
     }
     // Infinite iteration: Smashes scalac's stack
-      type NNn = b[R]#ap[b[R]]#ap[An]
-      // Equals[NNn#eval, c]
+      type NNn = b[R]#apply[b[R]]#apply[An]
+      // assertSame[NNn#eval, c]
 
 }
