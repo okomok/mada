@@ -111,7 +111,7 @@ object SKITestOriginal {
 
     trait Term {
       type ap[x <: Term] <: Term
-      type eval <: Term
+      type eval
     }
 
     // The S combinator
