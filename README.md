@@ -30,7 +30,7 @@
 
 `auto` provides deterministic resource management within a block.
 
-    import mada.auto._
+    import com.github.okomok.mada.auto._
     import java.nio.channels
     import java.nio.channels.Channels
 
@@ -53,8 +53,8 @@
 
 `blend` contains heterogeneous-list implementation originally written in [Metascala].
 
-    import mada.meta.nat.Literal._
-    import mada.blend._
+    import com.github.okomok.mada.meta.nat.Literal._
+    import com.github.okomok.mada.blend._
     import junit.framework.Assert._
 
     class DocTest {
@@ -106,7 +106,7 @@ The following example contrasts the non-meta versus meta programming in Scala:
     }
 
     class metaDocTest {
-        import mada.meta._
+        import com.github.okomok.mada.meta._
 
         // meta boolean value
         assert[`true`]
@@ -150,8 +150,8 @@ Scala metaprogramming seems to put several restrictions:
 
 `peg` package provides "pure" [PEG] parser combinators:
 
-    import mada.peg._
-    import mada.peg.compatibles._
+    import com.github.okomok.mada.peg._
+    import com.github.okomok.mada.peg.compatibles._
     import junit.framework.Assert._
 
     class DocTest {
@@ -212,7 +212,7 @@ When you need strictly-evaluated one, apply method `strict`.
 `List` emulates lazily-evaluated list like haskell's one,
 which is useful to build recursive sequences:
 
-    import mada.sequence._
+    import com.github.okomok.mada.sequence._
     import junit.framework.Assert._
 
     class DocTest {
@@ -238,7 +238,7 @@ but number of iterator instances would be exponential-growth in a recursive sequ
 `Vector` represents (optionally writable) random access sequence, that is, "array".
 It supports also parallel algorithms. Parallelization is explicit but transparent:
 
-    import mada.sequence._
+    import com.github.okomok.mada.sequence._
     import junit.framework.Assert._
 
     class DocTest {
@@ -290,8 +290,8 @@ Shunsuke Sogame <<okomok@gmail.com>>
 
 
 [MIT License]: http://www.opensource.org/licenses/mit-license.php "MIT License"
-[Browse Source]: http://github.com/okomok/mada/tree/master/src/main/scala/mada "Browse Source"
-[Browse Test Source]: http://github.com/okomok/mada/tree/master/src/test/scala/madatest "Browse Test Source"
+[Browse Source]: http://github.com/okomok/mada/tree/master/src/main/scala "Browse Source"
+[Browse Test Source]: http://github.com/okomok/mada/tree/master/src/test/scala "Browse Test Source"
 [The Scala Programming Language]: http://www.scala-lang.org/ "The Scala Programming Language"
 [PEG]: http://en.wikipedia.org/wiki/Parsing_expression_grammar "PEG"
 [MetaScala]: http://www.assembla.com/wiki/show/metascala
