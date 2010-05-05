@@ -152,19 +152,17 @@ object SKITest {
     trait _K1[x <: Term] extends Combinator[_K1[x]] {
         override type apply[y <: Term] = x // _K2[x, y]
     }
-    /*
     trait _K2[x <: Term, y <: Term] extends Applicator {
         override protected type term = x
-    }*/
+    }
 
     // The I combinator
     trait I extends Combinator[I] {
         override type apply[x <: Term] = x // _I1[x]
     }
-    /*
     trait _I1[x <: Term] extends Applicator {
         override protected type term = x
-    }*/
+    }
 
     // Convenience
     trait apply0[x0 <: Term] extends Applicator {
