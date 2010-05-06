@@ -115,7 +115,7 @@ object SKITest {
     trait Term {
       type apply[x <: Term] <: Term
       type eval
-    }
+  }
 
     // Implementation helpers
     trait Combinator[x <: Term] extends Term {
@@ -150,40 +150,23 @@ object SKITest {
         override type apply[x <: Term] = _K1[x]
     }
     trait _K1[x <: Term] extends Combinator[_K1[x]] {
-        override type apply[y <: Term] = x // _K2[x, y]
-    }
-    trait _K2[x <: Term, y <: Term] extends Applicator {
-        override protected type term = x
+        override type apply[y <: Term] = x
     }
 
     // The I combinator
     trait I extends Combinator[I] {
-        override type apply[x <: Term] = x // _I1[x]
-    }
-    trait _I1[x <: Term] extends Applicator {
-        override protected type term = x
+        override type apply[x <: Term] = x
     }
 
-    // Convenience
-    trait apply0[x0 <: Term] extends Applicator {
-        override protected type term = x0
+    trait box[c] extends Term {
+        override type apply[x <: Term] = box[c]
+        override type eval = c
     }
-    trait apply1[x0 <: Term, x1 <: Term] extends Applicator {
-        override protected type term = x0#apply[x1]
-    }
-    trait apply2[x0 <: Term, x1 <: Term, x2 <: Term] extends Applicator {
-        override protected type term = x0#apply[x1]#apply[x2]
-    }
-    trait apply3[x0 <: Term, x1 <: Term, x2 <: Term, x3 <: Term] extends Applicator {
-        override protected type term = x0#apply[x1]#apply[x2]#apply[x3]
-    }
-    trait apply4[x0 <: Term, x1 <: Term, x2 <: Term, x3 <: Term, x4 <: Term] extends Applicator {
-        override protected type term = x0#apply[x1]#apply[x2]#apply[x3]#apply[x4]
-    }
+
+    type ![x <: Term, y <: Term] = x#apply[y]
 
 
   // Tests
-
     trait c extends Constant[c]
     trait d extends Constant[d]
     trait e extends Constant[e]
@@ -192,38 +175,38 @@ object SKITest {
     //assertSame[String, Int] // won't compile
 
     // Ic -> c
-    assertSame[apply1[I, c]#eval, c]
+    assertSame[(I!c)#eval , c]
 
     // Kcd -> c
-    assertSame[apply2[K, c, d]#eval, c]
+    assertSame[(K!c!d)#eval, c]
 
     // KKcde -> d
-    assertSame[apply4[K, K, c, d, e]#eval, d]
+    assertSame[(K!K!c!d!e)#eval, d]
 
     // SIIIc -> Ic
-    assertSame[apply4[S, I, I, I, c]#eval, c]
+    assertSame[(S!I!I!I!c)#eval, c]
 
     // SKKc -> Ic
-    assertSame[apply3[S, K, K, c]#eval, c]
+    assertSame[(S!K!K!c)#eval, c]
 
     // SIIKc -> KKc
-    assertSame[apply4[S, I, I, K ,c]#eval, apply2[K, K, c]#eval]
+    assertSame[(S!I!I!K!c)#eval, (K!K!c)#eval]
 
     // SIKKc -> K(KK)c
-    assertSame[apply4[S, I, K, K, c]#eval, apply2[K, apply1[K, K], c]#eval]
+    assertSame[(S!I!K!K!c)#eval, (K!(K!K)!c)#eval]
 
     // SIKIc -> KIc
-    assertSame[apply4[S, I, K, I, c]#eval, apply2[K, I, c]#eval]
+    assertSame[(S!I!K!I!c)#eval, (K!I!c)#eval]
 
     // SKIc -> Ic
-    assertSame[apply3[S, K, I, c]#eval, apply1[I, c]#eval]
+    assertSame[(S!K!I!c)#eval, (I!c)#eval]
 
     // R = S(K(SI))K  (reverse)
-    type R = apply2[S, apply1[K, apply1[S, I]], K]
-    assertSame[apply2[R, c, d]#eval, apply1[d, c]#eval]
+    type R = S!(K!(S!I))!K
+    assertSame[(R!c!d)#eval, (d!c)#eval]
 
     // b(a) = S(Ka)(SII)
-    type b[a <: Term] = apply2[S, apply1[K, a], apply2[S, I, I]]
+    type b[a <: Term] = S!(K!a)!(S!I!I)
 
     trait A0 extends Term {
       type apply[x <: Term] = c
