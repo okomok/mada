@@ -241,4 +241,7 @@ object SKITest {
       type NNn = b[R]#apply[b[R]]#apply[An]
       // assertSame[NNn#eval, c]
 
+    // box
+    assertSame[(I!box[Int])#eval , Int]
+
 }
