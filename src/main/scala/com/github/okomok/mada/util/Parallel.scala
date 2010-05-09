@@ -31,7 +31,7 @@ object Parallels {
     val poolSize = 2 * java.lang.Runtime.getRuntime.availableProcessors
 
     // Interdependent tasks need unbounded pools to avoid starvation deadlock.
-    // (scala.actors.Future doesn't support dependent tasks.)
+    // (scala.actors.Future doesn't support such tasks.)
     val executor =
         new ThreadPoolExecutor(0, poolSize, 60L, TimeUnit.SECONDS, new SynchronousQueue[Runnable]())
         // Executors.newCachedThreadPool()

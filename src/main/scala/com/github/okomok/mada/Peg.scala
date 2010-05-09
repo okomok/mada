@@ -13,7 +13,7 @@ import peg._
 /**
  * The PEG parser combinator:
  * <ul>
- * <li/>Sequence: <code>e1 >> e2</code>
+ * <li/>Sequence: <code>e1 &gt;&gt; e2</code>
  * <li/>Ordered choice: <code>e1 | e2</code>
  * <li/>Zero-or-more: <code>e.*</code>
  * <li/>One-or-more: <code>e.+</code>
@@ -54,7 +54,7 @@ trait Peg[A] {
      * Matches <code>this</code> and <code>that</code>.
      * <code>that</code> parses sub-region which <code>this</code> matches.
      *
-     * @see     & as alias.
+     * @see     &amp; as alias.
      */
     final def and(that: Peg[A]): Peg[A] = And(this, that)
 
@@ -93,28 +93,28 @@ trait Peg[A] {
     /**
      * Sequence
      *
-     * @see     >> as alias.
+     * @see     &gt;&gt; as alias.
      */
     final def seqAnd(that: Peg[A]): Peg[A] = SeqAnd(this, that)
 
     /**
-     * @return  <code>(this >> that.?) | that</code>.
-     * @see     >|> as alias.
+     * @return  <code>(this &gt;&gt; that.?) | that</code>.
+     * @see     &gt;|&gt; as alias.
      */
     final def seqOr(that: Peg[A]): Peg[A] = SeqOr(this, that)
 
     /**
-     * Equivalent to <code>!this | this >> that</code>, but parses <code>this</code> once.
+     * Equivalent to <code>!this | this &gt;&gt; that</code>, but parses <code>this</code> once.
      *
-     * @see     >-> as alias.
+     * @see     &gt;-&gt; as alias.
      */
     final def seqImply(that: Peg[A]): Peg[A] = SeqImply(this, that)
 
     /**
      * Goes sequence as long as possible.
      *
-     * @return  <code>that >> this.?</code>.
-     * @see     >?>: as alias.
+     * @return  <code>that &gt;&gt; this.?</code>.
+     * @see     &gt;?&gt;: as alias.
      */
     final def seqOpt_:(that: Peg[A]): Peg[A] = SeqOpt(this, that)
 
@@ -172,14 +172,14 @@ trait Peg[A] {
     /**
      * Lookbehind zero-width assertion
      *
-     * @see     <=~ as alias.
+     * @see     &gt;=~ as alias.
      */
     final def lookbehind: Peg[A] = Lookbehind(this)
 
     /**
      * Lookback zero-width assertion; looking over input as reversed.
      *
-     * @see     <<~ as alias.
+     * @see     &gt;&gt;~ as alias.
      */
     final def lookback: Peg[A] = Lookback(this)
 
