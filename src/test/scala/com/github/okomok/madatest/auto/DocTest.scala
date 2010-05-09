@@ -14,7 +14,9 @@ import com.github.okomok.mada
     import java.nio.channels.Channels
 
     class DocTest extends junit.framework.TestCase {
-        def testTrivial: Unit = {
+        def testOff: Unit = ()
+
+        def teztTrivial: Unit = {
             for {
                 source <- use(Channels.newChannel(System.in))
                 dest <- use(Channels.newChannel(System.out))
