@@ -16,7 +16,10 @@ import junit.framework.Assert._
 import java.nio.channels._
 
 
-class NioTest {
+class NioTest extends junit.framework.TestCase {
+
+    def testOff: Unit = ()
+
     def testTrivial(off: Int): Unit = {
 
         val s: Selector = null

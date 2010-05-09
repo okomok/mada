@@ -15,7 +15,7 @@ import junit.framework.Assert._
 // See: That about wraps it up --- Using FIX to handle errors without exceptions, and other programming tricks (1997)
 //  at http://citeseer.ist.psu.edu/51062.html
 
-class FixTest {
+class FixTest extends junit.framework.TestCase {
     class R(val i: Int)
 
     def testTrivial: Unit = {

@@ -13,7 +13,7 @@ import mada.sequence.list
 import junit.framework.Assert._
 
 
-class SliceTest {
+class SliceTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
         val t = list.Of(4,5,1,3,2,9,7,10)
         val u = list.Of(4,5,1)

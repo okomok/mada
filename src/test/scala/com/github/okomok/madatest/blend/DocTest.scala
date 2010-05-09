@@ -13,7 +13,7 @@ import com.github.okomok.mada
     import mada.blend._
     import junit.framework.Assert._
 
-    class DocTest {
+    class DocTest extends junit.framework.TestCase {
         def testTrivial: Unit = {
             type l = String :: Boolean :: Char :: Int :: Nil
             val l: l = "hetero" :: true :: 'L' :: 7 :: Nil

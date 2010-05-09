@@ -13,7 +13,7 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
-class TakeWhileTest {
+class TakeWhileTest extends junit.framework.TestCase {
     def testTrivial0: Unit = {
         val a = vector.Of(1,2,3,4,5,6)
         val b = new java.util.ArrayList[Int]

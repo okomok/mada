@@ -16,7 +16,7 @@ import mada.peg.Compatibles._
 import mada.sequence.{Vector, vector}
 
 
-class SplitTest {
+class SplitTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
         assertEquals(
             mada.sequence.Iterative(vector.from("ab"), vector.from("cdef"), vector.from("gh")),

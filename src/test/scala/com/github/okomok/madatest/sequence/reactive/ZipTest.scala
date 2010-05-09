@@ -13,7 +13,7 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
-class ZipTest {
+class ZipTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
         val t = reactive.Of(1,2,3)
         val u = reactive.Of("2","3","4")

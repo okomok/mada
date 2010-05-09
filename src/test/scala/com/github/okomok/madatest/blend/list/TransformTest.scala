@@ -13,7 +13,7 @@ import mada.blend._
 import junit.framework.Assert._
 
 
-class TransformTest {
+class TransformTest extends junit.framework.TestCase {
 
     def testTrivial {
         val ff = list.transform((x: Any, y: Any) => x.toString + y.toString)

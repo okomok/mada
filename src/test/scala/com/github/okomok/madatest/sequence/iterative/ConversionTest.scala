@@ -13,7 +13,7 @@ import mada.sequence.iterative
 import junit.framework.Assert._
 
 
-class ConversionTest {
+class ConversionTest extends junit.framework.TestCase {
     def testIterable: Unit = {
         val t = iterative.Of(1,2,3)
         val i = t.toSeq.iterator

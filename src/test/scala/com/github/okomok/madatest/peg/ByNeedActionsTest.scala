@@ -14,7 +14,7 @@ import mada.peg.Compatibles._
 import mada.{Peg, peg}
 
 
-class ByNeedActionsTest {
+class ByNeedActionsTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
         val B = new peg.ByNeedActions[Char]
         var c = 0

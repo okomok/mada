@@ -13,7 +13,7 @@ import junit.framework.Assert._
 import junit.framework.AssertionFailedError
 
 
-class AssertNotEqualsTest {
+class AssertNotEqualsTest extends junit.framework.TestCase {
     def testThis {
         AssertNotEquals("abc", "efg")
         AssertNotEquals("wowow", 21, 20)

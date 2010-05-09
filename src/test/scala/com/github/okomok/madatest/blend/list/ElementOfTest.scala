@@ -13,7 +13,7 @@ import mada.blend._
 import mada.meta
 
 
-class ElementOfTest {
+class ElementOfTest extends junit.framework.TestCase {
     import junit.framework.Assert._
     assertFalse(scala.Nil eq Nil)
 

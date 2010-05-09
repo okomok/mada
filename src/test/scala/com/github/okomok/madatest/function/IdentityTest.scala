@@ -13,7 +13,7 @@ import mada.function
 import junit.framework.Assert._
 
 
-class IdentityTest {
+class IdentityTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
         assertEquals(11, function.identity[Int].apply(11))
         assertEquals("11", function.identity[String].apply("11"))

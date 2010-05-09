@@ -16,7 +16,8 @@ import mada.sequence.{Vector, vector}
 import com.github.okomok.madatest.sequencetest.vectortest.detail.Example._
 
 
-class CompatiblesTest {
+class CompatiblesTest extends junit.framework.TestCase {
+    def testOff: Unit = ()
     def testCompile(x: Int): Unit = {
         takeIterable(makeVector.toSeq)
         takeVector(Array(1,2,3))

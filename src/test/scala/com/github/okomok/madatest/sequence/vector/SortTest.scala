@@ -18,7 +18,7 @@ import junit.framework.Assert._
 import com.github.okomok.madatest.sequencetest.vectortest.detail.Example._
 
 
-class SortTest {
+class SortTest extends junit.framework.TestCase {
     def testTrivial {
         val actual = fromArray(example1).seal.sort(Ordering.fromLessThan[Int](_ < _))
         detail.TestVectorReadOnly(example1Sorted, actual)

@@ -12,7 +12,7 @@ import com.github.okomok.mada
     import mada.sequence.iterative
     import junit.framework.Assert._
 
-    class DocTest {
+    class DocTest extends junit.framework.TestCase {
         def testFibs: Unit = {
             val fibs = new iterative.Recursive[Int]
             fibs := iterative.Of(0, 1) ++ fibs.zipBy(fibs.tail)(_ + _)

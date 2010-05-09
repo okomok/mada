@@ -19,7 +19,7 @@ import mada.peg._
 import mada.sequence.vector
 
 
-class SymbolMapTest {
+class SymbolMapTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
         val g = symbolMap(entry(vector.from("e"), "z"), entry("ef", "g"), /* entry("", "DEFAULT"), */ entry("wx", "wy"), entry("w", "xyz"))
         assertTrue("abc" >> g >> "LL"  matches "abcezLL")

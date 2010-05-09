@@ -15,7 +15,7 @@ import junit.framework.Assert._
 import detail.Example._
 
 
-class ForTest {
+class ForTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
         val v = vector.fromArray(example1)
         val w = for (e <- v) yield e

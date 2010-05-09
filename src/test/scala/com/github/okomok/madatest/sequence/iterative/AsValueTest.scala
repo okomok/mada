@@ -13,7 +13,7 @@ import mada.sequence.iterative
 import junit.framework.Assert._
 
 
-class AsValueTest {
+class AsValueTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
         val t: iterative.Type[Int] = iterative.Of(1,2,3)
         val u = iterative.Of(1,2,3)

@@ -19,7 +19,7 @@ import junit.framework.Assert._
 import mada.peg.Compatibles._
 
 
-class ByNameTest {
+class ByNameTest extends junit.framework.TestCase {
     val S = new StackActions[Char, Int]
 
     lazy val expr = term >>

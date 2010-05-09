@@ -13,7 +13,7 @@ import mada.sequence.iterative
 import junit.framework.Assert._
 
 
-class MapTest {
+class MapTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
     //    new NotStartable[Int].map(_ + 1)
         val t = iterative.Of(1,2,3)

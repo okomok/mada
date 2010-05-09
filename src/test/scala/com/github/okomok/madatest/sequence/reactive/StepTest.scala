@@ -13,7 +13,7 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
-class StepTest {
+class StepTest extends junit.framework.TestCase {
 /*
     def testStep0: Unit = {
         val out = new java.util.ArrayList[Int]

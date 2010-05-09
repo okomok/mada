@@ -13,7 +13,7 @@ import mada.sequence.iterative
 import junit.framework.Assert._
 
 
-class BlockTest {
+class BlockTest extends junit.framework.TestCase {
     def makeEmpty(y: Int => Unit): Int = 999
 
     def testEmpty: Unit = {

@@ -13,9 +13,7 @@ import mada.meta._
 // import junit.framework.Assert._
 
 
-class FunctionTest {
-    def testNone: Unit = ()
-
+object FunctionTest {
 
     trait Func1 {
         type Arg1

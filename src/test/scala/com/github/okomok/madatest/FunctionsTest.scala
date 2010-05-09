@@ -13,7 +13,7 @@ import mada.function
 import junit.framework.Assert._
 
 
-class FunctionsTest {
+class FunctionsTest extends junit.framework.TestCase {
     def testMemoize: Unit = {
         var i = 0
         def heavy(fixed: Int => Int, v: Int) = { i += 1; v * v }

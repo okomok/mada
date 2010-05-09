@@ -19,7 +19,7 @@ import mada.peg.Compatibles._
 
 
 
-class CalcTest {
+class CalcTest extends junit.framework.TestCase {
     val expr, term, factor, integer, digit = new Rule[Char]
 
     val stack = new java.util.ArrayDeque[Int]

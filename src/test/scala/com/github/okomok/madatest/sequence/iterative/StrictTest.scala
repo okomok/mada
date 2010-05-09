@@ -13,7 +13,7 @@ import mada.sequence.iterative
 import junit.framework.Assert._
 
 
-class StrictTest {
+class StrictTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
         val k = new java.util.ArrayList[Int]
         val tr = iterative.Of(2,4,6,8,10)

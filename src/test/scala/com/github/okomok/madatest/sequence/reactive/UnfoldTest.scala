@@ -13,7 +13,7 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
-class UnfoldTest {
+class UnfoldTest extends junit.framework.TestCase {
     def testRight: Unit = {
         val r = reactive.unfoldRight(10){ b => if (b == 0) None else Some(b, b-1) }
         val out = new java.util.ArrayList[Int]

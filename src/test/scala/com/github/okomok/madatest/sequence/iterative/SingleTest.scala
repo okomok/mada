@@ -13,7 +13,7 @@ import mada.sequence.iterative
 import junit.framework.Assert._
 
 
-class SingleTest {
+class SingleTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
         val t = iterative.single(99)
         val u = iterative.Of(99)

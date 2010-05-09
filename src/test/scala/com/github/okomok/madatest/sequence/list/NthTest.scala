@@ -13,7 +13,7 @@ import mada.sequence.list
 import junit.framework.Assert._
 
 
-class NthTest {
+class NthTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
         val A1 = list.Of(1,6,7,10,14,17)
         assertEquals(1, A1.nth(0))

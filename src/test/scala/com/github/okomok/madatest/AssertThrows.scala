@@ -28,7 +28,7 @@ object AssertThrows {
 }
 
 
-class AssertThrowsTest {
+class AssertThrowsTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
         AssertThrows(throw new Error())
     }

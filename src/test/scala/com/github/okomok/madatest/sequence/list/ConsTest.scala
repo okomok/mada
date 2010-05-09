@@ -13,7 +13,7 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
-class ConsTest {
+class ConsTest extends junit.framework.TestCase {
 
     def testInfer: Unit = {
         val x: list.Type[Int] = 1 :: 3 :: 4 :: Nil

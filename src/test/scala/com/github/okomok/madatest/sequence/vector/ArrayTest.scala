@@ -14,7 +14,7 @@ import mada.sequence.vector.fromArray
 import junit.framework.Assert._
 
 
-class ArrayTest {
+class ArrayTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
         val a = fromArray(Array.range(0, 6))
         val b = fromArray(Array.range(0, 6))

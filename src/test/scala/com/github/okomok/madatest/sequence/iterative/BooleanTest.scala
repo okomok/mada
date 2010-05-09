@@ -13,7 +13,7 @@ import mada.sequence.iterative
 import junit.framework.Assert._
 
 
-class BooleanTest {
+class BooleanTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
         val tr = iterative.Of(2,4,6)
         val t = tr.begin

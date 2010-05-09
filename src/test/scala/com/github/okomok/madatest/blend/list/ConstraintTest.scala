@@ -13,7 +13,7 @@ import mada.blend._
 import mada.meta
 
 
-class ConstraintTest {
+class ConstraintTest extends junit.framework.TestCase {
     import junit.framework.Assert._
     assertFalse(scala.Nil eq Nil)
 

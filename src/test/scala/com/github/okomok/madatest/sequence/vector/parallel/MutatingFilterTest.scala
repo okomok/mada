@@ -14,7 +14,7 @@ import junit.framework.Assert._
 
 
 
-class FilterTest {
+class FilterTest extends junit.framework.TestCase {
     def testTrivial {
         val v = vector.range(0, 10)
         val e = vector.Of(0,2,4,6,8)

@@ -12,7 +12,7 @@ import com.github.okomok.mada
 import junit.framework.Assert._
 
 
-class EnvTest {
+class EnvTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
         mada.blend.`if`[Unit, mada.isDebug] {
             assertTrue(mada.isDebug)

@@ -13,7 +13,7 @@ import mada.sequence.iterative
 import junit.framework.Assert._
 
 
-class MemoizeTest {
+class MemoizeTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
         var memo = false
         val v = iterative.from(Array(0,1,2,3,4,5)).map{ x => if (memo) fail("doh"); x + 10 }

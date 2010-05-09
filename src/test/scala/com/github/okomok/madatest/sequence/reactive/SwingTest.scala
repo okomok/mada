@@ -17,8 +17,9 @@ import javax.swing
 import reactive.Swing
 
 
-class SwingTest {
+class SwingTest extends junit.framework.TestCase {
 
+    def testOff: Unit = ()
 
     def testTrivial(off: Int): Unit = {
         val frame = new swing.JFrame("SwingTest")

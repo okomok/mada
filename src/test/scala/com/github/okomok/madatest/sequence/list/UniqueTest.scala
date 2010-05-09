@@ -13,7 +13,7 @@ import mada.sequence.list
 import junit.framework.Assert._
 
 
-class UniqueTest {
+class UniqueTest extends junit.framework.TestCase {
 
     def testUnique: Unit = {
         val tr = list.Of(5,4,4,4,3,2,2,2,2,2,1)

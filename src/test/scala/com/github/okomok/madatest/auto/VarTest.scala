@@ -14,7 +14,7 @@ import mada.Auto
 import junit.framework.Assert._
 
 
-class VarTest {
+class VarTest extends junit.framework.TestCase {
 
     class MyFile(val name: String) extends java.io.Closeable {
         var disposed = false

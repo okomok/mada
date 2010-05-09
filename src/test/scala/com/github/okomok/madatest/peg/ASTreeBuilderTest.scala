@@ -20,7 +20,7 @@ import mada.peg.Compatibles._
 import javax.swing.tree.TreeNode
 
 
-class ASTreeBuilderTest {
+class ASTreeBuilderTest extends junit.framework.TestCase {
     var indent = 0
 
     def testTrivial: Unit = {

@@ -16,7 +16,7 @@ import mada.sequence.{Vector, vector}
 import junit.framework.Assert._
 
 
-class OrderingTest {
+class OrderingTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
         val v1 = vector.from("ab")
         val v2 = vector.from("")

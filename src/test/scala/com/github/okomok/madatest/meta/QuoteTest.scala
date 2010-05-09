@@ -13,7 +13,7 @@ import mada.meta._
 // import junit.framework.Assert._
 
 
-class QuoteTest {
+object QuoteTest {
 
     // "types"
     trait Strong
@@ -31,7 +31,7 @@ class QuoteTest {
     type q1 = quote2[get1, Strong, Strung]
     type q2 = quote2[get2, Strong, Strung]
 
-    def testTrivial: Unit = {
+    trait testTrivial {
         assertSame[quote1[identity, String]#apply[String], String]
         assertSame[q1#apply[so, su], so]
         assertSame[q2#apply[so, su], su]

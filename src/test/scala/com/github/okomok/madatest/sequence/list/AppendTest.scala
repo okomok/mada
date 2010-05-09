@@ -13,7 +13,7 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
-class AppendTest {
+class AppendTest extends junit.framework.TestCase {
 
     def testTrivial: Unit = {
         val t = list.Of(4,5,1,3)

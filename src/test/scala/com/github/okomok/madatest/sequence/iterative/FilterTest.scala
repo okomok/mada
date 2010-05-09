@@ -13,7 +13,7 @@ import mada.sequence.iterative
 import junit.framework.Assert._
 
 
-class FilterTest {
+class FilterTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
     //    new NotStartable[Int].filter(_ => false)
         val t = iterative.Of(1,2,2,3,4,5,5,6,7,8,9)

@@ -12,7 +12,7 @@ import com.github.okomok.mada
 import mada.meta._
 
 
-class NatTest {
+class NatTest extends junit.framework.TestCase {
     def testUnmeta: Unit = {
         import junit.framework.Assert._
         assertEquals(0, unmeta[_0N, scala.Int])

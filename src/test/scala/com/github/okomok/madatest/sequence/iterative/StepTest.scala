@@ -13,7 +13,7 @@ import mada.sequence.iterative
 import junit.framework.Assert._
 
 
-class StepTest {
+class StepTest extends junit.framework.TestCase {
 
     def testStep0: Unit = {
         // Unlike Vector, 0 is allowed.

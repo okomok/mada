@@ -13,7 +13,7 @@ import mada.meta._
 //import junit.framework.Assert._
 
 
-class NatVisitorTest {
+object NatVisitorTest {
 
     trait vt[m <: Nat] extends nat.Visitor[Nat] {
         type visitZero = m

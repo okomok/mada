@@ -16,7 +16,7 @@ import com.github.okomok.madatest.sequencetest.vectortest.detail.Example._
 import com.github.okomok.madatest.sequencetest.vectortest.detail._
 
 
-class SortTest {
+class SortTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
         val v = fromArray(example1)
         mada.sequence.vector.stl.sort(v, 0, v.size)

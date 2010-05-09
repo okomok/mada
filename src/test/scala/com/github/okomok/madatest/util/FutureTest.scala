@@ -13,7 +13,7 @@ import mada.util
 import junit.framework.Assert._
 
 
-class FutureTest {
+class FutureTest extends junit.framework.TestCase {
     class Wrap(val i: Int) extends RuntimeException
 
     def testTrivial: Unit = {

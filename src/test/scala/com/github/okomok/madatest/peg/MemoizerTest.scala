@@ -16,7 +16,7 @@ import mada.peg.Compatibles._
 import mada.{Peg, peg}
 
 
-class MemoizerTest {
+class MemoizerTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
         var c = 0
         val v = vector.from("abcdefghij")

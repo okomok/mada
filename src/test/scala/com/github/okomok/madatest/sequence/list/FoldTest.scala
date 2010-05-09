@@ -13,7 +13,7 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
-class FoldTest {
+class FoldTest extends junit.framework.TestCase {
 
     def testRight: Unit = {
         val A: List[Int] = (1 :: 3 :: 4 :: Nil).cycle // infinite

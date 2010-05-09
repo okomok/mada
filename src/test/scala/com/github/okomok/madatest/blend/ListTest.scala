@@ -13,7 +13,7 @@ import mada.blend._
 import mada.meta
 import mada.meta.nat.Literal._
 
-class ListUnmetaTest {
+class ListUnmetaTest extends junit.framework.TestCase {
     import junit.framework.Assert._
     assertFalse(scala.Nil eq Nil)
 
@@ -204,7 +204,7 @@ class ListUnmetaTest {
 }
 
 
-class ListmetaTest {
+object ListmetaTest {
     import meta.{ assert, assertSame }
 
     trait testAt {

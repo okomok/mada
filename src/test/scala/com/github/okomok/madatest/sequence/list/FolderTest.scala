@@ -13,7 +13,7 @@ import mada.sequence.list
 import junit.framework.Assert._
 
 
-class FolderTest {
+class FolderTest extends junit.framework.TestCase {
 // left
     def testFolderLeft: Unit = {
         val t = list.Of(1,2,3,4,5,6,7,8)

@@ -13,7 +13,7 @@ import mada.peg._
 import junit.framework.Assert._
 
 
-class DotTest {
+class DotTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
         val sample = mada.sequence.vector.unstringize("/")
         assertTrue(dot[Char].matches(sample))

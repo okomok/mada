@@ -12,7 +12,7 @@ import com.github.okomok.mada
     import mada.sequence._
     import junit.framework.Assert._
 
-    class DocTest {
+    class DocTest extends junit.framework.TestCase {
         def testTrivial: Unit = {
             lazy val fibs: List[Int] = 0 :: 1 :: fibs.zipBy(fibs.tail)(_ + _)
             assertEquals(832040, fibs.nth(30))

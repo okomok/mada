@@ -16,7 +16,7 @@ import junit.framework.Assert._
 import mada.sequence.vector
 
 
-class DropTest {
+class DropTest extends junit.framework.TestCase {
     val ones = vector.Of(1,1,1,1)
 
     def testTrivial: Unit = {

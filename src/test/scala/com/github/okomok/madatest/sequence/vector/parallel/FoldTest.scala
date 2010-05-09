@@ -16,7 +16,7 @@ import com.github.okomok.madatest.sequencetest.vectortest.detail.Example._
 import com.github.okomok.madatest.sequencetest.vectortest.detail._
 
 
-class FoldTest {
+class FoldTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
         val v = mada.sequence.vector.from(example1)
         assertEquals(v.foldLeft(3)(_ + _), v.parallel.fold(3)(_ + _))

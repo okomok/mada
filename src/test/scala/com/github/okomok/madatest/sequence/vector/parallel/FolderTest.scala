@@ -18,7 +18,7 @@ import com.github.okomok.madatest.sequencetest.vectortest.detail.Example._
 import com.github.okomok.madatest.sequencetest.vectortest.detail._
 
 
-class FolderTest {
+class FolderTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
         val v: Vector[Int] = Array(1,2,3,4,5,6,7,8,9,10,11)
         assertEquals(v.folder(4)(_ + _), v.parallel.folder(4)(_ + _))

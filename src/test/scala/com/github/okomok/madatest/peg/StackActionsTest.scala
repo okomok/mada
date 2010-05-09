@@ -18,7 +18,7 @@ import junit.framework.Assert._
 import mada.peg.Compatibles._
 
 
-class StackActionsTest {
+class StackActionsTest extends junit.framework.TestCase {
     val expr, term, factor, integer, digit = new Rule[Char]
 
     val S = new StackActions[Char, Int]

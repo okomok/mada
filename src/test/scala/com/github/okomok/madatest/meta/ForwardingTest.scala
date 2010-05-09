@@ -13,9 +13,7 @@ import mada.meta._
 // import junit.framework.Assert._
 
 
-class ForwardingTest {
-    def testNone: Unit = ()
-
+object ForwardingTest {
     type incre[n <: Nat] = n#increment
 
     type foo[n <: Nat] = forwarding1[Nat, incre]#apply[n]#increment

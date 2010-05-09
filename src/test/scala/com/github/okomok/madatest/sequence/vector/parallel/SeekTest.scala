@@ -16,7 +16,7 @@ import com.github.okomok.madatest.sequencetest.vectortest.detail.Example._
 import com.github.okomok.madatest.sequencetest.vectortest.detail._
 
 
-class SeekTest {
+class SeekTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
         val v = vector.Of("ab", "cde", "f", "ghij", "kl", "mno", "p", "qrst")
         assertEquals("kl", v.parallel.seek(_ == "kl").get)

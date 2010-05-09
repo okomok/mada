@@ -13,7 +13,7 @@ import mada.peg._
 import junit.framework.Assert._
 
 
-class StarTest {
+class StarTest extends junit.framework.TestCase {
     def testStar: Unit = {
         val sample = mada.sequence.vector.unstringize("aaaaaaa")
         assertTrue((unstringize("a")*).matches(sample))

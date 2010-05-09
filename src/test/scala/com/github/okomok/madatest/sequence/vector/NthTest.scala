@@ -14,7 +14,7 @@ import mada.sequence.vector.fromArray
 import junit.framework.Assert._
 
 
-class NthTest {
+class NthTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
         val a = vector.range(3, 10)
         assertEquals(3, a(3))

@@ -14,7 +14,7 @@ import mada.meta
 import mada.meta.nat.Literal._
 
 
-class ReplaceTest {
+class ReplaceTest extends junit.framework.TestCase {
     import junit.framework.Assert._
     assertFalse(scala.Nil eq Nil)
 

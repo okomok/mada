@@ -16,7 +16,7 @@ import mada.sequence.iterative
 import junit.framework.Assert._
 
 
-class SortedTest {
+class SortedTest extends junit.framework.TestCase {
 
 
 // merge

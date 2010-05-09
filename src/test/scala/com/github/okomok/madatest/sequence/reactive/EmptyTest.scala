@@ -13,7 +13,7 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
-class EmptyTest {
+class EmptyTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
         val s = new java.util.ArrayList[Int]
         reactive.empty.of[Int].activate(reactor.make(_ => s.add(99), s.add(_)))

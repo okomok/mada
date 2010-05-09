@@ -13,7 +13,7 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
-class ParallelTest {
+class ParallelTest extends junit.framework.TestCase {
     def testFusion: Unit = {
         val v = vector.range(0, 10)
         val e = vector.range(1, 11)

@@ -33,7 +33,7 @@ object Example {
 }
 
 
-class ExampleTest {
+class ExampleTest extends junit.framework.TestCase {
     def testEmpty1 {
         assertEquals(0, Example.empty1.length)
     }

@@ -15,7 +15,7 @@ import junit.framework.Assert._
 import com.github.okomok.madatest.sequencetest.vectortest.detail.Example._
 
 
-class StableSortTest {
+class StableSortTest extends junit.framework.TestCase {
     def testTrivial {
         val actual = fromArray(example1).seal.stableSort
         detail.TestVectorReadOnly(example1Sorted, actual)

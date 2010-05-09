@@ -13,7 +13,7 @@ import mada.function
 import junit.framework.Assert._
 
 
-class ParameterizeTest {
+class ParameterizeTest extends junit.framework.TestCase {
 
     def foo(w: Int, h: Int, msg: String): Int = w * h + msg.length
 

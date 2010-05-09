@@ -13,7 +13,7 @@ import mada.sequence.iterative
 import junit.framework.Assert._
 
 
-class OfTest {
+class OfTest extends junit.framework.TestCase {
     def testMatching: Unit = {
         val a = iterative.Of(1,2,3,4,5)
         val iterative.Of(x1,2,x3,4,x5) = a

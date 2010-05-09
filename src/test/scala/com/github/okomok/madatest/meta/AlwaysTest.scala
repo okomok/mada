@@ -13,14 +13,14 @@ import mada.meta._
 // import junit.framework.Assert._
 
 
-class AlwaysTest {
+object AlwaysTest {
 
     trait Strong
     trait Strung
     final class so extends Strong
     final class su extends Strung
 
-    def testTrivial: Unit = {
+    trait testTrivial {
         type k = always[su]#apply1[so]
         assertSame[su, k]
         assertSame[su, always[su]#apply0]
@@ -28,6 +28,5 @@ class AlwaysTest {
         assertSame[su, always[su]#apply1[so]]
         assertSame[su, always[su]#apply2[scala.Int, so]]
         assertSame[su, always[su]#apply3[scala.Int, so, so]]
-        ()
     }
 }

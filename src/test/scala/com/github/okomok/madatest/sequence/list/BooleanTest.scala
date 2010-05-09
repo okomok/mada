@@ -13,7 +13,7 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
-class BooleanTest {
+class BooleanTest extends junit.framework.TestCase {
     def testShortCircuit: Unit = {
         val L = (true #:: true #:: false #:: true #:: Nil) ::: (true #:: Nil).cycle
         assertFalse(L.and)

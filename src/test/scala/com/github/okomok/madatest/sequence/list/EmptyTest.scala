@@ -13,7 +13,7 @@ import mada.sequence.list
 import junit.framework.Assert._
 
 
-class EmptyTest {
+class EmptyTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
         val tr = list.empty.of[Int]
         assertTrue(tr.isEmpty)

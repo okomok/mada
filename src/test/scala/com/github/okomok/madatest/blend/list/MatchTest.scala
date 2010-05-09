@@ -14,7 +14,7 @@ import mada.meta
 import mada.meta.nat.Literal._
 
 
-class MatchTest {
+class MatchTest extends junit.framework.TestCase {
     import junit.framework.Assert._
     assertFalse(scala.Nil eq Nil)
 

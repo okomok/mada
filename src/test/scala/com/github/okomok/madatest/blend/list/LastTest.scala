@@ -13,7 +13,7 @@ import mada.blend._
 import mada.meta
 
 
-class LastTest {
+class LastTest extends junit.framework.TestCase {
     import junit.framework.Assert._
     assertFalse(scala.Nil eq Nil)
 
@@ -38,7 +38,7 @@ class LastTest {
 
 /*
 
-class LastOrElseTest {
+class LastOrElseTest extends junit.framework.TestCase {
     import junit.framework.Assert._
     assertFalse(scala.Nil eq Nil)
 

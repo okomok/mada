@@ -15,7 +15,7 @@ import mada.meta._
 
 // Overriding generic-metamethod doesn't work.
 
-class GenericMethodOverrideTest {
+object GenericMethodOverrideTest {
 
     trait B {
         type foo[T, x <: T] <: T // "generic" metamethod (ie, result metatype depends on arguments.)
@@ -39,7 +39,7 @@ class GenericMethodOverrideTest {
     // assertSame[wow, _3N] // but fails.
 }
 
-class GenericMethodOverride2Test {
+object GenericMethodOverride2Test {
 
     trait B {
         type foo[x]
@@ -59,7 +59,7 @@ class GenericMethodOverride2Test {
 
 
 
-class TypeConstraintTest {
+object TypeConstraintTest {
 
     trait B {
         type R
@@ -81,7 +81,7 @@ class TypeConstraintTest {
 
 }
 
-class TypeConstraint2Test {
+object TypeConstraint2Test {
 
     trait B[R] {
         type inc[n <: Nat] <: R
@@ -101,7 +101,7 @@ class TypeConstraint2Test {
 
 }
 
-class TypeConstraint3Test {
+object TypeConstraint3Test {
 
     trait B {
         type inc[n <: Nat] <: Nat
@@ -122,7 +122,7 @@ class TypeConstraint3Test {
 }
 
 
-class TypeConstraint4Test {
+object TypeConstraint4Test {
 
     type inc[n <: Nat] = n#increment
 
@@ -137,7 +137,7 @@ class TypeConstraint4Test {
 }
 
 
-class TypeConstraint5Test {
+object TypeConstraint5Test {
 
     trait B[R] {
         type inc[n <: Nat] <: R
@@ -159,7 +159,7 @@ class TypeConstraint5Test {
 }
 
 
-class TypeConstraint6Test {
+object TypeConstraint6Test {
 
     trait B[R] {
         type inc[n <: Nat] <: R

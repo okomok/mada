@@ -13,7 +13,7 @@ import mada.sequence.list
 import junit.framework.Assert._
 
 
-class ForeachTest {
+class ForeachTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
         val tr = list.Of(1,2,3)
         val k1 = new java.util.ArrayList[Int]

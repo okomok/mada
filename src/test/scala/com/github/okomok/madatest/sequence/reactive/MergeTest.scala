@@ -15,7 +15,7 @@ import junit.framework.Assert._
 import vector.range
 
 
-class MergeTest {
+class MergeTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
         val src = new IntSenders(range(0, 5), range(5, 12))
         val dst = new IntReceiver(range(0, 12))

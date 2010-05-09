@@ -13,7 +13,7 @@ import mada.sequence.iterative
 import junit.framework.Assert._
 
 
-class SliceTest {
+class SliceTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
     //    new NotStartable[Int].slice(1,2)
         val t = iterative.Of(4,5,1,3,2,9,7,10)

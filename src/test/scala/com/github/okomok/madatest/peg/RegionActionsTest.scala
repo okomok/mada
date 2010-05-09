@@ -15,7 +15,7 @@ import mada.peg.Compatibles._
 import mada.{Peg, peg}
 
 
-class RegionActionsTest {
+class RegionActionsTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
         val R = new peg.RegionActions[Char]
         var w: Vector[Char] = null

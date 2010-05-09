@@ -9,7 +9,7 @@ package com.github.okomok.madatest; package metatest
 
 import com.github.okomok.mada
 
-    class DocTest {
+    object DocTest {
         // boolean value
         assert(true)
 
@@ -35,11 +35,9 @@ import com.github.okomok.mada
 
         // function invocation
         assert(inc.apply(3) == 4)
-
-        def testTrivial: Unit = ()
     }
 
-    class metaDocTest {
+    object metaDocTest {
         import mada.meta._
 
         // meta boolean value
@@ -67,6 +65,4 @@ import com.github.okomok.mada
 
         // metafunction invocation
         assert[inc#apply[_3N] == _4N]
-
-        def testTrivial: Unit = ()
     }

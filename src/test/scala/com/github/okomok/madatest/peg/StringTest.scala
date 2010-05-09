@@ -13,7 +13,7 @@ import mada.peg._
 import junit.framework.Assert._
 
 
-class StringTest {
+class StringTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
         val sample = mada.sequence.vector.unstringize("/*hello*/")
         assertTrue(unstringize("/*hello*/").matches(sample))

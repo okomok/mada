@@ -14,7 +14,7 @@ import mada.sequence.vector._
 import junit.framework.Assert._
 
 
-class ConcatTest {
+class ConcatTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
         val v1 = vector.fromArray(Array(0,1,2))
         val v2 = vector.fromArray(Array(3,4))

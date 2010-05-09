@@ -13,7 +13,7 @@ import mada.sequence.{Iterative, iterative}
 import junit.framework.Assert._
 
 
-class AccessTest {
+class AccessTest extends junit.framework.TestCase {
     def testHeadLast: Unit = {
         val A1 = iterative.Of(1,6,7,10,14,17)
         assertEquals(1, A1.head)

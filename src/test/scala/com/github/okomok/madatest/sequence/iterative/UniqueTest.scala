@@ -13,7 +13,7 @@ import mada.sequence.iterative
 import junit.framework.Assert._
 
 
-class UniqueTest {
+class UniqueTest extends junit.framework.TestCase {
 
     def testUnique: Unit = {
     //    new NotStartable[Int].unique

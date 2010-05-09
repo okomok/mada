@@ -13,7 +13,7 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
-class UnsplitTest {
+class UnsplitTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
         val v1 = iterative.from(Array(0,1,2))
         val v2 = iterative.from(Array(3,4))

@@ -13,7 +13,7 @@ import junit.framework.Assert._
 import junit.framework.AssertionFailedError
 
 
-class AssertImpliesTest {
+class AssertImpliesTest extends junit.framework.TestCase {
     def testThis {
         AssertImplies(true, true)
         AssertImplies(false, true)

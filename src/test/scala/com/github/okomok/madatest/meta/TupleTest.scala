@@ -13,7 +13,7 @@ import mada.meta._
 // import junit.framework.Assert._
 
 
-class tupleTest {
+object tupleTest {
 
     // "types"
     trait Strong

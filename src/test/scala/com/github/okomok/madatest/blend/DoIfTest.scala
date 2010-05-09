@@ -14,7 +14,7 @@ import mada.blend._
 import junit.framework.Assert._
 
 
-class DoIfTest {
+class DoIfTest extends junit.framework.TestCase {
 
     type on = meta.`true`
     type off = meta.`false`

@@ -12,7 +12,7 @@ import com.github.okomok.mada
 import mada.blend._
 
 
-class ConsTest {
+class ConsTest extends junit.framework.TestCase {
 
     // "cons and then decompose" falls into incompatible types.
     /*

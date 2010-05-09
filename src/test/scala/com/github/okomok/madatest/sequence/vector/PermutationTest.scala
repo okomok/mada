@@ -14,7 +14,7 @@ import mada.sequence.vector.fromArray
 import junit.framework.Assert._
 
 
-class PermutationTest {
+class PermutationTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
         val a = vector.range(0, 6).copy
         val b = vector.Of[Int](2,3,1,0,5,4)

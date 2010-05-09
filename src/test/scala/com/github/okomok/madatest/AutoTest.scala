@@ -45,7 +45,7 @@ class MaybeThrow(b: Boolean) extends Auto[MaybeThrow] {
 
 
 
-class AutoTest {
+class AutoTest extends junit.framework.TestCase {
 
     def testTrivial: Unit = {
         val file = new MyFile

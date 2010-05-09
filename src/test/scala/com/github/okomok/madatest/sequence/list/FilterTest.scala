@@ -13,7 +13,7 @@ import mada.sequence.list
 import junit.framework.Assert._
 
 
-class FilterTest {
+class FilterTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
         val t = list.Of(1,2,2,3,4,5,5,6,7,8,9)
         val u = list.Of(2,2,4,6,8)

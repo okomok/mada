@@ -14,7 +14,7 @@ import mada.blend._
 import junit.framework.Assert._
 
 
-class TimesTest {
+class TimesTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
         var i = 0
         times[meta._6N#increment] {

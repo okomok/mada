@@ -13,7 +13,7 @@ import mada.stack
 import junit.framework.Assert._
 
 
-class ToSomeTest {
+class ToSomeTest extends junit.framework.TestCase {
 
     def testTrivial: Unit = {
         val j = new java.util.ArrayDeque[Int]
