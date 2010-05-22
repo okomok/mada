@@ -585,7 +585,7 @@ object Vector extends math.LowPriorityOrderingImplicits {
 
 // compatibles
 
-    implicit def _ustringize(from: String): Vector[Char] = unstringize(from)
+    implicit def _unstringize(from: String): Vector[Char] = unstringize(from)
     implicit def _fromArray[A](from: Array[A]): Vector[A] = fromArray(from)
     implicit def _fromCell[A](from: Cell[A]): Vector[A] = fromCell(from)
     implicit def _fromOption[A](from: Option[A]): Vector[A] = fromOption(from)
