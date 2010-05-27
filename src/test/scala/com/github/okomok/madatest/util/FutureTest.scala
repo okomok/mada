@@ -33,3 +33,12 @@ class FutureTest extends junit.framework.TestCase {
         assertEquals(true, thrown)
     }
 }
+
+class FutureDaemonTest extends junit.framework.TestCase {
+    def testDaemon: Unit = {
+        // In fact, junit always makes children daemon-ize,
+        // so that I don't know how to test....
+        val a = util.future(while(true){})
+        ()
+    }
+}

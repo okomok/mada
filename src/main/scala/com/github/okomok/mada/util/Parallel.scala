@@ -28,11 +28,22 @@ case class Parallel[R](_1: Function0[R]) extends Function0[R] {
 object Parallels {
     import concurrent._
 
-    val poolSize = 2 * java.lang.Runtime.getRuntime.availableProcessors
+    val poolSize: Int = 2 * java.lang.Runtime.getRuntime.availableProcessors
 
     // Interdependent tasks need unbounded pools to avoid starvation deadlock.
     // (scala.actors.Future doesn't support such tasks.)
-    val executor =
-        new ThreadPoolExecutor(0, poolSize, 60L, TimeUnit.SECONDS, new SynchronousQueue[Runnable]())
-        // Executors.newCachedThreadPool()
+    val executor: ThreadPoolExecutor = {
+        val ex = new ThreadPoolExecutor(0, poolSize, 60L, TimeUnit.SECONDS, new SynchronousQueue[Runnable])
+        // Executors.newCachedThreadPool
+        ex.setThreadFactory(new DaemonThreadFactory(ex.getThreadFactory))
+        ex
+    }
+
+    private class DaemonThreadFactory(underlying: ThreadFactory) extends ThreadFactory {
+        override def newThread(r: Runnable) = {
+            val t = underlying.newThread(r)
+            t.setDaemon(true)
+            t
+        }
+    }
 }
