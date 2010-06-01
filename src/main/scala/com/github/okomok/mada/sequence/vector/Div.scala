@@ -7,8 +7,6 @@
 package com.github.okomok.mada; package sequence; package vector
 
 
-// Java guarantees positive remainder?
-
 private object Div { // doesn't return a tuple to avoid heap-allocation.
     def quotient(a: Int, b: Int): Int = {
         util.assert(b > 0)
@@ -17,6 +15,7 @@ private object Div { // doesn't return a tuple to avoid heap-allocation.
         if (r < 0) q - 1 else q
     }
 
+    // Returns nonnegative.
     def remainder(a: Int, b: Int): Int = {
         util.assert(b > 0)
         val r = a % b
