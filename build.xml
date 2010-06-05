@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Mada" default="help">
+<project name="mada" default="help">
 
 
 <!-- config -->
@@ -20,6 +20,20 @@
     <property name="target.classes.dir" location="${target.dir}/classes" />
     <property name="target.test-classes.dir" location="${target.dir}/test-classes" />
     <property name="target.surefire-reports.dir" location="${target.dir}/surefire-reports" />
+    <property name="target.site.dir" location="${target.dir}/site" />
+    <property name="target.site.scaladocs.dir" location="${target.site.dir}/scaladocs" />
+
+
+<!-- dirs -->
+
+    <target name="dirs">
+        <echo>Creating output directories if needed...</echo>
+        <mkdir dir="${target.dir}" />
+        <mkdir dir="${target.classes.dir}" />        
+        <mkdir dir="${target.test-classes.dir}" />
+        <mkdir dir="${target.surefire-reports.dir}" />        
+        <mkdir dir="${target.site.scaladocs.dir}" />
+    </target>
 
 
 <!-- scalac -->
@@ -33,13 +47,15 @@
         <classpath refid="scala.classpath" />
     </taskdef>
 
-    <macrodef name="jscalac">
+    <macrodef name="scalajavac">
         <attribute name="classpathref" />
         <attribute name="src" />
         <attribute name="destdir" />
         <sequential>
-            <scalac target="jvm-1.5" destdir="@{destdir}" force="changed"
-                deprecation="on" unchecked="on" addParams="-Yrecursion 50">
+            <scalac target="jvm-1.5" destdir="@{destdir}"
+                deprecation="on" unchecked="on"
+                force="true"
+                addParams="-Yrecursion 50 -make:transitive -dependencyfile @{destdir}/#scala_dependencies#">
                 <classpath refid="@{classpathref}" />
                 <src path="@{src}" />
                 <include name="**/*.scala" />
@@ -61,16 +77,11 @@
         <fileset dir="${libs.dir}">
             <include name="*.jar" />
         </fileset>
+        <pathelement path="${target.classes.dir}" /> <!-- for transitive -->
     </path>
 
-    <target name="init">
-        <echo>Creating compile output directories if needed...</echo>
-        <mkdir dir="${target.dir}" />
-        <mkdir dir="${target.classes.dir}" />
-    </target>
-
-    <target name="compile" depends="init">
-        <jscalac classpathref="compile.classpath" src="${src.main.dir}" destdir="${target.classes.dir}" />
+    <target name="compile" depends="dirs">
+        <scalajavac classpathref="compile.classpath" src="${src.main.dir}" destdir="${target.classes.dir}" />
     </target>
 
 
@@ -80,16 +91,11 @@
         <path refid="compile.classpath" />
         <pathelement path="${target.classes.dir}" />
         <pathelement path="${junit.jar}" />
+        <pathelement path="${target.test-classes.dir}" /> <!-- for transitive -->
     </path>
 
-    <target name="test-init" depends="init">
-        <echo>Creating test output directories if needed...</echo>
-        <mkdir dir="${target.test-classes.dir}" />
-        <mkdir dir="${target.surefire-reports.dir}" />
-    </target>
-
-    <target name="test-compile" depends="compile, test-init">
-        <jscalac classpathref="test.compile.classpath" src="${src.test.dir}" destdir="${target.test-classes.dir}" />
+    <target name="test-compile" depends="compile, dirs">
+        <scalajavac classpathref="test.compile.classpath" src="${src.test.dir}" destdir="${target.test-classes.dir}" />
     </target>
 
     <path id="test.classpath">
@@ -120,6 +126,14 @@
             </fileset>
             <report format="frames" todir="${target.surefire-reports.dir}" />
         </junitreport>
+    </target>
+
+
+<!-- doc -->
+
+    <target name="doc" depends="dirs">
+        <scaladoc classpathref="compile.classpath" srcdir="${src.main.dir}" destdir="${target.site.scaladocs.dir}"
+        doctitle="${ant.project.name}" />
     </target>
 
 
