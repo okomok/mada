@@ -10,47 +10,6 @@ package com.github.okomok.mada
 package object util {
 
 
-// assertion
-
-    /**
-     * The assert
-     */
-    def assert(cond: => Boolean): Unit = {
-        blend.doIf[isDebug] {
-            if (!cond) {
-                throw new java.lang.AssertionError("assertion failed")
-            }
-        }
-    }
-
-    /**
-     * assert with message
-     */
-    def assert(msg: => Any, cond: => Boolean): Unit = {
-        blend.doIf[isDebug] {
-            if (!cond) {
-                throw new java.lang.AssertionError("assertion failed: " + msg)
-            }
-        }
-    }
-
-    /**
-     * Alias of <code>apply</code>; <code>cond</code> is evaluated.
-     */
-    def verify(cond: Boolean) = util.assert(cond)
-
-    /**
-     * Alias of <code>apply</code>; <code>cond</code> is evaluated.
-     */
-    def verify(msg: => Any, cond: Boolean) = util.assert(msg, cond)
-
-    @equivalentTo("assert(expect(e)); e")
-    def ensure[A](e: A)(expect: A => Boolean): A = { util.assert(expect(e)); e }
-
-    @equivalentTo("assert(msg, expect(e)); e")
-    def ensure[A](msg: => Any, e: A)(expect: A => Boolean): A = { util.assert(msg, expect(e)); e }
-
-
 // language
 
     @aliasOf("()")

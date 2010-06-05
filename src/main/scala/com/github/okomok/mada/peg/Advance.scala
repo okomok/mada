@@ -8,7 +8,7 @@ package com.github.okomok.mada; package peg
 
 
 case class Advance[A](_1: Int) extends Peg[A] {
-    util.assert(_1 >= 0)
+    assert(_1 >= 0)
 
     override def parse(v: sequence.Vector[A], start: Int, end: Int) = {
         val cur = start + _1

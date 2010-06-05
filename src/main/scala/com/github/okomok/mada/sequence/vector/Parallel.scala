@@ -8,7 +8,7 @@ package com.github.okomok.mada; package sequence; package vector
 
 
 case class Parallel[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
-    util.assert(!IsParallel(_1))
+    assert(!IsParallel(_1))
     Precondition.positive(_2, "grain size")
 
     override protected val delegate = _1

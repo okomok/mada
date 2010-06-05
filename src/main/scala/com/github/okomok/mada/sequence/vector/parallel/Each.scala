@@ -12,7 +12,7 @@ import util.future
 
 private object ParallelEach {
     def apply[A](_1: Vector[A], _2: A => Unit, _3: Int): Unit = {
-        util.assert(!IsParallel(_1))
+        assert(!IsParallel(_1))
 
         if (_3 == 1) {
             _1.map{ e => future(_2(e)) }.force.foreach{ u => u() }

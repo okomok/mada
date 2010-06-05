@@ -9,7 +9,7 @@ package com.github.okomok.mada; package sequence; package vector
 
 private object ParallelEqualsIf {
     def apply[A, B](_1: Vector[A], _2: Vector[B], _3: (A, B) => Boolean, _4: Int): Boolean = {
-        util.assert(!IsParallel(_1))
+        assert(!IsParallel(_1))
 
         if (_1.size != _2.size) {
             false

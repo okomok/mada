@@ -34,7 +34,7 @@ case class Block[+A](_1: Yield[A] => Unit) extends Iterative[A] {
         }
 
         private def doExchange: Unit = {
-            util.assert(in.buf.isEmpty)
+            assert(in.buf.isEmpty)
             in = x.exchange(in)
         }
     }
@@ -68,7 +68,7 @@ private object _Block {
 
         private def doExchange: Unit = {
             out = x.exchange(out)
-            util.assert(out.buf.isEmpty)
+            assert(out.buf.isEmpty)
         }
     }
 

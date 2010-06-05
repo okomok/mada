@@ -131,8 +131,8 @@ class TSTree[A, V](implicit __comp: Ordering[A]) extends java.lang.Cloneable {
     }
 
     private def copyInto(key: sequence.Vector[A], _first: Int, last: Int, _result: TSTreeNode[A, V]): TSTreeNode[A, V] = {
-        util.assert(_first != last)
-        util.assert(_result ne null)
+        assert(_first != last)
+        assert(_result ne null)
         var first = _first
         var result = _result
 
@@ -167,8 +167,8 @@ class TSTree[A, V](implicit __comp: Ordering[A]) extends java.lang.Cloneable {
     }
 
     private def search(_first1: TSTreeNode[A, V], key2: sequence.Vector[A], _first2: Int, last2: Int): (TSTreeNode[A, V], Int) = {
-        util.assert(_first1 ne null)
-        util.assert(_first2 != last2)
+        assert(_first1 ne null)
+        assert(_first2 != last2)
         var first1 = _first1
         var first2 = _first2
         var cur1: TSTreeNode[A, V] = null

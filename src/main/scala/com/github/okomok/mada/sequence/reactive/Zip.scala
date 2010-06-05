@@ -23,7 +23,7 @@ case class ZipBy[A, B, +C](_1: Reactive[A], _2: Reactive[B], _3: (A, B) => C) ex
         var ends2 = false
         val q1 = new LinkedList[A]
         val q2 = new LinkedList[B]
-        def invariant = util.assert(q1.isEmpty || q2.isEmpty)
+        def invariant = assert(q1.isEmpty || q2.isEmpty)
 
         val j1 = new Reactor[A] {
             override def onEnd = {

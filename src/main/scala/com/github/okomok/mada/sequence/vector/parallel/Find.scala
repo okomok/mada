@@ -9,7 +9,7 @@ package com.github.okomok.mada; package sequence; package vector
 
 private object ParallelFind {
     def apply[A](_1: Vector[A], _2: A => Boolean, _3: Int): Option[A] = {
-        util.assert(!IsParallel(_1))
+        assert(!IsParallel(_1))
 
         if (_1.isEmpty) {
             None

@@ -33,7 +33,7 @@ case class Undivide[A](_1: Vector[Vector[A]]) extends Forwarder[A] {
 }
 
 private class _Undivide[A](_1: Vector[Vector[A]]) extends Vector[A] {
-    util.assert(!_1.isEmpty)
+    assert(!_1.isEmpty)
 
     override def start = 0
     override def end = (quotient * divisor) + remainder
