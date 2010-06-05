@@ -61,7 +61,7 @@ class AutoTest extends junit.framework.TestCase {
         assertFalse(file.ended)
         for {
             f <- auto.use(file)
-        } yield {
+        } {
             f.read
         }
         assertTrue(file.ended)

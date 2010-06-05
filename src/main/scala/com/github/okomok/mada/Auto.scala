@@ -41,12 +41,6 @@ trait Auto[+A] {
     }
 
     @aliasOf("usedBy")
-    final def map[B](f: A => B): B = usedBy(f)
-
-    @aliasOf("usedBy")
-    final def flatMap[B](f: A => B): B = usedBy(f)
-
-    @aliasOf("usedBy")
     final def foreach[B](f: A => B): B = usedBy(f)
 
     /**
