@@ -9,7 +9,7 @@ package com.github.okomok.madatest; package toy; package varargcovarianttest
 
 import com.github.okomok.mada
 
-object VarargCovariantTest {
+object VarargCovariantStaticTezt {
 
     trait A
     class B extends A

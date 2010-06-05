@@ -59,7 +59,7 @@ object List {
 }
 
 
-class HListTest {
+class HListTezt {
 
     import List._
 

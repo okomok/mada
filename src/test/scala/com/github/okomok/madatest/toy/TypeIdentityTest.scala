@@ -47,7 +47,7 @@ sealed trait Func1Id extends Func1 {
 }
 
 
-class TypeIdentityTest {
+class TypeIdentityTezt {
 
 
 

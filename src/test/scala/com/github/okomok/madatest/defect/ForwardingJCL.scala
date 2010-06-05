@@ -10,7 +10,7 @@ package com.github.okomok.madatest; package defecttest; package forwardingjcl
 import junit.framework.Assert._
 
 
-class ForwardingJclTest {
+class ForwardingJclTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
 //        val fc = java.util.Collections.unmodifiableCollection(new java.util.ArrayList[Int]) // can't forward equals.
 //        val l = new java.util.ArrayList[Int]

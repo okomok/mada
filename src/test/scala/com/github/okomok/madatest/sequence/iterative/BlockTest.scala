@@ -79,7 +79,7 @@ class BlockTest extends junit.framework.TestCase {
     }
 }
 
-class BlockLockTest extends NoBenchmark {
+class BlockLockCompile extends Benchmark {
     val b = new BlockTest
     val tr = iterative.block(b.makeValuesTo(100000))
     override def run = {

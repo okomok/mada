@@ -9,7 +9,7 @@ package com.github.okomok.madatest; package toy; package curryvsoverloadtest
 
 import com.github.okomok.mada
 
-object CurryVsOverloadTest {
+object CurryVsOverloadStaticTezt {
 
     def foo(i: Int)(d: Double) = ()
     def foo(i: Int)(j: Int) = ()

@@ -18,7 +18,7 @@ class R
 
 class Wrap[A](x: A)
 
-class NestedImplicitTest {
+class NestedImplicitTezt {
 
     val k1: Wrap[R] = new Wrap[R](new L) // OK
 

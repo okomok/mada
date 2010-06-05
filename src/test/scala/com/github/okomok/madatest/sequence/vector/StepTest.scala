@@ -21,13 +21,13 @@ class StepTest extends junit.framework.TestCase {
         // 0,18,14,17,19, 8,13, 6, 4,23, 0,12,15,11, 4
         val expected = Array(0,17,13,23,15)
         val actual = fromArray(example1).step(3)
-        detail.TestVectorReadWrite(expected, actual)
+        detail.TeztVectorReadWrite(expected, actual)
     }
 
     def testTrivial2 {
         val expected = Array(17,13,23,15)
         val actual = fromArray(example1).drop(3).step(3)
-        detail.TestVectorReadWrite(expected, actual)
+        detail.TeztVectorReadWrite(expected, actual)
     }
 
     def testTrivial3 {
@@ -37,18 +37,18 @@ class StepTest extends junit.framework.TestCase {
 //        println("subvector:" + vector.Region(fromArray(example1), 2, 11).toString)
         val actual = vector.Region(fromArray(example1), 2, 11).step(3)
 //        println(actual)
-        detail.TestVectorReadWrite(expected, actual)
+        detail.TeztVectorReadWrite(expected, actual)
     }
 
     def testBounds {
         val expected = Array(0, 6, 4)
         val actual = fromArray(example1).step(7) // 15 / 7 = 2..1
-        detail.TestVectorReadWrite(expected, actual)
+        detail.TeztVectorReadWrite(expected, actual)
     }
 
     def testOne {
         val actual = fromArray(example1).step(1)
-        detail.TestVectorReadWrite(example1, actual)
+        detail.TeztVectorReadWrite(example1, actual)
     }
 
     def testBigStride {
@@ -58,24 +58,24 @@ class StepTest extends junit.framework.TestCase {
     }
 
     def testEmpty {
-        detail.TestEmpty(fromArray(empty1).step(10))
+        detail.TeztEmpty(fromArray(empty1).step(10))
     }
 
     def testStepStep: Unit = {
         val expected = Array(17,23)
         val actual = fromArray(example1).step(3).seal.drop(1).step(2)
-        detail.TestVectorReadWrite(expected, actual)
+        detail.TeztVectorReadWrite(expected, actual)
     }
 
     def testStepDrop: Unit = {
         val expected = Array(17,23)
         val actual = fromArray(example1).step(3).drop(1).step(2)
-        detail.TestVectorReadWrite(expected, actual)
+        detail.TeztVectorReadWrite(expected, actual)
     }
 
     def testFusion: Unit = {
         val expected = Array(0,13,15)
         val actual = fromArray(example1).step(3).step(2)
-        detail.TestVectorReadWrite(expected, actual)
+        detail.TeztVectorReadWrite(expected, actual)
     }
 }

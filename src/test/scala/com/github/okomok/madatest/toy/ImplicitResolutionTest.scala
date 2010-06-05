@@ -25,7 +25,7 @@ object V {
 }
 
 
-class ImplicitResolutionTest {
+class ImplicitResolutionTezt {
 
     def makeK[A](x: A)(expected: Int)(implicit p: K[A]): Unit = {
         assertEquals(expected, p.i)

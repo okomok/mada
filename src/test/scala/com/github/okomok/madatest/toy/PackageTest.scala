@@ -29,7 +29,7 @@ package your {
 
 import your.My._
 
-class PackageTest {
+class PackageTezt {
     def buz = {
      //   foo(3)
      your.My.P.foo(3)

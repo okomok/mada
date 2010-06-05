@@ -13,7 +13,7 @@ import mada.meta._
 // import junit.framework.Assert._
 
 
-object FunctionTest {
+object FunctionTezt {
 
     trait Func1 {
         type Arg1

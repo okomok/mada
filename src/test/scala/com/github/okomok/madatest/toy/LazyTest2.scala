@@ -21,7 +21,7 @@ trait SeqForwarder[A] {
     override def drop(n: Int) = delegate.drop(n)
 }
 
-class LazyTest {
+class LazyTezt {
 
     def makeSeq: Seq[Int] = throw new Error
 

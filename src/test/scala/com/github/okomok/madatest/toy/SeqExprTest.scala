@@ -35,7 +35,7 @@ trait Sequence[+A] {
 }
 */
 
-class SeqExprTest {
+class SeqExprTezt {
 
     def testTrivial: Unit = {
         //sequence.from(Array(1,2,3)).map(f) // expr

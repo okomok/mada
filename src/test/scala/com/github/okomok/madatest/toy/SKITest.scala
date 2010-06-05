@@ -13,7 +13,7 @@ package com.github.okomok.madatest; package toy; package skitest
 import com.github.okomok.mada
 import mada.meta.assertSame
 
-object SKINonLazyTest {
+object SKINonLazyStaticTezt {
 
     trait Term {
         type apply[x <: Term] <: Term
@@ -110,7 +110,7 @@ object SKINonLazyTest {
 }
 
 
-object SKITest {
+object SKIStaticTezt {
 
     trait Term {
       type apply[x <: Term] <: Term

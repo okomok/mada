@@ -24,7 +24,7 @@ object B {
 }
 
 
-class TestCompile {
+class LookupTezt {
     val b = new B
 //    val x = b.foo()
     val y = b.foo(3)

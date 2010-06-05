@@ -15,7 +15,7 @@ import junit.framework.Assert._
 class A
 
 
-class LazyTest {
+class LazyTezt {
 
     def foo(a: => A) = {a; new A()}
 

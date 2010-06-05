@@ -30,14 +30,14 @@ class CountTest extends junit.framework.TestCase {
 }
 
 
-class CountNoThreadsTest extends NoBenchmark {
+class CountNoThreadsTezt extends Benchmark {
     override def run = {
         val a = longSample1.count({e => longCalc; e % 2 == 0})
         ()
     }
 }
 
-class CountParallelCountTest extends NoBenchmark {
+class CountParallelCountTezt extends Benchmark {
     override def run = {
         val a = longSample1.parallel.count({e => e % 2 == 0})
         //val a = longSample1.divide(mada.sequence.vector.parallel.DefaultGrainSize(longSample1)).parallel.map({ w => w.count(_ % 2 == 0) }).unparallel.reduce(_ + _)
@@ -46,7 +46,7 @@ class CountParallelCountTest extends NoBenchmark {
 }
 
 // too slow.
-class CountParallelEachTest extends NoBenchmark {
+class CountParallelEachTezt extends Benchmark {
     override def run = {
         val n = new java.util.concurrent.atomic.AtomicInteger(0)
         longSample1.parallelBy(longSample1.defaultGrainSize).each({ e => if (e % 2 == 0) n.incrementAndGet })

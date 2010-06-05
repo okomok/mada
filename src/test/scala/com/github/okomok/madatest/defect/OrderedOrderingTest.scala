@@ -14,7 +14,7 @@ object A extends math.LowPriorityOrderingImplicits {
 
 }
 
-class OrderedOrderingTest {
+class OrderedOrderingTezt {
     def testTrivial(off: Int) = foo
     def foo(implicit ord: Ordering[A]) = ()
 }

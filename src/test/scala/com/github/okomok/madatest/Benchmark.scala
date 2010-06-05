@@ -28,10 +28,3 @@ trait Benchmark extends scala.testing.Benchmark {
         }
     }
 }
-
-trait NoBenchmark {
-    def run: Unit
-    def runCount: Int = 3
-    def grainCount: Int = 100
-    def longCalc: Unit = { }
-}

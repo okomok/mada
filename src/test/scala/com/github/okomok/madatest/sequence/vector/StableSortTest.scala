@@ -18,27 +18,27 @@ import com.github.okomok.madatest.sequencetest.vectortest.detail.Example._
 class StableSortTest extends junit.framework.TestCase {
     def testTrivial {
         val actual = fromArray(example1).seal.stableSort
-        detail.TestVectorReadOnly(example1Sorted, actual)
+        detail.TeztVectorReadOnly(example1Sorted, actual)
     }
 
     def testImplicit {
         val actual = fromArray(example1).seal.stableSort
-        detail.TestVectorReadOnly(example1Sorted, actual)
+        detail.TeztVectorReadOnly(example1Sorted, actual)
     }
 
     def testOptimizeArray {
         val actual = fromArray(example1).stableSort
-        detail.TestVectorReadOnly(example1Sorted, actual)
+        detail.TeztVectorReadOnly(example1Sorted, actual)
     }
 
     def testOptimizeArrayWindow {
         val actual = fromArray(example1).window(0, 0).window(0, example1.length).stableSort
-        detail.TestVectorReadOnly(example1Sorted, actual)
+        detail.TeztVectorReadOnly(example1Sorted, actual)
     }
 
     def testOptimizeArrayList {
         val actual = fromJList(fromArray(example1).toJList).stableSort
-        detail.TestVectorReadOnly(example1Sorted, actual)
+        detail.TeztVectorReadOnly(example1Sorted, actual)
     }
 
     def testStablity: Unit = {
@@ -77,7 +77,7 @@ class StableSortTest extends junit.framework.TestCase {
     def testStlEmpty: Unit = {
         val v = fromArray(empty1)
         mada.sequence.vector.stl.stableSort(v, 0, v.size)
-        detail.TestEmpty(v)
+        detail.TeztEmpty(v)
     }
 
     def longExample1 = Array(

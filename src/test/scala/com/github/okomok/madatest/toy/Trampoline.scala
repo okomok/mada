@@ -20,7 +20,7 @@ final case class Node(_1: String, _2: Tree, _3: Tree) extends Tree
 final case class Tip(_1: String) extends Tree
 
 
-class TrampolineTest {
+class TrampolineTezt {
 
     def sizeNotTailRecursive(t: Tree): Int = t match {
         case Tip(_) => 1

@@ -12,7 +12,7 @@ import com.github.okomok.mada
 import mada.meta._
 
 
-class MetamethodTest {
+class MetamethodTezt {
 
     type incre[n <: Nat] = n#increment
 

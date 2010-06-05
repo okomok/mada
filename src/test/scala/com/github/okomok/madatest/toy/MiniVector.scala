@@ -41,7 +41,7 @@ case class VAppend[A](override val _1: MiniVector[A], override val _2: MiniVecto
 }
 
 
-class MiniVectorTest {
+class MiniVectorTezt {
 
     def testCompile[A](t: MiniSequence[A], v: MiniVector[A]): Unit = {
         testCompile(v ++ t, v)

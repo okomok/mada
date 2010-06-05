@@ -55,7 +55,7 @@ object Vec {
 }
 
 
-class PetitSequenceTest {
+class PetitSequenceTezt {
     def compileMe(i: Int) = {
 
         val it = new Iter[Int] { }

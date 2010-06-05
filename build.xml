@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Mada" default="help">
+
+
+<!-- config -->
+
+    <property name="scala.home" location="../../scala-2.8.0.RC3" />
+    <property name="junit.jar" location="${ant.home}/lib/junit-3.8.2.jar" />
+
+
+<!-- properties -->
+
+    <property name="application.package" value="com.github.okomok.mada" />
+    <property name="application.testpackage" value="${application.package}test" />
+    <property name="src.dir" location="src" />
+    <property name="src.main.dir" location="${src.dir}/main" />
+    <property name="src.test.dir" location="${src.dir}/test" />
+    <property name="libs.dir" location="libs" />
+    <property name="target.dir" location="target" />
+    <property name="target.classes.dir" location="${target.dir}/classes" />
+    <property name="target.test-classes.dir" location="${target.dir}/test-classes" />
+    <property name="target.surefire-reports.dir" location="${target.dir}/surefire-reports" />
+
+
+<!-- scalac -->
+
+    <path id="scala.classpath">
+        <pathelement path="${scala.home}/lib/scala-compiler.jar" />
+        <pathelement path="${scala.home}/lib/scala-library.jar" />
+    </path>
+
+    <taskdef resource="scala/tools/ant/antlib.xml">
+        <classpath refid="scala.classpath" />
+    </taskdef>
+
+    <macrodef name="jscalac">
+        <attribute name="classpathref" />
+        <attribute name="src" />
+        <attribute name="destdir" />
+        <sequential>
+            <scalac target="jvm-1.5" destdir="@{destdir}" force="changed"
+                deprecation="on" unchecked="on" addParams="-Yrecursion 50">
+                <classpath refid="@{classpathref}" />
+                <src path="@{src}" />
+                <include name="**/*.scala" />
+                <include name="**/*.java" />
+            </scalac>
+            <javac target="1.5" destdir="@{destdir}">
+                <classpath refid="@{classpathref}" />
+                <src path="@{src}" />
+                <include name="**/*.java" />
+            </javac>
+        </sequential>
+    </macrodef>
+
+
+<!-- compilation -->
+
+    <path id="compile.classpath">
+        <path refid="scala.classpath" />
+        <fileset dir="${libs.dir}">
+            <include name="*.jar" />
+        </fileset>
+    </path>
+
+    <target name="init">
+        <echo>Creating compile output directories if needed...</echo>
+        <mkdir dir="${target.dir}" />
+        <mkdir dir="${target.classes.dir}" />
+    </target>
+
+    <target name="compile" depends="init">
+        <jscalac classpathref="compile.classpath" src="${src.main.dir}" destdir="${target.classes.dir}" />
+    </target>
+
+
+<!-- unit test -->
+
+    <path id="test.compile.classpath">
+        <path refid="compile.classpath" />
+        <pathelement path="${target.classes.dir}" />
+        <pathelement path="${junit.jar}" />
+    </path>
+
+    <target name="test-init" depends="init">
+        <echo>Creating test output directories if needed...</echo>
+        <mkdir dir="${target.test-classes.dir}" />
+        <mkdir dir="${target.surefire-reports.dir}" />
+    </target>
+
+    <target name="test-compile" depends="compile, test-init">
+        <jscalac classpathref="test.compile.classpath" src="${src.test.dir}" destdir="${target.test-classes.dir}" />
+    </target>
+
+    <path id="test.classpath">
+        <path refid="test.compile.classpath" />
+        <pathelement path="${target.test-classes.dir}" />
+    </path>
+
+    <target name="test" depends="test-compile">    
+        <junit fork="true" forkmode="perBatch"
+            errorProperty="test.failed" failureProperty="test.failed">
+            <classpath refid="test.classpath" />
+            <formatter type="brief" usefile="false" />
+            <formatter type="xml" unless="testcase" />
+            <test name="${application.testpackage}.${testcase}" todir="${target.surefire-reports.dir}" if="testcase" />
+            <batchtest todir="${target.surefire-reports.dir}" unless="testcase">
+                <fileset dir="${target.test-classes.dir}">
+                    <include name="**/*Test*.class" />
+                    <exclude name="**/*$*.class" />
+                </fileset>
+            </batchtest>
+        </junit>
+    </target>
+
+    <target name="report" depends="test">
+        <junitreport todir="${target.surefire-reports.dir}">
+            <fileset dir="${target.surefire-reports.dir}">
+                <include name="TEST-*.xml" />
+            </fileset>
+            <report format="frames" todir="${target.surefire-reports.dir}" />
+        </junitreport>
+    </target>
+
+
+<!-- deploy -->
+
+    <target name="jar" depends="test">    
+        <fail message="Unit Tests failed" if="test.failed" />
+        <jar destfile="${target.dir}/${ant.project.name}.jar" basedir="${target.classes.dir}" />
+    </target>
+
+
+<!-- convenience -->
+
+    <target name="help">
+        <echo>Mada Build. Available targets:</echo>
+        <echo>   clean:     Cleans up.</echo>
+        <echo>   test:      Runs all the unit tests. For one test, add "-Dtest.target=ATestCase".</echo>
+    </target>
+
+    <target name="clean">
+        <delete dir="${target.dir}" />
+    </target>
+
+
+</project>

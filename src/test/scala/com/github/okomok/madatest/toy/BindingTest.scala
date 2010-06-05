@@ -35,6 +35,6 @@ import Buz.Foo1._
 import Buz.Foo2._
 
 
-class BindingTest {
+class BindingTezt {
     some()
 }

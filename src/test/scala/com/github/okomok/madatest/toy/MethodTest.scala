@@ -17,7 +17,7 @@ object foo {
 }
 
 
-class MethodTest {
+class MethodTezt {
 
     def testTrivial: Unit = {
         assertEquals(3, (foo(_: Int))(3))

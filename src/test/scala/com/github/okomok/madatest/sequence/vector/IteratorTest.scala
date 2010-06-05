@@ -27,6 +27,6 @@ class IteratorTest extends junit.framework.TestCase {
 
     def testFrom: Unit = {
         val ac = iterative.fromSIterable(example1).toVector
-        detail.TestVectorReadOnly(example1, ac)
+        detail.TeztVectorReadOnly(example1, ac)
     }
 }

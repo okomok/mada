@@ -49,7 +49,7 @@ trait A_[T] extends A[T] {
 
 
 
-class CompatibleTest {
+class CompatibleTezt {
 
     def testTrivial: Unit = {
         val a = new A[Int]{}

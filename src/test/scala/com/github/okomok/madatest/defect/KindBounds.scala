@@ -3,7 +3,7 @@
 package com.github.okomok.madatest; package defecttest; package kindbounds
 
 
-object MyTest {
+object MyTezt {
 
     trait A
 
@@ -23,7 +23,7 @@ object MyTest {
 }
 
 
-object MyTest2 {
+object MyCompile2 {
 
     trait A
 

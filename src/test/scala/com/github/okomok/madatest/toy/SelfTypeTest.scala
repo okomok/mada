@@ -13,7 +13,7 @@ trait Foo {
 
 object Bar extends Foo
 
-class SelfTypeTest {
+class SelfTypeTezt {
     def testTrivial: Unit = {
         try {
            // new Foo {} // doesn't compile.

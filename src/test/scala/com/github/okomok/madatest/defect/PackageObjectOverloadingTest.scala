@@ -15,7 +15,7 @@ package object overloading {
 
 }
 
-class PackageObjectOverloadingTest {
+class PackageObjectOverloadingTezt {
     def buz(n: Int, m: Int): Unit = ()
 
     def testTrivial(off: Int): Unit = {

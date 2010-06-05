@@ -11,7 +11,7 @@ import junit.framework.Assert._
 
 
 /* comment out to suppress warning.
-class HeteroTest {
+class HeteroTezt {
     case class Cons[A](val car: A, val cdr: Cons[_])
 
     case object Nil extends Cons[Any](null, null)

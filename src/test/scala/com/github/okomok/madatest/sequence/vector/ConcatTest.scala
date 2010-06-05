@@ -23,7 +23,7 @@ class ConcatTest extends junit.framework.TestCase {
         val v5 = vector.fromArray(Array(7,8,9,10))
         val vv = vector.concat(v1,v2,v3,v4,v5)
         val e = vector.range(0, 11)
-        detail.TestVectorReadWrite(e.toArray, vv) // concat is a view; flatten is not.
+        detail.TeztVectorReadWrite(e.toArray, vv) // concat is a view; flatten is not.
     }
 
     def testEmpty: Unit = {
@@ -31,10 +31,10 @@ class ConcatTest extends junit.framework.TestCase {
         val v2 = vector.fromArray(detail.Example.empty1)
         val v3 = vector.fromArray(detail.Example.empty1)
         val vv = vector.concat(v1,v2,v3)
-        detail.TestEmpty(vv)
+        detail.TeztEmpty(vv)
     }
 
     def testEmpty2: Unit = {
-        detail.TestEmpty(vector.concat[Int]())
+        detail.TeztEmpty(vector.concat[Int]())
     }
 }

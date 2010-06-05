@@ -41,7 +41,7 @@ object Stack {
     def addInt[S](sxy: ((S, Int), Int)): (S, Int) = smap2 (plusIntObj) (sxy)
 }
 
-class StackTest {
+class StackTezt {
     import Stack._
     def testTrivial {
         assertEquals(11, only (addInt (push (6) (push (5) (Empty)))))
@@ -199,7 +199,7 @@ object Postfix1d {
 //        = (s: ((S, Int), Int)) => next (Stack.addInt (s)) (_: (S, Int) => _)
 }*/
 
-class Postfix1Test {
+class Postfix1Tezt {
     import Postfix1._
     def testTrivial {
     //    val push5 = push (5) // X => (SS => _) => _

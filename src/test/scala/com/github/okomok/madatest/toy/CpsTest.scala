@@ -44,7 +44,7 @@ object cps {
 }
 
 
-class CpsTest {
+class CpsTezt {
     import cps._
 
     def testSugar: Unit = {

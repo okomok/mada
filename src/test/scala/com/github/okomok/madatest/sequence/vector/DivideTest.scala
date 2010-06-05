@@ -40,9 +40,9 @@ class DivideTest extends junit.framework.TestCase {
         // 14,17,19, 8,  13, 6, 4,23,   0,12,15
         val actual = mada.sequence.vector.from(example1).copy.region(2, 13).divide(4)
         assertEquals(3, actual.size)
-        detail.TestVectorReadWrite(Array(14,17,19, 8), actual.nth(0))
-        detail.TestVectorReadWrite(Array(13, 6, 4,23), actual.nth(1))
-        detail.TestVectorReadWrite(Array( 0,12,15), actual.nth(2))
+        detail.TeztVectorReadWrite(Array(14,17,19, 8), actual.nth(0))
+        detail.TeztVectorReadWrite(Array(13, 6, 4,23), actual.nth(1))
+        detail.TeztVectorReadWrite(Array( 0,12,15), actual.nth(2))
     }
 
 
@@ -57,35 +57,35 @@ class DivideTest extends junit.framework.TestCase {
     def testUndivide: Unit = {
         val actual = mada.sequence.vector.from(example1).copy.divide(6).seal.undivide
         assertEquals(15, actual.size)
-        detail.TestVectorReadWrite(example1, actual)
+        detail.TeztVectorReadWrite(example1, actual)
     }
     def testUndivideBound: Unit = {
         val actual = mada.sequence.vector.from(example1).divide(1).seal.undivide
         assertEquals(15, actual.size)
-        detail.TestVectorReadOnly(example1, actual)
+        detail.TeztVectorReadOnly(example1, actual)
     }
 
     def testUndivideBoundBig: Unit = {
         val actual = mada.sequence.vector.from(example1).divide(1000).seal.undivide
         assertEquals(15, actual.size)
-        detail.TestVectorReadOnly(example1, actual)
+        detail.TeztVectorReadOnly(example1, actual)
     }
 
     def testUndivideEmpty: Unit = {
         val actual = mada.sequence.vector.from(empty1).divide(10).seal.undivide
-        detail.TestEmpty(actual)
+        detail.TeztEmpty(actual)
     }
 
     def testUndivideFusion: Unit = {
         val actual = mada.sequence.vector.from(example1).divide(1000).undivide
         assertEquals(15, actual.size)
-        detail.TestVectorReadOnly(example1, actual)
+        detail.TeztVectorReadOnly(example1, actual)
     }
 
     def testUndivideRegion: Unit = {
         val dv =mada.sequence.vector.from(example1).copy.divide(6).seal.region(1, 2)
         val actual = dv.undivide
         assertEquals(6, actual.size)
-        detail.TestVectorReadWrite(Array(13, 6, 4,23, 0,12), actual)
+        detail.TeztVectorReadWrite(Array(13, 6, 4,23, 0,12), actual)
     }
 }

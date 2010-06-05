@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.madatest; package toytest; package printftest
+package com.github.okomok.madatest; package toy; package printftest
 
 
 import com.github.okomok.mada
@@ -48,7 +48,7 @@ class BooleanFormatter extends Formatter[Boolean] {
 }
 
 
-class PrintfTest {
+class PrintfTezt {
 
     import junit.framework.Assert._
 

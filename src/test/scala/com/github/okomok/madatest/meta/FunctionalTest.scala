@@ -12,7 +12,7 @@ import com.github.okomok.mada
 import mada.meta._
 
 
-trait FunctionalTest {
+object FunctionalTezt {
 
     type inc[n <: Nat] = n#increment
     type foo[p <: Product2 { type _2 <: Nat }] = inc[select2nd[p]]

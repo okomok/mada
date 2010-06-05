@@ -76,7 +76,7 @@ class Foo {
 
 }
 
-class DisjointBoundedViewTest {
+class DisjointBoundedViewTezt {
     def testTrivial(off: Int): Unit = {
         val f = new Foo
 

@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.madatest; package metatest; package toy; package typeidentity2test
+package com.github.okomok.madatest; package toy; package typeidentity2test
 
 
 import com.github.okomok.mada
@@ -60,7 +60,7 @@ sealed trait Succ[n <: Nat] extends Nat {
 }
 
 
-class TypeIdentity2Test {
+object TypeIdentity2StaticTezt {
 
     type _0N = Zero
     type _1N = Succ[_0N]

@@ -28,7 +28,7 @@ class Cow extends Animal {
 class Fish extends Food
 
 
-class Animal2Test {
+class Animal2Tezt {
 
     def foo(bessy: Cow): Unit = {
 //        bessy.eat(12) // required bessy.SuitableFood

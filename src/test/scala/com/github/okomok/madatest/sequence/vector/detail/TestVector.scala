@@ -13,9 +13,9 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
-object TestVectorReadWrite {
+object TeztVectorReadWrite {
     def apply[A<% Ordered[A] : ClassManifest](expected: Array[A], actual: Vector[A]): Unit = {
-        TestVectorReadOnly(expected, actual)
+        TeztVectorReadOnly(expected, actual)
 
         CombSort(actual)
         val ex = CopyArray(expected); CombSort(vector.fromArray(ex))
@@ -24,7 +24,7 @@ object TestVectorReadWrite {
 }
 
 
-object TestVectorReadOnly {
+object TeztVectorReadOnly {
     def apply[A](expected: Array[A], actual: Vector[A]): Unit = {
         assertEquals(expected.length, actual.size)
 

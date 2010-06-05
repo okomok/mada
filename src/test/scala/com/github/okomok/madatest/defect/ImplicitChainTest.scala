@@ -35,7 +35,7 @@ package mmm {
 
 }
 
-class ImplicitChainTest {
+class ImplicitChainTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
         mmm.peg.range('0', '9')
         mmm.peg.range('0', '9')

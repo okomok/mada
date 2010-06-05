@@ -144,7 +144,7 @@ class FibTest extends junit.framework.TestCase {
 
 
 /*
-class RecursiveFibsNoMemoTest extends NoBenchmark {
+class RecursiveFibsNoMemoTest extends Benchmark {
     override def run = {
         val fibs = new Recursive[Int]
         fibs := Of(0, 1) ++ fibs.zipBy(fibs.tail)(_ + _)
@@ -152,7 +152,7 @@ class RecursiveFibsNoMemoTest extends NoBenchmark {
     }
 }
 
-class RecursiveFibsTest extends NoBenchmark {
+class RecursiveFibsTest extends Benchmark {
     override def run = {
         val fibs = new Recursive[Int]
         fibs := (Of(0, 1) ++ fibs.zipBy(fibs.tail)(_ + _)).memoize

@@ -32,7 +32,7 @@ class SortTest extends junit.framework.TestCase {
     def testEmpty: Unit = {
         val v = fromArray(empty1)
         mada.sequence.vector.stl.sort(v, 0, v.size)
-        TestEmpty(v)
+        TeztEmpty(v)
     }
 
     def longExample1 = Array(

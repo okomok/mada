@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.madatest; package sequencetest; package vectortest; package parallelstest
+package com.github.okomok.madatest; package sequencetest; package vectortest; package paralleltest
 
 
 import com.github.okomok.mada
@@ -40,14 +40,14 @@ class ContainsTest extends junit.framework.TestCase {
 }
 
 
-class ContainsNoThreadsTest extends NoBenchmark {
+class ContainsNoThreadsTezt extends Benchmark {
     override def run = {
         val a = longSample1.contains(405)
         ()
     }
 }
 
-class ContainsParallelTest extends NoBenchmark {
+class ContainsParallelTezt extends Benchmark {
     override def run = {
         val a = longSample1.parallel.contains(405)
         ()

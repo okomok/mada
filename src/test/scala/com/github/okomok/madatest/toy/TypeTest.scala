@@ -14,7 +14,7 @@ object XX
 object YY extends XX.type
 */
 
-class TypeTest {
+class TypeTezt {
     def testTrivial {
     }
 }

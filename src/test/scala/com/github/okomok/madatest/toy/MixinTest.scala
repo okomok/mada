@@ -85,7 +85,7 @@ object YourFoo extends Foo with FooMinimalProxy {
 }
 
 
-class MixinTest {
+class MixinTezt {
     def testTrivial {
         assertEquals(9, MyFoo.foo)
         assertEquals(4, MyFoo.far)

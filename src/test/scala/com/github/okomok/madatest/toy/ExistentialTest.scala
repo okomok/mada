@@ -15,7 +15,7 @@ import java.lang.Character
 
 
 // See: http://www.haskell.org/haskellwiki/Existential_types
-class ExistentialTest {
+class ExistentialTezt {
 
     class Show[T <: AnyRef](val me: T)
 

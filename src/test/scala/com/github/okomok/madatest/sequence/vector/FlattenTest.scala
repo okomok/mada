@@ -41,11 +41,11 @@ class FlattenTest extends junit.framework.TestCase {
         val v2 = iterative.from(detail.Example.empty1)
         val v3 = vector.from(detail.Example.empty1)
         val vv = iterative.from(Array[iterative.Sequence[Int]](v1, v2, v3)).flatten.toVector
-        detail.TestEmpty(vv)
+        detail.TeztEmpty(vv)
     }
 
     def testFlatMap: Unit = {
         val v = vector.from(detail.Example.example1).flatMap(vector.single(_: Int)).toVector
-        detail.TestVectorReadOnly(detail.Example.example1, v)
+        detail.TeztVectorReadOnly(detail.Example.example1, v)
     }
 }

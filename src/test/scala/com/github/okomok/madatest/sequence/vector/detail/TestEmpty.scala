@@ -13,7 +13,7 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
-object TestEmpty {
+object TeztEmpty {
     def apply[A](v: Vector[A]) {
         assertEquals(0, v.size)
     }

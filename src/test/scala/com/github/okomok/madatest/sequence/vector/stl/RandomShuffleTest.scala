@@ -25,6 +25,6 @@ class RandomShuffleTest extends junit.framework.TestCase {
         mada.sequence.vector.stl.randomShuffle(v, 0, v.size)
 //        println(v.toString)
         mada.sequence.vector.stl.sort(v, 0, v.size)
-        TestVectorReadOnly(example1Sorted, v)
+        TeztVectorReadOnly(example1Sorted, v)
     }
 }

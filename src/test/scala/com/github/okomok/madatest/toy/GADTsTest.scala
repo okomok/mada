@@ -11,7 +11,7 @@ import junit.framework.Assert._
 
 
 // See: http://www.haskell.org/ghc/docs/latest/html/users_guide/data-type-extensions.html#gadt
-class GADTsTest {
+class GADTsTezt {
     class Term[A]
     case class Lit(i: Int) extends Term[Int]
     case class Succ(t: Term[Int]) extends Term[Int]

@@ -154,7 +154,7 @@ case class IdentityExpr[A](_1: Expr.Terminal[A]) extends Expr.Terminal[A] {
 }*/
 
 
-class ExprTest {
+class ExprTezt {
     def aList = Array(1,2,3,4,5).toList
     def anIterator = aList.iterator
 

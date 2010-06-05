@@ -58,7 +58,7 @@ package my {
 }
 
 
-class ImplicitScopeTest {
+class ImplicitScopeTezt {
 
     import my._
     import my.Foo.Compatibles._

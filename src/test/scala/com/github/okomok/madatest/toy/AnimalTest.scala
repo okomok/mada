@@ -35,7 +35,7 @@ class CowG extends AnimalG[Grass] {
 }
 
 
-class AnimalTest {
+class AnimalTezt {
 
     def bar(bessy: Animal): Unit = {
         // bessy.eat(new Grass) // type mismatch: Grass -> bessy.SuitableFood

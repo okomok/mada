@@ -97,7 +97,7 @@ object MiniVector {
     }
 }
 
-class MiniVector2Test {
+class MiniVector2Tezt {
 
     def testTrivial: Unit = {
         val v = new MiniVector[Int]{}

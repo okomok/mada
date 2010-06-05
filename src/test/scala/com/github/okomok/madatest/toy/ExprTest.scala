@@ -65,7 +65,7 @@ class SizeExpr[A](val base: Expr[Rng[A]]) extends Expr[Long] {
 }
 
 
-class ExprTest {
+class ExprTezt {
     implicit def unstringize(s: String) = new Rng[Char] { }
 
     def testTrivial {

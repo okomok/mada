@@ -18,11 +18,11 @@ class ValuesTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
         val ex = Array(5,1,3,6,9,7,10,0)
         val ac = vector.Of(5,1,3,6,9,7,10,0)
-        detail.TestVectorReadOnly(ex, ac)
+        detail.TeztVectorReadOnly(ex, ac)
     }
 
     def testEmpty: Unit = {
         val ac = vector.Of[Int]()
-        detail.TestEmpty(ac)
+        detail.TeztEmpty(ac)
     }
 }

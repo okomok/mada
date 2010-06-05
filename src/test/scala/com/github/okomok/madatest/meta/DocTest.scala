@@ -9,7 +9,7 @@ package com.github.okomok.madatest; package metatest
 
 import com.github.okomok.mada
 
-    object DocTest {
+    object DocTezt {
         // boolean value
         assert(true)
 
@@ -37,7 +37,7 @@ import com.github.okomok.mada
         assert(inc.apply(3) == 4)
     }
 
-    object metaDocTest {
+    object metaDocTezt {
         import mada.meta._
 
         // meta boolean value

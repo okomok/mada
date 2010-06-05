@@ -24,7 +24,7 @@ package vv {
 }
 
 
-class OpsTest {
+class OpsTezt {
     def testCompile(x: Int): Unit = {
         val v = new vv.V[Int] {}
         v.go

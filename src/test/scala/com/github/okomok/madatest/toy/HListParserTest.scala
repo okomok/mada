@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.madatest; package toytest; package hlistparsertest
+package com.github.okomok.madatest; package toy; package hlistparsertest
 
 
 import com.github.okomok.mada
@@ -72,7 +72,7 @@ case class Sequential[L <: Parser, R <: Parser { type parse[In <: Input] <: List
     }
 }*/
 
-class HListParserTest {
+class HListParserTezt {
     import junit.framework.Assert._
 
     def testTrivial: Unit = {

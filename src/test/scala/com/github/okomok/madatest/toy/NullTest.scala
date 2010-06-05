@@ -11,7 +11,7 @@ import junit.framework.Assert._
 
 
 // See: http://www.haskell.org/haskellwiki/Existential_types
-class NullTest {
+class NullTezt {
     def testMatch: Unit = {
         assertFalse(null == 10)
         assertFalse(null.isInstanceOf[String])
