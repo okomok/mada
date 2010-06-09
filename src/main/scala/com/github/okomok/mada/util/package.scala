@@ -30,22 +30,22 @@ package object util {
     /**
      * A function calculating <code>body</code> by <code>name</code>.
      */
-    def byName[R](body: => R): ByName[R] = ByName{ () => body }
+    def byName[R](body: => R): ByName[R] = ByName(() => body)
 
     /**
      * A function calculating <code>body</code> by <code>lazy</code>.
      */
-    def byLazy[R](body: => R): ByLazy[R] = ByLazy{ () => body }
+    def byLazy[R](body: => R): ByLazy[R] = ByLazy(() => body)
 
     /**
-     * A function calculating <code>body</code> in (possibly) other threads.
+     * A function calculating <code>body</code> in possibly other threads.
      */
-    def future[R](body: => R): Future[R] = Future{ () => body }
+    def future[R](body: => R): Future[R] = Future(() => body)
 
     /**
      * A function calculating <code>body</code> in other threads.
      */
-    def parallel[R](body: => R): Parallel[R] = Parallel{ () => body }
+    def parallel[R](body: => R): Parallel[R] = Parallel(() => body)
 
 
 // hash code
@@ -70,5 +70,36 @@ package object util {
         def |>[B](f: A => B): B = f(x)
     }
     implicit def |>[A](x: A): ForwardPipe[A] = new ForwardPipe(x)
+
+
+// misc
+
+    /**
+     * Typed <code>None</code>
+     */
+    def NoneOf[A]: Option[A] = None
+
+    /**
+     * Evaluates <code>body</code> infinite times.
+     */
+    def repeat(body: => Unit): Unit = while (true) body
+
+    /**
+     * Evaluates <code>body</code> <code>n</code> times sequentially.
+     */
+    def times(n: Int)(body: => Unit): Unit = {
+        var i = 0
+        while (i != n) {
+            body
+            i += 1
+        }
+    }
+
+    /**
+     * Evaluates <code>body</code> <code>n</code> times in possibly parallel.
+     */
+    def timesParallel(n: Int)(body: => Unit): Unit = {
+        sequence.vector.range(0, n).parallel.each(_ => body)
+    }
 
 }

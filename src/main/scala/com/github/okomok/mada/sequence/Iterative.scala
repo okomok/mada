@@ -250,7 +250,7 @@ trait Iterative[+A] extends Sequence[A] {
      * Optionally returns the last element.
      */
     def lastOption: Option[A] = {
-        var e = option.NoneOf[A]
+        var e = util.NoneOf[A]
         val it = begin
         while (it) {
             e = Some(~it)

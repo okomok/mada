@@ -12,7 +12,7 @@ import com.github.okomok.mada
 // import mada.Compare.madaCompareFromGetOrdered
 
 
-import mada.control
+import mada.util
 import mada.sequence.{Vector, vector}
 import mada.sequence.vector._
 import junit.framework.Assert._
@@ -53,14 +53,14 @@ class SortTest extends junit.framework.TestCase {
 
 class SortParallelPerfTezt extends Benchmark {
     override def run = {
-        longSample1.copy.parallel.sort(Ordering.fromLessThan[Int]{ (x, y) => control.times(longCalc, 5); x < y })
+        longSample1.copy.parallel.sort(Ordering.fromLessThan[Int]{ (x, y) => util.times(5)(longCalc); x < y })
     }
     override val grainCount = 1
 }
 
 class SortNonParallelPerfTezt extends Benchmark {
     override def run = {
-        longSample1.copy.sort(Ordering.fromLessThan[Int]{ (x, y) => control.times(longCalc, 5); x < y })
+        longSample1.copy.sort(Ordering.fromLessThan[Int]{ (x, y) => util.times(5)(longCalc); x < y })
     }
     override val grainCount = 1
 }

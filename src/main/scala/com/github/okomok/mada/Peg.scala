@@ -404,9 +404,9 @@ object Peg extends peg.Compatibles {
 
 // methodization
 
-    sealed class OfChar(_this: Peg[Char]) {
+    sealed class _OfChar(_this: Peg[Char]) {
         def lowerCaseRead: Peg[Char] = _this._lowerCaseRead(_this)
     }
-    implicit def ofChar(_this: Peg[Char]): OfChar = new OfChar(_this)
+    implicit def _ofChar(_this: Peg[Char]): _OfChar = new _OfChar(_this)
 
 }
