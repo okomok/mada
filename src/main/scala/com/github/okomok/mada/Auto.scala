@@ -15,6 +15,9 @@ import auto._
  */
 trait Auto[+A] {
 
+    @returnThis
+    final def asAuto: Auto[A] = this
+
     /**
      * Returns the associated reference.
      */
@@ -43,18 +46,16 @@ trait Auto[+A] {
     @aliasOf("usedBy")
     final def foreach[B](f: A => B): B = usedBy(f)
 
-    /**
-     * Triggers begin/end iif <code>p</code> satisfies.
-     */
-    def filter(p: A => Boolean): Auto[A] = Filter(this, p)
-
-    @aliasOf("filter")
-    final def withFilter(p: A => Boolean): Auto[A] = filter(p)
-
 }
 
 
 object Auto {
+
+// methodization
+    sealed class _OfInvariant[A](_this: Auto[A]) {
+        def asVar: Auto[Var[A]] = AsVar(_this)
+    }
+    implicit def _ofInvariant[A](_this: Auto[A]): _OfInvariant[A] = new _OfInvariant(_this)
 
 // compatibles
     implicit def _fromJCloseable[A <: java.io.Closeable](from: A): Auto[A] = fromJCloseable(from)

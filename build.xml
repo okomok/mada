@@ -103,7 +103,7 @@
         <pathelement path="${target.test-classes.dir}" />
     </path>
 
-    <target name="test" depends="test-compile">    
+    <target name="test" depends="test-compile">
         <junit fork="true" forkmode="perBatch"
             errorProperty="test.failed" failureProperty="test.failed">
             <classpath refid="test.classpath" />

@@ -32,11 +32,6 @@ package object auto {
      */
     def endWith(f: => Unit): Auto[Unit] = EndWith(util.byName(f))
 
-    /**
-     * Uses a variable Auto.
-     */
-    def useVar[A](a: Auto[A]): Auto[Var[A]] = UseVar(a)
-
     @equivalentTo("scala.Responder.exec")
     def doing(x: => Unit): Boolean = { x; true }
 

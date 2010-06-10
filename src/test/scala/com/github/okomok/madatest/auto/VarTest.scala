@@ -9,7 +9,7 @@ package com.github.okomok.madatest; package autotest
 
 import com.github.okomok.mada
 
-import mada.auto._
+import mada.auto.{use, using, Var}
 import mada.Auto
 import junit.framework.Assert._
 
@@ -31,9 +31,9 @@ class VarTest extends junit.framework.TestCase {
         val f4 = new MyFile("f4")
 
         for {
-            a1 <- useVar(f1)
-            a2 <- useVar(f2)
-            a3 <- useVar(f3)
+            a1 <- use(f1).asVar
+            a2 <- use(f2).asVar
+            a3 <- use(f3).asVar
         } {
             val _f1 = a1.release
             assertSame(f1, _f1.get)

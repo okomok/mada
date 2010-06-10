@@ -21,7 +21,7 @@ class Var[A](private var a: Auto[A]) extends Auto[A] {
 }
 
 
-case class UseVar[A](_1: Auto[A]) extends Auto[Var[A]] {
+case class AsVar[A](_1: Auto[A]) extends Auto[Var[A]] {
     override val get = new Var(_1)
     override def begin = get.begin
     override def end = get.end
