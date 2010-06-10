@@ -53,4 +53,10 @@ package object list {
      */
     def replicate[A](n: Int, x: A): List[A] = repeat(x).take(n)
 
+
+// conversion
+
+    @compatibleConversion
+    def fromOption[A](from: Option[A]): List[A] = if (from.isEmpty) empty else single(from.get)
+
 }

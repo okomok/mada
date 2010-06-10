@@ -497,6 +497,7 @@ object Iterative {
 
     implicit def _unstringize(from: String): Iterative[Char] = unstringize(from)
     implicit def _fromArray[A](from: Array[A]): Iterative[A] = fromArray(from)
+    implicit def _fromOption[A](from: Option[A]): Iterative[A] = fromOption(from)
     implicit def _fromSIterable[A](from: Iterable[A]): Iterative[A] = fromSIterable(from)
     implicit def _fromJIterable[A](from: java.lang.Iterable[A]): Iterative[A] = fromJIterable(from)
     implicit def _fromJObjectInput(from: java.io.ObjectInput): Iterative[AnyRef] = fromJObjectInput(from)

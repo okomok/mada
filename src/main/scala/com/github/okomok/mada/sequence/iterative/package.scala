@@ -85,6 +85,9 @@ package object iterative {
     def fromArray[A](from: Array[A]): Iterative[A] = FromArray(from)
 
     @compatibleConversion
+    def fromOption[A](from: Option[A]): Iterative[A] = FromOption(from)
+
+    @compatibleConversion
     def fromSIterable[A](from: Iterable[A]): Iterative[A] = FromSIterable(from)
 
     @compatibleConversion

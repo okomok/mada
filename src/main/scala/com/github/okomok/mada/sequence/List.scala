@@ -545,6 +545,11 @@ object List {
     implicit def _ofPair[A, B](_this: List[(A, B)]): _OfPair[A, B] = new _OfPair(_this)
 
 
+// compatibles
+
+    implicit def _fromOption[A](from: Option[A]): List[A] = fromOption(from)
+
+
 // pattern matching
 
     @aliasOf("Of.apply")
