@@ -252,6 +252,9 @@ sealed abstract class List[+A] extends iterative.Sequence[A] {
         case x :: xs => f(x, util.byLazy(xs().foldRight(z)(f)))
     }
 
+    @aliasOf("foldRight")
+    final def :\[B](z: B)(f: (A, util.ByLazy[B]) => B): B = foldRight(z)(f)
+
     /**
      * Reduces left-associative. (a.k.a. foldl1)
      */

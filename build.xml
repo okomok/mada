@@ -29,9 +29,9 @@
     <target name="dirs">
         <echo>Creating output directories if needed...</echo>
         <mkdir dir="${target.dir}" />
-        <mkdir dir="${target.classes.dir}" />        
+        <mkdir dir="${target.classes.dir}" />
         <mkdir dir="${target.test-classes.dir}" />
-        <mkdir dir="${target.surefire-reports.dir}" />        
+        <mkdir dir="${target.surefire-reports.dir}" />
         <mkdir dir="${target.site.scaladocs.dir}" />
     </target>
 
@@ -149,8 +149,11 @@
 
     <target name="help">
         <echo>Mada Build. Available targets:</echo>
-        <echo>   clean:     Cleans up.</echo>
-        <echo>   test:      Runs all the unit tests. For one test, add "-Dtest.target=ATestCase".</echo>
+        <echo>   jar:       Builds jar.</echo>
+        <echo>   doc:       Builds scaladoc.</echo>
+        <echo>   report:    Builds html report from unit tests result.</echo>
+        <echo>   test:      Runs all the unit tests. For one test, add "-Dtestcase=ATestCase".</echo>
+        <echo>   clean:     Cleans up the target directory.</echo>
     </target>
 
     <target name="clean">

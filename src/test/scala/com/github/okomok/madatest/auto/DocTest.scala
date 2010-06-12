@@ -7,16 +7,12 @@
 package com.github.okomok.madatest; package autotest
 
 
-import com.github.okomok.mada
-
-    import mada.auto._
+    import com.github.okomok.mada.auto.use
     import java.nio.channels
     import java.nio.channels.Channels
 
-    class DocTest extends junit.framework.TestCase {
-        def testOff: Unit = ()
-
-        def teztTrivial: Unit = {
+    class DocTezt extends junit.framework.TestCase {
+        def testTrivial: Unit = {
             for {
                 source <- use(Channels.newChannel(System.in))
                 dest <- use(Channels.newChannel(System.out))

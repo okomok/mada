@@ -21,4 +21,9 @@ class FoldTest extends junit.framework.TestCase {
         assertEquals(A.take(30), B.take(30))
     }
 
+    def testRight2: Unit = {
+        val A: List[Int] = (1 :: 3 :: 4 :: Nil).cycle // infinite
+        val B: List[Int] = (A :\ Nil.of[Int]) { new Cons(_, _) }
+        assertEquals(A.take(30), B.take(30))
+    }
 }

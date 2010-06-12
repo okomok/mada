@@ -30,12 +30,12 @@
 
 `auto` provides deterministic resource management within a block.
 
-    import com.github.okomok.mada.auto._
+    import com.github.okomok.mada.auto.use
     import java.nio.channels
     import java.nio.channels.Channels
 
-    class DocTest {
-        def teztTrivial: Unit = {
+    class DocTezt extends junit.framework.TestCase {
+        def testTrivial: Unit = {
             for {
                 source <- use(Channels.newChannel(System.in))
                 dest <- use(Channels.newChannel(System.out))
@@ -180,6 +180,8 @@ which is useful to build recursive sequences:
 
 In fact, you could build recursive sequences using only iterator abstraction,
 but number of iterator instances would be exponential-growth in a recursive sequence like above.
+
+Note `scala.Stream` is not thread-safe, and its `foldRight`, which is the most important method, is not lazy.
 
 `List` summary:
 
