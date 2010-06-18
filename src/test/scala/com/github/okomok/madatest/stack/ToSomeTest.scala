@@ -18,8 +18,10 @@ class ToSomeTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
         val j = new java.util.ArrayDeque[Int]
         val s = stack.from(j)
+        /* toSome was rejected.
 //        s.toSome.getFirst
         s.toSome.toSome
+        */
         ()
     }
 

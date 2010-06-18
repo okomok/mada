@@ -411,9 +411,6 @@ trait Iterative[+A] extends Sequence[A] {
     }
 
     @conversion
-    def toSome: ToSome[A] = new ToSome(this)
-
-    @conversion
     def toList: List[A] = {
         val it = begin
         if (it) {

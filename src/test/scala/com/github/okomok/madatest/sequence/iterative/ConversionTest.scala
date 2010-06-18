@@ -46,10 +46,12 @@ class ConversionTest extends junit.framework.TestCase {
         assertTrue(v.isEmpty)
     }
 
+    /* toSome was rejected.
     def testToSome: Unit = {
         val t = iterative.Of(1,2,3)
         val x = t.toSome
         x.view
         ()
     }
+    */
 }

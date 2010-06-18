@@ -46,9 +46,6 @@ trait Stack[A] {
     def clear: Unit
 
     @compatibleConversion
-    def toSome: ToSome[A] = new ToSome(this)
-
-    @compatibleConversion
     def toSStack: scala.collection.mutable.Stack[A] = throw new Error
 
     @aliasOf("peek")

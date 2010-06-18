@@ -420,7 +420,7 @@ sealed abstract class List[+A] extends iterative.Sequence[A] {
         (_1, _2)
     }
 
-    @equivalentTo("(take(n), drop(n)")
+    @equivalentTo("(take(n), drop(n))")
     def splitAt(n: Int): (List[A], List[A]) = (take(n), drop(n))
 
 
