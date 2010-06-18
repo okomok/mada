@@ -60,7 +60,7 @@ trait Stack[A] {
 }
 
 object Stack {
-    implicit def madaStackFromJDeque[A](from: java.util.Deque[A]): Stack[A] = fromJDeque(from)
-    implicit def madaStackFromSStack[A](from: scala.collection.mutable.Stack[A]): Stack[A] = fromSStack(from)
-    implicit def madaStackFromSArrayStack[A](from: scala.collection.mutable.ArrayStack[A]): Stack[A] = fromSArrayStack(from)
+    implicit def _fromJDeque[A](from: java.util.Deque[A]): Stack[A] = fromJDeque(from)
+    implicit def _fromSStack[A](from: scala.collection.mutable.Stack[A]): Stack[A] = fromSStack(from)
+    implicit def _fromSArrayStack[A](from: scala.collection.mutable.ArrayStack[A]): Stack[A] = fromSArrayStack(from)
 }

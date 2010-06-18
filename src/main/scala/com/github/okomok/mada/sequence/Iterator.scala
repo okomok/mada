@@ -80,5 +80,5 @@ trait Iterator[+A] {
 
 
 object Iterator {
-    implicit def madaIteratorToBoolean[A](from: Iterator[A]): Boolean = from.toBoolean
+    implicit def _toBoolean[A](from: Iterator[A]): Boolean = from.toBoolean
 }
