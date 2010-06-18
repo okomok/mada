@@ -16,24 +16,24 @@ object || {
 
     // T1 || T2 || T3
     // --> ||[||[T1, T2], T3]
-    // --> ||[S1, S2] (S1 = ||[T1, T2], S2 = T3)
+    // --> ||[S1, S2] where S1 = ||[T1, T2], S2 = T3
 
-    implicit def of21[T1, T2](from: T1) = new (T1 || T2){}
-    implicit def of22[T1, T2](from: T2) = new (T1 || T2){}
+    implicit def _of21[T1, T2](from: T1) = new (T1 || T2){}
+    implicit def _of22[T1, T2](from: T2) = new (T1 || T2){}
 
-    implicit def of31[T1, T2, T3](from: T1) = new (T1 || T2 || T3){}
-    implicit def of32[T1, T2, T3](from: T2) = new (T1 || T2 || T3){}
+    implicit def _of31[T1, T2, T3](from: T1) = new (T1 || T2 || T3){}
+    implicit def _of32[T1, T2, T3](from: T2) = new (T1 || T2 || T3){}
 
-    implicit def of41[T1, T2, T3, T4](from: T1) = new (T1 || T2 || T3 || T4){}
-    implicit def of42[T1, T2, T3, T4](from: T2) = new (T1 || T2 || T3 || T4){}
+    implicit def _of41[T1, T2, T3, T4](from: T1) = new (T1 || T2 || T3 || T4){}
+    implicit def _of42[T1, T2, T3, T4](from: T2) = new (T1 || T2 || T3 || T4){}
 
-    implicit def of51[T1, T2, T3, T4, T5](from: T1) = new (T1 || T2 || T3 || T4 || T5){}
-    implicit def of52[T1, T2, T3, T4, T5](from: T2) = new (T1 || T2 || T3 || T4 || T5){}
+    implicit def _of51[T1, T2, T3, T4, T5](from: T1) = new (T1 || T2 || T3 || T4 || T5){}
+    implicit def _of52[T1, T2, T3, T4, T5](from: T2) = new (T1 || T2 || T3 || T4 || T5){}
 
-    implicit def of61[T1, T2, T3, T4, T5, T6](from: T1) = new (T1 || T2 || T3 || T4 || T5 || T6){}
-    implicit def of62[T1, T2, T3, T4, T5, T6](from: T2) = new (T1 || T2 || T3 || T4 || T5 || T6){}
+    implicit def _of61[T1, T2, T3, T4, T5, T6](from: T1) = new (T1 || T2 || T3 || T4 || T5 || T6){}
+    implicit def _of62[T1, T2, T3, T4, T5, T6](from: T2) = new (T1 || T2 || T3 || T4 || T5 || T6){}
 
-    implicit def of71[T1, T2, T3, T4, T5, T6, T7](from: T1) = new (T1 || T2 || T3 || T4 || T5 || T6 || T7){}
-    implicit def of72[T1, T2, T3, T4, T5, T6, T7](from: T2) = new (T1 || T2 || T3 || T4 || T5 || T6 || T7){}
+    implicit def _of71[T1, T2, T3, T4, T5, T6, T7](from: T1) = new (T1 || T2 || T3 || T4 || T5 || T6 || T7){}
+    implicit def _of72[T1, T2, T3, T4, T5, T6, T7](from: T2) = new (T1 || T2 || T3 || T4 || T5 || T6 || T7){}
 
 }
