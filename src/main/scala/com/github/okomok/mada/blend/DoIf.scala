@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package blend
 
 
-// See: meta.Programming with Scala: Conditional Compilation and Loop Unrolling
+// See: Meta-programming with Scala: Conditional Compilation and Loop Unrolling
 //      at http://michid.wordpress.com/2008/10/29/meta-programming-with-scala-conditional-compilation-and-loop-unrolling/
 
 
@@ -19,11 +19,11 @@ sealed abstract class DoIf[b <: meta.Boolean] {
 
 object DoIf {
 
-    implicit object ofTrue extends DoIf[meta.`true`] {
+    implicit object _ofTrue extends DoIf[meta.`true`] {
         override def apply(block: => Unit) = block
     }
 
-    implicit object ofFalse extends DoIf[meta.`false`] {
+    implicit object _ofFalse extends DoIf[meta.`false`] {
         override def apply(block: => Unit) = ()
     }
 

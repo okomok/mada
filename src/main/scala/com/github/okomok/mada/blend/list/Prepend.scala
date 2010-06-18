@@ -13,18 +13,18 @@ sealed abstract class Prepend[r <: List, l <: List] extends ((r, l) => Prepend.r
 
 object Prepend {
 
-    type result[r <: List, l <: List] = l#accept_List[vt[r]]
+    type result[r <: List, l <: List] = l#accept_List[_vt[r]]
 
-    sealed trait vt[r <: List] extends Visitor[List] {
+    sealed trait _vt[r <: List] extends Visitor[List] {
         override type visitNil = r
-        override type visitCons[h, t <: List] = Cons[h, t#accept_List[vt[r]]]
+        override type visitCons[h, t <: List] = Cons[h, t#accept_List[_vt[r]]]
     }
 
-    implicit def ofNil[r <: List] = new Prepend[r, Nil] {
+    implicit def _ofNil[r <: List] = new Prepend[r, Nil] {
         override def apply(_r: r, _l: Nil) = _r
     }
 
-    implicit def ofCons[r <: List, h, t <: List](implicit _prepend: Prepend[r, t]) = new Prepend[r, Cons[h, t]] {
+    implicit def _ofCons[r <: List, h, t <: List](implicit _prepend: Prepend[r, t]) = new Prepend[r, Cons[h, t]] {
         override def apply(_r: r, _l: Cons[h, t]) = Cons(_l.head, _prepend(_r, _l.tail))
     }
 

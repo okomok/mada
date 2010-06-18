@@ -15,11 +15,11 @@ object ElementOf {
 
     type result[l <: List, a] = a
 
-    implicit def ofCons[h, t <: List, a](implicit _elementOf: ElementOf[t, a]) = new ElementOf[Cons[h, t], a] {
+    implicit def _ofCons[h, t <: List, a](implicit _elementOf: ElementOf[t, a]) = new ElementOf[Cons[h, t], a] {
         override def apply(_l: Cons[h, t]) = _elementOf(_l.tail)
     }
 
-    implicit def ofConsMatch[t <: List, a] = new ElementOf[Cons[a, t], a] {
+    implicit def _ofConsMatch[t <: List, a] = new ElementOf[Cons[a, t], a] {
         override def apply(_l: Cons[a, t]) = _l.head
     }
 

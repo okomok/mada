@@ -13,18 +13,18 @@ sealed abstract class PrependReversed[r <: List, l <: List] extends ((r, l) => P
 
 object PrependReversed {
 
-    type result[r <: List, l <: List] = l#accept_List[vt[r]]
+    type result[r <: List, l <: List] = l#accept_List[_vt[r]]
 
-    sealed trait vt[r <: List] extends Visitor[List] {
+    sealed trait _vt[r <: List] extends Visitor[List] {
         override type visitNil = r
-        override type visitCons[h, t <: List] = t#accept_List[vt[Cons[h, r]]]
+        override type visitCons[h, t <: List] = t#accept_List[_vt[Cons[h, r]]]
     }
 
-    implicit def ofNil[r <: List] = new PrependReversed[r, Nil] {
+    implicit def _ofNil[r <: List] = new PrependReversed[r, Nil] {
         override def apply(_r: r, _l: Nil) = _r
     }
 
-    implicit def ofCons[r <: List, h, t <: List](implicit _prependReversed: PrependReversed[Cons[h, r], t]) = new PrependReversed[r, Cons[h, t]] {
+    implicit def _ofCons[r <: List, h, t <: List](implicit _prependReversed: PrependReversed[Cons[h, r], t]) = new PrependReversed[r, Cons[h, t]] {
         override def apply(_r: r, _l: Cons[h, t]) = _prependReversed(Cons(_l.head, _r), _l.tail)
     }
 

@@ -13,18 +13,18 @@ sealed abstract class Slice[l <: List, n <: meta.Nat, m <: meta.Nat] extends (l 
 
 object Slice {
 
-    type result[l <: List, n <: meta.Nat, m <: meta.Nat] = n#accept_blendList[vt[l, m]]
+    type result[l <: List, n <: meta.Nat, m <: meta.Nat] = n#accept_blendList[_vt[l, m]]
 
-    sealed trait vt[l <: List, m <: meta.Nat] extends meta.nat.Visitor[List] {
+    sealed trait _vt[l <: List, m <: meta.Nat] extends meta.nat.Visitor[List] {
         override type visitZero = Take.result[l, m]
-        override type visitSucc[n <: meta.Nat] = n#accept_blendList[vt[l#tail, m#decrement]]
+        override type visitSucc[n <: meta.Nat] = n#accept_blendList[_vt[l#tail, m#decrement]]
     }
 
-    implicit def ofZero[l <: List, m <: meta.Nat](implicit _take: Take[l, m]) = new Slice[l, meta.Zero, m] {
+    implicit def _ofZero[l <: List, m <: meta.Nat](implicit _take: Take[l, m]) = new Slice[l, meta.Zero, m] {
         override def apply(_l: l) = _take(_l)
     }
 
-    implicit def ofSucc[h, t <: List, n <: meta.Nat, m <: meta.Nat](implicit _slice: Slice[t, n, m]) = new Slice[Cons[h, t], meta.Succ[n], meta.Succ[m]] {
+    implicit def _ofSucc[h, t <: List, n <: meta.Nat, m <: meta.Nat](implicit _slice: Slice[t, n, m]) = new Slice[Cons[h, t], meta.Succ[n], meta.Succ[m]] {
         override def apply(_l: Cons[h, t]) = _slice(_l.tail)
     }
 

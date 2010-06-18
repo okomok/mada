@@ -23,7 +23,7 @@ sealed abstract class Then[A] {
 
 object If {
 
-    implicit def ofTrue[A] = new If[A, meta.`true`] {
+    implicit def _ofTrue[A] = new If[A, meta.`true`] {
         override def apply(block: => A) = new Then[A] {
             override def `else`(unused: => A) = block
             override def elseIf[b <: meta.Boolean](unused: => A)(implicit _if: If[A, b]) = this
@@ -31,7 +31,7 @@ object If {
         }
     }
 
-    implicit def ofFalse[A] = new If[A, meta.`false`] {
+    implicit def _ofFalse[A] = new If[A, meta.`false`] {
         override def apply(unused: => A) = new Then[A] {
             override def `else`(block: => A) = block
             override def elseIf[b <: meta.Boolean](block: => A)(implicit _if: If[A, b]) = _if(block)

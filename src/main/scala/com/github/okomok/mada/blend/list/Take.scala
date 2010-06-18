@@ -13,18 +13,18 @@ sealed abstract class Take[l <: List, n <: meta.Nat] extends (l => Take.result[l
 
 object Take {
 
-    type result[l <: List, n <: meta.Nat] = n#accept_blendList[vt[l]]
+    type result[l <: List, n <: meta.Nat] = n#accept_blendList[_vt[l]]
 
-    sealed trait vt[l <: List] extends meta.nat.Visitor[List] {
+    sealed trait _vt[l <: List] extends meta.nat.Visitor[List] {
         override type visitZero = Nil
-        override type visitSucc[n <: meta.Nat] = Cons[l#head, n#accept_blendList[vt[l#tail]]]
+        override type visitSucc[n <: meta.Nat] = Cons[l#head, n#accept_blendList[_vt[l#tail]]]
     }
 
-    implicit def ofZero[l <: List] = new Take[l, meta.Zero] {
+    implicit def _ofZero[l <: List] = new Take[l, meta.Zero] {
         override def apply(_l: l) = Nil
     }
 
-    implicit def ofSucc[h, t <: List, n <: meta.Nat](implicit _take: Take[t, n]) = new Take[Cons[h, t], meta.Succ[n]] {
+    implicit def _ofSucc[h, t <: List, n <: meta.Nat](implicit _take: Take[t, n]) = new Take[Cons[h, t], meta.Succ[n]] {
         override def apply(_l: Cons[h, t]) = Cons(_l.head, _take(_l.tail))
     }
 
