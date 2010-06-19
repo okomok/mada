@@ -51,7 +51,8 @@
 
 ## `blend`
 
-`blend` contains heterogeneous-list implementation originally written in [Metascala].
+`blend` package contains heterogeneous-list implementation originally written in [Metascala].
+While `scala.List` contains elements of the same type, `blend.List` can contain elements of different types:
 
     import com.github.okomok.mada.meta.nat.Literal._
     import com.github.okomok.mada.blend._
@@ -66,12 +67,19 @@
         }
     }
 
-While `scala.List` contains elements of the same type, `blend.List` can contain
-elements of different types.
-
+Now `nth` is used for both method and "metamethod" invocation to retrieve n-th element from a list.
+(We might say that `l.nth` is a "companion method" invocation.)
+In the same way, `blend.List` provides almost all methods which `scala.List` provides.
 
 
 ## `meta`
+
+`meta` package provides several types and methods for metaprogramming:
+
+* `Boolean`: boolean type
+* `Nat`: natural number type
+* `assert`: assertion method
+* `unmeta`: converts meta-value to runtime-value.
 
 The following example contrasts the non-meta versus meta programming in Scala:
 
