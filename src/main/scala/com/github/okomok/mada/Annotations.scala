@@ -93,6 +93,11 @@ class returnThat extends StaticAnnotation
  */
 class specializer extends StaticAnnotation
 
+/**
+ * A companion method which has a corresponding metamethod.
+ */
+class companionMethod extends StaticAnnotation
+
 
 /**
  * Marks an unfixable compiler bug.

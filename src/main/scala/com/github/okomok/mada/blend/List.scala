@@ -16,31 +16,35 @@ import list._
 
 sealed abstract class List { // this: self =>
 
-    @returnThis
+    @companionMethod @returnThis
     def self: self
     type self <: List
 
     /**
      * Returns the first element.
      */
+    @companionMethod
     def head: head
     type head
 
     /**
      * Returns the trailing list.
      */
+    @companionMethod
     def tail: tail
     type tail <: List
 
     /**
      * Prepends <code>e</code>.
      */
+    @companionMethod
     final def ::[A](e: A): addFirst[A] = Cons(e, self)
     final type addFirst[A] = Cons[A, self]
 
     /**
      * Is this list nil?
      */
+    @companionMethod
     type isEmpty <: meta.Boolean
     final def isEmpty(implicit _unmeta: meta.Unmeta[isEmpty, scala.Boolean]): scala.Boolean = _unmeta() // just for convenience.
 
@@ -64,6 +68,7 @@ sealed abstract class List { // this: self =>
      *
      * @pre `n in [0, size)`.
      */
+    @companionMethod
     final def drop[n <: meta.Nat](implicit _drop: Drop[self, n]): drop[n] = _drop(self)
     final type drop[n <: meta.Nat] = Drop.result[self, n]
 
@@ -72,10 +77,11 @@ sealed abstract class List { // this: self =>
      *
      * @pre `n in [0, size)`.
      */
+    @companionMethod
     final def take[n <: meta.Nat](implicit _take: Take[self, n]): take[n] = _take(self)
     final type take[n <: meta.Nat] = Take.result[self, n]
 
-    @equivalentTo("drop[n].take[m - n]")
+    @companionMethod @equivalentTo("drop[n].take[m - n]")
     final def slice[n <: meta.Nat, m <: meta.Nat](implicit _slice: Slice[self, n, m]): slice[n, m] = _slice(self)
     final type slice[n <: meta.Nat, m <: meta.Nat] = Slice.result[self, n, m]
 
@@ -84,12 +90,14 @@ sealed abstract class List { // this: self =>
      *
      * @pre List contains an element whose type is <code>k</code>.
      */
+    @companionMethod
     final def elementOf[a](implicit _elementOf: ElementOf[self, a]): elementOf[a] = _elementOf(self)
     final type elementOf[a] = ElementOf.result[self, a]
 
     /**
      * Returns a list without the last element.
      */
+    @companionMethod
     final def init(implicit _init: Init[Nil, self]): init = _init(Nil, self)
     final type init = Init.result[Nil, self]
 
@@ -98,6 +106,7 @@ sealed abstract class List { // this: self =>
      *
      * @pre `n in [0, size)`.
      */
+    @companionMethod
     final def insert[n <: meta.Nat] = new {
         def apply[that <: List](_that: that)(implicit _insert: Insert[self, n, that]): insert[n, that] = _insert(self, _that)
     }
@@ -108,6 +117,7 @@ sealed abstract class List { // this: self =>
      *
      * @pre <code>!isEmpty</code>.
      */
+    @companionMethod
     final def last(implicit _lastOrElse: LastOrElse[self, meta.`null`]): last = _lastOrElse(self, util.nullInstance[meta.`null`])
     final type last = LastOrElse.result[self, meta.`null`]
 
@@ -116,12 +126,14 @@ sealed abstract class List { // this: self =>
      *
      * @pre `n in [0, size)`.
      */
+    @companionMethod
     final def nth[n <: meta.Nat](implicit _nth: Nth[self, n]): nth[n] = _nth(self)
     final type nth[n <: meta.Nat] = Nth.result[self, n]
 
     /**
      * Prepends <code>that</code>.
      */
+    @companionMethod
     final def :::[that <: List](_that: that)(implicit _prepend: Prepend[self, that]): prepend[that] = _prepend(self, _that)
     final type prepend[that <: List] = Prepend.result[self, that]
 
@@ -130,6 +142,7 @@ sealed abstract class List { // this: self =>
      *
      * @pre `n in [0, size)`.
      */
+    @companionMethod
     final def remove[n <: meta.Nat](implicit _remove: Remove[self, n]): remove[n] = _remove(self)
     final type remove[n <: meta.Nat] = Remove.result[self, n]
 
@@ -138,6 +151,7 @@ sealed abstract class List { // this: self =>
      *
      * @pre `n in [0, size)`.
      */
+    @companionMethod
     final def replace[n <: meta.Nat] = new {
         def apply[a](_a: a)(implicit _replace: Replace[self, n, a]): replace[n, a] = _replace(self, _a)
     }
@@ -146,18 +160,21 @@ sealed abstract class List { // this: self =>
     /**
      * Prepends reversed <code>that</code>.
      */
+    @companionMethod
     final def reverse_:::[that <: List](_that: that)(implicit _prependReversed: PrependReversed[self, that]): prependReversed[that] = _prependReversed(self, _that)
     final type prependReversed[that <: List] = PrependReversed.result[self, that]
 
     /**
      * Returns reversed one.
      */
+    @companionMethod
     final def reverse(implicit _prependReversed: PrependReversed[Nil, self]): reverse = _prependReversed(Nil, self)
     final type reverse = PrependReversed.result[Nil, self]
 
     /**
      * Returns the size.
      */
+    @companionMethod
     final type size = Size.result[self]
     final def size(implicit _unmeta: meta.Unmeta[size, scala.Int]): scala.Int = _unmeta() // just for convenience.
 
@@ -166,12 +183,14 @@ sealed abstract class List { // this: self =>
      *
      * @pre <code>size &lt;= that.size<code>.
      */
+    @companionMethod
     final def zip[that <: List](_that: that)(implicit _zip: Zip[self, that]): zip[that] = _zip(self, _that)
     final type zip[that <: List] = Zip.result[self, that]
 
     /**
      * Converts to <code>sequence.List[Any]</code>.
      */
+    @companionMethod
     def untyped: untyped // The implicit way would annoy toString.
     final type untyped = sequence.List[Any]
 
