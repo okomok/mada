@@ -32,6 +32,11 @@ package object blend {
      */
     def timesBy[n <: meta.Nat](op: Int => Unit)(implicit _times: Times[n]): Unit = _times(op, 0)
 
+    /**
+     * Returns true iif A type is the same as B type.
+     */
+    def isSame[A, B](implicit _isSame: IsSame[A, B] = IsSame._ofNotSame[A, B]): Boolean = _isSame.apply
+
 
 // list
 
