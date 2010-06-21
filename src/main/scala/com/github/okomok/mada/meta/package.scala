@@ -33,6 +33,11 @@ package object meta {
     type &&[a <: Operatable_&&, b <: a#Operand_&&] = a#operator_&&[b]
     type ||[a <: Operatable_||, b <: a#Operand_||] = a#operator_||[b]
 
+    type <[a <: Operatable_<, b <: a#Operand_<] = a#operator_<[b]
+    type <=[a <: Operatable_<=, b <: a#Operand_<=] = a#operator_<=[b]
+    type >[a <: Operatable_>, b <: a#Operand_>] = a#operator_>[b]
+    type >=[a <: Operatable_>=, b <: a#Operand_>=] = a#operator_>=[b]
+
 
 // assertions
 
@@ -43,6 +48,11 @@ package object meta {
      * assertion
      */
     def assert[a >: `true` <: `true`]: scala.Unit = ()
+
+    /**
+     * negative assertion
+     */
+    def assertNot[a >: `false` <: `false`]: scala.Unit = ()
 
     /**
      * assertion of identity equality

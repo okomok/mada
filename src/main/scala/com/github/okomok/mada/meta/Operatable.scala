@@ -14,11 +14,14 @@ package com.github.okomok.mada; package meta
 trait Operatable extends Operatable_==
     with Operatable_+ with Operatable_-
     with Operatable_&& with Operatable_||
+    with Operatable_< with Operatable_<= with Operatable_> with Operatable_>=
+
 
 trait Operatable_== {
     type Operand_==
     type operator_==[that <: Operand_==] <: Boolean
 }
+
 
 trait Operatable_+ {
     type Operand_+
@@ -30,6 +33,7 @@ trait Operatable_- {
     type operator_-[that <: Operand_-]
 }
 
+
 trait Operatable_&& {
     type Operand_&&
     type operator_&&[that <: Operand_&&]
@@ -38,4 +42,25 @@ trait Operatable_&& {
 trait Operatable_|| {
     type Operand_||
     type operator_||[that <: Operand_||]
+}
+
+
+trait Operatable_< {
+    type Operand_<
+    type operator_<[that <: Operand_<]
+}
+
+trait Operatable_<= {
+    type Operand_<=
+    type operator_<=[that <: Operand_<=]
+}
+
+trait Operatable_> {
+    type Operand_>
+    type operator_>[that <: Operand_>]
+}
+
+trait Operatable_>= {
+    type Operand_>=
+    type operator_>=[that <: Operand_>=]
 }

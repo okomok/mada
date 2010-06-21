@@ -81,6 +81,24 @@ class NatTest extends junit.framework.TestCase {
         */
     }
 
+    trait testComparison {
+        assert[_0N < _2N]
+        assert[_3N < _5N]
+        assert[_3N <= _3N]
+        assert[_5N > _3N]
+        assert[_4N > _0N]
+        assert[_4N >= _2N]
+        assert[_0N <= _0N]
+        assert[_0N >= _0N]
+        assertNot[_3N > _5N]
+        assertNot[_0N < _0N]
+        assertNot[_0N > _0N]
+        assertNot[_4N >= _5N]
+        assertNot[_4N <= _2N]
+        assertNot[_4N < _4N]
+        assertNot[_4N > _4N]
+    }
+
     trait testPropagation {
         type plusPlus[n <: Nat] = n#increment#increment
         type id[n <: Nat] = n#increment#decrement

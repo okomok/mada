@@ -29,6 +29,9 @@ class BooleanTest extends junit.framework.TestCase {
         assertSame[`false`, if_Boolean[`false`, `true`, `false`]]
     }
 
+    assert[`true`]
+    assertNot[`false`]
+
     assert[`true` == `true`]
     assert[`false` == `false`]
     assert[`true` != `false`]
