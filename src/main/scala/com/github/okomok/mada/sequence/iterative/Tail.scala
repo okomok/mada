@@ -7,6 +7,6 @@
 package com.github.okomok.mada; package sequence; package iterative
 
 
-case class Tail[+A](_1: Iterative[A]) extends Forwarder[A] {
+private[mada] case class Tail[+A](_1: Iterative[A]) extends Forwarder[A] {
     override protected val delegate = _1.drop(1)
 }

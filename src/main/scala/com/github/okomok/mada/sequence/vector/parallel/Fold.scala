@@ -23,12 +23,12 @@ private object ParallelReduce {
 }
 
 
-case class ParallelFolder[A](_1: Vector[A], _2: A, _3: (A, A) => A, _4: Int) extends Forwarder[A] {
+private[mada] case class ParallelFolder[A](_1: Vector[A], _2: A, _3: (A, A) => A, _4: Int) extends Forwarder[A] {
     assert(!IsParallel(_1))
     override protected val delegate = (single(_2) ++ _1).parallelBy(_4).reducer(_3)
 }
 
-case class ParallelReducer[A](_1: Vector[A], _2: (A, A) => A, _3: Int) extends Forwarder[A] {
+private[mada] case class ParallelReducer[A](_1: Vector[A], _2: (A, A) => A, _3: Int) extends Forwarder[A] {
     assert(!IsParallel(_1))
     Precondition.notEmpty(_1, "paralell.reducer")
 

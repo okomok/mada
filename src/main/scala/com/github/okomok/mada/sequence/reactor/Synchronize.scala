@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package sequence; package reactor
 
 
-case class Synchronize[-A](_1: Reactor[A]) extends Reactor[A] {
+private[mada] case class Synchronize[-A](_1: Reactor[A]) extends Reactor[A] {
     override def onEnd = synchronized { _1.onEnd }
     override def react(e: A) = synchronized { _1.react(e) }
 }

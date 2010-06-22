@@ -7,6 +7,6 @@
 package com.github.okomok.mada; package sequence; package reactive
 
 
-case class FlatMap[A, +B](_1: Reactive[A], _2: A => Reactive[B]) extends Forwarder[B] {
+private[mada] case class FlatMap[A, +B](_1: Reactive[A], _2: A => Reactive[B]) extends Forwarder[B] {
     override protected val delegate = _1.map(_2).flatten
 }

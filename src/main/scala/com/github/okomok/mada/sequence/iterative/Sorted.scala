@@ -32,7 +32,7 @@ private object Sorted {
 }
 
 
-case class Merge[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) extends Iterative[A] {
+private[mada] case class Merge[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) extends Iterative[A] {
     override def begin = new Iterator[A] {
         private val it1 = _1.begin
         private val it2 = _2.begin
@@ -44,7 +44,7 @@ case class Merge[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) extends
 }
 
 
-case class Union[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) extends Iterative[A] {
+private[mada] case class Union[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) extends Iterative[A] {
     override def begin = new Iterator[A] {
         private val it1 = _1.begin
         private val it2 = _2.begin
@@ -76,7 +76,7 @@ case class Union[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) extends
 }
 
 
-case class Intersection[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) extends Iterative[A] {
+private[mada] case class Intersection[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) extends Iterative[A] {
     override def begin = new Iterator[A] {
         private val it1 = _1.begin
         private val it2 = _2.begin
@@ -106,7 +106,7 @@ case class Intersection[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) 
 }
 
 
-case class Difference[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) extends Iterative[A] {
+private[mada] case class Difference[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) extends Iterative[A] {
     override def begin = new Iterator[A] {
         private val it1 = _1.begin
         private val it2 = _2.begin
@@ -136,7 +136,7 @@ case class Difference[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) ex
 }
 
 
-case class SymmetricDifference[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) extends Iterative[A] {
+private[mada] case class SymmetricDifference[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) extends Iterative[A] {
     override def begin = new Iterator[A] {
         private val it1 = _1.begin
         private val it2 = _2.begin

@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package auto
 
 
-case class UsedWith[A](_1: Seq[Auto[_]], _2: A) extends Auto[A] {
+private[mada] case class UsedWith[A](_1: Seq[Auto[_]], _2: A) extends Auto[A] {
     override def get = _2
     override def usedBy[B](f: A => B): B = _1.size match {
         case 1 => for (_ <- _1(0)) { f(_2) }

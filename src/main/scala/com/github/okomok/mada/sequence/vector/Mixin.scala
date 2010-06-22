@@ -55,7 +55,7 @@ object Mixin {
 }
 
 
-case class Mix[A](_1: Vector[A], _2: Mixin) extends Forwarder[A] {
+private[mada] case class Mix[A](_1: Vector[A], _2: Mixin) extends Forwarder[A] {
     override protected val delegate = _2(_1)
     override protected def around[B](that: => Vector[B]) = that.mix(_2)
 

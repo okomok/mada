@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package peg
 
 
-case class Negate[A](_1: Peg[A]) extends Peg[A] {
+private[mada] case class Negate[A](_1: Peg[A]) extends Peg[A] {
     override def parse(v: sequence.Vector[A], start: Int, end: Int) = {
         if (_1.parse(v, start, end) != FAILURE) {
             FAILURE

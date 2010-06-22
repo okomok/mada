@@ -8,7 +8,7 @@ package com.github.okomok.mada; package sequence; package reactive
 
 
 @notThreadSafe
-case class TakeWhile[A](_1: Reactive[A], _2: A => Boolean) extends Reactive[A] {
+private[mada] case class TakeWhile[A](_1: Reactive[A], _2: A => Boolean) extends Reactive[A] {
     override def activate(k: Reactor[A]) = {
         val j = new Reactor[A] {
             private var ends = false

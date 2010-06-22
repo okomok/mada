@@ -8,6 +8,6 @@ package com.github.okomok.mada; package sequence; package iterative
 
 
 // not object for inheritance
-case class Empty() extends Iterative[Nothing] {
+private[mada] case class Empty() extends Iterative[Nothing] {
     override def begin = iterator.end
 }

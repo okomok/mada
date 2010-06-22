@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package sequence; package vector
 
 
-case class FromProduct(_1: Product) extends Forwarder[Any] {
+private[mada] case class FromProduct(_1: Product) extends Forwarder[Any] {
     override protected val delegate = _1 match {
         case _1: ToProduct => _1.a1.asVectorOf[Any] // from-to fusion
         case _ => new _FromProduct(_1)

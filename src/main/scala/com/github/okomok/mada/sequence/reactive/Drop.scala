@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package sequence; package reactive
 
 
-case class Drop[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
+private[mada] case class Drop[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
     Precondition.nonnegative(_2, "drop")
 
     override def activate(k: Reactor[A]) = {

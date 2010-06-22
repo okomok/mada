@@ -17,7 +17,7 @@ private object _Step {
     }
 }
 
-case class Step[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
+private[mada] case class Step[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
     Precondition.positive(_2, "step")
 
     override protected val delegate = _1.permutation{ i => i * _2 }.nth(0, _Step.count(_1.start, _1.end, _2))

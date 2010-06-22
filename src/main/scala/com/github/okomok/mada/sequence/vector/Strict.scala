@@ -9,7 +9,7 @@ package com.github.okomok.mada; package sequence; package vector
 
 // Hmm...
 
-case class Strict[A](_1: Vector[A]) extends Forwarder[A] {
+private[mada] case class Strict[A](_1: Vector[A]) extends Forwarder[A] {
     override protected val delegate = _1.mix(Mixin.force)
 
     // override def filter = delegate.mutatingFilter

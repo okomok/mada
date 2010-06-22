@@ -11,12 +11,12 @@ import java.util.LinkedList
 
 
 @notThreadSafe
-case class Zip[+A, +B](_1: Reactive[A], _2: Reactive[B]) extends Forwarder[(A, B)] {
+private[mada] case class Zip[+A, +B](_1: Reactive[A], _2: Reactive[B]) extends Forwarder[(A, B)] {
     override protected val delegate = _1.zipBy(_2){ (a, b) => (a, b) }
 }
 
 @notThreadSafe
-case class ZipBy[A, B, +C](_1: Reactive[A], _2: Reactive[B], _3: (A, B) => C) extends Reactive[C] {
+private[mada] case class ZipBy[A, B, +C](_1: Reactive[A], _2: Reactive[B], _3: (A, B) => C) extends Reactive[C] {
     override def activate(k: Reactor[C]) = {
         val k_onEnd = new OnlyFirst[Unit](_ => k.onEnd)
         var ends1 = false

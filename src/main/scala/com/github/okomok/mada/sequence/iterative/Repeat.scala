@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package sequence; package iterative
 
 
-case class Repeat[+A](_1: A) extends Iterative[A] {
+private[mada] case class Repeat[+A](_1: A) extends Iterative[A] {
     override def begin = new Iterator[A] {
         override def isEnd = false
         override def deref = _1

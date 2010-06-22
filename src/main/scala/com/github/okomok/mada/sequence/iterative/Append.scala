@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package sequence; package iterative
 
 
-case class Append[+A](_1: Iterative[A], _2: Iterative[A]) extends Iterative[A] {
+private[mada] case class Append[+A](_1: Iterative[A], _2: Iterative[A]) extends Iterative[A] {
     override def begin = new Iterator[A] {
         private var it = _1.begin
         private var inLeft = true

@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package sequence; package iterative
 
 
-case class Drop[+A](_1: Iterative[A], _2: Int) extends Iterative[A] {
+private[mada] case class Drop[+A](_1: Iterative[A], _2: Int) extends Iterative[A] {
     Precondition.nonnegative(_2, "drop")
 
     override def begin = {

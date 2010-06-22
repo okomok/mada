@@ -11,7 +11,7 @@ package com.github.okomok.mada; package sequence; package reactive
 // for onEnd and react must not be overlapped.
 
 @notThreadSafe
-case class Take[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
+private[mada] case class Take[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
     Precondition.nonnegative(_2, "take")
 
     override def activate(k: Reactor[A]) = {

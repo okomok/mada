@@ -35,6 +35,7 @@ object Mixin {
 }
 
 
+@visibleForTesting
 case class Mix[+A](_1: Iterative[A], _2: Mixin) extends Forwarder[A] {
     override protected val delegate = _2(_1) // can't be lazy for `Mixin.force`.
     override protected def around[B](that: => Iterative[B]) = that.mix(_2)

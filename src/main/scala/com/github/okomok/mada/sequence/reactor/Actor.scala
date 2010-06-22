@@ -10,16 +10,16 @@ package com.github.okomok.mada; package sequence; package reactor
 import scala.actors.Actor
 
 
-case object OnEnd
-case class React[+A](_1: A)
+private[mada] case object OnEnd
+private[mada] case class React[+A](_1: A)
 
 
-case class FromActor[A](_1: Actor) extends Reactor[A] {
+private[mada] case class FromActor[A](_1: Actor) extends Reactor[A] {
     override def onEnd = _1 ! OnEnd
     override def react(e: A) = _1 ! React(e)
 }
 
-case class ToActor[-A](_1: Reactor[A]) extends Actor {
+private[mada] case class ToActor[-A](_1: Reactor[A]) extends Actor {
     override def act = {
         Actor.loop {
             react {

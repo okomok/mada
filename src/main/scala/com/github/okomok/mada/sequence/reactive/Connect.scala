@@ -8,7 +8,7 @@ package com.github.okomok.mada; package sequence; package reactive
 
 
 @notThreadSafe
-case class Connect[+A](_1: Reactive[A], _2: Reactive[A]) extends Reactive[A] {
+private[mada] case class Connect[+A](_1: Reactive[A], _2: Reactive[A]) extends Reactive[A] {
     override def activate(k: Reactor[A]) = {
         var ends1 = false
         def stop1 = if (!ends1) ends1 = true

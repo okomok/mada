@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package auto
 
 
-case class EndWith(_1: util.ByName[Unit]) extends Auto[Unit] {
+private[mada] case class EndWith(_1: util.ByName[Unit]) extends Auto[Unit] {
     override def get = ()
     override def end = _1()
 }

@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package sequence; package vector
 
 
-case class Empty[A]() extends Vector[A] {
+private[mada] case class Empty[A]() extends Vector[A] {
     override def start = 0
     override def end = 0
 }

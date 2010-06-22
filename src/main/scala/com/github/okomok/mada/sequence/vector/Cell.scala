@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package sequence; package vector
 
 
-case class FromCell[A](_1: Cell[A]) extends Vector[A] {
+private[mada] case class FromCell[A](_1: Cell[A]) extends Vector[A] {
     override def start = 0
     override def end = 1
     override def apply(i: Int) = _1.elem

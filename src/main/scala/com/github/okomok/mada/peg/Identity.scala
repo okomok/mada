@@ -7,6 +7,6 @@
 package com.github.okomok.mada; package peg
 
 
-case class Identity[A](_1: Peg[A]) extends Forwarder[A] {
+private[mada] case class Identity[A](_1: Peg[A]) extends Forwarder[A] {
     override protected val delegate = _1
 }

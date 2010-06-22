@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package peg
 
 
-case class Switch[A](_1: scala.collection.Map[A, Peg[A]]) extends Peg[A] {
+private[mada] case class Switch[A](_1: scala.collection.Map[A, Peg[A]]) extends Peg[A] {
     override def parse(v: sequence.Vector[A], start: Int, end: Int) = {
         if (start == end) {
             FAILURE

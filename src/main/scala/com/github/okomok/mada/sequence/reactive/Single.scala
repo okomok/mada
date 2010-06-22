@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package sequence; package reactive
 
 
-case class Single[+A](_1: A) extends Reactive[A] {
+private[mada] case class Single[+A](_1: A) extends Reactive[A] {
     override def activate(k: Reactor[A]) = {
         k.react(_1)
         k.onEnd

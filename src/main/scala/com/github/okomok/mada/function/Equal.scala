@@ -7,10 +7,10 @@
 package com.github.okomok.mada; package function
 
 
-case class Equal() extends Predicate2[Any, Any] {
+private[mada] case class Equal() extends Predicate2[Any, Any] {
     override def apply(x: Any, y: Any) = x == y
 }
 
-case class EqualTo(_1: Any) extends Predicate1[Any] {
+private[mada] case class EqualTo(_1: Any) extends Predicate1[Any] {
     override def apply(y: Any) = _1 == y
 }

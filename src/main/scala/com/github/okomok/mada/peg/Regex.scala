@@ -7,11 +7,11 @@
 package com.github.okomok.mada; package peg
 
 
-case class Regex(_1: String) extends Forwarder[Char] {
+private[mada] case class Regex(_1: String) extends Forwarder[Char] {
     override protected val delegate = fromRegexPattern(java.util.regex.Pattern.compile(_1))
 }
 
-case class FromRegexPattern(_1: java.util.regex.Pattern) extends Peg[Char] {
+private[mada] case class FromRegexPattern(_1: java.util.regex.Pattern) extends Peg[Char] {
     override def parse(v: sequence.Vector[Char], start: Int, end: Int) = {
         val mat = _1.matcher(v.toJCharSequence)
         mat.region(start - v.start, end - v.start)

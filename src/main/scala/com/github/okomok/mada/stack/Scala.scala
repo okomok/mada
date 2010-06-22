@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package stack
 
 
-case class FromSStack[A](_1: scala.collection.mutable.Stack[A]) extends Stack[A] {
+private[mada] case class FromSStack[A](_1: scala.collection.mutable.Stack[A]) extends Stack[A] {
     override def push(e: A) = _1.push(e)
     override def pop = _1.pop
     override def peek = _1.top
@@ -17,7 +17,7 @@ case class FromSStack[A](_1: scala.collection.mutable.Stack[A]) extends Stack[A]
 }
 
 
-case class FromSArrayStack[A](_1: scala.collection.mutable.ArrayStack[A]) extends Stack[A] {
+private[mada] case class FromSArrayStack[A](_1: scala.collection.mutable.ArrayStack[A]) extends Stack[A] {
     override def push(e: A) = _1.push(e)
     override def pop = _1.pop
     override def peek = _1.top

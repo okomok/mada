@@ -7,13 +7,13 @@
 package com.github.okomok.mada; package sequence; package iterative
 
 
-case class Unique[+A](_1: Iterative[A]) extends Forwarder[A] {
+private[mada] case class Unique[+A](_1: Iterative[A]) extends Forwarder[A] {
     override protected val delegate = _1.uniqueBy(function.equal)
 
     override def unique: Iterative[A] = this // unique-unique fusion
 }
 
-case class UniqueBy[A](_1: Iterative[A], _2: (A, A) => Boolean) extends Iterative[A] {
+private[mada] case class UniqueBy[A](_1: Iterative[A], _2: (A, A) => Boolean) extends Iterative[A] {
     override def begin = new Iterator[A] {
         private val it = _1.begin
 

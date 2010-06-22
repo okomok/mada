@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package peg
 
 
-case class Undefined[A]() extends Peg[A] {
+private[mada] case class Undefined[A]() extends Peg[A] {
     override def parse(v: sequence.Vector[A], start: Int, end: Int) = {
         throw new java.lang.AssertionError("undefined")
     }

@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package sequence; package vector
 
 
-case class Force[A](_1: Vector[A]) extends TransformAdapter[A] with NotWritable[A] {
+private[mada] case class Force[A](_1: Vector[A]) extends TransformAdapter[A] with NotWritable[A] {
     override protected val underlying = {
         // Expand _1.copy to minimize element-access-indirection, that's "force".
         val r = allocate[A](_1.size)

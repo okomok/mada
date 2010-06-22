@@ -7,11 +7,11 @@
 package com.github.okomok.mada; package peg
 
 
-case class Lookaround[A](_1: sequence.vector.Pred[A]) extends Forwarder[A] {
+private[mada] case class Lookaround[A](_1: sequence.vector.Pred[A]) extends Forwarder[A] {
     override protected val delegate = lookaround3(sequence.vector.triplify(_1))
 }
 
-case class Lookaround3[A](_1: sequence.vector.Pred3[A]) extends Peg[A] with ZeroWidth[A] {
+private[mada] case class Lookaround3[A](_1: sequence.vector.Pred3[A]) extends Peg[A] with ZeroWidth[A] {
     override def parse(v: sequence.Vector[A], start: Int, end: Int) = {
         if (_1(v, start, end)) {
             start
@@ -22,20 +22,20 @@ case class Lookaround3[A](_1: sequence.vector.Pred3[A]) extends Peg[A] with Zero
 }
 
 
-case class Begin[A]() extends Forwarder[A] {
+private[mada] case class Begin[A]() extends Forwarder[A] {
     override protected val delegate = lookaround3[A]{ (v, i, _) => i == v.start }
 }
 
-case class End[A]() extends Forwarder[A] {
+private[mada] case class End[A]() extends Forwarder[A] {
     override protected val delegate = lookaround3[A]{ (v, i, _) => i == v.end }
 }
 
 
-case class Eps[A]() extends Forwarder[A] {
+private[mada] case class Eps[A]() extends Forwarder[A] {
     override protected val delegate = lookaround3[A]{ (_, _, _) => true }
 }
 
 
-case class Fail[A]() extends Forwarder[A] {
+private[mada] case class Fail[A]() extends Forwarder[A] {
     override protected val delegate = lookaround3[A]{ (_, _, _) => false }
 }

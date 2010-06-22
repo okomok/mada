@@ -7,6 +7,6 @@
 package com.github.okomok.mada; package sequence; package iterative
 
 
-case class Strict[+A](_1: Iterative[A]) extends Forwarder[A] {
+private[mada] case class Strict[+A](_1: Iterative[A]) extends Forwarder[A] {
     override protected val delegate = _1.mix(Mixin.force)
 }

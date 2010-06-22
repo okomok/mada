@@ -7,10 +7,10 @@
 package com.github.okomok.mada; package sequence; package iterative
 
 
-case class Bind[+A](_1: Iterator[A]) extends Iterative[A] {
+private[mada] case class Bind[+A](_1: Iterator[A]) extends Iterative[A] {
     override def begin = _1
 }
 
-case class BindName[+A](_1: util.ByName[Iterator[A]]) extends Iterative[A] {
+private[mada] case class BindName[+A](_1: util.ByName[Iterator[A]]) extends Iterative[A] {
     override def begin = _1()
 }

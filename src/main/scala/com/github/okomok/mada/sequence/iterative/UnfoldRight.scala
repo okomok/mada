@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package sequence; package iterative
 
 
-case class UnfoldRight[A, +B](_1: A, _2: A => Option[(B, A)]) extends Iterative[B] {
+private[mada] case class UnfoldRight[A, +B](_1: A, _2: A => Option[(B, A)]) extends Iterative[B] {
     override def begin = new Iterator[B] {
         private var acc = _2(_1)
 

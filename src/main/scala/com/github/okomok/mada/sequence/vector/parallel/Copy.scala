@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package sequence; package vector
 
 
-case class ParallelCopy[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
+private[mada] case class ParallelCopy[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
     assert(!IsParallel(_1))
 
     override protected val delegate = {

@@ -11,7 +11,7 @@ import util.future
 
 
 // Note that parallel.map is projection, that is, non-blocking.
-case class ParallelMap[Z, A](_1: Vector[Z], _2: Z => A, _3: Int) extends Forwarder[A] {
+private[mada] case class ParallelMap[Z, A](_1: Vector[Z], _2: Z => A, _3: Int) extends Forwarder[A] {
     assert(!IsParallel(_1))
 
     override protected val delegate = {

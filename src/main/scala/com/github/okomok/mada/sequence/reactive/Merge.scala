@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package sequence; package reactive
 
 
-case class Merge[+A](_1: Reactive[A], _2: Reactive[A]) extends Reactive[A] {
+private[mada] case class Merge[+A](_1: Reactive[A], _2: Reactive[A]) extends Reactive[A] {
     override def activate(k: Reactor[A]) = {
         val j = new Reactor[A] {
             private val _onEnd = new SkipFirst[Unit](_ => k.onEnd)

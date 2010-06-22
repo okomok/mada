@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package sequence; package vector
 
 
-case class Append[A](_1: Vector[A], _2: Vector[A]) extends Vector[A] {
+private[mada] case class Append[A](_1: Vector[A], _2: Vector[A]) extends Vector[A] {
     override def start = 0
     override def end = _1.nth.size + _2.nth.size
 

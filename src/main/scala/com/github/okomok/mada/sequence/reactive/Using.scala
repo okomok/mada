@@ -8,7 +8,7 @@ package com.github.okomok.mada; package sequence; package reactive
 
 
 @notThreadSafe
-case class Using[+A](_1: Reactive[A], _2: util.ByLazy[Auto[Any]]) extends Reactive[A] {
+private[mada] case class Using[+A](_1: Reactive[A], _2: util.ByLazy[Auto[Any]]) extends Reactive[A] {
     override def activate(k: Reactor[A]) = {
         val j = new Reactor[A] {
             private val _autoBegin = util.byLazy(_2().begin)

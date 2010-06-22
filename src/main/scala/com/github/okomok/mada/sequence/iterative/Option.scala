@@ -7,6 +7,6 @@
 package com.github.okomok.mada; package sequence; package iterative
 
 
-case class FromOption[A](_1: Option[A]) extends Forwarder[A] {
+private[mada] case class FromOption[A](_1: Option[A]) extends Forwarder[A] {
     override protected val delegate = if (_1.isEmpty) empty else single(_1.get)
 }

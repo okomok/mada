@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package sequence; package vector
 
 
-case class AsIterative[A](_1: Vector[A]) extends Iterative[A] {
+private[mada] case class AsIterative[A](_1: Vector[A]) extends Iterative[A] {
     override def begin = new Iterator[A] {
         private var i = _1.start
         override def isEnd = i == _1.end

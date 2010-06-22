@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package sequence; package vector
 
 
-case class Parallel[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
+private[mada] case class Parallel[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
     assert(!IsParallel(_1))
     Precondition.positive(_2, "grain size")
 

@@ -7,6 +7,6 @@
 package com.github.okomok.mada; package sequence; package iterative
 
 
-case class Unstringize(_1: String) extends Forwarder[Char] {
+private[mada] case class Unstringize(_1: String) extends Forwarder[Char] {
     override protected val delegate = fromSIterable(_1)
 }

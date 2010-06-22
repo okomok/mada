@@ -7,6 +7,6 @@
 package com.github.okomok.mada; package sequence; package vector
 
 
-case class ReadOnly[A](_1: Vector[A]) extends TransformAdapter[A] with NotWritable[A] {
+private[mada] case class ReadOnly[A](_1: Vector[A]) extends TransformAdapter[A] with NotWritable[A] {
     override protected val underlying = _1
 }

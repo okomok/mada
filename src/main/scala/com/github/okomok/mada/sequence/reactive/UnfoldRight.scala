@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package sequence; package reactive
 
 
-case class UnfoldRight[A, +B](_1: A, _2: A => Option[(B, A)]) extends Reactive[B] {
+private[mada] case class UnfoldRight[A, +B](_1: A, _2: A => Option[(B, A)]) extends Reactive[B] {
     override def activate(k: Reactor[B]) = {
         var acc = _2(_1)
         while (!acc.isEmpty) {

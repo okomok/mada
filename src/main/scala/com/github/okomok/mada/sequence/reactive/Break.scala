@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package sequence; package reactive
 
 
-case class Break[+A](_1: Reactive[A]) extends Reactive[A] {
+private[mada] case class Break[+A](_1: Reactive[A]) extends Reactive[A] {
     override def activate(k: Reactor[A]) = _1.start
     override def break = _1.break // break-break fusion
 }

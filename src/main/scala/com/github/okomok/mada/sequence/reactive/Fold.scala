@@ -11,7 +11,7 @@ package com.github.okomok.mada; package sequence; package reactive
 
 
 @notThreadSafe
-case class FolderLeft[A, B](_1: Reactive[A], _2: B, _3: (B, A) => B) extends Reactive[B] {
+private[mada] case class FolderLeft[A, B](_1: Reactive[A], _2: B, _3: (B, A) => B) extends Reactive[B] {
     override def activate(k: Reactor[B]) = {
         val j = new Reactor[A] {
             private var isHead = true
@@ -32,7 +32,7 @@ case class FolderLeft[A, B](_1: Reactive[A], _2: B, _3: (B, A) => B) extends Rea
 
 
 @notThreadSafe
-case class ReducerLeft[A, B >: A](_1: Reactive[A], _2: (B, A) => B) extends Reactive[B] {
+private[mada] case class ReducerLeft[A, B >: A](_1: Reactive[A], _2: (B, A) => B) extends Reactive[B] {
     override def activate(k: Reactor[B]) = {
         val j = new Reactor[A] {
             private var isHead = true

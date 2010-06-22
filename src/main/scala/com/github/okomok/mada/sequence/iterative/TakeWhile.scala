@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package sequence; package iterative
 
 
-case class TakeWhile[A](_1: Iterative[A], _2: A => Boolean) extends Iterative[A] {
+private[mada] case class TakeWhile[A](_1: Iterative[A], _2: A => Boolean) extends Iterative[A] {
     override def begin = new Iterator[A] {
         private var it = _1.begin
         ready

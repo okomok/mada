@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package peg
 
 
-case class Split[A](_1: Peg[A], _2: sequence.Vector[A]) extends sequence.Iterative[sequence.Vector[A]] {
+private[mada] case class Split[A](_1: Peg[A], _2: sequence.Vector[A]) extends sequence.Iterative[sequence.Vector[A]] {
     Precondition.zeroWidth(_1, "split")
 
     override def begin = new sequence.Iterator[sequence.Vector[A]] {

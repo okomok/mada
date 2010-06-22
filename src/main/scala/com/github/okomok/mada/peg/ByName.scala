@@ -7,6 +7,6 @@
 package com.github.okomok.mada; package peg
 
 
-case class ByName[A](_1: util.ByName[Peg[A]]) extends Forwarder[A] {
+private[mada] case class ByName[A](_1: util.ByName[Peg[A]]) extends Forwarder[A] {
     override protected def delegate = _1()
 }

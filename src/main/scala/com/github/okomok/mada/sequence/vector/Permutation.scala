@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package sequence; package vector
 
 
-case class Permutation[A](_1: Vector[A], _2: Int => Int) extends TransformAdapter[A] {
+private[mada] case class Permutation[A](_1: Vector[A], _2: Int => Int) extends TransformAdapter[A] {
     override protected val underlying = _1.nth
 
     override def apply(i: Int) = underlying(_2(i))
@@ -16,7 +16,7 @@ case class Permutation[A](_1: Vector[A], _2: Int => Int) extends TransformAdapte
 }
 
 
-case class Nth[A](_1: Vector[A]) extends Vector[A] {
+private[mada] case class Nth[A](_1: Vector[A]) extends Vector[A] {
     override def start = 0
     override def end = _1.size
 
@@ -28,12 +28,12 @@ case class Nth[A](_1: Vector[A]) extends Vector[A] {
 }
 
 
-case class Reverse[A](_1: Vector[A]) extends Forwarder[A] {
+private[mada] case class Reverse[A](_1: Vector[A]) extends Forwarder[A] {
     override protected val delegate = _1.permutation{ i => _1.size - i - 1 }
     override def reverse = _1 // reverse-reverse fusion
 }
 
 
-case class Rotate[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
+private[mada] case class Rotate[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
     override protected val delegate = _1(_1.start + _2, _1.end) ++ _1(_1.start, _1.start + _2)
 }

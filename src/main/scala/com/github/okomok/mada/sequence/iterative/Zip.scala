@@ -7,11 +7,11 @@
 package com.github.okomok.mada; package sequence; package iterative
 
 
-case class Zip[+A, +B](_1: Iterative[A], _2: Iterative[B]) extends Forwarder[(A, B)] {
+private[mada] case class Zip[+A, +B](_1: Iterative[A], _2: Iterative[B]) extends Forwarder[(A, B)] {
     override protected val delegate = _1.zipBy(_2){ (a, b) => (a, b) }
 }
 
-case class ZipBy[A, B, +C](_1: Iterative[A], _2: Iterative[B], _3: (A, B) => C) extends Iterative[C] {
+private[mada] case class ZipBy[A, B, +C](_1: Iterative[A], _2: Iterative[B], _3: (A, B) => C) extends Iterative[C] {
     override def begin = new Iterator[C] {
         private val it1 = _1.begin
         private val it2 = _2.begin
