@@ -8,20 +8,20 @@ package com.github.okomok.mada; package meta; package nat
 
 
 /**
- * Contains aliases of meta literals.
+ * Contains natural number literals.
  */
-object Literal {
+object Literal extends LiteralCommon
 
-    type _0N = meta._0N
-    type _1N = meta._1N
-    type _2N = meta._2N
-    type _3N = meta._3N
-    type _4N = meta._4N
-    type _5N = meta._5N
-    type _6N = meta._6N
-    type _7N = meta._7N
-    type _8N = meta._8N
-    type _9N = meta._9N
-    type _10N = meta._10N
-
+private[mada] trait LiteralCommon {
+    type _0N = Zero
+    type _1N = Succ[_0N]
+    type _2N = Succ[_1N]
+    type _3N = Succ[_2N]
+    type _4N = Succ[_3N]
+    type _5N = Succ[_4N]
+    type _6N = Succ[_5N]
+    type _7N = Succ[_6N]
+    type _8N = Succ[_7N]
+    type _9N = Succ[_8N]
+    type _10N = Succ[_9N]
 }

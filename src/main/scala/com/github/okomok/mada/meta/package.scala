@@ -7,7 +7,8 @@
 package com.github.okomok.mada
 
 
-package object meta {
+package object meta
+    extends meta.nat.LiteralCommon with meta.OperatorCommon {
 
 
     @aliasOf("Nothing")
@@ -20,23 +21,6 @@ package object meta {
      * Returns corresponding runtime value.
      */
     def unmeta[From, To](implicit _unmeta: Unmeta[From, To]): To = _unmeta()
-
-
-// operators
-
-    type +[a <: Operatable_+, b <: a#Operand_+] = a#operator_+[b]
-    type -[a <: Operatable_-, b <: a#Operand_-] = a#operator_-[b]
-
-    type ==[a <: Operatable_==, b <: a#Operand_==] = a#operator_==[b]
-    type !=[a <: Operatable_==, b <: a#Operand_==] = a#operator_==[b]#not
-
-    type &&[a <: Operatable_&&, b <: a#Operand_&&] = a#operator_&&[b]
-    type ||[a <: Operatable_||, b <: a#Operand_||] = a#operator_||[b]
-
-    type <[a <: Operatable_<, b <: a#Operand_<] = a#operator_<[b]
-    type <=[a <: Operatable_<=, b <: a#Operand_<=] = a#operator_<=[b]
-    type >[a <: Operatable_>, b <: a#Operand_>] = a#operator_>[b]
-    type >=[a <: Operatable_>=, b <: a#Operand_>=] = a#operator_>=[b]
 
 
 // assertions
@@ -68,21 +52,6 @@ package object meta {
      * assertion if <code>a</code> is upper than <code>b</code>.
      */
     def assertUpper[a >: b, b]: scala.Unit = ()
-
-
-// Nat literals
-
-    type _0N = Zero
-    type _1N = Succ[_0N]
-    type _2N = Succ[_1N]
-    type _3N = Succ[_2N]
-    type _4N = Succ[_3N]
-    type _5N = Succ[_4N]
-    type _6N = Succ[_5N]
-    type _7N = Succ[_6N]
-    type _8N = Succ[_7N]
-    type _9N = Succ[_8N]
-    type _10N = Succ[_9N]
 
 
 // if

@@ -11,6 +11,32 @@ package com.github.okomok.mada; package meta
 //      at http://www.assembla.com/wiki/show/metascala
 
 
+// Operator
+
+/**
+ * Contains infix operators for meta types.
+ */
+object Operator extends OperatorCommon
+
+private[mada] trait OperatorCommon {
+    type +[a <: Operatable_+, b <: a#Operand_+] = a#operator_+[b]
+    type -[a <: Operatable_-, b <: a#Operand_-] = a#operator_-[b]
+
+    type ==[a <: Operatable_==, b <: a#Operand_==] = a#operator_==[b]
+    type !=[a <: Operatable_==, b <: a#Operand_==] = a#operator_==[b]#not
+
+    type &&[a <: Operatable_&&, b <: a#Operand_&&] = a#operator_&&[b]
+    type ||[a <: Operatable_||, b <: a#Operand_||] = a#operator_||[b]
+
+    type <[a <: Operatable_<, b <: a#Operand_<] = a#operator_<[b]
+    type <=[a <: Operatable_<=, b <: a#Operand_<=] = a#operator_<=[b]
+    type >[a <: Operatable_>, b <: a#Operand_>] = a#operator_>[b]
+    type >=[a <: Operatable_>=, b <: a#Operand_>=] = a#operator_>=[b]
+}
+
+
+// Operatables
+
 trait Operatable extends Operatable_==
     with Operatable_+ with Operatable_-
     with Operatable_&& with Operatable_||
