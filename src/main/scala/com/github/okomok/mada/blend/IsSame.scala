@@ -11,9 +11,7 @@ package com.github.okomok.mada; package blend
 
 
 @specializer
-sealed abstract class IsSame[A, B] {
-    def apply: Boolean
-}
+sealed abstract class IsSame[A, B] extends Function0[Boolean]
 
 
 object IsSame {
