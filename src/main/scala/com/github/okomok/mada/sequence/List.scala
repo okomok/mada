@@ -98,7 +98,7 @@ sealed abstract class List[+A] extends iterative.Sequence[A] {
 // strict cons
 
     @equivalentTo("x :: this")
-    def #::[B >: A](x: B): List[B] = x :: this.asInstanceOf[List[B]]
+    def #::[B >: A](x: B): List[B] = x :: of[B]
 
 
 // iterative
