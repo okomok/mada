@@ -123,7 +123,7 @@ class NatTest extends junit.framework.TestCase {
         type qp = quote2[inc, Int, Int, Int]
 
         assert[qp#apply2[_8N, _0N] == _9N]
-        assertLower[_3N#foldLeft[_0N, qp], Int]
+        assertConforms[_3N#foldLeft[_0N, qp], Int]
         assert[_3N#foldLeft[_0N, qp] == _3N]
         assert[inc[_2N, _0N]#foldLeft[_2N, qp] == _5N]
 

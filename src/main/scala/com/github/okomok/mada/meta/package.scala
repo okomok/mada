@@ -46,12 +46,7 @@ package object meta
     /**
      * assertion if <code>a</code> is lower than <code>b</code>.
      */
-    def assertLower[a <: b, b]: scala.Unit = ()
-
-    /**
-     * assertion if <code>a</code> is upper than <code>b</code>.
-     */
-    def assertUpper[a >: b, b]: scala.Unit = ()
+    def assertConforms[a <: b, b]: scala.Unit = ()
 
 
 // if

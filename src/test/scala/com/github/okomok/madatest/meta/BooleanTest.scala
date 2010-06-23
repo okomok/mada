@@ -52,7 +52,7 @@ class BooleanTest extends junit.framework.TestCase {
 
     trait testPropagation {
         type incinc[n <: Nat] = if_Nat[n == _3N, n#increment, n]#increment
-        assertLower[incinc[_2N], Nat]
+        assertConforms[incinc[_2N], Nat]
 
         assert[if_Nat[_2N == _3N, _2N#increment, _2N]#increment == _3N]
         assert[incinc[_2N] == _3N]
