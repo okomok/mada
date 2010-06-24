@@ -33,24 +33,6 @@ package object blend {
     def timesBy[n <: meta.Nat](op: Int => Unit)(implicit _times: Times[n]): Unit = _times(op, 0)
 
 
-// type constraints
-
-    /**
-     * Returns true iif type <code>A</code> is the same as type <code>B</code>.
-     */
-    def isSame[A, B](implicit c: A =:= B = null): Boolean = null ne c
-
-    /**
-     * Returns true iif type <code>A</code> conforms type <code>B</code>.
-     */
-    def conforms[A, B](implicit c: A <:< B = null): Boolean = null ne c
-
-    /**
-     * Returns true iif type <code>A</code> is compatible to type <code>B</code>.
-     */
-    def compatible[A, B](implicit c: A <%< B = null): Boolean = null ne c
-
-
 // list
 
     @equivalentTo("new Nil{}")

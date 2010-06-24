@@ -25,6 +25,29 @@ package object util {
     def nullInstance[A]: A = null.asInstanceOf[A]
 
 
+// type constraints
+
+    /**
+     * Returns true iif implicit value found.
+     */
+    def hasImplicit[A](implicit _hasImplicit: HasImplicit[A] = HasImplicit._ofNotFound) = _hasImplicit()
+
+    /**
+     * Returns true iif type <code>A</code> is the same as type <code>B</code>.
+     */
+    def isSame[A, B](implicit c: A =:= B = null): Boolean = null ne c
+
+    /**
+     * Returns true iif type <code>A</code> conforms type <code>B</code>.
+     */
+    def conforms[A, B](implicit c: A <:< B = null): Boolean = null ne c
+
+    /**
+     * Returns true iif type <code>A</code> is compatible to type <code>B</code>.
+     */
+    def compatible[A, B](implicit c: A <%< B = null): Boolean = null ne c
+
+
 // evaluation strategy
 
     /**

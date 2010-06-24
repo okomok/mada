@@ -4,13 +4,13 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.madatest; package blendtest
+package com.github.okomok.madatest; package utiltest
 
 
 import com.github.okomok.mada
 
 import mada.meta.nat.Literal._
-import mada.blend._
+import mada.util._
 import junit.framework.Assert._
 
 
@@ -89,6 +89,18 @@ class ConstraintTest extends junit.framework.TestCase {
         assertTrue(compatible[Long, Float])
         assertFalse(compatible[Float, Long])
         assertTrue(compatible[Int, scala.runtime.RichInt])
+    }
+
+
+    def testHasImplicit {
+        implicit val x = 3
+        assertTrue(hasImplicit[Int])
+        assertTrue(hasImplicit[Int =:= Int])
+    }
+
+    def testHasImplicitNegative {
+        assertFalse(hasImplicit[Int])
+        assertFalse(hasImplicit[Char =:= Int])
     }
 
 }
