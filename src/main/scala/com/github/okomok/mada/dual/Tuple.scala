@@ -1,10 +1,10 @@
 
 
-// Copyright Shunsuke Sogame 2008-2009.
+// Copyright Shunsuke Sogame 2008-2010.
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package meta
+package com.github.okomok.mada; package dual
 
 
 sealed trait tuple1[v1] extends Product1 {

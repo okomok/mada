@@ -1,10 +1,10 @@
 
 
-// Copyright Shunsuke Sogame 2008-2009.
+// Copyright Shunsuke Sogame 2008-2010.
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package meta; package nat
+package com.github.okomok.mada; package dual; package nat
 
 
 /**
@@ -13,6 +13,18 @@ package com.github.okomok.mada; package meta; package nat
 object Literal extends LiteralCommon
 
 private[mada] trait LiteralCommon {
+    val _0N = new _0N
+    val _1N = new _1N
+    val _2N = new _2N
+    val _3N = new _3N
+    val _4N = new _4N
+    val _5N = new _5N
+    val _6N = new _6N
+    val _7N = new _7N
+    val _8N = new _8N
+    val _9N = new _9N
+    val _10N = new _10N
+
     type _0N = Zero
     type _1N = Succ[_0N]
     type _2N = Succ[_1N]

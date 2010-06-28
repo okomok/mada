@@ -1,10 +1,10 @@
 
 
-// Copyright Shunsuke Sogame 2008-2009.
+// Copyright Shunsuke Sogame 2008-2010.
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package meta
+package com.github.okomok.mada; package dual
 
 
 // See: Nats.scala
@@ -63,7 +63,7 @@ sealed trait Nat extends Operatable {
 
 // "case classes"
 
-sealed trait Zero extends Nat {
+class Zero extends Nat {
     override type self = Zero
 
     override private[mada] type isZero = `true`
@@ -81,7 +81,7 @@ sealed trait Zero extends Nat {
     override type accept_blendList[v <: Visitor[blend.List]] = v#visitZero
 }
 
-sealed trait Succ[n <: Nat] extends Nat {
+class Succ[n <: Nat] extends Nat {
     override type self = Succ[n]
 
     override private[mada] type isZero = `false`

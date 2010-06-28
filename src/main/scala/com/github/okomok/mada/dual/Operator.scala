@@ -1,10 +1,10 @@
 
 
-// Copyright Shunsuke Sogame 2008-2009.
+// Copyright Shunsuke Sogame 2008-2010.
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package meta
+package com.github.okomok.mada; package dual
 
 
 // See: Utils.scala
@@ -14,7 +14,7 @@ package com.github.okomok.mada; package meta
 // Operator
 
 /**
- * Contains infix operators for meta types.
+ * Contains infix operators for dual types.
  */
 object Operator extends OperatorCommon
 
