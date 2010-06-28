@@ -21,6 +21,7 @@ object Operator extends OperatorCommon
 private[mada] trait OperatorCommon {
     type +[a <: Operatable_+, b <: a#Operand_+] = a#operator_+[b]
     type -[a <: Operatable_-, b <: a#Operand_-] = a#operator_-[b]
+    //type *[a <: Operatable_*, b <: a#Operand_*] = a#operator_*[b]
 
     type ==[a <: Operatable_==, b <: a#Operand_==] = a#operator_==[b]
     type !=[a <: Operatable_==, b <: a#Operand_==] = a#operator_==[b]#not
@@ -38,7 +39,7 @@ private[mada] trait OperatorCommon {
 // Operatables
 
 trait Operatable extends Operatable_==
-    with Operatable_+ with Operatable_-
+    with Operatable_+ with Operatable_- with Operatable_*
     with Operatable_&& with Operatable_||
     with Operatable_< with Operatable_<= with Operatable_> with Operatable_>=
 
@@ -57,6 +58,11 @@ trait Operatable_+ {
 trait Operatable_- {
     type Operand_-
     type operator_-[that <: Operand_-]
+}
+
+trait Operatable_* {
+    type Operand_*
+    type operator_*[that <: Operand_*]
 }
 
 

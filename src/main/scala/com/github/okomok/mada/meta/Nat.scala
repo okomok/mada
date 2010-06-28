@@ -19,23 +19,24 @@ sealed trait Nat extends Operatable {
 
     private[mada] type isZero <: Boolean
     private[mada] type gtZero <: Boolean
-    private[mada] type negateAdd[that <: Nat] <: Nat
 
-    type equals[that <: Nat] <: Boolean
+    final type equals[that <: Nat] = subtract[that]#isZero
     final override type Operand_== = Nat
     final override type operator_==[that <: Nat] = equals[that]
 
     type increment <: Nat
     type decrement <: Nat
 
-    type add[that <: Nat] <: Nat
+    final type add[that <: Nat] = foldRight_Nat[that, Function2[Nat, Nat, Nat]{ type apply[_ <: Nat, b <: Nat] = b#increment }]
     final override type Operand_+ = Nat
     final override type operator_+[that <: Nat] = add[that]
-    final type subtract[that <: Nat] = that#negateAdd[self]
+    final type subtract[that <: Nat] = that#foldRight_Nat[self, Function2[Nat, Nat, Nat]{ type apply[_ <: Nat, b <: Nat] = b#decrement }]
     final override type Operand_- = Nat
     final override type operator_-[that <: Nat] = subtract[that]
 
-    type multiply[that <: Nat] <: Nat
+    final type multiply[that <: Nat] = foldRight_Nat[Zero, Function2[Nat, Nat, Nat]{ type apply[_ <: Nat, b <: Nat] = that#add[b] }]
+    final override type Operand_* = Nat
+    final override type operator_*[that <: Nat] = multiply[that]
 
     final type gt[that <: Nat] = subtract[that]#gtZero
     final type lt[that <: Nat] = that#gt[self]
@@ -67,13 +68,9 @@ sealed trait Zero extends Nat {
 
     override private[mada] type isZero = `true`
     override private[mada] type gtZero = `false`
-    override private[mada] type negateAdd[that <: Nat] = that
 
-    override type equals[that <: Nat] = that#isZero
     override type increment = Succ[Zero]
     override type decrement = sentinel
-    override type add[that <: Nat] = that
-    override type multiply[that <: Nat] = Zero
 
     override type foldRight_Any[z <: Any, f <: Function2[Nat, Any, Any]] = z
     override type foldRight_Nat[z <: Nat, f <: Function2[Nat, Nat, Nat]] = z
@@ -89,13 +86,9 @@ sealed trait Succ[n <: Nat] extends Nat {
 
     override private[mada] type isZero = `false`
     override private[mada] type gtZero = `true`
-    override private[mada] type negateAdd[that <: Nat] = n#negateAdd[that#decrement]
 
-    override type equals[that <: Nat] = n#equals[that#decrement]
     override type increment = Succ[self]
     override type decrement = n
-    override type add[that <: Nat] = Succ[n#add[that]]
-    override type multiply[that <: Nat] = n#multiply[that]#add[that]
 
     override type foldRight_Any[z <: Any, f <: Function2[Nat, Any, Any]] = f#apply[self, n#foldRight_Any[z, f]]
     override type foldRight_Nat[z <: Nat, f <: Function2[Nat, Nat, Nat]] = f#apply[self, n#foldRight_Nat[z, f]]
@@ -114,13 +107,9 @@ sealed trait sentinel extends Nat {
 
     override private[mada] type isZero = `false`
     override private[mada] type gtZero = `false`
-    override private[mada] type negateAdd[that <: Nat] = `null`
 
-    override type equals[that <: Nat] = `false`
     override type increment = `null`
     override type decrement = self
-    override type add[that <: Nat] = `null`
-    override type multiply[that <: Nat] = `null`
 
     override type foldRight_Any[z <: Any, f <: Function2[Nat, Any, Any]] = `null`
     override type foldRight_Nat[z <: Nat, f <: Function2[Nat, Nat, Nat]] = `null`
