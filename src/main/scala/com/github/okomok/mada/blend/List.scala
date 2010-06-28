@@ -139,8 +139,8 @@ sealed abstract class List { // this: self =>
      * @pre <code>!isEmpty</code>.
      */
     @companionMethod
-    final def last(implicit _lastOrElse: LastOrElse[self, meta.`null`]): last = _lastOrElse(self, util.nullInstance[meta.`null`])
-    final type last = LastOrElse.result[self, meta.`null`]
+    final def last(implicit _lastOrElse: _LastOrElse[self, meta.`null`]): last = _lastOrElse(self, util.nullInstance[meta.`null`])
+    final type last = _LastOrElse.result[self, meta.`null`]
 
     /**
      * Returns the <code>n</code>-th element.
@@ -159,8 +159,8 @@ sealed abstract class List { // this: self =>
     //final type prepend[that <: List] = Prepend.result[self, that]
 
     @companionMethod
-    final def :::[that <: List](_that: that): prepend[that] = _Prepend.apply(self, _that)
-    final type prepend[that <: List] = _Prepend.apply[self, that]
+    final def :::[that <: List](_that: that): prepend[that] = Prepend.apply(self, _that)
+    final type prepend[that <: List] = Prepend.apply[self, that]
 
     /**
      * Removes <code>n</code>-th element.

@@ -16,11 +16,11 @@ object Insert {
     type result[l <: List, n <: meta.Nat, r <: List] = n#accept_blendList[_vt[l, r]]
 
     sealed trait _vt[l <: List, r <: List] extends meta.nat.Visitor[List] {
-        override type visitZero = Prepend.result[l, r]
+        override type visitZero = _Prepend.result[l, r]
         override type visitSucc[n <: meta.Nat] = Cons[l#head, n#accept_blendList[_vt[l#tail, r]]]
     }
 
-    implicit def _ofZero[l <: List, r <: List](implicit _prepend: Prepend[l, r]) = new Insert[l, meta.Zero, r] {
+    implicit def _ofZero[l <: List, r <: List](implicit _prepend: _Prepend[l, r]) = new Insert[l, meta.Zero, r] {
         override def apply(_l: l, _r: r) = _prepend(_l, _r)
     }
 
