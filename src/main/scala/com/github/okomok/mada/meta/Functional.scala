@@ -1,10 +1,10 @@
 
 
-// Copyright Shunsuke Sogame 2008-2010.
+// Copyright Shunsuke Sogame 2008-2009.
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package dual
+package com.github.okomok.mada; package meta
 
 
 sealed trait bind1st[T1, T2, f[_ <: T1, _ <: T2], c <: T1] {

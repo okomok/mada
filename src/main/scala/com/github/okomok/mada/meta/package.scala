@@ -1,22 +1,18 @@
 
 
-// Copyright Shunsuke Sogame 2008-2010.
+// Copyright Shunsuke Sogame 2008-2009.
 // Distributed under the terms of an MIT-style license.
 
 
 package com.github.okomok.mada
 
 
-package object dual
-    extends dual.nat.LiteralCommon with dual.OperatorCommon {
+package object meta
+    extends meta.nat.LiteralCommon with meta.OperatorCommon {
 
 
-    /**
-     * Designates an error.
-     */
-    @companionMethod
-    def error: error = throw new Error("dual.error")
-    type error = Nothing
+    @aliasOf("Nothing")
+    type `null` = Nothing
 
 
 // unmeta
@@ -30,7 +26,7 @@ package object dual
 // assertions
 
     // Prefer methods to case classes:
-    //   case classes doesn't work well.
+    //   case classes often permit should-be-illegal expression.
 
     /**
      * assertion
@@ -53,33 +49,42 @@ package object dual
     def assertConforms[a <: b, b]: scala.Unit = ()
 
 
-// Boolean
-
-    @equivalentTo("new `true`{}")
-    val `true` = _Boolean._true
-
-    @equivalentTo("new `false`{}")
-    val `false` = _Boolean._false
+// if
 
     /**
      * The if-expression to return Any.
      */
-    @companionMethod
-    def if_Any[cond <: Boolean, then <: Any, _else <: Any](cond: cond, then: then, _else: _else): if_Any[cond, then, _else] = cond.if_Any(then, _else)
     type if_Any[cond <: Boolean, then <: Any, _else <: Any] = cond#if_Any[then, _else]
 
     /**
      * The if-expression to return Boolean.
      */
-    @companionMethod
-    def if_Boolean[cond <: Boolean, then <: Boolean, _else <: Boolean](cond: cond, then: then, _else: _else): if_Boolean[cond, then, _else] = cond.if_Boolean(then, _else)
     type if_Boolean[cond <: Boolean, then <: Boolean, _else <: Boolean] = cond#if_Boolean[then, _else]
 
     /**
      * The if-expression to return Nat.
      */
-    @companionMethod
-    def if_Nat[cond <: Boolean, then <: Nat, _else <: Nat](cond: cond, then: then, _else: _else): if_Nat[cond, then, _else] = cond.if_Nat(then, _else)
     type if_Nat[cond <: Boolean, then <: Nat, _else <: Nat] = cond#if_Nat[then, _else]
+
+
+// functional
+
+    @aliasOf("tuple2")
+    type pair[v1, v2] = tuple2[v1, v2]
+
+    @equivalentTo("a")
+    type identity[a] = a
+
+    @equivalentTo("a")
+    type project1st[a, b] = a
+
+    @equivalentTo("b")
+    type project2nd[a, b] = b
+
+    @equivalentTo("p#_1")
+    type select1st[p <: Product2] = p#_1
+
+    @equivalentTo("p#_2")
+    type select2nd[p <: Product2] = p#_2
 
 }

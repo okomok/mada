@@ -10,32 +10,27 @@ package com.github.okomok.mada; package dual
 /**
  * The dual Boolean
  */
-sealed trait Boolean extends Operatable {
-    def and[that <: Boolean](that: that): and[that]
-    type and[that <: Boolean] <: Boolean
-
-    def or[that <: Boolean](that: that): or[that]
-    type or[that <: Boolean] <: Boolean
+sealed trait Boolean extends Operatable_=== with Operatable_&& with Operatable_|| {
+    final override type Operand_=== = Boolean
+    final override type Operand_&& = Boolean
+    final override type Operand_|| = Boolean
 
     def not: not
     type not <: Boolean
 
-    def equals[that <: Boolean](that: that): equals[that]
-    type equals[that <: Boolean] <: Boolean
-
-    override type Operand_== = Boolean
-    override type operator_==[that <: Boolean] = equals[that]
-
-    override type Operand_&& = Boolean
-    override type operator_&&[that <: Boolean] = and[that]
-    override type Operand_|| = Boolean
-    override type operator_||[that <: Boolean] = or[that]
-
+    private[mada] def isTrue: isTrue
     private[mada] type isTrue <: Boolean
+
+    private[mada] def isFalse: isFalse
     private[mada] type isFalse <: Boolean
 
+    private[mada] def if_Any[then <: Any, _else <: Any](then: then, _else: _else): if_Any[then, _else]
     private[mada] type if_Any[then <: Any, _else <: Any] <: Any
+
+    private[mada] def if_Boolean[then <: Boolean, _else <: Boolean](then: then, _else: _else): if_Boolean[then, _else]
     private[mada] type if_Boolean[then <: Boolean, _else <: Boolean] <: Boolean
+
+    private[mada] def if_Nat[then <: Nat, _else <: Nat](then: then, _else: _else): if_Nat[then, _else]
     private[mada] type if_Nat[then <: Nat, _else <: Nat] <: Nat
 }
 
@@ -43,26 +38,31 @@ sealed trait Boolean extends Operatable {
  * The dual true
  */
 sealed trait `true` extends Boolean {
-    override def and[that <: Boolean](that: that): and[that] = that
-    override type and[that <: Boolean] = that
+    override def &&[that <: Boolean](that: that): &&[that] = that
+    override type &&[that <: Boolean] = that
 
-    override def or[that <: Boolean](that: that): or[that] = `true`
-    override type or[that <: Boolean] = `true`
+    override def ||[that <: Boolean](that: that): ||[that] = `true`
+    override type ||[that <: Boolean] = `true`
 
     override def not: not = `false`
     override type not = `false`
 
-    override def equals[that <: Boolean](that: that) = that.isTrue
-    override type equals[that <: Boolean] = that#isTrue
+    override def ===[that <: Boolean](that: that): ===[that] = that.isTrue
+    override type ===[that <: Boolean] = that#isTrue
 
-    override private[mada] def isTrue = `true`
+    override private[mada] def isTrue: isTrue = `true`
     override private[mada] type isTrue = `true`
 
-    override private[mada] def isFalse = `false`
+    override private[mada] def isFalse: isFalse = `false`
     override private[mada] type isFalse = `false`
 
+    override private[mada] def if_Any[then <: Any, _else <: Any](then: then, _else: _else): if_Any[then, _else] = then
     override private[mada] type if_Any[then <: Any, _else <: Any] = then
+
+    override private[mada] def if_Boolean[then <: Boolean, _else <: Boolean](then: then, _else: _else): if_Boolean[then, _else] = then
     override private[mada] type if_Boolean[then <: Boolean, _else <: Boolean] = then
+
+    override private[mada] def if_Nat[then <: Nat, _else <: Nat](then: then, _else: _else): if_Nat[then, _else] = then
     override private[mada] type if_Nat[then <: Nat, _else <: Nat] = then
 }
 
@@ -70,24 +70,36 @@ sealed trait `true` extends Boolean {
  * The dual false
  */
 sealed trait `false` extends Boolean {
-    override type and[that <: Boolean] = `false`
-    override type or[that <: Boolean] = that
-    override type not = `true`
-    override type equals[that <: Boolean] = that#isFalse
+    override def &&[that <: Boolean](that: that): &&[that] = `false`
+    override type &&[that <: Boolean] = `false`
 
-    override private[mada] def isTrue = `false`
+    override def ||[that <: Boolean](that: that): ||[that] = that
+    override type ||[that <: Boolean] = that
+
+    override def not: not = `true`
+    override type not = `true`
+
+    override def ===[that <: Boolean](that: that): ===[that] = that.isFalse
+    override type ===[that <: Boolean] = that#isFalse
+
+    override private[mada] def isTrue: isTrue = `false`
     override private[mada] type isTrue = `false`
 
-    override private[mada] def isFalse = `true`
+    override private[mada] def isFalse: isFalse = `true`
     override private[mada] type isFalse = `true`
 
+    override private[mada] def if_Any[then <: Any, _else <: Any](then: then, _else: _else): if_Any[then, _else] = _else
     override private[mada] type if_Any[then <: Any, _else <: Any] = _else
+
+    override private[mada] def if_Boolean[then <: Boolean, _else <: Boolean](then: then, _else: _else): if_Boolean[then, _else] = _else
     override private[mada] type if_Boolean[then <: Boolean, _else <: Boolean] = _else
+
+    override private[mada] def if_Nat[then <: Nat, _else <: Nat](then: then, _else: _else): if_Nat[then, _else] = _else
     override private[mada] type if_Nat[then <: Nat, _else <: Nat] = _else
 }
 
 
 private[mada] object _Boolean { // works around `sealed`
-    val _true = new `true`
-    val _false = new `false`
+    val _true = new `true`{}
+    val _false = new `false`{}
 }
