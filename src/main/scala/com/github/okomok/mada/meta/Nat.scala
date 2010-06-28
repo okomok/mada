@@ -50,6 +50,10 @@ sealed trait Nat extends Operatable {
     final override type operator_>[that <: Nat] = gt[that]
     final override type operator_>=[that <: Nat] = gteq[that]
 
+    type foldRight_Any[z <: Any, f <: Function2[Nat, Any, Any]] <: Any
+    type foldRight_Nat[z <: Nat, f <: Function2[Nat, Nat, Nat]] <: Nat
+    type foldRight_blendList[z <: blend.List, f <: Function2[Nat, blend.List, blend.List]] <: blend.List
+
     type accept_Any[v <: Visitor[Any]] <: Any
     type accept_Nat[v <: Visitor[Nat]] <: Nat
     type accept_blendList[v <: Visitor[blend.List]] <: blend.List
@@ -71,6 +75,10 @@ sealed trait Zero extends Nat {
     override type add[that <: Nat] = that
     override type multiply[that <: Nat] = Zero
 
+    override type foldRight_Any[z <: Any, f <: Function2[Nat, Any, Any]] = z
+    override type foldRight_Nat[z <: Nat, f <: Function2[Nat, Nat, Nat]] = z
+    override type foldRight_blendList[z <: blend.List, f <: Function2[Nat, blend.List, blend.List]] = z
+
     override type accept_Any[v <: Visitor[Any]] = v#visitZero
     override type accept_Nat[v <: Visitor[Nat]] = v#visitZero
     override type accept_blendList[v <: Visitor[blend.List]] = v#visitZero
@@ -88,6 +96,10 @@ sealed trait Succ[n <: Nat] extends Nat {
     override type decrement = n
     override type add[that <: Nat] = Succ[n#add[that]]
     override type multiply[that <: Nat] = n#multiply[that]#add[that]
+
+    override type foldRight_Any[z <: Any, f <: Function2[Nat, Any, Any]] = f#apply[self, n#foldRight_Any[z, f]]
+    override type foldRight_Nat[z <: Nat, f <: Function2[Nat, Nat, Nat]] = f#apply[self, n#foldRight_Nat[z, f]]
+    override type foldRight_blendList[z <: blend.List, f <: Function2[Nat, blend.List, blend.List]] = f#apply[self, n#foldRight_blendList[z, f]]
 
     override type accept_Any[v <: Visitor[Any]] = v#visitSucc[n]
     override type accept_Nat[v <: Visitor[Nat]] = v#visitSucc[n]
@@ -109,6 +121,10 @@ sealed trait sentinel extends Nat {
     override type decrement = self
     override type add[that <: Nat] = `null`
     override type multiply[that <: Nat] = `null`
+
+    override type foldRight_Any[z <: Any, f <: Function2[Nat, Any, Any]] = `null`
+    override type foldRight_Nat[z <: Nat, f <: Function2[Nat, Nat, Nat]] = `null`
+    override type foldRight_blendList[z <: blend.List, f <: Function2[Nat, blend.List, blend.List]] = `null`
 
     override type accept_Any[v <: Visitor[Any]] = `null`
     override type accept_Nat[v <: Visitor[Nat]] = `null`

@@ -45,8 +45,29 @@ sealed abstract class List { // this: self =>
      * Is this list nil?
      */
     @companionMethod
-    type isEmpty <: meta.Boolean
     final def isEmpty(implicit _unmeta: meta.Unmeta[isEmpty, scala.Boolean]): scala.Boolean = _unmeta() // just for convenience.
+    type isEmpty <: meta.Boolean
+
+    /**
+     * Folds right-associative.
+     */
+    @companionMethod
+    def foldRight_Any[z <: Any, f <: Function2[Any, Any, Any]](_z: z, _f: f): foldRight_Any[z, f]
+    type foldRight_Any[z <: Any, f <: Function2[Any, Any, Any]] <: Any
+
+    /**
+     * Folds right-associative.
+     */
+    @companionMethod
+    def foldRight_List[z <: List, f <: Function2[Any, List, List]](_z: z, _f: f): foldRight_List[z, f]
+    type foldRight_List[z <: List, f <: Function2[Any, List, List]] <: List
+
+    /**
+     * Folds right-associative.
+     */
+    @companionMethod
+    def foldRight_metaNat[z <: meta.Nat, f <: Function2[Any, meta.Nat, meta.Nat]](_z: z, _f: f): foldRight_metaNat[z, f]
+    type foldRight_metaNat[z <: meta.Nat, f <: Function2[Any, meta.Nat, meta.Nat]] <: meta.Nat
 
     /**
      * Supports visitor iteration to return Any.
@@ -217,6 +238,13 @@ sealed abstract class Nil extends List {
     override type tail = meta.`null` // `Nil` would make `List.take` less-restrictive.
     override type isEmpty = meta.`true`
 
+    override def foldRight_Any[z <: Any, f <: Function2[Any, Any, Any]](_z: z, _f: f): foldRight_Any[z, f] = _z
+    override type foldRight_Any[z <: Any, f <: Function2[Any, Any, Any]] = z
+    override def foldRight_List[z <: List, f <: Function2[Any, List, List]](_z: z, _f: f): foldRight_List[z, f] = _z
+    override type foldRight_List[z <: List, f <: Function2[Any, List, List]] = z
+    override def foldRight_metaNat[z <: meta.Nat, f <: Function2[Any, meta.Nat, meta.Nat]](_z: z, _f: f): foldRight_metaNat[z, f] = _z
+    override type foldRight_metaNat[z <: meta.Nat, f <: Function2[Any, meta.Nat, meta.Nat]] = z
+
     override type accept_Any[v <: Visitor[Any]] = v#visitNil
     override type accept_List[v <: Visitor[List]] = v#visitNil
     override type accept_metaNat[v <: Visitor[meta.Nat]] = v#visitNil
@@ -236,6 +264,13 @@ final case class Cons[h, t <: List](override val head: h, override val tail: t) 
     override type head = h
     override type tail = t
     override type isEmpty = meta.`false`
+
+    override def foldRight_Any[z <: Any, f <: Function2[Any, Any, Any]](_z: z, _f: f): foldRight_Any[z, f] = _f(head, tail.foldRight_Any(_z, _f))
+    override type foldRight_Any[z <: Any, f <: Function2[Any, Any, Any]] = f#apply[head, tail#foldRight_Any[z, f]]
+    override def foldRight_List[z <: List, f <: Function2[Any, List, List]](_z: z, _f: f): foldRight_List[z, f] = _f(head, tail.foldRight_List(_z, _f))
+    override type foldRight_List[z <: List, f <: Function2[Any, List, List]] = f#apply[head, tail#foldRight_List[z, f]]
+    override def foldRight_metaNat[z <: meta.Nat, f <: Function2[Any, meta.Nat, meta.Nat]](_z: z, _f: f): foldRight_metaNat[z, f] = _f(head, tail.foldRight_metaNat(_z, _f))
+    override type foldRight_metaNat[z <: meta.Nat, f <: Function2[Any, meta.Nat, meta.Nat]] = f#apply[head, tail#foldRight_metaNat[z, f]]
 
     override type accept_Any[v <: Visitor[Any]] = v#visitCons[h, t]
     override type accept_List[v <: Visitor[List]] = v#visitCons[h, t]
