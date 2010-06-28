@@ -256,4 +256,14 @@ object ListTezt {
         assertSame[lst1, Nil ::: lst1]
         assertSame[lst1, (Int :: String :: Nil) ::: (Double :: Nil) ::: (Char :: Float :: Nil) ::: Nil]
     }
+
+    type prependprepend[l1 <: List, l2 <: List, r <: List] = r#prepend[l1]#prepend[l2]
+
+    trait testPrepend2 {
+        type lst1 = Int :: String :: Double :: Char :: Float :: Nil
+        type lst2 = Boolean :: Byte :: Nil
+        type lst3 = Char :: String :: Nil
+        type r = prependprepend[lst2, lst3, lst1]
+        assertSame[Char :: String :: Boolean :: Byte :: Int :: String :: Double :: Char :: Float :: Nil, r]
+    }
 }

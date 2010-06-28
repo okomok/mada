@@ -154,9 +154,13 @@ sealed abstract class List { // this: self =>
     /**
      * Prepends <code>that</code>.
      */
+    //@companionMethod
+    //final def :::[that <: List](_that: that)(implicit _prepend: Prepend[self, that]): prepend[that] = _prepend(self, _that)
+    //final type prepend[that <: List] = Prepend.result[self, that]
+
     @companionMethod
-    final def :::[that <: List](_that: that)(implicit _prepend: Prepend[self, that]): prepend[that] = _prepend(self, _that)
-    final type prepend[that <: List] = Prepend.result[self, that]
+    final def :::[that <: List](_that: that): prepend[that] = _Prepend.apply(self, _that)
+    final type prepend[that <: List] = _Prepend.apply[self, that]
 
     /**
      * Removes <code>n</code>-th element.

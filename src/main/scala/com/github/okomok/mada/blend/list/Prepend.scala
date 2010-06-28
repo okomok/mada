@@ -29,3 +29,15 @@ object Prepend {
     }
 
 }
+
+
+private[mada] object _Prepend extends Function2[List, List, List] {
+    override type apply[r <: List, l <: List] = l#foldRight_List[r, step]
+    override def apply[r <: List, l <: List](_r: r, _l: l): apply[r, l] = _l.foldRight_List(_r, new step)
+
+    class step extends Function2[Any, List, List] {
+        override type apply[a <: Any, b <: List] = Cons[a, b]
+        override def apply[a <: Any, b <: List](_a: a, _b: b): apply[a, b] = Cons(_a, _b)
+    }
+}
+
