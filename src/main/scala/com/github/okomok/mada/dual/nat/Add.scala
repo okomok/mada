@@ -12,7 +12,7 @@ private[mada] object Add {
     type apply[x <: Nat, y <: Nat] = x#foldRight_Nat[y, step]
 
     val step = new step
-    class step extends Function2[Nat, Nat, Nat] {
+    class step extends Function2_Nat_Nat_Nat {
         override  def apply[a <: Nat, b <: Nat](a: a, b: b): apply[a, b] = b.increment
         override type apply[a <: Nat, b <: Nat] = b#increment
     }

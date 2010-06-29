@@ -66,14 +66,11 @@ sealed trait Nat extends Operatable_===
     final override  def <=[that <: Nat](that: that): <=[that] = that.>=(self)
     final override type <=[that <: Nat] = that# >=[self]
 
-     def foldRight_Any[z <: Any, f <: Function2[Nat, Any, Any]](z: z, f: f): foldRight_Any[z, f]
-    type foldRight_Any[z <: Any, f <: Function2[Nat, Any, Any]] <: Any
+     def foldRight_Any[z <: Any, f <: Function2_Nat_Any_Any](z: z, f: f): foldRight_Any[z, f]
+    type foldRight_Any[z <: Any, f <: Function2_Nat_Any_Any] <: Any
 
-     def foldRight_Nat[z <: Nat, f <: Function2[Nat, Nat, Nat]](z: z, f: f): foldRight_Nat[z, f]
-    type foldRight_Nat[z <: Nat, f <: Function2[Nat, Nat, Nat]] <: Nat
-
-     def foldRight_blendList[z <: blend.List, f <: Function2[Nat, blend.List, blend.List]](z: z, f: f): foldRight_blendList[z, f]
-    type foldRight_blendList[z <: blend.List, f <: Function2[Nat, blend.List, blend.List]] <: blend.List
+     def foldRight_Nat[z <: Nat, f <: Function2_Nat_Nat_Nat](z: z, f: f): foldRight_Nat[z, f]
+    type foldRight_Nat[z <: Nat, f <: Function2_Nat_Nat_Nat] <: Nat
 
     type accept_Any[v <: Visitor[Any]] <: Any
     type accept_Nat[v <: Visitor[Nat]] <: Nat
@@ -100,14 +97,11 @@ sealed trait Zero extends Nat {
     override  def decrement = singular
     override type decrement = singular
 
-    override  def foldRight_Any[z <: Any, f <: Function2[Nat, Any, Any]](z: z, f: f): foldRight_Any[z, f] = z
-    override type foldRight_Any[z <: Any, f <: Function2[Nat, Any, Any]] = z
+    override  def foldRight_Any[z <: Any, f <: Function2_Nat_Any_Any](z: z, f: f): foldRight_Any[z, f] = z
+    override type foldRight_Any[z <: Any, f <: Function2_Nat_Any_Any] = z
 
-    override  def foldRight_Nat[z <: Nat, f <: Function2[Nat, Nat, Nat]](z: z, f: f): foldRight_Nat[z, f] = z
-    override type foldRight_Nat[z <: Nat, f <: Function2[Nat, Nat, Nat]] = z
-
-    override  def foldRight_blendList[z <: blend.List, f <: Function2[Nat, blend.List, blend.List]](z: z, f: f): foldRight_blendList[z, f] = z
-    override type foldRight_blendList[z <: blend.List, f <: Function2[Nat, blend.List, blend.List]] = z
+    override  def foldRight_Nat[z <: Nat, f <: Function2_Nat_Nat_Nat](z: z, f: f): foldRight_Nat[z, f] = z
+    override type foldRight_Nat[z <: Nat, f <: Function2_Nat_Nat_Nat] = z
 
     override type accept_Any[v <: Visitor[Any]] = v#visitZero
     override type accept_Nat[v <: Visitor[Nat]] = v#visitZero
@@ -130,14 +124,11 @@ class Succ[n <: Nat](n: n) extends Nat {
     override  def decrement = n
     override type decrement = n
 
-    override  def foldRight_Any[z <: Any, f <: Function2[Nat, Any, Any]](z: z, f: f): foldRight_Any[z, f] = f.apply(self, n.foldRight_Any(z, f))
-    override type foldRight_Any[z <: Any, f <: Function2[Nat, Any, Any]] = f#apply[self, n#foldRight_Any[z, f]]
+    override  def foldRight_Any[z <: Any, f <: Function2_Nat_Any_Any](z: z, f: f): foldRight_Any[z, f] = f.apply(self, n.foldRight_Any(z, f))
+    override type foldRight_Any[z <: Any, f <: Function2_Nat_Any_Any] = f#apply[self, n#foldRight_Any[z, f]]
 
-    override  def foldRight_Nat[z <: Nat, f <: Function2[Nat, Nat, Nat]](z: z, f: f): foldRight_Nat[z, f] = f.apply(self, n.foldRight_Nat(z, f))
-    override type foldRight_Nat[z <: Nat, f <: Function2[Nat, Nat, Nat]] = f#apply[self, n#foldRight_Nat[z, f]]
-
-    override  def foldRight_blendList[z <: blend.List, f <: Function2[Nat, blend.List, blend.List]](z: z, f: f): foldRight_blendList[z, f] = f.apply(self, n.foldRight_blendList(z, f))
-    override type foldRight_blendList[z <: blend.List, f <: Function2[Nat, blend.List, blend.List]] = f#apply[self, n#foldRight_blendList[z, f]]
+    override  def foldRight_Nat[z <: Nat, f <: Function2_Nat_Nat_Nat](z: z, f: f): foldRight_Nat[z, f] = f.apply(self, n.foldRight_Nat(z, f))
+    override type foldRight_Nat[z <: Nat, f <: Function2_Nat_Nat_Nat] = f#apply[self, n#foldRight_Nat[z, f]]
 
     override type accept_Any[v <: Visitor[Any]] = v#visitSucc[n]
     override type accept_Nat[v <: Visitor[Nat]] = v#visitSucc[n]
@@ -161,14 +152,11 @@ sealed trait singular extends Nat {
     override  def decrement = self
     override type decrement = self
 
-    override  def foldRight_Any[z <: Any, f <: Function2[Nat, Any, Any]](z: z, f: f) = error
-    override type foldRight_Any[z <: Any, f <: Function2[Nat, Any, Any]] = error
+    override  def foldRight_Any[z <: Any, f <: Function2_Nat_Any_Any](z: z, f: f) = error
+    override type foldRight_Any[z <: Any, f <: Function2_Nat_Any_Any] = error
 
-    override  def foldRight_Nat[z <: Nat, f <: Function2[Nat, Nat, Nat]](z: z, f: f) = error
-    override type foldRight_Nat[z <: Nat, f <: Function2[Nat, Nat, Nat]] = error
-
-    override  def foldRight_blendList[z <: blend.List, f <: Function2[Nat, blend.List, blend.List]](z: z, f: f) = error
-    override type foldRight_blendList[z <: blend.List, f <: Function2[Nat, blend.List, blend.List]] = error
+    override  def foldRight_Nat[z <: Nat, f <: Function2_Nat_Nat_Nat](z: z, f: f) = error
+    override type foldRight_Nat[z <: Nat, f <: Function2_Nat_Nat_Nat] = error
 
     override type accept_Any[v <: Visitor[Any]] = error
     override type accept_Nat[v <: Visitor[Nat]] = error
