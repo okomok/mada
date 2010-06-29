@@ -55,8 +55,8 @@ package object dual
     /**
      * The if-expression to return Any.
      */
-     def if_Any[cond <: Boolean, then <: Any, _else <: Any](cond: cond, then: then, _else: _else): if_Any[cond, then, _else] = cond.if_Any(then, _else)
-    type if_Any[cond <: Boolean, then <: Any, _else <: Any] = cond#if_Any[then, _else]
+     def if_Any[cond <: Boolean, then <: Function0[Any], _else <: Function0[Any]](cond: cond, then: then, _else: _else): if_Any[cond, then, _else] = cond.if_Any(then, _else)
+    type if_Any[cond <: Boolean, then <: Function0[Any], _else <: Function0[Any]] = cond#if_Any[then, _else]
 
     /**
      * The if-expression to return Boolean.

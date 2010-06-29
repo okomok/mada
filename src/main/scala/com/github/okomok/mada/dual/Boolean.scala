@@ -56,8 +56,8 @@ sealed trait `true` extends Boolean {
     override private[mada]  def isFalse: isFalse = `false`
     override private[mada] type isFalse = `false`
 
-    override private[mada]  def if_Any[then <: Any, _else <: Any](then: then, _else: _else): if_Any[then, _else] = then
-    override private[mada] type if_Any[then <: Any, _else <: Any] = then
+    override private[mada]  def if_Any[then <: Function0[Any], _else <: Function0[Any]](then: then, _else: _else): if_Any[then, _else] = then
+    override private[mada] type if_Any[then <: Function0[Any], _else <: Function0[Any]] = then
 
     override private[mada]  def if_Boolean[then <: Boolean, _else <: Boolean](then: then, _else: _else): if_Boolean[then, _else] = then
     override private[mada] type if_Boolean[then <: Boolean, _else <: Boolean] = then
@@ -88,8 +88,8 @@ sealed trait `false` extends Boolean {
     override private[mada]  def isFalse: isFalse = `true`
     override private[mada] type isFalse = `true`
 
-    override private[mada]  def if_Any[then <: Any, _else <: Any](then: then, _else: _else): if_Any[then, _else] = _else
-    override private[mada] type if_Any[then <: Any, _else <: Any] = _else
+    override private[mada]  def if_Any[then <: Function0[Any], _else <: Function0[Any]](then: then, _else: _else): if_Any[then, _else] = _else
+    override private[mada] type if_Any[then <: Function0[Any], _else <: Function0[Any]] = _else
 
     override private[mada]  def if_Boolean[then <: Boolean, _else <: Boolean](then: then, _else: _else): if_Boolean[then, _else] = _else
     override private[mada] type if_Boolean[then <: Boolean, _else <: Boolean] = _else
