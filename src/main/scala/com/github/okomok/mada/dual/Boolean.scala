@@ -24,8 +24,8 @@ sealed trait Boolean extends Operatable_=== with Operatable_&& with Operatable_|
     private[mada]  def isFalse: isFalse
     private[mada] type isFalse <: Boolean
 
-    private[mada]  def if_Any[then <: Any, _else <: Any](then: then, _else: _else): if_Any[then, _else]
-    private[mada] type if_Any[then <: Any, _else <: Any] <: Any
+    private[mada]  def if_Any[then <: Function0[Any], _else <: Function0[Any]](then: then, _else: _else): if_Any[then, _else]
+    private[mada] type if_Any[then <: Function0[Any], _else <: Function0[Any]] <: Function0[Any]
 
     private[mada]  def if_Boolean[then <: Boolean, _else <: Boolean](then: then, _else: _else): if_Boolean[then, _else]
     private[mada] type if_Boolean[then <: Boolean, _else <: Boolean] <: Boolean

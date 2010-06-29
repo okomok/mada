@@ -45,8 +45,8 @@ sealed trait Nat extends Operatable_===
      def decrement: decrement
     type decrement <: Nat
 
-    final override  def +[that <: Nat](that: that): +[that] = Plus.apply(self, that)
-    final override type +[that <: Nat] = Plus.apply[self, that]
+    final override  def +[that <: Nat](that: that): +[that] = Add.apply(self, that)
+    final override type +[that <: Nat] = Add.apply[self, that]
 
     final override  def -[that <: Nat](that: that): -[that] = Subtract.apply(self, that)
     final override type -[that <: Nat] = Subtract.apply[self, that]
@@ -79,8 +79,8 @@ sealed trait Nat extends Operatable_===
     type accept_Nat[v <: Visitor[Nat]] <: Nat
     type accept_blendList[v <: Visitor[blend.List]] <: blend.List
 
-    final  def toSInt: toSInt = if_Any(isZero, 0, 1 + decrement.toSInt)
-    final type toSInt = scala.Int
+    final  def toSInt: toSInt = ToSInt.apply(self)
+    final type toSInt = ToSInt.apply[self]
 }
 
 
