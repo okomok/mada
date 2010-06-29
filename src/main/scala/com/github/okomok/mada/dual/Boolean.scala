@@ -27,11 +27,14 @@ sealed trait Boolean extends Operatable_=== with Operatable_&& with Operatable_|
     private[mada]  def if_Any[then <: Function0[Any], _else <: Function0[Any]](then: then, _else: _else): if_Any[then, _else]
     private[mada] type if_Any[then <: Function0[Any], _else <: Function0[Any]] <: Function0[Any]
 
-    private[mada]  def if_Boolean[then <: Boolean, _else <: Boolean](then: then, _else: _else): if_Boolean[then, _else]
-    private[mada] type if_Boolean[then <: Boolean, _else <: Boolean] <: Boolean
+    private[mada]  def if_Boolean[then <: Function0[Boolean], _else <: Function0[Boolean]](then: then, _else: _else): if_Boolean[then, _else]
+    private[mada] type if_Boolean[then <: Function0[Boolean], _else <: Function0[Boolean]] <: Function0[Boolean]
 
-    private[mada]  def if_Nat[then <: Nat, _else <: Nat](then: then, _else: _else): if_Nat[then, _else]
-    private[mada] type if_Nat[then <: Nat, _else <: Nat] <: Nat
+    def if_Nat[then <: Function0_Nat, _else <: Function0_Nat](then: then, _else: _else): if_Nat[then, _else]
+    type if_Nat[then <: Function0_Nat, _else <: Function0_Nat] <: Function0_Nat
+
+    def toSBoolean: toSBoolean
+    final type toSBoolean = scala.Boolean
 }
 
 /**
@@ -59,11 +62,13 @@ sealed trait `true` extends Boolean {
     override private[mada]  def if_Any[then <: Function0[Any], _else <: Function0[Any]](then: then, _else: _else): if_Any[then, _else] = then
     override private[mada] type if_Any[then <: Function0[Any], _else <: Function0[Any]] = then
 
-    override private[mada]  def if_Boolean[then <: Boolean, _else <: Boolean](then: then, _else: _else): if_Boolean[then, _else] = then
-    override private[mada] type if_Boolean[then <: Boolean, _else <: Boolean] = then
+    override private[mada]  def if_Boolean[then <: Function0[Boolean], _else <: Function0[Boolean]](then: then, _else: _else): if_Boolean[then, _else] = then
+    override private[mada] type if_Boolean[then <: Function0[Boolean], _else <: Function0[Boolean]] = then
 
-    override private[mada]  def if_Nat[then <: Nat, _else <: Nat](then: then, _else: _else): if_Nat[then, _else] = then
-    override private[mada] type if_Nat[then <: Nat, _else <: Nat] = then
+    override def if_Nat[then <: Function0_Nat, _else <: Function0_Nat](then: then, _else: _else): if_Nat[then, _else] = then
+    override type if_Nat[then <: Function0_Nat, _else <: Function0_Nat] = then
+
+    override def toSBoolean = true
 }
 
 /**
@@ -91,11 +96,13 @@ sealed trait `false` extends Boolean {
     override private[mada]  def if_Any[then <: Function0[Any], _else <: Function0[Any]](then: then, _else: _else): if_Any[then, _else] = _else
     override private[mada] type if_Any[then <: Function0[Any], _else <: Function0[Any]] = _else
 
-    override private[mada]  def if_Boolean[then <: Boolean, _else <: Boolean](then: then, _else: _else): if_Boolean[then, _else] = _else
-    override private[mada] type if_Boolean[then <: Boolean, _else <: Boolean] = _else
+    override private[mada]  def if_Boolean[then <: Function0[Boolean], _else <: Function0[Boolean]](then: then, _else: _else): if_Boolean[then, _else] = _else
+    override private[mada] type if_Boolean[then <: Function0[Boolean], _else <: Function0[Boolean]] = _else
 
-    override private[mada]  def if_Nat[then <: Nat, _else <: Nat](then: then, _else: _else): if_Nat[then, _else] = _else
-    override private[mada] type if_Nat[then <: Nat, _else <: Nat] = _else
+    override   def if_Nat[then <: Function0_Nat, _else <: Function0_Nat](then: then, _else: _else): if_Nat[then, _else] = _else
+    override  type if_Nat[then <: Function0_Nat, _else <: Function0_Nat] = _else
+
+    override def toSBoolean = false
 }
 
 

@@ -61,14 +61,14 @@ package object dual
     /**
      * The if-expression to return Boolean.
      */
-     def if_Boolean[cond <: Boolean, then <: Boolean, _else <: Boolean](cond: cond, then: then, _else: _else): if_Boolean[cond, then, _else] = cond.if_Boolean(then, _else)
-    type if_Boolean[cond <: Boolean, then <: Boolean, _else <: Boolean] = cond#if_Boolean[then, _else]
+     def if_Boolean[cond <: Boolean, then <: Function0[Boolean], _else <: Function0[Boolean]](cond: cond, then: then, _else: _else): if_Boolean[cond, then, _else] = cond.if_Boolean(then, _else)
+    type if_Boolean[cond <: Boolean, then <: Function0[Boolean], _else <: Function0[Boolean]] = cond#if_Boolean[then, _else]
 
     /**
      * The if-expression to return Nat.
      */
-     def if_Nat[cond <: Boolean, then <: Nat, _else <: Nat](cond: cond, then: then, _else: _else): if_Nat[cond, then, _else] = cond.if_Nat(then, _else)
-    type if_Nat[cond <: Boolean, then <: Nat, _else <: Nat] = cond#if_Nat[then, _else]
+     def if_Nat[cond <: Boolean, then <: Function0_Nat, _else <: Function0_Nat](cond: cond, then: then, _else: _else): if_Nat[cond, then, _else] = cond.if_Nat(then, _else)
+    type if_Nat[cond <: Boolean, then <: Function0_Nat, _else <: Function0_Nat] = cond#if_Nat[then, _else]
 
 
 // Nat

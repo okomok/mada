@@ -26,3 +26,8 @@ trait Function3[T1, T2, T3, R] {
     def apply[v1 <: T1, v2 <: T2, v3 <: T3](v1: v1, v2: v2, v3: v3): apply[v1, v2, v3]
     type apply[v1 <: T1, v2 <: T2, v3 <: T3] <: R
 }
+
+trait Function0_Nat {
+    def apply: apply
+    type apply <: Nat
+}
