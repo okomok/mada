@@ -7,9 +7,9 @@
 package com.github.okomok.mada; package dual; package nat
 
 
-private[mada] object Subtract extends Function2[Nat, Nat, Nat] {
-    override  def apply[x <: Nat, y <: Nat](x: x, y: y): apply[x, y] = y.foldRight_Nat(x, step)
-    override type apply[x <: Nat, y <: Nat] = y#foldRight_Nat[x, step]
+private[mada] object Subtract {
+     def apply[x <: Nat, y <: Nat](x: x, y: y): apply[x, y] = y.foldRight_Nat(x, step)
+    type apply[x <: Nat, y <: Nat] = y#foldRight_Nat[x, step]
 
     val step = new step
     class step extends Function2[Nat, Nat, Nat] {

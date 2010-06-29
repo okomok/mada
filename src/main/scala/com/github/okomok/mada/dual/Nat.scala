@@ -78,12 +78,15 @@ sealed trait Nat extends Operatable_===
     type accept_Any[v <: Visitor[Any]] <: Any
     type accept_Nat[v <: Visitor[Nat]] <: Nat
     type accept_blendList[v <: Visitor[blend.List]] <: blend.List
+
+    final  def toSInt: toSInt = if_Any(isZero, 0, 1 + decrement.toSInt)
+    final type toSInt = scala.Int
 }
 
 
-sealed trait zero extends Nat {
+sealed trait Zero extends Nat {
     override  def self = this
-    override type self = zero
+    override type self = Zero
 
     override private[mada]  def isZero = `true`
     override private[mada] type isZero = `true`
@@ -91,8 +94,8 @@ sealed trait zero extends Nat {
     override private[mada]  def gtZero = `false`
     override private[mada] type gtZero = `false`
 
-    override  def increment = succ(self)
-    override type increment = succ[self]
+    override  def increment = new Succ(self)
+    override type increment = Succ[self]
 
     override  def decrement = singular
     override type decrement = singular
@@ -111,9 +114,9 @@ sealed trait zero extends Nat {
     override type accept_blendList[v <: Visitor[blend.List]] = v#visitZero
 }
 
-class succ[n <: Nat](n: n) extends Nat {
+class Succ[n <: Nat](n: n) extends Nat {
     override  def self = this
-    override type self = succ[n]
+    override type self = Succ[n]
 
     override private[mada]  def isZero = `false`
     override private[mada] type isZero = `false`
@@ -121,8 +124,8 @@ class succ[n <: Nat](n: n) extends Nat {
     override private[mada]  def gtZero = `true`
     override private[mada] type gtZero = `true`
 
-    override  def increment = succ(self)
-    override type increment = succ[self]
+    override  def increment = new Succ(self)
+    override type increment = Succ[self]
 
     override  def decrement = n
     override type decrement = n
@@ -174,6 +177,6 @@ sealed trait singular extends Nat {
 
 
 private[mada] object _Nat { // works around `sealed`.
-    val _zero = new zero{}
+    val _Zero = new Zero{}
     val _singular = new singular{}
 }

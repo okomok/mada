@@ -7,6 +7,11 @@
 package com.github.okomok.mada; package dual
 
 
+trait Function0[T1, R] {
+    def apply: apply
+    type apply <: R
+}
+
 trait Function1[T1, R] {
     def apply[v1 <: T1](v1: v1): apply[v1]
     type apply[v1 <: T1] <: R
