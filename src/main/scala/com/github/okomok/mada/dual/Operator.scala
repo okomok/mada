@@ -38,12 +38,6 @@ private[mada] trait OperatorCommon {
 
 // Operatables
 
-trait Operatable extends Operatable_===
-    with Operatable_+ with Operatable_- with Operatable_x
-    with Operatable_&& with Operatable_||
-    with Operatable_< with Operatable_<= with Operatable_> with Operatable_>=
-
-
 trait Operatable_=== {
     type Operand_===
     def ===[that <: Operand_===](that: that): ===[that]

@@ -15,16 +15,8 @@ package object dual
      * Designates an error.
      */
     @companionMethod
-    def error: error = throw new Error("dual.error")
+     def error: error = throw new Error("dual.error")
     type error = Nothing
-
-
-// unmeta
-
-    /**
-     * Returns corresponding runtime value.
-     */
-    def unmeta[From, To](implicit _unmeta: Unmeta[From, To]): To = _unmeta()
 
 
 // assertions
@@ -65,21 +57,33 @@ package object dual
      * The if-expression to return Any.
      */
     @companionMethod
-    def if_Any[cond <: Boolean, then <: Any, _else <: Any](cond: cond, then: then, _else: _else): if_Any[cond, then, _else] = cond.if_Any(then, _else)
+     def if_Any[cond <: Boolean, then <: Any, _else <: Any](cond: cond, then: then, _else: _else): if_Any[cond, then, _else] = cond.if_Any(then, _else)
     type if_Any[cond <: Boolean, then <: Any, _else <: Any] = cond#if_Any[then, _else]
 
     /**
      * The if-expression to return Boolean.
      */
     @companionMethod
-    def if_Boolean[cond <: Boolean, then <: Boolean, _else <: Boolean](cond: cond, then: then, _else: _else): if_Boolean[cond, then, _else] = cond.if_Boolean(then, _else)
+     def if_Boolean[cond <: Boolean, then <: Boolean, _else <: Boolean](cond: cond, then: then, _else: _else): if_Boolean[cond, then, _else] = cond.if_Boolean(then, _else)
     type if_Boolean[cond <: Boolean, then <: Boolean, _else <: Boolean] = cond#if_Boolean[then, _else]
 
     /**
      * The if-expression to return Nat.
      */
     @companionMethod
-    def if_Nat[cond <: Boolean, then <: Nat, _else <: Nat](cond: cond, then: then, _else: _else): if_Nat[cond, then, _else] = cond.if_Nat(then, _else)
+     def if_Nat[cond <: Boolean, then <: Nat, _else <: Nat](cond: cond, then: then, _else: _else): if_Nat[cond, then, _else] = cond.if_Nat(then, _else)
     type if_Nat[cond <: Boolean, then <: Nat, _else <: Nat] = cond#if_Nat[then, _else]
+
+
+// Nat
+
+    @equivalentTo("new zero{}")
+    val zero: zero = _Nat._zero
+
+    @equivalentTo("new succ(n)")
+    def succ[n <: Nat](n: n): succ[n] = new succ(n)
+
+    @equivalentTo("new singular{}")
+    private[mada] val singular: singular = _Nat._singular
 
 }
