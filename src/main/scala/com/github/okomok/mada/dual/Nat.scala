@@ -164,7 +164,7 @@ sealed trait singular extends Nat {
 }
 
 
-private[mada] object _Nat { // works around `sealed`.
-    val _Zero = new Zero{}
-    val _singular = new singular{}
+object Nat {
+    private[mada] val _Zero = new Zero{}
+    private[mada] val _singular = new singular{}
 }

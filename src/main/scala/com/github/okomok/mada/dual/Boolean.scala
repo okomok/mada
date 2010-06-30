@@ -106,7 +106,9 @@ sealed trait `false` extends Boolean {
 }
 
 
-private[mada] object _Boolean { // works around `sealed`.
-    val _true = new `true`{}
-    val _false = new `false`{}
+object Boolean {
+    private[mada] val _true = new `true`{}
+    private[mada] val _false = new `false`{}
+
+    // implicit def _toSBoolean[c <: Boolean](c: c): scala.Boolean = c.toSBoolean
 }

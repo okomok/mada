@@ -13,7 +13,7 @@ package com.github.okomok.mada; package dual; package nat
 object Literal extends LiteralCommon
 
 private[mada] trait LiteralCommon {
-    val _0N = _Nat._Zero
+    val _0N = Nat._Zero
     val _1N = new Succ(_0N)
     val _2N = new Succ(_1N)
     val _3N = new Succ(_2N)
