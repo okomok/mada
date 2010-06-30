@@ -20,6 +20,34 @@ class NatTest extends junit.framework.TestCase {
         assertEquals(10, _10N.toSInt)
     }
 
+    def testAddDuality {
+        val x: _2N + _3N = _2N + _3N
+        val y: _5N = x
+        assert(x === y)
+        assert(x === _5N)
+    }
+
+    def testSubstractDuality {
+        val x: _6N - _5N = _6N - _5N
+        val y: _1N = x
+        assert(x === y)
+        assert(x === _1N)
+    }
+
+    def testMultiplyDuality {
+        val a: _4N ** _2N = _4N ** _2N
+        val b: _8N = a
+        assert(a === b)
+        assert(a === _8N)
+    }
+
+    def testComparisonDuality {
+        val a: _4N > _2N = _4N > _2N
+        val b: `true` = a
+        assert(a === b)
+        assert(a === `true`)
+    }
+
     trait testTrivial {
         meta.assertSame[scala.Int, _2N#toSInt]
         meta.assert[_0N === _0N]
@@ -70,14 +98,14 @@ class NatTest extends junit.framework.TestCase {
     }
 
     trait testMultiply {
-        meta.assert[(_3N x _2N) === _6N]
-        meta.assert[(_0N x _3N) === _0N]
-        meta.assert[(_1N x _3N) === _3N]
-        meta.assert[(_3N x _1N) === _3N]
-        meta.assert[(_2N x _3N) === _6N]
-        meta.assert[(_9N x _1N) === _9N]
-        meta.assert[(_3N x _3N) === _9N]
-        meta.assert[(_4N x _2N) === _8N]
+        meta.assert[_3N ** _2N === _6N]
+        meta.assert[_0N ** _3N === _0N]
+        meta.assert[_1N ** _3N === _3N]
+        meta.assert[_3N ** _1N === _3N]
+        meta.assert[_2N ** _3N === _6N]
+        meta.assert[_9N ** _1N === _9N]
+        meta.assert[_3N ** _3N === _9N]
+        meta.assert[_4N ** _2N === _8N]
     }
 
     trait testComparison {

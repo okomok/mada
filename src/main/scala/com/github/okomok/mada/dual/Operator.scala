@@ -11,6 +11,10 @@ package com.github.okomok.mada; package dual
 //      at http://www.assembla.com/wiki/show/metascala
 
 
+// These are meta-generics, which doesn't work in complicated context.
+// Used only as syntax sugar.
+
+
 // Operator
 
 /**
@@ -21,7 +25,7 @@ object Operator extends OperatorCommon
 private[mada] trait OperatorCommon {
     type +[a <: Operatable_+, b <: a#Operand_+] = a# +[b]
     type -[a <: Operatable_-, b <: a#Operand_-] = a# -[b]
-    type x[a <: Operatable_x, b <: a#Operand_x] = a# x[b]
+    type **[a <: Operatable_**, b <: a#Operand_**] = a# **[b]
 
     type ===[a <: Operatable_===, b <: a#Operand_===] = a# ===[b]
     type !==[a <: Operatable_===, b <: a#Operand_===] = a# !==[b]
@@ -60,10 +64,10 @@ trait Operatable_- {
     type -[that <: Operand_-]
 }
 
-trait Operatable_x {
-    type Operand_x
-     def x[that <: Operand_x](that: that): x[that]
-    type x[that <: Operand_x]
+trait Operatable_** {
+    type Operand_**
+     def **[that <: Operand_**](that: that): **[that]
+    type **[that <: Operand_**]
 }
 
 

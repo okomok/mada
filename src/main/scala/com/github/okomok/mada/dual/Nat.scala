@@ -15,7 +15,7 @@ import nat._
 
 
 sealed trait Nat extends Operatable_===
-    with Operatable_+ with Operatable_- with Operatable_x
+    with Operatable_+ with Operatable_- with Operatable_**
     with Operatable_< with Operatable_<= with Operatable_> with Operatable_>= {
 
      def self: self
@@ -24,7 +24,7 @@ sealed trait Nat extends Operatable_===
     final override type Operand_=== = Nat
     final override type Operand_+ = Nat
     final override type Operand_- = Nat
-    final override type Operand_x = Nat
+    final override type Operand_** = Nat
     final override type Operand_< = Nat
     final override type Operand_<= = Nat
     final override type Operand_> = Nat
@@ -51,8 +51,8 @@ sealed trait Nat extends Operatable_===
     final override  def -[that <: Nat](that: that): -[that] = Subtract.apply(self, that)
     final override type -[that <: Nat] = Subtract.apply[self, that]
 
-    final override  def x[that <: Nat](that: that): x[that] = Multiply.apply(self, that)
-    final override type x[that <: Nat] = Multiply.apply[self, that]
+    final override  def **[that <: Nat](that: that): **[that] = Multiply.apply(self, that)
+    final override type **[that <: Nat] = Multiply.apply[self, that]
 
     final override  def >[that <: Nat](that: that): >[that] = this.-(that).gtZero
     final override type >[that <: Nat] = -[that]#gtZero
@@ -146,21 +146,21 @@ sealed trait singular extends Nat {
     override private[mada]  def gtZero = `false`
     override private[mada] type gtZero = `false`
 
-    override  def increment: increment = error
-    override type increment = error
+    override  def increment: increment = unsupported
+    override type increment = unsupported
 
     override  def decrement = self
     override type decrement = self
 
-    override  def foldRight_Any[z <: Any, f <: Function2_Nat_Any_Any](z: z, f: f) = error
-    override type foldRight_Any[z <: Any, f <: Function2_Nat_Any_Any] = error
+    override  def foldRight_Any[z <: Any, f <: Function2_Nat_Any_Any](z: z, f: f) = unsupported
+    override type foldRight_Any[z <: Any, f <: Function2_Nat_Any_Any] = unsupported
 
-    override  def foldRight_Nat[z <: Nat, f <: Function2_Nat_Nat_Nat](z: z, f: f) = error
-    override type foldRight_Nat[z <: Nat, f <: Function2_Nat_Nat_Nat] = error
+    override  def foldRight_Nat[z <: Nat, f <: Function2_Nat_Nat_Nat](z: z, f: f) = unsupported
+    override type foldRight_Nat[z <: Nat, f <: Function2_Nat_Nat_Nat] = unsupported
 
-    override type accept_Any[v <: Visitor[Any]] = error
-    override type accept_Nat[v <: Visitor[Nat]] = error
-    override type accept_blendList[v <: Visitor[blend.List]] = error
+    override type accept_Any[v <: Visitor[Any]] = unsupported
+    override type accept_Nat[v <: Visitor[Nat]] = unsupported
+    override type accept_blendList[v <: Visitor[blend.List]] = unsupported
 }
 
 

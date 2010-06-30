@@ -60,7 +60,7 @@ Scala metaprogramming seems to put several restrictions:
 
 * Requires -"Yrecursion 50" flag.
 * Meta-eq(type identity equality) is infeasible.
-* Meta-generics doesn't work. (metatype can't be a parameter.)
+* Meta-generics doesn't work. (E.g. metatype can't be a parameter.)
 
 
 

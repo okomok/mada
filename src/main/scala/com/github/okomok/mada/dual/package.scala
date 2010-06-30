@@ -16,17 +16,10 @@ package object dual
 
 
     /**
-     * Designates an error.
+     * Designates an unsupported operation error.
      */
-     def error: error = throw new Error("dual.error")
-    type error = Nothing
-
-    @aliasOf("scala.Unit")
-    type Unit = scala.Unit
-
-    @aliasOf("scala.Unit")
-     val unit: unit = ()
-    type unit = Unit
+     def unsupported: unsupported = throw new java.lang.UnsupportedOperationException
+    type unsupported = Nothing
 
 
 // assertions
@@ -80,5 +73,15 @@ package object dual
 
     @equivalentTo("new singular{}")
     private[mada] val singular: singular = _Nat._singular
+
+
+// Unit
+
+    @aliasOf("scala.Unit")
+    type Unit = scala.Unit
+
+    @aliasOf("scala.Unit")
+     val unit: unit = ()
+    type unit = Unit
 
 }

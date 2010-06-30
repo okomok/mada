@@ -14,7 +14,7 @@ import mada.dual._
 
 
 class BooleanTest extends junit.framework.TestCase {
-    def testUnmeta: Unit = {
+    def testConvert: Unit = {
         import junit.framework.Assert._
         assertEquals(true, `true`.toSBoolean)
         assertEquals(false, `false`.toSBoolean)
@@ -28,6 +28,13 @@ class BooleanTest extends junit.framework.TestCase {
 
     //    meta.assertSame[`false`, if_Boolean[`true`, `false`, `true`]]
     //    meta.assertSame[`false`, if_Boolean[`false`, `true`, `false`]]
+    }
+
+    def testDuality {
+        val f: `false` && `true` = `false` && `true`
+        val t: `false` || `true` = `false` || `true`
+        val x: `false` = f && t
+        assert(x === `false`)
     }
 
     meta.assert[`true`]
@@ -52,7 +59,7 @@ class BooleanTest extends junit.framework.TestCase {
     }
 
     trait testPropagation {
-        type incinc[n <: Nat] = if_Nat[n === _3N, Inc_Nat[n], Always_Nat[n]]#apply#increment
+        type incinc[n <: Nat] = if_Nat[n === _3N, Inc_Nat[n], Always_Nat[n]]#apply#increment#decrement#increment
         meta.assertConforms[incinc[_2N], Nat]
 
         meta.assert[if_Nat[_2N === _3N, Inc_Nat[_2N], Always_Nat[_2N]]#apply#increment === _3N]
