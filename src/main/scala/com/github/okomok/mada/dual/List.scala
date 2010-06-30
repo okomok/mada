@@ -55,8 +55,8 @@ sealed abstract class List { // this: self =>
      *
      * @pre `n in [0, size)`.
      */
-      def take[n <: Nat](n: n): take[n]
-     type take[n <: Nat] <: List
+    final  def take[n <: Nat](n: n): take[n] = Take.apply(self, n)
+    final type take[n <: Nat] = Take.apply[self, n]
     //final  def take[n <: Nat](n: n): take[n] = reverse.drop(size - n).reverse
     //final type take[n <: Nat] = reverse#drop[size - n]#reverse
 
@@ -216,8 +216,8 @@ sealed abstract class Nil extends List {
     override  def isEmpty = `true`
     override type isEmpty = `true`
 
-    override  def take[n <: Nat](n: n) = Nil
-    override type take[n <: Nat] = Nil
+//    override  def take[n <: Nat](n: n) = Nil
+//    override type take[n <: Nat] = Nil
 
     override  def zip[that <: List](that: that) = Nil
     override type zip[that <: List] = Nil
@@ -248,8 +248,8 @@ final case class Cons[x <: Any, xs <: List](x: x, xs: xs) extends List {
     override  val tail = xs
     override type tail = xs
 
-    override  def take[n <: Nat](n: n): take[n] = ConsTake.apply(self, n)
-    override type take[n <: Nat] = ConsTake.apply[self, n]
+  //  override  def take[n <: Nat](n: n): take[n] = ConsTake.apply(self, n)
+ //   override type take[n <: Nat] = ConsTake.apply[self, n]
 
     override  def isEmpty = `false`
     override type isEmpty = `false`
