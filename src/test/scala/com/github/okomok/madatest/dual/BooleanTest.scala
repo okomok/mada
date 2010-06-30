@@ -21,43 +21,43 @@ class BooleanTest extends junit.framework.TestCase {
     }
 
     trait testTrivial {
-        assertSame[scala.Boolean, `true`#toSBoolean]
-        assertSame[`true`, `true`]
-     //   assert[`false` === if_Boolean[`true`, `false`, `true`]]
-     //   assert[`false` === if_Boolean[`false`, `true`, `false`]]
+        meta.assertSame[scala.Boolean, `true`#toSBoolean]
+        meta.assertSame[`true`, `true`]
+     //   meta.assert[`false` === if_Boolean[`true`, `false`, `true`]]
+     //   meta.assert[`false` === if_Boolean[`false`, `true`, `false`]]
 
-    //    assertSame[`false`, if_Boolean[`true`, `false`, `true`]]
-    //    assertSame[`false`, if_Boolean[`false`, `true`, `false`]]
+    //    meta.assertSame[`false`, if_Boolean[`true`, `false`, `true`]]
+    //    meta.assertSame[`false`, if_Boolean[`false`, `true`, `false`]]
     }
 
-    assert[`true`]
-    assertNot[`false`]
+    meta.assert[`true`]
+    meta.assertNot[`false`]
 
-    assert[`true` === `true`]
-    assert[`false` === `false`]
-    assert[`true` !== `false`]
-    assert[`false` !== `true`]
+    meta.assert[`true` === `true`]
+    meta.assert[`false` === `false`]
+    meta.assert[`true` !== `false`]
+    meta.assert[`false` !== `true`]
 
     type myNot[b <: Boolean] = b#not
-    assert[myNot[`true`] !== `true`]
-    assert[myNot[`false`] !== `false`]
-    assert[myNot[`true`] === `false`]
-    assert[myNot[`false`] === `true`]
+    meta.assert[myNot[`true`] !== `true`]
+    meta.assert[myNot[`false`] !== `false`]
+    meta.assert[myNot[`true`] === `false`]
+    meta.assert[myNot[`false`] === `true`]
 
     trait testOperator {
-        assert[`true` && `true`]
-        assert[(`false` && `true`)#not]
-        assert[`false` || `true`]
-        assert[`true` || `false`]
+        meta.assert[`true` && `true`]
+        meta.assert[(`false` && `true`)#not]
+        meta.assert[`false` || `true`]
+        meta.assert[`true` || `false`]
     }
 
     trait testPropagation {
         type incinc[n <: Nat] = if_Nat[n === _3N, Inc_Nat[n], Always_Nat[n]]#apply#increment
-        assertConforms[incinc[_2N], Nat]
+        meta.assertConforms[incinc[_2N], Nat]
 
-        assert[if_Nat[_2N === _3N, Inc_Nat[_2N], Always_Nat[_2N]]#apply#increment === _3N]
-        assert[incinc[_2N] === _3N]
-        assert[incinc[_3N] === _5N]
+        meta.assert[if_Nat[_2N === _3N, Inc_Nat[_2N], Always_Nat[_2N]]#apply#increment === _3N]
+        meta.assert[incinc[_2N] === _3N]
+        meta.assert[incinc[_3N] === _5N]
     }
 
     class Always_Nat[e <: Nat](e: e) extends Function0_Nat {

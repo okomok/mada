@@ -21,81 +21,81 @@ class NatTest extends junit.framework.TestCase {
     }
 
     trait testTrivial {
-        assertSame[scala.Int, _2N#toSInt]
-        assert[_0N === _0N]
+        meta.assertSame[scala.Int, _2N#toSInt]
+        meta.assert[_0N === _0N]
 
-        assert[_0N !== _1N]
-        assert[_1N !== _0N]
+        meta.assert[_0N !== _1N]
+        meta.assert[_1N !== _0N]
 
-        assert[_1N === _1N]
+        meta.assert[_1N === _1N]
 
-        assert[_1N !== _2N]
-        assert[_1N !== _3N]
-        assert[_2N !== _1N]
-        assert[_3N !== _1N]
+        meta.assert[_1N !== _2N]
+        meta.assert[_1N !== _3N]
+        meta.assert[_2N !== _1N]
+        meta.assert[_3N !== _1N]
 
-        assert[_7N === _7N]
-        assert[_2N !== _7N]
-        assert[_7N !== _2N]
-        assert[_6N !== _7N]
-        assert[_7N !== _6N]
-        assert[_0N !== _7N]
-        assert[_7N !== _0N]
-        assert[_1N !== _7N]
-        assert[_7N !== _1N]
+        meta.assert[_7N === _7N]
+        meta.assert[_2N !== _7N]
+        meta.assert[_7N !== _2N]
+        meta.assert[_6N !== _7N]
+        meta.assert[_7N !== _6N]
+        meta.assert[_0N !== _7N]
+        meta.assert[_7N !== _0N]
+        meta.assert[_1N !== _7N]
+        meta.assert[_7N !== _1N]
 
-        assert[_1N#increment === _2N]
-        assert[_1N#increment#increment === _3N]
+        meta.assert[_1N#increment === _2N]
+        meta.assert[_1N#increment#increment === _3N]
 
-        assert[_1N#decrement === _0N]
-        assert[_3N#decrement#decrement === _1N]
-        assert[_4N#decrement === _3N]
-        assert[_7N#increment#decrement#decrement === _6N]
+        meta.assert[_1N#decrement === _0N]
+        meta.assert[_3N#decrement#decrement === _1N]
+        meta.assert[_4N#decrement === _3N]
+        meta.assert[_7N#increment#decrement#decrement === _6N]
     }
 
     trait testAdd {
-        assert[_0N + _0N === _0N]
-        assert[_0N + _3N === _3N]
-        assert[_4N + _3N === _7N]
-        assert[_1N + _8N === _9N]
-        assert[_5N + _2N === _7N]
+        meta.assert[_0N + _0N === _0N]
+        meta.assert[_0N + _3N === _3N]
+        meta.assert[_4N + _3N === _7N]
+        meta.assert[_1N + _8N === _9N]
+        meta.assert[_5N + _2N === _7N]
     }
 
     trait testSubtract {
-        assert[_0N - _0N === _0N]
-        assert[_3N - _0N === _3N]
-        assert[_4N - _3N === _1N]
-        assert[_8N - _1N === _7N]
-        assert[_5N - _2N === _3N]
+        meta.assert[_0N - _0N === _0N]
+        meta.assert[_3N - _0N === _3N]
+        meta.assert[_4N - _3N === _1N]
+        meta.assert[_8N - _1N === _7N]
+        meta.assert[_5N - _2N === _3N]
     }
 
     trait testMultiply {
-        assert[(_3N x _2N) === _6N]
-        assert[(_0N x _3N) === _0N]
-        assert[(_1N x _3N) === _3N]
-        assert[(_3N x _1N) === _3N]
-        assert[(_2N x _3N) === _6N]
-        assert[(_9N x _1N) === _9N]
-        assert[(_3N x _3N) === _9N]
-        assert[(_4N x _2N) === _8N]
+        meta.assert[(_3N x _2N) === _6N]
+        meta.assert[(_0N x _3N) === _0N]
+        meta.assert[(_1N x _3N) === _3N]
+        meta.assert[(_3N x _1N) === _3N]
+        meta.assert[(_2N x _3N) === _6N]
+        meta.assert[(_9N x _1N) === _9N]
+        meta.assert[(_3N x _3N) === _9N]
+        meta.assert[(_4N x _2N) === _8N]
     }
 
     trait testComparison {
-        assert[_0N < _2N]
-        assert[_3N < _5N]
-        assert[_3N <= _3N]
-        assert[_5N > _3N]
-        assert[_4N > _0N]
-        assert[_4N >= _2N]
-        assert[_0N <= _0N]
-        assert[_0N >= _0N]
-        assertNot[_3N > _5N]
-        assertNot[_0N < _0N]
-        assertNot[_0N > _0N]
-        assertNot[_4N >= _5N]
-        assertNot[_4N <= _2N]
-        assertNot[_4N < _4N]
-        assertNot[_4N > _4N]
+        meta.assert[_0N < _2N]
+        meta.assert[_3N < _5N]
+        meta.assert[_3N <= _3N]
+        meta.assert[_5N > _3N]
+        meta.assert[_4N > _0N]
+        meta.assert[_4N >= _2N]
+        meta.assert[_0N <= _0N]
+        meta.assert[_0N >= _0N]
+        meta.assertNot[_3N > _5N]
+        meta.assertNot[_0N < _0N]
+        meta.assertNot[_0N > _0N]
+        meta.assertNot[_4N >= _5N]
+        meta.assertNot[_4N <= _2N]
+        meta.assertNot[_4N < _4N]
+        meta.assertNot[_4N > _4N]
     }
 
     trait testPropagation {
@@ -103,16 +103,16 @@ class NatTest extends junit.framework.TestCase {
         type id[n <: Nat] = n#increment#decrement
         type equaL[n <: Nat, m <: Nat] = plusPlus[n] === id[m]
 
-        assert[plusPlus[_4N] === _6N]
-        assert[plusPlus[_7N] === _9N]
-        assert[id[_9N] === _9N]
-        assert[id[_7N] === _7N]
+        meta.assert[plusPlus[_4N] === _6N]
+        meta.assert[plusPlus[_7N] === _9N]
+        meta.assert[id[_9N] === _9N]
+        meta.assert[id[_7N] === _7N]
 
-        assert[equaL[_3N, _5N]]
-        assert[equaL[_4N, _6N]]
+        meta.assert[equaL[_3N, _5N]]
+        meta.assert[equaL[_4N, _6N]]
 
         // Must work.
         type subsub[n <: Nat, m <: Nat] = n# -[m]# -[m]
-        assert[subsub[_9N, _2N] === _5N]
+        meta.assert[subsub[_9N, _2N] === _5N]
     }
 }

@@ -22,6 +22,11 @@ trait Function0_Nat {
     type apply <: Nat
 }
 
+trait Function0_Unit {
+     def apply: apply
+    type apply <: Unit
+}
+
 
 trait Function2_Nat_Any_Any {
      def apply[v1 <: Nat, v2 <: Any](v1: v1, v2: v2): apply[v1, v2]

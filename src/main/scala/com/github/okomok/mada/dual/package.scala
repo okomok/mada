@@ -17,31 +17,27 @@ package object dual
      def error: error = throw new Error("dual.error")
     type error = Nothing
 
+    @aliasOf("scala.Unit")
+    type Unit = scala.Unit
+
+    @aliasOf("scala.Unit")
+     val unit: unit = ()
+    type unit = Unit
+
 
 // assertions
-
-    // Prefer methods to case classes:
-    //   case classes doesn't work well.
 
     /**
      * assertion
      */
-    def assert[a >: `true` <: `true`]: scala.Unit = ()
+     def assert[a <: Boolean](a: a): assert[a] = if (!a.toSBoolean) throw new java.lang.AssertionError("dual.assert")
+    type assert[a <: Boolean] = Unit
 
     /**
      * negative assertion
      */
-    def assertNot[a >: `false` <: `false`]: scala.Unit = ()
-
-    /**
-     * assertion of identity equality
-     */
-    def assertSame[a >: b <: b, b]: scala.Unit = ()
-
-    /**
-     * assertion if <code>a</code> is lower than <code>b</code>.
-     */
-    def assertConforms[a <: b, b]: scala.Unit = ()
+     def assertNot[a <: Boolean](a: a): assert[a] = if (a.toSBoolean) throw new java.lang.AssertionError("dual.assertNot")
+    type assertNot[a <: Boolean] = Unit
 
 
 // Boolean
