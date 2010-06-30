@@ -10,13 +10,21 @@ package com.github.okomok.mada; package dual
 /**
  * The dual Boolean
  */
-sealed trait Boolean extends Operatable_=== with Operatable_&& with Operatable_|| {
+sealed trait Boolean {
      def not: not
     type not <: Boolean
 
-    final override type Operand_=== = Boolean
-    final override type Operand_&& = Boolean
-    final override type Operand_|| = Boolean
+     def ===[that <: Boolean](that: that): ===[that]
+    type ===[that <: Boolean] <: Boolean
+
+     def &&[that <: Boolean](that: that): &&[that]
+    type &&[that <: Boolean] <: Boolean
+
+     def ||[that <: Boolean](that: that): ||[that]
+    type ||[that <: Boolean] <: Boolean
+
+    final  def !==[that <: Boolean](that: that): !==[that] = ===(that).not
+    final type !==[that <: Boolean] = ===[that]#not
 
     private[mada]  def isTrue: isTrue
     private[mada] type isTrue <: Boolean

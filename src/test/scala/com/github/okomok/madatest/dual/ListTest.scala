@@ -12,7 +12,6 @@ import com.github.okomok.mada
 import mada.dual._
 
 
-
 class ListTest extends junit.framework.TestCase {
     import junit.framework.Assert._
     assertFalse(scala.Nil eq Nil)

@@ -11,8 +11,7 @@ import annotation.elidable
 import annotation.elidable.ASSERTION
 
 
-package object dual
-    extends dual.nat.LiteralCommon with dual.OperatorCommon {
+package object dual extends dual.nat.LiteralCommon {
 
 
     /**

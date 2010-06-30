@@ -28,7 +28,6 @@ class SliceTest extends junit.framework.TestCase {
 
         type Lst3 = Nil
         val lst3: Lst3 = Nil;
-/*
         {
             val e: Lst1#slice[_0N, _2N] = lst1.slice(_0N, _2N)
             val e_ : Int::String::Nil = e
@@ -62,7 +61,6 @@ class SliceTest extends junit.framework.TestCase {
             val e_ : Nil = e
             assertEquals(Nil, e_)
         }
-    */
         ()
     }
 }

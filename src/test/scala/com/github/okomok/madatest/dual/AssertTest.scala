@@ -13,6 +13,8 @@ import mada.dual._
 
 import junit.framework.Assert._
 
+//import boolean.Operator._
+
 
 class AssertTest extends junit.framework.TestCase {
 
@@ -58,8 +60,8 @@ class AssertTest extends junit.framework.TestCase {
     trait testMeta {
         meta.assert[`true`]
         meta.assertNot[`false`]
-        meta.assert[`true` === `true`]
-        meta.assertNot[`true` !== `true`]
+        meta.assert[`true`# === [`true`]]
+        meta.assertNot[`true`# !== [`true`]]
     }
 
 }

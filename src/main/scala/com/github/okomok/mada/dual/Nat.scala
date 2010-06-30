@@ -14,21 +14,10 @@ package com.github.okomok.mada; package dual
 import nat._
 
 
-sealed trait Nat extends Operatable_===
-    with Operatable_+ with Operatable_- with Operatable_**
-    with Operatable_< with Operatable_<= with Operatable_> with Operatable_>= {
+sealed trait Nat {
 
      def self: self
     type self <: Nat
-
-    final override type Operand_=== = Nat
-    final override type Operand_+ = Nat
-    final override type Operand_- = Nat
-    final override type Operand_** = Nat
-    final override type Operand_< = Nat
-    final override type Operand_<= = Nat
-    final override type Operand_> = Nat
-    final override type Operand_>= = Nat
 
     private[mada]  def isZero: isZero
     private[mada] type isZero <: Boolean
@@ -39,32 +28,35 @@ sealed trait Nat extends Operatable_===
     final  def ===[that <: Nat](that: that): ===[that] = this.-(that).isZero
     final type ===[that <: Nat] = -[that]#isZero
 
+    final  def !==[that <: Nat](that: that): !==[that] = ===(that).not
+    final type !==[that <: Nat] = ===[that]#not
+
      def increment: increment
     type increment <: Nat
 
      def decrement: decrement
     type decrement <: Nat
 
-    final override  def +[that <: Nat](that: that): +[that] = Add.apply(self, that)
-    final override type +[that <: Nat] = Add.apply[self, that]
+    final  def +[that <: Nat](that: that): +[that] = Add.apply(self, that)
+    final type +[that <: Nat] = Add.apply[self, that]
 
-    final override  def -[that <: Nat](that: that): -[that] = Subtract.apply(self, that)
-    final override type -[that <: Nat] = Subtract.apply[self, that]
+    final  def -[that <: Nat](that: that): -[that] = Subtract.apply(self, that)
+    final type -[that <: Nat] = Subtract.apply[self, that]
 
-    final override  def **[that <: Nat](that: that): **[that] = Multiply.apply(self, that)
-    final override type **[that <: Nat] = Multiply.apply[self, that]
+    final  def *[that <: Nat](that: that): *[that] = Multiply.apply(self, that)
+    final type *[that <: Nat] = Multiply.apply[self, that]
 
-    final override  def >[that <: Nat](that: that): >[that] = this.-(that).gtZero
-    final override type >[that <: Nat] = -[that]#gtZero
+    final  def >[that <: Nat](that: that): >[that] = this.-(that).gtZero
+    final type >[that <: Nat] = -[that]#gtZero
 
-    final override  def <[that <: Nat](that: that): <[that] = that.>(self)
-    final override type <[that <: Nat] = that# >[self]
+    final  def <[that <: Nat](that: that): <[that] = that.>(self)
+    final type <[that <: Nat] = that# >[self]
 
-    final override  def >=[that <: Nat](that: that): >=[that] = >(that).||(===(that))
-    final override type >=[that <: Nat] = >[that]# ||[===[that]]
+    final  def >=[that <: Nat](that: that): >=[that] = >(that).||(===(that))
+    final type >=[that <: Nat] = >[that]# ||[===[that]]
 
-    final override  def <=[that <: Nat](that: that): <=[that] = that.>=(self)
-    final override type <=[that <: Nat] = that# >=[self]
+    final  def <=[that <: Nat](that: that): <=[that] = that.>=(self)
+    final type <=[that <: Nat] = that# >=[self]
 
      def foldRight_Any[z <: Any, f <: Function2_Nat_Any_Any](z: z, f: f): foldRight_Any[z, f]
     type foldRight_Any[z <: Any, f <: Function2_Nat_Any_Any] <: Any

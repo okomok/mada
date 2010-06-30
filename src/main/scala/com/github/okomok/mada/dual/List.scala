@@ -57,8 +57,6 @@ sealed abstract class List { // this: self =>
      */
     final  def take[n <: Nat](n: n): take[n] = Take.apply(self, n)
     final type take[n <: Nat] = Take.apply[self, n]
-    //final  def take[n <: Nat](n: n): take[n] = reverse.drop(size - n).reverse
-    //final type take[n <: Nat] = reverse#drop[size - n]#reverse
 
     @equivalentTo("take(m).drop(n)")
     final  def slice[n <: Nat, m <: Nat](n: n, m: m): slice[n, m] = take(m).drop(n)
@@ -116,7 +114,7 @@ sealed abstract class List { // this: self =>
     final  def replace[n <: Nat, e <: Any](n: n, e: e): replace[n, e] = Cons(e, drop_1_+(n)).prepend(take(n))
     final type replace[n <: Nat, e <: Any] = Cons[e, drop_1_+[n]]#prepend[take[n]]
 
-    @compilerWorkaround("2.8.0") // Help type-inference.
+    @compilerWorkaround("2.8.0") // works around a type mismatch.
     private final  def drop_1_+[n <: Nat](n: n): drop_1_+[n] = drop(n.increment)
     private final type drop_1_+[n <: Nat] = drop[n#increment]
 
@@ -166,7 +164,7 @@ sealed abstract class List { // this: self =>
     /**
      * Converts to <code>sequence.List[Any]</code>.
      */
-    def untyped: untyped // The implicit way would annoy toString.
+    def untyped: untyped
     final type untyped = sequence.List[Any]
 
     final override def equals(that: Any) = that match {
@@ -216,9 +214,6 @@ sealed abstract class Nil extends List {
     override  def isEmpty = `true`
     override type isEmpty = `true`
 
-//    override  def take[n <: Nat](n: n) = Nil
-//    override type take[n <: Nat] = Nil
-
     override  def zip[that <: List](that: that) = Nil
     override type zip[that <: List] = Nil
 
@@ -248,18 +243,11 @@ final case class Cons[x <: Any, xs <: List](x: x, xs: xs) extends List {
     override  val tail = xs
     override type tail = xs
 
-  //  override  def take[n <: Nat](n: n): take[n] = ConsTake.apply(self, n)
- //   override type take[n <: Nat] = ConsTake.apply[self, n]
-
     override  def isEmpty = `false`
     override type isEmpty = `false`
 
     override  def zip[that <: List](that: that): zip[that] = Cons(scala.Tuple2(head, that.head), tail.zip(that.tail))
     override type zip[that <: List] = Cons[scala.Tuple2[head, that#head], tail#zip[that#tail]]
-
-//    @compilerWorkaround("2.8.0") // Help type-inference.
-//    private  def tail_zip[that <: List](that: that): tail_zip[that] = tail.zip(that.tail)
-//    private type tail_zip[that <: List] = tail#zip[that#tail]
 
     override def untyped = head :: tail.untyped
 
