@@ -8,13 +8,9 @@
 
     Emulating `C# using` statement.
 
-- `blend`
+- `dual`
 
-    Blending meta into runtime
-
-- `meta`
-
-    Metaprogramming toys
+    Offers method and metamethod duality.
 
 - `peg`
 
@@ -49,64 +45,22 @@
 
 
 
-## `blend`
+## `dual`
 
-`blend` package contains heterogeneous-list implementation originally written in [Metascala].
-While `scala.List` contains elements of the same type, `blend.List` can contain elements of different types:
+* TODO
 
-    import com.github.okomok.mada.meta.nat.Literal._
-    import com.github.okomok.mada.blend._
-    import junit.framework.Assert._
+Terminology:
 
-    class DocTest {
-        def testTrivial: Unit = {
-            type l = String :: Boolean :: Char :: Int :: Nil
-            val l: l = "hetero" :: true :: 'L' :: 7 :: Nil
-            val i: l#nth[_3N] = l.nth[_3N]
-            assertEquals(10, i + 3)
-        }
-    }
-
-Now `nth` is used for both method and "metamethod" invocation to retrieve n-th element from a list.
-(We might say that `l.nth` is a "companion method" invocation.)
-In the same way, `blend.List` provides almost all methods which `scala.List` provides.
-
-
-## `meta`
-
-`meta` package provides several types and methods for metaprogramming:
-
-* `Boolean`: boolean type
-* `Nat`: natural number type
-* `assert`: assertion method
-* `unmeta`: converts meta-value to runtime-value.
-
-The following example contrasts the non-meta versus meta programming in Scala:
-
-    class DocTest {
-        // boolean value
-        assert(true)
-
-        // method
-        def increment(n: Int) = n + 1
-    }
-
-    class metaDocTest {
-        import com.github.okomok.mada.meta._
-
-        // meta boolean value
-        assert[`true`]
-
-        // metamethod
-        type increment[n <: Nat] = n#increment // metamethod invocation by `#`
-    }
+* _metamethod_ is a type constructor.
+* _metatype_ is a type. (capitalized in source code.)
+* _metavalue_ is a type which extends metatype. (uncapitalized.)
+* _dualmethod_ is an identifier which can be used as both method and metamethod. (uncapitalized.)
 
 Scala metaprogramming seems to put several restrictions:
 
-1. Requires -"Yrecursion 50" flag.
-1. No metamethod overloading.
-1. Meta-eq is infeasible.
-1. Generic metamethod can't be overridden. (As a result, meta-if is infeasible.)
+* Requires -"Yrecursion 50" flag.
+* Meta-eq(type identity equality) is infeasible.
+* Meta-generics doesn't work. (metatype can't be a parameter.)
 
 
 

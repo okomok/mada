@@ -7,6 +7,10 @@
 package com.github.okomok.mada
 
 
+import annotation.elidable
+import annotation.elidable.ASSERTION
+
+
 package object dual
     extends dual.nat.LiteralCommon with dual.OperatorCommon {
 
@@ -30,12 +34,14 @@ package object dual
     /**
      * assertion
      */
+    @elidable(ASSERTION)
      def assert[a <: Boolean](a: a): assert[a] = if (!a.toSBoolean) throw new java.lang.AssertionError("dual.assert")
     type assert[a <: Boolean] = Unit
 
     /**
      * negative assertion
      */
+    @elidable(ASSERTION)
      def assertNot[a <: Boolean](a: a): assert[a] = if (a.toSBoolean) throw new java.lang.AssertionError("dual.assertNot")
     type assertNot[a <: Boolean] = Unit
 

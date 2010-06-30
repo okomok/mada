@@ -9,9 +9,13 @@ package com.github.okomok.mada; package dual
 
 package object meta {
 
+
+// assertion (Note case classes doesn't work well.)
+
     /**
      * assertion
      */
+    // @elidable(ALL) // crashes compiler.
     def assert[a >: `true` <: `true`]: scala.Unit = ()
 
     /**
