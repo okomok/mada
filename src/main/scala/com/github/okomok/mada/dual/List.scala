@@ -135,8 +135,12 @@ sealed abstract class List { // this: self =>
      *
      * @pre `n in [0, size)`.
      */
-    final  def replace[n <: Nat, e <: Any](n: n, e: e): replace[n, e] = throw new Error//take(n) ::: (e :: drop(n.increment))
-    final type replace[n <: Nat, e <: Any] = take[n] ::: (e :: drop[n#increment])
+    final  def replace[n <: Nat, e <: Any](n: n, e: e): replace[n, e] = Cons(e, drop_1_+(n)).prepend(take(n))
+    final type replace[n <: Nat, e <: Any] = Cons[e, drop_1_+[n]]#prepend[take[n]]
+
+    @compilerWorkaround("2.8.0") // Help type-inference.
+    private final  def drop_1_+[n <: Nat](n: n): drop_1_+[n] = drop(n.increment)
+    private final type drop_1_+[n <: Nat] = drop[n#increment]
 
     /**
      * Prepends reversed <code>that</code>.
@@ -226,7 +230,7 @@ sealed abstract class Nil extends List {
 }
 
 
-final case class Cons[x, xs <: List](override val head: x, override val tail: xs) extends List {
+final case class Cons[x <: Any, xs <: List](override val head: x, override val tail: xs) extends List {
     override  val self = this
     override type self = Cons[x, xs]
 

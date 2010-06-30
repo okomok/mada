@@ -81,13 +81,13 @@ package object dual
     val Nil = List._Nil
 
     @equivalentTo("t#addFirst[h]")
-    type ::[h, t <: List] = t#addFirst[h]
+    type ::[x <: Any, xs <: List] = xs#addFirst[x]
 
-    @equivalentTo("r#prepend[l]")
-    type :::[l <: List, r <: List] = r#prepend[l]
+    @equivalentTo("ys#prepend[xs]")
+    type :::[xs <: List, ys <: List] = ys#prepend[xs]
 
-    @equivalentTo("r#reversePrepend[l]")
-    type reverse_:::[l <: List, r <: List] = r#prependReversed[l]
+    @equivalentTo("ys#reversePrepend[xs]")
+    type reverse_:::[xs <: List, ys <: List] = ys#prependReversed[xs]
 
 
 // Unit

@@ -13,7 +13,7 @@ private[mada] object Prepend {
 
     val step = new step
     class step extends Function2_Any_List_List {
-        override  def apply[a <: Any, b <: List](a: a, b: b) = Cons(a, b)
+        override  def apply[a <: Any, b <: List](a: a, b: b): apply[a, b] = Cons(a, b)
         override type apply[a <: Any, b <: List] = Cons[a, b]
     }
 }
