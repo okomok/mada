@@ -28,6 +28,22 @@ trait Function0_Unit {
 }
 
 
+trait Function2_Any_Any_Any {
+     def apply[v1 <: Any, v2 <: Any](v1: v1, v2: v2): apply[v1, v2]
+    type apply[v1 <: Any, v2 <: Any] <: Any
+}
+
+trait Function2_Any_Nat_Nat {
+     def apply[v1 <: Any, v2 <: Nat](v1: v1, v2: v2): apply[v1, v2]
+    type apply[v1 <: Any, v2 <: Nat] <: Nat
+}
+
+trait Function2_Any_List_List {
+     def apply[v1 <: Any, v2 <: List](v1: v1, v2: v2): apply[v1, v2]
+    type apply[v1 <: Any, v2 <: List] <: List
+}
+
+
 trait Function2_Nat_Any_Any {
      def apply[v1 <: Nat, v2 <: Any](v1: v1, v2: v2): apply[v1, v2]
     type apply[v1 <: Nat, v2 <: Any] <: Any
@@ -36,4 +52,15 @@ trait Function2_Nat_Any_Any {
 trait Function2_Nat_Nat_Nat {
      def apply[v1 <: Nat, v2 <: Nat](v1: v1, v2: v2): apply[v1, v2]
     type apply[v1 <: Nat, v2 <: Nat] <: Nat
+}
+
+trait Function2_Nat_List_List {
+     def apply[v1 <: Nat, v2 <: List](v1: v1, v2: v2): apply[v1, v2]
+    type apply[v1 <: Nat, v2 <: List] <: List
+}
+
+
+trait Function2_List_Any_List {
+     def apply[v1 <: List, v2 <: Any](v1: v1, v2: v2): apply[v1, v2]
+    type apply[v1 <: List, v2 <: Any] <: List
 }

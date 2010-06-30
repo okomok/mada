@@ -75,6 +75,21 @@ package object dual
     private[mada] val singular: singular = Nat._singular
 
 
+// List
+
+    @equivalentTo("new Nil{}")
+    val Nil = List._Nil
+
+    @equivalentTo("t#addFirst[h]")
+    type ::[h, t <: List] = t#addFirst[h]
+
+    @equivalentTo("r#prepend[l]")
+    type :::[l <: List, r <: List] = r#prepend[l]
+
+    @equivalentTo("r#reversePrepend[l]")
+    type reverse_:::[l <: List, r <: List] = r#prependReversed[l]
+
+
 // Unit
 
     @aliasOf("scala.Unit")
