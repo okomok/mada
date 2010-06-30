@@ -22,6 +22,11 @@ trait Function0_Nat {
     type apply <: Nat
 }
 
+trait Function0_List {
+     def apply: apply
+    type apply <: List
+}
+
 trait Function0_Unit {
      def apply: apply
     type apply <: Unit

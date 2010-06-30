@@ -369,8 +369,8 @@ sealed abstract class List[+A] extends iterative.Sequence[A] {
         case (n, _ :: xs) => xs().drop(n - 1)
     }
 
-    @equivalentTo("drop(n).take(m - n)")
-    def slice(n: Int, m: Int): List[A] = drop(n).take(m - n)
+    @equivalentTo("take(m).drop(n)")
+    def slice(n: Int, m: Int): List[A] = take(m).drop(n)
 
     /**
      * Returns the longest prefix that satisfies the predicate.

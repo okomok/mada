@@ -43,30 +43,6 @@ sealed abstract class List { // this: self =>
     type isEmpty <: Boolean
 
     /**
-     * Folds right-associative.
-     */
-     def foldRight_Any[z <: Any, f <: Function2_Any_Any_Any](z: z, f: f): foldRight_Any[z, f]
-    type foldRight_Any[z <: Any, f <: Function2_Any_Any_Any] <: Any
-
-    /**
-     * Folds right-associative.
-     */
-     def foldRight_List[z <: List, f <: Function2_Any_List_List](z: z, f: f): foldRight_List[z, f]
-    type foldRight_List[z <: List, f <: Function2_Any_List_List] <: List
-
-    /**
-     * Folds right-associative.
-     */
-     def foldRight_Nat[z <: Nat, f <: Function2_Any_Nat_Nat](z: z, f: f): foldRight_Nat[z, f]
-    type foldRight_Nat[z <: Nat, f <: Function2_Any_Nat_Nat] <: Nat
-
-    /**
-     * Folds left-associative.
-     */
-     def foldLeft_List[z <: List, f <: Function2_List_Any_List](z: z, f: f): foldLeft_List[z, f]
-    type foldLeft_List[z <: List, f <: Function2_List_Any_List] <: List
-
-    /**
      * Drops EXACTLY <code>n</code> elements.
      *
      * @pre `n in [0, size)`.
@@ -79,12 +55,14 @@ sealed abstract class List { // this: self =>
      *
      * @pre `n in [0, size)`.
      */
-    final  def take[n <: Nat](n: n): take[n] = reverse.drop(size - n).reverse
-    final type take[n <: Nat] = reverse#drop[size - n]#reverse
+      def take[n <: Nat](n: n): take[n]
+     type take[n <: Nat] <: List
+    //final  def take[n <: Nat](n: n): take[n] = reverse.drop(size - n).reverse
+    //final type take[n <: Nat] = reverse#drop[size - n]#reverse
 
-    @equivalentTo("drop(n).take(m - n)")
-    final  def slice[n <: Nat, m <: Nat](n: n, m: m): slice[n, m] = drop(n).take(m - n)
-    final type slice[n <: Nat, m <: Nat] = drop[n]#take[m - n]
+    @equivalentTo("take(m).drop(n)")
+    final  def slice[n <: Nat, m <: Nat](n: n, m: m): slice[n, m] = take(m).drop(n)
+    final type slice[n <: Nat, m <: Nat] = take[m]#drop[n]
 
     /**
      * Returns a list without the last element.
@@ -165,8 +143,8 @@ sealed abstract class List { // this: self =>
      *
      * @pre <code>size &lt;= that.size<code>.
      */
-//    final def zip[that <: List](that: that)(implicit _zip: Zip[self, that]): zip[that] = _zip(self, that)
-//    final type zip[that <: List] = Zip.result[self, that]
+     def zip[that <: List](that: that): zip[that]
+    type zip[that <: List] <: List
 
     @aliasOf("addFirst")
     final def ::[e <: Any](e: e): addFirst[e] = Cons(e, self)
@@ -198,6 +176,30 @@ sealed abstract class List { // this: self =>
     final override def hashCode = untyped.hashCode
     final override def toString = untyped.toString
 
+    /**
+     * Folds right-associative.
+     */
+     def foldRight_Any[z <: Any, f <: Function2_Any_Any_Any](z: z, f: f): foldRight_Any[z, f]
+    type foldRight_Any[z <: Any, f <: Function2_Any_Any_Any] <: Any
+
+    /**
+     * Folds right-associative.
+     */
+     def foldRight_List[z <: List, f <: Function2_Any_List_List](z: z, f: f): foldRight_List[z, f]
+    type foldRight_List[z <: List, f <: Function2_Any_List_List] <: List
+
+    /**
+     * Folds right-associative.
+     */
+     def foldRight_Nat[z <: Nat, f <: Function2_Any_Nat_Nat](z: z, f: f): foldRight_Nat[z, f]
+    type foldRight_Nat[z <: Nat, f <: Function2_Any_Nat_Nat] <: Nat
+
+    /**
+     * Folds left-associative.
+     */
+     def foldLeft_List[z <: List, f <: Function2_List_Any_List](z: z, f: f): foldLeft_List[z, f]
+    type foldLeft_List[z <: List, f <: Function2_List_Any_List] <: List
+
 }
 
 
@@ -214,6 +216,14 @@ sealed abstract class Nil extends List {
     override  def isEmpty = `true`
     override type isEmpty = `true`
 
+    override  def take[n <: Nat](n: n) = Nil
+    override type take[n <: Nat] = Nil
+
+    override  def zip[that <: List](that: that) = Nil
+    override type zip[that <: List] = Nil
+
+    override def untyped = sequence.Nil
+
     override  def foldRight_Any[z <: Any, f <: Function2_Any_Any_Any](z: z, f: f): foldRight_Any[z, f] = z
     override type foldRight_Any[z <: Any, f <: Function2_Any_Any_Any] = z
 
@@ -225,20 +235,33 @@ sealed abstract class Nil extends List {
 
     override  def foldLeft_List[z <: List, f <: Function2_List_Any_List](z: z, f: f): foldLeft_List[z, f] = z
     override type foldLeft_List[z <: List, f <: Function2_List_Any_List] = z
-
-    override def untyped = sequence.Nil
 }
 
 
-final case class Cons[x <: Any, xs <: List](override val head: x, override val tail: xs) extends List {
+final case class Cons[x <: Any, xs <: List](x: x, xs: xs) extends List {
     override  val self = this
     override type self = Cons[x, xs]
 
+    override  val head = x
     override type head = x
+
+    override  val tail = xs
     override type tail = xs
+
+    override  def take[n <: Nat](n: n): take[n] = ConsTake.apply(self, n)
+    override type take[n <: Nat] = ConsTake.apply[self, n]
 
     override  def isEmpty = `false`
     override type isEmpty = `false`
+
+    override  def zip[that <: List](that: that): zip[that] = Cons(scala.Tuple2(head, that.head), tail.zip(that.tail))
+    override type zip[that <: List] = Cons[scala.Tuple2[head, that#head], tail#zip[that#tail]]
+
+//    @compilerWorkaround("2.8.0") // Help type-inference.
+//    private  def tail_zip[that <: List](that: that): tail_zip[that] = tail.zip(that.tail)
+//    private type tail_zip[that <: List] = tail#zip[that#tail]
+
+    override def untyped = head :: tail.untyped
 
     override  def foldRight_Any[z <: Any, f <: Function2_Any_Any_Any](z: z, f: f): foldRight_Any[z, f] = f.apply(head, tail.foldRight_Any(z, f))
     override type foldRight_Any[z <: Any, f <: Function2_Any_Any_Any] = f#apply[head, tail#foldRight_Any[z, f]]
@@ -251,8 +274,6 @@ final case class Cons[x <: Any, xs <: List](override val head: x, override val t
 
     override  def foldLeft_List[z <: List, f <: Function2_List_Any_List](z: z, f: f): foldLeft_List[z, f] = tail.foldLeft_List(f.apply(z, head), f)
     override type foldLeft_List[z <: List, f <: Function2_List_Any_List] = tail#foldLeft_List[f#apply[z, head], f]
-
-    override def untyped = head :: tail.untyped
 }
 
 

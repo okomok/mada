@@ -8,19 +8,19 @@ package com.github.okomok.mada; package dual; package list
 
 
 @specializer
-sealed abstract class ElementOf[l <: List, a] extends (l => ElementOf.result[l, a])
+sealed abstract class ElementOf[xs <: List, e <: Any] extends (xs => ElementOf.result[xs, e])
 
 
 object ElementOf {
 
-    type result[l <: List, a] = a
+    type result[xs <: List, e] = e
 
-    implicit def _ofCons[h, t <: List, a](implicit _elementOf: ElementOf[t, a]) = new ElementOf[Cons[h, t], a] {
-        override def apply(_l: Cons[h, t]) = _elementOf(_l.tail)
+    implicit def _ofCons[a, as <: List, e](implicit _elementOf: ElementOf[as, e]) = new ElementOf[Cons[a, as], e] {
+        override def apply(xs: Cons[a, as]) = _elementOf(xs.tail)
     }
 
-    implicit def _ofConsMatch[t <: List, a] = new ElementOf[Cons[a, t], a] {
-        override def apply(_l: Cons[a, t]) = _l.head
+    implicit def _ofConsMatch[as <: List, e] = new ElementOf[Cons[e, as], e] {
+        override def apply(xs: Cons[e, as]) = xs.head
     }
 
 }

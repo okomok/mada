@@ -140,7 +140,7 @@
 
 <!-- deploy -->
 
-    <target name="jar" depends="test">    
+    <target name="jar" depends="test">
         <fail message="Unit Tests failed" if="test.failed" />
         <jar destfile="${target.dir}/${ant.project.name}.jar" basedir="${target.classes.dir}" />
     </target>

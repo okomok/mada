@@ -29,14 +29,14 @@ package object dual
      */
     @elidable(ASSERTION)
      def assert[c <: Boolean](c: c): assert[c] = if (!c.toSBoolean) throw new java.lang.AssertionError("dual.assert")
-    type assert[c <: Boolean] = unit
+    type assert[c <: Boolean] = Unit
 
     /**
      * negative assertion
      */
     @elidable(ASSERTION)
      def assertNot[b <: Boolean](b: b): assert[b] = if (b.toSBoolean) throw new java.lang.AssertionError("dual.assertNot")
-    type assertNot[b <: Boolean] = unit
+    type assertNot[b <: Boolean] = Unit
 
 
 // Boolean
@@ -65,6 +65,12 @@ package object dual
      def if_Nat[b <: Boolean, then <: Function0_Nat, _else <: Function0_Nat](b: b, then: then, _else: _else): if_Nat[b, then, _else] = b.if_Nat(then, _else)
     type if_Nat[b <: Boolean, then <: Function0_Nat, _else <: Function0_Nat] = b#if_Nat[then, _else]
 
+    /**
+     * The if-expression to return List.
+     */
+     def if_List[b <: Boolean, then <: Function0_List, _else <: Function0_List](b: b, then: then, _else: _else): if_List[b, then, _else] = b.if_List(then, _else)
+    type if_List[b <: Boolean, then <: Function0_List, _else <: Function0_List] = b#if_List[then, _else]
+
 
 // Nat
 
@@ -88,15 +94,5 @@ package object dual
 
     @equivalentTo("ys#reversePrepend[xs]")
     type reverse_:::[xs <: List, ys <: List] = ys#prependReversed[xs]
-
-
-// Unit
-
-    @aliasOf("scala.Unit")
-    type Unit = scala.Unit
-
-    @aliasOf("scala.Unit")
-     val unit: unit = ()
-    type unit = Unit
 
 }

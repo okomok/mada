@@ -33,6 +33,9 @@ sealed trait Boolean extends Operatable_=== with Operatable_&& with Operatable_|
     private[mada]  def if_Nat[then <: Function0_Nat, _else <: Function0_Nat](then: then, _else: _else): if_Nat[then, _else]
     private[mada] type if_Nat[then <: Function0_Nat, _else <: Function0_Nat] <: Function0_Nat
 
+    private[mada]  def if_List[then <: Function0_List, _else <: Function0_List](then: then, _else: _else): if_List[then, _else]
+    private[mada] type if_List[then <: Function0_List, _else <: Function0_List] <: Function0_List
+
     def toSBoolean: toSBoolean
     final type toSBoolean = scala.Boolean
 }
@@ -68,6 +71,9 @@ sealed trait `true` extends Boolean {
     override private[mada]  def if_Nat[then <: Function0_Nat, _else <: Function0_Nat](then: then, _else: _else): if_Nat[then, _else] = then
     override private[mada] type if_Nat[then <: Function0_Nat, _else <: Function0_Nat] = then
 
+    override private[mada]  def if_List[then <: Function0_List, _else <: Function0_List](then: then, _else: _else): if_List[then, _else] = then
+    override private[mada] type if_List[then <: Function0_List, _else <: Function0_List] = then
+
     override def toSBoolean = true
 }
 
@@ -101,6 +107,9 @@ sealed trait `false` extends Boolean {
 
     override private[mada]  def if_Nat[then <: Function0_Nat, _else <: Function0_Nat](then: then, _else: _else): if_Nat[then, _else] = _else
     override private[mada] type if_Nat[then <: Function0_Nat, _else <: Function0_Nat] = _else
+
+    override private[mada]  def if_List[then <: Function0_List, _else <: Function0_List](then: then, _else: _else): if_List[then, _else] = _else
+    override private[mada] type if_List[then <: Function0_List, _else <: Function0_List] = _else
 
     override def toSBoolean = false
 }

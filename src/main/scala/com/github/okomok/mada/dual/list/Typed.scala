@@ -8,17 +8,17 @@ package com.github.okomok.mada; package dual; package list
 
 
 @specializer
-sealed abstract class Typed[l <: List] extends (sequence.List[Any] => l)
+sealed abstract class Typed[xs <: List] extends (sequence.List[Any] => xs)
 
 
 object Typed {
 
     implicit val _ofNil = new Typed[Nil] {
-        override def apply(_l: sequence.List[Any]) = Nil
+        override def apply(xs: sequence.List[Any]) = Nil
     }
 
-    implicit def _ofCons[h, t <: List](implicit _typed: Typed[t]) = new Typed[Cons[h, t]] {
-        override def apply(_l: sequence.List[Any]) = Cons(_l.head.asInstanceOf[h], _typed(_l.tail))
+    implicit def _ofCons[a, as <: List](implicit _typed: Typed[as]) = new Typed[Cons[a, as]] {
+        override def apply(xs: sequence.List[Any]) = Cons(xs.head.asInstanceOf[a], _typed(xs.tail))
     }
 
 }

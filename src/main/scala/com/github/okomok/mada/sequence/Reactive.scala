@@ -111,7 +111,7 @@ trait Reactive[+A] extends Sequence[A] {
      */
     def drop(n: Int): Reactive[A] = Drop(this, n)
 
-    @equivalentTo("drop(n).take(n - m)")
+    @equivalentTo("take(m).drop(n)")
     def slice(n: Int, m: Int): Reactive[A] = Slice(this, n, m)
 
     /**

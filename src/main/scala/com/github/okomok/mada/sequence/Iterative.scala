@@ -269,7 +269,7 @@ trait Iterative[+A] extends Sequence[A] {
      */
     def drop(n: Int): Iterative[A] = Drop(this, n)
 
-    @equivalentTo("drop(n).take(n - m)")
+    @equivalentTo("take(m).drop(n)")
     def slice(n: Int, m: Int): Iterative[A] = Slice(this, n, m)
 
     /**

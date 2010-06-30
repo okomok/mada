@@ -17,7 +17,12 @@ class Always0_Nat[n <: Nat](n: n) extends Function0_Nat {
     override type apply = n
 }
 
+class Always0_Nil extends Function0_List {
+    override  def apply = Nil
+    override type apply = Nil
+}
+
 class Always0_Unit extends Function0_Unit {
-    override  def apply = unit
-    override type apply = unit
+    override  def apply = ()
+    override type apply = Unit
 }
