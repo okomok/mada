@@ -47,20 +47,42 @@
 
 ## `dual`
 
-* TODO
+`dual` introduces a new way of Scala metaprogramming (now implicit parameters are unneeded!):
+
+    import com.github.okomok.mada.dual
+    import dual.::
+    import dual.nat.Literal._
+    import junit.framework.Assert._
+
+    class DocTest extends junit.framework.TestCase {
+        class slice {
+            // List and Nat are metatypes. xs, n, and m are dualvalues. take and drop are dualmethods.
+             def apply[xs <: dual.List, n <: dual.Nat, m <: dual.Nat](xs: xs, n: n, m: m): apply[xs, n, m] = xs.take(m).drop(n)
+            type apply[xs <: dual.List, n <: dual.Nat, m <: dual.Nat] = xs#take[m]#drop[n]
+        }
+        val slice = new slice
+
+        def testSlice: Unit = {
+            type xs = Char :: Float :: String :: Int :: dual.Nil
+            val xs = 'c' :: 3.14f :: "dual" :: 4 :: dual.Nil
+            val ys: slice#apply[xs, _1N, _3N] = slice(xs, _1N, _3N)
+            assertEquals(3.14f :: "dual" :: dual.Nil, ys)
+        }
+    }
 
 Terminology:
 
-* _metamethod_ is a type constructor.
 * _metatype_ is a type. (capitalized in source code.)
 * _metavalue_ is a type which extends metatype. (uncapitalized.)
+* _metamethod_ is a type constructor. (uncapitalized.)
+* _dualvalue_ is an identifier which can e used as both value and metavalue. (uncapitalized.)
 * _dualmethod_ is an identifier which can be used as both method and metamethod. (uncapitalized.)
 
 Scala metaprogramming seems to put several restrictions:
 
 * Requires -"Yrecursion 50" flag.
 * Meta-eq(type identity equality) is infeasible.
-* Meta-generics doesn't work. (E.g. metatype can't be a parameter.)
+* Meta-generics doesn't work. (e.g. metatype can't be a parameter.)
 
 
 
