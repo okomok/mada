@@ -7,7 +7,8 @@
 package com.github.okomok.mada; package dual; package nat
 
 
-private[mada] object Add {
+@compilerWorkaround("2.8.0") // `object Add` crashes `Operator`.
+private[mada] class Add {
      def apply[x <: Nat, y <: Nat](x: x, y: y): apply[x, y] = x.foldRight_Nat(y, step)
     type apply[x <: Nat, y <: Nat] = x#foldRight_Nat[y, step]
 

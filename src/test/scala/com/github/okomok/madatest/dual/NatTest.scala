@@ -36,7 +36,7 @@ class NatTest extends junit.framework.TestCase {
     }
 
     def testMultiplyDuality {
-        val a: _4N# * [_2N] = _4N * _2N
+        val a: _4N# ** [_2N] = _4N ** _2N
         val b: _8N = a
         assert(a === b)
         assert(a === _8N)
@@ -98,14 +98,14 @@ class NatTest extends junit.framework.TestCase {
     }
 
     trait testMultiply {
-        meta.assert[_3N# *[_2N]# ===[_6N]]
-        meta.assert[_0N# *[_3N]# ===[_0N]]
-        meta.assert[_1N# *[_3N]# ===[_3N]]
-        meta.assert[_3N# *[_1N]# ===[_3N]]
-        meta.assert[_2N# *[_3N]# ===[_6N]]
-        meta.assert[_9N# *[_1N]# ===[_9N]]
-        meta.assert[_3N# *[_3N]# ===[_9N]]
-        meta.assert[_4N# *[_2N]# ===[_8N]]
+        meta.assert[_3N# **[_2N]# ===[_6N]]
+        meta.assert[_0N# **[_3N]# ===[_0N]]
+        meta.assert[_1N# **[_3N]# ===[_3N]]
+        meta.assert[_3N# **[_1N]# ===[_3N]]
+        meta.assert[_2N# **[_3N]# ===[_6N]]
+        meta.assert[_9N# **[_1N]# ===[_9N]]
+        meta.assert[_3N# **[_3N]# ===[_9N]]
+        meta.assert[_4N# **[_2N]# ===[_8N]]
     }
 
     trait testComparison {

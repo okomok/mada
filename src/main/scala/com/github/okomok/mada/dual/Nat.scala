@@ -15,7 +15,6 @@ import nat._
 
 
 sealed trait Nat {
-
      def self: self
     type self <: Nat
 
@@ -37,14 +36,14 @@ sealed trait Nat {
      def decrement: decrement
     type decrement <: Nat
 
-    final  def +[that <: Nat](that: that): +[that] = Add.apply(self, that)
-    final type +[that <: Nat] = Add.apply[self, that]
+    final  def +[that <: Nat](that: that): +[that] = new Add().apply(self, that)
+    final type +[that <: Nat] = Add#apply[self, that]
 
-    final  def -[that <: Nat](that: that): -[that] = Subtract.apply(self, that)
-    final type -[that <: Nat] = Subtract.apply[self, that]
+    final  def -[that <: Nat](that: that): -[that] = new Subtract().apply(self, that)
+    final type -[that <: Nat] = Subtract#apply[self, that]
 
-    final  def *[that <: Nat](that: that): *[that] = Multiply.apply(self, that)
-    final type *[that <: Nat] = Multiply.apply[self, that]
+    final  def **[that <: Nat](that: that): **[that] = new Multiply().apply(self, that)
+    final type **[that <: Nat] = Multiply#apply[self, that]
 
     final  def >[that <: Nat](that: that): >[that] = this.-(that).gtZero
     final type >[that <: Nat] = -[that]#gtZero
@@ -66,10 +65,6 @@ sealed trait Nat {
 
      def foldRight_List[z <: List, f <: Function2_Nat_List_List](z: z, f: f): foldRight_List[z, f]
     type foldRight_List[z <: List, f <: Function2_Nat_List_List] <: List
-
-    type accept_Any[v <: Visitor[Any]] <: Any
-    type accept_Nat[v <: Visitor[Nat]] <: Nat
-    type accept_blendList[v <: Visitor[blend.List]] <: blend.List
 
     final  def toSInt: toSInt = ToSInt.apply(self)
     final type toSInt = ToSInt.apply[self]
@@ -140,7 +135,7 @@ sealed trait singular extends Nat {
     override private[mada]  def gtZero = `false`
     override private[mada] type gtZero = `false`
 
-    override  def increment: increment = unsupported
+    override  def increment = unsupported
     override type increment = unsupported
 
     override  def decrement = self

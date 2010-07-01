@@ -12,7 +12,7 @@ import com.github.okomok.mada
 import mada.dual._
 //import junit.framework.Assert._
 
-//import boolean.Operator._
+import boolean.Operator._
 
 
 class BooleanTest extends junit.framework.TestCase {
@@ -42,10 +42,10 @@ class BooleanTest extends junit.framework.TestCase {
     meta.assert[`true`]
     meta.assertNot[`false`]
 
-    meta.assert[`true`# === [`true`]]
-    meta.assert[`false`# === [`false`]]
-    meta.assert[`true`# !== [`false`]]
-    meta.assert[`false`# !== [`true`]]
+    meta.assert[`true` === `true`]
+    meta.assert[`false` === `false`]
+    meta.assert[`true` !== `false`]
+    meta.assert[`false` !== `true`]
 
     type myNot[b <: Boolean] = b#not
     meta.assert[myNot[`true`]# !== [`true`]]
@@ -54,10 +54,10 @@ class BooleanTest extends junit.framework.TestCase {
     meta.assert[myNot[`false`]# === [`true`]]
 
     trait testOperator {
-        meta.assert[`true`# && [`true`]]
-        meta.assert[`false`# && [`true`]#not]
-        meta.assert[`false`# || [`true`]]
-        meta.assert[`true`# || [`false`]]
+        meta.assert[`true` && `true`]
+        meta.assert[(`false` && `true`)#not]
+        meta.assert[`false` || `true`]
+        meta.assert[`true` || `false`]
     }
 
     trait testPropagation {

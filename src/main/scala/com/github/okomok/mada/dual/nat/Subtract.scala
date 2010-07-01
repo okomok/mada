@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package dual; package nat
 
 
-private[mada] object Subtract {
+private[mada] class Subtract {
      def apply[x <: Nat, y <: Nat](x: x, y: y): apply[x, y] = y.foldRight_Nat(x, step)
     type apply[x <: Nat, y <: Nat] = y#foldRight_Nat[x, step]
 

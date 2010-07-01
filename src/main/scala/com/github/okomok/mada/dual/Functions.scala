@@ -69,3 +69,8 @@ trait Function2_List_Any_List {
      def apply[v1 <: List, v2 <: Any](v1: v1, v2: v2): apply[v1, v2]
     type apply[v1 <: List, v2 <: Any] <: List
 }
+
+trait Function2_List_Nat_List {
+     def apply[v1 <: List, v2 <: Nat](v1: v1, v2: v2): apply[v1, v2]
+    type apply[v1 <: List, v2 <: Nat] <: List
+}

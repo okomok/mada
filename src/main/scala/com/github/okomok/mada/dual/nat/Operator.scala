@@ -14,7 +14,7 @@ package com.github.okomok.mada; package dual; package nat
 object Operator {// crashes compiler!!
     type  +[x <: Nat, y <: Nat] = x# +[y]
     type  -[x <: Nat, y <: Nat] = x# -[y]
-//    type *[x <: Nat, y <: Nat] = x# *[y]
+    type **[x <: Nat, y <: Nat] = x# **[y]
 
     type ===[x <: Nat, y <: Nat] = x# ===[y]
     type !==[x <: Nat, y <: Nat] = x# !==[y]
