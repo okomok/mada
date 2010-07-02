@@ -47,16 +47,16 @@ sealed abstract class List { // this: self =>
      *
      * @pre `n in [0, size)`.
      */
-    final  def drop[n <: Nat](n: n): drop[n] = Drop.apply(self, n)
-    final type drop[n <: Nat] = Drop.apply[self, n]
+    final  def drop[n <: Nat](n: n): drop[n] = new Drop().apply(self, n)
+    final type drop[n <: Nat] = Drop#apply[self, n]
 
     /**
      * Takes EXACTLY <code>n</code> elements.
      *
      * @pre `n in [0, size)`.
      */
-    final  def take[n <: Nat](n: n): take[n] = Take.apply(self, n)
-    final type take[n <: Nat] = Take.apply[self, n]
+    final  def take[n <: Nat](n: n): take[n] = reverse.drop(size - n).reverse //Take.apply(self, n)
+    final type take[n <: Nat] = reverse#drop[size# -[n]]#reverse //Take.apply[self, n]
 
     @equivalentTo("take(m).drop(n)")
     final  def slice[n <: Nat, m <: Nat](n: n, m: m): slice[n, m] = take(m).drop(n)
@@ -95,8 +95,8 @@ sealed abstract class List { // this: self =>
     /**
      * Prepends <code>that</code>.
      */
-    final  def prepend[that <: List](that: that): prepend[that] = Prepend.apply(self, that)
-    final type prepend[that <: List] = Prepend.apply[self, that]
+    final  def prepend[that <: List](that: that): prepend[that] = new Prepend().apply(self, that)
+    final type prepend[that <: List] = Prepend#apply[self, that]
 
     /**
      * Removes <code>n</code>-th element.
@@ -111,18 +111,18 @@ sealed abstract class List { // this: self =>
      *
      * @pre `n in [0, size)`.
      */
-    final  def replace[n <: Nat, e <: Any](n: n, e: e): replace[n, e] = Cons(e, drop_1_+(n)).prepend(take(n))
-    final type replace[n <: Nat, e <: Any] = Cons[e, drop_1_+[n]]#prepend[take[n]]
+    final  def replace[n <: Nat, e <: Any](n: n, e: e): replace[n, e] = take(n) ::: _cons_drop(n, e)
+    final type replace[n <: Nat, e <: Any] = take[n] ::: _cons_drop[n, e]
 
     @compilerWorkaround("2.8.0") // works around a type mismatch.
-    private final  def drop_1_+[n <: Nat](n: n): drop_1_+[n] = drop(n.increment)
-    private final type drop_1_+[n <: Nat] = drop[n#increment]
+    private final  def _cons_drop[n <: Nat, e <: Any](n: n, e: e): _cons_drop[n, e] = Cons(e, drop(n.increment))
+    private final type _cons_drop[n <: Nat, e <: Any] = Cons[e, drop[n#increment]]
 
     /**
      * Prepends reversed <code>that</code>.
      */
-    final  def prependReversed[that <: List](that: that) = PrependReversed.apply(self, that)
-    final type prependReversed[that <: List] = PrependReversed.apply[self, that]
+    final  def prependReversed[that <: List](that: that) = new PrependReversed().apply(self, that)
+    final type prependReversed[that <: List] = PrependReversed#apply[self, that]
 
     /**
      * Returns reversed one.
@@ -133,8 +133,8 @@ sealed abstract class List { // this: self =>
     /**
      * Returns the size.
      */
-    final  def size: size = Size.apply(self)
-    final type size = Size.apply[self]
+    final  def size: size = new Size().apply(self)
+    final type size = Size#apply[self]
 
     /**
      * Zips <code>that</code>.
@@ -305,6 +305,6 @@ object List {
  */
 object :: {
 
-    def unapply[x, xs <: List](xs: Cons[x, xs]): Option[(x, xs)] = Some(xs.head, xs.tail)
+    def unapply[x <: Any, xs <: List](xs: Cons[x, xs]): Option[(x, xs)] = Some(xs.head, xs.tail)
 
 }

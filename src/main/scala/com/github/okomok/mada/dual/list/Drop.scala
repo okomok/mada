@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package dual; package list
 
 
-private[mada] object Drop {
+private[mada] class Drop {
      def apply[xs <: List, n <: Nat](xs: xs, n: n): apply[xs, n] = n.foldRight_List(xs, step)
     type apply[xs <: List, n <: Nat] = n#foldRight_List[xs, step]
 

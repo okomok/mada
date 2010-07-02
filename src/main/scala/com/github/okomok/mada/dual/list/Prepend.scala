@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package dual; package list
 
 
-private[mada] object Prepend {
+private[mada] class Prepend {
      def apply[xs <: List, ys <: List](xs: xs, ys: ys): apply[xs, ys] = ys.foldRight_List(xs, step)
     type apply[xs <: List, ys <: List] = ys#foldRight_List[xs, step]
 

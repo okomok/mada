@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package dual; package list
 
 
-private[mada] object Size {
+private[mada] class Size {
      def apply[xs <: List](xs: xs): apply[xs] = xs.foldRight_Nat(_0N, step)
     type apply[xs <: List] = xs#foldRight_Nat[_0N, step]
 

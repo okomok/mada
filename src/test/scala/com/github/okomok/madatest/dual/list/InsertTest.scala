@@ -11,12 +11,10 @@ import com.github.okomok.mada
 
 import mada.dual._
 
-/*
 
 class InsertTest extends junit.framework.TestCase {
     import junit.framework.Assert._
     assertFalse(scala.Nil eq Nil)
-
     def testTrivial: Unit = {
         val i = new java.lang.Integer(10)
         type l = Int :: String :: java.lang.Integer :: Char :: Int :: Nil
@@ -80,4 +78,3 @@ class InsertTest extends junit.framework.TestCase {
         assertEquals(a, m)
     }
 }
-*/

@@ -12,7 +12,6 @@ import com.github.okomok.mada
 import mada.dual._
 
 
-/*
 class RemoveTest extends junit.framework.TestCase {
     import junit.framework.Assert._
     assertFalse(scala.Nil eq Nil)
@@ -25,6 +24,7 @@ class RemoveTest extends junit.framework.TestCase {
         val m: Int :: java.lang.Integer :: Char :: Int :: Nil = _m
         val e: Char = m.nth(_2N)
         assertEquals('a', e)
+        ()
     }
 }
-*/
+

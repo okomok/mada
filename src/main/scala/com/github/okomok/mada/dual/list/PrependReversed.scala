@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package dual; package list
 
 
-private[mada] object PrependReversed {
+private[mada] class PrependReversed {
      def apply[xs <: List, ys <: List](xs: xs, ys: ys): apply[xs, ys] = ys.foldLeft_List(xs, step)
     type apply[xs <: List, ys <: List] = ys#foldLeft_List[xs, step]
 
