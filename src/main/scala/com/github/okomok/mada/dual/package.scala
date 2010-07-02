@@ -27,14 +27,14 @@ package object dual extends dual.nat.LiteralCommon {
      * assertion
      */
     @elidable(ASSERTION)
-     def assert[c <: Boolean](c: c): assert[c] = if (!c.toSBoolean) throw new java.lang.AssertionError("dual.assert")
+     def assert[c <: Boolean](c: c): assert[c] = if (!c.undual) throw new java.lang.AssertionError("dual.assert")
     type assert[c <: Boolean] = Unit
 
     /**
      * negative assertion
      */
     @elidable(ASSERTION)
-     def assertNot[b <: Boolean](b: b): assert[b] = if (b.toSBoolean) throw new java.lang.AssertionError("dual.assertNot")
+     def assertNot[b <: Boolean](b: b): assert[b] = if (b.undual) throw new java.lang.AssertionError("dual.assertNot")
     type assertNot[b <: Boolean] = Unit
 
 

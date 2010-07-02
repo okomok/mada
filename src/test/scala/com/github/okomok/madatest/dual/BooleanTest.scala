@@ -18,12 +18,12 @@ import boolean.Operator._
 class BooleanTest extends junit.framework.TestCase {
     def testConvert: Unit = {
         import junit.framework.Assert._
-        assertEquals(true, `true`.toSBoolean)
-        assertEquals(false, `false`.toSBoolean)
+        assertEquals(true, `true`.undual)
+        assertEquals(false, `false`.undual)
     }
 
     trait testTrivial {
-        meta.assertSame[scala.Boolean, `true`#toSBoolean]
+        meta.assertSame[scala.Boolean, `true`#undual]
         meta.assertSame[`true`, `true`]
      //   meta.assert[`false` === if_Boolean[`true`, `false`, `true`]]
      //   meta.assert[`false` === if_Boolean[`false`, `true`, `false`]]

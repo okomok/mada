@@ -66,8 +66,8 @@ sealed trait Nat {
      def foldRight_List[z <: List, f <: Function2_Nat_List_List](z: z, f: f): foldRight_List[z, f]
     type foldRight_List[z <: List, f <: Function2_Nat_List_List] <: List
 
-    final  def toSInt: toSInt = ToSInt.apply(self)
-    final type toSInt = ToSInt.apply[self]
+    final  def undual: undual = Undual.apply(self)
+    final type undual = Undual.apply[self]
 }
 
 

@@ -44,8 +44,8 @@ sealed trait Boolean {
     private[mada]  def if_List[then <: Function0_List, _else <: Function0_List](then: then, _else: _else): if_List[then, _else]
     private[mada] type if_List[then <: Function0_List, _else <: Function0_List] <: Function0_List
 
-    def toSBoolean: toSBoolean
-    final type toSBoolean = scala.Boolean
+    def undual: undual
+    final type undual = scala.Boolean
 }
 
 /**
@@ -82,7 +82,7 @@ sealed trait `true` extends Boolean {
     override private[mada]  def if_List[then <: Function0_List, _else <: Function0_List](then: then, _else: _else): if_List[then, _else] = then
     override private[mada] type if_List[then <: Function0_List, _else <: Function0_List] = then
 
-    override def toSBoolean = true
+    override def undual = true
 }
 
 /**
@@ -119,7 +119,7 @@ sealed trait `false` extends Boolean {
     override private[mada]  def if_List[then <: Function0_List, _else <: Function0_List](then: then, _else: _else): if_List[then, _else] = _else
     override private[mada] type if_List[then <: Function0_List, _else <: Function0_List] = _else
 
-    override def toSBoolean = false
+    override def undual = false
 }
 
 
@@ -127,5 +127,5 @@ object Boolean {
     private[mada] val _true = new `true`{}
     private[mada] val _false = new `false`{}
 
-    // implicit def _toSBoolean[c <: Boolean](c: c): scala.Boolean = c.toSBoolean
+    // implicit def _undual[c <: Boolean](c: c): scala.Boolean = c.undual
 }

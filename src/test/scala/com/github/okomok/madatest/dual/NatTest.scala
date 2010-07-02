@@ -14,11 +14,11 @@ import mada.dual._
 
 class NatTest extends junit.framework.TestCase {
 
-    def testToSInt {
+    def testUndual {
         import junit.framework.Assert._
-        assertEquals(0, _0N.toSInt)
-        assertEquals(7, _6N.increment.toSInt)
-        assertEquals(10, _10N.toSInt)
+        assertEquals(0, _0N.undual)
+        assertEquals(7, _6N.increment.undual)
+        assertEquals(10, _10N.undual)
     }
 
     def testAddDuality {
@@ -50,7 +50,7 @@ class NatTest extends junit.framework.TestCase {
     }
 
     trait testTrivial {
-        meta.assertSame[scala.Int, _2N#toSInt]
+        meta.assertSame[scala.Int, _2N#undual]
         meta.assert[_0N# === [_0N]]
 
         meta.assert[_0N# !== [_1N]]
