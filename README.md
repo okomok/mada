@@ -47,6 +47,8 @@
 
 ## `dual`
 
+**This package needs `Yrecursion 50` compiler option.**
+
 `dual` introduces a new way of Scala metaprogramming (now implicit parameters are unneeded!):
 
     import com.github.okomok.mada.dual
@@ -73,16 +75,16 @@
 Terminology:
 
 * _metatype_ is a type. (capitalized in source code.)
-* _metavalue_ is a type which extends metatype. (uncapitalized.)
-* _metamethod_ is a type constructor. (uncapitalized.)
-* _dualvalue_ is an identifier which can be used as both value and metavalue. (uncapitalized.)
-* _dualmethod_ is an identifier which can be used as both method and metamethod. (uncapitalized.)
+* _metavalue_ is a type which extends metatype.
+* _metamethod_ is a type constructor.
+* _dualvalue_ is an identifier which can be used as both value and metavalue.
+* _dualmethod_ is an identifier which can be used as both method and metamethod.
 
-Scala metaprogramming seems to put several restrictions:
+In the Scala metaprogramming world:
 
-* Requires -"Yrecursion 50" flag.
-* Meta-eq(type identity equality) is infeasible.
-* Meta-generics doesn't work. (e.g. metatype can't be a parameter.)
+* meta-`eq`(type identity equality) is infeasible.
+* meta-`asInstanceOf` is infeasible.
+* meta-generics doesn't work. (e.g. metatype can't be a parameter.)
 
 
 
