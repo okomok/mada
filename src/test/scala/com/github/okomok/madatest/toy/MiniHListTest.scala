@@ -57,7 +57,7 @@ object Mini {
     //type ::[h <: t#Element, t <: HList[_]] = t#addFirst[h] // doesn't work.
 }
 
-
+/*
 class MiniHListTest extends junit.framework.TestCase {
 
     import junit.framework.Assert._
@@ -75,4 +75,4 @@ class MiniHListTest extends junit.framework.TestCase {
     }
 
 }
-
+*/

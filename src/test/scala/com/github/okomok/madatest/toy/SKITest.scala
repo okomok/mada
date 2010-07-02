@@ -11,7 +11,7 @@ package com.github.okomok.madatest; package toy; package skitest
 
 
 import com.github.okomok.mada
-import mada.meta.assertSame
+import mada.dual.meta.assertSame
 
 object SKINonLazyStaticTezt {
 

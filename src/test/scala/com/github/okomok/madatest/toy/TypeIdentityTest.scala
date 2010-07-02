@@ -11,10 +11,7 @@ import com.github.okomok.mada
 
 //import junit.framework.Assert._
 
-import mada.meta.assertSame
-import mada.meta
-
-
+import mada.dual._
 
 
 // nullary
@@ -51,24 +48,24 @@ class TypeIdentityTezt {
 
 
 
-    assertSame[Func1Id#apply[Double], Double]
-    assertSame[Fwd1[Func1Id]#apply[Double], Double] // ok
+    meta.assertSame[Func1Id#apply[Double], Double]
+    meta.assertSame[Fwd1[Func1Id]#apply[Double], Double] // ok
 
     type callFwd1[f <: Func1, x] = Fwd1[f]#apply[x]
-    assertSame[callFwd1[Func1Id, Double], Double] // ok
+    meta.assertSame[callFwd1[Func1Id, Double], Double] // ok
 
     type callFwd111[f <: Func1, x] = Fwd1[Fwd1[Fwd1[f]]]#apply[x]
-    assertSame[callFwd111[Func1Id, Double], Double] // ok
+    meta.assertSame[callFwd111[Func1Id, Double], Double] // ok
 
 
-    assertSame[FuncInt#result, Int] // ok
+    meta.assertSame[FuncInt#result, Int] // ok
 
-    assertSame[id[FuncInt]#what, Int]
+    meta.assertSame[id[FuncInt]#what, Int]
     type callid[f <: Func] = id[f]#what
-    assertSame[callid[FuncInt], Int]
+    meta.assertSame[callid[FuncInt], Int]
 
 
-    assertSame[meta.Succ[mada.meta._1N]#equals[meta._2N]#not, meta.`false`]
+    meta.assertSame[Succ[_1N]# ===[_2N]#not, `false`]
 
 }
 

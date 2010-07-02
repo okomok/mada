@@ -1,17 +1,15 @@
 
 
-// Copyright Shunsuke Sogame 2008-2009.
+// Copyright Shunsuke Sogame 2008-2010.
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.madatest; package blendtest; package listtest
+package com.github.okomok.madatest; package dualtest; package listtest
 
 
 import com.github.okomok.mada
 
-import mada.blend._
-import mada.meta
-import mada.meta.nat.Literal._
+import mada.dual._
 
 
 class InitTest extends junit.framework.TestCase {

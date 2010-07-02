@@ -13,7 +13,7 @@ import com.github.okomok.mada
 //      http://paste.pocoo.org/show/144292/
 
 
-import mada.blend._
+import mada.dual._
 
 
 abstract class FChain[ES <: List] {outer =>
@@ -39,11 +39,11 @@ trait Formatter[T] {
     def formatElement(o:Any):String
 }
 
-class IntFormatter extends Formatter[Int] {
+class IntFormatter extends Formatter[scala.Int] {
     def formatElement(o:Any) = "i="+o
 }
 
-class BooleanFormatter extends Formatter[Boolean] {
+class BooleanFormatter extends Formatter[scala.Boolean] {
     def formatElement(o:Any) = "b="+o
 }
 

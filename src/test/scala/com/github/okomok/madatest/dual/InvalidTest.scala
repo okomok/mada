@@ -1,15 +1,16 @@
 
 
-// Copyright Shunsuke Sogame 2008-2009.
+// Copyright Shunsuke Sogame 2008-2010.
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.madatest; package metatest
+package com.github.okomok.madatest; package dualtest
 
 
 import com.github.okomok.mada
 
-import mada.meta._
+import mada.dual._
+import mada.dual.meta._
 // import junit.framework.Assert._
 
 

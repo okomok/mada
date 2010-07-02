@@ -9,7 +9,8 @@ package com.github.okomok.madatest; package toy; package metamethodtest
 
 import com.github.okomok.mada
 
-import mada.meta._
+import mada.dual._
+// import mada.dual.nat.Operator._ // crash!
 
 
 class MetamethodTezt {
@@ -24,13 +25,14 @@ class MetamethodTezt {
     }
 
     trait testTrivial {
-        assert[applyx[incre, _3N] == _4N]
-        assert[twice[incre, _3N] == _5N]
+        meta.assert[applyx[incre, _3N]# === [_4N]]
+        meta.assert[twice[incre, _3N]# === [_5N]]
 
         type k = twice[incre, _3N]
-        assert[k == _5N]
+        meta.assert[k# === [_5N]]
 
-        assert[applyx[always1[_2N]#result, _3N] == _2N]
+        meta.assert[applyx[always1[_2N]#result, _3N]# === [_2N]]
     }
 
 }
+
