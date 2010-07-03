@@ -7,6 +7,9 @@
 package com.github.okomok.mada; package dual
 
 
+import option._
+
+
 /**
  * The dual Option
  */
@@ -25,8 +28,8 @@ sealed abstract class Option {
      * If the option is nonempty return its value,
      * otherwise return the result of evaluating a default expression.
      */
-    final  def getOrElse[f <: Function0](f: f): getOrElse[f] = `if`(isEmpty, f, new Always0(get)).apply
-    final type getOrElse[f <: Function0] = `if`[isEmpty, f, Always0[get]]#apply
+    final  def getOrElse[f <: Function0](f: f): getOrElse[f] = new GetOrElse().apply(self, f)
+    final type getOrElse[f <: Function0] = GetOrElse#apply[self, f]
 
     /**
      * Returns true iif the option is a <code>Some</code>(...).
