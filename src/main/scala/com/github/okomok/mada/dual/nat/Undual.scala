@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package dual; package nat
 
 
-private[mada] object Undual {
+private[mada] class Undual {
      def apply[x <: Nat](x: x): apply[x] = `if`(x.isZero, new Always(0), new Step(x)).apply.asInstanceOf[scala.Int]
     type apply[x <: Nat] = scala.Int
 
@@ -16,7 +16,7 @@ private[mada] object Undual {
         override type apply = scala.Int
     }
     class Step[x <: Nat](x: x) extends Function0 {
-        override  def apply = 1 + x.decrement.undual
+        override  def apply = 1 + Undual.this.apply(x.decrement)
         override type apply = scala.Int
     }
 }

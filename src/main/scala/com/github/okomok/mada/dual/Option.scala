@@ -25,7 +25,7 @@ sealed abstract class Option {
      * If the option is nonempty return its value,
      * otherwise return the result of evaluating a default expression.
      */
-    final  def getOrElse[f <: Function0](f: f): getOrElse_Any[f] = `if`(isEmpty, f, new Always0(get)).apply
+    final  def getOrElse[f <: Function0](f: f): getOrElse[f] = `if`(isEmpty, f, new Always0(get)).apply
     final type getOrElse[f <: Function0] = `if`[isEmpty, f, Always0[get]]#apply
 
     /**
