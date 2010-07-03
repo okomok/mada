@@ -58,4 +58,15 @@ class OptionTest extends junit.framework.TestCase {
         assert(_4N === natty(s))
     }
 
-}
+    def testOrElse {
+        type s = Some[_3N]
+        val s: s = Some(_3N)
+        val r: s#getOrElse[Int] = s.getOrElse(8)
+        val k: _3N = r
+
+        type n = None
+        val n: n = None
+        val q: n#getOrElse[Int] = n.getOrElse(8)
+        val p: Int = q
+        assertEquals(8, q)
+    }
