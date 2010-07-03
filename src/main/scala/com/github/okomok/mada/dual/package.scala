@@ -80,6 +80,12 @@ package object dual extends dual.nat.LiteralCommon {
     private[mada] val singular: singular = Nat._singular
 
 
+// Option
+
+    @equivalentTo("new None{}")
+    val None = Option._None
+
+
 // List
 
     @equivalentTo("new Nil{}")

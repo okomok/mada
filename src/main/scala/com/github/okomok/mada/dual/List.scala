@@ -305,6 +305,6 @@ object List {
  */
 object :: {
 
-    def unapply[x <: Any, xs <: List](xs: Cons[x, xs]): Option[(x, xs)] = Some(xs.head, xs.tail)
+    def unapply[x <: Any, xs <: List](xs: Cons[x, xs]): scala.Option[(x, xs)] = scala.Some(xs.head, xs.tail)
 
 }
