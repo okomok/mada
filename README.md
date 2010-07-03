@@ -226,6 +226,7 @@ or you could say a sequence-specific, thread-less and trivial `scala.Actor`.
 1. [Browse Test Source]
 1. [The Scala Programming Language]
 1. [MetaScala]
+1. [Apocalisp]
 
 
 
@@ -239,4 +240,5 @@ Shunsuke Sogame <<okomok@gmail.com>>
 [The Scala Programming Language]: http://www.scala-lang.org/ "The Scala Programming Language"
 [PEG]: http://en.wikipedia.org/wiki/Parsing_expression_grammar "PEG"
 [MetaScala]: http://www.assembla.com/wiki/show/metascala
+[Apocalisp]: http://apocalisp.wordpress.com/
 
