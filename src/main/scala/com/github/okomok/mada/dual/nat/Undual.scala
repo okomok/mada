@@ -8,14 +8,14 @@ package com.github.okomok.mada; package dual; package nat
 
 
 private[mada] object Undual {
-     def apply[x <: Nat](x: x): apply[x] = if_Any(x.isZero, new Always(0), new Step(x)).apply.asInstanceOf[scala.Int]
+     def apply[x <: Nat](x: x): apply[x] = `if`(x.isZero, new Always(0), new Step(x)).apply.asInstanceOf[scala.Int]
     type apply[x <: Nat] = scala.Int
 
-    class Always(n: scala.Int) extends Function0_Any {
+    class Always(n: scala.Int) extends Function0 {
         override  def apply = n
         override type apply = scala.Int
     }
-    class Step[x <: Nat](x: x) extends Function0_Any {
+    class Step[x <: Nat](x: x) extends Function0 {
         override  def apply = 1 + x.decrement.undual
         override type apply = scala.Int
     }

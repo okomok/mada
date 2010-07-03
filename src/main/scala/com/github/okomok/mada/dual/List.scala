@@ -177,8 +177,8 @@ sealed abstract class List { // this: self =>
     /**
      * Folds right-associative.
      */
-     def foldRight_Any[z <: Any, f <: Function2_Any_Any_Any](z: z, f: f): foldRight_Any[z, f]
-    type foldRight_Any[z <: Any, f <: Function2_Any_Any_Any] <: Any
+     def foldRight[z <: Any, f <: Function2_Any_Any_Any](z: z, f: f): foldRight[z, f]
+    type foldRight[z <: Any, f <: Function2_Any_Any_Any] <: Any
 
     /**
      * Folds right-associative.
@@ -219,8 +219,8 @@ sealed abstract class Nil extends List {
 
     override def untyped = sequence.Nil
 
-    override  def foldRight_Any[z <: Any, f <: Function2_Any_Any_Any](z: z, f: f): foldRight_Any[z, f] = z
-    override type foldRight_Any[z <: Any, f <: Function2_Any_Any_Any] = z
+    override  def foldRight[z <: Any, f <: Function2_Any_Any_Any](z: z, f: f): foldRight[z, f] = z
+    override type foldRight[z <: Any, f <: Function2_Any_Any_Any] = z
 
     override  def foldRight_List[z <: List, f <: Function2_Any_List_List](z: z, f: f): foldRight_List[z, f] = z
     override type foldRight_List[z <: List, f <: Function2_Any_List_List] = z
@@ -251,8 +251,8 @@ final case class Cons[x <: Any, xs <: List](x: x, xs: xs) extends List {
 
     override def untyped = head :: tail.untyped
 
-    override  def foldRight_Any[z <: Any, f <: Function2_Any_Any_Any](z: z, f: f): foldRight_Any[z, f] = f.apply(head, tail.foldRight_Any(z, f))
-    override type foldRight_Any[z <: Any, f <: Function2_Any_Any_Any] = f#apply[head, tail#foldRight_Any[z, f]]
+    override  def foldRight[z <: Any, f <: Function2_Any_Any_Any](z: z, f: f): foldRight[z, f] = f.apply(head, tail.foldRight(z, f))
+    override type foldRight[z <: Any, f <: Function2_Any_Any_Any] = f#apply[head, tail#foldRight[z, f]]
 
     override  def foldRight_List[z <: List, f <: Function2_Any_List_List](z: z, f: f): foldRight_List[z, f] = f.apply(head, tail.foldRight_List(z, f))
     override type foldRight_List[z <: List, f <: Function2_Any_List_List] = f#apply[head, tail#foldRight_List[z, f]]

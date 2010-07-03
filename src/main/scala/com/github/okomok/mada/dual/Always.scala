@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package dual
 
 
-class Always0_Any[v <: Any](v: v) extends Function0_Any {
+class Always0[v <: Any](v: v) extends Function0 {
     override  def apply = v
     override type apply = v
 }

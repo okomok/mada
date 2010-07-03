@@ -57,8 +57,8 @@ sealed trait Nat {
     final  def <=[that <: Nat](that: that): <=[that] = that.>=(self)
     final type <=[that <: Nat] = that# >=[self]
 
-     def foldRight_Any[z <: Any, f <: Function2_Nat_Any_Any](z: z, f: f): foldRight_Any[z, f]
-    type foldRight_Any[z <: Any, f <: Function2_Nat_Any_Any] <: Any
+     def foldRight[z <: Any, f <: Function2_Nat_Any_Any](z: z, f: f): foldRight[z, f]
+    type foldRight[z <: Any, f <: Function2_Nat_Any_Any] <: Any
 
      def foldRight_Nat[z <: Nat, f <: Function2_Nat_Nat_Nat](z: z, f: f): foldRight_Nat[z, f]
     type foldRight_Nat[z <: Nat, f <: Function2_Nat_Nat_Nat] <: Nat
@@ -87,8 +87,8 @@ sealed trait Zero extends Nat {
     override  def decrement = singular
     override type decrement = singular
 
-    override  def foldRight_Any[z <: Any, f <: Function2_Nat_Any_Any](z: z, f: f): foldRight_Any[z, f] = z
-    override type foldRight_Any[z <: Any, f <: Function2_Nat_Any_Any] = z
+    override  def foldRight[z <: Any, f <: Function2_Nat_Any_Any](z: z, f: f): foldRight[z, f] = z
+    override type foldRight[z <: Any, f <: Function2_Nat_Any_Any] = z
 
     override  def foldRight_Nat[z <: Nat, f <: Function2_Nat_Nat_Nat](z: z, f: f): foldRight_Nat[z, f] = z
     override type foldRight_Nat[z <: Nat, f <: Function2_Nat_Nat_Nat] = z
@@ -114,8 +114,8 @@ class Succ[n <: Nat](n: n) extends Nat {
     override  def decrement = n
     override type decrement = n
 
-    override  def foldRight_Any[z <: Any, f <: Function2_Nat_Any_Any](z: z, f: f): foldRight_Any[z, f] = f.apply(self, n.foldRight_Any(z, f))
-    override type foldRight_Any[z <: Any, f <: Function2_Nat_Any_Any] = f#apply[self, n#foldRight_Any[z, f]]
+    override  def foldRight[z <: Any, f <: Function2_Nat_Any_Any](z: z, f: f): foldRight[z, f] = f.apply(self, n.foldRight(z, f))
+    override type foldRight[z <: Any, f <: Function2_Nat_Any_Any] = f#apply[self, n#foldRight[z, f]]
 
     override  def foldRight_Nat[z <: Nat, f <: Function2_Nat_Nat_Nat](z: z, f: f): foldRight_Nat[z, f] = f.apply(self, n.foldRight_Nat(z, f))
     override type foldRight_Nat[z <: Nat, f <: Function2_Nat_Nat_Nat] = f#apply[self, n#foldRight_Nat[z, f]]
@@ -141,8 +141,8 @@ sealed trait singular extends Nat {
     override  def decrement = self
     override type decrement = self
 
-    override  def foldRight_Any[z <: Any, f <: Function2_Nat_Any_Any](z: z, f: f) = unsupported
-    override type foldRight_Any[z <: Any, f <: Function2_Nat_Any_Any] = unsupported
+    override  def foldRight[z <: Any, f <: Function2_Nat_Any_Any](z: z, f: f) = unsupported
+    override type foldRight[z <: Any, f <: Function2_Nat_Any_Any] = unsupported
 
     override  def foldRight_Nat[z <: Nat, f <: Function2_Nat_Nat_Nat](z: z, f: f) = unsupported
     override type foldRight_Nat[z <: Nat, f <: Function2_Nat_Nat_Nat] = unsupported
