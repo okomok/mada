@@ -85,6 +85,7 @@ In the Scala metaprogramming world:
 * meta-`eq`(type identity equality) is infeasible.
 * meta-`asInstanceOf` is infeasible.
 * meta-generics doesn't work. (e.g. metatype can't be a parameter.)
+* metatype is resurrected in parameter-nondependent context.
 
 
 
