@@ -76,7 +76,7 @@ final case class Some[e <: Any](e: e) extends Option {
     override  def isEmpty = `false`
     override type isEmpty = `false`
 
-    override def undual = scala.Some(e: Any)
+    override def undual = scala.Some(e)
 }
 
 

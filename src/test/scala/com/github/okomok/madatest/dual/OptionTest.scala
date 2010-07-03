@@ -30,6 +30,61 @@ class OptionTest extends junit.framework.TestCase {
         }
     }
 
+    def testIsEmpty {
+        {
+            type s = Some[Int]
+            val s: s = Some(3)
+            meta.assertSame[`false`, s#isEmpty]
+            val e: s#isEmpty = s.isEmpty
+            val k: `false` = e
+        }
+        {
+            type s = None
+            val s: s = None
+            meta.assertSame[`true`, s#isEmpty]
+            val e: s#isEmpty = s.isEmpty
+            val k: `true` = e
+        }
+        ()
+    }
+
+    def testIsDefined {
+        {
+            type s = Some[Int]
+            val s: s = Some(3)
+            meta.assertSame[`true`, s#isDefined]
+            val e: s#isDefined = s.isDefined
+            val k: `true` = e
+        }
+        {
+            type s = None
+            val s: s = None
+            meta.assertSame[`false`, s#isDefined]
+            val e: s#isEmpty = s.isEmpty
+            val k: `true` = e
+        }
+        ()
+    }
+
+    def testUndual {
+        {
+            type s = Some[Int]
+            val s: s = Some(3)
+            meta.assertSame[scala.Option[Any], s#undual]
+            val e: s#undual = s.undual
+            assertEquals(scala.Some(3), e)
+        }
+        {
+            type s = None
+            val s: s = None
+            meta.assertSame[scala.Option[Any], s#undual]
+            val e: s#undual = s.undual
+            assertSame(scala.None, s.undual)
+        }
+        ()
+    }
+
+
     def testMatch {
         val s = Some(3)
         s match {
