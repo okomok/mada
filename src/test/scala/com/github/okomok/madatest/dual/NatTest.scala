@@ -19,6 +19,9 @@ class NatTest extends junit.framework.TestCase {
         assertEquals(0, _0N.undual)
         assertEquals(7, _6N.increment.undual)
         assertEquals(10, _10N.undual)
+
+        assertEquals(_2N, _2N)
+        AssertNotEquals(_2N, _3N)
     }
 
     def testAddDuality {

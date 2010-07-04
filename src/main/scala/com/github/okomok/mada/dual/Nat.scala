@@ -68,6 +68,13 @@ sealed trait Nat {
 
     final  def undual: undual = new Undual().apply(self)
     final type undual = Undual#apply[self]
+
+    final override def equals(that: Any) = that match {
+        case that: Nat => undual == that.undual
+        case _ => false
+    }
+    final override def hashCode = undual.hashCode
+    final override def toString = undual.toString
 }
 
 

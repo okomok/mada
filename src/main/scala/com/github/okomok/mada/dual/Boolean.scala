@@ -46,6 +46,13 @@ sealed trait Boolean {
 
     def undual: undual
     final type undual = scala.Boolean
+
+    final override def equals(that: Any) = that match {
+        case that: Boolean => undual == that.undual
+        case _ => false
+    }
+    final override def hashCode = undual.hashCode
+    final override def toString = undual.toString
 }
 
 /**

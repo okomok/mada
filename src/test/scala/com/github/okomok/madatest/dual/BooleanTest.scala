@@ -20,6 +20,10 @@ class BooleanTest extends junit.framework.TestCase {
         import junit.framework.Assert._
         assertEquals(true, `true`.undual)
         assertEquals(false, `false`.undual)
+        assertEquals(`true`, `true`)
+        assertEquals(`false`, `false`)
+        AssertNotEquals(`false`, `true`)
+
     }
 
     trait testTrivial {
