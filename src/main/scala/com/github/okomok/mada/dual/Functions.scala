@@ -33,6 +33,12 @@ trait Function0_Unit {
 }
 
 
+trait Function1_Nat_Nat {
+     def apply[v1 <: Nat](v1: v1): apply[v1]
+    type apply[v1 <: Nat] <: Nat
+}
+
+
 trait Function2_Any_Any_Any {
      def apply[v1 <: Any, v2 <: Any](v1: v1, v2: v2): apply[v1, v2]
     type apply[v1 <: Any, v2 <: Any] <: Any
