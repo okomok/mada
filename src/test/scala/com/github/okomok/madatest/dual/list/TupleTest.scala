@@ -16,7 +16,7 @@ class TupleTest extends junit.framework.TestCase {
     import junit.framework.Assert._
     assertFalse(scala.Nil eq Nil)
 
-    def testFrom: Unit = {
+    def testFrom {
         val t: (Int, String, java.lang.Integer) = (3, "hello", new java.lang.Integer(10))
 
         type l = Int :: String :: java.lang.Integer :: Nil
@@ -25,7 +25,7 @@ class TupleTest extends junit.framework.TestCase {
         assertSame(t._2, l.nth(_1N))
     }
 
-    def testTo: Unit = {
+    def testTo {
         type l = Int :: String :: java.lang.Integer :: Nil
         val l: l = 3 :: "hello" :: new java.lang.Integer(10):: Nil
 

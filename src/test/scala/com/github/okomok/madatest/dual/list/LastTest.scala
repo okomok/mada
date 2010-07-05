@@ -19,7 +19,7 @@ class LastTest extends junit.framework.TestCase {
     type lastOf[l <: List] = l#last
     meta.assertSame[Box[Int], lastOf[Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil]]
 
-    def testTrivial: Unit = {
+    def testTrivial {
         val i = new java.lang.Integer(10)
         type Lst1 = Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil
         val lst1: Lst1 = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil
@@ -41,7 +41,7 @@ class LastOrElseTest extends junit.framework.TestCase {
     import junit.framework.Assert._
     assertFalse(scala.Nil eq Nil)
 
-    def testTrivial: Unit = {
+    def testTrivial {
         val i = new java.lang.Integer(10)
         type Lst1 = Int :: String :: java.lang.Integer :: Char :: Int :: Nil
         val lst1: Lst1 = 3 :: "hello" :: i :: 'a' :: 12 :: Nil
@@ -56,7 +56,7 @@ class LastOrElseTest extends junit.framework.TestCase {
         assertEquals("hello", e2_)
     }
 
-    def testEmpty: Unit = {
+    def testEmpty {
         val i = new java.lang.Integer(10)
         type Lst1 = Nil
         val lst1: Lst1 = Nil

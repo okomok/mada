@@ -17,7 +17,7 @@ class SliceTest extends junit.framework.TestCase {
     import junit.framework.Assert._
     assertFalse(scala.Nil eq Nil)
 
-    def testSlice: Unit = {
+    def testSlice {
         val i = new java.lang.Integer(10)
 
         type Lst1 = Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil

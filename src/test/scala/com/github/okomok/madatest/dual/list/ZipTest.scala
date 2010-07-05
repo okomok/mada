@@ -12,13 +12,11 @@ import com.github.okomok.mada
 import mada.dual._
 
 
-/*
-
 class ZipTest extends junit.framework.TestCase {
     import junit.framework.Assert._
     assertFalse(scala.Nil eq Nil)
 
-    def testTrivial: Unit = {
+    def testTrivial {
         val i = new java.lang.Integer(10)
         type l1 = Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Nil
         val l1: l1 = Box(3) :: Box("hello") :: Box(i) :: Nil
@@ -27,13 +25,13 @@ class ZipTest extends junit.framework.TestCase {
         val l2: l2 = Box(i) :: Box('a') :: Box(12) :: Nil
 
         val _z: l1#zip[l2] = l1.zip(l2)
-        val z: (Int, java.lang.Integer) :: (String, Char) :: (java.lang.Integer, Int) :: Nil = _z
+        val z: Tuple2[Box[Int], Box[java.lang.Integer]] :: Tuple2[Box[String], Box[Char]] :: Tuple2[Box[java.lang.Integer], Box[Int]] :: Nil = _z
 
-        val a = (3, i) :: ("hello", 'a') :: (i, 12) :: Nil
+        val a = Tuple2(Box(3), Box(i)) :: Tuple2(Box("hello"), Box('a')) :: Tuple2(Box(i), Box(12)) :: Nil
         assertEquals(a, z)
     }
 
-    def testNil: Unit = {
+    def testNil {
         type l1 = Nil
         val l1: l1 = Nil
 
@@ -47,19 +45,18 @@ class ZipTest extends junit.framework.TestCase {
         assertEquals(a, z)
     }
 
-    def testLonger: Unit = {
+    def testLonger {
         val i = new java.lang.Integer(10)
-        type l1 = Int :: String :: java.lang.Integer :: Nil
+        type l1 = Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Nil
         val l1: l1 = Box(3) :: Box("hello") :: Box(i) :: Nil
 
-        type l2 = java.lang.Integer :: Char :: Int :: String :: Nil
+        type l2 = Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Box[String] :: Nil
         val l2: l2 = Box(i) :: Box('a') :: Box(12) :: Box("ignored") :: Nil
 
         val _z: l1#zip[l2] = l1.zip(l2)
-        val z: (Int, java.lang.Integer) :: (String, Char) :: (java.lang.Integer, Int) :: Nil = _z
+        val z: Tuple2[Box[Int], Box[java.lang.Integer]] :: Tuple2[Box[String], Box[Char]] :: Tuple2[Box[java.lang.Integer], Box[Int]] :: Nil = _z
 
-        val a = (3, i) :: ("hello", 'a') :: (i, 12) :: Nil
+        val a = Tuple2(Box(3), Box(i)) :: Tuple2(Box("hello"), Box('a')) :: Tuple2(Box(i), Box(12)) :: Nil
         assertEquals(a, z)
     }
 }
-*/

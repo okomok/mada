@@ -232,7 +232,7 @@ sealed abstract class Nil extends List {
     override  def filter[f <: Function1](f: f) = Nil
     override type filter[f <: Function1] = Nil
 
-    override  def foreach[f <: Function1](f: f) = ()
+    override  def foreach[f <: Function1](f: f) = Unit
 
     override  def zip[that <: List](that: that) = Nil
     override type zip[that <: List] = Nil

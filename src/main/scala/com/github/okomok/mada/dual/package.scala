@@ -27,14 +27,14 @@ package object dual extends dual.nat.LiteralCommon {
      * assertion
      */
     @elidable(ASSERTION)
-     def assert[c <: Boolean](c: c): assert[c] = if (!c.undual) throw new java.lang.AssertionError("dual.assert")
+     def assert[c <: Boolean](c: c): assert[c] = { if (!c.undual) throw new java.lang.AssertionError("dual.assert"); Unit }
     type assert[c <: Boolean] = Unit
 
     /**
      * negative assertion
      */
     @elidable(ASSERTION)
-     def assertNot[b <: Boolean](b: b): assert[b] = if (b.undual) throw new java.lang.AssertionError("dual.assertNot")
+     def assertNot[b <: Boolean](b: b): assert[b] = { if (b.undual) throw new java.lang.AssertionError("dual.assertNot"); Unit }
     type assertNot[b <: Boolean] = Unit
 
 
@@ -65,13 +65,13 @@ package object dual extends dual.nat.LiteralCommon {
 // Option
 
     @equivalentTo("new None{}")
-    val None = Option._None
+    val None: None = Option._None
 
 
 // List
 
     @equivalentTo("new Nil{}")
-    val Nil = List._Nil
+    val Nil: Nil = List._Nil
 
     @equivalentTo("t#addFirst[h]")
     type ::[x <: Any, xs <: List] = xs#addFirst[x]
@@ -81,5 +81,10 @@ package object dual extends dual.nat.LiteralCommon {
 
     @equivalentTo("ys#reversePrepend[xs]")
     type reverse_:::[xs <: List, ys <: List] = ys#prependReversed[xs]
+
+// Unit
+
+    @equivalentTo("new Unit{}")
+    val Unit: Unit = _Unit.value
 
 }

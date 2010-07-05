@@ -16,7 +16,7 @@ class MatchTest extends junit.framework.TestCase {
     import junit.framework.Assert._
     assertFalse(scala.Nil eq Nil)
 
-    def testTrivial: Unit = {
+    def testTrivial {
         type l = Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Nil
         val l: l = Box(3) :: Box("hello") :: Box(new java.lang.Integer(10)) :: Nil
 
@@ -41,7 +41,7 @@ class MatchTest extends junit.framework.TestCase {
         ()
     }
 
-    def testNil: Unit = {
+    def testNil {
         Nil match {
             case Nil => ()
             case _ => fail("doh")

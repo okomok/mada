@@ -16,7 +16,7 @@ class ReplaceTest extends junit.framework.TestCase {
     import junit.framework.Assert._
     assertFalse(scala.Nil eq Nil)
 
-    def testTrivial: Unit = {
+    def testTrivial {
         val i = new java.lang.Integer(10)
         type l = Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil
         val l: l = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil

@@ -16,7 +16,7 @@ import boolean.Operator._
 
 
 class BooleanTest extends junit.framework.TestCase {
-    def testConvert: Unit = {
+    def testConvert {
         import junit.framework.Assert._
         assertEquals(true, `true`.undual)
         assertEquals(false, `false`.undual)

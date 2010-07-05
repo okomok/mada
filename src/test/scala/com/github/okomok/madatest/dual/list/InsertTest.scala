@@ -15,7 +15,7 @@ import mada.dual._
 class InsertTest extends junit.framework.TestCase {
     import junit.framework.Assert._
     assertFalse(scala.Nil eq Nil)
-    def testTrivial: Unit = {
+    def testTrivial {
         val i = new java.lang.Integer(10)
         type l = Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil
         val l: l = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil
@@ -25,7 +25,7 @@ class InsertTest extends junit.framework.TestCase {
         val a = Box(3) :: Box("wow") :: Box(scala.Tuple1(10)) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil
         assertEquals(a, m)
     }
-    def testNil: Unit = {
+    def testNil {
         val i = new java.lang.Integer(10)
         type l = Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil
         val l: l = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil
@@ -36,7 +36,7 @@ class InsertTest extends junit.framework.TestCase {
         assertEquals(a, m)
     }
 
-    def testNilNil: Unit = {
+    def testNilNil {
         type l = Nil
         val l: l = Nil
 
@@ -46,7 +46,7 @@ class InsertTest extends junit.framework.TestCase {
         assertEquals(a, m)
     }
 
-    def testNilNotNil: Unit = {
+    def testNilNotNil {
         type l = Nil
         val l: l = Nil
 
@@ -56,7 +56,7 @@ class InsertTest extends junit.framework.TestCase {
         assertEquals(a, m)
     }
 
-    def testHead: Unit = {
+    def testHead {
         val i = new java.lang.Integer(10)
         type l = Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil
         val l: l = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil
@@ -67,7 +67,7 @@ class InsertTest extends junit.framework.TestCase {
         assertEquals(a, m)
     }
 
-    def testTail: Unit = {
+    def testTail {
         val i = new java.lang.Integer(10)
         type l = Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil
         val l: l = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil

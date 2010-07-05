@@ -39,3 +39,23 @@ class MapTest extends junit.framework.TestCase {
     }
 }
 
+
+class MapNatTest extends junit.framework.TestCase {
+    import junit.framework.Assert._
+    assertFalse(scala.Nil eq Nil)
+
+    class add2 extends Function1 {
+        override  def apply[x <: Any](x: x): apply[x] = x.asInstanceOfNat + _2N
+        override type apply[x <: Any] = x#asInstanceOfNat# +[_2N]
+    }
+    val add2 = new add2
+
+    def testTrivial {
+        type xs = _3N :: _4N :: _5N :: _6N :: Nil
+        val xs: xs = _3N :: _4N :: _5N :: _6N :: Nil
+        val u: xs#map[add2] = xs.map(add2)
+        val v: _5N :: _6N :: _7N :: _8N :: Nil = u
+        assertEquals(_5N :: _6N :: _7N :: _8N :: Nil, v)
+    }
+}
+

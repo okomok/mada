@@ -20,6 +20,9 @@ trait Any {
      def asInstanceOfList: asInstanceOfList = unsupported
     type asInstanceOfList <: List
 
+     def asInstanceOfUnit: asInstanceOfUnit = unsupported
+    type asInstanceOfUnit <: Unit
+
      def undual: undual = unsupported
     type undual <: scala.Any
 

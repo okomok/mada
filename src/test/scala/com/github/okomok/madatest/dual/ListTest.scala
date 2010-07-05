@@ -30,20 +30,20 @@ class ListTest extends junit.framework.TestCase {
         assertEquals(10, lst.nth(_2N).unbox.intValue)
     }
 
-    def testSize: Unit = {
+    def testSize {
         val i = new java.lang.Integer(10)
         val lst = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Nil
         assert(_4N === lst.size)
         assert(Nil.size === _0N)
     }
-    def testTypeErase: Unit = {
+    def testTypeErase {
         val i = new java.lang.Integer(10)
         val lst = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Nil
         assertEquals("[]", Nil.toString)
         assertEquals("[3, hello, 10, a]", lst.toString)
     }
 
-    def testEquals: Unit = {
+    def testEquals {
         val i = new java.lang.Integer(10)
         val j = new java.lang.Integer(10)
         assertEquals(i, j)
@@ -59,7 +59,7 @@ class ListTest extends junit.framework.TestCase {
         AssertNotEquals(lst1, lst5)
     }
 
-    def testDrop: Unit = {
+    def testDrop {
         val i = new java.lang.Integer(10)
         val lst = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil
         val a = Box(i) :: Box('a') :: Box(12) :: Nil
@@ -75,7 +75,7 @@ class ListTest extends junit.framework.TestCase {
         assertEquals(Nil, c)
     }
 
-    def testTake: Unit = {
+    def testTake {
         val i = new java.lang.Integer(10)
         val lst = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil
         val a = lst.take(_0N)
@@ -86,12 +86,12 @@ class ListTest extends junit.framework.TestCase {
         assertEquals(Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil, c)
     }
 
-    def testIsEmpty: Unit = {
+    def testIsEmpty {
         assert(Nil.isEmpty)
         assertNot((Box(3) :: Box("hello") :: Nil).isEmpty)
     }
 /*
-    def testTyped: Unit = {
+    def testTyped {
         import mada.sequence
         val i = new java.lang.Integer(10)
         val el: sequence.List[Any] = 3 :: "hello" :: i :: 'a' :: sequence.Nil.of[Any]
@@ -101,7 +101,7 @@ class ListTest extends junit.framework.TestCase {
         ()
     }
 */
-    def testPrepend: Unit = {
+    def testPrepend {
         val i = new java.lang.Integer(10)
         val lst1 = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil
         val lst2 = Box("wow") :: Box(99) :: Nil
@@ -114,7 +114,7 @@ class ListTest extends junit.framework.TestCase {
     }
 
 
-    def testReversePrepend: Unit = {
+    def testReversePrepend {
         val i = new java.lang.Integer(10)
         type Lst1 = Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil
         type Lst2 = Box[String] :: Box[Int] :: Nil
@@ -131,7 +131,7 @@ class ListTest extends junit.framework.TestCase {
         ()
     }
 
-    def testReverse: Unit = {
+    def testReverse {
         val i = new java.lang.Integer(10)
         type Lst1 = Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil
         val lst1: Lst1 = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil
