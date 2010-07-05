@@ -14,7 +14,7 @@ package com.github.okomok.mada; package dual
 import list._
 
 
-sealed abstract class List { // this: self =>
+sealed abstract class List extends Any {
 
     @returnThis
      def self: self
@@ -45,26 +45,26 @@ sealed abstract class List { // this: self =>
     /**
      * Maps elements using <code>f</code>.
      */
-     def map[f <: Function1_Any_Any](f: f): map[f]
-    type map[f <: Function1_Any_Any] <: List
+     def map[f <: Function1](f: f): map[f]
+    type map[f <: Function1] <: List
 
     /**
      * Flattens elements using <code>f</code>.
      */
-     def flatMap[f <: Function1_Any_List](f: f): flatMap[f]
-    type flatMap[f <: Function1_Any_List] <: List
+     def flatMap[f <: Function1](f: f): flatMap[f]
+    type flatMap[f <: Function1] <: List
 
     /**
      * Filters elements using <code>f</code>.
      */
-     def filter[f <: Function1_Any_Boolean](f: f): filter[f]
-    type filter[f <: Function1_Any_Boolean] <: List
+     def filter[f <: Function1](f: f): filter[f]
+    type filter[f <: Function1] <: List
 
     /**
      * Applies <code>f</code> to each element.
      */
-    def foreach[f <: Function1_Any_Unit](f: f): foreach[f]
-    final type foreach[f <: Function1_Any_Unit] = Unit
+    def foreach[f <: Function1](f: f): foreach[f]
+    final type foreach[f <: Function1] = Unit
 
     /**
      * Drops EXACTLY <code>n</code> elements.
@@ -185,42 +185,31 @@ sealed abstract class List { // this: self =>
     final  def elementOf[e <: Any](implicit _elementOf: ElementOf[self, e]): elementOf[e] = _elementOf(self)
     final type elementOf[e <: Any] = ElementOf.result[self, e]
 
+    final override  def asInstanceOfList = self
+    final override type asInstanceOfList = self
+
     /**
      * Converts to <code>sequence.List[Any]</code>.
      */
     def untyped: untyped
-    final type untyped = sequence.List[Any]
+    final type untyped = sequence.List[scala.Any]
 
-    final override def equals(that: Any) = that match {
+    final override def equals(that: scala.Any) = that match {
         case that: List => untyped == that.untyped
         case _ => false
     }
-    final override def hashCode = untyped.hashCode
-    final override def toString = untyped.toString
 
     /**
      * Folds right-associative.
      */
-     def foldRight[z <: Any, f <: Function2_Any_Any_Any](z: z, f: f): foldRight[z, f]
-    type foldRight[z <: Any, f <: Function2_Any_Any_Any] <: Any
-
-    /**
-     * Folds right-associative.
-     */
-     def foldRight_List[z <: List, f <: Function2_Any_List_List](z: z, f: f): foldRight_List[z, f]
-    type foldRight_List[z <: List, f <: Function2_Any_List_List] <: List
-
-    /**
-     * Folds right-associative.
-     */
-     def foldRight_Nat[z <: Nat, f <: Function2_Any_Nat_Nat](z: z, f: f): foldRight_Nat[z, f]
-    type foldRight_Nat[z <: Nat, f <: Function2_Any_Nat_Nat] <: Nat
+     def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f]
+    type foldRight[z <: Any, f <: Function2] <: Any
 
     /**
      * Folds left-associative.
      */
-     def foldLeft_List[z <: List, f <: Function2_List_Any_List](z: z, f: f): foldLeft_List[z, f]
-    type foldLeft_List[z <: List, f <: Function2_List_Any_List] <: List
+     def foldLeft[z <: Any, f <: Function2](z: z, f: f): foldLeft[z, f]
+    type foldLeft[z <: Any, f <: Function2] <: Any
 
 }
 
@@ -238,33 +227,27 @@ sealed abstract class Nil extends List {
     override  def isEmpty = `true`
     override type isEmpty = `true`
 
-    override  def map[f <: Function1_Any_Any](f: f) = Nil
-    override type map[f <: Function1_Any_Any] = Nil
+    override  def map[f <: Function1](f: f) = Nil
+    override type map[f <: Function1] = Nil
 
-    override  def flatMap[f <: Function1_Any_List](f: f) = Nil
-    override type flatMap[f <: Function1_Any_List] = Nil
+    override  def flatMap[f <: Function1](f: f) = Nil
+    override type flatMap[f <: Function1] = Nil
 
-    override  def filter[f <: Function1_Any_Boolean](f: f) = Nil
-    override type filter[f <: Function1_Any_Boolean] = Nil
+    override  def filter[f <: Function1](f: f) = Nil
+    override type filter[f <: Function1] = Nil
 
-    override  def foreach[f <: Function1_Any_Unit](f: f) = ()
+    override  def foreach[f <: Function1](f: f) = ()
 
     override  def zip[that <: List](that: that) = Nil
     override type zip[that <: List] = Nil
 
     override def untyped = sequence.Nil
 
-    override  def foldRight[z <: Any, f <: Function2_Any_Any_Any](z: z, f: f): foldRight[z, f] = z
-    override type foldRight[z <: Any, f <: Function2_Any_Any_Any] = z
+    override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = z
+    override type foldRight[z <: Any, f <: Function2] = z
 
-    override  def foldRight_List[z <: List, f <: Function2_Any_List_List](z: z, f: f): foldRight_List[z, f] = z
-    override type foldRight_List[z <: List, f <: Function2_Any_List_List] = z
-
-    override  def foldRight_Nat[z <: Nat, f <: Function2_Any_Nat_Nat](z: z, f: f): foldRight_Nat[z, f] = z
-    override type foldRight_Nat[z <: Nat, f <: Function2_Any_Nat_Nat] = z
-
-    override  def foldLeft_List[z <: List, f <: Function2_List_Any_List](z: z, f: f): foldLeft_List[z, f] = z
-    override type foldLeft_List[z <: List, f <: Function2_List_Any_List] = z
+    override  def foldLeft[z <: Any, f <: Function2](z: z, f: f): foldLeft[z, f] = z
+    override type foldLeft[z <: Any, f <: Function2] = z
 }
 
 
@@ -281,33 +264,27 @@ final case class Cons[x <: Any, xs <: List](x: x, xs: xs) extends List {
     override  def isEmpty = `false`
     override type isEmpty = `false`
 
-    override  def map[f <: Function1_Any_Any](f: f) = Cons(f.apply(x), xs.map(f))
-    override type map[f <: Function1_Any_Any] = Cons[f#apply[x], xs#map[f]]
+    override  def map[f <: Function1](f: f) = Cons(f.apply(x), xs.map(f))
+    override type map[f <: Function1] = Cons[f#apply[x], xs#map[f]]
 
-    override  def flatMap[f <: Function1_Any_List](f: f): flatMap[f] = f.apply(x) ::: xs.flatMap(f)
-    override type flatMap[f <: Function1_Any_List] = f#apply[x] ::: xs#flatMap[f]
+    override  def flatMap[f <: Function1](f: f): flatMap[f] = f.apply(x).asInstanceOfList ::: xs.flatMap(f)
+    override type flatMap[f <: Function1] = f#apply[x]#asInstanceOfList ::: xs#flatMap[f]
 
-    override  def filter[f <: Function1_Any_Boolean](f: f) = new FilterCons().apply(x, xs, f)
-    override type filter[f <: Function1_Any_Boolean] = FilterCons#apply[x, xs, f]
+    override  def filter[f <: Function1](f: f) = new FilterCons().apply(x, xs, f)
+    override type filter[f <: Function1] = FilterCons#apply[x, xs, f]
 
-    override  def foreach[f <: Function1_Any_Unit](f: f) = { f.apply(x); xs.foreach(f) }
+    override  def foreach[f <: Function1](f: f) = { f.apply(x); xs.foreach(f) }
 
-    override  def zip[that <: List](that: that): zip[that] = Cons(scala.Tuple2(head, that.head), tail.zip(that.tail))
-    override type zip[that <: List] = Cons[scala.Tuple2[head, that#head], tail#zip[that#tail]]
+    override  def zip[that <: List](that: that): zip[that] = Cons(Tuple2(head, that.head), tail.zip(that.tail))
+    override type zip[that <: List] = Cons[Tuple2[head, that#head], tail#zip[that#tail]]
 
     override def untyped = head :: tail.untyped
 
-    override  def foldRight[z <: Any, f <: Function2_Any_Any_Any](z: z, f: f): foldRight[z, f] = f.apply(head, tail.foldRight(z, f))
-    override type foldRight[z <: Any, f <: Function2_Any_Any_Any] = f#apply[head, tail#foldRight[z, f]]
+    override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = f.apply(head, tail.foldRight(z, f))
+    override type foldRight[z <: Any, f <: Function2] = f#apply[head, tail#foldRight[z, f]]
 
-    override  def foldRight_List[z <: List, f <: Function2_Any_List_List](z: z, f: f): foldRight_List[z, f] = f.apply(head, tail.foldRight_List(z, f))
-    override type foldRight_List[z <: List, f <: Function2_Any_List_List] = f#apply[head, tail#foldRight_List[z, f]]
-
-    override  def foldRight_Nat[z <: Nat, f <: Function2_Any_Nat_Nat](z: z, f: f): foldRight_Nat[z, f] = f.apply(head, tail.foldRight_Nat(z, f))
-    override type foldRight_Nat[z <: Nat, f <: Function2_Any_Nat_Nat] = f#apply[head, tail#foldRight_Nat[z, f]]
-
-    override  def foldLeft_List[z <: List, f <: Function2_List_Any_List](z: z, f: f): foldLeft_List[z, f] = tail.foldLeft_List(f.apply(z, head), f)
-    override type foldLeft_List[z <: List, f <: Function2_List_Any_List] = tail#foldLeft_List[f#apply[z, head], f]
+    override  def foldLeft[z <: Any, f <: Function2](z: z, f: f): foldLeft[z, f] = tail.foldLeft(f.apply(z, head), f)
+    override type foldLeft[z <: Any, f <: Function2] = tail#foldLeft[f#apply[z, head], f]
 }
 
 
@@ -317,7 +294,7 @@ object List {
 
 
 // methodization
-
+/*
     sealed class _Of1[a1](_this: a1 :: Nil) {
         def toTuple: Tuple1[a1] = Tuple1(_this.head)
     }
@@ -342,7 +319,7 @@ object List {
         def toTuple: Tuple5[a1, a2, a3, a4, a5] = Tuple5(_this.head, _this.tail.head, _this.tail.tail.head, _this.tail.tail.tail.head, _this.tail.tail.tail.tail.head)
     }
     implicit def _of5[a1, a2, a3, a4, a5](_this: a1 :: a2 :: a3 :: a4 :: a5 :: Nil): _Of5[a1, a2, a3, a4, a5] = new _Of5(_this)
-
+*/
 }
 
 

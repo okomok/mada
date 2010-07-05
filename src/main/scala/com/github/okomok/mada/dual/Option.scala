@@ -13,7 +13,7 @@ import option._
 /**
  * The dual Option
  */
-sealed abstract class Option {
+sealed abstract class Option extends Any {
     @returnThis
      def self: self
     type self <: Option

@@ -14,7 +14,7 @@ package com.github.okomok.mada; package dual
 import nat._
 
 
-sealed trait Nat {
+sealed trait Nat extends Any {
      def self: self
     type self <: Nat
 
@@ -57,24 +57,18 @@ sealed trait Nat {
     final  def <=[that <: Nat](that: that): <=[that] = that.>=(self)
     final type <=[that <: Nat] = that# >=[self]
 
-     def foldRight[z <: Any, f <: Function2_Nat_Any_Any](z: z, f: f): foldRight[z, f]
-    type foldRight[z <: Any, f <: Function2_Nat_Any_Any] <: Any
+     def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f]
+    type foldRight[z <: Any, f <: Function2] <: Any
 
-     def foldRight_Nat[z <: Nat, f <: Function2_Nat_Nat_Nat](z: z, f: f): foldRight_Nat[z, f]
-    type foldRight_Nat[z <: Nat, f <: Function2_Nat_Nat_Nat] <: Nat
+    final override  def asInstanceOfNat = self
+    final override type asInstanceOfNat = self
 
-     def foldRight_List[z <: List, f <: Function2_Nat_List_List](z: z, f: f): foldRight_List[z, f]
-    type foldRight_List[z <: List, f <: Function2_Nat_List_List] <: List
+    final override type undual = scala.Int
 
-    final  def undual: undual = new Undual().apply(self)
-    final type undual = Undual#apply[self]
-
-    final override def equals(that: Any) = that match {
+    final override def equals(that: scala.Any) = that match {
         case that: Nat => undual == that.undual
         case _ => false
     }
-    final override def hashCode = undual.hashCode
-    final override def toString = undual.toString
 }
 
 
@@ -94,14 +88,10 @@ sealed trait Zero extends Nat {
     override  def decrement = singular
     override type decrement = singular
 
-    override  def foldRight[z <: Any, f <: Function2_Nat_Any_Any](z: z, f: f): foldRight[z, f] = z
-    override type foldRight[z <: Any, f <: Function2_Nat_Any_Any] = z
+    override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = z
+    override type foldRight[z <: Any, f <: Function2] = z
 
-    override  def foldRight_Nat[z <: Nat, f <: Function2_Nat_Nat_Nat](z: z, f: f): foldRight_Nat[z, f] = z
-    override type foldRight_Nat[z <: Nat, f <: Function2_Nat_Nat_Nat] = z
-
-    override  def foldRight_List[z <: List, f <: Function2_Nat_List_List](z: z, f: f): foldRight_List[z, f] = z
-    override type foldRight_List[z <: List, f <: Function2_Nat_List_List] = z
+    override def undual = 0
 }
 
 
@@ -121,14 +111,10 @@ class Succ[n <: Nat](n: n) extends Nat {
     override  def decrement = n
     override type decrement = n
 
-    override  def foldRight[z <: Any, f <: Function2_Nat_Any_Any](z: z, f: f): foldRight[z, f] = f.apply(self, n.foldRight(z, f))
-    override type foldRight[z <: Any, f <: Function2_Nat_Any_Any] = f#apply[self, n#foldRight[z, f]]
+    override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = f.apply(self, n.foldRight(z, f))
+    override type foldRight[z <: Any, f <: Function2] = f#apply[self, n#foldRight[z, f]]
 
-    override  def foldRight_Nat[z <: Nat, f <: Function2_Nat_Nat_Nat](z: z, f: f): foldRight_Nat[z, f] = f.apply(self, n.foldRight_Nat(z, f))
-    override type foldRight_Nat[z <: Nat, f <: Function2_Nat_Nat_Nat] = f#apply[self, n#foldRight_Nat[z, f]]
-
-    override  def foldRight_List[z <: List, f <: Function2_Nat_List_List](z: z, f: f): foldRight_List[z, f] = f.apply(self, n.foldRight_List(z, f))
-    override type foldRight_List[z <: List, f <: Function2_Nat_List_List] = f#apply[self, n#foldRight_List[z, f]]
+    override def undual = 1 + n.undual
 }
 
 
@@ -148,14 +134,8 @@ sealed trait singular extends Nat {
     override  def decrement = self
     override type decrement = self
 
-    override  def foldRight[z <: Any, f <: Function2_Nat_Any_Any](z: z, f: f) = unsupported
-    override type foldRight[z <: Any, f <: Function2_Nat_Any_Any] = unsupported
-
-    override  def foldRight_Nat[z <: Nat, f <: Function2_Nat_Nat_Nat](z: z, f: f) = unsupported
-    override type foldRight_Nat[z <: Nat, f <: Function2_Nat_Nat_Nat] = unsupported
-
-    override  def foldRight_List[z <: List, f <: Function2_Nat_List_List](z: z, f: f) = unsupported
-    override type foldRight_List[z <: List, f <: Function2_Nat_List_List] = unsupported
+    override  def foldRight[z <: Any, f <: Function2](z: z, f: f) = unsupported
+    override type foldRight[z <: Any, f <: Function2] = unsupported
 }
 
 

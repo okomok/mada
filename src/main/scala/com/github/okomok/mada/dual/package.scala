@@ -52,24 +52,6 @@ package object dual extends dual.nat.LiteralCommon {
      def `if`[b <: Boolean, then <: Function0, _else <: Function0](b: b, then: then, _else: _else): `if`[b, then, _else] = b.`if`(then, _else)
     type `if`[b <: Boolean, then <: Function0, _else <: Function0] = b#`if`[then, _else]
 
-    /**
-     * The if-expression to return Boolean.
-     */
-     def if_Boolean[b <: Boolean, then <: Function0_Boolean, _else <: Function0_Boolean](b: b, then: then, _else: _else): if_Boolean[b, then, _else] = b.if_Boolean(then, _else)
-    type if_Boolean[b <: Boolean, then <: Function0_Boolean, _else <: Function0_Boolean] = b#if_Boolean[then, _else]
-
-    /**
-     * The if-expression to return Nat.
-     */
-     def if_Nat[b <: Boolean, then <: Function0_Nat, _else <: Function0_Nat](b: b, then: then, _else: _else): if_Nat[b, then, _else] = b.if_Nat(then, _else)
-    type if_Nat[b <: Boolean, then <: Function0_Nat, _else <: Function0_Nat] = b#if_Nat[then, _else]
-
-    /**
-     * The if-expression to return List.
-     */
-     def if_List[b <: Boolean, then <: Function0_List, _else <: Function0_List](b: b, then: then, _else: _else): if_List[b, then, _else] = b.if_List(then, _else)
-    type if_List[b <: Boolean, then <: Function0_List, _else <: Function0_List] = b#if_List[then, _else]
-
 
 // Nat
 

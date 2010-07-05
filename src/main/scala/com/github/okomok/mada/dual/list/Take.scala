@@ -8,6 +8,7 @@ package com.github.okomok.mada; package dual; package list
 
 
 // cf. take(n) = reverse.drop(size - n).reverse
+/*
 
 private[mada] object Take {
      def apply[xs <: List, n <: Nat](xs: xs, n: n): apply[xs, n] = if_List(new Cond(xs, n).apply, new Always0_Nil, new Else(xs, n)).apply
@@ -24,3 +25,4 @@ private[mada] object Take {
         override type apply = Cons[xs#head, Take.apply[xs#tail, n#decrement]]
     }
 }
+*/

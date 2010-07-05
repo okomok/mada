@@ -13,13 +13,13 @@ sealed abstract class ElementOf[xs <: List, e <: Any] extends (xs => ElementOf.r
 
 object ElementOf {
 
-    type result[xs <: List, e] = e
+    type result[xs <: List, e <: Any] = e
 
-    implicit def _ofCons[a, as <: List, e](implicit _elementOf: ElementOf[as, e]) = new ElementOf[Cons[a, as], e] {
+    implicit def _ofCons[a <: Any, as <: List, e <: Any](implicit _elementOf: ElementOf[as, e]) = new ElementOf[Cons[a, as], e] {
         override def apply(xs: Cons[a, as]) = _elementOf(xs.tail)
     }
 
-    implicit def _ofConsMatch[as <: List, e] = new ElementOf[Cons[e, as], e] {
+    implicit def _ofConsMatch[as <: List, e <: Any] = new ElementOf[Cons[e, as], e] {
         override def apply(xs: Cons[e, as]) = xs.head
     }
 

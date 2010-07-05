@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package dual
 
 
-class Always0[v <: Any](v: v) extends Function0 {
-    override  def apply = v
-    override type apply = v
+final case class Box[A](e: A) extends Any {
+     def unbox: unbox = e
+    type unbox = A
 }

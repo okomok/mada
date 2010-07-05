@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package dual
 
 
-class Always0[v <: Any](v: v) extends Function0 {
-    override  def apply = v
-    override type apply = v
+case class Tuple2[v1 <: Any, v2 <: Any](_1: v1, _2: v2) extends Any {
+    type _1 = v1
+    type _2 = v2
 }

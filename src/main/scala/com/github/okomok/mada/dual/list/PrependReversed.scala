@@ -8,12 +8,12 @@ package com.github.okomok.mada; package dual; package list
 
 
 private[mada] class PrependReversed {
-     def apply[xs <: List, ys <: List](xs: xs, ys: ys): apply[xs, ys] = ys.foldLeft_List(xs, step)
-    type apply[xs <: List, ys <: List] = ys#foldLeft_List[xs, step]
+     def apply[xs <: List, ys <: List](xs: xs, ys: ys): apply[xs, ys] = ys.foldLeft(xs, step).asInstanceOfList
+    type apply[xs <: List, ys <: List] = ys#foldLeft[xs, step]#asInstanceOfList
 
     val step = new step
-    class step extends Function2_List_Any_List {
-        override  def apply[b <: List, a <: Any](b: b, a: a) = Cons(a, b)
-        override type apply[b <: List, a <: Any] = Cons[a, b]
+    class step extends Function2 {
+        override  def apply[b <: Any, a <: Any](b: b, a: a) = Cons(a, b.asInstanceOfList)
+        override type apply[b <: Any, a <: Any] = Cons[a, b#asInstanceOfList]
     }
 }

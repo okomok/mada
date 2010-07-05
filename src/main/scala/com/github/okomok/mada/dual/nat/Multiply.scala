@@ -8,11 +8,11 @@ package com.github.okomok.mada; package dual; package nat
 
 
 private[mada] class Multiply {
-     def apply[x <: Nat, y <: Nat](x: x, y: y): apply[x, y] = x.foldRight_Nat(Zero, new Step(y))
-    type apply[x <: Nat, y <: Nat] = x#foldRight_Nat[Zero, Step[y]]
+     def apply[x <: Nat, y <: Nat](x: x, y: y): apply[x, y] = x.foldRight(Zero, new Step(y)).asInstanceOfNat
+    type apply[x <: Nat, y <: Nat] = x#foldRight[Zero, Step[y]]#asInstanceOfNat
 
-    class Step[y <: Nat](y: y) extends Function2_Nat_Nat_Nat {
-        override def apply[a <: Nat, b <: Nat](a: a, b: b): apply[a, b] = y + b
-        override type apply[a <: Nat, b <: Nat] = y# +[b]
+    class Step[y <: Nat](y: y) extends Function2 {
+        override def apply[a <: Any, b <: Any](a: a, b: b): apply[a, b] = y + b.asInstanceOfNat
+        override type apply[a <: Any, b <: Any] = y# +[b#asInstanceOfNat]
     }
 }

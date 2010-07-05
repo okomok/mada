@@ -6,6 +6,7 @@
 
 package com.github.okomok.mada; package dual; package list
 
+/*
 
 @specializer
 sealed abstract class Typed[xs <: List] extends (sequence.List[Any] => xs)
@@ -22,3 +23,4 @@ object Typed {
     }
 
 }
+*/

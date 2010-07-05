@@ -13,11 +13,11 @@ package object list {
     /**
      * Creates a list from <code>sequence.List</code>.
      */
-    def typed[l <: List](from: sequence.List[Any])(implicit _typed: Typed[l]) = _typed(from)
+    //def typed[l <: List](from: sequence.List[Any])(implicit _typed: Typed[l]) = _typed(from)
 
 
 // conversion
-
+/*
     def fromTuple1[T1](from: Tuple1[T1]): T1 :: Nil = from._1 :: Nil
     def fromTuple2[T1, T2](from: Tuple2[T1, T2]): T1 :: T2 :: Nil = from._1 :: from._2 :: Nil
     def fromTuple3[T1, T2, T3](from: Tuple3[T1, T2, T3]): T1 :: T2 :: T3 :: Nil = from._1 :: from._2 :: from._3 :: Nil
@@ -29,7 +29,7 @@ package object list {
     def fromTuple[T1, T2, T3](from: Tuple3[T1, T2, T3]): T1 :: T2 :: T3 :: Nil = fromTuple3(from)
     def fromTuple[T1, T2, T3, T4](from: Tuple4[T1, T2, T3, T4]): T1 :: T2 :: T3 :: T4 :: Nil = fromTuple4(from)
     def fromTuple[T1, T2, T3, T4, T5](from: Tuple5[T1, T2, T3, T4, T5]): T1 :: T2 :: T3 :: T4 :: T5 :: Nil = fromTuple5(from)
-
+*/
 
 // misc
 

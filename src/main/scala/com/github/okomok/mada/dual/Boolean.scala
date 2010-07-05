@@ -10,21 +10,24 @@ package com.github.okomok.mada; package dual
 /**
  * The dual Boolean
  */
-sealed trait Boolean {
+sealed trait Boolean extends Any {
+     def self: self
+    type self <: Boolean
+
      def not: not
     type not <: Boolean
 
      def ===[that <: Boolean](that: that): ===[that]
     type ===[that <: Boolean] <: Boolean
 
+    final  def !==[that <: Boolean](that: that): !==[that] = ===(that).not
+    final type !==[that <: Boolean] = ===[that]#not
+
      def &&[that <: Boolean](that: that): &&[that]
     type &&[that <: Boolean] <: Boolean
 
      def ||[that <: Boolean](that: that): ||[that]
     type ||[that <: Boolean] <: Boolean
-
-    final  def !==[that <: Boolean](that: that): !==[that] = ===(that).not
-    final type !==[that <: Boolean] = ===[that]#not
 
     private[mada]  def isTrue: isTrue
     private[mada] type isTrue <: Boolean
@@ -35,30 +38,25 @@ sealed trait Boolean {
      def `if`[then <: Function0, _else <: Function0](then: then, _else: _else): `if`[then, _else]
     type `if`[then <: Function0, _else <: Function0] <: Function0
 
-     def if_Boolean[then <: Function0_Boolean, _else <: Function0_Boolean](then: then, _else: _else): if_Boolean[then, _else]
-    type if_Boolean[then <: Function0_Boolean, _else <: Function0_Boolean] <: Function0_Boolean
-
-     def if_Nat[then <: Function0_Nat, _else <: Function0_Nat](then: then, _else: _else): if_Nat[then, _else]
-    type if_Nat[then <: Function0_Nat, _else <: Function0_Nat] <: Function0_Nat
-
-     def if_List[then <: Function0_List, _else <: Function0_List](then: then, _else: _else): if_List[then, _else]
-    type if_List[then <: Function0_List, _else <: Function0_List] <: Function0_List
+    final override  def asInstanceOfBoolean = self
+    final override type asInstanceOfBoolean = self
 
     def undual: undual
     final type undual = scala.Boolean
 
-    final override def equals(that: Any) = that match {
+    final override def equals(that: scala.Any) = that match {
         case that: Boolean => undual == that.undual
         case _ => false
     }
-    final override def hashCode = undual.hashCode
-    final override def toString = undual.toString
 }
 
 /**
  * The dual true
  */
 sealed trait `true` extends Boolean {
+    override  def self = this
+    override type self = `true`
+
     override  def not: not = `false`
     override type not = `false`
 
@@ -80,15 +78,6 @@ sealed trait `true` extends Boolean {
     override  def `if`[then <: Function0, _else <: Function0](then: then, _else: _else): `if`[then, _else] = then
     override type `if`[then <: Function0, _else <: Function0] = then
 
-    override  def if_Boolean[then <: Function0_Boolean, _else <: Function0_Boolean](then: then, _else: _else): if_Boolean[then, _else] = then
-    override type if_Boolean[then <: Function0_Boolean, _else <: Function0_Boolean] = then
-
-    override  def if_Nat[then <: Function0_Nat, _else <: Function0_Nat](then: then, _else: _else): if_Nat[then, _else] = then
-    override type if_Nat[then <: Function0_Nat, _else <: Function0_Nat] = then
-
-    override  def if_List[then <: Function0_List, _else <: Function0_List](then: then, _else: _else): if_List[then, _else] = then
-    override type if_List[then <: Function0_List, _else <: Function0_List] = then
-
     override def undual = true
 }
 
@@ -96,6 +85,9 @@ sealed trait `true` extends Boolean {
  * The dual false
  */
 sealed trait `false` extends Boolean {
+    override  def self = this
+    override type self = `false`
+
     override  def not: not = `true`
     override type not = `true`
 
@@ -116,15 +108,6 @@ sealed trait `false` extends Boolean {
 
     override  def `if`[then <: Function0, _else <: Function0](then: then, _else: _else): `if`[then, _else] = _else
     override type `if`[then <: Function0, _else <: Function0] = _else
-
-    override  def if_Boolean[then <: Function0_Boolean, _else <: Function0_Boolean](then: then, _else: _else): if_Boolean[then, _else] = _else
-    override type if_Boolean[then <: Function0_Boolean, _else <: Function0_Boolean] = _else
-
-    override  def if_Nat[then <: Function0_Nat, _else <: Function0_Nat](then: then, _else: _else): if_Nat[then, _else] = _else
-    override type if_Nat[then <: Function0_Nat, _else <: Function0_Nat] = _else
-
-    override  def if_List[then <: Function0_List, _else <: Function0_List](then: then, _else: _else): if_List[then, _else] = _else
-    override type if_List[then <: Function0_List, _else <: Function0_List] = _else
 
     override def undual = false
 }
