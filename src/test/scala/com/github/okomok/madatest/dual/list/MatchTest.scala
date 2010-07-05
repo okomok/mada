@@ -17,19 +17,19 @@ class MatchTest extends junit.framework.TestCase {
     assertFalse(scala.Nil eq Nil)
 
     def testTrivial: Unit = {
-        type l = Int :: String :: java.lang.Integer :: Nil
-        val l: l = 3 :: "hello" :: new java.lang.Integer(10):: Nil
+        type l = Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Nil
+        val l: l = Box(3) :: Box("hello") :: Box(new java.lang.Integer(10)) :: Nil
 
         l match {
-            case x :: y :: z :: Nil => {
+            case Box(x) :: Box(y) :: Box(z) :: Nil => {
                 assertEquals(3, x + 1 - 1)
                 assertEquals("hello", y)
             }
-            case x :: ys => {
+            case Box(x) :: ys => {
                 assertEquals(3, x + 1 - 1)
-                val _l: String :: java.lang.Integer :: Nil = ys
+                val _l: Box[String] :: Box[java.lang.Integer] :: Nil = ys
                 _l match {
-                    case y :: zs => {
+                    case Box(y) :: zs => {
                         assertEquals("hello", y)
                     }
                     case _ => fail("doh")

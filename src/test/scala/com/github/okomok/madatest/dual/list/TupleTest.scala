@@ -11,7 +11,7 @@ import com.github.okomok.mada
 
 import mada.dual._
 
-
+/*
 class TupleTest extends junit.framework.TestCase {
     import junit.framework.Assert._
     assertFalse(scala.Nil eq Nil)
@@ -34,3 +34,4 @@ class TupleTest extends junit.framework.TestCase {
         assertSame(t._2, l.nth(_1N))
     }
 }
+*/

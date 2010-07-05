@@ -26,3 +26,8 @@ trait Any {
     override def hashCode = undual.hashCode
     override def toString = undual.toString
 }
+
+
+object Any {
+    // implicit def _boxing[A](from: A): Any = Box(from)
+}

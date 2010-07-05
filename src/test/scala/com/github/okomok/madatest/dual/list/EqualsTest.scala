@@ -17,11 +17,11 @@ class EqualsTest extends junit.framework.TestCase {
     assertFalse(scala.Nil eq Nil)
 
     def testTrivial: Unit = {
-        type l = Int :: String :: java.lang.Integer :: Nil
-        val l1: l = 3 :: "hello" :: new java.lang.Integer(10):: Nil
-        val l2: l = 3 :: "hello" :: new java.lang.Integer(10):: Nil
-        val l3 = 3 :: "helll" :: new java.lang.Integer(10):: Nil
-        val l4 = 3 :: "hello" :: new java.lang.Integer(10):: 2.0 :: Nil
+        type l = Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Nil
+        val l1: l = Box(3) :: Box("hello") :: Box(new java.lang.Integer(10)) :: Nil
+        val l2: l = Box(3) :: Box("hello") :: Box(new java.lang.Integer(10)) :: Nil
+        val l3 = Box(3) :: Box("helll") :: Box(new java.lang.Integer(10)) :: Nil
+        val l4 = Box(3) :: Box("hello") :: Box(new java.lang.Integer(10)) :: Box(2.0) :: Nil
 
         assertEquals(l2, l1)
         AssertNotEquals(Nil, l1)

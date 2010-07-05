@@ -82,7 +82,7 @@ sealed trait Zero extends Nat {
     override private[mada]  def gtZero = `false`
     override private[mada] type gtZero = `false`
 
-    override  def increment = new Succ(self)
+    override  def increment = Succ(self)
     override type increment = Succ[self]
 
     override  def decrement = singular
@@ -95,7 +95,7 @@ sealed trait Zero extends Nat {
 }
 
 
-class Succ[n <: Nat](n: n) extends Nat {
+final case class Succ[n <: Nat](n: n) extends Nat {
     override  def self = this
     override type self = Succ[n]
 
@@ -105,7 +105,7 @@ class Succ[n <: Nat](n: n) extends Nat {
     override private[mada]  def gtZero = `true`
     override private[mada] type gtZero = `true`
 
-    override  def increment = new Succ(self)
+    override  def increment = Succ(self)
     override type increment = Succ[self]
 
     override  def decrement = n

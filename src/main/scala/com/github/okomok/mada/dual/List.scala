@@ -185,20 +185,6 @@ sealed abstract class List extends Any {
     final  def elementOf[e <: Any](implicit _elementOf: ElementOf[self, e]): elementOf[e] = _elementOf(self)
     final type elementOf[e <: Any] = ElementOf.result[self, e]
 
-    final override  def asInstanceOfList = self
-    final override type asInstanceOfList = self
-
-    /**
-     * Converts to <code>sequence.List[Any]</code>.
-     */
-    def untyped: untyped
-    final type untyped = sequence.List[scala.Any]
-
-    final override def equals(that: scala.Any) = that match {
-        case that: List => untyped == that.untyped
-        case _ => false
-    }
-
     /**
      * Folds right-associative.
      */
@@ -210,6 +196,16 @@ sealed abstract class List extends Any {
      */
      def foldLeft[z <: Any, f <: Function2](z: z, f: f): foldLeft[z, f]
     type foldLeft[z <: Any, f <: Function2] <: Any
+
+    final override  def asInstanceOfList = self
+    final override type asInstanceOfList = self
+
+    final override type undual = sequence.List[scala.Any]
+
+    final override def equals(that: scala.Any) = that match {
+        case that: List => undual == that.undual
+        case _ => false
+    }
 
 }
 
@@ -241,13 +237,13 @@ sealed abstract class Nil extends List {
     override  def zip[that <: List](that: that) = Nil
     override type zip[that <: List] = Nil
 
-    override def untyped = sequence.Nil
-
     override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = z
     override type foldRight[z <: Any, f <: Function2] = z
 
     override  def foldLeft[z <: Any, f <: Function2](z: z, f: f): foldLeft[z, f] = z
     override type foldLeft[z <: Any, f <: Function2] = z
+
+    override def undual = sequence.Nil
 }
 
 
@@ -278,13 +274,13 @@ final case class Cons[x <: Any, xs <: List](x: x, xs: xs) extends List {
     override  def zip[that <: List](that: that): zip[that] = Cons(Tuple2(head, that.head), tail.zip(that.tail))
     override type zip[that <: List] = Cons[Tuple2[head, that#head], tail#zip[that#tail]]
 
-    override def untyped = head :: tail.untyped
-
     override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = f.apply(head, tail.foldRight(z, f))
     override type foldRight[z <: Any, f <: Function2] = f#apply[head, tail#foldRight[z, f]]
 
     override  def foldLeft[z <: Any, f <: Function2](z: z, f: f): foldLeft[z, f] = tail.foldLeft(f.apply(z, head), f)
     override type foldLeft[z <: Any, f <: Function2] = tail#foldLeft[f#apply[z, head], f]
+
+    override def undual = head :: tail.undual
 }
 
 

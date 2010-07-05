@@ -17,12 +17,12 @@ class RemoveTest extends junit.framework.TestCase {
     assertFalse(scala.Nil eq Nil)
     def testTrivial: Unit = {
         val i = new java.lang.Integer(10)
-        type l = Int :: String :: java.lang.Integer :: Char :: Int :: Nil
-        val l: l = 3 :: "hello" :: i :: 'a' :: 12 :: Nil
+        type l = Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil
+        val l: l = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil
 
         val _m: l#remove[_1N] = l.remove(_1N)
-        val m: Int :: java.lang.Integer :: Char :: Int :: Nil = _m
-        val e: Char = m.nth(_2N)
+        val m: Box[Int] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil = _m
+        val e: Char = m.nth(_2N).unbox
         assertEquals('a', e)
         ()
     }

@@ -14,10 +14,10 @@ import junit.framework.Assert._
 
 class OptionTest extends junit.framework.TestCase {
     def testTrivial {
-        type s = Some[Int]
-        val s: s = Some(3)
+        type s = Some[Box[Int]]
+        val s: s = Some(Box(3))
         val e: s#get = s.get
-        val k: Int = e
+        val k: Int = e.unbox
         assertEquals(3, k)
 
         type n = None
@@ -32,8 +32,8 @@ class OptionTest extends junit.framework.TestCase {
 
     def testIsEmpty {
         {
-            type s = Some[Int]
-            val s: s = Some(3)
+            type s = Some[Box[Int]]
+            val s: s = Some(Box(3))
             meta.assertSame[`false`, s#isEmpty]
             val e: s#isEmpty = s.isEmpty
             val k: `false` = e
@@ -50,8 +50,8 @@ class OptionTest extends junit.framework.TestCase {
 
     def testIsDefined {
         {
-            type s = Some[Int]
-            val s: s = Some(3)
+            type s = Some[Box[Int]]
+            val s: s = Some(Box(3))
             meta.assertSame[`true`, s#isDefined]
             val e: s#isDefined = s.isDefined
             val k: `true` = e
@@ -68,16 +68,16 @@ class OptionTest extends junit.framework.TestCase {
 
     def testUndual {
         {
-            type s = Some[Int]
-            val s: s = Some(3)
-            meta.assertSame[scala.Option[Any], s#undual]
+            type s = Some[Box[Int]]
+            val s: s = Some(Box(3))
+            meta.assertSame[scala.Option[scala.Any], s#undual]
             val e: s#undual = s.undual
             assertEquals(scala.Some(3), e)
         }
         {
             type s = None
             val s: s = None
-            meta.assertSame[scala.Option[Any], s#undual]
+            meta.assertSame[scala.Option[scala.Any], s#undual]
             val e: s#undual = s.undual
             assertSame(scala.None, s.undual)
         }
@@ -86,9 +86,9 @@ class OptionTest extends junit.framework.TestCase {
 
 
     def testMatch {
-        val s = Some(3)
+        val s = Some(Box(3))
         s match {
-            case Some(e) => assertEquals(3, e)
+            case Some(Box(e)) => assertEquals(3, e)
             case _ => fail("doh")
         }
 

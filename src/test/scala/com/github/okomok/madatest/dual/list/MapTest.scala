@@ -16,17 +16,17 @@ class MapTest extends junit.framework.TestCase {
     import junit.framework.Assert._
     assertFalse(scala.Nil eq Nil)
 
-    class mkString extends Function1_Any_Any {
+    class mkString extends Function1 {
         override  def apply[x <: Any](x: x): apply[x] = x.toString
         override type apply[x <: Any] = String
     }
     val mkString = new mkString
 
     def testTrivial {
-        type xs = Int :: String :: Char :: Nil
-        val xs: xs = 3 :: "hello" :: 'a' :: Nil
+        type xs = Box[Int] :: Box[String] :: Box[Char] :: Nil
+        val xs: xs = Box(3) :: Box("hello") :: Box('a') :: Nil
         val u: xs#map[mkString] = xs.map(mkString)
-        val v: String :: String :: String :: Nil = u
+        val v: Box[String] :: Box[String] :: Box[String] :: Nil = u
         assertEquals("3" :: "hello" :: "a" :: Nil, v)
     }
 

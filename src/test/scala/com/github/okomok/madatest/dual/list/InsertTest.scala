@@ -17,22 +17,22 @@ class InsertTest extends junit.framework.TestCase {
     assertFalse(scala.Nil eq Nil)
     def testTrivial: Unit = {
         val i = new java.lang.Integer(10)
-        type l = Int :: String :: java.lang.Integer :: Char :: Int :: Nil
-        val l: l = 3 :: "hello" :: i :: 'a' :: 12 :: Nil
+        type l = Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil
+        val l: l = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil
 
-        val _m: l#insert[_1N, String :: Tuple1[Int] :: Nil] = l.insert(_1N, "wow" :: Tuple1(10) :: Nil)
-        val m: Int :: String :: Tuple1[Int] :: String :: java.lang.Integer :: Char :: Int :: Nil = _m
-        val a = 3 :: "wow" :: Tuple1(10) :: "hello" :: i :: 'a' :: 12 :: Nil
+        val _m: l#insert[_1N, Box[String] :: Box[scala.Tuple1[Int]] :: Nil] = l.insert(_1N, Box("wow") :: Box(scala.Tuple1(10)) :: Nil)
+        val m: Box[Int] :: Box[String] :: Box[scala.Tuple1[Int]] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil = _m
+        val a = Box(3) :: Box("wow") :: Box(scala.Tuple1(10)) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil
         assertEquals(a, m)
     }
     def testNil: Unit = {
         val i = new java.lang.Integer(10)
-        type l = Int :: String :: java.lang.Integer :: Char :: Int :: Nil
-        val l: l = 3 :: "hello" :: i :: 'a' :: 12 :: Nil
+        type l = Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil
+        val l: l = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil
 
         val _m: l#insert[_1N, Nil] = l.insert(_1N, Nil)
-        val m: Int :: String :: java.lang.Integer :: Char :: Int :: Nil = _m
-        val a = 3 :: "hello" :: i :: 'a' :: 12 :: Nil
+        val m: Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil = _m
+        val a = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil
         assertEquals(a, m)
     }
 
@@ -50,31 +50,31 @@ class InsertTest extends junit.framework.TestCase {
         type l = Nil
         val l: l = Nil
 
-        val _m: l#insert[_0N, String :: Tuple1[Int] :: Nil] = l.insert(_0N, "wow" :: Tuple1(10) :: Nil)
-        val m: String :: Tuple1[Int] :: Nil = _m
-        val a = "wow" :: Tuple1(10) :: Nil
+        val _m: l#insert[_0N, Box[String] :: Box[scala.Tuple1[Int]] :: Nil] = l.insert(_0N, Box("wow") :: Box(scala.Tuple1(10)) :: Nil)
+        val m: Box[String] :: Box[scala.Tuple1[Int]] :: Nil = _m
+        val a = Box("wow") :: Box(scala.Tuple1(10)) :: Nil
         assertEquals(a, m)
     }
 
     def testHead: Unit = {
         val i = new java.lang.Integer(10)
-        type l = Int :: String :: java.lang.Integer :: Char :: Int :: Nil
-        val l: l = 3 :: "hello" :: i :: 'a' :: 12 :: Nil
+        type l = Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil
+        val l: l = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil
 
-        val _m: l#insert[_0N, String :: Tuple1[Int] :: Nil] = l.insert(_0N, "wow" :: Tuple1(10) :: Nil)
-        val m: String :: Tuple1[Int] :: Int :: String :: java.lang.Integer :: Char :: Int :: Nil = _m
-        val a = "wow" :: Tuple1(10) :: 3 :: "hello" :: i :: 'a' :: 12 :: Nil
+        val _m: l#insert[_0N, Box[String] :: Box[scala.Tuple1[Int]] :: Nil] = l.insert(_0N, Box("wow") :: Box(scala.Tuple1(10)) :: Nil)
+        val m: Box[String] :: Box[scala.Tuple1[Int]] :: Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil = _m
+        val a = Box("wow") :: Box(scala.Tuple1(10)) :: Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil
         assertEquals(a, m)
     }
 
     def testTail: Unit = {
         val i = new java.lang.Integer(10)
-        type l = Int :: String :: java.lang.Integer :: Char :: Int :: Nil
-        val l: l = 3 :: "hello" :: i :: 'a' :: 12 :: Nil
+        type l = Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil
+        val l: l = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil
 
-        val _m: l#insert[_5N, String :: Tuple1[Int] :: Nil] = l.insert(_5N, "wow" :: Tuple1(10) :: Nil)
-        val m: Int :: String :: java.lang.Integer :: Char :: Int :: String :: Tuple1[Int] :: Nil = _m
-        val a = 3 :: "hello" :: i :: 'a' :: 12 :: "wow" :: Tuple1(10) :: Nil
+        val _m: l#insert[_5N, Box[String] :: Box[scala.Tuple1[Int]] :: Nil] = l.insert(_5N, "wow" :: Tuple1(10) :: Nil)
+        val m: Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Box[String] :: Box[scala.Tuple1[Int]] :: Nil = _m
+        val a = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Box("wow") :: Box(scala.Tuple1(10)) :: Nil
         assertEquals(a, m)
     }
 }

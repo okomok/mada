@@ -17,20 +17,20 @@ class LastTest extends junit.framework.TestCase {
     assertFalse(scala.Nil eq Nil)
 
     type lastOf[l <: List] = l#last
-    meta.assertSame[Int, lastOf[Int :: String :: java.lang.Integer :: Char :: Int :: Nil]]
+    meta.assertSame[Box[Int], lastOf[Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil]]
 
     def testTrivial: Unit = {
         val i = new java.lang.Integer(10)
-        type Lst1 = Int :: String :: java.lang.Integer :: Char :: Int :: Nil
-        val lst1: Lst1 = 3 :: "hello" :: i :: 'a' :: 12 :: Nil
+        type Lst1 = Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil
+        val lst1: Lst1 = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil
         val e: Lst1#last = lst1.last
-        val e_ : Int = e
+        val e_ : Int = e.unbox
         assertEquals(12, e_)
 
-        type Lst2 = String :: Nil
-        val lst2: Lst2 = "hello" :: Nil
+        type Lst2 = Box[String] :: Nil
+        val lst2: Lst2 = Box("hello") :: Nil
         val e2: Lst2#last = lst2.last
-        val e2_ : String = e2
+        val e2_ : String = e2.unbox
         assertEquals("hello", e2_)
     }
 }

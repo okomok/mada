@@ -41,7 +41,6 @@ sealed trait Boolean extends Any {
     final override  def asInstanceOfBoolean = self
     final override type asInstanceOfBoolean = self
 
-    def undual: undual
     final type undual = scala.Boolean
 
     final override def equals(that: scala.Any) = that match {

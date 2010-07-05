@@ -16,18 +16,18 @@ class FlatMapTest extends junit.framework.TestCase {
     import junit.framework.Assert._
     assertFalse(scala.Nil eq Nil)
 
-    class oops extends Function1_Any_List {
-        override  def apply[x <: Any](x: x): apply[x] = x :: "oops" :: Nil
-        override type apply[x <: Any] = x :: String :: Nil
+    class oops extends Function1 {
+        override  def apply[x <: Any](x: x): apply[x] = x :: Box("oops") :: Nil
+        override type apply[x <: Any] = x :: Box[String] :: Nil
     }
     val oops = new oops
 
     def testTrivial {
-        type xs = Int :: String :: Char :: Nil
-        val xs: xs = 3 :: "hello" :: 'a' :: Nil
+        type xs = Box[Int] :: Box[String] :: Box[Char] :: Nil
+        val xs: xs = Box(3) :: Box("hello") :: Box('a') :: Nil
         val u: xs#flatMap[oops] = xs.flatMap(oops)
-        val v: Int :: String :: String :: String :: Char :: String :: Nil = u
-        assertEquals(3 :: "oops" :: "hello" :: "oops" :: 'a' :: "oops"  :: Nil, v)
+        val v: Box[Int] :: Box[String] :: Box[String] :: Box[String] :: Box[Char] :: Box[String] :: Nil = u
+        assertEquals(Box(3) :: Box("oops") :: Box("hello") :: Box("oops") :: Box('a') :: Box("oops")  :: Nil, v)
     }
 
     def testTrivialNil {

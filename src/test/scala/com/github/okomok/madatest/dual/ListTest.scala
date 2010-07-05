@@ -18,27 +18,27 @@ class ListTest extends junit.framework.TestCase {
 
     def testAt = {
         val i = new java.lang.Integer(10)
-        val lst = 3 :: "hello" :: i :: 'a' :: Nil
-        val a1: Int = lst.nth(_0N)
-        assertEquals(3, a1)
-        val a2: String = lst.nth(_1N)
-        assertEquals("hello", a2)
-        val a3: java.lang.Integer = lst.nth(_2N)
-        assertSame(i, a3)
-        val a4: Char = lst.nth(_3N)
-        assertEquals('a', a4)
-        assertEquals(10, lst.nth(_2N).intValue)
+        val lst = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Nil
+        val a1: Box[Int] = lst.nth(_0N)
+        assertEquals(3, a1.unbox)
+        val a2: Box[String] = lst.nth(_1N)
+        assertEquals("hello", a2.unbox)
+        val a3: Box[java.lang.Integer] = lst.nth(_2N)
+        assertSame(i, a3.unbox)
+        val a4: Box[Char] = lst.nth(_3N)
+        assertEquals('a', a4.unbox)
+        assertEquals(10, lst.nth(_2N).unbox.intValue)
     }
 
     def testSize: Unit = {
         val i = new java.lang.Integer(10)
-        val lst = 3 :: "hello" :: i :: 'a' :: Nil
+        val lst = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Nil
         assert(_4N === lst.size)
         assert(Nil.size === _0N)
     }
     def testTypeErase: Unit = {
         val i = new java.lang.Integer(10)
-        val lst = 3 :: "hello" :: i :: 'a' :: Nil
+        val lst = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Nil
         assertEquals("[]", Nil.toString)
         assertEquals("[3, hello, 10, a]", lst.toString)
     }
@@ -47,10 +47,10 @@ class ListTest extends junit.framework.TestCase {
         val i = new java.lang.Integer(10)
         val j = new java.lang.Integer(10)
         assertEquals(i, j)
-        val lst1 = 3 :: "hello" :: i :: 'a' :: Nil
-        val lst2 = 3 :: "hello" :: j :: 'a' :: Nil
-        val lst3 = 3 :: "hello" :: 'b' :: Nil
-        val lst4 = 2 :: "hello" :: i :: 'a' :: Nil
+        val lst1 = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Nil
+        val lst2 = Box(3) :: Box("hello") :: Box(j) :: Box('a') :: Nil
+        val lst3 = Box(3) :: Box("hello") :: Box('b') :: Nil
+        val lst4 = Box(2) :: Box("hello") :: Box(i) :: Box('a') :: Nil
         val lst5 = Nil
         assertEquals(lst1, lst2)
         AssertNotEquals(lst1, lst3)
@@ -61,36 +61,36 @@ class ListTest extends junit.framework.TestCase {
 
     def testDrop: Unit = {
         val i = new java.lang.Integer(10)
-        val lst = 3 :: "hello" :: i :: 'a' :: 12 :: Nil
-        val a = i :: 'a' :: 12 :: Nil
+        val lst = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil
+        val a = Box(i) :: Box('a') :: Box(12) :: Nil
         val s = lst.drop(_0N)
-        val b: java.lang.Integer :: Char :: Int :: Nil = lst.drop(_2N)
+        val b: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil = lst.drop(_2N)
         val c = lst.drop(_5N)
 //        val d = lst.drop(_9N)
         assertEquals(a, b)
 //        assertEquals(0, d.size)
 //        assertEquals(Nil, d)
-        assertEquals(3 :: "hello" :: i :: 'a' :: 12 :: Nil, s)
-        assertEquals(i :: 'a' :: 12 :: Nil, b)
+        assertEquals(Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil, s)
+        assertEquals(Box(i) :: Box('a') :: Box(12) :: Nil, b)
         assertEquals(Nil, c)
     }
 
     def testTake: Unit = {
         val i = new java.lang.Integer(10)
-        val lst = 3 :: "hello" :: i :: 'a' :: 12 :: Nil
+        val lst = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil
         val a = lst.take(_0N)
-        val b: Int :: String :: Nil = lst.take(_2N)
+        val b: Box[Int] :: Box[String] :: Nil = lst.take(_2N)
         val c = lst.take(_5N)
         assertEquals(Nil, a)
-        assertEquals(3 :: "hello" :: Nil, b)
-        assertEquals(3 :: "hello" :: i :: 'a' :: 12 :: Nil, c)
+        assertEquals(Box(3) :: Box("hello") :: Nil, b)
+        assertEquals(Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil, c)
     }
 
     def testIsEmpty: Unit = {
         assert(Nil.isEmpty)
-        assertNot((3 :: "hello" :: Nil).isEmpty)
+        assertNot((Box(3) :: Box("hello") :: Nil).isEmpty)
     }
-
+/*
     def testTyped: Unit = {
         import mada.sequence
         val i = new java.lang.Integer(10)
@@ -100,44 +100,44 @@ class ListTest extends junit.framework.TestCase {
         assertEquals(Nil, list.typed[Nil](sequence.Nil))
         ()
     }
-
+*/
     def testPrepend: Unit = {
         val i = new java.lang.Integer(10)
-        val lst1 = 3 :: "hello" :: i :: 'a' :: 12 :: Nil
-        val lst2 = "wow" :: 99 :: Nil
-        assertEquals(3 :: "hello" :: i :: 'a' :: 12 :: "wow" :: 99 :: Nil, lst1 ::: lst2)
+        val lst1 = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil
+        val lst2 = Box("wow") :: Box(99) :: Nil
+        assertEquals(Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Box("wow") :: Box(99) :: Nil, lst1 ::: lst2)
         assertEquals(Nil ::: Nil, Nil)
-        assertEquals(lst1 ::: Nil, 3 :: "hello" :: i :: 'a' :: 12 :: Nil)
-        assertEquals(Nil ::: lst1, 3 :: "hello" :: i :: 'a' :: 12 :: Nil)
-        val k: Int :: String :: java.lang.Integer :: Char :: Int :: Nil = (3 :: "hello" :: Nil) ::: (i :: Nil) ::: ('a' :: 12 :: Nil) ::: Nil
+        assertEquals(lst1 ::: Nil, Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil)
+        assertEquals(Nil ::: lst1, Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil)
+        val k: Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil = (Box(3) :: Box("hello") :: Nil) ::: (Box(i) :: Nil) ::: (Box('a') :: Box(12) :: Nil) ::: Nil
         assertEquals(lst1, k)
     }
 
 
     def testReversePrepend: Unit = {
         val i = new java.lang.Integer(10)
-        type Lst1 = Int :: String :: java.lang.Integer :: Char :: Int :: Nil
-        type Lst2 = String :: Int :: Nil
-        val lst1: Lst1 = 3 :: "hello" :: i :: 'a' :: 12 :: Nil
-        val lst2: Lst2 = "wow" :: 99 :: Nil
+        type Lst1 = Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil
+        type Lst2 = Box[String] :: Box[Int] :: Nil
+        val lst1: Lst1 = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil
+        val lst2: Lst2 = Box("wow") :: Box(99) :: Nil
 
         val lst12: Lst1 reverse_::: Lst2 = lst1 reverse_::: lst2
-        assertEquals(12 :: 'a' :: i :: "hello" :: 3 :: "wow" :: 99 :: Nil, lst12)
+        assertEquals(Box(12) :: Box('a') :: Box(i) :: Box("hello") :: Box(3) :: Box("wow") :: Box(99) :: Nil, lst12)
         assertEquals(Nil reverse_::: Nil, Nil)
-        assertEquals(lst1 reverse_::: Nil, 12 :: 'a' :: i :: "hello" :: 3  :: Nil)
-        assertEquals(Nil reverse_::: lst1, 3 :: "hello" :: i :: 'a' :: 12 :: Nil)
-        val k: Int :: String :: java.lang.Integer :: Char :: Int :: Nil = ("hello" :: 3 :: Nil) reverse_::: (i :: Nil) reverse_::: (12 :: 'a' :: Nil) reverse_::: Nil
+        assertEquals(lst1 reverse_::: Nil, Box(12) :: Box('a') :: Box(i) :: Box("hello") :: Box(3)  :: Nil)
+        assertEquals(Nil reverse_::: lst1, Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil)
+        val k: Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil = (Box("hello") :: Box(3) :: Nil) reverse_::: (Box(i) :: Nil) reverse_::: (Box(12) :: Box('a') :: Nil) reverse_::: Nil
         assertEquals(lst1, k)
         ()
     }
 
     def testReverse: Unit = {
         val i = new java.lang.Integer(10)
-        type Lst1 = Int :: String :: java.lang.Integer :: Char :: Int :: Nil
-        val lst1: Lst1 = 3 :: "hello" :: i :: 'a' :: 12 :: Nil
+        type Lst1 = Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil
+        val lst1: Lst1 = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil
         val lst1r: Lst1#reverse = lst1.reverse
-        val lst1r_ : Int :: Char :: java.lang.Integer :: String :: Int :: Nil = lst1r
-        assertEquals(12 :: 'a' :: i :: "hello" :: 3 :: Nil, lst1r)
+        val lst1r_ : Box[Int] :: Box[Char] :: Box[java.lang.Integer] :: Box[String] :: Box[Int] :: Nil = lst1r
+        assertEquals(Box(12) :: Box('a') :: Box(i) :: Box("hello") :: Box(3) :: Nil, lst1r)
         assertEquals(Nil.reverse, Nil)
     }
 }
@@ -147,62 +147,62 @@ object ListTezt {
     import meta.{ assert, assertSame }
 
     trait testAt {
-        type lst = Int :: String :: Double :: Char :: Nil
-        assertSame[lst#nth[_0N], Int]
-        assertSame[lst#nth[_1N], String]
-        assertSame[lst#nth[_2N], Double]
-        assertSame[lst#nth[_3N], Char]
-        assertSame[lst#nth[_2N# +[_1N]], Char]
+        type lst = Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Nil
+        assertSame[lst#nth[_0N], Box[Int]]
+        assertSame[lst#nth[_1N], Box[String]]
+        assertSame[lst#nth[_2N], Box[Double]]
+        assertSame[lst#nth[_3N], Box[Char]]
+        assertSame[lst#nth[_2N# +[_1N]], Box[Char]]
     }
 
     trait testSize {
-        type lst = Int :: String :: Double :: Char :: Nil
+        type lst = Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Nil
         assert[lst#size# ===[_4N]]
         assert[Nil#size# ===[_0N]]
     }
 
     trait testIsEmpty {
-        type lst = Int :: String :: Double :: Char :: Nil
+        type lst = Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Nil
         assertSame[Nil#isEmpty, `true`]
         assertSame[lst#isEmpty, `false`]
     }
 
     trait testDrop {
-        type lst = Int :: String :: Double :: Char :: Float :: Nil
-        assertSame[Int :: String :: Double :: Char :: Float :: Nil, lst#drop[_0N]]
-        assertSame[Double :: Char :: Float :: Nil, lst#drop[_2N]]
+        type lst = Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Box[Float] :: Nil
+        assertSame[Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Box[Float] :: Nil, lst#drop[_0N]]
+        assertSame[Box[Double] :: Box[Char] :: Box[Float] :: Nil, lst#drop[_2N]]
         assertSame[Nil, lst#drop[_5N]]
     }
 
     trait testTake {
-        type lst = Int :: String :: Double :: Char :: Float :: Nil
+        type lst = Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Box[Float] :: Nil
         assertSame[Nil, lst#take[_0N]]
-        assertSame[Int :: String :: Nil, lst#take[_2N]]
-        assertSame[Int :: String :: Double :: Char :: Float :: Nil, lst#take[_5N]]
+        assertSame[Box[Int] :: Box[String] :: Nil, lst#take[_2N]]
+        assertSame[Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Box[Float] :: Nil, lst#take[_5N]]
     }
 
     trait testPrepend {
-        type lst1 = Int :: String :: Double :: Char :: Float :: Nil
-        type lst2 = Boolean :: Byte :: Nil
+        type lst1 = Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Box[Float] :: Nil
+        type lst2 = Box[Boolean] :: Box[Byte] :: Nil
         assertSame[Nil, Nil#prepend[Nil]]
-        assertSame[Int :: String :: Double :: Char :: Float :: Boolean :: Byte :: Nil, lst2#prepend[lst1]]
+        assertSame[Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Box[Float] :: Box[Boolean] :: Box[Byte] :: Nil, lst2#prepend[lst1]]
         assertSame[lst1, lst1#prepend[Nil]]
         assertSame[lst1, Nil#prepend[lst1]]
 
         assertSame[Nil, Nil ::: Nil]
-        assertSame[Int :: String :: Double :: Char :: Float :: Boolean :: Byte :: Nil, lst1 ::: lst2]
+        assertSame[Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Box[Float] :: Box[Boolean] :: Box[Byte] :: Nil, lst1 ::: lst2]
         assertSame[lst1, lst1 ::: Nil]
         assertSame[lst1, Nil ::: lst1]
-        assertSame[lst1, (Int :: String :: Nil) ::: (Double :: Nil) ::: (Char :: Float :: Nil) ::: Nil]
+        assertSame[lst1, (Box[Int] :: Box[String] :: Nil) ::: (Box[Double] :: Nil) ::: (Box[Char] :: Box[Float] :: Nil) ::: Nil]
     }
 
     type prependprepend[l1 <: List, l2 <: List, r <: List] = r#prepend[l1]#prepend[l2]
 
     trait testPrepend2 {
-        type lst1 = Int :: String :: Double :: Char :: Float :: Nil
-        type lst2 = Boolean :: Byte :: Nil
-        type lst3 = Char :: String :: Nil
+        type lst1 = Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Box[Float] :: Nil
+        type lst2 = Box[Boolean] :: Box[Byte] :: Nil
+        type lst3 = Box[Char] :: Box[String] :: Nil
         type r = prependprepend[lst2, lst3, lst1]
-        assertSame[Char :: String :: Boolean :: Byte :: Int :: String :: Double :: Char :: Float :: Nil, r]
+        assertSame[Box[Char] :: Box[String] :: Box[Boolean] :: Box[Byte] :: Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Box[Float] :: Nil, r]
     }
 }

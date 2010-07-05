@@ -15,6 +15,7 @@ import com.github.okomok.mada
 
 import mada.dual._
 
+/*
 
 abstract class FChain[ES <: List] {outer =>
     def ::(constant:String) = new FConstant[ES](constant, this)
@@ -58,4 +59,6 @@ class PrintfTezt {
     }
 
 }
+
+*/
 

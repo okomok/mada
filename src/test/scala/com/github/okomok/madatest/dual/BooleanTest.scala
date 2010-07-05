@@ -65,19 +65,15 @@ class BooleanTest extends junit.framework.TestCase {
     }
 
     trait testPropagation {
-        type incinc[n <: Nat] = if_Nat[n# ===[_3N], Inc_Nat[n], Always_Nat[n]]#apply#increment#decrement#increment
+        type incinc[n <: Nat] = `if`[n# ===[_3N], Inc_Nat[n], Always0[n]]#apply#asInstanceOfNat#increment#decrement#increment
         meta.assertConforms[incinc[_2N], Nat]
 
-        meta.assert[if_Nat[_2N# ===[_3N], Inc_Nat[_2N], Always_Nat[_2N]]#apply#increment# ===[_3N]]
+        meta.assert[`if`[_2N# ===[_3N], Inc_Nat[_2N], Always0[_2N]]#apply#increment# ===[_3N]]
         meta.assert[incinc[_2N]# ===[_3N]]
         meta.assert[incinc[_3N]# ===[_5N]]
     }
 
-    class Always_Nat[e <: Nat](e: e) extends Function0_Nat {
-        override def apply = e
-        override type apply = e
-    }
-    class Inc_Nat[e <: Nat](val e: e) extends Function0_Nat {
+    class Inc_Nat[e <: Nat](val e: e) extends Function0 {
         override def apply = e.increment
         override type apply = e#increment
     }

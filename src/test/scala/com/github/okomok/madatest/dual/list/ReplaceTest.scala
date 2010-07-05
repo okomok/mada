@@ -18,15 +18,15 @@ class ReplaceTest extends junit.framework.TestCase {
 
     def testTrivial: Unit = {
         val i = new java.lang.Integer(10)
-        type l = Int :: String :: java.lang.Integer :: Char :: Int :: Nil
-        val l: l = 3 :: "hello" :: i :: 'a' :: 12 :: Nil
+        type l = Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil
+        val l: l = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil
 
-        val _m: l#replace[_1N, Char] = l.replace(_1N, 'c')
-        val m: Int :: Char :: java.lang.Integer :: Char :: Int :: Nil = _m
-        val e: Char = m.nth(_1N)
+        val _m: l#replace[_1N, Box[Char]] = l.replace(_1N, Box('c'))
+        val m: Box[Int] :: Box[Char] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil = _m
+        val e: Char = m.nth(_1N).unbox
         assertEquals('c', e)
 
-        val A = 3 :: 'c' :: i :: 'a' :: 12 :: Nil
+        val A = Box(3) :: Box('c') :: Box(i) :: Box('a') :: Box(12) :: Nil
         assertEquals(A, m)
     }
 }

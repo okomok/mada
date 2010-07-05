@@ -20,35 +20,35 @@ class InitTest extends junit.framework.TestCase {
     trait testMeta {
         type initInit[l <: List] = l#init#init
 
-        type l = Int :: String :: java.lang.Integer :: Char :: Int :: Nil
-        meta.assertSame[Int :: String :: java.lang.Integer :: Nil, initInit[l]]
+        type l = Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil
+        meta.assertSame[Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Nil, initInit[l]]
     }
 
     def testTrivial: Unit = {
         val i = new java.lang.Integer(10)
-        type l = Int :: String :: java.lang.Integer :: Char :: Int :: Nil
-        val l: l = 3 :: "hello" :: i :: 'a' :: 12 :: Nil
+        type l = Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil
+        val l: l = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil
 
         val li: l#init = l.init
-        val lii: Int :: String :: java.lang.Integer :: Char :: Nil = li
-        val A = 3 :: "hello" :: i :: 'a' :: Nil
+        val lii: Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Nil = li
+        val A = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Nil
         assertEquals(A, lii)
     }
 
     def testTrivial2: Unit = {
         val i = new java.lang.Integer(10)
-        type l = Int :: String :: java.lang.Integer :: Char :: Nil
-        val l: l = 3 :: "hello" :: i :: 'a' :: Nil
+        type l = Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Nil
+        val l: l = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Nil
 
         val li: l#init = l.init
-        val lii: Int :: String :: java.lang.Integer :: Nil = li
-        val A = 3 :: "hello" :: i :: Nil
+        val lii: Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Nil = li
+        val A = Box(3) :: Box("hello") :: Box(i) :: Nil
         assertEquals(A, lii)
     }
 
     def testOne: Unit = {
-        type l = Int :: Nil
-        val l: l = 12 :: Nil
+        type l = Box[Int] :: Nil
+        val l: l = Box(12) :: Nil
 
         val li: l#init = l.init
         val lii: Nil = li
