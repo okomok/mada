@@ -17,8 +17,8 @@ class MapTest extends junit.framework.TestCase {
     assertFalse(scala.Nil eq Nil)
 
     class mkString extends Function1 {
-        override  def apply[x <: Any](x: x): apply[x] = x.toString
-        override type apply[x <: Any] = String
+        override  def apply[x <: Any](x: x): apply[x] = Box(x.toString)
+        override type apply[x <: Any] = Box[String]
     }
     val mkString = new mkString
 
@@ -27,7 +27,7 @@ class MapTest extends junit.framework.TestCase {
         val xs: xs = Box(3) :: Box("hello") :: Box('a') :: Nil
         val u: xs#map[mkString] = xs.map(mkString)
         val v: Box[String] :: Box[String] :: Box[String] :: Nil = u
-        assertEquals("3" :: "hello" :: "a" :: Nil, v)
+        assertEquals(Box("3") :: Box("hello") :: Box("a") :: Nil, v)
     }
 
     def testTrivialNil {

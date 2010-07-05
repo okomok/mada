@@ -72,7 +72,7 @@ class InsertTest extends junit.framework.TestCase {
         type l = Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil
         val l: l = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil
 
-        val _m: l#insert[_5N, Box[String] :: Box[scala.Tuple1[Int]] :: Nil] = l.insert(_5N, "wow" :: Tuple1(10) :: Nil)
+        val _m: l#insert[_5N, Box[String] :: Box[scala.Tuple1[Int]] :: Nil] = l.insert(_5N, Box("wow") :: Box(scala.Tuple1(10)) :: Nil)
         val m: Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Box[String] :: Box[scala.Tuple1[Int]] :: Nil = _m
         val a = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Box("wow") :: Box(scala.Tuple1(10)) :: Nil
         assertEquals(a, m)

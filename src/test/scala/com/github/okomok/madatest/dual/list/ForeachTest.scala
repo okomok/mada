@@ -15,6 +15,8 @@ import mada.dual._
 class ForeachTest extends junit.framework.TestCase {
     import junit.framework.Assert._
     assertFalse(scala.Nil eq Nil)
+    def testTrivial2 {
+    }
 /*
     def testTrivial {
         type xs = Box[Int] :: Box[String] :: Box[Char] :: Nil
