@@ -6,7 +6,7 @@
 
 package com.github.okomok.madatest; package dualtest
 
-/*
+
     import com.github.okomok.mada.dual
     import dual.::
     import dual.nat.Literal._
@@ -22,9 +22,10 @@ package com.github.okomok.madatest; package dualtest
 
         def testSlice {
             type xs = _5N :: _6N :: _7N :: _8N :: dual.Nil
-            val xs = _5N :: _6N :: _7N :: _8N :: dual.Nil
+            val xs  = _5N :: _6N :: _7N :: _8N :: dual.Nil
             val ys: slice#apply[xs, _1N, _3N] = slice(xs, _1N, _3N)
-            assertEquals(3.14f :: "dual" :: dual.Nil, ys)
+            val zs: _6N :: _7N :: dual.Nil = ys
+            assertEquals(_6N :: _7N :: dual.Nil, zs)
         }
     }
-*/
+
