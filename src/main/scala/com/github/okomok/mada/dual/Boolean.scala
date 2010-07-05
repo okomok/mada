@@ -32,17 +32,17 @@ sealed trait Boolean {
     private[mada]  def isFalse: isFalse
     private[mada] type isFalse <: Boolean
 
-    private[mada]  def if_[then <: Function0, _else <: Function0](then: then, _else: _else): if_[then, _else]
-    private[mada] type if_[then <: Function0, _else <: Function0] <: Function0
+     def `if`[then <: Function0, _else <: Function0](then: then, _else: _else): `if`[then, _else]
+    type `if`[then <: Function0, _else <: Function0] <: Function0
 
-    private[mada]  def if_Boolean[then <: Function0_Boolean, _else <: Function0_Boolean](then: then, _else: _else): if_Boolean[then, _else]
-    private[mada] type if_Boolean[then <: Function0_Boolean, _else <: Function0_Boolean] <: Function0_Boolean
+     def if_Boolean[then <: Function0_Boolean, _else <: Function0_Boolean](then: then, _else: _else): if_Boolean[then, _else]
+    type if_Boolean[then <: Function0_Boolean, _else <: Function0_Boolean] <: Function0_Boolean
 
-    private[mada]  def if_Nat[then <: Function0_Nat, _else <: Function0_Nat](then: then, _else: _else): if_Nat[then, _else]
-    private[mada] type if_Nat[then <: Function0_Nat, _else <: Function0_Nat] <: Function0_Nat
+     def if_Nat[then <: Function0_Nat, _else <: Function0_Nat](then: then, _else: _else): if_Nat[then, _else]
+    type if_Nat[then <: Function0_Nat, _else <: Function0_Nat] <: Function0_Nat
 
-    private[mada]  def if_List[then <: Function0_List, _else <: Function0_List](then: then, _else: _else): if_List[then, _else]
-    private[mada] type if_List[then <: Function0_List, _else <: Function0_List] <: Function0_List
+     def if_List[then <: Function0_List, _else <: Function0_List](then: then, _else: _else): if_List[then, _else]
+    type if_List[then <: Function0_List, _else <: Function0_List] <: Function0_List
 
     def undual: undual
     final type undual = scala.Boolean
@@ -77,17 +77,17 @@ sealed trait `true` extends Boolean {
     override private[mada]  def isFalse: isFalse = `false`
     override private[mada] type isFalse = `false`
 
-    override private[mada]  def if_[then <: Function0, _else <: Function0](then: then, _else: _else): if_[then, _else] = then
-    override private[mada] type if_[then <: Function0, _else <: Function0] = then
+    override  def `if`[then <: Function0, _else <: Function0](then: then, _else: _else): `if`[then, _else] = then
+    override type `if`[then <: Function0, _else <: Function0] = then
 
-    override private[mada]  def if_Boolean[then <: Function0_Boolean, _else <: Function0_Boolean](then: then, _else: _else): if_Boolean[then, _else] = then
-    override private[mada] type if_Boolean[then <: Function0_Boolean, _else <: Function0_Boolean] = then
+    override  def if_Boolean[then <: Function0_Boolean, _else <: Function0_Boolean](then: then, _else: _else): if_Boolean[then, _else] = then
+    override type if_Boolean[then <: Function0_Boolean, _else <: Function0_Boolean] = then
 
-    override private[mada]  def if_Nat[then <: Function0_Nat, _else <: Function0_Nat](then: then, _else: _else): if_Nat[then, _else] = then
-    override private[mada] type if_Nat[then <: Function0_Nat, _else <: Function0_Nat] = then
+    override  def if_Nat[then <: Function0_Nat, _else <: Function0_Nat](then: then, _else: _else): if_Nat[then, _else] = then
+    override type if_Nat[then <: Function0_Nat, _else <: Function0_Nat] = then
 
-    override private[mada]  def if_List[then <: Function0_List, _else <: Function0_List](then: then, _else: _else): if_List[then, _else] = then
-    override private[mada] type if_List[then <: Function0_List, _else <: Function0_List] = then
+    override  def if_List[then <: Function0_List, _else <: Function0_List](then: then, _else: _else): if_List[then, _else] = then
+    override type if_List[then <: Function0_List, _else <: Function0_List] = then
 
     override def undual = true
 }
@@ -114,17 +114,17 @@ sealed trait `false` extends Boolean {
     override private[mada]  def isFalse: isFalse = `true`
     override private[mada] type isFalse = `true`
 
-    override private[mada]  def if_[then <: Function0, _else <: Function0](then: then, _else: _else): if_[then, _else] = _else
-    override private[mada] type if_[then <: Function0, _else <: Function0] = _else
+    override  def `if`[then <: Function0, _else <: Function0](then: then, _else: _else): `if`[then, _else] = _else
+    override type `if`[then <: Function0, _else <: Function0] = _else
 
-    override private[mada]  def if_Boolean[then <: Function0_Boolean, _else <: Function0_Boolean](then: then, _else: _else): if_Boolean[then, _else] = _else
-    override private[mada] type if_Boolean[then <: Function0_Boolean, _else <: Function0_Boolean] = _else
+    override  def if_Boolean[then <: Function0_Boolean, _else <: Function0_Boolean](then: then, _else: _else): if_Boolean[then, _else] = _else
+    override type if_Boolean[then <: Function0_Boolean, _else <: Function0_Boolean] = _else
 
-    override private[mada]  def if_Nat[then <: Function0_Nat, _else <: Function0_Nat](then: then, _else: _else): if_Nat[then, _else] = _else
-    override private[mada] type if_Nat[then <: Function0_Nat, _else <: Function0_Nat] = _else
+    override  def if_Nat[then <: Function0_Nat, _else <: Function0_Nat](then: then, _else: _else): if_Nat[then, _else] = _else
+    override type if_Nat[then <: Function0_Nat, _else <: Function0_Nat] = _else
 
-    override private[mada]  def if_List[then <: Function0_List, _else <: Function0_List](then: then, _else: _else): if_List[then, _else] = _else
-    override private[mada] type if_List[then <: Function0_List, _else <: Function0_List] = _else
+    override  def if_List[then <: Function0_List, _else <: Function0_List](then: then, _else: _else): if_List[then, _else] = _else
+    override type if_List[then <: Function0_List, _else <: Function0_List] = _else
 
     override def undual = false
 }

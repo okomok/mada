@@ -49,8 +49,8 @@ package object dual extends dual.nat.LiteralCommon {
     /**
      * The if-expression to return Any.
      */
-     def `if`[b <: Boolean, then <: Function0, _else <: Function0](b: b, then: then, _else: _else): `if`[b, then, _else] = b.if_(then, _else)
-    type `if`[b <: Boolean, then <: Function0, _else <: Function0] = b#if_[then, _else]
+     def `if`[b <: Boolean, then <: Function0, _else <: Function0](b: b, then: then, _else: _else): `if`[b, then, _else] = b.`if`(then, _else)
+    type `if`[b <: Boolean, then <: Function0, _else <: Function0] = b#`if`[then, _else]
 
     /**
      * The if-expression to return Boolean.
