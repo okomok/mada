@@ -7,6 +7,8 @@
 package com.github.okomok.mada; package dual; package list
 
 
+// TODO: make it easy method impl.
+
 private[mada] class Size {
      def apply[xs <: List](xs: xs): apply[xs] = xs.foldRight_Nat(_0N, step)
     type apply[xs <: List] = xs#foldRight_Nat[_0N, step]

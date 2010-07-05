@@ -43,6 +43,30 @@ sealed abstract class List { // this: self =>
     type isEmpty <: Boolean
 
     /**
+     * Maps elements using <code>f</code>.
+     */
+     def map[f <: Function1_Any_Any](f: f): map[f]
+    type map[f <: Function1_Any_Any] <: List
+
+    /**
+     * Flattens elements using <code>f</code>.
+     */
+     def flatMap[f <: Function1_Any_List](f: f): flatMap[f]
+    type flatMap[f <: Function1_Any_List] <: List
+
+    /**
+     * Filters elements using <code>f</code>.
+     */
+     def filter[f <: Function1_Any_Boolean](f: f): filter[f]
+    type filter[f <: Function1_Any_Boolean] <: List
+
+    /**
+     * Applies <code>f</code> to each element.
+     */
+    def foreach[f <: Function1_Any_Unit](f: f): foreach[f]
+    final type foreach[f <: Function1_Any_Unit] = Unit
+
+    /**
      * Drops EXACTLY <code>n</code> elements.
      *
      * @pre `n in [0, size)`.
@@ -214,6 +238,17 @@ sealed abstract class Nil extends List {
     override  def isEmpty = `true`
     override type isEmpty = `true`
 
+    override  def map[f <: Function1_Any_Any](f: f) = Nil
+    override type map[f <: Function1_Any_Any] = Nil
+
+    override  def flatMap[f <: Function1_Any_List](f: f) = Nil
+    override type flatMap[f <: Function1_Any_List] = Nil
+
+    override  def filter[f <: Function1_Any_Boolean](f: f) = Nil
+    override type filter[f <: Function1_Any_Boolean] = Nil
+
+    override  def foreach[f <: Function1_Any_Unit](f: f) = ()
+
     override  def zip[that <: List](that: that) = Nil
     override type zip[that <: List] = Nil
 
@@ -245,6 +280,17 @@ final case class Cons[x <: Any, xs <: List](x: x, xs: xs) extends List {
 
     override  def isEmpty = `false`
     override type isEmpty = `false`
+
+    override  def map[f <: Function1_Any_Any](f: f) = Cons(f.apply(x), xs.map(f))
+    override type map[f <: Function1_Any_Any] = Cons[f#apply[x], xs#map[f]]
+
+    override  def flatMap[f <: Function1_Any_List](f: f): flatMap[f] = f.apply(x) ::: xs.flatMap(f)
+    override type flatMap[f <: Function1_Any_List] = f#apply[x] ::: xs#flatMap[f]
+
+    override  def filter[f <: Function1_Any_Boolean](f: f) = new FilterCons().apply(x, xs, f)
+    override type filter[f <: Function1_Any_Boolean] = FilterCons#apply[x, xs, f]
+
+    override  def foreach[f <: Function1_Any_Unit](f: f) = { f.apply(x); xs.foreach(f) }
 
     override  def zip[that <: List](that: that): zip[that] = Cons(scala.Tuple2(head, that.head), tail.zip(that.tail))
     override type zip[that <: List] = Cons[scala.Tuple2[head, that#head], tail#zip[that#tail]]

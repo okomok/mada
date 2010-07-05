@@ -27,7 +27,4 @@ class Always0_Nil extends Function0_List {
     override type apply = Nil
 }
 
-class Always0_Unit extends Function0_Unit {
-    override  def apply = ()
-    override type apply = Unit
-}
+class Always0_Unit extends Function0_Unit

@@ -28,10 +28,30 @@ trait Function0_List {
 }
 
 trait Function0_Unit {
-     def apply: apply
-    type apply <: Unit
+    final  def apply: apply = ()
+    final type apply = Unit
 }
 
+
+trait Function1_Any_Any {
+     def apply[v1 <: Any](v1: v1): apply[v1]
+    type apply[v1 <: Any] <: Any
+}
+
+trait Function1_Any_Unit {
+    def apply[v1 <: Any](v1: v1): apply[v1]
+    final type apply[v1 <: Any] = Unit
+}
+
+trait Function1_Any_Boolean {
+     def apply[v1 <: Any](v1: v1): apply[v1]
+    type apply[v1 <: Any] <: Boolean
+}
+
+trait Function1_Any_List {
+     def apply[v1 <: Any](v1: v1): apply[v1]
+    type apply[v1 <: Any] <: List
+}
 
 trait Function1_Nat_Nat {
      def apply[v1 <: Nat](v1: v1): apply[v1]
