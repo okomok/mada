@@ -75,8 +75,8 @@
 
 Terminology:
 
-* _metatype_ is a type. (capitalized in source code.)
-* _metavalue_ is a type which extends metatype.
+* _metatype_ is a type which extends `dual.Any`. (capitalized in source code.)
+* _metavalue_ is an unextendable type which extends metatype.
 * _metamethod_ is a type constructor.
 * _dualvalue_ is an identifier which can be used as both value and metavalue.
 * _dualmethod_ is an identifier which can be used as both method and metamethod.
