@@ -14,8 +14,8 @@ package com.github.okomok.madatest; package dualtest
 
     class DocTest extends junit.framework.TestCase {
         // Define dualvalue `not2`.
-        final class not2 extends dual.Function1 { // No meta-generics. Function1 isn't parameterized.
-            // `self` is the dual version of `this` reference. manual setup is needed.
+        final class not2 extends dual.Function1 { // No meta-generics. `Function1` isn't parameterized.
+            // `self` is the dual version of `this` reference. Manual setup is needed.
             override  def self = this
             override type self = not2
             // Again no meta-generics. Downcast is needed as you did in 90s.
