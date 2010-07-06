@@ -42,6 +42,7 @@ sealed abstract class Option extends Any {
      def isDefined: isDefined = isEmpty.not
     type isDefined = isEmpty#not
 
+    override type undual <: scala.Option[_]
     final override def canEqual(that: scala.Any) = that.isInstanceOf[Option]
 }
 

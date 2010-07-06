@@ -273,7 +273,7 @@ final case class Cons[x <: Any, xs <: List](private val x: x, private val xs: xs
     override  def foldLeft[z <: Any, f <: Function2](z: z, f: f): foldLeft[z, f] = tail.foldLeft(f.apply(z, head), f)
     override type foldLeft[z <: Any, f <: Function2] = tail#foldLeft[f#apply[z, head], f]
 
-    override def undual = head :: tail.undual
+    override def undual = head.undual :: tail.undual
 }
 
 object :: {
