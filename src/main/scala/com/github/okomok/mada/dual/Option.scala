@@ -42,8 +42,7 @@ sealed abstract class Option extends Any {
      def isDefined: isDefined = isEmpty.not
     type isDefined = isEmpty#not
 
-    def undual: undual
-    final type undual = scala.Option[scala.Any]
+    final override def canEqual(that: scala.Any) = that.isInstanceOf[Option]
 }
 
 
@@ -60,7 +59,8 @@ sealed abstract class None extends Option {
     override  def isEmpty = `true`
     override type isEmpty = `true`
 
-    override def undual = scala.None
+    override  def undual = scala.None
+    override type undual = scala.None.type
 }
 
 
@@ -77,7 +77,8 @@ final case class Some[e <: Any](e: e) extends Option {
     override  def isEmpty = `false`
     override type isEmpty = `false`
 
-    override def undual = scala.Some(e.undual)
+    override  def undual = scala.Some(e.undual)
+    override type undual = scala.Some[e#undual]
 }
 
 

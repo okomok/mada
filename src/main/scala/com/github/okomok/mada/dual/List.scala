@@ -199,12 +199,7 @@ sealed abstract class List extends Any {
     final override type asInstanceOfList = self
 
     final override type undual = sequence.List[scala.Any]
-
-    final override def equals(that: scala.Any) = that match {
-        case that: List => undual == that.undual
-        case _ => false
-    }
-
+    final override def canEqual(that: scala.Any) = that.isInstanceOf[List]
 }
 
 

@@ -13,6 +13,9 @@ package com.github.okomok.mada; package dual
 sealed trait Boolean extends Any {
     type self <: Boolean
 
+    final override  def asInstanceOfBoolean = self
+    final override type asInstanceOfBoolean = self
+
      def not: not
     type not <: Boolean
 
@@ -37,15 +40,8 @@ sealed trait Boolean extends Any {
      def `if`[then <: Function0, _else <: Function0](then: then, _else: _else): `if`[then, _else]
     type `if`[then <: Function0, _else <: Function0] <: Function0
 
-    final override  def asInstanceOfBoolean = self
-    final override type asInstanceOfBoolean = self
-
-    final type undual = scala.Boolean
-
-    final override def equals(that: scala.Any) = that match {
-        case that: Boolean => undual == that.undual
-        case _ => false
-    }
+    final override type undual = scala.Boolean
+    final override def canEqual(that: scala.Any) = that.isInstanceOf[Boolean]
 }
 
 /**

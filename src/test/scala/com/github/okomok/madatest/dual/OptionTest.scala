@@ -70,14 +70,14 @@ class OptionTest extends junit.framework.TestCase {
         {
             type s = Some[Box[Int]]
             val s: s = Some(Box(3))
-            meta.assertSame[scala.Option[scala.Any], s#undual]
+            meta.assertSame[scala.Some[Int], s#undual]
             val e: s#undual = s.undual
             assertEquals(scala.Some(3), e)
         }
         {
             type s = None
             val s: s = None
-            meta.assertSame[scala.Option[scala.Any], s#undual]
+            meta.assertSame[scala.None.type, s#undual]
             val e: s#undual = s.undual
             assertSame(scala.None, s.undual)
         }

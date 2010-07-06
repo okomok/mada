@@ -15,6 +15,8 @@ trait Product extends Any {
 
      def arity: arity
     type arity <: Nat
+
+    override def canEqual(that: scala.Any) = that.isInstanceOf[Product]
 }
 
 
@@ -29,6 +31,8 @@ trait Product1 extends Product {
 
      def _1: _1
     type _1 <: Any
+
+    override def canEqual(that: scala.Any) = that.isInstanceOf[Product1]
 }
 
 trait Product2 extends Product {
@@ -45,4 +49,6 @@ trait Product2 extends Product {
 
      def _2: _2
     type _2 <: Any
+
+    override def canEqual(that: scala.Any) = that.isInstanceOf[Product2]
 }

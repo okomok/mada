@@ -63,11 +63,7 @@ sealed trait Nat extends Any {
     type foldRight[z <: Any, f <: Function2] <: Any
 
     final override type undual = scala.Int
-
-    final override def equals(that: scala.Any) = that match {
-        case that: Nat => undual == that.undual
-        case _ => false
-    }
+    final override def canEqual(that: scala.Any) = that.isInstanceOf[Nat]
 }
 
 
@@ -127,13 +123,13 @@ sealed trait singular extends Nat {
     override private[mada]  def gtZero = `false`
     override private[mada] type gtZero = `false`
 
-    override  def increment = `throw`(new scala.UnsupportedOperationException)
+    override  def increment = `throw`(new scala.UnsupportedOperationException("singular.increment"))
     override type increment = `throw`[scala.UnsupportedOperationException]
 
     override  def decrement = self
     override type decrement = self
 
-    override  def foldRight[z <: Any, f <: Function2](z: z, f: f) =  `throw`(new scala.UnsupportedOperationException)
+    override  def foldRight[z <: Any, f <: Function2](z: z, f: f) =  `throw`(new scala.UnsupportedOperationException("singular.foldRight"))
     override type foldRight[z <: Any, f <: Function2] = `throw`[scala.UnsupportedOperationException]
 }
 
