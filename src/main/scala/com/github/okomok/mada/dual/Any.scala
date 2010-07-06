@@ -17,6 +17,9 @@ trait Any {
      def asInstanceOfBoolean: asInstanceOfBoolean = `throw`(new scala.UnsupportedOperationException)
     type asInstanceOfBoolean <: Boolean
 
+     def asInstanceOfBox: asInstanceOfBox = `throw`(new scala.UnsupportedOperationException)
+    type asInstanceOfBox <: Box[_]
+
      def asInstanceOfFunction0: asInstanceOfFunction0 = `throw`(new scala.UnsupportedOperationException)
     type asInstanceOfFunction0 <: Function0
 
