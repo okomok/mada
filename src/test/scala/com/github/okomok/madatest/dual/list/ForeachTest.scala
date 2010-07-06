@@ -22,6 +22,8 @@ class ForeachTest extends junit.framework.TestCase {
 
         val r = new java.util.ArrayList[String]
         class AddString extends Function1 {
+            override  def self = this
+            override type self = AddString
             override  def apply[x <: Any](x: x) = { r.add(x.toString); Unit }
             override type apply[x <: Any] = Unit
         }
@@ -36,6 +38,8 @@ class ForeachTest extends junit.framework.TestCase {
 
         val r = new java.util.ArrayList[String]
         class AddString extends Function1 {
+            override  def self = this
+            override type self = AddString
             override  def apply[x <: Any](x: x) = { r.add(x.toString); Unit }
             override type apply[x <: Any] = Unit
         }

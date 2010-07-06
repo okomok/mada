@@ -13,6 +13,8 @@ private[mada] class PrependReversed {
 
     val step = new step
     class step extends Function2 {
+        override  def self = this
+        override type self = step
         override  def apply[b <: Any, a <: Any](b: b, a: a) = Cons(a, b.asInstanceOfList)
         override type apply[b <: Any, a <: Any] = Cons[a, b#asInstanceOfList]
     }

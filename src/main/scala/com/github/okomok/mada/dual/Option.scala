@@ -14,9 +14,10 @@ import option._
  * The dual Option
  */
 sealed abstract class Option extends Any {
-    @returnThis
-     def self: self
     type self <: Option
+
+    final override  def asInstanceOfOption = self
+    final override type asInstanceOfOption = self
 
     /**
      * Get a value of this option.
@@ -50,7 +51,7 @@ sealed abstract class Option extends Any {
  * The dual None
  */
 sealed abstract class None extends Option {
-    override  val self = this
+    override  def self = this
     override type self = None
 
     override  def get = throw new NoSuchElementException("dual.None.get")
@@ -67,7 +68,7 @@ sealed abstract class None extends Option {
  * The dual Some
  */
 final case class Some[e <: Any](e: e) extends Option {
-    override  val self = this
+    override  def self = this
     override type self = Some[e]
 
     override  val get = e

@@ -7,15 +7,13 @@
 package com.github.okomok.mada; package dual
 
 
-final case class Box[A](e: A) extends Any {
+final case class Box[A](private val e: A) extends Any {
+    override  def self = this
+    override type self = Box[A]
+
      def unbox = e
     type unbox = A
 
     override  def undual = unbox
-    override type undual = A
-
-    override def equals(that: scala.Any) = that match {
-        case that: Box[_] => undual == that.undual
-        case _ => false
-    }
+    override type undual = unbox
 }

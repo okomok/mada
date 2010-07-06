@@ -15,8 +15,10 @@ import nat._
 
 
 sealed trait Nat extends Any {
-     def self: self
     type self <: Nat
+
+    final override  def asInstanceOfNat = self
+    final override type asInstanceOfNat = self
 
     private[mada]  def isZero: isZero
     private[mada] type isZero <: Boolean
@@ -60,9 +62,6 @@ sealed trait Nat extends Any {
      def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f]
     type foldRight[z <: Any, f <: Function2] <: Any
 
-    final override  def asInstanceOfNat = self
-    final override type asInstanceOfNat = self
-
     final override type undual = scala.Int
 
     final override def equals(that: scala.Any) = that match {
@@ -95,7 +94,7 @@ sealed trait Zero extends Nat {
 }
 
 
-final case class Succ[n <: Nat](n: n) extends Nat {
+final case class Succ[n <: Nat](private val n: n) extends Nat {
     override  def self = this
     override type self = Succ[n]
 
@@ -128,14 +127,14 @@ sealed trait singular extends Nat {
     override private[mada]  def gtZero = `false`
     override private[mada] type gtZero = `false`
 
-    override  def increment = unsupported
-    override type increment = unsupported
+    override  def increment = `throw`(new scala.UnsupportedOperationException)
+    override type increment = `throw`[scala.UnsupportedOperationException]
 
     override  def decrement = self
     override type decrement = self
 
-    override  def foldRight[z <: Any, f <: Function2](z: z, f: f) = unsupported
-    override type foldRight[z <: Any, f <: Function2] = unsupported
+    override  def foldRight[z <: Any, f <: Function2](z: z, f: f) =  `throw`(new scala.UnsupportedOperationException)
+    override type foldRight[z <: Any, f <: Function2] = `throw`[scala.UnsupportedOperationException]
 }
 
 

@@ -8,6 +8,9 @@ package com.github.okomok.mada; package dual
 
 
 sealed abstract class Unit extends Any {
+    override  def self = this
+    override type self = Unit
+
     override  def asInstanceOfUnit = this
     override type asInstanceOfUnit = Unit
 

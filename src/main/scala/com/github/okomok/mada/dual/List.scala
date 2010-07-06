@@ -16,8 +16,6 @@ import list._
 
 sealed abstract class List extends Any {
 
-    @returnThis
-     def self: self
     type self <: List
 
     /**
@@ -169,7 +167,7 @@ sealed abstract class List extends Any {
     type zip[that <: List] <: List
 
     @aliasOf("addFirst")
-    final def ::[e <: Any](e: e): addFirst[e] = Cons(e, self)
+    final def ::[e <: Any](e: e): addFirst[e] = addFirst(e)
 
     @aliasOf("prepend")
     final def :::[that <: List](that: that): prepend[that] = prepend(that)
@@ -211,14 +209,14 @@ sealed abstract class List extends Any {
 
 
 sealed abstract class Nil extends List {
-    override  val self = this
+    override  def self = this
     override type self = Nil
 
-    override  def head = unsupported
-    override type head = unsupported
+    override  def head = `throw`(new scala.NoSuchElementException)
+    override type head = `throw`[scala.NoSuchElementException]
 
-    override  def tail = unsupported // `Nil` would make `List.take` less-restrictive?
-    override type tail = unsupported
+    override  def tail = `throw`(new scala.NoSuchElementException)
+    override type tail = `throw`[scala.NoSuchElementException]
 
     override  def isEmpty = `true`
     override type isEmpty = `true`
@@ -247,8 +245,8 @@ sealed abstract class Nil extends List {
 }
 
 
-final case class Cons[x <: Any, xs <: List](x: x, xs: xs) extends List {
-    override  val self = this
+final case class Cons[x <: Any, xs <: List](private val x: x, private val xs: xs) extends List {
+    override  def self = this
     override type self = Cons[x, xs]
 
     override  val head = x
@@ -269,7 +267,7 @@ final case class Cons[x <: Any, xs <: List](x: x, xs: xs) extends List {
     override  def filter[f <: Function1](f: f) = new FilterCons().apply(x, xs, f)
     override type filter[f <: Function1] = FilterCons#apply[x, xs, f]
 
-    override  def foreach[f <: Function1](f: f) = { f.apply(x); xs.foreach(f) }
+    override  def foreach[f <: Function1](f: f): foreach[f] = { f.apply(x); xs.foreach(f) }
 
     override  def zip[that <: List](that: that): zip[that] = Cons(Tuple2(head, that.head), tail.zip(that.tail))
     override type zip[that <: List] = Cons[Tuple2[head, that#head], tail#zip[that#tail]]
@@ -281,6 +279,10 @@ final case class Cons[x <: Any, xs <: List](x: x, xs: xs) extends List {
     override type foldLeft[z <: Any, f <: Function2] = tail#foldLeft[f#apply[z, head], f]
 
     override def undual = head :: tail.undual
+}
+
+object :: {
+    def unapply[x <: Any, xs <: List](xs: Cons[x, xs]): scala.Option[(x, xs)] = scala.Some(xs.head, xs.tail)
 }
 
 
@@ -316,14 +318,4 @@ object List {
     }
     implicit def _of5[a1, a2, a3, a4, a5](_this: a1 :: a2 :: a3 :: a4 :: a5 :: Nil): _Of5[a1, a2, a3, a4, a5] = new _Of5(_this)
 */
-}
-
-
-/**
- * The matcher for cons list
- */
-object :: {
-
-    def unapply[x <: Any, xs <: List](xs: Cons[x, xs]): scala.Option[(x, xs)] = scala.Some(xs.head, xs.tail)
-
 }

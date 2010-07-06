@@ -11,7 +11,6 @@ package com.github.okomok.mada; package dual
  * The dual Boolean
  */
 sealed trait Boolean extends Any {
-     def self: self
     type self <: Boolean
 
      def not: not

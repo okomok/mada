@@ -13,6 +13,8 @@ private[mada] class Subtract {
 
     val step = new step
     class step extends Function2 {
+        override  def self = this
+        override type self = step
         override  def apply[a <: Any, b <: Any](a: a, b: b): apply[a, b] = b.asInstanceOfNat.decrement
         override type apply[a <: Any, b <: Any] = b#asInstanceOfNat#decrement
     }

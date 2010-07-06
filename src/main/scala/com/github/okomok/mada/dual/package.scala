@@ -15,10 +15,10 @@ package object dual extends dual.nat.LiteralCommon {
 
 
     /**
-     * Designates an unsupported operation error.
+     * The dual throw
      */
-     def unsupported: unsupported = throw new java.lang.UnsupportedOperationException
-    type unsupported = scala.Nothing
+     def `throw`[x <: scala.Throwable](x: x): `throw`[x] = throw x
+    type `throw`[x <: scala.Throwable] = Nothing
 
 
 // assertions
@@ -81,6 +81,7 @@ package object dual extends dual.nat.LiteralCommon {
 
     @equivalentTo("ys#reversePrepend[xs]")
     type reverse_:::[xs <: List, ys <: List] = ys#prependReversed[xs]
+
 
 // Unit
 

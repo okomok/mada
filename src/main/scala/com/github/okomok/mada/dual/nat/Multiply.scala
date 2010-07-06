@@ -12,6 +12,8 @@ private[mada] class Multiply {
     type apply[x <: Nat, y <: Nat] = x#foldRight[Zero, Step[y]]#asInstanceOfNat
 
     class Step[y <: Nat](y: y) extends Function2 {
+        override  def self = this
+        override type self = Step[y]
         override def apply[a <: Any, b <: Any](a: a, b: b): apply[a, b] = y + b.asInstanceOfNat
         override type apply[a <: Any, b <: Any] = y# +[b#asInstanceOfNat]
     }

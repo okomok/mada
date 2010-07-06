@@ -12,6 +12,8 @@ private[mada] class GetOrElse {
     type apply[p <: Option, f <: Function0] = `if`[p#isEmpty, f, Get[p]]#apply
 
     class Get[p <: Option](p: p) extends Function0 {
+        override  def self = this
+        override type self = Get[p]
         override  def apply: apply = p.get
         override type apply = p#get
     }

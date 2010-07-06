@@ -13,7 +13,9 @@ private[mada] class Drop {
 
     val step = new step
     class step extends Function2 {
-        override def apply[a <: Any, b <: Any](a: a, b: b): apply[a, b] = b.asInstanceOfList.tail
+        override  def self = this
+        override type self = step
+        override  def apply[a <: Any, b <: Any](a: a, b: b): apply[a, b] = b.asInstanceOfList.tail
         override type apply[a <: Any, b <: Any] = b#asInstanceOfList#tail
     }
 }
