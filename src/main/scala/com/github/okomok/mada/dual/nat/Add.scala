@@ -13,7 +13,7 @@ private[mada] class Add {
     type apply[x <: Nat, y <: Nat] = x#foldRight[y, step]#asInstanceOfNat
 
     val step = new step
-    class step extends Function2 {
+    final class step extends Function2 {
         override  def self = this
         override type self = step
         override  def apply[a <: Any, b <: Any](a: a, b: b): apply[a, b] = b.asInstanceOfNat.increment

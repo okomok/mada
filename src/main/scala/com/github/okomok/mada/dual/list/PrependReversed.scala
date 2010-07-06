@@ -12,7 +12,7 @@ private[mada] class PrependReversed {
     type apply[xs <: List, ys <: List] = ys#foldLeft[xs, step]#asInstanceOfList
 
     val step = new step
-    class step extends Function2 {
+    final class step extends Function2 {
         override  def self = this
         override type self = step
         override  def apply[b <: Any, a <: Any](b: b, a: a) = Cons(a, b.asInstanceOfList)

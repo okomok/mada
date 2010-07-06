@@ -77,14 +77,13 @@ Terminology:
 
 * _metatype_ is a type which extends `dual.Any`. (capitalized in source code.)
 * _metavalue_ is an unextendable type which extends metatype.
-* _metamethod_ is a type constructor.
+* _metamethod_ is a type constructor which takes metavalues.
 * _dualvalue_ is an identifier which can be used as both value and metavalue.
 * _dualmethod_ is an identifier which can be used as both method and metamethod.
 
 In the Scala metaprogramming world:
 
 * meta-`eq`(type identity equality) is infeasible.
-* meta-`asInstanceOf` is infeasible.
 * meta-generics doesn't work. (e.g. metatype can't be a parameter.)
 * metatype is resurrected in parameter-nondependent context.
 
