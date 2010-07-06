@@ -53,8 +53,8 @@ sealed abstract class None extends Option {
     override  def self = this
     override type self = None
 
-    override  def get = throw new NoSuchElementException("dual.None.get")
-    override type get = Nothing
+    override  def get = `throw`(new scala.NoSuchElementException("dual.None.get"))
+    override type get = `throw`[scala.NoSuchElementException]
 
     override  def isEmpty = `true`
     override type isEmpty = `true`

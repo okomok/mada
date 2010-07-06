@@ -123,13 +123,13 @@ sealed trait singular extends Nat {
     override private[mada]  def gtZero = `false`
     override private[mada] type gtZero = `false`
 
-    override  def increment = `throw`(new scala.UnsupportedOperationException("singular.increment"))
+    override  def increment = `throw`(new scala.UnsupportedOperationException("dual.singular.increment"))
     override type increment = `throw`[scala.UnsupportedOperationException]
 
     override  def decrement = self
     override type decrement = self
 
-    override  def foldRight[z <: Any, f <: Function2](z: z, f: f) =  `throw`(new scala.UnsupportedOperationException("singular.foldRight"))
+    override  def foldRight[z <: Any, f <: Function2](z: z, f: f) =  `throw`(new scala.UnsupportedOperationException("dual.singular.foldRight"))
     override type foldRight[z <: Any, f <: Function2] = `throw`[scala.UnsupportedOperationException]
 }
 
