@@ -32,6 +32,9 @@ sealed abstract class Nat extends Any {
     private[mada]  def ifNil[then <: Function0, _else <: Function0](then: then, _else: _else): ifNil[then, _else]
     private[mada] type ifNil[then <: Function0, _else <: Function0] <: Function0
 
+    private[mada]  def match4way[that <: Nat, tt <: Function0, tf <: Function0, ft <: Function0, ff <: Function0]: match4way[that, tt, tf, ft, ff]
+    private[mada] type match4way[that <: Nat, tt <: Function0, tf <: Function0, ft <: Function0, ff <: Function0] <: Function0
+
     final  def ===[that <: Nat](that: that): ===[that] = throw new Error//this.-(that).isZero
     final type ===[that <: Nat] = Nothing//-[that]#isZero
 
@@ -95,6 +98,9 @@ sealed class NatNil extends Nat {
     override private[mada]  def ifNil[then <: Function0, _else <: Function0](then: then, _else: _else) = then
     override private[mada] type ifNil[then <: Function0, _else <: Function0] = then
 
+    override private[mada]  def match4way[that <: Nat, tt <: Function0, tf <: Function0, ft <: Function0, ff <: Function0] = `throw`(new scala.UnsupportedOperationException("dual.NatNil.match4way"))
+    override private[mada] type match4way[that <: Nat, tt <: Function0, tf <: Function0, ft <: Function0, ff <: Function0] = `throw`[scala.UnsupportedOperationException]
+
     override  def increment = NatCons(`true`, self)
     override type increment = NatCons[`true`, self]
 
@@ -135,6 +141,9 @@ final case class NatCons[x <: Boolean, xs <: Nat](private val x: x, private val 
 
     override private[mada]  def ifNil[then <: Function0, _else <: Function0](then: then, _else: _else) = _else
     override private[mada] type ifNil[then <: Function0, _else <: Function0] = _else
+
+    override private[mada]  def match4way[that <: Nat, tt <: Function0, tf <: Function0, ft <: Function0, ff <: Function0] = x.`if`(y.`if`(tt, tf), y.`if`(ft, ff))
+    override private[mada] type match4way[that <: Nat, tt <: Function0, tf <: Function0, ft <: Function0, ff <: Function0] = x#`if`[y#`if`[tf, tf], y#`if`[ft, ff]]
 
     override  def increment = IncrementCons(x, xs).apply
     override type increment = IncrementCons[x, xs]#apply

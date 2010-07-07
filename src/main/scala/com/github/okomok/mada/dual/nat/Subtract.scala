@@ -23,7 +23,7 @@ private[mada] final case class SubtractCons[x <: Boolean, xs <: Nat, ys <: Nat](
      def apply: apply = ys.ifNil(Always0(NatCons(x, xs)), Else()).apply.asInstanceOfNat
     type apply = ys#ifNil[Always0[NatCons[x, xs]], Else]#apply#asInstanceOfNat
 
-    // (x :: xs) + (z :: zs)
+    // (x :: xs) - (z :: zs)
     final case class Else() extends Function0 {
         override  def self = this
         override type self = Else
@@ -31,7 +31,7 @@ private[mada] final case class SubtractCons[x <: Boolean, xs <: Nat, ys <: Nat](
         override type apply = ys#head#`if`[ElseThen, ElseElse]
     }
 
-        // (x :: xs) + (`false` :: zs)
+        // (x :: xs) - (`false` :: zs)
         final case class ElseThen() extends Function0 {
             override  def self = this
             override type self = ElseThen
@@ -39,7 +39,7 @@ private[mada] final case class SubtractCons[x <: Boolean, xs <: Nat, ys <: Nat](
             override type apply = NatCons[x, xs# +[ys]]
         }
 
-        // (x :: xs) + (`true` :: zs)
+        // (x :: xs) - (`true` :: zs)
         final case class ElseElse() extends Function0 {
             override  def self = this
             override type self = ElseElse
@@ -47,7 +47,7 @@ private[mada] final case class SubtractCons[x <: Boolean, xs <: Nat, ys <: Nat](
             override type apply = x#`if`[ElseElseThen, ElseElseElse]
         }
 
-            // (`true` :: xs) + (`true` :: zs)
+            // (`true` :: xs) - (`true` :: zs)
             final case class ElseElseThen() extends Function0 {
                 override  def self = this
                 override type self = ElseElseThen
@@ -55,7 +55,7 @@ private[mada] final case class SubtractCons[x <: Boolean, xs <: Nat, ys <: Nat](
                 override type apply = NatCons[`false`, xs# +[ys]#increment]
             }
 
-            // (`false` :: xs) + (`true` :: zs)
+            // (`false` :: xs) - (`true` :: zs)
             final case class ElseElseElse() extends Function0 {
                 override  def self = this
                 override type self = ElseElseElse
