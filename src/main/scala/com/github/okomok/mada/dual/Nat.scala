@@ -83,8 +83,8 @@ sealed abstract class Nat extends Any {
     final  def matchCaseNil[that <: Nat, nn <: Function0, nc <: Function0, cn <: Function0, cc <: Function0](that: that, nn: nn, nc: nc, cn: cn, cc: cc): matchCaseNil[that, nn, nc, cn, cc] = isEmpty.`if`(that.isEmpty.`if`(nn, nc), that.isEmpty.`if`(cn, cc))
     final type matchCaseNil[that <: Nat, nn <: Function0, nc <: Function0, cn <: Function0, cc <: Function0] = isEmpty#`if`[that#isEmpty#`if`[nn, nc], that#isEmpty#`if`[cn, cc]]
 
-    final  def matchCaseCons[that <: Nat, tt <: Function0, tf <: Function0, ft <: Function0, ff <: Function0](that: that, tt: tt, tf: tf, ft: ft, ff: ff): matchCaseCons[that, tt, tf, ft, ff] = head.`if`(that.head.`if`(tt, tf), that.head.`if`(ft, ff))
-    final type matchCaseCons[that <: Nat, tt <: Function0, tf <: Function0, ft <: Function0, ff <: Function0] = head#`if`[that#head#`if`[tt, tf], that#head#`if`[ft, ff]]
+    final  def matchCaseCons[that <: Nat, tt <: Function0, tf <: Function0, ft <: Function0, ff <: Function0](that: that, tt: tt, tf: tf, ft: ft, ff: ff) = MatchCaseCons(self, that, tt, tf, ft, ff)
+    final type matchCaseCons[that <: Nat, tt <: Function0, tf <: Function0, ft <: Function0, ff <: Function0] = MatchCaseCons[self, that, tt, tf, ft, ff]
 }
 
 
@@ -151,10 +151,11 @@ final case class NatCons[x <: Boolean, xs <: Nat](private val x: x, private val 
     override  def >>[that <: Nat](that: that) = tail
     override type >>[that <: Nat] = tail
 
-    override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = f.apply(self, xs.foldRight(z, f))
-    override type foldRight[z <: Any, f <: Function2] = f#apply[self, xs#foldRight[z, f]]
+    override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = f.apply(self, decrement.foldRight(z, f))
+    override type foldRight[z <: Any, f <: Function2] = f#apply[self, decrement#foldRight[z, f]]
 
-    override def undual = 1 + (2 * xs.undual)}
+    override def undual = (if (x.undual) 1 else 0) + (2 * xs.undual)
+}
 
 
 object Nat {

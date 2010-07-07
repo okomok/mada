@@ -12,7 +12,7 @@ private[mada] final case class Add[xs <: Nat, ys <: Nat](xs: xs, ys: ys) {
      def xsmc: xsmc = xs.matchCaseCons(ys, TT(), XF(), FX(), XF())
     type xsmc = xs#matchCaseCons[ys, TT, XF, FX, XF]
 
-     def apply: apply = xs.matchCaseNil(ys, Always0(NatNil), Always0(ys), Always0(xs), xsmc).apply.asInstanceOfNat
+     def apply: apply = xs.matchCaseNil(ys, Always0(NatNil), Always0(ys), Always0(xs), xsmc).apply.asInstanceOfNat.asInstanceOf[apply]
     type apply = xs.matchCaseNil[ys, Always0[NatNil], Always0[ys], Always0[xs], xsmc]#apply#asInstanceOfNat
 
     final case class TT() extends Function0 {

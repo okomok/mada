@@ -24,6 +24,12 @@ class NatTest extends junit.framework.TestCase {
         AssertNotEquals(_2N, _3N)
     }
 
+    def testIncDecDuarity {
+        val x: _4N = _3N.increment
+        val y: _3N = _4N.decrement
+        ()
+    }
+
     def testAddDuality {
         val x: _2N# + [_3N] = _2N + _3N
         val y: _5N = x
@@ -84,7 +90,6 @@ class NatTest extends junit.framework.TestCase {
         meta.assert[_4N#decrement# === [_3N]]
         meta.assert[_7N#increment#decrement#decrement# === [_6N]]
     }
-
     trait testAdd {
         meta.assert[_0N# +[_0N]# ===[_0N]]
         meta.assert[_0N# +[_3N]# ===[_3N]]
@@ -94,10 +99,13 @@ class NatTest extends junit.framework.TestCase {
     }
     trait testSubtract {
         meta.assert[_0N# -[_0N]# ===[_0N]]
+        meta.assert[_1N# -[_1N]# ===[_0N]]
         meta.assert[_3N# -[_0N]# ===[_3N]]
         meta.assert[_4N# -[_3N]# ===[_1N]]
         meta.assert[_8N# -[_1N]# ===[_7N]]
         meta.assert[_5N# -[_2N]# ===[_3N]]
+        meta.assert[_6N# -[_5N]# ===[_1N]]
+        meta.assert[_5N# -[_5N]# ===[_0N]]
     }
 /*
     trait testMultiply {
@@ -128,7 +136,6 @@ class NatTest extends junit.framework.TestCase {
         meta.assertNot[_4N# <[_4N]]
         meta.assertNot[_4N# >[_4N]]
     }
-
 
     trait testPropagation {
         type plusPlus[n <: Nat] = n#increment#increment
