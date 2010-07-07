@@ -7,6 +7,40 @@
 package com.github.okomok.mada; package dual; package nat
 
 
+
+
+private[mada] final case class AddCons[xs <: Nat, ys <: Nat](xs: xs, ys: ys) {
+     def apply/*: apply*/ = ys.ifNil(Always0(xs), xs.consMatch(ys, TT(), XF(), FX(), XF())).apply.asInstanceOfNat
+    type apply = ys#ifNil[Always0[xs], xs#consMatch[ys, TT, XF, FX, XF]]#apply#asInstanceOfNat
+
+    final case class XF() extends Function0 {
+        override  def self = this
+        override type self = XF
+        override  def apply: apply = NatCons(xs.head, (xs.tail + ys.tail))
+        override type apply = NatCons[xs#head, xs#tail# +[ys#tail]]
+    }
+
+    final case class FX() extends Function0 {
+        override  def self = this
+        override type self = FX
+        override  def apply: apply = NatCons(ys.head, xs.tail + ys.tail)
+        override type apply = NatCons[ys#head, xs#tail# +[ys.tail]]
+    }
+
+    final case class TT() extends Function0 {
+        override  def self = this
+        override type self = TT
+
+        @compilerWorkaround("2.8.0") // needed for some reason.
+         val yst: yst = ys.tail
+        type yst = ys#tail
+
+        override  def apply = NatCons(`false`, (xs.tail + yst).increment)
+        override type apply = NatCons[`false`, xs#tail# +[yst]#increment]
+    }
+}
+
+/*
 private[mada] final case class AddCons[x <: Boolean, xs <: Nat, ys <: Nat](x: x, xs: xs, ys: ys) {
      def apply: apply = ys.ifNil(Always0(NatCons(x, xs)), Else()).apply.asInstanceOfNat
     type apply = ys#ifNil[Always0[NatCons[x, xs]], Else]#apply#asInstanceOfNat
@@ -51,3 +85,4 @@ private[mada] final case class AddCons[x <: Boolean, xs <: Nat, ys <: Nat](x: x,
                 override type apply = NatCons[ys#head, xs# +[ys.tail]]
             }
 }
+*/
