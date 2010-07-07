@@ -55,11 +55,11 @@ package object dual extends dual.nat.LiteralCommon {
 
 // Nat
 
-    @equivalentTo("new Zero{}")
-    val Zero: Zero = Nat._Zero
+    @equivalentTo("new NatNil{}")
+    val NatNil: NatNil = Nat._Nil
 
-    @equivalentTo("new singular{}")
-    private[mada] val singular: singular = Nat._singular
+    @equivalentTo("x#addFirst[xs]")
+    type Nat_::[x <: Boolean, xs <: Nat] = xs#addFirst[x]
 
 
 // Option
@@ -73,7 +73,7 @@ package object dual extends dual.nat.LiteralCommon {
     @equivalentTo("new Nil{}")
     val Nil: Nil = List._Nil
 
-    @equivalentTo("t#addFirst[h]")
+    @equivalentTo("x#addFirst[xs]")
     type ::[x <: Any, xs <: List] = xs#addFirst[x]
 
     @equivalentTo("ys#prepend[xs]")

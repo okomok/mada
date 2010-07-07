@@ -7,30 +7,36 @@
 package com.github.okomok.mada; package dual
 
 
-// See: Nats.scala
-//      at http://www.assembla.com/wiki/show/metascala
+// See: http://apocalisp.wordpress.com/2010/06/24/type-level-programming-in-scala-part-5a-binary-numbers/
 
 
 import nat._
 
 
-sealed trait Nat extends Any {
+sealed abstract class Nat extends Any {
     type self <: Nat
 
     final override  def asInstanceOfNat = self
     final override type asInstanceOfNat = self
 
-    private[mada]  def isZero: isZero
-    private[mada] type isZero <: Boolean
+     def head: head
+    type head <: Boolean
 
-    private[mada]  def gtZero: gtZero
-    private[mada] type gtZero <: Boolean
+     def tail: tail
+    type tail <: Nat
 
-    final  def ===[that <: Nat](that: that): ===[that] = this.-(that).isZero
-    final type ===[that <: Nat] = -[that]#isZero
+    @equivalentTo("NatCons(e, self)")
+    final  def addFirst[e <: Boolean](e: e): addFirst[e] = NatCons(e, self)
+    final type addFirst[e <: Boolean] = NatCons[e, self]
 
-    final  def !==[that <: Nat](that: that): !==[that] = ===(that).not
-    final type !==[that <: Nat] = ===[that]#not
+    private[mada]  def ifNil[then <: Function0, _else <: Function0](then: then, _else: _else): ifNil[then, _else]
+    private[mada] type ifNil[then <: Function0, _else <: Function0] <: Function0
+
+    final  def ===[that <: Nat](that: that): ===[that] = throw new Error//this.-(that).isZero
+    final type ===[that <: Nat] = Nothing//-[that]#isZero
+
+    final  def !==[that <: Nat](that: that): !==[that] = throw new Error//===(that).not
+    final type !==[that <: Nat] = Nothing//===[that]#not
 
      def increment: increment
     type increment <: Nat
@@ -38,50 +44,77 @@ sealed trait Nat extends Any {
      def decrement: decrement
     type decrement <: Nat
 
-    final  def +[that <: Nat](that: that): +[that] = new Add().apply(self, that)
-    final type +[that <: Nat] = Add#apply[self, that]
+     def +[that <: Nat](that: that): +[that]
+    type +[that <: Nat] <: Nat
 
-    final  def -[that <: Nat](that: that): -[that] = new Subtract().apply(self, that)
-    final type -[that <: Nat] = Subtract#apply[self, that]
+     def -[that <: Nat](that: that): -[that]
+    type -[that <: Nat] <: Nat
 
-    final  def **[that <: Nat](that: that): **[that] = new Multiply().apply(self, that)
-    final type **[that <: Nat] = Multiply#apply[self, that]
+     def **[that <: Nat](that: that): **[that]
+    type **[that <: Nat] <: Nat
 
-    final  def >[that <: Nat](that: that): >[that] = this.-(that).gtZero
-    final type >[that <: Nat] = -[that]#gtZero
+    final  def >[that <: Nat](that: that): >[that] = throw new Error//this.-(that).gtZero
+    final type >[that <: Nat] = Nothing//-[that]#gtZero
 
-    final  def <[that <: Nat](that: that): <[that] = that.>(self)
-    final type <[that <: Nat] = that# >[self]
+    final  def <[that <: Nat](that: that): <[that] = throw new Error//that.>(self)
+    final type <[that <: Nat] = Nothing//that# >[self]
 
-    final  def >=[that <: Nat](that: that): >=[that] = >(that).||(===(that))
-    final type >=[that <: Nat] = >[that]# ||[===[that]]
+    final  def >=[that <: Nat](that: that): >=[that] = throw new Error//>(that).||(===(that))
+    final type >=[that <: Nat] = Nothing// >[that]# ||[===[that]]
 
-    final  def <=[that <: Nat](that: that): <=[that] = that.>=(self)
-    final type <=[that <: Nat] = that# >=[self]
+    final  def <=[that <: Nat](that: that): <=[that] = throw new Error// that.>=(self)
+    final type <=[that <: Nat] = Nothing//that# >=[self]
+
+     def <<[that <: Nat](that: that): <<[that]
+    type <<[that <: Nat] <: Nat
+
+     def >>[that <: Nat](that: that): >>[that]
+    type >>[that <: Nat] <: Nat
 
      def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f]
     type foldRight[z <: Any, f <: Function2] <: Any
+
+    @aliasOf("addFirst")
+    final def Nat_::[e <: Boolean](e: e): addFirst[e] = addFirst(e)
 
     final override type undual = scala.Int
     final override def canEqual(that: scala.Any) = that.isInstanceOf[Nat]
 }
 
 
-sealed trait Zero extends Nat {
+sealed class NatNil extends Nat {
     override  def self = this
-    override type self = Zero
+    override type self = NatNil
 
-    override private[mada]  def isZero = `true`
-    override private[mada] type isZero = `true`
+    override  def head = `throw`(new scala.NoSuchElementException("dual.NatNil.head"))
+    override type head = `throw`[scala.NoSuchElementException]
 
-    override private[mada]  def gtZero = `false`
-    override private[mada] type gtZero = `false`
+    override  def tail = `throw`(new scala.NoSuchElementException("dual.NatNil.tail"))
+    override type tail = `throw`[scala.NoSuchElementException]
 
-    override  def increment = Succ(self)
-    override type increment = Succ[self]
+    override private[mada]  def ifNil[then <: Function0, _else <: Function0](then: then, _else: _else) = then
+    override private[mada] type ifNil[then <: Function0, _else <: Function0] = then
 
-    override  def decrement = singular
-    override type decrement = singular
+    override  def increment = NatCons(`true`, self)
+    override type increment = NatCons[`true`, self]
+
+    override  def decrement = `throw`(new scala.UnsupportedOperationException("dual.NatNil.decrement"))
+    override type decrement = `throw`[scala.UnsupportedOperationException]
+
+    override  def +[that <: Nat](that: that) = that
+    override type +[that <: Nat] = that
+
+    override  def -[that <: Nat](that: that) = SubtractNil(that).apply
+    override type -[that <: Nat] = SubtractNil[that]#apply
+
+    override  def **[that <: Nat](that: that) = self
+    override type **[that <: Nat] = self
+
+    override  def <<[that <: Nat](that: that) = self
+    override type <<[that <: Nat] = self
+
+    override  def >>[that <: Nat](that: that) = self
+    override type >>[that <: Nat] = self
 
     override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = z
     override type foldRight[z <: Any, f <: Function2] = z
@@ -90,51 +123,47 @@ sealed trait Zero extends Nat {
 }
 
 
-final case class Succ[n <: Nat](private val n: n) extends Nat {
+final case class NatCons[x <: Boolean, xs <: Nat](private val x: x, private val xs: xs) extends Nat {
     override  def self = this
-    override type self = Succ[n]
+    override type self = NatCons[x, xs]
 
-    override private[mada]  def isZero = `false`
-    override private[mada] type isZero = `false`
+    override  def head = x
+    override type head = x
 
-    override private[mada]  def gtZero = `true`
-    override private[mada] type gtZero = `true`
+    override  def tail = xs
+    override type tail = xs
 
-    override  def increment = Succ(self)
-    override type increment = Succ[self]
+    override private[mada]  def ifNil[then <: Function0, _else <: Function0](then: then, _else: _else) = _else
+    override private[mada] type ifNil[then <: Function0, _else <: Function0] = _else
 
-    override  def decrement = n
-    override type decrement = n
+    override  def increment = IncrementCons(x, xs).apply
+    override type increment = IncrementCons[x, xs]#apply
 
-    override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = f.apply(self, n.foldRight(z, f))
-    override type foldRight[z <: Any, f <: Function2] = f#apply[self, n#foldRight[z, f]]
+    override  def decrement = DecrementCons(x, xs).apply
+    override type decrement = DecrementCons[x, xs]#apply
 
-    override def undual = 1 + n.undual
-}
+    override  def +[that <: Nat](that: that) = AddCons(x, xs, that).apply
+    override type +[that <: Nat] = AddCons[x, xs, that]#apply
 
+    override  def -[that <: Nat](that: that) = SubtractCons(x, xs, that).apply
+    override type -[that <: Nat] = SubtractCons[x, xs, that]#apply
 
-sealed trait singular extends Nat {
-    override  def self = this
-    override type self = singular
+    override  def **[that <: Nat](that: that) = throw new Error//MultiplyCons(x, xs).apply(that)
+    override type **[that <: Nat] = Nothing//MultiplyCons[x, xs]#apply[that]
 
-    override private[mada]  def isZero = `false`
-    override private[mada] type isZero = `false`
+    override  def <<[that <: Nat](that: that) = NatCons(`false`, self)
+    override type <<[that <: Nat] = NatCons[`false`, self]
 
-    override private[mada]  def gtZero = `false`
-    override private[mada] type gtZero = `false`
+    override  def >>[that <: Nat](that: that) = tail
+    override type >>[that <: Nat] = tail
 
-    override  def increment = `throw`(new scala.UnsupportedOperationException("dual.singular.increment"))
-    override type increment = `throw`[scala.UnsupportedOperationException]
+    override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = f.apply(self, xs.foldRight(z, f))
+    override type foldRight[z <: Any, f <: Function2] = f#apply[self, xs#foldRight[z, f]]
 
-    override  def decrement = self
-    override type decrement = self
-
-    override  def foldRight[z <: Any, f <: Function2](z: z, f: f) =  `throw`(new scala.UnsupportedOperationException("dual.singular.foldRight"))
-    override type foldRight[z <: Any, f <: Function2] = `throw`[scala.UnsupportedOperationException]
+    override def undual = 1 + (2 * xs.undual)
 }
 
 
 object Nat {
-    private[mada] val _Zero = new Zero{}
-    private[mada] val _singular = new singular{}
+    private[mada] val _Nil = new NatNil{}
 }

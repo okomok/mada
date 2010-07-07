@@ -13,27 +13,42 @@ package com.github.okomok.mada; package dual; package nat
 object Literal extends LiteralCommon
 
 private[mada] trait LiteralCommon {
-    val _0N = Nat._Zero
-    val _1N = Succ(_0N)
-    val _2N = Succ(_1N)
-    val _3N = Succ(_2N)
-    val _4N = Succ(_3N)
-    val _5N = Succ(_4N)
-    val _6N = Succ(_5N)
-    val _7N = Succ(_6N)
-    val _8N = Succ(_7N)
-    val _9N = Succ(_8N)
-    val _10N = Succ(_9N)
+    private[mada]  val _0B = `false`
+    private[mada]  val _1B = `true`
+    private[mada] type _0B = `false`
+    private[mada] type _1B = `true`
 
-    type _0N = Zero
-    type _1N = Succ[_0N]
-    type _2N = Succ[_1N]
-    type _3N = Succ[_2N]
-    type _4N = Succ[_3N]
-    type _5N = Succ[_4N]
-    type _6N = Succ[_5N]
-    type _7N = Succ[_6N]
-    type _8N = Succ[_7N]
-    type _9N = Succ[_8N]
-    type _10N = Succ[_9N]
+	val  _0N = Nat._Nil
+	val  _1N = NatCons(_1B, NatNil)
+	val  _2N = NatCons(_0B, NatCons(_1B, NatNil))
+	val  _3N = NatCons(_1B, NatCons(_1B, NatNil))
+	val  _4N = NatCons(_0B, NatCons(_0B, NatCons(_1B, NatNil)))
+	val  _5N = NatCons(_1B, NatCons(_0B, NatCons(_1B, NatNil)))
+	val  _6N = NatCons(_0B, NatCons(_1B, NatCons(_1B, NatNil)))
+	val  _7N = NatCons(_1B, NatCons(_1B, NatCons(_1B, NatNil)))
+	val  _8N = NatCons(_0B, NatCons(_0B, NatCons(_0B, NatCons(_1B, NatNil))))
+	val  _9N = NatCons(_1B, NatCons(_0B, NatCons(_0B, NatCons(_1B, NatNil))))
+	val _10N = NatCons(_0B, NatCons(_1B, NatCons(_0B, NatCons(_1B, NatNil))))
+	val _11N = NatCons(_1B, NatCons(_1B, NatCons(_0B, NatCons(_1B, NatNil))))
+	val _12N = NatCons(_0B, NatCons(_0B, NatCons(_1B, NatCons(_1B, NatNil))))
+	val _13N = NatCons(_1B, NatCons(_0B, NatCons(_1B, NatCons(_1B, NatNil))))
+	val _14N = NatCons(_0B, NatCons(_1B, NatCons(_1B, NatCons(_1B, NatNil))))
+	val _15N = NatCons(_1B, NatCons(_1B, NatCons(_1B, NatCons(_1B, NatNil))))
+
+	type  _0N = NatNil
+	type  _1N = NatCons[_1B, NatNil]
+	type  _2N = NatCons[_0B, NatCons[_1B, NatNil]]
+	type  _3N = NatCons[_1B, NatCons[_1B, NatNil]]
+	type  _4N = NatCons[_0B, NatCons[_0B, NatCons[_1B, NatNil]]]
+	type  _5N = NatCons[_1B, NatCons[_0B, NatCons[_1B, NatNil]]]
+	type  _6N = NatCons[_0B, NatCons[_1B, NatCons[_1B, NatNil]]]
+	type  _7N = NatCons[_1B, NatCons[_1B, NatCons[_1B, NatNil]]]
+	type  _8N = NatCons[_0B, NatCons[_0B, NatCons[_0B, NatCons[_1B, NatNil]]]]
+	type  _9N = NatCons[_1B, NatCons[_0B, NatCons[_0B, NatCons[_1B, NatNil]]]]
+	type _10N = NatCons[_0B, NatCons[_1B, NatCons[_0B, NatCons[_1B, NatNil]]]]
+	type _11N = NatCons[_1B, NatCons[_1B, NatCons[_0B, NatCons[_1B, NatNil]]]]
+	type _12N = NatCons[_0B, NatCons[_0B, NatCons[_1B, NatCons[_1B, NatNil]]]]
+	type _13N = NatCons[_1B, NatCons[_0B, NatCons[_1B, NatCons[_1B, NatNil]]]]
+	type _14N = NatCons[_0B, NatCons[_1B, NatCons[_1B, NatCons[_1B, NatNil]]]]
+	type _15N = NatCons[_1B, NatCons[_1B, NatCons[_1B, NatCons[_1B, NatNil]]]]
 }
