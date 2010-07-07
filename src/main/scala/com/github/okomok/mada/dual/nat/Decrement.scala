@@ -8,8 +8,8 @@ package com.github.okomok.mada; package dual; package nat
 
 
 private[mada] final case class DecrementCons[x <: Boolean, xs <: Nat](x: x, xs: xs) {
-     def apply: apply = xs.ifNil(Always0(NatNil), x.`if`(Then(), Else())).apply.asInstanceOf
-    type apply = xs#ifNil[Always0[NatNil], x#`if`[Then, Else]]#apply#asInstanceOfNat
+     def apply: apply = xs.isEmpty.`if`(Always0(xs), x.`if`(Then(), Else())).apply.asInstanceOf
+    type apply = xs#isEmpty#`if`[Always0[xs], x#`if`[Then, Else]]#apply#asInstanceOfNat
 
     // (`true` :: xs).decrement
     final case class Then() extends Function0 {

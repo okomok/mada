@@ -63,7 +63,7 @@ class NatOperatorTezt {
         assert[_8N - _1N === _7N]
         assert[_5N - _2N === _3N]
     }
-
+/*
     trait testMultiply {
         assert[_3N ** _2N === _6N]
         assert[_0N ** _3N === _0N]
@@ -75,7 +75,7 @@ class NatOperatorTezt {
         assert[_4N ** _2N === _8N]
 
     }
-
+*/
     trait testComparison {
         assert[_0N < _2N]
         assert[_3N < _5N]

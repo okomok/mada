@@ -37,14 +37,14 @@ class NatTest extends junit.framework.TestCase {
         assert(x === y)
         assert(x === _1N)
     }
-
+/*
     def testMultiplyDuality {
         val a: _4N# ** [_2N] = _4N ** _2N
         val b: _8N = a
         assert(a === b)
         assert(a === _8N)
     }
-
+*/
     def testComparisonDuality {
         val a: _4N# > [_2N] = _4N > _2N
         val b: `true` = a
@@ -99,7 +99,7 @@ class NatTest extends junit.framework.TestCase {
         meta.assert[_8N# -[_1N]# ===[_7N]]
         meta.assert[_5N# -[_2N]# ===[_3N]]
     }
-
+/*
     trait testMultiply {
         meta.assert[_3N# **[_2N]# ===[_6N]]
         meta.assert[_0N# **[_3N]# ===[_0N]]
@@ -110,7 +110,7 @@ class NatTest extends junit.framework.TestCase {
         meta.assert[_3N# **[_3N]# ===[_9N]]
         meta.assert[_4N# **[_2N]# ===[_8N]]
     }
-
+*/
     trait testComparison {
         meta.assert[_0N# <[_2N]]
         meta.assert[_3N# <[_5N]]

@@ -65,7 +65,7 @@ class TypeIdentityTezt {
     meta.assertSame[callid[FuncInt], Int]
 
 
-    meta.assertSame[Succ[_1N]# ===[_2N]#not, `false`]
+    meta.assertSame[_1N#increment# ===[_2N]#not, `false`]
 
 }
 

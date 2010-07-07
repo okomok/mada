@@ -25,21 +25,18 @@ sealed abstract class Nat extends Any {
      def tail: tail
     type tail <: Nat
 
+     def isEmpty: isEmpty
+    type isEmpty <: Boolean
+
     @equivalentTo("NatCons(e, self)")
     final  def addFirst[e <: Boolean](e: e): addFirst[e] = NatCons(e, self)
     final type addFirst[e <: Boolean] = NatCons[e, self]
 
-    private[mada]  def ifNil[then <: Function0, _else <: Function0](then: then, _else: _else): ifNil[then, _else]
-    private[mada] type ifNil[then <: Function0, _else <: Function0] <: Function0
+    final  def ===[that <: Nat](that: that): ===[that] = Equals(self, that).apply
+    final type ===[that <: Nat] = Equals[self, that]#apply
 
-    private[mada]  def consMatch[that <: Nat, tt <: Function0, tf <: Function0, ft <: Function0, ff <: Function0](that: that, tt: tt, tf: tf, ft: ft, ff: ff): consMatch[that, tt, tf, ft, ff]
-    private[mada] type consMatch[that <: Nat, tt <: Function0, tf <: Function0, ft <: Function0, ff <: Function0] <: Function0
-
-    final  def ===[that <: Nat](that: that): ===[that] = throw new Error//this.-(that).isZero
-    final type ===[that <: Nat] = Nothing//-[that]#isZero
-
-    final  def !==[that <: Nat](that: that): !==[that] = throw new Error//===(that).not
-    final type !==[that <: Nat] = Nothing//===[that]#not
+    final  def !==[that <: Nat](that: that): !==[that] = ===(that).not
+    final type !==[that <: Nat] = ===[that]#not
 
      def increment: increment
     type increment <: Nat
@@ -47,26 +44,26 @@ sealed abstract class Nat extends Any {
      def decrement: decrement
     type decrement <: Nat
 
-     def +[that <: Nat](that: that): +[that]
-    type +[that <: Nat] <: Nat
+    final  def +[that <: Nat](that: that) = Add(self,that).apply
+    final type +[that <: Nat] = Add[self, that]#apply
 
-     def -[that <: Nat](that: that): -[that]
-    type -[that <: Nat] <: Nat
+    final  def -[that <: Nat](that: that) = Subtract(self, that).apply
+    final type -[that <: Nat] = Subtract[self, that]#apply
 
      def **[that <: Nat](that: that): **[that]
     type **[that <: Nat] <: Nat
 
-    final  def >[that <: Nat](that: that): >[that] = throw new Error//this.-(that).gtZero
-    final type >[that <: Nat] = Nothing//-[that]#gtZero
+    final  def >[that <: Nat](that: that): >[that] = that.<(self)
+    final type >[that <: Nat] = that# <[self]
 
-    final  def <[that <: Nat](that: that): <[that] = throw new Error//that.>(self)
-    final type <[that <: Nat] = Nothing//that# >[self]
+    final  def <[that <: Nat](that: that) = Lt(self, that).apply
+    final type <[that <: Nat] = Lt[self, that]#apply
 
-    final  def >=[that <: Nat](that: that): >=[that] = throw new Error//>(that).||(===(that))
-    final type >=[that <: Nat] = Nothing// >[that]# ||[===[that]]
+    final  def >=[that <: Nat](that: that): >=[that] = that.<=(self)
+    final type >=[that <: Nat] = that# <=[self]
 
-    final  def <=[that <: Nat](that: that): <=[that] = throw new Error// that.>=(self)
-    final type <=[that <: Nat] = Nothing//that# >=[self]
+    final  def <=[that <: Nat](that: that): <=[that] = Lteq(self, that).apply
+    final type <=[that <: Nat] = Lteq[self, that]#apply
 
      def <<[that <: Nat](that: that): <<[that]
     type <<[that <: Nat] <: Nat
@@ -82,6 +79,12 @@ sealed abstract class Nat extends Any {
 
     final override type undual = scala.Int
     final override def canEqual(that: scala.Any) = that.isInstanceOf[Nat]
+
+    final  def matchCaseNil[that <: Nat, nn <: Function0, nc <: Function0, cn <: Function0, cc <: Function0](that: that, nn: nn, nc: nc, cn: cn, cc: cc): matchCaseNil[that, nn, nc, cn, cc] = isEmpty.`if`(that.isEmpty.`if`(nn, nc), that.isEmpty.`if`(cn, cc))
+    final type matchCaseNil[that <: Nat, nn <: Function0, nc <: Function0, cn <: Function0, cc <: Function0] = isEmpty#`if`[that#isEmpty#`if`[nn, nc], that#isEmpty#`if`[cn, cc]]
+
+    final  def matchCaseCons[that <: Nat, tt <: Function0, tf <: Function0, ft <: Function0, ff <: Function0](that: that, tt: tt, tf: tf, ft: ft, ff: ff): matchCaseCons[that, tt, tf, ft, ff] = head.`if`(that.head.`if`(tt, tf), that.head.`if`(ft, ff))
+    final type matchCaseCons[that <: Nat, tt <: Function0, tf <: Function0, ft <: Function0, ff <: Function0] = head#`if`[that#head#`if`[tt, tf], that#head#`if`[ft, ff]]
 }
 
 
@@ -95,23 +98,14 @@ sealed class NatNil extends Nat {
     override  def tail = `throw`(new scala.NoSuchElementException("dual.NatNil.tail"))
     override type tail = `throw`[scala.NoSuchElementException]
 
-    override private[mada]  def ifNil[then <: Function0, _else <: Function0](then: then, _else: _else) = then
-    override private[mada] type ifNil[then <: Function0, _else <: Function0] = then
-
-    override private[mada]  def consMatch[that <: Nat, tt <: Function0, tf <: Function0, ft <: Function0, ff <: Function0](that: that, tt: tt, tf: tf, ft: ft, ff: ff) = `throw`(new scala.UnsupportedOperationException("dual.NatNil.consMatch"))
-    override private[mada] type consMatch[that <: Nat, tt <: Function0, tf <: Function0, ft <: Function0, ff <: Function0] = `throw`[scala.UnsupportedOperationException]
+    override  def isEmpty = `true`
+    override type isEmpty = `true`
 
     override  def increment = NatCons(`true`, self)
     override type increment = NatCons[`true`, self]
 
     override  def decrement = `throw`(new scala.UnsupportedOperationException("dual.NatNil.decrement"))
     override type decrement = `throw`[scala.UnsupportedOperationException]
-
-    override  def +[that <: Nat](that: that) = that
-    override type +[that <: Nat] = that
-
-    override  def -[that <: Nat](that: that) = SubtractNil(that).apply
-    override type -[that <: Nat] = SubtractNil[that]#apply
 
     override  def **[that <: Nat](that: that) = self
     override type **[that <: Nat] = self
@@ -139,23 +133,14 @@ final case class NatCons[x <: Boolean, xs <: Nat](private val x: x, private val 
     override  def tail = xs
     override type tail = xs
 
-    override private[mada]  def ifNil[then <: Function0, _else <: Function0](then: then, _else: _else) = _else
-    override private[mada] type ifNil[then <: Function0, _else <: Function0] = _else
-
-    override private[mada]  def consMatch[that <: Nat, tt <: Function0, tf <: Function0, ft <: Function0, ff <: Function0](that: that, tt: tt, tf: tf, ft: ft, ff: ff): consMatch[that, tt, tf, ft, ff] = x.`if`(that.head.`if`(tt, tf), that.head.`if`(ft, ff))
-    override private[mada] type consMatch[that <: Nat, tt <: Function0, tf <: Function0, ft <: Function0, ff <: Function0] = x#`if`[that#head#`if`[tt, tf], that#head#`if`[ft, ff]]
+    override  def isEmpty = `false`
+    override type isEmpty = `false`
 
     override  def increment = IncrementCons(x, xs).apply
     override type increment = IncrementCons[x, xs]#apply
 
     override  def decrement = DecrementCons(x, xs).apply
     override type decrement = DecrementCons[x, xs]#apply
-
-    override  def +[that <: Nat](that: that) = AddCons(self, that).apply
-    override type +[that <: Nat] = AddCons[self, that]#apply
-
-    override  def -[that <: Nat](that: that) = SubtractCons(x, xs, that).apply
-    override type -[that <: Nat] = SubtractCons[x, xs, that]#apply
 
     override  def **[that <: Nat](that: that) = throw new Error//MultiplyCons(x, xs).apply(that)
     override type **[that <: Nat] = Nothing//MultiplyCons[x, xs]#apply[that]
@@ -169,8 +154,7 @@ final case class NatCons[x <: Boolean, xs <: Nat](private val x: x, private val 
     override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = f.apply(self, xs.foldRight(z, f))
     override type foldRight[z <: Any, f <: Function2] = f#apply[self, xs#foldRight[z, f]]
 
-    override def undual = 1 + (2 * xs.undual)
-}
+    override def undual = 1 + (2 * xs.undual)}
 
 
 object Nat {

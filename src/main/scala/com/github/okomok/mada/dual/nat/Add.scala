@@ -7,25 +7,46 @@
 package com.github.okomok.mada; package dual; package nat
 
 
+private[mada] final case class Add[xs <: Nat, ys <: Nat](xs: xs, ys: ys) {
+    @compilerWorkaround("2.8.0") // needed for some reason.
+     def xsmc: xsmc = xs.matchCaseCons(ys, TT(), XF(), FX(), XF())
+    type xsmc = xs#matchCaseCons[ys, TT, XF, FX, XF]
 
+     def apply: apply = xs.matchCaseNil(ys, Always0(NatNil), Always0(ys), Always0(xs), xsmc).apply.asInstanceOfNat
+    type apply = xs.matchCaseNil[ys, Always0[NatNil], Always0[ys], Always0[xs], xsmc]#apply#asInstanceOfNat
 
-private[mada] final case class AddCons[xs <: Nat, ys <: Nat](xs: xs, ys: ys) {
-     def apply/*: apply*/ = ys.ifNil(Always0(xs), xs.consMatch(ys, TT(), XF(), FX(), XF())).apply.asInstanceOfNat
-    type apply = ys#ifNil[Always0[xs], xs#consMatch[ys, TT, XF, FX, XF]]#apply#asInstanceOfNat
+    final case class TT() extends Function0 {
+        override  def self = this
+        override type self = TT
+
+        @compilerWorkaround("2.8.0") // needed for some reason.
+         def yst: yst = ys.tail
+        type yst = ys#tail
+
+        override  def apply = NatCons(`false`, (xs.tail + yst).increment)
+        override type apply = NatCons[`false`, xs#tail# +[yst]#increment]
+    }
 
     final case class XF() extends Function0 {
         override  def self = this
         override type self = XF
-        override  def apply: apply = NatCons(xs.head, (xs.tail + ys.tail))
+        override  def apply = NatCons(xs.head, (xs.tail + ys.tail))
         override type apply = NatCons[xs#head, xs#tail# +[ys#tail]]
     }
 
     final case class FX() extends Function0 {
         override  def self = this
         override type self = FX
-        override  def apply: apply = NatCons(ys.head, xs.tail + ys.tail)
+        override  def apply = NatCons(ys.head, xs.tail + ys.tail)
         override type apply = NatCons[ys#head, xs#tail# +[ys.tail]]
     }
+}
+
+
+/*
+private[mada] final case class AddCons[xs <: Nat, ys <: Nat](xs: xs, ys: ys) {
+     def apply/*: apply*/ = ys.isEmpty.`if`(Always0(xs), xs.matchCaseCons(ys, TT(), XF(), FX(), XF())).apply.asInstanceOfNat
+    type apply = ys#isEmpty#`if`[Always0[xs], xs#matchCaseCons[ys, TT, XF, FX, XF]]#apply#asInstanceOfNat
 
     final case class TT() extends Function0 {
         override  def self = this
@@ -38,7 +59,22 @@ private[mada] final case class AddCons[xs <: Nat, ys <: Nat](xs: xs, ys: ys) {
         override  def apply = NatCons(`false`, (xs.tail + yst).increment)
         override type apply = NatCons[`false`, xs#tail# +[yst]#increment]
     }
+
+    final case class XF() extends Function0 {
+        override  def self = this
+        override type self = XF
+        override  def apply = NatCons(xs.head, (xs.tail + ys.tail))
+        override type apply = NatCons[xs#head, xs#tail# +[ys#tail]]
+    }
+
+    final case class FX() extends Function0 {
+        override  def self = this
+        override type self = FX
+        override  def apply = NatCons(ys.head, xs.tail + ys.tail)
+        override type apply = NatCons[ys#head, xs#tail# +[ys.tail]]
+    }
 }
+*/
 
 /*
 private[mada] final case class AddCons[x <: Boolean, xs <: Nat, ys <: Nat](x: x, xs: xs, ys: ys) {
