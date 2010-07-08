@@ -8,8 +8,6 @@ package com.github.okomok.mada; package dual; package nat
 
 
 private[mada] final case class IncrementCons[x <: Boolean, xs <: Nat](x: x, xs: xs) {
-    Predef.assert(null != x)
-    Predef.assert(null != xs)
      def apply: apply = x.`if`(Then(), Else()).apply.asInstanceOfNat
     type apply = x#`if`[Then, Else]#apply#asInstanceOfNat
 

@@ -53,17 +53,17 @@ sealed abstract class Nat extends Any {
      def **[that <: Nat](that: that): **[that]
     type **[that <: Nat] <: Nat
 
-    final  def >[that <: Nat](that: that): >[that] = that.<(self)
+    final  def >[that <: Nat](that: that): >[that] = that < self
     final type >[that <: Nat] = that# <[self]
 
-    final  def <[that <: Nat](that: that) = Lt(self, that).apply
-    final type <[that <: Nat] = Lt[self, that]#apply
+    final  def <[that <: Nat](that: that) = LessThan(self, that).apply
+    final type <[that <: Nat] = LessThan[self, that]#apply
 
-    final  def >=[that <: Nat](that: that): >=[that] = that.<=(self)
-    final type >=[that <: Nat] = that# <=[self]
+    final  def >=[that <: Nat](that: that): >=[that] = (that > self).not
+    final type >=[that <: Nat] = that# >[self]#not
 
-    final  def <=[that <: Nat](that: that): <=[that] = Lteq(self, that).apply
-    final type <=[that <: Nat] = Lteq[self, that]#apply
+    final  def <=[that <: Nat](that: that): <=[that] = (that < self).not
+    final type <=[that <: Nat] = that# <[self]#not
 
      def <<[that <: Nat](that: that): <<[that]
     type <<[that <: Nat] <: Nat

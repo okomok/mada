@@ -27,26 +27,22 @@ private[mada] final case class Equals[xs <: Nat, ys <: Nat](xs: xs, ys: ys) {
     }
 }
 
-private[mada] final case class Lteq[xs <: Nat, ys <: Nat](xs: xs, ys: ys) {
-     def apply: apply = xs.matchCaseNil(ys, Always0(`true`), Always0(`true`), Always0(`false`), CC()).apply.asInstanceOfBoolean
-    type apply = xs#matchCaseNil[ys, Always0[`true`], Always0[`true`], Always0[`false`], CC]#apply#asInstanceOfBoolean
 
-    final case class CC() extends Function0 {
+private[mada] final case class LessThan[xs <: Nat, ys <: Nat](xs: xs, ys: ys) {
+     def apply: apply = xs.matchCaseNil(ys, Always0(`false`), Always0(`true`), Always0(`false`), xs.matchCaseCons(ys, XXTF(), XXTF(), FT(), XXTF())).apply.asInstanceOfBoolean.asInstanceOf[apply]
+    type apply = xs.matchCaseNil[ys, Always0[`false`], Always0[`true`], Always0[`false`], xs#matchCaseCons[ys, XXTF, XXTF, FT, XXTF]]#apply#asInstanceOfBoolean
+
+    final case class XXTF() extends Function0 {
         override  def self = this
-        override type self = CC
-        override  def apply = xs.decrement <= ys.decrement
-        override type apply = xs#decrement# <=[ys#decrement]
+        override type self = XXTF
+        override  def apply = xs.tail < ys.tail
+        override type apply = xs#tail# <[ys#tail]
     }
-}
 
-private[mada] final case class Lt[xs <: Nat, ys <: Nat](xs: xs, ys: ys) {
-     def apply: apply = xs.matchCaseNil(ys, Always0(`false`), Always0(`true`), Always0(`false`), CC()).apply.asInstanceOfBoolean
-    type apply = xs#matchCaseNil[ys, Always0[`false`], Always0[`true`], Always0[`false`], CC]#apply#asInstanceOfBoolean
-
-    final case class CC() extends Function0 {
+    final case class FT() extends Function0 {
         override  def self = this
-        override type self = CC
-        override  def apply = xs.decrement < ys.decrement
-        override type apply = xs#decrement# <[ys#decrement]
+        override type self = FT
+        override  def apply = (ys.tail < xs.tail).not.asInstanceOf[apply]
+        override type apply = ys#tail# <[xs#tail]#not
     }
 }
