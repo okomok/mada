@@ -133,12 +133,8 @@ sealed abstract class List extends Any {
      *
      * @pre `n in [0, size)`.
      */
-    final  def replace[n <: Nat, e <: Any](n: n, e: e): replace[n, e] = take(n) ::: _cons_drop(n, e)
-    final type replace[n <: Nat, e <: Any] = take[n] ::: _cons_drop[n, e]
-
-    @compilerWorkaround("2.8.0") // works around a type mismatch.
-    private final  def _cons_drop[n <: Nat, e <: Any](n: n, e: e): _cons_drop[n, e] = Cons(e, drop(n.increment))
-    private final type _cons_drop[n <: Nat, e <: Any] = Cons[e, drop[n#increment]]
+    final  def replace[n <: Nat, e <: Any](n: n, e: e): replace[n, e] = (take(n) ::: Cons(e, drop(n.increment))).asInstanceOf[replace[n, e]]
+    final type replace[n <: Nat, e <: Any] = take[n] ::: Cons[e, drop[n#increment]]
 
     /**
      * Prepends reversed <code>that</code>.
