@@ -8,13 +8,12 @@ package com.github.okomok.mada; package dual; package list
 
 
 private[mada] class Drop {
-     def apply[xs <: List, n <: Nat](xs: xs, n: n): apply[xs, n] = n.foldRightWithNat(xs, step).asInstanceOfList
-    type apply[xs <: List, n <: Nat] = n#foldRightWithNat[xs, step]#asInstanceOfList
+     def apply[xs <: List, n <: Nat](xs: xs, n: n): apply[xs, n] = n.foldRightWithNat(xs, Step()).asInstanceOfList
+    type apply[xs <: List, n <: Nat] = n#foldRightWithNat[xs, Step]#asInstanceOfList
 
-    val step = new step
-    final class step extends Function2 {
+    final case class Step() extends Function2 {
         override  def self = this
-        override type self = step
+        override type self = Step
         override  def apply[a <: Any, b <: Any](a: a, b: b): apply[a, b] = b.asInstanceOfList.tail
         override type apply[a <: Any, b <: Any] = b#asInstanceOfList#tail
     }

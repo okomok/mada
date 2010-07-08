@@ -18,6 +18,9 @@ sealed abstract class List extends Any {
 
     type self <: List
 
+    final override  def asInstanceOfList = self
+    final override type asInstanceOfList = self
+
     /**
      * Returns the first element.
      */
@@ -190,9 +193,6 @@ sealed abstract class List extends Any {
      */
      def foldLeft[z <: Any, f <: Function2](z: z, f: f): foldLeft[z, f]
     type foldLeft[z <: Any, f <: Function2] <: Any
-
-    final override  def asInstanceOfList = self
-    final override type asInstanceOfList = self
 
     final override type undual = sequence.List[scala.Any]
     final override def canEqual(that: scala.Any) = that.isInstanceOf[List]

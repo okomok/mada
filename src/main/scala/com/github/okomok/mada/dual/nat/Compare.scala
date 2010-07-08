@@ -23,7 +23,7 @@ private[mada] final case class Equals[xs <: Nat, ys <: Nat](xs: xs, ys: ys) {
         override  def self = this
         override type self = Else
         override  def apply = xs.tail === ys.tail
-        override type apply =xs.tail# ===[ys#tail]
+        override type apply = xs.tail# ===[ys#tail]
     }
 }
 
