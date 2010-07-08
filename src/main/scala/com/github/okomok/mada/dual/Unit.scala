@@ -14,7 +14,7 @@ sealed abstract class Unit extends Any {
     override  def asInstanceOfUnit = this
     override type asInstanceOfUnit = Unit
 
-    override  def undual = ()
+    override  def undual: undual = ()
     override type undual = scala.Unit
     override def canEqual(that: scala.Any) = that.isInstanceOf[Unit]
 }

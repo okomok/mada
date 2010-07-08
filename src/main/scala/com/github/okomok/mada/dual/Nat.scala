@@ -44,10 +44,10 @@ sealed abstract class Nat extends Any {
      def decrement: decrement
     type decrement <: Nat
 
-    final  def +[that <: Nat](that: that) = Add(self,that).apply
+    final  def +[that <: Nat](that: that): +[that] = Add(self,that).apply
     final type +[that <: Nat] = Add[self, that]#apply
 
-    final  def -[that <: Nat](that: that) = Subtract(self, that).apply
+    final  def -[that <: Nat](that: that): -[that] = Subtract(self, that).apply
     final type -[that <: Nat] = Subtract[self, that]#apply
 
      def **[that <: Nat](that: that): **[that]
@@ -56,7 +56,7 @@ sealed abstract class Nat extends Any {
     final  def >[that <: Nat](that: that): >[that] = that < self
     final type >[that <: Nat] = that# <[self]
 
-    final  def <[that <: Nat](that: that) = LessThan(self, that).apply
+    final  def <[that <: Nat](that: that): <[that] = LessThan(self, that).apply
     final type <[that <: Nat] = LessThan[self, that]#apply
 
     final  def >=[that <: Nat](that: that): >=[that] = (that > self).not
@@ -83,7 +83,7 @@ sealed abstract class Nat extends Any {
     final  def matchCaseNil[that <: Nat, nn <: Function0, nc <: Function0, cn <: Function0, cc <: Function0](that: that, nn: nn, nc: nc, cn: cn, cc: cc): matchCaseNil[that, nn, nc, cn, cc] = isEmpty.`if`(that.isEmpty.`if`(nn, nc), that.isEmpty.`if`(cn, cc))
     final type matchCaseNil[that <: Nat, nn <: Function0, nc <: Function0, cn <: Function0, cc <: Function0] = isEmpty#`if`[that#isEmpty#`if`[nn, nc], that#isEmpty#`if`[cn, cc]]
 
-    final  def matchCaseCons[that <: Nat, tt <: Function0, tf <: Function0, ft <: Function0, ff <: Function0](that: that, tt: tt, tf: tf, ft: ft, ff: ff) = MatchCaseCons(self, that, tt, tf, ft, ff)
+    final  def matchCaseCons[that <: Nat, tt <: Function0, tf <: Function0, ft <: Function0, ff <: Function0](that: that, tt: tt, tf: tf, ft: ft, ff: ff): matchCaseCons[that, tt, tf, ft, ff] = MatchCaseCons(self, that, tt, tf, ft, ff)
     final type matchCaseCons[that <: Nat, tt <: Function0, tf <: Function0, ft <: Function0, ff <: Function0] = MatchCaseCons[self, that, tt, tf, ft, ff]
 }
 
@@ -92,34 +92,34 @@ sealed class NatNil extends Nat {
     override  def self = this
     override type self = NatNil
 
-    override  def head = `throw`(new scala.NoSuchElementException("dual.NatNil.head"))
+    override  def head: head = `throw`(new scala.NoSuchElementException("dual.NatNil.head"))
     override type head = `throw`[scala.NoSuchElementException]
 
-    override  def tail = `throw`(new scala.NoSuchElementException("dual.NatNil.tail"))
+    override  def tail: tail = `throw`(new scala.NoSuchElementException("dual.NatNil.tail"))
     override type tail = `throw`[scala.NoSuchElementException]
 
-    override  def isEmpty = `true`
+    override  def isEmpty: isEmpty = `true`
     override type isEmpty = `true`
 
-    override  def increment = NatCons(`true`, self)
+    override  def increment: increment = NatCons(`true`, self)
     override type increment = NatCons[`true`, self]
 
-    override  def decrement = `throw`(new scala.UnsupportedOperationException("dual.NatNil.decrement"))
+    override  def decrement: decrement = `throw`(new scala.UnsupportedOperationException("dual.NatNil.decrement"))
     override type decrement = `throw`[scala.UnsupportedOperationException]
 
-    override  def **[that <: Nat](that: that) = self
+    override  def **[that <: Nat](that: that): **[that] = self
     override type **[that <: Nat] = self
 
-    override  def <<[that <: Nat](that: that) = self
+    override  def <<[that <: Nat](that: that): <<[that] = self
     override type <<[that <: Nat] = self
 
-    override  def >>[that <: Nat](that: that) = self
+    override  def >>[that <: Nat](that: that): >>[that] = self
     override type >>[that <: Nat] = self
 
     override  def foldRightWithNat[z <: Any, f <: Function2](z: z, f: f): foldRightWithNat[z, f] = z
     override type foldRightWithNat[z <: Any, f <: Function2] = z
 
-    override def undual = 0
+    override def undual: undual = 0
 }
 
 
@@ -127,34 +127,34 @@ final case class NatCons[x <: Boolean, xs <: Nat](private val x: x, private val 
     override  def self = this
     override type self = NatCons[x, xs]
 
-    override  def head = x
+    override  def head: head = x
     override type head = x
 
-    override  def tail = xs
+    override  def tail: tail = xs
     override type tail = xs
 
-    override  def isEmpty = `false`
+    override  def isEmpty: isEmpty = `false`
     override type isEmpty = `false`
 
-    override  def increment = IncrementCons(x, xs).apply
+    override  def increment: increment = IncrementCons(x, xs).apply
     override type increment = IncrementCons[x, xs]#apply
 
-    override  def decrement = DecrementCons(x, xs).apply
+    override  def decrement: decrement = DecrementCons(x, xs).apply
     override type decrement = DecrementCons[x, xs]#apply
 
-    override  def **[that <: Nat](that: that) = throw new Error//MultiplyCons(x, xs).apply(that)
+    override  def **[that <: Nat](that: that): **[that] = throw new Error//MultiplyCons(x, xs).apply(that)
     override type **[that <: Nat] = Nothing//MultiplyCons[x, xs]#apply[that]
 
-    override  def <<[that <: Nat](that: that) = NatCons(`false`, self)
+    override  def <<[that <: Nat](that: that): <<[that] = NatCons(`false`, self)
     override type <<[that <: Nat] = NatCons[`false`, self]
 
-    override  def >>[that <: Nat](that: that) = tail
+    override  def >>[that <: Nat](that: that): >>[that] = tail
     override type >>[that <: Nat] = tail
 
     override  def foldRightWithNat[z <: Any, f <: Function2](z: z, f: f): foldRightWithNat[z, f] = f.apply(self, decrement.foldRightWithNat(z, f))
     override type foldRightWithNat[z <: Any, f <: Function2] = f#apply[self, decrement#foldRightWithNat[z, f]]
 
-    override def undual = (if (x.undual) 1 else 0) + (2 * xs.undual)
+    override def undual: undual = (if (x.undual) 1 else 0) + (2 * xs.undual)
 }
 
 

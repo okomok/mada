@@ -142,7 +142,7 @@ sealed abstract class List extends Any {
     /**
      * Prepends reversed <code>that</code>.
      */
-    final  def prependReversed[that <: List](that: that) = new PrependReversed().apply(self, that)
+    final  def prependReversed[that <: List](that: that): prependReversed[that] = new PrependReversed().apply(self, that)
     final type prependReversed[that <: List] = PrependReversed#apply[self, that]
 
     /**
@@ -203,27 +203,27 @@ sealed abstract class Nil extends List {
     override  def self = this
     override type self = Nil
 
-    override  def head = `throw`(new scala.NoSuchElementException)
+    override  def head: head = `throw`(new scala.NoSuchElementException)
     override type head = `throw`[scala.NoSuchElementException]
 
-    override  def tail = `throw`(new scala.NoSuchElementException)
+    override  def tail: tail = `throw`(new scala.NoSuchElementException)
     override type tail = `throw`[scala.NoSuchElementException]
 
-    override  def isEmpty = `true`
+    override  def isEmpty: isEmpty = `true`
     override type isEmpty = `true`
 
-    override  def map[f <: Function1](f: f) = Nil
+    override  def map[f <: Function1](f: f): map[f] = Nil
     override type map[f <: Function1] = Nil
 
-    override  def flatMap[f <: Function1](f: f) = Nil
+    override  def flatMap[f <: Function1](f: f): flatMap[f] = Nil
     override type flatMap[f <: Function1] = Nil
 
-    override  def filter[f <: Function1](f: f) = Nil
+    override  def filter[f <: Function1](f: f): filter[f] = Nil
     override type filter[f <: Function1] = Nil
 
-    override  def foreach[f <: Function1](f: f) = Unit
+    override  def foreach[f <: Function1](f: f): foreach[f] = Unit
 
-    override  def zip[that <: List](that: that) = Nil
+    override  def zip[that <: List](that: that): zip[that] = Nil
     override type zip[that <: List] = Nil
 
     override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = z
@@ -232,7 +232,7 @@ sealed abstract class Nil extends List {
     override  def foldLeft[z <: Any, f <: Function2](z: z, f: f): foldLeft[z, f] = z
     override type foldLeft[z <: Any, f <: Function2] = z
 
-    override def undual = sequence.Nil
+    override def undual: undual = sequence.Nil
 }
 
 
@@ -240,22 +240,22 @@ final case class Cons[x <: Any, xs <: List](private val x: x, private val xs: xs
     override  def self = this
     override type self = Cons[x, xs]
 
-    override  val head = x
+    override  val head: head = x
     override type head = x
 
-    override  val tail = xs
+    override  val tail: tail = xs
     override type tail = xs
 
-    override  def isEmpty = `false`
+    override  def isEmpty: isEmpty = `false`
     override type isEmpty = `false`
 
-    override  def map[f <: Function1](f: f) = Cons(f.apply(x), xs.map(f))
+    override  def map[f <: Function1](f: f): map[f] = Cons(f.apply(x), xs.map(f))
     override type map[f <: Function1] = Cons[f#apply[x], xs#map[f]]
 
     override  def flatMap[f <: Function1](f: f): flatMap[f] = f.apply(x).asInstanceOfList ::: xs.flatMap(f)
     override type flatMap[f <: Function1] = f#apply[x]#asInstanceOfList ::: xs#flatMap[f]
 
-    override  def filter[f <: Function1](f: f) = new FilterCons().apply(x, xs, f)
+    override  def filter[f <: Function1](f: f): filter[f] = new FilterCons().apply(x, xs, f)
     override type filter[f <: Function1] = FilterCons#apply[x, xs, f]
 
     override  def foreach[f <: Function1](f: f): foreach[f] = { f.apply(x); xs.foreach(f) }
@@ -269,7 +269,7 @@ final case class Cons[x <: Any, xs <: List](private val x: x, private val xs: xs
     override  def foldLeft[z <: Any, f <: Function2](z: z, f: f): foldLeft[z, f] = tail.foldLeft(f.apply(z, head), f)
     override type foldLeft[z <: Any, f <: Function2] = tail#foldLeft[f#apply[z, head], f]
 
-    override def undual = head.undual :: tail.undual
+    override def undual: undual = head.undual :: tail.undual
 }
 
 object :: {

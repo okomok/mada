@@ -54,13 +54,13 @@ sealed abstract class None extends Option {
     override  def self = this
     override type self = None
 
-    override  def get = `throw`(new scala.NoSuchElementException("dual.None.get"))
+    override  def get: get = `throw`(new scala.NoSuchElementException("dual.None.get"))
     override type get = `throw`[scala.NoSuchElementException]
 
-    override  def isEmpty = `true`
+    override  def isEmpty: isEmpty = `true`
     override type isEmpty = `true`
 
-    override  def undual = scala.None
+    override  def undual: undual = scala.None
     override type undual = scala.None.type
 }
 
@@ -72,13 +72,13 @@ final case class Some[e <: Any](e: e) extends Option {
     override  def self = this
     override type self = Some[e]
 
-    override  val get = e
+    override  val get: get = e
     override type get = e
 
-    override  def isEmpty = `false`
+    override  def isEmpty: isEmpty = `false`
     override type isEmpty = `false`
 
-    override  def undual = scala.Some(e.undual)
+    override  def undual: undual = scala.Some(e.undual)
     override type undual = scala.Some[e#undual]
 }
 

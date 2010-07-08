@@ -26,7 +26,7 @@ trait Product1 extends Product {
     final override  def asInstanceOfProduct1 = self
     final override type asInstanceOfProduct1 = self
 
-    final override  def arity = _1N
+    final override  def arity: arity = _1N
     final override type arity = _1N
 
      def _1: _1
@@ -41,7 +41,7 @@ trait Product2 extends Product {
     final override  def asInstanceOfProduct2 = self
     final override type asInstanceOfProduct2 = self
 
-    final override  def arity = _2N
+    final override  def arity: arity = _2N
     final override type arity = _2N
 
      def _1: _1

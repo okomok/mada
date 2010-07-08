@@ -20,7 +20,7 @@ object ElementOf {
     }
 
     implicit def _ofConsMatch[as <: List, e <: Any] = new ElementOf[Cons[e, as], e] {
-        override def apply(xs: Cons[e, as]) = xs.head
+        override def apply(xs: Cons[e, as]): e = xs.head
     }
 
 }

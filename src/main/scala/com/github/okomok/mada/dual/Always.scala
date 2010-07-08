@@ -11,6 +11,6 @@ final case class Always0[v <: Any](private val v: v) extends Function0 {
     override  def self = this
     override type self = Always0[v]
 
-    override  def apply = v
+    override  def apply: apply = v
     override type apply = v
 }

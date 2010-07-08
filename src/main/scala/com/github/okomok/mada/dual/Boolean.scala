@@ -72,7 +72,7 @@ sealed trait `true` extends Boolean {
     override  def `if`[then <: Function0, _else <: Function0](then: then, _else: _else): `if`[then, _else] = then
     override type `if`[then <: Function0, _else <: Function0] = then
 
-    override def undual = true
+    override def undual: undual = true
 }
 
 /**
@@ -103,7 +103,7 @@ sealed trait `false` extends Boolean {
     override  def `if`[then <: Function0, _else <: Function0](then: then, _else: _else): `if`[then, _else] = _else
     override type `if`[then <: Function0, _else <: Function0] = _else
 
-    override def undual = false
+    override def undual: undual = false
 }
 
 

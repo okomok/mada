@@ -14,28 +14,28 @@ private[mada] final case class Subtract[xs <: Nat, ys <: Nat](xs: xs, ys: ys) {
     final case class Throw() extends Function0 {
         override  def self = this
         override type self = Throw
-        override  def apply = `throw`(new scala.UnsupportedOperationException("dual.NatNil.subtract positive"))
+        override  def apply: apply = `throw`(new scala.UnsupportedOperationException("dual.NatNil.subtract positive"))
         override type apply = `throw`[scala.UnsupportedOperationException]
     }
 
     final case class XX() extends Function0 {
         override  def self = this
         override type self = XX
-        override  def apply = ConsFalse(xs.tail - ys.tail).apply.asInstanceOf[apply]
+        override  def apply: apply = ConsFalse(xs.tail - ys.tail).apply.asInstanceOf[apply]
         override type apply = ConsFalse[xs#tail# -[ys#tail]]#apply
     }
 
     final case class ConsFalse[zs <: Nat](zs: zs) extends Function0 {
         override  def self = this
         override type self = ConsFalse[zs]
-        override  def apply = zs.isEmpty.`if`(Always0(zs), Always0(NatCons(`false`, zs))).apply
+        override  def apply: apply = zs.isEmpty.`if`(Always0(zs), Always0(NatCons(`false`, zs))).apply
         override type apply = zs#isEmpty#`if`[Always0[zs], Always0[NatCons[`false`, zs]]]#apply
     }
 
     final case class TF() extends Function0 {
         override  def self = this
         override type self = TF
-        override  def apply = NatCons(`true`, (xs.tail - ys.tail))
+        override  def apply: apply = NatCons(`true`, (xs.tail - ys.tail))
         override type apply = NatCons[`true`, xs#tail# -[ys#tail]]
     }
 
@@ -43,7 +43,7 @@ private[mada] final case class Subtract[xs <: Nat, ys <: Nat](xs: xs, ys: ys) {
         override  def self = this
         override type self = FT
 
-        override  def apply = NatCons(`true`, xs.tail.decrement - ys.tail).asInstanceOf[apply]
+        override  def apply: apply = NatCons(`true`, xs.tail.decrement - ys.tail).asInstanceOf[apply]
         override type apply = NatCons[`true`, xs#tail#decrement# -[ys#tail]]
     }
 }

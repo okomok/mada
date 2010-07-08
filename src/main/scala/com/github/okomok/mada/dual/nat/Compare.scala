@@ -14,7 +14,7 @@ private[mada] final case class Equals[xs <: Nat, ys <: Nat](xs: xs, ys: ys) {
     final case class CC() extends Function0 {
         override  def self = this
         override type self = CC
-        override  def apply = xs.head.!==(ys.head).`if`(Always0(`false`), Else()).apply
+        override  def apply: apply = xs.head.!==(ys.head).`if`(Always0(`false`), Else()).apply
         override type apply = xs.head# !==[ys.head]# `if`[Always0[`false`], Else]#apply
     }
 
@@ -22,7 +22,7 @@ private[mada] final case class Equals[xs <: Nat, ys <: Nat](xs: xs, ys: ys) {
     final case class Else() extends Function0 {
         override  def self = this
         override type self = Else
-        override  def apply = xs.tail === ys.tail
+        override  def apply: apply = xs.tail === ys.tail
         override type apply = xs.tail# ===[ys#tail]
     }
 }
@@ -35,14 +35,14 @@ private[mada] final case class LessThan[xs <: Nat, ys <: Nat](xs: xs, ys: ys) {
     final case class XXTF() extends Function0 {
         override  def self = this
         override type self = XXTF
-        override  def apply = xs.tail < ys.tail
+        override  def apply: apply = xs.tail < ys.tail
         override type apply = xs#tail# <[ys#tail]
     }
 
     final case class FT() extends Function0 {
         override  def self = this
         override type self = FT
-        override  def apply = (ys.tail < xs.tail).not.asInstanceOf[apply]
+        override  def apply: apply = (ys.tail < xs.tail).not.asInstanceOf[apply]
         override type apply = ys#tail# <[xs#tail]#not
     }
 }

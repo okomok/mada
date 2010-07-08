@@ -14,7 +14,7 @@ private[mada] class PrependReversed {
     final case class Step() extends Function2 {
         override  def self = this
         override type self = Step
-        override  def apply[b <: Any, a <: Any](b: b, a: a) = Cons(a, b.asInstanceOfList)
+        override  def apply[b <: Any, a <: Any](b: b, a: a): apply[b, a] = Cons(a, b.asInstanceOfList)
         override type apply[b <: Any, a <: Any] = Cons[a, b#asInstanceOfList]
     }
 }

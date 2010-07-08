@@ -7,6 +7,9 @@
 package com.github.okomok.mada; package dual
 
 
+import function._
+
+
 trait Function0 extends Any {
     type self <: Function0
 
@@ -16,11 +19,12 @@ trait Function0 extends Any {
      def apply: apply
     type apply <: Any
 
-    override lazy val undual = () => apply.undual
+    override lazy val undual: undual = () => apply.undual
     override type undual = () => apply#undual
 
     override def canEqual(that: scala.Any) = that.isInstanceOf[Function0]
 }
+
 
 trait Function1 extends Any {
     type self <: Function1
@@ -31,8 +35,14 @@ trait Function1 extends Any {
      def apply[v1 <: Any](v1: v1): apply[v1]
     type apply[v1 <: Any] <: Any
 
+    final  def compose[that <: Function1](that: that): compose[that] = Compose(self, that)
+    final type compose[that <: Function1] = Compose[self, that]
+
+    final  def andThen[that <: Function1](that: that): andThen[that] = Compose(that, self)
+    final type andThen[that <: Function1] = Compose[that, self]
+
     // `val` keeps identity equality for undual objects.
-    override lazy val undual = (v1: scala.Any) => throw new UnsupportedOperationException("dual.Function1.apply")
+    override lazy val undual: undual = (v1: scala.Any) => throw new UnsupportedOperationException("dual.Function1.apply")
     override type undual = scala.Any => scala.Nothing
 
     override def canEqual(that: scala.Any) = that.isInstanceOf[Function1]
@@ -47,7 +57,13 @@ trait Function2 extends Any {
      def apply[v1 <: Any, v2 <: Any](v1: v1, v2: v2): apply[v1, v2]
     type apply[v1 <: Any, v2 <: Any] <: Any
 
-    override lazy val undual = (v1: scala.Any, v2: scala.Any) => throw new UnsupportedOperationException("dual.Function2.apply")
+    final  def curried: curried = Curried2(self)
+    final type curried = Curried2[self]
+
+    final  def tupled: tupled = Tupled2(self)
+    final type tupled = Tupled2[self]
+
+    override lazy val undual: undual = (v1: scala.Any, v2: scala.Any) => throw new UnsupportedOperationException("dual.Function2.apply")
     override type undual = (scala.Any, scala.Any) => Nothing
 
     override def canEqual(that: scala.Any) = that.isInstanceOf[Function2]

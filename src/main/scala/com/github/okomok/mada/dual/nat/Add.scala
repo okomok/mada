@@ -14,21 +14,21 @@ private[mada] final case class Add[xs <: Nat, ys <: Nat](xs: xs, ys: ys) {
     final case class TT() extends Function0 {
         override  def self = this
         override type self = TT
-        override  def apply = NatCons(`false`, (xs.tail + ys.tail).increment).asInstanceOf[apply]
+        override  def apply: apply = NatCons(`false`, (xs.tail + ys.tail).increment).asInstanceOf[apply]
         override type apply = NatCons[`false`, xs#tail# +[ys#tail]#increment]
     }
 
     final case class XF() extends Function0 {
         override  def self = this
         override type self = XF
-        override  def apply = NatCons(xs.head, (xs.tail + ys.tail))
+        override  def apply: apply = NatCons(xs.head, (xs.tail + ys.tail))
         override type apply = NatCons[xs#head, xs#tail# +[ys#tail]]
     }
 
     final case class FX() extends Function0 {
         override  def self = this
         override type self = FX
-        override  def apply = NatCons(ys.head, xs.tail + ys.tail)
+        override  def apply: apply = NatCons(ys.head, xs.tail + ys.tail)
         override type apply = NatCons[ys#head, xs#tail# +[ys.tail]]
     }
 }

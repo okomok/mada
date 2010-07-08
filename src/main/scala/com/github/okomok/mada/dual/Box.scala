@@ -14,9 +14,9 @@ final case class Box[A](private val e: A) extends Any {
     override  def asInstanceOfBox = self
     override type asInstanceOfBox = self
 
-     def unbox = e
+     def unbox: unbox = e
     type unbox = A
 
-    override  def undual = unbox
+    override  def undual: undual = unbox
     override type undual = unbox
 }
