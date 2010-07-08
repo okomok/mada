@@ -71,8 +71,8 @@ sealed abstract class Nat extends Any {
      def >>[that <: Nat](that: that): >>[that]
     type >>[that <: Nat] <: Nat
 
-     def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f]
-    type foldRight[z <: Any, f <: Function2] <: Any
+     def foldRightWithNat[z <: Any, f <: Function2](z: z, f: f): foldRightWithNat[z, f]
+    type foldRightWithNat[z <: Any, f <: Function2] <: Any
 
     @aliasOf("addFirst")
     final def Nat_::[e <: Boolean](e: e): addFirst[e] = addFirst(e)
@@ -116,8 +116,8 @@ sealed class NatNil extends Nat {
     override  def >>[that <: Nat](that: that) = self
     override type >>[that <: Nat] = self
 
-    override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = z
-    override type foldRight[z <: Any, f <: Function2] = z
+    override  def foldRightWithNat[z <: Any, f <: Function2](z: z, f: f): foldRightWithNat[z, f] = z
+    override type foldRightWithNat[z <: Any, f <: Function2] = z
 
     override def undual = 0
 }
@@ -151,8 +151,8 @@ final case class NatCons[x <: Boolean, xs <: Nat](private val x: x, private val 
     override  def >>[that <: Nat](that: that) = tail
     override type >>[that <: Nat] = tail
 
-    override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = f.apply(self, decrement.foldRight(z, f))
-    override type foldRight[z <: Any, f <: Function2] = f#apply[self, decrement#foldRight[z, f]]
+    override  def foldRightWithNat[z <: Any, f <: Function2](z: z, f: f): foldRightWithNat[z, f] = f.apply(self, decrement.foldRightWithNat(z, f))
+    override type foldRightWithNat[z <: Any, f <: Function2] = f#apply[self, decrement#foldRightWithNat[z, f]]
 
     override def undual = (if (x.undual) 1 else 0) + (2 * xs.undual)
 }
