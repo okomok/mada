@@ -11,7 +11,10 @@ package dual; package nat; package dense
 // See: http://apocalisp.wordpress.com/2010/06/24/type-level-programming-in-scala-part-5a-binary-numbers/
 
 
-object Dense extends Common
+object Dense extends Common with OperatorCommon {
+    @returnThis
+    val Operator: OperatorCommon = this
+}
 
 
 sealed abstract class Dense extends Any {

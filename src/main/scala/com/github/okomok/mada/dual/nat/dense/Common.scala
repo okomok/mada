@@ -8,9 +8,9 @@ package com.github.okomok.mada
 package dual; package nat; package dense
 
 
-private[mada] trait Common extends LiteralCommon with OperatorCommon {
+private[mada] trait Common extends LiteralCommon {
+    @returnThis
     val Literal: LiteralCommon = this
-    val Operator: OperatorCommon = this // may crash compiler.
 
     @equivalentTo("new Nil{}")
     val Nil: Nil = _Dense.Nil
@@ -66,8 +66,11 @@ private[mada] trait LiteralCommon {
 
 
 /**
- * Contains infix operators for Dense.
+ * Contains operators for Dense.
  */
+@compilerWorkaround("2.8.0") // not extended by `Common` to avoid "error: type _140.type is defined twice".
+object Operator extends OperatorCommon
+
 private[mada] trait OperatorCommon {
     type  +[x <: Dense, y <: Dense] = x# +[y]
     type  -[x <: Dense, y <: Dense] = x# -[y]
