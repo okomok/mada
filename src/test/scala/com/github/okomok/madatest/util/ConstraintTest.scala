@@ -9,7 +9,7 @@ package com.github.okomok.madatest; package utiltest
 
 import com.github.okomok.mada
 
-import mada.dual.nat.Peano.Literal._
+import mada.dual.nat.peano.Literal._
 import mada.util._
 import junit.framework.Assert._
 

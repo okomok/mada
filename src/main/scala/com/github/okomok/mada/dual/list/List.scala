@@ -5,46 +5,11 @@
 
 
 package com.github.okomok.mada
-package dual
+package dual; package list
 
 
 // See: HList.scala
 //      at http://www.assembla.com/wiki/show/metascala
-
-
-import list._
-
-
-object List {
-
-// methodization
-/*
-    sealed class _Of1[a1](_this: a1 :: Nil) {
-        def toTuple: Tuple1[a1] = Tuple1(_this.head)
-    }
-    implicit def _of1[a1](_this: a1 :: Nil): _Of1[a1] = new _Of1(_this)
-
-    sealed class _Of2[a1, a2](_this: a1 :: a2 :: Nil) {
-        def toTuple: Tuple2[a1, a2] = Tuple2(_this.head, _this.tail.head)
-    }
-    implicit def _of2[a1, a2](_this: a1 :: a2 :: Nil): _Of2[a1, a2] = new _Of2(_this)
-
-    sealed class _Of3[a1, a2, a3](_this: a1 :: a2 :: a3 :: Nil) {
-        def toTuple: Tuple3[a1, a2, a3] = Tuple3(_this.head, _this.tail.head, _this.tail.tail.head)
-    }
-    implicit def _of3[a1, a2, a3](_this: a1 :: a2 :: a3 :: Nil): _Of3[a1, a2, a3] = new _Of3(_this)
-
-    sealed class _Of4[a1, a2, a3, a4](_this: a1 :: a2 :: a3 :: a4 :: Nil) {
-        def toTuple: Tuple4[a1, a2, a3, a4] = Tuple4(_this.head, _this.tail.head, _this.tail.tail.head, _this.tail.tail.tail.head)
-    }
-    implicit def _of4[a1, a2, a3, a4](_this: a1 :: a2 :: a3 :: a4 :: Nil): _Of4[a1, a2, a3, a4] = new _Of4(_this)
-
-    sealed class _Of5[a1, a2, a3, a4, a5](_this: a1 :: a2 :: a3 :: a4 :: a5 :: Nil) {
-        def toTuple: Tuple5[a1, a2, a3, a4, a5] = Tuple5(_this.head, _this.tail.head, _this.tail.tail.head, _this.tail.tail.tail.head, _this.tail.tail.tail.tail.head)
-    }
-    implicit def _of5[a1, a2, a3, a4, a5](_this: a1 :: a2 :: a3 :: a4 :: a5 :: Nil): _Of5[a1, a2, a3, a4, a5] = new _Of5(_this)
-*/
-}
 
 
 sealed abstract class List extends Any {
@@ -305,11 +270,36 @@ final case class Cons[x <: Any, xs <: List](private val x: x, private val xs: xs
     override def undual: undual = head.undual :: tail.undual
 }
 
-object :: {
-    def unapply[x <: Any, xs <: List](xs: Cons[x, xs]): scala.Option[(x, xs)] = scala.Some(xs.head, xs.tail)
-}
-
 
 private[mada] object _List {
+
     val Nil = new Nil{}
+
+// methodization
+/*
+    sealed class _Of1[a1](_this: a1 :: Nil) {
+        def toTuple: Tuple1[a1] = Tuple1(_this.head)
+    }
+    implicit def _of1[a1](_this: a1 :: Nil): _Of1[a1] = new _Of1(_this)
+
+    sealed class _Of2[a1, a2](_this: a1 :: a2 :: Nil) {
+        def toTuple: Tuple2[a1, a2] = Tuple2(_this.head, _this.tail.head)
+    }
+    implicit def _of2[a1, a2](_this: a1 :: a2 :: Nil): _Of2[a1, a2] = new _Of2(_this)
+
+    sealed class _Of3[a1, a2, a3](_this: a1 :: a2 :: a3 :: Nil) {
+        def toTuple: Tuple3[a1, a2, a3] = Tuple3(_this.head, _this.tail.head, _this.tail.tail.head)
+    }
+    implicit def _of3[a1, a2, a3](_this: a1 :: a2 :: a3 :: Nil): _Of3[a1, a2, a3] = new _Of3(_this)
+
+    sealed class _Of4[a1, a2, a3, a4](_this: a1 :: a2 :: a3 :: a4 :: Nil) {
+        def toTuple: Tuple4[a1, a2, a3, a4] = Tuple4(_this.head, _this.tail.head, _this.tail.tail.head, _this.tail.tail.tail.head)
+    }
+    implicit def _of4[a1, a2, a3, a4](_this: a1 :: a2 :: a3 :: a4 :: Nil): _Of4[a1, a2, a3, a4] = new _Of4(_this)
+
+    sealed class _Of5[a1, a2, a3, a4, a5](_this: a1 :: a2 :: a3 :: a4 :: a5 :: Nil) {
+        def toTuple: Tuple5[a1, a2, a3, a4, a5] = Tuple5(_this.head, _this.tail.head, _this.tail.tail.head, _this.tail.tail.tail.head, _this.tail.tail.tail.tail.head)
+    }
+    implicit def _of5[a1, a2, a3, a4, a5](_this: a1 :: a2 :: a3 :: a4 :: a5 :: Nil): _Of5[a1, a2, a3, a4, a5] = new _Of5(_this)
+*/
 }

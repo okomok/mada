@@ -8,12 +8,9 @@ package com.github.okomok.mada
 package dual
 
 
-package object nat {
+package object option {
 
-    @aliasOf("dense.Dense")
-    type Dense = dense.Dense
-
-    @aliasOf("peano.Peano")
-    type Peano = peano.Peano
+    @equivalentTo("new None{}")
+    val None = _Option.None
 
 }

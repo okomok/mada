@@ -8,7 +8,7 @@ package com.github.okomok.mada
 package dual
 
 
-import nat.Peano
+import nat.peano
 
 
 trait Product extends Any {
@@ -18,7 +18,7 @@ trait Product extends Any {
     final override type asInstanceOfProduct = self
 
      def arity: arity
-    type arity <: Peano
+    type arity <: peano.Peano
 
     override def canEqual(that: scala.Any) = that.isInstanceOf[Product]
 }
@@ -30,8 +30,8 @@ trait Product1 extends Product {
     final override  def asInstanceOfProduct1 = self
     final override type asInstanceOfProduct1 = self
 
-    final override  def arity: arity = Peano._1
-    final override type arity = Peano._1
+    final override  def arity: arity = peano._1
+    final override type arity = peano._1
 
      def _1: _1
     type _1 <: Any
@@ -45,8 +45,8 @@ trait Product2 extends Product {
     final override  def asInstanceOfProduct2 = self
     final override type asInstanceOfProduct2 = self
 
-    final override  def arity: arity = Peano._2
-    final override type arity = Peano._2
+    final override  def arity: arity = peano._2
+    final override type arity = peano._2
 
      def _1: _1
     type _1 <: Any

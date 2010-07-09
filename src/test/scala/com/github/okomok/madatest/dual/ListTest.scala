@@ -10,7 +10,7 @@ package com.github.okomok.madatest; package dualtest
 import com.github.okomok.mada
 
 import mada.dual._
-import nat.Peano.Literal._
+import nat.peano.Literal._
 
 
 class ListTest extends junit.framework.TestCase {

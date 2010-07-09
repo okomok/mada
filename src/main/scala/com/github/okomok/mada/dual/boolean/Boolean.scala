@@ -5,19 +5,7 @@
 
 
 package com.github.okomok.mada
-package dual
-
-
-import boolean._
-
-
-object Boolean {
-    @aliasOf("boolean.Operator")
-    val Operator = boolean.Operator
-
-    // useless
-    // implicit def _undual[c <: Boolean](c: c): scala.Boolean = c.undual
-}
+package dual; package boolean
 
 
 /**

@@ -9,7 +9,7 @@ package dual; package nat; package peano
 
 
 /**
- * Contains natural number literals.
+ * Contains literals for Peano.
  */
 object Literal extends LiteralCommon
 

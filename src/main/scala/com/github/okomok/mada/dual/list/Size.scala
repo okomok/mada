@@ -10,9 +10,13 @@ package dual; package list
 
 // TODO: make it easy method impl.
 
+
+import nat.peano
+
+
 private[mada] class Size {
-     def apply[xs <: List](xs: xs): apply[xs] = xs.foldRight(nat.Peano._0, Step()).asInstanceOfNatPeano
-    type apply[xs <: List] = xs#foldRight[nat.Peano._0, Step]#asInstanceOfNatPeano
+     def apply[xs <: List](xs: xs): apply[xs] = xs.foldRight(peano._0, Step()).asInstanceOfNatPeano
+    type apply[xs <: List] = xs#foldRight[peano._0, Step]#asInstanceOfNatPeano
 
     final case class Step() extends Function2 {
         override  def self = this

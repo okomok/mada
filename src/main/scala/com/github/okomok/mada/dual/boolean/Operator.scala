@@ -11,13 +11,15 @@ package dual; package boolean
 /**
  * Contains infix operators for Boolean.
  */
-object Operator extends OperatorCommon
+object Operator extends OperatorCommon // may crash compiler.
 
 
 trait OperatorCommon {
+
     type ===[x <: Boolean, y <: Boolean] = x# ===[y]
     type !==[x <: Boolean, y <: Boolean] = x# !==[y]
 
     type &&[x <: Boolean, y <: Boolean] = x# &&[y]
     type ||[x <: Boolean, y <: Boolean] = x# ||[y]
+
 }

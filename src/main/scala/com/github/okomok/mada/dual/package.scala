@@ -14,14 +14,14 @@ import annotation.elidable.ASSERTION
 package object dual {
 
 
+// util
+
     /**
      * The dual throw
      */
      def `throw`[x <: scala.Throwable](x: x): `throw`[x] = throw x
     type `throw`[x <: scala.Throwable] = Nothing
 
-
-// util
     /**
      * The dual constant function
      */
@@ -48,38 +48,56 @@ package object dual {
 
 // Boolean
 
-    @equivalentTo("new `true`{}")
-    val `true` = _Boolean.`true`
+    @aliasOf("boolean.Boolean")
+    type Boolean = boolean.Boolean
 
-    @equivalentTo("new `false`{}")
-    val `false` = _Boolean.`false`
+    @aliasOf("boolean.`true`")
+     val `true` = boolean.`true`
+    type `true` = boolean.`true`
 
-    /**
-     * The if-expression to return Any.
-     */
-     def `if`[b <: Boolean, then <: Function0, _else <: Function0](b: b, then: then, _else: _else): `if`[b, then, _else] = b.`if`(then, _else)
-    type `if`[b <: Boolean, then <: Function0, _else <: Function0] = b#`if`[then, _else]
+    @aliasOf("boolean.`false`")
+     val `false` = boolean.`false`
+    type `false` = boolean.`false`
 
-
-// Option
-
-    @equivalentTo("new None{}")
-    val None: None = _Option.None
+    @aliasOf("boolean.`if`")
+     def `if`[b <: Boolean, then <: Function0, _else <: Function0](b: b, then: then, _else: _else): `if`[b, then, _else] = boolean.`if`(b, then, _else)
+    type `if`[b <: Boolean, then <: Function0, _else <: Function0] = boolean.`if`[b, then, _else]
 
 
 // List
 
+    @aliasOf("list.List")
+    type List = list.List
+
     @equivalentTo("new Nil{}")
-    val Nil: Nil = _List.Nil
+     val Nil = list.Nil
+    type Nil = list.Nil
 
-    @equivalentTo("x#addFirst[xs]")
-    type ::[x <: Any, xs <: List] = xs#addFirst[x]
+    @aliasOf("Cons")
+    val :: = list.Cons
 
-    @equivalentTo("ys#prepend[xs]")
-    type :::[xs <: List, ys <: List] = ys#prepend[xs]
+    @aliasOf("list.::")
+    type ::[x <: Any, xs <: List] = list.::[x, xs]
 
-    @equivalentTo("ys#reversePrepend[xs]")
-    type reverse_:::[xs <: List, ys <: List] = ys#prependReversed[xs]
+    @aliasOf("list.:::")
+    type :::[xs <: List, ys <: List] = list.:::[xs, ys]
+
+    @aliasOf("list.reverse_:::")
+    type reverse_:::[xs <: List, ys <: List] = list.reverse_:::[xs, ys]
+
+
+// Option
+
+    @aliasOf("option.Option")
+    type Option = option.Option
+
+    @aliasOf("option.None")
+     val None = option.None
+    type None = option.None
+
+    @aliasOf("option.Some")
+     val Some = option.Some
+    type Some[x <: Any] = option.Some[x]
 
 
 // Unit

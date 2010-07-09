@@ -5,22 +5,10 @@
 
 
 package com.github.okomok.mada
-package dual; package nat
+package dual; package nat; package dense
 
 
 // See: http://apocalisp.wordpress.com/2010/06/24/type-level-programming-in-scala-part-5a-binary-numbers/
-
-
-import dense._
-
-
-object Dense extends LiteralCommon with OperatorCommon {
-    @aliasOf("dense.Literal")
-    val Literal = dense.Literal
-
-    @aliasOf("dense.Operator")
-    val Operator = dense.Operator
-}
 
 
 sealed abstract class Dense extends Any {

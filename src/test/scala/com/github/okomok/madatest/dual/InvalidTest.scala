@@ -12,7 +12,7 @@ import com.github.okomok.mada
 import mada.dual._
 import mada.dual.meta._
 import mada.dual.nat.Peano
-import Peano.Literal._
+import mada.dual.nat.peano.Literal._
 // import junit.framework.Assert._
 
 

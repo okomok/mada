@@ -9,14 +9,14 @@ package dual; package nat; package dense
 
 
 /**
- * Contains natural number literals.
+ * Contains literals for Dense.
  */
 object Literal extends LiteralCommon
 
 
 private[mada] trait LiteralCommon {
-    private[mada]  val _0B = _Boolean.`false`
-    private[mada]  val _1B = _Boolean.`true`
+    private[mada]  val _0B = boolean.`false`
+    private[mada]  val _1B = boolean.`true`
     private[mada] type _0B = `false`
     private[mada] type _1B = `true`
 

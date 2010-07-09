@@ -5,23 +5,11 @@
 
 
 package com.github.okomok.mada
-package dual; package nat
+package dual; package nat; package peano
 
 
 // See: Nats.scala
 //      at http://www.assembla.com/wiki/show/metascala
-
-
-import peano._
-
-
-object Peano extends LiteralCommon with OperatorCommon {
-    @aliasOf("peano.Literal")
-    val Literal = peano.Literal
-
-    @aliasOf("peano.Operator")
-    val Operator = peano.Operator
-}
 
 
 sealed trait Peano extends Any {

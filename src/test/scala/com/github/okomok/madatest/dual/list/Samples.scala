@@ -11,7 +11,7 @@ import com.github.okomok.mada
 
 
 import mada.dual._
-import nat.Peano.Literal._
+import nat.peano.Literal._
 
 
 object Samples {

@@ -5,13 +5,7 @@
 
 
 package com.github.okomok.mada
-package dual
-
-
-import option._
-
-
-object Option
+package dual; package option
 
 
 /**

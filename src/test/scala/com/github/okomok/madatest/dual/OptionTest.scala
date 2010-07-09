@@ -10,7 +10,7 @@ package com.github.okomok.madatest; package dualtest
 import com.github.okomok.mada.dual
 import dual._
 import junit.framework.Assert._
-import nat.Peano.Literal._
+import nat.peano.Literal._
 import nat.Peano
 
 

@@ -10,6 +10,20 @@ package dual
 
 package object list {
 
+    @equivalentTo("new Nil{}")
+    val Nil: Nil = _List.Nil
+
+    @aliasOf("Cons")
+    val :: = Cons
+
+    @equivalentTo("x#addFirst[xs]")
+    type ::[x <: Any, xs <: List] = xs#addFirst[x]
+
+    @equivalentTo("ys#prepend[xs]")
+    type :::[xs <: List, ys <: List] = ys#prepend[xs]
+
+    @equivalentTo("ys#reversePrepend[xs]")
+    type reverse_:::[xs <: List, ys <: List] = ys#prependReversed[xs]
 
     /**
      * Creates a list from <code>sequence.List</code>.
