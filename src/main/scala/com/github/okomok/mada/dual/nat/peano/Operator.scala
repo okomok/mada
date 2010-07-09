@@ -11,7 +11,7 @@ package dual; package nat; package peano
 /**
  * Contains infix operators for Peano.
  */
-object Operator extends OperatorCommon// may crash compiler.
+object Operator extends OperatorCommon // may crash compiler.
 
 
 trait OperatorCommon {
