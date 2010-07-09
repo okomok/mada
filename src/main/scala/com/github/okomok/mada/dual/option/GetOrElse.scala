@@ -8,13 +8,13 @@ package com.github.okomok.mada
 package dual; package option
 
 
-private[mada] class GetOrElse {
-     def apply[p <: Option, f <: Function0](p: p, f: f): apply[p, f] = `if`(p.isEmpty, f, Get(p)).apply
-    type apply[p <: Option, f <: Function0] = `if`[p#isEmpty, f, Get[p]]#apply
+private[mada] final case class GetOrElse[p <: Option, f <: Function0](p: p, f: f) {
+     def apply = `if`(p.isEmpty, f, Get()).apply
+    type apply = `if`[p#isEmpty, f, Get]#apply
 
-    final case class Get[p <: Option](p: p) extends Function0 {
+    final case class Get() extends Function0 {
         override  def self = this
-        override type self = Get[p]
+        override type self = Get
         override  def apply: apply = p.get
         override type apply = p#get
     }

@@ -8,6 +8,12 @@ package com.github.okomok.mada
 package dual
 
 
+object Any {
+    // useless
+    // implicit def _boxing[A](from: A): Box[A] = Box(from)
+}
+
+
 /**
  * The dual Any
  */
@@ -33,11 +39,11 @@ trait Any extends scala.Equals {
      def asInstanceOfList: asInstanceOfList = `throw`(new scala.UnsupportedOperationException("dual.Any.asInstanceOfList"))
     type asInstanceOfList <: List
 
-     def asInstanceOfNatPeano: asInstanceOfNatPeano = `throw`(new scala.UnsupportedOperationException("dual.Any.asInstanceOfNatPeano"))
-    type asInstanceOfNatPeano <: nat.Peano
-
      def asInstanceOfNatDense: asInstanceOfNatDense = `throw`(new scala.UnsupportedOperationException("dual.Any.asInstanceOfNatDense"))
     type asInstanceOfNatDense <: nat.Dense
+
+     def asInstanceOfNatPeano: asInstanceOfNatPeano = `throw`(new scala.UnsupportedOperationException("dual.Any.asInstanceOfNatPeano"))
+    type asInstanceOfNatPeano <: nat.Peano
 
      def asInstanceOfOption: asInstanceOfOption = `throw`(new scala.UnsupportedOperationException("dual.Any.asInstanceOfOption"))
     type asInstanceOfOption <: Option
@@ -63,9 +69,4 @@ trait Any extends scala.Equals {
     }
     override def hashCode = undual.hashCode
     override def toString = undual.toString
-}
-
-
-object Any {
-    // implicit def _boxing[A](from: A): Box[A] = Box(from)
 }

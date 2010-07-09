@@ -33,8 +33,8 @@ sealed abstract class Option extends Any {
      * If the option is nonempty return its value,
      * otherwise return the result of evaluating a default expression.
      */
-    final  def getOrElse[f <: Function0](f: f): getOrElse[f] = new GetOrElse().apply(self, f)
-    final type getOrElse[f <: Function0] = GetOrElse#apply[self, f]
+    final  def getOrElse[f <: Function0](f: f): getOrElse[f] = GetOrElse(self, f).apply
+    final type getOrElse[f <: Function0] = GetOrElse[self, f]#apply
 
     /**
      * Returns true iif the option is a <code>Some</code>(...).
@@ -43,8 +43,11 @@ sealed abstract class Option extends Any {
     type isEmpty <: Boolean
 
     @equivalentTo("isEmpty.not")
-     def isDefined: isDefined = isEmpty.not
-    type isDefined = isEmpty#not
+    final  def isDefined: isDefined = isEmpty.not
+    final type isDefined = isEmpty#not
+
+    final  def map[f <: Function1](f: f): map[f] = isEmpty.`if`(always0(None), byLazy(Some(f.apply(get)))).apply.asInstanceOf[map[f]]
+    final type map[f <: Function1] = isEmpty#`if`[always0[None], byLazy[Some[f#apply[get]]]]#apply
 
     override type undual <: scala.Option[_]
     final override def canEqual(that: scala.Any) = that.isInstanceOf[Option]
