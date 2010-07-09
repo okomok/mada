@@ -28,13 +28,6 @@ package object dual {
      def always0[x <: Any](x: x): Always0[x] = Always0(x)
     type always0[x <: Any] = Always0[x]
 
-    /**
-     * The dual lazy function
-     */
-     def byLazy[x <: Any](x: => x): byLazy[x] = new ByLazy(x)
-    type byLazy[x <: Any] = ByLazy[x]
-
-
 
 // assertions
 

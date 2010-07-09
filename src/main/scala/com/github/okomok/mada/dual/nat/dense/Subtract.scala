@@ -9,8 +9,8 @@ package dual; package nat; package dense
 
 
 private[mada] final case class Subtract[xs <: Dense, ys <: Dense](xs: xs, ys: ys) {
-     def apply: apply = xs.matchCaseNil(ys, Always0(Nil), Throw(), Always0(xs), xs.matchCaseCons(ys, XX(), TF(), FT(), XX())).apply.asInstanceOfNatDense.asInstanceOf[apply]
-    type apply = xs#matchCaseNil[ys, Always0[Nil], Throw, Always0[xs], xs#matchCaseCons[ys, XX, TF, FT, XX]]#apply#asInstanceOfNatDense
+     def apply: apply = xs.matchCaseNil(ys, always0(Nil), Throw(), always0(xs), xs.matchCaseCons(ys, XX(), TF(), FT(), XX())).apply.asInstanceOfNatDense.asInstanceOf[apply]
+    type apply = xs#matchCaseNil[ys, always0[Nil], Throw, always0[xs], xs#matchCaseCons[ys, XX, TF, FT, XX]]#apply#asInstanceOfNatDense
 
     final case class Throw() extends Function0 {
         override  def self = this
@@ -29,8 +29,8 @@ private[mada] final case class Subtract[xs <: Dense, ys <: Dense](xs: xs, ys: ys
     final case class ConsFalse[zs <: Dense](zs: zs) extends Function0 {
         override  def self = this
         override type self = ConsFalse[zs]
-        override  def apply: apply = zs.isEmpty.`if`(Always0(zs), Always0(Cons(`false`, zs))).apply
-        override type apply = zs#isEmpty#`if`[Always0[zs], Always0[Cons[`false`, zs]]]#apply
+        override  def apply: apply = zs.isEmpty.`if`(always0(zs), always0(Cons(`false`, zs))).apply
+        override type apply = zs#isEmpty#`if`[always0[zs], always0[Cons[`false`, zs]]]#apply
     }
 
     final case class TF() extends Function0 {

@@ -9,8 +9,8 @@ package dual; package nat; package dense
 
 
 private[mada] final case class DecrementCons[x <: Boolean, xs <: Dense](x: x, xs: xs) {
-     def apply: apply = xs.isEmpty.`if`(Always0(xs), x.`if`(Then(), Else())).apply.asInstanceOfNatDense.asInstanceOf[apply]
-    type apply = xs#isEmpty#`if`[Always0[xs], x#`if`[Then, Else]]#apply#asInstanceOfNatDense
+     def apply: apply = xs.isEmpty.`if`(always0(xs), x.`if`(Then(), Else())).apply.asInstanceOfNatDense.asInstanceOf[apply]
+    type apply = xs#isEmpty#`if`[always0[xs], x#`if`[Then, Else]]#apply#asInstanceOfNatDense
 
     // (`true` :: xs).decrement
     final case class Then() extends Function0 {

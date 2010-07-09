@@ -12,8 +12,8 @@ package dual; package list
 /*
 
 private[mada] object Take {
-     def apply[xs <: List, n <: nat.Peano](xs: xs, n: n): apply[xs, n] = if_List(new Cond(xs, n).apply, new Always0_Nil, new Else(xs, n)).apply
-    type apply[xs <: List, n <: nat.Peano] = if_List[Cond[xs, n]#apply, Always0_Nil, Else[xs, n]]#apply
+     def apply[xs <: List, n <: nat.Peano](xs: xs, n: n): apply[xs, n] = if_List(new Cond(xs, n).apply, new always0_Nil, new Else(xs, n)).apply
+    type apply[xs <: List, n <: nat.Peano] = if_List[Cond[xs, n]#apply, always0_Nil, Else[xs, n]]#apply
 
     @compilerWorkaround("2.8.0") // works around a type mismatch.
     class Cond[xs <: List, n <: nat.Peano](xs: xs, n: n) extends Function0_Boolean {

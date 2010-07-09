@@ -24,8 +24,8 @@ private[mada] class Drop {
 /*
 // After all, `if` is a destroyer.
 private[mada] class Drop extends Function2_List_Nat_List {
-    override def apply[xs <: List, n <: nat.Peano](xs: xs, n: n): apply[xs, n] = if_List(new Cond(xs, n).apply, new Always0_List(xs), new Else(xs, n, this)).apply
-    override type apply[xs <: List, n <: nat.Peano] = if_List[Cond[xs, n]#apply, Always0_List[xs], Else[xs, n, Drop]]#apply
+    override def apply[xs <: List, n <: nat.Peano](xs: xs, n: n): apply[xs, n] = if_List(new Cond(xs, n).apply, new always0_List(xs), new Else(xs, n, this)).apply
+    override type apply[xs <: List, n <: nat.Peano] = if_List[Cond[xs, n]#apply, always0_List[xs], Else[xs, n, Drop]]#apply
 
     @compilerWorkaround("2.8.0") // works around a type mismatch.
     class Cond[xs <: List, n <: nat.Peano](xs: xs, n: n) extends Function0_Boolean {

@@ -46,8 +46,8 @@ sealed abstract class Option extends Any {
     final  def isDefined: isDefined = isEmpty.not
     final type isDefined = isEmpty#not
 
-    final  def map[f <: Function1](f: f): map[f] = isEmpty.`if`(always0(None), byLazy(Some(f.apply(get)))).apply.asInstanceOf[map[f]]
-    final type map[f <: Function1] = isEmpty#`if`[always0[None], byLazy[Some[f#apply[get]]]]#apply
+//    final  def map[f <: Function1](f: f): map[f] = isEmpty.`if`(always0(None), byLazy(Some(f.apply(get)))).apply.asInstanceOf[map[f]]
+//    final type map[f <: Function1] = isEmpty#`if`[always0[None], byLazy[Some[f#apply[get]]]]#apply
 
     override type undual <: scala.Option[_]
     final override def canEqual(that: scala.Any) = that.isInstanceOf[Option]

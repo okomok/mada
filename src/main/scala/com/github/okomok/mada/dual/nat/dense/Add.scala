@@ -9,8 +9,8 @@ package dual; package nat; package dense
 
 
 private[mada] final case class Add[xs <: Dense, ys <: Dense](xs: xs, ys: ys) {
-     def apply: apply = xs.matchCaseNil(ys, Always0(Nil), Always0(ys), Always0(xs), xs.matchCaseCons(ys, TT(), XF(), FX(), XF())).apply.asInstanceOfNatDense.asInstanceOf[apply]
-    type apply = xs.matchCaseNil[ys, Always0[Nil], Always0[ys], Always0[xs], xs#matchCaseCons[ys, TT, XF, FX, XF]]#apply#asInstanceOfNatDense
+     def apply: apply = xs.matchCaseNil(ys, always0(Nil), always0(ys), always0(xs), xs.matchCaseCons(ys, TT(), XF(), FX(), XF())).apply.asInstanceOfNatDense.asInstanceOf[apply]
+    type apply = xs.matchCaseNil[ys, always0[Nil], always0[ys], always0[xs], xs#matchCaseCons[ys, TT, XF, FX, XF]]#apply#asInstanceOfNatDense
 
     final case class TT() extends Function0 {
         override  def self = this

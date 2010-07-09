@@ -9,14 +9,14 @@ package dual; package nat; package dense
 
 
 private[mada] final case class Equals[xs <: Dense, ys <: Dense](xs: xs, ys: ys) {
-     def apply: apply = xs.matchCaseNil(ys, Always0(`true`), Always0(`false`), Always0(`false`), CC()).apply.asInstanceOfBoolean
-    type apply = xs#matchCaseNil[ys, Always0[`true`], Always0[`false`], Always0[`false`], CC]#apply#asInstanceOfBoolean
+     def apply: apply = xs.matchCaseNil(ys, always0(`true`), always0(`false`), always0(`false`), CC()).apply.asInstanceOfBoolean
+    type apply = xs#matchCaseNil[ys, always0[`true`], always0[`false`], always0[`false`], CC]#apply#asInstanceOfBoolean
 
     final case class CC() extends Function0 {
         override  def self = this
         override type self = CC
-        override  def apply: apply = xs.head.!==(ys.head).`if`(Always0(`false`), Else()).apply
-        override type apply = xs.head# !==[ys.head]# `if`[Always0[`false`], Else]#apply
+        override  def apply: apply = xs.head.!==(ys.head).`if`(always0(`false`), Else()).apply
+        override type apply = xs.head# !==[ys.head]# `if`[always0[`false`], Else]#apply
     }
 
     // for short-circuit.
@@ -30,8 +30,8 @@ private[mada] final case class Equals[xs <: Dense, ys <: Dense](xs: xs, ys: ys) 
 
 
 private[mada] final case class LessThan[xs <: Dense, ys <: Dense](xs: xs, ys: ys) {
-     def apply: apply = xs.matchCaseNil(ys, Always0(`false`), Always0(`true`), Always0(`false`), xs.matchCaseCons(ys, XXTF(), XXTF(), FT(), XXTF())).apply.asInstanceOfBoolean.asInstanceOf[apply]
-    type apply = xs.matchCaseNil[ys, Always0[`false`], Always0[`true`], Always0[`false`], xs#matchCaseCons[ys, XXTF, XXTF, FT, XXTF]]#apply#asInstanceOfBoolean
+     def apply: apply = xs.matchCaseNil(ys, always0(`false`), always0(`true`), always0(`false`), xs.matchCaseCons(ys, XXTF(), XXTF(), FT(), XXTF())).apply.asInstanceOfBoolean.asInstanceOf[apply]
+    type apply = xs.matchCaseNil[ys, always0[`false`], always0[`true`], always0[`false`], xs#matchCaseCons[ys, XXTF, XXTF, FT, XXTF]]#apply#asInstanceOfBoolean
 
     final case class XXTF() extends Function0 {
         override  def self = this

@@ -118,13 +118,13 @@ class OptionTest extends junit.framework.TestCase {
     def testGetOrElse {
         type s = Some[_3]
         val s: s = Some(_3)
-        meta.assertSame[_3, s#getOrElse[Always0[_8]]]
-        val r: s#getOrElse[Always0[_8]] = s.getOrElse(new Always0(_8))
+        meta.assertSame[_3, s#getOrElse[always0[_8]]]
+        val r: s#getOrElse[always0[_8]] = s.getOrElse(always0(_8))
         val k: _3 = r
 
         type n = None
         val n: n = None
-        val q: n#getOrElse[Always0[_8]] = n.getOrElse(new Always0(_8))
+        val q: n#getOrElse[always0[_8]] = n.getOrElse(always0(_8))
         val p: _8 = q
         ()
     }
