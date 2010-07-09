@@ -8,6 +8,10 @@ package com.github.okomok.mada
 package dual; package option
 
 
+object Option {
+}
+
+
 /**
  * The dual Option
  */

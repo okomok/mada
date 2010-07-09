@@ -49,6 +49,7 @@ package object dual {
 // Boolean
 
     @aliasOf("boolean.Boolean")
+     val Boolean = boolean.Boolean
     type Boolean = boolean.Boolean
 
     @aliasOf("boolean.`true`")
@@ -67,6 +68,7 @@ package object dual {
 // List
 
     @aliasOf("list.List")
+     val List = list.List
     type List = list.List
 
     @equivalentTo("new Nil{}")
@@ -89,6 +91,7 @@ package object dual {
 // Option
 
     @aliasOf("option.Option")
+     val Option = option.Option
     type Option = option.Option
 
     @aliasOf("option.None")

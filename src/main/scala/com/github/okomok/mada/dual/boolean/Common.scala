@@ -9,7 +9,7 @@ package dual; package boolean
 
 
 private[mada] trait Common extends OperatorCommon {
-    val Operator: OperatorCommon = this
+    val Operator: OperatorCommon = new OperatorCommon{}//this
 
     @equivalentTo("new `true`{}")
     val `true` = _Boolean.`true`
