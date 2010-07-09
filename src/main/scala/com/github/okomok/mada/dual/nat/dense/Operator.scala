@@ -11,8 +11,7 @@ package dual; package nat; package dense
 /**
  * Contains infix operators for Dense.
  */
-@deprecated("danger!")// crashes compiler!!
-object Operator extends OperatorCommon
+object Operator extends OperatorCommon // may crash compiler.
 
 
 trait OperatorCommon {

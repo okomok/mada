@@ -15,13 +15,11 @@ import dense._
 
 
 object Dense extends LiteralCommon with OperatorCommon {
-
     @aliasOf("dense.Literal")
     val Literal = dense.Literal
 
     @aliasOf("dense.Operator")
     val Operator = dense.Operator
-
 }
 
 

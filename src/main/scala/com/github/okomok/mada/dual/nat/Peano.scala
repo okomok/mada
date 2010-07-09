@@ -16,13 +16,11 @@ import peano._
 
 
 object Peano extends LiteralCommon with OperatorCommon {
-
     @aliasOf("peano.Literal")
     val Literal = peano.Literal
 
     @aliasOf("peano.Operator")
     val Operator = peano.Operator
-
 }
 
 
