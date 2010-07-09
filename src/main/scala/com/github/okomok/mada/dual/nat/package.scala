@@ -13,7 +13,7 @@ package object nat {
 
 // Peano
 
-    @equivalentTo("new peano.Zero{}")
+    @equivalentTo("new Zero{}")
     val Zero = _Peano.Zero
 
     private[mada] val Singular = _Peano.Singular
@@ -21,7 +21,7 @@ package object nat {
 
 // Dense
 
-    @equivalentTo("new dense.Nil{}")
+    @equivalentTo("new Nil{}")
     val Nil: Nil = _Dense.Nil
 
     @equivalentTo("x#addFirst[xs]")

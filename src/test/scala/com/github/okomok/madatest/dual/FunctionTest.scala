@@ -43,7 +43,7 @@ class FunctionTest extends junit.framework.TestCase {
         val c: c = Plus().tupled
 
         type k = c#apply[Tuple2[_3, _4]]
-        val k/* : k */ = c.apply(Tuple2(_3, _4))//.asInstanceOf[k]// still doesn't compile!
+        val k : k = c.apply(Tuple2(_3, _4))
 
         val r: _7 = k
         assert(k === _7)
@@ -67,7 +67,7 @@ class FunctionTest extends junit.framework.TestCase {
     def testCompose {
         type c = Plus2#compose[Minus3]
         val c: c = Plus2().compose(Minus3())
-        val r/*: c#apply[_5]*/ = c.apply(_5) // hmm...
+        val r: c#apply[_5] = c.apply(_5)
         assert(r === _4)
         val k: _4 = r
         ()

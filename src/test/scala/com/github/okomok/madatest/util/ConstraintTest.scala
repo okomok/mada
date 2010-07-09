@@ -26,9 +26,8 @@ class ConstraintTest extends junit.framework.TestCase {
         assertTrue(isSame[Int, Int])
         assertFalse(isSame[Int, String])
         assertFalse(isSame[String, Float])
-    //    compiler hung up....
-    //    assertTrue(isSame[_1# +[_2], _3])
-    //    assertFalse(isSame[_2# +[_2], _5])
+        assertTrue(isSame[_1# +[_2], _3])
+        assertFalse(isSame[_2# +[_2], _5])
         assertFalse(isSame[A, B])
         assertFalse(isSame[B, A])
     }
@@ -77,8 +76,8 @@ class ConstraintTest extends junit.framework.TestCase {
         assertTrue(compatible[Int, Int])
         assertFalse(compatible[Int, String])
         assertFalse(compatible[String, Float])
-   //     assertTrue(compatible[_1# +[_2], _3])
-   //     assertFalse(compatible[_2# +[_2], _5])
+        assertTrue(compatible[_1# +[_2], _3])
+        assertFalse(compatible[_2# +[_2], _5])
     }
 
     def testCompatibleNoErasure {
