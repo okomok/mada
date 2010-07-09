@@ -4,10 +4,19 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada
+package com.github.okomok.mada; package peg
 
 
-import peg._
+object Peg extends Common with Compatibles {
+
+// methodization
+
+    sealed class _OfChar(_this: Peg[Char]) {
+        def lowerCaseRead: Peg[Char] = _this._lowerCaseRead(_this)
+    }
+    implicit def _ofChar(_this: Peg[Char]): _OfChar = new _OfChar(_this)
+
+}
 
 
 /**
@@ -396,17 +405,5 @@ trait Peg[A] {
 
     @equivalentTo("(e, this)")
     final def inCase(e: A): (A, Peg[A]) = (e, this)
-
-}
-
-
-object Peg extends peg.Compatibles {
-
-// methodization
-
-    sealed class _OfChar(_this: Peg[Char]) {
-        def lowerCaseRead: Peg[Char] = _this._lowerCaseRead(_this)
-    }
-    implicit def _ofChar(_this: Peg[Char]): _OfChar = new _OfChar(_this)
 
 }
