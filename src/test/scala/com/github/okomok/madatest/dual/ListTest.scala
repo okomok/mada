@@ -10,6 +10,7 @@ package com.github.okomok.madatest; package dualtest
 import com.github.okomok.mada
 
 import mada.dual._
+import nat.Peano.Literal._
 
 
 class ListTest extends junit.framework.TestCase {
@@ -19,22 +20,22 @@ class ListTest extends junit.framework.TestCase {
     def testAt = {
         val i = new java.lang.Integer(10)
         val lst = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Nil
-        val a1: Box[Int] = lst.nth(_0N)
+        val a1: Box[Int] = lst.nth(_0)
         assertEquals(3, a1.unbox)
-        val a2: Box[String] = lst.nth(_1N)
+        val a2: Box[String] = lst.nth(_1)
         assertEquals("hello", a2.unbox)
-        val a3: Box[java.lang.Integer] = lst.nth(_2N)
+        val a3: Box[java.lang.Integer] = lst.nth(_2)
         assertSame(i, a3.unbox)
-        val a4: Box[Char] = lst.nth(_3N)
+        val a4: Box[Char] = lst.nth(_3)
         assertEquals('a', a4.unbox)
-        assertEquals(10, lst.nth(_2N).unbox.intValue)
+        assertEquals(10, lst.nth(_2).unbox.intValue)
     }
 
     def testSize {
         val i = new java.lang.Integer(10)
         val lst = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Nil
-        assert(_4N === lst.size)
-        assert(Nil.size === _0N)
+        assert(_4 === lst.size)
+        assert(Nil.size === _0)
     }
     def testTypeErase {
         val i = new java.lang.Integer(10)
@@ -63,10 +64,10 @@ class ListTest extends junit.framework.TestCase {
         val i = new java.lang.Integer(10)
         val lst = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil
         val a = Box(i) :: Box('a') :: Box(12) :: Nil
-        val s = lst.drop(_0N)
-        val b: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil = lst.drop(_2N)
-        val c = lst.drop(_5N)
-//        val d = lst.drop(_9N)
+        val s = lst.drop(_0)
+        val b: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil = lst.drop(_2)
+        val c = lst.drop(_5)
+//        val d = lst.drop(_9)
         assertEquals(a, b)
 //        assertEquals(0, d.size)
 //        assertEquals(Nil, d)
@@ -78,9 +79,9 @@ class ListTest extends junit.framework.TestCase {
     def testTake {
         val i = new java.lang.Integer(10)
         val lst = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil
-        val a = lst.take(_0N)
-        val b: Box[Int] :: Box[String] :: Nil = lst.take(_2N)
-        val c = lst.take(_5N)
+        val a = lst.take(_0)
+        val b: Box[Int] :: Box[String] :: Nil = lst.take(_2)
+        val c = lst.take(_5)
         assertEquals(Nil, a)
         assertEquals(Box(3) :: Box("hello") :: Nil, b)
         assertEquals(Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil, c)
@@ -148,17 +149,17 @@ object ListTezt {
 
     trait testAt {
         type lst = Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Nil
-        assertSame[lst#nth[_0N], Box[Int]]
-        assertSame[lst#nth[_1N], Box[String]]
-        assertSame[lst#nth[_2N], Box[Double]]
-        assertSame[lst#nth[_3N], Box[Char]]
-        assertSame[lst#nth[_2N# +[_1N]], Box[Char]]
+        assertSame[lst#nth[_0], Box[Int]]
+        assertSame[lst#nth[_1], Box[String]]
+        assertSame[lst#nth[_2], Box[Double]]
+        assertSame[lst#nth[_3], Box[Char]]
+        assertSame[lst#nth[_2# +[_1]], Box[Char]]
     }
 
     trait testSize {
         type lst = Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Nil
-        assert[lst#size# ===[_4N]]
-        assert[Nil#size# ===[_0N]]
+        assert[lst#size# ===[_4]]
+        assert[Nil#size# ===[_0]]
     }
 
     trait testIsEmpty {
@@ -169,16 +170,16 @@ object ListTezt {
 
     trait testDrop {
         type lst = Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Box[Float] :: Nil
-        assertSame[Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Box[Float] :: Nil, lst#drop[_0N]]
-        assertSame[Box[Double] :: Box[Char] :: Box[Float] :: Nil, lst#drop[_2N]]
-        assertSame[Nil, lst#drop[_5N]]
+        assertSame[Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Box[Float] :: Nil, lst#drop[_0]]
+        assertSame[Box[Double] :: Box[Char] :: Box[Float] :: Nil, lst#drop[_2]]
+        assertSame[Nil, lst#drop[_5]]
     }
 
     trait testTake {
         type lst = Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Box[Float] :: Nil
-        assertSame[Nil, lst#take[_0N]]
-        assertSame[Box[Int] :: Box[String] :: Nil, lst#take[_2N]]
-        assertSame[Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Box[Float] :: Nil, lst#take[_5N]]
+        assertSame[Nil, lst#take[_0]]
+        assertSame[Box[Int] :: Box[String] :: Nil, lst#take[_2]]
+        assertSame[Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Box[Float] :: Nil, lst#take[_5]]
     }
 
     trait testPrepend {

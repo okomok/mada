@@ -12,6 +12,8 @@ import com.github.okomok.mada
 import mada.dual._
 //import junit.framework.Assert._
 
+import mada.dual.nat.peano.Literal._
+import mada.dual.nat.Peano
 import boolean.Operator._
 
 
@@ -65,15 +67,15 @@ class BooleanTest extends junit.framework.TestCase {
     }
 
     trait testPropagation {
-        type incinc[n <: Nat] = `if`[n# ===[_3N], Inc_Nat[n], Always0[n]]#apply#asInstanceOfNat#increment#decrement#increment
-        meta.assertConforms[incinc[_2N], Nat]
+        type incinc[n <: Peano] = `if`[n# ===[_3], Inc_Nat[n], Always0[n]]#apply#asInstanceOfNatPeano#increment#decrement#increment
+        meta.assertConforms[incinc[_2], Peano]
 
-        meta.assert[`if`[_2N# ===[_3N], Inc_Nat[_2N], Always0[_2N]]#apply#increment# ===[_3N]]
-        meta.assert[incinc[_2N]# ===[_3N]]
-        meta.assert[incinc[_3N]# ===[_5N]]
+        meta.assert[`if`[_2# ===[_3], Inc_Nat[_2], Always0[_2]]#apply#increment# ===[_3]]
+        meta.assert[incinc[_2]# ===[_3]]
+        meta.assert[incinc[_3]# ===[_5]]
     }
 
-    class Inc_Nat[e <: Nat](val e: e) extends Function0 {
+    class Inc_Nat[e <: Peano](val e: e) extends Function0 {
         override  def self = this
         override type self = Inc_Nat[e]
         override def apply = e.increment

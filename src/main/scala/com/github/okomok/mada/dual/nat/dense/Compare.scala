@@ -4,10 +4,11 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package dual; package nat
+package com.github.okomok.mada
+package dual; package nat; package dense
 
 
-private[mada] final case class Equals[xs <: Nat, ys <: Nat](xs: xs, ys: ys) {
+private[mada] final case class Equals[xs <: Dense, ys <: Dense](xs: xs, ys: ys) {
      def apply: apply = xs.matchCaseNil(ys, Always0(`true`), Always0(`false`), Always0(`false`), CC()).apply.asInstanceOfBoolean
     type apply = xs#matchCaseNil[ys, Always0[`true`], Always0[`false`], Always0[`false`], CC]#apply#asInstanceOfBoolean
 
@@ -28,7 +29,7 @@ private[mada] final case class Equals[xs <: Nat, ys <: Nat](xs: xs, ys: ys) {
 }
 
 
-private[mada] final case class LessThan[xs <: Nat, ys <: Nat](xs: xs, ys: ys) {
+private[mada] final case class LessThan[xs <: Dense, ys <: Dense](xs: xs, ys: ys) {
      def apply: apply = xs.matchCaseNil(ys, Always0(`false`), Always0(`true`), Always0(`false`), xs.matchCaseCons(ys, XXTF(), XXTF(), FT(), XXTF())).apply.asInstanceOfBoolean.asInstanceOf[apply]
     type apply = xs.matchCaseNil[ys, Always0[`false`], Always0[`true`], Always0[`false`], xs#matchCaseCons[ys, XXTF, XXTF, FT, XXTF]]#apply#asInstanceOfBoolean
 

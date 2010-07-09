@@ -10,6 +10,7 @@ package com.github.okomok.madatest; package dualtest; package listtest
 import com.github.okomok.mada
 
 import mada.dual._
+import nat.Peano.Literal._
 
 
 class FilterTest extends junit.framework.TestCase {
@@ -19,17 +20,17 @@ class FilterTest extends junit.framework.TestCase {
     class not2 extends Function1 {
         override  def self = this
         override type self = not2
-        override  def apply[x <: Any](x: x): apply[x] = x.asInstanceOfNat !== _2N
-        override type apply[x <: Any] = x#asInstanceOfNat# !==[_2N]
+        override  def apply[x <: Any](x: x): apply[x] = x.asInstanceOfNatPeano !== _2
+        override type apply[x <: Any] = x#asInstanceOfNatPeano# !==[_2]
     }
     val not2 = new not2
 
     def testTrivial {
-        type xs = _2N :: _3N :: _4N :: _2N :: _5N :: _6N :: _2N :: Nil
-        val xs: xs = _2N :: _3N :: _4N :: _2N :: _5N :: _6N :: _2N :: Nil
+        type xs = _2 :: _3 :: _4 :: _2 :: _5 :: _6 :: _2 :: Nil
+        val xs: xs = _2 :: _3 :: _4 :: _2 :: _5 :: _6 :: _2 :: Nil
         val u: xs#filter[not2] = xs.filter(not2)
-        val v: _3N :: _4N :: _5N :: _6N :: Nil = u
-        assertEquals(_3N :: _4N :: _5N :: _6N :: Nil, v)
+        val v: _3 :: _4 :: _5 :: _6 :: Nil = u
+        assertEquals(_3 :: _4 :: _5 :: _6 :: Nil, v)
     }
 
     def testTrivialNil {

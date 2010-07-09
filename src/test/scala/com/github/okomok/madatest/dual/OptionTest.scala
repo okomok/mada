@@ -10,6 +10,8 @@ package com.github.okomok.madatest; package dualtest
 import com.github.okomok.mada.dual
 import dual._
 import junit.framework.Assert._
+import nat.Peano.Literal._
+import nat.Peano
 
 
 class OptionTest extends junit.framework.TestCase {
@@ -101,29 +103,29 @@ class OptionTest extends junit.framework.TestCase {
     }
 
     class natty {
-         def apply[o <: Option{ type get <: Nat }](o: o): apply[o] = o.get.increment
-        type apply[o <: Option{ type get <: Nat }] = o#get#increment
+         def apply[o <: Option{ type get <: Peano }](o: o): apply[o] = o.get.increment
+        type apply[o <: Option{ type get <: Peano }] = o#get#increment
     }
     val natty = new natty
 
     def testNatty {
-        type s = Some[_3N]
-        val s = Some(_3N)
-        meta.assertSame[_4N, natty#apply[s]]
-        assert(_4N === natty(s))
+        type s = Some[_3]
+        val s = Some(_3)
+        meta.assertSame[_4, natty#apply[s]]
+        assert(_4 === natty(s))
     }
 
     def testGetOrElse {
-        type s = Some[_3N]
-        val s: s = Some(_3N)
-        meta.assertSame[_3N, s#getOrElse[Always0[_8N]]]
-        val r: s#getOrElse[Always0[_8N]] = s.getOrElse(new Always0(_8N))
-        val k: _3N = r
+        type s = Some[_3]
+        val s: s = Some(_3)
+        meta.assertSame[_3, s#getOrElse[Always0[_8]]]
+        val r: s#getOrElse[Always0[_8]] = s.getOrElse(new Always0(_8))
+        val k: _3 = r
 
         type n = None
         val n: n = None
-        val q: n#getOrElse[Always0[_8N]] = n.getOrElse(new Always0(_8N))
-        val p: _8N = q
+        val q: n#getOrElse[Always0[_8]] = n.getOrElse(new Always0(_8))
+        val p: _8 = q
         ()
     }
 

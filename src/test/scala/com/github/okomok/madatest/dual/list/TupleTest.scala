@@ -10,6 +10,8 @@ package com.github.okomok.madatest; package dualtest; package listtest
 import com.github.okomok.mada
 
 import mada.dual._
+import nat.Peano.Literal._
+
 
 /*
 class TupleTest extends junit.framework.TestCase {
@@ -22,7 +24,7 @@ class TupleTest extends junit.framework.TestCase {
         type l = Int :: String :: java.lang.Integer :: Nil
         val l: l = list.fromTuple(t)
 
-        assertSame(t._2, l.nth(_1N))
+        assertSame(t._2, l.nth(_1))
     }
 
     def testTo {
@@ -31,7 +33,7 @@ class TupleTest extends junit.framework.TestCase {
 
         val t: (Int, String, java.lang.Integer) = l.toTuple
 
-        assertSame(t._2, l.nth(_1N))
+        assertSame(t._2, l.nth(_1))
     }
 }
 */

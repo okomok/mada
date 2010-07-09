@@ -4,10 +4,14 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package dual
+package com.github.okomok.mada
+package dual
 
 
 import option._
+
+
+object Option
 
 
 /**
@@ -83,6 +87,6 @@ final case class Some[e <: Any](e: e) extends Option {
 }
 
 
-object Option {
-    private[mada] val _None = new None{}
+private[mada] object _Option {
+    val None = new None{}
 }

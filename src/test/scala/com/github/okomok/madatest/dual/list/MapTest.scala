@@ -10,6 +10,7 @@ package com.github.okomok.madatest; package dualtest; package listtest
 import com.github.okomok.mada
 
 import mada.dual._
+import nat.Peano.Literal._
 
 
 class MapTest extends junit.framework.TestCase {
@@ -49,17 +50,17 @@ class MapNatTest extends junit.framework.TestCase {
     class add2 extends Function1 {
         override  def self = this
         override type self = add2
-        override  def apply[x <: Any](x: x): apply[x] = x.asInstanceOfNat + _2N
-        override type apply[x <: Any] = x#asInstanceOfNat# +[_2N]
+        override  def apply[x <: Any](x: x): apply[x] = x.asInstanceOfNatPeano + _2
+        override type apply[x <: Any] = x#asInstanceOfNatPeano# +[_2]
     }
     val add2 = new add2
 
     def testTrivial {
-        type xs = _3N :: _4N :: _5N :: _6N :: Nil
-        val xs: xs = _3N :: _4N :: _5N :: _6N :: Nil
+        type xs = _3 :: _4 :: _5 :: _6 :: Nil
+        val xs: xs = _3 :: _4 :: _5 :: _6 :: Nil
         val u: xs#map[add2] = xs.map(add2)
-        val v: _5N :: _6N :: _7N :: _8N :: Nil = u
-        assertEquals(_5N :: _6N :: _7N :: _8N :: Nil, v)
+        val v: _5 :: _6 :: _7 :: _8 :: Nil = u
+        assertEquals(_5 :: _6 :: _7 :: _8 :: Nil, v)
     }
 }
 

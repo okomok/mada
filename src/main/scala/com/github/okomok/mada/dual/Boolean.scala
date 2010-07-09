@@ -4,7 +4,14 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package dual
+package com.github.okomok.mada
+package dual
+
+
+object Boolean {
+    // useless
+    // implicit def _undual[c <: Boolean](c: c): scala.Boolean = c.undual
+}
 
 
 /**
@@ -75,6 +82,7 @@ sealed trait `true` extends Boolean {
     override def undual: undual = true
 }
 
+
 /**
  * The dual false
  */
@@ -107,9 +115,7 @@ sealed trait `false` extends Boolean {
 }
 
 
-object Boolean {
-    private[mada] val _true = new `true`{}
-    private[mada] val _false = new `false`{}
-
-    // implicit def _undual[c <: Boolean](c: c): scala.Boolean = c.undual
+private[mada] object _Boolean {
+    val `true` = new `true`{}
+    val `false` = new `false`{}
 }

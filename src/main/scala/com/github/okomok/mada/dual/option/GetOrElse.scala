@@ -4,7 +4,8 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package dual; package option
+package com.github.okomok.mada
+package dual; package option
 
 
 private[mada] class GetOrElse {

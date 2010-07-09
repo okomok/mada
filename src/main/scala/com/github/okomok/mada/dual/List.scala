@@ -4,7 +4,8 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package dual
+package com.github.okomok.mada
+package dual
 
 
 // See: HList.scala
@@ -12,6 +13,38 @@ package com.github.okomok.mada; package dual
 
 
 import list._
+
+
+object List {
+
+// methodization
+/*
+    sealed class _Of1[a1](_this: a1 :: Nil) {
+        def toTuple: Tuple1[a1] = Tuple1(_this.head)
+    }
+    implicit def _of1[a1](_this: a1 :: Nil): _Of1[a1] = new _Of1(_this)
+
+    sealed class _Of2[a1, a2](_this: a1 :: a2 :: Nil) {
+        def toTuple: Tuple2[a1, a2] = Tuple2(_this.head, _this.tail.head)
+    }
+    implicit def _of2[a1, a2](_this: a1 :: a2 :: Nil): _Of2[a1, a2] = new _Of2(_this)
+
+    sealed class _Of3[a1, a2, a3](_this: a1 :: a2 :: a3 :: Nil) {
+        def toTuple: Tuple3[a1, a2, a3] = Tuple3(_this.head, _this.tail.head, _this.tail.tail.head)
+    }
+    implicit def _of3[a1, a2, a3](_this: a1 :: a2 :: a3 :: Nil): _Of3[a1, a2, a3] = new _Of3(_this)
+
+    sealed class _Of4[a1, a2, a3, a4](_this: a1 :: a2 :: a3 :: a4 :: Nil) {
+        def toTuple: Tuple4[a1, a2, a3, a4] = Tuple4(_this.head, _this.tail.head, _this.tail.tail.head, _this.tail.tail.tail.head)
+    }
+    implicit def _of4[a1, a2, a3, a4](_this: a1 :: a2 :: a3 :: a4 :: Nil): _Of4[a1, a2, a3, a4] = new _Of4(_this)
+
+    sealed class _Of5[a1, a2, a3, a4, a5](_this: a1 :: a2 :: a3 :: a4 :: a5 :: Nil) {
+        def toTuple: Tuple5[a1, a2, a3, a4, a5] = Tuple5(_this.head, _this.tail.head, _this.tail.tail.head, _this.tail.tail.tail.head, _this.tail.tail.tail.tail.head)
+    }
+    implicit def _of5[a1, a2, a3, a4, a5](_this: a1 :: a2 :: a3 :: a4 :: a5 :: Nil): _Of5[a1, a2, a3, a4, a5] = new _Of5(_this)
+*/
+}
 
 
 sealed abstract class List extends Any {
@@ -72,20 +105,20 @@ sealed abstract class List extends Any {
      *
      * @pre `n in [0, size)`.
      */
-    final  def drop[n <: Nat](n: n): drop[n] = new Drop().apply(self, n)
-    final type drop[n <: Nat] = Drop#apply[self, n]
+    final  def drop[n <: nat.Peano](n: n): drop[n] = new Drop().apply(self, n)
+    final type drop[n <: nat.Peano] = Drop#apply[self, n]
 
     /**
      * Takes EXACTLY <code>n</code> elements.
      *
      * @pre `n in [0, size)`.
      */
-    final  def take[n <: Nat](n: n): take[n] = reverse.drop(size - n).reverse //Take.apply(self, n)
-    final type take[n <: Nat] = reverse#drop[size# -[n]]#reverse //Take.apply[self, n]
+    final  def take[n <: nat.Peano](n: n): take[n] = reverse.drop(size - n).reverse //Take.apply(self, n)
+    final type take[n <: nat.Peano] = reverse#drop[size# -[n]]#reverse //Take.apply[self, n]
 
     @equivalentTo("take(m).drop(n)")
-    final  def slice[n <: Nat, m <: Nat](n: n, m: m): slice[n, m] = take(m).drop(n)
-    final type slice[n <: Nat, m <: Nat] = take[m]#drop[n]
+    final  def slice[n <: nat.Peano, m <: nat.Peano](n: n, m: m): slice[n, m] = take(m).drop(n)
+    final type slice[n <: nat.Peano, m <: nat.Peano] = take[m]#drop[n]
 
     /**
      * Returns a list without the last element.
@@ -98,8 +131,8 @@ sealed abstract class List extends Any {
      *
      * @pre `n in [0, size)`.
      */
-    final  def insert[n <: Nat, that <: List](n: n, that: that): insert[n, that] = take(n) ::: that ::: drop(n)
-    final type insert[n <: Nat, that <: List] = take[n] ::: that ::: drop[n]
+    final  def insert[n <: nat.Peano, that <: List](n: n, that: that): insert[n, that] = take(n) ::: that ::: drop(n)
+    final type insert[n <: nat.Peano, that <: List] = take[n] ::: that ::: drop[n]
 
     /**
      * Returns the last element.
@@ -114,8 +147,8 @@ sealed abstract class List extends Any {
      *
      * @pre `n in [0, size)`.
      */
-    final  def nth[n <: Nat](n: n): nth[n] = drop(n).head
-    final type nth[n <: Nat] = drop[n]#head
+    final  def nth[n <: nat.Peano](n: n): nth[n] = drop(n).head
+    final type nth[n <: nat.Peano] = drop[n]#head
 
     /**
      * Prepends <code>that</code>.
@@ -128,16 +161,16 @@ sealed abstract class List extends Any {
      *
      * @pre `n in [0, size)`.
      */
-    final  def remove[n <: Nat](n: n): remove[n] = take(n) ::: drop(n.increment)
-    final type remove[n <: Nat] = take[n] ::: drop[n#increment]
+    final  def remove[n <: nat.Peano](n: n): remove[n] = take(n) ::: drop(n.increment)
+    final type remove[n <: nat.Peano] = take[n] ::: drop[n#increment]
 
     /**
      * Replaces <code>n</code>-th element with <code>_a</code>.
      *
      * @pre `n in [0, size)`.
      */
-    final  def replace[n <: Nat, e <: Any](n: n, e: e): replace[n, e] = (take(n) ::: Cons(e, drop(n.increment))).asInstanceOf[replace[n, e]]
-    final type replace[n <: Nat, e <: Any] = take[n] ::: Cons[e, drop[n#increment]]
+    final  def replace[n <: nat.Peano, e <: Any](n: n, e: e): replace[n, e] = (take(n) ::: Cons(e, drop(n.increment))).asInstanceOf[replace[n, e]]
+    final type replace[n <: nat.Peano, e <: Any] = take[n] ::: Cons[e, drop[n#increment]]
 
     /**
      * Prepends reversed <code>that</code>.
@@ -277,36 +310,6 @@ object :: {
 }
 
 
-object List {
-
-    private[mada] val _Nil = new Nil{}
-
-
-// methodization
-/*
-    sealed class _Of1[a1](_this: a1 :: Nil) {
-        def toTuple: Tuple1[a1] = Tuple1(_this.head)
-    }
-    implicit def _of1[a1](_this: a1 :: Nil): _Of1[a1] = new _Of1(_this)
-
-    sealed class _Of2[a1, a2](_this: a1 :: a2 :: Nil) {
-        def toTuple: Tuple2[a1, a2] = Tuple2(_this.head, _this.tail.head)
-    }
-    implicit def _of2[a1, a2](_this: a1 :: a2 :: Nil): _Of2[a1, a2] = new _Of2(_this)
-
-    sealed class _Of3[a1, a2, a3](_this: a1 :: a2 :: a3 :: Nil) {
-        def toTuple: Tuple3[a1, a2, a3] = Tuple3(_this.head, _this.tail.head, _this.tail.tail.head)
-    }
-    implicit def _of3[a1, a2, a3](_this: a1 :: a2 :: a3 :: Nil): _Of3[a1, a2, a3] = new _Of3(_this)
-
-    sealed class _Of4[a1, a2, a3, a4](_this: a1 :: a2 :: a3 :: a4 :: Nil) {
-        def toTuple: Tuple4[a1, a2, a3, a4] = Tuple4(_this.head, _this.tail.head, _this.tail.tail.head, _this.tail.tail.tail.head)
-    }
-    implicit def _of4[a1, a2, a3, a4](_this: a1 :: a2 :: a3 :: a4 :: Nil): _Of4[a1, a2, a3, a4] = new _Of4(_this)
-
-    sealed class _Of5[a1, a2, a3, a4, a5](_this: a1 :: a2 :: a3 :: a4 :: a5 :: Nil) {
-        def toTuple: Tuple5[a1, a2, a3, a4, a5] = Tuple5(_this.head, _this.tail.head, _this.tail.tail.head, _this.tail.tail.tail.head, _this.tail.tail.tail.tail.head)
-    }
-    implicit def _of5[a1, a2, a3, a4, a5](_this: a1 :: a2 :: a3 :: a4 :: a5 :: Nil): _Of5[a1, a2, a3, a4, a5] = new _Of5(_this)
-*/
+private[mada] object _List {
+    val Nil = new Nil{}
 }

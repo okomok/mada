@@ -4,7 +4,8 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package dual; package function
+package com.github.okomok.mada
+package dual; package function
 
 
 final case class Compose[f <: Function1, g <: Function1](f: f, g: g) extends Function1 {

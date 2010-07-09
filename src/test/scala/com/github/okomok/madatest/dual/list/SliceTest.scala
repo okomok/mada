@@ -10,7 +10,7 @@ package com.github.okomok.madatest; package dualtest; package listtest
 import com.github.okomok.mada
 
 import mada.dual._
-
+import nat.Peano.Literal._
 
 
 class SliceTest extends junit.framework.TestCase {
@@ -29,35 +29,35 @@ class SliceTest extends junit.framework.TestCase {
         type Lst3 = Nil
         val lst3: Lst3 = Nil;
         {
-            val e: Lst1#slice[_0N, _2N] = lst1.slice(_0N, _2N)
+            val e: Lst1#slice[_0, _2] = lst1.slice(_0, _2)
             val e_ : Box[Int]::Box[String]::Nil = e
             assertEquals(Box(3)::Box("hello")::Nil, e_)
         }
 
         {
-            val e: Lst1#slice[_1N, _5N] = lst1.slice(_1N, _5N)
+            val e: Lst1#slice[_1, _5] = lst1.slice(_1, _5)
             val e_ : Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil = e
             assertEquals(Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil, e_)
         }
 
         {
-            val e: Lst1#slice[_2N, _4N] = lst1.slice(_2N, _4N)
+            val e: Lst1#slice[_2, _4] = lst1.slice(_2, _4)
             val e_ : Box[java.lang.Integer] :: Box[Char] :: Nil = e
             assertEquals(Box(i) :: Box('a') :: Nil, e_)
         }
         {
-            val e: Lst2#slice[_0N, _0N] = lst2.slice(_0N, _0N)
+            val e: Lst2#slice[_0, _0] = lst2.slice(_0, _0)
             val e_ : Nil = e
             assertEquals(Nil, e_)
         }
         {
-            val e: Lst2#slice[_0N, _1N] = lst2.slice(_0N, _1N)
+            val e: Lst2#slice[_0, _1] = lst2.slice(_0, _1)
             val e_ : Box[String] :: Nil = e
             assertEquals(Box("hello") :: Nil, e_)
         }
 
         {
-            val e: Lst2#slice[_0N, _0N] = lst2.slice(_0N, _0N)
+            val e: Lst2#slice[_0, _0] = lst2.slice(_0, _0)
             val e_ : Nil = e
             assertEquals(Nil, e_)
         }
@@ -71,7 +71,7 @@ object SliceTezt {
 
     trait testSlice {
         type lst = Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Box[Float] :: Nil
-        assertSame[Nil, lst#slice[_2N, _2N]]
-        assertSame[Box[String] :: Box[Double] :: Box[Char] :: Nil, lst#slice[_1N, _4N]]
+        assertSame[Nil, lst#slice[_2, _2]]
+        assertSame[Box[String] :: Box[Double] :: Box[Char] :: Nil, lst#slice[_1, _4]]
     }
 }

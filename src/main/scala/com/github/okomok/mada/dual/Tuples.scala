@@ -4,7 +4,8 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package dual
+package com.github.okomok.mada
+package dual
 
 
 final case class Tuple1[v1 <: Any](private val v1: v1) extends Product1 {

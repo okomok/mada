@@ -11,7 +11,7 @@ import annotation.elidable
 import annotation.elidable.ASSERTION
 
 
-package object dual extends dual.nat.LiteralCommon {
+package object dual {
 
 
     /**
@@ -41,10 +41,10 @@ package object dual extends dual.nat.LiteralCommon {
 // Boolean
 
     @equivalentTo("new `true`{}")
-    val `true` = Boolean._true
+    val `true` = _Boolean.`true`
 
     @equivalentTo("new `false`{}")
-    val `false` = Boolean._false
+    val `false` = _Boolean.`false`
 
     /**
      * The if-expression to return Any.
@@ -53,25 +53,16 @@ package object dual extends dual.nat.LiteralCommon {
     type `if`[b <: Boolean, then <: Function0, _else <: Function0] = b#`if`[then, _else]
 
 
-// Nat
-
-    @equivalentTo("new NatNil{}")
-    val NatNil: NatNil = Nat._Nil
-
-    @equivalentTo("x#addFirst[xs]")
-    type Nat_::[x <: Boolean, xs <: Nat] = xs#addFirst[x]
-
-
 // Option
 
     @equivalentTo("new None{}")
-    val None: None = Option._None
+    val None: None = _Option.None
 
 
 // List
 
     @equivalentTo("new Nil{}")
-    val Nil: Nil = List._Nil
+    val Nil: Nil = _List.Nil
 
     @equivalentTo("x#addFirst[xs]")
     type ::[x <: Any, xs <: List] = xs#addFirst[x]

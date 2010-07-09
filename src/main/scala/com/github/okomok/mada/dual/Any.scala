@@ -4,7 +4,8 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package dual
+package com.github.okomok.mada
+package dual
 
 
 /**
@@ -32,8 +33,11 @@ trait Any extends scala.Equals {
      def asInstanceOfList: asInstanceOfList = `throw`(new scala.UnsupportedOperationException("dual.Any.asInstanceOfList"))
     type asInstanceOfList <: List
 
-     def asInstanceOfNat: asInstanceOfNat = `throw`(new scala.UnsupportedOperationException("dual.Any.asInstanceOfNat"))
-    type asInstanceOfNat <: Nat
+     def asInstanceOfNatPeano: asInstanceOfNatPeano = `throw`(new scala.UnsupportedOperationException("dual.Any.asInstanceOfNatPeano"))
+    type asInstanceOfNatPeano <: nat.Peano
+
+     def asInstanceOfNatDense: asInstanceOfNatDense = `throw`(new scala.UnsupportedOperationException("dual.Any.asInstanceOfNatDense"))
+    type asInstanceOfNatDense <: nat.Dense
 
      def asInstanceOfOption: asInstanceOfOption = `throw`(new scala.UnsupportedOperationException("dual.Any.asInstanceOfOption"))
     type asInstanceOfOption <: Option

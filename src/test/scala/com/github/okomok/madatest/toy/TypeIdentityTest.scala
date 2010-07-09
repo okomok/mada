@@ -12,6 +12,7 @@ import com.github.okomok.mada
 //import junit.framework.Assert._
 
 import mada.dual._
+import mada.dual.nat.peano.Literal._
 
 
 // nullary
@@ -63,6 +64,6 @@ class TypeIdentityTezt {
     meta.assertSame[callid[FuncInt], Int]
 
 
-    meta.assertSame[_1N#increment# ===[_2N]#not, `false`]
+    meta.assertSame[_1#increment# ===[_2]#not, `false`]
 }
 

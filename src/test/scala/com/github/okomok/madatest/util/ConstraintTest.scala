@@ -9,7 +9,7 @@ package com.github.okomok.madatest; package utiltest
 
 import com.github.okomok.mada
 
-import mada.dual.nat.Literal._
+import mada.dual.nat.Peano.Literal._
 import mada.util._
 import junit.framework.Assert._
 
@@ -27,8 +27,8 @@ class ConstraintTest extends junit.framework.TestCase {
         assertFalse(isSame[Int, String])
         assertFalse(isSame[String, Float])
     //    compiler hung up....
-    //    assertTrue(isSame[_1N# +[_2N], _3N])
-    //    assertFalse(isSame[_2N# +[_2N], _5N])
+    //    assertTrue(isSame[_1# +[_2], _3])
+    //    assertFalse(isSame[_2# +[_2], _5])
         assertFalse(isSame[A, B])
         assertFalse(isSame[B, A])
     }
@@ -53,8 +53,8 @@ class ConstraintTest extends junit.framework.TestCase {
         assertTrue(conforms[Int, Int])
         assertFalse(conforms[Int, String])
         assertFalse(conforms[String, Float])
-        assertTrue(conforms[_1N# +[_2N], _3N])
-        assertFalse(conforms[_2N# +[_2N], _5N])
+        assertTrue(conforms[_1# +[_2], _3])
+        assertFalse(conforms[_2# +[_2], _5])
     }
 
     def testConformsNoErasure {
@@ -77,8 +77,8 @@ class ConstraintTest extends junit.framework.TestCase {
         assertTrue(compatible[Int, Int])
         assertFalse(compatible[Int, String])
         assertFalse(compatible[String, Float])
-   //     assertTrue(compatible[_1N# +[_2N], _3N])
-   //     assertFalse(compatible[_2N# +[_2N], _5N])
+   //     assertTrue(compatible[_1# +[_2], _3])
+   //     assertFalse(compatible[_2# +[_2], _5])
     }
 
     def testCompatibleNoErasure {

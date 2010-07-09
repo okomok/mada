@@ -9,12 +9,14 @@ package com.github.okomok.madatest; package dualtest; package listtest
 
 import com.github.okomok.mada
 
+
 import mada.dual._
+import nat.Peano.Literal._
 
 
 object Samples {
 
-    type xs_0_5        = _0N :: _1N :: _2N :: _3N :: _4N :: Nil
-     val xs_0_5: xs_0_5 = _0N :: _1N :: _2N :: _3N :: _4N :: Nil
+    type xs_0_5        = _0 :: _1 :: _2 :: _3 :: _4 :: Nil
+     val xs_0_5: xs_0_5 = _0 :: _1 :: _2 :: _3 :: _4 :: Nil
 
 }

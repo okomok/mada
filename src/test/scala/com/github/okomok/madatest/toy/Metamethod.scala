@@ -10,28 +10,30 @@ package com.github.okomok.madatest; package toy; package metamethodtest
 import com.github.okomok.mada
 
 import mada.dual._
+import mada.dual.nat.peano.Literal._
+import nat.Peano
 // import mada.dual.nat.Operator._ // crash!
 
 
 class MetamethodTezt {
 
-    type incre[n <: Nat] = n#increment
+    type incre[n <: Peano] = n#increment
 
-    type applyx[f[_ <: Nat], n <: Nat] = f[n]
-    type twice[f[_ <: Nat] <: Nat, n <: Nat] = f[n]#increment
+    type applyx[f[_ <: Peano], n <: Peano] = f[n]
+    type twice[f[_ <: Peano] <: Peano, n <: Peano] = f[n]#increment
 
     trait always1[a] {
         type result[_ <: Any] = a
     }
 
     trait testTrivial {
-        meta.assert[applyx[incre, _3N]# === [_4N]]
-        meta.assert[twice[incre, _3N]# === [_5N]]
+        meta.assert[applyx[incre, _3]# === [_4]]
+        meta.assert[twice[incre, _3]# === [_5]]
 
-        type k = twice[incre, _3N]
-        meta.assert[k# === [_5N]]
+        type k = twice[incre, _3]
+        meta.assert[k# === [_5]]
 
-        meta.assert[applyx[always1[_2N]#result, _3N]# === [_2N]]
+        meta.assert[applyx[always1[_2]#result, _3]# === [_2]]
     }
 
 }
