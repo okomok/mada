@@ -11,6 +11,15 @@ package dual; package nat; package dense
 // See: http://apocalisp.wordpress.com/2010/06/24/type-level-programming-in-scala-part-5a-binary-numbers/
 
 
+object Dense {
+    @aliasOf("dense.Literal")
+    val Literal = dense.Literal
+
+    @aliasOf("dense.Operator")
+    val Operator = dense.Operator
+}
+
+
 sealed abstract class Dense extends Any {
     type self <: Dense
 
