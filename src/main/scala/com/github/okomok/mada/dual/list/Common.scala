@@ -8,14 +8,7 @@ package com.github.okomok.mada
 package dual; package list
 
 
-/**
- * Contains operators for List.
- */
-object Operator extends OperatorCommon
-
-
-trait OperatorCommon {
-
+trait Common {
     @equivalentTo("new Nil{}")
     val Nil: Nil = _List.Nil
 
@@ -30,5 +23,4 @@ trait OperatorCommon {
 
     @equivalentTo("ys#reversePrepend[xs]")
     type reverse_:::[xs <: List, ys <: List] = ys#prependReversed[xs]
-
 }

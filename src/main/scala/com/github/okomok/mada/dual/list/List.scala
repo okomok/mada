@@ -12,10 +12,7 @@ package dual; package list
 //      at http://www.assembla.com/wiki/show/metascala
 
 
-object List {
-
-    @aliasOf("list.Operator")
-    val Operator = list.Operator
+object List extends Common {
 
 // methodization
 /*

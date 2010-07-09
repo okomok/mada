@@ -8,11 +8,4 @@ package com.github.okomok.mada
 package dual; package nat
 
 
-package object peano extends peano.LiteralCommon with peano.OperatorCommon {
-
-    @equivalentTo("new Zero{}")
-    val Zero = _Peano.Zero
-
-    private[mada] val Singular = _Peano.Singular
-
-}
+package object peano extends peano.Common

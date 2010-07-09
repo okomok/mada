@@ -8,6 +8,9 @@ package com.github.okomok.mada
 package dual; package boolean
 
 
+object Boolean extends Common
+
+
 /**
  * The dual Boolean
  */

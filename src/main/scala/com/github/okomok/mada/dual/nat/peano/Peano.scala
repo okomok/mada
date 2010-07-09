@@ -12,13 +12,7 @@ package dual; package nat; package peano
 //      at http://www.assembla.com/wiki/show/metascala
 
 
-object Peano {
-    @aliasOf("peano.Literal")
-    val Literal = peano.Literal
-
-    @aliasOf("peano.Operator")
-    val Operator = peano.Operator
-}
+object Peano extends Common
 
 
 sealed trait Peano extends Any {

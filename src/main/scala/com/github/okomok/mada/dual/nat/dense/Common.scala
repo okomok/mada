@@ -8,10 +8,19 @@ package com.github.okomok.mada
 package dual; package nat; package dense
 
 
-/**
- * Contains literals for Dense.
- */
-object Literal extends LiteralCommon
+private[mada] trait Common extends LiteralCommon with OperatorCommon {
+    val Literal: LiteralCommon = this
+    val Operator: OperatorCommon = this // may crash compiler.
+
+    @equivalentTo("new Nil{}")
+    val Nil: Nil = _Dense.Nil
+
+    @aliasOf("Cons")
+    val :: = Cons
+
+    @equivalentTo("x#addFirst[xs]")
+    type ::[x <: Boolean, xs <: Dense] = xs#addFirst[x]
+}
 
 
 private[mada] trait LiteralCommon {
@@ -53,4 +62,22 @@ private[mada] trait LiteralCommon {
 	type _13 = Cons[_1B, Cons[_0B, Cons[_1B, Cons[_1B, Nil]]]]
 	type _14 = Cons[_0B, Cons[_1B, Cons[_1B, Cons[_1B, Nil]]]]
 	type _15 = Cons[_1B, Cons[_1B, Cons[_1B, Cons[_1B, Nil]]]]
+}
+
+
+/**
+ * Contains infix operators for Dense.
+ */
+private[mada] trait OperatorCommon {
+    type  +[x <: Dense, y <: Dense] = x# +[y]
+    type  -[x <: Dense, y <: Dense] = x# -[y]
+    type **[x <: Dense, y <: Dense] = x# **[y]
+
+    type ===[x <: Dense, y <: Dense] = x# ===[y]
+    type !==[x <: Dense, y <: Dense] = x# !==[y]
+
+    type  <[x <: Dense, y <: Dense] = x# <[y]
+    type <=[x <: Dense, y <: Dense] = x# <=[y]
+    type  >[x <: Dense, y <: Dense] = x# >[y]
+    type >=[x <: Dense, y <: Dense] = x# >=[y]
 }

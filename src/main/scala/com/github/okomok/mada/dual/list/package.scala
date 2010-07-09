@@ -8,7 +8,7 @@ package com.github.okomok.mada
 package dual
 
 
-package object list extends list.OperatorCommon {
+package object list extends list.Common {
 
     /**
      * Creates a list from <code>sequence.List</code>.
