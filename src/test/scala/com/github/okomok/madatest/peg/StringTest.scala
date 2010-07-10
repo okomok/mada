@@ -15,8 +15,8 @@ import junit.framework.Assert._
 
 class StringTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
-        val sample = mada.sequence.vector.unstringize("/*hello*/")
-        assertTrue(unstringize("/*hello*/").matches(sample))
-        assertFalse(unstringize("/*hello*").matches(sample))
+        val sample = mada.sequence.vector.from("/*hello*/")
+        assertTrue(from("/*hello*/").matches(sample))
+        assertFalse(from("/*hello*").matches(sample))
     }
 }

@@ -15,7 +15,7 @@ import junit.framework.Assert._
 
 class FlattenTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
-    //    new NotStartable[iterative.Type[Int]]().flatten
+    //    new NotStartable[iterative.Iterative[Int]]().flatten
         val t1 = iterative.Of(0,1,2)
         val t2 = iterative.Of(3,4)
         val t3 = iterative.empty.of[Int]

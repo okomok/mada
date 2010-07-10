@@ -11,5 +11,5 @@ import scala.collection.mutable.ArraySeq
 
 
 private[mada] case class Allocate[A](_1: Int) extends Forwarder[A] {
-    override protected val delegate = fromSIndexedSeq(new ArraySeq[A](_1))
+    override protected val delegate = from(new ArraySeq[A](_1))
 }

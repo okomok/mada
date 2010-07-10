@@ -15,8 +15,8 @@ import junit.framework.Assert._
 
 class SeqAndTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
-        val sample = mada.sequence.vector.unstringize("/*hello*/")
-        assertTrue((unstringize("/*hel") >> unstringize("lo*/")).matches(sample))
-        assertFalse((unstringize("/*hel") >> unstringize("lo*")).matches(sample))
+        val sample = mada.sequence.vector.from("/*hello*/")
+        assertTrue((from("/*hel") >> from("lo*/")).matches(sample))
+        assertFalse((from("/*hel") >> from("lo*")).matches(sample))
     }
 }

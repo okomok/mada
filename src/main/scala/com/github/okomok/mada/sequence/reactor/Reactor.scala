@@ -4,10 +4,10 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package sequence
+package com.github.okomok.mada; package sequence; package reactor
 
 
-import reactor._
+object Reactor extends Common
 
 
 trait Reactor[-A] { self =>
@@ -32,10 +32,5 @@ trait Reactor[-A] { self =>
 
     @conversion
     final def toActor: scala.actors.Actor = ToActor(this)
-
-}
-
-
-object Reactor {
 
 }

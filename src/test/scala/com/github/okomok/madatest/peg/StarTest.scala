@@ -15,32 +15,32 @@ import junit.framework.Assert._
 
 class StarTest extends junit.framework.TestCase {
     def testStar: Unit = {
-        val sample = mada.sequence.vector.unstringize("aaaaaaa")
-        assertTrue((unstringize("a")*).matches(sample))
+        val sample = mada.sequence.vector.from("aaaaaaa")
+        assertTrue((from("a")*).matches(sample))
     }
 
     def testStar2: Unit = {
-        val sample = mada.sequence.vector.unstringize("aaaaaaab")
-        assertTrue((unstringize("a").* >> unstringize("b")).matches(sample))
+        val sample = mada.sequence.vector.from("aaaaaaab")
+        assertTrue((from("a").* >> from("b")).matches(sample))
     }
 
     def testStar3: Unit = {
-        val sample = mada.sequence.vector.unstringize("b")
-        assertTrue((unstringize("a").* >> unstringize("b")).matches(sample))
+        val sample = mada.sequence.vector.from("b")
+        assertTrue((from("a").* >> from("b")).matches(sample))
     }
 
     def testStar4: Unit = {
-        val sample = mada.sequence.vector.unstringize("Aabababab")
-        assertTrue(  (unstringize("A") >> (unstringize("a") >> unstringize("b")).* ).matches(sample)  ) // `.` is needed.
+        val sample = mada.sequence.vector.from("Aabababab")
+        assertTrue(  (from("A") >> (from("a") >> from("b")).* ).matches(sample)  ) // `.` is needed.
     }
 
     def testBefore: Unit = {
-        val sample = mada.sequence.vector.unstringize("/*hello*/")
-        assertTrue((unstringize("/*") >> (dot.* >>> ~unstringize("*/")) >> unstringize("*/")).matches(sample))
+        val sample = mada.sequence.vector.from("/*hello*/")
+        assertTrue((from("/*") >> (dot.* >>> ~from("*/")) >> from("*/")).matches(sample))
     }
 
     def testUntil: Unit = {
-        val sample = mada.sequence.vector.unstringize("/*hello*/")
-        assertTrue((unstringize("/*") >> (dot.* >>> unstringize("*/"))).matches(sample))
+        val sample = mada.sequence.vector.from("/*hello*/")
+        assertTrue((from("/*") >> (dot.* >>> from("*/"))).matches(sample))
     }
 }

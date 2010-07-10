@@ -10,20 +10,20 @@ package com.github.okomok.madatest; package sequencetest; package vectortest
 import com.github.okomok.mada
 
 import mada.sequence._
-import mada.sequence.vector.fromArray
+import mada.sequence.vector.from
 import junit.framework.Assert._
 import detail.Example._
 
 
 class ForTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
-        val v = vector.fromArray(example1)
+        val v = vector.from(example1)
         val w = for (e <- v) yield e
         assertEquals(v, w)
     }
 
     def testFilter: Unit = {
-        val v = vector.fromArray(example1)
+        val v = vector.from(example1)
         val w = for (e <- v; if (e < 999)) yield e
         assertFalse(w.isInstanceOf[Vector[_]])
         assertTrue(w.isInstanceOf[Iterative[_]])
@@ -31,10 +31,10 @@ class ForTest extends junit.framework.TestCase {
     }
 
     def testForeach: Unit = {
-        val v = vector.fromArray(example1)
+        val v = vector.from(example1)
         val a = new java.util.ArrayList[Int]
         for (e <- v) a.add(e)
-        assertEquals(vector.fromJList(a), v)
+        assertEquals(vector.from(a), v)
     }
 
     def testFlatMap: Unit = {

@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package peg
 
 
-private[mada] trait Common {
+private[mada] class Common {
 
 
 // aliases
@@ -134,7 +134,7 @@ private[mada] trait Common {
     /**
      * Chooses the longest match.
      */
-    def longest[A](ps: Peg[A]*): Peg[A] = Longest(sequence.iterative.from(ps))
+    def longest[A](ps: Peg[A]*): Peg[A] = Longest(sequence.Iterative.from(ps))
 
     /**
      * Chooses the longest match.
@@ -144,7 +144,7 @@ private[mada] trait Common {
     /**
      * Chooses the shortest match.
      */
-    def shortest[A](ps: Peg[A]*): Peg[A] = Shortest(sequence.iterative.from(ps))
+    def shortest[A](ps: Peg[A]*): Peg[A] = Shortest(sequence.Iterative.from(ps))
 
     /**
      * Chooses the shortest match.
@@ -157,7 +157,7 @@ private[mada] trait Common {
     /**
      * Matches any element of set.
      */
-    def multiple[A](es: A*): Peg[A] = Multiple(sequence.iterative.from(es).toSHashSet)
+    def multiple[A](es: A*): Peg[A] = Multiple(sequence.Iterative.from(es).toSHashSet)
 
     /**
      * Matches any element of set.
@@ -167,7 +167,7 @@ private[mada] trait Common {
     /**
      * Matches a key, then tries to match its value.
      */
-    def switch[A](es: (A, Peg[A])*): Peg[A] = Switch(sequence.iterative.from(es).toSHashMap)
+    def switch[A](es: (A, Peg[A])*): Peg[A] = Switch(sequence.Iterative.from(es).toSHashMap)
 
     /**
      * Matches a key, then tries to match its value.
@@ -180,7 +180,7 @@ private[mada] trait Common {
     type SymbolSet[A] = Peg[A] with scala.collection.mutable.Set[sequence.Vector[A]]
 
     @equivalentTo("symbolSet(vs)(c)")
-    def symbolSet[A](vs: sequence.Vector[A]*)(implicit c: Ordering[A]): SymbolSet[A] = symbolSet(sequence.iterative.from(vs))(c)
+    def symbolSet[A](vs: sequence.Vector[A]*)(implicit c: Ordering[A]): SymbolSet[A] = symbolSet(sequence.Iterative.from(vs))(c)
 
     /**
      * Returns a peg to optimize the form <code>k1|k2|k3|...</code>.
@@ -196,7 +196,7 @@ private[mada] trait Common {
     type SymbolMap[A] = Peg[A] with scala.collection.mutable.Map[sequence.Vector[A], Peg[A]]
 
     @equivalentTo("symbolMap(es)(c)")
-    def symbolMap[A](es: (sequence.Vector[A], Peg[A])*)(implicit c: Ordering[A]): SymbolMap[A] = symbolMap(sequence.iterative.from(es))(c)
+    def symbolMap[A](es: (sequence.Vector[A], Peg[A])*)(implicit c: Ordering[A]): SymbolMap[A] = symbolMap(sequence.Iterative.from(es))(c)
 
     /**
      * Returns a peg to optimize the form <code>(k1 >> p1)|(k2 >> p2)|(k3 >> p3)|...</code>.

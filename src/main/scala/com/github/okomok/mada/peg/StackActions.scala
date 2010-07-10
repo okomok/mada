@@ -18,7 +18,7 @@ class StackActions[A, B](override val delegate: Stack[B]) extends stack.Forwarde
     /**
      * Constructs from an empty stack.
      */
-    def this() = this(stack.from(new java.util.ArrayDeque[B]))
+    def this() = this(Stack.from(new java.util.ArrayDeque[B]))
 
 
 // apply

@@ -15,7 +15,7 @@ import junit.framework.Assert._
 
 class DotTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
-        val sample = mada.sequence.vector.unstringize("/")
+        val sample = mada.sequence.vector.from("/")
         assertTrue(dot[Char].matches(sample))
         assertFalse(dot[Char].matches(mada.sequence.vector.empty))
     }

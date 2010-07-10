@@ -9,15 +9,8 @@ package com.github.okomok.mada; package sequence
 
 package object iterative {
 
-
-    @aliasOf("Iterative")
-    val Type = Iterative
-
-    @aliasOf("Iterative")
-    type Type[+A] = Iterative[A]
-
-
-// constructors
+    @returnThat
+    def from[A](to: Iterative[A]): Iterative[A] = to
 
     /**
      * The empty sequence
@@ -71,32 +64,5 @@ package object iterative {
 
     @aliasOf("Function1[A, Unit]")
     type Yield[-A] = Function1[A, Unit]
-
-
-// conversion
-
-    @returnThat
-    def from[A](to: Iterative[A]): Iterative[A] = to
-
-    @compatibleConversion
-    def unstringize(from: String): Iterative[Char] = Unstringize(from)
-
-    @compatibleConversion
-    def fromArray[A](from: Array[A]): Iterative[A] = FromArray(from)
-
-    @compatibleConversion
-    def fromOption[A](from: Option[A]): Iterative[A] = FromOption(from)
-
-    @compatibleConversion
-    def fromSIterable[A](from: Iterable[A]): Iterative[A] = FromSIterable(from)
-
-    @compatibleConversion
-    def fromJIterable[A](from: java.lang.Iterable[A]): Iterative[A] = FromJIterable(from)
-
-    @compatibleConversion
-    def fromJObjectInput(from: java.io.ObjectInput): Iterative[AnyRef] = FromJObjectInput(from)
-
-    @compatibleConversion
-    def fromJReader(from: java.io.Reader): Iterative[Char] = FromJReader(from)
 
 }

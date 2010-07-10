@@ -16,12 +16,12 @@ import junit.framework.Assert._
 class ConsTest extends junit.framework.TestCase {
 
     def testInfer: Unit = {
-        val x: list.Type[Int] = 1 :: 3 :: 4 :: Nil
+        val x: list.List[Int] = 1 :: 3 :: 4 :: Nil
         assertEquals(10, x.nth(1) + 7)
     }
 
     def testInferStrict: Unit = {
-        val x: list.Type[Int] = 1 #:: 3 #:: 4 #:: Nil
+        val x: list.List[Int] = 1 #:: 3 #:: 4 #:: Nil
         assertEquals(10, x.nth(1) + 7)
     }
 

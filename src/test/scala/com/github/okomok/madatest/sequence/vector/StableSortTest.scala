@@ -17,27 +17,27 @@ import com.github.okomok.madatest.sequencetest.vectortest.detail.Example._
 
 class StableSortTest extends junit.framework.TestCase {
     def testTrivial {
-        val actual = fromArray(example1).seal.stableSort
+        val actual = from(example1).seal.stableSort
         detail.TeztVectorReadOnly(example1Sorted, actual)
     }
 
     def testImplicit {
-        val actual = fromArray(example1).seal.stableSort
+        val actual = from(example1).seal.stableSort
         detail.TeztVectorReadOnly(example1Sorted, actual)
     }
 
     def testOptimizeArray {
-        val actual = fromArray(example1).stableSort
+        val actual = from(example1).stableSort
         detail.TeztVectorReadOnly(example1Sorted, actual)
     }
 
     def testOptimizeArrayWindow {
-        val actual = fromArray(example1).window(0, 0).window(0, example1.length).stableSort
+        val actual = from(example1).window(0, 0).window(0, example1.length).stableSort
         detail.TeztVectorReadOnly(example1Sorted, actual)
     }
 
     def testOptimizeArrayList {
-        val actual = fromJList(fromArray(example1).toJList).stableSort
+        val actual = from(from(example1).toJList).stableSort
         detail.TeztVectorReadOnly(example1Sorted, actual)
     }
 
@@ -63,19 +63,19 @@ class StableSortTest extends junit.framework.TestCase {
 
 // vector.stl
     def testStlTrivial: Unit = {
-        val v = fromArray(example1)
+        val v = from(example1)
         mada.sequence.vector.stl.stableSort(v, 0, v.size)
-        assertEquals(fromArray(example1Sorted), v)
+        assertEquals(from(example1Sorted), v)
     }
 
     def testStlBy: Unit = {
-        val v = fromArray(example1)
+        val v = from(example1)
         mada.sequence.vector.stl.stableSort(v, 0, v.size)(Ordering.Int.reverse)
-        assertEquals(fromArray(example1ReversedSorted), v)
+        assertEquals(from(example1ReversedSorted), v)
     }
 
     def testStlEmpty: Unit = {
-        val v = fromArray(empty1)
+        val v = from(empty1)
         mada.sequence.vector.stl.stableSort(v, 0, v.size)
         detail.TeztEmpty(v)
     }
@@ -85,7 +85,7 @@ class StableSortTest extends junit.framework.TestCase {
     )
 
     def testStlLongExample1: Unit = {
-        val v = fromArray(longExample1)
+        val v = from(longExample1)
         mada.sequence.vector.stl.stableSort(v, 0, v.size)
         assertEquals(vector.range(0, 1000), v)
     }

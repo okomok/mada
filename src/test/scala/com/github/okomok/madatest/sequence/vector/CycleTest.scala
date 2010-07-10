@@ -17,23 +17,23 @@ import detail.Example._
 class CycleTest extends junit.framework.TestCase {
     def testTrivial {
         val expected = Array(4,23,0,12,4,23,0,12,4,23,0,12,4,23,0,12)
-        val actual = fromArray(Array(4,23,0,12)).times(4)
+        val actual = from(Array(4,23,0,12)).times(4)
         detail.TeztVectorReadOnly(expected, actual)
     }
 
     def testEmpty {
-        val actual = fromArray(empty1).times(40)
+        val actual = from(empty1).times(40)
         detail.TeztEmpty(actual)
     }
 
     def testEmpty2 {
-        val actual = fromArray(example1).times(0)
+        val actual = from(example1).times(0)
         detail.TeztEmpty(actual)
     }
 
     def testFusion {
         val expected = Array(4,23,0,12,4,23,0,12,4,23,0,12,4,23,0,12)
-        val actual = fromArray(Array(4,23,0,12)).times(2).times(2)
+        val actual = from(Array(4,23,0,12)).times(2).times(2)
         detail.TeztVectorReadOnly(expected, actual)
     }
 }

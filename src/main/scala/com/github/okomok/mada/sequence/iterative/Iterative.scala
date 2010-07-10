@@ -111,7 +111,7 @@ trait Iterative[+A] extends Sequence[A] {
         val m = new scala.collection.mutable.HashMap[K, Vector[B]]
         _this.foreach { e =>
             val k = f(e)
-            assoc.lazyGet(m)(k)(vector.fromJList(new java.util.ArrayList[B])).
+            assoc.lazyGet(m)(k)(Vector.from(new java.util.ArrayList[B])).
                 asInstanceOf[vector.FromJList[B]]._1.add(e)
         }
         m

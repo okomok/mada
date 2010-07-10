@@ -7,15 +7,15 @@
 package com.github.okomok.mada; package sequence; package iterator
 
 
-private[mada] trait Common {
+private[mada] class Common {
+
+    @returnThat
+    def from[A](to: Iterator[A]) = to
 
     /**
      * The universal end iterator
      */
     val end: Iterator[Nothing] = End()
-
-    @returnThat
-    def from[A](to: Iterator[A]) = to
 
     @conversion
     def fromSIterator[A](from: scala.Iterator[A]): Iterator[A] = FromSIterator(from)

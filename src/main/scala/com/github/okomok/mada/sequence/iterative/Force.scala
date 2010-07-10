@@ -16,7 +16,7 @@ case class Force[+A](_1: Iterative[A]) extends Iterative[A] {
             r.add(~it)
             it.++
         }
-        fromJIterable(r)
+        from(r)
     }
     override def begin = k.begin
 

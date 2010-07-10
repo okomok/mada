@@ -32,7 +32,7 @@ object Nio {
                 while (true) {
                     if (_2(_1) != 0) {
                         val keys = _1.selectedKeys
-                        for (key <- iterative.from(keys)) {
+                        for (key <- Iterative.from(keys)) {
                             k.react(key.asInstanceOf[SelectionKey])
                         }
                         keys.clear

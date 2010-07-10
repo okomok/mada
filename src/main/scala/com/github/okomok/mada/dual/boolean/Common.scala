@@ -8,8 +8,9 @@ package com.github.okomok.mada
 package dual; package boolean
 
 
-private[mada] trait Common extends OperatorCommon {
-    val Operator: OperatorCommon = new OperatorCommon{}//this
+private[mada] class Common extends OperatorCommon {
+    @returnThis
+    val Operator: OperatorCommon = this
 
     @equivalentTo("new `true`{}")
     val `true` = _Boolean.`true`

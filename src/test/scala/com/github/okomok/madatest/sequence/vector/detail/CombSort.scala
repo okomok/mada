@@ -51,8 +51,8 @@ class CombSortTest extends junit.framework.TestCase {
     import mada.sequence._
     import junit.framework.Assert._
 
-    def expected = vector.fromArray(Array(0, 0, 4, 4, 6, 8,11,12,13,14,15,17,18,19,23))
-    def example =  vector.fromArray(Array(0,18,14,17,19, 8,13, 6, 4,23, 0,12,15,11, 4))
+    def expected = vector.from(Array(0, 0, 4, 4, 6, 8,11,12,13,14,15,17,18,19,23))
+    def example =  vector.from(Array(0,18,14,17,19, 8,13, 6, 4,23, 0,12,15,11, 4))
 
     def testTrivial: Unit ={
         val v = example

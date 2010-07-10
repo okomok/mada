@@ -8,7 +8,7 @@ package com.github.okomok.mada
 package dual; package nat; package peano
 
 
-private[mada] trait Common extends LiteralCommon with OperatorCommon {
+private[mada] class Common extends LiteralCommon with OperatorCommon {
     val Literal: LiteralCommon = this
     val Operator: OperatorCommon = this // may crash compiler.
 

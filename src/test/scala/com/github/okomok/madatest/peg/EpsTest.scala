@@ -20,6 +20,6 @@ class EpsTest extends junit.framework.TestCase {
     }
 
     def testCompile(v: mada.sequence.Vector[Char]): Unit = {
-        (unstringize("abcd") >> eps).parse(v, 0, 10)
+        (from("abcd") >> eps).parse(v, 0, 10)
     }
 }

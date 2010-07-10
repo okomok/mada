@@ -8,7 +8,7 @@ package com.github.okomok.mada
 package dual; package nat; package dense
 
 
-private[mada] trait Common extends LiteralCommon {
+private[mada] class Common extends LiteralCommon {
     @returnThis
     val Literal: LiteralCommon = this
 

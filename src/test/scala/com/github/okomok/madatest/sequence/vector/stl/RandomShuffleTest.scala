@@ -21,7 +21,7 @@ import com.github.okomok.madatest.sequencetest.vectortest.detail._
 
 class RandomShuffleTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
-        val v = fromArray(example1)
+        val v = from(example1)
         mada.sequence.vector.stl.randomShuffle(v, 0, v.size)
 //        println(v.toString)
         mada.sequence.vector.stl.sort(v, 0, v.size)

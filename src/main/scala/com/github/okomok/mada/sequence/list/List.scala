@@ -4,14 +4,50 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package sequence
+package com.github.okomok.mada; package sequence; package list
 
 
 import annotation.tailrec
-import list._
 
 
 // See: http://www.haskell.org/onlinereport/standard-prelude.html
+
+
+object List extends Common with Compatibles {
+
+
+// logical hierarchy
+
+    implicit def _asIterative[A](from: List[A]): Iterative[A] = from.asIterative
+
+
+// methodization
+
+    sealed class _OfName[A](_this: => List[A]) {
+        def ::(x: A): List[A] = new Cons(x, util.byLazy(_this))
+    // right-associative
+        def :::(prefix: List[A]): List[A] = prefix.append(_this)
+        def reverse_:::(prefix: List[A]): List[A] = prefix.reverseAppend(_this)
+    }
+    implicit def _ofName[A](_this: => List[A]): _OfName[A] = new _OfName(_this)
+
+    sealed class _OfList[A](_this: List[List[A]]) {
+        def flatten: List[A] = _this.foldRight(Nil.of[A])(_ ::: _())
+    }
+    implicit def _ofList[A](_this: List[List[A]]): _OfList[A] = new _OfList(_this)
+
+    sealed class _OfBoolean(_this: List[Boolean]) {
+        def and: Boolean = _this.foldRight(true)(_ && _())
+        def or: Boolean = _this.foldRight(false)(_ || _())
+    }
+    implicit def _ofBoolean(_this: List[Boolean]): _OfBoolean = new _OfBoolean(_this)
+
+    sealed class _OfPair[A, B](_this: List[(A, B)]) {
+        def unzip: (List[A], List[B]) = _this.foldRight((Nil.of[A], Nil.of[B])){ (ab, abs) => (ab._1 :: abs()._1, ab._2 :: abs()._2) }
+    }
+    implicit def _ofPair[A, B](_this: List[(A, B)]): _OfPair[A, B] = new _OfPair(_this)
+
+}
 
 
 // Nil
@@ -509,57 +545,6 @@ sealed abstract class List[+A] extends iterative.Sequence[A] {
         case (a :: as, b :: bs) => f(a, b) :: as().zipBy(bs())(f)
         case _ => Nil
     }
-
-}
-
-
-object List {
-
-
-// logical hierarchy
-
-    implicit def _asIterative[A](from: List[A]): Iterative[A] = from.asIterative
-
-
-// methodization
-
-    sealed class _OfName[A](_this: => List[A]) {
-        def ::(x: A): List[A] = new Cons(x, util.byLazy(_this))
-    // right-associative
-        def :::(prefix: List[A]): List[A] = prefix.append(_this)
-        def reverse_:::(prefix: List[A]): List[A] = prefix.reverseAppend(_this)
-    }
-    implicit def _ofName[A](_this: => List[A]): _OfName[A] = new _OfName(_this)
-
-    sealed class _OfList[A](_this: List[List[A]]) {
-        def flatten: List[A] = _this.foldRight(Nil.of[A])(_ ::: _())
-    }
-    implicit def _ofList[A](_this: List[List[A]]): _OfList[A] = new _OfList(_this)
-
-    sealed class _OfBoolean(_this: List[Boolean]) {
-        def and: Boolean = _this.foldRight(true)(_ && _())
-        def or: Boolean = _this.foldRight(false)(_ || _())
-    }
-    implicit def _ofBoolean(_this: List[Boolean]): _OfBoolean = new _OfBoolean(_this)
-
-    sealed class _OfPair[A, B](_this: List[(A, B)]) {
-        def unzip: (List[A], List[B]) = _this.foldRight((Nil.of[A], Nil.of[B])){ (ab, abs) => (ab._1 :: abs()._1, ab._2 :: abs()._2) }
-    }
-    implicit def _ofPair[A, B](_this: List[(A, B)]): _OfPair[A, B] = new _OfPair(_this)
-
-
-// compatibles
-
-    implicit def _fromOption[A](from: Option[A]): List[A] = fromOption(from)
-
-
-// pattern matching
-
-    @aliasOf("Of.apply")
-    def apply[A](from: A*): List[A] = Of.apply(from: _*)
-
-    @aliasOf("Of.unapplySeq")
-    def unapplySeq[A](from: List[A]): Option[Seq[A]] = Of.unapplySeq(from)
 
 }
 

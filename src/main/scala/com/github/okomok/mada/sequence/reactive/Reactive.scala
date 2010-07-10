@@ -4,13 +4,13 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package sequence
+package com.github.okomok.mada; package sequence; package reactive
 
 
 // See: scala.Responder
 
 
-import reactive._
+object Reactive extends Common
 
 
 trait Reactive[+A] extends Sequence[A] {
@@ -219,8 +219,4 @@ trait Reactive[+A] extends Sequence[A] {
      */
     def connect[B >: A](that: Reactive[B]): Reactive[B] = Connect[B](this, that)
 
-}
-
-
-object Reactive {
 }

@@ -11,7 +11,7 @@ import com.github.okomok.mada
 
 import mada.sequence.{Vector, vector}
 
-import mada.sequence.vector.fromArray
+import mada.sequence.vector.from
 import junit.framework.Assert._
 import com.github.okomok.madatest.sequencetest.vectortest.detail.Example._
 

@@ -15,7 +15,7 @@ import junit.framework.Assert._
 
 class AsValueTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
-        val t: iterative.Type[Int] = iterative.Of(1,2,3)
+        val t: iterative.Iterative[Int] = iterative.Of(1,2,3)
         val u = iterative.Of(1,2,3)
         assertNotSame(t, u)
         assertTrue(t.equalsIf(u)(mada.function.equal))
@@ -29,7 +29,7 @@ class AsValueTest extends junit.framework.TestCase {
 
     def testTrivial2: Unit = {
         val t = iterative.Of(1,2,3)
-        val u = iterative.Type(1,2,3,4)
+        val u = iterative.Iterative(1,2,3,4)
         AssertNotEquals(t, u)
     }
 

@@ -66,10 +66,10 @@ class SizeExpr[A](val base: Expr[Rng[A]]) extends Expr[Long] {
 
 
 class ExprTezt {
-    implicit def unstringize(s: String) = new Rng[Char] { }
+    implicit def from(s: String) = new Rng[Char] { }
 
     def testTrivial {
-        val e1 = MapExpr(Expr(unstringize("abc")), {(x: Char) => 99})
+        val e1 = MapExpr(Expr(from("abc")), {(x: Char) => 99})
         val e2 = MapExpr(e1, {(x: Int) => 'a'})
         assertFalse(e2.optimized)
         val r = e2.eval
@@ -82,7 +82,7 @@ class ExprTezt {
 
     def testInfix {
         import Map._
-        val e1 = Expr(unstringize("abc")).map({(x: Char) => 99})
+        val e1 = Expr(from("abc")).map({(x: Char) => 99})
         val e2 = e1.map({(x: Int) => 'a'})
         assertFalse(e2.optimized)
         val r = e2.eval
@@ -95,9 +95,9 @@ class ExprTezt {
 
     def testContext {
         import Map._
-        val e = Expr(unstringize("abc")).map({(x: Char) => 99})
+        val e = Expr(from("abc")).map({(x: Char) => 99})
         assertEquals(new SizeExpr(e).eval, 9L)
-        assertEquals(new SizeExpr(Expr(unstringize("abc"))).eval, 999L)
+        assertEquals(new SizeExpr(Expr(from("abc"))).eval, 999L)
     }
 }
 

@@ -43,7 +43,7 @@ private[mada] case class Parallel[A](_1: Vector[A], _2: Int) extends Forwarder[A
 // conversion
     override def toArray[B >: A : ClassManifest]: Array[B] = {
         val r = new Array[B](size)
-        ParallelCopyTo(delegate, fromArray(r), grainSize)
+        ParallelCopyTo(delegate, from(r), grainSize)
         r
     }
 }

@@ -30,7 +30,7 @@ class SymbolMapTest extends junit.framework.TestCase {
     }
 
     def testTrivial2: Unit = {
-        val g = symbolMap(mada.sequence.vector.unstringize("e") -> mada.peg.unstringize("z"), mada.sequence.vector.unstringize("ef") -> mada.peg.unstringize("g"))
+        val g = symbolMap(mada.sequence.vector.from("e") -> mada.peg.from("z"), mada.sequence.vector.from("ef") -> mada.peg.from("g"))
         assertTrue("abc" >> g  matches "abcez")
     }
 

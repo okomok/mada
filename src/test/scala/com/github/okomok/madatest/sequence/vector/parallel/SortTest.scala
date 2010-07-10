@@ -21,7 +21,7 @@ import com.github.okomok.madatest.sequencetest.vectortest.detail.Example._
 
 class SortTest extends junit.framework.TestCase {
     def testTrivial {
-        val actual = fromArray(example1).seal.parallel.sort
+        val actual = from(example1).seal.parallel.sort
         detail.TeztVectorReadOnly(example1Sorted, actual)
     }
 
@@ -31,22 +31,22 @@ class SortTest extends junit.framework.TestCase {
     }
 
     def testImplicit: Unit = {
-        val actual = fromArray(example1).seal.parallel.sort
+        val actual = from(example1).seal.parallel.sort
         detail.TeztVectorReadOnly(example1Sorted, actual)
     }
 
     def testOptimizeArray {
-        val actual = fromArray(example1).parallel.sort
+        val actual = from(example1).parallel.sort
         detail.TeztVectorReadOnly(example1Sorted, actual)
     }
 
     def testOptimizeArrayWindow {
-        val actual = fromArray(example1).window(0, 0).window(0, example1.length).parallel.sort
+        val actual = from(example1).window(0, 0).window(0, example1.length).parallel.sort
         detail.TeztVectorReadOnly(example1Sorted, actual)
     }
 
     def testOptimizeArrayList {
-        val actual = fromJList(fromArray(example1).toJList).parallel.sort
+        val actual = from(from(example1).toJList).parallel.sort
         detail.TeztVectorReadOnly(example1Sorted, actual)
     }
 }

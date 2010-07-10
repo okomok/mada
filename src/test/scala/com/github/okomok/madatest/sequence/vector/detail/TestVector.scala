@@ -18,8 +18,8 @@ object TeztVectorReadWrite {
         TeztVectorReadOnly(expected, actual)
 
         CombSort(actual)
-        val ex = CopyArray(expected); CombSort(vector.fromArray(ex))
-        assertEquals(vector.fromArray(ex), actual)
+        val ex = CopyArray(expected); CombSort(vector.from(ex))
+        assertEquals(vector.from(ex), actual)
     }
 }
 

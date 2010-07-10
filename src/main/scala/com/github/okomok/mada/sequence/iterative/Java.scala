@@ -8,7 +8,7 @@ package com.github.okomok.mada; package sequence; package iterative
 
 
 private[mada] case class FromJIterable[A](_1: java.lang.Iterable[A]) extends Iterative[A] {
-    override def begin = iterator.fromJIterator(_1.iterator)
+    override def begin = Iterator.fromJIterator(_1.iterator)
 }
 
 private[mada] case class ToJIterable[A](_1: Iterative[A]) extends java.lang.Iterable[A] {

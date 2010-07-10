@@ -15,7 +15,7 @@ private[mada] case class FromSIterable[A](_1: scala.Iterable[A]) extends Forward
         for (e <- _1.view) {
             r.add(e)
         }
-        fromJList(r)
+        from(r)
     }
 }
 

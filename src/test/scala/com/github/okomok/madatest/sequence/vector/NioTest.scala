@@ -10,7 +10,7 @@ package com.github.okomok.madatest; package sequencetest; package vectortest
 import com.github.okomok.mada
 
 import mada.sequence.{Vector, vector}
-import mada.sequence.vector.fromJList
+import mada.sequence.vector.from
 import com.github.okomok.madatest.sequencetest.vectortest.detail.NewArrayList
 import junit.framework.Assert._
 

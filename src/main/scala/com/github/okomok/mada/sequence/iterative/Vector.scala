@@ -15,6 +15,6 @@ private[mada] case class ToVector[A](_1: Iterative[A]) extends vector.Forwarder[
             a.add(~it)
             it.++
         }
-        vector.fromJList(a)
+        Vector.from(a)
     }
 }

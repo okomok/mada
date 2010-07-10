@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package stack
 
 
-private[mada] trait Common {
+private[mada] class Common {
 
     @returnThat
     def from[A](to: Stack[A]): Stack[A] = to

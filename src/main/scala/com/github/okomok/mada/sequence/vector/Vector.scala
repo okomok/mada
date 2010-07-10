@@ -4,10 +4,13 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package sequence
+package com.github.okomok.mada; package sequence; package vector
 
 
-import vector._
+object Vector extends Common with Compatibles with math.LowPriorityOrderingImplicits {
+// eligibles
+    implicit def _theOrdering[A](implicit c: Ordering[A]): Ordering[Vector[A]] = lexicographicalOrdering(c)
+}
 
 
 /**
@@ -536,7 +539,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
     @conversion
     def toArray[B >: A : ClassManifest]: Array[B] = {
         val r = new Array[B](size)
-        copyTo(fromArray(r))
+        copyTo(from(r))
         r
     }
 
@@ -576,44 +579,5 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
 
     @equivalentTo("range(start, end)")
     final def indices: Vector[Int] = range(start, end)
-
-}
-
-
-object Vector extends math.LowPriorityOrderingImplicits {
-
-
-// compatibles
-
-    implicit def _unstringize(from: String): Vector[Char] = unstringize(from)
-    implicit def _fromArray[A](from: Array[A]): Vector[A] = fromArray(from)
-    implicit def _fromCell[A](from: Cell[A]): Vector[A] = fromCell(from)
-    implicit def _fromOption[A](from: Option[A]): Vector[A] = fromOption(from)
-    implicit def _fromProduct(from: Product): Vector[Any] = fromProduct(from)
-    implicit def _fromSIndexedSeq[A](from: scala.collection.IndexedSeq[A]): Vector[A] = fromSIndexedSeq(from)
-    implicit def _fromJCharSequence(from: java.lang.CharSequence): Vector[Char] = fromJCharSequence(from)
-    implicit def _fromJList[A](from: java.util.List[A]): Vector[A] = fromJList(from)
-
-    implicit def _fromJByteBuffer(from: java.nio.ByteBuffer): Vector[Byte] = fromJByteBuffer(from)
-    implicit def _fromJCharBuffer(from: java.nio.CharBuffer): Vector[Char] = fromJCharBuffer(from)
-    implicit def _fromJDoubleBuffer(from: java.nio.DoubleBuffer): Vector[Double] = fromJDoubleBuffer(from)
-    implicit def _fromJFloatBuffer(from: java.nio.FloatBuffer): Vector[Float] = fromJFloatBuffer(from)
-    implicit def _fromJIntBuffer(from: java.nio.IntBuffer): Vector[Int] = fromJIntBuffer(from)
-    implicit def _fromJLongBuffer(from: java.nio.LongBuffer): Vector[Long] = fromJLongBuffer(from)
-    implicit def _fromJShortBuffer(from: java.nio.ShortBuffer): Vector[Short] = fromJShortBuffer(from)
-
-
-// eligibles
-
-    implicit def _theOrdering[A](implicit c: Ordering[A]): Ordering[Vector[A]] = lexicographicalOrdering(c)
-
-
-// pattern matching
-
-    @aliasOf("Of.apply")
-    def apply[A](from: A*): Vector[A] = Of.apply(from: _*)
-
-    @aliasOf("Of.unapplySeq")
-    def unapplySeq[A](from: Vector[A]): Option[Seq[A]] = Of.unapplySeq(from)
 
 }

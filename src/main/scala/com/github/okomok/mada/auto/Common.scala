@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package auto
 
 
-private[mada] trait Common {
+private[mada] class Common {
 
     @returnThat
     def use[A](that: Auto[A]): Auto[A] = that

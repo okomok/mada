@@ -18,19 +18,19 @@ import com.github.okomok.madatest.sequencetest.vectortest.detail._
 
 class SortTest extends junit.framework.TestCase {
     def testTrivial: Unit = {
-        val v = fromArray(example1)
+        val v = from(example1)
         mada.sequence.vector.stl.sort(v, 0, v.size)
-        assertEquals(fromArray(example1Sorted), v)
+        assertEquals(from(example1Sorted), v)
     }
 
     def testBy: Unit = {
-        val v = fromArray(example1)
+        val v = from(example1)
         mada.sequence.vector.stl.sort(v, 0, v.size)(Ordering.Int.reverse)
-        assertEquals(fromArray(example1ReversedSorted), v)
+        assertEquals(from(example1ReversedSorted), v)
     }
 
     def testEmpty: Unit = {
-        val v = fromArray(empty1)
+        val v = from(empty1)
         mada.sequence.vector.stl.sort(v, 0, v.size)
         TeztEmpty(v)
     }
@@ -40,13 +40,13 @@ class SortTest extends junit.framework.TestCase {
     )
 
     def testLongExample1: Unit = {
-        val v = fromArray(longExample1)
+        val v = from(longExample1)
         mada.sequence.vector.stl.sort(v, 0, v.size)
         assertEquals(vector.range(0, 1000), v)
     }
 /*
     def testIntroSort: Unit = {
-        val v = fromArray(longExample1)
+        val v = from(longExample1)
         mada.sequence.vector.stl.IntroSort[Int](v, 0, v.size, (_: Int) < (_: Int))
         assertEquals(vector.range(0, 1000), v)
     }
