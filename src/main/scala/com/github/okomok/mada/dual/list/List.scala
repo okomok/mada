@@ -15,32 +15,32 @@ package dual; package list
 object List extends Common {
 
 // methodization
-/*
-    sealed class _Of1[a1](_this: a1 :: Nil) {
-        def toTuple: Tuple1[a1] = Tuple1(_this.head)
-    }
-    implicit def _of1[a1](_this: a1 :: Nil): _Of1[a1] = new _Of1(_this)
 
-    sealed class _Of2[a1, a2](_this: a1 :: a2 :: Nil) {
-        def toTuple: Tuple2[a1, a2] = Tuple2(_this.head, _this.tail.head)
+    sealed class _Of1[_this <: List](_this: _this) {
+        def toSTuple: scala.Tuple1[_this#head#undual] = scala.Tuple1(_this.head.undual)
     }
-    implicit def _of2[a1, a2](_this: a1 :: a2 :: Nil): _Of2[a1, a2] = new _Of2(_this)
+    implicit def _of1[a1 <: Any](_this: a1 :: Nil): _Of1[a1 :: Nil] = new _Of1(_this)
 
-    sealed class _Of3[a1, a2, a3](_this: a1 :: a2 :: a3 :: Nil) {
-        def toTuple: Tuple3[a1, a2, a3] = Tuple3(_this.head, _this.tail.head, _this.tail.tail.head)
+    sealed class _Of2[_this <: List](_this: _this) {
+        def toSTuple: scala.Tuple2[_this#head#undual, _this#tail#head#undual] = scala.Tuple2(_this.head.undual, _this.tail.head.undual)
     }
-    implicit def _of3[a1, a2, a3](_this: a1 :: a2 :: a3 :: Nil): _Of3[a1, a2, a3] = new _Of3(_this)
+    implicit def _of2[a1 <: Any, a2 <: Any](_this: a1 :: a2 :: Nil): _Of2[a1 :: a2 :: Nil] = new _Of2(_this)
 
-    sealed class _Of4[a1, a2, a3, a4](_this: a1 :: a2 :: a3 :: a4 :: Nil) {
-        def toTuple: Tuple4[a1, a2, a3, a4] = Tuple4(_this.head, _this.tail.head, _this.tail.tail.head, _this.tail.tail.tail.head)
+    sealed class _Of3[_this <: List](_this: _this) {
+        def toSTuple: scala.Tuple3[_this#head#undual, _this#tail#head#undual, _this#tail#tail#head#undual] = scala.Tuple3(_this.head.undual, _this.tail.head.undual, _this.tail.tail.head.undual)
     }
-    implicit def _of4[a1, a2, a3, a4](_this: a1 :: a2 :: a3 :: a4 :: Nil): _Of4[a1, a2, a3, a4] = new _Of4(_this)
+    implicit def _of3[a1 <: Any, a2 <: Any, a3 <: Any](_this: a1 :: a2 :: a3 :: Nil): _Of3[a1 :: a2 :: a3 :: Nil] = new _Of3(_this)
 
-    sealed class _Of5[a1, a2, a3, a4, a5](_this: a1 :: a2 :: a3 :: a4 :: a5 :: Nil) {
-        def toTuple: Tuple5[a1, a2, a3, a4, a5] = Tuple5(_this.head, _this.tail.head, _this.tail.tail.head, _this.tail.tail.tail.head, _this.tail.tail.tail.tail.head)
+    sealed class _Of4[_this <: List](_this: _this) {
+        def toSTuple: scala.Tuple4[_this#head#undual, _this#tail#head#undual, _this#tail#tail#head#undual, _this#tail#tail#tail#head#undual] = scala.Tuple4(_this.head.undual, _this.tail.head.undual, _this.tail.tail.head.undual, _this.tail.tail.tail.head.undual)
     }
-    implicit def _of5[a1, a2, a3, a4, a5](_this: a1 :: a2 :: a3 :: a4 :: a5 :: Nil): _Of5[a1, a2, a3, a4, a5] = new _Of5(_this)
-*/
+    implicit def _of4[a1 <: Any, a2 <: Any, a3 <: Any, a4 <: Any](_this: a1 :: a2 :: a3 :: a4 :: Nil): _Of4[a1 :: a2 :: a3 :: a4 :: Nil] = new _Of4(_this)
+
+    sealed class _Of5[_this <: List](_this: _this) {
+        def toSTuple: scala.Tuple5[_this#head#undual, _this#tail#head#undual, _this#tail#tail#head#undual, _this#tail#tail#tail#head#undual, _this#tail#tail#tail#tail#head#undual] = scala.Tuple5(_this.head.undual, _this.tail.head.undual, _this.tail.tail.head.undual, _this.tail.tail.tail.head.undual, _this.tail.tail.tail.tail.head.undual)
+    }
+    implicit def _of5[a1 <: Any, a2 <: Any, a3 <: Any, a4 <: Any, a5 <: Any](_this: a1 :: a2 :: a3 :: a4 :: a5 :: Nil): _Of5[a1 :: a2 :: a3 :: a4 :: a5 :: Nil] = new _Of5(_this)
+
 }
 
 
