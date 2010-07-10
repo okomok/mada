@@ -4,10 +4,18 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada
+package com.github.okomok.mada; package auto
 
 
-import auto._
+object Auto extends Common with Compatibles {
+
+// methodization
+    sealed class _OfInvariant[A](_this: Auto[A]) {
+        def asVar: Auto[Var[A]] = AsVar(_this)
+    }
+    implicit def _ofInvariant[A](_this: Auto[A]): _OfInvariant[A] = new _OfInvariant(_this)
+
+}
 
 
 /**
@@ -45,20 +53,5 @@ trait Auto[+A] {
 
     @aliasOf("usedBy")
     final def foreach[B](f: A => B): B = usedBy(f)
-
-}
-
-
-object Auto {
-
-// methodization
-    sealed class _OfInvariant[A](_this: Auto[A]) {
-        def asVar: Auto[Var[A]] = AsVar(_this)
-    }
-    implicit def _ofInvariant[A](_this: Auto[A]): _OfInvariant[A] = new _OfInvariant(_this)
-
-// compatibles
-    implicit def _fromJCloseable[A <: java.io.Closeable](from: A): Auto[A] = fromJCloseable(from)
-    implicit def _fromJLock[A <: java.util.concurrent.locks.Lock](from: A): Auto[A] = fromJLock(from)
 
 }

@@ -4,10 +4,12 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package sequence
+package com.github.okomok.mada; package sequence; package iterator
 
 
-import iterator._
+object Iterator extends Common {
+    implicit def _toBoolean[A](from: Iterator[A]): Boolean = from.toBoolean
+}
 
 
 /**
@@ -76,9 +78,4 @@ trait Iterator[+A] {
     final def &&(p: => Boolean): Boolean = if (!isEnd) p else false
     final def ||(p: => Boolean): Boolean = if (!isEnd) true else p
 */
-}
-
-
-object Iterator {
-    implicit def _toBoolean[A](from: Iterator[A]): Boolean = from.toBoolean
 }

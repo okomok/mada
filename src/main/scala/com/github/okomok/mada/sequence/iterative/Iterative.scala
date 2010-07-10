@@ -4,10 +4,10 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package sequence
+package com.github.okomok.mada; package sequence; package iterative
 
 
-import iterative._
+object Iterative extends Common with Compatibles
 
 
 /**
@@ -483,30 +483,5 @@ trait Iterative[+A] extends Sequence[A] {
      * Constructs a sorted iterable with the set symmetric difference of the two sorted iterables.
      */
     def symmetricDifference[B >: A](that: Iterative[B])(implicit c: Ordering[B]): Iterative[B] = SymmetricDifference[B](this, that, c)
-
-}
-
-
-object Iterative {
-
-
-// compatibles
-
-    implicit def _unstringize(from: String): Iterative[Char] = unstringize(from)
-    implicit def _fromArray[A](from: Array[A]): Iterative[A] = fromArray(from)
-    implicit def _fromOption[A](from: Option[A]): Iterative[A] = fromOption(from)
-    implicit def _fromSIterable[A](from: Iterable[A]): Iterative[A] = fromSIterable(from)
-    implicit def _fromJIterable[A](from: java.lang.Iterable[A]): Iterative[A] = fromJIterable(from)
-    implicit def _fromJObjectInput(from: java.io.ObjectInput): Iterative[AnyRef] = fromJObjectInput(from)
-    implicit def _fromJReader(from: java.io.Reader): Iterative[Char] = fromJReader(from)
-
-
-// pattern matching
-
-    @aliasOf("Of.apply")
-    def apply[A](from: A*): Iterative[A] = Of.apply(from: _*)
-
-    @aliasOf("Of.unapplySeq")
-    def unapplySeq[A](from: Iterative[A]): Option[Seq[A]] = Of.unapplySeq(from)
 
 }
