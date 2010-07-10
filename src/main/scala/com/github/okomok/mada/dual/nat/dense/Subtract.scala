@@ -26,13 +26,6 @@ private[mada] final case class Subtract[xs <: Dense, ys <: Dense](xs: xs, ys: ys
         override type apply = ConsFalse[xs#tail# -[ys#tail]]#apply
     }
 
-    final case class ConsFalse[zs <: Dense](zs: zs) extends Function0 {
-        override  def self = this
-        override type self = ConsFalse[zs]
-        override  def apply: apply = zs.isEmpty.`if`(always0(zs), always0(Cons(`false`, zs))).apply
-        override type apply = zs#isEmpty#`if`[always0[zs], always0[Cons[`false`, zs]]]#apply
-    }
-
     final case class TF() extends Function0 {
         override  def self = this
         override type self = TF

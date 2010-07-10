@@ -21,6 +21,9 @@ trait Any extends scala.Equals {
      def self: self
     type self <: Any
 
+//     def typeid: typeid
+//    type typeid <: nat.Dense
+
      def asInstanceOfBoolean: asInstanceOfBoolean = `throw`(new scala.UnsupportedOperationException("dual.Any.asInstanceOfBoolean"))
     type asInstanceOfBoolean <: Boolean
 

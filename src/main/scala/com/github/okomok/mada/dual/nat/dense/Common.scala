@@ -83,4 +83,7 @@ private[mada] trait OperatorCommon {
     type <=[x <: Dense, y <: Dense] = x# <=[y]
     type  >[x <: Dense, y <: Dense] = x# >[y]
     type >=[x <: Dense, y <: Dense] = x# >=[y]
+
+    type &[x <: Dense, y <: Dense] = x# &[y]
+    type |[x <: Dense, y <: Dense] = x# |[y]
 }

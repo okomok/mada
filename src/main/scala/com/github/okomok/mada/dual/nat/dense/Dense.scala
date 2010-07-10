@@ -75,6 +75,12 @@ sealed abstract class Dense extends Any {
      def >>[that <: Dense](that: that): >>[that]
     type >>[that <: Dense] <: Dense
 
+    final  def &[that <: Dense](that: that): &[that] = BitAnd(self, that).apply
+    final type &[that <: Dense] = BitAnd[self, that]#apply
+
+    final  def |[that <: Dense](that: that): |[that] = BitOr(self, that).apply
+    final type |[that <: Dense] = BitOr[self, that]#apply
+
      def foldRightWithNat[z <: Any, f <: Function2](z: z, f: f): foldRightWithNat[z, f]
     type foldRightWithNat[z <: Any, f <: Function2] <: Any
 

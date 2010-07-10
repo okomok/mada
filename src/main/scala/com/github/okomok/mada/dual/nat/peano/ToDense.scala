@@ -15,7 +15,7 @@ private[mada] final case class ToDense[x <: Peano](x: x) {
     final case class Else() extends Function0 {
          override  def self = this
          override type self = Else
-         override  def apply: apply = dense.Cons(x.isOdd, Div2(x).apply.toDense)
+         override  def apply: apply = dense.Cons(x.isOdd, Div2(x).apply.toDense) // `ConsFalse` is unneeded.
          override type apply = dense.Cons[x.isOdd, Div2[x]#apply#toDense]
      }
 }
