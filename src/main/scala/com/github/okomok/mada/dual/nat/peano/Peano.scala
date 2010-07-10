@@ -12,7 +12,10 @@ package dual; package nat; package peano
 //      at http://www.assembla.com/wiki/show/metascala
 
 
-object Peano extends Common
+object Peano extends Common with OperatorCommon {
+    @returnThis
+    val Operator: OperatorCommon = this
+}
 
 
 sealed trait Peano extends Any {
@@ -60,8 +63,20 @@ sealed trait Peano extends Any {
     final  def <=[that <: Peano](that: that): <=[that] = that.>=(self)
     final type <=[that <: Peano] = that# >=[self]
 
+    //final  def %[that <: Peano](that: that): %[that] = new Mod().apply(self, that)
+    //final type %[that <: Peano] = Mod#apply[self, that]
+
      def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f]
     type foldRight[z <: Any, f <: Function2] <: Any
+
+     def isEven: isEven
+    type isEven <: Boolean
+
+    final  def isOdd: isOdd = isEven.not
+    final type isOdd = isEven#not
+
+    final  def toDense: toDense = ToDense(self).apply
+    final type toDense = ToDense[self]#apply
 
     final override type undual = scala.Int
     final override def canEqual(that: scala.Any) = that.isInstanceOf[Peano]
@@ -72,22 +87,25 @@ sealed trait Zero extends Peano {
     override  def self = this
     override type self = Zero
 
-    override private[mada]  def isZero = `true`
+    override private[mada]  def isZero: isZero = `true`
     override private[mada] type isZero = `true`
 
-    override private[mada]  def gtZero = `false`
+    override private[mada]  def gtZero: gtZero = `false`
     override private[mada] type gtZero = `false`
 
-    override  def increment = Succ(self)
+    override  def increment: increment = Succ(self)
     override type increment = Succ[self]
 
-    override  def decrement = Singular
+    override  def decrement: decrement = Singular
     override type decrement = Singular
 
     override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = z
     override type foldRight[z <: Any, f <: Function2] = z
 
-    override def undual = 0
+    override  def isEven: isEven = `true`
+    override type isEven = `true`
+
+    override def undual: undual = 0
 }
 
 
@@ -95,22 +113,25 @@ final case class Succ[n <: Peano](private val n: n) extends Peano {
     override  def self = this
     override type self = Succ[n]
 
-    override private[mada]  def isZero = `false`
+    override private[mada]  def isZero: isZero = `false`
     override private[mada] type isZero = `false`
 
-    override private[mada]  def gtZero = `true`
+    override private[mada]  def gtZero: gtZero = `true`
     override private[mada] type gtZero = `true`
 
-    override  def increment = Succ(self)
+    override  def increment: increment = Succ(self)
     override type increment = Succ[self]
 
-    override  def decrement = n
+    override  def decrement: decrement = n
     override type decrement = n
 
     override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = f.apply(self, n.foldRight(z, f))
     override type foldRight[z <: Any, f <: Function2] = f#apply[self, n#foldRight[z, f]]
 
-    override def undual = 1 + n.undual
+    override lazy val isEven: isEven = n.isEven.not
+    override type isEven = n#isEven#not
+
+    override def undual: undual = 1 + n.undual
 }
 
 
@@ -118,19 +139,22 @@ sealed trait Singular extends Peano {
     override  def self = this
     override type self = Singular
 
-    override private[mada]  def isZero = `false`
+    override private[mada]  def isZero: isZero = `false`
     override private[mada] type isZero = `false`
 
-    override private[mada]  def gtZero = `false`
+    override private[mada]  def gtZero: gtZero = `false`
     override private[mada] type gtZero = `false`
 
-    override  def increment = `throw`(new scala.UnsupportedOperationException("dual.nat.Singular.increment"))
+    override  def increment: increment = `throw`(new scala.UnsupportedOperationException("dual.nat.Singular.increment"))
     override type increment = `throw`[scala.UnsupportedOperationException]
 
-    override  def decrement = self
+    override  def decrement: decrement = self
     override type decrement = self
 
-    override  def foldRight[z <: Any, f <: Function2](z: z, f: f) =  `throw`(new scala.UnsupportedOperationException("dual.Singular.foldRight"))
+    override  def isEven: isEven = `throw`(new scala.UnsupportedOperationException("dual.nat.Singular.isEven"))
+    override type isEven = `throw`[scala.UnsupportedOperationException]
+
+    override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] =  `throw`(new scala.UnsupportedOperationException("dual.Singular.foldRight"))
     override type foldRight[z <: Any, f <: Function2] = `throw`[scala.UnsupportedOperationException]
 }
 

@@ -78,6 +78,9 @@ sealed abstract class Dense extends Any {
      def foldRightWithNat[z <: Any, f <: Function2](z: z, f: f): foldRightWithNat[z, f]
     type foldRightWithNat[z <: Any, f <: Function2] <: Any
 
+     def toPeano: toPeano
+    type toPeano <: Peano
+
     @aliasOf("addFirst")
     final def Nat_::[e <: Boolean](e: e): addFirst[e] = addFirst(e)
 
@@ -120,6 +123,9 @@ sealed class Nil extends Dense {
     override  def >>[that <: Dense](that: that): >>[that] = self
     override type >>[that <: Dense] = self
 
+    override  def toPeano: toPeano = peano.Zero
+    override type toPeano = peano.Zero
+
     override  def foldRightWithNat[z <: Any, f <: Function2](z: z, f: f): foldRightWithNat[z, f] = z
     override type foldRightWithNat[z <: Any, f <: Function2] = z
 
@@ -154,6 +160,9 @@ final case class Cons[x <: Boolean, xs <: Dense](private val x: x, private val x
 
     override  def >>[that <: Dense](that: that): >>[that] = tail
     override type >>[that <: Dense] = tail
+
+    override  def toPeano: toPeano = peano.Succ(decrement.toPeano)
+    override type toPeano = peano.Succ[decrement#toPeano]
 
     override  def foldRightWithNat[z <: Any, f <: Function2](z: z, f: f): foldRightWithNat[z, f] = f.apply(self, decrement.foldRightWithNat(z, f))
     override type foldRightWithNat[z <: Any, f <: Function2] = f#apply[self, decrement#foldRightWithNat[z, f]]

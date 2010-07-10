@@ -8,9 +8,9 @@ package com.github.okomok.mada
 package dual; package nat; package peano
 
 
-private[mada] class Common extends LiteralCommon with OperatorCommon {
+private[mada] class Common extends LiteralCommon {
+    @returnThis
     val Literal: LiteralCommon = this
-    val Operator: OperatorCommon = this // may crash compiler.
 
     @equivalentTo("new Zero{}")
     val Zero = _Peano.Zero
@@ -45,6 +45,12 @@ private[mada] trait LiteralCommon {
     type _10 = Succ[_9]
 }
 
+
+/**
+ * Contains operators for Dense.
+ */
+@compilerWorkaround("2.8.0") // not extended by `Common` to avoid "error: type _140.type is defined twice".
+object Operator extends OperatorCommon
 
 private[mada] trait OperatorCommon {
     type  +[x <: Peano, y <: Peano] = x# +[y]
