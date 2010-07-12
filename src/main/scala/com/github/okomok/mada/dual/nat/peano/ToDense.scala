@@ -22,8 +22,8 @@ private[mada] final case class ToDense[x <: Peano](x: x) {
 
 
 private[mada] final case class Div2[x <: Peano](x: x)  {
-      def apply: apply = (x < _2).`if`(always0(Zero), Else()).apply.asInstanceOfNatPeano
-     type apply = x# <[_2]#`if`[always0[Zero], Else]#apply#asInstanceOfNatPeano
+      def apply: apply = `if`(x < _2, always0(Zero), Else()).apply.asInstanceOfNatPeano
+     type apply = `if`[x# <[_2], always0[Zero], Else]#apply#asInstanceOfNatPeano
 
      final case class Else() extends Function0 {
          override  def self = this
