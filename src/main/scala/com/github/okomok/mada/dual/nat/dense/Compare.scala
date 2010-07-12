@@ -15,8 +15,8 @@ private[mada] final case class Equals[xs <: Dense, ys <: Dense](xs: xs, ys: ys) 
     final case class CC() extends Function0 {
         override  def self = this
         override type self = CC
-        override  def apply: apply = (xs.head !== ys.head).`if`(always0(`false`), Else()).apply.asInstanceOf[apply]
-        override type apply = xs#head# !==[ys#head]#`if`[always0[`false`], Else]#apply
+        override  def apply: apply = `if`(xs.head !== ys.head, always0(`false`), Else()).apply.asInstanceOf[apply]
+        override type apply = `if`[xs#head# !==[ys#head], always0[`false`], Else]#apply
     }
 
     // for short-circuit.

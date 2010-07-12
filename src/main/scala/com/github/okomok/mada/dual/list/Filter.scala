@@ -9,8 +9,8 @@ package dual; package list
 
 
 private[mada] class FilterCons {
-     def apply[x <: Any, xs <: List, f <: Function1](x: x, xs: xs, f: f): apply[x, xs, f] = f.apply(x).asInstanceOfBoolean.`if`(Then(x, xs, f), Else(x, xs, f)).apply.asInstanceOfList
-    type apply[x <: Any, xs <: List, f <: Function1] =f#apply[x]#asInstanceOfBoolean#`if`[Then[x, xs, f], Else[x, xs, f]]#apply#asInstanceOfList
+     def apply[x <: Any, xs <: List, f <: Function1](x: x, xs: xs, f: f): apply[x, xs, f] = `if`(f.apply(x).asInstanceOfBoolean, Then(x, xs, f), Else(x, xs, f)).apply.asInstanceOfList
+    type apply[x <: Any, xs <: List, f <: Function1] = `if`[f#apply[x]#asInstanceOfBoolean, Then[x, xs, f], Else[x, xs, f]]#apply#asInstanceOfList
 
     final case class Then[x <: Any, xs <: List, f <: Function1](x: x, xs: xs, f: f) extends Function0 {
         override  def self = this

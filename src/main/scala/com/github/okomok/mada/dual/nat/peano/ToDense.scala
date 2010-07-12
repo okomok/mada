@@ -9,8 +9,8 @@ package dual; package nat; package peano
 
 
 private[mada] final case class ToDense[x <: Peano](x: x) {
-     def apply: apply = x.isZero.`if`(always0(dense.Nil), Else()).apply.asInstanceOfNatDense
-    type apply = x#isZero#`if`[always0[dense.Nil], Else]#apply#asInstanceOfNatDense
+     def apply: apply = `if`(x.isZero, always0(dense.Nil), Else()).apply.asInstanceOfNatDense
+    type apply = `if`[x#isZero, always0[dense.Nil], Else]#apply#asInstanceOfNatDense
 
     final case class Else() extends Function0 {
          override  def self = this

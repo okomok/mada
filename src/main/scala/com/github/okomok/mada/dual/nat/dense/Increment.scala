@@ -9,8 +9,8 @@ package dual; package nat; package dense
 
 
 private[mada] final case class IncrementCons[x <: Boolean, xs <: Dense](x: x, xs: xs) {
-     def apply: apply = x.`if`(Then(), Else()).apply.asInstanceOfNatDense
-    type apply = x#`if`[Then, Else]#apply#asInstanceOfNatDense
+     def apply: apply = `if`(x, Then(), Else()).apply.asInstanceOfNatDense
+    type apply = `if`[x, Then, Else]#apply#asInstanceOfNatDense
 
     // (`true` :: xs).increment
     final case class Then() extends Function0 {
