@@ -92,12 +92,6 @@ sealed abstract class Dense extends Any {
 
     final override type undual = scala.Int
     final override def canEqual(that: scala.Any) = that.isInstanceOf[Dense]
-
-    final  def matchCaseNil[that <: Dense, nn <: Function0, nc <: Function0, cn <: Function0, cc <: Function0](that: that, nn: nn, nc: nc, cn: cn, cc: cc): matchCaseNil[that, nn, nc, cn, cc] = isEmpty.`if`(that.isEmpty.`if`(nn, nc), that.isEmpty.`if`(cn, cc))
-    final type matchCaseNil[that <: Dense, nn <: Function0, nc <: Function0, cn <: Function0, cc <: Function0] = isEmpty#`if`[that#isEmpty#`if`[nn, nc], that#isEmpty#`if`[cn, cc]]
-
-    final  def matchCaseCons[that <: Dense, tt <: Function0, tf <: Function0, ft <: Function0, ff <: Function0](that: that, tt: tt, tf: tf, ft: ft, ff: ff): matchCaseCons[that, tt, tf, ft, ff] = MatchCaseCons(self, that, tt, tf, ft, ff)
-    final type matchCaseCons[that <: Dense, tt <: Function0, tf <: Function0, ft <: Function0, ff <: Function0] = MatchCaseCons[self, that, tt, tf, ft, ff]
 }
 
 

@@ -9,8 +9,8 @@ package dual; package option
 
 
 private[mada] final case class GetOrElse[p <: Option, f <: Function0](p: p, f: f) {
-     def apply = `if`(p.isEmpty, f, Get()).apply
-    type apply = `if`[p#isEmpty, f, Get]#apply
+     def apply = p.isEmpty.`if`(f, Get()).apply
+    type apply = p#isEmpty#`if`[f, Get]#apply
 
     final case class Get() extends Function0 {
         override  def self = this

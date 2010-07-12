@@ -9,8 +9,8 @@ package dual; package nat; package dense
 
 
 private[mada] final case class Subtract[xs <: Dense, ys <: Dense](xs: xs, ys: ys) {
-     def apply: apply = xs.matchCaseNil(ys, always0(Nil), Throw(), always0(xs), xs.matchCaseCons(ys, XX(), TF(), FT(), XX())).apply.asInstanceOfNatDense.asInstanceOf[apply]
-    type apply = xs#matchCaseNil[ys, always0[Nil], Throw, always0[xs], xs#matchCaseCons[ys, XX, TF, FT, XX]]#apply#asInstanceOfNatDense
+     def apply: apply = Match(xs, ys, always0(Nil), Throw(), always0(xs), ConsMatch(xs, ys, XX(), TF(), FT(), XX())).apply.asInstanceOfNatDense.asInstanceOf[apply]
+    type apply = Match[xs, ys, always0[Nil], Throw, always0[xs], ConsMatch[xs, ys, XX, TF, FT, XX]]#apply#asInstanceOfNatDense
 
     final case class Throw() extends Function0 {
         override  def self = this
