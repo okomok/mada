@@ -25,7 +25,7 @@ package object dual {
     /**
      * The dual constant function
      */
-     def always0[x <: Any](x: x): Always0[x] = Always0(x)
+     def always0[x <: Any](x: x): always0[x] = Always0(x)
     type always0[x <: Any] = Always0[x]
 
 
@@ -42,8 +42,8 @@ package object dual {
      * negative assertion
      */
     @elidable(ASSERTION)
-     def assertNot[b <: Boolean](b: b): assert[b] = { if (b.undual) throw new java.lang.AssertionError("dual.assertNot"); Unit }
-    type assertNot[b <: Boolean] = Unit
+     def assertNot[c <: Boolean](c: c): assert[c] = { if (c.undual) throw new java.lang.AssertionError("dual.assertNot"); Unit }
+    type assertNot[c <: Boolean] = Unit
 
 
 // Boolean
@@ -61,8 +61,8 @@ package object dual {
     type `false` = boolean.`false`
 
     @aliasOf("boolean.`if`")
-     def `if`[b <: Boolean, then <: Function0, _else <: Function0](b: b, then: then, _else: _else): `if`[b, then, _else] = boolean.`if`(b, then, _else)
-    type `if`[b <: Boolean, then <: Function0, _else <: Function0] = boolean.`if`[b, then, _else]
+     def `if`[c <: Boolean, then <: Function0, _else <: Function0](c: c, then: then, _else: _else): `if`[c, then, _else] = boolean.`if`(c, then, _else)
+    type `if`[c <: Boolean, then <: Function0, _else <: Function0] = boolean.`if`[c, then, _else]
 
 
 // List
