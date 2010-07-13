@@ -18,7 +18,7 @@ private[mada] final class Take {
     class Else[xs <: List, n <: nat.Peano](xs: xs, n: n) extends Function0 {
         override  val self = this
         override type self = Else[xs, n]
-        override  def apply: apply = Cons(xs.head, new Take().apply(xs.tail, n.decrement)).asInstanceOf[apply]
-        override type apply = Cons[xs#head, Take#apply[xs#tail, n#decrement]]
+        override  def apply: apply = Cons(xs.head, xs.tail.take(n.decrement)).asInstanceOf[apply]
+        override type apply = Cons[xs#head, xs#tail#take[n#decrement]]
     }
 }

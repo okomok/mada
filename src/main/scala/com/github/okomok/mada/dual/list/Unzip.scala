@@ -17,8 +17,8 @@ private[mada] final class Unzip {
         override type self = Else[xs]
         private lazy val x: x = xs.head.asInstanceOfProduct2
         private type x = xs#head#asInstanceOfProduct2
-        private lazy val ys: ys = new Unzip().apply(xs.tail).asInstanceOf[ys]
-        private type ys = Unzip#apply[xs#tail]
+        private lazy val ys: ys = xs.tail.unzip.asInstanceOf[ys]
+        private type ys = xs#tail#unzip
         override  def apply: apply = Tuple2(Cons(x._1, ys._1.asInstanceOfList), Cons(x._2, ys._2.asInstanceOfList))
         override type apply = Tuple2[Cons[x#_1, ys#_1#asInstanceOfList], Cons[x#_2, ys#_2#asInstanceOfList]]
     }

@@ -15,9 +15,7 @@ private[mada] final class Drop {
     class Else[xs <: List, n <: nat.Peano](xs: xs, n: n) extends Function0 {
         override  val self = this
         override type self = Else[xs, n]
-        override  def apply: apply = new Drop().apply(xs.tail, n.decrement).asInstanceOf[apply]
-        override type apply = Drop#apply[xs#tail, n#decrement]
+        override  def apply: apply = xs.tail.drop(n.decrement).asInstanceOf[apply]
+        override type apply = xs#tail#drop[n#decrement]
     }
 }
-
-

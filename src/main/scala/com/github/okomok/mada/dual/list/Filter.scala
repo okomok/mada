@@ -22,13 +22,13 @@ private[mada] final class Filter {
     class ElseThen[xs <: List, f <: Function1](xs: xs, f: f) extends Function0 {
         override  val self = this
         override type self = ElseThen[xs, f]
-        override  def apply: apply = Cons(xs.head, new Filter().apply(xs.tail, f)).asInstanceOf[apply]
-        override type apply = Cons[xs#head, Filter#apply[xs#tail, f]]
+        override  def apply: apply = Cons(xs.head, xs.tail.filter(f)).asInstanceOf[apply]
+        override type apply = Cons[xs#head, xs#tail#filter[f]]
     }
     class ElseElse[xs <: List, f <: Function1](xs: xs, f: f) extends Function0 {
         override  val self = this
         override type self = ElseElse[xs, f]
-        override  def apply: apply = new Filter().apply(xs.tail, f).asInstanceOf[apply]
-        override type apply = Filter#apply[xs#tail, f]
+        override  def apply: apply = xs.tail.filter(f).asInstanceOf[apply]
+        override type apply = xs#tail#filter[f]
     }
 }
