@@ -9,8 +9,10 @@ package dual; package nat; package dense
 
 
 private[mada] final class Subtract {
-     def apply[xs <: Dense, ys <: Dense](xs: xs, ys: ys): apply[xs, ys] = new Match().apply(xs, ys, always0(Nil), new Throw(xs, ys), always0(xs), ConsMatch(xs, ys, new XX(xs, ys), new TF(xs, ys), new FT(xs, ys), new XX(xs, ys))).asInstanceOfNatDense.asInstanceOf[apply[xs, ys]]
-    type apply[xs <: Dense, ys <: Dense] = Match#apply[xs, ys, always0[Nil], Throw[xs, ys], always0[xs], ConsMatch[xs, ys, XX[xs, ys], TF[xs, ys], FT[xs, ys], XX[xs, ys]]]#asInstanceOfNatDense
+     def apply[xs <: Dense, ys <: Dense](xs: xs, ys: ys): apply[xs, ys] =
+        Match(xs, ys, always0(Nil), new Throw(xs, ys), always0(xs), ConsMatch(xs, ys, new XX(xs, ys), new TF(xs, ys), new FT(xs, ys), new XX(xs, ys))).apply.asInstanceOfNatDense.asInstanceOf[apply[xs, ys]]
+    type apply[xs <: Dense, ys <: Dense] =
+        Match[xs, ys, always0[Nil], Throw[xs, ys], always0[xs], ConsMatch[xs, ys, XX[xs, ys], TF[xs, ys], FT[xs, ys], XX[xs, ys]]]#apply#asInstanceOfNatDense
 
     class Throw[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
         override  val self = this

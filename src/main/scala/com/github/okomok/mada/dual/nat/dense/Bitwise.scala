@@ -9,8 +9,10 @@ package dual; package nat; package dense
 
 
 private[mada] final class BitAnd {
-     def apply[xs <: Dense, ys <: Dense](xs: xs, ys: ys): apply[xs, ys] = new Match().apply(xs, ys, always0(Nil), always0(Nil), always0(Nil), ConsMatch(xs, ys, new TT(xs, ys), new Else(xs, ys), new Else(xs, ys), new Else(xs, ys))).asInstanceOfNatDense.asInstanceOf[apply[xs, ys]]
-    type apply[xs <: Dense, ys <: Dense] = Match#apply[xs, ys, always0[Nil], always0[Nil], always0[Nil], ConsMatch[xs, ys, TT[xs, ys], Else[xs, ys], Else[xs, ys], Else[xs, ys]]]#asInstanceOfNatDense
+     def apply[xs <: Dense, ys <: Dense](xs: xs, ys: ys): apply[xs, ys] =
+        Match(xs, ys, always0(Nil), always0(Nil), always0(Nil), ConsMatch(xs, ys, new TT(xs, ys), new Else(xs, ys), new Else(xs, ys), new Else(xs, ys))).apply.asInstanceOfNatDense.asInstanceOf[apply[xs, ys]]
+    type apply[xs <: Dense, ys <: Dense] =
+        Match[xs, ys, always0[Nil], always0[Nil], always0[Nil], ConsMatch[xs, ys, TT[xs, ys], Else[xs, ys], Else[xs, ys], Else[xs, ys]]]#apply#asInstanceOfNatDense
 
     class TT[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
         override  val self = this
@@ -29,8 +31,10 @@ private[mada] final class BitAnd {
 
 
 private[mada] final class BitOr {
-     def apply[xs <: Dense, ys <: Dense](xs: xs, ys: ys): apply[xs, ys] = new Match().apply(xs, ys, always0(Nil), always0(ys), always0(xs), ConsMatch(xs, ys, new Else(xs, ys), new Else(xs, ys), new Else(xs, ys), new FF(xs, ys))).asInstanceOfNatDense.asInstanceOf[apply[xs, ys]]
-    type apply[xs <: Dense, ys <: Dense] = Match#apply[xs, ys, always0[Nil], always0[ys], always0[xs], ConsMatch[xs, ys, Else[xs, ys], Else[xs, ys], Else[xs, ys], FF[xs, ys]]]#asInstanceOfNatDense
+     def apply[xs <: Dense, ys <: Dense](xs: xs, ys: ys): apply[xs, ys] =
+        Match(xs, ys, always0(Nil), always0(ys), always0(xs), ConsMatch(xs, ys, new Else(xs, ys), new Else(xs, ys), new Else(xs, ys), new FF(xs, ys))).apply.asInstanceOfNatDense.asInstanceOf[apply[xs, ys]]
+    type apply[xs <: Dense, ys <: Dense] =
+        Match[xs, ys, always0[Nil], always0[ys], always0[xs], ConsMatch[xs, ys, Else[xs, ys], Else[xs, ys], Else[xs, ys], FF[xs, ys]]]#apply#asInstanceOfNatDense
 
     class FF[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
         override  val self = this
