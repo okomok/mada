@@ -13,7 +13,7 @@ private[mada] final case class GetOrElse[p <: Option, f <: Function0](p: p, f: f
     type apply = `if`[p#isEmpty, f, Get]#apply
 
     final case class Get() extends Function0 {
-        override  def self = this
+        override  val self = this
         override type self = Get
         override  def apply: apply = p.get
         override type apply = p#get

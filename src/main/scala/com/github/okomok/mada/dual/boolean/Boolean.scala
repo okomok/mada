@@ -52,7 +52,7 @@ sealed trait Boolean extends Any {
  * The dual true
  */
 sealed trait `true` extends Boolean {
-    override  def self = this
+    override  val self = this
     override type self = `true`
 
     override  def not: not = `false`
@@ -84,7 +84,7 @@ sealed trait `true` extends Boolean {
  * The dual false
  */
 sealed trait `false` extends Boolean {
-    override  def self = this
+    override  val self = this
     override type self = `false`
 
     override  def not: not = `true`

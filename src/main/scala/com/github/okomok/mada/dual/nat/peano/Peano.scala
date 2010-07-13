@@ -84,7 +84,7 @@ sealed trait Peano extends Any {
 
 
 sealed trait Zero extends Peano {
-    override  def self = this
+    override  val self = this
     override type self = Zero
 
     override  def isZero: isZero = `true`
@@ -110,7 +110,7 @@ sealed trait Zero extends Peano {
 
 
 final case class Succ[n <: Peano](private val n: n) extends Peano {
-    override  def self = this
+    override  val self = this
     override type self = Succ[n]
 
     override  def isZero: isZero = `false`
@@ -136,7 +136,7 @@ final case class Succ[n <: Peano](private val n: n) extends Peano {
 
 
 sealed trait Singular extends Peano {
-    override  def self = this
+    override  val self = this
     override type self = Singular
 
     override  def isZero: isZero = `false`

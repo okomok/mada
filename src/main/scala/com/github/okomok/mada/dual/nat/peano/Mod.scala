@@ -15,7 +15,7 @@ private[mada] class Mod[x <: Peano, y <: Peano](x: x, y: y) {
 
     val step = new step
     final class step extends Function2 {
-        override  def self = this
+        override  val self = this
         override type self = step
         override  def apply[a <: Any, b <: Any](a: a, b: b): apply[a, b] = b.asInstanceOfNatPeano.increment
         override type apply[a <: Any, b <: Any] = b#asInstanceOfNatPeano#increment

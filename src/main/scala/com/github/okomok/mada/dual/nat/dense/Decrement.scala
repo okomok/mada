@@ -14,7 +14,7 @@ private[mada] final case class DecrementCons[x <: Boolean, xs <: Dense](x: x, xs
 
     // (`true` :: xs).decrement
     final case class Then() extends Function0 {
-        override  def self = this
+        override  val self = this
         override type self = Then
         override  def apply: apply = Cons(`false`, xs)
         override type apply = Cons[`false`, xs]
@@ -22,7 +22,7 @@ private[mada] final case class DecrementCons[x <: Boolean, xs <: Dense](x: x, xs
 
     // (`false` :: xs).decrement
     final case class Else() extends Function0 {
-        override  def self = this
+        override  val self = this
         override type self = Else
         override  def apply: apply = Cons(`true`, xs.decrement)
         override type apply = Cons[`true`, xs#decrement]

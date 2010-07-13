@@ -13,7 +13,7 @@ private[mada] final case class ToDense[x <: Peano](x: x) {
     type apply = `if`[x#isZero, always0[dense.Nil], Else]#apply#asInstanceOfNatDense
 
     final case class Else() extends Function0 {
-         override  def self = this
+         override  val self = this
          override type self = Else
          override  def apply: apply = dense.Cons(x.isOdd, Div2(x).apply.toDense) // `ConsFalse` is unneeded.
          override type apply = dense.Cons[x#isOdd, Div2[x]#apply#toDense]
@@ -26,7 +26,7 @@ private[mada] final case class Div2[x <: Peano](x: x)  {
      type apply = `if`[x# <[_2], always0[Zero], Else]#apply#asInstanceOfNatPeano
 
      final case class Else() extends Function0 {
-         override  def self = this
+         override  val self = this
          override type self = Else
          override  def apply: apply = Div2(x.decrement.decrement).apply.increment.asInstanceOf[apply]
          override type apply = Div2[x#decrement#decrement]#apply#increment

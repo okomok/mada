@@ -56,7 +56,7 @@ sealed abstract class Option extends Any {
  * The dual None
  */
 sealed abstract class None extends Option {
-    override  def self = this
+    override  val self = this
     override type self = None
 
     override  def get: get = `throw`(new scala.NoSuchElementException("dual.None.get"))
@@ -74,7 +74,7 @@ sealed abstract class None extends Option {
  * The dual Some
  */
 final case class Some[e <: Any](e: e) extends Option {
-    override  def self = this
+    override  val self = this
     override type self = Some[e]
 
     override  val get: get = e

@@ -96,7 +96,7 @@ sealed abstract class Dense extends Any {
 
 
 sealed class Nil extends Dense {
-    override  def self = this
+    override  val self = this
     override type self = Nil
 
     override  def head: head = `throw`(new scala.NoSuchElementException("dual.nat.Nil.head"))
@@ -134,7 +134,7 @@ sealed class Nil extends Dense {
 
 
 final case class Cons[x <: Boolean, xs <: Dense](private val x: x, private val xs: xs) extends Dense {
-    override  def self = this
+    override  val self = this
     override type self = Cons[x, xs]
 
     override  def head: head = x

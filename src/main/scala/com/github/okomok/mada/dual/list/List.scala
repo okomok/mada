@@ -184,16 +184,20 @@ sealed abstract class List extends Any {
     /**
      * Returns the size.
      */
-    final  def size: size = new Size().apply(self)
-    final type size = Size#apply[self]
+     def size: size
+    type size <: nat.Peano
 
     /**
      * Zips <code>that</code>.
-     *
-     * @pre <code>size &lt;= that.size<code>.
      */
      def zip[that <: List](that: that): zip[that]
     type zip[that <: List] <: List
+
+    /**
+     * Unzips.
+     */
+    final  def unzip: unzip = Unzip(self).apply
+    final type unzip = Unzip[self]#apply
 
     @aliasOf("addFirst")
     final def ::[e <: Any](e: e): addFirst[e] = addFirst(e)
@@ -230,7 +234,7 @@ sealed abstract class List extends Any {
 
 
 sealed abstract class Nil extends List {
-    override  def self = this
+    override  val self = this
     override type self = Nil
 
     override  def head: head = `throw`(new scala.NoSuchElementException)
@@ -253,6 +257,9 @@ sealed abstract class Nil extends List {
 
     override  def foreach[f <: Function1](f: f): foreach[f] = Unit
 
+    override  def size: size = nat.peano.Zero
+    override type size = nat.peano.Zero
+
     override  def zip[that <: List](that: that): zip[that] = Nil
     override type zip[that <: List] = Nil
 
@@ -267,7 +274,7 @@ sealed abstract class Nil extends List {
 
 
 final case class Cons[x <: Any, xs <: List](private val x: x, private val xs: xs) extends List {
-    override  def self = this
+    override  val self = this
     override type self = Cons[x, xs]
 
     override  val head: head = x
@@ -289,6 +296,9 @@ final case class Cons[x <: Any, xs <: List](private val x: x, private val xs: xs
     override type filter[f <: Function1] = FilterCons#apply[x, xs, f]
 
     override  def foreach[f <: Function1](f: f): foreach[f] = { f.apply(x); xs.foreach(f) }
+
+    override  def size: size = xs.size.increment
+    override type size = xs#size#increment
 
     override  def zip[that <: List](that: that): zip[that] = Cons(Tuple2(head, that.head), tail.zip(that.tail))
     override type zip[that <: List] = Cons[Tuple2[head, that#head], tail#zip[that#tail]]

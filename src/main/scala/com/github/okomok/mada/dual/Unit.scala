@@ -9,7 +9,7 @@ package dual
 
 
 sealed abstract class Unit extends Any {
-    override  def self = this
+    override  val self = this
     override type self = Unit
 
     override  def asInstanceOfUnit = this

@@ -15,7 +15,7 @@ private[mada] class Drop {
     type apply[xs <: List, n <: nat.Peano] = n#foldRight[xs, Step]#asInstanceOfList
 
     final case class Step() extends Function2 {
-        override  def self = this
+        override  val self = this
         override type self = Step
         override  def apply[a <: Any, b <: Any](a: a, b: b): apply[a, b] = b.asInstanceOfList.tail
         override type apply[a <: Any, b <: Any] = b#asInstanceOfList#tail

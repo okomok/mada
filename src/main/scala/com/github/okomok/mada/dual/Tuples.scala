@@ -9,7 +9,7 @@ package dual
 
 
 final case class Tuple1[v1 <: Any](private val v1: v1) extends Product1 {
-    override  def self = this
+    override  val self = this
     override type self = Tuple1[v1]
 
     override  def _1: _1 = v1
@@ -20,7 +20,7 @@ final case class Tuple1[v1 <: Any](private val v1: v1) extends Product1 {
 }
 
 final case class Tuple2[v1 <: Any, v2 <: Any](private val v1: v1, private val v2: v2) extends Product2 {
-    override  def self = this
+    override  val self = this
     override type self = Tuple2[v1, v2]
 
     override  def _1: _1 = v1
