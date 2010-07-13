@@ -9,21 +9,16 @@ package dual; package list
 
 
 // cf. take(n) = reverse.drop(size - n).reverse
-/*
 
-private[mada] object Take {
-     def apply[xs <: List, n <: nat.Peano](xs: xs, n: n): apply[xs, n] = if_List(new Cond(xs, n).apply, new always0_Nil, new Else(xs, n)).apply
-    type apply[xs <: List, n <: nat.Peano] = if_List[Cond[xs, n]#apply, always0_Nil, Else[xs, n]]#apply
 
-    @compilerWorkaround("2.8.0") // works around a type mismatch.
-    class Cond[xs <: List, n <: nat.Peano](xs: xs, n: n) extends Function0_Boolean {
-        override  def apply: apply = xs.isEmpty || n === nat.peano._0
-        override type apply = xs#isEmpty# ||[n# ===[nat.peano._0]]
-    }
+private[mada] final case class Take[xs <: List, n <: nat.Peano](xs: xs, n: n) {
+     def apply: apply = `if`(n.isZero || xs.isEmpty, always0(Nil), Else()).apply.asInstanceOfList.asInstanceOf[apply]
+    type apply = `if`[n#isZero# ||[xs#isEmpty], always0[Nil], Else]#apply#asInstanceOfList
 
-    class Else[xs <: List, n <: nat.Peano](xs: xs, n: n) extends Function0_List {
-        override  def apply: apply = Cons(xs.head, Take.apply(xs.tail, n.decrement))
-        override type apply = Cons[xs#head, Take.apply[xs#tail, n#decrement]]
+    final case class Else() extends Function0 {
+        override  val self = this
+        override type self = Else
+        override  def apply: apply = Cons(xs.head, Take(xs.tail, n.decrement).apply).asInstanceOf[apply]
+        override type apply = Cons[xs#head, Take[xs#tail, n#decrement]#apply]
     }
 }
-*/

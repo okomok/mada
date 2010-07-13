@@ -98,20 +98,20 @@ sealed abstract class List extends Any {
     final type foreach[f <: Function1] = Unit
 
     /**
-     * Drops EXACTLY <code>n</code> elements.
+     * Drops at most <code>n</code> elements.
      *
      * @pre `n in [0, size)`.
      */
-    final  def drop[n <: nat.Peano](n: n): drop[n] = new Drop().apply(self, n)
-    final type drop[n <: nat.Peano] = Drop#apply[self, n]
+    final  def drop[n <: nat.Peano](n: n): drop[n] = Drop(self, n).apply//new Drop().apply(self, n)
+    final type drop[n <: nat.Peano] = Drop[self, n]#apply//Drop#apply[self, n]
 
     /**
-     * Takes EXACTLY <code>n</code> elements.
+     * Takes at most <code>n</code> elements.
      *
      * @pre `n in [0, size)`.
      */
-    final  def take[n <: nat.Peano](n: n): take[n] = reverse.drop(size - n).reverse //Take.apply(self, n)
-    final type take[n <: nat.Peano] = reverse#drop[size# -[n]]#reverse //Take.apply[self, n]
+    final  def take[n <: nat.Peano](n: n): take[n] = Take(self, n).apply//reverse.drop(size - n).reverse.asInstanceOf[take[n]] //Take.apply(self, n)
+    final type take[n <: nat.Peano] = Take[self, n]#apply//reverse#drop[size# -[n]]#reverse //Take.apply[self, n]
 
     @equivalentTo("take(m).drop(n)")
     final  def slice[n <: nat.Peano, m <: nat.Peano](n: n, m: m): slice[n, m] = take(m).drop(n)
@@ -158,7 +158,7 @@ sealed abstract class List extends Any {
      *
      * @pre `n in [0, size)`.
      */
-    final  def remove[n <: nat.Peano](n: n): remove[n] = take(n) ::: drop(n.increment)
+    final  def remove[n <: nat.Peano](n: n): remove[n] = (take(n) ::: drop(n.increment)).asInstanceOf[remove[n]]
     final type remove[n <: nat.Peano] = take[n] ::: drop[n#increment]
 
     /**

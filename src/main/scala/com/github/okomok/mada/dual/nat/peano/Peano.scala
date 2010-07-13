@@ -24,8 +24,8 @@ sealed trait Peano extends Any {
     final override  def asInstanceOfNatPeano = self
     final override type asInstanceOfNatPeano = self
 
-    private[mada]  def isZero: isZero
-    private[mada] type isZero <: Boolean
+     def isZero: isZero
+    type isZero <: Boolean
 
     private[mada]  def gtZero: gtZero
     private[mada] type gtZero <: Boolean
@@ -87,8 +87,8 @@ sealed trait Zero extends Peano {
     override  def self = this
     override type self = Zero
 
-    override private[mada]  def isZero: isZero = `true`
-    override private[mada] type isZero = `true`
+    override  def isZero: isZero = `true`
+    override type isZero = `true`
 
     override private[mada]  def gtZero: gtZero = `false`
     override private[mada] type gtZero = `false`
@@ -113,8 +113,8 @@ final case class Succ[n <: Peano](private val n: n) extends Peano {
     override  def self = this
     override type self = Succ[n]
 
-    override private[mada]  def isZero: isZero = `false`
-    override private[mada] type isZero = `false`
+    override  def isZero: isZero = `false`
+    override type isZero = `false`
 
     override private[mada]  def gtZero: gtZero = `true`
     override private[mada] type gtZero = `true`
@@ -139,8 +139,8 @@ sealed trait Singular extends Peano {
     override  def self = this
     override type self = Singular
 
-    override private[mada]  def isZero: isZero = `false`
-    override private[mada] type isZero = `false`
+    override  def isZero: isZero = `false`
+    override  type isZero = `false`
 
     override private[mada]  def gtZero: gtZero = `false`
     override private[mada] type gtZero = `false`

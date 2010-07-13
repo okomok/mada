@@ -4,7 +4,8 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.madatest; package dualtest
+package com.github.okomok.madatest
+package dualtest; package listtest
 
 
 import com.github.okomok.mada
@@ -13,7 +14,7 @@ import mada.dual._
 import nat.peano.Literal._
 
 
-class ListTest extends junit.framework.TestCase {
+class TrivialTest extends junit.framework.TestCase {
     import junit.framework.Assert._
     assertFalse(scala.Nil eq Nil)
 
@@ -37,6 +38,7 @@ class ListTest extends junit.framework.TestCase {
         assert(_4 === lst.size)
         assert(Nil.size === _0)
     }
+
     def testTypeErase {
         val i = new java.lang.Integer(10)
         val lst = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Nil
@@ -58,33 +60,6 @@ class ListTest extends junit.framework.TestCase {
         AssertNotEquals(lst1, lst4)
         assertEquals(lst5, lst5)
         AssertNotEquals(lst1, lst5)
-    }
-
-    def testDrop {
-        val i = new java.lang.Integer(10)
-        val lst = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil
-        val a = Box(i) :: Box('a') :: Box(12) :: Nil
-        val s = lst.drop(_0)
-        val b: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil = lst.drop(_2)
-        val c = lst.drop(_5)
-//        val d = lst.drop(_9)
-        assertEquals(a, b)
-//        assertEquals(0, d.size)
-//        assertEquals(Nil, d)
-        assertEquals(Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil, s)
-        assertEquals(Box(i) :: Box('a') :: Box(12) :: Nil, b)
-        assertEquals(Nil, c)
-    }
-
-    def testTake {
-        val i = new java.lang.Integer(10)
-        val lst = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil
-        val a = lst.take(_0)
-        val b: Box[Int] :: Box[String] :: Nil = lst.take(_2)
-        val c = lst.take(_5)
-        assertEquals(Nil, a)
-        assertEquals(Box(3) :: Box("hello") :: Nil, b)
-        assertEquals(Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil, c)
     }
 
     def testIsEmpty {
@@ -144,7 +119,7 @@ class ListTest extends junit.framework.TestCase {
 }
 
 
-object ListTezt {
+object TrivialTezt {
     import meta.{ assert, assertSame }
 
     trait testAt {
@@ -166,20 +141,6 @@ object ListTezt {
         type lst = Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Nil
         assertSame[Nil#isEmpty, `true`]
         assertSame[lst#isEmpty, `false`]
-    }
-
-    trait testDrop {
-        type lst = Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Box[Float] :: Nil
-        assertSame[Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Box[Float] :: Nil, lst#drop[_0]]
-        assertSame[Box[Double] :: Box[Char] :: Box[Float] :: Nil, lst#drop[_2]]
-        assertSame[Nil, lst#drop[_5]]
-    }
-
-    trait testTake {
-        type lst = Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Box[Float] :: Nil
-        assertSame[Nil, lst#take[_0]]
-        assertSame[Box[Int] :: Box[String] :: Nil, lst#take[_2]]
-        assertSame[Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Box[Float] :: Nil, lst#take[_5]]
     }
 
     trait testPrepend {
