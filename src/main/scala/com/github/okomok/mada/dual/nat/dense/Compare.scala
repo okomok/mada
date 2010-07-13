@@ -9,8 +9,8 @@ package dual; package nat; package dense
 
 
 private[mada] final class Equals {
-     def apply[xs <: Dense, ys <: Dense](xs: xs, ys: ys): apply[xs, ys] = Match(xs, ys, always0(`true`), always0(`false`), always0(`false`), new CC(xs, ys)).apply.asInstanceOfBoolean
-    type apply[xs <: Dense, ys <: Dense] = Match[xs, ys, always0[`true`], always0[`false`], always0[`false`], CC[xs, ys]]#apply#asInstanceOfBoolean
+     def apply[xs <: Dense, ys <: Dense](xs: xs, ys: ys): apply[xs, ys] = new Match().apply(xs, ys, always0(`true`), always0(`false`), always0(`false`), new CC(xs, ys)).asInstanceOfBoolean
+    type apply[xs <: Dense, ys <: Dense] = Match#apply[xs, ys, always0[`true`], always0[`false`], always0[`false`], CC[xs, ys]]#asInstanceOfBoolean
 
     class CC[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
         override  val self = this
@@ -30,8 +30,8 @@ private[mada] final class Equals {
 
 
 private[mada] final class LessThan {
-     def apply[xs <: Dense, ys <: Dense](xs: xs, ys: ys): apply[xs, ys] = Match(xs, ys, always0(`false`), always0(`true`), always0(`false`), ConsMatch(xs, ys, new XXTF(xs, ys), new XXTF(xs, ys), new FT(xs, ys), new XXTF(xs, ys))).apply.asInstanceOfBoolean.asInstanceOf[apply[xs, ys]]
-    type apply[xs <: Dense, ys <: Dense] = Match[xs, ys, always0[`false`], always0[`true`], always0[`false`], ConsMatch[xs, ys, XXTF[xs, ys], XXTF[xs, ys], FT[xs, ys], XXTF[xs, ys]]]#apply#asInstanceOfBoolean
+     def apply[xs <: Dense, ys <: Dense](xs: xs, ys: ys): apply[xs, ys] = new Match().apply(xs, ys, always0(`false`), always0(`true`), always0(`false`), ConsMatch(xs, ys, new XXTF(xs, ys), new XXTF(xs, ys), new FT(xs, ys), new XXTF(xs, ys))).asInstanceOfBoolean.asInstanceOf[apply[xs, ys]]
+    type apply[xs <: Dense, ys <: Dense] = Match#apply[xs, ys, always0[`false`], always0[`true`], always0[`false`], ConsMatch[xs, ys, XXTF[xs, ys], XXTF[xs, ys], FT[xs, ys], XXTF[xs, ys]]]#asInstanceOfBoolean
 
     class XXTF[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
         override  val self = this
