@@ -88,8 +88,8 @@ sealed abstract class List extends Any {
     /**
      * Filters elements using <code>f</code>.
      */
-     def filter[f <: Function1](f: f): filter[f]
-    type filter[f <: Function1] <: List
+    final  def filter[f <: Function1](f: f): filter[f] = Filter(self, f).apply
+    final type filter[f <: Function1] = Filter[self, f]#apply
 
     /**
      * Applies <code>f</code> to each element.
@@ -252,9 +252,6 @@ sealed abstract class Nil extends List {
     override  def flatMap[f <: Function1](f: f): flatMap[f] = Nil
     override type flatMap[f <: Function1] = Nil
 
-    override  def filter[f <: Function1](f: f): filter[f] = Nil
-    override type filter[f <: Function1] = Nil
-
     override  def foreach[f <: Function1](f: f): foreach[f] = Unit
 
     override  def size: size = nat.peano.Zero
@@ -291,9 +288,6 @@ final case class Cons[x <: Any, xs <: List](private val x: x, private val xs: xs
 
     override  def flatMap[f <: Function1](f: f): flatMap[f] = f.apply(x).asInstanceOfList ::: xs.flatMap(f)
     override type flatMap[f <: Function1] = f#apply[x]#asInstanceOfList ::: xs#flatMap[f]
-
-    override  def filter[f <: Function1](f: f): filter[f] = new FilterCons().apply(x, xs, f)
-    override type filter[f <: Function1] = FilterCons#apply[x, xs, f]
 
     override  def foreach[f <: Function1](f: f): foreach[f] = { f.apply(x); xs.foreach(f) }
 
