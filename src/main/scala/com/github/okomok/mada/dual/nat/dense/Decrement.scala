@@ -8,22 +8,22 @@ package com.github.okomok.mada
 package dual; package nat; package dense
 
 
-private[mada] final case class DecrementCons[x <: Boolean, xs <: Dense](x: x, xs: xs) {
-     def apply: apply = `if`(xs.isEmpty, always0(xs), `if`(x, new Then, new Else)).apply.asInstanceOfNatDense.asInstanceOf[apply]
-    type apply = `if`[xs#isEmpty, always0[xs], `if`[x, Then, Else]]#apply#asInstanceOfNatDense
+private[mada] final class DecrementCons {
+     def apply[x <: Boolean, xs <: Dense](x: x, xs: xs): apply[x, xs] = `if`(xs.isEmpty, always0(xs), `if`(x, new Then(x, xs), new Else(x, xs))).apply.asInstanceOfNatDense.asInstanceOf[apply[x, xs]]
+    type apply[x <: Boolean, xs <: Dense] = `if`[xs#isEmpty, always0[xs], `if`[x, Then[x, xs], Else[x, xs]]]#apply#asInstanceOfNatDense
 
     // (`true` :: xs).decrement
-    class Then extends Function0 {
+    class Then[x <: Boolean, xs <: Dense](x: x, xs: xs) extends Function0 {
         override  val self = this
-        override type self = Then
+        override type self = Then[x, xs]
         override  def apply: apply = Cons(`false`, xs)
         override type apply = Cons[`false`, xs]
     }
 
     // (`false` :: xs).decrement
-    class Else extends Function0 {
+    class Else[x <: Boolean, xs <: Dense](x: x, xs: xs) extends Function0 {
         override  val self = this
-        override type self = Else
+        override type self = Else[x, xs]
         override  def apply: apply = Cons(`true`, xs.decrement)
         override type apply = Cons[`true`, xs#decrement]
     }

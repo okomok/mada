@@ -8,9 +8,7 @@ package com.github.okomok.mada
 package dual; package nat; package dense
 
 
-private[mada] final case class ConsFalse[xs <: Dense](xs: xs) extends Function0 {
-    override  val self = this
-    override type self = ConsFalse[xs]
-    override  def apply: apply = `if`(xs.isEmpty, always0(xs), always0(Cons(`false`, xs))).apply
-    override type apply = `if`[xs#isEmpty, always0[xs], always0[Cons[`false`, xs]]]#apply
+private[mada] final class ConsFalse {
+     def apply[xs <: Dense](xs: xs): apply[xs] = `if`(xs.isEmpty, always0(xs), always0(Cons(`false`, xs))).apply
+    type apply[xs <: Dense] = `if`[xs#isEmpty, always0[xs], always0[Cons[`false`, xs]]]#apply
 }

@@ -8,35 +8,34 @@ package com.github.okomok.mada
 package dual; package nat; package dense
 
 
-private[mada] final case class Subtract[xs <: Dense, ys <: Dense](xs: xs, ys: ys) {
-     def apply: apply = Match(xs, ys, always0(Nil), new Throw, always0(xs), ConsMatch(xs, ys, new XX, new TF, new FT, new XX)).apply.asInstanceOfNatDense.asInstanceOf[apply]
-    type apply = Match[xs, ys, always0[Nil], Throw, always0[xs], ConsMatch[xs, ys, XX, TF, FT, XX]]#apply#asInstanceOfNatDense
+private[mada] final class Subtract {
+     def apply[xs <: Dense, ys <: Dense](xs: xs, ys: ys): apply[xs, ys] = Match(xs, ys, always0(Nil), new Throw(xs, ys), always0(xs), ConsMatch(xs, ys, new XX(xs, ys), new TF(xs, ys), new FT(xs, ys), new XX(xs, ys))).apply.asInstanceOfNatDense.asInstanceOf[apply[xs, ys]]
+    type apply[xs <: Dense, ys <: Dense] = Match[xs, ys, always0[Nil], Throw[xs, ys], always0[xs], ConsMatch[xs, ys, XX[xs, ys], TF[xs, ys], FT[xs, ys], XX[xs, ys]]]#apply#asInstanceOfNatDense
 
-    class Throw extends Function0 {
+    class Throw[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
         override  val self = this
-        override type self = Throw
+        override type self = Throw[xs, ys]
         override  def apply: apply = `throw`(new scala.UnsupportedOperationException("dual.nat.Nil.subtract positive"))
         override type apply = `throw`[scala.UnsupportedOperationException]
     }
 
-    class XX extends Function0 {
+    class XX[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
         override  val self = this
-        override type self = XX
-        override  def apply: apply = ConsFalse(xs.tail - ys.tail).apply.asInstanceOf[apply]
-        override type apply = ConsFalse[xs#tail# -[ys#tail]]#apply
+        override type self = XX[xs, ys]
+        override  def apply: apply = new ConsFalse().apply(xs.tail - ys.tail).asInstanceOf[apply]
+        override type apply = ConsFalse#apply[xs#tail# -[ys#tail]]
     }
 
-    class TF extends Function0 {
+    class TF[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
         override  val self = this
-        override type self = TF
+        override type self = TF[xs, ys]
         override  def apply: apply = Cons(`true`, (xs.tail - ys.tail))
         override type apply = Cons[`true`, xs#tail# -[ys#tail]]
     }
 
-    class FT extends Function0 {
+    class FT[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
         override  val self = this
-        override type self = FT
-
+        override type self = FT[xs, ys]
         override  def apply: apply = Cons(`true`, xs.tail.decrement - ys.tail).asInstanceOf[apply]
         override type apply = Cons[`true`, xs#tail#decrement# -[ys#tail]]
     }

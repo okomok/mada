@@ -36,8 +36,8 @@ sealed abstract class Dense extends Any {
     final  def addFirst[e <: Boolean](e: e): addFirst[e] = Cons(e, self)
     final type addFirst[e <: Boolean] = Cons[e, self]
 
-    final  def ===[that <: Dense](that: that): ===[that] = Equals(self, that).apply
-    final type ===[that <: Dense] = Equals[self, that]#apply
+    final  def ===[that <: Dense](that: that): ===[that] = new Equals().apply(self, that)
+    final type ===[that <: Dense] = Equals#apply[self, that]
 
     final  def !==[that <: Dense](that: that): !==[that] = ===(that).not
     final type !==[that <: Dense] = ===[that]#not
@@ -48,11 +48,11 @@ sealed abstract class Dense extends Any {
      def decrement: decrement
     type decrement <: Dense
 
-    final  def +[that <: Dense](that: that): +[that] = Add(self,that).apply
-    final type +[that <: Dense] = Add[self, that]#apply
+    final  def +[that <: Dense](that: that): +[that] = new Add().apply(self,that)
+    final type +[that <: Dense] = Add#apply[self, that]
 
-    final  def -[that <: Dense](that: that): -[that] = Subtract(self, that).apply
-    final type -[that <: Dense] = Subtract[self, that]#apply
+    final  def -[that <: Dense](that: that): -[that] = new Subtract().apply(self, that)
+    final type -[that <: Dense] = Subtract#apply[self, that]
 
      def **[that <: Dense](that: that): **[that]
     type **[that <: Dense] <: Dense
@@ -60,8 +60,8 @@ sealed abstract class Dense extends Any {
     final  def >[that <: Dense](that: that): >[that] = that < self
     final type >[that <: Dense] = that# <[self]
 
-    final  def <[that <: Dense](that: that): <[that] = LessThan(self, that).apply
-    final type <[that <: Dense] = LessThan[self, that]#apply
+    final  def <[that <: Dense](that: that): <[that] = new LessThan().apply(self, that)
+    final type <[that <: Dense] = LessThan#apply[self, that]
 
     final  def >=[that <: Dense](that: that): >=[that] = (that > self).not
     final type >=[that <: Dense] = that# >[self]#not
@@ -75,11 +75,11 @@ sealed abstract class Dense extends Any {
      def >>[that <: Dense](that: that): >>[that]
     type >>[that <: Dense] <: Dense
 
-    final  def &[that <: Dense](that: that): &[that] = BitAnd(self, that).apply
-    final type &[that <: Dense] = BitAnd[self, that]#apply
+    final  def &[that <: Dense](that: that): &[that] = new BitAnd().apply(self, that)
+    final type &[that <: Dense] = BitAnd#apply[self, that]
 
-    final  def |[that <: Dense](that: that): |[that] = BitOr(self, that).apply
-    final type |[that <: Dense] = BitOr[self, that]#apply
+    final  def |[that <: Dense](that: that): |[that] = new BitOr().apply(self, that)
+    final type |[that <: Dense] = BitOr#apply[self, that]
 
      def foldRightWithNat[z <: Any, f <: Function2](z: z, f: f): foldRightWithNat[z, f]
     type foldRightWithNat[z <: Any, f <: Function2] <: Any
@@ -146,11 +146,11 @@ final case class Cons[x <: Boolean, xs <: Dense](private val x: x, private val x
     override  def isEmpty: isEmpty = `false`
     override type isEmpty = `false`
 
-    override  def increment: increment = IncrementCons(x, xs).apply
-    override type increment = IncrementCons[x, xs]#apply
+    override  def increment: increment = new IncrementCons().apply(x, xs)
+    override type increment = IncrementCons#apply[x, xs]
 
-    override  def decrement: decrement = DecrementCons(x, xs).apply
-    override type decrement = DecrementCons[x, xs]#apply
+    override  def decrement: decrement = new DecrementCons().apply(x, xs)
+    override type decrement = DecrementCons#apply[x, xs]
 
     override  def **[that <: Dense](that: that): **[that] = throw new Error//MultiplyCons(x, xs).apply(that)
     override type **[that <: Dense] = Nothing//MultiplyCons[x, xs]#apply[that]

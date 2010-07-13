@@ -8,22 +8,22 @@ package com.github.okomok.mada
 package dual; package nat; package dense
 
 
-private[mada] final case class IncrementCons[x <: Boolean, xs <: Dense](x: x, xs: xs) {
-     def apply: apply = `if`(x, new Then, new Else).apply.asInstanceOfNatDense
-    type apply = `if`[x, Then, Else]#apply#asInstanceOfNatDense
+private[mada] final class IncrementCons {
+     def apply[x <: Boolean, xs <: Dense](x: x, xs: xs): apply[x, xs] = `if`(x, new Then(x, xs), new Else(x, xs)).apply.asInstanceOfNatDense
+    type apply[x <: Boolean, xs <: Dense] = `if`[x, Then[x, xs], Else[x, xs]]#apply#asInstanceOfNatDense
 
     // (`true` :: xs).increment
-    class Then extends Function0 {
+    class Then[x <: Boolean, xs <: Dense](x: x, xs: xs) extends Function0 {
         override  val self = this
-        override type self = Then
+        override type self = Then[x, xs]
         override  def apply: apply = Cons(`false`, xs.increment)
         override type apply = Cons[`false`, xs#increment]
     }
 
     // (`false` :: xs).increment
-    class Else extends Function0 {
+    class Else[x <: Boolean, xs <: Dense](x: x, xs: xs) extends Function0 {
         override  val self = this
-        override type self = Else
+        override type self = Else[x, xs]
         override  def apply: apply = Cons(`true`, xs)
         override type apply = Cons[`true`, xs]
     }
