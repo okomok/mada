@@ -56,8 +56,8 @@ sealed abstract class Option extends Any {
     type filter[f <: Function1] <: Option
 
     @equivalentTo("!isEmpty && f(get)")
-    final  def exists[f <: Function1](f: f): exists[f] = isEmpty.not && f.apply(get).asInstanceOfBoolean
-    final type exists[f <: Function1] = isEmpty#not# &&[f#apply[get]#asInstanceOfBoolean]
+     def exists[f <: Function1](f: f): exists[f]
+    type exists[f <: Function1] <: Boolean
 
     @equivalentTo("if (!isEmpty) f(get)")
     def foreach[f <: Function1](f: f): foreach[f]
@@ -97,6 +97,9 @@ sealed abstract class None extends Option {
     override  def filter[f <: Function1](f: f): filter[f] = None
     override type filter[f <: Function1] = None
 
+    override  def exists[f <: Function1](f: f): exists[f] = `false`
+    override type exists[f <: Function1] = `false`
+
     override  def foreach[f <: Function1](f: f): foreach[f] = Unit
 
     override  def undual: undual = scala.None
@@ -128,6 +131,9 @@ final case class Some[e <: Any](e: e) extends Option {
 
     override  def filter[f <: Function1](f: f): filter[f] = `if`(f.apply(get).asInstanceOfBoolean, always0(self), always0(None)).apply.asInstanceOfOption
     override type filter[f <: Function1] = `if`[f#apply[get]#asInstanceOfBoolean, always0[self], always0[None]]#apply#asInstanceOfOption
+
+    override  def exists[f <: Function1](f: f): exists[f] = f.apply(get).asInstanceOfBoolean
+    override type exists[f <: Function1] = f#apply[get]#asInstanceOfBoolean
 
     override  def foreach[f <: Function1](f: f): foreach[f] = { f.apply(get); Unit }
 
