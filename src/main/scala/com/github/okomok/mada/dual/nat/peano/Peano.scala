@@ -75,8 +75,8 @@ sealed trait Peano extends Any {
     final  def isOdd: isOdd = isEven.not
     final type isOdd = isEven#not
 
-    final  def toDense: toDense = ToDense(self).apply
-    final type toDense = ToDense[self]#apply
+    final  def toDense: toDense = new ToDense().apply(self)
+    final type toDense = ToDense#apply[self]
 
     final override type undual = scala.Int
     final override def canEqual(that: scala.Any) = that.isInstanceOf[Peano]

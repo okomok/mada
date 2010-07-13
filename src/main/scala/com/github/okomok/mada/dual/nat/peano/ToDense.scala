@@ -8,27 +8,27 @@ package com.github.okomok.mada
 package dual; package nat; package peano
 
 
-private[mada] final case class ToDense[x <: Peano](x: x) {
-     def apply: apply = `if`(x.isZero, always0(dense.Nil), Else()).apply.asInstanceOfNatDense
-    type apply = `if`[x#isZero, always0[dense.Nil], Else]#apply#asInstanceOfNatDense
+private[mada] final class ToDense {
+     def apply[x <: Peano](x: x): apply[x] = `if`(x.isZero, always0(dense.Nil), new Else(x)).apply.asInstanceOfNatDense
+    type apply[x <: Peano] = `if`[x#isZero, always0[dense.Nil], Else[x]]#apply#asInstanceOfNatDense
 
-    final case class Else() extends Function0 {
+    class Else[x <: Peano](x: x) extends Function0 {
          override  val self = this
-         override type self = Else
-         override  def apply: apply = dense.Cons(x.isOdd, Div2(x).apply.toDense) // `ConsFalse` is unneeded.
-         override type apply = dense.Cons[x#isOdd, Div2[x]#apply#toDense]
+         override type self = Else[x]
+         override  def apply: apply = dense.Cons(x.isOdd, new Div2().apply(x).toDense) // `ConsFalse` is redundant.
+         override type apply = dense.Cons[x#isOdd, Div2#apply[x]#toDense]
      }
 }
 
 
-private[mada] final case class Div2[x <: Peano](x: x)  {
-      def apply: apply = `if`(x < _2, always0(Zero), Else()).apply.asInstanceOfNatPeano
-     type apply = `if`[x# <[_2], always0[Zero], Else]#apply#asInstanceOfNatPeano
+private[mada] final class Div2  {
+      def apply[x <: Peano](x: x): apply[x] = `if`(x < _2, always0(Zero), new Else(x)).apply.asInstanceOfNatPeano
+     type apply[x <: Peano] = `if`[x# <[_2], always0[Zero], Else[x]]#apply#asInstanceOfNatPeano
 
-     final case class Else() extends Function0 {
+     class Else[x <: Peano](x: x) extends Function0 {
          override  val self = this
-         override type self = Else
-         override  def apply: apply = Div2(x.decrement.decrement).apply.increment.asInstanceOf[apply]
-         override type apply = Div2[x#decrement#decrement]#apply#increment
+         override type self = Else[x]
+         override  def apply: apply = new Div2().apply(x.decrement.decrement).increment.asInstanceOf[apply]
+         override type apply = Div2#apply[x#decrement#decrement]#increment
      }
 }
