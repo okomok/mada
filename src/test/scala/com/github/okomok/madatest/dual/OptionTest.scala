@@ -15,6 +15,7 @@ import nat.Peano
 
 
 class OptionTest extends junit.framework.TestCase {
+
     def testTrivial {
         type s = Some[Box[Int]]
         val s: s = Some(Box(3))
