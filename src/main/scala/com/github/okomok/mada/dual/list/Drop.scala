@@ -8,30 +8,16 @@ package com.github.okomok.mada
 package dual; package list
 
 
+private[mada] final class Drop {
+     def apply[xs <: List, n <: nat.Peano](xs: xs, n: n): apply[xs, n] = `if`(n.isZero || xs.isEmpty, always0(xs), Else(xs, n)).apply.asInstanceOfList.asInstanceOf[apply[xs, n]]
+    type apply[xs <: List, n <: nat.Peano] = `if`[n#isZero# ||[xs#isEmpty], always0[xs], Else[xs, n]]#apply#asInstanceOfList
 
-/*
-private[mada] class Drop {
-     def apply[xs <: List, n <: nat.Peano](xs: xs, n: n): apply[xs, n] = n.foldRight(xs, Step()).asInstanceOfList
-    type apply[xs <: List, n <: nat.Peano] = n#foldRight[xs, Step]#asInstanceOfList
-
-    final case class Step() extends Function2 {
+    final case class Else[xs <: List, n <: nat.Peano](xs: xs, n: n) extends Function0 {
         override  val self = this
-        override type self = Step
-        override  def apply[a <: Any, b <: Any](a: a, b: b): apply[a, b] = b.asInstanceOfList.tail
-        override type apply[a <: Any, b <: Any] = b#asInstanceOfList#tail
+        override type self = Else[xs, n]
+        override  def apply: apply = new Drop().apply(xs.tail, n.decrement).asInstanceOf[apply]
+        override type apply = Drop#apply[xs#tail, n#decrement]
     }
 }
-*/
 
 
-private[mada] final case class Drop[xs <: List, n <: nat.Peano](xs: xs, n: n) {
-     def apply: apply = `if`(n.isZero || xs.isEmpty, always0(xs), Else()).apply.asInstanceOfList.asInstanceOf[apply]
-    type apply = `if`[n#isZero# ||[xs#isEmpty], always0[xs], Else]#apply#asInstanceOfList
-
-    final case class Else() extends Function0 {
-        override  val self = this
-        override type self = Else
-        override  def apply: apply = Drop(xs.tail, n.decrement).apply.asInstanceOf[apply]
-        override type apply = Drop[xs#tail, n#decrement]#apply
-    }
-}

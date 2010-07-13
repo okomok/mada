@@ -19,11 +19,11 @@ trait Common {
     @equivalentTo("x#addFirst[xs]")
     type ::[x <: Any, xs <: List] = xs#addFirst[x]
 
-    @equivalentTo("ys#prepend[xs]")
-    type :::[xs <: List, ys <: List] = ys#prepend[xs]
+    @equivalentTo("ys# :::[xs]")
+    type :::[xs <: List, ys <: List] = ys# :::[xs]
 
-    @equivalentTo("ys#reversePrepend[xs]")
-    type reverse_:::[xs <: List, ys <: List] = ys#prependReversed[xs]
+    @equivalentTo("xs#reverse_:::[ys]")
+    type reverse_:::[xs <: List, ys <: List] = ys#reverse_:::[xs]
 
     def fromSTuple1[T1](from: scala.Tuple1[T1]): Box[T1] :: Nil = Box(from._1) :: Nil
     def fromSTuple2[T1, T2](from: scala.Tuple2[T1, T2]): Box[T1] :: Box[T2] :: Nil = Box(from._1) :: Box(from._2) :: Nil

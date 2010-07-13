@@ -88,8 +88,8 @@ sealed abstract class List extends Any {
     /**
      * Filters elements using <code>f</code>.
      */
-    final  def filter[f <: Function1](f: f): filter[f] = Filter(self, f).apply
-    final type filter[f <: Function1] = Filter[self, f]#apply
+    final  def filter[f <: Function1](f: f): filter[f] = new Filter().apply(self, f)
+    final type filter[f <: Function1] = Filter#apply[self, f]
 
     /**
      * Applies <code>f</code> to each element.
@@ -102,16 +102,16 @@ sealed abstract class List extends Any {
      *
      * @pre `n in [0, size)`.
      */
-    final  def drop[n <: nat.Peano](n: n): drop[n] = Drop(self, n).apply//new Drop().apply(self, n)
-    final type drop[n <: nat.Peano] = Drop[self, n]#apply//Drop#apply[self, n]
+    final  def drop[n <: nat.Peano](n: n): drop[n] = new Drop().apply(self, n)
+    final type drop[n <: nat.Peano] = Drop#apply[self, n]
 
     /**
      * Takes at most <code>n</code> elements.
      *
      * @pre `n in [0, size)`.
      */
-    final  def take[n <: nat.Peano](n: n): take[n] = Take(self, n).apply//reverse.drop(size - n).reverse.asInstanceOf[take[n]] //Take.apply(self, n)
-    final type take[n <: nat.Peano] = Take[self, n]#apply//reverse#drop[size# -[n]]#reverse //Take.apply[self, n]
+    final  def take[n <: nat.Peano](n: n): take[n] = new Take().apply(self, n)
+    final type take[n <: nat.Peano] = Take#apply[self, n]
 
     @equivalentTo("take(m).drop(n)")
     final  def slice[n <: nat.Peano, m <: nat.Peano](n: n, m: m): slice[n, m] = take(m).drop(n)
@@ -128,8 +128,8 @@ sealed abstract class List extends Any {
      *
      * @pre `n in [0, size)`.
      */
-    final  def insert[n <: nat.Peano, that <: List](n: n, that: that): insert[n, that] = take(n) ::: that ::: drop(n)
-    final type insert[n <: nat.Peano, that <: List] = take[n] ::: that ::: drop[n]
+    final  def insert[n <: nat.Peano, that <: List](n: n, that: that): insert[n, that] = drop(n).:::(that).:::(take(n))
+    final type insert[n <: nat.Peano, that <: List] = drop[n]# :::[that]# :::[take[n]]
 
     /**
      * Returns the last element.
@@ -150,36 +150,42 @@ sealed abstract class List extends Any {
     /**
      * Prepends <code>that</code>.
      */
-    final  def prepend[that <: List](that: that): prepend[that] = new Prepend().apply(self, that)
-    final type prepend[that <: List] = Prepend#apply[self, that]
+    final  def :::[that <: List](that: that): :::[that] = that.append(self)
+    final type :::[that <: List] = that#append[self]
+
+    private[mada]  def append[that <: List](that: that): append[that]
+    private[mada] type append[that <: List] <: List
 
     /**
      * Removes <code>n</code>-th element.
      *
      * @pre `n in [0, size)`.
      */
-    final  def remove[n <: nat.Peano](n: n): remove[n] = (take(n) ::: drop(n.increment)).asInstanceOf[remove[n]]
-    final type remove[n <: nat.Peano] = take[n] ::: drop[n#increment]
+    final  def remove[n <: nat.Peano](n: n): remove[n] = drop(n.increment).:::(take(n)).asInstanceOf[remove[n]]
+    final type remove[n <: nat.Peano] = drop[n#increment]# :::[take[n]]
 
     /**
      * Replaces <code>n</code>-th element with <code>_a</code>.
      *
      * @pre `n in [0, size)`.
      */
-    final  def replace[n <: nat.Peano, e <: Any](n: n, e: e): replace[n, e] = (take(n) ::: Cons(e, drop(n.increment))).asInstanceOf[replace[n, e]]
-    final type replace[n <: nat.Peano, e <: Any] = take[n] ::: Cons[e, drop[n#increment]]
+    final  def replace[n <: nat.Peano, e <: Any](n: n, e: e): replace[n, e] = Cons(e, drop(n.increment)).:::(take(n)).asInstanceOf[replace[n, e]]
+    final type replace[n <: nat.Peano, e <: Any] = Cons[e, drop[n#increment]]# :::[take[n]]
 
     /**
      * Prepends reversed <code>that</code>.
      */
-    final  def prependReversed[that <: List](that: that): prependReversed[that] = new PrependReversed().apply(self, that)
-    final type prependReversed[that <: List] = PrependReversed#apply[self, that]
+    final  def reverse_:::[that <: List](that: that): reverse_:::[that] = that.reverseAppend(self)
+    final type reverse_:::[that <: List] = that#reverseAppend[self]
+
+    private[mada]  def reverseAppend[that <: List](that: that): reverseAppend[that]
+    private[mada] type reverseAppend[that <: List] <: List
 
     /**
      * Returns reversed one.
      */
-    final  def reverse: reverse = Nil.prependReversed(self)
-    final type reverse = Nil#prependReversed[self]
+    final  def reverse: reverse = reverseAppend(Nil)
+    final type reverse = reverseAppend[Nil]
 
     /**
      * Returns the size.
@@ -196,17 +202,12 @@ sealed abstract class List extends Any {
     /**
      * Unzips.
      */
-    final  def unzip: unzip = Unzip(self).apply
-    final type unzip = Unzip[self]#apply
+    final  def unzip: unzip = new Unzip().apply(self)
+    final type unzip = Unzip#apply[self]
 
     @aliasOf("addFirst")
     final def ::[e <: Any](e: e): addFirst[e] = addFirst(e)
 
-    @aliasOf("prepend")
-    final def :::[that <: List](that: that): prepend[that] = prepend(that)
-
-    @aliasOf("prependReversed")
-    final def reverse_:::[that <: List](that: that): prependReversed[that] = prependReversed(that)
 
     /**
      * Returns the first element whose type is <code>k</code>.
@@ -254,6 +255,12 @@ sealed abstract class Nil extends List {
 
     override  def foreach[f <: Function1](f: f): foreach[f] = Unit
 
+    override private[mada]  def append[that <: List](that: that): append[that] = that
+    override private[mada] type append[that <: List] = that
+
+    override private[mada]  def reverseAppend[that <: List](that: that) = that
+    override private[mada] type reverseAppend[that <: List] = that
+
     override  def size: size = nat.peano.Zero
     override type size = nat.peano.Zero
 
@@ -266,7 +273,7 @@ sealed abstract class Nil extends List {
     override  def foldLeft[z <: Any, f <: Function2](z: z, f: f): foldLeft[z, f] = z
     override type foldLeft[z <: Any, f <: Function2] = z
 
-    override def undual: undual = sequence.Nil
+    override  def undual: undual = sequence.Nil
 }
 
 
@@ -283,16 +290,22 @@ final case class Cons[x <: Any, xs <: List](private val x: x, private val xs: xs
     override  def isEmpty: isEmpty = `false`
     override type isEmpty = `false`
 
-    override  def map[f <: Function1](f: f): map[f] = Cons(f.apply(x), xs.map(f))
-    override type map[f <: Function1] = Cons[f#apply[x], xs#map[f]]
+    override  def map[f <: Function1](f: f): map[f] = Cons(f.apply(head), tail.map(f))
+    override type map[f <: Function1] = Cons[f#apply[head], tail#map[f]]
 
-    override  def flatMap[f <: Function1](f: f): flatMap[f] = f.apply(x).asInstanceOfList ::: xs.flatMap(f)
-    override type flatMap[f <: Function1] = f#apply[x]#asInstanceOfList ::: xs#flatMap[f]
+    override  def flatMap[f <: Function1](f: f): flatMap[f] = tail.flatMap(f).:::(f.apply(head).asInstanceOfList)
+    override type flatMap[f <: Function1] = tail#flatMap[f]# :::[f#apply[head]#asInstanceOfList]
 
-    override  def foreach[f <: Function1](f: f): foreach[f] = { f.apply(x); xs.foreach(f) }
+    override  def foreach[f <: Function1](f: f): foreach[f] = { f.apply(head); tail.foreach(f) }
 
-    override  def size: size = xs.size.increment
-    override type size = xs#size#increment
+    override private[mada]  def append[that <: List](that: that): append[that] = Cons(head, tail.append(that))
+    override private[mada] type append[that <: List] = Cons[head, tail#append[that]]
+
+    override private[mada]  def reverseAppend[that <: List](that: that) = tail.reverseAppend(Cons(head, that))
+    override private[mada] type reverseAppend[that <: List] = tail#reverseAppend[Cons[head, that]]
+
+    override  def size: size = tail.size.increment
+    override type size = tail#size#increment
 
     override  def zip[that <: List](that: that): zip[that] = Cons(Tuple2(head, that.head), tail.zip(that.tail))
     override type zip[that <: List] = Cons[Tuple2[head, that#head], tail#zip[that#tail]]
@@ -303,7 +316,7 @@ final case class Cons[x <: Any, xs <: List](private val x: x, private val xs: xs
     override  def foldLeft[z <: Any, f <: Function2](z: z, f: f): foldLeft[z, f] = tail.foldLeft(f.apply(z, head), f)
     override type foldLeft[z <: Any, f <: Function2] = tail#foldLeft[f#apply[z, head], f]
 
-    override def undual: undual = head.undual :: tail.undual
+    override  def undual: undual = head.undual :: tail.undual
 }
 
 

@@ -11,14 +11,14 @@ package dual; package list
 // cf. take(n) = reverse.drop(size - n).reverse
 
 
-private[mada] final case class Take[xs <: List, n <: nat.Peano](xs: xs, n: n) {
-     def apply: apply = `if`(n.isZero || xs.isEmpty, always0(Nil), Else()).apply.asInstanceOfList.asInstanceOf[apply]
-    type apply = `if`[n#isZero# ||[xs#isEmpty], always0[Nil], Else]#apply#asInstanceOfList
+private[mada] final class Take {
+     def apply[xs <: List, n <: nat.Peano](xs: xs, n: n): apply[xs, n] = `if`(n.isZero || xs.isEmpty, always0(Nil), Else(xs, n)).apply.asInstanceOfList.asInstanceOf[apply[xs, n]]
+    type apply[xs <: List, n <: nat.Peano] = `if`[n#isZero# ||[xs#isEmpty], always0[Nil], Else[xs, n]]#apply#asInstanceOfList
 
-    final case class Else() extends Function0 {
+    final case class Else[xs <: List, n <: nat.Peano](xs: xs, n: n) extends Function0 {
         override  val self = this
-        override type self = Else
-        override  def apply: apply = Cons(xs.head, Take(xs.tail, n.decrement).apply).asInstanceOf[apply]
-        override type apply = Cons[xs#head, Take[xs#tail, n#decrement]#apply]
+        override type self = Else[xs, n]
+        override  def apply: apply = Cons(xs.head, new Take().apply(xs.tail, n.decrement)).asInstanceOf[apply]
+        override type apply = Cons[xs#head, Take#apply[xs#tail, n#decrement]]
     }
 }

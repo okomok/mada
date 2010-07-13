@@ -23,7 +23,10 @@ class ReplaceTest extends junit.framework.TestCase {
         val l: l = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil
 
         val _m: l#replace[_1, Box[Char]] = l.replace(_1, Box('c'))
-        val m: Box[Int] :: Box[Char] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil = _m
+        type m = Box[Int] :: Box[Char] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil
+        meta.assertSame[m, l#replace[_1, Box[Char]]]
+        val m: m  = _m
+
         val e: Char = m.nth(_1).unbox
         assertEquals('c', e)
 

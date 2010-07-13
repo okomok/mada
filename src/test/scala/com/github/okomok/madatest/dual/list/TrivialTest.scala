@@ -146,10 +146,10 @@ object TrivialTezt {
     trait testPrepend {
         type lst1 = Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Box[Float] :: Nil
         type lst2 = Box[Boolean] :: Box[Byte] :: Nil
-        assertSame[Nil, Nil#prepend[Nil]]
-        assertSame[Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Box[Float] :: Box[Boolean] :: Box[Byte] :: Nil, lst2#prepend[lst1]]
-        assertSame[lst1, lst1#prepend[Nil]]
-        assertSame[lst1, Nil#prepend[lst1]]
+        assertSame[Nil, Nil# :::[Nil]]
+        assertSame[Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Box[Float] :: Box[Boolean] :: Box[Byte] :: Nil, lst2# :::[lst1]]
+        assertSame[lst1, lst1# :::[Nil]]
+        assertSame[lst1, Nil# :::[lst1]]
 
         assertSame[Nil, Nil ::: Nil]
         assertSame[Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Box[Float] :: Box[Boolean] :: Box[Byte] :: Nil, lst1 ::: lst2]
@@ -158,7 +158,7 @@ object TrivialTezt {
         assertSame[lst1, (Box[Int] :: Box[String] :: Nil) ::: (Box[Double] :: Nil) ::: (Box[Char] :: Box[Float] :: Nil) ::: Nil]
     }
 
-    type prependprepend[l1 <: List, l2 <: List, r <: List] = r#prepend[l1]#prepend[l2]
+    type prependprepend[l1 <: List, l2 <: List, r <: List] = r# :::[l1]# :::[l2]
 
     trait testPrepend2 {
         type lst1 = Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Box[Float] :: Nil
