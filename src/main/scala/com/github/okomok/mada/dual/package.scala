@@ -103,6 +103,13 @@ package object dual {
     type reverse_:::[xs <: List, ys <: List] = list.reverse_:::[xs, ys]
 
 
+// Map
+
+    @aliasOf("map.Map")
+     val Map = map.Map
+    type Map = map.Map
+
+
 // Option
 
     @aliasOf("option.Option")
@@ -116,6 +123,13 @@ package object dual {
     @aliasOf("option.Some")
      val Some = option.Some
     type Some[x <: Any] = option.Some[x]
+
+
+// Ordering
+
+    @aliasOf("ordering.Ordering")
+     val Ordering = ordering.Ordering
+    type Ordering = ordering.Ordering
 
 
 // Unit
