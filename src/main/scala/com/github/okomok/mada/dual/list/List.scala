@@ -229,7 +229,7 @@ sealed abstract class List extends Any {
      def foldLeft[z <: Any, f <: Function2](z: z, f: f): foldLeft[z, f]
     type foldLeft[z <: Any, f <: Function2] <: Any
 
-    final override type undual = sequence.List[scala.Any]
+    final override type undual = sequence.List[_]
     final override def canEqual(that: scala.Any) = that.isInstanceOf[List]
 }
 
