@@ -20,50 +20,33 @@ sealed abstract class Option extends Any {
     final override  def asInstanceOfOption = self
     final override type asInstanceOfOption = self
 
-    /**
-     * Returns true iif the option is a <code>Some</code>(...).
-     */
      def isEmpty: isEmpty
     type isEmpty <: Boolean
 
-    /**
-     * Get a value of this option.
-     */
      def get: get
     type get <: Any // Not metageneric
 
-    /**
-     * If the option is nonempty return its value,
-     * otherwise return the result of evaluating a default expression.
-     */
      def getOrElse[f <: Function0](f: f): getOrElse[f]
     type getOrElse[f <: Function0] <: Any
 
-    @equivalentTo("isEmpty.not")
     final  def isDefined: isDefined = isEmpty.not
     final type isDefined = isEmpty#not
 
-    @equivalentTo("if (isEmpty) None else Some(f(get)))")
      def map[f <: Function1](f: f): map[f]
     type map[f <: Function1] <: Option
 
-    @equivalentTo("if (isEmpty) None else f(get))")
      def flatMap[f <: Function1](f: f): flatMap[f]
     type flatMap[f <: Function1] <: Option
 
-    @equivalentTo("if (isEmpty || f(get)) this else None")
      def filter[f <: Function1](f: f): filter[f]
     type filter[f <: Function1] <: Option
 
-    @equivalentTo("!isEmpty && f(get)")
      def exists[f <: Function1](f: f): exists[f]
     type exists[f <: Function1] <: Boolean
 
-    @equivalentTo("if (!isEmpty) f(get)")
-    def foreach[f <: Function1](f: f): foreach[f]
+     def foreach[f <: Function1](f: f): foreach[f]
     final type foreach[f <: Function1] = Unit
 
-    @equivalentTo("if (isEmpty) f() else this")
     final  def orElse[f <: Function0](f: f): orElse[f] = `if`(isEmpty, f, always0(self)).apply.asInstanceOfOption
     final type orElse[f <: Function0] = `if`[isEmpty, f, always0[self]]#apply#asInstanceOfOption
 

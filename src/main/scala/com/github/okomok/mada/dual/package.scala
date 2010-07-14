@@ -65,6 +65,21 @@ package object dual {
     type `if`[c <: Boolean, then <: Function0, _else <: Function0] = boolean.`if`[c, then, _else]
 
 
+// Either
+
+    @aliasOf("either.Either")
+     val Either = either.Either
+    type Either = either.Either
+
+    @aliasOf("either.Left")
+     val Left = either.Left
+    type Left[x <: Any] = either.Left[x]
+
+    @aliasOf("either.Right")
+     val Right = either.Right
+    type Right[x <: Any] = either.Right[x]
+
+
 // List
 
     @aliasOf("list.List")
