@@ -25,8 +25,8 @@ private[mada] class Glue {
         override  val self = this
         override type self = ElseThen[l, r, o]
 
-        private lazy val d: d = new DeleteFindMax().apply(l)
-        private type d = DeleteFindMax#apply[l]
+        private lazy val d: d = new RemoveMax().apply(l)
+        private type d = RemoveMax#apply[l]
 
         override  def apply: apply = new Balance().apply(d._1.asInstanceOfProduct2._1, d._1.asInstanceOfProduct2._2, d._2.asInstanceOfMap, r, o)
         override type apply        =     Balance#  apply[d#_1#asInstanceOfProduct2#_1, d#_1#asInstanceOfProduct2#_2, d#_2#asInstanceOfMap, r, o]
@@ -36,8 +36,8 @@ private[mada] class Glue {
         override  val self = this
         override type self = ElseElse[l, r, o]
 
-        private lazy val d: d = new DeleteFindMin().apply(r)
-        private type d = DeleteFindMin#apply[r]
+        private lazy val d: d = new RemoveMin().apply(r)
+        private type d = RemoveMin#apply[r]
 
         override  def apply: apply = new Balance().apply(d._1.asInstanceOfProduct2._1, d._1.asInstanceOfProduct2._2, l, d._2.asInstanceOfMap, o)
         override type apply        =     Balance#  apply[d#_1#asInstanceOfProduct2#_1, d#_1#asInstanceOfProduct2#_2, l, d#_2#asInstanceOfMap, o]
@@ -45,7 +45,7 @@ private[mada] class Glue {
 }
 
 
-private[mada] class DeleteFindMax {
+private[mada] class RemoveMax { // => Tuple2(Tuple2(maxKey, value), map)
      def apply[m <: Map](m: m): apply[m] = `if`(m.right.isEmpty, Then(m), Else(m)).apply.asInstanceOfProduct2
     type apply[m <: Map]                 = `if`[m#right#isEmpty, Then[m], Else[m]]#apply#asInstanceOfProduct2
 
@@ -60,15 +60,15 @@ private[mada] class DeleteFindMax {
         override  val self = this
         override type self = Else[m]
 
-        private lazy val d: d = new DeleteFindMax().apply(m.right)
-        private type d = DeleteFindMax#apply[m#right]
+        private lazy val d: d = new RemoveMax().apply(m.right)
+        private type d = RemoveMax#apply[m#right]
 
         override  def apply: apply = Tuple2(d._1, new Balance().apply(m.key, m.value, m.left, d._2.asInstanceOfMap, m.ord)).asInstanceOf[apply]
         override type apply        = Tuple2[d#_1,     Balance#  apply[m#key, m#value, m#left, d#_2#asInstanceOfMap, m#ord]]
     }
 }
 
-private[mada] class DeleteFindMin {
+private[mada] class RemoveMin { // => Tuple2(Tuple2(minKey, value), map)
      def apply[m <: Map](m: m): apply[m] = `if`(m.left.isEmpty, Then(m), Else(m)).apply.asInstanceOfProduct2
     type apply[m <: Map]                 = `if`[m#left#isEmpty, Then[m], Else[m]]#apply#asInstanceOfProduct2
 
@@ -83,8 +83,8 @@ private[mada] class DeleteFindMin {
         override  val self = this
         override type self = Else[m]
 
-        private lazy val d: d = new DeleteFindMin().apply(m.left)
-        private type d = DeleteFindMin#apply[m#left]
+        private lazy val d: d = new RemoveMin().apply(m.left)
+        private type d = RemoveMin#apply[m#left]
 
         override  def apply: apply = Tuple2(d._1, new Balance().apply(m.key, m.value, d._2.asInstanceOfMap, m.right, m.ord)).asInstanceOf[apply]
         override type apply        = Tuple2[d#_1,     Balance#  apply[m#key, m#value, d#_2#asInstanceOfMap, m#right, m#ord]]
