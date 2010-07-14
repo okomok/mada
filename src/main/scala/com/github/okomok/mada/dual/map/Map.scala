@@ -47,6 +47,9 @@ sealed abstract class Map extends Any {
      def put[k <: Any, v <: Any](k: k, v: v): put[k, v]
     type put[k <: Any, v <: Any] <: Map
 
+     def remove[k <: Any](k: k): remove[k]
+    type remove[k <: Any] <: Map
+
     final override type undual = scala.collection.immutable.Map[_, _]
     final override def canEqual(that: scala.Any) = that.isInstanceOf[Map]
 }
@@ -82,6 +85,9 @@ final case class Nil[o <: Ordering](override val ord: o) extends Map {
     override  def put[k <: Any, v <: Any](k: k, v: v): put[k, v] = single(k, v, ord)
     override type put[k <: Any, v <: Any] = single[k, v, ord]
 
+    override  def remove[k <: Any](k: k): remove[k] = self
+    override type remove[k <: Any] = self
+
     override  def undual: undual = scala.collection.immutable.Map.empty
 }
 
@@ -110,6 +116,9 @@ final case class Node[n <: nat.Peano, k <: Any, v <: Any, l <: Map, r <: Map, o 
 
     override  def put[k <: Any, v <: Any](k: k, v: v): put[k, v] = new NodePut().apply(self, k, v)
     override type put[k <: Any, v <: Any] = NodePut#apply[self, k, v]
+
+    override  def remove[k <: Any](k: k): remove[k] = new NodeRemove().apply(self, k)
+    override type remove[k <: Any] = NodeRemove#apply[self, k]
 
     override  def undual: undual = (left.undual ++ right.undual) + (key -> value)
 }

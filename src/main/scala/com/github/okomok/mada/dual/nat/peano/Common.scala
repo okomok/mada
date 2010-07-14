@@ -31,6 +31,11 @@ private[mada] trait LiteralCommon {
     val  _8 = Succ(_7)
     val  _9 = Succ(_8)
     val _10 = Succ(_9)
+    val _11 = Succ(_10)
+    val _12 = Succ(_11)
+    val _13 = Succ(_12)
+    val _14 = Succ(_13)
+    val _15 = Succ(_14)
 
     type  _0 = Zero
     type  _1 = Succ[_0]
@@ -43,6 +48,11 @@ private[mada] trait LiteralCommon {
     type  _8 = Succ[_7]
     type  _9 = Succ[_8]
     type _10 = Succ[_9]
+    type _11 = Succ[_10]
+    type _12 = Succ[_11]
+    type _13 = Succ[_12]
+    type _14 = Succ[_13]
+    type _15 = Succ[_14]
 }
 
 
