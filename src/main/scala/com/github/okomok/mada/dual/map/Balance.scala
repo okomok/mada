@@ -16,7 +16,8 @@ private[mada] object Balance {
 }
 
 
-private[mada] class Balance {
+@visibleForTesting
+class Balance {
     import Balance._
 
      def apply[k <: Any, v <: Any, l <: Map, r <: Map, o <: Ordering](k: k, v: v, l: l, r: r, o: o): apply[k, v, l, r, o] =

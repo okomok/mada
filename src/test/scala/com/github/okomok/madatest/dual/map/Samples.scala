@@ -45,6 +45,7 @@ object Samples {
 
     type m8 =    map.Node[_9, _8, box[scala.Boolean], m3, m10, o]
     val m8: m8 = map.Node(_9, _8, box(false), m3, m10, o)
+
 }
 
 class SamplesTest extends junit.framework.TestCase {
