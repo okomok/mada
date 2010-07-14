@@ -14,6 +14,7 @@ import mada.dual._
 
 
 // `object Helper` would fall in weird compiler error.
+// Also, don't import multiple times.
 class Helper {
     type natOrd = ordering.ofNatPeano
     val natOrd: natOrd = ordering.ofNatPeano

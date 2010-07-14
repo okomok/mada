@@ -12,7 +12,7 @@ object Map extends Common
 
 
 /**
- * The dual Option
+ * The dual Map
  */
 sealed abstract class Map extends Any {
     type self <: Map
@@ -49,6 +49,9 @@ sealed abstract class Map extends Any {
 
      def remove[k <: Any](k: k): remove[k]
     type remove[k <: Any] <: Map
+
+    final  def contains[k <: Any](k: k): contains[k] = get(k).isEmpty.not
+    final type contains[k <: Any] = get[k]#isEmpty#not
 
     final override type undual = scala.collection.immutable.Map[_, _]
     final override def canEqual(that: scala.Any) = that.isInstanceOf[Map]
@@ -121,8 +124,4 @@ final case class Node[n <: nat.Peano, k <: Any, v <: Any, l <: Map, r <: Map, o 
     override type remove[k <: Any] = NodeRemove#apply[self, k]
 
     override  def undual: undual = (left.undual ++ right.undual) + (key -> value)
-}
-
-
-private[mada] object _Map {
 }

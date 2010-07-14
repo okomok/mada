@@ -55,4 +55,15 @@ class TrivialTest extends junit.framework.TestCase {
         assertEquals('c', v5.undual)
     }
 
+    def testContains {
+        type o = ordering.ofNatPeano
+        val o: o = ordering.ofNatPeano
+
+        type m = map.Nil[o]#put[_3, box[Int]]#put[_5, box[Char]]#put[_1, box[String]]
+        val m: m = map.Nil(o).put(_3, box(3)).put(_5, box('c')).put(_1, box("wow"))
+
+        meta.assertSame[`false`, m#contains[_9]]
+        meta.assertSame[`true`, m#contains[_5]]
+    }
+
 }

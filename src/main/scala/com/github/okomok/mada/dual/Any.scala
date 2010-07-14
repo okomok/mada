@@ -51,6 +51,9 @@ trait Any extends scala.Equals {
      def asInstanceOfMap: asInstanceOfMap = unsupported("dual.Any.asInstanceOfMap")
     type asInstanceOfMap <: Map
 
+     def asInstanceOfSet: asInstanceOfSet = unsupported("dual.Any.asInstanceOfSet")
+    type asInstanceOfSet <: Set
+
      def asInstanceOfNatPeano: asInstanceOfNatPeano = unsupported("dual.Any.asInstanceOfNatPeano")
     type asInstanceOfNatPeano <: nat.Peano
 

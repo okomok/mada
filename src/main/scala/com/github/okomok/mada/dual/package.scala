@@ -117,6 +117,13 @@ package object dual {
     type Map = map.Map
 
 
+// Set
+
+    @aliasOf("set.Set")
+     val Set = set.Set
+    type Set = set.Set
+
+
 // Option
 
     @aliasOf("option.Option")
