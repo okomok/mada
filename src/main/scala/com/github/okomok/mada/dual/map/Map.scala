@@ -8,7 +8,7 @@ package com.github.okomok.mada
 package dual; package map
 
 
-object Map
+object Map extends Common
 
 
 /**
@@ -41,17 +41,20 @@ sealed abstract class Map extends Any {
      def isEmpty: isEmpty
     type isEmpty <: Boolean
 
-    final  def get[k <: Any](k: k): get[k] = new Get().apply(self, k)
-    final type get[k <: Any] = Get#apply[self, k]
+     def get[k <: Any](k: k): get[k]
+    type get[k <: Any] <: Option
+
+     def put[k <: Any, v <: Any](k: k, v: v): put[k, v]
+    type put[k <: Any, v <: Any] <: Map
 
     final override type undual = scala.collection.immutable.Map[_, _]
     final override def canEqual(that: scala.Any) = that.isInstanceOf[Map]
 }
 
 
-sealed abstract class Nil extends Map {
+final case class Nil[o <: Ordering](override val ord: o) extends Map {
     override  val self = this
-    override type self = Nil
+    override type self = Nil[o]
 
     override  def size: size = nat.peano.Zero
     override type size = nat.peano.Zero
@@ -68,11 +71,16 @@ sealed abstract class Nil extends Map {
     override  def right: right = unsupported("dual.map.Nil.right")
     override type right = unsupported[_]
 
-    override  def ord: ord = unsupported("dual.map.Nil.ord")
-    override type ord = unsupported[_]
+    override type ord = o
 
     override  def isEmpty: isEmpty = `true`
     override type isEmpty = `true`
+
+    override  def get[k <: Any](k: k): get[k] = None
+    override type get[k <: Any] = None
+
+    override  def put[k <: Any, v <: Any](k: k, v: v): put[k, v] = single(k, v, ord)
+    override type put[k <: Any, v <: Any] = single[k, v, ord]
 
     override  def undual: undual = scala.collection.immutable.Map.empty
 }
@@ -97,10 +105,15 @@ final case class Node[n <: nat.Peano, k <: Any, v <: Any, l <: Map, r <: Map, o 
     override  def isEmpty: isEmpty = `false`
     override type isEmpty = `false`
 
+    override  def get[k <: Any](k: k): get[k] = new NodeGet().apply(self, k)
+    override type get[k <: Any] = NodeGet#apply[self, k]
+
+    override  def put[k <: Any, v <: Any](k: k, v: v): put[k, v] = new NodePut().apply(self, k, v)
+    override type put[k <: Any, v <: Any] = NodePut#apply[self, k, v]
+
     override  def undual: undual = (left.undual ++ right.undual) + (key -> value)
 }
 
 
 private[mada] object _Map {
-    val Nil = new Nil{}
 }

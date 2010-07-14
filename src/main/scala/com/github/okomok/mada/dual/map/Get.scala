@@ -8,16 +8,11 @@ package com.github.okomok.mada
 package dual; package map
 
 
-private[mada] final class Get {
-     def apply[m <: Map, k <: Any](m: m, k: k): apply[m, k] = `if`(m.isEmpty, always0(None), Else(m, k)).apply
-    type apply[m <: Map, k <: Any] = `if`[m#isEmpty, always0[None], Else[m, k]]#apply
-
-    case class Else[m <: Map, k <: Any](m: m, k: k) extends Function0 {
-        override  val self = this
-        override type self = Else[m, k]
-        override  def apply: apply = m.ord.`match`(k, m.key, CaseLT(m, k), CaseGT(m, k), CaseEQ(m, k))
-        override type apply = m#ord#`match`[k, m#key, CaseLT[m, k], CaseGT[m, k], CaseEQ[m, k]]
-    }
+private[mada] final class NodeGet {
+     def apply[m <: Map, k <: Any](m: m, k: k): apply[m, k] =
+        m.ord.`match`(k, m.key, CaseLT(m, k), CaseGT(m, k), CaseEQ(m, k)).asInstanceOfOption.asInstanceOf[apply[m, k]]
+    type apply[m <: Map, k <: Any] =
+        m#ord#`match`[k, m#key, CaseLT[m, k], CaseGT[m, k], CaseEQ[m, k]]#asInstanceOfOption
 
     case class CaseLT[m <: Map, k <: Any](m: m, k: k) extends Function0 {
         override  val self = this

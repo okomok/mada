@@ -12,4 +12,10 @@ private[mada] trait Common {
     val LT: LT = _Result.LT
     val GT: GT = _Result.GT
     val EQ: EQ = _Result.EQ
+
+     val ofNatPeano = new OfNatPeano
+    type ofNatPeano = OfNatPeano
+
+     val ofNatDense = new OfNatDense
+    type ofNatDense = OfNatDense
 }

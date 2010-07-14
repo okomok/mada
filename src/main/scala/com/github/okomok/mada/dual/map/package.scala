@@ -8,4 +8,4 @@ package com.github.okomok.mada
 package dual
 
 
-package object map
+package object map extends map.Common

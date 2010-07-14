@@ -28,7 +28,7 @@ sealed abstract class Result extends Any {
     private[mada] type isEQ <: Boolean
 
     final override type undual = scala.Int
-    override def canEqual(that: scala.Any) = that.isInstanceOf[Ordering]
+    override def canEqual(that: scala.Any) = that.isInstanceOf[Result]
 }
 
 
