@@ -49,11 +49,10 @@ sealed abstract class Either extends Any {
 /**
  * The dual Left
  */
-final case class Left[e <: Any](private val e: e) extends Either {
+final case class Left[e <: Any](override val get: e) extends Either {
     override  val self = this
     override type self = Left[e]
 
-    override  val get: get = e
     override type get = e
 
     override  def fold[f <: Function1, g <: Function1](f: f, g: g): fold[f, g] = f.apply(get)
@@ -74,19 +73,18 @@ final case class Left[e <: Any](private val e: e) extends Either {
     override  def isRight: isRight = `false`
     override type isRight = `false`
 
-    override  def undual: undual = scala.Left(e.undual)
-    override type undual = scala.Left[e#undual, _]
+    override  def undual: undual = scala.Left(get.undual)
+    override type undual = scala.Left[get#undual, _]
 }
 
 
 /**
  * The dual Right
  */
-final case class Right[e <: Any](private val e: e) extends Either {
+final case class Right[e <: Any](override val get: e) extends Either {
     override  val self = this
     override type self = Right[e]
 
-    override  val get: get = e
     override type get = e
 
     override  def fold[f <: Function1, g <: Function1](f: f, g: g): fold[f, g] = g.apply(get)
@@ -107,6 +105,6 @@ final case class Right[e <: Any](private val e: e) extends Either {
     override  def isRight: isRight = `true`
     override type isRight = `true`
 
-    override  def undual: undual = scala.Right(e.undual)
-    override type undual = scala.Right[_, e#undual]
+    override  def undual: undual = scala.Right(get.undual)
+    override type undual = scala.Right[_, get#undual]
 }

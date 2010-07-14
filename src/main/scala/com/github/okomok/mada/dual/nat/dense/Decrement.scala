@@ -8,7 +8,7 @@ package com.github.okomok.mada
 package dual; package nat; package dense
 
 
-private[mada] final class DecrementCons {
+private[mada] final class ConsDecrement {
      def apply[x <: Boolean, xs <: Dense](x: x, xs: xs): apply[x, xs] = `if`(xs.isEmpty, always0(xs), `if`(x, new Then(x, xs), new Else(x, xs))).apply.asInstanceOfNatDense.asInstanceOf[apply[x, xs]]
     type apply[x <: Boolean, xs <: Dense] = `if`[xs#isEmpty, always0[xs], `if`[x, Then[x, xs], Else[x, xs]]]#apply#asInstanceOfNatDense
 

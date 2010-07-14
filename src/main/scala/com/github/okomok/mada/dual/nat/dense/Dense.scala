@@ -133,27 +133,24 @@ sealed class Nil extends Dense {
 }
 
 
-final case class Cons[x <: Boolean, xs <: Dense](private val x: x, private val xs: xs) extends Dense {
+final case class Cons[x <: Boolean, xs <: Dense](override val head: x, override val tail: xs) extends Dense {
     override  val self = this
     override type self = Cons[x, xs]
 
-    override  def head: head = x
     override type head = x
-
-    override  def tail: tail = xs
     override type tail = xs
 
     override  def isEmpty: isEmpty = `false`
     override type isEmpty = `false`
 
-    override  def increment: increment = new IncrementCons().apply(x, xs)
-    override type increment = IncrementCons#apply[x, xs]
+    override  def increment: increment = new ConsIncrement().apply(head, tail)
+    override type increment = ConsIncrement#apply[head, tail]
 
-    override  def decrement: decrement = new DecrementCons().apply(x, xs)
-    override type decrement = DecrementCons#apply[x, xs]
+    override  def decrement: decrement = new ConsDecrement().apply(head, tail)
+    override type decrement = ConsDecrement#apply[head, tail]
 
-    override  def **[that <: Dense](that: that): **[that] = throw new Error//MultiplyCons(x, xs).apply(that)
-    override type **[that <: Dense] = Nothing//MultiplyCons[x, xs]#apply[that]
+    override  def **[that <: Dense](that: that): **[that] = throw new Error//MultiplyCons(head, tail).apply(that)
+    override type **[that <: Dense] = Nothing//MultiplyCons[head, tail]#apply[that]
 
     override  def <<[that <: Dense](that: that): <<[that] = Cons(`false`, self)
     override type <<[that <: Dense] = Cons[`false`, self]
@@ -167,7 +164,7 @@ final case class Cons[x <: Boolean, xs <: Dense](private val x: x, private val x
     override  def foldRightWithNat[z <: Any, f <: Function2](z: z, f: f): foldRightWithNat[z, f] = f.apply(self, decrement.foldRightWithNat(z, f))
     override type foldRightWithNat[z <: Any, f <: Function2] = f#apply[self, decrement#foldRightWithNat[z, f]]
 
-    override def undual: undual = (if (x.undual) 1 else 0) + (2 * xs.undual)
+    override def undual: undual = (if (head.undual) 1 else 0) + (2 * tail.undual)
 }
 
 

@@ -277,14 +277,11 @@ sealed abstract class Nil extends List {
 }
 
 
-final case class Cons[x <: Any, xs <: List](private val x: x, private val xs: xs) extends List {
+final case class Cons[x <: Any, xs <: List](override val head: x, override val tail: xs) extends List {
     override  val self = this
     override type self = Cons[x, xs]
 
-    override  val head: head = x
     override type head = x
-
-    override  val tail: tail = xs
     override type tail = xs
 
     override  def isEmpty: isEmpty = `false`

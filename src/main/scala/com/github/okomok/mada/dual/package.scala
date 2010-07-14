@@ -29,6 +29,13 @@ package object dual {
     type always0[x <: Any] = Always0[x]
 
 
+    /**
+     * The dual boxing
+     */
+     def box[x](x: x): box[x] = Box(x)
+    type box[x] = Box[x]
+
+
 // assertions
 
     /**

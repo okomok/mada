@@ -93,14 +93,13 @@ sealed abstract class None extends Option {
 /**
  * The dual Some
  */
-final case class Some[e <: Any](e: e) extends Option {
+final case class Some[e <: Any](override val get: e) extends Option {
     override  val self = this
     override type self = Some[e]
 
     override  def isEmpty: isEmpty = `false`
     override type isEmpty = `false`
 
-    override  val get: get = e
     override type get = e
 
     override  def getOrElse[f <: Function0](f: f): getOrElse[f] = get
@@ -120,8 +119,8 @@ final case class Some[e <: Any](e: e) extends Option {
 
     override  def foreach[f <: Function1](f: f): foreach[f] = { f.apply(get); Unit }
 
-    override  def undual: undual = scala.Some(e.undual)
-    override type undual = scala.Some[e#undual]
+    override  def undual: undual = scala.Some(get.undual)
+    override type undual = scala.Some[get#undual]
 }
 
 

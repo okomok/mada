@@ -109,7 +109,7 @@ sealed trait Zero extends Peano {
 }
 
 
-final case class Succ[n <: Peano](private val n: n) extends Peano {
+final case class Succ[n <: Peano](override val decrement: n) extends Peano {
     override  val self = this
     override type self = Succ[n]
 
@@ -122,16 +122,15 @@ final case class Succ[n <: Peano](private val n: n) extends Peano {
     override  def increment: increment = Succ(self)
     override type increment = Succ[self]
 
-    override  def decrement: decrement = n
     override type decrement = n
 
-    override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = f.apply(self, n.foldRight(z, f))
-    override type foldRight[z <: Any, f <: Function2] = f#apply[self, n#foldRight[z, f]]
+    override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = f.apply(self, decrement.foldRight(z, f))
+    override type foldRight[z <: Any, f <: Function2] = f#apply[self, decrement#foldRight[z, f]]
 
-    override lazy val isEven: isEven = n.isEven.not
-    override type isEven = n#isEven#not
+    override lazy val isEven: isEven = decrement.isEven.not
+    override type isEven = decrement#isEven#not
 
-    override def undual: undual = 1 + n.undual
+    override def undual: undual = 1 + decrement.undual
 }
 
 
