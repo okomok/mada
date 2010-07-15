@@ -19,14 +19,14 @@ class Helper {
     type natOrd = ordering.ofNatPeano
     val natOrd: natOrd = ordering.ofNatPeano
 
-    type node[k <: nat.Peano, l <: map.Map, r <: map.Map] =
-        map.Node[l#size# +[r#size]#increment, k, k, l, r, natOrd]
-    def node[k <: nat.Peano, l <: map.Map, r <: map.Map](k: k, l: l, r: r): node[k, l, r] =
-        map.Node((l.size + r.size).increment, k, k, l, r, natOrd).asInstanceOf[node[k, l, r]]
+    type node[k <: nat.Peano, l <: map.bstree.BSTree, r <: map.bstree.BSTree] =
+        map.bstree.Node[l#size# +[r#size]#increment, k, k, l, r, natOrd]
+    def node[k <: nat.Peano, l <: map.bstree.BSTree, r <: map.bstree.BSTree](k: k, l: l, r: r): node[k, l, r] =
+        map.bstree.Node((l.size + r.size).increment, k, k, l, r, natOrd).asInstanceOf[node[k, l, r]]
 
-    type nil = map.Nil[natOrd]
-    val nil: nil = map.Nil(natOrd)
+    type nil = map.bstree.Nil[natOrd]
+    val nil: nil = map.bstree.Nil(natOrd)
 
-    type leaf[k <: nat.Peano] = map.single[k, k, natOrd]
-    def leaf[k <: nat.Peano](k: k) = map.single(k, k, natOrd)
+    type leaf[k <: nat.Peano] = map.bstree.Nil[natOrd]#put[k, k]
+    def leaf[k <: nat.Peano](k: k) = map.bstree.Nil(natOrd).put(k, k)
 }

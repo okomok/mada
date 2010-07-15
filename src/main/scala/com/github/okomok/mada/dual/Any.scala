@@ -51,6 +51,9 @@ trait Any extends scala.Equals {
      def asInstanceOfMap: asInstanceOfMap = unsupported("dual.Any.asInstanceOfMap")
     type asInstanceOfMap <: Map
 
+     def asInstanceOfMapBSTree: asInstanceOfMapBSTree = unsupported("dual.Any.asInstanceOfMapBSTree")
+    type asInstanceOfMapBSTree <: map.bstree.BSTree
+
      def asInstanceOfSet: asInstanceOfSet = unsupported("dual.Any.asInstanceOfSet")
     type asInstanceOfSet <: Set
 

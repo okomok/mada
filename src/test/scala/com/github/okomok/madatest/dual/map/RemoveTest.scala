@@ -21,8 +21,8 @@ class RemoveTest extends junit.framework.TestCase {
         type o = ordering.ofNatPeano
         val o: o = ordering.ofNatPeano
 
-        type m = map.Nil[o]#put[_3, box[Int]]#put[_5, box[Char]]#put[_1, box[String]]
-        val m: m = map.Nil(o).put(_3, box(3)).put(_5, box('c')).put(_1, box("wow"))
+        type m = map.sorted[o]#put[_3, box[Int]]#put[_5, box[Char]]#put[_1, box[String]]
+        val m: m = map.sorted(o).put(_3, box(3)).put(_5, box('c')).put(_1, box("wow"))
         AssertInvariant(m)
 
         type rm = m#remove[_5]

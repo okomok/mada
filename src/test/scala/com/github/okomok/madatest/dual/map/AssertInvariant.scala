@@ -15,7 +15,7 @@ import junit.framework.Assert._
 
 
 object AssertInvariant {
-    def apply[m <: Map](m: m) {
+    def apply[m <: map.bstree.BSTree](m: m) {
         if (m.isEmpty.undual) {
             assertEquals(0, m.size.undual)
         } else  {
@@ -36,7 +36,7 @@ object AssertInvariant {
 }
 
 object AssertKeyLT {
-    def apply[m <: Map, k <: Any](m: m, k: k) {
+    def apply[m <: map.bstree.BSTree, k <: Any](m: m, k: k) {
         if (!m.isEmpty.undual) {
             assertTrue(m.ord.compare(m.key, k).undual < 0)
             AssertKeyLT(m.left, k)
@@ -46,7 +46,7 @@ object AssertKeyLT {
 }
 
 object AssertKeyGT {
-    def apply[m <: Map, k <: Any](m: m, k: k) {
+    def apply[m <: map.bstree.BSTree, k <: Any](m: m, k: k) {
         if (!m.isEmpty.undual) {
             assertTrue(m.ord.compare(k, m.key).undual < 0)
             AssertKeyGT(m.left, k)

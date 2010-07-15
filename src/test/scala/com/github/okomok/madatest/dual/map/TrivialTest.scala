@@ -20,16 +20,16 @@ class TrivialTest extends junit.framework.TestCase {
     def testSingle {
         type o = ordering.ofNatPeano
         val o: o = ordering.ofNatPeano
-        type s = map.single[_3, box[Int], o]
-        val s: s = map.single(_3, box(3), o)
+        type s = map.sorted[o]#put[_3, box[Int]]
+        val s: s = map.sorted(o).put(_3, box(3))
 
         AssertInvariant(s)
 
         meta.assertSame[_1, s#size]
         meta.assertSame[_3, s#key]
         meta.assertSame[box[Int], s#value]
-        meta.assertSame[map.Nil[o], s#left]
-        meta.assertSame[map.Nil[o], s#right]
+        meta.assertSame[map.sorted[o], s#left]
+        meta.assertSame[map.sorted[o], s#right]
         meta.assertSame[o, s#ord]
         ()
     }
@@ -38,8 +38,8 @@ class TrivialTest extends junit.framework.TestCase {
         type o = ordering.ofNatPeano
         val o: o = ordering.ofNatPeano
 
-        type m = map.Nil[o]#put[_3, box[Int]]#put[_5, box[Char]]#put[_1, box[String]]
-        val m: m = map.Nil(o).put(_3, box(3)).put(_5, box('c')).put(_1, box("wow"))
+        type m = map.sorted[o]#put[_3, box[Int]]#put[_5, box[Char]]#put[_1, box[String]]
+        val m: m = map.sorted(o).put(_3, box(3)).put(_5, box('c')).put(_1, box("wow"))
 
         AssertInvariant(m)
 
@@ -59,8 +59,8 @@ class TrivialTest extends junit.framework.TestCase {
         type o = ordering.ofNatPeano
         val o: o = ordering.ofNatPeano
 
-        type m = map.Nil[o]#put[_3, box[Int]]#put[_5, box[Char]]#put[_1, box[String]]
-        val m: m = map.Nil(o).put(_3, box(3)).put(_5, box('c')).put(_1, box("wow"))
+        type m = map.sorted[o]#put[_3, box[Int]]#put[_5, box[Char]]#put[_1, box[String]]
+        val m: m = map.sorted(o).put(_3, box(3)).put(_5, box('c')).put(_1, box("wow"))
 
         meta.assertSame[`false`, m#contains[_9]]
         meta.assertSame[`true`, m#contains[_5]]
