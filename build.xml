@@ -4,7 +4,7 @@
 
 <!-- config -->
 
-    <property name="scala.home" location="../../scala-2.8.0.RC7" />
+    <property name="scala.home" location="../../scala-2.8.0.final" />
     <property name="junit.jar" location="${ant.home}/lib/junit-3.8.2.jar" />
 
     <property name="application.package" value="com.github.okomok.mada" />

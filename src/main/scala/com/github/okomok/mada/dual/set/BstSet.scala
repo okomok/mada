@@ -8,7 +8,7 @@ package com.github.okomok.mada
 package dual; package set
 
 
-private[mada] final case class BstSet[m <: Map](private val m: m) extends Set {
+private[mada] final case class BstSet[m <: map.Map](private val m: m) extends Set {
     override  val self = this
     override type self = BstSet[m]
 
