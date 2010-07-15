@@ -56,8 +56,8 @@ class OrderingTest extends junit.framework.TestCase {
         type o = ordering.ofNatPeano
         val o: o = ordering.ofNatPeano
 
-        type r = o#`match`[_5, _6, always0[_0], always0[_1], always0[_2]]
-        val r: r = o.`match`(_5, _6, always0(_0), always0(_1), always0(_2))
+        type r = o#`match`[_5, _6, const0[_0], const0[_1], const0[_2]]
+        val r: r = o.`match`(_5, _6, const0(_0), const0(_1), const0(_2))
         meta.assertSame[_0, r]
         assertEquals(_0, r)
     }
@@ -66,8 +66,8 @@ class OrderingTest extends junit.framework.TestCase {
         type o = ordering.ofNatPeano
         val o: o = ordering.ofNatPeano
 
-        type r = o#`match`[_7, _6, always0[_0], always0[_1], always0[_2]]
-        val r: r = o.`match`(_7, _6, always0(_0), always0(_1), always0(_2))
+        type r = o#`match`[_7, _6, const0[_0], const0[_1], const0[_2]]
+        val r: r = o.`match`(_7, _6, const0(_0), const0(_1), const0(_2))
         meta.assertSame[_1, r]
         assertEquals(_1, r)
     }
@@ -76,8 +76,8 @@ class OrderingTest extends junit.framework.TestCase {
         type o = ordering.ofNatPeano
         val o: o = ordering.ofNatPeano
 
-        type r = o#`match`[_7, _7, always0[_0], always0[_1], always0[_2]]
-        val r: r = o.`match`(_7, _7, always0(_0), always0(_1), always0(_2))
+        type r = o#`match`[_7, _7, const0[_0], const0[_1], const0[_2]]
+        val r: r = o.`match`(_7, _7, const0(_0), const0(_1), const0(_2))
         meta.assertSame[_2, r]
         assertEquals(_2, r)
     }

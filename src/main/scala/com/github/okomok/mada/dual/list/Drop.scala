@@ -9,8 +9,8 @@ package dual; package list
 
 
 private[mada] final class Drop {
-     def apply[xs <: List, n <: nat.Peano](xs: xs, n: n): apply[xs, n] = `if`(n.isZero || xs.isEmpty, always0(xs), new Else(xs, n)).apply.asInstanceOfList.asInstanceOf[apply[xs, n]]
-    type apply[xs <: List, n <: nat.Peano] = `if`[n#isZero# ||[xs#isEmpty], always0[xs], Else[xs, n]]#apply#asInstanceOfList
+     def apply[xs <: List, n <: nat.Peano](xs: xs, n: n): apply[xs, n] = `if`(n.isZero || xs.isEmpty, const0(xs), new Else(xs, n)).apply.asInstanceOfList.asInstanceOf[apply[xs, n]]
+    type apply[xs <: List, n <: nat.Peano] = `if`[n#isZero# ||[xs#isEmpty], const0[xs], Else[xs, n]]#apply#asInstanceOfList
 
     class Else[xs <: List, n <: nat.Peano](xs: xs, n: n) extends Function0 {
         override  val self = this

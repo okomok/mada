@@ -5,12 +5,13 @@
 
 
 package com.github.okomok.mada
-package dual
+package dual; package function
 
 
-private[mada] final case class Always0[v <: Any](override val apply: v) extends Function0 {
+private[mada] final class Const0[v <: Any](v: => v) extends Function0 {
     override  val self = this
-    override type self = Always0[v]
+    override type self = Const0[v]
 
+    override lazy val apply: apply = v
     override type apply = v
 }

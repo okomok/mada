@@ -69,11 +69,11 @@ sealed abstract class Dense extends Any {
     final  def <=[that <: Dense](that: that): <=[that] = (that < self).not
     final type <=[that <: Dense] = that# <[self]#not
 
-     def <<[that <: Dense](that: that): <<[that]
-    type <<[that <: Dense] <: Dense
+     def shiftLeft: shiftLeft
+    type shiftLeft <: Dense
 
-     def >>[that <: Dense](that: that): >>[that]
-    type >>[that <: Dense] <: Dense
+     def shiftRight: shiftRight
+    type shiftRight <: Dense
 
     final  def &[that <: Dense](that: that): &[that] = new BitAnd().apply(self, that)
     final type &[that <: Dense] = BitAnd#apply[self, that]
@@ -117,11 +117,11 @@ sealed class Nil extends Dense {
     override  def **[that <: Dense](that: that): **[that] = self
     override type **[that <: Dense] = self
 
-    override  def <<[that <: Dense](that: that): <<[that] = self
-    override type <<[that <: Dense] = self
+    override  def shiftLeft: shiftLeft = self
+    override type shiftLeft = self
 
-    override  def >>[that <: Dense](that: that): >>[that] = self
-    override type >>[that <: Dense] = self
+    override  def shiftRight: shiftRight = self
+    override type shiftRight = self
 
     override  def toPeano: toPeano = peano.Zero
     override type toPeano = peano.Zero
@@ -134,6 +134,8 @@ sealed class Nil extends Dense {
 
 
 final case class Cons[x <: Boolean, xs <: Dense](override val head: x, override val tail: xs) extends Dense {
+    assert(head || tail.isEmpty.not)
+
     override  val self = this
     override type self = Cons[x, xs]
 
@@ -149,14 +151,14 @@ final case class Cons[x <: Boolean, xs <: Dense](override val head: x, override 
     override  def decrement: decrement = new ConsDecrement().apply(head, tail)
     override type decrement = ConsDecrement#apply[head, tail]
 
-    override  def **[that <: Dense](that: that): **[that] = throw new Error//MultiplyCons(head, tail).apply(that)
-    override type **[that <: Dense] = Nothing//MultiplyCons[head, tail]#apply[that]
+    override  def **[that <: Dense](that: that): **[that] = new ConsMultiply().apply(head, tail, that)
+    override type **[that <: Dense] = ConsMultiply#apply[head, tail, that]
 
-    override  def <<[that <: Dense](that: that): <<[that] = Cons(`false`, self)
-    override type <<[that <: Dense] = Cons[`false`, self]
+    override  def shiftLeft: shiftLeft = new ConsFalse().apply(self)
+    override type shiftLeft = ConsFalse#apply[self]
 
-    override  def >>[that <: Dense](that: that): >>[that] = tail
-    override type >>[that <: Dense] = tail
+    override  def shiftRight: shiftRight = tail
+    override type shiftRight = tail
 
     override  def toPeano: toPeano = peano.Succ(decrement.toPeano)
     override type toPeano = peano.Succ[decrement#toPeano]

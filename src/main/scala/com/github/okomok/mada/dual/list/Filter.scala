@@ -9,8 +9,8 @@ package dual; package list
 
 
 private[mada] final class Filter {
-     def apply[xs <: List, f <: Function1](xs: xs, f: f): apply[xs, f] = `if`(xs.isEmpty, always0(xs), new Else(xs, f)).apply.asInstanceOfList
-    type apply[xs <: List, f <: Function1] = `if`[xs#isEmpty, always0[xs], Else[xs, f]]#apply#asInstanceOfList
+     def apply[xs <: List, f <: Function1](xs: xs, f: f): apply[xs, f] = `if`(xs.isEmpty, const0(xs), new Else(xs, f)).apply.asInstanceOfList
+    type apply[xs <: List, f <: Function1] = `if`[xs#isEmpty, const0[xs], Else[xs, f]]#apply#asInstanceOfList
 
     class Else[xs <: List, f <: Function1](xs: xs, f: f) extends Function0 {
         override  val self = this

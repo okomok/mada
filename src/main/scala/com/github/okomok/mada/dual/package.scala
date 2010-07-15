@@ -23,17 +23,16 @@ package object dual {
     type `throw`[x <: scala.Throwable] = Nothing
 
     /**
-     * The dual constant function
-     */
-     def always0[x <: Any](x: x): always0[x] = Always0(x)
-    type always0[x <: Any] = Always0[x]
-
-
-    /**
      * The dual boxing
      */
      def box[x](x: x): box[x] = Box(x)
     type box[x] = Box[x]
+
+    /**
+     * The dual constant function
+     */
+     def const0[x <: Any](x: => x): const0[x] = new function.Const0(x)
+    type const0[x <: Any] = function.Const0[x]
 
 
 // assertions

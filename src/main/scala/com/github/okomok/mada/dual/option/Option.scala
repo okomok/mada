@@ -47,8 +47,8 @@ sealed abstract class Option extends Any {
      def foreach[f <: Function1](f: f): foreach[f]
     final type foreach[f <: Function1] = Unit
 
-    final  def orElse[f <: Function0](f: f): orElse[f] = `if`(isEmpty, f, always0(self)).apply.asInstanceOfOption
-    final type orElse[f <: Function0] = `if`[isEmpty, f, always0[self]]#apply#asInstanceOfOption
+    final  def orElse[f <: Function0](f: f): orElse[f] = `if`(isEmpty, f, const0(self)).apply.asInstanceOfOption
+    final type orElse[f <: Function0] = `if`[isEmpty, f, const0[self]]#apply#asInstanceOfOption
 
     override type undual <: scala.Option[_]
     final override def canEqual(that: scala.Any) = that.isInstanceOf[Option]
@@ -111,8 +111,8 @@ final case class Some[e <: Any](override val get: e) extends Option {
     override  def flatMap[f <: Function1](f: f): flatMap[f] = f.apply(get).asInstanceOfOption
     override type flatMap[f <: Function1] = f#apply[get]#asInstanceOfOption
 
-    override  def filter[f <: Function1](f: f): filter[f] = `if`(f.apply(get).asInstanceOfBoolean, always0(self), always0(None)).apply.asInstanceOfOption
-    override type filter[f <: Function1] = `if`[f#apply[get]#asInstanceOfBoolean, always0[self], always0[None]]#apply#asInstanceOfOption
+    override  def filter[f <: Function1](f: f): filter[f] = `if`(f.apply(get).asInstanceOfBoolean, const0(self), const0(None)).apply.asInstanceOfOption
+    override type filter[f <: Function1] = `if`[f#apply[get]#asInstanceOfBoolean, const0[self], const0[None]]#apply#asInstanceOfOption
 
     override  def exists[f <: Function1](f: f): exists[f] = f.apply(get).asInstanceOfBoolean
     override type exists[f <: Function1] = f#apply[get]#asInstanceOfBoolean
