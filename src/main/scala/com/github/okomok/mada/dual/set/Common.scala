@@ -10,7 +10,7 @@ package dual; package set
 
 trait Common {
 
-     def sorted[o <: Ordering](o: o): sorted[o] = BSTreeSet(map.sorted(o))
-    type sorted[o <: Ordering] = BSTreeSet[map.sorted[o]]
+     def sorted[o <: Ordering](o: o): sorted[o] = BSTree(map.bstree.Nil(o))
+    type sorted[o <: Ordering] = BSTree[map.bstree.Nil[o]]
 
 }

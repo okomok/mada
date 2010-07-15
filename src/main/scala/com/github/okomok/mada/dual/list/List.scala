@@ -88,8 +88,8 @@ sealed abstract class List extends Any {
     /**
      * Filters elements using <code>f</code>.
      */
-    final  def filter[f <: Function1](f: f): filter[f] = new Filter().apply(self, f)
-    final type filter[f <: Function1] = Filter#apply[self, f]
+     def filter[f <: Function1](f: f): filter[f]
+    type filter[f <: Function1] <: List
 
     /**
      * Applies <code>f</code> to each element.
@@ -247,11 +247,14 @@ sealed abstract class Nil extends List {
     override  def isEmpty: isEmpty = `true`
     override type isEmpty = `true`
 
-    override  def map[f <: Function1](f: f): map[f] = Nil
-    override type map[f <: Function1] = Nil
+    override  def map[f <: Function1](f: f): map[f] = self
+    override type map[f <: Function1] = self
 
-    override  def flatMap[f <: Function1](f: f): flatMap[f] = Nil
-    override type flatMap[f <: Function1] = Nil
+    override  def flatMap[f <: Function1](f: f): flatMap[f] = self
+    override type flatMap[f <: Function1] = self
+
+    override  def filter[f <: Function1](f: f): filter[f] = self
+    override type filter[f <: Function1] = self
 
     override  def foreach[f <: Function1](f: f): foreach[f] = Unit
 
@@ -264,8 +267,8 @@ sealed abstract class Nil extends List {
     override  def size: size = nat.peano.Zero
     override type size = nat.peano.Zero
 
-    override  def zip[that <: List](that: that): zip[that] = Nil
-    override type zip[that <: List] = Nil
+    override  def zip[that <: List](that: that): zip[that] = self
+    override type zip[that <: List] = self
 
     override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = z
     override type foldRight[z <: Any, f <: Function2] = z
@@ -292,6 +295,9 @@ final case class Cons[x <: Any, xs <: List](override val head: x, override val t
 
     override  def flatMap[f <: Function1](f: f): flatMap[f] = tail.flatMap(f).:::(f.apply(head).asInstanceOfList)
     override type flatMap[f <: Function1] = tail#flatMap[f]# :::[f#apply[head]#asInstanceOfList]
+
+    override  def filter[f <: Function1](f: f): filter[f] = new ConsFilter().apply(head, tail, f)
+    override type filter[f <: Function1] = ConsFilter#apply[head, tail, f]
 
     override  def foreach[f <: Function1](f: f): foreach[f] = { f.apply(head); tail.foreach(f) }
 

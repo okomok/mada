@@ -12,7 +12,7 @@ private[mada] final case class Match[o <: Ordering, x <: Any, y <: Any, flt <: F
     override  val self = this
     override type self = Match[o, x, y, flt, fgt, feq]
 
-    private  val c: c = o.compare(x, y)
+    private lazy val c: c = o.compare(x, y)
     private type c = o#compare[x, y]
 
     override  def apply: apply = `if`(c === LT, flt, `if`(c === GT, fgt, feq)).apply.asInstanceOf[apply]

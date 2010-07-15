@@ -48,6 +48,7 @@ sealed trait Boolean extends Any {
     final override def canEqual(that: scala.Any) = that.isInstanceOf[Boolean]
 }
 
+
 /**
  * The dual true
  */

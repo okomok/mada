@@ -8,9 +8,9 @@ package com.github.okomok.mada
 package dual; package set
 
 
-private[mada] final case class BSTreeSet[m <: map.Map](private val m: m) extends Set {
+private[mada] final case class BSTree[m <: map.bstree.BSTree](private val m: m) extends Set {
     override  val self = this
-    override type self = BSTreeSet[m]
+    override type self = BSTree[m]
 
     override  def size: size = m.size
     override type size = m#size
@@ -18,11 +18,11 @@ private[mada] final case class BSTreeSet[m <: map.Map](private val m: m) extends
     override  def isEmpty: isEmpty = m.isEmpty
     override type isEmpty = m#isEmpty
 
-    override  def add[k <: Any](k: k): add[k] = BSTreeSet(m.put(k, Unit))
-    override type add[k <: Any] = BSTreeSet[m#put[k, Unit]]
+    override  def add[k <: Any](k: k): add[k] = BSTree(m.put(k, Unit))
+    override type add[k <: Any] = BSTree[m#put[k, Unit]]
 
-    override  def remove[k <: Any](k: k): remove[k] = BSTreeSet(m.remove(k))
-    override type remove[k <: Any] = BSTreeSet[m#remove[k]]
+    override  def remove[k <: Any](k: k): remove[k] = BSTree(m.remove(k))
+    override type remove[k <: Any] = BSTree[m#remove[k]]
 
     override  def contains[k <: Any](k: k): contains[k] = m.contains(k)
     override type contains[k <: Any] = m#contains[k]

@@ -12,10 +12,12 @@ package dual; package list
 
 
 private[mada] final class Take {
-     def apply[xs <: List, n <: nat.Peano](xs: xs, n: n): apply[xs, n] = `if`(n.isZero || xs.isEmpty, const0(Nil), new Else(xs, n)).apply.asInstanceOfList.asInstanceOf[apply[xs, n]]
-    type apply[xs <: List, n <: nat.Peano] = `if`[n#isZero# ||[xs#isEmpty], const0[Nil], Else[xs, n]]#apply#asInstanceOfList
+     def apply[xs <: List, n <: nat.Peano](xs: xs, n: n): apply[xs, n] =
+        `if`(n.isZero || xs.isEmpty, const0(Nil), Else(xs, n)).apply.asInstanceOfList.asInstanceOf[apply[xs, n]]
+    type apply[xs <: List, n <: nat.Peano] =
+        `if`[n#isZero# ||[xs#isEmpty], const0[Nil], Else[xs, n]]#apply#asInstanceOfList
 
-    class Else[xs <: List, n <: nat.Peano](xs: xs, n: n) extends Function0 {
+    case class Else[xs <: List, n <: nat.Peano](xs: xs, n: n) extends Function0 {
         override  val self = this
         override type self = Else[xs, n]
         override  def apply: apply = Cons(xs.head, xs.tail.take(n.decrement)).asInstanceOf[apply]
