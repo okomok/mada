@@ -20,9 +20,9 @@ class Helper {
     val natOrd: natOrd = ordering.ofNatPeano
 
     type node[k <: nat.Peano, l <: map.bstree.BSTree, r <: map.bstree.BSTree] =
-        map.bstree.Node[l#size# +[r#size]#increment, k, k, l, r, natOrd]
+        map.bstree.Node[k, k, l, r]
     def node[k <: nat.Peano, l <: map.bstree.BSTree, r <: map.bstree.BSTree](k: k, l: l, r: r): node[k, l, r] =
-        map.bstree.Node((l.size + r.size).increment, k, k, l, r, natOrd).asInstanceOf[node[k, l, r]]
+        map.bstree.Node(k, k, l, r).asInstanceOf[node[k, l, r]]
 
     type nil = map.bstree.Nil[natOrd]
     val nil: nil = map.bstree.Nil(natOrd)

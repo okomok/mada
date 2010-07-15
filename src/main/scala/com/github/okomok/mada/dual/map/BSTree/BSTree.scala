@@ -61,8 +61,8 @@ final case class Nil[o <: Ordering](override val ord: o) extends BSTree {
     override  def get[k <: Any](k: k): get[k] = None
     override type get[k <: Any] = None
 
-    override  def put[k <: Any, v <: Any](k: k, v: v): put[k, v] = Node(nat.peano._1, k, v, self, self, ord)
-    override type put[k <: Any, v <: Any] = Node[nat.peano._1, k, v, self, self, ord]
+    override  def put[k <: Any, v <: Any](k: k, v: v): put[k, v] = Node(k, v, self, self)
+    override type put[k <: Any, v <: Any] = Node[k, v, self, self]
 
     override  def remove[k <: Any](k: k): remove[k] = self
     override type remove[k <: Any] = self
@@ -71,21 +71,24 @@ final case class Nil[o <: Ordering](override val ord: o) extends BSTree {
 }
 
 
-final case class Node[n <: nat.Peano, k <: Any, v <: Any, l <: BSTree, r <: BSTree, o <: Ordering](
-    override val size: n,
-    override val key: k, override val value: v,
-    override val left: l, override val right: r,
-    override val ord: o) extends BSTree
+final case class Node[k <: Any, v <: Any, l <: BSTree, r <: BSTree](
+    override val key: k, override val value: v, override val left: l, override val right: r) extends BSTree
 {
-    override  val self = this
-    override type self = Node[n, k, v, l, r, o]
+    Predef.assert(left.ord.undual == right.ord.undual)
 
-    override type size = n
+    override  val self = this
+    override type self = Node[k, v, l, r]
+
+    override  val size: size = (left.size + right.size).increment.asInstanceOf[size]
+    override type size = left#size# +[right#size]#increment
+
     override type key = k
     override type value = v
     override type left = l
     override type right = r
-    override type ord = o
+
+    override  val ord: ord = left.ord
+    override type ord = left#ord
 
     override  def isEmpty: isEmpty = `false`
     override type isEmpty = `false`

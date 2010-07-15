@@ -25,8 +25,10 @@ trait Ordering extends Any {
     final type `match`[x <: Any, y <: Any, flt <: Function0, fgt <: Function0, feq <: Function0] =
         Match[self, x, y, flt, fgt, feq]#apply
 
-    override lazy val undual: undual = new scala.Ordering[scala.Any] { override def compare(x: scala.Any, y: scala.Any) = unsupported("dual.Ordering.undual") }
-    override type undual = scala.Ordering[scala.Any]
+    final override lazy val undual: undual = new scala.Ordering[scala.Any] {
+        override def compare(x: scala.Any, y: scala.Any) = unsupported("dual.Ordering.undual")
+    }
+    final override type undual = scala.Ordering[scala.Any]
 
     override  def canEqual(that: scala.Any) = that.isInstanceOf[Ordering]
 }
