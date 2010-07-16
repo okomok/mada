@@ -1,4 +1,4 @@
-# `Mada` 1.0-SNAPSHOT
+# `Mada` *0-SNAPSHOT
 
 
 
@@ -96,10 +96,10 @@ In the Scala metaprogramming world:
 
 References:
 
-1. [MetaScala]
-1. [Michid]
-1. [Apocalisp]
-1. [BoostFusion]
+* [MetaScala]
+* [Michid]
+* [Apocalisp]
+* [BoostFusion]
 
 
 
@@ -128,12 +128,12 @@ References:
 
 You might notice that:
 
-1. *Sequence* is represented by `>>`, because Scala doesn't have "blank" operator.
-1. *And-predicate* is represented by `~`, because Scala doesn't have unary `&` operator.
-1. `peg.from` may be needed to bust ambiguity.
-1. No scanners.
-1. `peg.Rule` is used to represent recursive grammars. (`lazy val` isn't used.)
-1. *Semantic Action* is passed using `{...}`. (`(...)` too can be used.)
+* *Sequence* is represented by `>>`, because Scala doesn't have "blank" operator.
+* *And-predicate* is represented by `~`, because Scala doesn't have unary `&` operator.
+* `peg.from` may be needed to bust ambiguity.
+* No scanners.
+* `peg.Rule` is used to represent recursive grammars. (`lazy val` isn't used.)
+* *Semantic Action* is passed using `{...}`. (`(...)` too can be used.)
 
 
 
@@ -237,9 +237,9 @@ or you could say a sequence-specific, thread-less and trivial `scala.Actor`.
 
 ## Links
 
-1. [Browse Source]
-1. [Browse Test Source]
-1. [The Scala Programming Language]
+* [Browse Source]
+* [Browse Test Source]
+* [The Scala Programming Language]
 
 
 Shunsuke Sogame <<okomok@gmail.com>>
