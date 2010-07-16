@@ -16,8 +16,8 @@ import junit.framework.Assert._
 
 
 object Samples {
-    type o = ordering.ofNatPeano
-    val o: o = ordering.ofNatPeano
+    type o = ordering.ofNat
+    val o: o = ordering.ofNat
 
     type map_single[k <: Any, v <: Any, o <: Ordering] = map.bstree.Nil[o]#put[k, v]
     def map_single[k <: Any, v <: Any, o <: Ordering](k: k, v: v, o: o) = map.bstree.Nil(o).put(k, v)

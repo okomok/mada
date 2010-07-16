@@ -18,8 +18,8 @@ import junit.framework.Assert._
 class RemoveTest extends junit.framework.TestCase {
 
     def testTrivial {
-        type o = ordering.ofNatPeano
-        val o: o = ordering.ofNatPeano
+        type o = ordering.ofNat
+        val o: o = ordering.ofNat
 
         type m = map.sorted[o]#put[_3, box[Int]]#put[_5, box[Char]]#put[_1, box[String]]
         val m: m = map.sorted(o).put(_3, box(3)).put(_5, box('c')).put(_1, box("wow"))

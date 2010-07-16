@@ -53,7 +53,7 @@
 
     import com.github.okomok.mada.dual
     import dual.::
-    import dual.nat.Literal._
+    import dual.nat.peano.Literal._
     import junit.framework.Assert._
 
     class DocTest extends junit.framework.TestCase {
@@ -63,21 +63,22 @@
             override  def self = this
             override type self = not2
             // Again no meta-generics. Downcast is needed as you did in 90s.
-            override  def apply[x <: dual.Any](x: x): apply[x] = x.asInstanceOfNat !== _2N
-            override type apply[x <: dual.Any] = x#asInstanceOfNat# !==[_2N]
+            override  def apply[x <: dual.Any](x: x): apply[x] = x.asInstanceOfNat !== _2
+            override type apply[x <: dual.Any] = x#asInstanceOfNat# !==[_2]
         }
         val not2 = new not2
 
         def testTrivial {
             // Filter heterogeneous list.
-            type xs = _2N :: _3N :: _4N :: _2N :: _5N :: _6N :: _2N :: dual.Nil
-            dual.meta.assertSame[_3N :: _4N :: _5N :: _6N :: dual.Nil, xs#filter[not2]]
+            type xs = _2 :: _3 :: _4 :: _2 :: _5 :: _6 :: _2 :: dual.Nil
+            dual.meta.assertSame[_3 :: _4 :: _5 :: _6 :: dual.Nil, xs#filter[not2]]
             // Because of duality, a runtime test might be unneeded.
-            val xs: xs = _2N :: _3N :: _4N :: _2N :: _5N :: _6N :: _2N :: dual.Nil
+            val xs: xs = _2 :: _3 :: _4 :: _2 :: _5 :: _6 :: _2 :: dual.Nil
             val fs: xs#filter[not2] = xs.filter(not2)
-            assertEquals(_3N :: _4N :: _5N :: _6N :: dual.Nil, fs)
+            assertEquals(_3 :: _4 :: _5 :: _6 :: dual.Nil, fs)
         }
     }
+
 
 Terminology:
 
@@ -92,7 +93,7 @@ In the Scala metaprogramming world:
 * meta-`eq`(type identity equality) is infeasible.
 * meta-generics doesn't work. (e.g. metatype can't be a parameter.)
 * metatype is resurrected in parameter-nondependent context.
-* there's no meta-`val` definition.
+* there's no way to define meta-`val`.
 
 References:
 

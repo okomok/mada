@@ -39,12 +39,16 @@ class TimesTest extends junit.framework.TestCase {
     }
 
     def testTimesParallel {
-        var i @volatile = 0
-        util.timesParallel(5) {
-            i += 1
-            "wow"
+        util.times(10) {
+            val i = new java.util.concurrent.atomic.AtomicInteger(0)
+            //var i @volatile = 0
+            util.timesParallel(5) {
+                i.incrementAndGet
+                //i += 1 // wake up man.
+                "wow"
+            }
+            assertEquals(5, i.get)
         }
-        assertEquals(5, i)
     }
 
 }

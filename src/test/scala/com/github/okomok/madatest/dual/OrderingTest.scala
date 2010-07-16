@@ -17,8 +17,8 @@ import nat.Peano
 class OrderingTest extends junit.framework.TestCase {
 
     def testLT {
-        type o = ordering.ofNatPeano
-        val o: o = ordering.ofNatPeano
+        type o = ordering.ofNat
+        val o: o = ordering.ofNat
 
         type r = o#compare[_1, _3]
         val r: r = o.compare(_1, _3)
@@ -29,8 +29,8 @@ class OrderingTest extends junit.framework.TestCase {
     }
 
     def testGT {
-        type o = ordering.ofNatPeano
-        val o: o = ordering.ofNatPeano
+        type o = ordering.ofNat
+        val o: o = ordering.ofNat
 
         type r = o#compare[_4, _2]
         val r: r = o.compare(_4, _2)
@@ -41,8 +41,8 @@ class OrderingTest extends junit.framework.TestCase {
     }
 
     def testEQ {
-        type o = ordering.ofNatPeano
-        val o: o = ordering.ofNatPeano
+        type o = ordering.ofNat
+        val o: o = ordering.ofNat
 
         type r = o#compare[_5, _5]
         val r: r = o.compare(_5, _5)
@@ -53,8 +53,8 @@ class OrderingTest extends junit.framework.TestCase {
     }
 
     def testMatchLT {
-        type o = ordering.ofNatPeano
-        val o: o = ordering.ofNatPeano
+        type o = ordering.ofNat
+        val o: o = ordering.ofNat
 
         type r = o#`match`[_5, _6, const0[_0], const0[_1], const0[_2]]
         val r: r = o.`match`(_5, _6, const0(_0), const0(_1), const0(_2))
@@ -63,8 +63,8 @@ class OrderingTest extends junit.framework.TestCase {
     }
 
     def testMatchGT {
-        type o = ordering.ofNatPeano
-        val o: o = ordering.ofNatPeano
+        type o = ordering.ofNat
+        val o: o = ordering.ofNat
 
         type r = o#`match`[_7, _6, const0[_0], const0[_1], const0[_2]]
         val r: r = o.`match`(_7, _6, const0(_0), const0(_1), const0(_2))
@@ -73,8 +73,8 @@ class OrderingTest extends junit.framework.TestCase {
     }
 
     def testMatchEQ {
-        type o = ordering.ofNatPeano
-        val o: o = ordering.ofNatPeano
+        type o = ordering.ofNat
+        val o: o = ordering.ofNat
 
         type r = o#`match`[_7, _7, const0[_0], const0[_1], const0[_2]]
         val r: r = o.`match`(_7, _7, const0(_0), const0(_1), const0(_2))
