@@ -97,9 +97,9 @@ In the Scala metaprogramming world:
 References:
 
 * [MetaScala]
-* [Michid]
+* [Michid's Weblog]
 * [Apocalisp]
-* [BoostFusion]
+* [Boost.Fusion]
 
 
 
@@ -247,11 +247,11 @@ Shunsuke Sogame <<okomok@gmail.com>>
 
 
 [MIT License]: http://www.opensource.org/licenses/mit-license.php "MIT License"
-[Browse Source]: http://github.com/okomok/mada/tree/master/src/main/scala "Browse Source"
-[Browse Test Source]: http://github.com/okomok/mada/tree/master/src/test/scala "Browse Test Source"
+[Browse Source]: http://github.com/okomok/mada/tree/master/src/main/scala/com/github/okomok/mada/ "Browse Source"
+[Browse Test Source]: http://github.com/okomok/mada/tree/master/src/test/scala/com/github/okomok/madatest/ "Browse Test Source"
 [The Scala Programming Language]: http://www.scala-lang.org/ "The Scala Programming Language"
 [PEG]: http://en.wikipedia.org/wiki/Parsing_expression_grammar "PEG"
 [MetaScala]: http://www.assembla.com/wiki/show/metascala
-[Michid]: http://michid.wordpress.com/
-[Apocalisp]: http://apocalisp.wordpress.com/
-[BoostFusion]: http://www.boost.org/doc/libs/release/libs/fusion/
+[Michid's Weblog]: http://michid.wordpress.com/ "Michid's Weblog"
+[Apocalisp]: http://apocalisp.wordpress.com/ "Apocalisp"
+[Boost.Fusion]: http://www.boost.org/doc/libs/release/libs/fusion/ "Boost.Fusion"
