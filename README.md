@@ -1,4 +1,4 @@
-# `Mada` *0-SNAPSHOT
+# `Mada` 1.0-SNAPSHOT
 
 
 
@@ -251,7 +251,7 @@ Shunsuke Sogame <<okomok@gmail.com>>
 [Browse Test Source]: http://github.com/okomok/mada/tree/master/src/test/scala/com/github/okomok/madatest/ "Browse Test Source"
 [The Scala Programming Language]: http://www.scala-lang.org/ "The Scala Programming Language"
 [PEG]: http://en.wikipedia.org/wiki/Parsing_expression_grammar "PEG"
-[MetaScala]: http://www.assembla.com/wiki/show/metascala
+[MetaScala]: http://www.assembla.com/wiki/show/metascala "MetaScala"
 [Michid's Weblog]: http://michid.wordpress.com/ "Michid's Weblog"
 [Apocalisp]: http://apocalisp.wordpress.com/ "Apocalisp"
 [Boost.Fusion]: http://www.boost.org/doc/libs/release/libs/fusion/ "Boost.Fusion"
