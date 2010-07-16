@@ -17,8 +17,8 @@ private[mada] class Glue {
     case class Else[l <: BSTree, r <: BSTree](l: l, r: r) extends Function0 {
         override  val self = this
         override type self = Else[l, r]
-        override  def apply: apply = `if`(l.size > r.size, ElseThen(l, r), ElseElse(l, r)).apply
-        override type apply = `if`[l#size# >[r#size], ElseThen[l, r], ElseElse[l, r]]#apply
+        override  def apply: apply = `if`(l.size  > r.size,  ElseThen(l, r), ElseElse(l, r)).apply.asInstanceOf[apply]
+        override type apply =        `if`[l#size# >[r#size], ElseThen[l, r], ElseElse[l, r]]#apply
     }
 
     case class ElseThen[l <: BSTree, r <: BSTree](l: l, r: r) extends Function0 {

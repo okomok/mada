@@ -27,18 +27,6 @@ sealed trait Peano extends Any {
      def isZero: isZero
     type isZero <: Boolean
 
-     def ltTwo: ltTwo
-    type ltTwo <: Boolean
-
-    private[mada]  def gtZero: gtZero
-    private[mada] type gtZero <: Boolean
-
-    final  def ===[that <: Peano](that: that): ===[that] = this.-(that).isZero
-    final type ===[that <: Peano] = -[that]#isZero
-
-    final  def !==[that <: Peano](that: that): !==[that] = ===(that).not
-    final type !==[that <: Peano] = ===[that]#not
-
      def increment: increment
     type increment <: Peano
 
@@ -54,17 +42,23 @@ sealed trait Peano extends Any {
     final  def **[that <: Peano](that: that): **[that] = new Multiply().apply(self, that)
     final type **[that <: Peano] = Multiply#apply[self, that]
 
-     def <[that <: Peano](that: that): <[that]
-    type <[that <: Peano] <: Boolean
+     def ===[that <: Peano](that: that): ===[that]
+    type ===[that <: Peano] <: Boolean
 
-    final  def >[that <: Peano](that: that): >[that] = that < self
-    final type >[that <: Peano] = that# <[self]
+     def <=[that <: Peano](that: that): <=[that]
+    type <=[that <: Peano] <: Boolean
 
-    final  def <=[that <: Peano](that: that): <=[that] = >(that).not
-    final type <=[that <: Peano] = >[that]#not
+    final  def !==[that <: Peano](that: that): !==[that] = ===(that).not
+    final type !==[that <: Peano] = ===[that]#not
 
-    final  def >=[that <: Peano](that: that): >=[that] = <(that).not
-    final type >=[that <: Peano] = <[that]#not
+    final  def >=[that <: Peano](that: that): >=[that] = that <= self
+    final type >=[that <: Peano] = that# <=[self]
+
+    final  def <[that <: Peano](that: that): <[that] = >=(that).not
+    final type <[that <: Peano] = >=[that]#not
+
+    final  def >[that <: Peano](that: that): >[that] = <=(that).not
+    final type >[that <: Peano] = <=[that]#not
 
     //final  def %[that <: Peano](that: that): %[that] = new Mod().apply(self, that)
     //final type %[that <: Peano] = Mod#apply[self, that]
@@ -93,20 +87,17 @@ sealed trait Zero extends Peano {
     override  def isZero: isZero = `true`
     override type isZero = `true`
 
-    override  def ltTwo: ltTwo = `true`
-    override type ltTwo = `true`
-
-    override private[mada]  def gtZero: gtZero = `false`
-    override private[mada] type gtZero = `false`
-
     override  def increment: increment = Succ(self)
     override type increment = Succ[self]
 
-    override  def decrement: decrement = Singular
-    override type decrement = Singular
+    override  def decrement: decrement = unsupported("dual.nat.peano.Zero.decrement")
+    override type decrement = unsupported[_]
 
-    override  def <[that <: Peano](that: that): <[that] = that.isZero.not
-    override type <[that <: Peano] = that#isZero#not
+    override  def ===[that <: Peano](that: that): ===[that] = that.isZero
+    override type ===[that <: Peano] = that#isZero
+
+    override  def <=[that <: Peano](that: that): <=[that] = `true`
+    override type <=[that <: Peano] = `true`
 
     override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = z
     override type foldRight[z <: Any, f <: Function2] = z
@@ -125,19 +116,16 @@ final case class Succ[n <: Peano](override val decrement: n) extends Peano {
     override  def isZero: isZero = `false`
     override type isZero = `false`
 
-    override  def ltTwo: ltTwo = decrement.isZero
-    override type ltTwo = decrement#isZero
-
-    override private[mada]  def gtZero: gtZero = `true`
-    override private[mada] type gtZero = `true`
-
     override  def increment: increment = Succ(self)
     override type increment = Succ[self]
 
     override type decrement = n
 
-    override  def <[that <: Peano](that: that): <[that] = new SuccLessThan().apply(self, that)
-    override type <[that <: Peano] = SuccLessThan#apply[self, that]
+    override  def ===[that <: Peano](that: that): ===[that] = new SuccEq().apply(self, that)
+    override type ===[that <: Peano] = SuccEq#apply[self, that]
+
+    override  def <=[that <: Peano](that: that): <=[that] = new SuccLtEq().apply(self, that)
+    override type <=[that <: Peano] = SuccLtEq#apply[self, that]
 
     override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = f.apply(self, decrement.foldRight(z, f))
     override type foldRight[z <: Any, f <: Function2] = f#apply[self, decrement#foldRight[z, f]]
@@ -148,38 +136,6 @@ final case class Succ[n <: Peano](override val decrement: n) extends Peano {
     override def undual: undual = 1 + decrement.undual
 }
 
-
-sealed trait Singular extends Peano {
-    override  val self = this
-    override type self = Singular
-
-    override  def isZero: isZero = `false`
-    override  type isZero = `false`
-
-    override  def ltTwo: ltTwo = unsupported("dual.nat.peano.Singular.ltTwo")
-    override type ltTwo = unsupported[_]
-
-    override private[mada]  def gtZero: gtZero = `false`
-    override private[mada] type gtZero = `false`
-
-    override  def increment: increment = `throw`(new scala.UnsupportedOperationException("dual.nat.Singular.increment"))
-    override type increment = `throw`[scala.UnsupportedOperationException]
-
-    override  def decrement: decrement = self
-    override type decrement = self
-
-     def <[that <: Peano](that: that): <[that] = throw new Error
-    type <[that <: Peano] = Nothing
-
-    override  def isEven: isEven = `throw`(new scala.UnsupportedOperationException("dual.nat.Singular.isEven"))
-    override type isEven = `throw`[scala.UnsupportedOperationException]
-
-    override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] =  `throw`(new scala.UnsupportedOperationException("dual.Singular.foldRight"))
-    override type foldRight[z <: Any, f <: Function2] = `throw`[scala.UnsupportedOperationException]
-}
-
-
 private[mada] object _Peano {
     val Zero = new Zero{}
-    val Singular = new Singular{}
 }

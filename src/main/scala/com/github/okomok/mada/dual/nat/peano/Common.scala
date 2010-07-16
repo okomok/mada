@@ -14,8 +14,6 @@ private[mada] class Common extends LiteralCommon {
 
     @equivalentTo("new Zero{}")
     val Zero = _Peano.Zero
-
-    private[mada] val Singular = _Peano.Singular
 }
 
 
