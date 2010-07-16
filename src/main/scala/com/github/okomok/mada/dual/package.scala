@@ -34,6 +34,11 @@ package object dual {
      def const0[x <: Any](x: => x): const0[x] = new function.Const0(x)
     type const0[x <: Any] = function.Const0[x]
 
+    /**
+     * Returns corresponding runtime value.
+     */
+     def unmeta[x <: Any](implicit _unmeta: Unmeta[x]): x = _unmeta.apply
+
 
 // assertions
 

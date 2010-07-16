@@ -19,8 +19,8 @@ package com.github.okomok.madatest; package dualtest
             override  def self = this
             override type self = not2
             // Again no meta-generics. Downcast is needed as you did in 90s.
-            override  def apply[x <: dual.Any](x: x): apply[x] = x.asInstanceOfNatPeano !== _2
-            override type apply[x <: dual.Any] = x#asInstanceOfNatPeano# !==[_2]
+            override  def apply[x <: dual.Any](x: x): apply[x] = x.asInstanceOfNat !== _2
+            override type apply[x <: dual.Any] = x#asInstanceOfNat# !==[_2]
         }
         val not2 = new not2
 
