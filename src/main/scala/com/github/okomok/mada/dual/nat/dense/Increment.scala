@@ -9,11 +9,13 @@ package dual; package nat; package dense
 
 
 private[mada] final class ConsIncrement {
-     def apply[x <: Boolean, xs <: Dense](x: x, xs: xs): apply[x, xs] = `if`(x, new Then(x, xs), new Else(x, xs)).apply.asInstanceOfNatDense
-    type apply[x <: Boolean, xs <: Dense] = `if`[x, Then[x, xs], Else[x, xs]]#apply#asInstanceOfNatDense
+     def apply[x <: Boolean, xs <: Dense](x: x, xs: xs): apply[x, xs] =
+        `if`(x, Then(x, xs), Else(x, xs)).apply.asInstanceOfNatDense
+    type apply[x <: Boolean, xs <: Dense] =
+        `if`[x, Then[x, xs], Else[x, xs]]#apply#asInstanceOfNatDense
 
     // (`true` :: xs).increment
-    class Then[x <: Boolean, xs <: Dense](x: x, xs: xs) extends Function0 {
+    case class Then[x <: Boolean, xs <: Dense](x: x, xs: xs) extends Function0 {
         override  val self = this
         override type self = Then[x, xs]
         override  def apply: apply = Cons(`false`, xs.increment)
@@ -21,7 +23,7 @@ private[mada] final class ConsIncrement {
     }
 
     // (`false` :: xs).increment
-    class Else[x <: Boolean, xs <: Dense](x: x, xs: xs) extends Function0 {
+    case class Else[x <: Boolean, xs <: Dense](x: x, xs: xs) extends Function0 {
         override  val self = this
         override type self = Else[x, xs]
         override  def apply: apply = Cons(`true`, xs)

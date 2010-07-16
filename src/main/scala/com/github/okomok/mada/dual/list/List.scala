@@ -238,10 +238,10 @@ sealed abstract class Nil extends List {
     override  val self = this
     override type self = Nil
 
-    override  def head: head = `throw`(new scala.NoSuchElementException)
+    override  def head: head = `throw`(new scala.NoSuchElementException("dual.list.Nil.head"))
     override type head = `throw`[scala.NoSuchElementException]
 
-    override  def tail: tail = `throw`(new scala.NoSuchElementException)
+    override  def tail: tail = `throw`(new scala.NoSuchElementException("dual.list.Nil.tail"))
     override type tail = `throw`[scala.NoSuchElementException]
 
     override  def isEmpty: isEmpty = `true`

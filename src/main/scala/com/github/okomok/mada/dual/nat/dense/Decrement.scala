@@ -9,11 +9,13 @@ package dual; package nat; package dense
 
 
 private[mada] final class ConsDecrement {
-     def apply[x <: Boolean, xs <: Dense](x: x, xs: xs): apply[x, xs] = `if`(xs.isEmpty, const0(xs), `if`(x, new Then(x, xs), new Else(x, xs))).apply.asInstanceOfNatDense.asInstanceOf[apply[x, xs]]
-    type apply[x <: Boolean, xs <: Dense] = `if`[xs#isEmpty, const0[xs], `if`[x, Then[x, xs], Else[x, xs]]]#apply#asInstanceOfNatDense
+     def apply[x <: Boolean, xs <: Dense](x: x, xs: xs): apply[x, xs] =
+        `if`(xs.isEmpty, const0(xs), `if`(x, Then(x, xs), Else(x, xs))).apply.asInstanceOfNatDense.asInstanceOf[apply[x, xs]]
+    type apply[x <: Boolean, xs <: Dense] =
+        `if`[xs#isEmpty, const0[xs], `if`[x, Then[x, xs], Else[x, xs]]]#apply#asInstanceOfNatDense
 
     // (`true` :: xs).decrement
-    class Then[x <: Boolean, xs <: Dense](x: x, xs: xs) extends Function0 {
+    case class Then[x <: Boolean, xs <: Dense](x: x, xs: xs) extends Function0 {
         override  val self = this
         override type self = Then[x, xs]
         override  def apply: apply = Cons(`false`, xs)
@@ -21,7 +23,7 @@ private[mada] final class ConsDecrement {
     }
 
     // (`false` :: xs).decrement
-    class Else[x <: Boolean, xs <: Dense](x: x, xs: xs) extends Function0 {
+    case class Else[x <: Boolean, xs <: Dense](x: x, xs: xs) extends Function0 {
         override  val self = this
         override type self = Else[x, xs]
         override  def apply: apply = Cons(`true`, xs.decrement)

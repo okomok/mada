@@ -36,12 +36,6 @@ sealed abstract class Dense extends Any {
     final  def addFirst[e <: Boolean](e: e): addFirst[e] = Cons(e, self)
     final type addFirst[e <: Boolean] = Cons[e, self]
 
-    final  def ===[that <: Dense](that: that): ===[that] = new Equals().apply(self, that)
-    final type ===[that <: Dense] = Equals#apply[self, that]
-
-    final  def !==[that <: Dense](that: that): !==[that] = ===(that).not
-    final type !==[that <: Dense] = ===[that]#not
-
      def increment: increment
     type increment <: Dense
 
@@ -56,6 +50,12 @@ sealed abstract class Dense extends Any {
 
      def **[that <: Dense](that: that): **[that]
     type **[that <: Dense] <: Dense
+
+    final  def ===[that <: Dense](that: that): ===[that] = new Equals().apply(self, that)
+    final type ===[that <: Dense] = Equals#apply[self, that]
+
+    final  def !==[that <: Dense](that: that): !==[that] = ===(that).not
+    final type !==[that <: Dense] = ===[that]#not
 
     final  def >[that <: Dense](that: that): >[that] = that < self
     final type >[that <: Dense] = that# <[self]
@@ -99,10 +99,10 @@ sealed class Nil extends Dense {
     override  val self = this
     override type self = Nil
 
-    override  def head: head = `throw`(new scala.NoSuchElementException("dual.nat.Nil.head"))
+    override  def head: head = `throw`(new scala.NoSuchElementException("dual.nat.dense.Nil.head"))
     override type head = `throw`[scala.NoSuchElementException]
 
-    override  def tail: tail = `throw`(new scala.NoSuchElementException("dual.nat.Nil.tail"))
+    override  def tail: tail = `throw`(new scala.NoSuchElementException("dual.nat.dense.Nil.tail"))
     override type tail = `throw`[scala.NoSuchElementException]
 
     override  def isEmpty: isEmpty = `true`
@@ -111,8 +111,8 @@ sealed class Nil extends Dense {
     override  def increment: increment = Cons(`true`, self)
     override type increment = Cons[`true`, self]
 
-    override  def decrement: decrement = `throw`(new scala.UnsupportedOperationException("dual.nat.Nil.decrement"))
-    override type decrement = `throw`[scala.UnsupportedOperationException]
+    override  def decrement: decrement = unsupported("dual.nat.dense.Nil.decrement")
+    override type decrement = unsupported[_]
 
     override  def **[that <: Dense](that: that): **[that] = self
     override type **[that <: Dense] = self
