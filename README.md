@@ -92,6 +92,14 @@ In the Scala metaprogramming world:
 * meta-`eq`(type identity equality) is infeasible.
 * meta-generics doesn't work. (e.g. metatype can't be a parameter.)
 * metatype is resurrected in parameter-nondependent context.
+* there's no meta-`val` definition.
+
+References:
+
+1. [MetaScala]
+1. [Michid]
+1. [Apocalisp]
+1. [BoostFusion]
 
 
 
@@ -232,9 +240,6 @@ or you could say a sequence-specific, thread-less and trivial `scala.Actor`.
 1. [Browse Source]
 1. [Browse Test Source]
 1. [The Scala Programming Language]
-1. [MetaScala]
-1. [Apocalisp]
-
 
 
 Shunsuke Sogame <<okomok@gmail.com>>
@@ -247,5 +252,6 @@ Shunsuke Sogame <<okomok@gmail.com>>
 [The Scala Programming Language]: http://www.scala-lang.org/ "The Scala Programming Language"
 [PEG]: http://en.wikipedia.org/wiki/Parsing_expression_grammar "PEG"
 [MetaScala]: http://www.assembla.com/wiki/show/metascala
+[Michid]: http://michid.wordpress.com/
 [Apocalisp]: http://apocalisp.wordpress.com/
-
+[BoostFusion]: http://www.boost.org/doc/libs/release/libs/fusion/
