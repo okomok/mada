@@ -57,11 +57,11 @@ sealed trait Peano extends Any {
     final  def <[that <: Peano](that: that): <[that] = that.>(self)
     final type <[that <: Peano] = that# >[self]
 
-    final  def >=[that <: Peano](that: that): >=[that] = >(that).||(===(that))
-    final type >=[that <: Peano] = >[that]# ||[===[that]]
+    final  def >=[that <: Peano](that: that): >=[that] = <(that).not
+    final type >=[that <: Peano] = <[that]#not
 
-    final  def <=[that <: Peano](that: that): <=[that] = that.>=(self)
-    final type <=[that <: Peano] = that# >=[self]
+    final  def <=[that <: Peano](that: that): <=[that] = >(that).not
+    final type <=[that <: Peano] = >[that]#not
 
     //final  def %[that <: Peano](that: that): %[that] = new Mod().apply(self, that)
     //final type %[that <: Peano] = Mod#apply[self, that]
