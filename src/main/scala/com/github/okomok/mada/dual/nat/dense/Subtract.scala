@@ -19,7 +19,7 @@ private[mada] final class Subtract {
     case class Throw[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
         override  val self = this
         override type self = Throw[xs, ys]
-        override  def apply: apply = `throw`(new scala.UnsupportedOperationException("dual.nat.Nil.subtract positive"))
+        override  def apply: apply = `throw`(new scala.UnsupportedOperationException("dual.nat.dense.Nil.subtract positive"))
         override type apply = `throw`[scala.UnsupportedOperationException]
     }
 
@@ -33,8 +33,10 @@ private[mada] final class Subtract {
     case class CaseTF[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
         override  val self = this
         override type self = CaseTF[xs, ys]
-        override  def apply: apply = Cons(`true`, (xs.tail - ys.tail))
-        override type apply = Cons[`true`, xs#tail# -[ys#tail]]
+        private   def xst_sub_yst: xst_sub_yst = (xs.tail - ys.tail).asInstanceOf[xst_sub_yst]
+        private  type xst_sub_yst = xs#tail# -[ys#tail]
+        override  def apply: apply = Cons(`true`, xst_sub_yst)
+        override type apply = Cons[`true`, xst_sub_yst]
     }
 
     case class CaseFT[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {

@@ -63,27 +63,3 @@ private[mada] trait LiteralCommon {
 	type _14 = Cons[_0B, Cons[_1B, Cons[_1B, Cons[_1B, Nil]]]]
 	type _15 = Cons[_1B, Cons[_1B, Cons[_1B, Cons[_1B, Nil]]]]
 }
-
-
-/**
- * Contains operators for Dense.
- */
-@compilerWorkaround("2.8.0") // not extended by `Common` to avoid "error: type _140.type is defined twice".
-object Operator extends OperatorCommon
-
-private[mada] trait OperatorCommon {
-    type  +[x <: Dense, y <: Dense] = x# +[y]
-    type  -[x <: Dense, y <: Dense] = x# -[y]
-    type **[x <: Dense, y <: Dense] = x# **[y]
-
-    type ===[x <: Dense, y <: Dense] = x# ===[y]
-    type !==[x <: Dense, y <: Dense] = x# !==[y]
-
-    type  <[x <: Dense, y <: Dense] = x# <[y]
-    type <=[x <: Dense, y <: Dense] = x# <=[y]
-    type  >[x <: Dense, y <: Dense] = x# >[y]
-    type >=[x <: Dense, y <: Dense] = x# >=[y]
-
-    type &[x <: Dense, y <: Dense] = x# &[y]
-    type |[x <: Dense, y <: Dense] = x# |[y]
-}

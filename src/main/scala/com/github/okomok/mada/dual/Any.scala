@@ -45,8 +45,14 @@ trait Any extends scala.Equals {
      def asInstanceOfList: asInstanceOfList = unsupported("dual.Any.asInstanceOfList")
     type asInstanceOfList <: List
 
+     def asInstanceOfNat: asInstanceOfNat = unsupported("dual.Any.asInstanceOfNat")
+    type asInstanceOfNat <: Nat
+
      def asInstanceOfNatDense: asInstanceOfNatDense = unsupported("dual.Any.asInstanceOfNatDense")
     type asInstanceOfNatDense <: nat.Dense
+
+     def asInstanceOfNatPeano: asInstanceOfNatPeano = unsupported("dual.Any.asInstanceOfNatPeano")
+    type asInstanceOfNatPeano <: nat.Peano
 
      def asInstanceOfMap: asInstanceOfMap = unsupported("dual.Any.asInstanceOfMap")
     type asInstanceOfMap <: Map
@@ -56,9 +62,6 @@ trait Any extends scala.Equals {
 
      def asInstanceOfSet: asInstanceOfSet = unsupported("dual.Any.asInstanceOfSet")
     type asInstanceOfSet <: Set
-
-     def asInstanceOfNatPeano: asInstanceOfNatPeano = unsupported("dual.Any.asInstanceOfNatPeano")
-    type asInstanceOfNatPeano <: nat.Peano
 
      def asInstanceOfOption: asInstanceOfOption = unsupported("dual.Any.asInstanceOfOption")
     type asInstanceOfOption <: Option

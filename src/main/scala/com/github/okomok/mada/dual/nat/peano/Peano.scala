@@ -12,53 +12,35 @@ package dual; package nat; package peano
 //      at http://www.assembla.com/wiki/show/metascala
 
 
-object Peano extends Common with OperatorCommon {
-    @returnThis
-    val Operator: OperatorCommon = this
-}
+object Peano extends Common
 
 
-sealed trait Peano extends Any {
+sealed trait Peano extends Nat {
     type self <: Peano
 
     final override  def asInstanceOfNatPeano = self
     final override type asInstanceOfNatPeano = self
 
-     def isZero: isZero
-    type isZero <: Boolean
-
-     def increment: increment
     type increment <: Peano
-
-     def decrement: decrement
     type decrement <: Peano
 
-    final  def +[that <: Peano](that: that): +[that] = new Add().apply(self, that)
-    final type +[that <: Peano] = Add#apply[self, that]
+    final  def +[that <: Nat](that: that): +[that] = new Add().apply(self, that.toPeano)
+    final type +[that <: Nat] = Add#apply[self, that#toPeano]
 
-    final  def -[that <: Peano](that: that): -[that] = new Subtract().apply(self, that)
-    final type -[that <: Peano] = Subtract#apply[self, that]
+    final  def -[that <: Nat](that: that): -[that] = new Subtract().apply(self, that.toPeano)
+    final type -[that <: Nat] = Subtract#apply[self, that#toPeano]
 
-    final  def **[that <: Peano](that: that): **[that] = new Multiply().apply(self, that)
-    final type **[that <: Peano] = Multiply#apply[self, that]
+    final  def **[that <: Nat](that: that): **[that] = new Multiply().apply(self, that.toPeano)
+    final type **[that <: Nat] = Multiply#apply[self, that#toPeano]
 
-     def ===[that <: Peano](that: that): ===[that]
-    type ===[that <: Peano] <: Boolean
+    final  def <[that <: Nat](that: that): <[that] = >=(that).not
+    final type <[that <: Nat] = >=[that]#not
 
-     def <=[that <: Peano](that: that): <=[that]
-    type <=[that <: Peano] <: Boolean
+    final override  def &[that <: Nat](that: that): &[that] = (toDense & that).toPeano
+    final override type &[that <: Nat] = toDense# &[that]#toPeano
 
-    final  def !==[that <: Peano](that: that): !==[that] = ===(that).not
-    final type !==[that <: Peano] = ===[that]#not
-
-    final  def >=[that <: Peano](that: that): >=[that] = that <= self
-    final type >=[that <: Peano] = that# <=[self]
-
-    final  def <[that <: Peano](that: that): <[that] = >=(that).not
-    final type <[that <: Peano] = >=[that]#not
-
-    final  def >[that <: Peano](that: that): >[that] = <=(that).not
-    final type >[that <: Peano] = <=[that]#not
+    final override  def |[that <: Nat](that: that): |[that] = (toDense | that).toPeano
+    final override type |[that <: Nat] = toDense# |[that]#toPeano
 
     //final  def %[that <: Peano](that: that): %[that] = new Mod().apply(self, that)
     //final type %[that <: Peano] = Mod#apply[self, that]
@@ -75,8 +57,8 @@ sealed trait Peano extends Any {
     final  def toDense: toDense = new ToDense().apply(self)
     final type toDense = ToDense#apply[self]
 
-    final override type undual = scala.Int
-    final override def canEqual(that: scala.Any) = that.isInstanceOf[Peano]
+    final override  def toPeano: toPeano = self
+    final override type toPeano = self
 }
 
 
@@ -93,11 +75,11 @@ sealed trait Zero extends Peano {
     override  def decrement: decrement = unsupported("dual.nat.peano.Zero.decrement")
     override type decrement = unsupported[_]
 
-    override  def ===[that <: Peano](that: that): ===[that] = that.isZero
-    override type ===[that <: Peano] = that#isZero
+    override  def ===[that <: Nat](that: that): ===[that] = that.isZero
+    override type ===[that <: Nat] = that#isZero
 
-    override  def <=[that <: Peano](that: that): <=[that] = `true`
-    override type <=[that <: Peano] = `true`
+    override  def <=[that <: Nat](that: that): <=[that] = `true`
+    override type <=[that <: Nat] = `true`
 
     override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = z
     override type foldRight[z <: Any, f <: Function2] = z
@@ -121,11 +103,11 @@ final case class Succ[n <: Peano](override val decrement: n) extends Peano {
 
     override type decrement = n
 
-    override  def ===[that <: Peano](that: that): ===[that] = new SuccEq().apply(self, that)
-    override type ===[that <: Peano] = SuccEq#apply[self, that]
+    override  def ===[that <: Nat](that: that): ===[that] = new SuccEq().apply(self, that.toPeano)
+    override type ===[that <: Nat] = SuccEq#apply[self, that#toPeano]
 
-    override  def <=[that <: Peano](that: that): <=[that] = new SuccLtEq().apply(self, that)
-    override type <=[that <: Peano] = SuccLtEq#apply[self, that]
+    override  def <=[that <: Nat](that: that): <=[that] = new SuccLtEq().apply(self, that.toPeano)
+    override type <=[that <: Nat] = SuccLtEq#apply[self, that#toPeano]
 
     override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = f.apply(self, decrement.foldRight(z, f))
     override type foldRight[z <: Any, f <: Function2] = f#apply[self, decrement#foldRight[z, f]]

@@ -52,24 +52,3 @@ private[mada] trait LiteralCommon {
     type _14 = Succ[_13]
     type _15 = Succ[_14]
 }
-
-
-/**
- * Contains operators for Dense.
- */
-@compilerWorkaround("2.8.0") // not extended by `Common` to avoid "error: type _140.type is defined twice".
-object Operator extends OperatorCommon
-
-private[mada] trait OperatorCommon {
-    type  +[x <: Peano, y <: Peano] = x# +[y]
-    type  -[x <: Peano, y <: Peano] = x# -[y]
-    type **[x <: Peano, y <: Peano] = x# **[y]
-
-    type ===[x <: Peano, y <: Peano] = x# ===[y]
-    type !==[x <: Peano, y <: Peano] = x# !==[y]
-
-    type  <[x <: Peano, y <: Peano] = x# <[y]
-    type <=[x <: Peano, y <: Peano] = x# <=[y]
-    type  >[x <: Peano, y <: Peano] = x# >[y]
-    type >=[x <: Peano, y <: Peano] = x# >=[y]
-}

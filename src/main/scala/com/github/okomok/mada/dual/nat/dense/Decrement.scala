@@ -10,9 +10,9 @@ package dual; package nat; package dense
 
 private[mada] final class ConsDecrement {
      def apply[x <: Boolean, xs <: Dense](x: x, xs: xs): apply[x, xs] =
-        `if`(xs.isEmpty, const0(xs), `if`(x, Then(x, xs), Else(x, xs))).apply.asInstanceOfNatDense.asInstanceOf[apply[x, xs]]
+        `if`(xs.isZero, const0(xs), `if`(x, Then(x, xs), Else(x, xs))).apply.asInstanceOfNatDense.asInstanceOf[apply[x, xs]]
     type apply[x <: Boolean, xs <: Dense] =
-        `if`[xs#isEmpty, const0[xs], `if`[x, Then[x, xs], Else[x, xs]]]#apply#asInstanceOfNatDense
+        `if`[xs#isZero, const0[xs], `if`[x, Then[x, xs], Else[x, xs]]]#apply#asInstanceOfNatDense
 
     // (`true` :: xs).decrement
     case class Then[x <: Boolean, xs <: Dense](x: x, xs: xs) extends Function0 {

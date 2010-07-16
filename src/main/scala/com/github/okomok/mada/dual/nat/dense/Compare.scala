@@ -25,7 +25,7 @@ private[mada] final class Equals {
     case class Else[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
         override  val self = this
         override type self = Else[xs, ys]
-        override  def apply: apply = xs.tail === ys.tail
+        override  def apply: apply = (xs.tail === ys.tail).asInstanceOf[apply]
         override type apply = xs#tail# ===[ys#tail]
     }
 }
@@ -42,7 +42,7 @@ private[mada] final class LessThan {
     case class CaseXXorTF[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
         override  val self = this
         override type self = CaseXXorTF[xs, ys]
-        override  def apply: apply = xs.tail < ys.tail
+        override  def apply: apply = (xs.tail < ys.tail).asInstanceOf[apply]
         override type apply = xs#tail# <[ys#tail]
     }
 

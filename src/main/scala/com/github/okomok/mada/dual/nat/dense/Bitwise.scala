@@ -19,8 +19,10 @@ private[mada] final class BitAnd {
     case class CaseTT[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
         override  val self = this
         override type self = CaseTT[xs, ys]
-        override  def apply: apply = Cons(`true`, xs.tail & ys.tail)
-        override type apply = Cons[`true`, xs#tail# &[ys#tail]]
+        private   def xst_and_yst: xst_and_yst = (xs.tail & ys.tail).asInstanceOf[xst_and_yst]
+        private  type xst_and_yst = xs#tail# &[ys#tail]
+        override  def apply: apply = Cons(`true`, xst_and_yst)
+        override type apply = Cons[`true`, xst_and_yst]
     }
 
     case class Else[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
@@ -43,14 +45,18 @@ private[mada] final class BitOr {
     case class CaseFF[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
         override  val self = this
         override type self = CaseFF[xs, ys]
-        override  def apply: apply = Cons(`false`, xs.tail | ys.tail)
-        override type apply = Cons[`false`, xs#tail# |[ys#tail]]
+        private   def xst_or_yst: xst_or_yst = (xs.tail | ys.tail).asInstanceOf[xst_or_yst]
+        private  type xst_or_yst = xs#tail# |[ys#tail]
+        override  def apply: apply = Cons(`false`, xst_or_yst)
+        override type apply = Cons[`false`, xst_or_yst]
     }
 
     case class Else[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
         override  val self = this
         override type self = Else[xs, ys]
-        override  def apply: apply = Cons(`true`, xs.tail | ys.tail)
-        override type apply = Cons[`true`, xs#tail# |[ys#tail]]
+        private   def xst_or_yst: xst_or_yst = (xs.tail | ys.tail).asInstanceOf[xst_or_yst]
+        private  type xst_or_yst = xs#tail# |[ys#tail]
+        override  def apply: apply = Cons(`true`, xst_or_yst)
+        override type apply = Cons[`true`, xst_or_yst]
     }
 }

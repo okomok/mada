@@ -12,7 +12,7 @@ import com.github.okomok.mada
 
 import mada.dual._
 import mada.dual.meta.{assert, assertNot}
-import mada.dual.nat.peano.Operator._
+import mada.dual.nat.Operator._
 import mada.dual.nat.peano.Literal._
 import mada.dual.nat.Peano
 

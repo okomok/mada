@@ -9,6 +9,6 @@ package dual; package nat; package dense
 
 
 private[mada] final class ConsFalse {
-     def apply[xs <: Dense](xs: xs): apply[xs] = `if`(xs.isEmpty, const0(xs), const0(Cons(`false`, xs))).apply
-    type apply[xs <: Dense] = `if`[xs#isEmpty, const0[xs], const0[Cons[`false`, xs]]]#apply
+     def apply[xs <: Dense](xs: xs): apply[xs] = `if`(xs.isZero, const0(xs), const0(Cons(`false`, xs))).apply
+    type apply[xs <: Dense] = `if`[xs#isZero, const0[xs], const0[Cons[`false`, xs]]]#apply
 }

@@ -109,6 +109,13 @@ package object dual {
     type reverse_:::[xs <: List, ys <: List] = list.reverse_:::[xs, ys]
 
 
+// Nat
+
+    @aliasOf("nat.Nat")
+     val Nat = nat.Nat
+    type Nat = nat.Nat
+
+
 // Map
 
     @aliasOf("map.Map")

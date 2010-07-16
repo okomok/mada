@@ -8,16 +8,4 @@ package com.github.okomok.mada
 package dual; package nat
 
 
-package object peano extends peano.Common {
-    type  +[x <: Peano, y <: Peano] = x# +[y]
-    type  -[x <: Peano, y <: Peano] = x# -[y]
-    type **[x <: Peano, y <: Peano] = x# **[y]
-
-    type ===[x <: Peano, y <: Peano] = x# ===[y]
-    type !==[x <: Peano, y <: Peano] = x# !==[y]
-
-    type  <[x <: Peano, y <: Peano] = x# <[y]
-    type <=[x <: Peano, y <: Peano] = x# <=[y]
-    type  >[x <: Peano, y <: Peano] = x# >[y]
-    type >=[x <: Peano, y <: Peano] = x# >=[y]
-}
+package object peano extends peano.Common

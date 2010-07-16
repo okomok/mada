@@ -102,20 +102,20 @@ sealed abstract class List extends Any {
      *
      * @pre `n in [0, size)`.
      */
-    final  def drop[n <: nat.Peano](n: n): drop[n] = new Drop().apply(self, n)
-    final type drop[n <: nat.Peano] = Drop#apply[self, n]
+    final  def drop[n <: Nat](n: n): drop[n] = new Drop().apply(self, n)
+    final type drop[n <: Nat] = Drop#apply[self, n]
 
     /**
      * Takes at most <code>n</code> elements.
      *
      * @pre `n in [0, size)`.
      */
-    final  def take[n <: nat.Peano](n: n): take[n] = new Take().apply(self, n)
-    final type take[n <: nat.Peano] = Take#apply[self, n]
+    final  def take[n <: Nat](n: n): take[n] = new Take().apply(self, n)
+    final type take[n <: Nat] = Take#apply[self, n]
 
     @equivalentTo("take(m).drop(n)")
-    final  def slice[n <: nat.Peano, m <: nat.Peano](n: n, m: m): slice[n, m] = take(m).drop(n)
-    final type slice[n <: nat.Peano, m <: nat.Peano] = take[m]#drop[n]
+    final  def slice[n <: Nat, m <: Nat](n: n, m: m): slice[n, m] = take(m).drop(n)
+    final type slice[n <: Nat, m <: Nat] = take[m]#drop[n]
 
     /**
      * Returns a list without the last element.
@@ -128,8 +128,8 @@ sealed abstract class List extends Any {
      *
      * @pre `n in [0, size)`.
      */
-    final  def insert[n <: nat.Peano, that <: List](n: n, that: that): insert[n, that] = drop(n).:::(that).:::(take(n))
-    final type insert[n <: nat.Peano, that <: List] = drop[n]# :::[that]# :::[take[n]]
+    final  def insert[n <: Nat, that <: List](n: n, that: that): insert[n, that] = drop(n).:::(that).:::(take(n))
+    final type insert[n <: Nat, that <: List] = drop[n]# :::[that]# :::[take[n]]
 
     /**
      * Returns the last element.
@@ -144,8 +144,8 @@ sealed abstract class List extends Any {
      *
      * @pre `n in [0, size)`.
      */
-    final  def nth[n <: nat.Peano](n: n): nth[n] = drop(n).head
-    final type nth[n <: nat.Peano] = drop[n]#head
+    final  def nth[n <: Nat](n: n): nth[n] = drop(n).head
+    final type nth[n <: Nat] = drop[n]#head
 
     /**
      * Prepends <code>that</code>.
@@ -161,16 +161,16 @@ sealed abstract class List extends Any {
      *
      * @pre `n in [0, size)`.
      */
-    final  def remove[n <: nat.Peano](n: n): remove[n] = drop(n.increment).:::(take(n)).asInstanceOf[remove[n]]
-    final type remove[n <: nat.Peano] = drop[n#increment]# :::[take[n]]
+    final  def remove[n <: Nat](n: n): remove[n] = drop(n.increment).:::(take(n)).asInstanceOf[remove[n]]
+    final type remove[n <: Nat] = drop[n#increment]# :::[take[n]]
 
     /**
      * Replaces <code>n</code>-th element with <code>_a</code>.
      *
      * @pre `n in [0, size)`.
      */
-    final  def replace[n <: nat.Peano, e <: Any](n: n, e: e): replace[n, e] = Cons(e, drop(n.increment)).:::(take(n)).asInstanceOf[replace[n, e]]
-    final type replace[n <: nat.Peano, e <: Any] = Cons[e, drop[n#increment]]# :::[take[n]]
+    final  def replace[n <: Nat, e <: Any](n: n, e: e): replace[n, e] = Cons(e, drop(n.increment)).:::(take(n)).asInstanceOf[replace[n, e]]
+    final type replace[n <: Nat, e <: Any] = Cons[e, drop[n#increment]]# :::[take[n]]
 
     /**
      * Prepends reversed <code>that</code>.
@@ -191,7 +191,7 @@ sealed abstract class List extends Any {
      * Returns the size.
      */
      def size: size
-    type size <: nat.Peano
+    type size <: Nat
 
     /**
      * Zips <code>that</code>.

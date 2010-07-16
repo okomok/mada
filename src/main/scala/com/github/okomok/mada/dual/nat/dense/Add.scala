@@ -26,14 +26,18 @@ private[mada] final class Add {
     case class CaseXF[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
         override  val self = this
         override type self = CaseXF[xs, ys]
-        override  def apply: apply = Cons(xs.head, (xs.tail + ys.tail))
-        override type apply = Cons[xs#head, xs#tail# +[ys#tail]]
+        private   def xst_add_yst: xst_add_yst = (xs.tail + ys.tail).asInstanceOf[xst_add_yst]
+        private  type xst_add_yst = xs#tail# +[ys#tail]
+        override  def apply: apply = Cons(xs.head, xst_add_yst)
+        override type apply = Cons[xs#head, xst_add_yst]
     }
 
     case class CaseFX[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
         override  val self = this
         override type self = CaseFX[xs, ys]
-        override  def apply: apply = Cons(ys.head, xs.tail + ys.tail)
-        override type apply = Cons[ys#head, xs#tail# +[ys#tail]]
+        private   def xst_add_yst: xst_add_yst = (xs.tail + ys.tail).asInstanceOf[xst_add_yst]
+        private  type xst_add_yst = xs#tail# +[ys#tail]
+        override  def apply: apply = Cons(ys.head, xst_add_yst)
+        override type apply = Cons[ys#head, xst_add_yst]
     }
 }
