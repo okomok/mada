@@ -9,10 +9,10 @@ package dual; package nat; package peano
 
 
 private[mada] final class ToDense {
-     def apply[x <: Peano](x: x): apply[x] = `if`(x.isZero, const0(dense.Nil), new Else(x)).apply.asInstanceOfNatDense
+     def apply[x <: Peano](x: x): apply[x] = `if`(x.isZero, const0(dense.Nil), Else(x)).apply.asInstanceOfNatDense
     type apply[x <: Peano] = `if`[x#isZero, const0[dense.Nil], Else[x]]#apply#asInstanceOfNatDense
 
-    class Else[x <: Peano](x: x) extends Function0 {
+    case class Else[x <: Peano](x: x) extends Function0 {
          override  val self = this
          override type self = Else[x]
          override  def apply: apply = dense.Cons(x.isOdd, new Div2().apply(x).toDense) // `ConsFalse` is redundant.
@@ -22,10 +22,10 @@ private[mada] final class ToDense {
 
 
 private[mada] final class Div2  {
-      def apply[x <: Peano](x: x): apply[x] = `if`(x < _2, const0(Zero), new Else(x)).apply.asInstanceOfNatPeano
+      def apply[x <: Peano](x: x): apply[x] = `if`(x < _2, const0(Zero), Else(x)).apply.asInstanceOfNatPeano
      type apply[x <: Peano] = `if`[x# <[_2], const0[Zero], Else[x]]#apply#asInstanceOfNatPeano
 
-     class Else[x <: Peano](x: x) extends Function0 {
+     case class Else[x <: Peano](x: x) extends Function0 {
          override  val self = this
          override type self = Else[x]
          override  def apply: apply = new Div2().apply(x.decrement.decrement).increment.asInstanceOf[apply]

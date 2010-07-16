@@ -9,10 +9,10 @@ package dual; package nat; package peano
 
 
 private[mada] final class Subtract {
-     def apply[x <: Peano, y <: Peano](x: x, y: y): apply[x, y] = y.foldRight(x, new Step).asInstanceOfNatPeano
+     def apply[x <: Peano, y <: Peano](x: x, y: y): apply[x, y] = y.foldRight(x, Step()).asInstanceOfNatPeano
     type apply[x <: Peano, y <: Peano] = y#foldRight[x, Step]#asInstanceOfNatPeano
 
-    class Step extends Function2 {
+    case class Step() extends Function2 {
         override  val self = this
         override type self = Step
         override  def apply[a <: Any, b <: Any](a: a, b: b): apply[a, b] = b.asInstanceOfNatPeano.decrement

@@ -12,10 +12,11 @@ package dual; package nat; package peano
 // 2. `case class Add[x <: Peano, y <: Peano](x: x, y: y)` may fall into type mismatch and slow-compilation.
 @compilerWorkaround("2.8.0")
 private[mada] final class Add {
-     def apply[x <: Peano, y <: Peano](x: x, y: y): apply[x, y] = x.foldRight(y, new Step).asInstanceOfNatPeano
-    type apply[x <: Peano, y <: Peano] = x#foldRight[y, Step]#asInstanceOfNatPeano
+    // fold in y, for `+` is left-associative.
+     def apply[x <: Peano, y <: Peano](x: x, y: y): apply[x, y] = y.foldRight(x, Step()).asInstanceOfNatPeano
+    type apply[x <: Peano, y <: Peano] = y#foldRight[x, Step]#asInstanceOfNatPeano
 
-    class Step extends Function2 {
+    case class Step() extends Function2 {
         override  val self = this
         override type self = Step
         override  def apply[a <: Any, b <: Any](a: a, b: b): apply[a, b] = b.asInstanceOfNatPeano.increment

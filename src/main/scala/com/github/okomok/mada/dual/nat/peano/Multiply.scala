@@ -9,13 +9,14 @@ package dual; package nat; package peano
 
 
 private[mada] final class Multiply {
-     def apply[x <: Peano, y <: Peano](x: x, y: y): apply[x, y] = x.foldRight(Zero, new Step(y)).asInstanceOfNatPeano
-    type apply[x <: Peano, y <: Peano] = x#foldRight[Zero, Step[y]]#asInstanceOfNatPeano
+    // fold in y, for `**` is left-associative.
+     def apply[x <: Peano, y <: Peano](x: x, y: y): apply[x, y] = y.foldRight(Zero, Step(x)).asInstanceOfNatPeano
+    type apply[x <: Peano, y <: Peano] = y#foldRight[Zero, Step[x]]#asInstanceOfNatPeano
 
-    class Step[y <: Peano](y: y) extends Function2 {
+    case class Step[x <: Peano](x: x) extends Function2 {
         override  val self = this
-        override type self = Step[y]
-        override def apply[a <: Any, b <: Any](a: a, b: b): apply[a, b] = y + b.asInstanceOfNatPeano
-        override type apply[a <: Any, b <: Any] = y# +[b#asInstanceOfNatPeano]
+        override type self = Step[x]
+        override def apply[a <: Any, b <: Any](a: a, b: b): apply[a, b] = x + b.asInstanceOfNatPeano
+        override type apply[a <: Any, b <: Any] = x# +[b#asInstanceOfNatPeano]
     }
 }
