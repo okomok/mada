@@ -19,7 +19,6 @@ class InitTest extends junit.framework.TestCase {
 
     trait testMeta {
         type initInit[l <: List] = l#init#init
-
         type l = Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil
         meta.assertSame[Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Nil, initInit[l]]
     }

@@ -123,8 +123,8 @@ sealed abstract class List extends Any {
     final  def lastOption: lastOption = nthOption(size.decrement)
     final type lastOption = nthOption[size#decrement]
 
-    final  def init: init = reverse.tail.reverse
-    final type init = reverse#tail#reverse
+     def init: init
+    type init <: List
 
     final  def take[n <: Nat](n: n): take[n] = new Take().apply(self, n)
     final type take[n <: Nat] = Take#apply[self, n]
@@ -211,6 +211,9 @@ sealed abstract class Nil extends List {
     override  def nthOption[n <: Nat](n: n): nthOption[n] = None
     override type nthOption[n <: Nat] = None
 
+    override  def init: init = unsupported("dual.list.Nil.init")
+    override type init = unsupported[_]
+
     override  def takeWhile[f <: Function1](f: f): takeWhile[f] = self
     override type takeWhile[f <: Function1] = self
 
@@ -265,6 +268,9 @@ final case class Cons[x <: Any, xs <: List](override val head: x, override val t
 
     override  def nthOption[n <: Nat](n: n): nthOption[n] = new ConsNthOption().apply(head, tail, n)
     override type nthOption[n <: Nat] = ConsNthOption#apply[head, tail, n]
+
+    override  def init: init = new ConsInit().apply(head, tail)
+    override type init = ConsInit#apply[head, tail]
 
     override  def takeWhile[f <: Function1](f: f): takeWhile[f] = new ConsTakeWhile().apply(head, tail, f)
     override type takeWhile[f <: Function1] = ConsTakeWhile#apply[head, tail, f]
