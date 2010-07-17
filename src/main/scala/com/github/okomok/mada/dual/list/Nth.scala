@@ -8,16 +8,16 @@ package com.github.okomok.mada
 package dual; package list
 
 
-private[mada] final class NthOption {
-     def apply[xs <: List, n <: Nat](xs: xs, n: n): apply[xs, n] =
-        `if`(n >= xs.size, const0(None), Else(xs, n)).apply.asInstanceOfOption.asInstanceOf[apply[xs, n]]
-    type apply[xs <: List, n <: Nat] =
-        `if`[n# >=[xs#size], const0[None], Else[xs, n]]#apply#asInstanceOfOption
+private[mada] final class ConsNthOption {
+     def apply[x <: Any, xs <: List, n <: Nat](x: x, xs: xs, n: n): apply[x, xs, n] =
+        `if`(n.isZero, const0(Some(x)), Else(xs, n)).apply.asInstanceOfOption//.asInstanceOf[apply[x, xs, n]]
+    type apply[x <: Any, xs <: List, n <: Nat] =
+        `if`[n#isZero, const0[Some[x]], Else[xs, n]]#apply#asInstanceOfOption
 
     case class Else[xs <: List, n <: Nat](xs: xs, n: n) extends Function0 {
         override  val self = this
         override type self = Else[xs, n]
-        override  def apply: apply = Some(xs.drop(n).head)
-        override type apply = Some[xs#drop[n]#head]
+        override  def apply: apply = xs.nthOption(n.decrement)
+        override type apply = xs#nthOption[n#decrement]
     }
 }

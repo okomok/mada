@@ -45,7 +45,6 @@ object List extends Common {
 
 
 sealed abstract class List extends Any {
-
     type self <: List
 
     final override  def asInstanceOfList = self
@@ -75,6 +74,9 @@ sealed abstract class List extends Any {
 
      def size: size
     type size <: Nat
+
+    final  def length: length = size
+    final type length = size
 
     final  def :::[that <: List](that: that): :::[that] = that.append(self)
     final type :::[that <: List] = that#append[self]
@@ -109,8 +111,8 @@ sealed abstract class List extends Any {
     final  def nth[n <: Nat](n: n): nth[n] = nthOption(n).get
     final type nth[n <: Nat] = nthOption[n]#get
 
-    final  def nthOption[n <: Nat](n: n): nthOption[n] = new NthOption().apply(self, n)
-    final type nthOption[n <: Nat] = NthOption#apply[self, n]
+     def nthOption[n <: Nat](n: n): nthOption[n]
+    type nthOption[n <: Nat] <: Option
 
     final  def headOption: headOption = nthOption(nat.peano.Zero)
     final type headOption = nthOption[nat.peano.Zero]
@@ -130,7 +132,6 @@ sealed abstract class List extends Any {
     final  def drop[n <: Nat](n: n): drop[n] = new Drop().apply(self, n)
     final type drop[n <: Nat] = Drop#apply[self, n]
 
-    @equivalentTo("take(m).drop(n)")
     final  def slice[n <: Nat, m <: Nat](n: n, m: m): slice[n, m] = take(m).drop(n)
     final type slice[n <: Nat, m <: Nat] = take[m]#drop[n]
 
@@ -143,11 +144,11 @@ sealed abstract class List extends Any {
     final  def reverse_:::[that <: List](that: that): reverse_:::[that] = that.reverseAppend(self)
     final type reverse_:::[that <: List] = that#reverseAppend[self]
 
-    private[mada]  def reverseAppend[that <: List](that: that): reverseAppend[that]
-    private[mada] type reverseAppend[that <: List] <: List
-
     final  def reverse: reverse = reverseAppend(Nil)
     final type reverse = reverseAppend[Nil]
+
+    private[mada]  def reverseAppend[that <: List](that: that): reverseAppend[that]
+    private[mada] type reverseAppend[that <: List] <: List
 
      def zip[that <: List](that: that): zip[that]
     type zip[that <: List] <: List
@@ -207,6 +208,9 @@ sealed abstract class Nil extends List {
     override  def foldLeft[z <: Any, f <: Function2](z: z, f: f): foldLeft[z, f] = z
     override type foldLeft[z <: Any, f <: Function2] = z
 
+    override  def nthOption[n <: Nat](n: n): nthOption[n] = None
+    override type nthOption[n <: Nat] = None
+
     override  def takeWhile[f <: Function1](f: f): takeWhile[f] = self
     override type takeWhile[f <: Function1] = self
 
@@ -258,6 +262,9 @@ final case class Cons[x <: Any, xs <: List](override val head: x, override val t
 
     override  def foldLeft[z <: Any, f <: Function2](z: z, f: f): foldLeft[z, f] = tail.foldLeft(f.apply(z, head), f)
     override type foldLeft[z <: Any, f <: Function2] = tail#foldLeft[f#apply[z, head], f]
+
+    override  def nthOption[n <: Nat](n: n): nthOption[n] = new ConsNthOption().apply(head, tail, n)
+    override type nthOption[n <: Nat] = ConsNthOption#apply[head, tail, n]
 
     override  def takeWhile[f <: Function1](f: f): takeWhile[f] = new ConsTakeWhile().apply(head, tail, f)
     override type takeWhile[f <: Function1] = ConsTakeWhile#apply[head, tail, f]
