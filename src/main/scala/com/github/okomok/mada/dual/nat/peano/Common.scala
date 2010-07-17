@@ -34,6 +34,21 @@ private[mada] trait LiteralCommon {
     val _13 = Succ(_12)
     val _14 = Succ(_13)
     val _15 = Succ(_14)
+    val _16 = Succ(_15)
+    val _17 = Succ(_16)
+    val _18 = Succ(_17)
+    val _19 = Succ(_18)
+    val _20 = Succ(_19)
+    val _21 = Succ(_20)
+    val _22 = Succ(_21)
+    val _23 = Succ(_22)
+    val _24 = Succ(_23)
+    val _25 = Succ(_24)
+    val _26 = Succ(_25)
+    val _27 = Succ(_26)
+    val _28 = Succ(_27)
+    val _29 = Succ(_28)
+    val _30 = Succ(_29)
 
     type  _0 = Zero
     type  _1 = Succ[_0]
@@ -51,4 +66,19 @@ private[mada] trait LiteralCommon {
     type _13 = Succ[_12]
     type _14 = Succ[_13]
     type _15 = Succ[_14]
+    type _16 = Succ[_15]
+    type _17 = Succ[_16]
+    type _18 = Succ[_17]
+    type _19 = Succ[_18]
+    type _20 = Succ[_19]
+    type _21 = Succ[_20]
+    type _22 = Succ[_21]
+    type _23 = Succ[_22]
+    type _24 = Succ[_23]
+    type _25 = Succ[_24]
+    type _26 = Succ[_25]
+    type _27 = Succ[_26]
+    type _28 = Succ[_27]
+    type _29 = Succ[_28]
+    type _30 = Succ[_29]
 }
