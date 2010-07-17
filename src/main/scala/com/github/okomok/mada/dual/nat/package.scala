@@ -12,6 +12,8 @@ package object nat extends nat.Common {
     type  +[x <: Nat, y <: Nat] = x# +[y]
     type  -[x <: Nat, y <: Nat] = x# -[y]
     type **[x <: Nat, y <: Nat] = x# **[y]
+    type /[x <: Nat, y <: Nat] = x# /[y]
+    type %[x <: Nat, y <: Nat] = x# %[y]
 
     type ===[x <: Nat, y <: Nat] = x# ===[y]
     type !==[x <: Nat, y <: Nat] = x# !==[y]

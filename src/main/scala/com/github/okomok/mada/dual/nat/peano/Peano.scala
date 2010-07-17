@@ -21,20 +21,23 @@ sealed trait Peano extends Nat {
     final override  def asInstanceOfNatPeano = self
     final override type asInstanceOfNatPeano = self
 
-    type increment <: Peano
-    type decrement <: Peano
+    override type increment <: Peano
+    override type decrement <: Peano
 
-    final  def +[that <: Nat](that: that): +[that] = new Add().apply(self, that.toPeano)
-    final type +[that <: Nat] = Add#apply[self, that#toPeano]
+    final override  def +[that <: Nat](that: that): +[that] = new Add().apply(self, that.toPeano)
+    final override type +[that <: Nat] = Add#apply[self, that#toPeano]
 
-    final  def -[that <: Nat](that: that): -[that] = new Subtract().apply(self, that.toPeano)
-    final type -[that <: Nat] = Subtract#apply[self, that#toPeano]
+    final override  def -[that <: Nat](that: that): -[that] = new Subtract().apply(self, that.toPeano)
+    final override type -[that <: Nat] = Subtract#apply[self, that#toPeano]
 
-    final  def **[that <: Nat](that: that): **[that] = new Multiply().apply(self, that.toPeano)
-    final type **[that <: Nat] = Multiply#apply[self, that#toPeano]
+    final override  def **[that <: Nat](that: that): **[that] = new Multiply().apply(self, that.toPeano)
+    final override type **[that <: Nat] = Multiply#apply[self, that#toPeano]
 
-    final  def <[that <: Nat](that: that): <[that] = (that.toPeano <= self).not
-    final type <[that <: Nat] = that#toPeano# <=[self]#not
+    final override  def divMod[that <: Nat](that: that): divMod[that] = new DivMod().apply(self, that)
+    final override type divMod[that <: Nat] = DivMod#apply[self, that]
+
+    final override  def <[that <: Nat](that: that): <[that] = (that.toPeano <= self).not
+    final override type <[that <: Nat] = that#toPeano# <=[self]#not
 
     final override  def &[that <: Nat](that: that): &[that] = (toDense & that).toPeano
     final override type &[that <: Nat] = toDense# &[that]#toPeano

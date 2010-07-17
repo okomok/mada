@@ -41,6 +41,9 @@ trait Nat extends Any {
      def **[that <: Nat](that: that): **[that]
     type **[that <: Nat] <: Nat
 
+     def divMod[that <: Nat](that: that): divMod[that]
+    type divMod[that <: Nat] <: Product2
+
      def ===[that <: Nat](that: that): ===[that]
     type ===[that <: Nat] <: Boolean
 
@@ -52,6 +55,12 @@ trait Nat extends Any {
 
     final  def !==[that <: Nat](that: that): !==[that] = ===(that).not
     final type !==[that <: Nat] = ===[that]#not
+
+    final  def /[that <: Nat](that: that): /[that] = divMod(that)._1.asInstanceOfNat
+    final type /[that <: Nat] = divMod[that]#_1#asInstanceOfNat
+
+    final  def %[that <: Nat](that: that): %[that] = divMod(that)._2.asInstanceOfNat
+    final type %[that <: Nat] = divMod[that]#_2#asInstanceOfNat
 
     @compilerWorkaround("2.8.0") // symmetric form makes bounds `Nothing`.
     final  def >[that <: Nat](that: that): >[that] = <=(that).not //that < self

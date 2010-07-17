@@ -41,6 +41,9 @@ sealed abstract class Dense extends Nat {
 
     override type **[that <: Nat] <: Dense
 
+    final override  def divMod[that <: Nat](that: that): divMod[that] = unsupported("coming soon")
+    final override type divMod[that <: Nat] = unsupported[_]
+
     final override  def ===[that <: Nat](that: that): ===[that] = new Equals().apply(self, that.toDense)
     final override type ===[that <: Nat] = Equals#apply[self, that#toDense]
 

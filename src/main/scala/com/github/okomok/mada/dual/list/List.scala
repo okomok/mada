@@ -12,36 +12,7 @@ package dual; package list
 //      at http://www.assembla.com/wiki/show/metascala
 
 
-object List extends Common {
-
-// methodization
-
-    sealed class _Of1[_this <: List](_this: _this) {
-        def toSTuple: scala.Tuple1[_this#head#undual] = scala.Tuple1(_this.head.undual)
-    }
-    implicit def _of1[a1 <: Any](_this: a1 :: Nil): _Of1[a1 :: Nil] = new _Of1(_this)
-
-    sealed class _Of2[_this <: List](_this: _this) {
-        def toSTuple: scala.Tuple2[_this#head#undual, _this#tail#head#undual] = scala.Tuple2(_this.head.undual, _this.tail.head.undual)
-    }
-    implicit def _of2[a1 <: Any, a2 <: Any](_this: a1 :: a2 :: Nil): _Of2[a1 :: a2 :: Nil] = new _Of2(_this)
-
-    sealed class _Of3[_this <: List](_this: _this) {
-        def toSTuple: scala.Tuple3[_this#head#undual, _this#tail#head#undual, _this#tail#tail#head#undual] = scala.Tuple3(_this.head.undual, _this.tail.head.undual, _this.tail.tail.head.undual)
-    }
-    implicit def _of3[a1 <: Any, a2 <: Any, a3 <: Any](_this: a1 :: a2 :: a3 :: Nil): _Of3[a1 :: a2 :: a3 :: Nil] = new _Of3(_this)
-
-    sealed class _Of4[_this <: List](_this: _this) {
-        def toSTuple: scala.Tuple4[_this#head#undual, _this#tail#head#undual, _this#tail#tail#head#undual, _this#tail#tail#tail#head#undual] = scala.Tuple4(_this.head.undual, _this.tail.head.undual, _this.tail.tail.head.undual, _this.tail.tail.tail.head.undual)
-    }
-    implicit def _of4[a1 <: Any, a2 <: Any, a3 <: Any, a4 <: Any](_this: a1 :: a2 :: a3 :: a4 :: Nil): _Of4[a1 :: a2 :: a3 :: a4 :: Nil] = new _Of4(_this)
-
-    sealed class _Of5[_this <: List](_this: _this) {
-        def toSTuple: scala.Tuple5[_this#head#undual, _this#tail#head#undual, _this#tail#tail#head#undual, _this#tail#tail#tail#head#undual, _this#tail#tail#tail#tail#head#undual] = scala.Tuple5(_this.head.undual, _this.tail.head.undual, _this.tail.tail.head.undual, _this.tail.tail.tail.head.undual, _this.tail.tail.tail.tail.head.undual)
-    }
-    implicit def _of5[a1 <: Any, a2 <: Any, a3 <: Any, a4 <: Any, a5 <: Any](_this: a1 :: a2 :: a3 :: a4 :: a5 :: Nil): _Of5[a1 :: a2 :: a3 :: a4 :: a5 :: Nil] = new _Of5(_this)
-
-}
+object List extends Common with ToSTuple
 
 
 sealed abstract class List extends Any {
@@ -119,6 +90,12 @@ sealed abstract class List extends Any {
 
      def reduceRight[f <: Function2](f: f): reduceRight[f]
     type reduceRight[f <: Function2] <: Any
+
+     def scanLeft[z <: Any, f <: Function2](z: z, f: f): scanLeft[z, f]
+    type scanLeft[z <: Any, f <: Function2] <: List
+
+     def scanRight[z <: Any, f <: Function2](z: z, f: f): scanRight[z, f]
+    type scanRight[z <: Any, f <: Function2] <: List
 
     final  def nth[n <: Nat](n: n): nth[n] = nthOption(n).get
     final type nth[n <: Nat] = nthOption[n]#get
@@ -226,6 +203,12 @@ sealed abstract class Nil extends List {
     override  def reduceRight[f <: Function2](f: f): reduceRight[f] = unsupported("dual.list.Nil.reduceRight")
     override type reduceRight[f <: Function2] = unsupported[_]
 
+    override  def scanLeft[z <: Any, f <: Function2](z: z, f: f): scanLeft[z, f] = Cons(z, self)
+    override type scanLeft[z <: Any, f <: Function2] = Cons[z, self]
+
+    override  def scanRight[z <: Any, f <: Function2](z: z, f: f): scanRight[z, f] = Cons(z, self)
+    override type scanRight[z <: Any, f <: Function2] = Cons[z, self]
+
     override  def nthOption[n <: Nat](n: n): nthOption[n] = None
     override type nthOption[n <: Nat] = None
 
@@ -289,6 +272,12 @@ final case class Cons[x <: Any, xs <: List](override val head: x, override val t
 
     override  def reduceRight[f <: Function2](f: f): reduceRight[f] = tail.foldRight(head, f)
     override type reduceRight[f <: Function2] = tail#foldRight[head, f]
+
+    override  def scanLeft[z <: Any, f <: Function2](z: z, f: f): scanLeft[z, f] = Cons(z, tail.scanLeft(f.apply(z, head), f))
+    override type scanLeft[z <: Any, f <: Function2] = Cons[z, tail#scanLeft[f#apply[z, head], f]]
+
+    override  def scanRight[z <: Any, f <: Function2](z: z, f: f): scanRight[z, f] = new ConsScanRightCons().apply(head, tail.scanRight(z, f), f)
+    override type scanRight[z <: Any, f <: Function2] = ConsScanRightCons#apply[head, tail#scanRight[z, f], f]
 
     override  def nthOption[n <: Nat](n: n): nthOption[n] = new ConsNthOption().apply(head, tail, n)
     override type nthOption[n <: Nat] = ConsNthOption#apply[head, tail, n]

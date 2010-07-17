@@ -1,0 +1,25 @@
+
+
+// Copyright Shunsuke Sogame 2008-2010.
+// Distributed under the terms of an MIT-style license.
+
+
+package com.github.okomok.mada
+package dual; package nat; package peano
+
+
+private[mada] final class DivMod {
+     def apply[x <: Nat, y <: Nat](x: x, y: y): apply[x, y] =
+        `if`(x < y, const0(Tuple2(Zero, x)), Else(x, y)).apply.asInstanceOfProduct2
+    type apply[x <: Nat, y <: Nat] =
+        `if`[x# <[y], const0[Tuple2[Zero, x]], Else[x, y]]#apply#asInstanceOfProduct2
+
+    case class Else[x <: Nat, y <: Nat](x: x, y: y) extends Function0 {
+        override  val self = this
+        override type self = Else[x, y]
+        private lazy val recur: recur = (x - y).divMod(y)
+        private type recur = x# -[y]#divMod[y]
+        override def apply: apply = Tuple2(recur._1.asInstanceOfNat.increment, recur._2)
+        override type apply = Tuple2[recur#_1#asInstanceOfNat#increment, recur#_2]
+    }
+}

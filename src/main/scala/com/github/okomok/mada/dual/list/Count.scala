@@ -9,8 +9,10 @@ package dual; package list
 
 
 private[mada] final class Count {
-     def apply[xs <: List, f <: Function1](xs: xs, f: f): apply[xs, f] = xs.foldRight(nat.peano._0, Step(xs, f)).asInstanceOfNat
-    type apply[xs <: List, f <: Function1] = xs#foldRight[nat.peano._0, Step[xs, f]]#asInstanceOfNat
+     def apply[xs <: List, f <: Function1](xs: xs, f: f): apply[xs, f] =
+        xs.foldRight(nat.peano._0, Step(xs, f)).asInstanceOfNat
+    type apply[xs <: List, f <: Function1] =
+        xs#foldRight[nat.peano._0, Step[xs, f]]#asInstanceOfNat
 
     case class Step[xs <: List, f <: Function1](xs: xs, f: f) extends Function2 {
         override  val self = this
