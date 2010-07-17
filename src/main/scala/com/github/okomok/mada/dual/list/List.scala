@@ -102,6 +102,9 @@ sealed abstract class List extends Any {
     final  def exists[f <: Function1](f: f): exists[f] = find(f).nonEmpty
     final type exists[f <: Function1] = find[f]#nonEmpty
 
+    final  def count[f <: Function1](f: f): count[f] = new Count().apply(self, f)
+    final type count[f <: Function1] = Count#apply[self, f]
+
      def find[f <: Function1](f: f): find[f]
     type find[f <: Function1] <: Option
 
