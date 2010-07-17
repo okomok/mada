@@ -102,11 +102,17 @@ sealed abstract class List extends Any {
      def find[f <: Function1](f: f): find[f]
     type find[f <: Function1] <: Option
 
+     def foldLeft[z <: Any, f <: Function2](z: z, f: f): foldLeft[z, f]
+    type foldLeft[z <: Any, f <: Function2] <: Any
+
      def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f]
     type foldRight[z <: Any, f <: Function2] <: Any
 
-     def foldLeft[z <: Any, f <: Function2](z: z, f: f): foldLeft[z, f]
-    type foldLeft[z <: Any, f <: Function2] <: Any
+     def reduceLeft[f <: Function2](f: f): reduceLeft[f]
+    type reduceLeft[f <: Function2] <: Any
+
+     def reduceRight[f <: Function2](f: f): reduceRight[f]
+    type reduceRight[f <: Function2] <: Any
 
     final  def nth[n <: Nat](n: n): nth[n] = nthOption(n).get
     final type nth[n <: Nat] = nthOption[n]#get
@@ -202,11 +208,17 @@ sealed abstract class Nil extends List {
     override  def find[f <: Function1](f: f): find[f] = None
     override type find[f <: Function1] = None
 
+    override  def foldLeft[z <: Any, f <: Function2](z: z, f: f): foldLeft[z, f] = z
+    override type foldLeft[z <: Any, f <: Function2] = z
+
     override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = z
     override type foldRight[z <: Any, f <: Function2] = z
 
-    override  def foldLeft[z <: Any, f <: Function2](z: z, f: f): foldLeft[z, f] = z
-    override type foldLeft[z <: Any, f <: Function2] = z
+    override  def reduceLeft[f <: Function2](f: f): reduceLeft[f] = unsupported("dual.list.Nil.reduceLeft")
+    override type reduceLeft[f <: Function2] = unsupported[_]
+
+    override  def reduceRight[f <: Function2](f: f): reduceRight[f] = unsupported("dual.list.Nil.reduceRight")
+    override type reduceRight[f <: Function2] = unsupported[_]
 
     override  def nthOption[n <: Nat](n: n): nthOption[n] = None
     override type nthOption[n <: Nat] = None
@@ -260,11 +272,17 @@ final case class Cons[x <: Any, xs <: List](override val head: x, override val t
     override  def find[f <: Function1](f: f): find[f] = new ConsFind().apply(head, tail, f)
     override type find[f <: Function1] = ConsFind#apply[head, tail, f]
 
+    override  def foldLeft[z <: Any, f <: Function2](z: z, f: f): foldLeft[z, f] = tail.foldLeft(f.apply(z, head), f)
+    override type foldLeft[z <: Any, f <: Function2] = tail#foldLeft[f#apply[z, head], f]
+
     override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = f.apply(head, tail.foldRight(z, f))
     override type foldRight[z <: Any, f <: Function2] = f#apply[head, tail#foldRight[z, f]]
 
-    override  def foldLeft[z <: Any, f <: Function2](z: z, f: f): foldLeft[z, f] = tail.foldLeft(f.apply(z, head), f)
-    override type foldLeft[z <: Any, f <: Function2] = tail#foldLeft[f#apply[z, head], f]
+    override  def reduceLeft[f <: Function2](f: f): reduceLeft[f] = tail.foldLeft(head, f)
+    override type reduceLeft[f <: Function2] = tail#foldLeft[head, f]
+
+    override  def reduceRight[f <: Function2](f: f): reduceRight[f] = tail.foldRight(head, f)
+    override type reduceRight[f <: Function2] = tail#foldRight[head, f]
 
     override  def nthOption[n <: Nat](n: n): nthOption[n] = new ConsNthOption().apply(head, tail, n)
     override type nthOption[n <: Nat] = ConsNthOption#apply[head, tail, n]
