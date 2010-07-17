@@ -87,8 +87,11 @@ sealed abstract class List extends Any {
      def map[f <: Function1](f: f): map[f]
     type map[f <: Function1] <: List
 
-     def flatMap[f <: Function1](f: f): flatMap[f]
-    type flatMap[f <: Function1] <: List
+    final  def flatMap[f <: Function1](f: f): flatMap[f] = map(f).flatten
+    final type flatMap[f <: Function1] = map[f]#flatten
+
+     def flatten: flatten
+    type flatten <: List
 
      def filter[f <: Function1](f: f): filter[f]
     type filter[f <: Function1] <: List
@@ -199,8 +202,8 @@ sealed abstract class Nil extends List {
     override  def map[f <: Function1](f: f): map[f] = self
     override type map[f <: Function1] = self
 
-    override  def flatMap[f <: Function1](f: f): flatMap[f] = self
-    override type flatMap[f <: Function1] = self
+    override  def flatten: flatten = self
+    override type flatten = self
 
     override  def filter[f <: Function1](f: f): filter[f] = self
     override type filter[f <: Function1] = self
@@ -263,8 +266,8 @@ final case class Cons[x <: Any, xs <: List](override val head: x, override val t
     override  def map[f <: Function1](f: f): map[f] = Cons(f.apply(head), tail.map(f))
     override type map[f <: Function1] = Cons[f#apply[head], tail#map[f]]
 
-    override  def flatMap[f <: Function1](f: f): flatMap[f] = tail.flatMap(f).:::(f.apply(head).asInstanceOfList)
-    override type flatMap[f <: Function1] = tail#flatMap[f]# :::[f#apply[head]#asInstanceOfList]
+    override  def flatten: flatten = tail.flatten.:::(head.asInstanceOfList)
+    override type flatten = tail#flatten# :::[head#asInstanceOfList]
 
     override  def filter[f <: Function1](f: f): filter[f] = new ConsFilter().apply(head, tail, f)
     override type filter[f <: Function1] = ConsFilter#apply[head, tail, f]
