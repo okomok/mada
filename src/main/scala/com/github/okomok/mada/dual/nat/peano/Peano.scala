@@ -33,8 +33,8 @@ sealed trait Peano extends Nat {
     final  def **[that <: Nat](that: that): **[that] = new Multiply().apply(self, that.toPeano)
     final type **[that <: Nat] = Multiply#apply[self, that#toPeano]
 
-    final  def <[that <: Nat](that: that): <[that] = >=(that).not
-    final type <[that <: Nat] = >=[that]#not
+    final  def <[that <: Nat](that: that): <[that] = (that.toPeano <= self).not
+    final type <[that <: Nat] = that#toPeano# <=[self]#not
 
     final override  def &[that <: Nat](that: that): &[that] = (toDense & that).toPeano
     final override type &[that <: Nat] = toDense# &[that]#toPeano

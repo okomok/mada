@@ -53,11 +53,12 @@ trait Nat extends Any {
     final  def !==[that <: Nat](that: that): !==[that] = ===(that).not
     final type !==[that <: Nat] = ===[that]#not
 
-    final  def >[that <: Nat](that: that): >[that] = that < self
-    final type >[that <: Nat] = that# <[self]
+    @compilerWorkaround("2.8.0") // symmetric form makes bounds `Nothing`.
+    final  def >[that <: Nat](that: that): >[that] = <=(that).not //that < self
+    final type >[that <: Nat] = <=[that]#not //that# <[self]
 
-    final  def >=[that <: Nat](that: that): >=[that] = that <= self
-    final type >=[that <: Nat] = that# <=[self]
+    final  def >=[that <: Nat](that: that): >=[that] = <(that).not //that <= self
+    final type >=[that <: Nat] = <[that]#not //that# <=[self]
 
      def &[that <: Nat](that: that): &[that]
     type &[that <: Nat] <: Nat

@@ -42,6 +42,9 @@ trait Function1 extends Any {
     final  def andThen[that <: Function1](that: that): andThen[that] = Compose(that, self)
     final type andThen[that <: Function1] = Compose[that, self]
 
+    final  def not: not = Not1(self)
+    final type not = Not1[self]
+
     // `val` keeps identity equality for undual objects.
     override lazy val undual: undual = (v1: scala.Any) => throw new UnsupportedOperationException("dual.Function1.apply")
     override type undual = scala.Any => scala.Nothing

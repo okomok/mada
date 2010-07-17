@@ -44,11 +44,11 @@ sealed abstract class Dense extends Nat {
     final override  def ===[that <: Nat](that: that): ===[that] = new Equals().apply(self, that.toDense)
     final override type ===[that <: Nat] = Equals#apply[self, that#toDense]
 
-    final  def <[that <: Nat](that: that): <[that] = new LessThan().apply(self, that.toDense)
-    final type <[that <: Nat] = LessThan#apply[self, that#toDense]
+    final override  def <[that <: Nat](that: that): <[that] = new LessThan().apply(self, that.toDense)
+    final override type <[that <: Nat] = LessThan#apply[self, that#toDense]
 
-    final  def <=[that <: Nat](that: that): <=[that] = (that.toDense < self).not
-    final type <=[that <: Nat] = that#toDense# <[self]#not
+    final override  def <=[that <: Nat](that: that): <=[that] = (that.toDense < self).not
+    final override type <=[that <: Nat] = that#toDense# <[self]#not
 
     final override  def &[that <: Nat](that: that): &[that] = new BitAnd().apply(self, that.toDense)
     final override type &[that <: Nat] = BitAnd#apply[self, that#toDense]

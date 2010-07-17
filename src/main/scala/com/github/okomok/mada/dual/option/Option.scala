@@ -23,8 +23,11 @@ sealed abstract class Option extends Any {
      def isEmpty: isEmpty
     type isEmpty <: Boolean
 
+    final  def nonEmpty: nonEmpty = isEmpty.not
+    final type nonEmpty = isEmpty#not
+
      def get: get
-    type get <: Any // Not metageneric
+    type get <: Any
 
      def getOrElse[f <: Function0](f: f): getOrElse[f]
     type getOrElse[f <: Function0] <: Any
