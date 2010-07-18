@@ -70,6 +70,9 @@ sealed abstract class List extends Any {
      def partition[f <: Function1](f: f): partition[f]
     type partition[f <: Function1] <: Product2
 
+     def sort[o <: Ordering](o: o): sort[o]
+    type sort[o <: Ordering] <: List
+
     final  def forall[f <: Function1](f: f): forall[f] = exists(f.not).not.asInstanceOf[forall[f]]
     final type forall[f <: Function1] = exists[f#not]#not
 
@@ -200,6 +203,9 @@ sealed abstract class Nil extends List {
     override  def partition[f <: Function1](f: f): partition[f] = Tuple2(self, self)
     override type partition[f <: Function1] = Tuple2[self, self]
 
+    override  def sort[o <: Ordering](o: o): sort[o] = self
+    override type sort[o <: Ordering] = self
+
     override  def find[f <: Function1](f: f): find[f] = None
     override type find[f <: Function1] = None
 
@@ -278,6 +284,9 @@ final case class Cons[x <: Any, xs <: List](override val head: x, override val t
 
     override  def partition[f <: Function1](f: f): partition[f] = new ConsPartition().apply(head, tail, f)
     override type partition[f <: Function1] = ConsPartition#apply[head, tail, f]
+
+    override  def sort[o <: Ordering](o: o): sort[o] = new ConsSort().apply(self, o)
+    override type sort[o <: Ordering] = ConsSort#apply[self, o]
 
     override  def find[f <: Function1](f: f): find[f] = new ConsFind().apply(head, tail, f)
     override type find[f <: Function1] = ConsFind#apply[head, tail, f]
