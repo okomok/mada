@@ -67,6 +67,9 @@ sealed abstract class List extends Any {
      def filter[f <: Function1](f: f): filter[f]
     type filter[f <: Function1] <: List
 
+     def partition[f <: Function1](f: f): partition[f]
+    type partition[f <: Function1] <: Product2
+
     final  def forall[f <: Function1](f: f): forall[f] = exists(f.not).not.asInstanceOf[forall[f]]
     final type forall[f <: Function1] = exists[f#not]#not
 
@@ -130,6 +133,9 @@ sealed abstract class List extends Any {
      def dropWhile[f <: Function1](f: f): dropWhile[f]
     type dropWhile[f <: Function1] <: List
 
+     def span[f <: Function1](f: f): span[f]
+    type span[f <: Function1] <: Product2
+
      def splitAt[n <: Nat](n: n): splitAt[n]
     type splitAt[n <: Nat] <: Product2
 
@@ -191,6 +197,9 @@ sealed abstract class Nil extends List {
     override  def filter[f <: Function1](f: f): filter[f] = self
     override type filter[f <: Function1] = self
 
+    override  def partition[f <: Function1](f: f): partition[f] = Tuple2(self, self)
+    override type partition[f <: Function1] = Tuple2[self, self]
+
     override  def find[f <: Function1](f: f): find[f] = None
     override type find[f <: Function1] = None
 
@@ -223,6 +232,9 @@ sealed abstract class Nil extends List {
 
     override  def dropWhile[f <: Function1](f: f): dropWhile[f] = self
     override type dropWhile[f <: Function1] = self
+
+    override  def span[f <: Function1](f: f): span[f] = Tuple2(self, self)
+    override type span[f <: Function1] = Tuple2[self, self]
 
     override  def splitAt[n <: Nat](n: n): splitAt[n] = Tuple2(self, self)
     override type splitAt[n <: Nat] = Tuple2[self, self]
@@ -264,6 +276,9 @@ final case class Cons[x <: Any, xs <: List](override val head: x, override val t
     override  def filter[f <: Function1](f: f): filter[f] = new ConsFilter().apply(head, tail, f)
     override type filter[f <: Function1] = ConsFilter#apply[head, tail, f]
 
+    override  def partition[f <: Function1](f: f): partition[f] = new ConsPartition().apply(head, tail, f)
+    override type partition[f <: Function1] = ConsPartition#apply[head, tail, f]
+
     override  def find[f <: Function1](f: f): find[f] = new ConsFind().apply(head, tail, f)
     override type find[f <: Function1] = ConsFind#apply[head, tail, f]
 
@@ -296,6 +311,9 @@ final case class Cons[x <: Any, xs <: List](override val head: x, override val t
 
     override  def dropWhile[f <: Function1](f: f): dropWhile[f] = new ConsDropWhile().apply(self, f)
     override type dropWhile[f <: Function1] = ConsDropWhile#apply[self, f]
+
+    override  def span[f <: Function1](f: f): span[f] = new ConsSpan().apply(self, f)
+    override type span[f <: Function1] = ConsSpan#apply[self, f]
 
     override  def splitAt[n <: Nat](n: n): splitAt[n] = new ConsSplitAt().apply(self, n)
     override type splitAt[n <: Nat] = ConsSplitAt#apply[self, n]
