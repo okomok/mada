@@ -17,9 +17,9 @@ private[mada] final class DivMod {
     case class Else[x <: Nat, y <: Nat](x: x, y: y) extends Function0 {
         override  val self = this
         override type self = Else[x, y]
-        private lazy val recur: recur = (x - y).divMod(y)
-        private type recur = x# -[y]#divMod[y]
-        override def apply: apply = Tuple2(recur._1.asInstanceOfNat.increment, recur._2)
-        override type apply = Tuple2[recur#_1#asInstanceOfNat#increment, recur#_2]
+        override  def apply: apply = Tuple2(r._1.asInstanceOfNat.increment, r._2)
+        override type apply = Tuple2[r#_1#asInstanceOfNat#increment, r#_2]
+        private lazy val r: r = (x - y).divMod(y)
+        private type r = x# -[y]#divMod[y]
     }
 }

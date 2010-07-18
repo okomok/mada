@@ -130,6 +130,9 @@ sealed abstract class List extends Any {
      def dropWhile[f <: Function1](f: f): dropWhile[f]
     type dropWhile[f <: Function1] <: List
 
+     def splitAt[n <: Nat](n: n): splitAt[n]
+    type splitAt[n <: Nat] <: Product2
+
     final  def reverse_:::[that <: List](that: that): reverse_:::[that] = that.reverseAppend(self)
     final type reverse_:::[that <: List] = that#reverseAppend[self]
 
@@ -221,6 +224,9 @@ sealed abstract class Nil extends List {
     override  def dropWhile[f <: Function1](f: f): dropWhile[f] = self
     override type dropWhile[f <: Function1] = self
 
+    override  def splitAt[n <: Nat](n: n): splitAt[n] = Tuple2(self, self)
+    override type splitAt[n <: Nat] = Tuple2[self, self]
+
     override private[mada]  def reverseAppend[that <: List](that: that) = that
     override private[mada] type reverseAppend[that <: List] = that
 
@@ -290,6 +296,9 @@ final case class Cons[x <: Any, xs <: List](override val head: x, override val t
 
     override  def dropWhile[f <: Function1](f: f): dropWhile[f] = new ConsDropWhile().apply(self, f)
     override type dropWhile[f <: Function1] = ConsDropWhile#apply[self, f]
+
+    override  def splitAt[n <: Nat](n: n): splitAt[n] = new ConsSplitAt().apply(self, n)
+    override type splitAt[n <: Nat] = ConsSplitAt#apply[self, n]
 
     override private[mada]  def reverseAppend[that <: List](that: that) = tail.reverseAppend(Cons(head, that))
     override private[mada] type reverseAppend[that <: List] = tail#reverseAppend[Cons[head, that]]
