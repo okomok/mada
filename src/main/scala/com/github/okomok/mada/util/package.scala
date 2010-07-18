@@ -103,6 +103,15 @@ package object util {
     def NoneOf[A]: Option[A] = None
 
     /**
+     * Returns an Option value instead of exception.
+     */
+    def optional[R](body: => R): Option[R] = try {
+        Some(body)
+    } catch {
+        case _ => None
+    }
+
+    /**
      * Evaluates <code>body</code> infinite times.
      */
     def repeat(body: => Unit): Unit = while (true) body
