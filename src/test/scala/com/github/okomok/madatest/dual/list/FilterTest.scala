@@ -20,8 +20,8 @@ class FilterTest extends junit.framework.TestCase {
     class not2 extends Function1 {
         override  def self = this
         override type self = not2
-        override  def apply[x <: Any](x: x): apply[x] = x.asInstanceOfNatPeano !== _2
-        override type apply[x <: Any] = x#asInstanceOfNatPeano# !==[_2]
+        override  def apply[x <: Any](x: x): apply[x] = x.asInstanceOfNat !== _2
+        override type apply[x <: Any] = x#asInstanceOfNat# !==[_2]
     }
     val not2 = new not2
 

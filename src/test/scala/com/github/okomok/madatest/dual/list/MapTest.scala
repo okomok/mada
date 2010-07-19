@@ -50,8 +50,8 @@ class MapNatTest extends junit.framework.TestCase {
     class add2 extends Function1 {
         override  def self = this
         override type self = add2
-        override  def apply[x <: Any](x: x): apply[x] = x.asInstanceOfNatPeano + _2
-        override type apply[x <: Any] = x#asInstanceOfNatPeano# +[_2]
+        override  def apply[x <: Any](x: x): apply[x] = x.asInstanceOfNat + _2
+        override type apply[x <: Any] = x#asInstanceOfNat# +[_2]
     }
     val add2 = new add2
 

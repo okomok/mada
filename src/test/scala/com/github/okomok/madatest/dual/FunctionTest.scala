@@ -18,8 +18,8 @@ class FunctionTest extends junit.framework.TestCase {
     final case class Plus() extends Function2 {
         override  val self = this
         override type self = Plus
-        override  def apply[n <: Any, m <: Any](n: n, m: m): apply[n, m] = n.asInstanceOfNatPeano + m.asInstanceOfNatPeano
-        override type apply[n <: Any, m <: Any] = n#asInstanceOfNatPeano# + [m#asInstanceOfNatPeano]
+        override  def apply[n <: Any, m <: Any](n: n, m: m): apply[n, m] = n.asInstanceOfNat + m.asInstanceOfNat
+        override type apply[n <: Any, m <: Any] = n#asInstanceOfNat# + [m#asInstanceOfNat]
     }
 
     def testCurried {
@@ -53,15 +53,15 @@ class FunctionTest extends junit.framework.TestCase {
     final case class Plus2() extends Function1 {
         override  val self = this
         override type self = Plus2
-        override  def apply[n <: Any](n: n): apply[n] = n.asInstanceOfNatPeano + _2
-        override type apply[n <: Any] = n#asInstanceOfNatPeano# + [_2]
+        override  def apply[n <: Any](n: n): apply[n] = n.asInstanceOfNat + _2
+        override type apply[n <: Any] = n#asInstanceOfNat# + [_2]
     }
 
     final case class Minus3() extends Function1 {
         override  val self = this
         override type self = Minus3
-        override  def apply[n <: Any](n: n): apply[n] = n.asInstanceOfNatPeano - _3
-        override type apply[n <: Any] = n#asInstanceOfNatPeano# - [_3]
+        override  def apply[n <: Any](n: n): apply[n] = n.asInstanceOfNat - _3
+        override type apply[n <: Any] = n#asInstanceOfNat# - [_3]
     }
 
     def testCompose {

@@ -156,8 +156,8 @@ final case class Cons[x <: Boolean, xs <: Dense](override val head: x, override 
     override  def shiftRight: shiftRight = tail
     override type shiftRight = tail
 
-    override  def toPeano: toPeano = peano.Succ(decrement.toPeano)
-    override type toPeano = peano.Succ[decrement#toPeano]
+    override  def toPeano: toPeano = new ConsToPeano().apply(tail)//peano.Succ(decrement.toPeano)
+    override type toPeano = ConsToPeano#apply[tail]//peano.Succ[decrement#toPeano]
 
     override  def foldRightWithNat[z <: Any, f <: Function2](z: z, f: f): foldRightWithNat[z, f] = f.apply(self, decrement.foldRightWithNat(z, f))
     override type foldRightWithNat[z <: Any, f <: Function2] = f#apply[self, decrement#foldRightWithNat[z, f]]

@@ -142,15 +142,15 @@ class EitherTest extends junit.framework.TestCase {
     case class Plus1() extends Function1 {
         override def self = this
         override type self = Plus1
-        override def apply[n <: Any](n: n): apply[n] = n.asInstanceOfNatPeano.increment
-        override type apply[n <: Any] = n#asInstanceOfNatPeano#increment
+        override def apply[n <: Any](n: n): apply[n] = n.asInstanceOfNat.increment
+        override type apply[n <: Any] = n#asInstanceOfNat#increment
     }
 
     case class Plus2() extends Function1 {
         override def self = this
         override type self = Plus2
-        override def apply[n <: Any](n: n): apply[n] = n.asInstanceOfNatPeano.increment.increment
-        override type apply[n <: Any] = n#asInstanceOfNatPeano#increment#increment
+        override def apply[n <: Any](n: n): apply[n] = n.asInstanceOfNat.increment.increment
+        override type apply[n <: Any] = n#asInstanceOfNat#increment#increment
     }
 
     def testFoldLeft {

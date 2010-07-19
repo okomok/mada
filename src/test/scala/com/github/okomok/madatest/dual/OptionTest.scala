@@ -134,8 +134,8 @@ class OptionTest extends junit.framework.TestCase {
     case class Plus1() extends Function1 {
         override def self = this
         override type self = Plus1
-        override def apply[n <: Any](n: n): apply[n] = n.asInstanceOfNatPeano.increment
-        override type apply[n <: Any] = n#asInstanceOfNatPeano#increment
+        override def apply[n <: Any](n: n): apply[n] = n.asInstanceOfNat.increment
+        override type apply[n <: Any] = n#asInstanceOfNat#increment
     }
 
     def testMapSome {
@@ -158,8 +158,8 @@ class OptionTest extends junit.framework.TestCase {
     case class Plus1Get() extends Function1 {
         override def self = this
         override type self = Plus1Get
-        override def apply[n <: Any](n: n): apply[n] = Some(n.asInstanceOfNatPeano.increment)
-        override type apply[n <: Any] = Some[n#asInstanceOfNatPeano#increment]
+        override def apply[n <: Any](n: n): apply[n] = Some(n.asInstanceOfNat.increment)
+        override type apply[n <: Any] = Some[n#asInstanceOfNat#increment]
     }
 
     def testFlatMapSome {
@@ -182,8 +182,8 @@ class OptionTest extends junit.framework.TestCase {
     case class Is2() extends Function1 {
         override def self = this
         override type self = Is2
-        override def apply[n <: Any](n: n): apply[n] = n.asInstanceOfNatPeano === _2
-        override type apply[n <: Any] = n#asInstanceOfNatPeano# ===[_2]
+        override def apply[n <: Any](n: n): apply[n] = n.asInstanceOfNat === _2
+        override type apply[n <: Any] = n#asInstanceOfNat# ===[_2]
     }
 
     def testFilterSome {
@@ -239,7 +239,7 @@ class OptionTest extends junit.framework.TestCase {
     case class AddTo(result: java.util.ArrayList[Int]) extends Function1 {
         override def self = this
         override type self = AddTo
-        override def apply[n <: Any](n: n): apply[n] = { result.add(n.asInstanceOfNatPeano.undual); Unit }
+        override def apply[n <: Any](n: n): apply[n] = { result.add(n.asInstanceOfNat.undual); Unit }
         override type apply[n <: Any] = Unit
     }
 
