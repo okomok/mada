@@ -8,10 +8,7 @@ package com.github.okomok.mada
 package dual
 
 
-object Any {
-    // useless
-    // implicit def _boxing[A](from: A): Box[A] = Box(from)
-}
+object Any
 
 
 /**
@@ -20,9 +17,6 @@ object Any {
 trait Any extends scala.Equals {
      def self: self
     type self <: Any
-
-//     def typeid: typeid
-//    type typeid <: nat.Dense
 
      def asInstanceOfBoolean: asInstanceOfBoolean = unsupported("dual.Any.asInstanceOfBoolean")
     type asInstanceOfBoolean <: Boolean
@@ -66,6 +60,9 @@ trait Any extends scala.Equals {
      def asInstanceOfOption: asInstanceOfOption = unsupported("dual.Any.asInstanceOfOption")
     type asInstanceOfOption <: Option
 
+     def asInstanceOfEquiv: asInstanceOfEquiv = unsupported("dual.Any.asInstanceOfEquiv")
+    type asInstanceOfEquiv <: Equiv
+
      def asInstanceOfOrdering: asInstanceOfOrdering = unsupported("dual.Any.asInstanceOfOrdering")
     type asInstanceOfOrdering <: Ordering
 
@@ -96,4 +93,14 @@ trait Any extends scala.Equals {
 
     protected  def unsupported(msg: Predef.String) = `throw`(new scala.UnsupportedOperationException(msg))
     protected type unsupported[_] = `throw`[scala.UnsupportedOperationException]
+}
+
+
+/**
+ * Mixin for a metatype whose `equals` is reference-equality.
+ */
+trait ReferenceEquality extends Any {
+    final override lazy val undual: undual = new scala.AnyRef{}
+    final override type undual = scala.AnyRef
+    final override  def canEqual(that: scala.Any) = true
 }

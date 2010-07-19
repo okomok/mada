@@ -11,7 +11,7 @@ package dual; package ordering
 object Ordering extends Common
 
 
-trait Ordering extends Any {
+trait Ordering extends Equiv {
     type self <: Ordering
 
     final override  def asInstanceOfOrdering = self
@@ -32,18 +32,11 @@ trait Ordering extends Any {
     final  def gt[x <: Any, y <: Any](x: x, y: y): gt[x, y] = compare(x, y).isGT
     final type gt[x <: Any, y <: Any] = compare[x, y]#isGT
 
-    final  def equiv[x <: Any, y <: Any](x: x, y: y): equiv[x, y] = compare(x, y).isEQ
-    final type equiv[x <: Any, y <: Any] = compare[x, y]#isEQ
+    final override  def equiv[x <: Any, y <: Any](x: x, y: y): equiv[x, y] = compare(x, y).isEQ
+    final override type equiv[x <: Any, y <: Any] = compare[x, y]#isEQ
 
     final  def `match`[x <: Any, y <: Any, flt <: Function0, fgt <: Function0, feq <: Function0](x: x, y: y, flt: flt, fgt: fgt, feq: feq): `match`[x, y, flt, fgt, feq] =
         Match(self, x, y, flt, fgt, feq).apply
     final type `match`[x <: Any, y <: Any, flt <: Function0, fgt <: Function0, feq <: Function0] =
         Match[self, x, y, flt, fgt, feq]#apply
-
-    final override lazy val undual: undual = new scala.Ordering[scala.Any] {
-        override def compare(x: scala.Any, y: scala.Any) = unsupported("dual.Ordering.undual")
-    }
-    final override type undual = scala.Ordering[scala.Any]
-
-    override  def canEqual(that: scala.Any) = that.isInstanceOf[Ordering]
 }

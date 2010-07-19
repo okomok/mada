@@ -27,7 +27,7 @@ trait Function0 extends Any {
 }
 
 
-trait Function1 extends Any {
+trait Function1 extends Any with ReferenceEquality {
     type self <: Function1
 
     final override  def asInstanceOfFunction1 = self
@@ -44,15 +44,9 @@ trait Function1 extends Any {
 
     final  def not: not = Not1(self)
     final type not = Not1[self]
-
-    // `val` keeps identity equality for undual objects.
-    override lazy val undual: undual = (v1: scala.Any) => throw new UnsupportedOperationException("dual.Function1.apply")
-    override type undual = scala.Any => scala.Nothing
-
-    override def canEqual(that: scala.Any) = that.isInstanceOf[Function1]
 }
 
-trait Function2 extends Any {
+trait Function2 extends Any with ReferenceEquality {
     type self <: Function2
 
     final override  def asInstanceOfFunction2 = self
@@ -66,9 +60,4 @@ trait Function2 extends Any {
 
     final  def tupled: tupled = Tupled2(self)
     final type tupled = Tupled2[self]
-
-    override lazy val undual: undual = (v1: scala.Any, v2: scala.Any) => throw new UnsupportedOperationException("dual.Function2.apply")
-    override type undual = (scala.Any, scala.Any) => Nothing
-
-    override def canEqual(that: scala.Any) = that.isInstanceOf[Function2]
 }

@@ -149,6 +149,12 @@ package object dual {
      val Some = option.Some
     type Some[x <: Any] = option.Some[x]
 
+// Equiv
+
+    @aliasOf("equiv.Equiv")
+     val Equiv = equiv.Equiv
+    type Equiv = equiv.Equiv
+
 
 // Ordering
 
