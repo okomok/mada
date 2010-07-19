@@ -35,6 +35,9 @@ trait Set extends Any {
      def contains[k <: Any](k: k): contains[k]
     type contains[k <: Any] <: Boolean
 
+     def toList: toList
+    type toList <: List
+
     override type undual = scala.collection.immutable.Set[_]
     override def canEqual(that: scala.Any) = that.isInstanceOf[Set]
 }

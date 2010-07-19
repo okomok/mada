@@ -34,6 +34,9 @@ sealed abstract class BSTree extends Map {
 
     final override  def keySet: keySet = set.BSTree(self)
     final override type keySet = set.BSTree[self]
+
+//    final  def equivTo[that <: BSTree, ve <: Equiv](that: that, ve: ve): equivTo[that, ve] = toList.equivTo(that.toList, Product2.eqv(ord, ve))
+//    final type equivTo[that <: BSTree, ve <: Equiv] = toList#equivTo[that#toList, Product2.eqv[ord, ve]]
 }
 
 

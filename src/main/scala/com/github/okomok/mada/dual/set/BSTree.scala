@@ -27,5 +27,8 @@ private[mada] final case class BSTree[m <: map.bstree.BSTree](private val m: m) 
     override  def contains[k <: Any](k: k): contains[k] = m.contains(k)
     override type contains[k <: Any] = m#contains[k]
 
+    override  def toList: toList = m.keyList
+    override type toList = m#keyList
+
     override  def undual: undual = scala.collection.immutable.Set.empty + m.undual.keySet
 }
