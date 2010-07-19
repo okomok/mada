@@ -142,6 +142,9 @@ sealed abstract class List extends Any {
      def splitAt[n <: Nat](n: n): splitAt[n]
     type splitAt[n <: Nat] <: Product2
 
+     def equivTo[that <: List, e <: Equiv](that: that, e: e): equivTo[that, e]
+    type equivTo[that <: List, e <: Equiv] <: Boolean
+
     final  def reverse_:::[that <: List](that: that): reverse_:::[that] = that.reverseAppend(self)
     final type reverse_:::[that <: List] = that#reverseAppend[self]
 
@@ -245,6 +248,9 @@ sealed abstract class Nil extends List {
     override  def splitAt[n <: Nat](n: n): splitAt[n] = Tuple2(self, self)
     override type splitAt[n <: Nat] = Tuple2[self, self]
 
+    override  def equivTo[that <: List, e <: Equiv](that: that, e: e): equivTo[that, e] = that.isEmpty
+    override type equivTo[that <: List, e <: Equiv] = that#isEmpty
+
     override private[mada]  def reverseAppend[that <: List](that: that) = that
     override private[mada] type reverseAppend[that <: List] = that
 
@@ -326,6 +332,9 @@ final case class Cons[x <: Any, xs <: List](override val head: x, override val t
 
     override  def splitAt[n <: Nat](n: n): splitAt[n] = new ConsSplitAt().apply(self, n)
     override type splitAt[n <: Nat] = ConsSplitAt#apply[self, n]
+
+    override  def equivTo[that <: List, e <: Equiv](that: that, e: e) = new ConsEquivTo().apply(self, that, e)
+    override type equivTo[that <: List, e <: Equiv] = ConsEquivTo#apply[self, that, e]
 
     override private[mada]  def reverseAppend[that <: List](that: that) = tail.reverseAppend(Cons(head, that))
     override private[mada] type reverseAppend[that <: List] = tail#reverseAppend[Cons[head, that]]

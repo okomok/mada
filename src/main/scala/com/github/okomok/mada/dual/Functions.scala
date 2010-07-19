@@ -46,6 +46,7 @@ trait Function1 extends Any with ReferenceEquality {
     final type not = Not1[self]
 }
 
+
 trait Function2 extends Any with ReferenceEquality {
     type self <: Function2
 
