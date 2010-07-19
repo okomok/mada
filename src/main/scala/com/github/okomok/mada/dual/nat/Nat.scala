@@ -44,6 +44,9 @@ trait Nat extends Any {
      def divMod[that <: Nat](that: that): divMod[that]
     type divMod[that <: Nat] <: Product2
 
+     def ^[that <: Nat](that: that): ^[that]
+    type ^[that <: Nat] <: Nat
+
      def ===[that <: Nat](that: that): ===[that]
     type ===[that <: Nat] <: Boolean
 

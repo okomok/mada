@@ -32,9 +32,8 @@ sealed abstract class Dense extends Nat {
     override type increment <: Dense
     override type decrement <: Dense
 
-    @equivalentTo("Cons(e, self)")
-    final  def addFirst[e <: Boolean](e: e): addFirst[e] = Cons(e, self)
-    final type addFirst[e <: Boolean] = Cons[e, self]
+    @equivalentTo("Cons(e. self)")
+    final def ::[e <: Boolean](e: e): Cons[e, self] = Cons(e, self)
 
     final override  def +[that <: Nat](that: that): +[that] = new Add().apply(self, that.toDense)
     final override type +[that <: Nat] = Add#apply[self, that#toDense]
@@ -76,9 +75,6 @@ sealed abstract class Dense extends Nat {
 
      def shiftLeftBy[n <: Peano](n: n): shiftLeftBy[n]
     type shiftLeftBy[n <: Peano] <: Dense
-
-    @aliasOf("addFirst")
-    final def Nat_::[e <: Boolean](e: e): addFirst[e] = addFirst(e)
 }
 
 
@@ -106,6 +102,9 @@ sealed class Nil extends Dense {
 
     override  def **[that <: Nat](that: that): **[that] = self
     override type **[that <: Nat] = self
+
+    override  def ^[that <: Nat](that: that): ^[that] = new NilExp().apply(self, that)
+    override type ^[that <: Nat] = NilExp#apply[self, that]
 
     override  def shiftLeft: shiftLeft = self
     override type shiftLeft = self
@@ -149,6 +148,9 @@ final case class Cons[x <: Boolean, xs <: Dense](override val head: x, override 
 
     override  def **[that <: Nat](that: that): **[that] = new ConsMultiply().apply(head, tail, that.toDense)
     override type **[that <: Nat] = ConsMultiply#apply[head, tail, that#toDense]
+
+    override  def ^[that <: Nat](that: that): ^[that] = new ConsExp().apply(self, that)
+    override type ^[that <: Nat] = ConsExp#apply[self, that]
 
     override  def shiftLeft: shiftLeft = new ConsFalse().apply(self)
     override type shiftLeft = ConsFalse#apply[self]

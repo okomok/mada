@@ -44,6 +44,7 @@ private[mada] trait OperatorCommon {
     type **[x <: Nat, y <: Nat] = x# **[y]
     type /[x <: Nat, y <: Nat] = x# /[y]
     type %[x <: Nat, y <: Nat] = x# %[y]
+    type ^[x <: Nat, y <: Nat] = x# ^[y]
 
     type ===[x <: Nat, y <: Nat] = x# ===[y]
     type !==[x <: Nat, y <: Nat] = x# !==[y]

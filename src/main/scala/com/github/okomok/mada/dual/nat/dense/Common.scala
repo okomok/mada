@@ -16,10 +16,8 @@ private[mada] class Common extends LiteralCommon {
     val Nil: Nil = _Dense.Nil
 
     @aliasOf("Cons")
-    val :: = Cons
-
-    @equivalentTo("x#addFirst[xs]")
-    type ::[x <: Boolean, xs <: Dense] = xs#addFirst[x]
+     val :: = Cons
+    type ::[x <: Boolean, xs <: Dense] = Cons[x, xs]
 }
 
 
