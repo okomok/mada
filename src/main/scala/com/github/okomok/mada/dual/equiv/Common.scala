@@ -8,7 +8,4 @@ package com.github.okomok.mada
 package dual; package equiv
 
 
-private[mada] trait Common {
-     val ofNat = new OfNat
-    type ofNat = OfNat
-}
+private[mada] trait Common

@@ -18,8 +18,8 @@ import junit.framework.Assert._
 class TrivialTest extends junit.framework.TestCase {
 
     def testSingle {
-        type o = ordering.ofNat
-        val o: o = ordering.ofNat
+        type o = nat.ord
+        val o: o = nat.ord
         type s = map.sorted[o]#put[_3, box[Int]]
         val s: s = map.sorted(o).put(_3, box(3))
 
@@ -35,8 +35,8 @@ class TrivialTest extends junit.framework.TestCase {
     }
 
     def testPut {
-        type o = ordering.ofNat
-        val o: o = ordering.ofNat
+        type o = nat.ord
+        val o: o = nat.ord
 
         type m = map.sorted[o]#put[_3, box[Int]]#put[_5, box[Char]]#put[_1, box[String]]
         val m: m = map.sorted(o).put(_3, box(3)).put(_5, box('c')).put(_1, box("wow"))
@@ -56,8 +56,8 @@ class TrivialTest extends junit.framework.TestCase {
     }
 
     def testContains {
-        type o = ordering.ofNat
-        val o: o = ordering.ofNat
+        type o = nat.ord
+        val o: o = nat.ord
 
         type m = map.sorted[o]#put[_3, box[Int]]#put[_5, box[Char]]#put[_1, box[String]]
         val m: m = map.sorted(o).put(_3, box(3)).put(_5, box('c')).put(_1, box("wow"))

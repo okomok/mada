@@ -16,6 +16,18 @@ private[mada] class Common {
     @aliasOf("peano.Peano")
      val Peano = peano.Peano
     type Peano = peano.Peano
+
+    /**
+     * The natural equivalence of Nat
+     */
+     val eqv: eqv = new Eqv
+    type eqv = Eqv
+
+    /**
+     * The natural ordering of Nat
+     */
+     val ord: ord = new Ord
+    type ord = Ord
 }
 
 

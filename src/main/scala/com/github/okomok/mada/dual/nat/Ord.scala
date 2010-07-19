@@ -5,12 +5,15 @@
 
 
 package com.github.okomok.mada
-package dual; package ordering
+package dual; package nat
 
 
-private[mada] class OfNat extends Ordering {
+import ordering.{LT, GT, EQ}
+
+
+private[mada] class Ord extends Ordering {
     override  def self = this
-    override type self = OfNat
+    override type self = Ord
 
     override  def compare[x <: Any, y <: Any](x: x, y: y): compare[x, y] =
         `if`(x.asInstanceOfNat < y.asInstanceOfNat,

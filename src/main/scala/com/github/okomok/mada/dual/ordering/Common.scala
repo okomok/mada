@@ -12,7 +12,4 @@ private[mada] trait Common {
     val LT: LT = _Result.LT
     val GT: GT = _Result.GT
     val EQ: EQ = _Result.EQ
-
-     val ofNat = new OfNat
-    type ofNat = OfNat
 }

@@ -23,8 +23,8 @@ class EquivToTest extends junit.framework.TestCase {
         type ys = _9 :: _2 :: _6 :: _10 :: _7 :: _9 :: _8 :: Nil
         val ys: ys = _9 :: _2 :: _6 :: _10 :: _7 :: _9 :: _8 :: Nil
 
-        type u = xs#equivTo[xs, equiv.ofNat]
-        val u: u = xs.equivTo(ys, equiv.ofNat)
+        type u = xs#equivTo[xs, nat.eqv]
+        val u: u = xs.equivTo(ys, nat.eqv)
         meta.assertSame[`true`, u]
         assertEquals(`true`, u)
     }
@@ -36,8 +36,8 @@ class EquivToTest extends junit.framework.TestCase {
         type ys = _8 :: Nil
         val ys: ys = _8 :: Nil
 
-        type u = xs#equivTo[ys, equiv.ofNat]
-        val u: u = xs.equivTo(ys, equiv.ofNat)
+        type u = xs#equivTo[ys, nat.eqv]
+        val u: u = xs.equivTo(ys, nat.eqv)
         meta.assertSame[`true`, u]
         assertEquals(`true`, u)
     }
@@ -49,8 +49,8 @@ class EquivToTest extends junit.framework.TestCase {
         type ys = Nil
         val ys: ys = Nil
 
-        type u = xs#equivTo[ys, equiv.ofNat]
-        val u: u = xs.equivTo(ys, equiv.ofNat)
+        type u = xs#equivTo[ys, nat.eqv]
+        val u: u = xs.equivTo(ys, nat.eqv)
         meta.assertSame[`true`, u]
         assertEquals(`true`, u)
     }
@@ -62,8 +62,8 @@ class EquivToTest extends junit.framework.TestCase {
         type ys = _9 :: _2 :: _6 :: _10 :: _7 :: _9 :: _8 :: Nil
         val ys: ys = _9 :: _2 :: _6 :: _10 :: _7 :: _9 :: _8 :: Nil
 
-        type u = xs#equivTo[ys, equiv.ofNat]
-        val u: u = xs.equivTo(ys, equiv.ofNat)
+        type u = xs#equivTo[ys, nat.eqv]
+        val u: u = xs.equivTo(ys, nat.eqv)
         meta.assertSame[`false`, u]
         assertEquals(`false`, u)
     }
@@ -75,8 +75,8 @@ class EquivToTest extends junit.framework.TestCase {
         type ys = _9 :: _2 :: _6 :: _10 :: _7 :: _9 :: Nil
         val ys: ys = _9 :: _2 :: _6 :: _10 :: _7 :: _9 :: Nil
 
-        type u = xs#equivTo[ys, equiv.ofNat]
-        val u: u = xs.equivTo(ys, equiv.ofNat)
+        type u = xs#equivTo[ys, nat.eqv]
+        val u: u = xs.equivTo(ys, nat.eqv)
         meta.assertSame[`false`, u]
         assertEquals(`false`, u)
     }

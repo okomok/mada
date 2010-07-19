@@ -16,8 +16,8 @@ import mada.dual._
 // `object Helper` would fall in weird compiler error.
 // Also, don't import multiple times.
 class Helper {
-    type natOrd = ordering.ofNat
-    val natOrd: natOrd = ordering.ofNat
+    type natOrd = nat.ord
+    val natOrd: natOrd = nat.ord
 
     type node[k <: nat.Peano, l <: map.bstree.BSTree, r <: map.bstree.BSTree] =
         map.bstree.Node[k, k, l, r]

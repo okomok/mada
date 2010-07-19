@@ -19,8 +19,8 @@ class SortTest extends junit.framework.TestCase {
     def testTrivial {
         type xs = _9 :: _2 :: _6 :: _10 :: _7 :: _9 :: _8 :: Nil
         val xs: xs = _9 :: _2 :: _6 :: _10 :: _7 :: _9 :: _8 :: Nil
-        type u = xs#sort[ordering.ofNat]
-        val u: u = xs.sort(ordering.ofNat)
+        type u = xs#sort[nat.ord]
+        val u: u = xs.sort(nat.ord)
         meta.assertSame[_2 :: _6 :: _7 :: _8 :: _9 :: _9 :: _10 :: Nil, u]
         assertEquals(_2 :: _6 :: _7 :: _8 :: _9 :: _9 :: _10 :: Nil, u)
     }
@@ -28,8 +28,8 @@ class SortTest extends junit.framework.TestCase {
     def testTrivialOne {
         type xs = _3 :: Nil
         val xs: xs = _3 :: Nil
-        type u = xs#sort[ordering.ofNat]
-        val u: u = xs.sort(ordering.ofNat)
+        type u = xs#sort[nat.ord]
+        val u: u = xs.sort(nat.ord)
         meta.assertSame[_3 :: Nil, u]
         assertEquals(_3 :: Nil, u)
     }
@@ -37,8 +37,8 @@ class SortTest extends junit.framework.TestCase {
     def testTrivialTwo {
         type xs = _4 :: _3 :: Nil
         val xs: xs = _4 :: _3 :: Nil
-        type u = xs#sort[ordering.ofNat]
-        val u: u = xs.sort(ordering.ofNat)
+        type u = xs#sort[nat.ord]
+        val u: u = xs.sort(nat.ord)
         meta.assertSame[_3 :: _4 :: Nil , u]
         assertEquals(_3 :: _4 :: Nil, u)
     }
@@ -46,8 +46,8 @@ class SortTest extends junit.framework.TestCase {
     def testTrivialNil {
         type xs = Nil
         val xs: xs = Nil
-        type u = xs#sort[ordering.ofNat]
-        val u: u = xs.sort(ordering.ofNat)
+        type u = xs#sort[nat.ord]
+        val u: u = xs.sort(nat.ord)
         meta.assertSame[Nil, u]
         assertEquals(Nil, u)
     }

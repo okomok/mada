@@ -5,12 +5,12 @@
 
 
 package com.github.okomok.mada
-package dual; package equiv
+package dual; package nat
 
 
-private[mada] final class OfNat extends Equiv {
+private[mada] final class Eqv extends Equiv {
     override  def self = this
-    override type self = OfNat
+    override type self = Eqv
     override  def equiv[x <: Any, y <: Any](x: x, y: y): equiv[x, y] = x.asInstanceOfNat === y.asInstanceOfNat
     override type equiv[x <: Any, y <: Any] = x#asInstanceOfNat# ===[y#asInstanceOfNat]
 }
