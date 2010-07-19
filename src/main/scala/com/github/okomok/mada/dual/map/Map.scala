@@ -38,6 +38,18 @@ trait Map extends Any {
     final  def contains[k <: Any](k: k): contains[k] = get(k).isEmpty.not
     final type contains[k <: Any] = get[k]#isEmpty#not
 
+     def keySet: keySet
+    type keySet <: Set
+
+     def toList: toList
+    type toList <: List
+
+     def keyList: keyList
+    type keyList <: List
+
+     def valueList: valueList
+    type valueList <: List
+
     final override type undual = scala.collection.immutable.Map[_, _]
     final override def canEqual(that: scala.Any) = that.isInstanceOf[Map]
 }

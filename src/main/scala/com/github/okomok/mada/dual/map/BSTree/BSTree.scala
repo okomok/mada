@@ -31,6 +31,9 @@ sealed abstract class BSTree extends Map {
 
      def ord: ord
     type ord <: Ordering
+
+    final override  def keySet: keySet = set.BSTree(self)
+    final override type keySet = set.BSTree[self]
 }
 
 
@@ -67,6 +70,15 @@ final case class Nil[o <: Ordering](override val ord: o) extends BSTree {
     override  def remove[k <: Any](k: k): remove[k] = self
     override type remove[k <: Any] = self
 
+    override  def toList: toList = list.Nil
+    override type toList = list.Nil
+
+    override  def keyList: keyList = list.Nil
+    override type keyList = list.Nil
+
+    override  def valueList: valueList = list.Nil
+    override type valueList = list.Nil
+
     override  def undual: undual = scala.collection.immutable.Map.empty
 }
 
@@ -101,6 +113,15 @@ final case class Node[k <: Any, v <: Any, l <: BSTree, r <: BSTree](
 
     override  def remove[k <: Any](k: k): remove[k] = new NodeRemove().apply(self, k)
     override type remove[k <: Any] = NodeRemove#apply[self, k]
+
+    override  def toList: toList = new NodeToList().apply(self)//(right.toList.:::(list.single(Tuple2(key, value))).:::(left.toList)).asInstanceOf[toList]
+    override type toList = NodeToList#apply[self]//right#toList# :::[list.single[Tuple2[key, value]]]# :::[left#toList]
+
+    override  def keyList: keyList = new NodeKeyList().apply(self)//(left.keyList ::: list.Cons(key, list.Nil) ::: right.keyList)//.asInstanceOf[keyList]
+    override type keyList = NodeKeyList#apply[self]//left#keyList ::: list.Cons[key, list.Nil] ::: right#keyList
+
+    override  def valueList: valueList = new NodeValueList().apply(self)//(left.valueList ::: list.single(value) ::: right.valueList).asInstanceOf[valueList]
+    override type valueList = NodeValueList#apply[self]//left#valueList ::: list.single[value] ::: right#valueList
 
     override  def undual: undual = (left.undual ++ right.undual) + (key -> value)
 }

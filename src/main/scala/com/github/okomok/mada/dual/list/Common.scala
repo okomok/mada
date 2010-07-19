@@ -25,6 +25,10 @@ trait Common {
     @equivalentTo("xs#reverse_:::[ys]")
     type reverse_:::[xs <: List, ys <: List] = ys#reverse_:::[xs]
 
+    @equivalentTo("Cons(x, Nil)")
+     def single[x <: Any](x: x): single[x] = Cons(x, Nil)
+    type single[x <: Any] = Cons[x, Nil]
+
     def fromSTuple1[T1](from: scala.Tuple1[T1]): Box[T1] :: Nil = Box(from._1) :: Nil
     def fromSTuple2[T1, T2](from: scala.Tuple2[T1, T2]): Box[T1] :: Box[T2] :: Nil = Box(from._1) :: Box(from._2) :: Nil
     def fromSTuple3[T1, T2, T3](from: scala.Tuple3[T1, T2, T3]): Box[T1] :: Box[T2] :: Box[T3] :: Nil = Box(from._1) :: Box(from._2) :: Box(from._3) :: Nil
