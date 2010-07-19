@@ -46,14 +46,7 @@ class TrivialTest extends junit.framework.TestCase {
         assert(x === y)
         assert(x === _1)
     }
-/*
-    def testMultiplyDuality {
-        val a: _4# ** [_2] = _4 ** _2
-        val b: _8 = a
-        assert(a === b)
-        assert(a === _8)
-    }
-*/
+
     def testComparisonDuality {
         val a: _4# > [_2] = _4 > _2
         val b: `true` = a
@@ -93,6 +86,7 @@ class TrivialTest extends junit.framework.TestCase {
         meta.assert[_4#decrement# === [_3]]
         meta.assert[_7#increment#decrement#decrement# === [_6]]
     }
+
     trait testAdd {
         meta.assert[_0# +[_0]# ===[_0]]
         meta.assert[_0# +[_3]# ===[_3]]
@@ -100,6 +94,7 @@ class TrivialTest extends junit.framework.TestCase {
         meta.assert[_1# +[_8]# ===[_9]]
         meta.assert[_5# +[_2]# ===[_7]]
     }
+
     trait testSubtract {
         meta.assert[_0# -[_0]# ===[_0]]
         meta.assert[_1# -[_1]# ===[_0]]
@@ -110,18 +105,7 @@ class TrivialTest extends junit.framework.TestCase {
         meta.assert[_6# -[_5]# ===[_1]]
         meta.assert[_5# -[_5]# ===[_0]]
     }
-/*
-    trait testMultiply {
-        meta.assert[_3# **[_2]# ===[_6]]
-        meta.assert[_0# **[_3]# ===[_0]]
-        meta.assert[_1# **[_3]# ===[_3]]
-        meta.assert[_3# **[_1]# ===[_3]]
-        meta.assert[_2# **[_3]# ===[_6]]
-        meta.assert[_9# **[_1]# ===[_9]]
-        meta.assert[_3# **[_3]# ===[_9]]
-        meta.assert[_4# **[_2]# ===[_8]]
-    }
-*/
+
     trait testComparison {
         meta.assert[_0# <[_2]]
         meta.assert[_3# <[_5]]

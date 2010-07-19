@@ -8,6 +8,12 @@ package com.github.okomok.mada
 package dual; package nat; package dense
 
 
+private[mada] final class NilIncrement {
+     def apply[xs <: Dense](xs: xs): apply[xs] = Cons(`true`, xs)
+    type apply[xs <: Dense] = Cons[`true`, xs]
+}
+
+
 private[mada] final class ConsIncrement {
      def apply[x <: Boolean, xs <: Dense](x: x, xs: xs): apply[x, xs] =
         `if`(x, Then(x, xs), Else(x, xs)).apply.asInstanceOfNatDense

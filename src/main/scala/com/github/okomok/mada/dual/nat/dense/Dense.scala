@@ -94,8 +94,8 @@ sealed class Nil extends Dense {
     override  def isZero: isZero = `true`
     override type isZero = `true`
 
-    override  def increment: increment = Cons(`true`, self)
-    override type increment = Cons[`true`, self]
+    override  def increment: increment = new NilIncrement().apply(self)//Cons(`true`, self)
+    override type increment = NilIncrement#apply[self]//Cons[`true`, self]
 
     override  def decrement: decrement = unsupported("dual.nat.dense.Nil.decrement")
     override type decrement = unsupported[_]

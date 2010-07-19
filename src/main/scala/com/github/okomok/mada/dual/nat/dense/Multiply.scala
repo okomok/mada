@@ -18,7 +18,7 @@ private[mada] final class ConsMultiply {
         override  val self = this
         override type self = Then[x, xs, ys]
         override  def apply: apply = (ys + (xs ** ys).shiftLeft).asInstanceOf[apply]
-        override type apply = ys# +[xs# **[ys]]# shiftLeft
+        override type apply = ys# +[xs# **[ys]#shiftLeft]
     }
 
     case class Else[x <: Boolean, xs <: Dense, ys <: Dense](x: x, xs: xs, ys: ys) extends Function0 {

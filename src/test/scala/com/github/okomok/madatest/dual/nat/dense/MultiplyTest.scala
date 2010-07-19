@@ -31,27 +31,24 @@ class MultiplyTest extends junit.framework.TestCase {
         assertEquals(_9, _3 ** _3)
     }
 
-    def testMultiplyDuality {
+    def testDuality {
         val a: _4# ** [_2] = _4 ** _2
         assertEquals(_8, a)
-        /*
-        hmm...
         val b: _8 = a
         assert(a === b)
         assert(a === _8)
-        */
     }
-/*
-    hmm...
-    trait testMultiply {
-        meta.assert[_3# **[_2]# ===[_6]]
-        meta.assert[_0# **[_3]# ===[_0]]
-        meta.assert[_1# **[_3]# ===[_3]]
-        meta.assert[_3# **[_1]# ===[_3]]
-        meta.assert[_2# **[_3]# ===[_6]]
-        meta.assert[_9# **[_1]# ===[_9]]
-        meta.assert[_3# **[_3]# ===[_9]]
-        meta.assert[_4# **[_2]# ===[_8]]
+
+    trait teztTrivial {
+        meta.assertSame[_6, _3 # **[ _2]]
+        meta.assertSame[_6, _2 # **[ _3]]
+        meta.assertSame[_0, _3 # **[ _0]]
+        meta.assertSame[_0, _0 # **[ _0]]
+        meta.assertSame[_0, _0 # **[ _9]]
+        meta.assertSame[_12, _6 # **[ _2]]
+        meta.assertSame[_15, _3 # **[ _5]]
+        meta.assertSame[_8, _4 # **[ _2]]
+        meta.assertSame[_1, _1 # **[ _1]]
+        meta.assertSame[_9, _3 # **[ _3]]
     }
-    */
 }

@@ -34,19 +34,23 @@ class ExpTest extends junit.framework.TestCase {
         assertEquals(1073741824, (_8 ^ _10).undual)
     }
 
-    def testMultiplyDuality {
+    def testDuality {
         val a: _4# ^ [_2] = _4 ^ _2
         assertEquals(_15 + _1, a)
-        /*
-        hmm...
-        val b: _8 = a
+        val b: _15# + [_1] = a
         assert(a === b)
-        assert(a === _8)
-        */
+        assert(a === _15 + _1)
     }
 
-    trait testTrivial {
-        //meta.assertSame[_9, _3# ^[_2]]
+    trait teztTrivial {
+        meta.assertSame[_9, _3 # ^[ _2]]
+        meta.assertSame[_8, _2 # ^[ _3]]
+        meta.assertSame[_1, _3 # ^[ _0]]
+        meta.assertSame[_1, _0 # ^[ _0]]
+        meta.assertSame[_0, _0 # ^[ _9]]
+        meta.assertSame[_6# ** [_6], _6 # ^[ _2]]
+        meta.assertSame[_15# + [_1], _4 # ^[ _2]]
+        meta.assertSame[_1, _1 # ^[ _1]]
     }
 
 }

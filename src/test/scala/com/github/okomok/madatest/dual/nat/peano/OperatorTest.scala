@@ -66,19 +66,7 @@ class OperatorTezt {
         assert[_8 - _1 === _7]
         assert[_5 - _2 === _3]
     }
-/*
-    trait testMultiply {
-        assert[_3 ** _2 === _6]
-        assert[_0 ** _3 === _0]
-        assert[_1 ** _3 === _3]
-        assert[_3 ** _1 === _3]
-        assert[_2 ** _3 === _6]
-        assert[_9 ** _1 === _9]
-        assert[_3 ** _3 === _9]
-        assert[_4 ** _2 === _8]
 
-    }
-*/
     trait testComparison {
         assert[_0 < _2]
         assert[_3 < _5]
