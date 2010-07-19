@@ -9,6 +9,6 @@ package dual; package nat; package dense
 
 
 private[mada] final class ConsToPeano {
-     def apply[xs <: Dense](xs: xs): apply[xs] = peano.Succ(xs.toPeano)
-    type apply[xs <: Dense] = peano.Succ[xs#toPeano]
+     def apply[xs <: Dense](xs: xs): apply[xs] = peano.Succ(xs.decrement.toPeano)
+    type apply[xs <: Dense] = peano.Succ[xs#decrement#toPeano]
 }

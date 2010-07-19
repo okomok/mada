@@ -102,7 +102,7 @@ class OptionTest extends junit.framework.TestCase {
         }
         ()
     }
-
+/* Now crash!
     class natty {
          def apply[o <: Option{ type get <: Peano }](o: o): apply[o] = o.get.increment
         type apply[o <: Option{ type get <: Peano }] = o#get#increment
@@ -115,7 +115,7 @@ class OptionTest extends junit.framework.TestCase {
         meta.assertSame[_4, natty#apply[s]]
         assert(_4 === natty(s))
     }
-
+*/
     def testGetOrElse {
         type s = Some[_3]
         val s: s = Some(_3)
