@@ -26,6 +26,9 @@ sealed abstract class Dense extends Nat {
      def tail: tail
     type tail <: Dense
 
+     def size: size
+    type size <: Peano
+
     override type increment <: Dense
     override type decrement <: Dense
 
@@ -41,8 +44,8 @@ sealed abstract class Dense extends Nat {
 
     override type **[that <: Nat] <: Dense
 
-    final override  def divMod[that <: Nat](that: that): divMod[that] = unsupported("coming soon")
-    final override type divMod[that <: Nat] = unsupported[_]
+    final override  def divMod[that <: Nat](that: that): divMod[that] = new DivMod().apply(self, that.toDense)
+    final override type divMod[that <: Nat] = DivMod#apply[self, that#toDense]
 
     final override  def ===[that <: Nat](that: that): ===[that] = new Equals().apply(self, that.toDense)
     final override type ===[that <: Nat] = Equals#apply[self, that#toDense]
@@ -65,11 +68,14 @@ sealed abstract class Dense extends Nat {
      def shiftRight: shiftRight
     type shiftRight <: Dense
 
+    final override  def toDense: toDense = self
+    final override type toDense = self
+
      def foldRightWithNat[z <: Any, f <: Function2](z: z, f: f): foldRightWithNat[z, f]
     type foldRightWithNat[z <: Any, f <: Function2] <: Any
 
-    final override  def toDense: toDense = self
-    final override type toDense = self
+     def shiftLeftBy[n <: Peano](n: n): shiftLeftBy[n]
+    type shiftLeftBy[n <: Peano] <: Dense
 
     @aliasOf("addFirst")
     final def Nat_::[e <: Boolean](e: e): addFirst[e] = addFirst(e)
@@ -85,6 +91,9 @@ sealed class Nil extends Dense {
 
     override  def tail: tail = `throw`(new scala.NoSuchElementException("dual.nat.dense.Nil.tail"))
     override type tail = `throw`[scala.NoSuchElementException]
+
+    override  val size: size = peano.Zero
+    override type size = peano.Zero
 
     override  def isZero: isZero = `true`
     override type isZero = `true`
@@ -110,6 +119,9 @@ sealed class Nil extends Dense {
     override  def foldRightWithNat[z <: Any, f <: Function2](z: z, f: f): foldRightWithNat[z, f] = z
     override type foldRightWithNat[z <: Any, f <: Function2] = z
 
+    override  def shiftLeftBy[n <: Peano](n: n): shiftLeftBy[n] = self
+    override type shiftLeftBy[n <: Peano] = self
+
     override def undual: undual = 0
 }
 
@@ -122,6 +134,9 @@ final case class Cons[x <: Boolean, xs <: Dense](override val head: x, override 
 
     override type head = x
     override type tail = xs
+
+    override  val size: size = tail.size.increment
+    override type size = tail#size#increment
 
     override  def isZero: isZero = `false`
     override type isZero = `false`
@@ -146,6 +161,9 @@ final case class Cons[x <: Boolean, xs <: Dense](override val head: x, override 
 
     override  def foldRightWithNat[z <: Any, f <: Function2](z: z, f: f): foldRightWithNat[z, f] = f.apply(self, decrement.foldRightWithNat(z, f))
     override type foldRightWithNat[z <: Any, f <: Function2] = f#apply[self, decrement#foldRightWithNat[z, f]]
+
+    override  def shiftLeftBy[n <: Peano](n: n): shiftLeftBy[n] = new ConsShiftLeftBy().apply(self, n)
+    override type shiftLeftBy[n <: Peano] = ConsShiftLeftBy#apply[self, n]
 
     override def undual: undual = (if (head.undual) 1 else 0) + (2 * tail.undual)
 }

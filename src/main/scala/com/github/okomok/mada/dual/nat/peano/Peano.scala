@@ -21,7 +21,9 @@ sealed trait Peano extends Nat {
     final override  def asInstanceOfNatPeano = self
     final override type asInstanceOfNatPeano = self
 
-    override type increment <: Peano
+    final override  def increment: increment = new SuccIncrement().apply(self)//Succ(self)
+    final override type increment = SuccIncrement#apply[self]//Succ[self]
+
     override type decrement <: Peano
 
     final override  def +[that <: Nat](that: that): +[that] = new Add().apply(self, that.toPeano)
@@ -72,9 +74,6 @@ sealed trait Zero extends Peano {
     override  def isZero: isZero = `true`
     override type isZero = `true`
 
-    override  def increment: increment = Succ(self)
-    override type increment = Succ[self]
-
     override  def decrement: decrement = unsupported("dual.nat.peano.Zero.decrement")
     override type decrement = unsupported[_]
 
@@ -101,9 +100,6 @@ final case class Succ[n <: Peano](override val decrement: n) extends Peano {
     override  def isZero: isZero = `false`
     override type isZero = `false`
 
-    override  def increment: increment = Succ(self)
-    override type increment = Succ[self]
-
     override type decrement = n
 
     override  def ===[that <: Nat](that: that): ===[that] = new SuccEq().apply(self, that.toPeano)
@@ -112,8 +108,8 @@ final case class Succ[n <: Peano](override val decrement: n) extends Peano {
     override  def <=[that <: Nat](that: that): <=[that] = new SuccLtEq().apply(self, that.toPeano)
     override type <=[that <: Nat] = SuccLtEq#apply[self, that#toPeano]
 
-    override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = f.apply(self, decrement.foldRight(z, f))
-    override type foldRight[z <: Any, f <: Function2] = f#apply[self, decrement#foldRight[z, f]]
+    override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = new SuccFoldRight().apply(self, z, f)//f.apply(self, decrement.foldRight(z, f))
+    override type foldRight[z <: Any, f <: Function2] = SuccFoldRight#apply[self, z, f]//f#apply[self, decrement#foldRight[z, f]]
 
     override lazy val isEven: isEven = decrement.isEven.not
     override type isEven = decrement#isEven#not
