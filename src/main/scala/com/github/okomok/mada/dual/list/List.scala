@@ -312,8 +312,8 @@ final case class Cons[x <: Any, xs <: List](override val head: x, override val t
     override  def scanLeft[z <: Any, f <: Function2](z: z, f: f): scanLeft[z, f] = Cons(z, tail.scanLeft(f.apply(z, head), f))
     override type scanLeft[z <: Any, f <: Function2] = Cons[z, tail#scanLeft[f#apply[z, head], f]]
 
-    override  def scanRight[z <: Any, f <: Function2](z: z, f: f): scanRight[z, f] = new ConsScanRightCons().apply(head, tail.scanRight(z, f), f)
-    override type scanRight[z <: Any, f <: Function2] = ConsScanRightCons#apply[head, tail#scanRight[z, f], f]
+    override  def scanRight[z <: Any, f <: Function2](z: z, f: f): scanRight[z, f] = new ConsScanRight().apply(head, tail, z, f)
+    override type scanRight[z <: Any, f <: Function2] = ConsScanRight#apply[head, tail, z, f]
 
     override  def nthOption[n <: Nat](n: n): nthOption[n] = new ConsNthOption().apply(head, tail, n)
     override type nthOption[n <: Nat] = ConsNthOption#apply[head, tail, n]
