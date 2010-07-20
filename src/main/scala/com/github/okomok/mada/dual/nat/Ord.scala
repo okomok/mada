@@ -11,7 +11,7 @@ package dual; package nat
 import ordering.{LT, GT, EQ}
 
 
-private[mada] class Ord extends Ordering {
+private[mada] final class Ord extends Ordering {
     override  def self = this
     override type self = Ord
 

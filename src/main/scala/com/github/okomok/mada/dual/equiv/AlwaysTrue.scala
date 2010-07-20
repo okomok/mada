@@ -8,7 +8,7 @@ package com.github.okomok.mada
 package dual; package equiv
 
 
-private[mada] class AlwaysTrue extends Equiv {
+private[mada] final class AlwaysTrue extends Equiv {
     override  def self = this
     override type self = AlwaysTrue
     override  def equiv[x <: Any, y <: Any](x: x, y: y): equiv[x, y] = `true`

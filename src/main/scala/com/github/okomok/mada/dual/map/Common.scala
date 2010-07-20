@@ -10,6 +10,9 @@ package dual; package map
 
 trait Common {
 
+    /**
+     * Constructs an empty sorted map.
+     */
      def sorted[o <: Ordering](o: o): sorted[o] = bstree.Nil(o)
     type sorted[o <: Ordering] = bstree.Nil[o]
 

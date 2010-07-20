@@ -44,7 +44,7 @@ object Product2 {
      def eqv[e1 <: Equiv, e2 <: Equiv](e1: e1, e2: e2): eqv[e1, e2] = new Eqv(e1, e2)
     type eqv[e1 <: Equiv, e2 <: Equiv] = Eqv[e1, e2]
 
-    private[mada] class Eqv[e1 <: Equiv, e2 <: Equiv](e1: e1, e2: e2) extends Equiv {
+    private[mada] final class Eqv[e1 <: Equiv, e2 <: Equiv](e1: e1, e2: e2) extends Equiv {
         override  def self = this
         override type self = Eqv[e1, e2]
         override  def equiv[x <: Any, y <: Any](x: x, y: y): equiv[x, y] =
