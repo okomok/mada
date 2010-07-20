@@ -29,7 +29,7 @@ class ForeachTest extends junit.framework.TestCase {
         }
         val u: Unit = xs.foreach(new AddString)
 
-        assertEquals("[3, hello, a]", r.toString)
+        assertEquals("[dual.3, dual.hello, dual.a]", r.toString)
     }
 
     def testTrivialNil {

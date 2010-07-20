@@ -49,16 +49,16 @@ final case class Nil[o <: Ordering](override val ord: o) extends BSTree {
     override  def size: size = nat.dense._0
     override type size = nat.dense._0
 
-    override  def key: key = unsupported("dual.map.bstree.Nil.key")
+    override  def key: key = unsupported("map.bstree.Nil.key")
     override type key = unsupported[_]
 
-    override  def value: value = unsupported("dual.map.bstree.Nil.value")
+    override  def value: value = unsupported("map.bstree.Nil.value")
     override type value = unsupported[_]
 
-    override  def left: left = unsupported("dual.map.bstree.Nil.left")
+    override  def left: left = unsupported("map.bstree.Nil.left")
     override type left = unsupported[_]
 
-    override  def right: right = unsupported("dual.map.bstree.Nil.right")
+    override  def right: right = unsupported("map.bstree.Nil.right")
     override type right = unsupported[_]
 
     override type ord = o
@@ -128,5 +128,5 @@ final case class Node[k <: Any, v <: Any, l <: BSTree, r <: BSTree](
     override  def valueList: valueList = new NodeValueList().apply(self)//(left.valueList ::: list.single(value) ::: right.valueList).asInstanceOf[valueList]
     override type valueList = NodeValueList#apply[self]//left#valueList ::: list.single[value] ::: right#valueList
 
-    override  def undual: undual = (left.undual ++ right.undual) + (key -> value)
+    override  def undual: undual = (left.undual + (key.undual -> value.undual)) ++ right.undual
 }

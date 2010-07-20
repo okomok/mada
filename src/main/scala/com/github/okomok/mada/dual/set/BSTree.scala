@@ -30,5 +30,5 @@ private[mada] final case class BSTree[m <: map.bstree.BSTree](private val m: m) 
     override  def toList: toList = m.keyList
     override type toList = m#keyList
 
-    override  def undual: undual = scala.collection.immutable.Set.empty + m.undual.keySet
+    override  def undual: undual = m.undual.keySet
 }

@@ -77,7 +77,7 @@ sealed trait Zero extends Peano {
     override  def isZero: isZero = `true`
     override type isZero = `true`
 
-    override  def decrement: decrement = unsupported("dual.nat.peano.Zero.decrement")
+    override  def decrement: decrement = unsupported("nat.peano.Zero.decrement")
     override type decrement = unsupported[_]
 
     override  def ===[that <: Nat](that: that): ===[that] = that.isZero

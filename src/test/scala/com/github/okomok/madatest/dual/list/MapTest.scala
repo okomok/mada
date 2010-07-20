@@ -20,7 +20,7 @@ class MapTest extends junit.framework.TestCase {
     class mkString extends Function1 {
         override  def self = this
         override type self = mkString
-        override  def apply[x <: Any](x: x): apply[x] = Box(x.toString)
+        override  def apply[x <: Any](x: x): apply[x] = Box(x.undual.toString)
         override type apply[x <: Any] = Box[String]
     }
     val mkString = new mkString

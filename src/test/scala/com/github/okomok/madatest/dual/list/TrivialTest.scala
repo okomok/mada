@@ -42,8 +42,8 @@ class TrivialTest extends junit.framework.TestCase {
     def testTypeErase {
         val i = new java.lang.Integer(10)
         val lst = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Nil
-        assertEquals("[]", Nil.toString)
-        assertEquals("[3, hello, 10, a]", lst.toString)
+        assertEquals("dual.List()", Nil.toString)
+        assertEquals("dual.List(3, hello, 10, a)", lst.toString)
     }
 
     def testEquals {

@@ -22,6 +22,7 @@ class TrivialTest extends junit.framework.TestCase {
         assertEquals(0, _0.undual)
         assertEquals(7, _6.increment.undual)
         assertEquals(10, _10.undual)
+        assertEquals("dual.10", _10.toString)
 
         assertEquals(_2, _2)
         AssertNotEquals(_2, _3)

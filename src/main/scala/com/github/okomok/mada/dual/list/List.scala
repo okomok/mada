@@ -168,7 +168,7 @@ sealed abstract class List extends Any {
     final  def elementOf[e <: Any](implicit _elementOf: ElementOf[self, e]): elementOf[e] = _elementOf(self)
     final type elementOf[e <: Any] = ElementOf.result[self, e]
 
-    final override type undual = sequence.List[_]
+    final override type undual = scala.collection.immutable.List[scala.Any]
     final override def canEqual(that: scala.Any) = that.isInstanceOf[List]
 }
 
@@ -218,10 +218,10 @@ sealed abstract class Nil extends List {
     override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = z
     override type foldRight[z <: Any, f <: Function2] = z
 
-    override  def reduceLeft[f <: Function2](f: f): reduceLeft[f] = unsupported("dual.list.Nil.reduceLeft")
+    override  def reduceLeft[f <: Function2](f: f): reduceLeft[f] = unsupported("list.Nil.reduceLeft")
     override type reduceLeft[f <: Function2] = unsupported[_]
 
-    override  def reduceRight[f <: Function2](f: f): reduceRight[f] = unsupported("dual.list.Nil.reduceRight")
+    override  def reduceRight[f <: Function2](f: f): reduceRight[f] = unsupported("list.Nil.reduceRight")
     override type reduceRight[f <: Function2] = unsupported[_]
 
     override  def scanLeft[z <: Any, f <: Function2](z: z, f: f): scanLeft[z, f] = Cons(z, self)
@@ -233,7 +233,7 @@ sealed abstract class Nil extends List {
     override  def nthOption[n <: Nat](n: n): nthOption[n] = None
     override type nthOption[n <: Nat] = None
 
-    override  def init: init = unsupported("dual.list.Nil.init")
+    override  def init: init = unsupported("list.Nil.init")
     override type init = unsupported[_]
 
     override  def takeWhile[f <: Function1](f: f): takeWhile[f] = self
@@ -257,7 +257,7 @@ sealed abstract class Nil extends List {
     override  def zip[that <: List](that: that): zip[that] = self
     override type zip[that <: List] = self
 
-    override  def undual: undual = sequence.Nil
+    override  def undual: undual = scala.collection.immutable.Nil
 }
 
 

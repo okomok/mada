@@ -66,4 +66,10 @@ class TrivialTest extends junit.framework.TestCase {
         meta.assertSame[`true`, m#contains[_5]]
     }
 
+    def testUndual {
+        type m   = map.sorted[nat.ord]#put[_3, _4]#put[_1, _2]#put[_5, _6]
+        val m: m = map.sorted(nat.ord).put(_3, _4).put(_1, _2).put(_5, _6)
+        assertEquals(Predef.Map(1 -> 2, 3 -> 4, 5 -> 6), m.undual)
+    }
+
 }

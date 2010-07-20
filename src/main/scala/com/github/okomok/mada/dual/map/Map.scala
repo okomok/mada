@@ -53,6 +53,6 @@ trait Map extends Any {
      def valueList: valueList
     type valueList <: List
 
-    final override type undual = scala.collection.immutable.Map[_, _]
+    final override type undual = scala.collection.Map[scala.Any, scala.Any]
     final override def canEqual(that: scala.Any) = that.isInstanceOf[Map]
 }

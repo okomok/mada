@@ -41,6 +41,6 @@ trait Set extends Any {
      def toList: toList
     type toList <: List
 
-    override type undual = scala.collection.immutable.Set[_]
+    override type undual = scala.collection.Set[scala.Any]
     override def canEqual(that: scala.Any) = that.isInstanceOf[Set]
 }

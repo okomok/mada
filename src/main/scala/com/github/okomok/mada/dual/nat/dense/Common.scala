@@ -22,10 +22,13 @@ private[mada] class Common extends LiteralCommon {
 
 
 private[mada] trait LiteralCommon {
-    private[mada]  val _0B = boolean.`false`
-    private[mada]  val _1B = boolean.`true`
-    private[mada] type _0B = `false`
-    private[mada] type _1B = `true`
+    @aliasOf("`false`")
+     val _0B = boolean.`false`
+    type _0B = `false`
+
+    @aliasOf("`true`")
+     val _1B = boolean.`true`
+    type _1B = `true`
 
 	val  _0 = _Dense.Nil
 	val  _1 = Cons(_1B, _Dense.Nil)

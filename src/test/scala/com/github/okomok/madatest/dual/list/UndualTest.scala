@@ -22,8 +22,9 @@ class UndualTest extends junit.framework.TestCase {
         val l: l = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil
 
         val r: l#undual = l.undual
-        val k: mada.sequence.List[scala.Any] = r
-        assertEquals(3 :: "hello" :: i :: 'a' :: 12 :: mada.sequence.Nil.of[scala.Any], k)
+        val k: scala.collection.immutable.List[scala.Any] = r
+        val nil: scala.collection.immutable.List[scala.Any] = scala.collection.immutable.Nil
+        assertEquals(3 :: "hello" :: i :: 'a' :: 12 :: nil, k)
         ()
     }
 
@@ -31,8 +32,8 @@ class UndualTest extends junit.framework.TestCase {
         type l = Nil
         val l: l = Nil
         val r: l#undual = l.undual
-        val k: mada.sequence.List[scala.Any] = r
-        assertEquals(mada.sequence.Nil, k)
+        val k: scala.collection.immutable.List[scala.Any] = r
+        assertEquals(scala.collection.immutable.Nil, k)
         ()
     }
 }
