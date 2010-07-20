@@ -21,7 +21,7 @@ trait Set extends Any {
     final override type asInstanceOfSet = self
 
      def size: size
-    type size <: nat.Peano
+    type size <: Nat
 
      def isEmpty: isEmpty
     type isEmpty <: Boolean

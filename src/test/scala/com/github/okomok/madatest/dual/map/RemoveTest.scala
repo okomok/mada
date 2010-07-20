@@ -27,7 +27,7 @@ class RemoveTest extends junit.framework.TestCase {
 
         type rm = m#remove[_5]
         val rm: rm = m.remove(_5)
-        meta.assertSame[_2, rm#size]
+        meta.assertSame[nat.dense._2, rm#size]
         meta.assertSame[None, rm#get[_5]]
         AssertInvariant(rm)
         ()
@@ -39,7 +39,7 @@ class RemoveTest extends junit.framework.TestCase {
 
         type rm = m#remove[_1]
         val rm: rm = m.remove(_1)
-        meta.assertSame[_8, rm#size]
+        meta.assertSame[nat.dense._8, rm#size]
         meta.assertSame[None, rm#get[_1]]
         AssertInvariant(rm)
         ()
@@ -51,7 +51,7 @@ class RemoveTest extends junit.framework.TestCase {
 
         type rm = m#remove[_3]
         val rm: rm = m.remove(_3)
-        meta.assertSame[_8, rm#size]
+        meta.assertSame[nat.dense._8, rm#size]
         meta.assertSame[None, rm#get[_3]]
         AssertInvariant(rm)
         //println(rm)
@@ -64,7 +64,7 @@ class RemoveTest extends junit.framework.TestCase {
 
         type rm = m#remove[_8]
         val rm: rm = m.remove(_8)
-        meta.assertSame[_8, rm#size]
+        meta.assertSame[nat.dense._8, rm#size]
         meta.assertSame[None, rm#get[_8]]
         AssertInvariant(rm)
         ()
@@ -76,7 +76,7 @@ class RemoveTest extends junit.framework.TestCase {
 
         type rm = m#remove[_14]
         val rm: rm = m.remove(_14)
-        meta.assertSame[_8, rm#size]
+        meta.assertSame[nat.dense._8, rm#size]
         meta.assertSame[None, rm#get[_14]]
         AssertInvariant(rm)
         ()
@@ -88,7 +88,7 @@ class RemoveTest extends junit.framework.TestCase {
 
         type rm = m#remove[_6]
         val rm: rm = m.remove(_6)
-        meta.assertSame[_8, rm#size]
+        meta.assertSame[nat.dense._8, rm#size]
         meta.assertSame[None, rm#get[_6]]
         AssertInvariant(rm)
         ()

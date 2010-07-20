@@ -46,8 +46,8 @@ final case class Nil[o <: Ordering](override val ord: o) extends BSTree {
     override  val self = this
     override type self = Nil[o]
 
-    override  def size: size = nat.peano.Zero
-    override type size = nat.peano.Zero
+    override  def size: size = nat.dense._0
+    override type size = nat.dense._0
 
     override  def key: key = unsupported("dual.map.bstree.Nil.key")
     override type key = unsupported[_]

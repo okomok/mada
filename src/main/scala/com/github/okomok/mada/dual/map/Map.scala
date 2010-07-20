@@ -21,7 +21,7 @@ trait Map extends Any {
     final override type asInstanceOfMap = self
 
      def size: size
-    type size <: nat.Peano
+    type size <: Nat
 
      def isEmpty: isEmpty
     type isEmpty <: Boolean

@@ -25,7 +25,7 @@ class TrivialTest extends junit.framework.TestCase {
 
         AssertInvariant(s)
 
-        meta.assertSame[_1, s#size]
+        meta.assertSame[nat.dense._1, s#size]
         meta.assertSame[_3, s#key]
         meta.assertSame[box[Int], s#value]
         meta.assertSame[map.sorted[o], s#left]
@@ -43,7 +43,7 @@ class TrivialTest extends junit.framework.TestCase {
 
         AssertInvariant(m)
 
-        meta.assertSame[_3, m#size]
+        meta.assertSame[nat.dense._3, m#size]
 
         type v8 = m#get[_8]
         val v8: v8 = m.get(_8)

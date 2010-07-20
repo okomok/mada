@@ -9,10 +9,10 @@ package dual; package map; package bstree
 
 
 private[mada] object Balance {
-     val delta: delta = nat.peano._5
-    type delta = nat.peano._5
-     val ratio: ratio = nat.peano._2
-    type ratio = nat.peano._2
+     val delta: delta = nat.dense._5
+    type delta = nat.dense._5
+     val ratio: ratio = nat.dense._2
+    type ratio = nat.dense._2
 }
 
 
@@ -21,7 +21,7 @@ final class Balance {
     import Balance._
 
      def apply[k <: Any, v <: Any, l <: BSTree, r <: BSTree](k: k, v: v, l: l, r: r): apply[k, v, l, r] =
-        `if`(l.size  + r.size   <= nat.peano._1,
+        `if`(l.size  + r.size   <= nat.dense._1,
             const0(Node(k, v, l, r)),
             `if`(r.size  >= delta  ** l.size,
                 RotateL(k, v, l, r),
@@ -33,7 +33,7 @@ final class Balance {
         ).apply.asInstanceOf[apply[k, v, l, r]]
 
     type apply[k <: Any, v <: Any, l <: BSTree, r <: BSTree] =
-        `if`[l#size# +[r#size]# <=[nat.peano._1],
+        `if`[l#size# +[r#size]# <=[nat.dense._1],
             const0[Node[k, v, l, r]],
             `if`[r#size# >=[delta# **[l#size]],
                 RotateL[k, v, l, r],
