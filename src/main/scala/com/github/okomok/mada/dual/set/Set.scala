@@ -29,6 +29,9 @@ trait Set extends Any {
      def add[k <: Any](k: k): add[k]
     type add[k <: Any] <: Set
 
+    final  def addList[xs <: List](xs: xs): addList[xs] = new AddList().apply(self, xs)
+    final type addList[xs <: List] = AddList#apply[self, xs]
+
      def remove[k <: Any](k: k): remove[k]
     type remove[k <: Any] <: Set
 
