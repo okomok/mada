@@ -3,6 +3,8 @@
 // Copyright Shunsuke Sogame 2008-2010.
 // Distributed under the terms of an MIT-style license.
 
+// Copyright Daan Leijen 2002.
+
 
 package com.github.okomok.mada
 package dual; package map; package bstree
