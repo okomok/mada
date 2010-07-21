@@ -95,6 +95,8 @@ In the Scala metaprogramming world:
 * metatype is resurrected in parameter-nondependent context.
 * there's no way to define meta-`val`.
 
+For now, `dual` provides the dual implementation of `Nat`, `List`, `Map`, `Set`, `Ordering`, `Option`, `Either` and `FunctionN`.
+
 References:
 
 * [MetaScala]
