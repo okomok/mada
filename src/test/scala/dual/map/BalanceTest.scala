@@ -15,7 +15,7 @@ import nat.peano.Literal._
 import junit.framework.Assert._
 
 
-class BalanceTest extends junit.framework.TestCase {
+class BalanceTest extends org.scalatest.junit.JUnit3Suite {
 
     val h = new Helper
     import h._

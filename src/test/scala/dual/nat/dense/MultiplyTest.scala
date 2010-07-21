@@ -16,7 +16,7 @@ import mada.dual.nat.Dense
 import junit.framework.Assert._
 
 
-class MultiplyTest extends junit.framework.TestCase {
+class MultiplyTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial {
         assertEquals(_6, _3 ** _2)
@@ -35,8 +35,8 @@ class MultiplyTest extends junit.framework.TestCase {
         val a: _4# ** [_2] = _4 ** _2
         assertEquals(_8, a)
         val b: _8 = a
-        assert(a === b)
-        assert(a === _8)
+        mada.dual.assert(a === b)
+        mada.dual.assert(a === _8)
     }
 
     trait teztTrivial {

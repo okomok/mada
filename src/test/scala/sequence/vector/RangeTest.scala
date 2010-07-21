@@ -13,7 +13,7 @@ import mada.sequence.{Vector, vector}
 import junit.framework.Assert._
 
 
-class RangeTest extends junit.framework.TestCase {
+class RangeTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         assertEquals(vector.range(2, 5), vector.range(2, 5))
 //        assertEquals(vector.range(2L, 5L), vector.range(2L, 5L)) // rejected.

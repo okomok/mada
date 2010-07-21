@@ -14,7 +14,7 @@ import nat.peano.Literal._
 import junit.framework.Assert._
 
 
-class ScanTest extends junit.framework.TestCase {
+class ScanTest extends org.scalatest.junit.JUnit3Suite {
 
     case class Div() extends Function2 {
         override  def self = this

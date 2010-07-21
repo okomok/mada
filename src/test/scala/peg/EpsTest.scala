@@ -13,7 +13,7 @@ import mada.peg._
 import junit.framework.Assert._
 
 
-class EpsTest extends junit.framework.TestCase {
+class EpsTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         assertTrue(eps[Int].matches(mada.sequence.vector.empty[Int]))
         assertFalse(eps[Int].matches(mada.sequence.vector.Of(1,2,3)))

@@ -14,7 +14,7 @@ import mada.sequence.vector.from
 import junit.framework.Assert._
 
 
-class NthTest extends junit.framework.TestCase {
+class NthTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val a = vector.range(3, 10)
         assertEquals(3, a(3))

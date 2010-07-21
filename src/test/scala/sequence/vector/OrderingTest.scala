@@ -16,7 +16,7 @@ import mada.sequence.{Vector, vector}
 import junit.framework.Assert._
 
 
-class OrderingTest extends junit.framework.TestCase {
+class OrderingTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val v1 = vector.from("ab")
         val v2 = vector.from("")

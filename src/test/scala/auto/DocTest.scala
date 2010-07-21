@@ -11,7 +11,7 @@ package com.github.okomok.madatest; package autotest
     import java.nio.channels
     import java.nio.channels.Channels
 
-    class DocTezt extends junit.framework.TestCase {
+    class DocTezt { // extends org.scalatest.junit.JUnit3Suite {
         def testTrivial: Unit = {
             for {
                 source <- use(Channels.newChannel(System.in))

@@ -13,7 +13,7 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
-class IterativeTest extends junit.framework.TestCase {
+class IterativeTest extends org.scalatest.junit.JUnit3Suite {
     def testTo: Unit = {
         val r = reactive.Of(1,2,3,4,5,6)
         assertEquals(iterative.Of(1,2,3,4,5,6), r.toIterative)

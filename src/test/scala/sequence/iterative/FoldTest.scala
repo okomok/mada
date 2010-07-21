@@ -13,7 +13,7 @@ import mada.sequence.iterative
 import junit.framework.Assert._
 
 
-class FoldTest extends junit.framework.TestCase {
+class FoldTest extends org.scalatest.junit.JUnit3Suite {
     def testFoldLeft: Unit = {
         val tr = iterative.Of(2,4,6)
         assertEquals(1+2+4+6, tr.foldLeft(1)(_ + _))

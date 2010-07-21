@@ -29,7 +29,7 @@ object CopyReverseArray {
 }
 
 
-class CopyArrayTest extends junit.framework.TestCase {
+class CopyArrayTest extends org.scalatest.junit.JUnit3Suite {
     def sample = Array(0,18,14,17,19, 8,13, 6, 4,23, 0,12,15,11, 4)
 
     def testCopy {

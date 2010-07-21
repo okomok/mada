@@ -19,7 +19,7 @@ import com.github.okomok.madatest.sequencetest.vectortest.detail.Example._
 import com.github.okomok.madatest.sequencetest.vectortest.detail._
 
 
-class RandomShuffleTest extends junit.framework.TestCase {
+class RandomShuffleTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val v = from(example1)
         mada.sequence.vector.stl.randomShuffle(v, 0, v.size)

@@ -13,7 +13,7 @@ import junit.framework.Assert._
 import mada.util
 
 
-class OptionalTest extends junit.framework.TestCase {
+class OptionalTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial = {
         val h = util.optional((3 :: Nil).head)

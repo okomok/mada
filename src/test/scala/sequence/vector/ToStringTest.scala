@@ -13,7 +13,7 @@ import junit.framework.Assert._
 import mada.sequence._
 
 
-class ToStringTest extends junit.framework.TestCase {
+class ToStringTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val k: Vector[Char] = vector.from("abcde")
        // println(k.toString)

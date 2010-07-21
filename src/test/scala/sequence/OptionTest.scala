@@ -13,7 +13,7 @@ import mada.sequence.{list,vector,iterative}
 import junit.framework.Assert._
 
 
-class OptionTest extends junit.framework.TestCase {
+class OptionTest extends org.scalatest.junit.JUnit3Suite {
 
     def evenOption(i: Int): Option[Int] = if (i % 2 == 0) Some(i) else None
 

@@ -13,7 +13,7 @@ import mada.sequence.iterative
 import junit.framework.Assert._
 
 
-class AppendTest extends junit.framework.TestCase {
+class AppendTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial: Unit = {
     //    new NotStartable[Int] ++ new NotStartable[Int]

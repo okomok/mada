@@ -13,7 +13,7 @@ import junit.framework.Assert._
 import junit.framework.AssertionFailedError
 
 
-class AssertNotEqualsTest extends junit.framework.TestCase {
+class AssertNotEqualsTest extends org.scalatest.junit.JUnit3Suite {
     def testThis {
         AssertNotEquals("abc", "efg")
         AssertNotEquals("wowow", 21, 20)

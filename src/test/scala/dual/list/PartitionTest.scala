@@ -14,7 +14,7 @@ import nat.peano.Literal._
 import junit.framework.Assert._
 
 
-class PartitionTest extends junit.framework.TestCase {
+class PartitionTest extends org.scalatest.junit.JUnit3Suite {
 
     case class Lt8() extends Function1 {
         override  def self = this

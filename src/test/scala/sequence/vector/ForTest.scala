@@ -15,7 +15,7 @@ import junit.framework.Assert._
 import detail.Example._
 
 
-class ForTest extends junit.framework.TestCase {
+class ForTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val v = vector.from(example1)
         val w = for (e <- v) yield e

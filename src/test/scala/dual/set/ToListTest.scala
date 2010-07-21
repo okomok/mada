@@ -15,7 +15,7 @@ import nat.dense.Literal._
 import junit.framework.Assert._
 
 
-class ToListTest extends junit.framework.TestCase {
+class ToListTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial {
         type m   = set.sorted[nat.ord]#add[_4]#add[_3]#add[_1]#add[_2]#add[_5]#add[_0]

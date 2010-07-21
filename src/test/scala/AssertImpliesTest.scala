@@ -13,7 +13,7 @@ import junit.framework.Assert._
 import junit.framework.AssertionFailedError
 
 
-class AssertImpliesTest extends junit.framework.TestCase {
+class AssertImpliesTest extends org.scalatest.junit.JUnit3Suite {
     def testThis {
         AssertImplies(true, true)
         AssertImplies(false, true)

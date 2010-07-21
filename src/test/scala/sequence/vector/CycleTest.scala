@@ -14,7 +14,7 @@ import junit.framework.Assert._
 import detail.Example._
 
 
-class CycleTest extends junit.framework.TestCase {
+class CycleTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial {
         val expected = Array(4,23,0,12,4,23,0,12,4,23,0,12,4,23,0,12)
         val actual = from(Array(4,23,0,12)).times(4)

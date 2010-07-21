@@ -16,7 +16,7 @@ import mada.dual.nat.Dense
 import junit.framework.Assert._
 
 
-class ExpTest extends junit.framework.TestCase {
+class ExpTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial {
         assertEquals(_9, _3 ^ _2)
@@ -38,8 +38,8 @@ class ExpTest extends junit.framework.TestCase {
         val a: _4# ^ [_2] = _4 ^ _2
         assertEquals(_15 + _1, a)
         val b: _15# + [_1] = a
-        assert(a === b)
-        assert(a === _15 + _1)
+        mada.dual.assert(a === b)
+        mada.dual.assert(a === _15 + _1)
     }
 
     trait teztTrivial {

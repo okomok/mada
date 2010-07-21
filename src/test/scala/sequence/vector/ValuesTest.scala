@@ -14,7 +14,7 @@ import mada.sequence.vector.from
 import junit.framework.Assert._
 
 
-class ValuesTest extends junit.framework.TestCase {
+class ValuesTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val ex = Array(5,1,3,6,9,7,10,0)
         val ac = vector.Of(5,1,3,6,9,7,10,0)

@@ -13,7 +13,7 @@ import mada.dual.List
 import List.Nil
 
 
-class CommonTest extends junit.framework.TestCase {
+class CommonTest extends org.scalatest.junit.JUnit3Suite {
     import junit.framework.Assert._
     assertFalse(scala.Nil eq Nil)
 

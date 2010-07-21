@@ -13,7 +13,7 @@ import mada.sequence.iterative
 import junit.framework.Assert._
 
 
-class UnfoldTest extends junit.framework.TestCase {
+class UnfoldTest extends org.scalatest.junit.JUnit3Suite {
     def testRight: Unit = {
         val E1 = iterative.unfoldRight(10){ b => if (b == 0) None else Some(b, b-1) }
         assertEquals(iterative.Of(10,9,8,7,6,5,4,3,2,1), E1)

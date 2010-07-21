@@ -13,7 +13,7 @@ import mada.function
 import junit.framework.Assert._
 
 
-class ParameterizeTest extends junit.framework.TestCase {
+class ParameterizeTest extends org.scalatest.junit.JUnit3Suite {
 
     def foo(w: Int, h: Int, msg: String): Int = w * h + msg.length
 

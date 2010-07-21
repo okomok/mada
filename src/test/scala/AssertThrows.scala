@@ -28,7 +28,7 @@ object AssertThrows {
 }
 
 
-class AssertThrowsTest extends junit.framework.TestCase {
+class AssertThrowsTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         AssertThrows(throw new Error())
     }

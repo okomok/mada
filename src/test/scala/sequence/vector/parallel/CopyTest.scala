@@ -16,7 +16,7 @@ import com.github.okomok.madatest.sequencetest.vectortest.detail.Example._
 import com.github.okomok.madatest.sequencetest.vectortest.detail._
 
 
-class CopyTest extends junit.framework.TestCase {
+class CopyTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val actual = mada.sequence.vector.from(example1).parallel.copy
         detail.TeztVectorReadWrite(example1, actual)

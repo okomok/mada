@@ -13,7 +13,7 @@ import mada.sequence.iterative
 import junit.framework.Assert._
 
 
-class FolderTest extends junit.framework.TestCase {
+class FolderTest extends org.scalatest.junit.JUnit3Suite {
     def testFolderLeft: Unit = {
     //    new NotStartable[Int].folderLeft(5)(_ + _)
         val t = iterative.Of(1,2,3,4,5,6,7,8)

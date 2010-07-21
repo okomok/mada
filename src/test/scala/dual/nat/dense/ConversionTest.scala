@@ -15,7 +15,7 @@ import mada.dual.meta
 import mada.dual.nat._
 
 
-class ConversionTest extends junit.framework.TestCase {
+class ConversionTest extends org.scalatest.junit.JUnit3Suite {
 
     def testToPeano {
         import junit.framework.Assert._
@@ -27,7 +27,7 @@ class ConversionTest extends junit.framework.TestCase {
          val x: x = dense._5
         type y = x#toPeano
          val y: y = x.toPeano
-        assert(peano._5 === y)
+        mada.dual.assert(peano._5 === y)
     }
 
 }

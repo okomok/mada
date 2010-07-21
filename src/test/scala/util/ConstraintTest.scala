@@ -14,7 +14,7 @@ import mada.util._
 import junit.framework.Assert._
 
 
-class ConstraintTest extends junit.framework.TestCase {
+class ConstraintTest extends org.scalatest.junit.JUnit3Suite {
 
     trait Foo[+A]
 

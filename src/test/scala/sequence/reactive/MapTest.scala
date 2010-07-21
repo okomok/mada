@@ -13,7 +13,7 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
-class MapTest extends junit.framework.TestCase {
+class MapTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val s = new java.util.ArrayList[Int]
         reactive.Of("123", "12", "12345").map(_.length).activate(reactor.make(_ => s.add(99), s.add(_)))

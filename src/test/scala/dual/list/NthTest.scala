@@ -14,7 +14,7 @@ import nat.peano.Literal._
 import junit.framework.Assert._
 
 
-class NthTest extends junit.framework.TestCase {
+class NthTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial {
         type xs = _5 :: _6 :: _7 :: _8 :: _9 :: Nil

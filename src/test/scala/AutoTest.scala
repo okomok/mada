@@ -45,7 +45,7 @@ class MaybeThrow(b: Boolean) extends Auto[MaybeThrow] {
 
 
 
-class AutoTest extends junit.framework.TestCase {
+class AutoTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial: Unit = {
         val file = new MyFile

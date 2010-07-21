@@ -13,7 +13,7 @@ import mada.sequence.iterative._
 import junit.framework.Assert._
 
 
-class MixTest extends junit.framework.TestCase {
+class MixTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val t = Of(1,2,3)
         val m = t.mix(Mixin.force)

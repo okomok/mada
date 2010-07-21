@@ -17,7 +17,7 @@ import junit.framework.Assert._
 import com.github.okomok.madatest.sequencetest.vectortest.detail.Example._
 
 
-class MixinTest extends junit.framework.TestCase {
+class MixinTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val v = vector.from(Array(0,18,14,17)).mix(vector.Mixin.readOnly)
         var thrown = false

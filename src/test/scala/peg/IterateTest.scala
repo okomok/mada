@@ -16,7 +16,7 @@ import mada.peg.Compatibles._
 import mada.peg._
 
 
-class IterateTest extends junit.framework.TestCase {
+class IterateTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val sb = new StringBuilder
         val w = mada.sequence.vector.from("XXabcXXabcXXabcXXabc").nth

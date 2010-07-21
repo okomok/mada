@@ -12,7 +12,7 @@ import com.github.okomok.mada
 import mada.dual._
 
 
-class LastTest extends junit.framework.TestCase {
+class LastTest extends org.scalatest.junit.JUnit3Suite {
     import junit.framework.Assert._
     assertFalse(scala.Nil eq Nil)
 
@@ -37,7 +37,7 @@ class LastTest extends junit.framework.TestCase {
 
 /*
 
-class LastOrElseTest extends junit.framework.TestCase {
+class LastOrElseTest extends org.scalatest.junit.JUnit3Suite {
     import junit.framework.Assert._
     assertFalse(scala.Nil eq Nil)
 

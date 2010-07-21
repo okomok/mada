@@ -13,7 +13,7 @@ import mada.sequence.{Vector, vector}
 import junit.framework.Assert._
 
 
-class WindowTest extends junit.framework.TestCase {
+class WindowTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val ac = vector.range(0, 10).window(1, 3)
         assertEquals(vector.range(1, 3), ac)

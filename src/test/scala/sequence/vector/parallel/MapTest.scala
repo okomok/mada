@@ -13,7 +13,7 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
-class MapTest extends junit.framework.TestCase {
+class MapTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val v = vector.range(0, 10)
         val e = vector.range(1, 11)

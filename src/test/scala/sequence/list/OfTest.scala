@@ -13,7 +13,7 @@ import mada.sequence.list
 import junit.framework.Assert._
 
 
-class OfTest extends junit.framework.TestCase {
+class OfTest extends org.scalatest.junit.JUnit3Suite {
     def testMatching: Unit = {
         val a = list.Of(1,2,3,4,5)
         val list.Of(x1,2,x3,4,x5) = a

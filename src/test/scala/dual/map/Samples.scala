@@ -51,7 +51,7 @@ object Samples {
 
 }
 
-class SamplesTest extends junit.framework.TestCase {
+class SamplesTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial {
         AssertInvariant(Samples.m8)
     }

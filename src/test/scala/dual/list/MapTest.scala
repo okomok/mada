@@ -13,7 +13,7 @@ import mada.dual._
 import nat.peano.Literal._
 
 
-class MapTest extends junit.framework.TestCase {
+class MapTest extends org.scalatest.junit.JUnit3Suite {
     import junit.framework.Assert._
     assertFalse(scala.Nil eq Nil)
 
@@ -43,7 +43,7 @@ class MapTest extends junit.framework.TestCase {
 }
 
 
-class MapNatTest extends junit.framework.TestCase {
+class MapNatTest extends org.scalatest.junit.JUnit3Suite {
     import junit.framework.Assert._
     assertFalse(scala.Nil eq Nil)
 

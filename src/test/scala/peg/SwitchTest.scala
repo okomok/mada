@@ -15,7 +15,7 @@ import mada.peg.Compatibles._
 import mada.peg._
 
 
-class SwitchTest extends junit.framework.TestCase {
+class SwitchTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val g = switch("z" inCase 'e', "gh" inCase 'f' , "abc" inCase 'q')
         assertTrue("RR" >> g >> "LL"  matches "RRezLL")

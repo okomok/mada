@@ -15,7 +15,7 @@ import nat.dense.Literal._
 import junit.framework.Assert._
 
 
-class AddListTest extends junit.framework.TestCase {
+class AddListTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial {
         type xs    = _4 :: _3 :: _1 :: _2 :: _5 :: _0 :: Nil

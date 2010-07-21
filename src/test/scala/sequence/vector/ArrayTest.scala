@@ -14,7 +14,7 @@ import mada.sequence.vector.from
 import junit.framework.Assert._
 
 
-class ArrayTest extends junit.framework.TestCase {
+class ArrayTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val a = from(Array.range(0, 6))
         val b = from(Array.range(0, 6))

@@ -12,7 +12,7 @@ import com.github.okomok.mada
     import mada.sequence._
     import junit.framework.Assert._
 
-    class DocTest extends junit.framework.TestCase {
+    class DocTest extends org.scalatest.junit.JUnit3Suite {
         def testTrivial: Unit = {
             val v = Vector(0,1,2,3,4).parallelize
             v.map(_ + 10).seek(_ == 13) match {

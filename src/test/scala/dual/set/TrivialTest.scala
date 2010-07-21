@@ -15,7 +15,7 @@ import nat.peano.Literal._
 import junit.framework.Assert._
 
 
-class TrivialTest extends junit.framework.TestCase {
+class TrivialTest extends org.scalatest.junit.JUnit3Suite {
 
     def testAdd {
         type o = nat.ord

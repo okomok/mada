@@ -13,7 +13,7 @@ import mada.sequence.iterative._
 import junit.framework.Assert._
 
 
-class ByNameTest extends junit.framework.TestCase {
+class ByNameTest extends org.scalatest.junit.JUnit3Suite {
     var c = 0
 
     def testLazy: Unit = {

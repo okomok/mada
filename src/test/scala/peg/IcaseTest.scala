@@ -16,7 +16,7 @@ import mada.peg.Compatibles._
 import mada.peg._
 
 
-class IcaseTest extends junit.framework.TestCase {
+class IcaseTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         assertTrue(icase("AbcDeFG") matches "ABcDefg")
         assertTrue(icase("AbcDeFG") matches "abCdEfG")

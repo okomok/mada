@@ -13,7 +13,7 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
-class UniqueTest extends junit.framework.TestCase {
+class UniqueTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial: Unit = {
         val tr = reactive.Of(5,4,4,4,3,2,2,2,2,2,1)

@@ -16,7 +16,7 @@ import junit.framework.Assert._
 import java.nio.channels._
 
 
-class NioTest extends junit.framework.TestCase {
+class NioTest extends org.scalatest.junit.JUnit3Suite {
 
     def testOff: Unit = ()
 

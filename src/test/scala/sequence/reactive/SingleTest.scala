@@ -13,7 +13,7 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
-class SingleTest extends junit.framework.TestCase {
+class SingleTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val t = reactive.single(1)
         val s = new java.util.ArrayList[Int]

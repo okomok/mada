@@ -12,7 +12,7 @@ package com.github.okomok.madatest; package dualtest
     import dual.nat.peano.Literal._
     import junit.framework.Assert._
 
-    class DocTest extends junit.framework.TestCase {
+    class DocTest extends org.scalatest.junit.JUnit3Suite {
         // Define dualvalue `not2`.
         final class not2 extends dual.Function1 { // No meta-generics. `Function1` isn't parameterized.
             // `self` is the dual version of `this` reference. Manual setup is needed.
@@ -37,7 +37,7 @@ package com.github.okomok.madatest; package dualtest
 
 
 
-    class DocOldTest extends junit.framework.TestCase {
+    class DocOldTest extends org.scalatest.junit.JUnit3Suite {
         class slice {
             // List and Nat are metatypes. xs, n, and m are dualvalues. take and drop are dualmethods.
              def apply[xs <: dual.List, n <: dual.nat.Peano, m <: dual.nat.Peano](xs: xs, n: n, m: m): apply[xs, n, m] = xs.take(m).drop(n)

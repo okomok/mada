@@ -14,7 +14,7 @@ import mada.dual._
 import nat.peano.Literal._
 
 
-class TakeTest extends junit.framework.TestCase {
+class TakeTest extends org.scalatest.junit.JUnit3Suite {
     import junit.framework.Assert._
     assertFalse(scala.Nil eq Nil)
 

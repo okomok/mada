@@ -13,7 +13,7 @@ import mada.sequence.iterative
 import junit.framework.Assert._
 
 
-class JavaTest extends junit.framework.TestCase {
+class JavaTest extends org.scalatest.junit.JUnit3Suite {
 
     def testJioReader: Unit = {
         val arr = mada.sequence.Vector('a','b','c').toArray[Char]

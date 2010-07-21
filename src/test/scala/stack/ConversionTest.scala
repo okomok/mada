@@ -13,7 +13,7 @@ import mada.stack
 import junit.framework.Assert._
 
 
-class ConversionTest extends junit.framework.TestCase {
+class ConversionTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial: Unit = {
         val j = new java.util.ArrayDeque[Int]

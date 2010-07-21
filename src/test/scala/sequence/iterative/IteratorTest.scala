@@ -14,7 +14,7 @@ import mada.sequence.iterator
 import junit.framework.Assert._
 
 
-class TraverserTest extends junit.framework.TestCase {
+class TraverserTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val tr = iterative.Of(2,4,6)
         val t = tr.begin

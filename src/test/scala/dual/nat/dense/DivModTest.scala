@@ -15,7 +15,7 @@ import mada.dual.nat.dense.Literal._
 import junit.framework.Assert._
 
 
-class DivModTest extends junit.framework.TestCase {
+class DivModTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial {
         type n = _3#divMod[_5]

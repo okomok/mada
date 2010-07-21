@@ -16,7 +16,7 @@ import mada.peg.Compatibles._
 import mada.peg._
 
 
-class TryTest extends junit.framework.TestCase {
+class TryTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         var thrown = false
         val p = `try` { "abc" >> undefined >> "d" } `catch` { case _: java.lang.AssertionError => thrown = true; "abcd" }

@@ -20,7 +20,7 @@ import mada.sequence.vector
 
 
 
-class SymbolSetTest extends junit.framework.TestCase {
+class SymbolSetTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val i = (vector.from("abc") >> symbolSet("to", "too", "tot", "tab", "so")).lookingAt(vector.from("abcto").nth).get
         assertEquals(5, i)

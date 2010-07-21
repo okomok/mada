@@ -14,7 +14,7 @@ import nat.peano.Literal._
 import nat.Peano
 
 
-class EitherTest extends junit.framework.TestCase {
+class EitherTest extends org.scalatest.junit.JUnit3Suite {
 
 
     def testTrivialLeft {

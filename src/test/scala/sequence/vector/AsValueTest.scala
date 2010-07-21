@@ -13,7 +13,7 @@ import mada.sequence.{Vector, vector}
 import junit.framework.Assert._
 
 
-class AsValueTest extends junit.framework.TestCase {
+class AsValueTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val a = vector.range(3, 10)
         val b = vector.range(3, 10)

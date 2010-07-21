@@ -47,7 +47,7 @@ object CombSort {
 
 
 
-class CombSortTest extends junit.framework.TestCase {
+class CombSortTest extends org.scalatest.junit.JUnit3Suite {
     import mada.sequence._
     import junit.framework.Assert._
 

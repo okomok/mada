@@ -16,7 +16,7 @@ import mada.sequence.vector
 import junit.framework.Assert._
 
 
-class IterativeTest extends junit.framework.TestCase {
+class IterativeTest extends org.scalatest.junit.JUnit3Suite {
     def testMerge: Unit = {
         val A1 = vector.Of(1,6,7,10,14,17)
         val A2 = vector.Of(2,5,8,11,13,18)

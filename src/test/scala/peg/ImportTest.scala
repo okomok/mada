@@ -14,7 +14,7 @@ import junit.framework.Assert._
 
 import mada.peg.Compatibles._ // "strong" import (not type-sensitive but name-sensitive)
 
-class ImportTest extends junit.framework.TestCase {
+class ImportTest extends org.scalatest.junit.JUnit3Suite {
     def testNotAmbiguous: Unit = {
         "abcde" >> "abcde" // needs strong import to look up `>>`.
 

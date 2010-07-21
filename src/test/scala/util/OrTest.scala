@@ -12,7 +12,7 @@ import com.github.okomok.mada
 import junit.framework.Assert._
 
 
-class OrTest extends junit.framework.TestCase {
+class OrTest extends org.scalatest.junit.JUnit3Suite {
 
     import mada.util.||
 

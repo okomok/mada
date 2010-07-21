@@ -14,7 +14,7 @@ import mada.auto.using
 import junit.framework.Assert._
 
 
-class FileTest extends junit.framework.TestCase {
+class FileTest extends org.scalatest.junit.JUnit3Suite {
 
     def testRead: Unit = {
         val n = "./target/madatest_vector_FileTest_read.txt"

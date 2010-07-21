@@ -16,7 +16,7 @@ import com.github.okomok.madatest.sequencetest.vectortest.detail.Example._
 import com.github.okomok.madatest.sequencetest.vectortest.detail._
 
 
-class CountTest extends junit.framework.TestCase {
+class CountTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val v = mada.sequence.vector.from("a813a91ng8a89a8")
         assertEquals(4, v.parallel.count(_ == 'a'))

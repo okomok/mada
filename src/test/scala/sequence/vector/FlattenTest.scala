@@ -13,7 +13,7 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
-class FlattenTest extends junit.framework.TestCase {
+class FlattenTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial {
         val v1 = vector.from(Array(0,1,2))
         val v2 = iterative.from(Array(3,4))

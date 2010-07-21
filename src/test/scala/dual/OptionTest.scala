@@ -14,7 +14,7 @@ import nat.peano.Literal._
 import nat.Peano
 
 
-class OptionTest extends junit.framework.TestCase {
+class OptionTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial {
         type s = Some[Box[Int]]
@@ -113,7 +113,7 @@ class OptionTest extends junit.framework.TestCase {
         type s = Some[_3]
         val s = Some(_3)
         meta.assertSame[_4, natty#apply[s]]
-        assert(_4 === natty(s))
+        mada.dual.assert(_4 === natty(s))
     }
 */
     def testGetOrElse {

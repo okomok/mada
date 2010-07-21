@@ -13,7 +13,7 @@ import mada.function
 import junit.framework.Assert._
 
 
-class FunctionsTest extends junit.framework.TestCase {
+class FunctionsTest extends org.scalatest.junit.JUnit3Suite {
     def testMemoize: Unit = {
         var i = 0
         def heavy(fixed: Int => Int, v: Int) = { i += 1; v * v }

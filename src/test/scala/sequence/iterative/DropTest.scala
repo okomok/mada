@@ -13,7 +13,7 @@ import mada.sequence.iterative
 import junit.framework.Assert._
 
 
-class DropTest extends junit.framework.TestCase {
+class DropTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
     //    new NotStartable[Int].drop(5)
         val t = iterative.Of(4,5,1,3,2,9,7,10)

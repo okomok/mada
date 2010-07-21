@@ -13,7 +13,7 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
-class EqualsTest extends junit.framework.TestCase {
+class EqualsTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val I1: Iterative[Int] = Iterative(27,10,14,7,4,1,2)
         val I2: Iterative[Int] = Iterative(27,10,14,7,4,1,2)

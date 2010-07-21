@@ -14,7 +14,7 @@ import mada.dual._
 import nat.peano.Literal._
 
 
-class DropTest extends junit.framework.TestCase {
+class DropTest extends org.scalatest.junit.JUnit3Suite {
     import junit.framework.Assert._
     assertFalse(scala.Nil eq Nil)
 

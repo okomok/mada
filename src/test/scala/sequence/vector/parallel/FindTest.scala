@@ -16,7 +16,7 @@ import com.github.okomok.madatest.sequencetest.vectortest.detail.Example._
 import com.github.okomok.madatest.sequencetest.vectortest.detail._
 
 
-class FindTest extends junit.framework.TestCase {
+class FindTest extends org.scalatest.junit.JUnit3Suite {
     def testFindFirst: Unit = {
         for (k <- 0 to 50) {
             val v = vector.Of(1,3,102,1,103,3,4,104,8,10,6)

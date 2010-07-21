@@ -13,7 +13,7 @@ import mada.sequence.{Vector, vector}
 import junit.framework.Assert._
 
 
-class AccessTest extends junit.framework.TestCase {
+class AccessTest extends org.scalatest.junit.JUnit3Suite {
     def testHeadLast: Unit = {
         val A1 = vector.Of(1,6,7,10,14,17)
         assertEquals(1, A1.head)

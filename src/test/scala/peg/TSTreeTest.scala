@@ -20,7 +20,7 @@ import mada.sequence.vector
 
 
 
-class TSTreeTest extends junit.framework.TestCase {
+class TSTreeTest extends org.scalatest.junit.JUnit3Suite {
     def testTSTree: Unit = {
         val tree = new mada.peg.TSTree[Char, String]
 

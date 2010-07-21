@@ -13,7 +13,7 @@ import mada.string
 import junit.framework.Assert._
 
 
-class StringsTest extends junit.framework.TestCase {
+class StringsTest extends org.scalatest.junit.JUnit3Suite {
     def testConcat: Unit = {
         assertEquals( "abcdef", string.concat("ab", "", "c", "def", "") )
         AssertNotEquals( "abcxef", string.concat("ab", "", "c", "def", "") )

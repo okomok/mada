@@ -15,7 +15,7 @@ import mada.dual.nat.peano.Literal._
 import mada.dual.nat.Peano
 
 
-class TrivialTest extends junit.framework.TestCase {
+class TrivialTest extends org.scalatest.junit.JUnit3Suite {
 
     def testUndual {
         import junit.framework.Assert._
@@ -37,22 +37,22 @@ class TrivialTest extends junit.framework.TestCase {
     def testAddDuality {
         val x: _2# + [_3] = _2 + _3
         val y: _5 = x
-        assert(x === y)
-        assert(x === _5)
+        mada.dual.assert(x === y)
+        mada.dual.assert(x === _5)
     }
 
     def testSubstractDuality {
         val x: _6# - [_5] = _6 - _5
         val y: _1 = x
-        assert(x === y)
-        assert(x === _1)
+        mada.dual.assert(x === y)
+        mada.dual.assert(x === _1)
     }
 
     def testComparisonDuality {
         val a: _4# > [_2] = _4 > _2
         val b: `true` = a
-        assert(a === b)
-        assert(a === `true`)
+        mada.dual.assert(a === b)
+        mada.dual.assert(a === `true`)
     }
 
     trait testTrivial {

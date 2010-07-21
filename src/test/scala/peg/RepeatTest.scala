@@ -14,7 +14,7 @@ import mada.sequence.{Vector, vector}
 import junit.framework.Assert._
 
 
-class RepeatTest extends junit.framework.TestCase {
+class RepeatTest extends org.scalatest.junit.JUnit3Suite {
     def testRepeat: Unit = {
         assertTrue(peg.from("abc").repeat(2, 4) matches "abcabc")
         assertTrue(peg.from("abc").repeat(2, 4) matches "abcabcabc")
@@ -47,7 +47,7 @@ class RepeatTest extends junit.framework.TestCase {
 }
 
 
-class RepeatUntilTest extends junit.framework.TestCase {
+class RepeatUntilTest extends org.scalatest.junit.JUnit3Suite {
     val any3 = peg.dot[Char] >> peg.dot[Char] >> peg.dot[Char]
 
     def testRepeat: Unit = {

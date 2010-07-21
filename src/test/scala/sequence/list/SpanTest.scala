@@ -13,7 +13,7 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
-class SpanTest extends junit.framework.TestCase {
+class SpanTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val t = list.Of(3,3,3,3,3,9,7,10)
         val (fst, snd) = t.span(_ == 3)

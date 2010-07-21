@@ -14,7 +14,7 @@ import mada.peg.Compatibles._
 import junit.framework.Assert._
 
 
-class VectorTest extends junit.framework.TestCase {
+class VectorTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val p = peg.from(sequence.Vector('a','b','c'))
         assertTrue("123" >> p >> "XYZ" matches "123abcXYZ")

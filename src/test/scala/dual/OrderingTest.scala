@@ -14,7 +14,7 @@ import nat.peano.Literal._
 import nat.Peano
 
 
-class OrderingTest extends junit.framework.TestCase {
+class OrderingTest extends org.scalatest.junit.JUnit3Suite {
 
     def testLT {
         type o = nat.ord

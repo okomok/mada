@@ -13,7 +13,7 @@ import mada.dual._
 import nat.peano.Literal._
 
 
-class FilterTest extends junit.framework.TestCase {
+class FilterTest extends org.scalatest.junit.JUnit3Suite {
     import junit.framework.Assert._
     assertFalse(scala.Nil eq Nil)
 

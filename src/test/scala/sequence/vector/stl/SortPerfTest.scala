@@ -16,7 +16,7 @@ import com.github.okomok.madatest.sequencetest.vectortest.detail.Example._
 import com.github.okomok.madatest.sequencetest.vectortest.detail._
 
 
-class SortPerfTest extends junit.framework.TestCase {
+class SortPerfTest extends org.scalatest.junit.JUnit3Suite {
     def testOff: Unit = ()
 /*
     def longExampleArrayList1 = mada.sequence.vector.jcl.NewArrayList[java.lang.Integer](

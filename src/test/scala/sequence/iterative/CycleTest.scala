@@ -13,7 +13,7 @@ import mada.sequence.iterative
 import junit.framework.Assert._
 
 
-class CycleTest extends junit.framework.TestCase {
+class CycleTest extends org.scalatest.junit.JUnit3Suite {
     def testCycle: Unit = {
     //    new NotStartable[Int].cycle
         val A1 = iterative.Of(1,6,7,10,14,17).cycle

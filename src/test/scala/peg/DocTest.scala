@@ -13,7 +13,7 @@ import com.github.okomok.mada
     import mada.peg.Compatibles._
     import junit.framework.Assert._
 
-    class DocTest extends junit.framework.TestCase {
+    class DocTest extends org.scalatest.junit.JUnit3Suite {
         val S, A, B = new Rule[Char]
 
         S ::= ~(A >> !"b") >> from("a").+ >> B >> !("a"|"b"|"c")

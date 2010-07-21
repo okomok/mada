@@ -16,7 +16,7 @@ import mada.peg.Compatibles._
 import mada.sequence.vector.Region
 
 
-class TokenizeTest extends junit.framework.TestCase {
+class TokenizeTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val pe = mada.peg.from("abcd")
         val v = mada.sequence.vector.from("XabcdXXabcdXX")

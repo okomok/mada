@@ -18,7 +18,7 @@ import com.github.okomok.madatest.sequencetest.vectortest.detail.Example._
 import com.github.okomok.madatest.sequencetest.vectortest.detail._
 
 
-class ReducerTest extends junit.framework.TestCase {
+class ReducerTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val v: Vector[Int] = Array(1,2,3,4,5,6,7,8,9,10,11)
         assertEquals(v.reducer(_ + _), v.parallel.reducer(_ + _))

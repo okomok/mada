@@ -33,7 +33,7 @@ object Example {
 }
 
 
-class ExampleTest extends junit.framework.TestCase {
+class ExampleTest extends org.scalatest.junit.JUnit3Suite {
     def testEmpty1 {
         assertEquals(0, Example.empty1.length)
     }

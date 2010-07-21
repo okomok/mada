@@ -13,7 +13,7 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
-class TryTest extends junit.framework.TestCase {
+class TryTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val t = reactive.Of(1,2,3,4,5,6,7,8,9)
 

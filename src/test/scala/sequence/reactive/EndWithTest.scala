@@ -13,7 +13,7 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
-class EndWithTest extends junit.framework.TestCase {
+class EndWithTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val a = vector.Of(1,2,3,4,5,6)
         val b = new java.util.ArrayList[Int]

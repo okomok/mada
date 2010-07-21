@@ -13,7 +13,7 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
-class StepTest extends junit.framework.TestCase {
+class StepTest extends org.scalatest.junit.JUnit3Suite {
 
     def testStep0: Unit = {
         // Unlike Vector, 0 is allowed.

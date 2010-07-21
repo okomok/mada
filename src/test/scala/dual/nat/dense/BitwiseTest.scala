@@ -15,7 +15,7 @@ import mada.dual.nat.dense._
 import junit.framework.Assert._
 
 
-class BitwiseTest extends junit.framework.TestCase {
+class BitwiseTest extends org.scalatest.junit.JUnit3Suite {
 
     def testAnd {
         meta.assertSame[_0, _0# &[_0]]

@@ -11,17 +11,17 @@ import com.github.okomok.mada
 import mada.dual._
 
 
-import junit.framework.Assert._
+//import junit.framework.Assert._
 
 //import boolean.Operator._
 
 
-class AssertTest extends junit.framework.TestCase {
+class AssertTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial {
-        assert(`true`)
+        mada.dual.assert(`true`)
         try {
-            assert(`false`)
+            mada.dual.assert(`false`)
             fail("never come here")
         } catch {
             case _: AssertionError =>
@@ -29,9 +29,9 @@ class AssertTest extends junit.framework.TestCase {
     }
 
     def testTrivial2 {
-        assert(`true` !== `false`)
+        mada.dual.assert(`true` !== `false`)
         try {
-            assert(`true` === `false`)
+            mada.dual.assert(`true` === `false`)
             fail("never come here")
         } catch {
             case _: AssertionError =>

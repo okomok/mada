@@ -13,7 +13,7 @@ import mada.sequence.iterative
 import junit.framework.Assert._
 
 
-class NthTest extends junit.framework.TestCase {
+class NthTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val A1 = iterative.Of(1,6,7,10,14,17)
         assertEquals(1, A1.nth(0))

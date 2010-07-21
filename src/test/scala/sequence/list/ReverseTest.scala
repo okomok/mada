@@ -13,7 +13,7 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
-class ReverseTest extends junit.framework.TestCase {
+class ReverseTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         assertEquals(list.Of(7,6,5,4,3,2), vector.range(2, 8).toList.reverse)
     }

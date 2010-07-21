@@ -15,7 +15,7 @@ import mada.peg.Compatibles._
 import mada.{Peg, peg}
 
 
-class RegionActionsTest extends junit.framework.TestCase {
+class RegionActionsTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val R = new peg.RegionActions[Char]
         var w: Vector[Char] = null

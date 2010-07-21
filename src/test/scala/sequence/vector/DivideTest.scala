@@ -16,7 +16,7 @@ import junit.framework.Assert._
 import com.github.okomok.madatest.sequencetest.vectortest.detail.Example._
 
 
-class DivideTest extends junit.framework.TestCase {
+class DivideTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         // 0  1  2  3  4  5    6  7  8  9 10 11   12 13 14
         // 0,18,14,17,19, 8,  13, 6, 4,23, 0,12,  15,11, 4

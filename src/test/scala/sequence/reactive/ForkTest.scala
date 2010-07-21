@@ -13,7 +13,7 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
-class ForkTest extends junit.framework.TestCase {
+class ForkTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val r = reactive.Of(1,2,3,4,5,6)
         val out = new java.util.ArrayList[Int]

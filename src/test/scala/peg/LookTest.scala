@@ -14,7 +14,7 @@ import junit.framework.Assert._
 import mada.peg.Compatibles._
 
 
-class LookTest extends junit.framework.TestCase {
+class LookTest extends org.scalatest.junit.JUnit3Suite {
     def testAhead: Unit = {
         assertTrue("abc" >> ~"def" >> "def" matches "abcdef")
         assertTrue("abc" >> ~(dot.*) >> "def" matches "abcdef")

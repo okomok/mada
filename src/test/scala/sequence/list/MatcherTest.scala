@@ -13,7 +13,7 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
-class MatcherTest extends junit.framework.TestCase {
+class MatcherTest extends org.scalatest.junit.JUnit3Suite {
 
     def testLazy: Unit = {
         val x :: xs = 1 #:: 2 #:: 3 #:: 4 #:: 5 #:: Nil

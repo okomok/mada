@@ -13,7 +13,7 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
-class ForTest extends junit.framework.TestCase {
+class ForTest extends org.scalatest.junit.JUnit3Suite {
     def testLazy: Unit = {
         var limit = 2
         val it = for (i <- iterative.Of(0, 1, 2, 3) if i <= limit; j <- vector.range(0,limit)) yield { limit = 4; (i, j) }

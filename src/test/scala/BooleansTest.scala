@@ -13,7 +13,7 @@ import mada.util.implies
 import junit.framework.Assert._
 
 
-class BooleansTest extends junit.framework.TestCase {
+class BooleansTest extends org.scalatest.junit.JUnit3Suite {
     def neverEvaluated: Boolean = {
         fail("impossible")
         false

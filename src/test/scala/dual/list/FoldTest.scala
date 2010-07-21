@@ -14,7 +14,7 @@ import nat.peano.Literal._
 import junit.framework.Assert._
 
 
-class FoldTest extends junit.framework.TestCase {
+class FoldTest extends org.scalatest.junit.JUnit3Suite {
 
     case class Plus() extends Function2 {
         override  def self = this

@@ -14,7 +14,7 @@ import mada.dual._
 import nat.peano.Literal._
 
 
-class TrivialTest extends junit.framework.TestCase {
+class TrivialTest extends org.scalatest.junit.JUnit3Suite {
     import junit.framework.Assert._
     assertFalse(scala.Nil eq Nil)
 
@@ -35,8 +35,8 @@ class TrivialTest extends junit.framework.TestCase {
     def testSize {
         val i = new java.lang.Integer(10)
         val lst = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Nil
-        assert(_4 === lst.size)
-        assert(Nil.size === _0)
+        mada.dual.assert(_4 === lst.size)
+        mada.dual.assert(Nil.size === _0)
     }
 
     def testTypeErase {
@@ -63,7 +63,7 @@ class TrivialTest extends junit.framework.TestCase {
     }
 
     def testIsEmpty {
-        assert(Nil.isEmpty)
+        mada.dual.assert(Nil.isEmpty)
         assertNot((Box(3) :: Box("hello") :: Nil).isEmpty)
     }
 /*

@@ -13,7 +13,7 @@ import mada.util
 import junit.framework.Assert._
 
 
-class PipelineTest extends junit.framework.TestCase {
+class PipelineTest extends org.scalatest.junit.JUnit3Suite {
 
     def foo(x: Int)(s: String): Char = 'a'
     def bar(x: Char): String = "abc"

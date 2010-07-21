@@ -17,7 +17,7 @@ import com.github.okomok.madatest.sequencetest.vectortest.detail.Example._
 import com.github.okomok.madatest.sequencetest.vectortest.detail._
 
 
-class EqualsTest extends junit.framework.TestCase {
+class EqualsTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         assertTrue(from(example1).parallelBy(1000) == mada.sequence.vector.from(example1))
         assertTrue(from(example1).parallelBy(6) == mada.sequence.vector.from(example1))

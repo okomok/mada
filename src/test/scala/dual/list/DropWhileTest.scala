@@ -14,7 +14,7 @@ import nat.peano.Literal._
 import junit.framework.Assert._
 
 
-class DropWhileTest extends junit.framework.TestCase {
+class DropWhileTest extends org.scalatest.junit.JUnit3Suite {
 
     case class Lt8() extends Function1 {
         override  def self = this

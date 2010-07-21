@@ -13,7 +13,7 @@ import mada.util
 import junit.framework.Assert._
 
 
-class TimesTest extends junit.framework.TestCase {
+class TimesTest extends org.scalatest.junit.JUnit3Suite {
 
     def testRepeat: Unit = {
         var i = 0

@@ -13,7 +13,7 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
-class TakeTest extends junit.framework.TestCase {
+class TakeTest extends org.scalatest.junit.JUnit3Suite {
     val ones = vector.Of(1,1,1,1)
 
     def testTrivial0: Unit = {

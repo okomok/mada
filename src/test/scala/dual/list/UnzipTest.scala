@@ -12,7 +12,7 @@ import com.github.okomok.mada
 import mada.dual._
 
 
-class UnzipTest extends junit.framework.TestCase {
+class UnzipTest extends org.scalatest.junit.JUnit3Suite {
     import junit.framework.Assert._
     assertFalse(scala.Nil eq Nil)
 

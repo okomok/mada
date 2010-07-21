@@ -13,7 +13,7 @@ import mada.sequence.iterative
 import junit.framework.Assert._
 
 
-class FindTest extends junit.framework.TestCase {
+class FindTest extends org.scalatest.junit.JUnit3Suite {
     def testFind: Unit = {
         val tr = iterative.Of(2,4,6)
         assertEquals(4, tr.find(_ == 4).get)

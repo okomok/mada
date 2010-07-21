@@ -14,7 +14,7 @@ import nat.peano.Literal._
 import junit.framework.Assert._
 
 
-class ForallTest extends junit.framework.TestCase {
+class ForallTest extends org.scalatest.junit.JUnit3Suite {
 
     case class Gt3() extends Function1 {
         override  def self = this

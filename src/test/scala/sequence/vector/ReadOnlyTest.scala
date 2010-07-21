@@ -17,7 +17,7 @@ import junit.framework.Assert._
 import com.github.okomok.madatest.sequencetest.vectortest.detail.Example._
 
 
-class ReadOnlyTest extends junit.framework.TestCase {
+class ReadOnlyTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val v = vector.from(Array(0,18,14,17)).readOnly
         var thrown = false

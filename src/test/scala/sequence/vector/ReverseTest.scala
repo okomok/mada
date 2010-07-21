@@ -14,7 +14,7 @@ import junit.framework.Assert._
 
 
 
-class ReverseTest extends junit.framework.TestCase {
+class ReverseTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         assertEquals(mada.sequence.vector.from(Array(7,6,5,4,3,2)), vector.range(2, 8).reverse)
     }

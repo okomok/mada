@@ -15,7 +15,7 @@ import mada.peg.Compatibles._
 import mada.{Peg, peg}
 
 
-class BestTest extends junit.framework.TestCase {
+class BestTest extends org.scalatest.junit.JUnit3Suite {
     def testLongest(i: Int): Unit = {
         val p = peg.longest("a", "abc", "KKKKKKKKKK", "abcdefg", "abcd")
         assertTrue("123" >> p >> "LL"  matches "123abcdefgLL")

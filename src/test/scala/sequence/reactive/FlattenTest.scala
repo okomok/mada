@@ -13,7 +13,7 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
-class FlattenTest extends junit.framework.TestCase {
+class FlattenTest extends org.scalatest.junit.JUnit3Suite {
 
     def testFlatMap: Unit = {
         val tr = reactive.Of(1,2,3,4,5)

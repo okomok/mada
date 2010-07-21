@@ -15,7 +15,7 @@ import com.github.okomok.madatest.sequencetest.vectortest.detail.NewArrayList
 import junit.framework.Assert._
 
 
-class JavaTest extends junit.framework.TestCase {
+class JavaTest extends org.scalatest.junit.JUnit3Suite {
     def testArrayList: Unit = {
         val ex = Array(0,18,14,17,19, 8,13, 6, 4,23, 0,12,15,11, 4)
         val ac = NewArrayList(0,18,14,17,19, 8,13, 6, 4,23, 0,12,15,11, 4)

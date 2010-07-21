@@ -15,7 +15,7 @@ import com.github.okomok.madatest.sequencetest.vectortest.detail.NewArrayList
 import junit.framework.Assert._
 
 
-class NioTest extends junit.framework.TestCase {
+class NioTest extends org.scalatest.junit.JUnit3Suite {
     def testCharBuffer: Unit = {
         val v = vector.from(java.nio.CharBuffer.allocate(10))
         assertTrue(v.isInstanceOf[vector.FromJCharBuffer])

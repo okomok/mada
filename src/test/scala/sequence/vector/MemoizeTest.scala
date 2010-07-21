@@ -13,7 +13,7 @@ import mada.sequence.{Vector, vector}
 import junit.framework.Assert._
 
 
-class MemoizeTest extends junit.framework.TestCase {
+class MemoizeTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         var memo = false
         val v = vector.from(Array(0,1,2,3,4,5)).map{ x => if (memo) fail("doh"); x + 10 }

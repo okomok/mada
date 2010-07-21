@@ -17,7 +17,7 @@ import javax.swing
 import reactive.Swing
 
 
-class SwingTest extends junit.framework.TestCase {
+class SwingTest extends org.scalatest.junit.JUnit3Suite {
 
     def testOff: Unit = ()
 

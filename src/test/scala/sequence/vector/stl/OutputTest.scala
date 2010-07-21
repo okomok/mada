@@ -16,7 +16,7 @@ import com.github.okomok.madatest.sequencetest.vectortest.detail.Example._
 import com.github.okomok.madatest.sequencetest.vectortest.detail._
 
 
-class OutputTest extends junit.framework.TestCase {
+class OutputTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val v = from(example1)
         var count = 0

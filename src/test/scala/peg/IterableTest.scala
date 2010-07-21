@@ -14,7 +14,7 @@ import mada.peg.Compatibles._
 import junit.framework.Assert._
 
 
-class IterableTest extends junit.framework.TestCase {
+class IterableTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val p = peg.fromSIterable(List('a','b','c'))
         assertTrue("123" >> p >> "XYZ" matches "123abcXYZ")

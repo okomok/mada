@@ -16,7 +16,7 @@ import com.github.okomok.madatest.sequencetest.vectortest.detail.Example._
 import com.github.okomok.madatest.sequencetest.vectortest.detail._
 
 
-class ContainsTest extends junit.framework.TestCase {
+class ContainsTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val v = mada.sequence.vector.from("abc1d3ef5g4qu67")
 

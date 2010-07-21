@@ -14,7 +14,7 @@ import mada.function
 import junit.framework.Assert._
 
 
-class MapsTest extends junit.framework.TestCase {
+class MapsTest extends org.scalatest.junit.JUnit3Suite {
     def testLazyGet: Unit = {
         val map = new java.util.concurrent.ConcurrentHashMap[String, () => Int]
         assertEquals( 3, assoc.lazyGet(map)("abc"){3} )

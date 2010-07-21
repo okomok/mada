@@ -13,7 +13,7 @@ import mada.sequence.iterative
 import junit.framework.Assert._
 
 
-class ZipTest extends junit.framework.TestCase {
+class ZipTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
     //    new NotStartable[Int].zip(new NotStartable[Int])
         val t = iterative.Of(1,2,3)

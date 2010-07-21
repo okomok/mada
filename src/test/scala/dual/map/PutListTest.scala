@@ -15,7 +15,7 @@ import nat.dense.Literal._
 import junit.framework.Assert._
 
 
-class PutListTest extends junit.framework.TestCase {
+class PutListTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial {
         type xs    = Tuple2[_4, _5] :: Tuple2[_3, _4] :: Tuple2[_1, _2] :: Tuple2[_2, _3] :: Tuple2[_5, _6] :: Tuple2[_0, _1] :: Nil

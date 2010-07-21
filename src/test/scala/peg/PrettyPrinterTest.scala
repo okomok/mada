@@ -18,7 +18,7 @@ import junit.framework.Assert._
 import mada.peg.Compatibles._
 
 
-class PrettyPrinterTest extends junit.framework.TestCase {
+class PrettyPrinterTest extends org.scalatest.junit.JUnit3Suite {
     val expr, term, factor, digit = new Rule[Char]
     val out
 //         = prettyprinter.xml

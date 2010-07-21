@@ -13,7 +13,7 @@ import mada.sequence.iterative
 import junit.framework.Assert._
 
 
-class SizeTest extends junit.framework.TestCase {
+class SizeTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val tr = iterative.Of(1,2,3)
         assertEquals(3, tr.size)

@@ -13,7 +13,7 @@ import mada.peg._
 import junit.framework.Assert._
 
 
-class DotTest extends junit.framework.TestCase {
+class DotTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val sample = mada.sequence.vector.from("/")
         assertTrue(dot[Char].matches(sample))

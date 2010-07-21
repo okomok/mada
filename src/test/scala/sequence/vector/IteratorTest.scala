@@ -15,7 +15,7 @@ import junit.framework.Assert._
 import detail.Example._
 
 
-class IteratorTest extends junit.framework.TestCase {
+class IteratorTest extends org.scalatest.junit.JUnit3Suite {
     def testTo: Unit = {
         val it = from(example1).toSeq.iterator
         var i = 0

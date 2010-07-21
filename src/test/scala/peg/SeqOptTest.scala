@@ -13,7 +13,7 @@ import mada.{Peg, peg}
 import junit.framework.Assert._
 
 
-class SeqOptTest extends junit.framework.TestCase {
+class SeqOptTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val p = "abc" >?>: "de" >?>: "fghi" >?>: peg.from("jk")
         assertTrue(p matches "abc")

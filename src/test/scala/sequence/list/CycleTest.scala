@@ -13,7 +13,7 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
-class CycleTest extends junit.framework.TestCase {
+class CycleTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val L = (1 :: 2 :: 3 :: Nil).cycle
         val A = 1 :: 2 :: 3 :: 1 :: 2 :: 3 :: 1 :: 2 :: Nil

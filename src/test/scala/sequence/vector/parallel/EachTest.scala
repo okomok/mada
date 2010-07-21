@@ -16,7 +16,7 @@ import com.github.okomok.madatest.sequencetest.vectortest.detail.Example._
 import com.github.okomok.madatest.sequencetest.vectortest.detail._
 
 
-class EachTest extends junit.framework.TestCase {
+class EachTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val ex = Array(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14)
         mada.sequence.vector.from(ex).parallel.each(print(_))

@@ -58,7 +58,7 @@ object Mini {
 }
 
 /*
-class MiniHListTest extends junit.framework.TestCase {
+class MiniHListTest extends org.scalatest.junit.JUnit3Suite {
 
     import junit.framework.Assert._
 //    import Mini._

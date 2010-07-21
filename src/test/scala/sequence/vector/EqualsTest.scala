@@ -13,7 +13,7 @@ import mada.sequence.{Vector, vector}
 import junit.framework.Assert._
 
 
-class EqualsTest extends junit.framework.TestCase {
+class EqualsTest extends org.scalatest.junit.JUnit3Suite {
     def testNull: Unit = {
         assertFalse(vector.range(1, 3) == null)
     }

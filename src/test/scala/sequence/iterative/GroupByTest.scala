@@ -13,7 +13,7 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
-class GroupByTest extends junit.framework.TestCase {
+class GroupByTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val A = Iterative("abc", "ab", "abcde", "efg", "a", "abcd", "b")
         val B = A.groupBy(_.length)

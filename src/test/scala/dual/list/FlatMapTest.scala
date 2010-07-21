@@ -12,7 +12,7 @@ import com.github.okomok.mada
 import mada.dual._
 
 
-class FlatMapTest extends junit.framework.TestCase {
+class FlatMapTest extends org.scalatest.junit.JUnit3Suite {
     import junit.framework.Assert._
     assertFalse(scala.Nil eq Nil)
 

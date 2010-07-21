@@ -13,7 +13,7 @@ import mada.sequence.iterative
 import junit.framework.Assert._
 
 
-class FlattenTest extends junit.framework.TestCase {
+class FlattenTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
     //    new NotStartable[iterative.Iterative[Int]]().flatten
         val t1 = iterative.Of(0,1,2)

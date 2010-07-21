@@ -15,7 +15,7 @@ import junit.framework.Assert._
 import com.github.okomok.madatest.sequencetest.vectortest.detail.Example._
 
 
-class AppendTest extends junit.framework.TestCase {
+class AppendTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial {
         val actual = from(Array(0,18,14,17)) ++ from(Array(19, 8,13, 6, 4,23, 0,12,15,11, 4))
         detail.TeztVectorReadWrite(example1, actual)

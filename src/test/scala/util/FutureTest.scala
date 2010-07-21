@@ -13,7 +13,7 @@ import mada.util
 import junit.framework.Assert._
 
 
-class FutureTest extends junit.framework.TestCase {
+class FutureTest extends org.scalatest.junit.JUnit3Suite {
     class Wrap(val i: Int) extends RuntimeException
 
     def testTrivial: Unit = {
@@ -34,7 +34,7 @@ class FutureTest extends junit.framework.TestCase {
     }
 }
 
-class FutureDaemonTest extends junit.framework.TestCase {
+class FutureDaemonTest extends org.scalatest.junit.JUnit3Suite {
     def testDaemon: Unit = {
         // In fact, junit always makes children daemon-ize,
         // so that I don't know how to test....

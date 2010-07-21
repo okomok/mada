@@ -15,7 +15,7 @@ import mada.peg.Compatibles._
 
 
 
-class FilterFromTest extends junit.framework.TestCase {
+class FilterFromTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val pe = mada.peg.from("abcd")
         val v = mada.sequence.vector.from("XabcdXXabcdXX")

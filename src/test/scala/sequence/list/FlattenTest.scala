@@ -13,7 +13,7 @@ import mada.sequence.list
 import junit.framework.Assert._
 
 
-class FlattenTest extends junit.framework.TestCase {
+class FlattenTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val t1 = list.Of(0,1,2)
         val t2 = list.Of(3,4)

@@ -14,7 +14,7 @@ import nat.peano.Literal._
 import junit.framework.Assert._
 
 
-class EquivToTest extends junit.framework.TestCase {
+class EquivToTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial {
         type xs = _9 :: _2 :: _6 :: _10 :: _7 :: _9 :: _8 :: Nil

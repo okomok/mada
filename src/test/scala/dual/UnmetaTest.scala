@@ -14,7 +14,7 @@ import nat.peano.Literal._
 import nat.Operator._
 
 
-class UnmetaTest extends junit.framework.TestCase {
+class UnmetaTest extends org.scalatest.junit.JUnit3Suite {
 
     def testBoolean {
         type r = `true`

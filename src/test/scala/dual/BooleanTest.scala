@@ -17,7 +17,7 @@ import mada.dual.nat.Peano
 import boolean.Operator._
 
 
-class BooleanTest extends junit.framework.TestCase {
+class BooleanTest extends org.scalatest.junit.JUnit3Suite {
     def testConvert {
         import junit.framework.Assert._
         assertEquals(true, `true`.undual)
@@ -42,7 +42,7 @@ class BooleanTest extends junit.framework.TestCase {
         val f: `false`# && [`true`] = `false` && `true`
         val t: `false`# || [`true`] = `false` || `true`
         val x: `false` = f && t
-        assert(x === `false`)
+        mada.dual.assert(x === `false`)
     }
 
     meta.assert[`true`]

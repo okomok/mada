@@ -15,7 +15,7 @@ import mada.peg.Compatibles._
 import mada.peg._
 
 
-class CapturingGroupsTest extends junit.framework.TestCase {
+class CapturingGroupsTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val c = new CapturingGroups[String, Char]
         val p = ("abcd" >> c("name", "EFG") >> "hi" >> c("name"))

@@ -13,7 +13,7 @@ import mada.peg._
 import junit.framework.Assert._
 
 
-class StarTest extends junit.framework.TestCase {
+class StarTest extends org.scalatest.junit.JUnit3Suite {
     def testStar: Unit = {
         val sample = mada.sequence.vector.from("aaaaaaa")
         assertTrue((from("a")*).matches(sample))

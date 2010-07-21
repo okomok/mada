@@ -16,7 +16,7 @@ import mada.peg._
 import java.util.regex.Pattern
 
 
-class RegexTest extends junit.framework.TestCase {
+class RegexTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val p = ("abc" >> Pattern.compile(".*b") >> "c")
         assertTrue(p matches "abcaaaaaaabc")

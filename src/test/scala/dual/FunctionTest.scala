@@ -13,7 +13,7 @@ import mada.dual.nat.peano.Literal._
 import junit.framework.Assert._
 
 
-class FunctionTest extends junit.framework.TestCase {
+class FunctionTest extends org.scalatest.junit.JUnit3Suite {
 
     final case class Plus() extends Function2 {
         override  val self = this
@@ -33,9 +33,9 @@ class FunctionTest extends junit.framework.TestCase {
         val b: b = a.apply(_2)
 
         val z: _5 = b
-        assert(b === _5)
+        mada.dual.assert(b === _5)
         val d: c#apply[_4]#apply[_5] = c(_4)(_5)
-        assert(d === _9)
+        mada.dual.assert(d === _9)
     }
 
     def testTupled {
@@ -46,7 +46,7 @@ class FunctionTest extends junit.framework.TestCase {
         val k : k = c.apply(Tuple2(_3, _4))
 
         val r: _7 = k
-        assert(k === _7)
+        mada.dual.assert(k === _7)
         ()
     }
 
@@ -68,7 +68,7 @@ class FunctionTest extends junit.framework.TestCase {
         type c = Plus2#compose[Minus3]
         val c: c = Plus2().compose(Minus3())
         val r: c#apply[_5] = c.apply(_5)
-        assert(r === _4)
+        mada.dual.assert(r === _4)
         val k: _4 = r
         ()
     }
