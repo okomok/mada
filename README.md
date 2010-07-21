@@ -1,4 +1,4 @@
-# `Mada` 1.0-SNAPSHOT
+# `Mada` 1.0.0-SNAPSHOT
 
 
 
@@ -93,7 +93,6 @@ In the Scala metaprogramming world:
 * meta-`eq`(type identity equality) is infeasible.
 * meta-generics doesn't work. (e.g. metatype can't be a parameter.)
 * metatype is resurrected in parameter-nondependent context.
-* there's no way to define meta-`val`.
 
 For now, `dual` provides the dual implementation of `Nat`, `List`, `Map`, `Set`, `Ordering`, `Option`, `Either` and `FunctionN`.
 
