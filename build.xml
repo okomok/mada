@@ -16,7 +16,7 @@
     <property name="src.dir" location="src" />
     <property name="src.main.dir" location="${src.dir}/main" />
     <property name="src.test.dir" location="${src.dir}/test" />
-    <property name="libs.dir" location="libs" />
+    <property name="lib.dir" location="lib" />
     <property name="target.dir" location="target" />
     <property name="target.classes.dir" location="${target.dir}/classes" />
     <property name="target.test-classes.dir" location="${target.dir}/test-classes" />
@@ -75,7 +75,7 @@
 
     <path id="compile.classpath">
         <path refid="scala.classpath" />
-        <fileset dir="${libs.dir}">
+        <fileset dir="${lib.dir}">
             <include name="*.jar" />
         </fileset>
         <pathelement path="${target.classes.dir}" /> <!-- for transitive -->
