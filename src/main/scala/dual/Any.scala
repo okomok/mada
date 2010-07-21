@@ -15,6 +15,8 @@ object Any
  * The dual Any
  */
 trait Any extends scala.Equals {
+
+    @returnThis
      def self: self
     type self <: Any
 
@@ -81,6 +83,9 @@ trait Any extends scala.Equals {
      def asInstanceOfUnit: asInstanceOfUnit = castError("Unit")
     type asInstanceOfUnit <: Unit
 
+    /**
+     * Escapes from the dual world.
+     */
      def undual: undual = unsupported("undual")
     type undual
 
@@ -95,6 +100,7 @@ trait Any extends scala.Equals {
     protected type unsupported[_] = `throw`[scala.UnsupportedOperationException]
 
     private def castError(name: Predef.String) = throw new java.lang.ClassCastException(toString + " is not instance of " + name)
+
 }
 
 

@@ -156,6 +156,13 @@ package object dual {
     type Equiv = equiv.Equiv
 
 
+// Product
+
+    @aliasOf("Tuple2")
+     val Pair = Tuple2
+    type Pair[v1 <: Any, v2 <: Any] = Tuple2[v1, v2]
+
+
 // Ordering
 
     @aliasOf("ordering.Ordering")
