@@ -22,8 +22,8 @@ trait Any extends scala.Equals {
      def asInstanceOfBoolean: asInstanceOfBoolean = castError("Boolean")
     type asInstanceOfBoolean <: Boolean
 
-    final  def isInstanceOfBoolean: isInstanceOfBoolean = checkInstance(boolean._Boolean.typeid)
-    final type isInstanceOfBoolean = checkInstance[boolean._Boolean.typeid]
+//    final  def isInstanceOfBoolean: isInstanceOfBoolean = checkInstance(boolean._Boolean.typeid)
+//    final type isInstanceOfBoolean = checkInstance[boolean._Boolean.typeid]
 
      def asInstanceOfBox: asInstanceOfBox = castError("Box")
     type asInstanceOfBox <: Box[_]
@@ -101,8 +101,8 @@ trait Any extends scala.Equals {
     /**
      * The type id as bit flags.
      */
-    protected  def typeid: typeid = throw new Error
-    protected type typeid <: nat.Dense
+//    protected  def typeid: typeid = throw new Error
+//    protected type typeid <: nat.Dense
 
     /**
      * Trivial helper to throw UnsupportedOperationException
@@ -112,8 +112,8 @@ trait Any extends scala.Equals {
 
     private def castError(name: Predef.String) = throw new java.lang.ClassCastException(toString + " is not instance of " + name)
 
-    private  def checkInstance[id <: nat.Dense](id: id): checkInstance[id] = (typeid & id).isZero.not
-    private type checkInstance[id <: nat.Dense] = typeid# &[id]#isZero#not
+//    private  def checkInstance[id <: nat.Dense](id: id): checkInstance[id] = (typeid & id).isZero.not
+//    private type checkInstance[id <: nat.Dense] = typeid# &[id]#isZero#not
 }
 
 
