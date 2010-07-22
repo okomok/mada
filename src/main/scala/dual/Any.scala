@@ -15,13 +15,15 @@ object Any
  * The dual Any
  */
 trait Any extends scala.Equals {
-
     @returnThis
      def self: self
     type self <: Any
 
      def asInstanceOfBoolean: asInstanceOfBoolean = castError("Boolean")
     type asInstanceOfBoolean <: Boolean
+
+    final  def isInstanceOfBoolean: isInstanceOfBoolean = checkInstance(boolean._Boolean.typeid)
+    final type isInstanceOfBoolean = checkInstance[boolean._Boolean.typeid]
 
      def asInstanceOfBox: asInstanceOfBox = castError("Box")
     type asInstanceOfBox <: Box[_]
@@ -96,11 +98,22 @@ trait Any extends scala.Equals {
     override def hashCode = undual.hashCode
     override def toString = "dual." + undual.toString
 
+    /**
+     * The type id as bit flags.
+     */
+    protected  def typeid: typeid = throw new Error
+    protected type typeid <: nat.Dense
+
+    /**
+     * Trivial helper to throw UnsupportedOperationException
+     */
     protected  def unsupported(name: Predef.String): unsupported[_] = `throw`(new java.lang.UnsupportedOperationException("dual." + name))
     protected type unsupported[_] = `throw`[scala.UnsupportedOperationException]
 
     private def castError(name: Predef.String) = throw new java.lang.ClassCastException(toString + " is not instance of " + name)
 
+    private  def checkInstance[id <: nat.Dense](id: id): checkInstance[id] = (typeid & id).isZero.not
+    private type checkInstance[id <: nat.Dense] = typeid# &[id]#isZero#not
 }
 
 

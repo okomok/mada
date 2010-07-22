@@ -10,9 +10,9 @@ package dual; package list
 
 private[mada] final class ConsEquivTo {
      def apply[xs <: List, ys <: List, e <: Equiv](xs: xs, ys: ys, e: e): apply[xs, ys, e] =
-        `if`(ys.isEmpty, const0(`false`), Else(xs, ys, e)).apply.asInstanceOfBoolean
+        `if`(ys.isEmpty  ||(xs.size  !== ys.size),  const0(`false`), Else(xs, ys, e)).apply.asInstanceOfBoolean.asInstanceOf[apply[xs, ys, e]]
     type apply[xs <: List, ys <: List, e <: Equiv] =
-        `if`[ys#isEmpty, const0[`false`], Else[xs, ys, e]]#apply#asInstanceOfBoolean
+        `if`[ys#isEmpty# ||[xs#size# !==[ys#size]], const0[`false`], Else[xs, ys, e]]#apply#asInstanceOfBoolean
 
     case class Else[xs <: List, ys <: List, e <: Equiv](xs: xs, ys: ys, e: e) extends Function0 {
         override  val self = this

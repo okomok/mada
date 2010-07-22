@@ -19,6 +19,8 @@ sealed trait Boolean extends Any {
 
     final override  def asInstanceOfBoolean = self
     final override type asInstanceOfBoolean = self
+    final override protected  def typeid = _Boolean.typeid
+    final override protected type typeid = _Boolean.typeid
 
      def not: not
     type not <: Boolean
@@ -116,4 +118,7 @@ sealed trait `false` extends Boolean {
 private[mada] object _Boolean {
     val `true` = new `true`{}
     val `false` = new `false`{}
+
+     val typeid = nat.dense.Literal._15
+    type typeid = nat.dense.Literal._15
 }
