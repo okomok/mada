@@ -1,0 +1,37 @@
+
+
+// Copyright Shunsuke Sogame 2008-2010.
+// Distributed under the terms of an MIT-style license.
+
+
+package com.github.okomok.mada
+package dual; package map
+
+
+private[mada] final class EquivTo {
+     def apply[m <: Map, w <: Map, ve <: Equiv](m: m, w: w, ve: ve): apply[m, w, ve] = m.toList.forall(Pred(w, ve))
+    type apply[m <: Map, w <: Map, ve <: Equiv] = m#toList#forall[Pred[w, ve]]
+
+    case class Pred[w <: Map, ve <: Equiv](w: w, ve: ve) extends Function1 {
+        override  val self = this
+        override type self = Pred[w, ve]
+        override  def apply[kv <: Any](kv: kv): apply[kv] =
+            PredApply(w.get(kv.asInstanceOfProduct2._1), kv.asInstanceOfProduct2._2, ve).apply.asInstanceOf[apply[kv]]
+        override type apply[kv <: Any] =
+            PredApply[w#get[kv#asInstanceOfProduct2#_1], kv#asInstanceOfProduct2#_2, ve]#apply
+    }
+
+    case class PredApply[ov <: Option, v <: Any, ve <: Equiv](ov: ov, v: v, ve: ve) extends Function0 {
+        override  val self = this
+        override type self = PredApply[ov, v, ve]
+        override  def apply: apply = `if`(ov.isEmpty, const0(`false`), Else(ov, v, ve)).apply
+        override type apply        = `if`[ov#isEmpty, const0[`false`], Else[ov, v, ve]]#apply
+    }
+
+    case class Else[ov <: Option, v <: Any, ve <: Equiv](ov: ov, v: v, ve: ve) extends Function0 {
+        override  val self = this
+        override type self = Else[ov, v, ve]
+        override  def apply: apply = ve.equiv(ov.get, v)
+        override type apply        = ve#equiv[ov#get, v]
+    }
+}
