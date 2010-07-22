@@ -162,9 +162,8 @@ sealed abstract class List extends Any {
 
     /**
      * Returns the first element whose type is <code>k</code>.
-     *
-     * @pre List contains an element whose type is <code>k</code>.
      */
+    @pre("List contains an element whose type is `k`.")
     final  def elementOf[e <: Any](implicit _elementOf: ElementOf[self, e]): elementOf[e] = _elementOf(self)
     final type elementOf[e <: Any] = ElementOf.result[self, e]
 

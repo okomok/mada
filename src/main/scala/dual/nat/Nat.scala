@@ -23,12 +23,15 @@ trait Nat extends Any {
     final override  def asInstanceOfNat = self
     final override type asInstanceOfNat = self
 
+    @constantTime
      def isZero: isZero
     type isZero <: Boolean
 
+    @constantTime
      def increment: increment
     type increment <: Nat
 
+    @constantTime
      def decrement: decrement
     type decrement <: Nat
 

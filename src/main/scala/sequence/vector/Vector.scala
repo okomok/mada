@@ -43,11 +43,11 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
 
     /**
      * @param   i   index of element to return.
-     * @pre     this vector is readable.
-     * @pre     <code>isDefinedAt(i)</code>
      * @return  the element at the specified position in this vector.
      * @throws  vector.NotReadableException if not overridden.
      */
+    @pre("this vector is readable.")
+    @pre("`isDefinedAt(i)`")
     override def apply(i: Int): A = throw NotReadableException(this)
 
     /**
@@ -56,10 +56,10 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
      *
      * @param   i   index of element to replace.
      * @param   e   element to be stored at the specified position.
-     * @pre     this vector is writable.
-     * @pre     <code>isDefinedAt(i)</code>
      * @throws  vector.NotWritableException if not overridden.
      */
+    @pre("this vector is writable.")
+    @pre("`isDefinedAt(i)`")
     def update(i: Int, e: A): Unit = throw NotWritableException(this)
 
     /**
@@ -279,9 +279,8 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
     /**
      * Replaces <code>start</code> and <code>end</code> of this vector.
      * Note that a larger vector than <code>this</code> is ALLOWED as far as <code>isDefinedAt</code> says ok.
-     *
-     * @pre <code>start <= end</code>
      */
+    @pre("start <= end")
     def region(_start: Int, _end: Int): Vector[A] = Region(this, _start, _end)
 
     @returnThis
@@ -291,9 +290,9 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
     final def apply(_start: Int, _end: Int): Vector[A] = region(_start, _end)
 
     /**
-     * @pre     <code>!isEmpty</code>
      * @return  <code>this(start, end - 1)</code>.
      */
+    @pre("!isEmpty")
     def init: Vector[A] = Init(this)
 
     @equivalentTo("this(start, start)")
@@ -323,9 +322,8 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
 
     /**
      * Reverts <code>divide</code>.
-     *
-     * @pre     each vector is the same size except for the last one.
      */
+    @pre("each vector is the same size except for the last one.")
     @methodized
     def _undivide[B](_this: Vector[Vector[B]]): Vector[B] = Undivide(_this)
 
@@ -468,10 +466,9 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
 
     /**
      * Copies all the elements into another.
-     *
-     * @pre     <code>size <= that.size</code>.
-     * @pre     <code>that</code> is writable.
      */
+    @pre("size <= that.size")
+    @pre("`that` is writable.")
     def copyTo[B >: A](that: Vector[B]): Vector[B] = {
         Precondition.range(this.size, that.size, "copyTo")
         that(that.start, stl.Copy(this, start, end, that, that.start))
@@ -510,27 +507,27 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
 // associative folding
 
     /**
-     * @pre     <code>op</code> is associative.
      * @return  <code>foldLeft(z)(op)</code>.
      */
+    @pre("`op` is associative.")
     def fold(z: A)(op: (A, A) => A): A = foldLeft(z)(op)
 
     /**
-     * @pre     <code>op</code> is associative.
      * @return  <code>reduceLeft(op)</code>.
      */
+    @pre("`op` is associative.")
     def reduce(op: (A, A) => A): A = reduceLeft(op)
 
     /**
-     * @pre     <code>op</code> is associative.
      * @return  <code>asIterative.folderLeft(z)(op).toVector</code>.
      */
+    @pre("`op` is associative.")
     def folder(z: A)(op: (A, A) => A): Vector[A] = Folder(this, z, op)
 
     /**
-     * @pre     <code>op</code> is associative.
      * @return  <code>asIterative.reducerLeft(op).toVector</code>.
      */
+    @pre("`op` is associative.")
     def reducer(op: (A, A) => A): Vector[A] = Reducer(this, op)
 
 

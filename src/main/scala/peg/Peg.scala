@@ -133,17 +133,17 @@ trait Peg[A] {
     /**
      * Zero-or-more
      *
-     * @pre     <code>this</code> is not instance of <code>ZeroWidth</code>.
      * @see     * as alias.
      */
+    @pre("`this` is not instance of `ZeroWidth`.")
     final def star: Quantified[A] = Star(this)
 
     /**
      * One-or-more
      *
-     * @pre     <code>this</code> is not instance of <code>ZeroWidth</code>.
      * @see     + as alias.
      */
+    @pre("`this` is not instance of `ZeroWidth`.")
     final def plus: Quantified[A] = Plus(this)
 
     /**
@@ -232,9 +232,8 @@ trait Peg[A] {
 
     /**
      * Temporarily converts input using one-to-one projection <code>f</code>.
-     *
-     * @pre     <code>v.size == f(v).size</code> for any <code>v</code>.
      */
+    @pre("`v.size == f(v).size` for any `v`.")
     final def readMap[Z](f: sequence.Vector[Z] => sequence.Vector[A]): Peg[Z] = ReadMap(this, f)
 
     @equivalentTo("readMap{ v => v.map(f) }")

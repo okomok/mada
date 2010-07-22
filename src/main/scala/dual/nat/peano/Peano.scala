@@ -50,9 +50,6 @@ sealed trait Peano extends Nat {
     final override  def |[that <: Nat](that: that): |[that] = (toDense | that).toPeano
     final override type |[that <: Nat] = toDense# |[that]#toPeano
 
-    //final  def %[that <: Peano](that: that): %[that] = new Mod().apply(self, that)
-    //final type %[that <: Peano] = Mod#apply[self, that]
-
      def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f]
     type foldRight[z <: Any, f <: Function2] <: Any
 

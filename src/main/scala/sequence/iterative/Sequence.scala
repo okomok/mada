@@ -24,9 +24,9 @@ trait Sequence[+A] { // physical
      * (In this regard, JCL hierarchy is broken. E.g. <code>unmodifiableCollection</code> can't forward <code>equals</code>.
      * Probably <code>List/Set</code> shouldn't have been a subclass of <code>Collection</code>.)
      *
-     * @pre Both sequences are finite if result is <code>true</code>.
      * @see Effective Java 2nd Edition - Item 8
      */
+    @pre("Both sequences are finite if result is `true`.")
     override def equals(that: Any) = that match {
         case that: Sequence[_] => asIterative.equalsIf(that.asIterative)(function.equal)
         case _ => false
@@ -34,9 +34,8 @@ trait Sequence[+A] { // physical
 
     /**
      * Returns a hash code of this sequence.
-     *
-     * @pre This sequence is finite.
      */
+    @pre("This sequence is finite.")
     override def hashCode = {
         var r = 1
         val it = asIterative.begin
@@ -49,9 +48,8 @@ trait Sequence[+A] { // physical
 
     /**
      * Returns a string representation of this sequence.
-     *
-     * @pre This sequence is finite.
      */
+    @pre("This sequence is finite.")
     override def toString = {
         val sb = new StringBuilder
         sb.append('[')

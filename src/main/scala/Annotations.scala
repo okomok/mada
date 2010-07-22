@@ -93,11 +93,6 @@ class returnThat extends StaticAnnotation
  */
 class specializer extends StaticAnnotation
 
-/**
- * A companion method which has a corresponding metamethod.
- */
-class companionMethod extends StaticAnnotation
-
 
 /**
  * Marks an unfixable compiler bug.
@@ -115,3 +110,16 @@ class compilerWorkaround(version: String) extends StaticAnnotation
  * Visible only for testing: don't touch this.
  */
 class visibleForTesting extends StaticAnnotation
+
+
+/**
+ * Describes method time-complexity.
+ */
+sealed trait TimeComplexity extends StaticAnnotation
+
+class constantTime extends TimeComplexity
+class logarithmicTime extends TimeComplexity
+class linearithmicTime extends TimeComplexity
+class polynomialTime extends TimeComplexity
+class exponentialTime extends TimeComplexity
+class factorialTime extends TimeComplexity
