@@ -41,6 +41,12 @@ trait Set extends Any {
      def toList: toList
     type toList <: List
 
+    final  def equivTo[that <: Set](that: that): equivTo[that] = new EquivTo().apply(self, that)
+    final type equivTo[that <: Set] = EquivTo#apply[self, that]
+
+    final  def union[that <: Set](that: that): union[that] = new Union().apply(self, that)
+    final type union[that <: Set] = Union#apply[self, that]
+
     override type undual = scala.collection.Set[scala.Any]
     override def canEqual(that: scala.Any) = that.isInstanceOf[Set]
 }

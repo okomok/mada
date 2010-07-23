@@ -72,4 +72,22 @@ class TrivialTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals(Predef.Map(1 -> 2, 3 -> 4, 5 -> 6), m.undual)
     }
 
+    def testDupePut {
+        type o = nat.ord
+        val o: o = nat.ord
+
+        type m = map.sorted[o]#put[_3, box[Int]]#put[_5, box[Char]]#put[_1, box[String]]
+        val m: m = map.sorted(o).put(_3, box(3)).put(_5, box('c')).put(_1, box("wow"))
+
+        type v5 = m#get[_5]#get
+        val v5: v5 = m.get(_5).get
+        meta.assertSame[box[Char], v5]
+        assertEquals('c', v5.undual)
+
+        type m2 = m.put[_5, box[String]]
+        val m2: m2 = m.put(_5, box("hw"))
+        meta.assertSame[box[String], m2#get[_5]#get]
+        assertEquals("hw", m2.get(_5).get.undual)
+    }
+
 }
