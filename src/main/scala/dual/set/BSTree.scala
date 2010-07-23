@@ -8,27 +8,57 @@ package com.github.okomok.mada
 package dual; package set
 
 
-private[mada] final case class BSTree[m <: map.bstree.BSTree](private val m: m) extends Set {
+sealed trait BSTree extends Set {
+    type self <: BSTree
+
+     val impl: impl
+    type impl <: map.bstree.BSTree
+}
+
+
+private[mada] final case class BSTreeFrom[m <: map.bstree.BSTree](override val impl: m) extends BSTree {
     override  val self = this
-    override type self = BSTree[m]
+    override type self = BSTreeFrom[m]
 
-    override  def size: size = m.size
-    override type size = m#size
+    override type impl = m
 
-    override  def isEmpty: isEmpty = m.isEmpty
-    override type isEmpty = m#isEmpty
+    override  def size: size = impl.size
+    override type size = impl#size
 
-    override  def add[k <: Any](k: k): add[k] = BSTree(m.put(k, Unit))
-    override type add[k <: Any] = BSTree[m#put[k, Unit]]
+    override  def isEmpty: isEmpty = impl.isEmpty
+    override type isEmpty = impl#isEmpty
 
-    override  def remove[k <: Any](k: k): remove[k] = BSTree(m.remove(k))
-    override type remove[k <: Any] = BSTree[m#remove[k]]
+    override  def add[k <: Any](k: k): add[k] = new BSTreeAdd().apply(self, k)
+    override type add[k <: Any] = BSTreeAdd#apply[self, k]
 
-    override  def contains[k <: Any](k: k): contains[k] = m.contains(k)
-    override type contains[k <: Any] = m#contains[k]
+    override  def clear: clear = new BSTreeClear().apply(self)
+    override type clear = BSTreeClear#apply[self]
 
-    override  def toList: toList = m.keyList
-    override type toList = m#keyList
+    override  def remove[k <: Any](k: k): remove[k] = new BSTreeRemove().apply(self, k)
+    override type remove[k <: Any] = BSTreeRemove#apply[self, k]
 
-    override  def undual: undual = m.undual.keySet
+    override  def contains[k <: Any](k: k): contains[k] = impl.contains(k)
+    override type contains[k <: Any] = impl#contains[k]
+
+    override  def toList: toList = impl.keyList
+    override type toList = impl#keyList
+
+    override  def undual: undual = impl.undual.keySet
+}
+
+
+@typeInstantiationErrorWorkaround
+private[mada] final class BSTreeClear {
+     def apply[t <: BSTree](t: t): apply[t] = BSTreeFrom(t.impl.clear)
+    type apply[t <: BSTree] = BSTreeFrom[t#impl#clear]
+}
+
+private[mada] final class BSTreeAdd {
+     def apply[t <: BSTree, k <: Any](t: t, k: k): apply[t, k] = BSTreeFrom(t.impl.put(k, Unit))
+    type apply[t <: BSTree, k <: Any] = BSTreeFrom[t#impl#put[k, Unit]]
+}
+
+private[mada] final class BSTreeRemove {
+     def apply[t <: BSTree, k <: Any](t: t, k: k): apply[t, k] = BSTreeFrom(t.impl.remove(k))
+    type apply[t <: BSTree, k <: Any] = BSTreeFrom[t#impl#remove[k]]
 }

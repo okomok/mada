@@ -26,6 +26,9 @@ trait Map extends Any {
      def isEmpty: isEmpty
     type isEmpty <: Boolean
 
+     def clear: clear
+    type clear <: Map
+
      def get[k <: Any](k: k): get[k]
     type get[k <: Any] <: Option
 

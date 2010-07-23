@@ -9,7 +9,7 @@ package dual; package nat; package peano
 
 
 private[mada] final class DivMod {
-    @symmetricTypeMismatchWorkaround
+    @nothingTypeMismatchWorkaround
      def apply[x <: Nat, y <: Nat](x: x, y: y): apply[x, y] =
         `if`(x < y, const0(Tuple2(Zero, x)), Else(x, y)).apply.asInstanceOfProduct2
     type apply[x <: Nat, y <: Nat] =

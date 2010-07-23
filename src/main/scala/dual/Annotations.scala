@@ -15,6 +15,8 @@ class typeInstantiationErrorWorkaround extends StaticAnnotation
 
 
 /**
- * Change metatype to a super one, then call `asInstanceOfXXX`.
+ * If scalac wrongly says type-mismatch to `Nothing`, change metatype to
+ * a super one (e.g. `Any`), then call `asInstanceOfXXX`.
+ * In general, this is needed when you call a method parameter's method in turn.
  */
-class symmetricTypeMismatchWorkaround extends StaticAnnotation
+class nothingTypeMismatchWorkaround extends StaticAnnotation

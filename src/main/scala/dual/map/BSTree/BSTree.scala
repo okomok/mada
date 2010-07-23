@@ -34,11 +34,11 @@ sealed abstract class BSTree extends Map {
      def ord: ord
     type ord <: Ordering
 
-    final override  def keySet: keySet = set.BSTree(self)
-    final override type keySet = set.BSTree[self]
+    final override  def keySet: keySet = set.BSTreeFrom(self)
+    final override type keySet = set.BSTreeFrom[self]
 
-//    final  def equivTo[that <: BSTree, ve <: Equiv](that: that, ve: ve): equivTo[that, ve] = toList.equivTo(that.toList, Product2.eqv(ord, ve))
-//    final type equivTo[that <: BSTree, ve <: Equiv] = toList#equivTo[that#toList, Product2.eqv[ord, ve]]
+    final override  def clear: clear = new Clear().apply(self)
+    final override type clear = Clear#apply[self]
 }
 
 
@@ -119,14 +119,14 @@ final case class Node[k <: Any, v <: Any, l <: BSTree, r <: BSTree](
     override  def remove[k <: Any](k: k): remove[k] = new NodeRemove().apply(self, k)
     override type remove[k <: Any] = NodeRemove#apply[self, k]
 
-    override  def toList: toList = new NodeToList().apply(self)//(right.toList.:::(list.single(Tuple2(key, value))).:::(left.toList)).asInstanceOf[toList]
-    override type toList = NodeToList#apply[self]//right#toList# :::[list.single[Tuple2[key, value]]]# :::[left#toList]
+    override  def toList: toList = new NodeToList().apply(self)
+    override type toList = NodeToList#apply[self]
 
-    override  def keyList: keyList = new NodeKeyList().apply(self)//(left.keyList ::: list.Cons(key, list.Nil) ::: right.keyList)//.asInstanceOf[keyList]
-    override type keyList = NodeKeyList#apply[self]//left#keyList ::: list.Cons[key, list.Nil] ::: right#keyList
+    override  def keyList: keyList = new NodeKeyList().apply(self)
+    override type keyList = NodeKeyList#apply[self]
 
-    override  def valueList: valueList = new NodeValueList().apply(self)//(left.valueList ::: list.single(value) ::: right.valueList).asInstanceOf[valueList]
-    override type valueList = NodeValueList#apply[self]//left#valueList ::: list.single[value] ::: right#valueList
+    override  def valueList: valueList = new NodeValueList().apply(self)
+    override type valueList = NodeValueList#apply[self]
 
     override  def undual: undual = (left.undual + (key.undual -> value.undual)) ++ right.undual
 }

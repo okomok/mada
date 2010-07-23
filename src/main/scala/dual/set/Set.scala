@@ -32,8 +32,14 @@ trait Set extends Any {
     final  def addList[xs <: List](xs: xs): addList[xs] = new AddList().apply(self, xs)
     final type addList[xs <: List] = AddList#apply[self, xs]
 
+     def clear: clear
+    type clear <: Set
+
      def remove[k <: Any](k: k): remove[k]
     type remove[k <: Any] <: Set
+
+    final  def removeList[xs <: List](xs: xs): removeList[xs] = new RemoveList().apply(self, xs)
+    final type removeList[xs <: List] = RemoveList#apply[self, xs]
 
      def contains[k <: Any](k: k): contains[k]
     type contains[k <: Any] <: Boolean
@@ -44,8 +50,17 @@ trait Set extends Any {
     final  def equivTo[that <: Set](that: that): equivTo[that] = new EquivTo().apply(self, that)
     final type equivTo[that <: Set] = EquivTo#apply[self, that]
 
+    final  def intersect[that <: Set](that: that): intersect[that] = new Intersect().apply(self, that)
+    final type intersect[that <: Set] = Intersect#apply[self, that]
+
     final  def union[that <: Set](that: that): union[that] = new Union().apply(self, that)
     final type union[that <: Set] = Union#apply[self, that]
+
+    final  def diff[that <: Set](that: that): diff[that] = new Diff().apply(self, that)
+    final type diff[that <: Set] = Diff#apply[self, that]
+
+    final  def subsetOf[that <: Set](that: that): subsetOf[that] = new SubsetOf().apply(self, that)
+    final type subsetOf[that <: Set] = SubsetOf#apply[self, that]
 
     override type undual = scala.collection.Set[scala.Any]
     override def canEqual(that: scala.Any) = that.isInstanceOf[Set]

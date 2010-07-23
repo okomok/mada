@@ -10,7 +10,7 @@ package dual; package map
 
 private[mada] final class Union {
     // left-biased
-    @symmetricTypeMismatchWorkaround
+    @nothingTypeMismatchWorkaround
      def apply[m <: Any, w <: Any](m: m, w: w): apply[m, w] = w.asInstanceOfMap.putList(m.asInstanceOfMap.toList)//.asInstanceOf[apply[m, w]]
     type apply[m <: Any, w <: Any] = w#asInstanceOfMap#putList[m#asInstanceOfMap#toList]
 }
