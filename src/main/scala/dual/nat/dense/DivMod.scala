@@ -53,8 +53,8 @@ private[mada] final class DivMod {
 
     case class Else[x <: Dense, y <: Dense](x: x, y: y) extends Function0 {
         type self = Else[x, y]
-        override  def apply: apply = `if`(x  < y,  const0(Tuple2(Nil, x)), ElseElse(x, y)).apply
-        override type apply        = `if`[x# <[y], const0[Tuple2[Nil, x]], ElseElse[x, y]]#apply
+        override  def apply: apply = `if`(x  < y,  Const0(Tuple2(Nil, x)), ElseElse(x, y)).apply
+        override type apply        = `if`[x# <[y], Const0[Tuple2[Nil, x]], ElseElse[x, y]]#apply
     }
 
     case class ElseElse[x <: Dense, y <: Dense](x: x, y: y) extends Function0 {

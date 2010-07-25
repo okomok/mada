@@ -10,9 +10,9 @@ package dual; package list
 
 private[mada] final class ConsDropWhile {
      def apply[xs <: List, f <: Function1](xs: xs, f: f): apply[xs, f] =
-        `if`(f.apply(xs.head).asInstanceOfBoolean, Then(xs, f), const0(xs)).apply.asInstanceOfList.asInstanceOf[apply[xs, f]]
+        `if`(f.apply(xs.head).asInstanceOfBoolean, Then(xs, f), Const0(xs)).apply.asInstanceOfList.asInstanceOf[apply[xs, f]]
     type apply[xs <: List, f <: Function1] =
-        `if`[f#apply[xs#head]#asInstanceOfBoolean, Then[xs, f], const0[xs]]#apply#asInstanceOfList
+        `if`[f#apply[xs#head]#asInstanceOfBoolean, Then[xs, f], Const0[xs]]#apply#asInstanceOfList
 
     case class Then[xs <: List, f <: Function1](xs: xs, f: f) extends Function0 {
         type self = Then[xs, f]

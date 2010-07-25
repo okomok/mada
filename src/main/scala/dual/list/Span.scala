@@ -10,9 +10,9 @@ package dual; package list
 
 private[mada] final class ConsSpan {
      def apply[xs <: List, f <: Function1](xs: xs, f: f): apply[xs, f] =
-        `if`(f.apply(xs.head).asInstanceOfBoolean, Then(xs, f), const0(Tuple2(Nil, xs))).apply.asInstanceOfProduct2.asInstanceOf[apply[xs, f]]
+        `if`(f.apply(xs.head).asInstanceOfBoolean, Then(xs, f), Const0(Tuple2(Nil, xs))).apply.asInstanceOfProduct2.asInstanceOf[apply[xs, f]]
     type apply[xs <: List, f <: Function1] =
-        `if`[f#apply[xs#head]#asInstanceOfBoolean, Then[xs, f], const0[Tuple2[Nil, xs]]]#apply#asInstanceOfProduct2
+        `if`[f#apply[xs#head]#asInstanceOfBoolean, Then[xs, f], Const0[Tuple2[Nil, xs]]]#apply#asInstanceOfProduct2
 
     case class Then[xs <: List, f <: Function1](xs: xs, f: f) extends Function0 {
         type self = Then[xs, f]

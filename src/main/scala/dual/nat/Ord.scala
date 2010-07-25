@@ -16,18 +16,18 @@ private[mada] final class Ord extends Ordering {
 
     override  def compare[x <: Any, y <: Any](x: x, y: y): compare[x, y] =
         `if`(x.asInstanceOfNat < y.asInstanceOfNat,
-            const0(LT),
+            Const0(LT),
             `if`(x.asInstanceOfNat > y.asInstanceOfNat,
-                const0(GT),
-                const0(EQ)
+                Const0(GT),
+                Const0(EQ)
             )
         ).apply.asInstanceOfOrderingResult.asInstanceOf[compare[x, y]]
     override type compare[x <: Any, y <: Any] =
         `if`[x#asInstanceOfNat# <[y#asInstanceOfNat],
-            const0[LT],
+            Const0[LT],
             `if`[x#asInstanceOfNat# >[y#asInstanceOfNat],
-                const0[GT],
-                const0[EQ]
+                Const0[GT],
+                Const0[EQ]
             ]
         ]#apply#asInstanceOfOrderingResult
 }

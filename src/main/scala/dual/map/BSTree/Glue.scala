@@ -10,9 +10,9 @@ package dual; package map; package bstree
 
 private[mada] final class Glue {
      def apply[l <: BSTree, r <: BSTree](l: l, r: r): apply[l, r] =
-        `if`(l.isEmpty, const0(r), `if`(r.isEmpty, const0(l), Else(l, r))).apply.asInstanceOfMapBSTree.asInstanceOf[apply[l, r]]
+        `if`(l.isEmpty, Const0(r), `if`(r.isEmpty, Const0(l), Else(l, r))).apply.asInstanceOfMapBSTree.asInstanceOf[apply[l, r]]
     type apply[l <: BSTree, r <: BSTree] =
-        `if`[l#isEmpty, const0[r], `if`[r#isEmpty, const0[l], Else[l, r]]]#apply#asInstanceOfMapBSTree
+        `if`[l#isEmpty, Const0[r], `if`[r#isEmpty, Const0[l], Else[l, r]]]#apply#asInstanceOfMapBSTree
 
     case class Else[l <: BSTree, r <: BSTree](l: l, r: r) extends Function0 {
         type self = Else[l, r]

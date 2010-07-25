@@ -48,8 +48,8 @@ sealed abstract class Option extends Any {
      def foreach[f <: Function1](f: f): foreach[f]
     final type foreach[f <: Function1] = Unit
 
-    final  def orElse[f <: Function0](f: f): orElse[f] = `if`(isEmpty, f, const0(self)).apply.asInstanceOfOption
-    final type orElse[f <: Function0] = `if`[isEmpty, f, const0[self]]#apply#asInstanceOfOption
+    final  def orElse[f <: Function0](f: f): orElse[f] = `if`(isEmpty, f, Const0(self)).apply.asInstanceOfOption
+    final type orElse[f <: Function0] = `if`[isEmpty, f, Const0[self]]#apply#asInstanceOfOption
 
     override type undual <: scala.Option[_]
     final override def canEqual(that: scala.Any) = that.isInstanceOf[Option]
@@ -65,8 +65,8 @@ sealed abstract class None extends Option {
     override  def isEmpty: isEmpty = `true`
     override type isEmpty = `true`
 
-    override  def get: get = `throw`(new scala.NoSuchElementException("dual.None.get"))
-    override type get = `throw`[scala.NoSuchElementException]
+    override  def get: get = `throw`(new NoSuchElementException("dual.None.get"))
+    override type get = `throw`[_]
 
     override  def getOrElse[f <: Function0](f: f): getOrElse[f] = f.apply
     override type getOrElse[f <: Function0] = f#apply
@@ -110,8 +110,8 @@ final case class Some[e <: Any](override val get: e) extends Option {
     override  def flatMap[f <: Function1](f: f): flatMap[f] = f.apply(get).asInstanceOfOption
     override type flatMap[f <: Function1] = f#apply[get]#asInstanceOfOption
 
-    override  def filter[f <: Function1](f: f): filter[f] = `if`(f.apply(get).asInstanceOfBoolean, const0(self), const0(None)).apply.asInstanceOfOption
-    override type filter[f <: Function1] = `if`[f#apply[get]#asInstanceOfBoolean, const0[self], const0[None]]#apply#asInstanceOfOption
+    override  def filter[f <: Function1](f: f): filter[f] = `if`(f.apply(get).asInstanceOfBoolean, Const0(self), Const0(None)).apply.asInstanceOfOption
+    override type filter[f <: Function1] = `if`[f#apply[get]#asInstanceOfBoolean, Const0[self], Const0[None]]#apply#asInstanceOfOption
 
     override  def exists[f <: Function1](f: f): exists[f] = f.apply(get).asInstanceOfBoolean
     override type exists[f <: Function1] = f#apply[get]#asInstanceOfBoolean

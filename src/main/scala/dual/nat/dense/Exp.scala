@@ -9,8 +9,8 @@ package dual; package nat; package dense
 
 
 private[mada] final class NilExp {
-     def apply[x <: Dense, n <: Nat](x: x, n: n): apply[x, n] = `if`(n.isZero, const0(_1), const0(x)).apply.asInstanceOfNatDense
-    type apply[x <: Dense, n <: Nat] = `if`[n#isZero, const0[_1], const0[x]]#apply#asInstanceOfNatDense
+     def apply[x <: Dense, n <: Nat](x: x, n: n): apply[x, n] = `if`(n.isZero, Const0(_1), Const0(x)).apply.asInstanceOfNatDense
+    type apply[x <: Dense, n <: Nat] = `if`[n#isZero, Const0[_1], Const0[x]]#apply#asInstanceOfNatDense
 }
 
 

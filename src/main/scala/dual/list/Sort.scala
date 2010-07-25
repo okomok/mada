@@ -10,9 +10,9 @@ package dual; package list
 
 private[mada] final class ConsSort {
      def apply[xs <: List, o <: Ordering](xs: xs, o: o): apply[xs, o] =
-        `if`(xs.tail.isEmpty, const0(xs), Else(xs, o)).apply.asInstanceOfList//.asInstanceOf[apply[xs, o]]
+        `if`(xs.tail.isEmpty, Const0(xs), Else(xs, o)).apply.asInstanceOfList//.asInstanceOf[apply[xs, o]]
     type apply[xs <: List, o <: Ordering] =
-        `if`[xs#tail#isEmpty, const0[xs], Else[xs, o]]#apply#asInstanceOfList
+        `if`[xs#tail#isEmpty, Const0[xs], Else[xs, o]]#apply#asInstanceOfList
 
     case class Else[xs <: List, o <: Ordering](xs: xs, o: o) extends Function0 {
         type self = Else[xs, o]
@@ -26,9 +26,9 @@ private[mada] final class ConsSort {
 
 private[mada] final class Merge {
      def apply[xs <: List, ys <: List, o <: Ordering](xs: xs, ys: ys, o: o): apply[xs, ys, o] =
-        `if`(xs.isEmpty, const0(ys), `if`(ys.isEmpty, const0(xs), Else(xs, ys, o))).apply.asInstanceOfList.asInstanceOf[apply[xs, ys, o]]
+        `if`(xs.isEmpty, Const0(ys), `if`(ys.isEmpty, Const0(xs), Else(xs, ys, o))).apply.asInstanceOfList.asInstanceOf[apply[xs, ys, o]]
     type apply[xs <: List, ys <: List, o <: Ordering] =
-        `if`[xs#isEmpty, const0[ys], `if`[ys#isEmpty, const0[xs], Else[xs, ys, o]]]#apply#asInstanceOfList
+        `if`[xs#isEmpty, Const0[ys], `if`[ys#isEmpty, Const0[xs], Else[xs, ys, o]]]#apply#asInstanceOfList
 
     case class Else[xs <: List, ys <: List, o <: Ordering](xs: xs, ys: ys, o: o) extends Function0 {
         type self = Else[xs, ys, o]

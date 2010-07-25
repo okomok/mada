@@ -10,9 +10,9 @@ package dual; package list
 
 private[mada] final class ConsInit {
      def apply[x <: Any, xs <: List](x: x, xs: xs): apply[x, xs] =
-        `if`(xs.isEmpty, const0(Nil), Else(x, xs)).apply.asInstanceOfList//.asInstanceOf[apply[x, xs]]
+        `if`(xs.isEmpty, Const0(Nil), Else(x, xs)).apply.asInstanceOfList//.asInstanceOf[apply[x, xs]]
     type apply[x <: Any, xs <: List] =
-        `if`[xs#isEmpty, const0[Nil], Else[x, xs]]#apply#asInstanceOfList
+        `if`[xs#isEmpty, Const0[Nil], Else[x, xs]]#apply#asInstanceOfList
 
     case class Else[x <: Any, xs <: List](x: x, xs: xs) extends Function0 {
         type self = Else[x, xs]

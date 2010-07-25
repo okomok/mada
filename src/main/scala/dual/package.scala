@@ -29,12 +29,6 @@ package object dual {
     type box[x] = Box[x]
 
     /**
-     * The dual constant function
-     */
-     def const0[x <: Any](x: => x): const0[x] = new function.Const0(x)
-    type const0[x <: Any] = function.Const0[x]
-
-    /**
      * Returns corresponding runtime value.
      */
      def unmeta[x <: Any](implicit _unmeta: Unmeta[x]): x = _unmeta.apply
@@ -89,6 +83,17 @@ package object dual {
     @aliasOf("either.Right")
      val Right = either.Right
     type Right[x <: Any] = either.Right[x]
+
+
+// Function
+
+    @aliasOf("function.Const0")
+     val Const0 = function.Const0
+    type Const0[x <: Any] = function.Const0[x]
+
+    @aliasOf("function.Throw0")
+     val Throw0 = function.Throw0
+    type Throw0 = function.Throw0
 
 
 // List

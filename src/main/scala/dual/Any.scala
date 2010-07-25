@@ -108,7 +108,7 @@ trait Any extends scala.Equals {
      * Trivial helper to throw UnsupportedOperationException
      */
     protected  def unsupported(name: Predef.String): unsupported[_] = `throw`(new java.lang.UnsupportedOperationException("dual." + name))
-    protected type unsupported[_] = `throw`[scala.UnsupportedOperationException]
+    protected type unsupported[_] = `throw`[_]
 
 //    private  def checkInstance[id <: nat.Dense](id: id): checkInstance[id] = (typeid & id).isZero.not
 //    private type checkInstance[id <: nat.Dense] = typeid# &[id]#isZero#not

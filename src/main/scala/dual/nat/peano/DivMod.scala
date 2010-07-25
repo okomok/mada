@@ -11,9 +11,9 @@ package dual; package nat; package peano
 private[mada] final class DivMod {
     @nothingTypeMismatchWorkaround
      def apply[x <: Nat, y <: Nat](x: x, y: y): apply[x, y] =
-        `if`(x < y, const0(Tuple2(Zero, x)), Else(x, y)).apply.asInstanceOfProduct2
+        `if`(x < y, Const0(Tuple2(Zero, x)), Else(x, y)).apply.asInstanceOfProduct2
     type apply[x <: Nat, y <: Nat] =
-        `if`[x# <[y], const0[Tuple2[Zero, x]], Else[x, y]]#apply#asInstanceOfProduct2
+        `if`[x# <[y], Const0[Tuple2[Zero, x]], Else[x, y]]#apply#asInstanceOfProduct2
 
     case class Else[x <: Nat, y <: Nat](x: x, y: y) extends Function0 {
         type self = Else[x, y]

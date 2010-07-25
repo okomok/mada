@@ -173,11 +173,11 @@ sealed abstract class List extends Any {
 sealed abstract class Nil extends List {
     type self = Nil
 
-    override  def head: head = `throw`(new scala.NoSuchElementException("dual.list.Nil.head"))
-    override type head = `throw`[scala.NoSuchElementException]
+    override  def head: head = `throw`(new NoSuchElementException("dual.list.Nil.head"))
+    override type head = `throw`[_]
 
-    override  def tail: tail = `throw`(new scala.NoSuchElementException("dual.list.Nil.tail"))
-    override type tail = `throw`[scala.NoSuchElementException]
+    override  def tail: tail = `throw`(new NoSuchElementException("dual.list.Nil.tail"))
+    override type tail = `throw`[_]
 
     override  def foreach[f <: Function1](f: f): foreach[f] = Unit
 

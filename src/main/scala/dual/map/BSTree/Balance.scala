@@ -22,24 +22,24 @@ final class Balance {
 
      def apply[k <: Any, v <: Any, l <: BSTree, r <: BSTree](k: k, v: v, l: l, r: r): apply[k, v, l, r] =
         `if`(l.size  + r.size   <= nat.dense._1,
-            const0(Node(k, v, l, r)),
+            Const0(Node(k, v, l, r)),
             `if`(r.size  >= delta  ** l.size,
                 RotateL(k, v, l, r),
                 `if`(l.size  >= delta  ** r.size,
                     RotateR(k, v, l, r),
-                    const0(Node(k, v, l, r))
+                    Const0(Node(k, v, l, r))
                 )
             )
         ).apply.asInstanceOf[apply[k, v, l, r]]
 
     type apply[k <: Any, v <: Any, l <: BSTree, r <: BSTree] =
         `if`[l#size# +[r#size]# <=[nat.dense._1],
-            const0[Node[k, v, l, r]],
+            Const0[Node[k, v, l, r]],
             `if`[r#size# >=[delta# **[l#size]],
                 RotateL[k, v, l, r],
                 `if`[l#size# >=[delta# **[r#size]],
                     RotateR[k, v, l, r],
-                    const0[Node[k, v, l, r]]
+                    Const0[Node[k, v, l, r]]
                 ]
             ]
         ]#apply

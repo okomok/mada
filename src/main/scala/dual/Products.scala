@@ -16,7 +16,10 @@ trait Product extends Any {
     type asInstanceOfProduct = self
 
      def arity: arity
-    type arity <: peano.Peano
+    type arity <: Nat
+
+     def productElement[n <: Nat](n: n): productElement[n]
+    type productElement[n <: Nat] <: Any
 
     override def canEqual(that: scala.Any) = that.isInstanceOf[Product]
 }
@@ -28,6 +31,18 @@ trait Product1 extends Product {
 
     final override  def arity: arity = peano._1
     final override type arity = peano._1
+
+    final override  def productElement[n <: Nat](n: n): productElement[n] =
+        `if`(n  === peano._0,
+            Const0(_1),
+            Throw0(new IndexOutOfBoundsException(n.toString))
+        ).apply
+
+    final override type productElement[n <: Nat] =
+        `if`[n# ===[peano._0],
+            Const0[_1],
+            Throw0
+        ]#apply
 
      def _1: _1
     type _1 <: Any
@@ -55,6 +70,24 @@ trait Product2 extends Product {
 
     final override  def arity: arity = peano._2
     final override type arity = peano._2
+
+    final override  def productElement[n <: Nat](n: n): productElement[n] =
+        `if`(n  === peano._0,
+            Const0(_1),
+            `if`(n  === peano._1,
+                Const0(_2),
+                Throw0(new IndexOutOfBoundsException(n.toString))
+            )
+        ).apply.asInstanceOf[productElement[n]]
+
+    final override type productElement[n <: Nat] =
+        `if`[n# ===[peano._0],
+            Const0[_1],
+            `if`[n# ===[peano._1],
+                Const0[_2],
+                Throw0
+            ]
+        ]#apply
 
      def _1: _1
     type _1 <: Any

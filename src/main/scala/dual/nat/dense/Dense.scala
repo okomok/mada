@@ -79,11 +79,11 @@ sealed abstract class Dense extends Nat {
 sealed class Nil extends Dense {
     type self = Nil
 
-    override  def head: head = `throw`(new scala.NoSuchElementException("dual.nat.dense.Nil.head"))
-    override type head = `throw`[scala.NoSuchElementException]
+    override  def head: head = `throw`(new NoSuchElementException("dual.nat.dense.Nil.head"))
+    override type head = `throw`[_]
 
-    override  def tail: tail = `throw`(new scala.NoSuchElementException("dual.nat.dense.Nil.tail"))
-    override type tail = `throw`[scala.NoSuchElementException]
+    override  def tail: tail = `throw`(new NoSuchElementException("dual.nat.dense.Nil.tail"))
+    override type tail = `throw`[_]
 
     override  val size: size = peano.Zero
     override type size = peano.Zero
@@ -91,8 +91,8 @@ sealed class Nil extends Dense {
     override  def isZero: isZero = `true`
     override type isZero = `true`
 
-    override  def increment: increment = new NilIncrement().apply(self)//Cons(`true`, self)
-    override type increment = NilIncrement#apply[self]//Cons[`true`, self]
+    override  def increment: increment = new NilIncrement().apply(self)
+    override type increment = NilIncrement#apply[self]
 
     override  def decrement: decrement = unsupported("nat.dense.Nil.decrement")
     override type decrement = unsupported[_]
@@ -154,8 +154,8 @@ final case class Cons[x <: Boolean, xs <: Dense](override val head: x, override 
     override  def shiftRight: shiftRight = tail
     override type shiftRight = tail
 
-    override  def toPeano: toPeano = new ConsToPeano().apply(self)//peano.Succ(decrement.toPeano)
-    override type toPeano = ConsToPeano#apply[self]//peano.Succ[decrement#toPeano]
+    override  def toPeano: toPeano = new ConsToPeano().apply(self)
+    override type toPeano = ConsToPeano#apply[self]
 
     override  def foldRightWithNat[z <: Any, f <: Function2](z: z, f: f): foldRightWithNat[z, f] = f.apply(self, decrement.foldRightWithNat(z, f))
     override type foldRightWithNat[z <: Any, f <: Function2] = f#apply[self, decrement#foldRightWithNat[z, f]]

@@ -10,9 +10,9 @@ package dual; package list
 
 private[mada] final class ConsSplitAt {
      def apply[xs <: List, n <: Nat](xs: xs, n: n): apply[xs, n] =
-        `if`(n.isZero, const0(Tuple2(Nil, xs)), Else(xs, n)).apply.asInstanceOfProduct2//.asInstanceOf[apply[xs, n]]
+        `if`(n.isZero, Const0(Tuple2(Nil, xs)), Else(xs, n)).apply.asInstanceOfProduct2//.asInstanceOf[apply[xs, n]]
     type apply[xs <: List, n <: Nat] =
-        `if`[n#isZero, const0[Tuple2[Nil, xs]], Else[xs, n]]#apply#asInstanceOfProduct2
+        `if`[n#isZero, Const0[Tuple2[Nil, xs]], Else[xs, n]]#apply#asInstanceOfProduct2
 
     case class Else[xs <: List, n <: Nat](xs: xs, n: n) extends Function0 {
         type self = Else[xs, n]

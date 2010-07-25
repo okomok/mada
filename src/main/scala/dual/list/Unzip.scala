@@ -10,9 +10,9 @@ package dual; package list
 
 private[mada] final class Unzip {
      def apply[xs <: List](xs: xs): apply[xs] =
-        `if`(xs.isEmpty, const0(Tuple2(Nil, Nil)), Else(xs)).apply.asInstanceOfProduct2
+        `if`(xs.isEmpty, Const0(Tuple2(Nil, Nil)), Else(xs)).apply.asInstanceOfProduct2
     type apply[xs <: List] =
-        `if`[xs#isEmpty, const0[Tuple2[Nil, Nil]], Else[xs]]#apply#asInstanceOfProduct2
+        `if`[xs#isEmpty, Const0[Tuple2[Nil, Nil]], Else[xs]]#apply#asInstanceOfProduct2
 
     case class Else[xs <: List](xs: xs) extends Function0 {
         type self = Else[xs]

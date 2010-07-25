@@ -10,17 +10,30 @@ package dual; package nat; package dense
 
 private[mada] final class Subtract {
      def apply[xs <: Dense, ys <: Dense](xs: xs, ys: ys): apply[xs, ys] =
-        Match(xs, ys, const0(Nil), Throw(xs, ys), const0(xs),
-            ConsMatch(xs, ys, CaseXX(xs, ys), CaseTF(xs, ys), CaseFT(xs, ys), CaseXX(xs, ys))).apply.asInstanceOfNatDense.asInstanceOf[apply[xs, ys]]
-    type apply[xs <: Dense, ys <: Dense] =
-        Match[xs, ys, const0[Nil], Throw[xs, ys], const0[xs],
-            ConsMatch[xs, ys, CaseXX[xs, ys], CaseTF[xs, ys], CaseFT[xs, ys], CaseXX[xs, ys]]]#apply#asInstanceOfNatDense
+        Match(xs, ys,
+            Const0(Nil),
+            Throw0(new UnsupportedOperationException("dual.nat.dense.Nil.subtract positive")),
+            Const0(xs),
+            ConsMatch(xs, ys,
+                CaseXX(xs, ys),
+                CaseTF(xs, ys),
+                CaseFT(xs, ys),
+                CaseXX(xs, ys)
+            )
+        ).apply.asInstanceOfNatDense.asInstanceOf[apply[xs, ys]]
 
-    case class Throw[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
-        type self = Throw[xs, ys]
-        override  def apply: apply = `throw`(new scala.UnsupportedOperationException("dual.nat.dense.Nil.subtract positive"))
-        override type apply = `throw`[scala.UnsupportedOperationException]
-    }
+    type apply[xs <: Dense, ys <: Dense] =
+        Match[xs, ys,
+            Const0[Nil],
+            Throw0,
+            Const0[xs],
+            ConsMatch[xs, ys,
+                CaseXX[xs, ys],
+                CaseTF[xs, ys],
+                CaseFT[xs, ys],
+                CaseXX[xs, ys]
+            ]
+        ]#apply#asInstanceOfNatDense
 
     case class CaseXX[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
         type self = CaseXX[xs, ys]
