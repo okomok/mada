@@ -15,8 +15,7 @@ private[mada] final class ConsInit {
         `if`[xs#isEmpty, const0[Nil], Else[x, xs]]#apply#asInstanceOfList
 
     case class Else[x <: Any, xs <: List](x: x, xs: xs) extends Function0 {
-        override  val self = this
-        override type self = Else[x, xs]
+        type self = Else[x, xs]
         override  def apply: apply = Cons(x, xs.init)
         override type apply = Cons[x, xs.init]
     }

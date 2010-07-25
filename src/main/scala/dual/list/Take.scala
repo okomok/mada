@@ -18,8 +18,7 @@ private[mada] final class Take {
         `if`[n#isZero# ||[xs#isEmpty], const0[Nil], Else[xs, n]]#apply#asInstanceOfList
 
     case class Else[xs <: List, n <: Nat](xs: xs, n: n) extends Function0 {
-        override  val self = this
-        override type self = Else[xs, n]
+        type self = Else[xs, n]
         override  def apply: apply = Cons(xs.head, xs.tail.take(n.decrement)).asInstanceOf[apply]
         override type apply = Cons[xs#head, xs#tail#take[n#decrement]]
     }

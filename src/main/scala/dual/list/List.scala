@@ -17,9 +17,7 @@ object List extends Common with ToSTuple
 
 sealed abstract class List extends Any {
     type self <: List
-
-    final override  def asInstanceOfList = self
-    final override type asInstanceOfList = self
+    type asInstanceOfList = self
 
      def head: head
     type head <: Any
@@ -173,8 +171,7 @@ sealed abstract class List extends Any {
 
 
 sealed abstract class Nil extends List {
-    override  val self = this
-    override type self = Nil
+    type self = Nil
 
     override  def head: head = `throw`(new scala.NoSuchElementException("dual.list.Nil.head"))
     override type head = `throw`[scala.NoSuchElementException]
@@ -261,8 +258,7 @@ sealed abstract class Nil extends List {
 
 
 final case class Cons[x <: Any, xs <: List](override val head: x, override val tail: xs) extends List {
-    override  val self = this
-    override type self = Cons[x, xs]
+    type self = Cons[x, xs]
 
     override type head = x
     override type tail = xs

@@ -16,9 +16,7 @@ object Option
  */
 sealed abstract class Option extends Any {
     type self <: Option
-
-    final override  def asInstanceOfOption = self
-    final override type asInstanceOfOption = self
+    type asInstanceOfOption = self
 
      def isEmpty: isEmpty
     type isEmpty <: Boolean
@@ -62,8 +60,7 @@ sealed abstract class Option extends Any {
  * The dual None
  */
 sealed abstract class None extends Option {
-    override  val self = this
-    override type self = None
+    type self = None
 
     override  def isEmpty: isEmpty = `true`
     override type isEmpty = `true`
@@ -97,8 +94,7 @@ sealed abstract class None extends Option {
  * The dual Some
  */
 final case class Some[e <: Any](override val get: e) extends Option {
-    override  val self = this
-    override type self = Some[e]
+    type self = Some[e]
 
     override  def isEmpty: isEmpty = `false`
     override type isEmpty = `false`

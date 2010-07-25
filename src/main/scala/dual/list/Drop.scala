@@ -15,8 +15,7 @@ private[mada] final class Drop {
         `if`[n#isZero# ||[xs#isEmpty], const0[xs], Else[xs, n]]#apply#asInstanceOfList
 
     case class Else[xs <: List, n <: Nat](xs: xs, n: n) extends Function0 {
-        override  val self = this
-        override type self = Else[xs, n]
+        type self = Else[xs, n]
         override  def apply: apply = xs.tail.drop(n.decrement).asInstanceOf[apply]
         override type apply = xs#tail#drop[n#decrement]
     }

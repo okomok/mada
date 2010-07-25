@@ -17,7 +17,6 @@ class FlatMapTest extends org.scalatest.junit.JUnit3Suite {
     assertFalse(scala.Nil eq Nil)
 
     class oops extends Function1 {
-        override  def self = this
         override type self = oops
         override  def apply[x <: Any](x: x): apply[x] = x :: Box("oops") :: Nil
         override type apply[x <: Any] = x :: Box[String] :: Nil

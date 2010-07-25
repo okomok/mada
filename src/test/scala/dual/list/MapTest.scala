@@ -18,7 +18,6 @@ class MapTest extends org.scalatest.junit.JUnit3Suite {
     assertFalse(scala.Nil eq Nil)
 
     class mkString extends Function1 {
-        override  def self = this
         override type self = mkString
         override  def apply[x <: Any](x: x): apply[x] = Box(x.undual.toString)
         override type apply[x <: Any] = Box[String]
@@ -48,7 +47,6 @@ class MapNatTest extends org.scalatest.junit.JUnit3Suite {
     assertFalse(scala.Nil eq Nil)
 
     class add2 extends Function1 {
-        override  def self = this
         override type self = add2
         override  def apply[x <: Any](x: x): apply[x] = x.asInstanceOfNat + _2
         override type apply[x <: Any] = x#asInstanceOfNat# +[_2]

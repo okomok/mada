@@ -13,9 +13,7 @@ object Equiv extends Common
 
 trait Equiv extends Any with ReferenceEquality {
     type self <: Equiv
-
-    final override  def asInstanceOfEquiv = self
-    final override type asInstanceOfEquiv = self
+    type asInstanceOfEquiv = self
 
      def equiv[x <: Any, y <: Any](x: x, y: y): equiv[x, y]
     type equiv[x <: Any, y <: Any] <: Boolean

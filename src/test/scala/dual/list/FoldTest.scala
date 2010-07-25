@@ -17,14 +17,12 @@ import junit.framework.Assert._
 class FoldTest extends org.scalatest.junit.JUnit3Suite {
 
     case class Plus() extends Function2 {
-        override  def self = this
         override type self = Plus
         override  def apply[x <: Any, y <: Any](x: x, y: y): apply[x, y] = x.asInstanceOfNat + y.asInstanceOfNat
         override type apply[x <: Any, y <: Any] = x#asInstanceOfNat# +[y#asInstanceOfNat]
     }
 
     case class Sub() extends Function2 {
-        override  def self = this
         override type self = Sub
         override  def apply[x <: Any, y <: Any](x: x, y: y): apply[x, y] = x.asInstanceOfNat - y.asInstanceOfNat
         override type apply[x <: Any, y <: Any] = x#asInstanceOfNat# -[y#asInstanceOfNat]

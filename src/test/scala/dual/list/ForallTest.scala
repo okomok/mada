@@ -17,7 +17,6 @@ import junit.framework.Assert._
 class ForallTest extends org.scalatest.junit.JUnit3Suite {
 
     case class Gt3() extends Function1 {
-        override  def self = this
         override type self = Gt3
         override  def apply[x <: Any](x: x): apply[x] = x.asInstanceOfNat > _3
         override type apply[x <: Any] = x#asInstanceOfNat# >[_3]

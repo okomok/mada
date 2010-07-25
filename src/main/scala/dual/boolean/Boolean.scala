@@ -16,9 +16,7 @@ object Boolean extends Common
  */
 sealed trait Boolean extends Any {
     type self <: Boolean
-
-    final override  def asInstanceOfBoolean = self
-    final override type asInstanceOfBoolean = self
+    type asInstanceOfBoolean = self
 //    final override protected  def typeid = _Boolean.typeid
 //    final override protected type typeid = _Boolean.typeid
 
@@ -55,8 +53,7 @@ sealed trait Boolean extends Any {
  * The dual true
  */
 sealed trait `true` extends Boolean {
-    override  val self = this
-    override type self = `true`
+    type self = `true`
 
     override  def not: not = `false`
     override type not = `false`
@@ -87,8 +84,7 @@ sealed trait `true` extends Boolean {
  * The dual false
  */
 sealed trait `false` extends Boolean {
-    override  val self = this
-    override type self = `false`
+    type self = `false`
 
     override  def not: not = `true`
     override type not = `true`

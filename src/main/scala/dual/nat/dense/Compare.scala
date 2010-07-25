@@ -15,16 +15,14 @@ private[mada] final class Equals {
         Match[xs, ys, const0[`true`], const0[`false`], const0[`false`], CaseCC[xs, ys]]#apply#asInstanceOfBoolean
 
     case class CaseCC[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
-        override  val self = this
-        override type self = CaseCC[xs, ys]
+        type self = CaseCC[xs, ys]
         override  def apply: apply = `if`(xs.head !== ys.head, const0(`false`), Else(xs, ys)).apply.asInstanceOf[apply]
         override type apply = `if`[xs#head# !==[ys#head], const0[`false`], Else[xs, ys]]#apply
     }
 
     // for short-circuit.
     case class Else[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
-        override  val self = this
-        override type self = Else[xs, ys]
+        type self = Else[xs, ys]
         override  def apply: apply = (xs.tail === ys.tail).asInstanceOf[apply]
         override type apply = xs#tail# ===[ys#tail]
     }
@@ -40,15 +38,13 @@ private[mada] final class LessThan {
             ConsMatch[xs, ys, CaseXXorTF[xs, ys], CaseXXorTF[xs, ys], CaseFT[xs, ys], CaseXXorTF[xs, ys]]]#apply#asInstanceOfBoolean
 
     case class CaseXXorTF[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
-        override  val self = this
-        override type self = CaseXXorTF[xs, ys]
+        type self = CaseXXorTF[xs, ys]
         override  def apply: apply = (xs.tail < ys.tail).asInstanceOf[apply]
         override type apply = xs#tail# <[ys#tail]
     }
 
     case class CaseFT[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
-        override  val self = this
-        override type self = CaseFT[xs, ys]
+        type self = CaseFT[xs, ys]
         override  def apply: apply = (ys.tail < xs.tail).not.asInstanceOf[apply]
         override type apply = ys#tail# <[xs#tail]#not
     }

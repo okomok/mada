@@ -17,8 +17,7 @@ sealed trait BSTree extends Set {
 
 
 private[mada] final case class BSTreeFrom[m <: map.bstree.BSTree](override val impl: m) extends BSTree {
-    override  val self = this
-    override type self = BSTreeFrom[m]
+    type self = BSTreeFrom[m]
 
     override type impl = m
 

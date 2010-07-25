@@ -13,8 +13,7 @@ private[mada] final class AddList {
     type apply[s <: Set, xs <: List] = xs#foldLeft[s, Step]#asInstanceOfSet
 
     case class Step() extends Function2 {
-        override  val self = this
-        override type self = Step
+        type self = Step
         override  def apply[b <: Any, a <: Any](b: b, a: a): apply[b, a] = b.asInstanceOfSet.add(a)
         override type apply[b <: Any, a <: Any] = b#asInstanceOfSet#add[a]
     }

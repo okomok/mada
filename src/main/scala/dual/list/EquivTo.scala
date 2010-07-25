@@ -15,15 +15,13 @@ private[mada] final class ConsEquivTo {
         `if`[ys#isEmpty# ||[xs#size# !==[ys#size]], const0[`false`], Else[xs, ys, e]]#apply#asInstanceOfBoolean
 
     case class Else[xs <: List, ys <: List, e <: Equiv](xs: xs, ys: ys, e: e) extends Function0 {
-        override  val self = this
-        override type self = Else[xs, ys, e]
+        type self = Else[xs, ys, e]
         override  def apply: apply = `if`(e.equiv(xs.head, ys.head), ElseThen(xs, ys, e), const0(`false`)).apply.asInstanceOf[apply]
         override type apply        = `if`[e#equiv[xs#head, ys#head], ElseThen[xs, ys, e], const0[`false`]]#apply
     }
 
     case class ElseThen[xs <: List, ys <: List, e <: Equiv](xs: xs, ys: ys, e: e) extends Function0 {
-        override  val self = this
-        override type self = ElseThen[xs, ys, e]
+        type self = ElseThen[xs, ys, e]
         override  def apply: apply = xs.tail.equivTo(ys.tail, e)
         override type apply        = xs#tail#equivTo[ys#tail, e]
     }

@@ -17,15 +17,13 @@ private[mada] final class Add {
             ConsMatch[xs, ys, CaseTT[xs, ys], CaseXF[xs, ys], CaseFX[xs, ys], CaseXF[xs, ys]]]#apply#asInstanceOfNatDense
 
     case class CaseTT[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
-        override  val self = this
-        override type self = CaseTT[xs, ys]
+        type self = CaseTT[xs, ys]
         override  def apply: apply = Cons(`false`, (xs.tail + ys.tail).increment).asInstanceOf[apply]
         override type apply = Cons[`false`, xs#tail# +[ys#tail]#increment]
     }
 
     case class CaseXF[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
-        override  val self = this
-        override type self = CaseXF[xs, ys]
+        type self = CaseXF[xs, ys]
         private   def xst_add_yst: xst_add_yst = (xs.tail + ys.tail).asInstanceOf[xst_add_yst]
         private  type xst_add_yst = xs#tail# +[ys#tail]
         override  def apply: apply = Cons(xs.head, xst_add_yst)
@@ -33,8 +31,7 @@ private[mada] final class Add {
     }
 
     case class CaseFX[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
-        override  val self = this
-        override type self = CaseFX[xs, ys]
+        type self = CaseFX[xs, ys]
         private   def xst_add_yst: xst_add_yst = (xs.tail + ys.tail).asInstanceOf[xst_add_yst]
         private  type xst_add_yst = xs#tail# +[ys#tail]
         override  def apply: apply = Cons(ys.head, xst_add_yst)

@@ -17,8 +17,7 @@ private[mada] final class Add {
     type apply[x <: Peano, y <: Peano] = y#foldRight[x, Step]#asInstanceOfNatPeano
 
     case class Step() extends Function2 {
-        override  val self = this
-        override type self = Step
+        type self = Step
         override  def apply[a <: Any, b <: Any](a: a, b: b): apply[a, b] = b.asInstanceOfNatPeano.increment
         override type apply[a <: Any, b <: Any] = b#asInstanceOfNatPeano#increment
     }

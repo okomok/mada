@@ -16,73 +16,73 @@ object Any
  */
 trait Any extends scala.Equals {
     @returnThis
-     def self: self
+    final val self: self = this.asInstanceOf[self]
     type self <: Any
 
-     def asInstanceOfBoolean: asInstanceOfBoolean = castError("Boolean")
+    final def asInstanceOfBoolean: asInstanceOfBoolean = this.asInstanceOf[asInstanceOfBoolean]
     type asInstanceOfBoolean <: Boolean
 
 //    final  def isInstanceOfBoolean: isInstanceOfBoolean = checkInstance(boolean._Boolean.typeid)
 //    final type isInstanceOfBoolean = checkInstance[boolean._Boolean.typeid]
 
-     def asInstanceOfBox: asInstanceOfBox = castError("Box")
+    final def asInstanceOfBox: asInstanceOfBox = this.asInstanceOf[asInstanceOfBox]
     type asInstanceOfBox <: Box[_]
 
-     def asInstanceOfEither: asInstanceOfEither = castError("Either")
+    final def asInstanceOfEither: asInstanceOfEither = this.asInstanceOf[asInstanceOfEither]
     type asInstanceOfEither <: Either
 
-     def asInstanceOfFunction0: asInstanceOfFunction0 = castError("Function0")
+    final def asInstanceOfFunction0: asInstanceOfFunction0 = this.asInstanceOf[asInstanceOfFunction0]
     type asInstanceOfFunction0 <: Function0
 
-     def asInstanceOfFunction1: asInstanceOfFunction1 = castError("Function1")
+    final def asInstanceOfFunction1: asInstanceOfFunction1 = this.asInstanceOf[asInstanceOfFunction1]
     type asInstanceOfFunction1 <: Function1
 
-     def asInstanceOfFunction2: asInstanceOfFunction2 = castError("Function2")
+    final def asInstanceOfFunction2: asInstanceOfFunction2 = this.asInstanceOf[asInstanceOfFunction2]
     type asInstanceOfFunction2 <: Function2
 
-     def asInstanceOfList: asInstanceOfList = castError("List")
+    final def asInstanceOfList: asInstanceOfList = this.asInstanceOf[asInstanceOfList]
     type asInstanceOfList <: List
 
-     def asInstanceOfNat: asInstanceOfNat = castError("Nat")
+    final def asInstanceOfNat: asInstanceOfNat = this.asInstanceOf[asInstanceOfNat]
     type asInstanceOfNat <: Nat
 
-     def asInstanceOfNatDense: asInstanceOfNatDense = castError("NatDense")
+    final def asInstanceOfNatDense: asInstanceOfNatDense = this.asInstanceOf[asInstanceOfNatDense]
     type asInstanceOfNatDense <: nat.Dense
 
-     def asInstanceOfNatPeano: asInstanceOfNatPeano = castError("NatPeano")
+    final def asInstanceOfNatPeano: asInstanceOfNatPeano = this.asInstanceOf[asInstanceOfNatPeano]
     type asInstanceOfNatPeano <: nat.Peano
 
-     def asInstanceOfMap: asInstanceOfMap = castError("Map")
+    final def asInstanceOfMap: asInstanceOfMap = this.asInstanceOf[asInstanceOfMap]
     type asInstanceOfMap <: Map
 
-     def asInstanceOfMapBSTree: asInstanceOfMapBSTree = castError("MapBSTree")
+    final def asInstanceOfMapBSTree: asInstanceOfMapBSTree = this.asInstanceOf[asInstanceOfMapBSTree]
     type asInstanceOfMapBSTree <: map.bstree.BSTree
 
-     def asInstanceOfSet: asInstanceOfSet = castError("Set")
+    final def asInstanceOfSet: asInstanceOfSet = this.asInstanceOf[asInstanceOfSet]
     type asInstanceOfSet <: Set
 
-     def asInstanceOfOption: asInstanceOfOption = castError("Option")
+    final def asInstanceOfOption: asInstanceOfOption = this.asInstanceOf[asInstanceOfOption]
     type asInstanceOfOption <: Option
 
-     def asInstanceOfEquiv: asInstanceOfEquiv = castError("Equiv")
+    final def asInstanceOfEquiv: asInstanceOfEquiv = this.asInstanceOf[asInstanceOfEquiv]
     type asInstanceOfEquiv <: Equiv
 
-     def asInstanceOfOrdering: asInstanceOfOrdering = castError("Ordering")
+    final def asInstanceOfOrdering: asInstanceOfOrdering = this.asInstanceOf[asInstanceOfOrdering]
     type asInstanceOfOrdering <: Ordering
 
-     def asInstanceOfOrderingResult: asInstanceOfOrderingResult = castError("OrderingResult")
+    final def asInstanceOfOrderingResult: asInstanceOfOrderingResult = this.asInstanceOf[asInstanceOfOrderingResult]
     type asInstanceOfOrderingResult <: ordering.Result
 
-     def asInstanceOfProduct: asInstanceOfProduct = castError("Product")
+    final def asInstanceOfProduct: asInstanceOfProduct = this.asInstanceOf[asInstanceOfProduct]
     type asInstanceOfProduct <: Product
 
-     def asInstanceOfProduct1: asInstanceOfProduct1 = castError("Product1")
+    final def asInstanceOfProduct1: asInstanceOfProduct1 = this.asInstanceOf[asInstanceOfProduct1]
     type asInstanceOfProduct1 <: Product1
 
-     def asInstanceOfProduct2: asInstanceOfProduct2 = castError("Product2")
+    final def asInstanceOfProduct2: asInstanceOfProduct2 = this.asInstanceOf[asInstanceOfProduct2]
     type asInstanceOfProduct2 <: Product2
 
-     def asInstanceOfUnit: asInstanceOfUnit = castError("Unit")
+    final def asInstanceOfUnit: asInstanceOfUnit = this.asInstanceOf[asInstanceOfUnit]
     type asInstanceOfUnit <: Unit
 
     /**
@@ -109,8 +109,6 @@ trait Any extends scala.Equals {
      */
     protected  def unsupported(name: Predef.String): unsupported[_] = `throw`(new java.lang.UnsupportedOperationException("dual." + name))
     protected type unsupported[_] = `throw`[scala.UnsupportedOperationException]
-
-    private def castError(name: Predef.String) = throw new java.lang.ClassCastException(toString + " is not instance of " + name)
 
 //    private  def checkInstance[id <: nat.Dense](id: id): checkInstance[id] = (typeid & id).isZero.not
 //    private type checkInstance[id <: nat.Dense] = typeid# &[id]#isZero#not

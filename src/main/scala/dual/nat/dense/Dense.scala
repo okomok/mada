@@ -16,9 +16,7 @@ object Dense extends Common
 
 sealed abstract class Dense extends Nat {
     type self <: Dense
-
-    final override  def asInstanceOfNatDense = self
-    final override type asInstanceOfNatDense = self
+    type asInstanceOfNatDense = self
 
      def head: head
     type head <: Boolean
@@ -79,8 +77,7 @@ sealed abstract class Dense extends Nat {
 
 
 sealed class Nil extends Dense {
-    override  val self = this
-    override type self = Nil
+    type self = Nil
 
     override  def head: head = `throw`(new scala.NoSuchElementException("dual.nat.dense.Nil.head"))
     override type head = `throw`[scala.NoSuchElementException]
@@ -128,8 +125,7 @@ sealed class Nil extends Dense {
 final case class Cons[x <: Boolean, xs <: Dense](override val head: x, override val tail: xs) extends Dense {
     assert(head || tail.isZero.not)
 
-    override  val self = this
-    override type self = Cons[x, xs]
+    type self = Cons[x, xs]
 
     override type head = x
     override type tail = xs

@@ -16,9 +16,7 @@ object Either
  */
 sealed abstract class Either extends Any {
     type self <: Either
-
-    final override  def asInstanceOfEither = self
-    final override type asInstanceOfEither = self
+    type asInstanceOfEither = self
 
      def get: get
     type get <: Any
@@ -50,8 +48,7 @@ sealed abstract class Either extends Any {
  * The dual Left
  */
 final case class Left[e <: Any](override val get: e) extends Either {
-    override  val self = this
-    override type self = Left[e]
+    type self = Left[e]
 
     override type get = e
 
@@ -82,8 +79,7 @@ final case class Left[e <: Any](override val get: e) extends Either {
  * The dual Right
  */
 final case class Right[e <: Any](override val get: e) extends Either {
-    override  val self = this
-    override type self = Right[e]
+    type self = Right[e]
 
     override type get = e
 

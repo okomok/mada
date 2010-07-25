@@ -17,9 +17,7 @@ object Peano extends Common
 
 sealed trait Peano extends Nat {
     type self <: Peano
-
-    final override  def asInstanceOfNatPeano = self
-    final override type asInstanceOfNatPeano = self
+    type asInstanceOfNatPeano = self
 
     final override  def increment: increment = new SuccIncrement().apply(self)//Succ(self)
     final override type increment = SuccIncrement#apply[self]//Succ[self]
@@ -68,8 +66,7 @@ sealed trait Peano extends Nat {
 
 
 sealed trait Zero extends Peano {
-    override  val self = this
-    override type self = Zero
+    type self = Zero
 
     override  def isZero: isZero = `true`
     override type isZero = `true`
@@ -94,8 +91,7 @@ sealed trait Zero extends Peano {
 
 
 final case class Succ[n <: Peano](override val decrement: n) extends Peano {
-    override  val self = this
-    override type self = Succ[n]
+    type self = Succ[n]
 
     override  def isZero: isZero = `false`
     override type isZero = `false`

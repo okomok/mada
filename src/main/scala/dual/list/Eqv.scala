@@ -9,8 +9,7 @@ package dual; package list
 
 
 private[mada] final class Eqv[ee <: Equiv](ee: ee) extends Equiv {
-    override  def self = this
-    override type self = Eqv[ee]
+    type self = Eqv[ee]
     override  def equiv[x <: Any, y <: Any](x: x, y: y): equiv[x, y] = x.asInstanceOfList.equivTo(y.asInstanceOfList, ee)
     override type equiv[x <: Any, y <: Any] = x#asInstanceOfList#equivTo[y#asInstanceOfList, ee]
 }

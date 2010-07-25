@@ -9,8 +9,7 @@ package dual; package equiv
 
 
 private[mada] final class AlwaysTrue extends Equiv {
-    override  def self = this
-    override type self = AlwaysTrue
+    type self = AlwaysTrue
     override  def equiv[x <: Any, y <: Any](x: x, y: y): equiv[x, y] = `true`
     override type equiv[x <: Any, y <: Any] = `true`
 }

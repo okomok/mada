@@ -15,15 +15,13 @@ private[mada] final class ConsMultiply {
         `if`[x, Then[x, xs, ys], Else[x, xs, ys]]#apply#asInstanceOfNatDense
 
     case class Then[x <: Boolean, xs <: Dense, ys <: Dense](x: x, xs: xs, ys: ys) extends Function0 {
-        override  val self = this
-        override type self = Then[x, xs, ys]
+        type self = Then[x, xs, ys]
         override  def apply: apply = (ys + (xs ** ys).shiftLeft).asInstanceOf[apply]
         override type apply = ys# +[xs# **[ys]#shiftLeft]
     }
 
     case class Else[x <: Boolean, xs <: Dense, ys <: Dense](x: x, xs: xs, ys: ys) extends Function0 {
-        override  val self = this
-        override type self = Else[x, xs, ys]
+        type self = Else[x, xs, ys]
         override  def apply: apply = (xs ** ys).shiftLeft
         override type apply = xs# **[ys]# shiftLeft
     }

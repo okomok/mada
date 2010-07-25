@@ -10,9 +10,7 @@ package dual; package ordering
 
 sealed abstract class Result extends Any {
     type self <: Result
-
-    final override  def asInstanceOfOrderingResult = self
-    final override type asInstanceOfOrderingResult = self
+    type asInstanceOfOrderingResult = self
 
      def ===[that <: Result](that: that): ===[that]
     type ===[that <: Result] <: Boolean
@@ -38,8 +36,7 @@ sealed abstract class Result extends Any {
 
 
 sealed abstract class LT extends Result {
-    override  val self = this
-    override type self = LT
+    type self = LT
 
     override  def ===[that <: Result](that: that): ===[that] = that.isLT
     override type ===[that <: Result] = that#isLT
@@ -55,8 +52,7 @@ sealed abstract class LT extends Result {
 }
 
 sealed abstract class GT extends Result {
-    override  val self = this
-    override type self = GT
+    type self = GT
 
     override  def ===[that <: Result](that: that): ===[that] = that.isGT
     override type ===[that <: Result] = that#isGT
@@ -72,8 +68,7 @@ sealed abstract class GT extends Result {
 }
 
 sealed abstract class EQ extends Result {
-    override  val self = this
-    override type self = EQ
+    type self = EQ
 
     override  def ===[that <: Result](that: that): ===[that] = that.isEQ
     override type ===[that <: Result] = that#isEQ

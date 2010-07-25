@@ -15,8 +15,7 @@ private[mada] final class ConsFind {
         `if`[f#apply[x]#asInstanceOfBoolean, const0[Some[x]], Else[x, xs, f]]#apply#asInstanceOfOption
 
     case class Else[x <: Any, xs <: List, f <: Function1](x: x, xs: xs, f: f) extends Function0 {
-        override  val self = this
-        override type self = Else[x, xs, f]
+        type self = Else[x, xs, f]
         override  def apply: apply = xs.find(f)
         override type apply = xs#find[f]
     }

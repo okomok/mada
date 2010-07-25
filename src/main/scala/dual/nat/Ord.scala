@@ -12,8 +12,7 @@ import ordering.{LT, GT, EQ}
 
 
 private[mada] final class Ord extends Ordering {
-    override  def self = this
-    override type self = Ord
+    type self = Ord
 
     override  def compare[x <: Any, y <: Any](x: x, y: y): compare[x, y] =
         `if`(x.asInstanceOfNat < y.asInstanceOfNat,

@@ -15,22 +15,19 @@ private[mada] final class NodeGet {
         m#ord#`match`[k, m#key, CaseLT[m, k], CaseGT[m, k], CaseEQ[m, k]]#asInstanceOfOption
 
     case class CaseLT[m <: BSTree, k <: Any](m: m, k: k) extends Function0 {
-        override  val self = this
-        override type self = CaseLT[m, k]
+        type self = CaseLT[m, k]
         override  def apply: apply = m.left.get(k)
         override type apply = m#left#get[k]
     }
 
     case class CaseGT[m <: BSTree, k <: Any](m: m, k: k) extends Function0 {
-        override  val self = this
-        override type self = CaseGT[m, k]
+        type self = CaseGT[m, k]
         override  def apply: apply = m.right.get(k)
         override type apply = m#right#get[k]
     }
 
     case class CaseEQ[m <: BSTree, k <: Any](m: m, k: k) extends Function0 {
-        override  val self = this
-        override type self = CaseEQ[m, k]
+        type self = CaseEQ[m, k]
         override  def apply: apply = Some(m.value)
         override type apply = Some[m#value]
     }

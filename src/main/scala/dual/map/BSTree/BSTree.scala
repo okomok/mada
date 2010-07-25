@@ -12,9 +12,7 @@ package dual; package map; package bstree
 
 sealed abstract class BSTree extends Map {
     type self <: BSTree
-
-    final override  def asInstanceOfMapBSTree = self
-    final override type asInstanceOfMapBSTree = self
+    type asInstanceOfMapBSTree = self
 
     override type put[k <: Any, v <: Any] <: BSTree
     override type remove[k <: Any] <: BSTree
@@ -43,8 +41,7 @@ sealed abstract class BSTree extends Map {
 
 
 final case class Nil[o <: Ordering](override val ord: o) extends BSTree {
-    override  val self = this
-    override type self = Nil[o]
+    type self = Nil[o]
 
     override  def size: size = nat.dense._0
     override type size = nat.dense._0
@@ -93,8 +90,7 @@ final case class Node[k <: Any, v <: Any, l <: BSTree, r <: BSTree](
 {
     Predef.assert(left.ord.undual == right.ord.undual)
 
-    override  val self = this
-    override type self = Node[k, v, l, r]
+    type self = Node[k, v, l, r]
 
     override  val size: size = (left.size + right.size).increment.asInstanceOf[size]
     override type size = left#size# +[right#size]#increment

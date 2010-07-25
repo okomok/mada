@@ -15,15 +15,13 @@ private[mada] final class Glue {
         `if`[l#isEmpty, const0[r], `if`[r#isEmpty, const0[l], Else[l, r]]]#apply#asInstanceOfMapBSTree
 
     case class Else[l <: BSTree, r <: BSTree](l: l, r: r) extends Function0 {
-        override  val self = this
-        override type self = Else[l, r]
+        type self = Else[l, r]
         override  def apply: apply = `if`(l.size  > r.size,  ElseThen(l, r), ElseElse(l, r)).apply.asInstanceOf[apply]
         override type apply =        `if`[l#size# >[r#size], ElseThen[l, r], ElseElse[l, r]]#apply
     }
 
     case class ElseThen[l <: BSTree, r <: BSTree](l: l, r: r) extends Function0 {
-        override  val self = this
-        override type self = ElseThen[l, r]
+        type self = ElseThen[l, r]
 
         private lazy val d: d = new RemoveMax().apply(l)
         private type d = RemoveMax#apply[l]
@@ -33,8 +31,7 @@ private[mada] final class Glue {
     }
 
     case class ElseElse[l <: BSTree, r <: BSTree](l: l, r: r) extends Function0 {
-        override  val self = this
-        override type self = ElseElse[l, r]
+        type self = ElseElse[l, r]
 
         private lazy val d: d = new RemoveMin().apply(r)
         private type d = RemoveMin#apply[r]
@@ -50,15 +47,13 @@ private[mada] final class RemoveMax { // => Tuple2(Tuple2(maxKey, value), map)
     type apply[m <: BSTree]                 = `if`[m#right#isEmpty, Then[m], Else[m]]#apply#asInstanceOfProduct2
 
     case class Then[m <: BSTree](m: m) extends Function0 {
-        override  val self = this
-        override type self = Then[m]
+        type self = Then[m]
         override  def apply: apply = Tuple2(Tuple2(m.key, m.value), m.left)
         override type apply        = Tuple2[Tuple2[m#key, m#value], m#left]
     }
 
     case class Else[m <: BSTree](m: m) extends Function0 {
-        override  val self = this
-        override type self = Else[m]
+        type self = Else[m]
 
         private lazy val d: d = new RemoveMax().apply(m.right)
         private type d = RemoveMax#apply[m#right]
@@ -73,15 +68,13 @@ private[mada] final class RemoveMin { // => Tuple2(Tuple2(minKey, value), map)
     type apply[m <: BSTree]                 = `if`[m#left#isEmpty, Then[m], Else[m]]#apply#asInstanceOfProduct2
 
     case class Then[m <: BSTree](m: m) extends Function0 {
-        override  val self = this
-        override type self = Then[m]
+        type self = Then[m]
         override  def apply: apply = Tuple2(Tuple2(m.key, m.value), m.right)
         override type apply        = Tuple2[Tuple2[m#key, m#value], m#right]
     }
 
     case class Else[m <: BSTree](m: m) extends Function0 {
-        override  val self = this
-        override type self = Else[m]
+        type self = Else[m]
 
         private lazy val d: d = new RemoveMin().apply(m.left)
         private type d = RemoveMin#apply[m#left]

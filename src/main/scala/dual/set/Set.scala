@@ -16,9 +16,7 @@ object Set extends Common
  */
 trait Set extends Any {
     type self <: Set
-
-    final override  def asInstanceOfSet = self
-    final override type asInstanceOfSet = self
+    type asInstanceOfSet = self
 
      def size: size
     type size <: Nat

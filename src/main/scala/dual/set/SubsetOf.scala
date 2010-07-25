@@ -13,8 +13,7 @@ private[mada] final class SubsetOf {
     type apply[s <: Set, z <: Set] = s#toList#forall[Pred[z]]
 
     case class Pred[z <: Set](z: z) extends Function1 {
-        override  val self = this
-        override type self = Pred[z]
+        type self = Pred[z]
         override  def apply[k <: Any](k: k): apply[k] = z.contains(k)
         override type apply[k <: Any] = z#contains[k]
     }

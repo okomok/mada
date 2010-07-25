@@ -15,8 +15,7 @@ private[mada] final class ConsNthOption {
         `if`[n#isZero, const0[Some[x]], Else[xs, n]]#apply#asInstanceOfOption
 
     case class Else[xs <: List, n <: Nat](xs: xs, n: n) extends Function0 {
-        override  val self = this
-        override type self = Else[xs, n]
+        type self = Else[xs, n]
         override  def apply: apply = xs.nthOption(n.decrement)
         override type apply = xs#nthOption[n#decrement]
     }

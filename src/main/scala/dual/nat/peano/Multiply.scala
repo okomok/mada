@@ -14,8 +14,7 @@ private[mada] final class Multiply {
     type apply[x <: Peano, y <: Peano] = y#foldRight[Zero, Step[x]]#asInstanceOfNatPeano
 
     case class Step[x <: Peano](x: x) extends Function2 {
-        override  val self = this
-        override type self = Step[x]
+        type self = Step[x]
         override def apply[a <: Any, b <: Any](a: a, b: b): apply[a, b] = x + b.asInstanceOfNatPeano
         override type apply[a <: Any, b <: Any] = x# +[b#asInstanceOfNatPeano]
     }

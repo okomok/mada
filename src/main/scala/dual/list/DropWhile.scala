@@ -15,8 +15,7 @@ private[mada] final class ConsDropWhile {
         `if`[f#apply[xs#head]#asInstanceOfBoolean, Then[xs, f], const0[xs]]#apply#asInstanceOfList
 
     case class Then[xs <: List, f <: Function1](xs: xs, f: f) extends Function0 {
-        override  val self = this
-        override type self = Then[xs, f]
+        type self = Then[xs, f]
         override  def apply: apply = xs.tail.dropWhile(f)
         override type apply = xs#tail#dropWhile[f]
     }

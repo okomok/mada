@@ -9,11 +9,8 @@ package dual
 
 
 sealed abstract class Unit extends Any {
-    override  val self = this
-    override type self = Unit
-
-    override  def asInstanceOfUnit = this
-    override type asInstanceOfUnit = Unit
+    type self = Unit
+    type asInstanceOfUnit = Unit
 
     override  def undual: undual = ()
     override type undual = scala.Unit

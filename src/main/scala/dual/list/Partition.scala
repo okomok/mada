@@ -15,8 +15,7 @@ private[mada] final class ConsPartition {
         `if`[f#apply[x]#asInstanceOfBoolean, Then[x, xs, f], Else[x, xs, f]]#apply#asInstanceOfProduct2
 
     case class Then[x <: Any, xs <: List, f <: Function1](x: x, xs: xs, f: f) extends Function0 {
-        override  val self = this
-        override type self = Then[x, xs, f]
+        type self = Then[x, xs, f]
         override  def apply: apply = Tuple2(Cons(x, r._1.asInstanceOfList), r._2)
         override type apply = Tuple2[Cons[x, r#_1#asInstanceOfList], r#_2]
         private lazy val r: r = xs.partition(f)
@@ -24,8 +23,7 @@ private[mada] final class ConsPartition {
     }
 
     case class Else[x <: Any, xs <: List, f <: Function1](x: x, xs: xs, f: f) extends Function0 {
-        override  val self = this
-        override type self = Else[x, xs, f]
+        type self = Else[x, xs, f]
         override  def apply: apply = Tuple2(r._1, Cons(x, r._2.asInstanceOfList))
         override type apply = Tuple2[r#_1, Cons[x, r#_2#asInstanceOfList]]
         private lazy val r: r = xs.partition(f)

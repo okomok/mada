@@ -9,8 +9,7 @@ package dual; package function
 
 
 final case class Tupled2[f <: Function2](f: f) extends Function1 {
-    override  val self = this
-    override type self = Tupled2[f]
+    type self = Tupled2[f]
     override  def apply[v1 <: Any](v1: v1): apply[v1] = pass(v1.asInstanceOfProduct2)
     override type apply[v1 <: Any] = pass[v1#asInstanceOfProduct2]
 

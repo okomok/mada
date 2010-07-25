@@ -17,7 +17,6 @@ import junit.framework.Assert._
 class DropWhileTest extends org.scalatest.junit.JUnit3Suite {
 
     case class Lt8() extends Function1 {
-        override  def self = this
         override type self = Lt8
         override  def apply[x <: Any](x: x): apply[x] = x.asInstanceOfNat < _8
         override type apply[x <: Any] = x#asInstanceOfNat# <[_8]

@@ -15,22 +15,19 @@ private[mada] final class NodeRemove {
         m#ord#`match`[k, m#key, CaseLT[m, k], CaseGT[m, k], CaseEQ[m, k]]#asInstanceOfMapBSTree
 
     case class CaseLT[m <: BSTree, k <: Any](m: m, k: k) extends Function0 {
-        override  val self = this
-        override type self = CaseLT[m, k]
+        type self = CaseLT[m, k]
         override  def apply: apply = new Balance().apply(m.key, m.value, m.left.remove(k), m.right).asInstanceOf[apply]
         override type apply        =     Balance#  apply[m#key, m#value, m#left#remove[k], m#right]
     }
 
     case class CaseGT[m <: BSTree, k <: Any](m: m, k: k) extends Function0 {
-        override  val self = this
-        override type self = CaseGT[m, k]
+        type self = CaseGT[m, k]
         override  def apply: apply = new Balance().apply(m.key, m.value, m.left, m.right.remove(k)).asInstanceOf[apply]
         override type apply        =     Balance#  apply[m#key, m#value, m#left, m#right#remove[k]]
     }
 
     case class CaseEQ[m <: BSTree, k <: Any](m: m, k: k) extends Function0 {
-        override  val self = this
-        override type self = CaseEQ[m, k]
+        type self = CaseEQ[m, k]
         override  def apply: apply = new Glue().apply(m.left, m.right)
         override type apply        =     Glue#  apply[m#left, m#right]
     }

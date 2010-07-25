@@ -13,9 +13,7 @@ object Ordering extends Common
 
 trait Ordering extends Equiv {
     type self <: Ordering
-
-    final override  def asInstanceOfOrdering = self
-    final override type asInstanceOfOrdering = self
+    type asInstanceOfOrdering = self
 
      def compare[x <: Any, y <: Any](x: x, y: y): compare[x, y]
     type compare[x <: Any, y <: Any] <: Result

@@ -15,8 +15,7 @@ private[mada] final class ConsSpan {
         `if`[f#apply[xs#head]#asInstanceOfBoolean, Then[xs, f], const0[Tuple2[Nil, xs]]]#apply#asInstanceOfProduct2
 
     case class Then[xs <: List, f <: Function1](xs: xs, f: f) extends Function0 {
-        override  val self = this
-        override type self = Then[xs, f]
+        type self = Then[xs, f]
         override  def apply: apply = Tuple2(Cons(xs.head, r._1.asInstanceOfList), r._2)
         override type apply        = Tuple2[Cons[xs#head, r#_1#asInstanceOfList], r#_2]
         private lazy val r: r = xs.tail.span(f)

@@ -15,8 +15,7 @@ private[mada] final class ConsSplitAt {
         `if`[n#isZero, const0[Tuple2[Nil, xs]], Else[xs, n]]#apply#asInstanceOfProduct2
 
     case class Else[xs <: List, n <: Nat](xs: xs, n: n) extends Function0 {
-        override  val self = this
-        override type self = Else[xs, n]
+        type self = Else[xs, n]
         override  def apply: apply = Tuple2(Cons(xs.head, r._1.asInstanceOfList), r._2)
         override type apply = Tuple2[Cons[xs#head, r#_1#asInstanceOfList], r#_2]
         private lazy val r: r = xs.tail.splitAt(n.decrement)

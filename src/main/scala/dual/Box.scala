@@ -9,11 +9,8 @@ package dual
 
 
 final case class Box[A](unbox: A) extends Any {
-    override  val self = this
-    override type self = Box[A]
-
-    override  def asInstanceOfBox = self
-    override type asInstanceOfBox = self
+    type self = Box[A]
+    type asInstanceOfBox = self
 
     type unbox = A
 

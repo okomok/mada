@@ -9,8 +9,7 @@ package dual; package ordering
 
 
 private[mada] final case class Match[o <: Ordering, x <: Any, y <: Any, flt <: Function0, fgt <: Function0, feq <: Function0](o: o, x: x, y: y, flt: flt, fgt: fgt, feq: feq) extends Function0 {
-    override  val self = this
-    override type self = Match[o, x, y, flt, fgt, feq]
+    type self = Match[o, x, y, flt, fgt, feq]
 
     private lazy val c: c = o.compare(x, y)
     private type c = o#compare[x, y]

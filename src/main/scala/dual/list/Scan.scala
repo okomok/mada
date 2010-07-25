@@ -13,8 +13,7 @@ private[mada] final class ConsScanRight {
     type apply[x <: Any, xs <: List, z <: Any, f <: Function2] = Impl[x, xs, z, f]#apply
 
     case class Impl[x <: Any, xs <: List, z <: Any, f <: Function2](x: x, xs: xs, z: z, f: f) extends Function0 {
-        override  val self = this
-        override type self = Impl[x, xs, z, f]
+        type self = Impl[x, xs, z, f]
         val r: r = xs.scanRight(z, f)
         type r = xs#scanRight[z, f]
         override  def apply: apply = Cons(f.apply(x, r.head), r)

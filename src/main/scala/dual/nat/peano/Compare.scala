@@ -15,8 +15,7 @@ private[mada] final class SuccEq {
         `if`[y#isZero, const0[`false`], Else[x, y]]#apply#asInstanceOfBoolean
 
     case class Else[x <: Peano, y <: Peano](x: x, y: y) extends Function0 {
-         override  val self = this
-         override type self = Else[x, y]
+         type self = Else[x, y]
          override  def apply: apply = x.decrement === y.decrement
          override type apply = x#decrement# ===[y#decrement]
      }
@@ -29,8 +28,7 @@ private[mada] final class SuccLtEq {
         `if`[y#isZero, const0[`false`], Else[x, y]]#apply#asInstanceOfBoolean
 
     case class Else[x <: Peano, y <: Peano](x: x, y: y) extends Function0 {
-         override  val self = this
-         override type self = Else[x, y]
+         type self = Else[x, y]
          override  def apply: apply = x.decrement <= y.decrement
          override type apply = x#decrement# <=[y#decrement]
      }

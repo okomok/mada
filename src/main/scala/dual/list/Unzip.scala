@@ -15,8 +15,7 @@ private[mada] final class Unzip {
         `if`[xs#isEmpty, const0[Tuple2[Nil, Nil]], Else[xs]]#apply#asInstanceOfProduct2
 
     case class Else[xs <: List](xs: xs) extends Function0 {
-        override  val self = this
-        override type self = Else[xs]
+        type self = Else[xs]
         private lazy val x: x = xs.head.asInstanceOfProduct2
         private type x = xs#head#asInstanceOfProduct2
         private lazy val ys: ys = xs.tail.unzip.asInstanceOf[ys]

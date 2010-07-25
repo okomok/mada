@@ -56,12 +56,10 @@
     import dual.nat.peano.Literal._
     import junit.framework.Assert._
 
-    class DocTest extends junit.framework.TestCase {
+    class DocTest extends org.scalatest.junit.JUnit3Suite {
         // Define dualvalue `not2`.
         final class not2 extends dual.Function1 { // No meta-generics. `Function1` isn't parameterized.
-            // `self` is the dual version of `this` reference. Manual setup is needed.
-            override  def self = this
-            override type self = not2
+            type self = not2 // `self` is the dual version of `this` reference. Manual setup is needed.
             // Again no meta-generics. Downcast is needed as you did in 90s.
             override  def apply[x <: dual.Any](x: x): apply[x] = x.asInstanceOfNat !== _2
             override type apply[x <: dual.Any] = x#asInstanceOfNat# !==[_2]
@@ -78,7 +76,6 @@
             assertEquals(_3 :: _4 :: _5 :: _6 :: dual.Nil, fs)
         }
     }
-
 
 Terminology:
 
