@@ -77,6 +77,8 @@
         }
     }
 
+For now, `dual` provides the dual version of `Nat`, `List`, `Map`, `Set`, `Ordering`, `Option`, `Either` and `FunctionN`.
+
 Terminology:
 
 * _metatype_ is a type which extends `dual.Any`. (capitalized in source code.)
@@ -90,8 +92,7 @@ In the Scala metaprogramming world:
 * meta-`eq`(type identity equality) is infeasible.
 * meta-generics doesn't work. (e.g. metatype can't be a parameter.)
 * metatype is resurrected in parameter-nondependent context.
-
-For now, `dual` provides the dual implementation of `Nat`, `List`, `Map`, `Set`, `Ordering`, `Option`, `Either` and `FunctionN`.
+* metamethod can't be re-overridden.
 
 References:
 
