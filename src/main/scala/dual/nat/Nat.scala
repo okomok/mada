@@ -66,7 +66,7 @@ trait Nat extends Any {
     final  def %[that <: Nat](that: that): %[that] = divMod(that)._2.asInstanceOfNat
     final type %[that <: Nat] = divMod[that]#_2#asInstanceOfNat
 
-    @compilerWorkaround("2.8.0") // symmetric form makes bounds `Nothing`.
+    @nothingTypeMismatchWorkaround
     final  def >[that <: Nat](that: that): >[that] = <=(that).not //that < self
     final type >[that <: Nat] = <=[that]#not //that# <[self]
 

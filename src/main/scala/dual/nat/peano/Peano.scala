@@ -19,8 +19,8 @@ sealed trait Peano extends Nat {
     type self <: Peano
     type asInstanceOfNatPeano = self
 
-    final override  def increment: increment = new SuccIncrement().apply(self)//Succ(self)
-    final override type increment = SuccIncrement#apply[self]//Succ[self]
+    final override  def increment: increment = new SuccIncrement().apply(self)
+    final override type increment = SuccIncrement#apply[self]
 
     override type decrement <: Peano
 
@@ -104,8 +104,8 @@ final case class Succ[n <: Peano](override val decrement: n) extends Peano {
     override  def <=[that <: Nat](that: that): <=[that] = new SuccLtEq().apply(self, that.toPeano)
     override type <=[that <: Nat] = SuccLtEq#apply[self, that#toPeano]
 
-    override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = new SuccFoldRight().apply(self, z, f)//f.apply(self, decrement.foldRight(z, f))
-    override type foldRight[z <: Any, f <: Function2] = SuccFoldRight#apply[self, z, f]//f#apply[self, decrement#foldRight[z, f]]
+    override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = new SuccFoldRight().apply(self, z, f)
+    override type foldRight[z <: Any, f <: Function2] = SuccFoldRight#apply[self, z, f]
 
     override lazy val isEven: isEven = decrement.isEven.not
     override type isEven = decrement#isEven#not

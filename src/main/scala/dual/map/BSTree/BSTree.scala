@@ -66,8 +66,8 @@ final case class Nil[o <: Ordering](override val ord: o) extends BSTree {
     override  def get[k <: Any](k: k): get[k] = None
     override type get[k <: Any] = None
 
-    override  def put[k <: Any, v <: Any](k: k, v: v): put[k, v] = Node(k, v, self, self)
-    override type put[k <: Any, v <: Any] = Node[k, v, self, self]
+    override  def put[k <: Any, v <: Any](k: k, v: v): put[k, v] = new NilPut().apply(self, k, v)
+    override type put[k <: Any, v <: Any] = NilPut#apply[self, k, v]
 
     override  def remove[k <: Any](k: k): remove[k] = self
     override type remove[k <: Any] = self
