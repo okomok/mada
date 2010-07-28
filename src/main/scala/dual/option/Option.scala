@@ -71,14 +71,14 @@ sealed abstract class None extends Option {
     override  def getOrElse[f <: Function0](f: f): getOrElse[f] = f.apply
     override type getOrElse[f <: Function0] = f#apply
 
-    override  def map[f <: Function1](f: f): map[f] = None
-    override type map[f <: Function1] = None
+    override  def map[f <: Function1](f: f): map[f] = self
+    override type map[f <: Function1] = self
 
-    override  def flatMap[f <: Function1](f: f): flatMap[f] = None
-    override type flatMap[f <: Function1] = None
+    override  def flatMap[f <: Function1](f: f): flatMap[f] = self
+    override type flatMap[f <: Function1] = self
 
-    override  def filter[f <: Function1](f: f): filter[f] = None
-    override type filter[f <: Function1] = None
+    override  def filter[f <: Function1](f: f): filter[f] = self
+    override type filter[f <: Function1] = self
 
     override  def exists[f <: Function1](f: f): exists[f] = `false`
     override type exists[f <: Function1] = `false`
@@ -104,8 +104,8 @@ final case class Some[e <: Any](override val get: e) extends Option {
     override  def getOrElse[f <: Function0](f: f): getOrElse[f] = get
     override type getOrElse[f <: Function0] = get
 
-    override  def map[f <: Function1](f: f): map[f] = Some(f.apply(get))
-    override type map[f <: Function1] = Some[f#apply[get]]
+    override  def map[f <: Function1](f: f): map[f] = new Map().apply(self, f)
+    override type map[f <: Function1] = Map#apply[self, f]
 
     override  def flatMap[f <: Function1](f: f): flatMap[f] = f.apply(get).asInstanceOfOption
     override type flatMap[f <: Function1] = f#apply[get]#asInstanceOfOption
