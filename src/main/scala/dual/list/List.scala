@@ -29,8 +29,8 @@ sealed abstract class List extends Any {
     final def ::[e <: Any](e: e): addFirst[e] = addFirst(e)
 
     @equivalentTo("Cons(e, self)")
-    final  def addFirst[e <: Any](e: e): addFirst[e] = Cons(e, self)
-    final type addFirst[e <: Any] = Cons[e, self]
+    final  def addFirst[e <: Any](e: e): addFirst[e] = new NewCons().apply(e, self)
+    final type addFirst[e <: Any] = NewCons#apply[e, self]
 
     def foreach[f <: Function1](f: f): foreach[f]
     final type foreach[f <: Function1] = Unit
@@ -220,11 +220,11 @@ sealed abstract class Nil extends List {
     override  def reduceRight[f <: Function2](f: f): reduceRight[f] = unsupported("list.Nil.reduceRight")
     override type reduceRight[f <: Function2] = unsupported[_]
 
-    override  def scanLeft[z <: Any, f <: Function2](z: z, f: f): scanLeft[z, f] = Cons(z, self)
-    override type scanLeft[z <: Any, f <: Function2] = Cons[z, self]
+    override  def scanLeft[z <: Any, f <: Function2](z: z, f: f): scanLeft[z, f] = new NewCons().apply(z, self)
+    override type scanLeft[z <: Any, f <: Function2] = NewCons#apply[z, self]
 
-    override  def scanRight[z <: Any, f <: Function2](z: z, f: f): scanRight[z, f] = Cons(z, self)
-    override type scanRight[z <: Any, f <: Function2] = Cons[z, self]
+    override  def scanRight[z <: Any, f <: Function2](z: z, f: f): scanRight[z, f] = new NewCons().apply(z, self)
+    override type scanRight[z <: Any, f <: Function2] = NewCons#apply[z, self]
 
     override  def nthOption[n <: Nat](n: n): nthOption[n] = None
     override type nthOption[n <: Nat] = None
@@ -338,6 +338,13 @@ final case class Cons[x <: Any, xs <: List](override val head: x, override val t
     override type zip[that <: List] = Cons[Tuple2[head, that#head], tail#zip[that#tail]]
 
     override  def undual: undual = head.undual :: tail.undual
+}
+
+
+@typeInstantiationErrorWorkaround
+private[mada] final class NewCons {
+     def apply[x <: Any, xs <: List](x: x, xs: xs): apply[x, xs] = Cons(x, xs)
+    type apply[x <: Any, xs <: List] = Cons[x, xs]
 }
 
 
