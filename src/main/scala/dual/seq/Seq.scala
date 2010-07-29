@@ -91,11 +91,11 @@ trait Seq extends Any {
      def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f]
     type foldRight[z <: Any, f <: Function2] <: Any
 
-     def reduceLeft[f <: Function2](f: f): reduceLeft[f]
-    type reduceLeft[f <: Function2] <: Any
+    final  def reduceLeft[f <: Function2](f: f): reduceLeft[f] = new ReduceLeft().apply(self, f)
+    final type reduceLeft[f <: Function2] = ReduceLeft#apply[self, f]
 
-     def reduceRight[f <: Function2](f: f): reduceRight[f]
-    type reduceRight[f <: Function2] <: Any
+    final  def reduceRight[f <: Function2](f: f): reduceRight[f] = new ReduceRight().apply(self, f)
+    final type reduceRight[f <: Function2] = ReduceRight#apply[self, f]
 
      def scanLeft[z <: Any, f <: Function2](z: z, f: f): scanLeft[z, f]
     type scanLeft[z <: Any, f <: Function2] <: Seq
@@ -154,5 +154,6 @@ trait Seq extends Any {
      def unzip: unzip
     type unzip <: Seq
 
-    override def canEqual(that: scala.Any) = that.isInstanceOf[Seq]
+     def fromSeq: fromSeq
+    type fromSeq <: Seq
 }
