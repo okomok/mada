@@ -8,6 +8,11 @@ package com.github.okomok.mada
 package dual; package list
 
 
+private[mada] final class ConsScanLeft {
+     def apply[x <: Any, xs <: List, z <: Any, f <: Function2](x: x, xs: xs, z: z, f: f): apply[x, xs, z, f] = Cons(z, xs.scanLeft(f.apply(z, x), f))
+    type apply[x <: Any, xs <: List, z <: Any, f <: Function2] = Cons[z, xs#scanLeft[f#apply[z, x], f]]
+}
+
 private[mada] final class ConsScanRight {
      def apply[x <: Any, xs <: List, z <: Any, f <: Function2](x: x, xs: xs, z: z, f: f): apply[x, xs, z, f] = Impl(x, xs, z, f).apply
     type apply[x <: Any, xs <: List, z <: Any, f <: Function2] = Impl[x, xs, z, f]#apply

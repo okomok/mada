@@ -102,11 +102,11 @@ package object dual {
      val List = list.List
     type List = list.List
 
-    @equivalentTo("new Nil{}")
+    @equivalentTo("new list.Nil{}")
      val Nil = list.Nil
     type Nil = list.Nil
 
-    @aliasOf("Cons")
+    @aliasOf("list.Cons")
     val :: = list.Cons
 
     @aliasOf("list.::")

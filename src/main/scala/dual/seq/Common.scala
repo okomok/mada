@@ -9,4 +9,9 @@ package dual; package seq
 
 
 trait Common {
+    /**
+     * Makes a Seq Equiv from element Equiv.
+     */
+     def eqv[ee <: Equiv](ee: ee): eqv[ee] = new Eqv(ee)
+    type eqv[ee <: Equiv] = Eqv[ee]
 }

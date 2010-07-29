@@ -9,7 +9,7 @@ package dual; package set
 
 
 private[mada] final class SubsetOf {
-     def apply[s <: Set, z <: Set](s: s, z: z): apply[s, z] = s.toList.forall(Pred(z))//.asInstanceOf[apply[s, z]]
+     def apply[s <: Set, z <: Set](s: s, z: z): apply[s, z] = s.toList.forall(Pred(z)).asInstanceOf[apply[s, z]]
     type apply[s <: Set, z <: Set] = s#toList#forall[Pred[z]]
 
     case class Pred[z <: Set](z: z) extends Function1 {

@@ -58,6 +58,9 @@ trait Any extends scala.Equals {
     final def asInstanceOfMapBSTree: asInstanceOfMapBSTree = this.asInstanceOf[asInstanceOfMapBSTree]
     type asInstanceOfMapBSTree <: map.bstree.BSTree
 
+    final def asInstanceOfSeq: asInstanceOfSeq = this.asInstanceOf[asInstanceOfSeq]
+    type asInstanceOfSeq <: Seq
+
     final def asInstanceOfSet: asInstanceOfSet = this.asInstanceOf[asInstanceOfSet]
     type asInstanceOfSet <: Set
 

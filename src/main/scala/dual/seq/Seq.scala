@@ -26,11 +26,11 @@ trait Seq extends Any {
      def addFirst[e <: Any](e: e): addFirst[e]
     type addFirst[e <: Any] <: Seq
 
-     def addLast[e <: Any](e: e): addLast[e]
+     def addLast[e <: Any](e: e): addLast[e] = unsupported("coming soon")
     type addLast[e <: Any] <: Seq
 
     @constantTime
-     def clear: clear
+     def clear: clear = unsupported("coming soon")
     type clear <: Seq
 
     final  def foreach[f <: Function1](f: f): foreach[f] = new Foreach().apply(self, f)
@@ -151,9 +151,12 @@ trait Seq extends Any {
      def zip[that <: Seq](that: that): zip[that]
     type zip[that <: Seq] <: Seq
 
-     def unzip: unzip
-    type unzip <: Seq
+     def unzip: unzip = unsupported("coming soon")
+    type unzip <: Product2
 
-     def fromSeq: fromSeq
+     def fromSeq: fromSeq = unsupported("coming soon")
     type fromSeq <: Seq
+
+     def toList: toList
+    type toList <: List
 }
