@@ -154,9 +154,6 @@ trait Seq extends Any {
      def unzip: unzip = unsupported("coming soon")
     type unzip <: Product2
 
-     def fromSeq: fromSeq = unsupported("coming soon")
-    type fromSeq <: Seq
-
      def toList: toList
     type toList <: List
 }

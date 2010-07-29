@@ -39,8 +39,8 @@ private[mada] final case class BSTreeFrom[m <: map.bstree.BSTree](override val i
     override  def contains[k <: Any](k: k): contains[k] = impl.contains(k)
     override type contains[k <: Any] = impl#contains[k]
 
-    override  def toList: toList = impl.keyList
-    override type toList = impl#keyList
+    override  def toList: toList = new BSTreeToList().apply(self)
+    override type toList = BSTreeToList#apply[self]
 
     override  def undual: undual = impl.undual.keySet
 }
@@ -60,4 +60,9 @@ private[mada] final class BSTreeAdd {
 private[mada] final class BSTreeRemove {
      def apply[t <: BSTree, k <: Any](t: t, k: k): apply[t, k] = BSTreeFrom(t.impl.remove(k))
     type apply[t <: BSTree, k <: Any] = BSTreeFrom[t#impl#remove[k]]
+}
+
+private[mada] final class BSTreeToList {
+     def apply[t <: BSTree](t: t): apply[t] = t.impl.keyList
+    type apply[t <: BSTree] = t#impl#keyList
 }

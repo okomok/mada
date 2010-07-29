@@ -27,8 +27,8 @@ trait Set extends Any {
      def add[k <: Any](k: k): add[k]
     type add[k <: Any] <: Set
 
-    final  def addList[xs <: List](xs: xs): addList[xs] = new AddList().apply(self, xs)
-    final type addList[xs <: List] = AddList#apply[self, xs]
+    final  def addSeq[xs <: Seq](xs: xs): addSeq[xs] = new AddSeq().apply(self, xs)
+    final type addSeq[xs <: Seq] = AddSeq#apply[self, xs]
 
      def clear: clear
     type clear <: Set
@@ -36,8 +36,8 @@ trait Set extends Any {
      def remove[k <: Any](k: k): remove[k]
     type remove[k <: Any] <: Set
 
-    final  def removeList[xs <: List](xs: xs): removeList[xs] = new RemoveList().apply(self, xs)
-    final type removeList[xs <: List] = RemoveList#apply[self, xs]
+    final  def removeSeq[xs <: Seq](xs: xs): removeSeq[xs] = new RemoveSeq().apply(self, xs)
+    final type removeSeq[xs <: Seq] = RemoveSeq#apply[self, xs]
 
      def contains[k <: Any](k: k): contains[k]
     type contains[k <: Any] <: Boolean

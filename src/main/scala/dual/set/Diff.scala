@@ -9,6 +9,6 @@ package dual; package set
 
 
 private[mada] final class Diff {
-     def apply[s <: Any, z <: Set](s: s, z: z): apply[s, z] = s.asInstanceOfSet.removeList(z.toList)//.asInstanceOf[apply[s, z]]
-    type apply[s <: Any, z <: Set] = s#asInstanceOfSet#removeList[z#toList]
+     def apply[s <: Any, z <: Set](s: s, z: z): apply[s, z] = s.asInstanceOfSet.removeSeq(z.toList)//.asInstanceOf[apply[s, z]]
+    type apply[s <: Any, z <: Set] = s#asInstanceOfSet#removeSeq[z#toList]
 }

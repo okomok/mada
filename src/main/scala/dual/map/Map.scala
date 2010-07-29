@@ -33,8 +33,8 @@ trait Map extends Any {
      def put[k <: Any, v <: Any](k: k, v: v): put[k, v]
     type put[k <: Any, v <: Any] <: Map
 
-    final  def putList[xs <: List](xs: xs): putList[xs] = new PutList().apply(self, xs)
-    final type putList[xs <: List] = PutList#apply[self, xs]
+    final  def putSeq[xs <: Seq](xs: xs): putSeq[xs] = new PutSeq().apply(self, xs)
+    final type putSeq[xs <: Seq] = PutSeq#apply[self, xs]
 
      def remove[k <: Any](k: k): remove[k]
     type remove[k <: Any] <: Map

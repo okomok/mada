@@ -8,9 +8,9 @@ package com.github.okomok.mada
 package dual; package set
 
 
-private[mada] final class RemoveList {
-     def apply[s <: Set, xs <: List](s: s, xs: xs): apply[s, xs] = xs.foldLeft(s, Step()).asInstanceOfSet
-    type apply[s <: Set, xs <: List] = xs#foldLeft[s, Step]#asInstanceOfSet
+private[mada] final class RemoveSeq {
+     def apply[s <: Set, xs <: Seq](s: s, xs: xs): apply[s, xs] = xs.foldLeft(s, Step()).asInstanceOfSet
+    type apply[s <: Set, xs <: Seq] = xs#foldLeft[s, Step]#asInstanceOfSet
 
     case class Step() extends Function2 {
         type self = Step

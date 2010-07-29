@@ -32,7 +32,6 @@ sealed abstract class List extends Seq {
     type takeWhile[f <: Function1] <: List
     type dropWhile[f <: Function1] <: List
     type zip[that <: Seq] <: List
-    type fromSeq <: List
 
     final override  def toList: toList = self
     final override type toList = self
