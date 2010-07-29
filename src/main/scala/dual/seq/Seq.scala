@@ -48,7 +48,7 @@ trait Seq extends Any {
      def size: size
     type size <: Nat
 
-    @equivalentTo("size")
+    @aliasOf("size")
     final  def length: length = size
     final type length = size
 
