@@ -133,6 +133,13 @@ package object dual {
     type Map = map.Map
 
 
+// Seq
+
+    @aliasOf("seq.Seq")
+     val Seq = seq.Seq
+    type Seq = seq.Seq
+
+
 // Set
 
     @aliasOf("set.Set")
