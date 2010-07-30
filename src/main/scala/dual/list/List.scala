@@ -34,7 +34,7 @@ sealed abstract class List extends Seq {
     type zip[that <: Seq] <: List
 
     final override  def toList: toList = self
-    final override type toList = self
+    final override type toList         = self
 
     @aliasOf("addFirst")
     final def ::[e <: Any](e: e): addFirst[e] = addFirst(e)
@@ -44,7 +44,7 @@ sealed abstract class List extends Seq {
     final override type addFirst[e <: Any] = NewCons#apply[e, self]
 
     final  def :::[that <: List](that: that): :::[that] = that.append(self)
-    final type :::[that <: List] = that#append[self]
+    final type :::[that <: List]                        = that#append[self]
 
     final override  def take[n <: Nat](n: n): take[n] = new Take().apply(self, n)
     final override type take[n <: Nat] = Take#apply[self, n]
@@ -53,10 +53,10 @@ sealed abstract class List extends Seq {
     final override type drop[n <: Nat] = Drop#apply[self, n]
 
     final  def reverse_:::[that <: List](that: that): reverse_:::[that] = that.reverseAppend(self)
-    final type reverse_:::[that <: List] = that#reverseAppend[self]
+    final type reverse_:::[that <: List]                                = that#reverseAppend[self]
 
     final override  def reverse: reverse = reverseAppend(Nil)
-    final override type reverse = reverseAppend[Nil]
+    final override type reverse          = reverseAppend[Nil]
 
     private[mada]  def reverseAppend[that <: List](that: that): reverseAppend[that]
     private[mada] type reverseAppend[that <: List] <: List
@@ -80,40 +80,40 @@ sealed abstract class Nil extends List {
     type self = Nil
 
     override  def head: head = `throw`(new NoSuchElementException("dual.list.Nil.head"))
-    override type head = `throw`[_]
+    override type head       = `throw`[_]
 
     override  def tail: tail = `throw`(new NoSuchElementException("dual.list.Nil.tail"))
-    override type tail = `throw`[_]
+    override type tail       = `throw`[_]
 
     override  def isEmpty: isEmpty = `true`
-    override type isEmpty = `true`
+    override type isEmpty          = `true`
 
     override  def size: size = nat.peano._0
-    override type size = nat.peano._0
+    override type size       = nat.peano._0
 
     override  def append[that <: Seq](that: that): append[that] = that.toList
-    override type append[that <: Seq] = that#toList
+    override type append[that <: Seq]                           = that#toList
 
     override  def map[f <: Function1](f: f): map[f] = self
-    override type map[f <: Function1] = self
+    override type map[f <: Function1]               = self
 
     override  def flatten: flatten = self
-    override type flatten = self
+    override type flatten          = self
 
     override  def filter[f <: Function1](f: f): filter[f] = self
-    override type filter[f <: Function1] = self
+    override type filter[f <: Function1]                  = self
 
     override  def partition[f <: Function1](f: f): partition[f] = Tuple2(self, self)
-    override type partition[f <: Function1] = Tuple2[self, self]
+    override type partition[f <: Function1]                     = Tuple2[self, self]
 
     override  def sort[o <: Ordering](o: o): sort[o] = self
-    override type sort[o <: Ordering] = self
+    override type sort[o <: Ordering]                = self
 
     override  def foldLeft[z <: Any, f <: Function2](z: z, f: f): foldLeft[z, f] = z
-    override type foldLeft[z <: Any, f <: Function2] = z
+    override type foldLeft[z <: Any, f <: Function2]                             = z
 
     override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = z
-    override type foldRight[z <: Any, f <: Function2] = z
+    override type foldRight[z <: Any, f <: Function2]                              = z
 
     override  def scanLeft[z <: Any, f <: Function2](z: z, f: f): scanLeft[z, f] = new NewCons().apply(z, self)
     override type scanLeft[z <: Any, f <: Function2] = NewCons#apply[z, self]
@@ -122,28 +122,28 @@ sealed abstract class Nil extends List {
     override type scanRight[z <: Any, f <: Function2] = NewCons#apply[z, self]
 
     override  def nthOption[n <: Nat](n: n): nthOption[n] = None
-    override type nthOption[n <: Nat] = None
+    override type nthOption[n <: Nat]                     = None
 
     override  def init: init = unsupported("list.Nil.init")
-    override type init = unsupported[_]
+    override type init       = unsupported[_]
 
     override  def takeWhile[f <: Function1](f: f): takeWhile[f] = self
-    override type takeWhile[f <: Function1] = self
+    override type takeWhile[f <: Function1]                     = self
 
     override  def dropWhile[f <: Function1](f: f): dropWhile[f] = self
-    override type dropWhile[f <: Function1] = self
+    override type dropWhile[f <: Function1]                     = self
 
     override  def span[f <: Function1](f: f): span[f] = Tuple2(self, self)
-    override type span[f <: Function1] = Tuple2[self, self]
+    override type span[f <: Function1]                = Tuple2[self, self]
 
     override  def splitAt[n <: Nat](n: n): splitAt[n] = Tuple2(self, self)
-    override type splitAt[n <: Nat] = Tuple2[self, self]
+    override type splitAt[n <: Nat]                   = Tuple2[self, self]
 
     override private[mada]  def reverseAppend[that <: List](that: that) = that
-    override private[mada] type reverseAppend[that <: List] = that
+    override private[mada] type reverseAppend[that <: List]             = that
 
     override  def zip[that <: Seq](that: that): zip[that] = self
-    override type zip[that <: Seq] = self
+    override type zip[that <: Seq]                        = self
 
     override  def undual: undual = scala.collection.immutable.Nil
 }
@@ -156,19 +156,21 @@ final case class Cons[x <: Any, xs <: List](override val head: x, override val t
     override type tail = xs
 
     override  def isEmpty: isEmpty = `false`
-    override type isEmpty = `false`
+    override type isEmpty          = `false`
 
     override  val size: size = tail.size.increment
-    override type size = tail#size#increment
+    override type size       = tail#size#increment
 
-    override  def append[that <: Seq](that: that): append[that] = new ConsAppend().apply(head, tail, that)
-    override type append[that <: Seq] = ConsAppend#apply[head, tail, that]
+    override  def append[that <: Seq](that: that): append[that] = Cons(self.head, self.tail.append(that))
+    private type _append[self <: List, that <: Seq]             = Cons[self#head, self#tail#append[that]]
+    override type append[that <: Seq] = _append[self, that]
 
-    override  def map[f <: Function1](f: f): map[f] = new ConsMap().apply(head, tail, f)
-    override type map[f <: Function1] = ConsMap#apply[head, tail, f]
+    override  def map[f <: Function1](f: f): map[f] = Cons(f.apply(self.head), self.tail.map(f))
+    private type _map[self <: List, f <: Function1] = Cons[f#apply[self#head], self#tail#map[f]]
+    override type map[f <: Function1] = _map[self, f]
 
-    override  def flatten: flatten = tail.flatten.:::(head.asInstanceOfList)
-    override type flatten = tail#flatten# :::[head#asInstanceOfList]
+    override  def flatten: flatten = tail.flatten. :::(head.asInstanceOfList)
+    override type flatten          = tail#flatten# :::[head#asInstanceOfList]
 
     override  def filter[f <: Function1](f: f): filter[f] = new ConsFilter().apply(head, tail, f)
     override type filter[f <: Function1] = ConsFilter#apply[head, tail, f]
@@ -180,10 +182,10 @@ final case class Cons[x <: Any, xs <: List](override val head: x, override val t
     override type sort[o <: Ordering] = ConsSort#apply[self, o]
 
     override  def foldLeft[z <: Any, f <: Function2](z: z, f: f): foldLeft[z, f] = tail.foldLeft(f.apply(z, head), f)
-    override type foldLeft[z <: Any, f <: Function2] = tail#foldLeft[f#apply[z, head], f]
+    override type foldLeft[z <: Any, f <: Function2]                             = tail#foldLeft[f#apply[z, head], f]
 
     override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = f.apply(head, tail.foldRight(z, f))
-    override type foldRight[z <: Any, f <: Function2] = f#apply[head, tail#foldRight[z, f]]
+    override type foldRight[z <: Any, f <: Function2]                              = f#apply[head, tail#foldRight[z, f]]
 
     override  def scanLeft[z <: Any, f <: Function2](z: z, f: f): scanLeft[z, f] = new ConsScanLeft().apply(head, tail, z, f)
     override type scanLeft[z <: Any, f <: Function2] = ConsScanLeft#apply[head, tail, z, f]
@@ -209,11 +211,13 @@ final case class Cons[x <: Any, xs <: List](override val head: x, override val t
     override  def splitAt[n <: Nat](n: n): splitAt[n] = new ConsSplitAt().apply(self, n)
     override type splitAt[n <: Nat] = ConsSplitAt#apply[self, n]
 
-    override private[mada]  def reverseAppend[that <: List](that: that) = new ConsReverseAppend().apply(head, tail, that)
-    override private[mada] type reverseAppend[that <: List] = ConsReverseAppend#apply[head, tail, that]
+    override private[mada]  def reverseAppend[that <: List](that: that) = self.tail.reverseAppend(Cons(self.head, that))
+    private type _reverseAppend[self <: List, that <: List]             = self#tail#reverseAppend[Cons[self.head, that]]
+    override private[mada] type reverseAppend[that <: List] = _reverseAppend[self, that]
 
-    override  def zip[that <: Seq](that: that): zip[that] = new ConsZip().apply(head, tail, that)
-    override type zip[that <: Seq] = ConsZip#apply[head, tail, that]
+    override  def zip[that <: Seq](that: that): zip[that] = Cons(Tuple2(self.head, that.head), self.tail.zip(that.tail))
+    private type _zip[self <: List, that <: Seq]          = Cons[Tuple2[self#head, that#head], self#tail#zip[that#tail]]
+    override type zip[that <: Seq] = _zip[self, that]
 
     override  def undual: undual = head.undual :: tail.undual
 }

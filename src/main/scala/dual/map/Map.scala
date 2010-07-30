@@ -40,7 +40,7 @@ trait Map extends Any {
     type remove[k <: Any] <: Map
 
     final  def contains[k <: Any](k: k): contains[k] = get(k).isEmpty.not
-    final type contains[k <: Any] = get[k]#isEmpty#not
+    final type contains[k <: Any]                    = get[k]#isEmpty#not
 
      def keySet: keySet
     type keySet <: Set
@@ -57,8 +57,10 @@ trait Map extends Any {
     final  def equivTo[that <: Map, ve <: Equiv](that: that, ve: ve): equivTo[that, ve] = new EquivTo().apply(self, that, ve)
     final type equivTo[that <: Map, ve <: Equiv] = EquivTo#apply[self, that, ve]
 
-    final  def union[that <: Map](that: that): union[that] = new Union().apply(self, that)
-    final type union[that <: Map] = Union#apply[self, that]
+    // left-biased
+    final  def union[that <: Map](that: that): union[that] = that.putSeq(self.toList)
+    private type _union[self <: Map, that <: Map]          = that#putSeq[self#toList]
+    final type union[that <: Map] = _union[self, that]
 
     final override type undual = scala.collection.Map[scala.Any, scala.Any]
     final override def canEqual(that: scala.Any) = that.isInstanceOf[Map]
