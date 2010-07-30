@@ -51,11 +51,13 @@ trait Set extends Any {
     final  def intersect[that <: Set](that: that): intersect[that] = new Intersect().apply(self, that)
     final type intersect[that <: Set] = Intersect#apply[self, that]
 
-    final  def union[that <: Set](that: that): union[that] = new Union().apply(self, that)
-    final type union[that <: Set] = Union#apply[self, that]
+    final  def union[that <: Set](that: that): union[that] = self.addSeq(that.toList)
+    private type _union[self <: Set, that <: Set]          = self#addSeq[that#toList]
+    final type union[that <: Set] = _union[self, that]
 
-    final  def diff[that <: Set](that: that): diff[that] = new Diff().apply(self, that)
-    final type diff[that <: Set] = Diff#apply[self, that]
+    final  def diff[that <: Set](that: that): diff[that] = self.removeSeq(that.toList)
+    private type _diff[self <: Set, that <: Set]         = self#removeSeq[that#toList]
+    final type diff[that <: Set] = _diff[self, that]
 
     final  def subsetOf[that <: Set](that: that): subsetOf[that] = new SubsetOf().apply(self, that)
     final type subsetOf[that <: Set] = SubsetOf#apply[self, that]

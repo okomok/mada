@@ -42,7 +42,7 @@ trait Seq extends Any {
 
     @equivalentTo("isEmpty.not")
     final  def nonEmpty: nonEmpty = isEmpty.not
-    final type nonEmpty = isEmpty#not
+    final type nonEmpty           = isEmpty#not
 
     @constantTime
      def size: size
@@ -59,7 +59,7 @@ trait Seq extends Any {
     type map[f <: Function1] <: Seq
 
     final  def flatMap[f <: Function1](f: f): flatMap[f] = map(f).flatten
-    final type flatMap[f <: Function1] = map[f]#flatten
+    final type flatMap[f <: Function1]                   = map[f]#flatten
 
      def flatten: flatten
     type flatten <: Seq
@@ -74,10 +74,10 @@ trait Seq extends Any {
     type sort[o <: Ordering] <: Seq
 
     final  def forall[f <: Function1](f: f): forall[f] = exists(f.not).not.asInstanceOf[forall[f]]
-    final type forall[f <: Function1] = exists[f#not]#not
+    final type forall[f <: Function1]                  = exists[f#not]#not
 
     final  def exists[f <: Function1](f: f): exists[f] = find(f).nonEmpty
-    final type exists[f <: Function1] = find[f]#nonEmpty
+    final type exists[f <: Function1]                  = find[f]#nonEmpty
 
     final  def count[f <: Function1](f: f): count[f] = new Count().apply(self, f)
     final type count[f <: Function1] = Count#apply[self, f]
@@ -104,19 +104,19 @@ trait Seq extends Any {
     type scanRight[z <: Any, f <: Function2] <: Seq
 
     final  def nth[n <: Nat](n: n): nth[n] = nthOption(n).get
-    final type nth[n <: Nat] = nthOption[n]#get
+    final type nth[n <: Nat]               = nthOption[n]#get
 
      def nthOption[n <: Nat](n: n): nthOption[n]
     type nthOption[n <: Nat] <: Option
 
     final  def headOption: headOption = nthOption(nat.peano._0)
-    final type headOption = nthOption[nat.peano._0]
+    final type headOption             = nthOption[nat.peano._0]
 
     final  def last: last = nth(size.decrement)
-    final type last = nth[size#decrement]
+    final type last       = nth[size#decrement]
 
     final  def lastOption: lastOption = nthOption(size.decrement)
-    final type lastOption = nthOption[size#decrement]
+    final type lastOption             = nthOption[size#decrement]
 
      def init: init
     type init <: Seq
@@ -128,7 +128,7 @@ trait Seq extends Any {
     type drop[n <: Nat] <: Seq
 
     final  def slice[n <: Nat, m <: Nat](n: n, m: m): slice[n, m] = take(m).drop(n)
-    final type slice[n <: Nat, m <: Nat] = take[m]#drop[n]
+    final type slice[n <: Nat, m <: Nat]                          = take[m]#drop[n]
 
      def takeWhile[f <: Function1](f: f): takeWhile[f]
     type takeWhile[f <: Function1] <: Seq
@@ -151,7 +151,7 @@ trait Seq extends Any {
      def zip[that <: Seq](that: that): zip[that]
     type zip[that <: Seq] <: Seq
 
-     def unzip: unzip = unsupported("coming soon")
+     def unzip: unzip
     type unzip <: Product2
 
      def toList: toList

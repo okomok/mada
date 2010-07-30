@@ -22,7 +22,7 @@ sealed abstract class Option extends Any {
     type isEmpty <: Boolean
 
     final  def nonEmpty: nonEmpty = isEmpty.not
-    final type nonEmpty = isEmpty#not
+    final type nonEmpty           = isEmpty#not
 
      def get: get
     type get <: Any
@@ -49,7 +49,7 @@ sealed abstract class Option extends Any {
     final type foreach[f <: Function1] = Unit
 
     final  def orElse[f <: Function0](f: f): orElse[f] = `if`(isEmpty, f, Const0(self)).apply.asInstanceOfOption
-    final type orElse[f <: Function0] = `if`[isEmpty, f, Const0[self]]#apply#asInstanceOfOption
+    final type orElse[f <: Function0]                  = `if`[isEmpty, f, Const0[self]]#apply#asInstanceOfOption
 
     override type undual <: scala.Option[_]
     final override def canEqual(that: scala.Any) = that.isInstanceOf[Option]
@@ -63,30 +63,30 @@ sealed abstract class None extends Option {
     type self = None
 
     override  def isEmpty: isEmpty = `true`
-    override type isEmpty = `true`
+    override type isEmpty          = `true`
 
     override  def get: get = `throw`(new NoSuchElementException("dual.None.get"))
-    override type get = `throw`[_]
+    override type get      = `throw`[_]
 
     override  def getOrElse[f <: Function0](f: f): getOrElse[f] = f.apply
-    override type getOrElse[f <: Function0] = f#apply
+    override type getOrElse[f <: Function0]                     = f#apply
 
     override  def map[f <: Function1](f: f): map[f] = self
-    override type map[f <: Function1] = self
+    override type map[f <: Function1]               = self
 
     override  def flatMap[f <: Function1](f: f): flatMap[f] = self
-    override type flatMap[f <: Function1] = self
+    override type flatMap[f <: Function1]                   = self
 
     override  def filter[f <: Function1](f: f): filter[f] = self
-    override type filter[f <: Function1] = self
+    override type filter[f <: Function1]                  = self
 
     override  def exists[f <: Function1](f: f): exists[f] = `false`
-    override type exists[f <: Function1] = `false`
+    override type exists[f <: Function1]                  = `false`
 
     override  def foreach[f <: Function1](f: f): foreach[f] = Unit
 
     override  def undual: undual = scala.None
-    override type undual = scala.None.type
+    override type undual         = scala.None.type
 }
 
 
@@ -104,22 +104,23 @@ final case class Some[e <: Any](override val get: e) extends Option {
     override  def getOrElse[f <: Function0](f: f): getOrElse[f] = get
     override type getOrElse[f <: Function0] = get
 
-    override  def map[f <: Function1](f: f): map[f] = new Map().apply(self, f)
-    override type map[f <: Function1] = Map#apply[self, f]
+    override  def map[f <: Function1](f: f): map[f]   = Some(f.apply(self.get))
+    private type _map[self <: Option, f <: Function1] = Some[f#apply[self#get]]
+    override type map[f <: Function1] = _map[self, f]
 
     override  def flatMap[f <: Function1](f: f): flatMap[f] = f.apply(get).asInstanceOfOption
-    override type flatMap[f <: Function1] = f#apply[get]#asInstanceOfOption
+    override type flatMap[f <: Function1]                   = f#apply[get]#asInstanceOfOption
 
     override  def filter[f <: Function1](f: f): filter[f] = `if`(f.apply(get).asInstanceOfBoolean, Const0(self), Const0(None)).apply.asInstanceOfOption
-    override type filter[f <: Function1] = `if`[f#apply[get]#asInstanceOfBoolean, Const0[self], Const0[None]]#apply#asInstanceOfOption
+    override type filter[f <: Function1]                  = `if`[f#apply[get]#asInstanceOfBoolean, Const0[self], Const0[None]]#apply#asInstanceOfOption
 
     override  def exists[f <: Function1](f: f): exists[f] = f.apply(get).asInstanceOfBoolean
-    override type exists[f <: Function1] = f#apply[get]#asInstanceOfBoolean
+    override type exists[f <: Function1]                    = f#apply[get]#asInstanceOfBoolean
 
     override  def foreach[f <: Function1](f: f): foreach[f] = { f.apply(get); Unit }
 
     override  def undual: undual = scala.Some(get.undual)
-    override type undual = scala.Some[get#undual]
+    override type undual         = scala.Some[get#undual]
 }
 
 

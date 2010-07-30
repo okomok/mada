@@ -22,47 +22,29 @@ private[mada] final case class BSTreeFrom[m <: map.bstree.BSTree](override val i
     override type impl = m
 
     override  def size: size = impl.size
-    override type size = impl#size
+    override type size       = impl#size
 
     override  def isEmpty: isEmpty = impl.isEmpty
     override type isEmpty = impl#isEmpty
 
-    override  def add[k <: Any](k: k): add[k] = new BSTreeAdd().apply(self, k)
-    override type add[k <: Any] = BSTreeAdd#apply[self, k]
+    override  def add[k <: Any](k: k): add[k]   = BSTreeFrom(self.impl.put(k, Unit))
+    private type _add[self <: BSTree, k <: Any] = BSTreeFrom[self#impl#put[k, Unit]]
+    override type add[k <: Any] = _add[self, k]
 
-    override  def clear: clear = new BSTreeClear().apply(self)
-    override type clear = BSTreeClear#apply[self]
+    override  def clear: clear          = BSTreeFrom(self.impl.clear)
+    private type _clear[self <: BSTree] = BSTreeFrom[self#impl#clear]
+    override type clear = _clear[self]
 
-    override  def remove[k <: Any](k: k): remove[k] = new BSTreeRemove().apply(self, k)
-    override type remove[k <: Any] = BSTreeRemove#apply[self, k]
+    override  def remove[k <: Any](k: k): remove[k] = BSTreeFrom(self.impl.remove(k))
+    private type _remove[self <: BSTree, k <: Any]  = BSTreeFrom[self#impl#remove[k]]
+    override type remove[k <: Any] = _remove[self, k]
 
     override  def contains[k <: Any](k: k): contains[k] = impl.contains(k)
-    override type contains[k <: Any] = impl#contains[k]
+    override type contains[k <: Any]                    = impl#contains[k]
 
-    override  def toList: toList = new BSTreeToList().apply(self)
-    override type toList = BSTreeToList#apply[self]
+    override  def toList: toList         = self.impl.keyList
+    private type _toList[self <: BSTree] = self#impl#keyList
+    override type toList = _toList[self]
 
     override  def undual: undual = impl.undual.keySet
-}
-
-
-@typeInstantiationErrorWorkaround
-private[mada] final class BSTreeClear {
-     def apply[t <: BSTree](t: t): apply[t] = BSTreeFrom(t.impl.clear)
-    type apply[t <: BSTree] = BSTreeFrom[t#impl#clear]
-}
-
-private[mada] final class BSTreeAdd {
-     def apply[t <: BSTree, k <: Any](t: t, k: k): apply[t, k] = BSTreeFrom(t.impl.put(k, Unit))
-    type apply[t <: BSTree, k <: Any] = BSTreeFrom[t#impl#put[k, Unit]]
-}
-
-private[mada] final class BSTreeRemove {
-     def apply[t <: BSTree, k <: Any](t: t, k: k): apply[t, k] = BSTreeFrom(t.impl.remove(k))
-    type apply[t <: BSTree, k <: Any] = BSTreeFrom[t#impl#remove[k]]
-}
-
-private[mada] final class BSTreeToList {
-     def apply[t <: BSTree](t: t): apply[t] = t.impl.keyList
-    type apply[t <: BSTree] = t#impl#keyList
 }
