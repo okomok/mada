@@ -215,9 +215,8 @@ final case class Cons[x <: Any, xs <: List](override val head: x, override val t
     private type _reverseAppend[self <: List, that <: List]             = self#tail#reverseAppend[Cons[self.head, that]]
     override private[mada] type reverseAppend[that <: List] = _reverseAppend[self, that]
 
-    override  def zip[that <: Seq](that: that): zip[that] = Cons(Tuple2(self.head, that.head), self.tail.zip(that.tail))
-    private type _zip[self <: List, that <: Seq]          = Cons[Tuple2[self#head, that#head], self#tail#zip[that#tail]]
-    override type zip[that <: Seq] = _zip[self, that]
+    override  def zip[that <: Seq](that: that): zip[that] = new ConsZip().apply(self, that)
+    override type zip[that <: Seq] = ConsZip#apply[self, that]
 
     override  def undual: undual = head.undual :: tail.undual
 }

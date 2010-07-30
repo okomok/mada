@@ -59,4 +59,19 @@ class ZipTest extends org.scalatest.junit.JUnit3Suite {
         val a = Tuple2(Box(3), Box(i)) :: Tuple2(Box("hello"), Box('a')) :: Tuple2(Box(i), Box(12)) :: Nil
         assertEquals(a, z)
     }
+
+    def testShorter {
+        val i = new java.lang.Integer(10)
+        type l1 = Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Nil
+        val l1: l1 = Box(3) :: Box("hello") :: Box(i) :: Nil
+
+        type l2 = Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Box[String] :: Nil
+        val l2: l2 = Box(i) :: Box('a') :: Box(12) :: Box("ignored") :: Nil
+
+        val _z: l2#zip[l1] = l2.zip(l1)
+        val z: Tuple2[Box[java.lang.Integer], Box[Int]] :: Tuple2[Box[Char], Box[String]] :: Tuple2[Box[Int], Box[java.lang.Integer]] :: Nil = _z
+
+        val a = Tuple2(Box(i), Box(3)) :: Tuple2(Box('a'), Box("hello")) :: Tuple2(Box(12), Box(i)) :: Nil
+        assertEquals(a, z)
+    }
 }

@@ -66,7 +66,7 @@ sealed abstract class Dense extends Nat {
     type shiftRight <: Dense
 
     final override  def toDense: toDense = self
-    final override type toDense = self
+    final override type toDense          = self
 
      def foldRightWithNat[z <: Any, f <: Function2](z: z, f: f): foldRightWithNat[z, f]
     type foldRightWithNat[z <: Any, f <: Function2] <: Any
@@ -80,43 +80,45 @@ sealed class Nil extends Dense {
     type self = Nil
 
     override  def head: head = `throw`(new NoSuchElementException("dual.nat.dense.Nil.head"))
-    override type head = `throw`[_]
+    override type head       = `throw`[_]
 
     override  def tail: tail = `throw`(new NoSuchElementException("dual.nat.dense.Nil.tail"))
-    override type tail = `throw`[_]
+    override type tail       = `throw`[_]
 
     override  val size: size = peano.Zero
-    override type size = peano.Zero
+    override type size       = peano.Zero
 
     override  def isZero: isZero = `true`
-    override type isZero = `true`
+    override type isZero         = `true`
 
-    override  def increment: increment = new NilIncrement().apply(self)
-    override type increment = NilIncrement#apply[self]
+    override  def increment: increment     = Cons(`true`, self)
+    private type _increment[self <: Dense] = Cons[`true`, self]
+    override type increment = _increment[self]
 
     override  def decrement: decrement = unsupported("nat.dense.Nil.decrement")
-    override type decrement = unsupported[_]
+    override type decrement            = unsupported[_]
 
     override  def **[that <: Nat](that: that): **[that] = self
-    override type **[that <: Nat] = self
+    override type **[that <: Nat]                       = self
 
-    override  def ^[that <: Nat](that: that): ^[that] = new NilExp().apply(self, that)
-    override type ^[that <: Nat] = NilExp#apply[self, that]
+    override  def ^[that <: Nat](that: that): ^[that] = `if`(that.isZero, Const0(_1), Const0(self)).apply.asInstanceOfNatDense
+    private type _exp[self <: Dense, that <: Nat]     = `if`[that#isZero, Const0[_1], Const0[self]]#apply#asInstanceOfNatDense
+    override type ^[that <: Nat] = _exp[self, that]
 
     override  def shiftLeft: shiftLeft = self
-    override type shiftLeft = self
+    override type shiftLeft            = self
 
     override  def shiftRight: shiftRight = self
-    override type shiftRight = self
+    override type shiftRight             = self
 
     override  def toPeano: toPeano = peano.Zero
-    override type toPeano = peano.Zero
+    override type toPeano          = peano.Zero
 
     override  def foldRightWithNat[z <: Any, f <: Function2](z: z, f: f): foldRightWithNat[z, f] = z
-    override type foldRightWithNat[z <: Any, f <: Function2] = z
+    override type foldRightWithNat[z <: Any, f <: Function2]                                     = z
 
     override  def shiftLeftBy[n <: Peano](n: n): shiftLeftBy[n] = self
-    override type shiftLeftBy[n <: Peano] = self
+    override type shiftLeftBy[n <: Peano]                       = self
 
     override def undual: undual = 0
 }
@@ -131,10 +133,10 @@ final case class Cons[x <: Boolean, xs <: Dense](override val head: x, override 
     override type tail = xs
 
     override  val size: size = tail.size.increment
-    override type size = tail#size#increment
+    override type size       = tail#size#increment
 
     override  def isZero: isZero = `false`
-    override type isZero = `false`
+    override type isZero         = `false`
 
     override  def increment: increment = new ConsIncrement().apply(head, tail)
     override type increment = ConsIncrement#apply[head, tail]
@@ -152,13 +154,14 @@ final case class Cons[x <: Boolean, xs <: Dense](override val head: x, override 
     override type shiftLeft = ConsFalse#apply[self]
 
     override  def shiftRight: shiftRight = tail
-    override type shiftRight = tail
+    override type shiftRight             = tail
 
-    override  def toPeano: toPeano = new ConsToPeano().apply(self)
-    override type toPeano = ConsToPeano#apply[self]
+    override  def toPeano: toPeano       = peano.Succ(self.decrement.toPeano)
+    private type _toPeano[self <: Dense] = peano.Succ[self#decrement#toPeano]
+    override type toPeano = _toPeano[self]
 
     override  def foldRightWithNat[z <: Any, f <: Function2](z: z, f: f): foldRightWithNat[z, f] = f.apply(self, decrement.foldRightWithNat(z, f))
-    override type foldRightWithNat[z <: Any, f <: Function2] = f#apply[self, decrement#foldRightWithNat[z, f]]
+    override type foldRightWithNat[z <: Any, f <: Function2]                                     = f#apply[self, decrement#foldRightWithNat[z, f]]
 
     override  def shiftLeftBy[n <: Peano](n: n): shiftLeftBy[n] = new ConsShiftLeftBy().apply(self, n)
     override type shiftLeftBy[n <: Peano] = ConsShiftLeftBy#apply[self, n]
