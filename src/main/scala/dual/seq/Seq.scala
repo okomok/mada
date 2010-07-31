@@ -23,14 +23,14 @@ trait Seq extends Any {
      def tail: tail
     type tail <: Seq
 
-     def addFirst[e <: Any](e: e): addFirst[e]
+     def addFirst[e <: Any](e: e): addFirst[e] = unsupported("Seq.addFirst")
     type addFirst[e <: Any] <: Seq
 
-     def addLast[e <: Any](e: e): addLast[e] = unsupported("coming soon")
+     def addLast[e <: Any](e: e): addLast[e] = unsupported("Seq.addLast")
     type addLast[e <: Any] <: Seq
 
     @constantTime
-     def clear: clear = unsupported("coming soon")
+     def clear: clear
     type clear <: Seq
 
     final  def foreach[f <: Function1](f: f): foreach[f] = new Foreach().apply(self, f)
@@ -103,20 +103,11 @@ trait Seq extends Any {
      def scanRight[z <: Any, f <: Function2](z: z, f: f): scanRight[z, f]
     type scanRight[z <: Any, f <: Function2] <: Seq
 
-    final  def nth[n <: Nat](n: n): nth[n] = nthOption(n).get
-    final type nth[n <: Nat]               = nthOption[n]#get
+     def nth[n <: Nat](n: n): nth[n]
+    type nth[n <: Nat] <: Any
 
-     def nthOption[n <: Nat](n: n): nthOption[n]
-    type nthOption[n <: Nat] <: Option
-
-    final  def headOption: headOption = nthOption(nat.peano._0)
-    final type headOption             = nthOption[nat.peano._0]
-
-    final  def last: last = nth(size.decrement)
-    final type last       = nth[size#decrement]
-
-    final  def lastOption: lastOption = nthOption(size.decrement)
-    final type lastOption             = nthOption[size#decrement]
+     def last: last
+    type last <: Any
 
      def init: init
     type init <: Seq

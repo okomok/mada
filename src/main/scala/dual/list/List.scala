@@ -20,7 +20,6 @@ sealed abstract class List extends Seq {
     type asInstanceOfList = self
 
     type tail <: List
-    type clear <: List
     type append[that <: Seq] <: List
     type map[f <: Function1] <: List
     type flatten <: List
@@ -43,8 +42,14 @@ sealed abstract class List extends Seq {
     final override  def addFirst[e <: Any](e: e): addFirst[e] = new NewCons().apply(e, self)
     final override type addFirst[e <: Any] = NewCons#apply[e, self]
 
+    final override  def clear: clear = Nil
+    final override type clear = Nil
+
     final  def :::[that <: List](that: that): :::[that] = that.append(self)
     final type :::[that <: List]                        = that#append[self]
+
+    final override  def last: last = nth(size.decrement)
+    final override type last       = nth[size#decrement]
 
     final override  def take[n <: Nat](n: n): take[n] = new Take().apply(self, n)
     final override type take[n <: Nat] = Take#apply[self, n]
@@ -121,8 +126,8 @@ sealed abstract class Nil extends List {
     override  def scanRight[z <: Any, f <: Function2](z: z, f: f): scanRight[z, f] = new NewCons().apply(z, self)
     override type scanRight[z <: Any, f <: Function2] = NewCons#apply[z, self]
 
-    override  def nthOption[n <: Nat](n: n): nthOption[n] = None
-    override type nthOption[n <: Nat]                     = None
+    override  def nth[n <: Nat](n: n): nth[n] = `throw`(new NoSuchElementException("Nil.nth"))
+    override type nth[n <: Nat]               = `throw`[_]
 
     override  def init: init = unsupported("list.Nil.init")
     override type init       = unsupported[_]
@@ -193,8 +198,8 @@ final case class Cons[x <: Any, xs <: List](override val head: x, override val t
     override  def scanRight[z <: Any, f <: Function2](z: z, f: f): scanRight[z, f] = new ConsScanRight().apply(head, tail, z, f)
     override type scanRight[z <: Any, f <: Function2] = ConsScanRight#apply[head, tail, z, f]
 
-    override  def nthOption[n <: Nat](n: n): nthOption[n] = new ConsNthOption().apply(head, tail, n)
-    override type nthOption[n <: Nat] = ConsNthOption#apply[head, tail, n]
+    override  def nth[n <: Nat](n: n): nth[n] = new ConsNth().apply(head, tail, n)
+    override type nth[n <: Nat] = ConsNth#apply[head, tail, n]
 
     override  def init: init = new ConsInit().apply(head, tail)
     override type init = ConsInit#apply[head, tail]
