@@ -33,14 +33,14 @@ trait Map extends Any {
      def put[k <: Any, v <: Any](k: k, v: v): put[k, v]
     type put[k <: Any, v <: Any] <: Map
 
-    final  def putSeq[xs <: Seq](xs: xs): putSeq[xs] = new PutSeq().apply(self, xs)
-    final type putSeq[xs <: Seq] = PutSeq#apply[self, xs]
+     def putSeq[xs <: Seq](xs: xs): putSeq[xs]
+    type putSeq[xs <: Seq] <: Map
 
      def remove[k <: Any](k: k): remove[k]
     type remove[k <: Any] <: Map
 
-    final  def contains[k <: Any](k: k): contains[k] = get(k).isEmpty.not
-    final type contains[k <: Any]                    = get[k]#isEmpty#not
+     def contains[k <: Any](k: k): contains[k]
+    type contains[k <: Any] <: Boolean
 
      def keySet: keySet
     type keySet <: Set
@@ -54,14 +54,10 @@ trait Map extends Any {
      def valueList: valueList
     type valueList <: List
 
-    final  def equivTo[that <: Map, ve <: Equiv](that: that, ve: ve): equivTo[that, ve] = new EquivTo().apply(self, that, ve)
-    final type equivTo[that <: Map, ve <: Equiv] = EquivTo#apply[self, that, ve]
+     def equivTo[that <: Map, ve <: Equiv](that: that, ve: ve): equivTo[that, ve]
+    type equivTo[that <: Map, ve <: Equiv] <: Boolean
 
     // left-biased
-    final  def union[that <: Map](that: that): union[that] = that.putSeq(self.toList)
-    private type _union[self <: Map, that <: Map]          = that#putSeq[self#toList]
-    final type union[that <: Map] = _union[self, that]
-
-    final override type undual = scala.collection.Map[scala.Any, scala.Any]
-    final override def canEqual(that: scala.Any) = that.isInstanceOf[Map]
+     def union[that <: Map](that: that): union[that]
+    type union[that <: Map] <: Map
 }

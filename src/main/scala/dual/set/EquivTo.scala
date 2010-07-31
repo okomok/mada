@@ -10,9 +10,9 @@ package dual; package set
 
 private[mada] final class EquivTo {
      def apply[s <: Set, z <: Set](s: s, z: z): apply[s, z] =
-        `if`(s.size  !== z.size,  Const0(`false`), Else(s, z)).apply.asInstanceOf[apply[s, z]]
+        `if`(s.size  !== z.size,  Const0(`false`), Else(s, z)).apply.asInstanceOfBoolean.asInstanceOf[apply[s, z]]
     type apply[s <: Set, z <: Set] =
-        `if`[s#size# !==[z#size], Const0[`false`], Else[s, z]]#apply
+        `if`[s#size# !==[z#size], Const0[`false`], Else[s, z]]#apply#asInstanceOfBoolean
 
     case class Else[s <: Set, z <: Set](s: s, z: z) extends Function0 {
         type self = Else[s, z]

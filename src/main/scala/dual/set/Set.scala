@@ -27,8 +27,8 @@ trait Set extends Any {
      def add[k <: Any](k: k): add[k]
     type add[k <: Any] <: Set
 
-    final  def addSeq[xs <: Seq](xs: xs): addSeq[xs] = new AddSeq().apply(self, xs)
-    final type addSeq[xs <: Seq] = AddSeq#apply[self, xs]
+     def addSeq[xs <: Seq](xs: xs): addSeq[xs]
+    type addSeq[xs <: Seq] <: Set
 
      def clear: clear
     type clear <: Set
@@ -36,8 +36,8 @@ trait Set extends Any {
      def remove[k <: Any](k: k): remove[k]
     type remove[k <: Any] <: Set
 
-    final  def removeSeq[xs <: Seq](xs: xs): removeSeq[xs] = new RemoveSeq().apply(self, xs)
-    final type removeSeq[xs <: Seq] = RemoveSeq#apply[self, xs]
+     def removeSeq[xs <: Seq](xs: xs): removeSeq[xs]
+    type removeSeq[xs <: Seq] <: Set
 
      def contains[k <: Any](k: k): contains[k]
     type contains[k <: Any] <: Boolean
@@ -45,23 +45,18 @@ trait Set extends Any {
      def toList: toList
     type toList <: List
 
-    final  def equivTo[that <: Set](that: that): equivTo[that] = new EquivTo().apply(self, that)
-    final type equivTo[that <: Set] = EquivTo#apply[self, that]
+     def equivTo[that <: Set](that: that): equivTo[that]
+    type equivTo[that <: Set] <: Boolean
 
-    final  def intersect[that <: Set](that: that): intersect[that] = new Intersect().apply(self, that)
-    final type intersect[that <: Set] = Intersect#apply[self, that]
+     def intersect[that <: Set](that: that): intersect[that]
+    type intersect[that <: Set] <: Set
 
-    final  def union[that <: Set](that: that): union[that] = self.addSeq(that.toList)
-    private type _union[self <: Set, that <: Set]          = self#addSeq[that#toList]
-    final type union[that <: Set] = _union[self, that]
+     def union[that <: Set](that: that): union[that]
+    type union[that <: Set] <: Set
 
-    final  def diff[that <: Set](that: that): diff[that] = self.removeSeq(that.toList)
-    private type _diff[self <: Set, that <: Set]         = self#removeSeq[that#toList]
-    final type diff[that <: Set] = _diff[self, that]
+     def diff[that <: Set](that: that): diff[that]
+    type diff[that <: Set] <: Set
 
-    final  def subsetOf[that <: Set](that: that): subsetOf[that] = new SubsetOf().apply(self, that)
-    final type subsetOf[that <: Set] = SubsetOf#apply[self, that]
-
-    override type undual = scala.collection.Set[scala.Any]
-    override def canEqual(that: scala.Any) = that.isInstanceOf[Set]
+     def subsetOf[that <: Set](that: that): subsetOf[that]
+    type subsetOf[that <: Set] <: Boolean
 }

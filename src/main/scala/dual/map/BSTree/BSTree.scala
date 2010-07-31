@@ -10,7 +10,7 @@ package com.github.okomok.mada
 package dual; package map; package bstree
 
 
-sealed abstract class BSTree extends Map {
+sealed abstract class BSTree extends AbstractMap {
     type self <: BSTree
     type asInstanceOfMapBSTree = self
 

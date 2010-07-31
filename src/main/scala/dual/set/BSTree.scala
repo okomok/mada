@@ -8,7 +8,7 @@ package com.github.okomok.mada
 package dual; package set
 
 
-sealed trait BSTree extends Set {
+sealed trait BSTree extends AbstractSet {
     type self <: BSTree
 
      val impl: impl

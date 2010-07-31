@@ -114,12 +114,6 @@ sealed abstract class Nil extends List {
     override  def sort[o <: Ordering](o: o): sort[o] = self
     override type sort[o <: Ordering]                = self
 
-    override  def foldLeft[z <: Any, f <: Function2](z: z, f: f): foldLeft[z, f] = z
-    override type foldLeft[z <: Any, f <: Function2]                             = z
-
-    override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = z
-    override type foldRight[z <: Any, f <: Function2]                              = z
-
     override  def scanLeft[z <: Any, f <: Function2](z: z, f: f): scanLeft[z, f] = new NewCons().apply(z, self)
     override type scanLeft[z <: Any, f <: Function2] = NewCons#apply[z, self]
 
@@ -185,12 +179,6 @@ final case class Cons[x <: Any, xs <: List](override val head: x, override val t
 
     override  def sort[o <: Ordering](o: o): sort[o] = new ConsSort().apply(self, o)
     override type sort[o <: Ordering] = ConsSort#apply[self, o]
-
-    override  def foldLeft[z <: Any, f <: Function2](z: z, f: f): foldLeft[z, f] = tail.foldLeft(f.apply(z, head), f)
-    override type foldLeft[z <: Any, f <: Function2]                             = tail#foldLeft[f#apply[z, head], f]
-
-    override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = f.apply(head, tail.foldRight(z, f))
-    override type foldRight[z <: Any, f <: Function2]                              = f#apply[head, tail#foldRight[z, f]]
 
     override  def scanLeft[z <: Any, f <: Function2](z: z, f: f): scanLeft[z, f] = new ConsScanLeft().apply(head, tail, z, f)
     override type scanLeft[z <: Any, f <: Function2] = ConsScanLeft#apply[head, tail, z, f]
