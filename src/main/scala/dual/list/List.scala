@@ -15,7 +15,7 @@ package dual; package list
 object List extends Common with ToSTuple
 
 
-sealed abstract class List extends Seq {
+sealed abstract class List extends seq.AbstractSeq {
     type self <: List
     type asInstanceOfList = self
 

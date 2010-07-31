@@ -33,24 +33,24 @@ trait Seq extends Any {
      def clear: clear
     type clear <: Seq
 
-    final  def foreach[f <: Function1](f: f): foreach[f] = new Foreach().apply(self, f)
-    final type foreach[f <: Function1] = Foreach#apply[self, f]
+     def foreach[f <: Function1](f: f): foreach[f]
+    type foreach[f <: Function1] <: Unit
 
     @constantTime
      def isEmpty: isEmpty
     type isEmpty <: Boolean
 
     @equivalentTo("isEmpty.not")
-    final  def nonEmpty: nonEmpty = isEmpty.not
-    final type nonEmpty           = isEmpty#not
+     def nonEmpty: nonEmpty
+    type nonEmpty <: Boolean
 
     @constantTime
      def size: size
     type size <: Nat
 
     @aliasOf("size")
-    final  def length: length = size
-    final type length = size
+     def length: length
+    type length <: Nat
 
      def append[that <: Seq](that: that): append[that]
     type append[that <: Seq] <: Seq
@@ -58,8 +58,8 @@ trait Seq extends Any {
      def map[f <: Function1](f: f): map[f]
     type map[f <: Function1] <: Seq
 
-    final  def flatMap[f <: Function1](f: f): flatMap[f] = map(f).flatten
-    final type flatMap[f <: Function1]                   = map[f]#flatten
+     def flatMap[f <: Function1](f: f): flatMap[f]
+    type flatMap[f <: Function1] <: Seq
 
      def flatten: flatten
     type flatten <: Seq
@@ -73,17 +73,17 @@ trait Seq extends Any {
      def sort[o <: Ordering](o: o): sort[o]
     type sort[o <: Ordering] <: Seq
 
-    final  def forall[f <: Function1](f: f): forall[f] = exists(f.not).not.asInstanceOf[forall[f]]
-    final type forall[f <: Function1]                  = exists[f#not]#not
+     def forall[f <: Function1](f: f): forall[f]
+    type forall[f <: Function1] <: Boolean
 
-    final  def exists[f <: Function1](f: f): exists[f] = find(f).nonEmpty
-    final type exists[f <: Function1]                  = find[f]#nonEmpty
+     def exists[f <: Function1](f: f): exists[f]
+    type exists[f <: Function1] <: Boolean
 
-    final  def count[f <: Function1](f: f): count[f] = new Count().apply(self, f)
-    final type count[f <: Function1] = Count#apply[self, f]
+     def count[f <: Function1](f: f): count[f]
+    type count[f <: Function1] <: Nat
 
-    final  def find[f <: Function1](f: f): find[f] = new Find().apply(self, f)
-    final type find[f <: Function1] = Find#apply[self, f]
+     def find[f <: Function1](f: f): find[f]
+    type find[f <: Function1] <: Option
 
      def foldLeft[z <: Any, f <: Function2](z: z, f: f): foldLeft[z, f]
     type foldLeft[z <: Any, f <: Function2] <: Any
@@ -91,11 +91,11 @@ trait Seq extends Any {
      def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f]
     type foldRight[z <: Any, f <: Function2] <: Any
 
-    final  def reduceLeft[f <: Function2](f: f): reduceLeft[f] = new ReduceLeft().apply(self, f)
-    final type reduceLeft[f <: Function2] = ReduceLeft#apply[self, f]
+     def reduceLeft[f <: Function2](f: f): reduceLeft[f]
+    type reduceLeft[f <: Function2] <: Any
 
-    final  def reduceRight[f <: Function2](f: f): reduceRight[f] = new ReduceRight().apply(self, f)
-    final type reduceRight[f <: Function2] = ReduceRight#apply[self, f]
+     def reduceRight[f <: Function2](f: f): reduceRight[f]
+    type reduceRight[f <: Function2] <: Any
 
      def scanLeft[z <: Any, f <: Function2](z: z, f: f): scanLeft[z, f]
     type scanLeft[z <: Any, f <: Function2] <: Seq
@@ -118,8 +118,8 @@ trait Seq extends Any {
      def drop[n <: Nat](n: n): drop[n]
     type drop[n <: Nat] <: Seq
 
-    final  def slice[n <: Nat, m <: Nat](n: n, m: m): slice[n, m] = take(m).drop(n)
-    final type slice[n <: Nat, m <: Nat]                          = take[m]#drop[n]
+     def slice[n <: Nat, m <: Nat](n: n, m: m): slice[n, m]
+    type slice[n <: Nat, m <: Nat]  <: Seq
 
      def takeWhile[f <: Function1](f: f): takeWhile[f]
     type takeWhile[f <: Function1] <: Seq
@@ -133,8 +133,8 @@ trait Seq extends Any {
      def splitAt[n <: Nat](n: n): splitAt[n]
     type splitAt[n <: Nat] <: Product2
 
-    final  def equivTo[that <: Seq, e <: Equiv](that: that, e: e): equivTo[that, e] = new EquivTo().apply(self, that, e)
-    final type equivTo[that <: Seq, e <: Equiv] = EquivTo#apply[self, that, e]
+     def equivTo[that <: Seq, e <: Equiv](that: that, e: e): equivTo[that, e]
+    type equivTo[that <: Seq, e <: Equiv] <: Boolean
 
      def reverse: reverse
     type reverse <: Seq
@@ -147,4 +147,45 @@ trait Seq extends Any {
 
      def toList: toList
     type toList <: List
+}
+
+
+trait AbstractSeq extends Seq {
+    final  def foreach[f <: Function1](f: f): foreach[f] = new Foreach().apply(self, f)
+    final type foreach[f <: Function1] = Foreach#apply[self, f]
+
+    @equivalentTo("isEmpty.not")
+    final  def nonEmpty: nonEmpty = isEmpty.not
+    final type nonEmpty           = isEmpty#not
+
+    @aliasOf("size")
+    final  def length: length = size
+    final type length = size
+
+    final  def flatMap[f <: Function1](f: f): flatMap[f] = map(f).flatten
+    final type flatMap[f <: Function1]                   = map[f]#flatten
+
+    final  def forall[f <: Function1](f: f): forall[f] = exists(f.not).not.asInstanceOf[forall[f]]
+    final type forall[f <: Function1]                  = exists[f#not]#not
+
+    final  def exists[f <: Function1](f: f): exists[f] = find(f).nonEmpty
+    final type exists[f <: Function1]                  = find[f]#nonEmpty
+
+    final  def count[f <: Function1](f: f): count[f] = new Count().apply(self, f)
+    final type count[f <: Function1] = Count#apply[self, f]
+
+    final  def find[f <: Function1](f: f): find[f] = new Find().apply(self, f)
+    final type find[f <: Function1] = Find#apply[self, f]
+
+    final  def reduceLeft[f <: Function2](f: f): reduceLeft[f] = new ReduceLeft().apply(self, f)
+    final type reduceLeft[f <: Function2] = ReduceLeft#apply[self, f]
+
+    final  def reduceRight[f <: Function2](f: f): reduceRight[f] = new ReduceRight().apply(self, f)
+    final type reduceRight[f <: Function2] = ReduceRight#apply[self, f]
+
+    final  def slice[n <: Nat, m <: Nat](n: n, m: m): slice[n, m] = take(m).drop(n)
+    final type slice[n <: Nat, m <: Nat]                          = take[m]#drop[n]
+
+    final  def equivTo[that <: Seq, e <: Equiv](that: that, e: e): equivTo[that, e] = new EquivTo().apply(self, that, e)
+    final type equivTo[that <: Seq, e <: Equiv] = EquivTo#apply[self, that, e]
 }
