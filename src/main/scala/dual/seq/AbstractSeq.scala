@@ -16,7 +16,7 @@ trait AbstractSeq extends Seq {
     final override type nonEmpty           = isEmpty#not
 
     final override  def length: length = size
-    final override type length = size
+    final override type length         = size
 
     final override  def flatMap[f <: Function1](f: f): flatMap[f] = map(f).flatten
     final override type flatMap[f <: Function1]                   = map[f]#flatten
@@ -47,6 +47,12 @@ trait AbstractSeq extends Seq {
 
     final override  def slice[n <: Nat, m <: Nat](n: n, m: m): slice[n, m] = take(m).drop(n)
     final override type slice[n <: Nat, m <: Nat]                          = take[m]#drop[n]
+
+    final override  def takeWhile[f <: Function1](f: f): takeWhile[f] = new TakeWhile().apply(self, f)
+    final override type takeWhile[f <: Function1] = TakeWhile#apply[self, f]
+
+    final override  def dropWhile[f <: Function1](f: f): dropWhile[f] = new DropWhile().apply(self, f)
+    final override type dropWhile[f <: Function1] = DropWhile#apply[self, f]
 
     final override  def equivTo[that <: Seq, e <: Equiv](that: that, e: e): equivTo[that, e] = new EquivTo().apply(self, that, e)
     final override type equivTo[that <: Seq, e <: Equiv] = EquivTo#apply[self, that, e]

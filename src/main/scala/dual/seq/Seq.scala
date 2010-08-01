@@ -150,4 +150,7 @@ trait Seq extends Any {
 
      def toList: toList
     type toList <: List
+
+     def fromSuper[that <: Seq](that: that): fromSuper[that]
+    type fromSuper[that <: Seq] <: Seq
 }

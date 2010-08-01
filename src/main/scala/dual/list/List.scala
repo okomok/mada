@@ -28,8 +28,6 @@ sealed abstract class List extends seq.AbstractSeq {
     type scanLeft[z <: Any, f <: Function2] <: List
     type scanRight[z <: Any, f <: Function2] <: List
     type init <: List
-    type takeWhile[f <: Function1] <: List
-    type dropWhile[f <: Function1] <: List
     type zip[that <: Seq] <: List
 
     final override  def toList: toList = self
@@ -68,6 +66,9 @@ sealed abstract class List extends seq.AbstractSeq {
 
     final override  def unzip: unzip = new Unzip().apply(self)
     final override type unzip = Unzip#apply[self]
+
+    final override  def fromSuper[that <: Seq](that: that): fromSuper[that] = that.asInstanceOfList
+    final override type fromSuper[that <: Seq]                              = that#asInstanceOfList
 
     /**
      * Returns the first element whose type is <code>k</code>.
@@ -125,12 +126,6 @@ sealed abstract class Nil extends List {
 
     override  def init: init = unsupported("list.Nil.init")
     override type init       = unsupported[_]
-
-    override  def takeWhile[f <: Function1](f: f): takeWhile[f] = self
-    override type takeWhile[f <: Function1]                     = self
-
-    override  def dropWhile[f <: Function1](f: f): dropWhile[f] = self
-    override type dropWhile[f <: Function1]                     = self
 
     override  def span[f <: Function1](f: f): span[f] = Tuple2(self, self)
     override type span[f <: Function1]                = Tuple2[self, self]
@@ -191,12 +186,6 @@ final case class Cons[x <: Any, xs <: List](override val head: x, override val t
 
     override  def init: init = new ConsInit().apply(head, tail)
     override type init = ConsInit#apply[head, tail]
-
-    override  def takeWhile[f <: Function1](f: f): takeWhile[f] = new ConsTakeWhile().apply(head, tail, f)
-    override type takeWhile[f <: Function1] = ConsTakeWhile#apply[head, tail, f]
-
-    override  def dropWhile[f <: Function1](f: f): dropWhile[f] = new ConsDropWhile().apply(self, f)
-    override type dropWhile[f <: Function1] = ConsDropWhile#apply[self, f]
 
     override  def span[f <: Function1](f: f): span[f] = new ConsSpan().apply(self, f)
     override type span[f <: Function1] = ConsSpan#apply[self, f]
