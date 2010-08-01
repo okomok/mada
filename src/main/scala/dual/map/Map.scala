@@ -60,4 +60,7 @@ trait Map extends Any {
     // left-biased
      def union[that <: Map](that: that): union[that]
     type union[that <: Map] <: Map
+
+    final override type undual = scala.collection.Map[scala.Any, scala.Any]
+    final override def canEqual(that: scala.Any) = that.isInstanceOf[Map]
 }

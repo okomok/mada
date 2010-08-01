@@ -12,7 +12,7 @@ object Either
 
 
 /**
- * The dual Option
+ * The dual Either
  */
 sealed abstract class Either extends Any {
     type self <: Either

@@ -21,7 +21,4 @@ trait AbstractMap extends Map {
     final override  def union[that <: Map](that: that): union[that] = that.putSeq(self.toList)
     private type _union[self <: Map, that <: Map]                   = that#putSeq[self#toList]
     final override type union[that <: Map] = _union[self, that]
-
-    final override type undual = scala.collection.Map[scala.Any, scala.Any]
-    final override def canEqual(that: scala.Any) = that.isInstanceOf[Map]
 }

@@ -15,8 +15,8 @@ sealed abstract class Result extends Any {
      def ===[that <: Result](that: that): ===[that]
     type ===[that <: Result] <: Boolean
 
-    final  def !==[that <: Result](that: that): !==[that] = ===(that).not
-    final type !==[that <: Result] = ===[that]#not
+     def !==[that <: Result](that: that): !==[that]
+    type !==[that <: Result] <: Boolean
 
      def isLT: isLT
     type isLT <: Boolean
@@ -25,60 +25,71 @@ sealed abstract class Result extends Any {
      def isEQ: isEQ
     type isEQ <: Boolean
 
-    final  def isLTEQ: isLTEQ = isLT || isEQ
-    final type isLTEQ = isLT# ||[isEQ]
-    final  def isGTEQ: isGTEQ = isGT || isEQ
-    final type isGTEQ = isGT# ||[isEQ]
+     def isLTEQ: isLTEQ
+    type isLTEQ <: Boolean
+     def isGTEQ: isGTEQ
+    type isGTEQ <: Boolean
 
     final override type undual = scala.Int
-    override def canEqual(that: scala.Any) = that.isInstanceOf[Result]
+    final override def canEqual(that: scala.Any) = that.isInstanceOf[Result]
 }
 
 
-sealed abstract class LT extends Result {
+private[mada] sealed abstract class AbstractResult extends Result {
+    final override  def !==[that <: Result](that: that): !==[that] = ===(that).not
+    final override type !==[that <: Result] =                        ===[that]#not
+
+    final override  def isLTEQ: isLTEQ = isLT  || isEQ
+    final override type isLTEQ         = isLT# ||[isEQ]
+    final override  def isGTEQ: isGTEQ = isGT  || isEQ
+    final override type isGTEQ         = isGT# ||[isEQ]
+}
+
+
+sealed abstract class LT extends AbstractResult {
     type self = LT
 
     override  def ===[that <: Result](that: that): ===[that] = that.isLT
-    override type ===[that <: Result] = that#isLT
+    override type ===[that <: Result]                        = that#isLT
 
     override  def isLT: isLT = `true`
-    override type isLT = `true`
+    override type isLT       = `true`
     override  def isGT: isGT = `false`
-    override type isGT = `false`
+    override type isGT       = `false`
     override  def isEQ: isEQ = `false`
-    override type isEQ = `false`
+    override type isEQ       = `false`
 
     override  def undual: undual = -1
 }
 
-sealed abstract class GT extends Result {
+sealed abstract class GT extends AbstractResult {
     type self = GT
 
     override  def ===[that <: Result](that: that): ===[that] = that.isGT
-    override type ===[that <: Result] = that#isGT
+    override type ===[that <: Result]                        = that#isGT
 
     override  def isLT: isLT = `false`
-    override type isLT = `false`
+    override type isLT       = `false`
     override  def isGT: isGT = `true`
-    override type isGT = `true`
+    override type isGT       = `true`
     override  def isEQ: isEQ = `false`
-    override type isEQ = `false`
+    override type isEQ       = `false`
 
     override  def undual: undual = 1
 }
 
-sealed abstract class EQ extends Result {
+sealed abstract class EQ extends AbstractResult {
     type self = EQ
 
     override  def ===[that <: Result](that: that): ===[that] = that.isEQ
-    override type ===[that <: Result] = that#isEQ
+    override type ===[that <: Result]                        = that#isEQ
 
     override  def isLT: isLT = `false`
-    override type isLT = `false`
+    override type isLT       = `false`
     override  def isGT: isGT = `false`
-    override type isGT = `false`
+    override type isGT       = `false`
     override  def isEQ: isEQ = `true`
-    override type isEQ = `true`
+    override type isEQ       = `true`
 
     override  def undual: undual = 0
 }

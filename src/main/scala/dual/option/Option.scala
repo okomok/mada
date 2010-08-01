@@ -21,8 +21,8 @@ sealed abstract class Option extends Any {
      def isEmpty: isEmpty
     type isEmpty <: Boolean
 
-    final  def nonEmpty: nonEmpty = isEmpty.not
-    final type nonEmpty           = isEmpty#not
+     def nonEmpty: nonEmpty
+    type nonEmpty <: Boolean
 
      def get: get
     type get <: Any
@@ -30,8 +30,8 @@ sealed abstract class Option extends Any {
      def getOrElse[f <: Function0](f: f): getOrElse[f]
     type getOrElse[f <: Function0] <: Any
 
-    final  def isDefined: isDefined = isEmpty.not
-    final type isDefined = isEmpty#not
+     def isDefined: isDefined
+    type isDefined <: Boolean
 
      def map[f <: Function1](f: f): map[f]
     type map[f <: Function1] <: Option
@@ -46,20 +46,34 @@ sealed abstract class Option extends Any {
     type exists[f <: Function1] <: Boolean
 
      def foreach[f <: Function1](f: f): foreach[f]
-    final type foreach[f <: Function1] = Unit
+    type foreach[f <: Function1] <: Unit
 
-    final  def orElse[f <: Function0](f: f): orElse[f] = `if`(isEmpty, f, Const0(self)).apply.asInstanceOfOption
-    final type orElse[f <: Function0]                  = `if`[isEmpty, f, Const0[self]]#apply#asInstanceOfOption
+     def orElse[f <: Function0](f: f): orElse[f]
+    type orElse[f <: Function0] <: Option
 
     override type undual <: scala.Option[_]
     final override def canEqual(that: scala.Any) = that.isInstanceOf[Option]
 }
 
 
+private[mada] sealed abstract class AbstractOption extends Option {
+    final override  def nonEmpty: nonEmpty = isEmpty.not
+    final override type nonEmpty           = isEmpty#not
+
+    final override  def isDefined: isDefined = isEmpty.not
+    final override type isDefined            = isEmpty#not
+
+    final override type foreach[f <: Function1] = Unit
+
+    final override  def orElse[f <: Function0](f: f): orElse[f] = `if`(isEmpty, f, Const0(self)).apply.asInstanceOfOption
+    final override type orElse[f <: Function0]                  = `if`[isEmpty, f, Const0[self]]#apply#asInstanceOfOption
+}
+
+
 /**
  * The dual None
  */
-sealed abstract class None extends Option {
+sealed abstract class None extends AbstractOption {
     type self = None
 
     override  def isEmpty: isEmpty = `true`
@@ -93,7 +107,7 @@ sealed abstract class None extends Option {
 /**
  * The dual Some
  */
-final case class Some[e <: Any](override val get: e) extends Option {
+final case class Some[e <: Any](override val get: e) extends AbstractOption {
     type self = Some[e]
 
     override  def isEmpty: isEmpty = `false`
@@ -115,7 +129,7 @@ final case class Some[e <: Any](override val get: e) extends Option {
     override type filter[f <: Function1]                  = `if`[f#apply[get]#asInstanceOfBoolean, Const0[self], Const0[None]]#apply#asInstanceOfOption
 
     override  def exists[f <: Function1](f: f): exists[f] = f.apply(get).asInstanceOfBoolean
-    override type exists[f <: Function1]                    = f#apply[get]#asInstanceOfBoolean
+    override type exists[f <: Function1]                  = f#apply[get]#asInstanceOfBoolean
 
     override  def foreach[f <: Function1](f: f): foreach[f] = { f.apply(get); Unit }
 

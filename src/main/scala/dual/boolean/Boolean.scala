@@ -12,9 +12,9 @@ object Boolean extends Common
 
 
 /**
- * The Boolean interface
+ * The dual Boolean
  */
-sealed trait Boolean extends Any {
+sealed abstract class Boolean extends Any {
     type self <: Boolean
     type asInstanceOfBoolean = self
 
@@ -47,10 +47,7 @@ sealed trait Boolean extends Any {
 }
 
 
-/**
- * A skeletal implementation of the Boolean interface
- */
-sealed trait AbstractBoolean extends Boolean {
+private[mada] sealed abstract class AbstractBoolean extends Boolean {
     final override  def !==[that <: Boolean](that: that): !==[that] = ===(that).not
     final override type !==[that <: Boolean] =                        ===[that]#not
 
@@ -62,7 +59,7 @@ sealed trait AbstractBoolean extends Boolean {
 /**
  * The true
  */
-sealed trait `true` extends AbstractBoolean {
+sealed abstract class `true` extends AbstractBoolean {
     type self = `true`
 
     override  def not: not = `false`
@@ -93,7 +90,7 @@ sealed trait `true` extends AbstractBoolean {
 /**
  * The false
  */
-sealed trait `false` extends AbstractBoolean {
+sealed abstract class `false` extends AbstractBoolean {
     type self = `false`
 
     override  def not: not = `true`
