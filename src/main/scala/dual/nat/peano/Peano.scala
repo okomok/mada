@@ -15,7 +15,7 @@ package dual; package nat; package peano
 object Peano extends Common
 
 
-sealed trait Peano extends Nat {
+sealed trait Peano extends AbstractNat {
     type self <: Peano
     type asInstanceOfNatPeano = self
 

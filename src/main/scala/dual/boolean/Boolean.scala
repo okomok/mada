@@ -57,7 +57,7 @@ private[mada] sealed abstract class AbstractBoolean extends Boolean {
 
 
 /**
- * The true
+ * The dual true
  */
 sealed abstract class `true` extends AbstractBoolean {
     type self = `true`
@@ -88,7 +88,7 @@ sealed abstract class `true` extends AbstractBoolean {
 
 
 /**
- * The false
+ * The dual false
  */
 sealed abstract class `false` extends AbstractBoolean {
     type self = `false`

@@ -14,7 +14,7 @@ package dual; package nat; package dense
 object Dense extends Common
 
 
-sealed abstract class Dense extends Nat {
+sealed abstract class Dense extends AbstractNat {
     type self <: Dense
     type asInstanceOfNatDense = self
 

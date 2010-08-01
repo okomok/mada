@@ -15,7 +15,7 @@ object Nat extends Common with OperatorCommon {
 
 
 /**
- * The dual natural number metatrait
+ * The dual natural number
  */
 trait Nat extends Any {
     type self <: Nat
@@ -57,21 +57,20 @@ trait Nat extends Any {
      def <[that <: Nat](that: that): <[that]
     type <[that <: Nat] <: Boolean
 
-    final  def !==[that <: Nat](that: that): !==[that] = ===(that).not
-    final type !==[that <: Nat] = ===[that]#not
+     def !==[that <: Nat](that: that): !==[that]
+    type !==[that <: Nat] <: Boolean
 
-    final  def /[that <: Nat](that: that): /[that] = divMod(that)._1.asInstanceOfNat
-    final type /[that <: Nat] = divMod[that]#_1#asInstanceOfNat
+     def /[that <: Nat](that: that): /[that]
+    type /[that <: Nat] <: Nat
 
-    final  def %[that <: Nat](that: that): %[that] = divMod(that)._2.asInstanceOfNat
-    final type %[that <: Nat] = divMod[that]#_2#asInstanceOfNat
+     def %[that <: Nat](that: that): %[that]
+    type %[that <: Nat] <: Nat
 
-    @nothingTypeMismatchWorkaround
-    final  def >[that <: Nat](that: that): >[that] = <=(that).not //that < self
-    final type >[that <: Nat] = <=[that]#not //that# <[self]
+     def >[that <: Nat](that: that): >[that]
+    type >[that <: Nat] <: Boolean
 
-    final  def >=[that <: Nat](that: that): >=[that] = <(that).not //that <= self
-    final type >=[that <: Nat] = <[that]#not //that# <=[self]
+     def >=[that <: Nat](that: that): >=[that]
+    type >=[that <: Nat] <: Boolean
 
      def &[that <: Nat](that: that): &[that]
     type &[that <: Nat] <: Nat
