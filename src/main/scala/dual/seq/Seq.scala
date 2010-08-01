@@ -11,6 +11,9 @@ package dual; package seq
 object Seq extends Common
 
 
+/**
+ * The dual Sequence (forward traversal)
+ */
 trait Seq extends Any {
     type self <: Seq
     type asInstanceOfSeq = self
