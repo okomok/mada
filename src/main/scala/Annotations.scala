@@ -119,7 +119,7 @@ sealed trait TimeComplexity extends StaticAnnotation
 
 class constantTime extends TimeComplexity
 class logarithmicTime extends TimeComplexity
-class linearithmicTime extends TimeComplexity
+class linearTime extends TimeComplexity
 class polynomialTime extends TimeComplexity
 class exponentialTime extends TimeComplexity
 class factorialTime extends TimeComplexity

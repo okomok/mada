@@ -14,4 +14,12 @@ trait Common {
      */
      def eqv[ee <: Equiv](ee: ee): eqv[ee] = new Eqv(ee)
     type eqv[ee <: Equiv] = Eqv[ee]
+
+    @aliasOf("iterator.Iterator")
+     val Iterator = iterator.Iterator
+    type Iterator = iterator.Iterator
+
+    @aliasOf("views.View")
+     val View = views.View
+    type View[it <: Iterator] = views.View[it]
 }

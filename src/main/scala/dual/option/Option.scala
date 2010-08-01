@@ -79,8 +79,8 @@ sealed abstract class None extends AbstractOption {
     override  def isEmpty: isEmpty = `true`
     override type isEmpty          = `true`
 
-    override  def get: get = `throw`(new NoSuchElementException("dual.None.get"))
-    override type get      = `throw`[_]
+    override  def get: get = noSuchElement("None.get")
+    override type get      = noSuchElement[_]
 
     override  def getOrElse[f <: Function0](f: f): getOrElse[f] = f.apply
     override type getOrElse[f <: Function0]                     = f#apply

@@ -19,6 +19,9 @@ sealed abstract class List extends seq.AbstractSeq {
     type self <: List
     type asInstanceOfList = self
 
+    final override  def begin: begin = ListIterator(self)
+    final override type begin        = ListIterator[self]
+
     type tail <: List
     type append[that <: Seq] <: List
     type map[f <: Function1] <: List
@@ -85,11 +88,11 @@ sealed abstract class List extends seq.AbstractSeq {
 sealed abstract class Nil extends List {
     type self = Nil
 
-    override  def head: head = `throw`(new NoSuchElementException("dual.list.Nil.head"))
-    override type head       = `throw`[_]
+    override  def head: head = noSuchElement("list.Nil.head")
+    override type head       = noSuchElement[_]
 
-    override  def tail: tail = `throw`(new NoSuchElementException("dual.list.Nil.tail"))
-    override type tail       = `throw`[_]
+    override  def tail: tail = noSuchElement("list.Nil.tail")
+    override type tail       = noSuchElement[_]
 
     override  def isEmpty: isEmpty = `true`
     override type isEmpty          = `true`
@@ -121,8 +124,8 @@ sealed abstract class Nil extends List {
     override  def scanRight[z <: Any, f <: Function2](z: z, f: f): scanRight[z, f] = new _Cons().apply(z, self)
     override type scanRight[z <: Any, f <: Function2] = _Cons#apply[z, self]
 
-    override  def nth[n <: Nat](n: n): nth[n] = `throw`(new NoSuchElementException("Nil.nth"))
-    override type nth[n <: Nat]               = `throw`[_]
+    override  def nth[n <: Nat](n: n): nth[n] = noSuchElement("list.Nil.nth")
+    override type nth[n <: Nat]               = noSuchElement[_]
 
     override  def init: init = unsupported("list.Nil.init")
     override type init       = unsupported[_]

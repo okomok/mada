@@ -9,6 +9,10 @@ package dual; package seq
 
 
 trait AbstractSeq extends Seq {
+    final override  def view: view  = View(self.begin)
+    private type _view[self <: Seq] = View[self#begin]
+    final override type view = _view[self]
+
     final override  def foreach[f <: Function1](f: f): foreach[f] = new Foreach().apply(self, f)
     final override type foreach[f <: Function1] = Foreach#apply[self, f]
 

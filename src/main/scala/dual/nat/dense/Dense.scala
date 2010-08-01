@@ -79,11 +79,11 @@ sealed abstract class Dense extends AbstractNat {
 sealed class Nil extends Dense {
     type self = Nil
 
-    override  def head: head = `throw`(new NoSuchElementException("dual.nat.dense.Nil.head"))
-    override type head       = `throw`[_]
+    override  def head: head = noSuchElement("nat.dense.Nil.head")
+    override type head       = noSuchElement[_]
 
-    override  def tail: tail = `throw`(new NoSuchElementException("dual.nat.dense.Nil.tail"))
-    override type tail       = `throw`[_]
+    override  def tail: tail = noSuchElement("nat.dense.Nil.tail")
+    override type tail       = noSuchElement[_]
 
     override  val size: size = peano.Zero
     override type size       = peano.Zero

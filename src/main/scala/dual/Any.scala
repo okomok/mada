@@ -61,6 +61,9 @@ trait Any extends scala.Equals {
     final def asInstanceOfSeq: asInstanceOfSeq = this.asInstanceOf[asInstanceOfSeq]
     type asInstanceOfSeq <: Seq
 
+    final def asInstanceOfSeqIterator: asInstanceOfSeqIterator = this.asInstanceOf[asInstanceOfSeqIterator]
+    type asInstanceOfSeqIterator <: seq.Iterator
+
     final def asInstanceOfSet: asInstanceOfSet = this.asInstanceOf[asInstanceOfSet]
     type asInstanceOfSet <: Set
 
@@ -91,7 +94,7 @@ trait Any extends scala.Equals {
     /**
      * Escapes from the dual world.
      */
-     def undual: undual = unsupported("undual")
+     def undual: undual = unsupported("Any.undual")
     type undual
 
     override def equals(that: scala.Any) = that match {
@@ -110,8 +113,14 @@ trait Any extends scala.Equals {
     /**
      * Trivial helper to throw UnsupportedOperationException
      */
-    protected  def unsupported(name: Predef.String): unsupported[_] = `throw`(new java.lang.UnsupportedOperationException("dual." + name))
+    protected  def unsupported(what: Predef.String): unsupported[_] = `throw`(new UnsupportedOperationException("dual." + what))
     protected type unsupported[_] = `throw`[_]
+
+    /**
+     * Trivial helper to throw UnsupportedOperationException
+     */
+    protected  def noSuchElement(what: Predef.String): noSuchElement[_] = `throw`(new NoSuchElementException("dual." + what))
+    protected type noSuchElement[_] = `throw`[_]
 
 //    private  def checkInstance[id <: nat.Dense](id: id): checkInstance[id] = (typeid & id).isZero.not
 //    private type checkInstance[id <: nat.Dense] = typeid# &[id]#isZero#not

@@ -19,6 +19,14 @@ trait Seq extends Any {
     type asInstanceOfSeq = self
 
     @constantTime
+     def begin: begin
+    type begin <: Iterator
+
+    @constantTime
+     def view: view
+    type view <: Seq
+
+    @constantTime
      def head: head
     type head <: Any
 
@@ -51,7 +59,7 @@ trait Seq extends Any {
      def size: size
     type size <: Nat
 
-    @aliasOf("size")
+    @linearTime
      def length: length
     type length <: Nat
 
