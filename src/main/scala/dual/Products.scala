@@ -11,6 +11,8 @@ package dual
 import nat.peano
 
 
+// Product
+
 trait Product extends Any {
     type self <: Product
     type asInstanceOfProduct = self
@@ -25,12 +27,21 @@ trait Product extends Any {
 }
 
 
+// Product1
+
 trait Product1 extends Product {
     type self <: Product1
     type asInstanceOfProduct1 = self
 
+     def _1: _1
+    type _1 <: Any
+
+    override def canEqual(that: scala.Any) = that.isInstanceOf[Product1]
+}
+
+private[mada] trait AbstractProduct1 extends Product1 {
     final override  def arity: arity = peano._1
-    final override type arity = peano._1
+    final override type arity        = peano._1
 
     final override  def productElement[n <: Nat](n: n): productElement[n] =
         `if`(n  === peano._0,
@@ -43,13 +54,10 @@ trait Product1 extends Product {
             Const0[_1],
             Throw0
         ]#apply
-
-     def _1: _1
-    type _1 <: Any
-
-    override def canEqual(that: scala.Any) = that.isInstanceOf[Product1]
 }
 
+
+// Product2
 
 object Product2 {
      def eqv[e1 <: Equiv, e2 <: Equiv](e1: e1, e2: e2): eqv[e1, e2] = new Eqv(e1, e2)
@@ -68,8 +76,18 @@ trait Product2 extends Product {
     type self <: Product2
     type asInstanceOfProduct2 = self
 
+     def _1: _1
+    type _1 <: Any
+
+     def _2: _2
+    type _2 <: Any
+
+    override def canEqual(that: scala.Any) = that.isInstanceOf[Product2]
+}
+
+private[mada] trait AbstractProduct2 extends Product2 {
     final override  def arity: arity = peano._2
-    final override type arity = peano._2
+    final override type arity        = peano._2
 
     final override  def productElement[n <: Nat](n: n): productElement[n] =
         `if`(n  === peano._0,
@@ -88,12 +106,4 @@ trait Product2 extends Product {
                 Throw0
             ]
         ]#apply
-
-     def _1: _1
-    type _1 <: Any
-
-     def _2: _2
-    type _2 <: Any
-
-    override def canEqual(that: scala.Any) = that.isInstanceOf[Product2]
 }

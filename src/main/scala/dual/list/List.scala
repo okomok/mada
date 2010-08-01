@@ -39,11 +39,11 @@ sealed abstract class List extends seq.AbstractSeq {
     final def ::[e <: Any](e: e): addFirst[e] = addFirst(e)
 
     @equivalentTo("Cons(e, self)")
-    final override  def addFirst[e <: Any](e: e): addFirst[e] = new NewCons().apply(e, self)
-    final override type addFirst[e <: Any] = NewCons#apply[e, self]
+    final override  def addFirst[e <: Any](e: e): addFirst[e] = new _Cons().apply(e, self)
+    final override type addFirst[e <: Any] = _Cons#apply[e, self]
 
     final override  def clear: clear = Nil
-    final override type clear = Nil
+    final override type clear        = Nil
 
     final  def :::[that <: List](that: that): :::[that] = that.append(self)
     final type :::[that <: List]                        = that#append[self]
@@ -114,11 +114,11 @@ sealed abstract class Nil extends List {
     override  def sort[o <: Ordering](o: o): sort[o] = self
     override type sort[o <: Ordering]                = self
 
-    override  def scanLeft[z <: Any, f <: Function2](z: z, f: f): scanLeft[z, f] = new NewCons().apply(z, self)
-    override type scanLeft[z <: Any, f <: Function2] = NewCons#apply[z, self]
+    override  def scanLeft[z <: Any, f <: Function2](z: z, f: f): scanLeft[z, f] = new _Cons().apply(z, self)
+    override type scanLeft[z <: Any, f <: Function2] = _Cons#apply[z, self]
 
-    override  def scanRight[z <: Any, f <: Function2](z: z, f: f): scanRight[z, f] = new NewCons().apply(z, self)
-    override type scanRight[z <: Any, f <: Function2] = NewCons#apply[z, self]
+    override  def scanRight[z <: Any, f <: Function2](z: z, f: f): scanRight[z, f] = new _Cons().apply(z, self)
+    override type scanRight[z <: Any, f <: Function2] = _Cons#apply[z, self]
 
     override  def nth[n <: Nat](n: n): nth[n] = `throw`(new NoSuchElementException("Nil.nth"))
     override type nth[n <: Nat]               = `throw`[_]
@@ -216,7 +216,7 @@ final case class Cons[x <: Any, xs <: List](override val head: x, override val t
 
 
 @typeInstantiationErrorWorkaround
-private[mada] final class NewCons {
+private[mada] final class _Cons {
      def apply[x <: Any, xs <: List](x: x, xs: xs): apply[x, xs] = Cons(x, xs)
     type apply[x <: Any, xs <: List] = Cons[x, xs]
 }

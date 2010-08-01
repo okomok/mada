@@ -35,7 +35,7 @@ sealed trait Peano extends AbstractNat {
     final override type **[that <: Nat] = Multiply#apply[self, that#toPeano]
 
     final override  def divMod[that <: Nat](that: that): divMod[that] = new DivMod().apply(self, that.toPeano).asInstanceOf[divMod[that]]
-    final override type divMod[that <: Nat] = DivMod#apply[self, that]
+    final override type divMod[that <: Nat] = DivMod#apply[self, that#toPeano]
 
     final override  def ^[that <: Nat](that: that): ^[that] = toDense  ^ that
     final override type ^[that <: Nat]                      = toDense# ^[that]
