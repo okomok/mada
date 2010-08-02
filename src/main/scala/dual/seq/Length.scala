@@ -5,7 +5,7 @@
 
 
 package com.github.okomok.mada
-package dual; package seq; package views
+package dual; package seq
 
 
 import nat.dense

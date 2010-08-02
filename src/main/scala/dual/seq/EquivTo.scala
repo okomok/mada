@@ -10,9 +10,9 @@ package dual; package seq
 
 private[mada] final class EquivTo {
      def apply[xs <: Seq, ys <: Seq, e <: Equiv](xs: xs, ys: ys, e: e): apply[xs, ys, e] =
-        `if`(xs.isEmpty  && ys.isEmpty,  Const0(`true`), `if`(xs.size  !== ys.size,  Const0(`false`), Else(xs, ys, e))).apply.asInstanceOfBoolean.asInstanceOf[apply[xs, ys, e]]
+        `if`(xs.isEmpty  && ys.isEmpty,  Const0(`true`), `if`(xs.isEmpty  !== ys.isEmpty,  Const0(`false`), Else(xs, ys, e))).apply.asInstanceOfBoolean.asInstanceOf[apply[xs, ys, e]]
     type apply[xs <: Seq, ys <: Seq, e <: Equiv] =
-        `if`[xs#isEmpty# &&[ys#isEmpty], Const0[`true`], `if`[xs#size# !==[ys#size], Const0[`false`], Else[xs, ys, e]]]#apply#asInstanceOfBoolean
+        `if`[xs#isEmpty# &&[ys#isEmpty], Const0[`true`], `if`[xs#isEmpty# !==[ys#isEmpty], Const0[`false`], Else[xs, ys, e]]]#apply#asInstanceOfBoolean
 
     case class Else[xs <: Seq, ys <: Seq, e <: Equiv](xs: xs, ys: ys, e: e) extends Function0 {
         type self = Else[xs, ys, e]

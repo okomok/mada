@@ -9,55 +9,125 @@ package dual; package seq
 
 
 trait AbstractSeq extends Seq {
-    final override  def view: view  = View(self.begin)
-    private type _view[self <: Seq] = View[self#begin]
-    final override type view = _view[self]
+    final override  def head: head = begin.deref
+    final override type head       = begin#deref
 
-    final override  def foreach[f <: Function1](f: f): foreach[f] = new Foreach().apply(self, f)
-    final override type foreach[f <: Function1] = Foreach#apply[self, f]
+    final override  def tail: tail  = Bind(self.begin.next)
+    private type _tail[self <: Seq] = Bind[self#begin#next]
+    final override type tail = _tail[self]
+
+    final override  def addFirst[e <: Any](e: e): addFirst[e] = throw new Error
+    final override type addFirst[e <: Any] <: Seq
+
+    final override  def addLast[e <: Any](e: e): addLast[e] = throw new Error
+    final override type addLast[e <: Any] <: Seq
+
+    final override  def clear: clear = Bind(iterator.End)
+    final override type clear        = Bind[iterator.End]
+
+    final override  def foreach[f <: Function1](f: f): foreach[f] = new Foreach().apply(begin, f)
+    final override type foreach[f <: Function1] = Foreach#apply[begin, f]
+
+    final override  def isEmpty: isEmpty = begin.isEnd
+    final override type isEmpty          = begin#isEnd
 
     final override  def nonEmpty: nonEmpty = isEmpty.not
     final override type nonEmpty           = isEmpty#not
 
-    final override  def length: length = size
-    final override type length         = size
+    final override  def length: length = new Length().apply(begin)
+    final override type length         = Length#apply[begin]
 
-    final override  def flatMap[f <: Function1](f: f): flatMap[f] = map(f).flatten
-    final override type flatMap[f <: Function1]                   = map[f]#flatten
+    final override  def append[that <: Seq](that: that): append[that] = throw new Error
+    final override type append[that <: Seq] <: Seq
 
-    final override  def forall[f <: Function1](f: f): forall[f] = exists(f.not).not.asInstanceOf[forall[f]]
-    final override type forall[f <: Function1]                  = exists[f#not]#not
+    final override  def map[f <: Function1](f: f): map[f] = new Map().apply(begin, f)
+    final override type map[f <: Function1] = Map#apply[begin, f]
 
-    final override  def exists[f <: Function1](f: f): exists[f] = find(f).nonEmpty
-    final override type exists[f <: Function1]                  = find[f]#nonEmpty
+    final override  def flatMap[f <: Function1](f: f): flatMap[f] = self.map(f).flatten
+    private type _flatMap[self <: Seq, f <: Function1]            = self#map[f]#flatten
+    final override type flatMap[f <: Function1] = _flatMap[self, f]
 
-    final override  def count[f <: Function1](f: f): count[f] = new Count().apply(self, f)
-    final override type count[f <: Function1] = Count#apply[self, f]
+    final override  def flatten: flatten = throw new Error
+    final override type flatten <: Seq
 
-    final override  def find[f <: Function1](f: f): find[f] = new Find().apply(self, f)
-    final override type find[f <: Function1] = Find#apply[self, f]
+    final override  def filter[f <: Function1](f: f): filter[f] = throw new Error
+    final override type filter[f <: Function1] <: Seq
 
-    final override  def foldLeft[z <: Any, f <: Function2](z: z, f: f): foldLeft[z, f] = new FoldLeft().apply(self, z, f)
-    final override type foldLeft[z <: Any, f <: Function2] = FoldLeft#apply[self, z, f]
+    final override  def partition[f <: Function1](f: f): partition[f] = throw new Error
+    final override type partition[f <: Function1] <: Product2
 
-    final override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = new FoldRight().apply(self, z, f)
-    final override type foldRight[z <: Any, f <: Function2] = FoldRight#apply[self, z, f]
+    final override  def forall[f <: Function1](f: f): forall[f] = throw new Error
+    final override type forall[f <: Function1] <: Boolean
 
-    final override  def reduceLeft[f <: Function2](f: f): reduceLeft[f] = new ReduceLeft().apply(self, f)
-    final override type reduceLeft[f <: Function2] = ReduceLeft#apply[self, f]
+    final override  def exists[f <: Function1](f: f): exists[f] = throw new Error
+    final override type exists[f <: Function1] <: Boolean
 
-    final override  def reduceRight[f <: Function2](f: f): reduceRight[f] = new ReduceRight().apply(self, f)
-    final override type reduceRight[f <: Function2] = ReduceRight#apply[self, f]
+    final override  def count[f <: Function1](f: f): count[f] = throw new Error
+    final override type count[f <: Function1] <: Nat
 
-    final override  def slice[n <: Nat, m <: Nat](n: n, m: m): slice[n, m] = take(m).drop(n)
-    final override type slice[n <: Nat, m <: Nat]                          = take[m]#drop[n]
+    final override  def find[f <: Function1](f: f): find[f] = throw new Error
+    final override type find[f <: Function1] <: Option
 
-    final override  def takeWhile[f <: Function1](f: f): takeWhile[f] = new TakeWhile().apply(self, f)
-    final override type takeWhile[f <: Function1] = TakeWhile#apply[self, f]
+    final override  def foldLeft[z <: Any, f <: Function2](z: z, f: f): foldLeft[z, f] = throw new Error
+    final override type foldLeft[z <: Any, f <: Function2] <: Any
 
-    final override  def dropWhile[f <: Function1](f: f): dropWhile[f] = new DropWhile().apply(self, f)
-    final override type dropWhile[f <: Function1] = DropWhile#apply[self, f]
+    final override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = throw new Error
+    final override type foldRight[z <: Any, f <: Function2] <: Any
 
-    final override  def equivTo[that <: Seq, e <: Equiv](that: that, e: e): equivTo[that, e] = new EquivTo().apply(self, that, e)
-    final override type equivTo[that <: Seq, e <: Equiv] = EquivTo#apply[self, that, e]
+    final override  def reduceLeft[f <: Function2](f: f): reduceLeft[f] = throw new Error
+    final override type reduceLeft[f <: Function2] <: Any
+
+    final override  def reduceRight[f <: Function2](f: f): reduceRight[f] = throw new Error
+    final override type reduceRight[f <: Function2] <: Any
+
+    final override  def scanLeft[z <: Any, f <: Function2](z: z, f: f): scanLeft[z, f] = throw new Error
+    final override type scanLeft[z <: Any, f <: Function2] <: Seq
+
+    final override  def scanRight[z <: Any, f <: Function2](z: z, f: f): scanRight[z, f] = throw new Error
+    final override type scanRight[z <: Any, f <: Function2] <: Seq
+
+    final override  def last: last = throw new Error
+    final override type last <: Any
+
+    final override  def init: init = throw new Error
+    final override type init <: Seq
+
+    final override  def take[n <: Nat](n: n): take[n] = throw new Error
+    final override type take[n <: Nat] <: Seq
+
+    final override  def drop[n <: Nat](n: n): drop[n] = throw new Error
+    final override type drop[n <: Nat] <: Seq
+
+    final override  def slice[n <: Nat, m <: Nat](n: n, m: m): slice[n, m] = take(n).drop(m)
+    final override type slice[n <: Nat, m <: Nat]                          = take[n]#drop[m]
+
+    final override  def takeWhile[f <: Function1](f: f): takeWhile[f] = throw new Error
+    final override type takeWhile[f <: Function1] <: Seq
+
+    final override  def dropWhile[f <: Function1](f: f): dropWhile[f] = throw new Error
+    final override type dropWhile[f <: Function1] <: Seq
+
+    final override  def span[f <: Function1](f: f): span[f] = throw new Error
+    final override type span[f <: Function1] <: Product2
+
+    final override  def splitAt[n <: Nat](n: n): splitAt[n] = throw new Error
+    final override type splitAt[n <: Nat] <: Product2
+
+    final override  def equivTo[that <: Seq, e <: Equiv](that: that, e: e): equivTo[that, e] = throw new Error
+    final override type equivTo[that <: Seq, e <: Equiv] <: Boolean
+
+    final override  def reverse: reverse = unsupported("Bind.reverse")
+    final override type reverse          = unsupported[_]
+
+    final override  def zip[that <: Seq](that: that): zip[that] = throw new Error
+    final override type zip[that <: Seq] <: Seq
+
+    final override  def unzip: unzip = throw new Error
+    final override type unzip <: Product2
+
+    final override  def toList: toList = throw new Error
+    final override type toList <: List
+
+    final override  def fromSuper[that <: Seq](that: that): fromSuper[that] = throw new Error
+    final override type fromSuper[that <: Seq] <: Seq
 }

@@ -5,17 +5,17 @@
 
 
 package com.github.okomok.mada
-package dual; package seq
+package dual; package seq; package views
 
 
 private[mada] final class Foreach {
-     def apply[xs <: Seq, f <: Function1](xs: xs, f: f): apply[xs, f] =
-        `if`(xs.isEmpty, Const0(Unit), Else(xs, f)).apply.asInstanceOfUnit
-    type apply[xs <: Seq, f <: Function1] = Unit
+     def apply[it <: Iterator, f <: Function1](it: it, f: f): apply[it, f] =
+        `if`(it.isEnd, Const0(Unit), Else(it, f)).apply.asInstanceOfUnit
+    type apply[it <: Iterator, f <: Function1] = Unit
 
-    case class Else[xs <: Seq, f <: Function1](xs: xs, f: f) extends Function0 {
-        type self = Else[xs, f]
-        override  def apply: apply = { f.apply(xs.head); xs.tail.foreach(f) }
+    case class Else[it <: Iterator, f <: Function1](it: it, f: f) extends Function0 {
+        type self = Else[it, f]
+        override  def apply: apply = { f.apply(it.deref); View(it.next).foreach(f) }
         override type apply = Unit
     }
 }

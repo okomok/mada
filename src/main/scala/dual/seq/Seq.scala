@@ -23,10 +23,6 @@ trait Seq extends Any {
     type begin <: Iterator
 
     @constantTime
-     def view: view
-    type view <: Seq
-
-    @constantTime
      def head: head
     type head <: Any
 

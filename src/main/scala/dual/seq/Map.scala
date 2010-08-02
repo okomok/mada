@@ -5,12 +5,12 @@
 
 
 package com.github.okomok.mada
-package dual; package seq; package views
+package dual; package seq
 
 
 private[mada] final class Map {
-     def apply[it <: Iterator, f <: Function1](it: it, f: f): apply[it, f] = View(Iter(it, f))
-    type apply[it <: Iterator, f <: Function1]                             = View[Iter[it, f]]
+     def apply[it <: Iterator, f <: Function1](it: it, f: f): apply[it, f] = Bind(Iter(it, f))
+    type apply[it <: Iterator, f <: Function1]                             = Bind[Iter[it, f]]
 
     case class Iter[it <: Iterator, f <: Function1](it: it, f: f) extends Iterator {
         type self = Iter[it, f]
