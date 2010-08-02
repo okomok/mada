@@ -10,7 +10,7 @@ package dual; package nat; package dense
 
 private[mada] final class Subtract {
      def apply[xs <: Dense, ys <: Dense](xs: xs, ys: ys): apply[xs, ys] =
-        Match(xs, ys,
+        new _Match().apply(xs, ys,
             Const0(Nil),
             Throw0(new UnsupportedOperationException("dual.nat.dense.Nil.subtract positive")),
             Const0(xs),
@@ -20,10 +20,10 @@ private[mada] final class Subtract {
                 CaseFT(xs, ys),
                 CaseXX(xs, ys)
             )
-        ).apply.asInstanceOfNatDense.asInstanceOf[apply[xs, ys]]
+        ).asInstanceOfNatDense.asInstanceOf[apply[xs, ys]]
 
     type apply[xs <: Dense, ys <: Dense] =
-        Match[xs, ys,
+        _Match#apply[xs, ys,
             Const0[Nil],
             Throw0,
             Const0[xs],
@@ -33,7 +33,7 @@ private[mada] final class Subtract {
                 CaseFT[xs, ys],
                 CaseXX[xs, ys]
             ]
-        ]#apply#asInstanceOfNatDense
+        ]#asInstanceOfNatDense
 
     case class CaseXX[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
         type self = CaseXX[xs, ys]

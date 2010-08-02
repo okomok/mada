@@ -19,3 +19,11 @@ private[mada] final case class ConsMatch[xs <: Dense, ys <: Dense, tt <: Functio
     override  def apply: apply = `if`(xs.head, `if`(ys.head, tt, tf), `if`(ys.head, ft, ff)).apply.asInstanceOf[apply]
     override type apply = `if`[xs#head, `if`[ys#head, tt, tf], `if`[ys#head, ft, ff]]#apply
 }
+
+
+private[mada] final class _Match {
+     def apply[xs <: Dense, ys <: Dense, nn <: Function0, nc <: Function0, cn <: Function0, cc <: Function0](xs: xs, ys: ys, nn: nn, nc: nc, cn: cn, cc: cc): apply[xs, ys, nn, nc, cn, cc] =
+        `if`(xs.isZero, `if`(ys.isZero, nn, nc), `if`(ys.isZero, cn, cc)).apply.asInstanceOf[apply[xs, ys, nn, nc, cn, cc]]
+    type apply[xs <: Dense, ys <: Dense, nn <: Function0, nc <: Function0, cn <: Function0, cc <: Function0] =
+        `if`[xs#isZero, `if`[ys#isZero, nn, nc], `if`[ys#isZero, cn, cc]]#apply
+}
