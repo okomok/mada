@@ -26,6 +26,19 @@ trait Iterator extends Any with ReferenceEquality {
 
      def next: next
     type next <: Iterator
+
+     def advance[n <: Nat](n: n): advance[n]
+    type advance[n <: Nat]
+
+     def advanceWhile[f <: Function1](f: f): advanceWhile[f]
+    type advanceWhile[f <: Function1]
+
+    final  def advance[n <: Nat](n: n): advance[n] = new Advance().apply[self, n]
+    final type advance[n <: Nat] = Advance#apply[self, n]
+
+    final  def advanceWhile[f <: Function1](f: f): advanceWhile[f] = new AdvanceWhile().apply[self, f]
+    final type advanceWhile[f <: Function1] = AdvanceWhile#apply[self, f]
+
 /*
      def category: category
     type category
@@ -48,7 +61,7 @@ trait Iterator extends Any with ReferenceEquality {
 /**
  * The End Iterator
  */
-sealed abstract class End extends Iterator {
+sealed abstract class End extends AbstractIterator {
     type self = End
 
      def isEnd: isEnd = `true`

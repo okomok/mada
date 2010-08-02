@@ -9,6 +9,23 @@ package dual; package seq
 
 
 private[mada] final class Find {
+     def apply[it <: Iterator, f <: Function1](it: it, f: f): apply[it, f] = toOption(it.advanceWhile(f.not))
+    type apply[it <: Iterator, f <: Function1]                             = toOption[it#advanceWhile[f#not]]
+
+     def toOption[it <: Iterator](it: jt): toOption[it]
+        `if`(it.isEnd, Const0(None), Else(it)).apply.asInstanceOfOption
+    type toOption[it <: Iterator] =
+        `if`[it#isEnd, Const0[None], Else[it]]#apply#asInstanceOfOption
+
+    case class Else[it <: Iterator](it: it) extends Function0 {
+        type self = Else[it]
+        override  def apply: apply = it.deref
+        override type apply        = it#deref
+    }
+}
+
+/*
+private[mada] final class Find {
      def apply[xs <: Seq, f <: Function1](xs: xs, f: f): apply[xs, f] =
         `if`(xs.isEmpty, Const0(None), Else(xs, f)).apply.asInstanceOfOption
     type apply[xs <: Seq, f <: Function1] =
@@ -28,3 +45,4 @@ private[mada] final class Find {
         override type apply        = xs#tail#find[f]
     }
 }
+*/
