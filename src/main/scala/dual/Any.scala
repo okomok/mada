@@ -61,9 +61,6 @@ trait Any extends scala.Equals {
     final def asInstanceOfSeq: asInstanceOfSeq = this.asInstanceOf[asInstanceOfSeq]
     type asInstanceOfSeq <: Seq
 
-    final def asInstanceOfSeqIterator: asInstanceOfSeqIterator = this.asInstanceOf[asInstanceOfSeqIterator]
-    type asInstanceOfSeqIterator <: seq.Iterator
-
     final def asInstanceOfSet: asInstanceOfSet = this.asInstanceOf[asInstanceOfSet]
     type asInstanceOfSet <: Set
 

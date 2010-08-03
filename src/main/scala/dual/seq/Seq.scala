@@ -19,8 +19,8 @@ trait Seq extends Any {
     type asInstanceOfSeq = self
 
     @constantTime
-     def begin: begin
-    type begin <: Iterator
+     def isEmpty: isEmpty
+    type isEmpty <: Boolean
 
     @constantTime
      def head: head
@@ -30,11 +30,12 @@ trait Seq extends Any {
      def tail: tail
     type tail <: Seq
 
-     def addFirst[e <: Any](e: e): addFirst[e] = unsupported("Seq.addFirst")
-    type addFirst[e <: Any] <: Seq
+    @equivalentTo("isEmpty.not")
+     def nonEmpty: nonEmpty
+    type nonEmpty <: Boolean
 
-     def addLast[e <: Any](e: e): addLast[e] = unsupported("Seq.addLast")
-    type addLast[e <: Any] <: Seq
+     def ::[e <: Any](e: e): ::[e]
+    type ::[e <: Any] <: Seq
 
     @constantTime
      def clear: clear
@@ -42,14 +43,6 @@ trait Seq extends Any {
 
      def foreach[f <: Function1](f: f): foreach[f]
     type foreach[f <: Function1] <: Unit
-
-    @constantTime
-     def isEmpty: isEmpty
-    type isEmpty <: Boolean
-
-    @equivalentTo("isEmpty.not")
-     def nonEmpty: nonEmpty
-    type nonEmpty <: Boolean
 
     @constantTime
      def size: size
@@ -77,7 +70,7 @@ trait Seq extends Any {
      def partition[f <: Function1](f: f): partition[f]
     type partition[f <: Function1] <: Product2
 
-     def sort[o <: Ordering](o: o): sort[o]
+     def sort[o <: Ordering](o: o): sort[o] = unsupported("Seq.sort")
     type sort[o <: Ordering] <: Seq
 
      def forall[f <: Function1](f: f): forall[f]
@@ -143,7 +136,7 @@ trait Seq extends Any {
      def equivTo[that <: Seq, e <: Equiv](that: that, e: e): equivTo[that, e]
     type equivTo[that <: Seq, e <: Equiv] <: Boolean
 
-     def reverse: reverse
+     def reverse: reverse = unsupported("Seq.reverse")
     type reverse <: Seq
 
      def zip[that <: Seq](that: that): zip[that]

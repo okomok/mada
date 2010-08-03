@@ -8,6 +8,6 @@ package com.github.okomok.mada
 package dual; package seq
 
 
-final class Bind[it <: Iterator](override val begin: it) extends AbstractSeq {
-    override type begin = it
+final class Bind[xs <: Seq](override val: xs) extends AbstractSeq {
+    override type = xs
 }
