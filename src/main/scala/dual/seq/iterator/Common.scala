@@ -5,7 +5,7 @@
 
 
 package com.github.okomok.mada
-package dual; package iterator
+package dual; package seq; package iterator
 
 
 trait Common {

@@ -5,7 +5,7 @@
 
 
 package com.github.okomok.mada
-package dual
+package dual; package seq
 
 
 package object iterator extends iterator.Common

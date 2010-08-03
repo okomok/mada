@@ -26,19 +26,6 @@ trait Iterator extends Any with ReferenceEquality {
 
      def next: next
     type next <: Iterator
-
-     def advance[n <: Nat](n: n): advance[n]
-    type advance[n <: Nat]
-
-     def advanceWhile[f <: Function1](f: f): advanceWhile[f]
-    type advanceWhile[f <: Function1]
-
-    final  def advance[n <: Nat](n: n): advance[n] = new Advance().apply[self, n]
-    final type advance[n <: Nat] = Advance#apply[self, n]
-
-    final  def advanceWhile[f <: Function1](f: f): advanceWhile[f] = new AdvanceWhile().apply[self, f]
-    final type advanceWhile[f <: Function1] = AdvanceWhile#apply[self, f]
-
 /*
      def category: category
     type category
@@ -64,14 +51,14 @@ trait Iterator extends Any with ReferenceEquality {
 sealed abstract class End extends AbstractIterator {
     type self = End
 
-     def isEnd: isEnd = `true`
-    type isEnd        = `true`
+    override  def isEnd: isEnd = `true`
+    override type isEnd        = `true`
 
-     def deref: deref = noSuchElement("seq.iterator.End.deref")
-    type deref        = noSuchElement[_]
+    override  def deref: deref = noSuchElement("seq.iterator.End.deref")
+    override type deref        = noSuchElement[_]
 
-     def next: next = noSuchElement("seq.iterator.End.next")
-    type next       = noSuchElement[_]
+    override  def next: next = noSuchElement("seq.iterator.End.next")
+    override type next       = noSuchElement[_]
 }
 
 private[mada] object _Iterator {
