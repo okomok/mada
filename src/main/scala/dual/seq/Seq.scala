@@ -30,10 +30,6 @@ trait Seq extends Any {
      def tail: tail
     type tail <: Seq
 
-    @equivalentTo("isEmpty.not")
-     def nonEmpty: nonEmpty
-    type nonEmpty <: Boolean
-
      def ::[e <: Any](e: e): ::[e]
     type ::[e <: Any] <: Seq
 
@@ -43,10 +39,6 @@ trait Seq extends Any {
 
      def foreach[f <: Function1](f: f): foreach[f]
     type foreach[f <: Function1] <: Unit
-
-    @constantTime
-     def size: size
-    type size <: Nat
 
     @linearTime
      def length: length
@@ -103,6 +95,7 @@ trait Seq extends Any {
      def scanRight[z <: Any, f <: Function2](z: z, f: f): scanRight[z, f]
     type scanRight[z <: Any, f <: Function2] <: Seq
 
+    @linearTime
      def nth[n <: Nat](n: n): nth[n]
     type nth[n <: Nat] <: Any
 
@@ -136,7 +129,7 @@ trait Seq extends Any {
      def equivTo[that <: Seq, e <: Equiv](that: that, e: e): equivTo[that, e]
     type equivTo[that <: Seq, e <: Equiv] <: Boolean
 
-     def reverse: reverse = unsupported("Seq.reverse")
+     def reverse: reverse
     type reverse <: Seq
 
      def zip[that <: Seq](that: that): zip[that]

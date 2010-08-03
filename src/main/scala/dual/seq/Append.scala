@@ -14,11 +14,11 @@ final class Append[xs <: Seq, ys <: Seq](xs: xs, ys: ys) extends AbstractSeq {
     override  def isEmpty: isEmpty = xs.isEmpty  && ys.isEmpty
     override type isEmpty          = xs#isEmpty# &&[ys#isEmpty]
 
-    override  def head: head = `if`(xs.isEmpty, new DerefThen, new DerefElse).apply.asInstanceOfSeqSeq
-    override type head       = `if`[xs#isEmpty,     DerefThen,     DerefElse]#apply#asInstanceOfSeqSeq
+    override  def head: head = `if`(xs.isEmpty, new DerefThen, new DerefElse).apply
+    override type head       = `if`[xs#isEmpty,     DerefThen,     DerefElse]#apply
 
-    override  def tail: tail = `if`(xs.isEmpty, new NextThen, new NextElse).apply.asInstanceOfSeqSeq
-    override type tail       = `if`[xs#isEmpty,     NextThen,     NextElse]#apply#asInstanceOfSeqSeq
+    override  def tail: tail = `if`(xs.isEmpty, new NextThen, new NextElse).apply.asInstanceOfSeq
+    override type tail       = `if`[xs#isEmpty,     NextThen,     NextElse]#apply#asInstanceOfSeq
 
     private class DerefThen extends Function0 {
         type self = DerefThen

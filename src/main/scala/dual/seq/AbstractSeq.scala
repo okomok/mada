@@ -20,12 +20,6 @@ trait AbstractSeq extends Seq {
     private type _foreach[self <: Seq, f <: Function1]            =     Foreach[self, f]#apply
     final override type foreach[f <: Function1] = _foreach[self, f]
 
-    final override  def nonEmpty: nonEmpty = isEmpty.not
-    final override type nonEmpty           = isEmpty#not
-
-    final override  def size: size = unsupported("Seq.size")
-    final override type size       = unsupported[_]
-
     final override lazy val length: length = new Length(self).apply
     private type _length[self <: Seq]      =     Length[self]#apply
     final override type length = _length[self]
@@ -56,8 +50,8 @@ trait AbstractSeq extends Seq {
     final override  def forall[f <: Function1](f: f): forall[f] = exists(f.not).not.asInstanceOf[forall[f]]
     final override type forall[f <: Function1]                  = exists[f#not]#not
 
-    final override  def exists[f <: Function1](f: f): exists[f] = find(f).nonEmpty
-    final override type exists[f <: Function1]                  = find[f]#nonEmpty
+    final override  def exists[f <: Function1](f: f): exists[f] = find(f).isEmpty.not
+    final override type exists[f <: Function1]                  = find[f]#isEmpty.not
 
     final override  def count[f <: Function1](f: f): count[f] = new Count(self, f).apply
     private type _count[self <: Seq, f <: Function1]         =      Count[self, f]#apply
@@ -72,20 +66,26 @@ trait AbstractSeq extends Seq {
     final override type foldLeft[z <: Any, f <: Function2] = _foldLeft[self, z, f]
 
     final override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = new FoldRight(self, z, f).apply
-    private type _foldRight[self <: Seq, z <: Any, f <: Function2]                      =     FoldRight[self, z, f]#apply
+    private type _foldRight[self <: Seq, z <: Any, f <: Function2]                      =      FoldRight[self, z, f]#apply
     final override type foldRight[z <: Any, f <: Function2] = _foldRight[self, z, f]
 
-    final override  def reduceLeft[f <: Function2](f: f): reduceLeft[f] = new ReduceLeft().apply, f)
-    final override type reduceLeft[f <: Function2] = ReduceLeft#apply, f]
+    final override  def reduceLeft[f <: Function2](f: f): reduceLeft[f] = new ReduceLeft(self, f).apply
+    private type _reduceLeft[self <: Seq, f <: Function2]               =     ReduceLeft[self, f]#apply
+    final override type reduceLeft[f <: Function2] = _reduceLeft[self, f]
 
-    final override  def reduceRight[f <: Function2](f: f): reduceRight[f] = new ReduceRight().apply, f)
-    final override type reduceRight[f <: Function2] = ReduceRight#apply, f]
+    final override  def reduceRight[f <: Function2](f: f): reduceRight[f] = new ReduceRight(self, f).apply
+    private type _reduceRight[self <: Seq, f <: Function2]               =      ReduceRight[self, f]#apply
+    final override type reduceRight[f <: Function2] = _reduceRight[self, f]
 
     final override  def scanLeft[z <: Any, f <: Function2](z: z, f: f): scanLeft[z, f] = throw new Error
     final override type scanLeft[z <: Any, f <: Function2] <: Seq
 
     final override  def scanRight[z <: Any, f <: Function2](z: z, f: f): scanRight[z, f] = throw new Error
     final override type scanRight[z <: Any, f <: Function2] <: Seq
+
+    final override  def nth[n <: Nat](n: n): nth[n] = new Nth(self, n).apply
+    private type _nth[self <: Seq, n <: Nat]        =     Nth[self, n]#apply
+    final override type nth[n <: Nat] = _nth[self, n]
 
     final override  def last: last = throw new Error
     final override type last <: Any
@@ -122,8 +122,8 @@ trait AbstractSeq extends Seq {
     final override  def equivTo[that <: Seq, e <: Equiv](that: that, e: e): equivTo[that, e] = throw new Error
     final override type equivTo[that <: Seq, e <: Equiv] <: Boolean
 
-    final override  def reverse: reverse = unsupported("Bind.reverse")
-    final override type reverse          = unsupported[_]
+    final override  def reverse: reverse = throw new Error
+    final override type reverse <: Seq
 
     final override  def zip[that <: Seq](that: that): zip[that] = throw new Error
     final override type zip[that <: Seq] <: Seq

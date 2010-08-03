@@ -17,7 +17,7 @@ final class Find[xs <: Seq, f <: Function1](xs: xs, f: f) extends Function0 {
     override  def apply: apply = `if`(ys.isEmpty, Const0(None), new Else).apply.asInstanceOfOption
     override type apply        = `if`[ys#isEmpty, Const0[None],     Else]#apply#asInstanceOfOption
 
-    class Else extends Function0 {
+    private class Else extends Function0 {
         type self = Else
         override  def apply: apply = ys.head
         override type apply        = ys#head

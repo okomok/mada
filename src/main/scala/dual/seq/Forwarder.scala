@@ -27,9 +27,6 @@ trait Forwarder extends Seq {
     final override  def tail: tail = delegate.tail
     final override type tail       = delegate#tail
 
-    final override  def nonEmpty: nonEmpty = delegate.nonEmpty
-    final override type nonEmpty           = delegate#nonEmpty
-
     final override  def ::[e <: Any](e: e): addFirst[e] = around(delegate. ::(e))
     final override type ::[e <: Any]                    = around[delegate# ::[e]]
 
@@ -38,9 +35,6 @@ trait Forwarder extends Seq {
 
     final override  def foreach[f <: Function1](f: f): foreach[f] = delegate.foreach(f)
     final override type foreach[f <: Function1]                   = delegate#foreach[f]
-
-    final override  def size: size = delegate.size
-    final override type size       = delegate#size
 
     final override  def length: length = delegate.length
     final override type length         = delegate#length
@@ -95,6 +89,9 @@ trait Forwarder extends Seq {
 
     final override  def scanRight[z <: Any, f <: Function2](z: z, f: f): scanRight[z, f] = around(delegate.scanRight(z, f))
     final override type scanRight[z <: Any, f <: Function2]                              = around[delegate#scanRight[z, f]]
+
+    final override  def apply[n <: Nat]: apply[n] = delegate.apply(n)
+    final override type apply[n <: Nat]           = delegate#apply[n]
 
     final override  def nth[n <: Nat](n: n): nth[n] = delegate.nth(n)
     final override type nth[n <: Nat]               = delegate#nth[n]
