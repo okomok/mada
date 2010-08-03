@@ -26,7 +26,7 @@ final class Flatten[xs <: Seq](xs: xs) extends AbstractSeq {
     override  def tail: tail = new Flatten(new Append(localIter.tail, ys.tail))
     override type tail       =     Flatten[    Append[localIter#tail, ys#tail]]
 
-    private class IsEmptyLocal extends Function1 {
+    class IsEmptyLocal extends Function1 {
         type self = IsEmptyLocal
         override  def apply[xs <: Any](xs: xs): apply[xs] = xs.asInstanceOfSeq.isEmpty
         override type apply[xs <: Any]                    = xs#asInstanceOfSeq#isEmpty

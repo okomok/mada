@@ -40,9 +40,6 @@ trait Any extends scala.Equals {
     final def asInstanceOfFunction2: asInstanceOfFunction2 = this.asInstanceOf[asInstanceOfFunction2]
     type asInstanceOfFunction2 <: Function2
 
-    final def asInstanceOfList: asInstanceOfList = this.asInstanceOf[asInstanceOfList]
-    type asInstanceOfList <: List
-
     final def asInstanceOfNat: asInstanceOfNat = this.asInstanceOf[asInstanceOfNat]
     type asInstanceOfNat <: Nat
 

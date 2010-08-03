@@ -16,8 +16,8 @@ private[mada] final class EquivTo {
 
     case class Else[m <: Map, w <: Map, ve <: Equiv](m: m, w: w, ve: ve) extends Function0 {
         type self = Else[m, w, ve]
-        override  def apply: apply = m.toList.forall(Pred(w, ve))
-        override type apply        = m#toList#forall[Pred[w, ve]]
+        override  def apply: apply = m.toSeq.forall(Pred(w, ve))
+        override type apply        = m#toSeq#forall[Pred[w, ve]]
     }
 
     case class Pred[w <: Map, ve <: Equiv](w: w, ve: ve) extends Function1 {

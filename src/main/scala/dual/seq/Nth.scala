@@ -11,12 +11,12 @@ package dual; package seq
 final class Nth[xs <: Seq, n <: Nat](xs: xs, n: n) extends Function0 {
     type self = Nth[xs, n]
 
-    override  def apply: apply = `if`(n.isZero, Const0(xs.head), new Else(xs, n)).apply
-    override type apply        = `if`[n#isZero, Const0[xs#head],     Else[xs, n]]#apply
+    override  def apply: apply = `if`(n.isZero, Const0(xs.head), new Else).apply.asInstanceOf[apply]
+    override type apply        = `if`[n#isZero, Const0[xs#head],     Else]#apply
 
-    private class Else[xs <: Seq, n <: Nat](xs: xs, n: n) extends Function0 {
-        type self = Else[xs, n]
-        override  def apply: apply = new Nth(xs.tail, n.decrement).apply
+    class Else extends Function0 {
+        type self = Else
+        override  def apply: apply = new Nth(xs.tail, n.decrement).apply.asInstanceOf[apply]
         override type apply        =     Nth[xs#tail, n#decrement]#apply
     }
 }

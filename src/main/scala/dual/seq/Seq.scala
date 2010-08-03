@@ -44,8 +44,8 @@ trait Seq extends Any {
      def length: length
     type length <: Nat
 
-     def append[that <: Seq](that: that): append[that]
-    type append[that <: Seq] <: Seq
+     def ++[that <: Seq](that: that): ++[that]
+    type ++[that <: Seq] <: Seq
 
      def map[f <: Function1](f: f): map[f]
     type map[f <: Function1] <: Seq
@@ -138,9 +138,11 @@ trait Seq extends Any {
      def unzip: unzip
     type unzip <: Product2
 
-     def toList: toList
-    type toList <: List
+     def force: force
+    type force <: Seq
 
-     def fromSuper[that <: Seq](that: that): fromSuper[that]
-    type fromSuper[that <: Seq] <: Seq
+    final override  def undual: undual = if (isEmpty.undual) scala.collection.immutable.Nil else (head.undual :: tail.undual)
+    final override type undual = scala.collection.immutable.List[scala.Any]
+
+    override def canEqual(that: scala.Any) = that.isInstanceOf[Seq]
 }

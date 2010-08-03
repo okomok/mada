@@ -15,8 +15,10 @@ trait Forwarder extends Seq {
     protected  def around[that <: Seq](that: that): around[that]
     protected type around[that <: Seq] <: Seq
 
-    final private  def around2[that <: Product2](that: that): around2[that] = Tuple2(around(that._1), around(that._2))
-    final private type around2[that <: Product2] <: Product2                = Tuple2[around[that._1], around[that._2]]
+    final private  def around2[that <: Product2](that: that): around2[that] =
+        Tuple2(around(that._1.asInstanceOfSeq), around(that._2.asInstanceOfSeq))
+    final private type around2[that <: Product2] =
+        Tuple2[around[that#_1#asInstanceOfSeq], around[that#_2#asInstanceOfSeq]]
 
     final override  def isEmpty: isEmpty = delegate.isEmpty
     final override type isEmpty          = delegate#isEmpty
@@ -27,8 +29,8 @@ trait Forwarder extends Seq {
     final override  def tail: tail = delegate.tail
     final override type tail       = delegate#tail
 
-    final override  def ::[e <: Any](e: e): addFirst[e] = around(delegate. ::(e))
-    final override type ::[e <: Any]                    = around[delegate# ::[e]]
+    final override  def ::[e <: Any](e: e): ::[e] = around(delegate. ::(e))
+    final override type ::[e <: Any]              = around[delegate# ::[e]]
 
     final override  def clear: clear = around(delegate.clear)
     final override type clear        = around[delegate#clear]
@@ -39,8 +41,8 @@ trait Forwarder extends Seq {
     final override  def length: length = delegate.length
     final override type length         = delegate#length
 
-    final override  def append[that <: Seq](that: that): append[that] = around(delegate.append(that))
-    final override type append[that <: Seq]                           = around[delegate#append[that]]
+    final override  def ++[that <: Seq](that: that): ++[that] = around(delegate. ++(that))
+    final override type ++[that <: Seq]                       = around[delegate# ++[that]]
 
     final override  def map[f <: Function1](f: f): map[f] = around(delegate.map(f))
     final override type map[f <: Function1]               = around[delegate#map[f]]
@@ -58,13 +60,13 @@ trait Forwarder extends Seq {
     final override type partition[f <: Function1]                     = around2[delegate#partition[f]]
 
     final override  def sort[o <: Ordering](o: o): sort[o] = around(delegate.sort(o))
-    final override type sort[o <: Ordering]                = around(delegate#sort[o]]
+    final override type sort[o <: Ordering]                = around[delegate#sort[o]]
 
     final override  def forall[f <: Function1](f: f): forall[f] = delegate.forall(f)
     final override type forall[f <: Function1]                  = delegate#forall[f]
 
-    final override  def exists[f <: Function1](f: f): exists[f] = delegate.exists(f))
-    final override type exists[f <: Function1]                  = delegate#exists[f]]
+    final override  def exists[f <: Function1](f: f): exists[f] = delegate.exists(f)
+    final override type exists[f <: Function1]                  = delegate#exists[f]
 
     final override  def count[f <: Function1](f: f): count[f] = delegate.count(f)
     final override type count[f <: Function1]                 = delegate#count[f]
@@ -72,11 +74,11 @@ trait Forwarder extends Seq {
     final override  def find[f <: Function1](f: f): find[f] = delegate.find(f)
     final override type find[f <: Function1]                = delegate#find[f]
 
-    final override  def foldLeft[z <: Any, f <: Function2](z: z, f: f): foldLeft[z, f] = delegate.foldLeft(f)
-    final override type foldLeft[z <: Any, f <: Function2]                             = delegate#foldLeft[f]
+    final override  def foldLeft[z <: Any, f <: Function2](z: z, f: f): foldLeft[z, f] = delegate.foldLeft(z, f)
+    final override type foldLeft[z <: Any, f <: Function2]                             = delegate#foldLeft[z, f]
 
-    final override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = delegate.foldRight(f)
-    final override type foldRight[z <: Any, f <: Function2]                              = delegate#foldRight[f]
+    final override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = delegate.foldRight(z, f)
+    final override type foldRight[z <: Any, f <: Function2]                              = delegate#foldRight[z, f]
 
     final override  def reduceLeft[f <: Function2](f: f): reduceLeft[f] = delegate.reduceLeft(f)
     final override type reduceLeft[f <: Function2]                      = delegate#reduceLeft[f]
@@ -90,9 +92,6 @@ trait Forwarder extends Seq {
     final override  def scanRight[z <: Any, f <: Function2](z: z, f: f): scanRight[z, f] = around(delegate.scanRight(z, f))
     final override type scanRight[z <: Any, f <: Function2]                              = around[delegate#scanRight[z, f]]
 
-    final override  def apply[n <: Nat]: apply[n] = delegate.apply(n)
-    final override type apply[n <: Nat]           = delegate#apply[n]
-
     final override  def nth[n <: Nat](n: n): nth[n] = delegate.nth(n)
     final override type nth[n <: Nat]               = delegate#nth[n]
 
@@ -102,11 +101,11 @@ trait Forwarder extends Seq {
     final override  def init: init = delegate.init
     final override type init       = delegate#init
 
-    final override  def take[n <: Nat](n: n): take[n] = around(delegate.take(n)
+    final override  def take[n <: Nat](n: n): take[n] = around(delegate.take(n))
     final override type take[n <: Nat]                = around[delegate#take[n]]
 
     final override  def drop[n <: Nat](n: n): drop[n] = around(delegate.drop(n))
-    final override type drop[n <: Nat]                = around(delegate#drop[n]]
+    final override type drop[n <: Nat]                = around[delegate#drop[n]]
 
     final override  def slice[n <: Nat, m <: Nat](n: n, m: m): slice[n, m] = around(delegate.slice(n, m))
     final override type slice[n <: Nat, m <: Nat]                          = around[delegate#slice[n, m]]

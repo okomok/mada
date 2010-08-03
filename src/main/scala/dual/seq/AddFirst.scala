@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.gxshub.okomok.mada
+package com.github.okomok.mada
 package dual; package seq
 
 

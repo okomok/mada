@@ -14,12 +14,12 @@ final class Find[xs <: Seq, f <: Function1](xs: xs, f: f) extends Function0 {
     private lazy val ys: ys = new DropWhile(xs, f.not)
     private type ys         =     DropWhile[xs, f#not]
 
-    override  def apply: apply = `if`(ys.isEmpty, Const0(None), new Else).apply.asInstanceOfOption
+    override  def apply: apply = `if`(ys.isEmpty, Const0(None), new Else).apply.asInstanceOfOption.asInstanceOf[apply]
     override type apply        = `if`[ys#isEmpty, Const0[None],     Else]#apply#asInstanceOfOption
 
-    private class Else extends Function0 {
+    class Else extends Function0 {
         type self = Else
-        override  def apply: apply = ys.head
-        override type apply        = ys#head
+        override  def apply: apply = Some(ys.head)
+        override type apply        = Some[ys#head]
     }
 }

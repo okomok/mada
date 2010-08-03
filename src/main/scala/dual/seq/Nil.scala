@@ -4,23 +4,23 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.gxshub.okomok.mada
+package com.github.okomok.mada
 package dual; package seq
 
 
-sealed abstract class Empty extends AbstractSeq {
-    type self = Empty
+sealed abstract class Nil extends AbstractSeq {
+    type self = Nil
 
     override  def isEmpty: isEmpty = `true`
     override type isEmpty          = `true`
 
-    override  def head: head = noSuchElement("seq.Empty.head")
+    override  def head: head = noSuchElement("seq.Nil.head")
     override type head       = noSuchElement[_]
 
-    override  def tail: tail = noSuchElement("seq.Empty.tail")
+    override  def tail: tail = noSuchElement("seq.Nil.tail")
     override type tail       = noSuchElement[_]
 }
 
-private[seq] object _Empty {
-    val value = new Empty{}
+private[seq] object _Nil {
+    val value = new Nil{}
 }

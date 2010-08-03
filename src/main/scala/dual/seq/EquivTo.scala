@@ -8,7 +8,7 @@ package com.github.okomok.mada
 package dual; package seq
 
 
-private[mada] final class EquivTo {
+private[seq] final class EquivTo {
      def apply[xs <: Seq, ys <: Seq, e <: Equiv](xs: xs, ys: ys, e: e): apply[xs, ys, e] =
         `if`(xs.isEmpty  && ys.isEmpty,  Const0(`true`), `if`(xs.isEmpty  !== ys.isEmpty,  Const0(`false`), Else(xs, ys, e))).apply.asInstanceOfBoolean.asInstanceOf[apply[xs, ys, e]]
     type apply[xs <: Seq, ys <: Seq, e <: Equiv] =

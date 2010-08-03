@@ -13,8 +13,8 @@ trait AbstractSeq extends Seq {
     private type _addFirst[self <: Seq, e <: Any] =     AddFirst[self, e]
     final override type ::[e <: Any] = _addFirst[self, e]
 
-    final override  def clear: clear = Empty
-    final override type clear        = Empty
+    final override  def clear: clear = Nil
+    final override type clear        = Nil
 
     final override  def foreach[f <: Function1](f: f): foreach[f] = new Foreach(self, f).apply
     private type _foreach[self <: Seq, f <: Function1]            =     Foreach[self, f]#apply
@@ -24,8 +24,8 @@ trait AbstractSeq extends Seq {
     private type _length[self <: Seq]      =     Length[self]#apply
     final override type length = _length[self]
 
-    final override  def ++[that <: Seq](that: that): append[that] = new Append(self, that)
-    private type _append[self <: Seq,  that <: Seq]               =     Append[self, that]]
+    final override  def ++[that <: Seq](that: that): ++[that] = new Append(self, that)
+    private type _append[self <: Seq,  that <: Seq]           =     Append[self, that]
     final override type ++[that <: Seq] = _append[self, that]
 
     final override  def map[f <: Function1](f: f): map[f] = new Map(self, f)
@@ -36,9 +36,9 @@ trait AbstractSeq extends Seq {
     private type _flatMap[self <: Seq, f <: Function1]            = self#map[f]#flatten
     final override type flatMap[f <: Function1] = _flatMap[self, f]
 
-    final override  def flatten: flatten = Flatten(self)
-    private type _flatten[self <: Seq]   =     Bind[Flatten[self]]
-    final override type flatten <: Seq = _flatten[self]
+    final override  def flatten: flatten = new Flatten(self)
+    private type _flatten[self <: Seq]   =     Flatten[self]
+    final override type flatten = _flatten[self]
 
     final override  def filter[f <: Function1](f: f): filter[f] = new Filter(self, f)
     private type _filter[self <: Seq, f <: Function1]           =     Filter[self, f]
@@ -51,7 +51,7 @@ trait AbstractSeq extends Seq {
     final override type forall[f <: Function1]                  = exists[f#not]#not
 
     final override  def exists[f <: Function1](f: f): exists[f] = find(f).isEmpty.not
-    final override type exists[f <: Function1]                  = find[f]#isEmpty.not
+    final override type exists[f <: Function1]                  = find[f]#isEmpty#not
 
     final override  def count[f <: Function1](f: f): count[f] = new Count(self, f).apply
     private type _count[self <: Seq, f <: Function1]         =      Count[self, f]#apply
@@ -122,8 +122,9 @@ trait AbstractSeq extends Seq {
     final override  def equivTo[that <: Seq, e <: Equiv](that: that, e: e): equivTo[that, e] = throw new Error
     final override type equivTo[that <: Seq, e <: Equiv] <: Boolean
 
-    final override  def reverse: reverse = throw new Error
-    final override type reverse <: Seq
+    final override  def reverse: reverse = new ReverseAppend(self, Nil)
+    private type _reverse[self <: Seq]   =     ReverseAppend[self, Nil]
+    final override type reverse = _reverse[self]
 
     final override  def zip[that <: Seq](that: that): zip[that] = throw new Error
     final override type zip[that <: Seq] <: Seq
@@ -131,9 +132,7 @@ trait AbstractSeq extends Seq {
     final override  def unzip: unzip = throw new Error
     final override type unzip <: Product2
 
-    final override  def toList: toList = throw new Error
-    final override type toList <: List
-
-    final override  def fromSuper[that <: Seq](that: that): fromSuper[that] = throw new Error
-    final override type fromSuper[that <: Seq] <: Seq
+    final override  def force: force = new Force(self)
+    private type _force[self <: Seq] =     Force[self]
+    final override type force = _force[self]
 }

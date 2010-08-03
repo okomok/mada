@@ -12,14 +12,14 @@ final class Drop[xs <: Seq, n <: Nat](xs: xs, n: n) extends TrivialForwarder {
     type self = Drop[xs, n]
 
     override protected lazy val delegate: delegate =
-        `if`(xs.isEmpty || n.isZero,  Const0(xs), new Else).apply.asInstanceOfSeqSeq
+        `if`(xs.isEmpty  || n.isZero,  Const0(xs), new Else).apply.asInstanceOfSeq.asInstanceOf[delegate]
     override protected type delegate =
-        `if`[xs#isEmpty ||[n#isZero], Const0[xs],     Else]#apply#asInstanceOfSeqSeq
+        `if`[xs#isEmpty# ||[n#isZero], Const0[xs],     Else]#apply#asInstanceOfSeq
 
-    private class Else extends Function0 {
+    class Else extends Function0 {
         type self = Else
-        override  def apply: apply = new Drop(xs.tail, n.decrement).apply
-        override type apply        =     Drop[xs#tail, n#decrement]#apply
+        override  def apply: apply = new Drop(xs.tail, n.decrement)
+        override type apply        =     Drop[xs#tail, n#decrement]
     }
 }
 
@@ -28,19 +28,19 @@ final class DropWhile[xs <: Seq, f <: Function1](xs: xs, f: f) extends TrivialFo
     type self = DropWhile[xs, f]
 
     override protected lazy val delegate: delegate =
-        `if`(xs.isEmpty, Const0(xs), new Else).apply.asInstanceOfSeqSeq
+        `if`(xs.isEmpty, Const0(xs), new Else).apply.asInstanceOfSeq
     override protected type delegate =
-        `if`[xs#isEmpty, Const0[xs],     Else]#apply#asInstanceOfSeqSeq
+        `if`[xs#isEmpty, Const0[xs],     Else]#apply#asInstanceOfSeq
 
-    private class Else extends Function0 {
+    class Else extends Function0 {
         type self = Else
-        override  def apply: apply = `if`(f.apply(xs.head).asInstanceOfBoolean, new ElseThen, Const0(xs))
-        override type apply        = `if`[f#apply[xs#head]#asInstanceOfBoolean,     ElseThen, Const0[xs]]
+        override  def apply: apply = `if`(f.apply(xs.head).asInstanceOfBoolean, new ElseThen, Const0(xs)).apply.asInstanceOf[apply]
+        override type apply        = `if`[f#apply[xs#head]#asInstanceOfBoolean,     ElseThen, Const0[xs]]#apply
     }
 
-    private class ElseThen extends Function0 {
+    class ElseThen extends Function0 {
         type self = ElseThen
-        override  def apply: apply = new DropWhile(xs.tail, f).apply
-        override type apply        =     DropWhile[xs#tail, f]#apply
+        override  def apply: apply = new DropWhile(xs.tail, f)
+        override type apply        =     DropWhile[xs#tail, f]
     }
 }

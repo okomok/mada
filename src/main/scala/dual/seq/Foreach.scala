@@ -13,7 +13,7 @@ final class Foreach[xs <: Seq, f <: Function1](xs: xs, f: f) extends Function0 {
     override  def apply: apply = `if`(xs.isEmpty, Const0(Unit), new Else).apply.asInstanceOfUnit
     override type apply = Unit
 
-    private class Else extends Function0 {
+    class Else extends Function0 {
         type self = Else
         override  def apply: apply = { f.apply(xs.head); new Foreach(xs.tail, f).apply }
         override type apply = Unit

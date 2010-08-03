@@ -96,29 +96,6 @@ package object dual {
     type Throw0 = function.Throw0
 
 
-// List
-
-    @aliasOf("list.List")
-     val List = list.List
-    type List = list.List
-
-    @equivalentTo("new list.Nil{}")
-     val Nil = list.Nil
-    type Nil = list.Nil
-
-    @aliasOf("list.Cons")
-    val :: = list.Cons
-
-    @aliasOf("list.::")
-    type ::[x <: Any, xs <: List] = list.::[x, xs]
-
-    @aliasOf("list.:::")
-    type :::[xs <: List, ys <: List] = list.:::[xs, ys]
-
-    @aliasOf("list.reverse_:::")
-    type reverse_:::[xs <: List, ys <: List] = list.reverse_:::[xs, ys]
-
-
 // Nat
 
     @aliasOf("nat.Nat")
@@ -138,6 +115,16 @@ package object dual {
     @aliasOf("seq.Seq")
      val Seq = seq.Seq
     type Seq = seq.Seq
+
+    @equivalentTo("new seq.Nil{}")
+     val Nil = seq.Nil
+    type Nil = seq.Nil
+
+    @aliasOf("seq.::")
+    type ::[x <: Any, xs <: Seq] = seq.::[x, xs]
+
+    @aliasOf("seq.++")
+    type ++[xs <: Any, ys <: Seq] = seq.++[xs, ys]
 
 
 // Set

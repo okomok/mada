@@ -45,14 +45,14 @@ trait Map extends Any {
      def keySet: keySet
     type keySet <: Set
 
-     def toList: toList
-    type toList <: List
+     def toSeq: toSeq
+    type toSeq <: Seq
 
-     def keyList: keyList
-    type keyList <: List
+     def keySeq: keySeq
+    type keySeq <: Seq
 
-     def valueList: valueList
-    type valueList <: List
+     def valueSeq: valueSeq
+    type valueSeq <: Seq
 
      def equivTo[that <: Map, ve <: Equiv](that: that, ve: ve): equivTo[that, ve]
     type equivTo[that <: Map, ve <: Equiv] <: Boolean
