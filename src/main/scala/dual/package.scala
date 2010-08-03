@@ -116,7 +116,7 @@ package object dual {
      val Seq = seq.Seq
     type Seq = seq.Seq
 
-    @equivalentTo("new seq.Nil{}")
+    @aliasOf("seq.Nil")
      val Nil = seq.Nil
     type Nil = seq.Nil
 
@@ -124,7 +124,7 @@ package object dual {
     type ::[x <: Any, xs <: Seq] = seq.::[x, xs]
 
     @aliasOf("seq.++")
-    type ++[xs <: Any, ys <: Seq] = seq.++[xs, ys]
+    type ++[xs <: Seq, ys <: Seq] = seq.++[xs, ys]
 
 
 // Set

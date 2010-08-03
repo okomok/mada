@@ -133,6 +133,9 @@ trait Forwarder extends Seq {
 
     final override  def unzip: unzip = around2(delegate.unzip)
     final override type unzip        = around2[delegate#unzip]
+
+    final override  def force: force = around(delegate.force)
+    final override type force        = around[delegate#force]
 }
 
 
