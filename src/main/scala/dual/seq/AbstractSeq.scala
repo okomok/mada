@@ -88,10 +88,10 @@ trait AbstractSeq extends Seq {
     final override type nth[n <: Nat] = _nth[self, n]
 
     final override  def last: last = throw new Error
-    final override type last <: Any
+    final override type last  = Nothing
 
     final override  def init: init = throw new Error
-    final override type init <: Seq
+    final override type init  = Nothing
 
     final override  def take[n <: Nat](n: n): take[n] = new Take(self, n)
     private type _take[self <: Seq, n <: Nat]         =     Take[self, n]
@@ -114,23 +114,24 @@ trait AbstractSeq extends Seq {
     final override type dropWhile[f <: Function1] = _dropWhile[self, f]
 
     final override  def span[f <: Function1](f: f): span[f] = throw new Error
-    final override type span[f <: Function1] <: Product2
+    final override type span[f <: Function1]  = Nothing
 
     final override  def splitAt[n <: Nat](n: n): splitAt[n] = throw new Error
-    final override type splitAt[n <: Nat] <: Product2
+    final override type splitAt[n <: Nat]  = Nothing
 
-    final override  def equivTo[that <: Seq, e <: Equiv](that: that, e: e): equivTo[that, e] = throw new Error
-    final override type equivTo[that <: Seq, e <: Equiv] <: Boolean
+    final override  def equivTo[that <: Seq, e <: Equiv](that: that, e: e): equivTo[that, e] = new EquivTo(self, that, e).apply
+    private type _equivTo[self <: Seq, that <: Seq, e <: Equiv]                              =     EquivTo[self, that, e]#apply
+    final override type equivTo[that <: Seq, e <: Equiv] = _equivTo[self, that, e]
 
     final override  def reverse: reverse = new ReverseAppend(self, Nil)
     private type _reverse[self <: Seq]   =     ReverseAppend[self, Nil]
     final override type reverse = _reverse[self]
 
     final override  def zip[that <: Seq](that: that): zip[that] = throw new Error
-    final override type zip[that <: Seq] <: Seq
+    final override type zip[that <: Seq] = Nothing
 
     final override  def unzip: unzip = throw new Error
-    final override type unzip <: Product2
+    final override type unzip = Nothing
 
     final override  def force: force = new Force(self)
     private type _force[self <: Seq] =     Force[self]
