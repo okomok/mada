@@ -23,7 +23,7 @@ class ToListTest extends org.scalatest.junit.JUnit3Suite {
 
         type l   = _0 :: _1 :: _2 :: _3 :: _4 :: _5 :: Nil
         val l: l = _0 :: _1 :: _2 :: _3 :: _4 :: _5 :: Nil
-        meta.assertSame[l, m#toList]
+        meta.assertSame[l, m#toList#force]
         assertEquals(l, m.toList)
    }
 
