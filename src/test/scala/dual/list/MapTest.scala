@@ -28,7 +28,7 @@ class MapTest extends org.scalatest.junit.JUnit3Suite {
         type xs = Box[Int] :: Box[String] :: Box[Char] :: Nil
         val xs: xs = Box(3) :: Box("hello") :: Box('a') :: Nil
         val u: xs#map[mkString] = xs.map(mkString)
-        val v: Box[String] :: Box[String] :: Box[String] :: Nil = u
+        val v: Box[String] :: Box[String] :: Box[String] :: Nil = u.force
         assertEquals(Box("3") :: Box("hello") :: Box("a") :: Nil, v)
     }
 
@@ -36,7 +36,7 @@ class MapTest extends org.scalatest.junit.JUnit3Suite {
         type xs = Nil
         val xs: xs = Nil
         val u: xs#map[mkString] = xs.map(mkString)
-        val v: Nil = u
+        val v: Nil = u.force
         ()
     }
 }
@@ -57,7 +57,7 @@ class MapNatTest extends org.scalatest.junit.JUnit3Suite {
         type xs = _3 :: _4 :: _5 :: _6 :: Nil
         val xs: xs = _3 :: _4 :: _5 :: _6 :: Nil
         val u: xs#map[add2] = xs.map(add2)
-        val v: _5 :: _6 :: _7 :: _8 :: Nil = u
+        val v: _5 :: _6 :: _7 :: _8 :: Nil = u.force
         assertEquals(_5 :: _6 :: _7 :: _8 :: Nil, v)
     }
 }

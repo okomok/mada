@@ -35,8 +35,8 @@ class TrivialTest extends org.scalatest.junit.JUnit3Suite {
     def testSize {
         val i = new java.lang.Integer(10)
         val lst = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Nil
-        mada.dual.assert(_4 === lst.size)
-        mada.dual.assert(Nil.size === _0)
+        mada.dual.assert(_4 === lst.length)
+        mada.dual.assert(Nil.length === _0)
     }
 
     def testTypeErase {
@@ -81,15 +81,15 @@ class TrivialTest extends org.scalatest.junit.JUnit3Suite {
         val i = new java.lang.Integer(10)
         val lst1 = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil
         val lst2 = Box("wow") :: Box(99) :: Nil
-        assertEquals(Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Box("wow") :: Box(99) :: Nil, lst1 ::: lst2)
-        assertEquals(Nil ::: Nil, Nil)
-        assertEquals(lst1 ::: Nil, Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil)
-        assertEquals(Nil ::: lst1, Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil)
-        val k: Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil = (Box(3) :: Box("hello") :: Nil) ::: (Box(i) :: Nil) ::: (Box('a') :: Box(12) :: Nil) ::: Nil
+        assertEquals(Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Box("wow") :: Box(99) :: Nil, lst1 ++ lst2)
+        assertEquals(Nil ++ Nil, Nil)
+        assertEquals(lst1 ++ Nil, Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil)
+        assertEquals(Nil ++ lst1, Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil)
+        val k: Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil = ((Box(3) :: Box("hello") :: Nil) ++ (Box(i) :: Nil) ++ (Box('a') :: Box(12) :: Nil) ++ Nil).force
         assertEquals(lst1, k)
     }
 
-
+    /*
     def testReversePrepend {
         val i = new java.lang.Integer(10)
         type Lst1 = Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil
@@ -105,14 +105,14 @@ class TrivialTest extends org.scalatest.junit.JUnit3Suite {
         val k: Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil = (Box("hello") :: Box(3) :: Nil) reverse_::: (Box(i) :: Nil) reverse_::: (Box(12) :: Box('a') :: Nil) reverse_::: Nil
         assertEquals(lst1, k)
         ()
-    }
+    }*/
 
     def testReverse {
         val i = new java.lang.Integer(10)
         type Lst1 = Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil
         val lst1: Lst1 = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil
         val lst1r: Lst1#reverse = lst1.reverse
-        val lst1r_ : Box[Int] :: Box[Char] :: Box[java.lang.Integer] :: Box[String] :: Box[Int] :: Nil = lst1r
+        val lst1r_ : Box[Int] :: Box[Char] :: Box[java.lang.Integer] :: Box[String] :: Box[Int] :: Nil = lst1r.force
         assertEquals(Box(12) :: Box('a') :: Box(i) :: Box("hello") :: Box(3) :: Nil, lst1r)
         assertEquals(Nil.reverse, Nil)
     }
@@ -133,8 +133,8 @@ object TrivialTezt {
 
     trait testSize {
         type lst = Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Nil
-        assert[lst#size# ===[_4]]
-        assert[Nil#size# ===[_0]]
+        assert[lst#length# ===[_4]]
+        assert[Nil#length# ===[_0]]
     }
 
     trait testIsEmpty {
@@ -146,19 +146,19 @@ object TrivialTezt {
     trait testPrepend {
         type lst1 = Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Box[Float] :: Nil
         type lst2 = Box[Boolean] :: Box[Byte] :: Nil
-        assertSame[Nil, Nil# :::[Nil]]
-        assertSame[Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Box[Float] :: Box[Boolean] :: Box[Byte] :: Nil, lst2# :::[lst1]]
-        assertSame[lst1, lst1# :::[Nil]]
-        assertSame[lst1, Nil# :::[lst1]]
+        assertSame[Nil, Nil# ++[Nil]#force]
+        assertSame[Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Box[Float] :: Box[Boolean] :: Box[Byte] :: Nil, lst1# ++[lst2]#force]
+        assertSame[lst1, lst1# ++[Nil]#force]
+        assertSame[lst1, Nil# ++[lst1]#force]
 
-        assertSame[Nil, Nil ::: Nil]
-        assertSame[Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Box[Float] :: Box[Boolean] :: Box[Byte] :: Nil, lst1 ::: lst2]
-        assertSame[lst1, lst1 ::: Nil]
-        assertSame[lst1, Nil ::: lst1]
-        assertSame[lst1, (Box[Int] :: Box[String] :: Nil) ::: (Box[Double] :: Nil) ::: (Box[Char] :: Box[Float] :: Nil) ::: Nil]
+        assertSame[Nil, (Nil ++ Nil)#force]
+        assertSame[Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Box[Float] :: Box[Boolean] :: Box[Byte] :: Nil, (lst1 ++ lst2)#force]
+        assertSame[lst1, (lst1 ++ Nil)#force]
+        assertSame[lst1, (Nil ++ lst1)#force]
+        assertSame[lst1, ((Box[Int] :: Box[String] :: Nil) ++ (Box[Double] :: Nil) ++ (Box[Char] :: Box[Float] :: Nil) ++ Nil)#force]
     }
 
-    type prependprepend[l1 <: List, l2 <: List, r <: List] = r# :::[l1]# :::[l2]
+    type prependprepend[l1 <: List, l2 <: List, r <: List] = l2# ++[l1]# ++[r]#force
 
     trait testPrepend2 {
         type lst1 = Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Box[Float] :: Nil

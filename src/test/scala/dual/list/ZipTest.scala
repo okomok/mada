@@ -25,7 +25,7 @@ class ZipTest extends org.scalatest.junit.JUnit3Suite {
         val l2: l2 = Box(i) :: Box('a') :: Box(12) :: Nil
 
         val _z: l1#zip[l2] = l1.zip(l2)
-        val z: Tuple2[Box[Int], Box[java.lang.Integer]] :: Tuple2[Box[String], Box[Char]] :: Tuple2[Box[java.lang.Integer], Box[Int]] :: Nil = _z
+        val z: Tuple2[Box[Int], Box[java.lang.Integer]] :: Tuple2[Box[String], Box[Char]] :: Tuple2[Box[java.lang.Integer], Box[Int]] :: Nil = _z.force
 
         val a = Tuple2(Box(3), Box(i)) :: Tuple2(Box("hello"), Box('a')) :: Tuple2(Box(i), Box(12)) :: Nil
         assertEquals(a, z)
@@ -39,7 +39,7 @@ class ZipTest extends org.scalatest.junit.JUnit3Suite {
         val l2: l2 = Nil
 
         val _z: l1#zip[l2] = l1.zip(l2)
-        val z: Nil = _z
+        val z: Nil = _z.force
 
         val a = Nil
         assertEquals(a, z)
@@ -54,7 +54,7 @@ class ZipTest extends org.scalatest.junit.JUnit3Suite {
         val l2: l2 = Box(i) :: Box('a') :: Box(12) :: Box("ignored") :: Nil
 
         val _z: l1#zip[l2] = l1.zip(l2)
-        val z: Tuple2[Box[Int], Box[java.lang.Integer]] :: Tuple2[Box[String], Box[Char]] :: Tuple2[Box[java.lang.Integer], Box[Int]] :: Nil = _z
+        val z: Tuple2[Box[Int], Box[java.lang.Integer]] :: Tuple2[Box[String], Box[Char]] :: Tuple2[Box[java.lang.Integer], Box[Int]] :: Nil = _z.force
 
         val a = Tuple2(Box(3), Box(i)) :: Tuple2(Box("hello"), Box('a')) :: Tuple2(Box(i), Box(12)) :: Nil
         assertEquals(a, z)
@@ -69,7 +69,7 @@ class ZipTest extends org.scalatest.junit.JUnit3Suite {
         val l2: l2 = Box(i) :: Box('a') :: Box(12) :: Box("ignored") :: Nil
 
         val _z: l2#zip[l1] = l2.zip(l1)
-        val z: Tuple2[Box[java.lang.Integer], Box[Int]] :: Tuple2[Box[Char], Box[String]] :: Tuple2[Box[Int], Box[java.lang.Integer]] :: Nil = _z
+        val z: Tuple2[Box[java.lang.Integer], Box[Int]] :: Tuple2[Box[Char], Box[String]] :: Tuple2[Box[Int], Box[java.lang.Integer]] :: Nil = _z.force
 
         val a = Tuple2(Box(i), Box(3)) :: Tuple2(Box('a'), Box("hello")) :: Tuple2(Box(12), Box(i)) :: Nil
         assertEquals(a, z)

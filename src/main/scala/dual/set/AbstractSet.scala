@@ -9,11 +9,11 @@ package dual; package set
 
 
 trait AbstractSet extends Set {
-    final override  def addSeq[xs <: Seq](xs: xs): addSeq[xs] = new AddSeq().apply(self, xs)
-    final override type addSeq[xs <: Seq] = AddSeq#apply[self, xs]
+    final override  def addList[xs <: List](xs: xs): addList[xs] = new AddList().apply(self, xs)
+    final override type addList[xs <: List] = AddList#apply[self, xs]
 
-    final override  def removeSeq[xs <: Seq](xs: xs): removeSeq[xs] = new RemoveSeq().apply(self, xs)
-    final override type removeSeq[xs <: Seq] = RemoveSeq#apply[self, xs]
+    final override  def removeList[xs <: List](xs: xs): removeList[xs] = new RemoveList().apply(self, xs)
+    final override type removeList[xs <: List] = RemoveList#apply[self, xs]
 
     final override  def equivTo[that <: Set](that: that): equivTo[that] = new EquivTo().apply(self, that)
     final override type equivTo[that <: Set] = EquivTo#apply[self, that]
@@ -21,12 +21,12 @@ trait AbstractSet extends Set {
     final override  def intersect[that <: Set](that: that): intersect[that] = new Intersect().apply(self, that)
     final override type intersect[that <: Set] = Intersect#apply[self, that]
 
-    final override  def union[that <: Set](that: that): union[that] = self.addSeq(that.toSeq)
-    private type _union[self <: Set, that <: Set]                   = self#addSeq[that#toSeq]
+    final override  def union[that <: Set](that: that): union[that] = self.addList(that.toList)
+    private type _union[self <: Set, that <: Set]                   = self#addList[that#toList]
     final override type union[that <: Set] = _union[self, that]
 
-    final override  def diff[that <: Set](that: that): diff[that] = self.removeSeq(that.toSeq)
-    private type _diff[self <: Set, that <: Set]                  = self#removeSeq[that#toSeq]
+    final override  def diff[that <: Set](that: that): diff[that] = self.removeList(that.toList)
+    private type _diff[self <: Set, that <: Set]                  = self#removeList[that#toList]
     final override type diff[that <: Set] = _diff[self, that]
 
     final override  def subsetOf[that <: Set](that: that): subsetOf[that] = new SubsetOf().apply(self, that)

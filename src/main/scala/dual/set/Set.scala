@@ -27,8 +27,8 @@ trait Set extends Any {
      def add[k <: Any](k: k): add[k]
     type add[k <: Any] <: Set
 
-     def addSeq[xs <: Seq](xs: xs): addSeq[xs]
-    type addSeq[xs <: Seq] <: Set
+     def addList[xs <: List](xs: xs): addList[xs]
+    type addList[xs <: List] <: Set
 
      def clear: clear
     type clear <: Set
@@ -36,14 +36,14 @@ trait Set extends Any {
      def remove[k <: Any](k: k): remove[k]
     type remove[k <: Any] <: Set
 
-     def removeSeq[xs <: Seq](xs: xs): removeSeq[xs]
-    type removeSeq[xs <: Seq] <: Set
+     def removeList[xs <: List](xs: xs): removeList[xs]
+    type removeList[xs <: List] <: Set
 
      def contains[k <: Any](k: k): contains[k]
     type contains[k <: Any] <: Boolean
 
-     def toSeq: toSeq
-    type toSeq <: Seq
+     def toList: toList
+    type toList <: List
 
      def equivTo[that <: Set](that: that): equivTo[that]
     type equivTo[that <: Set] <: Boolean

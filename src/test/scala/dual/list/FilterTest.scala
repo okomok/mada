@@ -28,7 +28,8 @@ class FilterTest extends org.scalatest.junit.JUnit3Suite {
         type xs = _2 :: _3 :: _4 :: _2 :: _5 :: _6 :: _2 :: Nil
         val xs: xs = _2 :: _3 :: _4 :: _2 :: _5 :: _6 :: _2 :: Nil
         val u: xs#filter[not2] = xs.filter(not2)
-        val v: _3 :: _4 :: _5 :: _6 :: Nil = u
+        println(u)
+        val v: _3 :: _4 :: _5 :: _6 :: Nil = u.force
         assertEquals(_3 :: _4 :: _5 :: _6 :: Nil, v)
     }
 
@@ -36,7 +37,7 @@ class FilterTest extends org.scalatest.junit.JUnit3Suite {
         type xs = Nil
         val xs: xs = Nil
         val u: xs#filter[not2] = xs.filter(not2)
-        val v: Nil = u
+        val v: Nil = u.force
         ()
     }
 }

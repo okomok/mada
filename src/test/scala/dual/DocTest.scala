@@ -25,7 +25,7 @@ package com.github.okomok.madatest; package dualtest
         def testTrivial {
             // Filter heterogeneous list.
             type xs = _2 :: _3 :: _4 :: _2 :: _5 :: _6 :: _2 :: dual.Nil
-            dual.meta.assertSame[_3 :: _4 :: _5 :: _6 :: dual.Nil, xs#filter[not2]]
+            dual.meta.assertSame[_3 :: _4 :: _5 :: _6 :: dual.Nil, xs#filter[not2]#force]
             // Because of duality, a runtime test might be unneeded.
             val xs: xs = _2 :: _3 :: _4 :: _2 :: _5 :: _6 :: _2 :: dual.Nil
             val fs: xs#filter[not2] = xs.filter(not2)
@@ -47,7 +47,7 @@ package com.github.okomok.madatest; package dualtest
             type xs = _5 :: _6 :: _7 :: _8 :: dual.Nil
             val xs  = _5 :: _6 :: _7 :: _8 :: dual.Nil
             val ys: slice#apply[xs, _1, _3] = slice(xs, _1, _3)
-            val zs: _6 :: _7 :: dual.Nil = ys
+            val zs: _6 :: _7 :: dual.Nil = ys.force
             assertEquals(_6 :: _7 :: dual.Nil, zs)
         }
     }

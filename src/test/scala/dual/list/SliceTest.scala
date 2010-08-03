@@ -30,35 +30,35 @@ class SliceTest extends org.scalatest.junit.JUnit3Suite {
         val lst3: Lst3 = Nil;
         {
             val e: Lst1#slice[_0, _2] = lst1.slice(_0, _2)
-            val e_ : Box[Int]::Box[String]::Nil = e
+            val e_ : Box[Int]::Box[String]::Nil = e.force
             assertEquals(Box(3)::Box("hello")::Nil, e_)
         }
 
         {
             val e: Lst1#slice[_1, _5] = lst1.slice(_1, _5)
-            val e_ : Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil = e
+            val e_ : Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil = e.force
             assertEquals(Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil, e_)
         }
 
         {
             val e: Lst1#slice[_2, _4] = lst1.slice(_2, _4)
-            val e_ : Box[java.lang.Integer] :: Box[Char] :: Nil = e
+            val e_ : Box[java.lang.Integer] :: Box[Char] :: Nil = e.force
             assertEquals(Box(i) :: Box('a') :: Nil, e_)
         }
         {
             val e: Lst2#slice[_0, _0] = lst2.slice(_0, _0)
-            val e_ : Nil = e
+            val e_ : Nil = e.force
             assertEquals(Nil, e_)
         }
         {
             val e: Lst2#slice[_0, _1] = lst2.slice(_0, _1)
-            val e_ : Box[String] :: Nil = e
+            val e_ : Box[String] :: Nil = e.force
             assertEquals(Box("hello") :: Nil, e_)
         }
 
         {
             val e: Lst2#slice[_0, _0] = lst2.slice(_0, _0)
-            val e_ : Nil = e
+            val e_ : Nil = e.force
             assertEquals(Nil, e_)
         }
         ()
@@ -71,7 +71,7 @@ object SliceTezt {
 
     trait testSlice {
         type lst = Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Box[Float] :: Nil
-        assertSame[Nil, lst#slice[_2, _2]]
-        assertSame[Box[String] :: Box[Double] :: Box[Char] :: Nil, lst#slice[_1, _4]]
+        assertSame[Nil, lst#slice[_2, _2]#force]
+        assertSame[Box[String] :: Box[Double] :: Box[Char] :: Nil, lst#slice[_1, _4]#force]
     }
 }

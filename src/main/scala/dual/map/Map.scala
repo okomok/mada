@@ -33,8 +33,8 @@ trait Map extends Any {
      def put[k <: Any, v <: Any](k: k, v: v): put[k, v]
     type put[k <: Any, v <: Any] <: Map
 
-     def putSeq[xs <: Seq](xs: xs): putSeq[xs]
-    type putSeq[xs <: Seq] <: Map
+     def putList[xs <: List](xs: xs): putList[xs]
+    type putList[xs <: List] <: Map
 
      def remove[k <: Any](k: k): remove[k]
     type remove[k <: Any] <: Map
@@ -45,14 +45,14 @@ trait Map extends Any {
      def keySet: keySet
     type keySet <: Set
 
-     def toSeq: toSeq
-    type toSeq <: Seq
+     def toList: toList
+    type toList <: List
 
-     def keySeq: keySeq
-    type keySeq <: Seq
+     def keyList: keyList
+    type keyList <: List
 
-     def valueSeq: valueSeq
-    type valueSeq <: Seq
+     def valueList: valueList
+    type valueList <: List
 
      def equivTo[that <: Map, ve <: Equiv](that: that, ve: ve): equivTo[that, ve]
     type equivTo[that <: Map, ve <: Equiv] <: Boolean

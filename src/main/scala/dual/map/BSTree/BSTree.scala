@@ -74,14 +74,14 @@ final case class Nil[o <: Ordering](override val ord: o) extends BSTree {
     override  def remove[k <: Any](k: k): remove[k] = self
     override type remove[k <: Any]                  = self
 
-    override  def toSeq: toSeq = seq.Nil
-    override type toSeq        = seq.Nil
+    override  def toList: toList = list.Nil
+    override type toList         = list.Nil
 
-    override  def keySeq: keySeq = seq.Nil
-    override type keySeq         = seq.Nil
+    override  def keyList: keyList = list.Nil
+    override type keyList          = list.Nil
 
-    override  def valueSeq: valueSeq = seq.Nil
-    override type valueSeq           = seq.Nil
+    override  def valueList: valueList = list.Nil
+    override type valueList            = list.Nil
 
     override  def undual: undual = scala.collection.immutable.Map.empty
 }
@@ -117,17 +117,17 @@ final case class Node[k <: Any, v <: Any, l <: BSTree, r <: BSTree](
     override  def remove[k <: Any](k: k): remove[k] = new NodeRemove().apply(self, k)
     override type remove[k <: Any] = NodeRemove#apply[self, k]
 
-    override  def toSeq: toSeq          = (self.left.toSeq ++ seq.single(Tuple2(self.key, self.value)) ++ self.right.toSeq).asInstanceOf[toSeq]
-    private type _toSeq[self <: BSTree] =  self#left#toSeq ++ seq.single[Tuple2[self#key, self#value]] ++ self#right#toSeq
-    override type toSeq = _toSeq[self]
+    override  def toList: toList         = (self.left.toList ++ list.single(Tuple2(self.key, self.value)) ++ self.right.toList).force.asInstanceOf[toList]
+    private type _toList[self <: BSTree] = (self#left#toList ++ list.single[Tuple2[self#key, self#value]] ++ self#right#toList)#force
+    override type toList = _toList[self]
 
-    override  def keySeq: keySeq        =  (self.left.keySeq ++ seq.single(self.key) ++ self.right.keySeq).asInstanceOf[keySeq]
-    private type _keySeq[self <: BSTree] =  self#left#keySeq ++ seq.single[self#key] ++ self#right#keySeq
-    override type keySeq = _keySeq[self]
+    override  def keyList: keyList        = (self.left.keyList ++ list.single(self.key) ++ self.right.keyList).force.asInstanceOf[keyList]
+    private type _keyList[self <: BSTree] = (self#left#keyList ++ list.single[self#key] ++ self#right#keyList)#force
+    override type keyList = _keyList[self]
 
-    override  def valueSeq: valueSeq      =  (self.left.valueSeq ++ seq.single(self.value) ++ self.right.valueSeq).asInstanceOf[valueSeq]
-    private type _valueSeq[self <: BSTree] =  self#left#valueSeq ++ seq.single[self#value] ++ self#right#valueSeq
-    override type valueSeq = _valueSeq[self]
+    override  def valueList: valueList      = (self.left.valueList ++ list.single(self.value) ++ self.right.valueList).force.asInstanceOf[valueList]
+    private type _valueList[self <: BSTree] = (self#left#valueList ++ list.single[self#value] ++ self#right#valueList)#force
+    override type valueList = _valueList[self]
 
     override  def undual: undual = (left.undual + (key.undual -> value.undual)) ++ right.undual
 }

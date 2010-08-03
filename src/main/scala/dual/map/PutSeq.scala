@@ -8,9 +8,9 @@ package com.github.okomok.mada
 package dual; package map
 
 
-private[mada] final class PutSeq {
-     def apply[m <: Map, xs <: Seq](m: m, xs: xs): apply[m, xs] = xs.foldLeft(m, Step()).asInstanceOfMap
-    type apply[m <: Map, xs <: Seq] = xs#foldLeft[m, Step]#asInstanceOfMap
+private[mada] final class PutList {
+     def apply[m <: Map, xs <: List](m: m, xs: xs): apply[m, xs] = xs.foldLeft(m, Step()).asInstanceOfMap
+    type apply[m <: Map, xs <: List] = xs#foldLeft[m, Step]#asInstanceOfMap
 
     case class Step() extends Function2 {
         type self = Step

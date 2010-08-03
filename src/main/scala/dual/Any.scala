@@ -40,6 +40,15 @@ trait Any extends scala.Equals {
     final def asInstanceOfFunction2: asInstanceOfFunction2 = this.asInstanceOf[asInstanceOfFunction2]
     type asInstanceOfFunction2 <: Function2
 
+    final def asInstanceOfList: asInstanceOfList = this.asInstanceOf[asInstanceOfList]
+    type asInstanceOfList <: List
+
+    final def asInstanceOfMap: asInstanceOfMap = this.asInstanceOf[asInstanceOfMap]
+    type asInstanceOfMap <: Map
+
+    final def asInstanceOfMapBSTree: asInstanceOfMapBSTree = this.asInstanceOf[asInstanceOfMapBSTree]
+    type asInstanceOfMapBSTree <: map.bstree.BSTree
+
     final def asInstanceOfNat: asInstanceOfNat = this.asInstanceOf[asInstanceOfNat]
     type asInstanceOfNat <: Nat
 
@@ -48,15 +57,6 @@ trait Any extends scala.Equals {
 
     final def asInstanceOfNatPeano: asInstanceOfNatPeano = this.asInstanceOf[asInstanceOfNatPeano]
     type asInstanceOfNatPeano <: nat.Peano
-
-    final def asInstanceOfMap: asInstanceOfMap = this.asInstanceOf[asInstanceOfMap]
-    type asInstanceOfMap <: Map
-
-    final def asInstanceOfMapBSTree: asInstanceOfMapBSTree = this.asInstanceOf[asInstanceOfMapBSTree]
-    type asInstanceOfMapBSTree <: map.bstree.BSTree
-
-    final def asInstanceOfSeq: asInstanceOfSeq = this.asInstanceOf[asInstanceOfSeq]
-    type asInstanceOfSeq <: Seq
 
     final def asInstanceOfSet: asInstanceOfSet = this.asInstanceOf[asInstanceOfSet]
     type asInstanceOfSet <: Set

@@ -21,16 +21,17 @@ class SplitAtTest extends org.scalatest.junit.JUnit3Suite {
         val xs: xs = _5 :: _6 :: _7 :: _8 :: _9 :: Nil
         type u = xs#splitAt[_3]
         val u: u = xs.splitAt(_3)
-        meta.assertSame[Tuple2[_5 :: _6 :: _7 :: Nil, _8 :: _9 :: Nil], u]
+        meta.assertSame[Tuple2[_5 :: _6 :: _7 :: Nil, _8 :: _9 :: Nil], list.force2[u]]
         assertEquals(Tuple2(_5 :: _6 :: _7 :: Nil, _8 :: _9 :: Nil), u)
     }
+
 
     def testTakeAll {
         type xs = _5 :: _6 :: _7 :: _8 :: _9 :: Nil
         val xs: xs = _5 :: _6 :: _7 :: _8 :: _9 :: Nil
-        type u = xs#splitAt[_20]
-        val u: u = xs.splitAt(_20)
-        meta.assertSame[Tuple2[_5 :: _6 :: _7 :: _8 :: _9 :: Nil, Nil], u]
+        type u = xs#splitAt[_10# +[_10]]
+        val u: u = xs.splitAt(_10 + _10)
+        meta.assertSame[Tuple2[_5 :: _6 :: _7 :: _8 :: _9 :: Nil, Nil], list.force2[u]]
         assertEquals(Tuple2(_5 :: _6 :: _7 :: _8 :: _9 :: Nil, Nil), u)
     }
 
@@ -39,7 +40,7 @@ class SplitAtTest extends org.scalatest.junit.JUnit3Suite {
         val xs: xs = _5 :: _6 :: _7 :: _8 :: _9 :: Nil
         type u = xs#splitAt[_0]
         val u: u = xs.splitAt(_0)
-        meta.assertSame[Tuple2[Nil, _5 :: _6 :: _7 :: _8 :: _9 :: Nil], u]
+        meta.assertSame[Tuple2[Nil, _5 :: _6 :: _7 :: _8 :: _9 :: Nil], list.force2[u]]
         assertEquals(Tuple2(Nil, _5 :: _6 :: _7 :: _8 :: _9 :: Nil), u)
     }
 
@@ -48,8 +49,7 @@ class SplitAtTest extends org.scalatest.junit.JUnit3Suite {
         val xs: xs = Nil
         type u = xs#splitAt[_3]
         val u: u = xs.splitAt(_3)
-        meta.assertSame[Tuple2[Nil, Nil], u]
+        meta.assertSame[Tuple2[Nil, Nil], list.force2[u]]
         assertEquals(Tuple2(Nil, Nil), u)
     }
-
 }

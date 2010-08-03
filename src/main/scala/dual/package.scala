@@ -96,6 +96,23 @@ package object dual {
     type Throw0 = function.Throw0
 
 
+// List
+
+    @aliasOf("list.List")
+     val List = list.List
+    type List = list.List
+
+    @aliasOf("list.Nil")
+     val Nil = list.Nil
+    type Nil = list.Nil
+
+    @aliasOf("list.::")
+    type ::[x <: Any, xs <: List] = list.::[x, xs]
+
+    @aliasOf("list.++")
+    type ++[xs <: List, ys <: List] = list.++[xs, ys]
+
+
 // Nat
 
     @aliasOf("nat.Nat")
@@ -108,23 +125,6 @@ package object dual {
     @aliasOf("map.Map")
      val Map = map.Map
     type Map = map.Map
-
-
-// Seq
-
-    @aliasOf("seq.Seq")
-     val Seq = seq.Seq
-    type Seq = seq.Seq
-
-    @aliasOf("seq.Nil")
-     val Nil = seq.Nil
-    type Nil = seq.Nil
-
-    @aliasOf("seq.::")
-    type ::[x <: Any, xs <: Seq] = seq.::[x, xs]
-
-    @aliasOf("seq.++")
-    type ++[xs <: Seq, ys <: Seq] = seq.++[xs, ys]
 
 
 // Set

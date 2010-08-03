@@ -42,9 +42,9 @@ private[mada] final case class BSTreeFrom[m <: map.bstree.BSTree](override val i
     override  def contains[k <: Any](k: k): contains[k] = impl.contains(k)
     override type contains[k <: Any]                    = impl#contains[k]
 
-    override  def toSeq: toSeq         = self.impl.keySeq
-    private type _toSeq[self <: BSTree] = self#impl#keySeq
-    override type toSeq = _toSeq[self]
+    override  def toList: toList         = self.impl.keyList
+    private type _toList[self <: BSTree] = self#impl#keyList
+    override type toList = _toList[self]
 
     override  def undual: undual = impl.undual.keySet
 }

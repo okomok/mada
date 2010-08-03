@@ -27,7 +27,7 @@ class FlatMapTest extends org.scalatest.junit.JUnit3Suite {
         type xs = Box[Int] :: Box[String] :: Box[Char] :: Nil
         val xs: xs = Box(3) :: Box("hello") :: Box('a') :: Nil
         val u: xs#flatMap[oops] = xs.flatMap(oops)
-        val v: Box[Int] :: Box[String] :: Box[String] :: Box[String] :: Box[Char] :: Box[String] :: Nil = u
+        val v: Box[Int] :: Box[String] :: Box[String] :: Box[String] :: Box[Char] :: Box[String] :: Nil = u.force
         assertEquals(Box(3) :: Box("oops") :: Box("hello") :: Box("oops") :: Box('a') :: Box("oops")  :: Nil, v)
     }
 
@@ -35,7 +35,7 @@ class FlatMapTest extends org.scalatest.junit.JUnit3Suite {
         type xs = Nil
         val xs: xs = Nil
         val u: xs#flatMap[oops] = xs.flatMap(oops)
-        val v: Nil = u
+        val v: Nil = u.force
         ()
     }
 }
