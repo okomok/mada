@@ -13,7 +13,7 @@ package com.github.okomok.madatest; package dualtest
     import junit.framework.Assert._
 
     class DocTest extends org.scalatest.junit.JUnit3Suite {
-        // Define nullary met `not2`.
+        // Define nullary dualmethod `not2`.
         final class not2 extends dual.Function1 { // No meta-generics. `Function1` isn't parameterized.
             type self = not2 // `self` is the dual version of `this` reference. Manual setup is needed.
             // Again no meta-generics. Downcast is needed as you did in 90s.

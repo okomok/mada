@@ -51,13 +51,8 @@
 
 `dual` introduces a new way of Scala metaprogramming (now implicit parameters are unneeded!):
 
-    import com.github.okomok.mada.dual
-    import dual.::
-    import dual.nat.peano.Literal._
-    import junit.framework.Assert._
-
     class DocTest extends org.scalatest.junit.JUnit3Suite {
-        // Define dualvalue `not2`.
+        // Define nullary dualmethod `not2`.
         final class not2 extends dual.Function1 { // No meta-generics. `Function1` isn't parameterized.
             type self = not2 // `self` is the dual version of `this` reference. Manual setup is needed.
             // Again no meta-generics. Downcast is needed as you did in 90s.
@@ -83,16 +78,14 @@ For now, `dual` provides the dual version of `Nat`, `List`, `Map`, `Set`, `Order
 Terminology:
 
 * _metatype_ is a type which extends `dual.Any`. (capitalized in source code.)
-* _metavalue_ is an unextendable type which extends metatype.
-* _metamethod_ is a type constructor which takes metavalues.
-* _dualvalue_ is an identifier which can be used as both value and metavalue.
+* _metamethod_ is a type, or a type constructor.
 * _dualmethod_ is an identifier which can be used as both method and metamethod.
 
 The computational model of Scala metaprogramming (maybe):
 
 * Pure(no side-effects) and object-oriented.
 * The arguments to a metamethod are always evaluated completely before the metamethod is applied.
-* Global memoization (The type-expression is never evaluated more than once.)
+* Memoization in the while metamethod call tree. (superior than Haskell.)
 * No meta-`eq` (You can't tell two types are the same or not.)
 * Meta-generics doesn't work. (e.g. metatype can't be a parameter.)
 * Metamethod can't be re-overridden.
