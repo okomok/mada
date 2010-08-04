@@ -78,7 +78,7 @@ For now, `dual` provides the dual version of `Nat`, `List`, `Map`, `Set`, `Order
 Terminology:
 
 * _metatype_ is a type which extends `dual.Any`. (capitalized in source code.)
-* _metamethod_ is a type, or a type constructor.
+* _metamethod_ is a type, or a type constructor which takes a _metatype_.
 * _dualmethod_ is an identifier which can be used as both method and metamethod.
 
 The computational model of Scala metaprogramming (maybe):
