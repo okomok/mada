@@ -51,6 +51,11 @@
 
 `dual` introduces a new way of Scala metaprogramming (now implicit parameters are unneeded!):
 
+    import com.github.okomok.mada.dual
+    import dual.::
+    import dual.nat.peano.Literal._
+    import junit.framework.Assert._
+
     class DocTest extends org.scalatest.junit.JUnit3Suite {
         // Define nullary dualmethod `not2`.
         final class not2 extends dual.Function1 { // No meta-generics. `Function1` isn't parameterized.
@@ -78,7 +83,7 @@ For now, `dual` provides the dual version of `Nat`, `List`, `Map`, `Set`, `Order
 Terminology:
 
 * _metatype_ is a type which extends `dual.Any`. (capitalized in source code.)
-* _metamethod_ is a type, or a type constructor which takes a _metatype_.
+* _metamethod_ is a type, or a type constructor which takes a metatype.
 * _dualmethod_ is an identifier which can be used as both method and metamethod.
 
 The computational model of Scala metaprogramming (maybe):
