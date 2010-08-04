@@ -67,9 +67,10 @@
         val not2 = new not2
 
         def testTrivial {
-            // Filter heterogeneous list.
+            // Filter a heterogeneous list.
             type xs = _2 :: _3 :: _4 :: _2 :: _5 :: _6 :: _2 :: dual.Nil
-            dual.meta.assertSame[_3 :: _4 :: _5 :: _6 :: dual.Nil, xs#filter[not2]]
+            type fs = xs#filter[not2] // `filter` returns a view.
+            dual.meta.assertSame[_3 :: _4 :: _5 :: _6 :: dual.Nil, fs#force]
             // Because of duality, a runtime test might be unneeded.
             val xs: xs = _2 :: _3 :: _4 :: _2 :: _5 :: _6 :: _2 :: dual.Nil
             val fs: xs#filter[not2] = xs.filter(not2)
@@ -87,12 +88,15 @@ Terminology:
 * _dualvalue_ is an identifier which can be used as both value and metavalue.
 * _dualmethod_ is an identifier which can be used as both method and metamethod.
 
-In the Scala metaprogramming world:
+The computational model of Scala metaprogramming (maybe):
 
-* meta-`eq`(type identity equality) is infeasible.
-* meta-generics doesn't work. (e.g. metatype can't be a parameter.)
-* metatype is resurrected in parameter-nondependent context.
-* metamethod can't be re-overridden.
+* Pure(no side-effects) and object-oriented.
+* The arguments to a metamethod are always evaluated completely before the metamethod is applied.
+* Global memoization (The type-expression is never evaluated more than once.)
+* No meta-`eq` (You can't tell two types are the same or not.)
+* Meta-generics doesn't work. (e.g. metatype can't be a parameter.)
+* Metamethod can't be re-overridden.
+* Metatype is resurrected in parameter-nondependent context.
 
 References:
 

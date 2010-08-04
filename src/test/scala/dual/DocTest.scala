@@ -13,7 +13,7 @@ package com.github.okomok.madatest; package dualtest
     import junit.framework.Assert._
 
     class DocTest extends org.scalatest.junit.JUnit3Suite {
-        // Define dualvalue `not2`.
+        // Define nullary met `not2`.
         final class not2 extends dual.Function1 { // No meta-generics. `Function1` isn't parameterized.
             type self = not2 // `self` is the dual version of `this` reference. Manual setup is needed.
             // Again no meta-generics. Downcast is needed as you did in 90s.
@@ -23,9 +23,10 @@ package com.github.okomok.madatest; package dualtest
         val not2 = new not2
 
         def testTrivial {
-            // Filter heterogeneous list.
+            // Filter a heterogeneous list.
             type xs = _2 :: _3 :: _4 :: _2 :: _5 :: _6 :: _2 :: dual.Nil
-            dual.meta.assertSame[_3 :: _4 :: _5 :: _6 :: dual.Nil, xs#filter[not2]#force]
+            type fs = xs#filter[not2] // `filter` returns a view.
+            dual.meta.assertSame[_3 :: _4 :: _5 :: _6 :: dual.Nil, fs#force]
             // Because of duality, a runtime test might be unneeded.
             val xs: xs = _2 :: _3 :: _4 :: _2 :: _5 :: _6 :: _2 :: dual.Nil
             val fs: xs#filter[not2] = xs.filter(not2)
