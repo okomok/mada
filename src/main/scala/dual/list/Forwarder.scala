@@ -136,6 +136,12 @@ trait Forwarder extends List {
 
     final override  def force: force = around(delegate.force)
     final override type force        = around[delegate#force]
+
+    final override  def step[n <: Nat](n: n): step[n] = around(delegate.step(n))
+    final override type step[n <: Nat]                = around[delegate#step[n]]
+
+    final override  def times[n <: Nat](n: n): times[n] = around(delegate.times(n))
+    final override type times[n <: Nat]                = around[delegate#times[n]]
 }
 
 

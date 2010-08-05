@@ -149,4 +149,12 @@ trait AbstractList extends List {
     final override  def force: force  = new Force(self).apply
     private type _force[self <: List] =     Force[self]#apply
     final override type force = _force[self]
+
+    final override  def step[n <: Nat](n: n): step[n] = new Step(self, n)
+    private type _step[self <: List, n <: Nat]        =     Step[self, n]
+    final override type step[n <: Nat] = _step[self, n]
+
+    final override  def times[n <: Nat](n: n): times[n] = new Times(self, n)
+    private type _times[self <: List, n <: Nat]         =     Times[self, n]
+    final override type times[n <: Nat] = _times[self, n]
 }

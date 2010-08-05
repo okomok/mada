@@ -14,7 +14,7 @@ trait Common {
      * Makes a List Equiv from element Equiv.
      */
      def eqv[ee <: Equiv](ee: ee): eqv[ee] = new Eqv(ee)
-    type eqv[ee <: Equiv] = Eqv[ee]
+    type eqv[ee <: Equiv]                  =     Eqv[ee]
 
     @equivalentTo("new Nil{}")
      val Nil = _Nil.value
@@ -28,6 +28,18 @@ trait Common {
     @equivalentTo("Nil.::(x)")
      def single[x <: Any](x: x): single[x] = Nil. ::(x)
     type single[x <: Any]                  = Nil# ::[x]
+
+     def range[n <: Nat, m <: Nat](n: n, m: m): range[n, m] = new Range(n, m)
+    type range[n <: Nat, m <: Nat]                          =     Range[n, m]
+
+     def iterate[z <: Any, f <: Function1](z: z, f: f): iterate[z, f] = new Iterate(z, f).apply
+    type iterate[z <: Any, f <: Function1]                            =     Iterate[z, f]#apply
+
+     def unfoldRight[z <: Any, f <: Function1](z: z, f: f): unfoldRight[z, f] = new UnfoldRight(z, f)
+    type unfoldRight[z <: Any, f <: Function1]                                =     UnfoldRight[z, f]
+
+     def repeat[z <: Any](z: z): repeat[z] = new Repeat(z).apply
+    type repeat[z <: Any]                  =     Repeat[z]#apply
 
     /**
      * Forces tuple elements.

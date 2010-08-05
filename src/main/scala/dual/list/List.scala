@@ -141,6 +141,12 @@ trait List extends Any {
      def force: force
     type force <: List
 
+     def step[n <: Nat](n: n): step[n]
+    type step[n <: Nat] <: List
+
+     def times[n <: Nat](n: n): times[n]
+    type times[n <: Nat] <: List
+
     final override  def undual: undual = if (isEmpty.undual) scala.collection.immutable.Nil else (head.undual :: tail.undual)
     final override type undual = scala.collection.immutable.List[scala.Any]
 
