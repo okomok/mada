@@ -25,6 +25,16 @@ object Unmeta {
     }
 
 
+// List
+
+    implicit val _ofListNil = new Unmeta[list.Nil] {
+        override def apply: list.Nil = list.Nil
+    }
+    implicit def _ofListCons[x <: Any, xs <: list.List](implicit _unmetaX: Unmeta[x], _unmetaXS: Unmeta[xs]) = new Unmeta[list.Cons[x, xs]] {
+        override def apply: list.Cons[x, xs] = new list.Cons(_unmetaX.apply, _unmetaXS.apply)
+    }
+
+
 // nat.Peano
 
     implicit val _ofNatPeanoZero = new Unmeta[nat.peano.Zero] {

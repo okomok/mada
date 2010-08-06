@@ -25,9 +25,6 @@ trait Any extends scala.Equals {
 //    final  def isInstanceOfBoolean: isInstanceOfBoolean = checkInstance(boolean._Boolean.typeid)
 //    final type isInstanceOfBoolean = checkInstance[boolean._Boolean.typeid]
 
-    final def asInstanceOfBox: asInstanceOfBox = this.asInstanceOf[asInstanceOfBox]
-    type asInstanceOfBox <: Box[_]
-
     final def asInstanceOfEither: asInstanceOfEither = this.asInstanceOf[asInstanceOfEither]
     type asInstanceOfEither <: Either
 
@@ -107,14 +104,14 @@ trait Any extends scala.Equals {
     /**
      * Trivial helper to throw UnsupportedOperationException
      */
-    protected  def unsupported(what: Predef.String): unsupported[_] = `throw`(new UnsupportedOperationException("dual." + what))
-    protected type unsupported[_] = `throw`[_]
+    protected  def unsupported(what: Predef.String): unsupported[_] = throw new UnsupportedOperationException("dual." + what)
+    protected type unsupported[_] = Nothing
 
     /**
      * Trivial helper to throw UnsupportedOperationException
      */
-    protected  def noSuchElement(what: Predef.String): noSuchElement[_] = `throw`(new NoSuchElementException("dual." + what))
-    protected type noSuchElement[_] = `throw`[_]
+    protected  def noSuchElement(what: Predef.String): noSuchElement[_] = throw new NoSuchElementException("dual." + what)
+    protected type noSuchElement[_] = Nothing
 
 //    private  def checkInstance[id <: nat.Dense](id: id): checkInstance[id] = (typeid & id).isZero.not
 //    private type checkInstance[id <: nat.Dense] = typeid# &[id]#isZero#not

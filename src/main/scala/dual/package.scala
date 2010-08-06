@@ -14,43 +14,6 @@ import annotation.elidable.ASSERTION
 package object dual {
 
 
-// util
-
-    /**
-     * The dual throw
-     */
-     def `throw`[x <: scala.Throwable](x: x): `throw`[x] = throw x
-    type `throw`[x <: scala.Throwable] = Nothing
-
-    /**
-     * The dual boxing
-     */
-     def box[x](x: x): box[x] = Box(x)
-    type box[x] = Box[x]
-
-    /**
-     * Returns corresponding runtime value.
-     */
-     def unmeta[x <: Any](implicit _unmeta: Unmeta[x]): x = _unmeta.apply
-
-
-// assertions
-
-    /**
-     * assertion
-     */
-    @elidable(ASSERTION)
-     def assert[c <: Boolean](c: c): assert[c] = { if (!c.undual) throw new java.lang.AssertionError("dual.assert"); Unit }
-    type assert[c <: Boolean] = Unit
-
-    /**
-     * negative assertion
-     */
-    @elidable(ASSERTION)
-     def assertNot[c <: Boolean](c: c): assert[c] = { if (c.undual) throw new java.lang.AssertionError("dual.assertNot"); Unit }
-    type assertNot[c <: Boolean] = Unit
-
-
 // Boolean
 
     @aliasOf("boolean.Boolean")
@@ -66,8 +29,10 @@ package object dual {
     type `false` = boolean.`false`
 
     @aliasOf("boolean.`if`")
-     def `if`[c <: Boolean, then <: Function0, _else <: Function0](c: c, then: then, _else: _else): `if`[c, then, _else] = boolean.`if`(c, then, _else)
-    type `if`[c <: Boolean, then <: Function0, _else <: Function0] = boolean.`if`[c, then, _else]
+     def `if`[c <: Boolean, then <: Function0, _else <: Function0](c: c, then: then, _else: _else): `if`[c, then, _else] =
+        boolean.`if`(c, then, _else)
+    type `if`[c <: Boolean, then <: Function0, _else <: Function0] =
+        boolean.`if`[c, then, _else]
 
 
 // Either
@@ -174,5 +139,33 @@ package object dual {
 
     @equivalentTo("new Unit{}")
     val Unit: Unit = _Unit.value
+
+
+// assertions
+
+    /**
+     * assertion (metamethod is not implemented yet.)
+     */
+    @elidable(ASSERTION)
+     def assert[c <: Boolean](c: c): Unit = {
+         if (!c.undual) throw new java.lang.AssertionError("dual.assert")
+         Unit
+    }
+    // type assert[c <: Boolean] = How?
+
+    /**
+     * negative assertion (metamethod is not implemented yet.)
+     */
+    @elidable(ASSERTION)
+     def assertNot[c <: Boolean](c: c): Unit = assert(c.not)
+    // type assertNot[c <: Boolean]                  = assert[c#not]
+
+
+// util
+
+    /**
+     * Returns corresponding runtime value.
+     */
+     def unmeta[x <: Any](implicit _unmeta: Unmeta[x]): x = _unmeta.apply
 
 }

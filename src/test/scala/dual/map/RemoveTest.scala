@@ -21,8 +21,8 @@ class RemoveTest extends org.scalatest.junit.JUnit3Suite {
         type o = nat.ord
         val o: o = nat.ord
 
-        type m = map.sorted[o]#put[_3, box[Int]]#put[_5, box[Char]]#put[_1, box[String]]
-        val m: m = map.sorted(o).put(_3, box(3)).put(_5, box('c')).put(_1, box("wow"))
+        type m = map.sorted[o]#put[_3, Box[Int]]#put[_5, Box[Char]]#put[_1, Box[String]]
+        val m: m = map.sorted(o).put(_3, Box(3)).put(_5, Box('c')).put(_1, Box("wow"))
         AssertInvariant(m)
 
         type rm = m#remove[_5]
