@@ -101,8 +101,8 @@ sealed class Nil extends Dense {
     override  def **[that <: Nat](that: that): **[that] = self
     override type **[that <: Nat]                       = self
 
-    override  def ^[that <: Nat](that: that): ^[that] = `if`(that.isZero, Const0(_1), Const0(self)).apply.asInstanceOfNatDense
-    private type _exp[self <: Dense, that <: Nat]     = `if`[that#isZero, Const0[_1], Const0[self]]#apply#asInstanceOfNatDense
+    override  def ^[that <: Nat](that: that): ^[that] = `if`(that.isZero, const0(_1), const0(self)).apply.asInstanceOfNatDense
+    private type _exp[self <: Dense, that <: Nat]     = `if`[that#isZero, const0[_1], const0[self]]#apply#asInstanceOfNatDense
     override type ^[that <: Nat] = _exp[self, that]
 
     override  def shiftLeft: shiftLeft = self
@@ -170,6 +170,7 @@ final case class Cons[x <: Boolean, xs <: Dense](override val head: x, override 
 }
 
 
-private[mada] object _Dense {
+private[dual]
+object _Dense {
     val Nil = new Nil{}
 }

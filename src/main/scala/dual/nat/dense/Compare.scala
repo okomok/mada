@@ -8,16 +8,17 @@ package com.github.okomok.mada
 package dual; package nat; package dense
 
 
-private[mada] final class Equals {
+private[dual]
+final class Equals {
      def apply[xs <: Dense, ys <: Dense](xs: xs, ys: ys): apply[xs, ys] =
-        Match(xs, ys, Const0(`true`), Const0(`false`), Const0(`false`), CaseCC(xs, ys)).apply.asInstanceOfBoolean
+        Match(xs, ys, const0(`true`), const0(`false`), const0(`false`), CaseCC(xs, ys)).apply.asInstanceOfBoolean
     type apply[xs <: Dense, ys <: Dense] =
-        Match[xs, ys, Const0[`true`], Const0[`false`], Const0[`false`], CaseCC[xs, ys]]#apply#asInstanceOfBoolean
+        Match[xs, ys, const0[`true`], const0[`false`], const0[`false`], CaseCC[xs, ys]]#apply#asInstanceOfBoolean
 
     case class CaseCC[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
         type self = CaseCC[xs, ys]
-        override  def apply: apply = `if`(xs.head !== ys.head, Const0(`false`), Else(xs, ys)).apply.asInstanceOf[apply]
-        override type apply = `if`[xs#head# !==[ys#head], Const0[`false`], Else[xs, ys]]#apply
+        override  def apply: apply = `if`(xs.head !== ys.head, const0(`false`), Else(xs, ys)).apply.asInstanceOf[apply]
+        override type apply = `if`[xs#head# !==[ys#head], const0[`false`], Else[xs, ys]]#apply
     }
 
     // for short-circuit.
@@ -29,12 +30,13 @@ private[mada] final class Equals {
 }
 
 
-private[mada] final class LessThan {
+private[dual]
+final class LessThan {
      def apply[xs <: Dense, ys <: Dense](xs: xs, ys: ys): apply[xs, ys] =
-        Match(xs, ys, Const0(`false`), Const0(`true`), Const0(`false`),
+        Match(xs, ys, const0(`false`), const0(`true`), const0(`false`),
             ConsMatch(xs, ys, CaseXXorTF(xs, ys), CaseXXorTF(xs, ys), CaseFT(xs, ys), CaseXXorTF(xs, ys))).apply.asInstanceOfBoolean.asInstanceOf[apply[xs, ys]]
     type apply[xs <: Dense, ys <: Dense] =
-        Match[xs, ys, Const0[`false`], Const0[`true`], Const0[`false`],
+        Match[xs, ys, const0[`false`], const0[`true`], const0[`false`],
             ConsMatch[xs, ys, CaseXXorTF[xs, ys], CaseXXorTF[xs, ys], CaseFT[xs, ys], CaseXXorTF[xs, ys]]]#apply#asInstanceOfBoolean
 
     case class CaseXXorTF[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {

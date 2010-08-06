@@ -8,12 +8,13 @@ package com.github.okomok.mada
 package dual; package nat; package dense
 
 
-private[mada] final class Add {
+private[dual]
+final class Add {
      def apply[xs <: Dense, ys <: Dense](xs: xs, ys: ys): apply[xs, ys] =
-        Match(xs, ys, Const0(Nil), Const0(ys), Const0(xs),
+        Match(xs, ys, const0(Nil), const0(ys), const0(xs),
             ConsMatch(xs, ys, CaseTT(xs, ys), CaseXF(xs, ys), CaseFX(xs, ys), CaseXF(xs, ys))).apply.asInstanceOfNatDense.asInstanceOf[apply[xs, ys]]
     type apply[xs <: Dense, ys <: Dense] =
-        Match[xs, ys, Const0[Nil], Const0[ys], Const0[xs],
+        Match[xs, ys, const0[Nil], const0[ys], const0[xs],
             ConsMatch[xs, ys, CaseTT[xs, ys], CaseXF[xs, ys], CaseFX[xs, ys], CaseXF[xs, ys]]]#apply#asInstanceOfNatDense
 
     case class CaseTT[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {

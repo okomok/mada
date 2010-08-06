@@ -11,8 +11,8 @@ package dual; package list
 final class Last[xs <: List](xs: xs) extends Function0 {
     type self = Last[xs]
 
-    override  def apply: apply = `if`(xs.tail.isEmpty, Const0(xs.head), new Else).apply.asInstanceOf[apply]
-    override type apply        = `if`[xs#tail#isEmpty, Const0[xs#head],     Else]#apply
+    override  def apply: apply = `if`(xs.tail.isEmpty, const0(xs.head), new Else).apply.asInstanceOf[apply]
+    override type apply        = `if`[xs#tail#isEmpty, const0[xs#head],     Else]#apply
 
     class Else extends Function0 {
         type self = Else

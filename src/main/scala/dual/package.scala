@@ -87,13 +87,13 @@ package object dual {
 
 // Function
 
-    @aliasOf("function.Const0")
-     val Const0 = function.Const0
-    type Const0[x <: Any] = function.Const0[x]
+    @aliasOf("function.const0")
+     def const0[v <: Any](v: => v): const0[v] = function.const0(v)
+    type const0[v <: Any]                     = function.const0[v]
 
-    @aliasOf("function.Throw0")
-     val Throw0 = function.Throw0
-    type Throw0 = function.Throw0
+    @aliasOf("function.throw0")
+     def throw0(x: Throwable) = function.throw0(x)
+    type throw0[_]            = function.throw0[_]
 
 
 // List

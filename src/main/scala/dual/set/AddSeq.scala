@@ -8,7 +8,8 @@ package com.github.okomok.mada
 package dual; package set
 
 
-private[mada] final class AddList {
+private[dual]
+final class AddList {
      def apply[s <: Set, xs <: List](s: s, xs: xs): apply[s, xs] = xs.foldLeft(s, Step()).asInstanceOfSet
     type apply[s <: Set, xs <: List] = xs#foldLeft[s, Step]#asInstanceOfSet
 

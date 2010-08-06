@@ -8,10 +8,11 @@ package com.github.okomok.mada
 package dual; package function
 
 
-final case class Curried2[f <: Function2](f: f) extends Function1 {
+private[dual]
+final class Curried2[f <: Function2](f: f) extends Function1 {
     type self = Curried2[f]
     override  def apply[v1 <: Any](v1: v1): apply[v1] = new Apply(v1)
-    override type apply[v1 <: Any] = Apply[v1]
+    override type apply[v1 <: Any]                    =     Apply[v1]
 
     class Apply[v1 <: Any](v1: v1) extends Function1 {
         type self = Apply[v1]

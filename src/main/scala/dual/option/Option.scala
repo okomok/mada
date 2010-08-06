@@ -56,7 +56,8 @@ sealed abstract class Option extends Any {
 }
 
 
-private[mada] sealed abstract class AbstractOption extends Option {
+private[dual]
+sealed abstract class AbstractOption extends Option {
     final override  def nonEmpty: nonEmpty = isEmpty.not
     final override type nonEmpty           = isEmpty#not
 
@@ -65,8 +66,8 @@ private[mada] sealed abstract class AbstractOption extends Option {
 
     final override type foreach[f <: Function1] = Unit
 
-    final override  def orElse[f <: Function0](f: f): orElse[f] = `if`(isEmpty, f, Const0(self)).apply.asInstanceOfOption
-    final override type orElse[f <: Function0]                  = `if`[isEmpty, f, Const0[self]]#apply#asInstanceOfOption
+    final override  def orElse[f <: Function0](f: f): orElse[f] = `if`(isEmpty, f, const0(self)).apply.asInstanceOfOption
+    final override type orElse[f <: Function0]                  = `if`[isEmpty, f, const0[self]]#apply#asInstanceOfOption
 }
 
 
@@ -125,8 +126,8 @@ final case class Some[e <: Any](override val get: e) extends AbstractOption {
     override  def flatMap[f <: Function1](f: f): flatMap[f] = f.apply(get).asInstanceOfOption
     override type flatMap[f <: Function1]                   = f#apply[get]#asInstanceOfOption
 
-    override  def filter[f <: Function1](f: f): filter[f] = `if`(f.apply(get).asInstanceOfBoolean, Const0(self), Const0(None)).apply.asInstanceOfOption
-    override type filter[f <: Function1]                  = `if`[f#apply[get]#asInstanceOfBoolean, Const0[self], Const0[None]]#apply#asInstanceOfOption
+    override  def filter[f <: Function1](f: f): filter[f] = `if`(f.apply(get).asInstanceOfBoolean, const0(self), const0(None)).apply.asInstanceOfOption
+    override type filter[f <: Function1]                  = `if`[f#apply[get]#asInstanceOfBoolean, const0[self], const0[None]]#apply#asInstanceOfOption
 
     override  def exists[f <: Function1](f: f): exists[f] = f.apply(get).asInstanceOfBoolean
     override type exists[f <: Function1]                  = f#apply[get]#asInstanceOfBoolean
@@ -138,6 +139,7 @@ final case class Some[e <: Any](override val get: e) extends AbstractOption {
 }
 
 
-private[mada] object _Option {
+private[dual]
+object _Option {
     val None = new None{}
 }

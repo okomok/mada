@@ -8,7 +8,8 @@ package com.github.okomok.mada
 package dual; package map; package bstree
 
 
-private[mada] final class NodeGet {
+private[dual]
+final class NodeGet {
      def apply[m <: BSTree, k <: Any](m: m, k: k): apply[m, k] =
         m.ord.`match`(k, m.key, CaseLT(m, k), CaseGT(m, k), CaseEQ(m, k)).asInstanceOfOption.asInstanceOf[apply[m, k]]
     type apply[m <: BSTree, k <: Any] =

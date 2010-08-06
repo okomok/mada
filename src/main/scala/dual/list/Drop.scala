@@ -12,9 +12,9 @@ final class Drop[xs <: List, n <: Nat](xs: xs, n: n) extends TrivialForwarder {
     type self = Drop[xs, n]
 
     override protected lazy val delegate: delegate =
-        `if`(xs.isEmpty  || n.isZero,  Const0(xs), new Else).apply.asInstanceOfList.asInstanceOf[delegate]
+        `if`(xs.isEmpty  || n.isZero,  const0(xs), new Else).apply.asInstanceOfList.asInstanceOf[delegate]
     override protected type delegate =
-        `if`[xs#isEmpty# ||[n#isZero], Const0[xs],     Else]#apply#asInstanceOfList
+        `if`[xs#isEmpty# ||[n#isZero], const0[xs],     Else]#apply#asInstanceOfList
 
     class Else extends Function0 {
         type self = Else
@@ -28,14 +28,14 @@ final class DropWhile[xs <: List, f <: Function1](xs: xs, f: f) extends TrivialF
     type self = DropWhile[xs, f]
 
     override protected lazy val delegate: delegate =
-        `if`(xs.isEmpty, Const0(xs), new Else).apply.asInstanceOfList
+        `if`(xs.isEmpty, const0(xs), new Else).apply.asInstanceOfList
     override protected type delegate =
-        `if`[xs#isEmpty, Const0[xs],     Else]#apply#asInstanceOfList
+        `if`[xs#isEmpty, const0[xs],     Else]#apply#asInstanceOfList
 
     class Else extends Function0 {
         type self = Else
-        override  def apply: apply = `if`(f.apply(xs.head).asInstanceOfBoolean, new ElseThen, Const0(xs)).apply.asInstanceOf[apply]
-        override type apply        = `if`[f#apply[xs#head]#asInstanceOfBoolean,     ElseThen, Const0[xs]]#apply
+        override  def apply: apply = `if`(f.apply(xs.head).asInstanceOfBoolean, new ElseThen, const0(xs)).apply.asInstanceOf[apply]
+        override type apply        = `if`[f#apply[xs#head]#asInstanceOfBoolean,     ElseThen, const0[xs]]#apply
     }
 
     class ElseThen extends Function0 {

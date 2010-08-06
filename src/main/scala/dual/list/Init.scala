@@ -11,8 +11,8 @@ package dual; package list
 final class Init[xs <: List](xs: xs) extends AbstractList {
     type self = Init[xs]
 
-    private lazy val ys: ys = `if`(xs.tail.isEmpty, Const0(Nil), Const0(xs)).apply.asInstanceOfList
-    private type ys         = `if`[xs#tail#isEmpty, Const0[Nil], Const0[xs]]#apply#asInstanceOfList
+    private lazy val ys: ys = `if`(xs.tail.isEmpty, const0(Nil), const0(xs)).apply.asInstanceOfList
+    private type ys         = `if`[xs#tail#isEmpty, const0[Nil], const0[xs]]#apply#asInstanceOfList
 
     override  def isEmpty: isEmpty = ys.isEmpty
     override type isEmpty          = ys#isEmpty

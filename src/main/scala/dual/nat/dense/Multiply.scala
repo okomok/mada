@@ -8,7 +8,8 @@ package com.github.okomok.mada
 package dual; package nat; package dense
 
 
-private[mada] final class ConsMultiply {
+private[dual]
+final class ConsMultiply {
      def apply[x <: Boolean, xs <: Dense, ys <: Dense](x: x, xs: xs, ys: ys): apply[x, xs, ys] =
         `if`(x, Then(x, xs, ys), Else(x, xs, ys)).apply.asInstanceOfNatDense
     type apply[x <: Boolean, xs <: Dense, ys <: Dense] =

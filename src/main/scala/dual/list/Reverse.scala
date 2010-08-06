@@ -12,9 +12,9 @@ final class ReverseAppend[xs <: List, ys <: List](xs: xs, ys: ys) extends Trivia
     type self = ReverseAppend[xs, ys]
 
     override protected lazy val delegate: delegate =
-        `if`(xs.isEmpty, Const0(ys), new Else).apply.asInstanceOfList
+        `if`(xs.isEmpty, const0(ys), new Else).apply.asInstanceOfList
     override protected type delegate =
-        `if`[xs#isEmpty, Const0[ys],     Else]#apply#asInstanceOfList
+        `if`[xs#isEmpty, const0[ys],     Else]#apply#asInstanceOfList
 
     class Else extends Function0 {
         type self = Else

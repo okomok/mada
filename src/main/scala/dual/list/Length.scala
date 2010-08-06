@@ -14,8 +14,8 @@ import nat.dense._0
 final class Length[xs <: List](xs: xs) extends Function0 {
     type self = Length[xs]
 
-    override  def apply: apply = `if`(xs.isEmpty, Const0(_0), new Else).apply.asInstanceOfNat
-    override type apply        = `if`[xs#isEmpty, Const0[_0],     Else]#apply#asInstanceOfNat
+    override  def apply: apply = `if`(xs.isEmpty, const0(_0), new Else).apply.asInstanceOfNat
+    override type apply        = `if`[xs#isEmpty, const0[_0],     Else]#apply#asInstanceOfNat
 
     class Else extends Function0 {
         type self = Else

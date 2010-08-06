@@ -36,18 +36,19 @@ sealed abstract class Boolean extends Any {
      def `if`[then <: Function0, _else <: Function0](then: then, _else: _else): `if`[then, _else]
     type `if`[then <: Function0, _else <: Function0] <: Function0
 
-    private[mada]  def isTrue: isTrue
-    private[mada] type isTrue <: Boolean
+    private[dual]  def isTrue: isTrue
+    private[dual] type isTrue <: Boolean
 
-    private[mada]  def isFalse: isFalse
-    private[mada] type isFalse <: Boolean
+    private[dual]  def isFalse: isFalse
+    private[dual] type isFalse <: Boolean
 
     final override type undual = scala.Boolean
     final override def canEqual(that: scala.Any) = that.isInstanceOf[Boolean]
 }
 
 
-private[mada] sealed abstract class AbstractBoolean extends Boolean {
+private[dual]
+sealed abstract class AbstractBoolean extends Boolean {
     final override  def !==[that <: Boolean](that: that): !==[that] = ===(that).not
     final override type !==[that <: Boolean] =                        ===[that]#not
 
@@ -79,11 +80,11 @@ sealed abstract class `true` extends AbstractBoolean {
 
     override def undual: undual = true
 
-    override private[mada]  def isTrue: isTrue = `true`
-    override private[mada] type isTrue         = `true`
+    override private[dual]  def isTrue: isTrue = `true`
+    override private[dual] type isTrue         = `true`
 
-    override private[mada]  def isFalse: isFalse = `false`
-    override private[mada] type isFalse          = `false`
+    override private[dual]  def isFalse: isFalse = `false`
+    override private[dual] type isFalse          = `false`
 }
 
 
@@ -110,15 +111,16 @@ sealed abstract class `false` extends AbstractBoolean {
 
     override def undual: undual = false
 
-    override private[mada]  def isTrue: isTrue = `false`
-    override private[mada] type isTrue         = `false`
+    override private[dual]  def isTrue: isTrue = `false`
+    override private[dual] type isTrue         = `false`
 
-    override private[mada]  def isFalse: isFalse = `true`
-    override private[mada] type isFalse          = `true`
+    override private[dual]  def isFalse: isFalse = `true`
+    override private[dual] type isFalse          = `true`
 }
 
 
-private[mada] object _Boolean {
+private[dual]
+object _Boolean {
     val `true` = new `true`{}
     val `false` = new `false`{}
 

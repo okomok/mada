@@ -8,7 +8,8 @@ package com.github.okomok.mada
 package dual; package nat; package dense
 
 
-private[mada] final class DivMod {
+private[dual]
+final class DivMod {
      def apply[x <: Dense, y <: Dense](x: x, y: y): apply[x, y] =
         `if`(y.size  < x.size,  Then(x, y), Else(x, y)).apply.asInstanceOfProduct2.asInstanceOf[apply[x, y]]
     type apply[x <: Dense, y <: Dense] =
@@ -53,8 +54,8 @@ private[mada] final class DivMod {
 
     case class Else[x <: Dense, y <: Dense](x: x, y: y) extends Function0 {
         type self = Else[x, y]
-        override  def apply: apply = `if`(x  < y,  Const0(Tuple2(Nil, x)), ElseElse(x, y)).apply
-        override type apply        = `if`[x# <[y], Const0[Tuple2[Nil, x]], ElseElse[x, y]]#apply
+        override  def apply: apply = `if`(x  < y,  const0(Tuple2(Nil, x)), ElseElse(x, y)).apply
+        override type apply        = `if`[x# <[y], const0[Tuple2[Nil, x]], ElseElse[x, y]]#apply
     }
 
     case class ElseElse[x <: Dense, y <: Dense](x: x, y: y) extends Function0 {
@@ -65,7 +66,8 @@ private[mada] final class DivMod {
 }
 
 
-private[mada] final class ConsShiftLeftBy {
+private[dual]
+final class ConsShiftLeftBy {
      def apply[x <: Dense, n <: Peano](x: x, n: n): apply[x, n] = n.foldRight(x, Step()).asInstanceOfNatDense
     type apply[x <: Dense, n <: Peano] = n#foldRight[x, Step]#asInstanceOfNatDense
 

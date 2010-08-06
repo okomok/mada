@@ -16,7 +16,8 @@ sealed trait BSTree extends AbstractSet {
 }
 
 
-private[mada] final case class BSTreeFrom[m <: map.bstree.BSTree](override val impl: m) extends BSTree {
+private[dual]
+final case class BSTreeFrom[m <: map.bstree.BSTree](override val impl: m) extends BSTree {
     type self = BSTreeFrom[m]
 
     override type impl = m

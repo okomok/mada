@@ -8,12 +8,13 @@ package com.github.okomok.mada
 package dual; package nat; package dense
 
 
-private[mada] final class Subtract {
+private[dual]
+final class Subtract {
      def apply[xs <: Dense, ys <: Dense](xs: xs, ys: ys): apply[xs, ys] =
         new _Match().apply(xs, ys,
-            Const0(Nil),
-            Throw0(new UnsupportedOperationException("dual.nat.dense.Nil.subtract positive")),
-            Const0(xs),
+            const0(Nil),
+            throw0(new UnsupportedOperationException("dual.nat.dense.Nil.subtract positive")),
+            const0(xs),
             ConsMatch(xs, ys,
                 CaseXX(xs, ys),
                 CaseTF(xs, ys),
@@ -24,9 +25,9 @@ private[mada] final class Subtract {
 
     type apply[xs <: Dense, ys <: Dense] =
         _Match#apply[xs, ys,
-            Const0[Nil],
-            Throw0,
-            Const0[xs],
+            const0[Nil],
+            throw0[_],
+            const0[xs],
             ConsMatch[xs, ys,
                 CaseXX[xs, ys],
                 CaseTF[xs, ys],

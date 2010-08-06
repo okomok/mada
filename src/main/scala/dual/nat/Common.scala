@@ -8,7 +8,8 @@ package com.github.okomok.mada
 package dual; package nat
 
 
-private[mada] class Common {
+private[dual]
+class Common {
     @aliasOf("dense.Dense")
      val Dense = dense.Dense
     type Dense = dense.Dense
@@ -38,7 +39,8 @@ private[mada] class Common {
 object Operator extends OperatorCommon
 
 
-private[mada] trait OperatorCommon {
+private[dual]
+trait OperatorCommon {
     type  +[x <: Nat, y <: Nat] = x# +[y]
     type  -[x <: Nat, y <: Nat] = x# -[y]
     type **[x <: Nat, y <: Nat] = x# **[y]

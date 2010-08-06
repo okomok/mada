@@ -18,6 +18,7 @@ sealed abstract class Unit extends Any {
 }
 
 
-private[mada] object _Unit {
+private[dual]
+object _Unit {
     val value = new Unit{}
 }

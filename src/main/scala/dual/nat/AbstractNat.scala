@@ -8,7 +8,8 @@ package com.github.okomok.mada
 package dual; package nat
 
 
-private[mada] trait AbstractNat extends Nat {
+private[dual]
+trait AbstractNat extends Nat {
     final override  def !==[that <: Nat](that: that): !==[that] = ===(that).not
     final override type !==[that <: Nat]                        = ===[that]#not
 

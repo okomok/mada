@@ -35,7 +35,8 @@ sealed abstract class Result extends Any {
 }
 
 
-private[mada] sealed abstract class AbstractResult extends Result {
+private[dual]
+sealed abstract class AbstractResult extends Result {
     final override  def !==[that <: Result](that: that): !==[that] = ===(that).not
     final override type !==[that <: Result] =                        ===[that]#not
 
@@ -95,7 +96,8 @@ sealed abstract class EQ extends AbstractResult {
 }
 
 
-private[mada] object _Result {
+private[dual]
+object _Result {
     val LT = new LT{}
     val GT = new GT{}
     val EQ = new EQ{}

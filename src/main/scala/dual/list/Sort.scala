@@ -12,14 +12,14 @@ final class Sort[xs <: List, o <: Ordering](xs: xs, o: o) extends TrivialForward
     type self = Sort[xs, o]
 
     override protected lazy val delegate: delegate =
-        `if`(xs.isEmpty, Const0(xs), new Else).apply.asInstanceOfList.asInstanceOf[delegate]
+        `if`(xs.isEmpty, const0(xs), new Else).apply.asInstanceOfList.asInstanceOf[delegate]
     override protected type delegate =
-        `if`[xs#isEmpty, Const0[xs],     Else]#apply#asInstanceOfList
+        `if`[xs#isEmpty, const0[xs],     Else]#apply#asInstanceOfList
 
     class Else extends Function0 {
         type self = Else
-        override  def apply: apply = `if`(xs.tail.isEmpty, Const0(xs), new ElseElse).apply.asInstanceOfList//.asInstanceOf[apply]
-        override type apply        = `if`[xs#tail#isEmpty, Const0[xs],     ElseElse]#apply#asInstanceOfList
+        override  def apply: apply = `if`(xs.tail.isEmpty, const0(xs), new ElseElse).apply.asInstanceOfList//.asInstanceOf[apply]
+        override type apply        = `if`[xs#tail#isEmpty, const0[xs],     ElseElse]#apply#asInstanceOfList
     }
 
     class ElseElse extends Function0 {
@@ -36,9 +36,9 @@ final class Merge[xs <: List, ys <: List, o <: Ordering](xs: xs, ys: ys, o: o) e
     type self = Merge[xs, ys, o]
 
     override  def apply: apply =
-        `if`(xs.isEmpty, Const0(ys), `if`(ys.isEmpty, Const0(xs), new Else)).apply.asInstanceOfList.asInstanceOf[apply]
+        `if`(xs.isEmpty, const0(ys), `if`(ys.isEmpty, const0(xs), new Else)).apply.asInstanceOfList.asInstanceOf[apply]
     override type apply =
-        `if`[xs#isEmpty, Const0[ys], `if`[ys#isEmpty, Const0[xs],     Else]]#apply#asInstanceOfList
+        `if`[xs#isEmpty, const0[ys], `if`[ys#isEmpty, const0[xs],     Else]]#apply#asInstanceOfList
 
     class Else extends Function0 {
         type self = Else

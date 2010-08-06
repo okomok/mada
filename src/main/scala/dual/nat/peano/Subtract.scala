@@ -8,7 +8,8 @@ package com.github.okomok.mada
 package dual; package nat; package peano
 
 
-private[mada] final class Subtract {
+private[dual]
+final class Subtract {
      def apply[x <: Peano, y <: Peano](x: x, y: y): apply[x, y] = y.foldRight(x, Step()).asInstanceOfNatPeano
     type apply[x <: Peano, y <: Peano] = y#foldRight[x, Step]#asInstanceOfNatPeano
 

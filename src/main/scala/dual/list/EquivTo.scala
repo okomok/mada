@@ -12,14 +12,14 @@ final class EquivTo[xs <: List, ys <: List, e <: Equiv](xs: xs, ys: ys, e: e) ex
     type self = EquivTo[xs, ys, e]
 
     override  def apply: apply =
-        `if`(xs.isEmpty  && ys.isEmpty,  Const0(`true`), `if`(xs.isEmpty  !== ys.isEmpty,  Const0(`false`), new Else)).apply.asInstanceOfBoolean.asInstanceOf[apply]
+        `if`(xs.isEmpty  && ys.isEmpty,  const0(`true`), `if`(xs.isEmpty  !== ys.isEmpty,  const0(`false`), new Else)).apply.asInstanceOfBoolean.asInstanceOf[apply]
     override type apply =
-        `if`[xs#isEmpty# &&[ys#isEmpty], Const0[`true`], `if`[xs#isEmpty# !==[ys#isEmpty], Const0[`false`],     Else]]#apply#asInstanceOfBoolean
+        `if`[xs#isEmpty# &&[ys#isEmpty], const0[`true`], `if`[xs#isEmpty# !==[ys#isEmpty], const0[`false`],     Else]]#apply#asInstanceOfBoolean
 
     class Else extends Function0 {
         type self = Else
-        override  def apply: apply = `if`(e.equiv(xs.head, ys.head), new ElseThen, Const0(`false`)).apply.asInstanceOf[apply]
-        override type apply        = `if`[e#equiv[xs#head, ys#head],     ElseThen, Const0[`false`]]#apply
+        override  def apply: apply = `if`(e.equiv(xs.head, ys.head), new ElseThen, const0(`false`)).apply.asInstanceOf[apply]
+        override type apply        = `if`[e#equiv[xs#head, ys#head],     ElseThen, const0[`false`]]#apply
     }
 
     class ElseThen extends Function0 {

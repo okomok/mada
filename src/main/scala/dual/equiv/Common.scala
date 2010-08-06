@@ -8,7 +8,8 @@ package com.github.okomok.mada
 package dual; package equiv
 
 
-private[mada] trait Common {
+private[dual]
+trait Common {
      val alwaysTrue: alwaysTrue = new AlwaysTrue
     type alwaysTrue = AlwaysTrue
 }

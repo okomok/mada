@@ -8,7 +8,8 @@ package com.github.okomok.mada
 package dual; package ordering
 
 
-private[mada] final case class Match[o <: Ordering, x <: Any, y <: Any, flt <: Function0, fgt <: Function0, feq <: Function0](
+private[dual]
+final case class Match[o <: Ordering, x <: Any, y <: Any, flt <: Function0, fgt <: Function0, feq <: Function0](
     o: o, x: x, y: y, flt: flt, fgt: fgt, feq: feq) extends Function0
 {
     type self = Match[o, x, y, flt, fgt, feq]

@@ -8,11 +8,12 @@ package com.github.okomok.mada
 package dual; package map; package bstree
 
 
-private[mada] final class Glue {
+private[dual]
+final class Glue {
      def apply[l <: BSTree, r <: BSTree](l: l, r: r): apply[l, r] =
-        `if`(l.isEmpty, Const0(r), `if`(r.isEmpty, Const0(l), Else(l, r))).apply.asInstanceOfMapBSTree.asInstanceOf[apply[l, r]]
+        `if`(l.isEmpty, const0(r), `if`(r.isEmpty, const0(l), Else(l, r))).apply.asInstanceOfMapBSTree.asInstanceOf[apply[l, r]]
     type apply[l <: BSTree, r <: BSTree] =
-        `if`[l#isEmpty, Const0[r], `if`[r#isEmpty, Const0[l], Else[l, r]]]#apply#asInstanceOfMapBSTree
+        `if`[l#isEmpty, const0[r], `if`[r#isEmpty, const0[l], Else[l, r]]]#apply#asInstanceOfMapBSTree
 
     case class Else[l <: BSTree, r <: BSTree](l: l, r: r) extends Function0 {
         type self = Else[l, r]
@@ -42,7 +43,8 @@ private[mada] final class Glue {
 }
 
 
-private[mada] final class RemoveMax { // => Tuple2(Tuple2(maxKey, value), map)
+private[dual]
+final class RemoveMax { // => Tuple2(Tuple2(maxKey, value), map)
      def apply[m <: BSTree](m: m): apply[m] = `if`(m.right.isEmpty, Then(m), Else(m)).apply.asInstanceOfProduct2
     type apply[m <: BSTree]                 = `if`[m#right#isEmpty, Then[m], Else[m]]#apply#asInstanceOfProduct2
 
@@ -63,7 +65,8 @@ private[mada] final class RemoveMax { // => Tuple2(Tuple2(maxKey, value), map)
     }
 }
 
-private[mada] final class RemoveMin { // => Tuple2(Tuple2(minKey, value), map)
+private[dual]
+final class RemoveMin { // => Tuple2(Tuple2(minKey, value), map)
      def apply[m <: BSTree](m: m): apply[m] = `if`(m.left.isEmpty, Then(m), Else(m)).apply.asInstanceOfProduct2
     type apply[m <: BSTree]                 = `if`[m#left#isEmpty, Then[m], Else[m]]#apply#asInstanceOfProduct2
 

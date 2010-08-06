@@ -67,10 +67,10 @@ class BooleanTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     trait testPropagation {
-        type incinc[n <: Peano] = `if`[n# ===[_3], Inc_Nat[n], Const0[n]]#apply#asInstanceOfNat#increment#decrement#increment
+        type incinc[n <: Peano] = `if`[n# ===[_3], Inc_Nat[n], const0[n]]#apply#asInstanceOfNat#increment#decrement#increment
         meta.assertConforms[incinc[_2], Peano]
 
-        meta.assert[`if`[_2# ===[_3], Inc_Nat[_2], Const0[_2]]#apply#increment# ===[_3]]
+        meta.assert[`if`[_2# ===[_3], Inc_Nat[_2], const0[_2]]#apply#increment# ===[_3]]
         meta.assert[incinc[_2]# ===[_3]]
         meta.assert[incinc[_3]# ===[_5]]
     }

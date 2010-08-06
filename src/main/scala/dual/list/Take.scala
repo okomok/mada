@@ -11,8 +11,8 @@ package dual; package list
 final class Take[xs <: List, n <: Nat](xs: xs, n: n) extends AbstractList {
     type self = Take[xs, n]
 
-    private lazy val ys: ys = `if`(n.isZero, Const0(Nil), Const0(xs)).apply.asInstanceOfList
-    private type ys         = `if`[n#isZero, Const0[Nil], Const0[xs]]#apply#asInstanceOfList
+    private lazy val ys: ys = `if`(n.isZero, const0(Nil), const0(xs)).apply.asInstanceOfList
+    private type ys         = `if`[n#isZero, const0[Nil], const0[xs]]#apply#asInstanceOfList
 
     override  def isEmpty: isEmpty = ys.isEmpty
     override type isEmpty          = ys#isEmpty
@@ -28,13 +28,13 @@ final class Take[xs <: List, n <: Nat](xs: xs, n: n) extends AbstractList {
 final class TakeWhile[xs <: List, f <: Function1](xs: xs, f: f) extends AbstractList {
     type self = TakeWhile[xs, f]
 
-    private lazy val ys: ys = `if`(xs.isEmpty, Const0(xs), new Else).apply.asInstanceOfList
-    private type ys         = `if`[xs#isEmpty, Const0[xs],     Else]#apply#asInstanceOfList
+    private lazy val ys: ys = `if`(xs.isEmpty, const0(xs), new Else).apply.asInstanceOfList
+    private type ys         = `if`[xs#isEmpty, const0[xs],     Else]#apply#asInstanceOfList
 
     class Else extends Function0 {
         type self = Else
-        override  def apply: apply = `if`(f.apply(xs.head).asInstanceOfBoolean, Const0(xs), Const0(Nil)).apply.asInstanceOf[apply]
-        override type apply        = `if`[f#apply[xs#head]#asInstanceOfBoolean, Const0[xs], Const0[Nil]]#apply
+        override  def apply: apply = `if`(f.apply(xs.head).asInstanceOfBoolean, const0(xs), const0(Nil)).apply.asInstanceOf[apply]
+        override type apply        = `if`[f#apply[xs#head]#asInstanceOfBoolean, const0[xs], const0[Nil]]#apply
     }
 
     override  def isEmpty: isEmpty = ys.isEmpty

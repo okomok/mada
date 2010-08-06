@@ -8,12 +8,13 @@ package com.github.okomok.mada
 package dual; package nat; package dense
 
 
-private[mada] final class BitAnd {
+private[dual]
+final class BitAnd {
      def apply[xs <: Dense, ys <: Dense](xs: xs, ys: ys): apply[xs, ys] =
-        Match(xs, ys, Const0(Nil), Const0(Nil), Const0(Nil),
+        Match(xs, ys, const0(Nil), const0(Nil), const0(Nil),
             ConsMatch(xs, ys, CaseTT(xs, ys), Else(xs, ys), Else(xs, ys), Else(xs, ys))).apply.asInstanceOfNatDense.asInstanceOf[apply[xs, ys]]
     type apply[xs <: Dense, ys <: Dense] =
-        Match[xs, ys, Const0[Nil], Const0[Nil], Const0[Nil],
+        Match[xs, ys, const0[Nil], const0[Nil], const0[Nil],
             ConsMatch[xs, ys, CaseTT[xs, ys], Else[xs, ys], Else[xs, ys], Else[xs, ys]]]#apply#asInstanceOfNatDense
 
     case class CaseTT[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
@@ -32,12 +33,13 @@ private[mada] final class BitAnd {
 }
 
 
-private[mada] final class BitOr {
+private[dual]
+final class BitOr {
      def apply[xs <: Dense, ys <: Dense](xs: xs, ys: ys): apply[xs, ys] =
-        Match(xs, ys, Const0(Nil), Const0(ys), Const0(xs),
+        Match(xs, ys, const0(Nil), const0(ys), const0(xs),
             ConsMatch(xs, ys, Else(xs, ys), Else(xs, ys), Else(xs, ys), CaseFF(xs, ys))).apply.asInstanceOfNatDense.asInstanceOf[apply[xs, ys]]
     type apply[xs <: Dense, ys <: Dense] =
-        Match[xs, ys, Const0[Nil], Const0[ys], Const0[xs],
+        Match[xs, ys, const0[Nil], const0[ys], const0[xs],
             ConsMatch[xs, ys, Else[xs, ys], Else[xs, ys], Else[xs, ys], CaseFF[xs, ys]]]#apply#asInstanceOfNatDense
 
     case class CaseFF[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {

@@ -8,7 +8,8 @@ package com.github.okomok.mada
 package dual; package nat; package dense
 
 
-private[mada] class Common extends LiteralCommon {
+private[dual]
+class Common extends LiteralCommon {
     @returnThis
     val Literal: LiteralCommon = this
 
@@ -21,7 +22,8 @@ private[mada] class Common extends LiteralCommon {
 }
 
 
-private[mada] trait LiteralCommon {
+private[dual]
+trait LiteralCommon {
     @aliasOf("`false`")
      val _0B = boolean.`false`
     type _0B = `false`

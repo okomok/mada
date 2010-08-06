@@ -11,8 +11,8 @@ package dual; package list
 final class Nth[xs <: List, n <: Nat](xs: xs, n: n) extends Function0 {
     type self = Nth[xs, n]
 
-    override  def apply: apply = `if`(n.isZero, Const0(xs.head), new Else).apply.asInstanceOf[apply]
-    override type apply        = `if`[n#isZero, Const0[xs#head],     Else]#apply
+    override  def apply: apply = `if`(n.isZero, const0(xs.head), new Else).apply.asInstanceOf[apply]
+    override type apply        = `if`[n#isZero, const0[xs#head],     Else]#apply
 
     class Else extends Function0 {
         type self = Else

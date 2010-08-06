@@ -11,7 +11,8 @@ package dual; package nat; package peano
 // 1. `object Add` crashes `Operator`.
 // 2. `case class Add[x <: Peano, y <: Peano](x: x, y: y)` may fall into type mismatch and slow-compilation.
 @compilerWorkaround("2.8.0")
-private[mada] final class Add {
+private[dual]
+final class Add {
     // fold in y, for `+` is left-associative.
      def apply[x <: Peano, y <: Peano](x: x, y: y): apply[x, y] = y.foldRight(x, Step()).asInstanceOfNatPeano
     type apply[x <: Peano, y <: Peano] = y#foldRight[x, Step]#asInstanceOfNatPeano

@@ -11,8 +11,8 @@ package dual; package list
 final class FoldLeft[xs <: List, z <: Any, f <: Function2](xs: xs, z: z, f: f) extends Function0 {
     type self = FoldLeft[xs, z, f]
 
-    override  def apply: apply = `if`(xs.isEmpty, Const0(z), new Else).apply
-    override type apply        = `if`[xs#isEmpty, Const0[z],     Else]#apply
+    override  def apply: apply = `if`(xs.isEmpty, const0(z), new Else).apply
+    override type apply        = `if`[xs#isEmpty, const0[z],     Else]#apply
 
     class Else extends Function0 {
         type self = Else
@@ -24,8 +24,8 @@ final class FoldLeft[xs <: List, z <: Any, f <: Function2](xs: xs, z: z, f: f) e
 final class FoldRight[xs <: List, z <: Any, f <: Function2](xs: xs, z: z, f: f) extends Function0 {
     type self = FoldRight[xs, z, f]
 
-    override  def apply: apply = `if`(xs.isEmpty, Const0(z), new Else).apply
-    override type apply        = `if`[xs#isEmpty, Const0[z],     Else]#apply
+    override  def apply: apply = `if`(xs.isEmpty, const0(z), new Else).apply
+    override type apply        = `if`[xs#isEmpty, const0[z],     Else]#apply
 
     class Else extends Function0 {
         type self = Else

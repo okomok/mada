@@ -33,9 +33,9 @@ final class ScanRight[xs <: List, z <: Any, f <: Function2](xs: xs, z: z, f: f) 
     type self = ScanRight[xs, z, f]
 
     override protected lazy val delegate: delegate =
-        `if`(xs.isEmpty, Const0(single(z)), new Else).apply.asInstanceOfList.asInstanceOf[delegate]
+        `if`(xs.isEmpty, const0(single(z)), new Else).apply.asInstanceOfList.asInstanceOf[delegate]
     override protected type delegate =
-        `if`[xs#isEmpty, Const0[single[z]],     Else]#apply#asInstanceOfList
+        `if`[xs#isEmpty, const0[single[z]],     Else]#apply#asInstanceOfList
 
     class Else extends Function0 {
         type self = Else

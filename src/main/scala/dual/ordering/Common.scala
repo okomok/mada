@@ -8,7 +8,8 @@ package com.github.okomok.mada
 package dual; package ordering
 
 
-private[mada] trait Common {
+private[dual]
+trait Common {
     val LT: LT = _Result.LT
     val GT: GT = _Result.GT
     val EQ: EQ = _Result.EQ

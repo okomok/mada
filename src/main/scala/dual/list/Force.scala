@@ -14,9 +14,9 @@ final class Force[xs <: List](xs: xs) extends Function0 {
     type self = Force[xs]
 
     override  def apply: apply =
-        `if`(xs.isEmpty, Const0(Nil), new Else).apply.asInstanceOfList
+        `if`(xs.isEmpty, const0(Nil), new Else).apply.asInstanceOfList
     override type apply =
-        `if`[xs#isEmpty, Const0[Nil],     Else]#apply#asInstanceOfList
+        `if`[xs#isEmpty, const0[Nil],     Else]#apply#asInstanceOfList
 
     class Else extends Function0 {
         type self = Else

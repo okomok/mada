@@ -8,7 +8,8 @@ package com.github.okomok.mada
 package dual; package nat; package dense
 
 
-private[mada] final class ConsExp {
+private[dual]
+final class ConsExp {
      def apply[x <: Dense, n <: Nat](x: x, n: n): apply[x, n] = n.toPeano.foldRight(_1, Step(x)).asInstanceOfNatDense
     type apply[x <: Dense, n <: Nat] = n#toPeano#foldRight[_1, Step[x]]#asInstanceOfNatDense
 

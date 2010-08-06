@@ -8,7 +8,8 @@ package com.github.okomok.mada
 package dual; package boolean
 
 
-private[mada] class Common extends OperatorCommon {
+private[dual]
+class Common extends OperatorCommon {
     @returnThis
     val Operator: OperatorCommon = this
 
@@ -26,7 +27,8 @@ private[mada] class Common extends OperatorCommon {
 }
 
 
-private[mada] trait OperatorCommon {
+private[dual]
+trait OperatorCommon {
     type ===[x <: Boolean, y <: Boolean] = x# ===[y]
     type !==[x <: Boolean, y <: Boolean] = x# !==[y]
 

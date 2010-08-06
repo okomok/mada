@@ -116,6 +116,7 @@ final case class Succ[n <: Peano](override val decrement: n) extends Peano {
 }
 
 
-private[mada] object _Peano {
+private[dual]
+object _Peano {
     val Zero = new Zero{}
 }
