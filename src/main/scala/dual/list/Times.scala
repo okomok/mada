@@ -9,7 +9,7 @@ package dual; package list
 
 
 /* too slow to compile.
-private[mada]
+private[dual]
 final class Times[xs <: List, n <: Nat](xs: xs, n: n) {
      def apply = repeat(Unit).take(n).flatMap(new Const)
     type apply = repeat[Unit]#take[n]#flatMap[    Const]
@@ -23,7 +23,7 @@ final class Times[xs <: List, n <: Nat](xs: xs, n: n) {
 */
 
 
-private[mada]
+private[dual]
 final class Times[xs <: List, n <: Nat](xs: xs, n: n) extends AbstractList {
     type self = Times[xs, n]
 

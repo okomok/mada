@@ -8,7 +8,7 @@ package com.github.okomok.mada
 package dual; package list
 
 
-private[mada]
+private[dual]
 final class Step[xs <: List, n <: Nat](xs: xs, n: n) extends AbstractList {
     type self = Step[xs, n]
 

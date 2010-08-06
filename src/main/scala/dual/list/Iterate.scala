@@ -8,7 +8,7 @@ package com.github.okomok.mada
 package dual; package list
 
 
-private[mada]
+private[dual]
 final class Iterate[z <: Any, f <: Function1](z: z, f: f) {
      def apply = unfoldRight(z, new Iter)
     type apply = unfoldRight[z,     Iter]

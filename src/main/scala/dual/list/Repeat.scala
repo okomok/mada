@@ -8,7 +8,7 @@ package com.github.okomok.mada
 package dual; package list
 
 
-private[mada]
+private[dual]
 final class Repeat[z <: Any](z: z) {
      def apply = iterate(z, function.identity)
     type apply = iterate[z, function.identity]

@@ -18,21 +18,42 @@ class UnmetaTest extends org.scalatest.junit.JUnit3Suite {
 
     def testBoolean {
         type r = `true`
-        assertEquals(`true`, unmeta[r])
+        val r: `true` = unmeta[r]
+        assertEquals(`true`, r)
         type s = `false`
-        assertEquals(`false`, unmeta[s])
+        val s: `false` = unmeta[s]
+        assertEquals(`false`, s)
     }
 
     def testNatPeano {
         type r = _1 + _3 + _4
-        assertEquals(_8, unmeta[r])
-        assertEquals(8, unmeta[r].undual)
+        val r: _8 = unmeta[r]
+        assertEquals(_8, r)
+        assertEquals(8, r.undual)
     }
 
     def testUnit {
         type r = Unit
-        assertEquals(Unit, unmeta[r])
+        val r: Unit = unmeta[r]
+        assertSame(Unit, r)
     }
 
+    def testListNil {
+        type l = Nil
+        val l: Nil = unmeta[l]
+        assertSame(Nil, l)
+    }
+
+    def testNatPeanoList {
+        type l = _1 :: _2 :: _3 :: Nil
+        val l: _1 :: _2 :: _3 :: Nil = unmeta[l]
+        assertEquals(_1 :: _2 :: _3 :: Nil, l)
+    }
+
+    def testNatPeanoListTake {
+        type l = _1 :: _2 :: _3 :: Nil
+        val l: _1 :: _2 :: Nil = unmeta[l#take[_2]#force]
+        assertEquals(_1 :: _2 :: Nil, l)
+    }
 
 }
