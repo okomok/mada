@@ -1,0 +1,52 @@
+
+
+package com.github.okomok.madatest;
+package defecttest; package nothingtypemismatch
+
+trait PinPon {
+    type self <: PinPon
+     def self: self
+
+    type pin[that <: PinPon]
+     def pin[that <: PinPon](that: that): pin[that]
+
+    type pon[that <: PinPon]
+     def pon[that <: PinPon](that: that): pon[that]
+
+    type toMyPinPon <: MyPinPon
+     def toMyPinPon: toMyPinPon
+}
+
+trait MyPinPon extends PinPon {
+    type self <: MyPinPon
+
+    type pin[that <: PinPon]                        = that#pon[self]
+     def pin[that <: PinPon](that: that): pin[that] = that.pon(self)
+
+    type callPinFail[that <: PinPon]                                = CallPinFail[self, that#toMyPinPon]
+     def callPinFail[that <: PinPon](that: that): callPinFail[that] = CallPinFail(self, that.toMyPinPon)
+
+    type CallPinFail[p <: MyPinPon, q <: MyPinPon]                                = p#pin[q]
+     def CallPinFail[p <: MyPinPon, q <: MyPinPon](p: p, q: q): CallPinFail[p, q] = p.pin(q)
+
+  /* A current workaround
+    type callPinOK[that <: PinPon]                              =     CallPinOK[self, that#toMyPinPon]#apply
+     def callPinOK[that <: PinPon](that: that): callPinOK[that] = new CallPinOK(self, that.toMyPinPon).apply
+
+    class CallPinOK[p <: MyPinPon, q <: MyPinPon](p: p, q: q) {
+        type apply        = p#pin[q]
+         def apply: apply = p.pin(q)
+    }
+  */
+}
+
+/* scalac 2.8.0.final with "-Yrecursion 50" generates:
+
+[error] E:\Application\my-projects\mada\src\test\scala\defect\NothingTypeMismatch.scala:27: type mismatch;
+[error]  found   : MyPinPon.this.self
+[error]  required: Nothing
+[error]      def callPinFail[that <: PinPon](that: that): callPinFail[that] = CallPinFail(self, that.toMyPinPon)
+[error]                                                                                   ^
+[error] one error found
+
+*/
