@@ -17,8 +17,8 @@ class FunctionTest extends org.scalatest.junit.JUnit3Suite {
 
     final case class Plus() extends Function2 {
         type self = Plus
-        override  def apply[n <: Any, m <: Any](n: n, m: m): apply[n, m] = n.asInstanceOfNat + m.asInstanceOfNat
-        override type apply[n <: Any, m <: Any] = n#asInstanceOfNat# + [m#asInstanceOfNat]
+        override  def apply[n <: Any, m <: Any](n: n, m: m): apply[n, m] = n.asInstanceOfNat plus m.asInstanceOfNat
+        override type apply[n <: Any, m <: Any] = n#asInstanceOfNat# plus [m#asInstanceOfNat]
     }
 
     def testCurried {
@@ -32,9 +32,9 @@ class FunctionTest extends org.scalatest.junit.JUnit3Suite {
         val b: b = a.apply(_2)
 
         val z: _5 = b
-        mada.dual.assert(b === _5)
+        mada.dual.assert(b equal _5)
         val d: c#apply[_4]#apply[_5] = c(_4)(_5)
-        mada.dual.assert(d === _9)
+        mada.dual.assert(d equal _9)
     }
 
     def testTupled {
@@ -45,27 +45,27 @@ class FunctionTest extends org.scalatest.junit.JUnit3Suite {
         val k : k = c.apply(Tuple2(_3, _4))
 
         val r: _7 = k
-        mada.dual.assert(k === _7)
+        mada.dual.assert(k equal _7)
         ()
     }
 
     final case class Plus2() extends Function1 {
         type self = Plus2
-        override  def apply[n <: Any](n: n): apply[n] = n.asInstanceOfNat + _2
-        override type apply[n <: Any] = n#asInstanceOfNat# + [_2]
+        override  def apply[n <: Any](n: n): apply[n] = n.asInstanceOfNat plus _2
+        override type apply[n <: Any] = n#asInstanceOfNat# plus [_2]
     }
 
     final case class Minus3() extends Function1 {
         type self = Minus3
-        override  def apply[n <: Any](n: n): apply[n] = n.asInstanceOfNat - _3
-        override type apply[n <: Any] = n#asInstanceOfNat# - [_3]
+        override  def apply[n <: Any](n: n): apply[n] = n.asInstanceOfNat minus _3
+        override type apply[n <: Any] = n#asInstanceOfNat# minus [_3]
     }
 
     def testCompose {
         type c = Plus2#compose[Minus3]
         val c: c = Plus2().compose(Minus3())
         val r: c#apply[_5] = c.apply(_5)
-        mada.dual.assert(r === _4)
+        mada.dual.assert(r equal _4)
         val k: _4 = r
         ()
     }

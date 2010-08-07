@@ -35,7 +35,7 @@ class DropTest extends org.scalatest.junit.JUnit3Suite {
         val i = new java.lang.Integer(10)
         type lst = Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil
         val lst: lst = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Box(12) :: Nil
-        val s: lst#drop[_10# +[_10]] = lst.drop(_10 + _10)
+        val s: lst#drop[_10#plus[_10]] = lst.drop(_10 plus _10)
         val k: Nil = s.force
         ()
     }

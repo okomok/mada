@@ -17,8 +17,8 @@ import mada.dual.nat.dense.Literal._
 import mada.dual.nat.Dense
 
 
+/*
 class OperatorTezt {
-
     trait testTrivial {
         assert[_0 === _0]
 
@@ -116,3 +116,5 @@ class OperatorTezt {
     }
 */
 }
+
+*/

@@ -45,13 +45,13 @@ trait AbstractProduct1 extends Product1 {
     final override type arity        = peano._1
 
     final override  def productElement[n <: Nat](n: n): productElement[n] =
-        `if`(n  === peano._0,
+        `if`(n.equal(peano._0),
             const0(_1),
             throw0(new IndexOutOfBoundsException(n.toString))
         ).apply
 
     final override type productElement[n <: Nat] =
-        `if`[n# ===[peano._0],
+        `if`[n#equal[peano._0],
             const0[_1],
             throw0[_]
         ]#apply
@@ -93,18 +93,18 @@ trait AbstractProduct2 extends Product2 {
     final override type arity        = peano._2
 
     final override  def productElement[n <: Nat](n: n): productElement[n] =
-        `if`(n  === peano._0,
+        `if`(n.equal(peano._0),
             const0(_1),
-            `if`(n  === peano._1,
+            `if`(n.equal(peano._1),
                 const0(_2),
                 throw0(new IndexOutOfBoundsException(n.toString))
             )
         ).apply.asInstanceOf[productElement[n]]
 
     final override type productElement[n <: Nat] =
-        `if`[n# ===[peano._0],
+        `if`[n#equal[peano._0],
             const0[_1],
-            `if`[n# ===[peano._1],
+            `if`[n#equal[peano._1],
                 const0[_2],
                 throw0[_]
             ]

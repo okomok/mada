@@ -33,50 +33,50 @@ trait Nat extends Any {
      def decrement: decrement
     type decrement <: Nat
 
-     def +[that <: Nat](that: that): +[that]
-    type +[that <: Nat] <: Nat
+     def plus[that <: Nat](that: that): plus[that]
+    type plus[that <: Nat] <: Nat
 
-     def -[that <: Nat](that: that): -[that]
-    type -[that <: Nat] <: Nat
+     def minus[that <: Nat](that: that): minus[that]
+    type minus[that <: Nat] <: Nat
 
-     def **[that <: Nat](that: that): **[that]
-    type **[that <: Nat] <: Nat
+     def times[that <: Nat](that: that): times[that]
+    type times[that <: Nat] <: Nat
 
      def divMod[that <: Nat](that: that): divMod[that]
     type divMod[that <: Nat] <: Product2
 
-     def ^[that <: Nat](that: that): ^[that]
-    type ^[that <: Nat] <: Nat
+     def exp[that <: Nat](that: that): exp[that]
+    type exp[that <: Nat] <: Nat
 
-     def ===[that <: Nat](that: that): ===[that]
-    type ===[that <: Nat] <: Boolean
+     def equal[that <: Nat](that: that): equal[that]
+    type equal[that <: Nat] <: Boolean
 
-     def <=[that <: Nat](that: that): <=[that]
-    type <=[that <: Nat] <: Boolean
+     def nequal[that <: Nat](that: that): nequal[that]
+    type nequal[that <: Nat] <: Boolean
 
-     def <[that <: Nat](that: that): <[that]
-    type <[that <: Nat] <: Boolean
+     def lteq[that <: Nat](that: that): lteq[that]
+    type lteq[that <: Nat] <: Boolean
 
-     def !==[that <: Nat](that: that): !==[that]
-    type !==[that <: Nat] <: Boolean
+     def lt[that <: Nat](that: that): lt[that]
+    type lt[that <: Nat] <: Boolean
 
-     def /[that <: Nat](that: that): /[that]
-    type /[that <: Nat] <: Nat
+     def div[that <: Nat](that: that): div[that]
+    type div[that <: Nat] <: Nat
 
-     def %[that <: Nat](that: that): %[that]
-    type %[that <: Nat] <: Nat
+     def mod[that <: Nat](that: that): mod[that]
+    type mod[that <: Nat] <: Nat
 
-     def >[that <: Nat](that: that): >[that]
-    type >[that <: Nat] <: Boolean
+     def gt[that <: Nat](that: that): gt[that]
+    type gt[that <: Nat] <: Boolean
 
-     def >=[that <: Nat](that: that): >=[that]
-    type >=[that <: Nat] <: Boolean
+     def gteq[that <: Nat](that: that): gteq[that]
+    type gteq[that <: Nat] <: Boolean
 
-     def &[that <: Nat](that: that): &[that]
-    type &[that <: Nat] <: Nat
+     def bitAnd[that <: Nat](that: that): bitAnd[that]
+    type bitAnd[that <: Nat] <: Nat
 
-     def |[that <: Nat](that: that): |[that]
-    type |[that <: Nat] <: Nat
+     def bitOr[that <: Nat](that: that): bitOr[that]
+    type bitOr[that <: Nat] <: Nat
 
      def toDense: toDense
     type toDense <: Dense

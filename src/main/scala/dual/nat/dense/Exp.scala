@@ -9,13 +9,13 @@ package dual; package nat; package dense
 
 
 private[dual]
-final class ConsExp {
+object ConsExp {
      def apply[x <: Dense, n <: Nat](x: x, n: n): apply[x, n] = n.toPeano.foldRight(_1, Step(x)).asInstanceOfNatDense
-    type apply[x <: Dense, n <: Nat] = n#toPeano#foldRight[_1, Step[x]]#asInstanceOfNatDense
+    type apply[x <: Dense, n <: Nat]                          = n#toPeano#foldRight[_1, Step[x]]#asInstanceOfNatDense
 
     case class Step[x <: Dense](x: x) extends Function2 {
         type self = Step[x]
-        override  def apply[a <: Any, b <: Any](a: a, b: b): apply[a, b] = x ** b.asInstanceOfNatDense
-        override type apply[a <: Any, b <: Any] = x# **[b#asInstanceOfNatDense]
+        override  def apply[a <: Any, b <: Any](a: a, b: b): apply[a, b] = x.times(b.asInstanceOfNatDense)
+        override type apply[a <: Any, b <: Any]                          = x#times[b#asInstanceOfNatDense]
     }
 }

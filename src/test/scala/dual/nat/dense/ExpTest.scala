@@ -19,38 +19,38 @@ import junit.framework.Assert._
 class ExpTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial {
-        assertEquals(_9, _3 ^ _2)
-        assertEquals(_8, _2 ^ _3)
-        assertEquals(_1, _3 ^ _0)
-        assertEquals(_1, _0 ^ _0)
-        assertEquals(_0, _0 ^ _9)
-        assertEquals(_6 ** _6, _6 ^ _2)
-        assertEquals(_15 + _1, _4 ^ _2)
-        assertEquals(_1, _1 ^ _1)
+        assertEquals(_9, _3 exp _2)
+        assertEquals(_8, _2 exp _3)
+        assertEquals(_1, _3 exp _0)
+        assertEquals(_1, _0 exp _0)
+        assertEquals(_0, _0 exp _9)
+        assertEquals(_6 times _6, _6 exp _2)
+        assertEquals(_15 plus _1, _4 exp _2)
+        assertEquals(_1, _1 exp _1)
     }
 
     def testBig {
-        assertEquals(32768, (_2 ^ _15).undual)
-        assertEquals(1073741824, (_8 ^ _10).undual)
+        assertEquals(32768, (_2 exp _15).undual)
+        assertEquals(1073741824, (_8 exp _10).undual)
     }
 
     def testDuality {
-        val a: _4# ^ [_2] = _4 ^ _2
-        assertEquals(_15 + _1, a)
-        val b: _15# + [_1] = a
-        mada.dual.assert(a === b)
-        mada.dual.assert(a === _15 + _1)
+        val a: _4# exp [_2] = _4 exp _2
+        assertEquals(_15 plus _1, a)
+        val b: _15#plus [_1] = a
+        mada.dual.assert(a equal b)
+        mada.dual.assert(a equal (_15 plus _1))
     }
 
     trait teztTrivial {
-        meta.assertSame[_9, _3 # ^[ _2]]
-        meta.assertSame[_8, _2 # ^[ _3]]
-        meta.assertSame[_1, _3 # ^[ _0]]
-        meta.assertSame[_1, _0 # ^[ _0]]
-        meta.assertSame[_0, _0 # ^[ _9]]
-        meta.assertSame[_6# ** [_6], _6 # ^[ _2]]
-        meta.assertSame[_15# + [_1], _4 # ^[ _2]]
-        meta.assertSame[_1, _1 # ^[ _1]]
+        meta.assertSame[_9, _3 # exp[ _2]]
+        meta.assertSame[_8, _2 # exp[ _3]]
+        meta.assertSame[_1, _3 # exp[ _0]]
+        meta.assertSame[_1, _0 # exp[ _0]]
+        meta.assertSame[_0, _0 # exp[ _9]]
+        meta.assertSame[_6# times [_6], _6 # exp[ _2]]
+        meta.assertSame[_15#plus [_1], _4 # exp[ _2]]
+        meta.assertSame[_1, _1 # exp[ _1]]
     }
 
 }

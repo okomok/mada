@@ -9,7 +9,7 @@ package dual; package nat; package dense
 
 
 private[dual]
-final class Equals {
+object Equal {
      def apply[xs <: Dense, ys <: Dense](xs: xs, ys: ys): apply[xs, ys] =
         Match(xs, ys, const0(`true`), const0(`false`), const0(`false`), CaseCC(xs, ys)).apply.asInstanceOfBoolean
     type apply[xs <: Dense, ys <: Dense] =
@@ -17,21 +17,21 @@ final class Equals {
 
     case class CaseCC[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
         type self = CaseCC[xs, ys]
-        override  def apply: apply = `if`(xs.head !== ys.head, const0(`false`), Else(xs, ys)).apply.asInstanceOf[apply]
-        override type apply = `if`[xs#head# !==[ys#head], const0[`false`], Else[xs, ys]]#apply
+        override  def apply: apply = `if`(xs.head. !==(ys.head), const0(`false`), Else(xs, ys)).apply.asInstanceOf[apply]
+        override type apply        = `if`[xs#head# !==[ys#head], const0[`false`], Else[xs, ys]]#apply
     }
 
     // for short-circuit.
     case class Else[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
         type self = Else[xs, ys]
-        override  def apply: apply = (xs.tail === ys.tail).asInstanceOf[apply]
-        override type apply = xs#tail# ===[ys#tail]
+        override  def apply: apply = xs.tail.equal(ys.tail).asInstanceOf[apply]
+        override type apply        = xs#tail#equal[ys#tail]
     }
 }
 
 
 private[dual]
-final class LessThan {
+object Lt {
      def apply[xs <: Dense, ys <: Dense](xs: xs, ys: ys): apply[xs, ys] =
         Match(xs, ys, const0(`false`), const0(`true`), const0(`false`),
             ConsMatch(xs, ys, CaseXXorTF(xs, ys), CaseXXorTF(xs, ys), CaseFT(xs, ys), CaseXXorTF(xs, ys))).apply.asInstanceOfBoolean.asInstanceOf[apply[xs, ys]]
@@ -41,13 +41,13 @@ final class LessThan {
 
     case class CaseXXorTF[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
         type self = CaseXXorTF[xs, ys]
-        override  def apply: apply = (xs.tail < ys.tail).asInstanceOf[apply]
-        override type apply = xs#tail# <[ys#tail]
+        override  def apply: apply = xs.tail.lt(ys.tail).asInstanceOf[apply]
+        override type apply        = xs#tail#lt[ys#tail]
     }
 
     case class CaseFT[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
         type self = CaseFT[xs, ys]
-        override  def apply: apply = (ys.tail < xs.tail).not.asInstanceOf[apply]
-        override type apply = ys#tail# <[xs#tail]#not
+        override  def apply: apply = ys.tail.lt(xs.tail).not.asInstanceOf[apply]
+        override type apply        = ys#tail#lt[xs#tail]#not
     }
 }

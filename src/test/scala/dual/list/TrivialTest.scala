@@ -35,8 +35,8 @@ class TrivialTest extends org.scalatest.junit.JUnit3Suite {
     def testSize {
         val i = new java.lang.Integer(10)
         val lst = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Nil
-        mada.dual.assert(_4 === lst.length)
-        mada.dual.assert(Nil.length === _0)
+        mada.dual.assert(_4 equal lst.length)
+        mada.dual.assert(Nil.length equal _0)
     }
 
     def testTypeErase {
@@ -128,13 +128,13 @@ object TrivialTezt {
         assertSame[lst#nth[_1], Box[String]]
         assertSame[lst#nth[_2], Box[Double]]
         assertSame[lst#nth[_3], Box[Char]]
-        assertSame[lst#nth[_2# +[_1]], Box[Char]]
+        assertSame[lst#nth[_2#plus[_1]], Box[Char]]
     }
 
     trait testSize {
         type lst = Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Nil
-        assert[lst#length# ===[_4]]
-        assert[Nil#length# ===[_0]]
+        assert[lst#length# equal[_4]]
+        assert[Nil#length# equal[_0]]
     }
 
     trait testIsEmpty {

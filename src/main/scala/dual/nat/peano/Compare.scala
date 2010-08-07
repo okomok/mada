@@ -9,7 +9,7 @@ package dual; package nat; package peano
 
 
 private[dual]
-final class SuccEq {
+object SuccEq {
      def apply[x <: Peano, y <: Peano](x: x, y: y): apply[x, y] =
         `if`(y.isZero, const0(`false`), Else(x, y)).apply.asInstanceOfBoolean
     type apply[x <: Peano, y <: Peano] =
@@ -17,13 +17,13 @@ final class SuccEq {
 
     case class Else[x <: Peano, y <: Peano](x: x, y: y) extends Function0 {
          type self = Else[x, y]
-         override  def apply: apply = x.decrement === y.decrement
-         override type apply = x#decrement# ===[y#decrement]
+         override  def apply: apply = x.decrement.equal(y.decrement)
+         override type apply        = x#decrement#equal[y#decrement]
      }
 }
 
 private[dual]
-final class SuccLtEq {
+object SuccLtEq {
      def apply[x <: Peano, y <: Peano](x: x, y: y): apply[x, y] =
         `if`(y.isZero, const0(`false`), Else(x, y)).apply.asInstanceOfBoolean
     type apply[x <: Peano, y <: Peano] =
@@ -31,7 +31,7 @@ final class SuccLtEq {
 
     case class Else[x <: Peano, y <: Peano](x: x, y: y) extends Function0 {
          type self = Else[x, y]
-         override  def apply: apply = x.decrement <= y.decrement
-         override type apply = x#decrement# <=[y#decrement]
+         override  def apply: apply = x.decrement.lteq(y.decrement)
+         override type apply        = x#decrement#lteq[y#decrement]
      }
 }

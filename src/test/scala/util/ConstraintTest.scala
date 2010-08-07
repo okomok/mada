@@ -26,8 +26,8 @@ class ConstraintTest extends org.scalatest.junit.JUnit3Suite {
         assertTrue(isSame[Int, Int])
         assertFalse(isSame[Int, String])
         assertFalse(isSame[String, Float])
-        assertTrue(isSame[_1# +[_2], _3])
-        assertFalse(isSame[_2# +[_2], _5])
+        assertTrue(isSame[_1#plus[_2], _3])
+        assertFalse(isSame[_2#plus[_2], _5])
         assertFalse(isSame[A, B])
         assertFalse(isSame[B, A])
     }
@@ -52,8 +52,8 @@ class ConstraintTest extends org.scalatest.junit.JUnit3Suite {
         assertTrue(conforms[Int, Int])
         assertFalse(conforms[Int, String])
         assertFalse(conforms[String, Float])
-        assertTrue(conforms[_1# +[_2], _3])
-        assertFalse(conforms[_2# +[_2], _5])
+        assertTrue(conforms[_1#plus[_2], _3])
+        assertFalse(conforms[_2#plus[_2], _5])
     }
 
     def testConformsNoErasure {
@@ -76,8 +76,8 @@ class ConstraintTest extends org.scalatest.junit.JUnit3Suite {
         assertTrue(compatible[Int, Int])
         assertFalse(compatible[Int, String])
         assertFalse(compatible[String, Float])
-        assertTrue(compatible[_1# +[_2], _3])
-        assertFalse(compatible[_2# +[_2], _5])
+        assertTrue(compatible[_1#plus[_2], _3])
+        assertFalse(compatible[_2#plus[_2], _5])
     }
 
     def testCompatibleNoErasure {

@@ -11,9 +11,9 @@ package dual; package map
 private[dual]
 object EquivTo {
      def apply[m <: Map, w <: Map, ve <: Equiv](m: m, w: w, ve: ve): apply[m, w, ve] =
-        `if`(m.size  !== w.size,  const0(`false`), new Else(m, w, ve)).apply.asInstanceOfBoolean.asInstanceOf[apply[m, w, ve]]
+        `if`(m.size.nequal(w.size), const0(`false`), new Else(m, w, ve)).apply.asInstanceOfBoolean.asInstanceOf[apply[m, w, ve]]
     type apply[m <: Map, w <: Map, ve <: Equiv] =
-        `if`[m#size# !==[w#size], const0[`false`],     Else[m, w, ve]]#apply#asInstanceOfBoolean
+        `if`[m#size#nequal[w#size], const0[`false`],     Else[m, w, ve]]#apply#asInstanceOfBoolean
 
     class Else[m <: Map, w <: Map, ve <: Equiv](m: m, w: w, ve: ve) extends Function0 {
         type self = Else[m, w, ve]

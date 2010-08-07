@@ -16,8 +16,8 @@ object Range {
     class Impl[n <: Nat, m <: Nat](n: n, m: m) extends AbstractList {
         type self = Impl[n, m]
 
-        override  def isEmpty: isEmpty = n  === m
-        override type isEmpty          = n# ===[m]
+        override  def isEmpty: isEmpty = n.equal(m)
+        override type isEmpty          = n#equal[m]
 
         override  def head: head = n
         override type head       = n

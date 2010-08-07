@@ -23,8 +23,8 @@ object Sort {
 
     class ElseElse[xs <: List, o <: Ordering](xs: xs, o: o) extends Function0 {
         type self = ElseElse[xs, o]
-        private lazy val r: r = xs.splitAt(xs.length  / nat.peano._2)
-        private type r        = xs#splitAt[xs#length# /[nat.peano._2]]
+        private lazy val r: r = xs.splitAt(xs.length.div(nat.peano._2))
+        private type r        = xs#splitAt[xs#length#div[nat.peano._2]]
         override  def apply: apply = Merge.apply(r._1.asInstanceOfList.sort(o), r._2.asInstanceOfList.sort(o), o).asInstanceOf[apply]
         override type apply        = Merge.apply[r#_1#asInstanceOfList#sort[o], r#_2#asInstanceOfList#sort[o], o]
     }

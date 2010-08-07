@@ -41,6 +41,7 @@ object Operator extends OperatorCommon
 
 private[dual]
 trait OperatorCommon {
+/*
     type  +[x <: Nat, y <: Nat] = x# +[y]
     type  -[x <: Nat, y <: Nat] = x# -[y]
     type **[x <: Nat, y <: Nat] = x# **[y]
@@ -58,4 +59,5 @@ trait OperatorCommon {
 
     type &[x <: Nat, y <: Nat] = x# &[y]
     type |[x <: Nat, y <: Nat] = x# |[y]
+*/
 }

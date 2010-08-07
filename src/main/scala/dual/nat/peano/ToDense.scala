@@ -9,26 +9,26 @@ package dual; package nat; package peano
 
 
 private[dual]
-final class ToDense {
+object ToDense {
      def apply[x <: Peano](x: x): apply[x] = `if`(x.isZero, const0(dense.Nil), Else(x)).apply.asInstanceOfNatDense
-    type apply[x <: Peano] = `if`[x#isZero, const0[dense.Nil], Else[x]]#apply#asInstanceOfNatDense
+    type apply[x <: Peano]                 = `if`[x#isZero, const0[dense.Nil], Else[x]]#apply#asInstanceOfNatDense
 
     case class Else[x <: Peano](x: x) extends Function0 {
          type self = Else[x]
-         override  def apply: apply = dense.Cons(x.isOdd, new Div2().apply(x).toDense) // `ConsFalse` is redundant.
-         override type apply = dense.Cons[x#isOdd, Div2#apply[x]#toDense]
+         override  def apply: apply = dense.Cons(x.isOdd, Div2.apply(x).toDense) // `ConsFalse` is redundant.
+         override type apply        = dense.Cons[x#isOdd, Div2.apply[x]#toDense]
      }
 }
 
 
 private[dual]
-final class Div2  {
-      def apply[x <: Peano](x: x): apply[x] = `if`(x < _2, const0(Zero), Else(x)).apply.asInstanceOfNatPeano
-     type apply[x <: Peano] = `if`[x# <[_2], const0[Zero], Else[x]]#apply#asInstanceOfNatPeano
+object Div2 {
+      def apply[x <: Peano](x: x): apply[x] = `if`(x.lt(_2), const0(Zero), Else(x)).apply.asInstanceOfNatPeano
+     type apply[x <: Peano]                 = `if`[x#lt[_2], const0[Zero], Else[x]]#apply#asInstanceOfNatPeano
 
      case class Else[x <: Peano](x: x) extends Function0 {
          type self = Else[x]
-         override  def apply: apply = new Div2().apply(x.decrement.decrement).increment.asInstanceOf[apply]
-         override type apply = Div2#apply[x#decrement#decrement]#increment
+         override  def apply: apply = Div2.apply(x.decrement.decrement).increment.asInstanceOf[apply]
+         override type apply        = Div2.apply[x#decrement#decrement]#increment
      }
 }

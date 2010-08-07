@@ -22,13 +22,13 @@ class ConversionTest extends org.scalatest.junit.JUnit3Suite {
         meta.assertSame[dense._0, peano._0#toDense]
         meta.assertSame[dense._1, peano._1#toDense]
         meta.assertSame[dense._6, peano._6#toDense]
-        meta.assertSame[dense._5, peano._2# +[peano._3]#toDense]
+        meta.assertSame[dense._5, peano._2#plus[peano._3]#toDense]
 
         type x = peano._5
          val x: x = peano._5
         type y = x#toDense
          val y: y = x.toDense
-        mada.dual.assert(dense._5 === y)
+        mada.dual.assert(dense._5 equal y)
     }
 
 }

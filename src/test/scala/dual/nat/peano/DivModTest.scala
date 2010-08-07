@@ -40,15 +40,15 @@ class DivModTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testTrivial4 {
-        type n = _14# /[_3]
-        val n: n = _14 / _3
+        type n = _14#div[_3]
+        val n: n = _14 div _3
         meta.assertSame[_4, n]
         assertEquals(_4, n)
     }
 
     def testTrivial5 {
-        type n = _14# %[_3]
-        val n: n = _14 % _3
+        type n = _14#mod[_3]
+        val n: n = _14 mod _3
         meta.assertSame[_2, n]
         assertEquals(_2, n)
     }

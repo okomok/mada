@@ -17,6 +17,7 @@ import mada.dual.nat.peano.Literal._
 import mada.dual.nat.Peano
 
 
+/*
 class OperatorTezt {
 
     trait testTrivial {
@@ -104,3 +105,4 @@ class OperatorTezt {
     }
 */
 }
+*/

@@ -113,7 +113,7 @@ class OptionTest extends org.scalatest.junit.JUnit3Suite {
         type s = Some[_3]
         val s = Some(_3)
         meta.assertSame[_4, natty#apply[s]]
-        mada.dual.assert(_4 === natty(s))
+        mada.dual.assert(_4 equal natty(s))
     }
 */
     def testGetOrElse {
@@ -179,8 +179,8 @@ class OptionTest extends org.scalatest.junit.JUnit3Suite {
 
     case class Is2() extends Function1 {
         override type self = Is2
-        override def apply[n <: Any](n: n): apply[n] = n.asInstanceOfNat === _2
-        override type apply[n <: Any] = n#asInstanceOfNat# ===[_2]
+        override def apply[n <: Any](n: n): apply[n] = n.asInstanceOfNat equal _2
+        override type apply[n <: Any] = n#asInstanceOfNat# equal[_2]
     }
 
     def testFilterSome {

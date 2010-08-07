@@ -18,14 +18,14 @@ class FoldTest extends org.scalatest.junit.JUnit3Suite {
 
     case class Plus() extends Function2 {
         override type self = Plus
-        override  def apply[x <: Any, y <: Any](x: x, y: y): apply[x, y] = x.asInstanceOfNat + y.asInstanceOfNat
-        override type apply[x <: Any, y <: Any] = x#asInstanceOfNat# +[y#asInstanceOfNat]
+        override  def apply[x <: Any, y <: Any](x: x, y: y): apply[x, y] = x.asInstanceOfNat plus y.asInstanceOfNat
+        override type apply[x <: Any, y <: Any] = x#asInstanceOfNat#plus[y#asInstanceOfNat]
     }
 
     case class Sub() extends Function2 {
         override type self = Sub
-        override  def apply[x <: Any, y <: Any](x: x, y: y): apply[x, y] = x.asInstanceOfNat - y.asInstanceOfNat
-        override type apply[x <: Any, y <: Any] = x#asInstanceOfNat# -[y#asInstanceOfNat]
+        override  def apply[x <: Any, y <: Any](x: x, y: y): apply[x, y] = x.asInstanceOfNat minus y.asInstanceOfNat
+        override type apply[x <: Any, y <: Any] = x#asInstanceOfNat# minus[y#asInstanceOfNat]
     }
 
     def testReduceLeft {

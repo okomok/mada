@@ -16,11 +16,11 @@ object Balance {
     type ratio        = nat.dense._2
 
      def apply[k <: Any, v <: Any, l <: BSTree, r <: BSTree](k: k, v: v, l: l, r: r): apply[k, v, l, r] =
-        `if`(l.size  + r.size   <= nat.dense._1,
+        `if`(l.size.plus(r.size).lteq(nat.dense._1),
             const0(Node(k, v, l, r)),
-            `if`(r.size  >= delta  ** l.size,
+            `if`(r.size.gteq(delta.times(l.size)),
                 new RotateL(k, v, l, r),
-                `if`(l.size  >= delta  ** r.size,
+                `if`(l.size.gteq(delta.times(r.size)),
                     new RotateR(k, v, l, r),
                     const0(Node(k, v, l, r))
                 )
@@ -28,11 +28,11 @@ object Balance {
         ).apply.asInstanceOf[apply[k, v, l, r]]
 
     type apply[k <: Any, v <: Any, l <: BSTree, r <: BSTree] =
-        `if`[l#size# +[r#size]# <=[nat.dense._1],
+        `if`[l#size#plus[r#size]#lteq[nat.dense._1],
             const0[Node[k, v, l, r]],
-            `if`[r#size# >=[delta# **[l#size]],
+            `if`[r#size#gteq[delta#times[l#size]],
                 RotateL[k, v, l, r],
-                `if`[l#size# >=[delta# **[r#size]],
+                `if`[l#size#gteq[delta#times[r#size]],
                     RotateR[k, v, l, r],
                     const0[Node[k, v, l, r]]
                 ]
@@ -41,14 +41,14 @@ object Balance {
 
     class RotateL[k <: Any, v <: Any, l <: BSTree, r <: BSTree](k: k, v: v, l: l, r: r) extends Function0 {
         type self = RotateL[k, v, l, r]
-        override  def apply: apply = `if`(r.left.size  < ratio  ** r.right.size  , new SingleL(k, v, l, r), new DoubleL(k, v, l, r)).apply.asInstanceOf[apply]
-        override type apply =        `if`[r#left#size# <[ratio# **[r#right#size]],     SingleL[k, v, l, r],     DoubleL[k, v, l, r]]#apply
+        override  def apply: apply = `if`(r.left.size.lt(ratio.times(r.right.size))  , new SingleL(k, v, l, r), new DoubleL(k, v, l, r)).apply.asInstanceOf[apply]
+        override type apply =        `if`[r#left#size#lt[ratio#times[r#right#size]],     SingleL[k, v, l, r],     DoubleL[k, v, l, r]]#apply
     }
 
     class RotateR[k <: Any, v <: Any, l <: BSTree, r <: BSTree](k: k, v: v, l: l, r: r) extends Function0 {
         type self = RotateR[k, v, l, r]
-        override  def apply: apply = `if`(l.right.size  < ratio  ** l.left.size  , new SingleR(k, v, l, r), new DoubleR(k, v, l, r)).apply.asInstanceOf[apply]
-        override type apply =        `if`[l#right#size# <[ratio# **[l#left#size]],     SingleR[k, v, l, r],     DoubleR[k, v, l, r]]#apply
+        override  def apply: apply = `if`(l.right.size.lt(ratio.times(l.left.size)), new SingleR(k, v, l, r), new DoubleR(k, v, l, r)).apply.asInstanceOf[apply]
+        override type apply =        `if`[l#right#size#lt[ratio#times[l#left#size]],     SingleR[k, v, l, r],     DoubleR[k, v, l, r]]#apply
     }
 
     class SingleL[k <: Any, v <: Any, l <: BSTree, r <: BSTree](k: k, v: v, l: l, r: r) extends Function0 {

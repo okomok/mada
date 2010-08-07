@@ -17,8 +17,8 @@ object Glue {
 
     class Else[l <: BSTree, r <: BSTree](l: l, r: r) extends Function0 {
         type self = Else[l, r]
-        override  def apply: apply = `if`(l.size  > r.size,  new ElseThen(l, r), new ElseElse(l, r)).apply.asInstanceOf[apply]
-        override type apply =        `if`[l#size# >[r#size],     ElseThen[l, r],     ElseElse[l, r]]#apply
+        override  def apply: apply = `if`(l.size.gt(r.size), new ElseThen(l, r), new ElseElse(l, r)).apply.asInstanceOf[apply]
+        override type apply =        `if`[l#size#gt[r#size],     ElseThen[l, r],     ElseElse[l, r]]#apply
     }
 
     class ElseThen[l <: BSTree, r <: BSTree](l: l, r: r) extends Function0 {

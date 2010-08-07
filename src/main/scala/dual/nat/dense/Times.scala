@@ -9,7 +9,7 @@ package dual; package nat; package dense
 
 
 private[dual]
-final class ConsMultiply {
+object ConsTimes {
      def apply[x <: Boolean, xs <: Dense, ys <: Dense](x: x, xs: xs, ys: ys): apply[x, xs, ys] =
         `if`(x, Then(x, xs, ys), Else(x, xs, ys)).apply.asInstanceOfNatDense
     type apply[x <: Boolean, xs <: Dense, ys <: Dense] =
@@ -17,13 +17,13 @@ final class ConsMultiply {
 
     case class Then[x <: Boolean, xs <: Dense, ys <: Dense](x: x, xs: xs, ys: ys) extends Function0 {
         type self = Then[x, xs, ys]
-        override  def apply: apply = (ys + (xs ** ys).shiftLeft).asInstanceOf[apply]
-        override type apply = ys# +[xs# **[ys]#shiftLeft]
+        override  def apply: apply = ys.plus(xs.times(ys).shiftLeft).asInstanceOf[apply]
+        override type apply        = ys#plus[xs.times[ys]#shiftLeft]
     }
 
     case class Else[x <: Boolean, xs <: Dense, ys <: Dense](x: x, xs: xs, ys: ys) extends Function0 {
         type self = Else[x, xs, ys]
-        override  def apply: apply = (xs ** ys).shiftLeft
-        override type apply = xs# **[ys]# shiftLeft
+        override  def apply: apply = xs.times(ys).shiftLeft
+        override type apply        = xs#times[ys]#shiftLeft
     }
 }

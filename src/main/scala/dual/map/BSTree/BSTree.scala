@@ -114,8 +114,8 @@ final case class Node[k <: Any, v <: Any, l <: BSTree, r <: BSTree](
 
     type self = Node[k, v, l, r]
 
-    override  val size: size = (left.size  + right.size).increment.asInstanceOf[size]
-    override type size       =  left#size# +[right#size]#increment
+    override  val size: size = left.size.plus(right.size).increment.asInstanceOf[size]
+    override type size       = left#size#plus[right#size]#increment
 
     override type key = k
     override type value = v

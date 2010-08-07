@@ -26,7 +26,7 @@ class UnmetaTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testNatPeano {
-        type r = _1 + _3 + _4
+        type r = _1#plus[_3]#plus[_4]
         val r: _8 = unmeta[r]
         assertEquals(_8, r)
         assertEquals(8, r.undual)
