@@ -15,8 +15,10 @@ import junit.framework.Assert._
 
 import mada.dual.nat.dense.Literal._
 import mada.dual.nat.dense.{Nil, ::, _1B, _0B}
-import FastFibonacci._ // takes 6s.
+//import FastFibonacci._ // takes 6s.
+import FastFibonacci2._
 //import SlowFibonacci._ // takes forever.
+//import SlowFibonacci2._ // takes forever.
 
 
 class MemoizeTest {
@@ -27,3 +29,4 @@ class MemoizeTest {
     }
 
 }
+
