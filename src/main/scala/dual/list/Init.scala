@@ -10,10 +10,10 @@ package dual; package list
 
 private[dual]
 object Init {
-     def apply[xs <: List](xs: xs): apply[xs] = new Impl(xs)
-    type apply[xs <: List]                    =     Impl[xs]
+     def apply[xs <: List](xs: xs): apply[xs] = Impl(xs)
+    type apply[xs <: List]                    = Impl[xs]
 
-    class Impl[xs <: List](xs: xs) extends AbstractList {
+    case class Impl[xs <: List](xs: xs) extends AbstractList {
         type self = Impl[xs]
 
         private lazy val ys: ys = `if`(xs.tail.isEmpty, const0(Nil), const0(xs)).apply.asInstanceOfList
@@ -25,7 +25,7 @@ object Init {
         override  def head: head = ys.head
         override type head       = ys#head
 
-        override  def tail: tail = new Impl(ys.tail)
-        override type tail       =     Impl[ys#tail]
+        override  def tail: tail = Impl(ys.tail)
+        override type tail       = Impl[ys#tail]
     }
 }

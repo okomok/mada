@@ -10,9 +10,10 @@ package dual; package map
 
 private[dual]
 object PutList {
-     def apply[m <: Map, xs <: List](m: m, xs: xs): apply[m, xs] = xs.foldLeft(m, new Step).asInstanceOfMap
-    type apply[m <: Map, xs <: List]                             = xs#foldLeft[m,     Step]#asInstanceOfMap
+     def apply[m <: Map, xs <: List](m: m, xs: xs): apply[m, xs] = xs.foldLeft(m, Step).asInstanceOfMap
+    type apply[m <: Map, xs <: List]                             = xs#foldLeft[m, Step]#asInstanceOfMap
 
+    val Step = new Step
     class Step extends Function2 {
         type self = Step
         override  def apply[b <: Any, a <: Any](b: b, a: a): apply[b, a] =

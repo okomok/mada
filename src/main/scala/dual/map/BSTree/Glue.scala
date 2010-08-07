@@ -11,17 +11,17 @@ package dual; package map; package bstree
 private[dual]
 object Glue {
      def apply[l <: BSTree, r <: BSTree](l: l, r: r): apply[l, r] =
-        `if`(l.isEmpty, const0(r), `if`(r.isEmpty, const0(l), new Else(l, r))).apply.asInstanceOfMapBSTree.asInstanceOf[apply[l, r]]
+        `if`(l.isEmpty, const0(r), `if`(r.isEmpty, const0(l), Else(l, r))).apply.asInstanceOfMapBSTree.asInstanceOf[apply[l, r]]
     type apply[l <: BSTree, r <: BSTree] =
-        `if`[l#isEmpty, const0[r], `if`[r#isEmpty, const0[l],     Else[l, r]]]#apply#asInstanceOfMapBSTree
+        `if`[l#isEmpty, const0[r], `if`[r#isEmpty, const0[l], Else[l, r]]]#apply#asInstanceOfMapBSTree
 
-    class Else[l <: BSTree, r <: BSTree](l: l, r: r) extends Function0 {
+    case class Else[l <: BSTree, r <: BSTree](l: l, r: r) extends Function0 {
         type self = Else[l, r]
-        override  def apply: apply = `if`(l.size.gt(r.size), new ElseThen(l, r), new ElseElse(l, r)).apply.asInstanceOf[apply]
-        override type apply =        `if`[l#size#gt[r#size],     ElseThen[l, r],     ElseElse[l, r]]#apply
+        override  def apply: apply = `if`(l.size.gt(r.size), ElseThen(l, r), ElseElse(l, r)).apply.asInstanceOf[apply]
+        override type apply =        `if`[l#size#gt[r#size], ElseThen[l, r], ElseElse[l, r]]#apply
     }
 
-    class ElseThen[l <: BSTree, r <: BSTree](l: l, r: r) extends Function0 {
+    case class ElseThen[l <: BSTree, r <: BSTree](l: l, r: r) extends Function0 {
         type self = ElseThen[l, r]
 
         private lazy val d: d = RemoveMax.apply(l)
@@ -31,7 +31,7 @@ object Glue {
         override type apply        = Balance.apply[d#_1#asInstanceOfProduct2#_1, d#_1#asInstanceOfProduct2#_2, d#_2#asInstanceOfMapBSTree, r]
     }
 
-    class ElseElse[l <: BSTree, r <: BSTree](l: l, r: r) extends Function0 {
+    case class ElseElse[l <: BSTree, r <: BSTree](l: l, r: r) extends Function0 {
         type self = ElseElse[l, r]
 
         private lazy val d: d = RemoveMin.apply(r)
@@ -67,16 +67,16 @@ object RemoveMax { // => Tuple2(Tuple2(maxKey, value), map)
 
 private[dual]
 object RemoveMin { // => Tuple2(Tuple2(minKey, value), map)
-     def apply[m <: BSTree](m: m): apply[m] = `if`(m.left.isEmpty, new Then(m), new Else(m)).apply.asInstanceOfProduct2
-    type apply[m <: BSTree]                 = `if`[m#left#isEmpty,     Then[m],     Else[m]]#apply#asInstanceOfProduct2
+     def apply[m <: BSTree](m: m): apply[m] = `if`(m.left.isEmpty, Then(m), Else(m)).apply.asInstanceOfProduct2
+    type apply[m <: BSTree]                 = `if`[m#left#isEmpty, Then[m], Else[m]]#apply#asInstanceOfProduct2
 
-    class Then[m <: BSTree](m: m) extends Function0 {
+    case class Then[m <: BSTree](m: m) extends Function0 {
         type self = Then[m]
         override  def apply: apply = Tuple2(Tuple2(m.key, m.value), m.right)
         override type apply        = Tuple2[Tuple2[m#key, m#value], m#right]
     }
 
-    class Else[m <: BSTree](m: m) extends Function0 {
+    case class Else[m <: BSTree](m: m) extends Function0 {
         type self = Else[m]
 
         private lazy val d: d = RemoveMin.apply(m.left)

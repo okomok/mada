@@ -10,10 +10,10 @@ package dual; package list
 
 private[dual]
 object Zip {
-     def apply[xs <: List, ys <: List](xs: xs, ys: ys): apply[xs, ys] = new Impl(xs, ys)
-    type apply[xs <: List, ys <: List]                                =     Impl[xs, ys]
+     def apply[xs <: List, ys <: List](xs: xs, ys: ys): apply[xs, ys] = Impl(xs, ys)
+    type apply[xs <: List, ys <: List]                                = Impl[xs, ys]
 
-    class Impl[xs <: List, ys <: List](xs: xs, ys: ys) extends AbstractList {
+    case class Impl[xs <: List, ys <: List](xs: xs, ys: ys) extends AbstractList {
         type self = Impl[xs, ys]
 
         override  def isEmpty: isEmpty = xs.isEmpty.or(ys.isEmpty)
@@ -22,7 +22,7 @@ object Zip {
         override  def head: head = Tuple2(xs.head, ys.head)
         override type head       = Tuple2[xs#head, ys#head]
 
-        override  def tail: tail = new Impl(xs.tail, ys.tail)
-        override type tail       =     Impl[xs#tail, ys#tail]
+        override  def tail: tail = Impl(xs.tail, ys.tail)
+        override type tail       = Impl[xs#tail, ys#tail]
     }
 }

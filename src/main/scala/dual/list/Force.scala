@@ -10,14 +10,14 @@ package dual; package list
 
 private[dual]
 object Force {
-     def apply[xs <: List](xs: xs): apply[xs] = `if`(xs.isEmpty, const0(Nil), new Else(xs)).apply.asInstanceOfList
-    type apply[xs <: List]                    = `if`[xs#isEmpty, const0[Nil],     Else[xs]]#apply#asInstanceOfList
+     def apply[xs <: List](xs: xs): apply[xs] = `if`(xs.isEmpty, const0(Nil), Else(xs)).apply.asInstanceOfList
+    type apply[xs <: List]                    = `if`[xs#isEmpty, const0[Nil], Else[xs]]#apply#asInstanceOfList
 
-    class Else[xs <: List](xs: xs) extends Function0 {
+    case class Else[xs <: List](xs: xs) extends Function0 {
         type self = Else[xs]
         private lazy val r: r = Force.apply(xs.tail).asInstanceOf[r]
         private type r        = Force.apply[xs#tail]
-        override  def apply: apply = new Cons(xs.head, r)
-        override type apply        =     Cons[xs#head, r]
+        override  def apply: apply = Cons(xs.head, r)
+        override type apply        = Cons[xs#head, r]
     }
 }

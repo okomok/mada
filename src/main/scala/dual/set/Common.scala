@@ -13,7 +13,7 @@ trait Common {
     /**
      * Constructs an empty sorted set.
      */
-     def sorted[o <: Ordering](o: o): sorted[o] = new BSTreeFrom(map.bstree.Nil(o))
-    type sorted[o <: Ordering]                  =     BSTreeFrom[map.bstree.Nil[o]]
+     def sorted[o <: Ordering](o: o): sorted[o] = BSTreeFrom(map.bstree.Nil(o))
+    type sorted[o <: Ordering]                  = BSTreeFrom[map.bstree.Nil[o]]
 
 }

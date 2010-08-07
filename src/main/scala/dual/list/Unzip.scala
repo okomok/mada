@@ -10,12 +10,12 @@ package dual; package list
 
 private[dual]
 object Unzip {
-     def apply[xs <: List](xs: xs): apply[xs] = Tuple2(new Unzip1(xs), new Unzip2(xs))
-    type apply[xs <: List]            = Tuple2[    Unzip1[xs],     Unzip2[xs]]
+     def apply[xs <: List](xs: xs): apply[xs] = Tuple2(Unzip1(xs), Unzip2(xs))
+    type apply[xs <: List]                    = Tuple2[Unzip1[xs], Unzip2[xs]]
 }
 
 
-final class Unzip1[xs <: List](xs: xs) extends AbstractList {
+final case class Unzip1[xs <: List](xs: xs) extends AbstractList {
     type self = Unzip1[xs]
 
     override  def isEmpty: isEmpty = xs.isEmpty
@@ -24,11 +24,11 @@ final class Unzip1[xs <: List](xs: xs) extends AbstractList {
     override  def head: head = xs.head.asInstanceOfProduct2._1
     override type head       = xs#head#asInstanceOfProduct2#_1
 
-    override  def tail: tail = new Unzip1(xs.tail)
-    override type tail       =     Unzip1[xs#tail]
+    override  def tail: tail = Unzip1(xs.tail)
+    override type tail       = Unzip1[xs#tail]
 }
 
-final class Unzip2[xs <: List](xs: xs) extends AbstractList {
+final case class Unzip2[xs <: List](xs: xs) extends AbstractList {
     type self = Unzip2[xs]
 
     override  def isEmpty: isEmpty = xs.isEmpty
@@ -37,6 +37,6 @@ final class Unzip2[xs <: List](xs: xs) extends AbstractList {
     override  def head: head = xs.head.asInstanceOfProduct2._2
     override type head       = xs#head#asInstanceOfProduct2#_2
 
-    override  def tail: tail = new Unzip2(xs.tail)
-    override type tail       =     Unzip2[xs#tail]
+    override  def tail: tail = Unzip2(xs.tail)
+    override type tail       = Unzip2[xs#tail]
 }

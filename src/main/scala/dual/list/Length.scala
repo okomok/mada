@@ -12,10 +12,10 @@ import nat.dense._0
 
 private[dual]
 object Length {
-     def apply[xs <: List](xs: xs): apply[xs] = `if`(xs.isEmpty, const0(_0), new Else(xs)).apply.asInstanceOfNat
-    type apply[xs <: List]                    = `if`[xs#isEmpty, const0[_0],     Else[xs]]#apply#asInstanceOfNat
+     def apply[xs <: List](xs: xs): apply[xs] = `if`(xs.isEmpty, const0(_0), Else(xs)).apply.asInstanceOfNat
+    type apply[xs <: List]                    = `if`[xs#isEmpty, const0[_0], Else[xs]]#apply#asInstanceOfNat
 
-    class Else[xs <: List](xs: xs) extends Function0 {
+    case class Else[xs <: List](xs: xs) extends Function0 {
         type self = Else[xs]
         override  def apply: apply = Length.apply(xs.tail).increment.asInstanceOf[apply]
         override type apply        = Length.apply[xs#tail]#increment

@@ -32,27 +32,12 @@ sealed abstract class BSTree extends AbstractMap {
 
      def ord: ord
     type ord <: Ordering
-/*
-    final override  def keySet: keySet   = new set.BSTreeFrom(self)
-    private type _keySet[self <: BSTree] =     set.BSTreeFrom[self]
-    final override type keySet = _keySet[self]
-
-    final override  def clear: clear    = new Clear().apply(self)//Nil(self.ord)
-    //private type _clear[self <: BSTree] = Nil[self#ord]
-    final override type clear = Clear#apply[self]//_clear[self]
-    */
 }
 
-/*
-class Clear {
-     def apply[self <: BSTree](self: self): apply[self] = Nil(self.ord)
-    type apply[self <: BSTree]                          = Nil[self#ord]
-}
-*/
 
 sealed abstract class AbstractBSTree extends BSTree {
-    final override  def keySet: keySet   = new set.BSTreeFrom(self)
-    private type _keySet[self <: BSTree] =     set.BSTreeFrom[self]
+    final override  def keySet: keySet   = set.BSTreeFrom(self)
+    private type _keySet[self <: BSTree] = set.BSTreeFrom[self]
     final override type keySet = _keySet[self]
 
     final override  def clear: clear    = Nil(self.ord)

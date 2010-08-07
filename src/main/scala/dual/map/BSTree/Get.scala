@@ -11,23 +11,23 @@ package dual; package map; package bstree
 private[dual]
 object NodeGet {
      def apply[m <: BSTree, k <: Any](m: m, k: k): apply[m, k] =
-        m.ord.`match`(k, m.key, new CaseLT(m, k), new CaseGT(m, k), new CaseEQ(m, k)).asInstanceOfOption.asInstanceOf[apply[m, k]]
+        m.ord.`match`(k, m.key, CaseLT(m, k), CaseGT(m, k), CaseEQ(m, k)).asInstanceOfOption.asInstanceOf[apply[m, k]]
     type apply[m <: BSTree, k <: Any] =
-        m#ord#`match`[k, m#key,     CaseLT[m, k],     CaseGT[m, k],     CaseEQ[m, k]]#asInstanceOfOption
+        m#ord#`match`[k, m#key, CaseLT[m, k], CaseGT[m, k], CaseEQ[m, k]]#asInstanceOfOption
 
-    class CaseLT[m <: BSTree, k <: Any](m: m, k: k) extends Function0 {
+    case class CaseLT[m <: BSTree, k <: Any](m: m, k: k) extends Function0 {
         type self = CaseLT[m, k]
         override  def apply: apply = m.left.get(k)
         override type apply        = m#left#get[k]
     }
 
-    class CaseGT[m <: BSTree, k <: Any](m: m, k: k) extends Function0 {
+    case class CaseGT[m <: BSTree, k <: Any](m: m, k: k) extends Function0 {
         type self = CaseGT[m, k]
         override  def apply: apply = m.right.get(k)
         override type apply        = m#right#get[k]
     }
 
-    class CaseEQ[m <: BSTree, k <: Any](m: m, k: k) extends Function0 {
+    case class CaseEQ[m <: BSTree, k <: Any](m: m, k: k) extends Function0 {
         type self = CaseEQ[m, k]
         override  def apply: apply = Some(m.value)
         override type apply        = Some[m#value]

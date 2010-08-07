@@ -10,10 +10,10 @@ package dual; package list
 
 private[dual]
 object Step {
-     def apply[xs <: List, n <: Nat](xs: xs, n: n): apply[xs, n] = new Impl(xs, n)
-    type apply[xs <: List, n <: Nat]                             =     Impl[xs, n]
+     def apply[xs <: List, n <: Nat](xs: xs, n: n): apply[xs, n] = Impl(xs, n)
+    type apply[xs <: List, n <: Nat]                             = Impl[xs, n]
 
-    class Impl[xs <: List, n <: Nat](xs: xs, n: n) extends AbstractList {
+    case class Impl[xs <: List, n <: Nat](xs: xs, n: n) extends AbstractList {
         type self = Impl[xs, n]
 
         override  def isEmpty: isEmpty = xs.isEmpty
@@ -22,7 +22,7 @@ object Step {
         override  def head: head = xs.head
         override type head       = xs#head
 
-        override  def tail: tail = new Impl(xs.drop(n), n)
-        override type tail       =     Impl[xs#drop[n], n]
+        override  def tail: tail = Impl(xs.drop(n), n)
+        override type tail       = Impl[xs#drop[n], n]
     }
 }

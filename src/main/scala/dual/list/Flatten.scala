@@ -10,10 +10,10 @@ package dual; package list
 
 private[dual]
 object Flatten {
-     def apply[xs <: List](xs: xs): apply[xs] = new Impl(xs)
-    type apply[xs <: List]                    =     Impl[xs]
+     def apply[xs <: List](xs: xs): apply[xs] = Impl(xs)
+    type apply[xs <: List]                    = Impl[xs]
 
-    class Impl[xs <: List](xs: xs) extends AbstractList {
+    case class Impl[xs <: List](xs: xs) extends AbstractList {
         type self = Impl[xs]
 
         private lazy val ys: ys = xs.dropWhile(IsEmpty)
@@ -28,8 +28,8 @@ object Flatten {
         override  def head: head = local.head
         override type head       = local#head
 
-        override  def tail: tail = new Impl(new Cons(local.tail, ys.tail))
-        override type tail       =     Impl[    Cons[local#tail, ys#tail]]
+        override  def tail: tail = Impl(Cons(local.tail, ys.tail))
+        override type tail       = Impl[Cons[local#tail, ys#tail]]
 
     }
 

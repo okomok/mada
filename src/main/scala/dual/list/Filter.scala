@@ -10,10 +10,10 @@ package dual; package list
 
 private[dual]
 object Filter {
-     def apply[xs <: List, f <: Function1](xs: xs, f: f): apply[xs, f] = new Impl(xs, f)
-    type apply[xs <: List, f <: Function1]                             =     Impl[xs, f]
+     def apply[xs <: List, f <: Function1](xs: xs, f: f): apply[xs, f] = Impl(xs, f)
+    type apply[xs <: List, f <: Function1]                             = Impl[xs, f]
 
-    class Impl[xs <: List, f <: Function1](xs: xs, f: f) extends AbstractList {
+    case class Impl[xs <: List, f <: Function1](xs: xs, f: f) extends AbstractList {
         type self = Impl[xs, f]
 
         private lazy val ys: ys = xs.dropWhile(f.not)
@@ -25,7 +25,7 @@ object Filter {
         override  def head: head = ys.head.asInstanceOf[head]
         override type head       = ys#head
 
-        override  def tail: tail = new Impl(ys.tail.asInstanceOf[ys#tail], f)
-        override type tail       =     Impl[ys#tail, f]
+        override  def tail: tail = Impl(ys.tail.asInstanceOf[ys#tail], f)
+        override type tail       = Impl[ys#tail, f]
     }
 }

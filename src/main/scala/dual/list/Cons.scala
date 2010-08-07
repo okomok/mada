@@ -8,7 +8,7 @@ package com.github.okomok.mada
 package dual; package list
 
 
-final class Cons[x <: Any, xs <: List](override val head: x, override val tail: xs) extends AbstractList {
+final case class Cons[x <: Any, xs <: List](override val head: x, override val tail: xs) extends AbstractList {
     type self = Cons[x, xs]
 
     override  def isEmpty: isEmpty = `false`

@@ -11,13 +11,13 @@ package dual; package set
 private[dual]
 object SubsetOf {
      def apply[s <: Set, z <: Set](s: s, z: z): apply[s, z] =
-        s.toList.forall(new Pred(z)).asInstanceOf[apply[s, z]]
+        s.toList.forall(Pred(z)).asInstanceOf[apply[s, z]]
     type apply[s <: Set, z <: Set] =
-        s#toList#forall[    Pred[z]]
+        s#toList#forall[Pred[z]]
 
-    class Pred[z <: Set](z: z) extends Function1 {
+    case class Pred[z <: Set](z: z) extends Function1 {
         type self = Pred[z]
         override  def apply[k <: Any](k: k): apply[k] = z.contains(k)
-        override type apply[k <: Any] = z#contains[k]
+        override type apply[k <: Any]                 = z#contains[k]
     }
 }

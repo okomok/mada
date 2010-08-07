@@ -10,10 +10,10 @@ package dual; package list
 
 private[dual]
 object Map {
-     def apply[xs <: List, f <: Function1](xs: xs, f: f): apply[xs, f] = new Impl(xs, f)
-    type apply[xs <: List, f <: Function1]                             =     Impl[xs, f]
+     def apply[xs <: List, f <: Function1](xs: xs, f: f): apply[xs, f] = Impl(xs, f)
+    type apply[xs <: List, f <: Function1]                             = Impl[xs, f]
 
-    class Impl[xs <: List, f <: Function1](xs: xs, f: f) extends AbstractList {
+    case class Impl[xs <: List, f <: Function1](xs: xs, f: f) extends AbstractList {
         type self = Impl[xs, f]
 
         override  def isEmpty: isEmpty = xs.isEmpty
@@ -22,7 +22,7 @@ object Map {
         override  def head: head = f.apply(xs.head)
         override type head       = f#apply[xs#head]
 
-        override  def tail: tail = new Impl(xs.tail, f)
-        override type tail       =     Impl[xs#tail, f]
+        override  def tail: tail = Impl(xs.tail, f)
+        override type tail       = Impl[xs#tail, f]
     }
 }
