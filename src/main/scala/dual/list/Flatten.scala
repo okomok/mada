@@ -16,8 +16,8 @@ object Flatten {
     class Impl[xs <: List](xs: xs) extends AbstractList {
         type self = Impl[xs]
 
-        private lazy val ys: ys = xs.dropWhile(new IsEmpty)
-        private type ys         = xs#dropWhile[    IsEmpty]
+        private lazy val ys: ys = xs.dropWhile(IsEmpty)
+        private type ys         = xs#dropWhile[IsEmpty]
 
         override  def isEmpty: isEmpty = ys.isEmpty
         override type isEmpty          = ys#isEmpty
@@ -31,10 +31,12 @@ object Flatten {
         override  def tail: tail = new Impl(new Cons(local.tail, ys.tail))
         override type tail       =     Impl[    Cons[local#tail, ys#tail]]
 
-        class IsEmpty extends Function1 {
-            type self = IsEmpty
-            override  def apply[xs <: Any](xs: xs): apply[xs] = xs.asInstanceOfList.isEmpty
-            override type apply[xs <: Any]                    = xs#asInstanceOfList#isEmpty
-        }
+    }
+
+    val IsEmpty = new IsEmpty
+    class IsEmpty extends Function1 {
+        type self = IsEmpty
+        override  def apply[xs <: Any](xs: xs): apply[xs] = xs.asInstanceOfList.isEmpty
+        override type apply[xs <: Any]                    = xs#asInstanceOfList#isEmpty
     }
 }

@@ -31,13 +31,13 @@ object Times {
     class Impl[xs <: List, n <: Nat](xs: xs, n: n) extends AbstractList {
         type self = Impl[xs, n]
 
-        override  def isEmpty: isEmpty = xs.isEmpty  || n.isZero
-        override type isEmpty          = xs#isEmpty# ||[n#isZero]
+        override  def isEmpty: isEmpty = xs.isEmpty.or(n.isZero)
+        override type isEmpty          = xs#isEmpty#or[n#isZero]
 
         override  def head: head = xs.head
         override type head       = xs#head
 
-        override  def tail: tail = xs.tail  ++ new Impl(xs, n.decrement)
-        override type tail       = xs#tail# ++[    Impl[xs, n#decrement]]
+        override  def tail: tail = xs.tail.append(new Impl(xs, n.decrement))
+        override type tail       = xs#tail#append[    Impl[xs, n#decrement]]
     }
 }

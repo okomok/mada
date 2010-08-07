@@ -29,9 +29,9 @@ class AssertTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testTrivial2 {
-        mada.dual.assert(`true` !== `false`)
+        mada.dual.assert(`true` nequal `false`)
         try {
-            mada.dual.assert(`true` === `false`)
+            mada.dual.assert(`true` equal `false`)
             fail("never come here")
         } catch {
             case _: AssertionError =>
@@ -48,9 +48,9 @@ class AssertTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testNotTrivial2 {
-        assertNot(`true` === `false`)
+        assertNot(`true` equal `false`)
         try {
-            assertNot(`true` !== `false`)
+            assertNot(`true` nequal `false`)
             fail("never come here")
         } catch {
             case _: AssertionError =>
@@ -60,8 +60,8 @@ class AssertTest extends org.scalatest.junit.JUnit3Suite {
     trait testMeta {
         meta.assert[`true`]
         meta.assertNot[`false`]
-        meta.assert[`true`# === [`true`]]
-        meta.assertNot[`true`# !== [`true`]]
+        meta.assert[`true`# equal [`true`]]
+        meta.assertNot[`true`# nequal [`true`]]
     }
 
 }

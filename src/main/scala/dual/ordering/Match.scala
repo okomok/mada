@@ -17,6 +17,6 @@ final case class Match[o <: Ordering, x <: Any, y <: Any, flt <: Function0, fgt 
     private lazy val c: c = o.compare(x, y)
     private type c        = o#compare[x, y]
 
-    override  def apply: apply = `if`(c  === LT,  flt, `if`(c  === GT,  fgt, feq)).apply.asInstanceOf[apply]
-    override type apply        = `if`[c# ===[LT], flt, `if`[c# ===[GT], fgt, feq]]#apply
+    override  def apply: apply = `if`(c.equal(LT), flt, `if`(c.equal(GT), fgt, feq)).apply.asInstanceOf[apply]
+    override type apply        = `if`[c#equal[LT], flt, `if`[c#equal[GT], fgt, feq]]#apply
 }

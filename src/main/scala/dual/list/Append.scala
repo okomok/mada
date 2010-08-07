@@ -16,8 +16,8 @@ object Append {
     class Impl[xs <: List, ys <: List](xs: xs, ys: ys) extends AbstractList {
         type self = Impl[xs, ys]
 
-        override  def isEmpty: isEmpty = xs.isEmpty  && ys.isEmpty
-        override type isEmpty          = xs#isEmpty# &&[ys#isEmpty]
+        override  def isEmpty: isEmpty = xs.isEmpty.and(ys.isEmpty)
+        override type isEmpty          = xs#isEmpty#and[ys#isEmpty]
 
         override  def head: head = `if`(xs.isEmpty, new DerefThen(xs, ys), new DerefElse(xs, ys)).apply
         override type head       = `if`[xs#isEmpty,     DerefThen[xs, ys],     DerefElse[xs, ys]]#apply

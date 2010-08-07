@@ -12,11 +12,11 @@ sealed abstract class Result extends Any {
     type self <: Result
     type asInstanceOfOrderingResult = self
 
-     def ===[that <: Result](that: that): ===[that]
-    type ===[that <: Result] <: Boolean
+     def equal[that <: Result](that: that): equal[that]
+    type equal[that <: Result] <: Boolean
 
-     def !==[that <: Result](that: that): !==[that]
-    type !==[that <: Result] <: Boolean
+     def nequal[that <: Result](that: that): nequal[that]
+    type nequal[that <: Result] <: Boolean
 
      def isLT: isLT
     type isLT <: Boolean
@@ -37,21 +37,21 @@ sealed abstract class Result extends Any {
 
 private[dual]
 sealed abstract class AbstractResult extends Result {
-    final override  def !==[that <: Result](that: that): !==[that] = ===(that).not
-    final override type !==[that <: Result] =                        ===[that]#not
+    final override  def nequal[that <: Result](that: that): nequal[that] = equal(that).not
+    final override type nequal[that <: Result]                           = equal[that]#not
 
-    final override  def isLTEQ: isLTEQ = isLT  || isEQ
-    final override type isLTEQ         = isLT# ||[isEQ]
-    final override  def isGTEQ: isGTEQ = isGT  || isEQ
-    final override type isGTEQ         = isGT# ||[isEQ]
+    final override  def isLTEQ: isLTEQ = isLT.or(isEQ)
+    final override type isLTEQ         = isLT#or[isEQ]
+    final override  def isGTEQ: isGTEQ = isGT.or(isEQ)
+    final override type isGTEQ         = isGT#or[isEQ]
 }
 
 
 sealed abstract class LT extends AbstractResult {
     type self = LT
 
-    override  def ===[that <: Result](that: that): ===[that] = that.isLT
-    override type ===[that <: Result]                        = that#isLT
+    override  def equal[that <: Result](that: that): equal[that] = that.isLT
+    override type equal[that <: Result]                          = that#isLT
 
     override  def isLT: isLT = `true`
     override type isLT       = `true`
@@ -66,8 +66,8 @@ sealed abstract class LT extends AbstractResult {
 sealed abstract class GT extends AbstractResult {
     type self = GT
 
-    override  def ===[that <: Result](that: that): ===[that] = that.isGT
-    override type ===[that <: Result]                        = that#isGT
+    override  def equal[that <: Result](that: that): equal[that] = that.isGT
+    override type equal[that <: Result]                          = that#isGT
 
     override  def isLT: isLT = `false`
     override type isLT       = `false`
@@ -82,8 +82,8 @@ sealed abstract class GT extends AbstractResult {
 sealed abstract class EQ extends AbstractResult {
     type self = EQ
 
-    override  def ===[that <: Result](that: that): ===[that] = that.isEQ
-    override type ===[that <: Result]                        = that#isEQ
+    override  def equal[that <: Result](that: that): equal[that] = that.isEQ
+    override type equal[that <: Result]                          = that#isEQ
 
     override  def isLT: isLT = `false`
     override type isLT       = `false`

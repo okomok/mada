@@ -138,7 +138,7 @@ sealed class Nil extends AbstractDense {
 
 
 final case class Cons[x <: Boolean, xs <: Dense](override val head: x, override val tail: xs) extends AbstractDense {
-    assert(head || tail.isZero.not)
+    assert(head.or(tail.isZero.not))
 
     type self = Cons[x, xs]
 

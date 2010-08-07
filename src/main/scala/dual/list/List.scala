@@ -44,8 +44,8 @@ trait List extends Any {
      def length: length
     type length <: Nat
 
-     def ++[that <: List](that: that): ++[that]
-    type ++[that <: List] <: List
+     def append[that <: List](that: that): append[that]
+    type append[that <: List] <: List
 
      def map[f <: Function1](f: f): map[f]
     type map[f <: Function1] <: List

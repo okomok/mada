@@ -24,9 +24,9 @@ trait AbstractList extends List {
     private type _length[self <: List]     = Length.apply[self]
     final override type length = _length[self]
 
-    final override  def ++[that <: List](that: that): ++[that] = Append.apply(self, that)
-    private type _append[self <: List,  that <: List]          = Append.apply[self, that]
-    final override type ++[that <: List] = _append[self, that]
+    final override  def append[that <: List](that: that): append[that] = Append.apply(self, that)
+    private type _append[self <: List,  that <: List]                  = Append.apply[self, that]
+    final override type append[that <: List] = _append[self, that]
 
     final override  def map[f <: Function1](f: f): map[f] = Map.apply(self, f)
     private type _map[self <: List, f <: Function1]       = Map.apply[self, f]

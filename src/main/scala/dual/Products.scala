@@ -68,9 +68,9 @@ object Product2 {
     final class Eqv[e1 <: Equiv, e2 <: Equiv](e1: e1, e2: e2) extends Equiv {
         type self = Eqv[e1, e2]
         override  def equiv[x <: Any, y <: Any](x: x, y: y): equiv[x, y] =
-            (e1.equiv(x.asInstanceOfProduct2._1, y.asInstanceOfProduct2._1)  && e1.equiv(x.asInstanceOfProduct2._2, y.asInstanceOfProduct2._2)).asInstanceOf[equiv[x, y]]
+            e1.equiv(x.asInstanceOfProduct2._1, y.asInstanceOfProduct2._1).and(e1.equiv(x.asInstanceOfProduct2._2, y.asInstanceOfProduct2._2)).asInstanceOf[equiv[x, y]]
         override type equiv[x <: Any, y <: Any] =
-             e1#equiv[x#asInstanceOfProduct2#_1, y#asInstanceOfProduct2#_1]# &&[e1#equiv[x#asInstanceOfProduct2#_2, y#asInstanceOfProduct2#_2]]
+            e1#equiv[x#asInstanceOfProduct2#_1, y#asInstanceOfProduct2#_1]#and[e1#equiv[x#asInstanceOfProduct2#_2, y#asInstanceOfProduct2#_2]]
     }
 }
 

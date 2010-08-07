@@ -51,8 +51,8 @@ class TrivialTest extends org.scalatest.junit.JUnit3Suite {
     def testComparisonDuality {
         val a: _4#gt [_2] = _4 gt _2
         val b: `true` = a
-        mada.dual.assert(a === b)
-        mada.dual.assert(a === `true`)
+        mada.dual.assert(a equal b)
+        mada.dual.assert(a equal `true`)
     }
 
     trait testTrivial {

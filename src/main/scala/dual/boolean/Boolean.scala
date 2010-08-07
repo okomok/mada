@@ -21,17 +21,17 @@ sealed abstract class Boolean extends Any {
      def not: not
     type not <: Boolean
 
-     def ===[that <: Boolean](that: that): ===[that]
-    type ===[that <: Boolean] <: Boolean
+     def equal[that <: Boolean](that: that): equal[that]
+    type equal[that <: Boolean] <: Boolean
 
-     def !==[that <: Boolean](that: that): !==[that]
-    type !==[that <: Boolean] <: Boolean
+     def nequal[that <: Boolean](that: that): nequal[that]
+    type nequal[that <: Boolean] <: Boolean
 
-     def &&[that <: Boolean](that: that): &&[that]
-    type &&[that <: Boolean] <: Boolean
+     def and[that <: Boolean](that: that): and[that]
+    type and[that <: Boolean] <: Boolean
 
-     def ||[that <: Boolean](that: that): ||[that]
-    type ||[that <: Boolean] <: Boolean
+     def or[that <: Boolean](that: that): or[that]
+    type or[that <: Boolean] <: Boolean
 
      def `if`[then <: Function0, _else <: Function0](then: then, _else: _else): `if`[then, _else]
     type `if`[then <: Function0, _else <: Function0] <: Function0
@@ -49,8 +49,8 @@ sealed abstract class Boolean extends Any {
 
 private[dual]
 sealed abstract class AbstractBoolean extends Boolean {
-    final override  def !==[that <: Boolean](that: that): !==[that] = ===(that).not
-    final override type !==[that <: Boolean] =                        ===[that]#not
+    final override  def nequal[that <: Boolean](that: that): nequal[that] = equal(that).not
+    final override type nequal[that <: Boolean]                           = equal[that]#not
 
 //    final override protected  def typeid = _Boolean.typeid
 //    final override protected type typeid = _Boolean.typeid
@@ -66,14 +66,14 @@ sealed abstract class `true` extends AbstractBoolean {
     override  def not: not = `false`
     override type not      = `false`
 
-    override  def ===[that <: Boolean](that: that): ===[that] = that.isTrue
-    override type ===[that <: Boolean]                        = that#isTrue
+    override  def equal[that <: Boolean](that: that): equal[that] = that.isTrue
+    override type equal[that <: Boolean]                          = that#isTrue
 
-    override  def &&[that <: Boolean](that: that): &&[that] = that
-    override type &&[that <: Boolean] = that
+    override  def and[that <: Boolean](that: that): and[that] = that
+    override type and[that <: Boolean]                        = that
 
-    override  def ||[that <: Boolean](that: that): ||[that] = `true`
-    override type ||[that <: Boolean]                       = `true`
+    override  def or[that <: Boolean](that: that): or[that] = `true`
+    override type or[that <: Boolean]                       = `true`
 
     override  def `if`[then <: Function0, _else <: Function0](then: then, _else: _else): `if`[then, _else] = then
     override type `if`[then <: Function0, _else <: Function0]                                              = then
@@ -97,14 +97,14 @@ sealed abstract class `false` extends AbstractBoolean {
     override  def not: not = `true`
     override type not      = `true`
 
-    override  def ===[that <: Boolean](that: that): ===[that] = that.isFalse
-    override type ===[that <: Boolean]                        = that#isFalse
+    override  def equal[that <: Boolean](that: that): equal[that] = that.isFalse
+    override type equal[that <: Boolean]                          = that#isFalse
 
-    override  def &&[that <: Boolean](that: that): &&[that] = `false`
-    override type &&[that <: Boolean]                       = `false`
+    override  def and[that <: Boolean](that: that): and[that] = `false`
+    override type and[that <: Boolean]                        = `false`
 
-    override  def ||[that <: Boolean](that: that): ||[that] = that
-    override type ||[that <: Boolean]                       = that
+    override  def or[that <: Boolean](that: that): or[that] = that
+    override type or[that <: Boolean]                       = that
 
     override  def `if`[then <: Function0, _else <: Function0](then: then, _else: _else): `if`[then, _else] = _else
     override type `if`[then <: Function0, _else <: Function0]                                              = _else

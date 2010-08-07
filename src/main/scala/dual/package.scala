@@ -74,9 +74,6 @@ package object dual {
     @aliasOf("list.::")
     type ::[x <: Any, xs <: List] = list.::[x, xs]
 
-    @aliasOf("list.++")
-    type ++[xs <: List, ys <: List] = list.++[xs, ys]
-
 
 // Nat
 

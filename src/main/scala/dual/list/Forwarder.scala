@@ -41,8 +41,8 @@ trait Forwarder extends List {
     final override  def length: length = delegate.length
     final override type length         = delegate#length
 
-    final override  def ++[that <: List](that: that): ++[that] = around(delegate. ++(that))
-    final override type ++[that <: List]                       = around[delegate# ++[that]]
+    final override  def append[that <: List](that: that): append[that] = around(delegate.append(that))
+    final override type append[that <: List]                           = around[delegate#append[that]]
 
     final override  def map[f <: Function1](f: f): map[f] = around(delegate.map(f))
     final override type map[f <: Function1]               = around[delegate#map[f]]

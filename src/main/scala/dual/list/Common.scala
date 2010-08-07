@@ -22,9 +22,6 @@ trait Common {
     @equivalentTo("x# ::[xs]")
     type ::[x <: Any, xs <: List] = xs# ::[x]
 
-    @equivalentTo("xs# ++[ys]")
-    type ++[xs <: List, ys <: List] = xs# ++[ys]
-
     @equivalentTo("Nil.::(x)")
      def single[x <: Any](x: x): single[x] = Nil. ::(x)
     type single[x <: Any]                  = Nil# ::[x]

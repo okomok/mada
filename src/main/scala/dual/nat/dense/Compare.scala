@@ -17,8 +17,8 @@ object Equal {
 
     case class CaseCC[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
         type self = CaseCC[xs, ys]
-        override  def apply: apply = `if`(xs.head. !==(ys.head), const0(`false`), Else(xs, ys)).apply.asInstanceOf[apply]
-        override type apply        = `if`[xs#head# !==[ys#head], const0[`false`], Else[xs, ys]]#apply
+        override  def apply: apply = `if`(xs.head.nequal(ys.head), const0(`false`), Else(xs, ys)).apply.asInstanceOf[apply]
+        override type apply        = `if`[xs#head#nequal[ys#head], const0[`false`], Else[xs, ys]]#apply
     }
 
     // for short-circuit.

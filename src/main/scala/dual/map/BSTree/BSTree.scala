@@ -140,16 +140,16 @@ final case class Node[k <: Any, v <: Any, l <: BSTree, r <: BSTree](
     private type _remove[self <: BSTree, k <: Any]  = NodeRemove.apply[self, k]
     override type remove[k <: Any] = _remove[self, k]
 
-    override  def toList: toList         = (self.left.toList ++ (Tuple2(self.key, self.value) :: self.right.toList)).asInstanceOf[toList]
-    private type _toList[self <: BSTree] = (self#left#toList ++ (Tuple2[self#key, self#value] :: self#right#toList))
+    override  def toList: toList         = self.left.toList.append(Tuple2(self.key, self.value) :: self.right.toList).asInstanceOf[toList]
+    private type _toList[self <: BSTree] = self#left#toList#append[Tuple2[self#key, self#value] :: self#right#toList]
     override type toList = _toList[self]
 
-    override  def keyList: keyList        = (self.left.keyList ++ (self.key :: self.right.keyList)).asInstanceOf[keyList]
-    private type _keyList[self <: BSTree] = (self#left#keyList ++ (self#key :: self#right#keyList))
+    override  def keyList: keyList        = self.left.keyList.append(self.key :: self.right.keyList).asInstanceOf[keyList]
+    private type _keyList[self <: BSTree] = self#left#keyList#append[self#key :: self#right#keyList]
     override type keyList = _keyList[self]
 
-    override  def valueList: valueList      = (self.left.valueList ++ (self.value :: self.right.valueList)).asInstanceOf[valueList]
-    private type _valueList[self <: BSTree] = (self#left#valueList ++ (self#value :: self#right#valueList))
+    override  def valueList: valueList      = self.left.valueList.append(self.value :: self.right.valueList).asInstanceOf[valueList]
+    private type _valueList[self <: BSTree] = self#left#valueList#append[self#value :: self#right#valueList]
     override type valueList = _valueList[self]
 
     override  def undual: undual = (left.undual + (key.undual -> value.undual)) ++ right.undual

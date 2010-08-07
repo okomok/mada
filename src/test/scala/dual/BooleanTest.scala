@@ -39,32 +39,34 @@ class BooleanTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testDuality {
-        val f: `false`# && [`true`] = `false` && `true`
-        val t: `false`# || [`true`] = `false` || `true`
-        val x: `false` = f && t
-        mada.dual.assert(x === `false`)
+        val f: `false`# and [`true`] = `false` and `true`
+        val t: `false`# or [`true`] = `false` or `true`
+        val x: `false` = f and t
+        mada.dual.assert(x equal `false`)
     }
 
     meta.assert[`true`]
     meta.assertNot[`false`]
 
-    meta.assert[`true` === `true`]
-    meta.assert[`false` === `false`]
-    meta.assert[`true` !== `false`]
-    meta.assert[`false` !== `true`]
+    meta.assert[`true`# equal [`true`]]
+    meta.assert[`false`# equal [`false`]]
+    meta.assert[`true`# nequal [`false`]]
+    meta.assert[`false`# nequal [`true`]]
 
     type myNot[b <: Boolean] = b#not
-    meta.assert[myNot[`true`]# !== [`true`]]
-    meta.assert[myNot[`false`]# !== [`false`]]
-    meta.assert[myNot[`true`]# === [`false`]]
-    meta.assert[myNot[`false`]# === [`true`]]
+    meta.assert[myNot[`true`]# nequal [`true`]]
+    meta.assert[myNot[`false`]# nequal [`false`]]
+    meta.assert[myNot[`true`]# equal [`false`]]
+    meta.assert[myNot[`false`]# equal [`true`]]
 
+    /*
     trait testOperator {
         meta.assert[`true` && `true`]
         meta.assert[(`false` && `true`)#not]
         meta.assert[`false` || `true`]
         meta.assert[`true` || `false`]
     }
+    */
 
     trait testPropagation {
         type incinc[n <: Peano] = `if`[n# equal[_3], Inc_Nat[n], const0[n]]#apply#asInstanceOfNat#increment#decrement#increment

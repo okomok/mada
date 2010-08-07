@@ -29,9 +29,11 @@ class Common extends OperatorCommon {
 
 private[dual]
 trait OperatorCommon {
+/*
     type ===[x <: Boolean, y <: Boolean] = x# ===[y]
     type !==[x <: Boolean, y <: Boolean] = x# !==[y]
 
     type &&[x <: Boolean, y <: Boolean] = x# &&[y]
     type ||[x <: Boolean, y <: Boolean] = x# ||[y]
+*/
 }

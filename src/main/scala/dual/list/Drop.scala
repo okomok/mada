@@ -11,9 +11,9 @@ package dual; package list
 private[dual]
 object Drop {
      def apply[xs <: List, n <: Nat](xs: xs, n: n) =
-        `if`(xs.isEmpty  || n.isZero,  const0(xs), new Else(xs, n)).apply.asInstanceOfList.asInstanceOf[apply[xs, n]]
+        `if`(xs.isEmpty.or(n.isZero), const0(xs), new Else(xs, n)).apply.asInstanceOfList.asInstanceOf[apply[xs, n]]
     type apply[xs <: List, n <: Nat] =
-        `if`[xs#isEmpty# ||[n#isZero], const0[xs],     Else[xs, n]]#apply#asInstanceOfList
+        `if`[xs#isEmpty#or[n#isZero], const0[xs],     Else[xs, n]]#apply#asInstanceOfList
 
     class Else[xs <: List, n <: Nat](xs: xs, n: n) extends Function0 {
         type self = Else[xs, n]
