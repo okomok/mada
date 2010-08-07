@@ -9,27 +9,27 @@ package dual; package map; package bstree
 
 
 private[dual]
-final class NodeRemove {
+object NodeRemove {
      def apply[m <: BSTree, k <: Any](m: m, k: k): apply[m, k] =
-        m.ord.`match`(k, m.key, CaseLT(m, k), CaseGT(m, k), CaseEQ(m, k)).asInstanceOfMapBSTree.asInstanceOf[apply[m, k]]
+        m.ord.`match`(k, m.key, new CaseLT(m, k), new CaseGT(m, k), new CaseEQ(m, k)).asInstanceOfMapBSTree.asInstanceOf[apply[m, k]]
     type apply[m <: BSTree, k <: Any] =
-        m#ord#`match`[k, m#key, CaseLT[m, k], CaseGT[m, k], CaseEQ[m, k]]#asInstanceOfMapBSTree
+        m#ord#`match`[k, m#key,     CaseLT[m, k],     CaseGT[m, k],     CaseEQ[m, k]]#asInstanceOfMapBSTree
 
-    case class CaseLT[m <: BSTree, k <: Any](m: m, k: k) extends Function0 {
+    class CaseLT[m <: BSTree, k <: Any](m: m, k: k) extends Function0 {
         type self = CaseLT[m, k]
-        override  def apply: apply = new Balance().apply(m.key, m.value, m.left.remove(k), m.right).asInstanceOf[apply]
-        override type apply        =     Balance#  apply[m#key, m#value, m#left#remove[k], m#right]
+        override  def apply: apply = Balance.apply(m.key, m.value, m.left.remove(k), m.right).asInstanceOf[apply]
+        override type apply        = Balance.apply[m#key, m#value, m#left#remove[k], m#right]
     }
 
-    case class CaseGT[m <: BSTree, k <: Any](m: m, k: k) extends Function0 {
+    class CaseGT[m <: BSTree, k <: Any](m: m, k: k) extends Function0 {
         type self = CaseGT[m, k]
-        override  def apply: apply = new Balance().apply(m.key, m.value, m.left, m.right.remove(k)).asInstanceOf[apply]
-        override type apply        =     Balance#  apply[m#key, m#value, m#left, m#right#remove[k]]
+        override  def apply: apply = Balance.apply(m.key, m.value, m.left, m.right.remove(k)).asInstanceOf[apply]
+        override type apply        = Balance.apply[m#key, m#value, m#left, m#right#remove[k]]
     }
 
-    case class CaseEQ[m <: BSTree, k <: Any](m: m, k: k) extends Function0 {
+    class CaseEQ[m <: BSTree, k <: Any](m: m, k: k) extends Function0 {
         type self = CaseEQ[m, k]
-        override  def apply: apply = new Glue().apply(m.left, m.right)
-        override type apply        =     Glue#  apply[m#left, m#right]
+        override  def apply: apply = Glue.apply(m.left, m.right)
+        override type apply        = Glue.apply[m#left, m#right]
     }
 }

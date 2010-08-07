@@ -9,11 +9,11 @@ package dual; package set
 
 
 private[dual]
-final class Intersect {
-     def apply[s <: Set, z <: Set](s: s, z: z): apply[s, z] = s.clear.addList(s.toList.filter(Pred(z)))//.asInstanceOf[apply[s, z]]
-    type apply[s <: Set, z <: Set] = s#clear#addList[s#toList#filter[Pred[z]]]
+object Intersect {
+     def apply[s <: Set, z <: Set](s: s, z: z): apply[s, z] = s.clear.addList(s.toList.filter(new Pred(z)))//.asInstanceOf[apply[s, z]]
+    type apply[s <: Set, z <: Set]                          = s#clear#addList[s#toList#filter[    Pred[z]]]
 
-    case class Pred[z <: Set](z: z) extends Function1 {
+    class Pred[z <: Set](z: z) extends Function1 {
         type self = Pred[z]
         override  def apply[k <: Any](k: k): apply[k] = z.contains(k)
         override type apply[k <: Any] = z#contains[k]

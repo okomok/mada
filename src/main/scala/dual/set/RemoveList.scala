@@ -9,7 +9,7 @@ package dual; package set
 
 
 private[dual]
-final class RemoveList {
+object RemoveList {
      def apply[s <: Set, xs <: List](s: s, xs: xs): apply[s, xs] =
         xs.foldLeft(s, new Step).asInstanceOfSet
     type apply[s <: Set, xs <: List] =

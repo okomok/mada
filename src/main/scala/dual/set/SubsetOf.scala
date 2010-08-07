@@ -9,7 +9,7 @@ package dual; package set
 
 
 private[dual]
-final class SubsetOf {
+object SubsetOf {
      def apply[s <: Set, z <: Set](s: s, z: z): apply[s, z] =
         s.toList.forall(new Pred(z)).asInstanceOf[apply[s, z]]
     type apply[s <: Set, z <: Set] =

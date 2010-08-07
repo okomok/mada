@@ -16,6 +16,7 @@ sealed abstract class BSTree extends AbstractMap {
 
     override type put[k <: Any, v <: Any] <: BSTree
     override type remove[k <: Any] <: BSTree
+    override type clear <: BSTree
 
      def key: key
     type key <: Any
@@ -31,9 +32,28 @@ sealed abstract class BSTree extends AbstractMap {
 
      def ord: ord
     type ord <: Ordering
+/*
+    final override  def keySet: keySet   = new set.BSTreeFrom(self)
+    private type _keySet[self <: BSTree] =     set.BSTreeFrom[self]
+    final override type keySet = _keySet[self]
 
-    final override  def keySet: keySet = set.BSTreeFrom(self)
-    final override type keySet         = set.BSTreeFrom[self]
+    final override  def clear: clear    = new Clear().apply(self)//Nil(self.ord)
+    //private type _clear[self <: BSTree] = Nil[self#ord]
+    final override type clear = Clear#apply[self]//_clear[self]
+    */
+}
+
+/*
+class Clear {
+     def apply[self <: BSTree](self: self): apply[self] = Nil(self.ord)
+    type apply[self <: BSTree]                          = Nil[self#ord]
+}
+*/
+
+sealed abstract class AbstractBSTree extends BSTree {
+    final override  def keySet: keySet   = new set.BSTreeFrom(self)
+    private type _keySet[self <: BSTree] =     set.BSTreeFrom[self]
+    final override type keySet = _keySet[self]
 
     final override  def clear: clear    = Nil(self.ord)
     private type _clear[self <: BSTree] = Nil[self#ord]
@@ -41,7 +61,7 @@ sealed abstract class BSTree extends AbstractMap {
 }
 
 
-final case class Nil[o <: Ordering](override val ord: o) extends BSTree {
+final case class Nil[o <: Ordering](override val ord: o) extends AbstractBSTree {
     type self = Nil[o]
 
     override  def size: size = nat.dense._0
@@ -88,7 +108,7 @@ final case class Nil[o <: Ordering](override val ord: o) extends BSTree {
 
 
 final case class Node[k <: Any, v <: Any, l <: BSTree, r <: BSTree](
-    override val key: k, override val value: v, override val left: l, override val right: r) extends BSTree
+    override val key: k, override val value: v, override val left: l, override val right: r) extends AbstractBSTree
 {
     Predef.assert(left.ord.undual == right.ord.undual)
 
@@ -108,14 +128,17 @@ final case class Node[k <: Any, v <: Any, l <: BSTree, r <: BSTree](
     override  def isEmpty: isEmpty = `false`
     override type isEmpty          = `false`
 
-    override  def get[k <: Any](k: k): get[k] = new NodeGet().apply(self, k)
-    override type get[k <: Any] = NodeGet#apply[self, k]
+    override  def get[k <: Any](k: k): get[k]   = NodeGet.apply(self, k)
+    private type _get[self <: BSTree, k <: Any] = NodeGet.apply[self, k]
+    override type get[k <: Any] = _get[self, k]
 
-    override  def put[k <: Any, v <: Any](k: k, v: v): put[k, v] = new NodePut().apply(self, k, v)
-    override type put[k <: Any, v <: Any] = NodePut#apply[self, k, v]
+    override  def put[k <: Any, v <: Any](k: k, v: v): put[k, v] = NodePut.apply(self, k, v)
+    private type _put[self <: BSTree, k <: Any, v <: Any]        = NodePut.apply[self, k, v]
+    override type put[k <: Any, v <: Any] = _put[self, k, v]
 
-    override  def remove[k <: Any](k: k): remove[k] = new NodeRemove().apply(self, k)
-    override type remove[k <: Any] = NodeRemove#apply[self, k]
+    override  def remove[k <: Any](k: k): remove[k] = NodeRemove.apply(self, k)
+    private type _remove[self <: BSTree, k <: Any]  = NodeRemove.apply[self, k]
+    override type remove[k <: Any] = _remove[self, k]
 
     override  def toList: toList         = (self.left.toList ++ (Tuple2(self.key, self.value) :: self.right.toList)).asInstanceOf[toList]
     private type _toList[self <: BSTree] = (self#left#toList ++ (Tuple2[self#key, self#value] :: self#right#toList))
