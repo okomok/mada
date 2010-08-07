@@ -9,8 +9,8 @@ package dual; package function
 
 
 private[dual]
-final class Throw0(what: Throwable) extends Function0 {
+final class Throw0(x: Throwable) extends Function0 {
     type self = Throw0
-    override  def apply: apply = throw what
-    override type apply = Nothing
+    override  def apply: apply = throw x
+    override type apply        = Nothing
 }
