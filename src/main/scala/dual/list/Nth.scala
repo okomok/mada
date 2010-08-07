@@ -8,15 +8,16 @@ package com.github.okomok.mada
 package dual; package list
 
 
-final class Nth[xs <: List, n <: Nat](xs: xs, n: n) extends Function0 {
-    type self = Nth[xs, n]
+private[mada]
+object Nth {
+     def apply[xs <: List, n <: Nat](xs: xs, n: n) =
+        `if`(n.isZero, const0(xs.head), new Else(xs, n)).apply.asInstanceOf[apply[xs, n]]
+    type apply[xs <: List, n <: Nat] =
+        `if`[n#isZero, const0[xs#head],     Else[xs, n]]#apply
 
-    override  def apply: apply = `if`(n.isZero, const0(xs.head), new Else).apply.asInstanceOf[apply]
-    override type apply        = `if`[n#isZero, const0[xs#head],     Else]#apply
-
-    class Else extends Function0 {
-        type self = Else
-        override  def apply: apply = new Nth(xs.tail, n.decrement).apply.asInstanceOf[apply]
-        override type apply        =     Nth[xs#tail, n#decrement]#apply
+    class Else[xs <: List, n <: Nat](xs: xs, n: n) extends Function0 {
+        type self = Else[xs, n]
+        override  def apply: apply = Nth.apply(xs.tail, n.decrement).asInstanceOf[apply]
+        override type apply        = Nth.apply[xs#tail, n#decrement]
     }
 }

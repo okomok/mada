@@ -10,16 +10,14 @@ package dual; package list
 
 import nat.dense._0
 
+private[dual]
+object Length {
+     def apply[xs <: List](xs: xs): apply[xs] = `if`(xs.isEmpty, const0(_0), new Else(xs)).apply.asInstanceOfNat
+    type apply[xs <: List]                    = `if`[xs#isEmpty, const0[_0],     Else[xs]]#apply#asInstanceOfNat
 
-final class Length[xs <: List](xs: xs) extends Function0 {
-    type self = Length[xs]
-
-    override  def apply: apply = `if`(xs.isEmpty, const0(_0), new Else).apply.asInstanceOfNat
-    override type apply        = `if`[xs#isEmpty, const0[_0],     Else]#apply#asInstanceOfNat
-
-    class Else extends Function0 {
-        type self = Else
-        override  def apply: apply = new Length(xs.tail).apply.increment.asInstanceOf[apply]
-        override type apply        =     Length[xs#tail]#apply#increment
+    class Else[xs <: List](xs: xs) extends Function0 {
+        type self = Else[xs]
+        override  def apply: apply = Length.apply(xs.tail).increment.asInstanceOf[apply]
+        override type apply        = Length.apply[xs#tail]#increment
     }
 }

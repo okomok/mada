@@ -8,15 +8,21 @@ package com.github.okomok.mada
 package dual; package list
 
 
-final class Zip[xs <: List, ys <: List](xs: xs, ys: ys) extends AbstractList {
-    type self = Zip[xs, ys]
+private[dual]
+object Zip {
+     def apply[xs <: List, ys <: List](xs: xs, ys: ys): apply[xs, ys] = new Impl(xs, ys)
+    type apply[xs <: List, ys <: List]                                =     Impl[xs, ys]
 
-    override  def isEmpty: isEmpty = xs.isEmpty  || ys.isEmpty
-    override type isEmpty          = xs#isEmpty# ||[ys#isEmpty]
+    class Impl[xs <: List, ys <: List](xs: xs, ys: ys) extends AbstractList {
+        type self = Impl[xs, ys]
 
-    override  def head: head = Tuple2(xs.head, ys.head)
-    override type head       = Tuple2[xs#head, ys#head]
+        override  def isEmpty: isEmpty = xs.isEmpty  || ys.isEmpty
+        override type isEmpty          = xs#isEmpty# ||[ys#isEmpty]
 
-    override  def tail: tail = new Zip(xs.tail, ys.tail)
-    override type tail       =     Zip[xs#tail, ys#tail]
+        override  def head: head = Tuple2(xs.head, ys.head)
+        override type head       = Tuple2[xs#head, ys#head]
+
+        override  def tail: tail = new Impl(xs.tail, ys.tail)
+        override type tail       =     Impl[xs#tail, ys#tail]
+    }
 }

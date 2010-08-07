@@ -8,39 +8,37 @@ package com.github.okomok.mada
 package dual; package list
 
 
-final class Drop[xs <: List, n <: Nat](xs: xs, n: n) extends TrivialForwarder {
-    type self = Drop[xs, n]
+private[dual]
+object Drop {
+     def apply[xs <: List, n <: Nat](xs: xs, n: n) =
+        `if`(xs.isEmpty  || n.isZero,  const0(xs), new Else(xs, n)).apply.asInstanceOfList.asInstanceOf[apply[xs, n]]
+    type apply[xs <: List, n <: Nat] =
+        `if`[xs#isEmpty# ||[n#isZero], const0[xs],     Else[xs, n]]#apply#asInstanceOfList
 
-    override protected lazy val delegate: delegate =
-        `if`(xs.isEmpty  || n.isZero,  const0(xs), new Else).apply.asInstanceOfList.asInstanceOf[delegate]
-    override protected type delegate =
-        `if`[xs#isEmpty# ||[n#isZero], const0[xs],     Else]#apply#asInstanceOfList
-
-    class Else extends Function0 {
-        type self = Else
-        override  def apply: apply = new Drop(xs.tail, n.decrement)
-        override type apply        =     Drop[xs#tail, n#decrement]
+    class Else[xs <: List, n <: Nat](xs: xs, n: n) extends Function0 {
+        type self = Else[xs, n]
+        override  def apply: apply = Drop.apply(xs.tail, n.decrement)
+        override type apply        = Drop.apply[xs#tail, n#decrement]
     }
 }
 
 
-final class DropWhile[xs <: List, f <: Function1](xs: xs, f: f) extends TrivialForwarder {
-    type self = DropWhile[xs, f]
+private[dual]
+object DropWhile {
+     def apply[xs <: List, f <: Function1](xs: xs, f: f): apply[xs, f] =
+        `if`(xs.isEmpty, const0(xs), new Else(xs, f)).apply.asInstanceOfList
+    type apply[xs <: List, f <: Function1] =
+        `if`[xs#isEmpty, const0[xs],     Else[xs, f]]#apply#asInstanceOfList
 
-    override protected lazy val delegate: delegate =
-        `if`(xs.isEmpty, const0(xs), new Else).apply.asInstanceOfList
-    override protected type delegate =
-        `if`[xs#isEmpty, const0[xs],     Else]#apply#asInstanceOfList
-
-    class Else extends Function0 {
-        type self = Else
-        override  def apply: apply = `if`(f.apply(xs.head).asInstanceOfBoolean, new ElseThen, const0(xs)).apply.asInstanceOf[apply]
-        override type apply        = `if`[f#apply[xs#head]#asInstanceOfBoolean,     ElseThen, const0[xs]]#apply
+    class Else[xs <: List, f <: Function1](xs: xs, f: f) extends Function0 {
+        type self = Else[xs, f]
+        override  def apply: apply = `if`(f.apply(xs.head).asInstanceOfBoolean, new ElseThen(xs, f), const0(xs)).apply.asInstanceOf[apply]
+        override type apply        = `if`[f#apply[xs#head]#asInstanceOfBoolean,     ElseThen[xs, f], const0[xs]]#apply
     }
 
-    class ElseThen extends Function0 {
-        type self = ElseThen
-        override  def apply: apply = new DropWhile(xs.tail, f)
-        override type apply        =     DropWhile[xs#tail, f]
+    class ElseThen[xs <: List, f <: Function1](xs: xs, f: f) extends Function0 {
+        type self = ElseThen[xs, f]
+        override  def apply: apply = DropWhile.apply(xs.tail, f)
+        override type apply        = DropWhile.apply[xs#tail, f]
     }
 }

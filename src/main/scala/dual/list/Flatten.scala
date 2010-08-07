@@ -8,27 +8,33 @@ package com.github.okomok.mada
 package dual; package list
 
 
-final class Flatten[xs <: List](xs: xs) extends AbstractList {
-    type self = Flatten[xs]
+private[dual]
+object Flatten {
+     def apply[xs <: List](xs: xs): apply[xs] = new Impl(xs)
+    type apply[xs <: List]                    =     Impl[xs]
 
-    private lazy val ys: ys = new DropWhile(xs, new IsEmpty)
-    private type ys         =     DropWhile[xs,     IsEmpty]
+    class Impl[xs <: List](xs: xs) extends AbstractList {
+        type self = Impl[xs]
 
-    override  def isEmpty: isEmpty = ys.isEmpty
-    override type isEmpty          = ys#isEmpty
+        private lazy val ys: ys = xs.dropWhile(new IsEmpty)
+        private type ys         = xs#dropWhile[    IsEmpty]
 
-    private lazy val local: local = ys.head.asInstanceOfList
-    private type local            = ys#head#asInstanceOfList
+        override  def isEmpty: isEmpty = ys.isEmpty
+        override type isEmpty          = ys#isEmpty
 
-    override  def head: head = local.head
-    override type head       = local#head
+        private lazy val local: local = ys.head.asInstanceOfList
+        private type local            = ys#head#asInstanceOfList
 
-    override  def tail: tail = new Flatten(new Cons(local.tail, ys.tail))
-    override type tail       =     Flatten[    Cons[local#tail, ys#tail]]
+        override  def head: head = local.head
+        override type head       = local#head
 
-    class IsEmpty extends Function1 {
-        type self = IsEmpty
-        override  def apply[xs <: Any](xs: xs): apply[xs] = xs.asInstanceOfList.isEmpty
-        override type apply[xs <: Any]                    = xs#asInstanceOfList#isEmpty
+        override  def tail: tail = new Impl(new Cons(local.tail, ys.tail))
+        override type tail       =     Impl[    Cons[local#tail, ys#tail]]
+
+        class IsEmpty extends Function1 {
+            type self = IsEmpty
+            override  def apply[xs <: Any](xs: xs): apply[xs] = xs.asInstanceOfList.isEmpty
+            override type apply[xs <: Any]                    = xs#asInstanceOfList#isEmpty
+        }
     }
 }

@@ -8,18 +8,24 @@ package com.github.okomok.mada
 package dual; package list
 
 
-final class Filter[xs <: List, f <: Function1](xs: xs, f: f) extends AbstractList {
-    type self = Filter[xs, f]
+private[dual]
+object Filter {
+     def apply[xs <: List, f <: Function1](xs: xs, f: f): apply[xs, f] = new Impl(xs, f)
+    type apply[xs <: List, f <: Function1]                             =     Impl[xs, f]
 
-    private lazy val ys: ys = new DropWhile(xs, f.not)
-    private type ys         =     DropWhile[xs, f#not]
+    class Impl[xs <: List, f <: Function1](xs: xs, f: f) extends AbstractList {
+        type self = Impl[xs, f]
 
-    override  def isEmpty: isEmpty = ys.isEmpty
-    override type isEmpty          = ys#isEmpty
+        private lazy val ys: ys = xs.dropWhile(f.not)
+        private type ys         = xs#dropWhile[f#not]
 
-    override  def head: head = ys.head
-    override type head       = ys#head
+        override  def isEmpty: isEmpty = ys.isEmpty.asInstanceOf[isEmpty]
+        override type isEmpty          = ys#isEmpty
 
-    override  def tail: tail = new Filter(ys.tail, f)
-    override type tail       =     Filter[ys#tail, f]
+        override  def head: head = ys.head.asInstanceOf[head]
+        override type head       = ys#head
+
+        override  def tail: tail = new Impl(ys.tail.asInstanceOf[ys#tail], f)
+        override type tail       =     Impl[ys#tail, f]
+    }
 }

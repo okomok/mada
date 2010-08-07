@@ -8,20 +8,15 @@ package com.github.okomok.mada
 package dual; package list
 
 
-// really forced?
+private[dual]
+object Force {
+     def apply[xs <: List](xs: xs): apply[xs] = `if`(xs.isEmpty, const0(Nil), new Else(xs)).apply.asInstanceOfList
+    type apply[xs <: List]                    = `if`[xs#isEmpty, const0[Nil],     Else[xs]]#apply#asInstanceOfList
 
-final class Force[xs <: List](xs: xs) extends Function0 {
-    type self = Force[xs]
-
-    override  def apply: apply =
-        `if`(xs.isEmpty, const0(Nil), new Else).apply.asInstanceOfList
-    override type apply =
-        `if`[xs#isEmpty, const0[Nil],     Else]#apply#asInstanceOfList
-
-    class Else extends Function0 {
-        type self = Else
-        private lazy val r: r = new Force(xs.tail).apply.asInstanceOf[r]
-        private type r        =     Force[xs#tail]#apply
+    class Else[xs <: List](xs: xs) extends Function0 {
+        type self = Else[xs]
+        private lazy val r: r = Force.apply(xs.tail).asInstanceOf[r]
+        private type r        = Force.apply[xs#tail]
         override  def apply: apply = new Cons(xs.head, r)
         override type apply        =     Cons[xs#head, r]
     }

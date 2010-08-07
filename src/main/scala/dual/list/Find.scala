@@ -8,17 +8,18 @@ package com.github.okomok.mada
 package dual; package list
 
 
-final class Find[xs <: List, f <: Function1](xs: xs, f: f) extends Function0 {
-    type self = Find[xs, f]
+private[dual]
+object Find {
+     def apply[xs <: List, f <: Function1](xs: xs, f: f): apply[xs, f] = toOption(xs.dropWhile(f.not))
+    type apply[xs <: List, f <: Function1]                             = toOption[xs#dropWhile[f#not]]
 
-    private lazy val ys: ys = new DropWhile(xs, f.not)
-    private type ys         =     DropWhile[xs, f#not]
+     def toOption[ys <: List](ys: ys): toOption[ys] =
+        `if`(ys.isEmpty, const0(None), new Else(ys)).apply.asInstanceOfOption.asInstanceOf[toOption[ys]]
+    type toOption[ys <: List] =
+        `if`[ys#isEmpty, const0[None],     Else[ys]]#apply#asInstanceOfOption
 
-    override  def apply: apply = `if`(ys.isEmpty, const0(None), new Else).apply.asInstanceOfOption.asInstanceOf[apply]
-    override type apply        = `if`[ys#isEmpty, const0[None],     Else]#apply#asInstanceOfOption
-
-    class Else extends Function0 {
-        type self = Else
+    class Else[ys <: List](ys: ys) extends Function0 {
+        type self = Else[ys]
         override  def apply: apply = Some(ys.head)
         override type apply        = Some[ys#head]
     }

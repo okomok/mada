@@ -8,6 +8,13 @@ package com.github.okomok.mada
 package dual; package list
 
 
+private[dual]
+object Unzip {
+     def apply[xs <: List](xs: xs): apply[xs] = Tuple2(new Unzip1(xs), new Unzip2(xs))
+    type apply[xs <: List]            = Tuple2[    Unzip1[xs],     Unzip2[xs]]
+}
+
+
 final class Unzip1[xs <: List](xs: xs) extends AbstractList {
     type self = Unzip1[xs]
 

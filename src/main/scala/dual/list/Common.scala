@@ -29,17 +29,17 @@ trait Common {
      def single[x <: Any](x: x): single[x] = Nil. ::(x)
     type single[x <: Any]                  = Nil# ::[x]
 
-     def range[n <: Nat, m <: Nat](n: n, m: m): range[n, m] = new Range(n, m)
-    type range[n <: Nat, m <: Nat]                          =     Range[n, m]
+     def range[n <: Nat, m <: Nat](n: n, m: m): range[n, m] = Range.apply(n, m)
+    type range[n <: Nat, m <: Nat]                          = Range.apply[n, m]
 
-     def iterate[z <: Any, f <: Function1](z: z, f: f): iterate[z, f] = new Iterate(z, f).apply
-    type iterate[z <: Any, f <: Function1]                            =     Iterate[z, f]#apply
+     def iterate[z <: Any, f <: Function1](z: z, f: f): iterate[z, f] = Iterate.apply(z, f)
+    type iterate[z <: Any, f <: Function1]                            = Iterate.apply[z, f]
 
-     def unfoldRight[z <: Any, f <: Function1](z: z, f: f): unfoldRight[z, f] = new UnfoldRight(z, f)
-    type unfoldRight[z <: Any, f <: Function1]                                =     UnfoldRight[z, f]
+     def unfoldRight[z <: Any, f <: Function1](z: z, f: f): unfoldRight[z, f] = UnfoldRight.apply(z, f)
+    type unfoldRight[z <: Any, f <: Function1]                                = UnfoldRight.apply[z, f]
 
-     def repeat[z <: Any](z: z): repeat[z] = new Repeat(z).apply
-    type repeat[z <: Any]                  =     Repeat[z]#apply
+     def repeat[z <: Any](z: z): repeat[z] = iterate(z, function.identity)
+    type repeat[z <: Any]                  = iterate[z, function.identity]
 
     /**
      * Forces tuple elements.

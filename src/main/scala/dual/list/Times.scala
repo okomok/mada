@@ -24,15 +24,20 @@ final class Times[xs <: List, n <: Nat](xs: xs, n: n) {
 
 
 private[dual]
-final class Times[xs <: List, n <: Nat](xs: xs, n: n) extends AbstractList {
-    type self = Times[xs, n]
+object Times {
+     def apply[xs <: List, n <: Nat](xs: xs, n: n): apply[xs, n] = new Impl(xs, n)
+    type apply[xs <: List, n <: Nat]                             =     Impl[xs, n]
 
-    override  def isEmpty: isEmpty = xs.isEmpty  || n.isZero
-    override type isEmpty          = xs#isEmpty# ||[n#isZero]
+    class Impl[xs <: List, n <: Nat](xs: xs, n: n) extends AbstractList {
+        type self = Impl[xs, n]
 
-    override  def head: head = xs.head
-    override type head       = xs#head
+        override  def isEmpty: isEmpty = xs.isEmpty  || n.isZero
+        override type isEmpty          = xs#isEmpty# ||[n#isZero]
 
-    override  def tail: tail = xs.tail  ++ new Times(xs, n.decrement)
-    override type tail       = xs#tail# ++[    Times[xs, n#decrement]]
+        override  def head: head = xs.head
+        override type head       = xs#head
+
+        override  def tail: tail = xs.tail  ++ new Impl(xs, n.decrement)
+        override type tail       = xs#tail# ++[    Impl[xs, n#decrement]]
+    }
 }

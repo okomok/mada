@@ -8,17 +8,16 @@ package com.github.okomok.mada
 package dual; package list
 
 
-final class ReverseAppend[xs <: List, ys <: List](xs: xs, ys: ys) extends TrivialForwarder {
-    type self = ReverseAppend[xs, ys]
+private[dual]
+object ReverseAppend {
+     def apply[xs <: List, ys <: List](xs: xs, ys: ys): apply[xs, ys] =
+        `if`(xs.isEmpty, const0(ys), new Else(xs, ys)).apply.asInstanceOfList
+    type apply[xs <: List, ys <: List] =
+        `if`[xs#isEmpty, const0[ys],     Else[xs, ys]]#apply#asInstanceOfList
 
-    override protected lazy val delegate: delegate =
-        `if`(xs.isEmpty, const0(ys), new Else).apply.asInstanceOfList
-    override protected type delegate =
-        `if`[xs#isEmpty, const0[ys],     Else]#apply#asInstanceOfList
-
-    class Else extends Function0 {
-        type self = Else
-        override  def apply: apply = new ReverseAppend(xs.tail, new Cons(xs.head, ys))
-        override type apply        =     ReverseAppend[xs#tail,     Cons[xs#head, ys]]
+    class Else[xs <: List, ys <: List](xs: xs, ys: ys) extends Function0 {
+        type self = Else[xs, ys]
+        override  def apply: apply = ReverseAppend.apply(xs.tail, new Cons(xs.head, ys))
+        override type apply        = ReverseAppend.apply[xs#tail,     Cons[xs#head, ys]]
     }
 }
