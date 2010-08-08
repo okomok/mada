@@ -9,8 +9,8 @@ package dual; package list
 
 
 trait AbstractList extends List {
-    final override  def ::[x <: Any](x: x): ::[x]  = new Cons(x, self)
-    private type _cons[self <: List, x <: Any]     =     Cons[x, self]
+    final override  def ::[x <: Any](x: x): ::[x]  = Cons(x, self)
+    private type _cons[self <: List, x <: Any]     = Cons[x, self]
     final override type ::[x <: Any] = _cons[self, x]
 
     final override  def clear: clear = Nil
