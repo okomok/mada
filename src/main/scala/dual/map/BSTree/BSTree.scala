@@ -113,17 +113,14 @@ final case class Node[k <: Any, v <: Any, l <: BSTree, r <: BSTree](
     override  def isEmpty: isEmpty = `false`
     override type isEmpty          = `false`
 
-    override  def get[k <: Any](k: k): get[k]   = NodeGet.apply(self, k)
-    private type _get[self <: BSTree, k <: Any] = NodeGet.apply[self, k]
-    override type get[k <: Any] = _get[self, k]
+    override  def get[k <: Any](k: k): get[k] = NodeGet.apply(self, k)
+    override type get[k <: Any]               = NodeGet.apply[self, k]
 
     override  def put[k <: Any, v <: Any](k: k, v: v): put[k, v] = NodePut.apply(self, k, v)
-    private type _put[self <: BSTree, k <: Any, v <: Any]        = NodePut.apply[self, k, v]
-    override type put[k <: Any, v <: Any] = _put[self, k, v]
+    override type put[k <: Any, v <: Any]                        = NodePut.apply[self, k, v]
 
     override  def remove[k <: Any](k: k): remove[k] = NodeRemove.apply(self, k)
-    private type _remove[self <: BSTree, k <: Any]  = NodeRemove.apply[self, k]
-    override type remove[k <: Any] = _remove[self, k]
+    override type remove[k <: Any]                  = NodeRemove.apply[self, k]
 
     override  def toList: toList         = self.left.toList.append(Tuple2(self.key, self.value) :: self.right.toList).asInstanceOf[toList]
     private type _toList[self <: BSTree] = self#left#toList#append[Tuple2[self#key, self#value] :: self#right#toList]

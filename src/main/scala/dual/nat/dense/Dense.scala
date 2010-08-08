@@ -61,7 +61,7 @@ sealed abstract class AbstractDense extends Dense {
     final override type ::[e <: Boolean] = _cons[self, e]
 
     final override  def plus[that <: Nat](that: that): plus[that] = Plus.apply(self, that.toDense)
-    final override type plus[that <: Nat]                      = Plus.apply[self, that#toDense]
+    final override type plus[that <: Nat]                         = Plus.apply[self, that#toDense]
 
     final override  def minus[that <: Nat](that: that): minus[that] = Minus.apply(self, that.toDense)
     final override type minus[that <: Nat]                          = Minus.apply[self, that#toDense]
@@ -79,7 +79,7 @@ sealed abstract class AbstractDense extends Dense {
     final override type lteq[that <: Nat]                         = that#toDense#lt[self]#not
 
     final override  def bitAnd[that <: Nat](that: that): bitAnd[that] = BitAnd.apply(self, that.toDense)
-    final override type bitAnd[that <: Nat]                      = BitAnd.apply[self, that#toDense]
+    final override type bitAnd[that <: Nat]                           = BitAnd.apply[self, that#toDense]
 
     final override  def bitOr[that <: Nat](that: that): bitOr[that] = BitOr.apply(self, that.toDense)
     final override type bitOr[that <: Nat]                          = BitOr.apply[self, that#toDense]
