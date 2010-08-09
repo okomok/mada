@@ -8,7 +8,8 @@ package com.github.okomok.mada
 package dual; package list
 
 
-private[list] final class Eqv[ee <: Equiv](ee: ee) extends Equiv {
+private[dual]
+final class Eqv[ee <: Equiv](ee: ee) extends Equiv {
     type self = Eqv[ee]
     override  def equiv[x <: Any, y <: Any](x: x, y: y): equiv[x, y] =
         x.asInstanceOfList.equivTo(y.asInstanceOfList, ee)

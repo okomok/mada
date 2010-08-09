@@ -10,12 +10,6 @@ package dual; package list
 
 trait Common {
 
-    /**
-     * Makes a List Equiv from element Equiv.
-     */
-     def eqv[ee <: Equiv](ee: ee): eqv[ee] = new Eqv(ee)
-    type eqv[ee <: Equiv]                  =     Eqv[ee]
-
     @equivalentTo("new Nil{}")
      val Nil = _Nil.value
 
@@ -43,6 +37,18 @@ trait Common {
      */
      def force2[t <: Product2](t: t): force2[t] = Tuple2(t._1.asInstanceOfList.force, t._2.asInstanceOfList.force)
     type force2[t <: Product2]                  = Tuple2[t#_1#asInstanceOfList#force, t#_2#asInstanceOfList#force]
+
+    /**
+     * Makes a List Equiv from element Equiv.
+     */
+     def eqv[ee <: Equiv](ee: ee): eqv[ee] = new Eqv(ee)
+    type eqv[ee <: Equiv]                  =     Eqv[ee]
+
+    /**
+     * Makes a lexicographical Ordering from element Ordering.
+     */
+     def ord[eo <: Ordering](eo: eo): ord[eo] = new Ord(eo)
+    type ord[eo <: Ordering]                  =     Ord[eo]
 
     def fromSTuple1[T1](from: scala.Tuple1[T1]): Box[T1] :: Nil = Box(from._1) :: Nil
     def fromSTuple2[T1, T2](from: scala.Tuple2[T1, T2]): Box[T1] :: Box[T2] :: Nil = Box(from._1) :: Box(from._2) :: Nil

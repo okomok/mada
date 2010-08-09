@@ -23,12 +23,12 @@ object ToDense {
 
 private[dual]
 object Div2 {
-      def apply[x <: Peano](x: x): apply[x] = `if`(x.lt(_2), const0(Zero), Else(x)).apply.asInstanceOfNatPeano
-     type apply[x <: Peano]                 = `if`[x#lt[_2], const0[Zero], Else[x]]#apply#asInstanceOfNatPeano
+     def apply[x <: Peano](x: x): apply[x] = `if`(x.lt(_2), const0(Zero), Else(x)).apply.asInstanceOfNatPeano
+    type apply[x <: Peano]                 = `if`[x#lt[_2], const0[Zero], Else[x]]#apply#asInstanceOfNatPeano
 
-     case class Else[x <: Peano](x: x) extends Function0 {
-         type self = Else[x]
-         override  def apply: apply = Div2.apply(x.decrement.decrement).increment.asInstanceOf[apply]
-         override type apply        = Div2.apply[x#decrement#decrement]#increment
-     }
+    case class Else[x <: Peano](x: x) extends Function0 {
+        type self = Else[x]
+        override  def apply: apply = Div2.apply(x.decrement.decrement).increment.asInstanceOf[apply]
+        override type apply        = Div2.apply[x#decrement#decrement]#increment
+    }
 }

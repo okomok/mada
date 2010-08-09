@@ -8,7 +8,8 @@ package com.github.okomok.mada
 package dual; package list
 
 
-private[list] trait ToSTuple {
+private[dual]
+trait ToSTuple {
 
     sealed class _Of1[_this <: List](_this: _this) {
         def toSTuple: scala.Tuple1[_this#head#undual] = scala.Tuple1(_this.head.undual)

@@ -21,6 +21,7 @@ sealed abstract class Nil extends AbstractList {
     override type tail       = noSuchElement[_]
 }
 
-private[list] object _Nil {
+private[dual]
+object _Nil {
     val value = new Nil{}
 }
