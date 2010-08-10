@@ -16,6 +16,10 @@ trait Common {
     @equivalentTo("x# ::[xs]")
     type ::[x <: Any, xs <: List] = xs# ::[x]
 
+    @equivalentTo("Nil")
+     val empty: empty = Nil
+    type empty        = Nil
+
     @equivalentTo("Nil.::(x)")
      def single[x <: Any](x: x): single[x] = Nil. ::(x)
     type single[x <: Any]                  = Nil# ::[x]
