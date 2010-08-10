@@ -62,6 +62,9 @@ trait Forwarder extends List {
     final override  def sort[o <: Ordering](o: o): sort[o] = around(delegate.sort(o))
     final override type sort[o <: Ordering]                = around[delegate#sort[o]]
 
+    final override  def isSorted[o <: Ordering](o: o): isSorted[o] = delegate.isSorted(o)
+    final override type isSorted[o <: Ordering]                    = delegate#isSorted[o]
+
     final override  def forall[f <: Function1](f: f): forall[f] = delegate.forall(f)
     final override type forall[f <: Function1]                  = delegate#forall[f]
 

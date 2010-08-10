@@ -65,6 +65,9 @@ trait List extends Any {
      def sort[o <: Ordering](o: o): sort[o]
     type sort[o <: Ordering] <: List
 
+     def isSorted[o <: Ordering](o: o): isSorted[o]
+    type isSorted[o <: Ordering] <: Boolean
+
      def forall[f <: Function1](f: f): forall[f]
     type forall[f <: Function1] <: Boolean
 

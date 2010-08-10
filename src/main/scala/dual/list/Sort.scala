@@ -11,19 +11,13 @@ package dual; package list
 private[dual]
 object Sort {
      def apply[xs <: List, o <: Ordering](xs: xs, o: o): apply[xs, o] =
-        `if`(xs.isEmpty, const0(xs), Else(xs, o)).apply.asInstanceOfList.asInstanceOf[apply[xs, o]]
+        `if`(HasTwoOrMore.apply(xs), Then(xs, o), const0(xs)).apply.asInstanceOfList.asInstanceOf[apply[xs, o]]
     type apply[xs <: List, o <: Ordering] =
-        `if`[xs#isEmpty, const0[xs], Else[xs, o]]#apply#asInstanceOfList
+        `if`[HasTwoOrMore.apply[xs], Then[xs, o], const0[xs]]#apply#asInstanceOfList
 
-    case class Else[xs <: List, o <: Ordering](xs: xs, o: o) extends Function0 {
-        type self = Else[xs, o]
-        override  def apply: apply = `if`(xs.tail.isEmpty, const0(xs), ElseElse(xs, o)).apply.asInstanceOfList//.asInstanceOf[apply]
-        override type apply        = `if`[xs#tail#isEmpty, const0[xs], ElseElse[xs, o]]#apply#asInstanceOfList
-    }
-
-    case class ElseElse[xs <: List, o <: Ordering](xs: xs, o: o) extends Function0 {
-        type self = ElseElse[xs, o]
-        private lazy val r: r = xs.splitAt(xs.length.div(nat.peano._2))
+    case class Then[xs <: List, o <: Ordering](xs: xs, o: o) extends Function0 {
+        type self = Then[xs, o]
+        private lazy val r: r = xs.splitAt(xs.length.div(nat.peano._2)) // TODO: remove `length`.
         private type r        = xs#splitAt[xs#length#div[nat.peano._2]]
         override  def apply: apply = Merge.apply(r._1.asInstanceOfList.sort(o), r._2.asInstanceOfList.sort(o), o).asInstanceOf[apply]
         override type apply        = Merge.apply[r#_1#asInstanceOfList#sort[o], r#_2#asInstanceOfList#sort[o], o]

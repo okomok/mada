@@ -42,6 +42,9 @@ trait AbstractList extends List {
     final override  def sort[o <: Ordering](o: o): sort[o] = Sort.apply(self, o)
     final override type sort[o <: Ordering]                = Sort.apply[self, o]
 
+    final override  def isSorted[o <: Ordering](o: o): isSorted[o] = IsSorted.apply(self, o)
+    final override type isSorted[o <: Ordering]                    = IsSorted.apply[self, o]
+
     final override  def forall[f <: Function1](f: f): forall[f] = exists(f.not).not.asInstanceOf[forall[f]]
     final override type forall[f <: Function1]                  = exists[f#not]#not
 
@@ -75,10 +78,10 @@ trait AbstractList extends List {
     final override  def nth[n <: Nat](n: n): nth[n] = Nth.apply(self, n)
     final override type nth[n <: Nat]               = Nth.apply[self, n]
 
-    final override lazy val last: last = Last.apply(self)
+    final override  def last: last = Last.apply(self)
     final override type last           = Last.apply[self]
 
-    final override lazy val init: init = Init.apply(self)
+    final override  def init: init = Init.apply(self)
     final override type init           = Init.apply[self]
 
     final override  def take[n <: Nat](n: n): take[n] = Take.apply(self, n)
