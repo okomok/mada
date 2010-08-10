@@ -9,10 +9,8 @@ package dual; package set
 
 
 private[dual]
-final case class BSTree[m <: map.bstree.BSTree](impl: m) extends AbstractSet {
-    type self = BSTree[m]
-
-    type impl = m
+final case class BSTree[impl <: map.bstree.BSTree](impl: impl) extends AbstractSet {
+    type self = BSTree[impl]
 
     override  def size: size = impl.size
     override type size       = impl#size
