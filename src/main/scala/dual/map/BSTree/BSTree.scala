@@ -36,8 +36,8 @@ sealed abstract class BSTree extends AbstractMap {
 
 
 sealed abstract class AbstractBSTree extends BSTree {
-    final override  def keySet: keySet = set.BSTreeFrom(self)
-    final override type keySet         = set.BSTreeFrom[self]
+    final override  def keySet: keySet = set.BSTree(self)
+    final override type keySet         = set.BSTree[self]
 
     final override  def clear: clear = Nil(self.ord)
     final override type clear        = Nil[self#ord]
