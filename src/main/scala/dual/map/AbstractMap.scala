@@ -19,6 +19,5 @@ trait AbstractMap extends Map {
     final override type equivTo[that <: Map, ve <: Equiv]                                        = EquivTo.apply[self, that, ve]
 
     final override  def union[that <: Map](that: that): union[that] = that.putList(self.toList)
-    private type _union[self <: Map, that <: Map]                   = that#putList[self#toList]
-    final override type union[that <: Map] = _union[self, that]
+    final override type union[that <: Map]                          = that#putList[self#toList]
 }

@@ -36,13 +36,11 @@ sealed abstract class BSTree extends AbstractMap {
 
 
 sealed abstract class AbstractBSTree extends BSTree {
-    final override  def keySet: keySet   = set.BSTreeFrom(self)
-    private type _keySet[self <: BSTree] = set.BSTreeFrom[self]
-    final override type keySet = _keySet[self]
+    final override  def keySet: keySet = set.BSTreeFrom(self)
+    final override type keySet         = set.BSTreeFrom[self]
 
-    final override  def clear: clear    = Nil(self.ord)
-    private type _clear[self <: BSTree] = Nil[self#ord]
-    final override type clear = _clear[self]
+    final override  def clear: clear = Nil(self.ord)
+    final override type clear        = Nil[self#ord]
 }
 
 
@@ -73,8 +71,7 @@ final case class Nil[o <: Ordering](override val ord: o) extends AbstractBSTree 
     override type get[k <: Any]               = None
 
     override  def put[k <: Any, v <: Any](k: k, v: v): put[k, v] = Node(k, v, self, self)
-    private type _put[self <: BSTree, k <: Any, v <: Any]        = Node[k, v, self, self]
-    override type put[k <: Any, v <: Any] = _put[self, k, v]
+    override type put[k <: Any, v <: Any]                        = Node[k, v, self, self]
 
     override  def remove[k <: Any](k: k): remove[k] = self
     override type remove[k <: Any]                  = self
@@ -122,17 +119,14 @@ final case class Node[k <: Any, v <: Any, l <: BSTree, r <: BSTree](
     override  def remove[k <: Any](k: k): remove[k] = NodeRemove.apply(self, k)
     override type remove[k <: Any]                  = NodeRemove.apply[self, k]
 
-    override  def toList: toList         = self.left.toList.append(Tuple2(self.key, self.value) :: self.right.toList).asInstanceOf[toList]
-    private type _toList[self <: BSTree] = self#left#toList#append[Tuple2[self#key, self#value] :: self#right#toList]
-    override type toList = _toList[self]
+    override  def toList: toList = self.left.toList.append(Tuple2(self.key, self.value) :: self.right.toList).asInstanceOf[toList]
+    override type toList         = self#left#toList#append[Tuple2[self#key, self#value] :: self#right#toList]
 
-    override  def keyList: keyList        = self.left.keyList.append(self.key :: self.right.keyList).asInstanceOf[keyList]
-    private type _keyList[self <: BSTree] = self#left#keyList#append[self#key :: self#right#keyList]
-    override type keyList = _keyList[self]
+    override  def keyList: keyList = self.left.keyList.append(self.key :: self.right.keyList).asInstanceOf[keyList]
+    override type keyList          = self#left#keyList#append[self#key :: self#right#keyList]
 
-    override  def valueList: valueList      = self.left.valueList.append(self.value :: self.right.valueList).asInstanceOf[valueList]
-    private type _valueList[self <: BSTree] = self#left#valueList#append[self#value :: self#right#valueList]
-    override type valueList = _valueList[self]
+    override  def valueList: valueList = self.left.valueList.append(self.value :: self.right.valueList).asInstanceOf[valueList]
+    override type valueList            = self#left#valueList#append[self#value :: self#right#valueList]
 
     override  def undual: undual = (left.undual + (key.undual -> value.undual)) ++ right.undual
 }

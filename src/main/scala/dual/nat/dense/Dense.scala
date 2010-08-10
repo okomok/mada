@@ -57,8 +57,7 @@ private[dual]
 sealed abstract class AbstractDense extends Dense {
     @equivalentTo("Cons(e. self)")
     final override  def ::[e <: Boolean](e: e): ::[e] = Cons(e, self)
-    private type _cons[self <: Dense, e <: Boolean]   = Cons[e, self]
-    final override type ::[e <: Boolean] = _cons[self, e]
+    final override type ::[e <: Boolean]              = Cons[e, self]
 
     final override  def plus[that <: Nat](that: that): plus[that] = Plus.apply(self, that.toDense)
     final override type plus[that <: Nat]                         = Plus.apply[self, that#toDense]
@@ -104,9 +103,8 @@ sealed class Nil extends AbstractDense {
     override  def isZero: isZero = `true`
     override type isZero         = `true`
 
-    override  def increment: increment     = Cons(`true`, self)
-    private type _increment[self <: Dense] = Cons[`true`, self]
-    override type increment = _increment[self]
+    override  def increment: increment = Cons(`true`, self)
+    override type increment            = Cons[`true`, self]
 
     override  def decrement: decrement = unsupported("nat.dense.Nil.decrement")
     override type decrement            = unsupported[_]
@@ -115,8 +113,7 @@ sealed class Nil extends AbstractDense {
     override type times[that <: Nat]                          = self
 
     override  def exp[that <: Nat](that: that): exp[that] = `if`(that.isZero, const0(_1), const0(self)).apply.asInstanceOfNatDense
-    private type _exp[self <: Dense, that <: Nat]         = `if`[that#isZero, const0[_1], const0[self]]#apply#asInstanceOfNatDense
-    override type exp[that <: Nat] = _exp[self, that]
+    override type exp[that <: Nat]                        = `if`[that#isZero, const0[_1], const0[self]]#apply#asInstanceOfNatDense
 
     override  def shiftLeft: shiftLeft = self
     override type shiftLeft            = self
@@ -169,9 +166,8 @@ final case class Cons[x <: Boolean, xs <: Dense](override val head: x, override 
     override  def shiftRight: shiftRight = tail
     override type shiftRight             = tail
 
-    override  def toPeano: toPeano       = peano.Succ(self.decrement.toPeano)
-    private type _toPeano[self <: Dense] = peano.Succ[self#decrement#toPeano]
-    override type toPeano = _toPeano[self]
+    override  def toPeano: toPeano = peano.Succ(self.decrement.toPeano)
+    override type toPeano          = peano.Succ[self#decrement#toPeano]
 
     override  def foldRightWithNat[z <: Any, f <: Function2](z: z, f: f): foldRightWithNat[z, f] = f.apply(self, decrement.foldRightWithNat(z, f))
     override type foldRightWithNat[z <: Any, f <: Function2]                                     = f#apply[self, decrement#foldRightWithNat[z, f]]
