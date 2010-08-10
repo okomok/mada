@@ -21,11 +21,11 @@ trait AbstractSet extends Set {
     final override  def intersect[that <: Set](that: that): intersect[that] = Intersect.apply(self, that)
     final override type intersect[that <: Set]                              = Intersect.apply[self, that]
 
-    final override  def union[that <: Set](that: that): union[that] = self.addList(that.toList)
-    final override type union[that <: Set]                          = self.addList[that#toList]
+    final override  def union[that <: Set](that: that): union[that] = addList(that.toList)
+    final override type union[that <: Set]                          = addList[that#toList]
 
-    final override  def diff[that <: Set](that: that): diff[that] = self.removeList(that.toList)
-    final override type diff[that <: Set]                         = self.removeList[that#toList]
+    final override  def diff[that <: Set](that: that): diff[that] = removeList(that.toList)
+    final override type diff[that <: Set]                         = removeList[that#toList]
 
     final override  def subsetOf[that <: Set](that: that): subsetOf[that] = SubsetOf.apply(self, that)
     final override type subsetOf[that <: Set]                             = SubsetOf.apply[self, that]

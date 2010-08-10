@@ -39,8 +39,8 @@ sealed abstract class AbstractBSTree extends BSTree {
     final override  def keySet: keySet = set.BSTree(self)
     final override type keySet         = set.BSTree[self]
 
-    final override  def clear: clear = Nil(self.ord)
-    final override type clear        = Nil[self#ord]
+    final override  def clear: clear = Nil(ord)
+    final override type clear        = Nil[ord]
 }
 
 
@@ -119,14 +119,14 @@ final case class Node[k <: Any, v <: Any, l <: BSTree, r <: BSTree](
     override  def remove[k <: Any](k: k): remove[k] = NodeRemove.apply(self, k)
     override type remove[k <: Any]                  = NodeRemove.apply[self, k]
 
-    override  def toList: toList = self.left.toList.append(Tuple2(self.key, self.value) :: self.right.toList).asInstanceOf[toList]
-    override type toList         = self#left#toList#append[Tuple2[self#key, self#value] :: self#right#toList]
+    override  def toList: toList = left.toList.append(Tuple2(key, value) :: right.toList).asInstanceOf[toList]
+    override type toList         = left#toList#append[Tuple2[key, value] :: right#toList]
 
-    override  def keyList: keyList = self.left.keyList.append(self.key :: self.right.keyList).asInstanceOf[keyList]
-    override type keyList          = self#left#keyList#append[self#key :: self#right#keyList]
+    override  def keyList: keyList = left.keyList.append(key :: right.keyList).asInstanceOf[keyList]
+    override type keyList          = left#keyList#append[key :: right#keyList]
 
-    override  def valueList: valueList = self.left.valueList.append(self.value :: self.right.valueList).asInstanceOf[valueList]
-    override type valueList            = self#left#valueList#append[self#value :: self#right#valueList]
+    override  def valueList: valueList = left.valueList.append(value :: right.valueList).asInstanceOf[valueList]
+    override type valueList            = left#valueList#append[value :: right#valueList]
 
     override  def undual: undual = (left.undual + (key.undual -> value.undual)) ++ right.undual
 }

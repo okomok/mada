@@ -119,8 +119,8 @@ final case class Some[e <: Any](override val get: e) extends AbstractOption {
     override  def getOrElse[f <: Function0](f: f): getOrElse[f] = get
     override type getOrElse[f <: Function0] = get
 
-    override  def map[f <: Function1](f: f): map[f] = Some(f.apply(self.get))
-    override type map[f <: Function1]               = Some[f#apply[self#get]]
+    override  def map[f <: Function1](f: f): map[f] = Some(f.apply(get))
+    override type map[f <: Function1]               = Some[f#apply[get]]
 
     override  def flatMap[f <: Function1](f: f): flatMap[f] = f.apply(get).asInstanceOfOption
     override type flatMap[f <: Function1]                   = f#apply[get]#asInstanceOfOption

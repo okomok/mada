@@ -118,8 +118,8 @@ final case class Succ[n <: Peano](override val decrement: n) extends AbstractPea
     override  def lteq[that <: Nat](that: that): lteq[that] = SuccLtEq.apply(self, that.toPeano)
     override type lteq[that <: Nat]                         = SuccLtEq.apply[self, that#toPeano]
 
-    override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = f.apply(self, self.decrement.foldRight(z, f))
-    override type foldRight[z <: Any, f <: Function2]                              = f#apply[self, self#decrement#foldRight[z, f]]
+    override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = f.apply(self, decrement.foldRight(z, f))
+    override type foldRight[z <: Any, f <: Function2]                              = f#apply[self, decrement#foldRight[z, f]]
 
     override lazy val isEven: isEven = decrement.isEven.not
     override type isEven             = decrement#isEven#not
