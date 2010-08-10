@@ -144,18 +144,13 @@ package object dual {
      * assertion (metamethod is not implemented yet.)
      */
     @elidable(ASSERTION)
-     def assert[c <: Boolean](c: c): Unit = {
-         if (!c.undual) throw new java.lang.AssertionError("dual.assert")
-         Unit
-    }
-    // type assert[c <: Boolean] = How?
+     def assert[c <: Boolean](c: c): assert[c] = Assert.apply(c)
+    type assert[c <: Boolean]                  = Assert.apply[c]
 
-    /**
-     * negative assertion (metamethod is not implemented yet.)
-     */
     @elidable(ASSERTION)
-     def assertNot[c <: Boolean](c: c): Unit = assert(c.not)
-    // type assertNot[c <: Boolean]                  = assert[c#not]
+    @equivalentTo("assert(c.not)")
+     def assertNot[c <: Boolean](c: c): assertNot[c] = assert(c.not)
+    type assertNot[c <: Boolean]                     = assert[c#not]
 
 
 // util
