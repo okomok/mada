@@ -21,8 +21,8 @@ class AddSeqTest extends org.scalatest.junit.JUnit3Suite {
         type xs    = _4 :: _3 :: _1 :: _2 :: _5 :: _0 :: Nil
         val xs: xs = _4 :: _3 :: _1 :: _2 :: _5 :: _0 :: Nil
 
-        type m   = set.sorted[nat.ord]#add[_8]#addList[xs]
-        val m: m = set.sorted(nat.ord).add(_8).addList(xs)
+        type m   = set.sorted[nat.naturalOrdering]#add[_8]#addList[xs]
+        val m: m = set.sorted(nat.naturalOrdering).add(_8).addList(xs)
 
         type l   = _0 :: _1 :: _2 :: _3 :: _4 :: _5 :: _8 :: Nil
         val l: l = _0 :: _1 :: _2 :: _3 :: _4 :: _5 :: _8 :: Nil
@@ -31,8 +31,8 @@ class AddSeqTest extends org.scalatest.junit.JUnit3Suite {
    }
 
     def testTrivialNil {
-        type m   = set.sorted[nat.ord]#add[_8]#addList[Nil]
-        val m: m = set.sorted(nat.ord).add(_8).addList(Nil)
+        type m   = set.sorted[nat.naturalOrdering]#add[_8]#addList[Nil]
+        val m: m = set.sorted(nat.naturalOrdering).add(_8).addList(Nil)
 
         type l   = _8 :: Nil
         val l: l = _8 :: Nil

@@ -105,8 +105,11 @@ trait AbstractList extends List {
     final override  def splitAt[n <: Nat](n: n): splitAt[n] = Tuple2(take(n), drop(n))
     final override type splitAt[n <: Nat]                   = Tuple2[take[n], drop[n]]
 
-    final override  def equivTo[that <: List, e <: Equiv](that: that, e: e): equivTo[that, e] = EquivTo.apply(self, that, e)
-    final override type equivTo[that <: List, e <: Equiv]                                     = EquivTo.apply[self, that, e]
+    final override  def equal[that <: List](that: that): equal[that] = Equal.apply(self, that, None)
+    final override type equal[that <: List]                          = Equal.apply[self, that, None]
+
+    final override  def equivTo[that <: List, e <: Equiv](that: that, e: e): equivTo[that, e] = Equal.apply(self, that, Some(e))
+    final override type equivTo[that <: List, e <: Equiv]                                     = Equal.apply[self, that, Some[e]]
 
     final override  def reverse: reverse = ReverseAppend.apply(self, Nil)
     final override type reverse          = ReverseAppend.apply[self, Nil]
@@ -125,4 +128,7 @@ trait AbstractList extends List {
 
     final override  def times[n <: Nat](n: n): times[n] = Times.apply(self, n)
     final override type times[n <: Nat]                 = Times.apply[self, n]
+
+    final override  def naturalOrdering: naturalOrdering = list.naturalOrdering
+    final override type naturalOrdering                  = list.naturalOrdering
 }

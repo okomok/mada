@@ -22,7 +22,7 @@ class TimesTest extends org.scalatest.junit.JUnit3Suite {
         val xs: xs = _1 :: _2 :: _3 :: Nil
         type rs = xs#times[_3]
         val rs: rs = xs.times(_3)
-        meta.assert[rs#equivTo[_1 :: _2 :: _3 :: _1 :: _2 :: _3 :: _1 :: _2 :: _3 :: Nil, nat.ord]]
+        meta.assert[rs#equivTo[_1 :: _2 :: _3 :: _1 :: _2 :: _3 :: _1 :: _2 :: _3 :: Nil, nat.naturalOrdering]]
         assertEquals(_1 :: _2 :: _3 :: _1 :: _2 :: _3 :: _1 :: _2 :: _3 :: Nil, rs)
     }
 

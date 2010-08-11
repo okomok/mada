@@ -18,8 +18,8 @@ import junit.framework.Assert._
 class TrivialTest extends org.scalatest.junit.JUnit3Suite {
 
     def testSingle {
-        type o = nat.ord
-        val o: o = nat.ord
+        type o = nat.naturalOrdering
+        val o: o = nat.naturalOrdering
         type s = map.sorted[o]#put[_3, Box[Int]]
         val s: s = map.sorted(o).put(_3, Box(3))
 
@@ -35,8 +35,8 @@ class TrivialTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testPut {
-        type o = nat.ord
-        val o: o = nat.ord
+        type o = nat.naturalOrdering
+        val o: o = nat.naturalOrdering
 
         type m = map.sorted[o]#put[_3, Box[Int]]#put[_5, Box[Char]]#put[_1, Box[String]]
         val m: m = map.sorted(o).put(_3, Box(3)).put(_5, Box('c')).put(_1, Box("wow"))
@@ -56,8 +56,8 @@ class TrivialTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testContains {
-        type o = nat.ord
-        val o: o = nat.ord
+        type o = nat.naturalOrdering
+        val o: o = nat.naturalOrdering
 
         type m = map.sorted[o]#put[_3, Box[Int]]#put[_5, Box[Char]]#put[_1, Box[String]]
         val m: m = map.sorted(o).put(_3, Box(3)).put(_5, Box('c')).put(_1, Box("wow"))
@@ -67,14 +67,14 @@ class TrivialTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testUndual {
-        type m   = map.sorted[nat.ord]#put[_3, _4]#put[_1, _2]#put[_5, _6]
-        val m: m = map.sorted(nat.ord).put(_3, _4).put(_1, _2).put(_5, _6)
+        type m   = map.sorted[nat.naturalOrdering]#put[_3, _4]#put[_1, _2]#put[_5, _6]
+        val m: m = map.sorted(nat.naturalOrdering).put(_3, _4).put(_1, _2).put(_5, _6)
         assertEquals(Predef.Map(1 -> 2, 3 -> 4, 5 -> 6), m.undual)
     }
 
     def testDupePut {
-        type o = nat.ord
-        val o: o = nat.ord
+        type o = nat.naturalOrdering
+        val o: o = nat.naturalOrdering
 
         type m = map.sorted[o]#put[_3, Box[Int]]#put[_5, Box[Char]]#put[_1, Box[String]]
         val m: m = map.sorted(o).put(_3, Box(3)).put(_5, Box('c')).put(_1, Box("wow"))

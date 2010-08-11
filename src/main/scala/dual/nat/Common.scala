@@ -19,16 +19,10 @@ class Common {
     type Peano = peano.Peano
 
     /**
-     * The natural equivalence of Nat
-     */
-     val eqv: eqv = new Eqv
-    type eqv = Eqv
-
-    /**
      * The natural ordering of Nat
      */
-     val ord: ord = new Ord
-    type ord = Ord
+     val naturalOrdering: naturalOrdering = new NaturalOrdering
+    type naturalOrdering                  =     NaturalOrdering
 }
 
 

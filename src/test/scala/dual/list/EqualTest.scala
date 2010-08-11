@@ -10,11 +10,12 @@ package com.github.okomok.madatest; package dualtest; package listtest
 import com.github.okomok.mada
 
 import mada.dual._
+import mada.dual.{assert => dassert}
 import nat.peano.Literal._
 import junit.framework.Assert._
 
 
-class EquivToTest extends org.scalatest.junit.JUnit3Suite {
+class EqualTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial {
         type xs = _9 :: _2 :: _6 :: _10 :: _7 :: _9 :: _8 :: Nil
@@ -23,8 +24,8 @@ class EquivToTest extends org.scalatest.junit.JUnit3Suite {
         type ys = _9 :: _2 :: _6 :: _10 :: _7 :: _9 :: _8 :: Nil
         val ys: ys = _9 :: _2 :: _6 :: _10 :: _7 :: _9 :: _8 :: Nil
 
-        type u = xs#equivTo[xs, nat.naturalOrdering]
-        val u: u = xs.equivTo(ys, nat.naturalOrdering)
+        type u = xs#equal[xs]
+        val u: u = xs.equal(ys)
         meta.assertSame[`true`, u]
         assertEquals(`true`, u)
     }
@@ -36,8 +37,8 @@ class EquivToTest extends org.scalatest.junit.JUnit3Suite {
         type ys = _8 :: Nil
         val ys: ys = _8 :: Nil
 
-        type u = xs#equivTo[ys, nat.naturalOrdering]
-        val u: u = xs.equivTo(ys, nat.naturalOrdering)
+        type u = xs#equal[ys]
+        val u: u = xs.equal(ys)
         meta.assertSame[`true`, u]
         assertEquals(`true`, u)
     }
@@ -49,8 +50,8 @@ class EquivToTest extends org.scalatest.junit.JUnit3Suite {
         type ys = Nil
         val ys: ys = Nil
 
-        type u = xs#equivTo[ys, nat.naturalOrdering]
-        val u: u = xs.equivTo(ys, nat.naturalOrdering)
+        type u = xs#equal[ys]
+        val u: u = xs.equal(ys)
         meta.assertSame[`true`, u]
         assertEquals(`true`, u)
     }
@@ -62,8 +63,8 @@ class EquivToTest extends org.scalatest.junit.JUnit3Suite {
         type ys = _9 :: _2 :: _6 :: _10 :: _7 :: _9 :: _8 :: Nil
         val ys: ys = _9 :: _2 :: _6 :: _10 :: _7 :: _9 :: _8 :: Nil
 
-        type u = xs#equivTo[ys, nat.naturalOrdering]
-        val u: u = xs.equivTo(ys, nat.naturalOrdering)
+        type u = xs#equal[ys]
+        val u: u = xs.equal(ys)
         meta.assertSame[`false`, u]
         assertEquals(`false`, u)
     }
@@ -75,10 +76,9 @@ class EquivToTest extends org.scalatest.junit.JUnit3Suite {
         type ys = _9 :: _2 :: _6 :: _10 :: _7 :: _9 :: Nil
         val ys: ys = _9 :: _2 :: _6 :: _10 :: _7 :: _9 :: Nil
 
-        type u = xs#equivTo[ys, nat.naturalOrdering]
-        val u: u = xs.equivTo(ys, nat.naturalOrdering)
+        type u = xs#equal[ys]
+        val u: u = xs.equal(ys)
         meta.assertSame[`false`, u]
         assertEquals(`false`, u)
     }
-
 }

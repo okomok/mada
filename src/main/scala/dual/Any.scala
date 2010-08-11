@@ -83,6 +83,12 @@ trait Any extends scala.Equals {
     type asInstanceOfUnit <: Unit
 
     /**
+     * Returns the natural ordering.
+     */
+     def naturalOrdering: naturalOrdering = unsupported("Any.naturalOrdering")
+    type naturalOrdering <: Ordering
+
+    /**
      * Escapes from the dual world.
      */
      def undual: undual = unsupported("Any.undual")

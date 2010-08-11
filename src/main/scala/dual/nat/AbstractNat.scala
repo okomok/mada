@@ -24,4 +24,7 @@ trait AbstractNat extends Nat {
 
     final override  def gteq[that <: Nat](that: that): gteq[that] = that.lteq(self)
     final override type gteq[that <: Nat]                         = that#lteq[self]
+
+    final override  def naturalOrdering: naturalOrdering = nat.naturalOrdering
+    final override type naturalOrdering                  = nat.naturalOrdering
 }

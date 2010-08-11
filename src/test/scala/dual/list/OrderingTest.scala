@@ -24,8 +24,8 @@ class OrderingTest extends org.scalatest.junit.JUnit3Suite {
         type ys    = _5 :: _6 :: _7 :: _8 :: _9 :: Nil
         val ys: ys = _5 :: _6 :: _7 :: _8 :: _9 :: Nil
 
-        meta.assert[list.ord[nat.ord]#equiv[xs, ys]]
-        dassert(list.ord(nat.ord).equiv(xs, ys))
+        meta.assert[list.lexicographicalOrdering[nat.naturalOrdering]#equiv[xs, ys]]
+        dassert(list.lexicographicalOrdering(nat.naturalOrdering).equiv(xs, ys))
     }
 
     def testTrivial2 {
@@ -35,8 +35,8 @@ class OrderingTest extends org.scalatest.junit.JUnit3Suite {
         type ys    = Nil
         val ys: ys = Nil
 
-        meta.assert[list.ord[nat.ord]#equiv[xs, ys]]
-        dassert(list.ord(nat.ord).equiv(xs, ys))
+        meta.assert[list.lexicographicalOrdering[nat.naturalOrdering]#equiv[xs, ys]]
+        dassert(list.lexicographicalOrdering(nat.naturalOrdering).equiv(xs, ys))
     }
 
     def testNilYS {
@@ -46,8 +46,8 @@ class OrderingTest extends org.scalatest.junit.JUnit3Suite {
         type ys    = _5 :: _6 :: Nil
         val ys: ys = _5 :: _6 :: Nil
 
-        meta.assert[list.ord[nat.ord]#lt[xs, ys]]
-        dassert(list.ord(nat.ord).lt(xs, ys))
+        meta.assert[list.lexicographicalOrdering[nat.naturalOrdering]#lt[xs, ys]]
+        dassert(list.lexicographicalOrdering(nat.naturalOrdering).lt(xs, ys))
     }
 
     def testXSNil {
@@ -57,8 +57,8 @@ class OrderingTest extends org.scalatest.junit.JUnit3Suite {
         type ys    = Nil
         val ys: ys = Nil
 
-        meta.assert[list.ord[nat.ord]#gt[xs, ys]]
-        dassert(list.ord(nat.ord).gt(xs, ys))
+        meta.assert[list.lexicographicalOrdering[nat.naturalOrdering]#gt[xs, ys]]
+        dassert(list.lexicographicalOrdering(nat.naturalOrdering).gt(xs, ys))
     }
 
     def testLonger {
@@ -68,8 +68,8 @@ class OrderingTest extends org.scalatest.junit.JUnit3Suite {
         type ys    = _5 :: _6 :: _7 :: Nil
         val ys: ys = _5 :: _6 :: _7 :: Nil
 
-        meta.assert[list.ord[nat.ord]#gt[xs, ys]]
-        dassert(list.ord(nat.ord).gt(xs, ys))
+        meta.assert[list.lexicographicalOrdering[nat.naturalOrdering]#gt[xs, ys]]
+        dassert(list.lexicographicalOrdering(nat.naturalOrdering).gt(xs, ys))
     }
 
     def testShorter {
@@ -79,8 +79,8 @@ class OrderingTest extends org.scalatest.junit.JUnit3Suite {
         type ys    = _5 :: _6 :: _7 :: _8 :: _9 :: Nil
         val ys: ys = _5 :: _6 :: _7 :: _8 :: _9 :: Nil
 
-        meta.assert[list.ord[nat.ord]#lt[xs, ys]]
-        dassert(list.ord(nat.ord).lt(xs, ys))
+        meta.assert[list.lexicographicalOrdering[nat.naturalOrdering]#lt[xs, ys]]
+        dassert(list.lexicographicalOrdering(nat.naturalOrdering).lt(xs, ys))
     }
 
     def testComplicated {
@@ -90,8 +90,8 @@ class OrderingTest extends org.scalatest.junit.JUnit3Suite {
         type ys    = _5 :: _6 :: _7 :: _8 :: _9 :: Nil
         val ys: ys = _5 :: _6 :: _7 :: _8 :: _9 :: Nil
 
-        meta.assert[list.ord[nat.ord]#gt[xs, ys]]
-        dassert(list.ord(nat.ord).gt(xs, ys))
+        meta.assert[list.lexicographicalOrdering[nat.naturalOrdering]#gt[xs, ys]]
+        dassert(list.lexicographicalOrdering(nat.naturalOrdering).gt(xs, ys))
     }
 
     def testComplicated2 {
@@ -101,8 +101,8 @@ class OrderingTest extends org.scalatest.junit.JUnit3Suite {
         type ys    = _5 :: _6 :: _7 :: _8 :: _9 :: Nil
         val ys: ys = _5 :: _6 :: _7 :: _8 :: _9 :: Nil
 
-        meta.assert[list.ord[nat.ord]#lt[ys, xs]]
-        dassert(list.ord(nat.ord).lt(ys, xs))
+        meta.assert[list.lexicographicalOrdering[nat.naturalOrdering]#lt[ys, xs]]
+        dassert(list.lexicographicalOrdering(nat.naturalOrdering).lt(ys, xs))
     }
 
 }

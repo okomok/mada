@@ -12,8 +12,11 @@ import ordering.{LT, GT, EQ}
 
 
 private[dual]
-final class Ord extends ordering.AbstractOrdering {
-    type self = Ord
+final class NaturalOrdering extends ordering.AbstractOrdering {
+    type self = NaturalOrdering
+
+    override  def equiv[x <: Any, y <: Any](x: x, y: y): equiv[x, y] = x.asInstanceOfNat.equal(y.asInstanceOfNat)
+    override type equiv[x <: Any, y <: Any]                          = x#asInstanceOfNat#equal[y#asInstanceOfNat]
 
     override  def compare[x <: Any, y <: Any](x: x, y: y): compare[x, y] =
         `if`(x.asInstanceOfNat.lt(y.asInstanceOfNat),

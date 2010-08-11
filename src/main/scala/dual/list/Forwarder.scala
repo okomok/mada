@@ -8,6 +8,9 @@ package com.github.okomok.mada
 package dual; package list
 
 
+// Will be removed.
+
+
 trait Forwarder extends List {
     protected  def delegate: delegate
     protected type delegate <: List

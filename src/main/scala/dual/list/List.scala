@@ -129,6 +129,9 @@ trait List extends Any {
      def splitAt[n <: Nat](n: n): splitAt[n]
     type splitAt[n <: Nat] <: Product2
 
+     def equal[that <: List](that: that): equal[that]
+    type equal[that <: List] <: Boolean
+
      def equivTo[that <: List, e <: Equiv](that: that, e: e): equivTo[that, e]
     type equivTo[that <: List, e <: Equiv] <: Boolean
 

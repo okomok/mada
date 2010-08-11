@@ -21,9 +21,6 @@ trait AbstractOrdering extends Ordering {
     final override  def gt[x <: Any, y <: Any](x: x, y: y): gt[x, y] = compare(x, y).isGT
     final override type gt[x <: Any, y <: Any]                       = compare[x, y]#isGT
 
-    final override  def equiv[x <: Any, y <: Any](x: x, y: y): equiv[x, y] = compare(x, y).isEQ
-    final override type equiv[x <: Any, y <: Any]                          = compare[x, y]#isEQ
-
     final override  def `match`[x <: Any, y <: Any, flt <: Function0, fgt <: Function0, feq <: Function0](x: x, y: y, flt: flt, fgt: fgt, feq: feq): `match`[x, y, flt, fgt, feq] =
         Match(self, x, y, flt, fgt, feq).apply
     final override type `match`[x <: Any, y <: Any, flt <: Function0, fgt <: Function0, feq <: Function0] =

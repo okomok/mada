@@ -43,16 +43,16 @@ trait Common {
     type force2[t <: Product2]                  = Tuple2[t#_1#asInstanceOfList#force, t#_2#asInstanceOfList#force]
 
     /**
-     * Makes a List Equiv from element Equiv.
+     * Makes a lexicographical Ordering from element natural ordering.
      */
-     def eqv[ee <: Equiv](ee: ee): eqv[ee] = new Eqv(ee)
-    type eqv[ee <: Equiv]                  =     Eqv[ee]
+     val naturalOrdering: naturalOrdering = LexicographicalOrdering.apply(None)
+    type naturalOrdering                  = LexicographicalOrdering.apply[None]
 
     /**
      * Makes a lexicographical Ordering from element Ordering.
      */
-     def ord[eo <: Ordering](eo: eo): ord[eo] = new Ord(eo)
-    type ord[eo <: Ordering]                  =     Ord[eo]
+     def lexicographicalOrdering[eo <: Ordering](eo: eo): lexicographicalOrdering[eo] = LexicographicalOrdering.apply(Some(eo))
+    type lexicographicalOrdering[eo <: Ordering]                                      = LexicographicalOrdering.apply[Some[eo]]
 
     def fromSTuple1[T1](from: scala.Tuple1[T1]): Box[T1] :: Nil = Box(from._1) :: Nil
     def fromSTuple2[T1, T2](from: scala.Tuple2[T1, T2]): Box[T1] :: Box[T2] :: Nil = Box(from._1) :: Box(from._2) :: Nil
