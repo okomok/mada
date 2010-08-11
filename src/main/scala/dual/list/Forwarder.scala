@@ -11,6 +11,7 @@ package dual; package list
 // Will be removed.
 
 
+/*
 trait Forwarder extends List {
     protected  def delegate: delegate
     protected type delegate <: List
@@ -62,11 +63,11 @@ trait Forwarder extends List {
     final override  def partition[f <: Function1](f: f): partition[f] = around2(delegate.partition(f))
     final override type partition[f <: Function1]                     = around2[delegate#partition[f]]
 
-    final override  def sort[o <: Ordering](o: o): sort[o] = around(delegate.sort(o))
-    final override type sort[o <: Ordering]                = around[delegate#sort[o]]
+    final override  def sortWith[o <: Ordering](o: o): sortWith[o] = around(delegate.sortWith(o))
+    final override type sortWith[o <: Ordering]                = around[delegate#sortWith[o]]
 
-    final override  def isSorted[o <: Ordering](o: o): isSorted[o] = delegate.isSorted(o)
-    final override type isSorted[o <: Ordering]                    = delegate#isSorted[o]
+    final override  def isSortedWith[o <: Ordering](o: o): isSortedWith[o] = delegate.isSortedWith(o)
+    final override type isSortedWith[o <: Ordering]                    = delegate#isSortedWith[o]
 
     final override  def forall[f <: Function1](f: f): forall[f] = delegate.forall(f)
     final override type forall[f <: Function1]                  = delegate#forall[f]
@@ -128,8 +129,8 @@ trait Forwarder extends List {
     final override  def splitAt[n <: Nat](n: n): splitAt[n] = around2(delegate.splitAt(n))
     final override type splitAt[n <: Nat]                   = around2[delegate#splitAt[n]]
 
-    final override  def equivTo[that <: List, e <: Equiv](that: that, e: e): equivTo[that, e] = delegate.equivTo(that, e)
-    final override type equivTo[that <: List, e <: Equiv]                                     = delegate#equivTo[that, e]
+    final override  def equalWith[that <: List, e <: Equiv](that: that, e: e): equalWith[that, e] = delegate.equalWith(that, e)
+    final override type equalWith[that <: List, e <: Equiv]                                     = delegate#equalWith[that, e]
 
     final override  def reverse: reverse = delegate.reverse
     final override type reverse          = delegate#reverse
@@ -155,3 +156,4 @@ trait TrivialForwarder extends Forwarder {
     final override protected  def around[that <: List](that: that): around[that] = that
     final override protected type around[that <: List]                           = that
 }
+*/

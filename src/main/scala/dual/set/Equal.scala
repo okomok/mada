@@ -9,7 +9,7 @@ package dual; package set
 
 
 private[dual]
-object EquivTo {
+object Equal {
      def apply[s <: Set, z <: Set](s: s, z: z): apply[s, z] =
         `if`(s.size.nequal(z.size), const0(`false`), Else(s, z)).apply.asInstanceOfBoolean.asInstanceOf[apply[s, z]]
     type apply[s <: Set, z <: Set] =

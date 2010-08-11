@@ -45,8 +45,8 @@ trait Set extends Any {
      def toList: toList
     type toList <: List
 
-     def equivTo[that <: Set](that: that): equivTo[that]
-    type equivTo[that <: Set] <: Boolean
+     def equal[that <: Set](that: that): equal[that]
+    type equal[that <: Set] <: Boolean
 
      def intersect[that <: Set](that: that): intersect[that]
     type intersect[that <: Set] <: Set

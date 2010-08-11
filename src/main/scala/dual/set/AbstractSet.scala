@@ -15,8 +15,8 @@ trait AbstractSet extends Set {
     final override  def removeList[xs <: List](xs: xs): removeList[xs] = RemoveList.apply(self, xs)
     final override type removeList[xs <: List]                         = RemoveList.apply[self, xs]
 
-    final override  def equivTo[that <: Set](that: that): equivTo[that] = EquivTo.apply(self, that)
-    final override type equivTo[that <: Set]                            = EquivTo.apply[self, that]
+    final override  def equal[that <: Set](that: that): equal[that] = Equal.apply(self, that)
+    final override type equal[that <: Set]                          = Equal.apply[self, that]
 
     final override  def intersect[that <: Set](that: that): intersect[that] = Intersect.apply(self, that)
     final override type intersect[that <: Set]                              = Intersect.apply[self, that]

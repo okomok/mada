@@ -20,7 +20,7 @@ class RangeTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial {
         type rs = list.range[_3, _10]
         val rs: rs = list.range(_3, _10)
-        meta.assert[rs#equivTo[_3 :: _4 :: _5 :: _6 :: _7 :: _8 :: _9 :: Nil, nat.naturalOrdering]]
+        meta.assert[rs#equalWith[_3 :: _4 :: _5 :: _6 :: _7 :: _8 :: _9 :: Nil, nat.naturalOrdering]]
         assertEquals(_3 :: _4 :: _5 :: _6 :: _7 :: _8 :: _9 :: Nil, rs)
     }
 

@@ -62,11 +62,17 @@ trait List extends Any {
      def partition[f <: Function1](f: f): partition[f]
     type partition[f <: Function1] <: Product2
 
-     def sort[o <: Ordering](o: o): sort[o]
-    type sort[o <: Ordering] <: List
+     def sort: sort
+    type sort <: List
 
-     def isSorted[o <: Ordering](o: o): isSorted[o]
-    type isSorted[o <: Ordering] <: Boolean
+     def sortWith[o <: Ordering](o: o): sortWith[o]
+    type sortWith[o <: Ordering] <: List
+
+     def isSorted: isSorted
+    type isSorted <: Boolean
+
+     def isSortedWith[o <: Ordering](o: o): isSortedWith[o]
+    type isSortedWith[o <: Ordering] <: Boolean
 
      def forall[f <: Function1](f: f): forall[f]
     type forall[f <: Function1] <: Boolean
@@ -132,8 +138,8 @@ trait List extends Any {
      def equal[that <: List](that: that): equal[that]
     type equal[that <: List] <: Boolean
 
-     def equivTo[that <: List, e <: Equiv](that: that, e: e): equivTo[that, e]
-    type equivTo[that <: List, e <: Equiv] <: Boolean
+     def equalWith[that <: List, e <: Equiv](that: that, e: e): equalWith[that, e]
+    type equalWith[that <: List, e <: Equiv] <: Boolean
 
      def reverse: reverse
     type reverse <: List

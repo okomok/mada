@@ -15,7 +15,7 @@ import nat.dense.Literal._
 import junit.framework.Assert._
 
 
-class EquivToTest extends org.scalatest.junit.JUnit3Suite {
+class EqualTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial {
         type m   = set.sorted[nat.naturalOrdering]#add[_4]#add[_3]#add[_1]#add[_2]#add[_5]#add[_0]
@@ -24,10 +24,10 @@ class EquivToTest extends org.scalatest.junit.JUnit3Suite {
         type m2   = set.sorted[nat.naturalOrdering]#add[_3]#add[_4]#add[_0]#add[_2]#add[_5]#add[_1]
         val m2: m2 = set.sorted(nat.naturalOrdering).add(_3).add(_4).add(_0).add(_2).add(_5).add(_1)
 
-        meta.assertSame[`true`, m#equivTo[m]]
-        meta.assertSame[`true`, m#equivTo[m2]]
-        meta.assertSame[`true`, m2#equivTo[m]]
-        assertEquals(`true`, m.equivTo(m2))
+        meta.assertSame[`true`, m#equal[m]]
+        meta.assertSame[`true`, m#equal[m2]]
+        meta.assertSame[`true`, m2#equal[m]]
+        assertEquals(`true`, m.equal(m2))
     }
 
     def testTrivial2 {
@@ -37,9 +37,9 @@ class EquivToTest extends org.scalatest.junit.JUnit3Suite {
         type m2   = set.sorted[nat.naturalOrdering]#add[_3]#add[_4]#add[_0]#add[_2]#add[_5]#add[_1]
         val m2: m2 = set.sorted(nat.naturalOrdering).add(_3).add(_4).add(_0).add(_2).add(_5).add(_1)
 
-        meta.assertSame[`false`, m#equivTo[m2]]
-        meta.assertSame[`false`, m2#equivTo[m]]
-        assertEquals(`false`, m.equivTo(m2))
+        meta.assertSame[`false`, m#equal[m2]]
+        meta.assertSame[`false`, m2#equal[m]]
+        assertEquals(`false`, m.equal(m2))
     }
 
     def testTrivialDifferentSize {
@@ -49,9 +49,9 @@ class EquivToTest extends org.scalatest.junit.JUnit3Suite {
         type m2   = set.sorted[nat.naturalOrdering]#add[_3]#add[_4]#add[_0]#add[_2]#add[_5]#add[_1]
         val m2: m2 = set.sorted(nat.naturalOrdering).add(_3).add(_4).add(_0).add(_2).add(_5).add(_1)
 
-        meta.assertSame[`false`, m#equivTo[m2]]
-        meta.assertSame[`false`, m2#equivTo[m]]
-        assertEquals(`false`, m.equivTo(m2))
+        meta.assertSame[`false`, m#equal[m2]]
+        meta.assertSame[`false`, m2#equal[m]]
+        assertEquals(`false`, m.equal(m2))
     }
 
     def testTrivialEmpty {
@@ -61,10 +61,10 @@ class EquivToTest extends org.scalatest.junit.JUnit3Suite {
         type m2   = set.sorted[nat.naturalOrdering]
         val m2: m2 = set.sorted(nat.naturalOrdering)
 
-        meta.assertSame[`true`, m#equivTo[m]]
-        meta.assertSame[`true`, m#equivTo[m2]]
-        meta.assertSame[`true`, m2#equivTo[m]]
-        assertEquals(`true`, m.equivTo(m2))
+        meta.assertSame[`true`, m#equal[m]]
+        meta.assertSame[`true`, m#equal[m2]]
+        meta.assertSame[`true`, m2#equal[m]]
+        assertEquals(`true`, m.equal(m2))
     }
 
 }

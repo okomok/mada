@@ -15,7 +15,7 @@ import nat.dense.Literal._
 import junit.framework.Assert._
 
 
-class EquivToTest extends org.scalatest.junit.JUnit3Suite {
+class EqualWithTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial {
         type xs    = Tuple2[_4, _5] :: Tuple2[_3, _4] :: Tuple2[_1, _2] :: Tuple2[_2, _3] :: Tuple2[_5, _6] :: Tuple2[_0, _1] :: Nil
@@ -28,10 +28,10 @@ class EquivToTest extends org.scalatest.junit.JUnit3Suite {
         type m2   = map.sorted[nat.naturalOrdering]#put[_8, _9]#putList[xs2]
         val m2: m2 = map.sorted(nat.naturalOrdering).put(_8, _9).putList(xs2)
 
-        meta.assertSame[`true`, m#equivTo[m, nat.naturalOrdering]]
-        meta.assertSame[`true`, m#equivTo[m2, nat.naturalOrdering]]
-        meta.assertSame[`true`, m2#equivTo[m, nat.naturalOrdering]]
-        assertEquals(`true`, m.equivTo(m2, nat.naturalOrdering))
+        meta.assertSame[`true`, m#equalWith[m, nat.naturalOrdering]]
+        meta.assertSame[`true`, m#equalWith[m2, nat.naturalOrdering]]
+        meta.assertSame[`true`, m2#equalWith[m, nat.naturalOrdering]]
+        assertEquals(`true`, m.equalWith(m2, nat.naturalOrdering))
     }
 
     def testTrivialDifferentKey {
@@ -45,10 +45,10 @@ class EquivToTest extends org.scalatest.junit.JUnit3Suite {
         type m2   = map.sorted[nat.naturalOrdering]#put[_8, _9]#putList[xs2]
         val m2: m2 = map.sorted(nat.naturalOrdering).put(_8, _9).putList(xs2)
 
-        meta.assertSame[`true`, m#equivTo[m, nat.naturalOrdering]]
-        meta.assertSame[`false`, m#equivTo[m2, nat.naturalOrdering]]
-        meta.assertSame[`false`, m2#equivTo[m, nat.naturalOrdering]]
-        assertEquals(`false`, m.equivTo(m2, nat.naturalOrdering))
+        meta.assertSame[`true`, m#equalWith[m, nat.naturalOrdering]]
+        meta.assertSame[`false`, m#equalWith[m2, nat.naturalOrdering]]
+        meta.assertSame[`false`, m2#equalWith[m, nat.naturalOrdering]]
+        assertEquals(`false`, m.equalWith(m2, nat.naturalOrdering))
     }
 
     def testTrivialDifferentValue {
@@ -62,10 +62,10 @@ class EquivToTest extends org.scalatest.junit.JUnit3Suite {
         type m2   = map.sorted[nat.naturalOrdering]#put[_8, _9]#putList[xs2]
         val m2: m2 = map.sorted(nat.naturalOrdering).put(_8, _9).putList(xs2)
 
-        meta.assertSame[`true`, m#equivTo[m, nat.naturalOrdering]]
-        meta.assertSame[`false`, m#equivTo[m2, nat.naturalOrdering]]
-        meta.assertSame[`false`, m2#equivTo[m, nat.naturalOrdering]]
-        assertEquals(`false`, m.equivTo(m2, nat.naturalOrdering))
+        meta.assertSame[`true`, m#equalWith[m, nat.naturalOrdering]]
+        meta.assertSame[`false`, m#equalWith[m2, nat.naturalOrdering]]
+        meta.assertSame[`false`, m2#equalWith[m, nat.naturalOrdering]]
+        assertEquals(`false`, m.equalWith(m2, nat.naturalOrdering))
     }
 
     def testTrivialDifferentSize {
@@ -79,10 +79,10 @@ class EquivToTest extends org.scalatest.junit.JUnit3Suite {
         type m2   = map.sorted[nat.naturalOrdering]#put[_8, _9]#putList[xs2]
         val m2: m2 = map.sorted(nat.naturalOrdering).put(_8, _9).putList(xs2)
 
-        meta.assertSame[`true`, m#equivTo[m, nat.naturalOrdering]]
-        meta.assertSame[`false`, m#equivTo[m2, nat.naturalOrdering]]
-        meta.assertSame[`false`, m2#equivTo[m, nat.naturalOrdering]]
-        assertEquals(`false`, m.equivTo(m2, nat.naturalOrdering))
+        meta.assertSame[`true`, m#equalWith[m, nat.naturalOrdering]]
+        meta.assertSame[`false`, m#equalWith[m2, nat.naturalOrdering]]
+        meta.assertSame[`false`, m2#equalWith[m, nat.naturalOrdering]]
+        assertEquals(`false`, m.equalWith(m2, nat.naturalOrdering))
     }
 
     def testTrivialNil {
@@ -91,10 +91,10 @@ class EquivToTest extends org.scalatest.junit.JUnit3Suite {
         type m2   = map.sorted[nat.naturalOrdering]
         val m2: m2 = map.sorted(nat.naturalOrdering)
 
-        meta.assertSame[`true`, m#equivTo[m, nat.naturalOrdering]]
-        meta.assertSame[`true`, m#equivTo[m2, nat.naturalOrdering]]
-        meta.assertSame[`true`, m2#equivTo[m, nat.naturalOrdering]]
-        assertEquals(`true`, m.equivTo(m2, nat.naturalOrdering))
+        meta.assertSame[`true`, m#equalWith[m, nat.naturalOrdering]]
+        meta.assertSame[`true`, m#equalWith[m2, nat.naturalOrdering]]
+        meta.assertSame[`true`, m2#equalWith[m, nat.naturalOrdering]]
+        assertEquals(`true`, m.equalWith(m2, nat.naturalOrdering))
    }
 
 }

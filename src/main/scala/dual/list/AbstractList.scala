@@ -22,7 +22,7 @@ trait AbstractList extends List {
     final override type length             = Length.apply[self]
 
     final override  def append[that <: List](that: that): append[that] = Append.apply(self, that)
-    final override type append[ that <: List]                          = Append.apply[self, that]
+    final override type append[that <: List]                           = Append.apply[self, that]
 
     final override  def map[f <: Function1](f: f): map[f] = Map.apply(self, f)
     final override type map[f <: Function1]               = Map.apply[self, f]
@@ -39,11 +39,17 @@ trait AbstractList extends List {
     final override  def partition[f <: Function1](f: f): partition[f] = Tuple2(filter(f), filter(f.not))
     final override type partition[f <: Function1]                     = Tuple2[filter[f], filter[f#not]]
 
-    final override  def sort[o <: Ordering](o: o): sort[o] = Sort.apply(self, o)
-    final override type sort[o <: Ordering]                = Sort.apply[self, o]
+    final override  def sort: sort = Sort.apply(self, None)
+    final override type sort       = Sort.apply[self, None]
 
-    final override  def isSorted[o <: Ordering](o: o): isSorted[o] = IsSorted.apply(self, o)
-    final override type isSorted[o <: Ordering]                    = IsSorted.apply[self, o]
+    final override  def sortWith[o <: Ordering](o: o): sortWith[o] = Sort.apply(self, Some(o))
+    final override type sortWith[o <: Ordering]                    = Sort.apply[self, Some[o]]
+
+    final override  def isSorted: isSorted = IsSorted.apply(self, None)
+    final override type isSorted           = IsSorted.apply[self, None]
+
+    final override  def isSortedWith[o <: Ordering](o: o): isSortedWith[o] = IsSorted.apply(self, Some(o))
+    final override type isSortedWith[o <: Ordering]                        = IsSorted.apply[self, Some[o]]
 
     final override  def forall[f <: Function1](f: f): forall[f] = exists(f.not).not.asInstanceOf[forall[f]]
     final override type forall[f <: Function1]                  = exists[f#not]#not
@@ -79,10 +85,10 @@ trait AbstractList extends List {
     final override type nth[n <: Nat]               = Nth.apply[self, n]
 
     final override  def last: last = Last.apply(self)
-    final override type last           = Last.apply[self]
+    final override type last       = Last.apply[self]
 
     final override  def init: init = Init.apply(self)
-    final override type init           = Init.apply[self]
+    final override type init       = Init.apply[self]
 
     final override  def take[n <: Nat](n: n): take[n] = Take.apply(self, n)
     final override type take[n <: Nat]                = Take.apply[self, n]
@@ -108,14 +114,14 @@ trait AbstractList extends List {
     final override  def equal[that <: List](that: that): equal[that] = Equal.apply(self, that, None)
     final override type equal[that <: List]                          = Equal.apply[self, that, None]
 
-    final override  def equivTo[that <: List, e <: Equiv](that: that, e: e): equivTo[that, e] = Equal.apply(self, that, Some(e))
-    final override type equivTo[that <: List, e <: Equiv]                                     = Equal.apply[self, that, Some[e]]
+    final override  def equalWith[that <: List, e <: Equiv](that: that, e: e): equalWith[that, e] = Equal.apply(self, that, Some(e))
+    final override type equalWith[that <: List, e <: Equiv]                                       = Equal.apply[self, that, Some[e]]
 
     final override  def reverse: reverse = ReverseAppend.apply(self, Nil)
     final override type reverse          = ReverseAppend.apply[self, Nil]
 
     final override  def zip[that <: List](that: that): zip[that] = Zip.apply(self, that)
-    final override type zip[ that <: List]                       = Zip.apply[self, that]
+    final override type zip[that <: List]                       = Zip.apply[self, that]
 
     final override  def unzip: unzip = Unzip.apply(self)
     final override type unzip        = Unzip.apply[self]
