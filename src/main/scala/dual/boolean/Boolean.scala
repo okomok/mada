@@ -43,7 +43,7 @@ sealed abstract class Boolean extends Any {
     private[dual] type isFalse <: Boolean
 
     final override type undual = scala.Boolean
-    final override def canEqual(that: scala.Any) = that.isInstanceOf[Boolean]
+    final override  def canEqual(that: scala.Any) = that.isInstanceOf[Boolean]
 }
 
 
@@ -51,6 +51,9 @@ private[dual]
 sealed abstract class AbstractBoolean extends Boolean {
     final override  def nequal[that <: Boolean](that: that): nequal[that] = equal(that).not
     final override type nequal[that <: Boolean]                           = equal[that]#not
+
+    final override  def naturalOrdering: naturalOrdering = boolean.naturalOrdering
+    final override type naturalOrdering                  = boolean.naturalOrdering
 
 //    final override protected  def typeid = _Boolean.typeid
 //    final override protected type typeid = _Boolean.typeid

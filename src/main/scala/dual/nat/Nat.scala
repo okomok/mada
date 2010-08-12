@@ -85,5 +85,5 @@ trait Nat extends Any {
     type toPeano <: Peano
 
     final override type undual = scala.Int
-    final override def canEqual(that: scala.Any) = that.isInstanceOf[Nat]
+    final override  def canEqual(that: scala.Any) = that.isInstanceOf[Nat]
 }

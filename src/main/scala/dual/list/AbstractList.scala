@@ -121,7 +121,7 @@ trait AbstractList extends List {
     final override type reverse          = ReverseAppend.apply[self, Nil]
 
     final override  def zip[that <: List](that: that): zip[that] = Zip.apply(self, that)
-    final override type zip[that <: List]                       = Zip.apply[self, that]
+    final override type zip[that <: List]                        = Zip.apply[self, that]
 
     final override  def unzip: unzip = Unzip.apply(self)
     final override type unzip        = Unzip.apply[self]
@@ -137,4 +137,7 @@ trait AbstractList extends List {
 
     final override  def naturalOrdering: naturalOrdering = list.naturalOrdering
     final override type naturalOrdering                  = list.naturalOrdering
+
+    final override  def undual: undual = if (isEmpty.undual) scala.collection.immutable.Nil else (head.undual :: tail.undual.toList)
+    final override type undual         = scala.collection.immutable.List[scala.Any]
 }

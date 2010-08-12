@@ -159,8 +159,6 @@ trait List extends Any {
      def times[n <: Nat](n: n): times[n]
     type times[n <: Nat] <: List
 
-    final override  def undual: undual = if (isEmpty.undual) scala.collection.immutable.Nil else (head.undual :: tail.undual)
-    final override type undual = scala.collection.immutable.List[scala.Any]
-
-    override def canEqual(that: scala.Any) = that.isInstanceOf[List]
+    override type undual <: scala.collection.immutable.Seq[scala.Any]
+    override  def canEqual(that: scala.Any) = that.isInstanceOf[List]
 }

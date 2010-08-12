@@ -29,7 +29,4 @@ trait AbstractSet extends Set {
 
     final override  def subsetOf[that <: Set](that: that): subsetOf[that] = SubsetOf.apply(self, that)
     final override type subsetOf[that <: Set]                             = SubsetOf.apply[self, that]
-
-    override type undual = scala.collection.Set[scala.Any]
-    override  def canEqual(that: scala.Any) = that.isInstanceOf[Set]
 }

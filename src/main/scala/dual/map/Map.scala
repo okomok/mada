@@ -65,5 +65,5 @@ trait Map extends Any {
     type union[that <: Map] <: Map
 
     final override type undual = scala.collection.Map[scala.Any, scala.Any]
-    final override def canEqual(that: scala.Any) = that.isInstanceOf[Map]
+    override def canEqual(that: scala.Any) = that.isInstanceOf[Map]
 }

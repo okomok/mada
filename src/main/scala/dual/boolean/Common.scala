@@ -24,6 +24,12 @@ class Common extends OperatorCommon {
      */
      def `if`[b <: Boolean, then <: Function0, _else <: Function0](b: b, then: then, _else: _else): `if`[b, then, _else] = b.`if`(then, _else)
     type `if`[b <: Boolean, then <: Function0, _else <: Function0] = b#`if`[then, _else]
+
+    /**
+     * The natural ordering of Boolean
+     */
+     val naturalOrdering: naturalOrdering = new NaturalOrdering
+    type naturalOrdering                  =     NaturalOrdering
 }
 
 

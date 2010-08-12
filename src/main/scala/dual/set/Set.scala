@@ -59,4 +59,7 @@ trait Set extends Any {
 
      def subsetOf[that <: Set](that: that): subsetOf[that]
     type subsetOf[that <: Set] <: Boolean
+
+    final override type undual = scala.collection.Set[scala.Any]
+    override def canEqual(that: scala.Any) = that.isInstanceOf[Set]
 }
