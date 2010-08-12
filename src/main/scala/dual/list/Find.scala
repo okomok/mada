@@ -16,7 +16,7 @@ object Find {
      def toOption[ys <: List](ys: ys): toOption[ys] =
         `if`(ys.isEmpty, const0(None), Else(ys)).apply.asInstanceOfOption.asInstanceOf[toOption[ys]]
     type toOption[ys <: List] =
-        `if`[ys#isEmpty, const0[None],  Else[ys]]#apply#asInstanceOfOption
+        `if`[ys#isEmpty, const0[None], Else[ys]]#apply#asInstanceOfOption
 
     case class Else[ys <: List](ys: ys) extends Function0 {
         type self = Else[ys]

@@ -132,6 +132,13 @@ package object dual {
     type Ordering = ordering.Ordering
 
 
+// Peg
+
+    @aliasOf("peg.Peg")
+     val Peg = peg.Peg
+    type Peg = peg.Peg
+
+
 // Unit
 
     @equivalentTo("new Unit{}")

@@ -70,6 +70,12 @@ trait Any extends scala.Equals {
     final def asInstanceOfOrderingResult: asInstanceOfOrderingResult = this.asInstanceOf[asInstanceOfOrderingResult]
     type asInstanceOfOrderingResult <: ordering.Result
 
+    final def asInstanceOfPeg: asInstanceOfPeg = this.asInstanceOf[asInstanceOfPeg]
+    type asInstanceOfPeg <: Peg
+
+    final def asInstanceOfPegResult: asInstanceOfPegResult = this.asInstanceOf[asInstanceOfPegResult]
+    type asInstanceOfPegResult <: peg.Result
+
     final def asInstanceOfProduct: asInstanceOfProduct = this.asInstanceOf[asInstanceOfProduct]
     type asInstanceOfProduct <: Product
 
