@@ -14,6 +14,8 @@ object Star {
     type apply[p <: Peg]                 = Impl[p]
 
     final case class Impl[p <: Peg](p: p) extends AbstractPeg {
+        type self = Impl[p]
+
         override  def parse[xs <: List](xs: xs): parse[xs] = _aux(p.parse(xs))
         override type parse[xs <: List]                    = _aux[p#parse[xs]]
 
