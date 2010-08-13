@@ -68,14 +68,14 @@ sealed abstract class AbstractOption extends Option {
     final override type nonEmpty           = isEmpty#not
 
     final override  def getOrNaturalEquiv[x <: Any](x: x): getOrNaturalEquiv[x] =
-        getOrElse(function.GetNaturalOrdering(x)).asInstanceOfEquiv
+        getOrElse(GetNaturalOrdering(x)).asInstanceOfEquiv
     final override type getOrNaturalEquiv[x <: Any] =
-        getOrElse[function.GetNaturalOrdering[x]]#asInstanceOfEquiv
+        getOrElse[GetNaturalOrdering[x]]#asInstanceOfEquiv
 
     final override  def getOrNaturalOrdering[x <: Any](x: x): getOrNaturalOrdering[x] =
-        getOrElse(function.GetNaturalOrdering(x)).asInstanceOfOrdering
+        getOrElse(GetNaturalOrdering(x)).asInstanceOfOrdering
     final override type getOrNaturalOrdering[x <: Any] =
-        getOrElse[function.GetNaturalOrdering[x]]#asInstanceOfOrdering
+        getOrElse[GetNaturalOrdering[x]]#asInstanceOfOrdering
 
     final override  def isDefined: isDefined = isEmpty.not
     final override type isDefined            = isEmpty#not

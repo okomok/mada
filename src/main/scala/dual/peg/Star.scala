@@ -30,4 +30,10 @@ object Star {
         override  def apply: apply = Star.apply(p).parse(r.next).map(MakeCons(r.get)).asInstanceOf[apply]
         override type apply        = Star.apply[p]#parse[r#next]#map[MakeCons[r#get]]
     }
+
+    final case class MakeCons[a <: Any](a: a) extends Function1 {
+        type self = MakeCons[a]
+        override  def apply[b <: Any](b: b): apply[b] = a :: b.asInstanceOfList
+        override type apply[b <: Any]                 = a :: b#asInstanceOfList
+    }
 }
