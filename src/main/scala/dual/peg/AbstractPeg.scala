@@ -30,6 +30,9 @@ trait AbstractPeg extends Peg {
     final override  def not: not = Not.apply(self)
     final override type not      = Not.apply[self]
 
+    final override  def map[f <: Function1](f: f): map[f] = Map.apply(self, f)
+    final override type map[f <: Function1]               = Map.apply[self, f]
+
     final override  def matches[xs <: List](xs: xs): matches[xs] = Matches.apply(self, xs)
     final override type matches[xs <: List]                      = Matches.apply[self, xs]
 }

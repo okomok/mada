@@ -70,6 +70,12 @@ trait Peg extends Any with ReferenceEquality {
     type not <: Peg
 
     /**
+     * Associates a semantic action.
+     */
+     def map[f <: Function1](f: f): map[f]
+    type map[f <: Function1] <: Peg
+
+    /**
      * Returns true iif full match.
      */
      def matches[xs <: List](xs: xs): matches[xs]
