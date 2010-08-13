@@ -29,4 +29,10 @@ trait Common {
      val dot: dot = Dot.apply
     type dot      = Dot.apply
 
+    /**
+     * Matches only the given list.
+     */
+     def fromList[ys <: List](ys: ys): fromList[ys] = FromList.apply(ys)
+    type fromList[ys <: List]                       = FromList.apply[ys]
+
 }
