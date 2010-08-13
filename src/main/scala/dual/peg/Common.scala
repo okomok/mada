@@ -10,14 +10,23 @@ package dual; package peg
 
 private[dual]
 trait Common {
-    /*
 
     /**
-     * The empty string
+     * Epsilon, the empty string
      */
      val eps: eps = new Eps
     type eps      =     Eps
 
+    /**
+     * Terminal
+     */
+     def term[y <: Any](y: y): term[y] = Term.apply(y)
+    type term[y <: Any]                = Term.apply[y]
 
-    */
+    /**
+     * Dot, which matches any character.
+     */
+     val dot: dot = Dot.apply
+    type dot      = Dot.apply
+
 }

@@ -68,4 +68,10 @@ trait Peg extends Any with ReferenceEquality {
      */
      def not: not
     type not <: Peg
+
+    /**
+     * Returns true iif full match.
+     */
+     def matches[xs <: List](xs: xs): matches[xs]
+    type matches[xs <: List] <: Boolean
 }

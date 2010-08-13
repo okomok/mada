@@ -9,20 +9,17 @@ package dual; package peg
 
 
 private[dual]
-object Single {
+object Term {
      def apply[y <: Any](y: y): apply[y] = Impl(y)
     type apply[y <: Any]                 = Impl[y]
 
-    final case class Impl[y <: Any](y: y) extends AbstractPeg {
+    final case class Impl[y <: Any](y: y) extends AbstractPeg with OneWidth {
         type self = Impl[y]
 
         override  def parse[xs <: List](xs: xs): parse[xs] =
             `if`(xs.isEmpty, const0(Failure(xs)), Else(y, xs)).apply.asInstanceOfPegResult//.asInstanceOf[parse[xs]]
         override type parse[xs <: List] =
             `if`[xs#isEmpty, const0[Failure[xs]], Else[y, xs]]#apply#asInstanceOfPegResult
-
-        override  def width: width = nat.dense._1
-        override type width        = nat.dense._1
     }
 
     final case class Else[y <: Any, xs <: List](y: y, xs: xs) extends Function0 {
