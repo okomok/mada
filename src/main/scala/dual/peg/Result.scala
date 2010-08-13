@@ -38,7 +38,7 @@ sealed abstract class AbstractResult extends Result {
 }
 
 
-case class Success[x <: Any, ys <: List](override val get: x, override val next: ys) extends AbstractResult {
+final case class Success[x <: Any, ys <: List](override val get: x, override val next: ys) extends AbstractResult {
     type self = Success[x, ys]
 
     override type get = x
@@ -52,7 +52,7 @@ case class Success[x <: Any, ys <: List](override val get: x, override val next:
 }
 
 
-case class Failure[ys <: List](override val next: ys) extends AbstractResult {
+final case class Failure[ys <: List](override val next: ys) extends AbstractResult {
     type self = Failure[ys]
 
     override  def get: get = noSuchElement("peg.Failure.get")
