@@ -8,7 +8,7 @@ package com.github.okomok.mada
 package dual; package peg
 
 
-private[dual]
+@visibleForTesting
 object StartsWith {
      def apply[xs <: List, ys <: List](xs: xs, ys: ys): apply[xs, ys] =
         `if`(ys.isEmpty,
@@ -47,7 +47,7 @@ object StartsWith {
         type self = ElseThenElse[x, r]
         private lazy val p: p = r.get.asInstanceOfProduct2
         private type p        = r#get#asInstanceOfProduct2
-        override  def apply: apply = Pair(x :: p._1.asInstanceOfList, p._2)
-        override type apply        = Pair[x :: p#_1#asInstanceOfList, p#_2]
+        override  def apply: apply = Some(Pair(x :: p._1.asInstanceOfList, p._2))
+        override type apply        = Some[Pair[x :: p#_1#asInstanceOfList, p#_2]]
     }
 }
