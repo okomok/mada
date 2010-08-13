@@ -17,7 +17,7 @@ object IsSorted {
 
     case class Then[xs <: List, o <: Option](xs: xs, o: o) extends Function0 {
         type self = Then[xs, o]
-        private lazy val _o: _o = o.getOrNaturalOrdering(xs.head)//.asInstanceOf[_o]
+        private lazy val _o: _o = o.getOrNaturalOrdering(xs.head)
         private type _o         = o#getOrNaturalOrdering[xs#head]
         override  def apply: apply = `if`(_o.lt(xs.tail.head, xs.head), const0(`false`), ThenElse(xs, o)).apply.asInstanceOf[apply]
         override type apply        = `if`[_o#lt[xs#tail#head, xs#head], const0[`false`], ThenElse[xs, o]]#apply

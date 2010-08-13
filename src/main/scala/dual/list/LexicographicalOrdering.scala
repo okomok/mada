@@ -40,7 +40,7 @@ object LexicographicalOrdering {
 
     case class Else[xs <: List, ys <: List, eo <: Option](xs: xs, ys: ys, eo: eo) extends Function0 {
         type self = Else[xs, ys, eo]
-        private lazy val _eo: _eo = eo.getOrNaturalOrdering(xs.head)//.asInstanceOf[_eo]
+        private lazy val _eo: _eo = eo.getOrNaturalOrdering(xs.head)
         private type _eo          = eo#getOrNaturalOrdering[xs#head]
         override  def apply: apply =
             _eo.`match`(xs.head, ys.head, const0(LT), const0(GT), CaseEQ(xs, ys, eo)).asInstanceOfOrderingResult.asInstanceOf[apply]

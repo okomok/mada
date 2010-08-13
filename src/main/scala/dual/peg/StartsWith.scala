@@ -10,35 +10,37 @@ package dual; package peg
 
 @visibleForTesting
 object StartsWith {
-     def apply[xs <: List, ys <: List](xs: xs, ys: ys): apply[xs, ys] =
+     def apply[xs <: List, ys <: List, eqv <: Option](xs: xs, ys: ys, eqv: eqv): apply[xs, ys, eqv] =
         `if`(ys.isEmpty,
             const0(Some(Pair(Nil, xs))),
             `if`(xs.isEmpty,
                 const0(None),
-                Else(xs, ys)
+                Else(xs, ys, eqv)
             )
-        ).apply.asInstanceOfOption.asInstanceOf[apply[xs, ys]]
-    type apply[xs <: List, ys <: List] =
+        ).apply.asInstanceOfOption.asInstanceOf[apply[xs, ys, eqv]]
+    type apply[xs <: List, ys <: List, eqv <: Option] =
         `if`[ys#isEmpty,
             const0[Some[Pair[Nil, xs]]],
             `if`[xs#isEmpty,
                 const0[None],
-                Else[xs, ys]
+                Else[xs, ys, eqv]
             ]
         ]#apply#asInstanceOfOption
 
-    final case class Else[xs <: List, ys <: List](xs: xs, ys: ys) extends Function0 {
-        type self = Else[xs, ys]
+    final case class Else[xs <: List, ys <: List, eqv <: Option](xs: xs, ys: ys, eqv: eqv) extends Function0 {
+        type self = Else[xs, ys, eqv]
+        private lazy val _eqv: _eqv = eqv.getOrNaturalEquiv(xs.head)
+        private type _eqv           = eqv#getOrNaturalEquiv[xs#head]
         override  def apply: apply =
-            `if`(xs.head.naturalOrdering.equiv(xs.head, ys.head), ElseThen(xs, ys), const0(None)).apply.asInstanceOf[apply]
+            `if`(_eqv.equiv(xs.head, ys.head), ElseThen(xs, ys, eqv), const0(None)).apply.asInstanceOf[apply]
         override type apply =
-            `if`[xs#head#naturalOrdering#equiv[xs#head, ys#head], ElseThen[xs, ys], const0[None]]#apply
+            `if`[_eqv#equiv[xs#head, ys#head], ElseThen[xs, ys, eqv], const0[None]]#apply
     }
 
-    final case class ElseThen[xs <: List, ys <: List](xs: xs, ys: ys) extends Function0 {
-        type self = ElseThen[xs, ys]
-        private lazy val r: r = StartsWith.apply(xs.tail, ys.tail)
-        private type r        = StartsWith.apply[xs#tail, ys#tail]
+    final case class ElseThen[xs <: List, ys <: List, eqv <: Option](xs: xs, ys: ys, eqv: eqv) extends Function0 {
+        type self = ElseThen[xs, ys, eqv]
+        private lazy val r: r = StartsWith.apply(xs.tail, ys.tail, eqv)
+        private type r        = StartsWith.apply[xs#tail, ys#tail, eqv]
         override  def apply: apply = `if`(r.isEmpty, const0(None), ElseThenElse(xs.head, r)).apply.asInstanceOf[apply]
         override type apply        = `if`[r#isEmpty, const0[None], ElseThenElse[xs#head, r]]#apply
     }

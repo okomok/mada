@@ -30,6 +30,9 @@ sealed abstract class Option extends Any {
      def getOrElse[f <: Function0](f: f): getOrElse[f]
     type getOrElse[f <: Function0] <: Any
 
+     def getOrNaturalEquiv[x <: Any](x: x): getOrNaturalEquiv[x]
+    type getOrNaturalEquiv[x <: Any] <: Equiv
+
      def getOrNaturalOrdering[x <: Any](x: x): getOrNaturalOrdering[x]
     type getOrNaturalOrdering[x <: Any] <: Ordering
 
@@ -63,6 +66,11 @@ private[dual]
 sealed abstract class AbstractOption extends Option {
     final override  def nonEmpty: nonEmpty = isEmpty.not
     final override type nonEmpty           = isEmpty#not
+
+    final override  def getOrNaturalEquiv[x <: Any](x: x): getOrNaturalEquiv[x] =
+        getOrElse(function.GetNaturalOrdering(x)).asInstanceOfEquiv
+    final override type getOrNaturalEquiv[x <: Any] =
+        getOrElse[function.GetNaturalOrdering[x]]#asInstanceOfEquiv
 
     final override  def getOrNaturalOrdering[x <: Any](x: x): getOrNaturalOrdering[x] =
         getOrElse(function.GetNaturalOrdering(x)).asInstanceOfOrdering

@@ -16,8 +16,8 @@ object FromList {
     final case class Impl[ys <: List](ys: ys) extends AbstractPeg {
         type self = Impl[ys]
 
-        override  def parse[xs <: List](xs: xs): parse[xs] = _aux(StartsWith.apply(xs, ys), xs)
-        override type parse[xs <: List]                    = _aux[StartsWith.apply[xs, ys], xs]
+        override  def parse[xs <: List](xs: xs): parse[xs] = _aux(StartsWith.apply(xs, ys, None), xs)
+        override type parse[xs <: List]                    = _aux[StartsWith.apply[xs, ys, None], xs]
 
         private  def _aux[r <: Option, xs <: List](r: r, xs: xs): _aux[r, xs] =
             `if`(r.isEmpty, const0(Failure(xs)), Else(r)).apply.asInstanceOfPegResult.asInstanceOf[_aux[r, xs]]

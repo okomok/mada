@@ -34,7 +34,7 @@ object Merge {
 
     case class Else[xs <: List, ys <: List, o <: Option](xs: xs, ys: ys, o: o) extends Function0 {
         type self = Else[xs, ys, o]
-        private lazy val _o: _o = o.getOrNaturalOrdering(xs.head)//.asInstanceOf[_o]
+        private lazy val _o: _o = o.getOrNaturalOrdering(xs.head)
         private type _o         = o#getOrNaturalOrdering[xs#head]
         override  def apply: apply = `if`(_o.lteq(xs.head, ys.head), ElseThen(xs, ys, o), ElseElse(xs, ys, o)).apply.asInstanceOf[apply]
         override type apply        = `if`[_o#lteq[xs#head, ys#head], ElseThen[xs, ys, o], ElseElse[xs, ys, o]]#apply

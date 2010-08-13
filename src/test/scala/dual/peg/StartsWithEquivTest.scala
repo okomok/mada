@@ -15,19 +15,26 @@ import nat.dense.Literal._
 import junit.framework.Assert._
 
 
-class StartsWithTest extends org.scalatest.junit.JUnit3Suite {
+class StartsWithEquivTest extends org.scalatest.junit.JUnit3Suite {
+
+    class Plus1Equiv extends Equiv {
+        type self = Plus1Equiv
+        override  def equiv[x <: Any, y <: Any](x: x, y: y): equiv[x, y] = x.asInstanceOfNat.increment.equal(y.asInstanceOfNat)
+        override type equiv[x <: Any, y <: Any]                          = x#asInstanceOfNat#increment#equal[y#asInstanceOfNat]
+    }
+    val Plus1Equiv = new Plus1Equiv
 
     def testTrivial {
         type xs    = _3 :: _4 :: _5 :: _6 :: Nil
         val xs: xs = _3 :: _4 :: _5 :: _6 :: Nil
-        type ys    = _3 :: _4 :: _5 :: Nil
-        val ys: ys = _3 :: _4 :: _5 :: Nil
-        type r   = peg.StartsWith.apply[xs, ys, None]
-        val r: r = peg.StartsWith.apply(xs, ys, None)
+        type ys    = _4 :: _5 :: _6 :: Nil
+        val ys: ys = _4 :: _5 :: _6 :: Nil
+        type r   = peg.StartsWith.apply[xs, ys, Some[Plus1Equiv]]
+        val r: r = peg.StartsWith.apply(xs, ys, Some(Plus1Equiv))
         meta.assert[r#isEmpty#not]
-        meta.assertSame[ys, r#get#asInstanceOfProduct2#_1#asInstanceOfList#force]
+        meta.assertSame[_3 :: _4 :: _5 :: Nil, r#get#asInstanceOfProduct2#_1#asInstanceOfList#force]
         meta.assertSame[_6 :: Nil, r#get#asInstanceOfProduct2#_2#asInstanceOfList#force]
-        assertEquals(ys, r.get.asInstanceOfProduct2._1)
+        assertEquals(_3 :: _4 :: _5 :: Nil, r.get.asInstanceOfProduct2._1)
         assertEquals(_6 :: Nil, r.get.asInstanceOfProduct2._2)
     }
 
@@ -36,8 +43,8 @@ class StartsWithTest extends org.scalatest.junit.JUnit3Suite {
         val xs: xs = _3 :: _4 :: _5 :: _6 :: Nil
         type ys    = Nil
         val ys: ys = Nil
-        type r   = peg.StartsWith.apply[xs, ys, None]
-        val r: r = peg.StartsWith.apply(xs, ys, None)
+        type r   = peg.StartsWith.apply[xs, ys, Some[Plus1Equiv]]
+        val r: r = peg.StartsWith.apply(xs, ys, Some(Plus1Equiv))
         meta.assert[r#isEmpty#not]
         meta.assertSame[Nil, r#get#asInstanceOfProduct2#_1#asInstanceOfList#force]
         meta.assertSame[xs, r#get#asInstanceOfProduct2#_2#asInstanceOfList#force]
@@ -50,8 +57,8 @@ class StartsWithTest extends org.scalatest.junit.JUnit3Suite {
         val xs: xs = Nil
         type ys    = Nil
         val ys: ys = Nil
-        type r   = peg.StartsWith.apply[xs, ys, None]
-        val r: r = peg.StartsWith.apply(xs, ys, None)
+        type r   = peg.StartsWith.apply[xs, ys, Some[Plus1Equiv]]
+        val r: r = peg.StartsWith.apply(xs, ys, Some(Plus1Equiv))
         meta.assert[r#isEmpty#not]
         meta.assertSame[Nil, r#get#asInstanceOfProduct2#_1#asInstanceOfList#force]
         meta.assertSame[Nil, r#get#asInstanceOfProduct2#_2#asInstanceOfList#force]
@@ -64,8 +71,8 @@ class StartsWithTest extends org.scalatest.junit.JUnit3Suite {
         val xs: xs = _3 :: _4 :: _5 :: _6 :: Nil
         type ys    = _5 :: _6 :: Nil
         val ys: ys = _5 :: _6 :: Nil
-        type r   = peg.StartsWith.apply[xs, ys, None]
-        val r: r = peg.StartsWith.apply(xs, ys, None)
+        type r   = peg.StartsWith.apply[xs, ys, Some[Plus1Equiv]]
+        val r: r = peg.StartsWith.apply(xs, ys, Some(Plus1Equiv))
         meta.assert[r#isEmpty]
         assertEquals(None, r)
     }
@@ -73,15 +80,14 @@ class StartsWithTest extends org.scalatest.junit.JUnit3Suite {
     def testAll {
         type xs    = _3 :: _4 :: _5 :: _6 :: Nil
         val xs: xs = _3 :: _4 :: _5 :: _6 :: Nil
-        type ys    = _3 :: _4 :: _5 :: _6 :: Nil
-        val ys: ys = _3 :: _4 :: _5 :: _6 :: Nil
-        type r   = peg.StartsWith.apply[xs, ys, None]
-        val r: r = peg.StartsWith.apply(xs, ys, None)
+        type ys    = _4 :: _5 :: _6 :: _7 :: Nil
+        val ys: ys = _4 :: _5 :: _6 :: _7 :: Nil
+        type r   = peg.StartsWith.apply[xs, ys, Some[Plus1Equiv]]
+        val r: r = peg.StartsWith.apply(xs, ys, Some(Plus1Equiv))
         meta.assert[r#isEmpty#not]
         meta.assertSame[xs, r#get#asInstanceOfProduct2#_1#asInstanceOfList#force]
         meta.assertSame[Nil, r#get#asInstanceOfProduct2#_2#asInstanceOfList#force]
         assertEquals(xs, r.get.asInstanceOfProduct2._1)
         assertEquals(Nil, r.get.asInstanceOfProduct2._2)
     }
-
 }
