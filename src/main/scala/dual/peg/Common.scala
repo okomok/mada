@@ -35,11 +35,4 @@ trait Common {
      def fromList[ys <: List](ys: ys): fromList[ys] = FromList.apply(ys)
     type fromList[ys <: List]                       = FromList.apply[ys]
 
-
-    /**
-     * Helps to build a recursive grammar.
-     */
-     def recursive[f <: Function0](f: f): recursive[f] = Recursive(f)
-    type recursive[f <: Function0]                     = Recursive[f]
-
 }
