@@ -51,4 +51,34 @@ class StarTest extends org.scalatest.junit.JUnit3Suite {
         assertTrue(r.undual)
     }
 
+    def testParseNoConsume {
+        type xs    = _4 :: _3 :: _5 :: _9 :: Nil
+        val xs: xs = _4 :: _3 :: _5 :: _9 :: Nil
+        type p   = fromList[_3 :: _5 :: _9 :: Nil]#star
+        val p: p = fromList(_3 :: _5 :: _9 :: Nil).star
+        type r = p#parse[xs]
+        val r: r = p.parse(xs)
+        meta.assert[r#successful]
+        assertTrue(r.successful.undual)
+        meta.assertSame[Nil, r#get#force]
+        assertEquals(Nil, r.get)
+        meta.assertSame[xs, r#next#force]
+        assertEquals(xs, r.next)
+    }
+
+    def testParseConsume {
+        type xs    = _3 :: _5 :: _9 :: _3 :: _5 :: _9 :: _3 :: _5 :: _9 :: _3 :: _5 :: _9 :: _10 :: _11 :: Nil
+        val xs: xs = _3 :: _5 :: _9 :: _3 :: _5 :: _9 :: _3 :: _5 :: _9 :: _3 :: _5 :: _9 :: _10 :: _11 :: Nil
+        type p   = fromList[_3 :: _5 :: _9 :: Nil]#star
+        val p: p = fromList(_3 :: _5 :: _9 :: Nil).star
+        type r = p#parse[xs]
+        val r: r = p.parse(xs)
+        meta.assert[r#successful]
+        assertTrue(r.successful.undual)
+        meta.assertSame[(_3 :: _5 :: _9 :: Nil) :: (_3 :: _5 :: _9 :: Nil) :: (_3 :: _5 :: _9 :: Nil) :: (_3 :: _5 :: _9 :: Nil) :: Nil, r#get#force]
+        assertEquals((_3 :: _5 :: _9 :: Nil) :: (_3 :: _5 :: _9 :: Nil) :: (_3 :: _5 :: _9 :: Nil) :: (_3 :: _5 :: _9 :: Nil) :: Nil, r.get)
+        meta.assertSame[_10 :: _11 :: Nil, r#next#force]
+        assertEquals(_10 :: _11 :: Nil, r.next)
+    }
+
 }
