@@ -70,6 +70,12 @@ trait Peg extends Any with ReferenceEquality {
     type not <: Peg
 
     /**
+     * Repeats at least n and at most m
+     */
+     def repeat[n <: Nat, m <: Nat](n: n, m: m): repeat[n, m]
+    type repeat[n <: Nat, m <: Nat] <: Peg
+
+    /**
      * Associates a semantic action.
      */
      def map[f <: Function1](f: f): map[f]
