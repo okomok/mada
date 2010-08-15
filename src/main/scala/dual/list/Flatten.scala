@@ -22,8 +22,8 @@ object Flatten {
         override  def isEmpty: isEmpty = ys.isEmpty
         override type isEmpty          = ys#isEmpty
 
-        private lazy val local: local = ys.head.asInstanceOfList
-        private type local            = ys#head#asInstanceOfList
+        private lazy val local: local = ys.head.asList
+        private type local            = ys#head#asList
 
         override  def head: head = local.head
         override type head       = local#head
@@ -36,7 +36,7 @@ object Flatten {
     val IsEmpty = new IsEmpty
     class IsEmpty extends Function1 {
         type self = IsEmpty
-        override  def apply[xs <: Any](xs: xs): apply[xs] = xs.asInstanceOfList.isEmpty
-        override type apply[xs <: Any]                    = xs#asInstanceOfList#isEmpty
+        override  def apply[xs <: Any](xs: xs): apply[xs] = xs.asList.isEmpty
+        override type apply[xs <: Any]                    = xs#asList#isEmpty
     }
 }

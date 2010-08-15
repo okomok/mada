@@ -64,8 +64,8 @@ class SeqTest extends org.scalatest.junit.JUnit3Suite {
         val r: r = p.parse(xs)
         meta.assert[r#successful]
         assertTrue(r.successful.undual)
-        type e = r#get#asInstanceOfProduct2
-        val e: e = r.get.asInstanceOfProduct2
+        type e = r#get#asProduct2
+        val e: e = r.get.asProduct2
         meta.assertSame[_3 :: _5 :: _9 :: Nil, e#_1]
         assertEquals(_3 :: _5 :: _9 :: Nil, e._1)
         meta.assertSame[_4 :: _2 :: Nil, e#_2]

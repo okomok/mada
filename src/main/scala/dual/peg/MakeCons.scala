@@ -11,6 +11,6 @@ package dual; package peg
 private[dual]
 final case class MakeCons[a <: Any](a: a) extends Function1 {
     type self = MakeCons[a]
-    override  def apply[b <: Any](b: b): apply[b] = a :: b.asInstanceOfList
-    override type apply[b <: Any]                 = a :: b#asInstanceOfList
+    override  def apply[b <: Any](b: b): apply[b] = a :: b.asList
+    override type apply[b <: Any]                 = a :: b#asList
 }

@@ -25,10 +25,10 @@ class StartsWithTest extends org.scalatest.junit.JUnit3Suite {
         type r   = peg.StartsWith.apply[xs, ys, None]
         val r: r = peg.StartsWith.apply(xs, ys, None)
         meta.assert[r#isEmpty#not]
-        meta.assertSame[ys, r#get#asInstanceOfProduct2#_1#asInstanceOfList#force]
-        meta.assertSame[_6 :: Nil, r#get#asInstanceOfProduct2#_2#asInstanceOfList#force]
-        assertEquals(ys, r.get.asInstanceOfProduct2._1)
-        assertEquals(_6 :: Nil, r.get.asInstanceOfProduct2._2)
+        meta.assertSame[ys, r#get#asProduct2#_1#asList#force]
+        meta.assertSame[_6 :: Nil, r#get#asProduct2#_2#asList#force]
+        assertEquals(ys, r.get.asProduct2._1)
+        assertEquals(_6 :: Nil, r.get.asProduct2._2)
     }
 
     def testNil {
@@ -39,10 +39,10 @@ class StartsWithTest extends org.scalatest.junit.JUnit3Suite {
         type r   = peg.StartsWith.apply[xs, ys, None]
         val r: r = peg.StartsWith.apply(xs, ys, None)
         meta.assert[r#isEmpty#not]
-        meta.assertSame[Nil, r#get#asInstanceOfProduct2#_1#asInstanceOfList#force]
-        meta.assertSame[xs, r#get#asInstanceOfProduct2#_2#asInstanceOfList#force]
-        assertEquals(Nil, r.get.asInstanceOfProduct2._1)
-        assertEquals(xs, r.get.asInstanceOfProduct2._2)
+        meta.assertSame[Nil, r#get#asProduct2#_1#asList#force]
+        meta.assertSame[xs, r#get#asProduct2#_2#asList#force]
+        assertEquals(Nil, r.get.asProduct2._1)
+        assertEquals(xs, r.get.asProduct2._2)
     }
 
     def testNilNil {
@@ -53,10 +53,10 @@ class StartsWithTest extends org.scalatest.junit.JUnit3Suite {
         type r   = peg.StartsWith.apply[xs, ys, None]
         val r: r = peg.StartsWith.apply(xs, ys, None)
         meta.assert[r#isEmpty#not]
-        meta.assertSame[Nil, r#get#asInstanceOfProduct2#_1#asInstanceOfList#force]
-        meta.assertSame[Nil, r#get#asInstanceOfProduct2#_2#asInstanceOfList#force]
-        assertEquals(Nil, r.get.asInstanceOfProduct2._1)
-        assertEquals(Nil, r.get.asInstanceOfProduct2._2)
+        meta.assertSame[Nil, r#get#asProduct2#_1#asList#force]
+        meta.assertSame[Nil, r#get#asProduct2#_2#asList#force]
+        assertEquals(Nil, r.get.asProduct2._1)
+        assertEquals(Nil, r.get.asProduct2._2)
     }
 
     def testNone {
@@ -78,10 +78,10 @@ class StartsWithTest extends org.scalatest.junit.JUnit3Suite {
         type r   = peg.StartsWith.apply[xs, ys, None]
         val r: r = peg.StartsWith.apply(xs, ys, None)
         meta.assert[r#isEmpty#not]
-        meta.assertSame[xs, r#get#asInstanceOfProduct2#_1#asInstanceOfList#force]
-        meta.assertSame[Nil, r#get#asInstanceOfProduct2#_2#asInstanceOfList#force]
-        assertEquals(xs, r.get.asInstanceOfProduct2._1)
-        assertEquals(Nil, r.get.asInstanceOfProduct2._2)
+        meta.assertSame[xs, r#get#asProduct2#_1#asList#force]
+        meta.assertSame[Nil, r#get#asProduct2#_2#asList#force]
+        assertEquals(xs, r.get.asProduct2._1)
+        assertEquals(Nil, r.get.asProduct2._2)
     }
 
 }

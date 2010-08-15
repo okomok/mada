@@ -21,7 +21,7 @@ object Minus {
                 CaseFT(xs, ys),
                 CaseXX(xs, ys)
             )
-        ).apply.asInstanceOfNatDense.asInstanceOf[apply[xs, ys]]
+        ).apply.asNatDense.asInstanceOf[apply[xs, ys]]
 
     type apply[xs <: Dense, ys <: Dense] =
         Match[xs, ys,
@@ -34,7 +34,7 @@ object Minus {
                 CaseFT[xs, ys],
                 CaseXX[xs, ys]
             ]
-        ]#apply#asInstanceOfNatDense
+        ]#apply#asNatDense
 
     case class CaseXX[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
         type self = CaseXX[xs, ys]

@@ -13,7 +13,9 @@ object Peg extends Common
 
 trait Peg extends Any with ReferenceEquality {
     type self <: Peg
-    type asInstanceOfPeg = self
+
+    final override  def asPeg = self
+    final override type asPeg = self
 
     /**
      * The parse method

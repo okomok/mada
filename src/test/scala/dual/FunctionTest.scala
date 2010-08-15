@@ -17,8 +17,8 @@ class FunctionTest extends org.scalatest.junit.JUnit3Suite {
 
     final case class Plus() extends Function2 {
         type self = Plus
-        override  def apply[n <: Any, m <: Any](n: n, m: m): apply[n, m] = n.asInstanceOfNat plus m.asInstanceOfNat
-        override type apply[n <: Any, m <: Any] = n#asInstanceOfNat# plus [m#asInstanceOfNat]
+        override  def apply[n <: Any, m <: Any](n: n, m: m): apply[n, m] = n.asNat plus m.asNat
+        override type apply[n <: Any, m <: Any] = n#asNat# plus [m#asNat]
     }
 
     def testCurried {
@@ -51,14 +51,14 @@ class FunctionTest extends org.scalatest.junit.JUnit3Suite {
 
     final case class Plus2() extends Function1 {
         type self = Plus2
-        override  def apply[n <: Any](n: n): apply[n] = n.asInstanceOfNat plus _2
-        override type apply[n <: Any] = n#asInstanceOfNat# plus [_2]
+        override  def apply[n <: Any](n: n): apply[n] = n.asNat plus _2
+        override type apply[n <: Any] = n#asNat# plus [_2]
     }
 
     final case class Minus3() extends Function1 {
         type self = Minus3
-        override  def apply[n <: Any](n: n): apply[n] = n.asInstanceOfNat minus _3
-        override type apply[n <: Any] = n#asInstanceOfNat# minus [_3]
+        override  def apply[n <: Any](n: n): apply[n] = n.asNat minus _3
+        override type apply[n <: Any] = n#asNat# minus [_3]
     }
 
     def testCompose {

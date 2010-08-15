@@ -22,8 +22,8 @@ object Append {
         override  def head: head = `if`(xs.isEmpty, DerefThen(xs, ys), DerefElse(xs, ys)).apply
         override type head       = `if`[xs#isEmpty, DerefThen[xs, ys], DerefElse[xs, ys]]#apply
 
-        override  def tail: tail = `if`(xs.isEmpty, NextThen(xs, ys), NextElse(xs, ys)).apply.asInstanceOfList
-        override type tail       = `if`[xs#isEmpty, NextThen[xs, ys], NextElse[xs, ys]]#apply#asInstanceOfList
+        override  def tail: tail = `if`(xs.isEmpty, NextThen(xs, ys), NextElse(xs, ys)).apply.asList
+        override type tail       = `if`[xs#isEmpty, NextThen[xs, ys], NextElse[xs, ys]]#apply#asList
     }
 
     case class DerefThen[xs <: List, ys <: List](xs: xs, ys: ys) extends Function0 {

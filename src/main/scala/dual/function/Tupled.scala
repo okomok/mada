@@ -13,8 +13,8 @@ object Tupled2 {
 
     final case class Impl[f <: Function2](f: f) extends Function1 {
         type self = Impl[f]
-        override  def apply[v1 <: Any](v1: v1): apply[v1] = _aux(v1.asInstanceOfProduct2)
-        override type apply[v1 <: Any]                    = _aux[v1#asInstanceOfProduct2]
+        override  def apply[v1 <: Any](v1: v1): apply[v1] = _aux(v1.asProduct2)
+        override type apply[v1 <: Any]                    = _aux[v1#asProduct2]
 
         private  def _aux[p <: Product2](p: p): _aux[p] = f.apply(p._1, p._2)
         private type _aux[p <: Product2]                = f#apply[p#_1, p#_2]
@@ -28,8 +28,8 @@ object Tupled3 {
 
     final case class Impl[f <: Function3](f: f) extends Function1 {
         type self = Impl[f]
-        override  def apply[v1 <: Any](v1: v1): apply[v1] = _aux(v1.asInstanceOfProduct3)
-        override type apply[v1 <: Any]                    = _aux[v1#asInstanceOfProduct3]
+        override  def apply[v1 <: Any](v1: v1): apply[v1] = _aux(v1.asProduct3)
+        override type apply[v1 <: Any]                    = _aux[v1#asProduct3]
 
         private  def _aux[p <: Product3](p: p): _aux[p] = f.apply(p._1, p._2, p._3)
         private type _aux[p <: Product3]                = f#apply[p#_1, p#_2, p#_3]
@@ -43,8 +43,8 @@ object TupledLeft3 {
 
     final case class Impl[f <: Function3](f: f) extends Function2 {
         type self = Impl[f]
-        override  def apply[v1 <: Any, v2 <: Any](v1: v1, v2: v2): apply[v1, v2] = _aux(v1.asInstanceOfProduct2, v2)
-        override type apply[v1 <: Any, v2 <: Any]                                = _aux[v1#asInstanceOfProduct2, v2]
+        override  def apply[v1 <: Any, v2 <: Any](v1: v1, v2: v2): apply[v1, v2] = _aux(v1.asProduct2, v2)
+        override type apply[v1 <: Any, v2 <: Any]                                = _aux[v1#asProduct2, v2]
 
         private  def _aux[p <: Product2, v2 <: Any](p: p, v2: v2): _aux[p, v2] = f.apply(p._1, p._2, v2)
         private type _aux[p <: Product2, v2 <: Any]                            = f#apply[p#_1, p#_2, v2]

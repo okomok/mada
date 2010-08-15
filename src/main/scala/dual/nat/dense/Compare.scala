@@ -11,9 +11,9 @@ package dual; package nat; package dense
 private[dual]
 object Equal {
      def apply[xs <: Dense, ys <: Dense](xs: xs, ys: ys): apply[xs, ys] =
-        Match(xs, ys, const0(`true`), const0(`false`), const0(`false`), CaseCC(xs, ys)).apply.asInstanceOfBoolean
+        Match(xs, ys, const0(`true`), const0(`false`), const0(`false`), CaseCC(xs, ys)).apply.asBoolean
     type apply[xs <: Dense, ys <: Dense] =
-        Match[xs, ys, const0[`true`], const0[`false`], const0[`false`], CaseCC[xs, ys]]#apply#asInstanceOfBoolean
+        Match[xs, ys, const0[`true`], const0[`false`], const0[`false`], CaseCC[xs, ys]]#apply#asBoolean
 
     case class CaseCC[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
         type self = CaseCC[xs, ys]
@@ -34,10 +34,10 @@ private[dual]
 object Lt {
      def apply[xs <: Dense, ys <: Dense](xs: xs, ys: ys): apply[xs, ys] =
         Match(xs, ys, const0(`false`), const0(`true`), const0(`false`),
-            ConsMatch(xs, ys, CaseXXorTF(xs, ys), CaseXXorTF(xs, ys), CaseFT(xs, ys), CaseXXorTF(xs, ys))).apply.asInstanceOfBoolean.asInstanceOf[apply[xs, ys]]
+            ConsMatch(xs, ys, CaseXXorTF(xs, ys), CaseXXorTF(xs, ys), CaseFT(xs, ys), CaseXXorTF(xs, ys))).apply.asBoolean.asInstanceOf[apply[xs, ys]]
     type apply[xs <: Dense, ys <: Dense] =
         Match[xs, ys, const0[`false`], const0[`true`], const0[`false`],
-            ConsMatch[xs, ys, CaseXXorTF[xs, ys], CaseXXorTF[xs, ys], CaseFT[xs, ys], CaseXXorTF[xs, ys]]]#apply#asInstanceOfBoolean
+            ConsMatch[xs, ys, CaseXXorTF[xs, ys], CaseXXorTF[xs, ys], CaseFT[xs, ys], CaseXXorTF[xs, ys]]]#apply#asBoolean
 
     case class CaseXXorTF[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
         type self = CaseXXorTF[xs, ys]

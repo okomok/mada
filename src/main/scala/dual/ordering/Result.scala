@@ -10,7 +10,9 @@ package dual; package ordering
 
 sealed abstract class Result extends Any {
     type self <: Result
-    type asInstanceOfOrderingResult = self
+
+    final override  def asOrderingResult = self
+    final override type asOrderingResult = self
 
      def equal[that <: Result](that: that): equal[that]
     type equal[that <: Result] <: Boolean

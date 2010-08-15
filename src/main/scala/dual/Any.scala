@@ -19,80 +19,80 @@ trait Any extends scala.Equals {
     final val self: self = this.asInstanceOf[self]
     type self <: Any
 
-    final def asInstanceOfBoolean: asInstanceOfBoolean = this.asInstanceOf[asInstanceOfBoolean]
-    type asInstanceOfBoolean <: Boolean
+     def asBoolean: asBoolean = unsupported("Any.asBoolean")
+    type asBoolean <: Boolean
 
 //    final  def isInstanceOfBoolean: isInstanceOfBoolean = checkInstance(boolean._Boolean.typeid)
 //    final type isInstanceOfBoolean = checkInstance[boolean._Boolean.typeid]
 
-    final def asInstanceOfEither: asInstanceOfEither = this.asInstanceOf[asInstanceOfEither]
-    type asInstanceOfEither <: Either
+     def asEither: asEither = unsupported("Any.asBoolean")
+    type asEither <: Either
 
-    final def asInstanceOfFunction0: asInstanceOfFunction0 = this.asInstanceOf[asInstanceOfFunction0]
-    type asInstanceOfFunction0 <: Function0
+     def asFunction0: asFunction0 = unsupported("Any.asFunction0")
+    type asFunction0 <: Function0
 
-    final def asInstanceOfFunction1: asInstanceOfFunction1 = this.asInstanceOf[asInstanceOfFunction1]
-    type asInstanceOfFunction1 <: Function1
+     def asFunction1: asFunction1 = unsupported("Any.asFunction1")
+    type asFunction1 <: Function1
 
-    final def asInstanceOfFunction2: asInstanceOfFunction2 = this.asInstanceOf[asInstanceOfFunction2]
-    type asInstanceOfFunction2 <: Function2
+     def asFunction2: asFunction2 = unsupported("Any.asFunction2")
+    type asFunction2 <: Function2
 
-    final def asInstanceOfFunction3: asInstanceOfFunction3 = this.asInstanceOf[asInstanceOfFunction3]
-    type asInstanceOfFunction3 <: Function3
+     def asFunction3: asFunction3 = unsupported("Any.asFunction3")
+    type asFunction3 <: Function3
 
-    final def asInstanceOfList: asInstanceOfList = this.asInstanceOf[asInstanceOfList]
-    type asInstanceOfList <: List
+     def asList: asList = unsupported("Any.asList")
+    type asList <: List
 
-    final def asInstanceOfMap: asInstanceOfMap = this.asInstanceOf[asInstanceOfMap]
-    type asInstanceOfMap <: Map
+     def asMap: asMap = unsupported("Any.asMap")
+    type asMap <: Map
 
-    final def asInstanceOfMapBSTree: asInstanceOfMapBSTree = this.asInstanceOf[asInstanceOfMapBSTree]
-    type asInstanceOfMapBSTree <: map.bstree.BSTree
+     def asMapBSTree: asMapBSTree = unsupported("Any.asMapBSTree")
+    type asMapBSTree <: map.bstree.BSTree
 
-    final def asInstanceOfNat: asInstanceOfNat = this.asInstanceOf[asInstanceOfNat]
-    type asInstanceOfNat <: Nat
+     def asNat: asNat = unsupported("Any.asNat")
+    type asNat <: Nat
 
-    final def asInstanceOfNatDense: asInstanceOfNatDense = this.asInstanceOf[asInstanceOfNatDense]
-    type asInstanceOfNatDense <: nat.Dense
+     def asNatDense: asNatDense = unsupported("Any.asNatDense")
+    type asNatDense <: nat.Dense
 
-    final def asInstanceOfNatPeano: asInstanceOfNatPeano = this.asInstanceOf[asInstanceOfNatPeano]
-    type asInstanceOfNatPeano <: nat.Peano
+     def asNatPeano: asNatPeano = unsupported("Any.asNatPeano")
+    type asNatPeano <: nat.Peano
 
-    final def asInstanceOfSet: asInstanceOfSet = this.asInstanceOf[asInstanceOfSet]
-    type asInstanceOfSet <: Set
+     def asSet: asSet = unsupported("Any.asSet")
+    type asSet <: Set
 
-    final def asInstanceOfOption: asInstanceOfOption = this.asInstanceOf[asInstanceOfOption]
-    type asInstanceOfOption <: Option
+     def asOption: asOption = unsupported("Any.asOption")
+    type asOption <: Option
 
-    final def asInstanceOfEquiv: asInstanceOfEquiv = this.asInstanceOf[asInstanceOfEquiv]
-    type asInstanceOfEquiv <: Equiv
+     def asEquiv: asEquiv = unsupported("Any.asEquiv")
+    type asEquiv <: Equiv
 
-    final def asInstanceOfOrdering: asInstanceOfOrdering = this.asInstanceOf[asInstanceOfOrdering]
-    type asInstanceOfOrdering <: Ordering
+     def asOrdering: asOrdering = unsupported("Any.asOrdering")
+    type asOrdering <: Ordering
 
-    final def asInstanceOfOrderingResult: asInstanceOfOrderingResult = this.asInstanceOf[asInstanceOfOrderingResult]
-    type asInstanceOfOrderingResult <: ordering.Result
+     def asOrderingResult: asOrderingResult = unsupported("Any.asOrderingResult")
+    type asOrderingResult <: ordering.Result
 
-    final def asInstanceOfPeg: asInstanceOfPeg = this.asInstanceOf[asInstanceOfPeg]
-    type asInstanceOfPeg <: Peg
+     def asPeg: asPeg = unsupported("Any.asPeg")
+    type asPeg <: Peg
 
-    final def asInstanceOfPegResult: asInstanceOfPegResult = this.asInstanceOf[asInstanceOfPegResult]
-    type asInstanceOfPegResult <: peg.Result
+     def asPegResult: asPegResult = unsupported("Any.asPegResult")
+    type asPegResult <: peg.Result
 
-    final def asInstanceOfProduct: asInstanceOfProduct = this.asInstanceOf[asInstanceOfProduct]
-    type asInstanceOfProduct <: Product
+     def asProduct: asProduct = unsupported("Any.asProduct")
+    type asProduct <: Product
 
-    final def asInstanceOfProduct1: asInstanceOfProduct1 = this.asInstanceOf[asInstanceOfProduct1]
-    type asInstanceOfProduct1 <: Product1
+     def asProduct1: asProduct1 = unsupported("Any.asProduct1")
+    type asProduct1 <: Product1
 
-    final def asInstanceOfProduct2: asInstanceOfProduct2 = this.asInstanceOf[asInstanceOfProduct2]
-    type asInstanceOfProduct2 <: Product2
+     def asProduct2: asProduct2 = unsupported("Any.asProduct2")
+    type asProduct2 <: Product2
 
-    final def asInstanceOfProduct3: asInstanceOfProduct3 = this.asInstanceOf[asInstanceOfProduct3]
-    type asInstanceOfProduct3 <: Product3
+     def asProduct3: asProduct3 = unsupported("Any.asProduct3")
+    type asProduct3 <: Product3
 
-    final def asInstanceOfUnit: asInstanceOfUnit = this.asInstanceOf[asInstanceOfUnit]
-    type asInstanceOfUnit <: Unit
+     def asUnit: asUnit = unsupported("Any.asUnit")
+    type asUnit <: Unit
 
     /**
      * Returns the natural ordering.

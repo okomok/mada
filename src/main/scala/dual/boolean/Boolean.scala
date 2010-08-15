@@ -16,7 +16,9 @@ object Boolean extends Common
  */
 sealed abstract class Boolean extends Any {
     type self <: Boolean
-    type asInstanceOfBoolean = self
+
+    final override  def asBoolean = self
+    final override type asBoolean = self
 
      def not: not
     type not <: Boolean

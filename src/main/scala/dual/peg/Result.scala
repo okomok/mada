@@ -10,7 +10,9 @@ package dual; package peg
 
 sealed abstract class Result extends Any with ReferenceEquality {
     type self <: Result
-    type asInstanceOfPegResult = self
+
+    final override  def asPegResult = self
+    final override type asPegResult = self
 
      def get: get
     type get <: Any
@@ -35,9 +37,9 @@ sealed abstract class Result extends Any with ReferenceEquality {
 private[dual]
 sealed abstract class AbstractResult extends Result {
 //    final override  def `match`[s <: Function1, f <: Function1](s: s, f: f): `match`[s, f] =
-//        `if`(successful, s, f).apply(self).asInstanceOfPegResult
+//        `if`(successful, s, f).apply(self).asPegResult
 //    final override type `match`[s <: Function1, f <: Function1] =
-//    `if`[successful, s, f]#apply[self]#asInstanceOfPegResult
+//    `if`[successful, s, f]#apply[self]#asPegResult
 }
 
 
@@ -71,6 +73,6 @@ final case class Failure[ys <: List](override val next: ys) extends AbstractResu
     override  def map[f <: Function1](f: f): map[f] = self
     override type map[f <: Function1]               = self
 
-    override  def append[f <: Function0](f: f): append[f] = f.apply.asInstanceOfPegResult
-    override type append[f <: Function0]                  = f#apply#asInstanceOfPegResult
+    override  def append[f <: Function0](f: f): append[f] = f.apply.asPegResult
+    override type append[f <: Function0]                  = f#apply#asPegResult
 }

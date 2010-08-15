@@ -18,8 +18,8 @@ class CountTest extends org.scalatest.junit.JUnit3Suite {
 
     case class Lt8() extends Function1 {
         override type self = Lt8
-        override  def apply[x <: Any](x: x): apply[x] = x.asInstanceOfNat lt _8
-        override type apply[x <: Any] = x#asInstanceOfNat#lt[_8]
+        override  def apply[x <: Any](x: x): apply[x] = x.asNat lt _8
+        override type apply[x <: Any] = x#asNat#lt[_8]
     }
 
     def testTrivial {

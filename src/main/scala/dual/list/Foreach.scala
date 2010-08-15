@@ -10,7 +10,7 @@ package dual; package list
 
 private[dual]
 object Foreach {
-     def apply[xs <: List, f <: Function1](xs: xs, f: f): apply[xs, f] = `if`(xs.isEmpty, const0(Unit), Else(xs, f)).apply.asInstanceOfUnit
+     def apply[xs <: List, f <: Function1](xs: xs, f: f): apply[xs, f] = `if`(xs.isEmpty, const0(Unit), Else(xs, f)).apply.asUnit
     type apply[xs <: List, f <: Function1]                             = Unit
 
     case class Else[xs <: List, f <: Function1](xs: xs, f: f) extends Function0 {

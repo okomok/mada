@@ -23,14 +23,14 @@ object Or {
         private type pw         = p#width
 
         override  def width: width =
-            `if`(pw.equal(q.width), const0(pw), throw0(new UnsupportedOperationException("dual.peg.or.width"))).apply.asInstanceOfNat.asInstanceOf[width]
+            `if`(pw.equal(q.width), const0(pw), throw0(new UnsupportedOperationException("dual.peg.or.width"))).apply.asNat.asInstanceOf[width]
         override type width =
-            `if`[pw#equal[q#width], const0[pw], throw0[_]]#apply#asInstanceOfNat
+            `if`[pw#equal[q#width], const0[pw], throw0[_]]#apply#asNat
 
         private  def _aux[r <: Result, xs <: List](r: r, xs: xs): _aux[r, xs] =
-            `if`(r.successful, Then(r), Else(q, xs)).apply.asInstanceOfPegResult
+            `if`(r.successful, Then(r), Else(q, xs)).apply.asPegResult
         private type _aux[r <: Result, xs <: List] =
-            `if`[r#successful, Then[r], Else[q, xs]]#apply#asInstanceOfPegResult
+            `if`[r#successful, Then[r], Else[q, xs]]#apply#asPegResult
     }
 
     final case class Then[r <: Result](r: r) extends Function0 {

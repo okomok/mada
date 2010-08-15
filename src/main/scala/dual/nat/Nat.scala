@@ -19,7 +19,9 @@ object Nat extends Common with OperatorCommon {
  */
 trait Nat extends Any {
     type self <: Nat
-    type asInstanceOfNat = self
+
+    final override  def asNat = self
+    final override type asNat = self
 
     @constantTime
      def isZero: isZero

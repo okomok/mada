@@ -15,23 +15,23 @@ private[dual]
 final class NaturalOrdering extends ordering.AbstractOrdering {
     type self = NaturalOrdering
 
-    override  def equiv[x <: Any, y <: Any](x: x, y: y): equiv[x, y] = x.asInstanceOfNat.equal(y.asInstanceOfNat)
-    override type equiv[x <: Any, y <: Any]                          = x#asInstanceOfNat#equal[y#asInstanceOfNat]
+    override  def equiv[x <: Any, y <: Any](x: x, y: y): equiv[x, y] = x.asNat.equal(y.asNat)
+    override type equiv[x <: Any, y <: Any]                          = x#asNat#equal[y#asNat]
 
     override  def compare[x <: Any, y <: Any](x: x, y: y): compare[x, y] =
-        `if`(x.asInstanceOfNat.lt(y.asInstanceOfNat),
+        `if`(x.asNat.lt(y.asNat),
             const0(LT),
-            `if`(x.asInstanceOfNat.gt(y.asInstanceOfNat),
+            `if`(x.asNat.gt(y.asNat),
                 const0(GT),
                 const0(EQ)
             )
-        ).apply.asInstanceOfOrderingResult.asInstanceOf[compare[x, y]]
+        ).apply.asOrderingResult.asInstanceOf[compare[x, y]]
     override type compare[x <: Any, y <: Any] =
-        `if`[x#asInstanceOfNat#lt[y#asInstanceOfNat],
+        `if`[x#asNat#lt[y#asNat],
             const0[LT],
-            `if`[x#asInstanceOfNat#gt[y#asInstanceOfNat],
+            `if`[x#asNat#gt[y#asNat],
                 const0[GT],
                 const0[EQ]
             ]
-        ]#apply#asInstanceOfOrderingResult
+        ]#apply#asOrderingResult
 }

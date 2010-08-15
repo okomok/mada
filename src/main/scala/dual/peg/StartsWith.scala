@@ -17,7 +17,7 @@ object StartsWith {
                 const0(None),
                 Else(xs, ys, eqv)
             )
-        ).apply.asInstanceOfOption.asInstanceOf[apply[xs, ys, eqv]]
+        ).apply.asOption.asInstanceOf[apply[xs, ys, eqv]]
     type apply[xs <: List, ys <: List, eqv <: Option] =
         `if`[ys#isEmpty,
             const0[Some[Pair[Nil, xs]]],
@@ -25,7 +25,7 @@ object StartsWith {
                 const0[None],
                 Else[xs, ys, eqv]
             ]
-        ]#apply#asInstanceOfOption
+        ]#apply#asOption
 
     final case class Else[xs <: List, ys <: List, eqv <: Option](xs: xs, ys: ys, eqv: eqv) extends Function0 {
         type self = Else[xs, ys, eqv]
@@ -47,9 +47,9 @@ object StartsWith {
 
     final case class ElseThenElse[x <: Any, r <: Option](x: x, r: r) extends Function0 {
         type self = ElseThenElse[x, r]
-        private lazy val p: p = r.get.asInstanceOfProduct2
-        private type p        = r#get#asInstanceOfProduct2
-        override  def apply: apply = Some(Pair(x :: p._1.asInstanceOfList, p._2))
-        override type apply        = Some[Pair[x :: p#_1#asInstanceOfList, p#_2]]
+        private lazy val p: p = r.get.asProduct2
+        private type p        = r#get#asProduct2
+        override  def apply: apply = Some(Pair(x :: p._1.asList, p._2))
+        override type apply        = Some[Pair[x :: p#_1#asList, p#_2]]
     }
 }

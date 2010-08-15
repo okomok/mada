@@ -15,7 +15,9 @@ import nat.peano
 
 trait Product extends Any {
     type self <: Product
-    type asInstanceOfProduct = self
+
+    final override  def asProduct = self
+    final override type asProduct = self
 
      def arity: arity
     type arity <: Nat
@@ -34,7 +36,9 @@ trait Product extends Any {
 
 trait Product1 extends Product {
     type self <: Product1
-    type asInstanceOfProduct1 = self
+
+    final override  def asProduct1 = self
+    final override type asProduct1 = self
 
      def _1: _1
     type _1 <: Any
@@ -74,15 +78,17 @@ object Product2 {
     final class Eqv[e1 <: Equiv, e2 <: Equiv](e1: e1, e2: e2) extends Equiv {
         type self = Eqv[e1, e2]
         override  def equiv[x <: Any, y <: Any](x: x, y: y): equiv[x, y] =
-            e1.equiv(x.asInstanceOfProduct2._1, y.asInstanceOfProduct2._1).and(e1.equiv(x.asInstanceOfProduct2._2, y.asInstanceOfProduct2._2)).asInstanceOf[equiv[x, y]]
+            e1.equiv(x.asProduct2._1, y.asProduct2._1).and(e1.equiv(x.asProduct2._2, y.asProduct2._2)).asInstanceOf[equiv[x, y]]
         override type equiv[x <: Any, y <: Any] =
-            e1#equiv[x#asInstanceOfProduct2#_1, y#asInstanceOfProduct2#_1]#and[e1#equiv[x#asInstanceOfProduct2#_2, y#asInstanceOfProduct2#_2]]
+            e1#equiv[x#asProduct2#_1, y#asProduct2#_1]#and[e1#equiv[x#asProduct2#_2, y#asProduct2#_2]]
     }
 }
 
 trait Product2 extends Product {
     type self <: Product2
-    type asInstanceOfProduct2 = self
+
+    final override  def asProduct2 = self
+    final override type asProduct2 = self
 
      def _1: _1
     type _1 <: Any
@@ -125,7 +131,9 @@ trait AbstractProduct2 extends Product2 {
 
 trait Product3 extends Product {
     type self <: Product3
-    type asInstanceOfProduct3 = self
+
+    final override  def asProduct3 = self
+    final override type asProduct3 = self
 
      def _1: _1
     type _1 <: Any

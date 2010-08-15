@@ -14,8 +14,8 @@ import mada.dual.nat.dense.{Nil, ::, _1B, _0B}
 
 
 object FastFibonacci {
-     def fibonacci[n <: Nat](n: n): fibonacci[n] = `if`(n  lt _2,  const0(n), FibElse(n)).apply.asInstanceOfNat
-    type fibonacci[n <: Nat]                     = `if`[n#lt[_2], const0[n], FibElse[n]]#apply#asInstanceOfNat
+     def fibonacci[n <: Nat](n: n): fibonacci[n] = `if`(n  lt _2,  const0(n), FibElse(n)).apply.asNat
+    type fibonacci[n <: Nat]                     = `if`[n#lt[_2], const0[n], FibElse[n]]#apply#asNat
 
     case class FibElse[n <: Nat](n: n) extends Function0 {
         type self = FibElse[n]
@@ -25,8 +25,8 @@ object FastFibonacci {
 }
 
 object SlowFibonacci {
-     def fibonacci[n <: Nat](n: n): fibonacci[n] = `if`(n  lt _2,  const0(n), FibElse(n)).apply.asInstanceOfNat
-    type fibonacci[n <: Nat]                     = `if`[n#lt[_2], const0[n], FibElse[n]]#apply#asInstanceOfNat
+     def fibonacci[n <: Nat](n: n): fibonacci[n] = `if`(n  lt _2,  const0(n), FibElse(n)).apply.asNat
+    type fibonacci[n <: Nat]                     = `if`[n#lt[_2], const0[n], FibElse[n]]#apply#asNat
 
     case class FibElse[n <: Nat](n: n) extends Function0 {
         type self = FibElse[n]
@@ -44,8 +44,8 @@ object FastFibonacci2 {
 }
 
 class _FastFibonacci2[n <: Nat](n: n) {
-     def apply: apply = `if`(n  lt _2,  const0(n), new Fib2Else(n)).apply.asInstanceOfNat
-    type apply        = `if`[n#lt[_2], const0[n],     Fib2Else[n]]#apply#asInstanceOfNat
+     def apply: apply = `if`(n  lt _2,  const0(n), new Fib2Else(n)).apply.asNat
+    type apply        = `if`[n#lt[_2], const0[n],     Fib2Else[n]]#apply#asNat
 }
 
     class Fib2Else[n <: Nat](n: n) extends Function0 {
@@ -61,8 +61,8 @@ object SlowFibonacci2 {
 }
 
 class _SlowFibonacci2[n <: Nat](n: n) {
-     def apply: apply = `if`(n  lt _2,  const0(n), new FibElse(n)).apply.asInstanceOfNat
-    type apply        = `if`[n#lt[_2], const0[n],     FibElse[n]]#apply#asInstanceOfNat
+     def apply: apply = `if`(n  lt _2,  const0(n), new FibElse(n)).apply.asNat
+    type apply        = `if`[n#lt[_2], const0[n],     FibElse[n]]#apply#asNat
 
     class FibElse[n <: Nat](n: n) extends Function0 {
         type self = FibElse[n]
@@ -79,8 +79,8 @@ object FastFibonacci3 {
 }
 
 class _FastFibonacci3 {
-     def apply[n <: Nat](n: n): apply[n] = `if`(n  lt _2,  const0(n), new FibElse(n)).apply.asInstanceOfNat
-    type apply[n <: Nat]                 = `if`[n#lt[_2], const0[n],     FibElse[n]]#apply#asInstanceOfNat
+     def apply[n <: Nat](n: n): apply[n] = `if`(n  lt _2,  const0(n), new FibElse(n)).apply.asNat
+    type apply[n <: Nat]                 = `if`[n#lt[_2], const0[n],     FibElse[n]]#apply#asNat
 
     class FibElse[n <: Nat](n: n) extends Function0 {
         type self = FibElse[n]
@@ -97,8 +97,8 @@ object SlowFibonacci4 {
 }
 
 class _SlowFibonacci4[m <: Nat](m: m) {
-     def apply[n <: Nat](n: n): apply[n] = `if`(n  lt _2,  const0(n), new FibElse(n)).apply.asInstanceOfNat
-    type apply[n <: Nat]                 = `if`[n#lt[_2], const0[n],     FibElse[n]]#apply#asInstanceOfNat
+     def apply[n <: Nat](n: n): apply[n] = `if`(n  lt _2,  const0(n), new FibElse(n)).apply.asNat
+    type apply[n <: Nat]                 = `if`[n#lt[_2], const0[n],     FibElse[n]]#apply#asNat
 
     class FibElse[n <: Nat](n: n) extends Function0 {
         type self = FibElse[n]
@@ -113,8 +113,8 @@ object SlowFibonacci5 {
     type fibonacci[n <: Nat]                     =     _SlowFibonacci5#apply[n]
 
     class _SlowFibonacci5 {
-         def apply[n <: Nat](n: n): apply[n] = `if`(n  lt _2,  const0(n), new FibElse(n)).apply.asInstanceOfNat
-        type apply[n <: Nat]                 = `if`[n#lt[_2], const0[n],     FibElse[n]]#apply#asInstanceOfNat
+         def apply[n <: Nat](n: n): apply[n] = `if`(n  lt _2,  const0(n), new FibElse(n)).apply.asNat
+        type apply[n <: Nat]                 = `if`[n#lt[_2], const0[n],     FibElse[n]]#apply#asNat
 
         class FibElse[n <: Nat](n: n) extends Function0 {
             type self = FibElse[n]

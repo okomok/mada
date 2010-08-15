@@ -16,7 +16,9 @@ object Option
  */
 sealed abstract class Option extends Any {
     type self <: Option
-    type asInstanceOfOption = self
+
+    final override  def asOption = self
+    final override type asOption = self
 
      def isEmpty: isEmpty
     type isEmpty <: Boolean
@@ -71,22 +73,22 @@ sealed abstract class AbstractOption extends Option {
     final override type nonEmpty           = isEmpty#not
 
     final override  def getOrNaturalEquiv[x <: Any](x: x): getOrNaturalEquiv[x] =
-        getOrElse(GetNaturalOrdering(x)).asInstanceOfEquiv
+        getOrElse(GetNaturalOrdering(x)).asEquiv
     final override type getOrNaturalEquiv[x <: Any] =
-        getOrElse[GetNaturalOrdering[x]]#asInstanceOfEquiv
+        getOrElse[GetNaturalOrdering[x]]#asEquiv
 
     final override  def getOrNaturalOrdering[x <: Any](x: x): getOrNaturalOrdering[x] =
-        getOrElse(GetNaturalOrdering(x)).asInstanceOfOrdering
+        getOrElse(GetNaturalOrdering(x)).asOrdering
     final override type getOrNaturalOrdering[x <: Any] =
-        getOrElse[GetNaturalOrdering[x]]#asInstanceOfOrdering
+        getOrElse[GetNaturalOrdering[x]]#asOrdering
 
     final override  def isDefined: isDefined = isEmpty.not
     final override type isDefined            = isEmpty#not
 
     final override type foreach[f <: Function1] = Unit
 
-    final override  def orElse[f <: Function0](f: f): orElse[f] = `if`(isEmpty, f, const0(self)).apply.asInstanceOfOption
-    final override type orElse[f <: Function0]                  = `if`[isEmpty, f, const0[self]]#apply#asInstanceOfOption
+    final override  def orElse[f <: Function0](f: f): orElse[f] = `if`(isEmpty, f, const0(self)).apply.asOption
+    final override type orElse[f <: Function0]                  = `if`[isEmpty, f, const0[self]]#apply#asOption
 }
 
 
@@ -144,14 +146,14 @@ final case class Some[e <: Any](override val get: e) extends AbstractOption {
     override  def map[f <: Function1](f: f): map[f] = Some(f.apply(get))
     override type map[f <: Function1]               = Some[f#apply[get]]
 
-    override  def flatMap[f <: Function1](f: f): flatMap[f] = f.apply(get).asInstanceOfOption
-    override type flatMap[f <: Function1]                   = f#apply[get]#asInstanceOfOption
+    override  def flatMap[f <: Function1](f: f): flatMap[f] = f.apply(get).asOption
+    override type flatMap[f <: Function1]                   = f#apply[get]#asOption
 
-    override  def filter[f <: Function1](f: f): filter[f] = `if`(f.apply(get).asInstanceOfBoolean, const0(self), const0(None)).apply.asInstanceOfOption
-    override type filter[f <: Function1]                  = `if`[f#apply[get]#asInstanceOfBoolean, const0[self], const0[None]]#apply#asInstanceOfOption
+    override  def filter[f <: Function1](f: f): filter[f] = `if`(f.apply(get).asBoolean, const0(self), const0(None)).apply.asOption
+    override type filter[f <: Function1]                  = `if`[f#apply[get]#asBoolean, const0[self], const0[None]]#apply#asOption
 
-    override  def exists[f <: Function1](f: f): exists[f] = f.apply(get).asInstanceOfBoolean
-    override type exists[f <: Function1]                  = f#apply[get]#asInstanceOfBoolean
+    override  def exists[f <: Function1](f: f): exists[f] = f.apply(get).asBoolean
+    override type exists[f <: Function1]                  = f#apply[get]#asBoolean
 
     override  def foreach[f <: Function1](f: f): foreach[f] = { f.apply(get); Unit }
 

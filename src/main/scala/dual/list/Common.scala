@@ -39,8 +39,8 @@ trait Common {
     /**
      * Forces tuple elements.
      */
-     def force2[t <: Product2](t: t): force2[t] = Tuple2(t._1.asInstanceOfList.force, t._2.asInstanceOfList.force)
-    type force2[t <: Product2]                  = Tuple2[t#_1#asInstanceOfList#force, t#_2#asInstanceOfList#force]
+     def force2[t <: Product2](t: t): force2[t] = Tuple2(t._1.asList.force, t._2.asList.force)
+    type force2[t <: Product2]                  = Tuple2[t#_1#asList#force, t#_2#asList#force]
 
     /**
      * Makes a lexicographical Ordering from element natural ordering.

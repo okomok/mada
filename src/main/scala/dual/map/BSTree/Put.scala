@@ -11,9 +11,9 @@ package dual; package map; package bstree
 private[dual]
 object NodePut {
      def apply[m <: BSTree, k <: Any, v <: Any](m: m, k: k, v: v): apply[m, k, v] =
-        m.ord.`match`(k, m.key, CaseLT(m, k, v), CaseGT(m, k, v), CaseEQ(m, k, v)).asInstanceOfMapBSTree.asInstanceOf[apply[m, k, v]]
+        m.ord.`match`(k, m.key, CaseLT(m, k, v), CaseGT(m, k, v), CaseEQ(m, k, v)).asMapBSTree.asInstanceOf[apply[m, k, v]]
     type apply[m <: BSTree, k <: Any, v <: Any] =
-        m#ord#`match`[k, m#key, CaseLT[m, k, v], CaseGT[m, k, v], CaseEQ[m, k, v]]#asInstanceOfMapBSTree
+        m#ord#`match`[k, m#key, CaseLT[m, k, v], CaseGT[m, k, v], CaseEQ[m, k, v]]#asMapBSTree
 
     case class CaseLT[m <: BSTree, k <: Any, v <: Any](m: m, k: k, v: v) extends Function0 {
         type self = CaseLT[m, k, v]

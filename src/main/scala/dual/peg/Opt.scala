@@ -20,9 +20,9 @@ object Opt {
         override type parse[xs <: List]                    = _aux[p#parse[xs]]
 
         private  def _aux[r <: Result](r: r): _aux[r] =
-            `if`(r.successful, Then(r), const0(Success(None, r.next))).apply.asInstanceOfPegResult.asInstanceOf[_aux[r]]
+            `if`(r.successful, Then(r), const0(Success(None, r.next))).apply.asPegResult.asInstanceOf[_aux[r]]
         private type _aux[r <: Result] =
-            `if`[r#successful, Then[r], const0[Success[None, r#next]]]#apply#asInstanceOfPegResult
+            `if`[r#successful, Then[r], const0[Success[None, r#next]]]#apply#asPegResult
     }
 
     final case class Then[r <: Result](r: r) extends Function0 {

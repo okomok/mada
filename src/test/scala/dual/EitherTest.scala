@@ -141,14 +141,14 @@ class EitherTest extends org.scalatest.junit.JUnit3Suite {
 
     case class Plus1() extends Function1 {
         override type self = Plus1
-        override def apply[n <: Any](n: n): apply[n] = n.asInstanceOfNat.increment
-        override type apply[n <: Any] = n#asInstanceOfNat#increment
+        override def apply[n <: Any](n: n): apply[n] = n.asNat.increment
+        override type apply[n <: Any] = n#asNat#increment
     }
 
     case class Plus2() extends Function1 {
         override type self = Plus2
-        override def apply[n <: Any](n: n): apply[n] = n.asInstanceOfNat.increment.increment
-        override type apply[n <: Any] = n#asInstanceOfNat#increment#increment
+        override def apply[n <: Any](n: n): apply[n] = n.asNat.increment.increment
+        override type apply[n <: Any] = n#asNat#increment#increment
     }
 
     def testFoldLeft {

@@ -11,9 +11,9 @@ package dual; package list
 private[dual]
 object IsSorted {
      def apply[xs <: List, o <: Option](xs: xs, o: o): apply[xs, o] =
-        `if`(HasTwoOrMore.apply(xs), Then(xs, o), const0(`true`)).apply.asInstanceOfBoolean//.asInstanceOf[apply[xs, o]]
+        `if`(HasTwoOrMore.apply(xs), Then(xs, o), const0(`true`)).apply.asBoolean//.asInstanceOf[apply[xs, o]]
     type apply[xs <: List, o <: Option] =
-        `if`[HasTwoOrMore.apply[xs], Then[xs, o], const0[`true`]]#apply#asInstanceOfBoolean
+        `if`[HasTwoOrMore.apply[xs], Then[xs, o], const0[`true`]]#apply#asBoolean
 
     case class Then[xs <: List, o <: Option](xs: xs, o: o) extends Function0 {
         type self = Then[xs, o]

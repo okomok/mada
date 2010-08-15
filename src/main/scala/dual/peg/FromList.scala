@@ -20,9 +20,9 @@ object FromList {
         override type parse[xs <: List]                    = _aux[StartsWith.apply[xs, ys, None], xs]
 
         private  def _aux[r <: Option, xs <: List](r: r, xs: xs): _aux[r, xs] =
-            `if`(r.isEmpty, const0(Failure(xs)), Else(r)).apply.asInstanceOfPegResult.asInstanceOf[_aux[r, xs]]
+            `if`(r.isEmpty, const0(Failure(xs)), Else(r)).apply.asPegResult.asInstanceOf[_aux[r, xs]]
         private type _aux[r <: Option, xs <: List] =
-            `if`[r#isEmpty, const0[Failure[xs]], Else[r]]#apply#asInstanceOfPegResult
+            `if`[r#isEmpty, const0[Failure[xs]], Else[r]]#apply#asPegResult
 
         override  def width: width = ys.length
         override type width        = ys#length
@@ -30,9 +30,9 @@ object FromList {
 
     final case class Else[r <: Option](r: r) extends Function0 {
         type self = Else[r]
-        private lazy val p: p = r.get.asInstanceOfProduct2
-        private type p        = r#get#asInstanceOfProduct2
-        override  def apply: apply = Success(p._1, p._2.asInstanceOfList)
-        override type apply        = Success[p#_1, p#_2#asInstanceOfList]
+        private lazy val p: p = r.get.asProduct2
+        private type p        = r#get#asProduct2
+        override  def apply: apply = Success(p._1, p._2.asList)
+        override type apply        = Success[p#_1, p#_2#asList]
     }
 }

@@ -48,8 +48,8 @@ class MapNatTest extends org.scalatest.junit.JUnit3Suite {
 
     class add2 extends Function1 {
         override type self = add2
-        override  def apply[x <: Any](x: x): apply[x] = x.asInstanceOfNat plus _2
-        override type apply[x <: Any] = x#asInstanceOfNat#plus[_2]
+        override  def apply[x <: Any](x: x): apply[x] = x.asNat plus _2
+        override type apply[x <: Any] = x#asNat#plus[_2]
     }
     val add2 = new add2
 

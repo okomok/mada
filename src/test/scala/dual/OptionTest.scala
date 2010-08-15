@@ -133,8 +133,8 @@ class OptionTest extends org.scalatest.junit.JUnit3Suite {
 
     case class Plus1() extends Function1 {
         override type self = Plus1
-        override def apply[n <: Any](n: n): apply[n] = n.asInstanceOfNat.increment
-        override type apply[n <: Any] = n#asInstanceOfNat#increment
+        override def apply[n <: Any](n: n): apply[n] = n.asNat.increment
+        override type apply[n <: Any] = n#asNat#increment
     }
 
     def testMapSome {
@@ -156,8 +156,8 @@ class OptionTest extends org.scalatest.junit.JUnit3Suite {
 
     case class Plus1Get() extends Function1 {
         override type self = Plus1Get
-        override def apply[n <: Any](n: n): apply[n] = Some(n.asInstanceOfNat.increment)
-        override type apply[n <: Any] = Some[n#asInstanceOfNat#increment]
+        override def apply[n <: Any](n: n): apply[n] = Some(n.asNat.increment)
+        override type apply[n <: Any] = Some[n#asNat#increment]
     }
 
     def testFlatMapSome {
@@ -179,8 +179,8 @@ class OptionTest extends org.scalatest.junit.JUnit3Suite {
 
     case class Is2() extends Function1 {
         override type self = Is2
-        override def apply[n <: Any](n: n): apply[n] = n.asInstanceOfNat equal _2
-        override type apply[n <: Any] = n#asInstanceOfNat# equal[_2]
+        override def apply[n <: Any](n: n): apply[n] = n.asNat equal _2
+        override type apply[n <: Any] = n#asNat# equal[_2]
     }
 
     def testFilterSome {
@@ -235,7 +235,7 @@ class OptionTest extends org.scalatest.junit.JUnit3Suite {
 
     case class AddTo(result: java.util.ArrayList[Int]) extends Function1 {
         override type self = AddTo
-        override def apply[n <: Any](n: n): apply[n] = { result.add(n.asInstanceOfNat.undual); Unit }
+        override def apply[n <: Any](n: n): apply[n] = { result.add(n.asNat.undual); Unit }
         override type apply[n <: Any] = Unit
     }
 

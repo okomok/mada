@@ -16,7 +16,9 @@ object List extends Common with ToSTuple
 */
 trait List extends Any {
     type self <: List
-    type asInstanceOfList = self
+
+    final override  def asList = self
+    final override type asList = self
 
     @constantTime
      def isEmpty: isEmpty

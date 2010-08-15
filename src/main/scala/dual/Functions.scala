@@ -13,7 +13,9 @@ import function._
 
 trait Function0 extends Any {
     type self <: Function0
-    type asInstanceOfFunction0 = self
+
+    final override  def asFunction0 = self
+    final override type asFunction0 = self
 
      def apply: apply
     type apply <: Any
@@ -27,7 +29,9 @@ trait Function0 extends Any {
 
 trait Function1 extends Any with ReferenceEquality {
     type self <: Function1
-    type asInstanceOfFunction1 = self
+
+    final override  def asFunction1 = self
+    final override type asFunction1 = self
 
      def apply[v1 <: Any](v1: v1): apply[v1]
     type apply[v1 <: Any] <: Any
@@ -45,7 +49,9 @@ trait Function1 extends Any with ReferenceEquality {
 
 trait Function2 extends Any with ReferenceEquality {
     type self <: Function2
-    type asInstanceOfFunction2 = self
+
+    final override  def asFunction2 = self
+    final override type asFunction2 = self
 
      def apply[v1 <: Any, v2 <: Any](v1: v1, v2: v2): apply[v1, v2]
     type apply[v1 <: Any, v2 <: Any] <: Any
@@ -63,7 +69,9 @@ trait Function2 extends Any with ReferenceEquality {
 
 trait Function3 extends Any with ReferenceEquality {
     type self <: Function3
-    type asInstanceOfFunction3 = self
+
+    final override  def asFunction3 = self
+    final override type asFunction3 = self
 
      def apply[v1 <: Any, v2 <: Any, v3 <: Any](v1: v1, v2: v2, v3: v3): apply[v1, v2, v3]
     type apply[v1 <: Any, v2 <: Any, v3 <: Any] <: Any

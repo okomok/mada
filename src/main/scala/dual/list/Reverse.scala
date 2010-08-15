@@ -11,9 +11,9 @@ package dual; package list
 private[dual]
 object ReverseAppend {
      def apply[xs <: List, ys <: List](xs: xs, ys: ys): apply[xs, ys] =
-        `if`(xs.isEmpty, const0(ys), Else(xs, ys)).apply.asInstanceOfList
+        `if`(xs.isEmpty, const0(ys), Else(xs, ys)).apply.asList
     type apply[xs <: List, ys <: List] =
-        `if`[xs#isEmpty, const0[ys], Else[xs, ys]]#apply#asInstanceOfList
+        `if`[xs#isEmpty, const0[ys], Else[xs, ys]]#apply#asList
 
     case class Else[xs <: List, ys <: List](xs: xs, ys: ys) extends Function0 {
         type self = Else[xs, ys]

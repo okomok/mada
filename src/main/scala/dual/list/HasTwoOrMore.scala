@@ -11,9 +11,9 @@ package dual; package list
 private[dual]
 object HasTwoOrMore {
      def apply[xs <: List](xs: xs): apply[xs] =
-        `if`(xs.isEmpty, const0(`false`), Else(xs)).apply.asInstanceOfBoolean
+        `if`(xs.isEmpty, const0(`false`), Else(xs)).apply.asBoolean
     type apply[xs <: List] =
-        `if`[xs#isEmpty, const0[`false`], Else[xs]]#apply#asInstanceOfBoolean
+        `if`[xs#isEmpty, const0[`false`], Else[xs]]#apply#asBoolean
 
     case class Else[xs <: List](xs: xs) extends Function0 {
         type self = Else[xs]

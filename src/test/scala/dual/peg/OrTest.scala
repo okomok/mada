@@ -53,8 +53,8 @@ class OrTest extends org.scalatest.junit.JUnit3Suite {
         val r: r = p.parse(xs)
         meta.assert[r#successful]
         assertTrue(r.successful.undual)
-        type e = r#get#asInstanceOfEither
-        val e: e = r.get.asInstanceOfEither
+        type e = r#get#asEither
+        val e: e = r.get.asEither
         meta.assert[e#isLeft]
         assertTrue(e.isLeft.undual)
         meta.assertSame[_3 :: _5 :: _9 :: Nil, e#get]
@@ -72,8 +72,8 @@ class OrTest extends org.scalatest.junit.JUnit3Suite {
         val r: r = p.parse(xs)
         meta.assert[r#successful]
         assertTrue(r.successful.undual)
-        type e = r#get#asInstanceOfEither
-        val e: e = r.get.asInstanceOfEither
+        type e = r#get#asEither
+        val e: e = r.get.asEither
         meta.assert[e#isRight]
         assertTrue(e.isRight.undual)
         meta.assertSame[_4 :: _2 :: Nil, e#get]

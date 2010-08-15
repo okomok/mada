@@ -20,9 +20,9 @@ trait Forwarder extends List {
     protected type around[that <: List] <: List
 
     final private  def around2[that <: Product2](that: that): around2[that] =
-        Tuple2(around(that._1.asInstanceOfList), around(that._2.asInstanceOfList))
+        Tuple2(around(that._1.asList), around(that._2.asList))
     final private type around2[that <: Product2] =
-        Tuple2[around[that#_1#asInstanceOfList], around[that#_2#asInstanceOfList]]
+        Tuple2[around[that#_1#asList], around[that#_2#asList]]
 
     final override  def isEmpty: isEmpty = delegate.isEmpty
     final override type isEmpty          = delegate#isEmpty

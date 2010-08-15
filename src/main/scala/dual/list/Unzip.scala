@@ -21,8 +21,8 @@ final case class Unzip1[xs <: List](xs: xs) extends AbstractList {
     override  def isEmpty: isEmpty = xs.isEmpty
     override type isEmpty          = xs#isEmpty
 
-    override  def head: head = xs.head.asInstanceOfProduct2._1
-    override type head       = xs#head#asInstanceOfProduct2#_1
+    override  def head: head = xs.head.asProduct2._1
+    override type head       = xs#head#asProduct2#_1
 
     override  def tail: tail = Unzip1(xs.tail)
     override type tail       = Unzip1[xs#tail]
@@ -34,8 +34,8 @@ final case class Unzip2[xs <: List](xs: xs) extends AbstractList {
     override  def isEmpty: isEmpty = xs.isEmpty
     override type isEmpty          = xs#isEmpty
 
-    override  def head: head = xs.head.asInstanceOfProduct2._2
-    override type head       = xs#head#asInstanceOfProduct2#_2
+    override  def head: head = xs.head.asProduct2._2
+    override type head       = xs#head#asProduct2#_2
 
     override  def tail: tail = Unzip2(xs.tail)
     override type tail       = Unzip2[xs#tail]

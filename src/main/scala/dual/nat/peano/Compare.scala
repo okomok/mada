@@ -11,9 +11,9 @@ package dual; package nat; package peano
 private[dual]
 object SuccEq {
      def apply[x <: Peano, y <: Peano](x: x, y: y): apply[x, y] =
-        `if`(y.isZero, const0(`false`), Else(x, y)).apply.asInstanceOfBoolean
+        `if`(y.isZero, const0(`false`), Else(x, y)).apply.asBoolean
     type apply[x <: Peano, y <: Peano] =
-        `if`[y#isZero, const0[`false`], Else[x, y]]#apply#asInstanceOfBoolean
+        `if`[y#isZero, const0[`false`], Else[x, y]]#apply#asBoolean
 
     case class Else[x <: Peano, y <: Peano](x: x, y: y) extends Function0 {
          type self = Else[x, y]
@@ -25,9 +25,9 @@ object SuccEq {
 private[dual]
 object SuccLtEq {
      def apply[x <: Peano, y <: Peano](x: x, y: y): apply[x, y] =
-        `if`(y.isZero, const0(`false`), Else(x, y)).apply.asInstanceOfBoolean
+        `if`(y.isZero, const0(`false`), Else(x, y)).apply.asBoolean
     type apply[x <: Peano, y <: Peano] =
-        `if`[y#isZero, const0[`false`], Else[x, y]]#apply#asInstanceOfBoolean
+        `if`[y#isZero, const0[`false`], Else[x, y]]#apply#asBoolean
 
     case class Else[x <: Peano, y <: Peano](x: x, y: y) extends Function0 {
          type self = Else[x, y]

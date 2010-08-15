@@ -12,7 +12,9 @@ package dual; package map; package bstree
 
 sealed abstract class BSTree extends AbstractMap {
     type self <: BSTree
-    type asInstanceOfMapBSTree = self
+
+    final override  def asMapBSTree = self
+    final override type asMapBSTree = self
 
     override type put[k <: Any, v <: Any] <: BSTree
     override type remove[k <: Any] <: BSTree

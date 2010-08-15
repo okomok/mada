@@ -11,9 +11,9 @@ package dual; package list
 private[dual]
 object Equal {
      def apply[xs <: List, ys <: List, ee <: Option](xs: xs, ys: ys, ee: ee): apply[xs, ys, ee] =
-        `if`(xs.isEmpty.and(ys.isEmpty), const0(`true`), `if`(xs.isEmpty.nequal(ys.isEmpty), const0(`false`), Else(xs, ys, ee))).apply.asInstanceOfBoolean.asInstanceOf[apply[xs, ys, ee]]
+        `if`(xs.isEmpty.and(ys.isEmpty), const0(`true`), `if`(xs.isEmpty.nequal(ys.isEmpty), const0(`false`), Else(xs, ys, ee))).apply.asBoolean.asInstanceOf[apply[xs, ys, ee]]
     type apply[xs <: List, ys <: List, ee <: Option] =
-        `if`[xs#isEmpty#and[ys#isEmpty], const0[`true`], `if`[xs#isEmpty#nequal[ys#isEmpty], const0[`false`], Else[xs, ys, ee]]]#apply#asInstanceOfBoolean
+        `if`[xs#isEmpty#and[ys#isEmpty], const0[`true`], `if`[xs#isEmpty#nequal[ys#isEmpty], const0[`false`], Else[xs, ys, ee]]]#apply#asBoolean
 
     case class Else[xs <: List, ys <: List, ee <: Option](xs: xs, ys: ys, ee: ee) extends Function0 {
         type self = Else[xs, ys, ee]

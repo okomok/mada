@@ -16,7 +16,9 @@ object Map extends Common
  */
 trait Map extends Any {
     type self <: Map
-    type asInstanceOfMap = self
+
+    final override  def asMap = self
+    final override type asMap = self
 
      def size: size
     type size <: Nat

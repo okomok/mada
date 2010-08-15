@@ -17,7 +17,9 @@ object Peano extends Common
 
 sealed trait Peano extends AbstractNat {
     type self <: Peano
-    type asInstanceOfNatPeano = self
+
+    final override  def asNatPeano = self
+    final override type asNatPeano = self
 
     override type increment <: Peano
     override type decrement <: Peano

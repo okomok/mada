@@ -20,8 +20,8 @@ object Plus {
         override type parse[xs <: List]                    = _aux[p#parse[xs]]
 
         private  def _aux[r <: Result](r: r): _aux[r] =
-            `if`(r.successful, Star.Then(p, r), const0(r)).apply.asInstanceOfPegResult.asInstanceOf[_aux[r]]
+            `if`(r.successful, Star.Then(p, r), const0(r)).apply.asPegResult.asInstanceOf[_aux[r]]
         private type _aux[r <: Result] =
-            `if`[r#successful, Star.Then[p, r], const0[r]]#apply#asInstanceOfPegResult
+            `if`[r#successful, Star.Then[p, r], const0[r]]#apply#asPegResult
     }
 }

@@ -17,9 +17,9 @@ object Term {
         type self = Impl[y]
 
         override  def parse[xs <: List](xs: xs): parse[xs] =
-            `if`(xs.isEmpty, const0(Failure(xs)), Else(y, xs)).apply.asInstanceOfPegResult//.asInstanceOf[parse[xs]]
+            `if`(xs.isEmpty, const0(Failure(xs)), Else(y, xs)).apply.asPegResult//.asInstanceOf[parse[xs]]
         override type parse[xs <: List] =
-            `if`[xs#isEmpty, const0[Failure[xs]], Else[y, xs]]#apply#asInstanceOfPegResult
+            `if`[xs#isEmpty, const0[Failure[xs]], Else[y, xs]]#apply#asPegResult
     }
 
     final case class Else[y <: Any, xs <: List](y: y, xs: xs) extends Function0 {

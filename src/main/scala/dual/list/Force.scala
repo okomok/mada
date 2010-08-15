@@ -10,8 +10,8 @@ package dual; package list
 
 private[dual]
 object Force {
-     def apply[xs <: List](xs: xs): apply[xs] = `if`(xs.isEmpty, const0(Nil), Else(xs)).apply.asInstanceOfList
-    type apply[xs <: List]                    = `if`[xs#isEmpty, const0[Nil], Else[xs]]#apply#asInstanceOfList
+     def apply[xs <: List](xs: xs): apply[xs] = `if`(xs.isEmpty, const0(Nil), Else(xs)).apply.asList
+    type apply[xs <: List]                    = `if`[xs#isEmpty, const0[Nil], Else[xs]]#apply#asList
 
     case class Else[xs <: List](xs: xs) extends Function0 {
         type self = Else[xs]

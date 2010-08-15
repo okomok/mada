@@ -16,7 +16,9 @@ object Dense extends Common
 
 sealed abstract class Dense extends AbstractNat {
     type self <: Dense
-    type asInstanceOfNatDense = self
+
+    final override  def asNatDense = self
+    final override type asNatDense = self
 
      def head: head
     type head <: Boolean
@@ -112,8 +114,8 @@ sealed class Nil extends AbstractDense {
     override  def times[that <: Nat](that: that): times[that] = self
     override type times[that <: Nat]                          = self
 
-    override  def exp[that <: Nat](that: that): exp[that] = `if`(that.isZero, const0(_1), const0(self)).apply.asInstanceOfNatDense
-    override type exp[that <: Nat]                        = `if`[that#isZero, const0[_1], const0[self]]#apply#asInstanceOfNatDense
+    override  def exp[that <: Nat](that: that): exp[that] = `if`(that.isZero, const0(_1), const0(self)).apply.asNatDense
+    override type exp[that <: Nat]                        = `if`[that#isZero, const0[_1], const0[self]]#apply#asNatDense
 
     override  def shiftLeft: shiftLeft = self
     override type shiftLeft            = self

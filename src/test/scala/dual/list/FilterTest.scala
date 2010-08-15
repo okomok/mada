@@ -19,8 +19,8 @@ class FilterTest extends org.scalatest.junit.JUnit3Suite {
 
     class not2 extends Function1 {
         override type self = not2
-        override  def apply[x <: Any](x: x): apply[x] = x.asInstanceOfNat nequal _2
-        override type apply[x <: Any] = x#asInstanceOfNat# nequal[_2]
+        override  def apply[x <: Any](x: x): apply[x] = x.asNat nequal _2
+        override type apply[x <: Any] = x#asNat# nequal[_2]
     }
     val not2 = new not2
 

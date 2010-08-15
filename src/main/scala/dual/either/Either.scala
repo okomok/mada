@@ -16,7 +16,9 @@ object Either
  */
 sealed abstract class Either extends Any {
     type self <: Either
-    type asInstanceOfEither = self
+
+    final override  def asEither = self
+    final override type asEither = self
 
      def get: get
     type get <: Any
@@ -58,8 +60,8 @@ final case class Left[e <: Any](override val get: e) extends Either {
     override  def swap: swap = Right(get)
     override type swap = Right[get]
 
-    override  def joinLeft: joinLeft = get.asInstanceOfEither
-    override type joinLeft = get#asInstanceOfEither
+    override  def joinLeft: joinLeft = get.asEither
+    override type joinLeft = get#asEither
 
     override  def joinRight: joinRight = self
     override type joinRight = self
@@ -92,8 +94,8 @@ final case class Right[e <: Any](override val get: e) extends Either {
     override  def joinLeft: joinLeft = self
     override type joinLeft = self
 
-    override  def joinRight: joinRight = get.asInstanceOfEither
-    override type joinRight = get#asInstanceOfEither
+    override  def joinRight: joinRight = get.asEither
+    override type joinRight = get#asEither
 
     override  def isLeft: isLeft = `false`
     override type isLeft = `false`
