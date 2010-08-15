@@ -46,4 +46,5 @@ object Curried3 {
         override  def apply[v3 <: Any](v3: v3): apply[v3] = f.apply(v1, v2, v3)
         override type apply[v3 <: Any]                    = f#apply[v1, v2, v3]
     }
+
 }
