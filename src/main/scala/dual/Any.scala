@@ -94,9 +94,6 @@ trait Any extends scala.Equals {
     final def asInstanceOfUnit: asInstanceOfUnit = this.asInstanceOf[asInstanceOfUnit]
     type asInstanceOfUnit <: Unit
 
-    final def asInstanceOfVector: asInstanceOfVector = this.asInstanceOf[asInstanceOfVector]
-    type asInstanceOfVector <: Vector
-
     /**
      * Returns the natural ordering.
      */
