@@ -32,11 +32,11 @@ trait Function1 extends Any with ReferenceEquality {
      def apply[v1 <: Any](v1: v1): apply[v1]
     type apply[v1 <: Any] <: Any
 
-    final  def compose[that <: Function1](that: that): compose[that] = new Compose(self, that)
-    final type compose[that <: Function1]                            =     Compose[self, that]
+    final  def compose[that <: Function1](that: that): compose[that] = Compose.Impl(self, that)
+    final type compose[that <: Function1]                            = Compose.Impl[self, that]
 
-    final  def andThen[that <: Function1](that: that): andThen[that] = new Compose(that, self)
-    final type andThen[that <: Function1]                            =     Compose[that, self]
+    final  def andThen[that <: Function1](that: that): andThen[that] = Compose.Impl(that, self)
+    final type andThen[that <: Function1]                            = Compose.Impl[that, self]
 
     final  def not: not = Not1.Impl(self)
     final type not      = Not1.Impl[self]
@@ -73,6 +73,9 @@ trait Function3 extends Any with ReferenceEquality {
 
     final  def tupled: tupled = Tupled3.Impl(self)
     final type tupled         = Tupled3.Impl[self]
+
+    final  def tupledLeft: tupledLeft = TupledLeft3.Impl(self)
+    final type tupledLeft             = TupledLeft3.Impl[self]
 
     final  def not: not = Not3.Impl(self)
     final type not      = Not3.Impl[self]

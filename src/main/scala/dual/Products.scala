@@ -13,7 +13,7 @@ import nat.peano
 
 // Product
 
-trait Product extends Any /*with Vector*/ {
+trait Product extends Any {
     type self <: Product
     type asInstanceOfProduct = self
 
@@ -22,6 +22,9 @@ trait Product extends Any /*with Vector*/ {
 
      def productElement[n <: Nat](n: n): productElement[n]
     type productElement[n <: Nat] <: Any
+
+     def toList: toList
+    type toList <: List
 
     override def canEqual(that: scala.Any) = that.isInstanceOf[Product]
 }
@@ -55,6 +58,9 @@ trait AbstractProduct1 extends Product1 {
             const0[_1],
             throw0[_]
         ]#apply
+
+    final override  def toList: toList = _1 :: Nil
+    final override type toList         = _1 :: Nil
 }
 
 
@@ -109,6 +115,9 @@ trait AbstractProduct2 extends Product2 {
                 throw0[_]
             ]
         ]#apply
+
+    final override  def toList: toList = _1 :: _2 :: Nil
+    final override type toList         = _1 :: _2 :: Nil
 }
 
 
@@ -158,4 +167,7 @@ trait AbstractProduct3 extends Product3 {
                 ]
             ]
         ]#apply
+
+    final override  def toList: toList = _1 :: _2 :: _3 :: Nil
+    final override type toList         = _1 :: _2 :: _3 :: Nil
 }
