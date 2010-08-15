@@ -18,6 +18,18 @@ trait Common {
     type eps      =     Eps
 
     /**
+     * Always fails.
+     */
+     val fail: fail = new Fail
+    type fail       =     Fail
+
+    /**
+     * Always throws.
+     */
+     val error: error = new Error
+    type error        =     Error
+
+    /**
      * Terminal
      */
      def term[y <: Any](y: y): term[y] = Term.apply(y)

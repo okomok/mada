@@ -24,6 +24,9 @@ sealed abstract class Result extends Any with ReferenceEquality {
      def map[f <: Function1](f: f): map[f]
     type map[f <: Function1] <: Result
 
+     def append[f <: Function0](f: f): append[f]
+    type append[f <: Function0] <: Result
+
 //     def `match`[s <: Function1, f <: Function1](s: s, f: f): `match`[s, f]
 //    type `match`[s <: Function1, f <: Function1] <: Result
 }
@@ -49,6 +52,9 @@ final case class Success[x <: Any, ys <: List](override val get: x, override val
 
     override  def map[f <: Function1](f: f): map[f] = Success(f.apply(get), next)
     override type map[f <: Function1]               = Success[f#apply[get], next]
+
+    override  def append[f <: Function0](f: f): append[f] = self
+    override type append[f <: Function0]                  = self
 }
 
 
@@ -64,4 +70,7 @@ final case class Failure[ys <: List](override val next: ys) extends AbstractResu
 
     override  def map[f <: Function1](f: f): map[f] = self
     override type map[f <: Function1]               = self
+
+    override  def append[f <: Function0](f: f): append[f] = f.apply.asInstanceOfPegResult
+    override type append[f <: Function0]                  = f#apply#asInstanceOfPegResult
 }
