@@ -47,9 +47,6 @@ trait Map extends Any {
      def keySet: keySet
     type keySet <: Set
 
-     def toList: toList
-    type toList <: List
-
      def keyList: keyList
     type keyList <: List
 

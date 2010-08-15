@@ -59,9 +59,6 @@ sealed abstract class Option extends Any {
      def orElse[f <: Function0](f: f): orElse[f]
     type orElse[f <: Function0] <: Option
 
-     def toList: toList
-    type toList <: List
-
     override type undual <: scala.Option[_]
     final override def canEqual(that: scala.Any) = that.isInstanceOf[Option]
 }
@@ -121,8 +118,8 @@ sealed abstract class None extends AbstractOption {
 
     override  def foreach[f <: Function1](f: f): foreach[f] = Unit
 
-    override  def toList: toList = Nil
-    override type toList         = Nil
+    override  def asList: asList = Nil
+    override type asList         = Nil
 
     override  def undual: undual = scala.None
     override type undual         = scala.None.type
@@ -157,8 +154,8 @@ final case class Some[e <: Any](override val get: e) extends AbstractOption {
 
     override  def foreach[f <: Function1](f: f): foreach[f] = { f.apply(get); Unit }
 
-    override  def toList: toList = list.single(get)
-    override type toList         = list.single[get]
+    override  def asList: asList = list.single(get)
+    override type asList         = list.single[get]
 
     override  def undual: undual = scala.Some(get.undual)
     override type undual         = scala.Some[get#undual]

@@ -30,8 +30,8 @@ final case class BSTree[impl <: map.bstree.BSTree](impl: impl) extends AbstractS
     override  def contains[k <: Any](k: k): contains[k] = impl.contains(k)
     override type contains[k <: Any]                    = impl#contains[k]
 
-    override  def toList: toList = impl.keyList
-    override type toList         = impl#keyList
+    override  def asList: asList = impl.keyList
+    override type asList         = impl#keyList
 
     override  def undual: undual = impl.undual.keySet
 }

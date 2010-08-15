@@ -80,12 +80,6 @@ trait Nat extends Any {
      def bitOr[that <: Nat](that: that): bitOr[that]
     type bitOr[that <: Nat] <: Nat
 
-     def toDense: toDense
-    type toDense <: Dense
-
-     def toPeano: toPeano
-    type toPeano <: Peano
-
     final override type undual = scala.Int
     final override  def canEqual(that: scala.Any) = that.isInstanceOf[Nat]
 }

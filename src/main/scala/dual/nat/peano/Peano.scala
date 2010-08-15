@@ -46,38 +46,35 @@ sealed abstract class AbstractPeano extends Peano {
     final override  def increment: increment = Succ(self)
     final override type increment            = Succ[self]
 
-    final override  def plus[that <: Nat](that: that): plus[that] = Plus.apply(self, that.toPeano)
-    final override type plus[that <: Nat]                         = Plus.apply[self, that#toPeano]
+    final override  def plus[that <: Nat](that: that): plus[that] = Plus.apply(self, that.asNatPeano)
+    final override type plus[that <: Nat]                         = Plus.apply[self, that#asNatPeano]
 
-    final override  def minus[that <: Nat](that: that): minus[that] = Minus.apply(self, that.toPeano)
-    final override type minus[that <: Nat]                          = Minus.apply[self, that#toPeano]
+    final override  def minus[that <: Nat](that: that): minus[that] = Minus.apply(self, that.asNatPeano)
+    final override type minus[that <: Nat]                          = Minus.apply[self, that#asNatPeano]
 
-    final override  def times[that <: Nat](that: that): times[that] = Times.apply(self, that.toPeano)
-    final override type times[that <: Nat]                          = Times.apply[self, that#toPeano]
+    final override  def times[that <: Nat](that: that): times[that] = Times.apply(self, that.asNatPeano)
+    final override type times[that <: Nat]                          = Times.apply[self, that#asNatPeano]
 
-    final override  def divMod[that <: Nat](that: that): divMod[that] = DivMod.apply(self, that.toPeano).asInstanceOf[divMod[that]]
-    final override type divMod[that <: Nat]                           = DivMod.apply[self, that#toPeano]
+    final override  def divMod[that <: Nat](that: that): divMod[that] = DivMod.apply(self, that.asNatPeano).asInstanceOf[divMod[that]]
+    final override type divMod[that <: Nat]                           = DivMod.apply[self, that#asNatPeano]
 
-    final override  def exp[that <: Nat](that: that): exp[that] = toDense.exp(that).toPeano
-    final override type exp[that <: Nat]                        = toDense#exp[that]#toPeano
+    final override  def exp[that <: Nat](that: that): exp[that] = asNatDense.exp(that).asNatPeano
+    final override type exp[that <: Nat]                        = asNatDense#exp[that]#asNatPeano
 
-    final override  def lt[that <: Nat](that: that): lt[that] = that.toPeano.lteq(self).not
-    final override type lt[that <: Nat]                       = that#toPeano#lteq[self]#not
+    final override  def lt[that <: Nat](that: that): lt[that] = that.asNatPeano.lteq(self).not
+    final override type lt[that <: Nat]                       = that#asNatPeano#lteq[self]#not
 
-    final override  def bitAnd[that <: Nat](that: that): bitAnd[that] = toDense.bitAnd(that).toPeano
-    final override type bitAnd[that <: Nat]                           = toDense#bitAnd[that]#toPeano
+    final override  def bitAnd[that <: Nat](that: that): bitAnd[that] = asNatDense.bitAnd(that).asNatPeano
+    final override type bitAnd[that <: Nat]                           = asNatDense#bitAnd[that]#asNatPeano
 
-    final override  def bitOr[that <: Nat](that: that): bitOr[that] = toDense.bitOr(that).toPeano
-    final override type bitOr[that <: Nat]                          = toDense#bitOr[that]#toPeano
+    final override  def bitOr[that <: Nat](that: that): bitOr[that] = asNatDense.bitOr(that).asNatPeano
+    final override type bitOr[that <: Nat]                          = asNatDense#bitOr[that]#asNatPeano
 
     final override  def isOdd: isOdd = isEven.not
     final override type isOdd        = isEven#not
 
-    final override  def toDense: toDense = ToDense.apply(self)
-    final override type toDense          = ToDense.apply[self]
-
-    final override  def toPeano: toPeano = self
-    final override type toPeano          = self
+    final override  def asNatDense: asNatDense = ToDense.apply(self)
+    final override type asNatDense             = ToDense.apply[self]
 }
 
 
@@ -114,11 +111,11 @@ final case class Succ[n <: Peano](override val decrement: n) extends AbstractPea
 
     override type decrement = n
 
-    override  def equal[that <: Nat](that: that): equal[that] = SuccEq.apply(self, that.toPeano)
-    override type equal[that <: Nat]                          = SuccEq.apply[self, that#toPeano]
+    override  def equal[that <: Nat](that: that): equal[that] = SuccEq.apply(self, that.asNatPeano)
+    override type equal[that <: Nat]                          = SuccEq.apply[self, that#asNatPeano]
 
-    override  def lteq[that <: Nat](that: that): lteq[that] = SuccLtEq.apply(self, that.toPeano)
-    override type lteq[that <: Nat]                         = SuccLtEq.apply[self, that#toPeano]
+    override  def lteq[that <: Nat](that: that): lteq[that] = SuccLtEq.apply(self, that.asNatPeano)
+    override type lteq[that <: Nat]                         = SuccLtEq.apply[self, that#asNatPeano]
 
     override  def foldRight[z <: Any, f <: Function2](z: z, f: f): foldRight[z, f] = f.apply(self, decrement.foldRight(z, f))
     override type foldRight[z <: Any, f <: Function2]                              = f#apply[self, decrement#foldRight[z, f]]

@@ -21,6 +21,6 @@ trait AbstractMap extends Map {
     final override  def equalWith[that <: Map, ve <: Equiv](that: that, ve: ve): equalWith[that, ve] = Equal.apply(self, that, Some(ve))
     final override type equalWith[that <: Map, ve <: Equiv]                                          = Equal.apply[self, that, Some[ve]]
 
-    final override  def union[that <: Map](that: that): union[that] = that.putList(toList)
-    final override type union[that <: Map]                          = that#putList[toList]
+    final override  def union[that <: Map](that: that): union[that] = that.putList(asList)
+    final override type union[that <: Map]                          = that#putList[asList]
 }

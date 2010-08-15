@@ -17,8 +17,8 @@ object Equal {
 
     case class Else[m <: Map, w <: Map, ve <: Option](m: m, w: w, ve: ve) extends Function0 {
         type self = Else[m, w, ve]
-        override  def apply: apply = m.toList.forall(Pred(w, ve))
-        override type apply        = m#toList#forall[Pred[w, ve]]
+        override  def apply: apply = m.asList.forall(Pred(w, ve))
+        override type apply        = m#asList#forall[Pred[w, ve]]
     }
 
     case class Pred[w <: Map, ve <: Option](w: w, ve: ve) extends Function1 {

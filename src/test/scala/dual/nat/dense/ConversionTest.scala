@@ -19,14 +19,14 @@ class ConversionTest extends org.scalatest.junit.JUnit3Suite {
 
     def testToPeano {
         import junit.framework.Assert._
-        meta.assertSame[peano._0, dense._0#toPeano]
-        meta.assertSame[peano._6, dense._6#toPeano]
-        meta.assertSame[peano._5, dense._2#plus[dense._3]#toPeano]
+        meta.assertSame[peano._0, dense._0#asNatPeano]
+        meta.assertSame[peano._6, dense._6#asNatPeano]
+        meta.assertSame[peano._5, dense._2#plus[dense._3]#asNatPeano]
 
         type x = dense._5
          val x: x = dense._5
-        type y = x#toPeano
-         val y: y = x.toPeano
+        type y = x#asNatPeano
+         val y: y = x.asNatPeano
         mada.dual.assert(peano._5 equal y)
     }
 

@@ -10,8 +10,8 @@ package dual; package nat; package dense
 
 private[dual]
 object ConsExp {
-     def apply[x <: Dense, n <: Nat](x: x, n: n): apply[x, n] = n.toPeano.foldRight(_1, Step(x)).asNatDense
-    type apply[x <: Dense, n <: Nat]                          = n#toPeano#foldRight[_1, Step[x]]#asNatDense
+     def apply[x <: Dense, n <: Nat](x: x, n: n): apply[x, n] = n.asNatPeano.foldRight(_1, Step(x)).asNatDense
+    type apply[x <: Dense, n <: Nat]                          = n#asNatPeano#foldRight[_1, Step[x]]#asNatDense
 
     case class Step[x <: Dense](x: x) extends Function2 {
         type self = Step[x]

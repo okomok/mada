@@ -15,8 +15,8 @@ object ToDense {
 
     case class Else[x <: Peano](x: x) extends Function0 {
          type self = Else[x]
-         override  def apply: apply = dense.Cons(x.isOdd, Div2.apply(x).toDense) // `ConsFalse` is redundant.
-         override type apply        = dense.Cons[x#isOdd, Div2.apply[x]#toDense]
+         override  def apply: apply = dense.Cons(x.isOdd, Div2.apply(x).asNatDense) // `ConsFalse` is redundant.
+         override type apply        = dense.Cons[x#isOdd, Div2.apply[x]#asNatDense]
      }
 }
 

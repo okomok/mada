@@ -78,8 +78,8 @@ final case class Nil[o <: Ordering](override val ord: o) extends AbstractBSTree 
     override  def remove[k <: Any](k: k): remove[k] = self
     override type remove[k <: Any]                  = self
 
-    override  def toList: toList = list.Nil
-    override type toList         = list.Nil
+    override  def asList: asList = list.Nil
+    override type asList         = list.Nil
 
     override  def keyList: keyList = list.Nil
     override type keyList          = list.Nil
@@ -121,8 +121,8 @@ final case class Node[k <: Any, v <: Any, l <: BSTree, r <: BSTree](
     override  def remove[k <: Any](k: k): remove[k] = NodeRemove.apply(self, k)
     override type remove[k <: Any]                  = NodeRemove.apply[self, k]
 
-    override  def toList: toList = left.toList.append(Tuple2(key, value) :: right.toList).asInstanceOf[toList]
-    override type toList         = left#toList#append[Tuple2[key, value] :: right#toList]
+    override  def asList: asList = left.asList.append(Tuple2(key, value) :: right.asList).asInstanceOf[asList]
+    override type asList         = left#asList#append[Tuple2[key, value] :: right#asList]
 
     override  def keyList: keyList = left.keyList.append(key :: right.keyList).asInstanceOf[keyList]
     override type keyList          = left#keyList#append[key :: right#keyList]
