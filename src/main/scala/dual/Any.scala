@@ -37,6 +37,9 @@ trait Any extends scala.Equals {
     final def asInstanceOfFunction2: asInstanceOfFunction2 = this.asInstanceOf[asInstanceOfFunction2]
     type asInstanceOfFunction2 <: Function2
 
+    final def asInstanceOfFunction3: asInstanceOfFunction3 = this.asInstanceOf[asInstanceOfFunction3]
+    type asInstanceOfFunction3 <: Function3
+
     final def asInstanceOfList: asInstanceOfList = this.asInstanceOf[asInstanceOfList]
     type asInstanceOfList <: List
 
@@ -84,6 +87,9 @@ trait Any extends scala.Equals {
 
     final def asInstanceOfProduct2: asInstanceOfProduct2 = this.asInstanceOf[asInstanceOfProduct2]
     type asInstanceOfProduct2 <: Product2
+
+    final def asInstanceOfProduct3: asInstanceOfProduct3 = this.asInstanceOf[asInstanceOfProduct3]
+    type asInstanceOfProduct3 <: Product3
 
     final def asInstanceOfUnit: asInstanceOfUnit = this.asInstanceOf[asInstanceOfUnit]
     type asInstanceOfUnit <: Unit

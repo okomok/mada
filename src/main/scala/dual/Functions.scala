@@ -38,8 +38,8 @@ trait Function1 extends Any with ReferenceEquality {
     final  def andThen[that <: Function1](that: that): andThen[that] = new Compose(that, self)
     final type andThen[that <: Function1]                            =     Compose[that, self]
 
-    final  def not: not = new Not1(self)
-    final type not      =     Not1[self]
+    final  def not: not = Not1.Impl(self)
+    final type not      = Not1.Impl[self]
 }
 
 
@@ -50,9 +50,30 @@ trait Function2 extends Any with ReferenceEquality {
      def apply[v1 <: Any, v2 <: Any](v1: v1, v2: v2): apply[v1, v2]
     type apply[v1 <: Any, v2 <: Any] <: Any
 
-    final  def curried: curried = new Curried2(self)
-    final type curried          =     Curried2[self]
+    final  def curried: curried = Curried2.Impl(self)
+    final type curried          = Curried2.Impl[self]
 
-    final  def tupled: tupled = new Tupled2(self)
-    final type tupled         =     Tupled2[self]
+    final  def tupled: tupled = Tupled2.Impl(self)
+    final type tupled         = Tupled2.Impl[self]
+
+    final  def not: not = Not2.Impl(self)
+    final type not      = Not2.Impl[self]
+}
+
+
+trait Function3 extends Any with ReferenceEquality {
+    type self <: Function3
+    type asInstanceOfFunction3 = self
+
+     def apply[v1 <: Any, v2 <: Any, v3 <: Any](v1: v1, v2: v2, v3: v3): apply[v1, v2, v3]
+    type apply[v1 <: Any, v2 <: Any, v3 <: Any] <: Any
+
+    final  def curried: curried = Curried3.Impl(self)
+    final type curried          = Curried3.Impl[self]
+
+    final  def tupled: tupled = Tupled3.Impl(self)
+    final type tupled         = Tupled3.Impl[self]
+
+    final  def not: not = Not3.Impl(self)
+    final type not      = Not3.Impl[self]
 }

@@ -14,7 +14,7 @@ object Option
 /**
  * The dual Option
  */
-sealed abstract class Option extends Any {
+sealed abstract class Option extends Any /*with List*/ {
     type self <: Option
     type asInstanceOfOption = self
 
