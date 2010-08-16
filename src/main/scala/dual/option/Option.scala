@@ -86,6 +86,9 @@ sealed abstract class AbstractOption extends Option {
 
     final override  def orElse[f <: Function0](f: f): orElse[f] = `if`(isEmpty, f, const0(self)).apply.asOption
     final override type orElse[f <: Function0]                  = `if`[isEmpty, f, const0[self]]#apply#asOption
+
+    final override  def naturalOrdering: naturalOrdering = list.naturalOrdering
+    final override type naturalOrdering                  = list.naturalOrdering
 }
 
 
@@ -154,8 +157,8 @@ final case class Some[e <: Any](override val get: e) extends AbstractOption {
 
     override  def foreach[f <: Function1](f: f): foreach[f] = { f.apply(get); Unit }
 
-    override  def asList: asList = list.single(get)
-    override type asList         = list.single[get]
+    override  def asList: asList = get :: Nil
+    override type asList         = get :: Nil
 
     override  def undual: undual = scala.Some(get.undual)
     override type undual         = scala.Some[get#undual]

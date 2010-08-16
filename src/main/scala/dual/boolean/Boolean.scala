@@ -83,7 +83,10 @@ sealed abstract class `true` extends AbstractBoolean {
     override  def `if`[then <: Function0, _else <: Function0](then: then, _else: _else): `if`[then, _else] = then
     override type `if`[then <: Function0, _else <: Function0]                                              = then
 
-    override def undual: undual = true
+    override  def asNat: asNat = nat.peano._1
+    override type asNat        = nat.peano._1
+
+    override  def undual: undual = true
 
     override private[dual]  def isTrue: isTrue = `true`
     override private[dual] type isTrue         = `true`
@@ -114,7 +117,10 @@ sealed abstract class `false` extends AbstractBoolean {
     override  def `if`[then <: Function0, _else <: Function0](then: then, _else: _else): `if`[then, _else] = _else
     override type `if`[then <: Function0, _else <: Function0]                                              = _else
 
-    override def undual: undual = false
+    override  def asNat: asNat = nat.peano._0
+    override type asNat        = nat.peano._0
+
+    override  def undual: undual = false
 
     override private[dual]  def isTrue: isTrue = `false`
     override private[dual] type isTrue         = `false`
