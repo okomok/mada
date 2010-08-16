@@ -5,10 +5,10 @@
 
 
 package com.github.okomok.mada
-package dual; package ordering
+package dual
 
 
-object Ordering extends Common
+object Ordering extends ordering.Common
 
 
 trait Ordering extends Equiv {
@@ -18,7 +18,7 @@ trait Ordering extends Equiv {
     final override type asOrdering = self
 
      def compare[x <: Any, y <: Any](x: x, y: y): compare[x, y]
-    type compare[x <: Any, y <: Any] <: Result
+    type compare[x <: Any, y <: Any] <: ordering.Result
 
      def lteq[x <: Any, y <: Any](x: x, y: y): lteq[x, y]
     type lteq[x <: Any, y <: Any] <: Boolean

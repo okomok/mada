@@ -5,10 +5,7 @@
 
 
 package com.github.okomok.mada
-package dual; package boolean
-
-
-object Boolean extends Common
+package dual
 
 
 /**
@@ -54,11 +51,8 @@ sealed abstract class AbstractBoolean extends Boolean {
     final override  def nequal[that <: Boolean](that: that): nequal[that] = equal(that).not
     final override type nequal[that <: Boolean]                           = equal[that]#not
 
-    final override  def naturalOrdering: naturalOrdering = boolean.naturalOrdering
-    final override type naturalOrdering                  = boolean.naturalOrdering
-
-//    final override protected  def typeid = _Boolean.typeid
-//    final override protected type typeid = _Boolean.typeid
+    final override  def naturalOrdering: naturalOrdering = _Boolean.NaturalOrdering
+    final override type naturalOrdering                  = _Boolean.NaturalOrdering
 }
 
 
@@ -135,6 +129,33 @@ object _Boolean {
     val `true` = new `true`{}
     val `false` = new `false`{}
 
-//     val typeid = nat.dense.Literal._15
-//    type typeid = nat.dense.Literal._15
+    import ordering.{LT, GT, EQ}
+
+    val NaturalOrdering = new NaturalOrdering
+    final class NaturalOrdering extends ordering.AbstractOrdering {
+        type self = NaturalOrdering
+
+        override  def equiv[x <: Any, y <: Any](x: x, y: y): equiv[x, y] = x.asBoolean.equal(y.asBoolean)
+        override type equiv[x <: Any, y <: Any]                          = x#asBoolean#equal[y#asBoolean]
+
+        override  def compare[x <: Any, y <: Any](x: x, y: y): compare[x, y] = _compare(x.asBoolean, y.asBoolean)
+        override type compare[x <: Any, y <: Any]                            = _compare[x#asBoolean, y#asBoolean]
+
+        private  def _compare[x <: Boolean, y <: Boolean](x: x, y: y): _compare[x, y] =
+            `if`(x.not.and(y),
+                const0(LT),
+                `if`(x.and(y.not),
+                    const0(GT),
+                    const0(EQ)
+                )
+            ).apply.asOrderingResult.asInstanceOf[_compare[x, y]]
+        private type _compare[x <: Boolean, y <: Boolean] =
+            `if`[x#not#and[y],
+                const0[LT],
+                `if`[x#and[y#not],
+                    const0[GT],
+                    const0[EQ]
+                ]
+            ]#apply#asOrderingResult
+    }
 }

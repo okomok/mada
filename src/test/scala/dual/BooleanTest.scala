@@ -14,7 +14,7 @@ import mada.dual._
 
 import mada.dual.nat.peano.Literal._
 import mada.dual.nat.Peano
-import boolean.Operator._
+//import boolean.Operator._
 
 
 class BooleanTest extends org.scalatest.junit.JUnit3Suite {

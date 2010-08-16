@@ -13,4 +13,10 @@ trait Common {
     val LT: LT = _Result.LT
     val GT: GT = _Result.GT
     val EQ: EQ = _Result.EQ
+
+    /**
+     * Always returns `EQ`.
+     */
+     val alwaysEQ = new AlwaysEQ
+    type alwaysEQ = AlwaysEQ
 }

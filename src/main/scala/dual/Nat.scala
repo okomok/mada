@@ -5,13 +5,10 @@
 
 
 package com.github.okomok.mada
-package dual; package nat
+package dual
 
 
-object Nat extends Common with OperatorCommon {
-    @returnThis
-    val Operator: OperatorCommon = this
-}
+object Nat extends nat.Common
 
 
 /**

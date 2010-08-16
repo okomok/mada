@@ -5,10 +5,7 @@
 
 
 package com.github.okomok.mada
-package dual; package equiv
-
-
-object Equiv extends Common
+package dual
 
 
 trait Equiv extends Any with ReferenceEquality {

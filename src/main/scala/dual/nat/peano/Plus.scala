@@ -8,9 +8,6 @@ package com.github.okomok.mada
 package dual; package nat; package peano
 
 
-// 1. `object Add` crashes `Operator`.
-// 2. `case class Add[x <: Peano, y <: Peano](x: x, y: y)` may fall into type mismatch and slow-compilation.
-@compilerWorkaround("2.8.0")
 private[dual]
 object Plus {
     // fold in y, for `+` is left-associative.

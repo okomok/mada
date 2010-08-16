@@ -8,22 +8,17 @@ package com.github.okomok.mada
 package dual
 
 
-object Any
-
-
 /**
  * The dual Any
  */
 trait Any extends scala.Equals {
+
     @returnThis
     final val self: self = this.asInstanceOf[self]
     type self <: Any
 
      def asBoolean: asBoolean = unsupported("Any.asBoolean")
     type asBoolean <: Boolean
-
-//    final  def isInstanceOfBoolean: isInstanceOfBoolean = checkInstance(boolean._Boolean.typeid)
-//    final type isInstanceOfBoolean = checkInstance[boolean._Boolean.typeid]
 
      def asEither: asEither = unsupported("Any.asBoolean")
     type asEither <: Either
@@ -114,12 +109,6 @@ trait Any extends scala.Equals {
     override def toString = "dual." + undual.toString
 
     /**
-     * The type id as bit flags.
-     */
-//    protected  def typeid: typeid = throw new Error
-//    protected type typeid <: nat.Dense
-
-    /**
      * Trivial helper to throw UnsupportedOperationException
      */
     protected  def unsupported(what: Predef.String): unsupported[_] = throw new UnsupportedOperationException("dual." + what)
@@ -131,8 +120,6 @@ trait Any extends scala.Equals {
     protected  def noSuchElement(what: Predef.String): noSuchElement[_] = throw new NoSuchElementException("dual." + what)
     protected type noSuchElement[_] = Nothing
 
-//    private  def checkInstance[id <: nat.Dense](id: id): checkInstance[id] = (typeid & id).isZero.not
-//    private type checkInstance[id <: nat.Dense] = typeid# &[id]#isZero#not
 }
 
 

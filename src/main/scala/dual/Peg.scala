@@ -5,10 +5,10 @@
 
 
 package com.github.okomok.mada
-package dual; package peg
+package dual
 
 
-object Peg extends Common
+object Peg extends peg.Common
 
 
 trait Peg extends Any with ReferenceEquality {
@@ -21,7 +21,7 @@ trait Peg extends Any with ReferenceEquality {
      * The parse method
      */
      def parse[xs <: List](xs: xs): parse[xs]
-    type parse[xs <: List] <: Result
+    type parse[xs <: List] <: peg.Result
 
     /**
      * Returns a mathced width.

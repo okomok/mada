@@ -5,7 +5,7 @@
 
 
 package com.github.okomok.mada
-package dual
+package dual; package detail
 
 
 private[dual]

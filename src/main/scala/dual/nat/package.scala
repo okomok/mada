@@ -9,23 +9,9 @@ package dual
 
 
 package object nat extends nat.Common {
-/*
-    type  +[x <: Nat, y <: Nat] = x# +[y]
-    type  -[x <: Nat, y <: Nat] = x# -[y]
-    type **[x <: Nat, y <: Nat] = x# **[y]
-    type /[x <: Nat, y <: Nat] = x# /[y]
-    type %[x <: Nat, y <: Nat] = x# %[y]
-    type ^[x <: Nat, y <: Nat] = x# ^[y]
 
-    type ===[x <: Nat, y <: Nat] = x# ===[y]
-    type !==[x <: Nat, y <: Nat] = x# !==[y]
+    @aliasOf("dual.Nat")
+     val Nat = dual.Nat
+    type Nat = dual.Nat
 
-    type  <[x <: Nat, y <: Nat] = x# <[y]
-    type <=[x <: Nat, y <: Nat] = x# <=[y]
-    type  >[x <: Nat, y <: Nat] = x# >[y]
-    type >=[x <: Nat, y <: Nat] = x# >=[y]
-
-    type &[x <: Nat, y <: Nat] = x# &[y]
-    type |[x <: Nat, y <: Nat] = x# |[y]
-*/
 }

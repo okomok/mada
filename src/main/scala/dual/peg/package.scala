@@ -8,4 +8,10 @@ package com.github.okomok.mada
 package dual
 
 
-package object peg extends peg.Common
+package object peg extends peg.Common {
+
+    @aliasOf("dual.Peg")
+     val Peg = dual.Peg
+    type Peg = dual.Peg
+
+}

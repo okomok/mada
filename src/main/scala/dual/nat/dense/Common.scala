@@ -25,11 +25,11 @@ class Common extends LiteralCommon {
 private[dual]
 trait LiteralCommon {
     @aliasOf("`false`")
-     val _0B = boolean.`false`
+     val _0B = `false`
     type _0B = `false`
 
     @aliasOf("`true`")
-     val _1B = boolean.`true`
+     val _1B = `true`
     type _1B = `true`
 
 	val  _0 = _Dense.Nil

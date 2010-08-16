@@ -5,10 +5,7 @@
 
 
 package com.github.okomok.mada
-package dual; package option
-
-
-object Option
+package dual
 
 
 /**
@@ -70,14 +67,14 @@ sealed abstract class AbstractOption extends Option {
     final override type nonEmpty           = isEmpty#not
 
     final override  def getOrNaturalEquiv[x <: Any](x: x): getOrNaturalEquiv[x] =
-        getOrElse(GetNaturalOrdering(x)).asEquiv
+        getOrElse(detail.GetNaturalOrdering(x)).asEquiv
     final override type getOrNaturalEquiv[x <: Any] =
-        getOrElse[GetNaturalOrdering[x]]#asEquiv
+        getOrElse[detail.GetNaturalOrdering[x]]#asEquiv
 
     final override  def getOrNaturalOrdering[x <: Any](x: x): getOrNaturalOrdering[x] =
-        getOrElse(GetNaturalOrdering(x)).asOrdering
+        getOrElse(detail.GetNaturalOrdering(x)).asOrdering
     final override type getOrNaturalOrdering[x <: Any] =
-        getOrElse[GetNaturalOrdering[x]]#asOrdering
+        getOrElse[detail.GetNaturalOrdering[x]]#asOrdering
 
     final override  def isDefined: isDefined = isEmpty.not
     final override type isDefined            = isEmpty#not

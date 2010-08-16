@@ -24,34 +24,3 @@ class Common {
      val naturalOrdering: naturalOrdering = new NaturalOrdering
     type naturalOrdering                  =     NaturalOrdering
 }
-
-
-/**
- * Contains operators for Dense.
- */
-@compilerWorkaround("2.8.0") // not extended by `Common` to avoid "error: type _140.type is defined twice".
-object Operator extends OperatorCommon
-
-
-private[dual]
-trait OperatorCommon {
-/*
-    type  +[x <: Nat, y <: Nat] = x# +[y]
-    type  -[x <: Nat, y <: Nat] = x# -[y]
-    type **[x <: Nat, y <: Nat] = x# **[y]
-    type /[x <: Nat, y <: Nat] = x# /[y]
-    type %[x <: Nat, y <: Nat] = x# %[y]
-    type ^[x <: Nat, y <: Nat] = x# ^[y]
-
-    type ===[x <: Nat, y <: Nat] = x# ===[y]
-    type !==[x <: Nat, y <: Nat] = x# !==[y]
-
-    type  <[x <: Nat, y <: Nat] = x# <[y]
-    type <=[x <: Nat, y <: Nat] = x# <=[y]
-    type  >[x <: Nat, y <: Nat] = x# >[y]
-    type >=[x <: Nat, y <: Nat] = x# >=[y]
-
-    type &[x <: Nat, y <: Nat] = x# &[y]
-    type |[x <: Nat, y <: Nat] = x# |[y]
-*/
-}

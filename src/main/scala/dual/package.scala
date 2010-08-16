@@ -16,38 +16,15 @@ package object dual {
 
 // Boolean
 
-    @aliasOf("boolean.Boolean")
-     val Boolean = boolean.Boolean
-    type Boolean = boolean.Boolean
+    @equivalentTo("new `true`{}")
+     val `true` = _Boolean.`true`
 
-    @aliasOf("boolean.`true`")
-     val `true` = boolean.`true`
-    type `true` = boolean.`true`
+    @equivalentTo("new `false`{}")
+     val `false` = _Boolean.`false`
 
-    @aliasOf("boolean.`false`")
-     val `false` = boolean.`false`
-    type `false` = boolean.`false`
-
-    @aliasOf("boolean.`if`")
-     def `if`[c <: Boolean, then <: Function0, _else <: Function0](c: c, then: then, _else: _else): `if`[c, then, _else] =
-        boolean.`if`(c, then, _else)
-    type `if`[c <: Boolean, then <: Function0, _else <: Function0] =
-        boolean.`if`[c, then, _else]
-
-
-// Either
-
-    @aliasOf("either.Either")
-     val Either = either.Either
-    type Either = either.Either
-
-    @aliasOf("either.Left")
-     val Left = either.Left
-    type Left[x <: Any] = either.Left[x]
-
-    @aliasOf("either.Right")
-     val Right = either.Right
-    type Right[x <: Any] = either.Right[x]
+    @equivalentTo("c.`if`(then, _else)")
+     def `if`[c <: Boolean, then <: Function0, _else <: Function0](c: c, then: then, _else: _else): `if`[c, then, _else] = c.`if`(then, _else)
+    type `if`[c <: Boolean, then <: Function0, _else <: Function0]                                                       = c#`if`[then, _else]
 
 
 // Function
@@ -63,10 +40,6 @@ package object dual {
 
 // List
 
-    @aliasOf("list.List")
-     val List = list.List
-    type List = list.List
-
     @aliasOf("list.Nil")
      val Nil = list.Nil
     type Nil = list.Nil
@@ -75,47 +48,10 @@ package object dual {
     type ::[x <: Any, xs <: List] = list.::[x, xs]
 
 
-// Nat
-
-    @aliasOf("nat.Nat")
-     val Nat = nat.Nat
-    type Nat = nat.Nat
-
-
-// Map
-
-    @aliasOf("map.Map")
-     val Map = map.Map
-    type Map = map.Map
-
-
-// Set
-
-    @aliasOf("set.Set")
-     val Set = set.Set
-    type Set = set.Set
-
-
 // Option
 
-    @aliasOf("option.Option")
-     val Option = option.Option
-    type Option = option.Option
-
-    @aliasOf("option.None")
-     val None = option.None
-    type None = option.None
-
-    @aliasOf("option.Some")
-     val Some = option.Some
-    type Some[x <: Any] = option.Some[x]
-
-
-// Equiv
-
-    @aliasOf("equiv.Equiv")
-     val Equiv = equiv.Equiv
-    type Equiv = equiv.Equiv
+    @equivalentTo("new None{}")
+     val None = _Option.None
 
 
 // Product
@@ -123,20 +59,6 @@ package object dual {
     @aliasOf("Tuple2")
      val Pair = Tuple2
     type Pair[v1 <: Any, v2 <: Any] = Tuple2[v1, v2]
-
-
-// Ordering
-
-    @aliasOf("ordering.Ordering")
-     val Ordering = ordering.Ordering
-    type Ordering = ordering.Ordering
-
-
-// Peg
-
-    @aliasOf("peg.Peg")
-     val Peg = peg.Peg
-    type Peg = peg.Peg
 
 
 // Unit
@@ -151,8 +73,8 @@ package object dual {
      * assertion (metamethod is not implemented yet.)
      */
     @elidable(ASSERTION)
-     def assert[c <: Boolean](c: c): assert[c] = Assert.apply(c)
-    type assert[c <: Boolean]                  = Assert.apply[c]
+     def assert[c <: Boolean](c: c): assert[c] = detail.Assert.apply(c)
+    type assert[c <: Boolean]                  = detail.Assert.apply[c]
 
     @elidable(ASSERTION)
     @equivalentTo("assert(c.not)")

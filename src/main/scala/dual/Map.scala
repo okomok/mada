@@ -5,10 +5,10 @@
 
 
 package com.github.okomok.mada
-package dual; package map
+package dual
 
 
-object Map extends Common
+object Map extends map.Common
 
 
 /**

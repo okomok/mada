@@ -11,7 +11,7 @@ import com.github.okomok.mada.dual
 import dual._
 import junit.framework.Assert._
 import nat.peano.Literal._
-import nat.Operator._
+//import nat.Operator._
 
 
 class UnmetaTest extends org.scalatest.junit.JUnit3Suite {
