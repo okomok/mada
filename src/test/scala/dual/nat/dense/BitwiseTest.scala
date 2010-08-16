@@ -10,7 +10,7 @@ package dualtest; package nattest; package densetest
 
 import com.github.okomok.mada
 
-import mada.dual.meta
+import mada.dual.free
 import mada.dual.nat.dense._
 import junit.framework.Assert._
 
@@ -18,14 +18,14 @@ import junit.framework.Assert._
 class BitwiseTest extends org.scalatest.junit.JUnit3Suite {
 
     def testAnd {
-        meta.assertSame[_0, _0#bitAnd[_0]]
-        meta.assertSame[_1, _1#bitAnd[_1]]
-        meta.assertSame[_0, _2#bitAnd[_5]]
-        meta.assertSame[_0, _8#bitAnd[_4]]
-        meta.assertSame[_5, _7#bitAnd[_5]]
-        meta.assertSame[_0, _5#bitAnd[_0]]
-        meta.assertSame[_3, _7#bitAnd[_3]]
-        meta.assertSame[_2, _2#bitAnd[_7]]
+        free.assertSame[_0, _0#bitAnd[_0]]
+        free.assertSame[_1, _1#bitAnd[_1]]
+        free.assertSame[_0, _2#bitAnd[_5]]
+        free.assertSame[_0, _8#bitAnd[_4]]
+        free.assertSame[_5, _7#bitAnd[_5]]
+        free.assertSame[_0, _5#bitAnd[_0]]
+        free.assertSame[_3, _7#bitAnd[_3]]
+        free.assertSame[_2, _2#bitAnd[_7]]
 
         assertEquals(0 & 0, (_0 bitAnd _0).undual)
         assertEquals(1 & 1, (_1 bitAnd _1).undual)
@@ -38,14 +38,14 @@ class BitwiseTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testOr {
-        meta.assertSame[_0, _0#bitOr[_0]]
-        meta.assertSame[_1, _1#bitOr[_1]]
-        meta.assertSame[_7, _2#bitOr[_5]]
-        meta.assertSame[_12, _8#bitOr[_4]]
-        meta.assertSame[_7, _7#bitOr[_5]]
-        meta.assertSame[_5, _5#bitOr[_0]]
-        meta.assertSame[_7, _7#bitOr[_3]]
-        meta.assertSame[_7, _2#bitOr[_7]]
+        free.assertSame[_0, _0#bitOr[_0]]
+        free.assertSame[_1, _1#bitOr[_1]]
+        free.assertSame[_7, _2#bitOr[_5]]
+        free.assertSame[_12, _8#bitOr[_4]]
+        free.assertSame[_7, _7#bitOr[_5]]
+        free.assertSame[_5, _5#bitOr[_0]]
+        free.assertSame[_7, _7#bitOr[_3]]
+        free.assertSame[_7, _2#bitOr[_7]]
 
         assertEquals(0 | 0, (_0 bitOr _0).undual)
         assertEquals(1 | 1, (_1 bitOr _1).undual)

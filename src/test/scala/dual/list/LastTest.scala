@@ -17,7 +17,7 @@ class LastTest extends org.scalatest.junit.JUnit3Suite {
     assertFalse(scala.Nil eq Nil)
 
     type lastOf[l <: List] = l#last
-    meta.assertSame[Box[Int], lastOf[Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil]]
+    free.assertSame[Box[Int], lastOf[Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil]]
 
     def testTrivial {
         val i = new java.lang.Integer(10)

@@ -25,7 +25,7 @@ class FromListTest extends org.scalatest.junit.JUnit3Suite {
         val p: p = fromList(_3 :: _5 :: _9 :: Nil)
         type r = p#matches[xs]
         val r: r = p.matches(xs)
-        meta.assert[r]
+        free.assert[r]
         assertTrue(r.undual)
     }
 
@@ -36,11 +36,11 @@ class FromListTest extends org.scalatest.junit.JUnit3Suite {
         val p: p = fromList(_3 :: _5 :: _9 :: Nil)
         type r = p#parse[xs]
         val r: r = p.parse(xs)
-        meta.assert[r#successful]
+        free.assert[r#successful]
         assertTrue(r.successful.undual)
-        meta.assertSame[_3 :: _5 :: _9 :: Nil, r#get#force]
+        free.assertSame[_3 :: _5 :: _9 :: Nil, r#get#force]
         assertEquals(_3 :: _5 :: _9 :: Nil, r.get)
-        meta.assertSame[_1 :: _4 :: Nil, r#next#force]
+        free.assertSame[_1 :: _4 :: Nil, r#next#force]
         assertEquals(_1 :: _4 :: Nil, r.next)
     }
 
@@ -51,9 +51,9 @@ class FromListTest extends org.scalatest.junit.JUnit3Suite {
         val p: p = fromList(_3 :: _5 :: _2 :: Nil)
         type r = p#parse[xs]
         val r: r = p.parse(xs)
-        meta.assertNot[r#successful]
+        free.assertNot[r#successful]
         assertFalse(r.successful.undual)
-        meta.assertSame[xs, r#next#force]
+        free.assertSame[xs, r#next#force]
         assertEquals(xs, r.next)
     }
 
@@ -64,7 +64,7 @@ class FromListTest extends org.scalatest.junit.JUnit3Suite {
         val p: p = fromList(Nil)
         type r = p#matches[xs]
         val r: r = p.matches(xs)
-        meta.assert[r]
+        free.assert[r]
         assertTrue(r.undual)
     }
 
@@ -75,11 +75,11 @@ class FromListTest extends org.scalatest.junit.JUnit3Suite {
         val p: p = fromList(Nil)
         type r = p#parse[xs]
         val r: r = p.parse(xs)
-        meta.assert[r#successful]
+        free.assert[r#successful]
         assertTrue(r.successful.undual)
-        meta.assertSame[Nil, r#get#force]
+        free.assertSame[Nil, r#get#force]
         assertEquals(Nil, r.get)
-        meta.assertSame[xs, r#next#force]
+        free.assertSame[xs, r#next#force]
         assertEquals(xs, r.next)
     }
 }

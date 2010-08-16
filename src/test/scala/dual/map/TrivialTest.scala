@@ -25,12 +25,12 @@ class TrivialTest extends org.scalatest.junit.JUnit3Suite {
 
         AssertInvariant(s)
 
-        meta.assertSame[nat.dense._1, s#size]
-        meta.assertSame[_3, s#key]
-        meta.assertSame[Box[Int], s#value]
-        meta.assertSame[map.sorted[o], s#left]
-        meta.assertSame[map.sorted[o], s#right]
-        meta.assertSame[o, s#ord]
+        free.assertSame[nat.dense._1, s#size]
+        free.assertSame[_3, s#key]
+        free.assertSame[Box[Int], s#value]
+        free.assertSame[map.sorted[o], s#left]
+        free.assertSame[map.sorted[o], s#right]
+        free.assertSame[o, s#ord]
         ()
     }
 
@@ -43,15 +43,15 @@ class TrivialTest extends org.scalatest.junit.JUnit3Suite {
 
         AssertInvariant(m)
 
-        meta.assertSame[nat.dense._3, m#size]
+        free.assertSame[nat.dense._3, m#size]
 
         type v8 = m#get[_8]
         val v8: v8 = m.get(_8)
-        meta.assertSame[None, v8]
+        free.assertSame[None, v8]
 
         type v5 = m#get[_5]#get
         val v5: v5 = m.get(_5).get
-        meta.assertSame[Box[Char], v5]
+        free.assertSame[Box[Char], v5]
         assertEquals('c', v5.undual)
     }
 
@@ -62,8 +62,8 @@ class TrivialTest extends org.scalatest.junit.JUnit3Suite {
         type m = map.sorted[o]#put[_3, Box[Int]]#put[_5, Box[Char]]#put[_1, Box[String]]
         val m: m = map.sorted(o).put(_3, Box(3)).put(_5, Box('c')).put(_1, Box("wow"))
 
-        meta.assertSame[`false`, m#contains[_9]]
-        meta.assertSame[`true`, m#contains[_5]]
+        free.assertSame[`false`, m#contains[_9]]
+        free.assertSame[`true`, m#contains[_5]]
     }
 
     def testUndual {
@@ -81,12 +81,12 @@ class TrivialTest extends org.scalatest.junit.JUnit3Suite {
 
         type v5 = m#get[_5]#get
         val v5: v5 = m.get(_5).get
-        meta.assertSame[Box[Char], v5]
+        free.assertSame[Box[Char], v5]
         assertEquals('c', v5.undual)
 
         type m2 = m.put[_5, Box[String]]
         val m2: m2 = m.put(_5, Box("hw"))
-        meta.assertSame[Box[String], m2#get[_5]#get]
+        free.assertSame[Box[String], m2#get[_5]#get]
         assertEquals("hw", m2.get(_5).get.undual)
     }
 

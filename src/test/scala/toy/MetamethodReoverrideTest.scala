@@ -24,5 +24,5 @@ trait C extends A {
 object Woo {
 //    val k: C#isB = throw new Error
 //    val i: Int = k
-//    meta.assertSame[Nothing, C#isB]
+//    free.assertSame[Nothing, C#isB]
 }

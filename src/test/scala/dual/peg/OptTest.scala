@@ -25,7 +25,7 @@ class OptTest extends org.scalatest.junit.JUnit3Suite {
         val p: p = fromList(_3 :: _5 :: _9 :: Nil).opt
         type r = p#matches[xs]
         val r: r = p.matches(xs)
-        meta.assert[r]
+        free.assert[r]
         assertTrue(r.undual)
     }
 
@@ -36,7 +36,7 @@ class OptTest extends org.scalatest.junit.JUnit3Suite {
         val p: p = fromList(_3 :: _5 :: _9 :: Nil).opt
         type r = p#matches[xs]
         val r: r = p.matches(xs)
-        meta.assert[r]
+        free.assert[r]
         assertTrue(r.undual)
     }
 
@@ -47,11 +47,11 @@ class OptTest extends org.scalatest.junit.JUnit3Suite {
         val p: p = fromList(_3 :: _5 :: _9 :: Nil).opt
         type r = p#parse[xs]
         val r: r = p.parse(xs)
-        meta.assert[r#successful]
+        free.assert[r#successful]
         assertTrue(r.successful.undual)
-        meta.assertSame[None, r#get]
+        free.assertSame[None, r#get]
         assertEquals(None, r.get)
-        meta.assertSame[xs, r#next]
+        free.assertSame[xs, r#next]
         assertEquals(xs, r.next)
     }
 
@@ -62,11 +62,11 @@ class OptTest extends org.scalatest.junit.JUnit3Suite {
         val p: p = fromList(_3 :: _5 :: _9 :: Nil).opt
         type r = p#parse[xs]
         val r: r = p.parse(xs)
-        meta.assert[r#successful]
+        free.assert[r#successful]
         assertTrue(r.successful.undual)
-        meta.assertSame[Some[_3 :: _5 :: _9 :: Nil], r#get]
+        free.assertSame[Some[_3 :: _5 :: _9 :: Nil], r#get]
         assertEquals(Some(_3 :: _5 :: _9 :: Nil), r.get)
-        meta.assertSame[_10 :: _11 :: Nil, r#next]
+        free.assertSame[_10 :: _11 :: Nil, r#next]
         assertEquals(_10 :: _11 :: Nil, r.next)
     }
 

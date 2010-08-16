@@ -27,11 +27,11 @@ class UnzipTest extends org.scalatest.junit.JUnit3Suite {
 
         type z = l1#zip[l2]
         val z: z = l1.zip(l2)
-        meta.assertSame[Tuple2[Box[Int], Box[java.lang.Integer]] :: Tuple2[Box[String], Box[Char]] :: Tuple2[Box[java.lang.Integer], Box[Int]] :: Nil, z#force]
+        free.assertSame[Tuple2[Box[Int], Box[java.lang.Integer]] :: Tuple2[Box[String], Box[Char]] :: Tuple2[Box[java.lang.Integer], Box[Int]] :: Nil, z#force]
 
         type k = z#unzip
         val k: k = z.unzip
-        meta.assertSame[Tuple2[Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Nil, Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil], list.force2[k]]
+        free.assertSame[Tuple2[Box[Int] :: Box[String] :: Box[java.lang.Integer] :: Nil, Box[java.lang.Integer] :: Box[Char] :: Box[Int] :: Nil], list.force2[k]]
 
         assertEquals(l1, k._1)
         assertEquals(l2, k._2)
@@ -46,11 +46,11 @@ class UnzipTest extends org.scalatest.junit.JUnit3Suite {
 
         type z = l1#zip[l2]
         val z: z = l1.zip(l2)
-        meta.assertSame[Nil, z#force]
+        free.assertSame[Nil, z#force]
 
         type k = z#unzip
         val k: k = z.unzip
-        meta.assertSame[Tuple2[Nil, Nil], list.force2[k]]
+        free.assertSame[Tuple2[Nil, Nil], list.force2[k]]
 
         assertEquals(Tuple2(Nil, Nil), k)
     }

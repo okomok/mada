@@ -9,7 +9,7 @@ package com.github.okomok.madatest; package toy; package typeidentity2test
 
 import com.github.okomok.mada
 
-import mada.dual.meta.assertSame
+import mada.dual.free.assertSame
 //import junit.framework.Assert._
 
 

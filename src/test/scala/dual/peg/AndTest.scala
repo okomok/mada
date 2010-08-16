@@ -25,7 +25,7 @@ class AndTest extends org.scalatest.junit.JUnit3Suite {
         val p: p = fromList(_3 :: _5 :: _9 :: Nil).and
         type r = p#matches[xs]
         val r: r = p.matches(xs)
-        meta.assertNot[r]
+        free.assertNot[r]
         assertFalse(r.undual)
     }
 
@@ -36,9 +36,9 @@ class AndTest extends org.scalatest.junit.JUnit3Suite {
         val p: p = fromList(_3 :: _5 :: _9 :: Nil).and
         type r = p#parse[xs]
         val r: r = p.parse(xs)
-        meta.assertNot[r#successful]
+        free.assertNot[r#successful]
         assertFalse(r.successful.undual)
-        meta.assertSame[xs, r#next]
+        free.assertSame[xs, r#next]
         assertEquals(xs, r.next)
     }
 
@@ -49,11 +49,11 @@ class AndTest extends org.scalatest.junit.JUnit3Suite {
         val p: p = fromList(_3 :: _5 :: _9 :: Nil).and
         type r = p#parse[xs]
         val r: r = p.parse(xs)
-        meta.assert[r#successful]
+        free.assert[r#successful]
         assertTrue(r.successful.undual)
-        meta.assertSame[xs, r#get#force]
+        free.assertSame[xs, r#get#force]
         assertEquals(xs, r.get)
-        meta.assertSame[xs, r#next]
+        free.assertSame[xs, r#next]
         assertEquals(xs, r.next)
     }
 
@@ -64,11 +64,11 @@ class AndTest extends org.scalatest.junit.JUnit3Suite {
         val p: p = fromList(_3 :: _5 :: _9 :: Nil).and
         type r = p#parse[xs]
         val r: r = p.parse(xs)
-        meta.assert[r#successful]
+        free.assert[r#successful]
         assertTrue(r.successful.undual)
-        meta.assertSame[_3 :: _5 :: _9 :: Nil, r#get#force]
+        free.assertSame[_3 :: _5 :: _9 :: Nil, r#get#force]
         assertEquals(_3 :: _5 :: _9 :: Nil, r.get)
-        meta.assertSame[xs, r#next]
+        free.assertSame[xs, r#next]
         assertEquals(xs, r.next)
     }
 

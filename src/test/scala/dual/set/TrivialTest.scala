@@ -24,15 +24,15 @@ class TrivialTest extends org.scalatest.junit.JUnit3Suite {
         type m = set.sorted[o]#add[_3]#add[_5]#add[_1]
         val m: m = set.sorted(o).add(_3).add(_5).add(_1)
 
-        meta.assertSame[nat.dense._3, m#size]
+        free.assertSame[nat.dense._3, m#size]
 
         type v8 = m#contains[_8]
         val v8: v8 = m.contains(_8)
-        meta.assertSame[`false`, v8]
+        free.assertSame[`false`, v8]
 
         type v5 = m#contains[_5]
         val v5: v5 = m.contains(_5)
-        meta.assertSame[`true`, v5]
+        free.assertSame[`true`, v5]
     }
 
     def testContains {
@@ -42,8 +42,8 @@ class TrivialTest extends org.scalatest.junit.JUnit3Suite {
         type m = set.sorted[o]#add[_3]#add[_5]#add[_1]
         val m: m = set.sorted(o).add(_3).add(_5).add(_1)
 
-        meta.assertSame[`false`, m#contains[_9]]
-        meta.assertSame[`true`, m#contains[_5]]
+        free.assertSame[`false`, m#contains[_9]]
+        free.assertSame[`true`, m#contains[_5]]
     }
 
     def testUndual {

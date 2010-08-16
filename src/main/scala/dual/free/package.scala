@@ -14,26 +14,23 @@ import annotation.elidable.ALL
 
 package object free {
 
-
-// assertion (Note case classes doesn't work well.)
-
     /**
      * assertion
      */
     @elidable(ALL)
-    def assert[a >: `true` <: `true`](a: a): scala.Unit = ()
+    def assert(a: `true`): scala.Unit = ()
 
     /**
      * type assertion
      */
     // @elidable(ALL) crashes compiler.
-    def assert[a >: `true` <: `true`]: scala.Unit = ()
+    def assert[a >: `true` <: `true`]: scala.Unit = () // `case class` doesn't work well.
 
     /**
      * negative assertion
      */
     @elidable(ALL)
-    def assertNot[a >: `false` <: `false`](a: a): scala.Unit = ()
+    def assertNot(a: `false`): scala.Unit = ()
 
     /**
      * negative type assertion

@@ -47,23 +47,23 @@ sealed trait Func1Id extends Func1 {
 
 class TypeIdentityTezt {
 
-    meta.assertSame[Func1Id#apply[Double], Double]
-    meta.assertSame[Fwd1[Func1Id]#apply[Double], Double] // ok
+    free.assertSame[Func1Id#apply[Double], Double]
+    free.assertSame[Fwd1[Func1Id]#apply[Double], Double] // ok
 
     type callFwd1[f <: Func1, x] = Fwd1[f]#apply[x]
-    meta.assertSame[callFwd1[Func1Id, Double], Double] // ok
+    free.assertSame[callFwd1[Func1Id, Double], Double] // ok
 
     type callFwd111[f <: Func1, x] = Fwd1[Fwd1[Fwd1[f]]]#apply[x]
-    meta.assertSame[callFwd111[Func1Id, Double], Double] // ok
+    free.assertSame[callFwd111[Func1Id, Double], Double] // ok
 
 
-    meta.assertSame[FuncInt#result, Int] // ok
+    free.assertSame[FuncInt#result, Int] // ok
 
-    meta.assertSame[id[FuncInt]#what, Int]
+    free.assertSame[id[FuncInt]#what, Int]
     type callid[f <: Func] = id[f]#what
-    meta.assertSame[callid[FuncInt], Int]
+    free.assertSame[callid[FuncInt], Int]
 
 
-    meta.assertSame[_1#increment#equal[_2]#not, `false`]
+    free.assertSame[_1#increment#equal[_2]#not, `false`]
 }
 

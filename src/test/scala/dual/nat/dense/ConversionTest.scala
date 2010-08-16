@@ -11,7 +11,7 @@ package dualtest; package nattest; package densetest
 import com.github.okomok.mada
 
 import mada.dual.assert
-import mada.dual.meta
+import mada.dual.free
 import mada.dual.nat._
 
 
@@ -19,9 +19,9 @@ class ConversionTest extends org.scalatest.junit.JUnit3Suite {
 
     def testToPeano {
         import junit.framework.Assert._
-        meta.assertSame[peano._0, dense._0#asNatPeano]
-        meta.assertSame[peano._6, dense._6#asNatPeano]
-        meta.assertSame[peano._5, dense._2#plus[dense._3]#asNatPeano]
+        free.assertSame[peano._0, dense._0#asNatPeano]
+        free.assertSame[peano._6, dense._6#asNatPeano]
+        free.assertSame[peano._5, dense._2#plus[dense._3]#asNatPeano]
 
         type x = dense._5
          val x: x = dense._5

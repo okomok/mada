@@ -25,7 +25,7 @@ class EqualWithTest extends org.scalatest.junit.JUnit3Suite {
 
         type u = xs#equalWith[xs, nat.naturalOrdering]
         val u: u = xs.equalWith(ys, nat.naturalOrdering)
-        meta.assertSame[`true`, u]
+        free.assertSame[`true`, u]
         assertEquals(`true`, u)
     }
 
@@ -38,7 +38,7 @@ class EqualWithTest extends org.scalatest.junit.JUnit3Suite {
 
         type u = xs#equalWith[ys, nat.naturalOrdering]
         val u: u = xs.equalWith(ys, nat.naturalOrdering)
-        meta.assertSame[`true`, u]
+        free.assertSame[`true`, u]
         assertEquals(`true`, u)
     }
 
@@ -51,7 +51,7 @@ class EqualWithTest extends org.scalatest.junit.JUnit3Suite {
 
         type u = xs#equalWith[ys, nat.naturalOrdering]
         val u: u = xs.equalWith(ys, nat.naturalOrdering)
-        meta.assertSame[`true`, u]
+        free.assertSame[`true`, u]
         assertEquals(`true`, u)
     }
 
@@ -64,7 +64,7 @@ class EqualWithTest extends org.scalatest.junit.JUnit3Suite {
 
         type u = xs#equalWith[ys, nat.naturalOrdering]
         val u: u = xs.equalWith(ys, nat.naturalOrdering)
-        meta.assertSame[`false`, u]
+        free.assertSame[`false`, u]
         assertEquals(`false`, u)
     }
 
@@ -77,7 +77,7 @@ class EqualWithTest extends org.scalatest.junit.JUnit3Suite {
 
         type u = xs#equalWith[ys, nat.naturalOrdering]
         val u: u = xs.equalWith(ys, nat.naturalOrdering)
-        meta.assertSame[`false`, u]
+        free.assertSame[`false`, u]
         assertEquals(`false`, u)
     }
 

@@ -31,7 +31,7 @@ class RuleTest extends org.scalatest.junit.JUnit3Suite {
         val xs: xs = _1 :: _1 :: _2 :: _2 :: Nil
         type r   = MyRule#matches[xs]
         val r: r = MyRule.matches(xs)
-        meta.assert[r]
+        free.assert[r]
         assertTrue(r.undual)
     }
 
@@ -40,7 +40,7 @@ class RuleTest extends org.scalatest.junit.JUnit3Suite {
         val xs: xs = _1 :: _1 :: _1 :: _2 :: _2 :: Nil
         type r   = MyRule#matches[xs]
         val r: r = MyRule.matches(xs)
-        meta.assertNot[r]
+        free.assertNot[r]
         assertFalse(r.undual)
     }
 

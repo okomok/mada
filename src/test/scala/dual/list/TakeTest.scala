@@ -41,7 +41,7 @@ class TakeTest extends org.scalatest.junit.JUnit3Suite {
 
 
 object TakeTezt {
-    import meta.{ assert, assertSame }
+    import free.{ assert, assertSame }
 
     trait testTrivial {
         type lst = Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Box[Float] :: Nil

@@ -20,18 +20,18 @@ class EitherTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivialLeft {
         type s = Left[_3]
         val s: s = Left(_3)
-        meta.assert[s#isLeft]
+        free.assert[s#isLeft]
         assertEquals(`true`, s.isLeft)
-        meta.assertNot[s#isRight]
+        free.assertNot[s#isRight]
         assertEquals(`false`, s.isRight)
     }
 
     def testTrivialRight {
         type s = Right[_3]
         val s: s = Right(_3)
-        meta.assert[s#isRight]
+        free.assert[s#isRight]
         assertEquals(`true`, s.isRight)
-        meta.assertNot[s#isLeft]
+        free.assertNot[s#isLeft]
         assertEquals(`false`, s.isLeft)
     }
 
@@ -39,14 +39,14 @@ class EitherTest extends org.scalatest.junit.JUnit3Suite {
     def testUndualLeft {
         type s = Left[_3]
         val s: s = Left(_3)
-        meta.assertSame[scala.Left[Int, _], s#undual]
+        free.assertSame[scala.Left[Int, _], s#undual]
         assertEquals(scala.Left(3), s.undual)
     }
 
     def testUndualRight {
         type s = Right[_3]
         val s: s = Right(_3)
-        meta.assertSame[scala.Right[_, Int], s#undual]
+        free.assertSame[scala.Right[_, Int], s#undual]
         assertEquals(scala.Right(3), s.undual)
     }
 
@@ -75,7 +75,7 @@ class EitherTest extends org.scalatest.junit.JUnit3Suite {
     def testGetLeft {
         type s = Left[_3]
         val s: s = Left(_3)
-        meta.assertSame[_3, s#get]
+        free.assertSame[_3, s#get]
         val m: s#get = s.get
         assertEquals(_3, m)
     }
@@ -83,7 +83,7 @@ class EitherTest extends org.scalatest.junit.JUnit3Suite {
     def testGetRight {
         type s = Right[_3]
         val s: s = Right(_3)
-        meta.assertSame[_3, s#get]
+        free.assertSame[_3, s#get]
         val m: s#get = s.get
         assertEquals(_3, m)
     }
@@ -92,7 +92,7 @@ class EitherTest extends org.scalatest.junit.JUnit3Suite {
     def testSwapLeft {
         type s = Left[_3]
         val s: s = Left(_3)
-        meta.assertSame[Right[_3], s#swap]
+        free.assertSame[Right[_3], s#swap]
         val m: s#swap = s.swap
         assertEquals(Right(_3), m)
     }
@@ -100,7 +100,7 @@ class EitherTest extends org.scalatest.junit.JUnit3Suite {
     def testSwapRight {
         type s = Right[_3]
         val s: s = Right(_3)
-        meta.assertSame[Left[_3], s#swap]
+        free.assertSame[Left[_3], s#swap]
         val m: s#swap = s.swap
         assertEquals(Left(_3), m)
     }
@@ -109,7 +109,7 @@ class EitherTest extends org.scalatest.junit.JUnit3Suite {
     def testJoinLeftLeft {
         type s = Left[Right[_3]]
         val s: s = Left(Right(_3))
-        meta.assertSame[Right[_3], s#joinLeft]
+        free.assertSame[Right[_3], s#joinLeft]
         val m: s#joinLeft = s.joinLeft
         assertEquals(Right(_3), m)
     }
@@ -117,7 +117,7 @@ class EitherTest extends org.scalatest.junit.JUnit3Suite {
     def testJoinLeftRight {
         type s = Right[_3]
         val s: s = Right(_3)
-        meta.assertSame[Right[_3], s#joinLeft]
+        free.assertSame[Right[_3], s#joinLeft]
         val m: s#joinLeft = s.joinLeft
         assertEquals(Right(_3), m)
     }
@@ -125,7 +125,7 @@ class EitherTest extends org.scalatest.junit.JUnit3Suite {
     def testJoinRightRight {
         type s = Right[Left[_3]]
         val s: s = Right(Left(_3))
-        meta.assertSame[Left[_3], s#joinRight]
+        free.assertSame[Left[_3], s#joinRight]
         val m: s#joinRight = s.joinRight
         assertEquals(Left(_3), m)
     }
@@ -133,7 +133,7 @@ class EitherTest extends org.scalatest.junit.JUnit3Suite {
     def testJoinRightLeft {
         type s = Left[_3]
         val s: s = Left(_3)
-        meta.assertSame[Left[_3], s#joinRight]
+        free.assertSame[Left[_3], s#joinRight]
         val m: s#joinRight = s.joinRight
         assertEquals(Left(_3), m)
     }
@@ -154,7 +154,7 @@ class EitherTest extends org.scalatest.junit.JUnit3Suite {
     def testFoldLeft {
         type s = Left[_3]
         val s: s = Left(_3)
-        meta.assertSame[_4, s#fold[Plus1, Plus2]]
+        free.assertSame[_4, s#fold[Plus1, Plus2]]
         val m: s#fold[Plus1, Plus2] = s.fold(Plus1(), Plus2())
         assertEquals(_4, m)
     }
@@ -162,7 +162,7 @@ class EitherTest extends org.scalatest.junit.JUnit3Suite {
     def testFoldRight {
         type s = Right[_3]
         val s: s = Right(_3)
-        meta.assertSame[_5, s#fold[Plus1, Plus2]]
+        free.assertSame[_5, s#fold[Plus1, Plus2]]
         val m: s#fold[Plus1, Plus2] = s.fold(Plus1(), Plus2())
         assertEquals(_5, m)
     }

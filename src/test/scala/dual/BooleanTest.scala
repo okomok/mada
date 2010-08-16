@@ -29,13 +29,13 @@ class BooleanTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     trait testTrivial {
-        meta.assertSame[scala.Boolean, `true`#undual]
-        meta.assertSame[`true`, `true`]
-     //   meta.assert[`false` === if_Boolean[`true`, `false`, `true`]]
-     //   meta.assert[`false` === if_Boolean[`false`, `true`, `false`]]
+        free.assertSame[scala.Boolean, `true`#undual]
+        free.assertSame[`true`, `true`]
+     //   free.assert[`false` === if_Boolean[`true`, `false`, `true`]]
+     //   free.assert[`false` === if_Boolean[`false`, `true`, `false`]]
 
-    //    meta.assertSame[`false`, if_Boolean[`true`, `false`, `true`]]
-    //    meta.assertSame[`false`, if_Boolean[`false`, `true`, `false`]]
+    //    free.assertSame[`false`, if_Boolean[`true`, `false`, `true`]]
+    //    free.assertSame[`false`, if_Boolean[`false`, `true`, `false`]]
     }
 
     def testDuality {
@@ -45,36 +45,36 @@ class BooleanTest extends org.scalatest.junit.JUnit3Suite {
         mada.dual.assert(x equal `false`)
     }
 
-    meta.assert[`true`]
-    meta.assertNot[`false`]
+    free.assert[`true`]
+    free.assertNot[`false`]
 
-    meta.assert[`true`# equal [`true`]]
-    meta.assert[`false`# equal [`false`]]
-    meta.assert[`true`# nequal [`false`]]
-    meta.assert[`false`# nequal [`true`]]
+    free.assert[`true`# equal [`true`]]
+    free.assert[`false`# equal [`false`]]
+    free.assert[`true`# nequal [`false`]]
+    free.assert[`false`# nequal [`true`]]
 
     type myNot[b <: Boolean] = b#not
-    meta.assert[myNot[`true`]# nequal [`true`]]
-    meta.assert[myNot[`false`]# nequal [`false`]]
-    meta.assert[myNot[`true`]# equal [`false`]]
-    meta.assert[myNot[`false`]# equal [`true`]]
+    free.assert[myNot[`true`]# nequal [`true`]]
+    free.assert[myNot[`false`]# nequal [`false`]]
+    free.assert[myNot[`true`]# equal [`false`]]
+    free.assert[myNot[`false`]# equal [`true`]]
 
     /*
     trait testOperator {
-        meta.assert[`true` && `true`]
-        meta.assert[(`false` && `true`)#not]
-        meta.assert[`false` || `true`]
-        meta.assert[`true` || `false`]
+        free.assert[`true` && `true`]
+        free.assert[(`false` && `true`)#not]
+        free.assert[`false` || `true`]
+        free.assert[`true` || `false`]
     }
     */
 
     trait testPropagation {
         type incinc[n <: Peano] = `if`[n# equal[_3], Inc_Nat[n], const0[n]]#apply#asNat#increment#decrement#increment
-        meta.assertConforms[incinc[_2], Peano]
+        free.assertConforms[incinc[_2], Peano]
 
-        meta.assert[`if`[_2# equal[_3], Inc_Nat[_2], const0[_2]]#apply#increment# equal[_3]]
-        meta.assert[incinc[_2]# equal[_3]]
-        meta.assert[incinc[_3]# equal[_5]]
+        free.assert[`if`[_2# equal[_3], Inc_Nat[_2], const0[_2]]#apply#increment# equal[_3]]
+        free.assert[incinc[_2]# equal[_3]]
+        free.assert[incinc[_3]# equal[_5]]
     }
 
     class Inc_Nat[e <: Peano](val e: e) extends Function0 {

@@ -120,7 +120,7 @@ class TrivialTest extends org.scalatest.junit.JUnit3Suite {
 
 
 object TrivialTezt {
-    import meta.{ assert, assertSame }
+    import free.{ assert, assertSame }
 
     trait testAt {
         type lst = Box[Int] :: Box[String] :: Box[Double] :: Box[Char] :: Nil

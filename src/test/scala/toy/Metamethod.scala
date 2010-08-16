@@ -27,13 +27,13 @@ class MetamethodTezt {
     }
 
     trait testTrivial {
-        meta.assert[applyx[incre, _3]# equal [_4]]
-        meta.assert[twice[incre, _3]# equal [_5]]
+        free.assert[applyx[incre, _3]# equal [_4]]
+        free.assert[twice[incre, _3]# equal [_5]]
 
         type k = twice[incre, _3]
-        meta.assert[k# equal [_5]]
+        free.assert[k# equal [_5]]
 
-        meta.assert[applyx[always1[_2]#result, _3]# equal [_2]]
+        free.assert[applyx[always1[_2]#result, _3]# equal [_2]]
     }
 
 }

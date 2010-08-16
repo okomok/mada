@@ -25,9 +25,9 @@ class OrTest extends org.scalatest.junit.JUnit3Suite {
         val p: p = fromList(_3 :: _5 :: _9 :: Nil).or(fromList(_4 :: _2 :: Nil))
         type r = p#parse[xs]
         val r: r = p.parse(xs)
-        meta.assertNot[r#successful]
+        free.assertNot[r#successful]
         assertFalse(r.successful.undual)
-        meta.assertSame[xs, r#next#force]
+        free.assertSame[xs, r#next#force]
         assertEquals(xs, r.next)
     }
 
@@ -38,9 +38,9 @@ class OrTest extends org.scalatest.junit.JUnit3Suite {
         val p: p = fromList(_3 :: _5 :: _9 :: Nil).or(fromList(_4 :: _2 :: Nil))
         type r = p#parse[xs]
         val r: r = p.parse(xs)
-        meta.assertNot[r#successful]
+        free.assertNot[r#successful]
         assertFalse(r.successful.undual)
-        meta.assertSame[xs, r#next#force]
+        free.assertSame[xs, r#next#force]
         assertEquals(xs, r.next)
     }
 
@@ -51,15 +51,15 @@ class OrTest extends org.scalatest.junit.JUnit3Suite {
         val p: p = fromList(_3 :: _5 :: _9 :: Nil).or(fromList(_4 :: _2 :: Nil))
         type r = p#parse[xs]
         val r: r = p.parse(xs)
-        meta.assert[r#successful]
+        free.assert[r#successful]
         assertTrue(r.successful.undual)
         type e = r#get#asEither
         val e: e = r.get.asEither
-        meta.assert[e#isLeft]
+        free.assert[e#isLeft]
         assertTrue(e.isLeft.undual)
-        meta.assertSame[_3 :: _5 :: _9 :: Nil, e#get]
+        free.assertSame[_3 :: _5 :: _9 :: Nil, e#get]
         assertEquals(_3 :: _5 :: _9 :: Nil, e.get)
-        meta.assertSame[_0 :: Nil, r#next#force]
+        free.assertSame[_0 :: Nil, r#next#force]
         assertEquals(_0 :: Nil, r.next)
     }
 
@@ -70,15 +70,15 @@ class OrTest extends org.scalatest.junit.JUnit3Suite {
         val p: p = fromList(_3 :: _5 :: _9 :: Nil).or(fromList(_4 :: _2 :: Nil))
         type r = p#parse[xs]
         val r: r = p.parse(xs)
-        meta.assert[r#successful]
+        free.assert[r#successful]
         assertTrue(r.successful.undual)
         type e = r#get#asEither
         val e: e = r.get.asEither
-        meta.assert[e#isRight]
+        free.assert[e#isRight]
         assertTrue(e.isRight.undual)
-        meta.assertSame[_4 :: _2 :: Nil, e#get]
+        free.assertSame[_4 :: _2 :: Nil, e#get]
         assertEquals(_4 :: _2 :: Nil, e.get)
-        meta.assertSame[_9 :: _0 :: Nil, r#next]
+        free.assertSame[_9 :: _0 :: Nil, r#next]
         assertEquals(_9 :: _0 :: Nil, r.next)
     }
 }

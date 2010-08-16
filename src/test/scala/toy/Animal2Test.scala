@@ -39,7 +39,7 @@ class Animal2Tezt {
     }
 
     def buz(bessy: Cow, bessy2: Cow): Unit = {
-        mada.dual.meta.assertSame[bessy.Self, Cow]
+        mada.dual.free.assertSame[bessy.Self, Cow]
 //        bessy.iam(12) // required bessy.Self
         bessy.iam(bessy2)
         bessy.iam(bessy)

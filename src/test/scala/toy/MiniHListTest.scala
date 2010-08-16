@@ -62,7 +62,7 @@ class MiniHListTest extends org.scalatest.junit.JUnit3Suite {
 
     import junit.framework.Assert._
 //    import Mini._
-    import mada.meta
+    import mada.free
 
     def testTrivial1 {
         val ops = new Mini.OperatorOf[AnyVal]

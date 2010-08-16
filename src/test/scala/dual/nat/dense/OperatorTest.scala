@@ -11,7 +11,7 @@ package dualtest; package nattest; package densetest
 import com.github.okomok.mada
 
 import mada.dual._
-import mada.dual.meta.{assert, assertNot}
+import mada.dual.free.{assert, assertNot}
 import mada.dual.nat.Operator._
 import mada.dual.nat.dense.Literal._
 import mada.dual.nat.Dense
