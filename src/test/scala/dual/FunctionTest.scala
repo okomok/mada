@@ -80,4 +80,42 @@ class FunctionTest extends org.scalatest.junit.JUnit3Suite {
         }
         ()
     }
+
+
+    final case class PlusTimes() extends Function3 {
+        type self = PlusTimes
+        override  def apply[n <: Any, m <: Any, u <: Any](n: n, m: m, u: u): apply[n, m, u] =
+            n.asNat.plus(m.asNat).times(u.asNat).asInstanceOf[apply[n, m, u]]
+        override type apply[n <: Any, m <: Any, u <: Any] =
+            n#asNat#plus[m#asNat]#times[u#asNat]
+    }
+
+    def testCurried3 {
+        type c = PlusTimes#curried
+        val c: c = PlusTimes().curried
+
+        type a = c#apply[_2]
+        val a: a = c.apply(_2)
+
+        type b = a#apply[_1]
+        val b: b = a.apply(_1)
+
+        val z: b#apply[_3] = b.apply(_3)
+        free.assert(z equal _9)
+        val d: c#apply[_2]#apply[_1]#apply[_3] = c(_2)(_1)(_3)
+        free.assert(d equal _9)
+    }
+
+    def testTupled3 {
+        type c = PlusTimes#tupled
+        val c: c = PlusTimes().tupled
+        free.assert(c(Tuple3(_2, _1, _3)) equal _9)
+    }
+
+    def testTupledLeft3 {
+        type c = PlusTimes#tupledLeft
+        val c: c = PlusTimes().tupledLeft
+        free.assert(c(Pair(Pair(_2, _1), _3)) equal _9)
+    }
+
 }

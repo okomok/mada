@@ -283,4 +283,28 @@ class OptionTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals(Some(_4), m)
     }
 
+    def testNaturalOrdering1 {
+        val s = Some(_5)
+        val t = Some(_6)
+        free.assert(s.naturalOrdering.lt(s, t))
+    }
+
+    def testNaturalOrdering2 {
+        val s = None
+        val t = Some(_6)
+        free.assert(s.naturalOrdering.lt(s, t))
+    }
+
+    def testNaturalOrdering3 {
+        val s = Some(_6)
+        val t = Some(_6)
+        free.assert(s.naturalOrdering.equiv(s, t))
+    }
+
+    def testNaturalOrdering4 {
+        val s = None
+        val t = None
+        free.assert(s.naturalOrdering.equiv(s, t))
+    }
+
 }
