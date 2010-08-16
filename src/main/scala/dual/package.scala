@@ -73,8 +73,8 @@ package object dual {
      * assertion (metamethod is not implemented yet.)
      */
     @elidable(ASSERTION)
-     def assert[c <: Boolean](c: c): assert[c] = detail.Assert.apply(c)
-    type assert[c <: Boolean]                  = detail.Assert.apply[c]
+     def assert[c <: Boolean](c: c): assert[c] = Assert.apply(c)
+    type assert[c <: Boolean]                  = Assert.apply[c]
 
     @elidable(ASSERTION)
     @equivalentTo("assert(c.not)")
