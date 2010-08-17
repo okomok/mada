@@ -53,6 +53,13 @@ class OrTest extends org.scalatest.junit.JUnit3Suite {
         val r: r = p.parse(xs)
         free.assert[r#successful]
         assertTrue(r.successful.undual)
+
+        free.assertSame[_3 :: _5 :: _9 :: Nil, r#get]
+        assertEquals(_3 :: _5 :: _9 :: Nil, r.get)
+        free.assertSame[_0 :: Nil, r#next]
+        assertEquals(_0 :: Nil, r.next)
+
+        /*
         type e = r#get#asEither
         val e: e = r.get.asEither
         free.assert[e#isLeft]
@@ -61,6 +68,7 @@ class OrTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals(_3 :: _5 :: _9 :: Nil, e.get)
         free.assertSame[_0 :: Nil, r#next#force]
         assertEquals(_0 :: Nil, r.next)
+        */
     }
 
     def testParseRight {
@@ -72,6 +80,13 @@ class OrTest extends org.scalatest.junit.JUnit3Suite {
         val r: r = p.parse(xs)
         free.assert[r#successful]
         assertTrue(r.successful.undual)
+
+        free.assertSame[_4 :: _2 :: Nil, r#get]
+        assertEquals(_4 :: _2 :: Nil, r.get)
+        free.assertSame[_9 :: _0 :: Nil, r#next]
+        assertEquals(_9 :: _0 :: Nil, r.next)
+
+        /*
         type e = r#get#asEither
         val e: e = r.get.asEither
         free.assert[e#isRight]
@@ -80,5 +95,6 @@ class OrTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals(_4 :: _2 :: Nil, e.get)
         free.assertSame[_9 :: _0 :: Nil, r#next]
         assertEquals(_9 :: _0 :: Nil, r.next)
+        */
     }
 }
