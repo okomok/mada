@@ -97,4 +97,5 @@ class OrTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals(_9 :: _0 :: Nil, r.next)
         */
     }
+
 }

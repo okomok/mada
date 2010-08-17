@@ -17,8 +17,28 @@ import nat.dense.Literal._
 
 // too slow to compile
 
-/*
+
 object Arithmetic {
+/*
+     val PLUS: PLUS = peg.term(Ch.+)
+    type PLUS       = peg.term[Ch.+]
+
+     val MINUS: MINUS = peg.term(Ch.-)
+    type MINUS        = peg.term[Ch.-]
+
+     val TIMES: TIMES = peg.term(Ch.*)
+    type TIMES        = peg.term[Ch.*]
+
+     val DIV: DIV = peg.term(Ch./)
+    type DIV      = peg.term[Ch./]
+
+     val LP: LP = peg.term(Ch.`(`)
+    type LP     = peg.term[Ch.`(`]
+
+     val RP: RP = peg.term(Ch.`)`)
+    type RP     = peg.term[Ch.`)`]
+*/
+
 
     val expr = new expr
     final class expr extends peg.Rule {
@@ -37,8 +57,8 @@ object Arithmetic {
     val factor = new factor
     final class factor extends peg.Rule {
         type self = factor
-        override  def rule: rule = number.or( peg.term(Ch.`(`).seq(expr).seq(peg.term(Ch.`)`)) )
-        override type rule       = number#or[ peg.term[Ch.`(`]#seq[expr]#seq[peg.term[Ch.`)`]] ]
+        override  def rule: rule = number//.or( peg.term(Ch.`(`).seq(expr).seq(peg.term(Ch.`)`)) )
+        override type rule       = number//#or[ peg.term[Ch.`(`]#seq[expr]#seq[peg.term[Ch.`)`]] ]
     }
 
     val number = new number
@@ -48,16 +68,35 @@ object Arithmetic {
         override type rule       = peg.term[_1]#or[peg.term[_2]]#or[peg.term[_3]]
     }
 
+    /*
+    // order matters.
+
+     val number: number = peg.term(_1).or(peg.term(_2)).or(peg.term(_3))
+    type number         = peg.term[_1]#or[peg.term[_2]]#or[peg.term[_3]]
+
+     val factor: factor = number//.or( peg.term(Ch.`(`).seq(expr).seq(peg.term(Ch.`)`)) )
+    type factor         = number//#or[ peg.term[Ch.`(`]#seq[expr]#seq[peg.term[Ch.`)`]]
+
+     val term: term = factor.seq( peg.term(Ch.*).seq(factor).or(peg.term(Ch./).seq(factor)).star )
+    type term       = factor#seq[ peg.term[Ch.*]#seq[factor]#or[peg.term[Ch./]#seq[factor]]#star ]
+
+     val expr: expr = term.seq( peg.term(Ch.+).seq(term).or(peg.term(Ch.-).seq(term)).star )
+    type expr       = term#seq[ peg.term[Ch.+]#seq[term]#or[peg.term[Ch.-]#seq[term]]#star ]
+    */
+
 }
 
 class ArithmeticTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial {
-       free.assert(Arithmetic.expr.matches(_3 :: Ch.* :: _2 :: Ch.- :: _1 :: Nil))
-//       free.assert(Arithmetic.expr.matches(_2 :: Ch.* :: Ch.`(` :: _3 :: Ch.+ :: _1 :: Ch.`)` :: Nil))
+       //println(Arithmetic.expr.parse(_3 :: Ch.+ :: _2 :: Ch.- :: _1 :: Nil))
+
+
+        //        type k = Arithmetic.expr#matches[_3 :: Ch.+ :: _2 :: Ch.- :: _1 :: Nil]
+//       free.assert(Arithmetic.expr.matches(_3 :: Ch.+ :: _2 :: Nil))
+//       free.assert(Arithmetic.expr.matches(_2 :: Ch.+ :: Ch.`(` :: _3 :: Ch.+ :: _1 :: Ch.`)` :: Nil))
         ()
     }
 
 }
 
-*/
