@@ -5,10 +5,10 @@
 
 
 package com.github.okomok.mada
-package dual
+package dual; package ordering
 
 
-object Ordering extends ordering.Common
+object Ordering extends Common
 
 
 trait Ordering extends Equiv {

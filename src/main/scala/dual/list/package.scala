@@ -8,10 +8,4 @@ package com.github.okomok.mada
 package dual
 
 
-package object list extends list.Common {
-
-    @aliasOf("dual.List")
-     val List = dual.List
-    type List = dual.List
-
-}
+package object list extends list.Common

@@ -40,6 +40,10 @@ package object dual {
 
 // List
 
+    @aliasOf("list.List")
+     val List = list.List
+    type List = list.List
+
     @aliasOf("list.Nil")
      val Nil = list.Nil
     type Nil = list.Nil
@@ -48,10 +52,38 @@ package object dual {
     type ::[x <: Any, xs <: List] = list.::[x, xs]
 
 
+// Map
+
+    @aliasOf("map.Map")
+     val Map = map.Map
+    type Map = map.Map
+
+
+// Nat
+
+    @aliasOf("nat.Nat")
+     val Nat = nat.Nat
+    type Nat = nat.Nat
+
+
 // Option
 
     @equivalentTo("new None{}")
      val None = _Option.None
+
+
+// Ordering
+
+    @aliasOf("ordering.Ordering")
+     val Ordering = ordering.Ordering
+    type Ordering = ordering.Ordering
+
+
+// Peg
+
+    @aliasOf("peg.Peg")
+     val Peg = peg.Peg
+    type Peg = peg.Peg
 
 
 // Product
@@ -59,6 +91,13 @@ package object dual {
     @aliasOf("Tuple2")
      val Pair = Tuple2
     type Pair[v1 <: Any, v2 <: Any] = Tuple2[v1, v2]
+
+
+// Set
+
+    @aliasOf("set.Set")
+     val Set = set.Set
+    type Set = set.Set
 
 
 // Unit

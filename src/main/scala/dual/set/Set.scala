@@ -5,10 +5,10 @@
 
 
 package com.github.okomok.mada
-package dual
+package dual; package set
 
 
-object Set extends set.Common
+object Set extends Common
 
 
 /**

@@ -8,7 +8,7 @@ package com.github.okomok.mada
 package dual; package peg
 
 
-sealed abstract class Result extends Any with ReferenceEquality {
+sealed abstract class Result extends Any {
     type self <: Result
 
     final override  def asPegResult = self
@@ -29,17 +29,12 @@ sealed abstract class Result extends Any with ReferenceEquality {
      def append[f <: Function0](f: f): append[f]
     type append[f <: Function0] <: Result
 
-//     def `match`[s <: Function1, f <: Function1](s: s, f: f): `match`[s, f]
-//    type `match`[s <: Function1, f <: Function1] <: Result
+    override type undual <: UndualResult[_]
 }
 
 
 private[dual]
 sealed abstract class AbstractResult extends Result {
-//    final override  def `match`[s <: Function1, f <: Function1](s: s, f: f): `match`[s, f] =
-//        `if`(successful, s, f).apply(self).asPegResult
-//    final override type `match`[s <: Function1, f <: Function1] =
-//    `if`[successful, s, f]#apply[self]#asPegResult
 }
 
 
@@ -57,6 +52,9 @@ final case class Success[x <: Any, ys <: List](override val get: x, override val
 
     override  def append[f <: Function0](f: f): append[f] = self
     override type append[f <: Function0]                  = self
+
+    override  def undual: undual = UndualSuccess(get.undual, next.undual)
+    override type undual         = UndualSuccess[get#undual]
 }
 
 
@@ -75,4 +73,7 @@ final case class Failure[ys <: List](override val next: ys) extends AbstractResu
 
     override  def append[f <: Function0](f: f): append[f] = f.apply.asPegResult
     override type append[f <: Function0]                  = f#apply#asPegResult
+
+    override  def undual: undual = UndualFailure(next.undual)
+    override type undual         = UndualFailure
 }

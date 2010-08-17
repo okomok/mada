@@ -8,10 +8,4 @@ package com.github.okomok.mada
 package dual
 
 
-package object ordering extends ordering.Common {
-
-    @aliasOf("dual.Ordering")
-     val Ordering = dual.Ordering
-    type Ordering = dual.Ordering
-
-}
+package object ordering extends ordering.Common

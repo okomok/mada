@@ -8,10 +8,4 @@ package com.github.okomok.mada
 package dual
 
 
-package object nat extends nat.Common {
-
-    @aliasOf("dual.Nat")
-     val Nat = dual.Nat
-    type Nat = dual.Nat
-
-}
+package object nat extends nat.Common

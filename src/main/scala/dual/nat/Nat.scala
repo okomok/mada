@@ -5,10 +5,10 @@
 
 
 package com.github.okomok.mada
-package dual
+package dual; package nat
 
 
-object Nat extends nat.Common
+object Nat extends Common
 
 
 /**

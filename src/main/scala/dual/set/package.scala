@@ -8,10 +8,4 @@ package com.github.okomok.mada
 package dual
 
 
-package object set extends set.Common {
-
-    @aliasOf("dual.Set")
-     val Set = dual.Set
-    type Set = dual.Set
-
-}
+package object set extends set.Common

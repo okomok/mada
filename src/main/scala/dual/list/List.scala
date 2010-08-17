@@ -5,10 +5,10 @@
 
 
 package com.github.okomok.mada
-package dual
+package dual; package list
 
 
-object List extends list.Common with list.ToSTuple
+object List extends Common with ToSTuple
 
 
 /**
