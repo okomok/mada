@@ -68,29 +68,30 @@ object Arithmetic {
         override type rule       = peg.term[_1]#or[peg.term[_2]]#or[peg.term[_3]]
     }
 
-    /*
-    // order matters.
 
+
+/*
+    // order matters.
      val number: number = peg.term(_1).or(peg.term(_2)).or(peg.term(_3))
     type number         = peg.term[_1]#or[peg.term[_2]]#or[peg.term[_3]]
 
      val factor: factor = number//.or( peg.term(Ch.`(`).seq(expr).seq(peg.term(Ch.`)`)) )
-    type factor         = number//#or[ peg.term[Ch.`(`]#seq[expr]#seq[peg.term[Ch.`)`]]
+    type factor         = number//#or[ peg.term[Ch.`(`]#seq[expr]#seq[peg.term[Ch.`)`]] ]
 
      val term: term = factor.seq( peg.term(Ch.*).seq(factor).or(peg.term(Ch./).seq(factor)).star )
     type term       = factor#seq[ peg.term[Ch.*]#seq[factor]#or[peg.term[Ch./]#seq[factor]]#star ]
 
      val expr: expr = term.seq( peg.term(Ch.+).seq(term).or(peg.term(Ch.-).seq(term)).star )
     type expr       = term#seq[ peg.term[Ch.+]#seq[term]#or[peg.term[Ch.-]#seq[term]]#star ]
-    */
+*/
 
 }
+
 
 class ArithmeticTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial {
        //println(Arithmetic.expr.parse(_3 :: Ch.+ :: _2 :: Ch.- :: _1 :: Nil))
-
 
         //        type k = Arithmetic.expr#matches[_3 :: Ch.+ :: _2 :: Ch.- :: _1 :: Nil]
 //       free.assert(Arithmetic.expr.matches(_3 :: Ch.+ :: _2 :: Nil))
