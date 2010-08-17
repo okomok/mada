@@ -19,7 +19,6 @@ trait CommonLiteral {
      val _1B = `true`
     type _1B = `true`
 
-    @compilerWorkaround("2.8.0") // Initialize `__Nil` before the literals.
     private  val __Nil: Nil = _Dense.Nil
     private type __::[x <: Boolean, xs <: Dense] = Cons[x, xs]
 
