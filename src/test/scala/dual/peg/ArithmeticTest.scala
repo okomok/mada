@@ -87,11 +87,28 @@ object Arithmetic {
 
 }
 
+/*
+final case class ArithmeticC[num <: Peg](num: num) extends Peg {
+    override  def parse[xs <: List](xs: xs): parse[xs] =
+        term(num).seq( peg.term(Ch.+).seq(term(num)).or(peg.term(Ch.-).seq(term(num))).star ).parse(xs)
+    override type parse[xs <: List] =
+        term[num]#seq[ peg.term[Ch.+]#seq[term[num]]#or[peg.term[Ch.-]#seq[term[num]]]#star ]#parse[xs]
+
+     def factor[num <: Peg](num: num): factor[num] =
+        num.or( peg.term(Ch.`(`).seq(self).seq(peg.term(Ch.`)`)) )
+    type factor[num <: Peg] =
+        num#or[ peg.term[Ch.`(`]#seq[self]#seq[peg.term[Ch.`)`]] ]
+
+     def term[num <: Peg](num: num): term[num] =
+        factor(num).seq( peg.term(Ch.*).seq(factor(num)).or(peg.term(Ch./).seq(factor(num))).star )
+    type term[num <: Peg] =
+        factor[num]#seq[ peg.term[Ch.*]#seq[factor[num]]#or[peg.term[Ch./]#seq[factor[num]]]#star ]}
+*/
 
 class ArithmeticTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial {
-       //println(Arithmetic.expr.parse(_3 :: Ch.+ :: _2 :: Ch.- :: _1 :: Nil))
+       //println(ArithmeticC(Arithmetic.number).parse(_3 :: Ch.+ :: _2 :: Ch.- :: _1 :: Nil))
 
         //        type k = Arithmetic.expr#matches[_3 :: Ch.+ :: _2 :: Ch.- :: _1 :: Nil]
 //       free.assert(Arithmetic.expr.matches(_3 :: Ch.+ :: _2 :: Nil))
