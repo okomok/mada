@@ -8,10 +8,6 @@ package com.github.okomok.mada
 package dual; package list
 
 
-// Will be removed.
-
-
-/*
 trait Forwarder extends List {
     protected  def delegate: delegate
     protected type delegate <: List
@@ -30,8 +26,8 @@ trait Forwarder extends List {
     final override  def head: head = delegate.head
     final override type head       = delegate#head
 
-    final override  def tail: tail = delegate.tail
-    final override type tail       = delegate#tail
+    final override  def tail: tail = around(delegate.tail)
+    final override type tail       = around[delegate#tail]
 
     final override  def ::[e <: Any](e: e): ::[e] = around(delegate. ::(e))
     final override type ::[e <: Any]              = around[delegate# ::[e]]
@@ -63,11 +59,17 @@ trait Forwarder extends List {
     final override  def partition[f <: Function1](f: f): partition[f] = around2(delegate.partition(f))
     final override type partition[f <: Function1]                     = around2[delegate#partition[f]]
 
+    final override  def sort: sort = around(delegate.sort)
+    final override type sort       = around[delegate#sort]
+
     final override  def sortWith[o <: Ordering](o: o): sortWith[o] = around(delegate.sortWith(o))
-    final override type sortWith[o <: Ordering]                = around[delegate#sortWith[o]]
+    final override type sortWith[o <: Ordering]                    = around[delegate#sortWith[o]]
+
+    final override  def isSorted: isSorted = delegate.isSorted
+    final override type isSorted           = delegate#isSorted
 
     final override  def isSortedWith[o <: Ordering](o: o): isSortedWith[o] = delegate.isSortedWith(o)
-    final override type isSortedWith[o <: Ordering]                    = delegate#isSortedWith[o]
+    final override type isSortedWith[o <: Ordering]                        = delegate#isSortedWith[o]
 
     final override  def forall[f <: Function1](f: f): forall[f] = delegate.forall(f)
     final override type forall[f <: Function1]                  = delegate#forall[f]
@@ -105,8 +107,8 @@ trait Forwarder extends List {
     final override  def last: last = delegate.last
     final override type last       = delegate#last
 
-    final override  def init: init = delegate.init
-    final override type init       = delegate#init
+    final override  def init: init = around(delegate.init)
+    final override type init       = around[delegate#init]
 
     final override  def take[n <: Nat](n: n): take[n] = around(delegate.take(n))
     final override type take[n <: Nat]                = around[delegate#take[n]]
@@ -129,11 +131,14 @@ trait Forwarder extends List {
     final override  def splitAt[n <: Nat](n: n): splitAt[n] = around2(delegate.splitAt(n))
     final override type splitAt[n <: Nat]                   = around2[delegate#splitAt[n]]
 
-    final override  def equalWith[that <: List, e <: Equiv](that: that, e: e): equalWith[that, e] = delegate.equalWith(that, e)
-    final override type equalWith[that <: List, e <: Equiv]                                     = delegate#equalWith[that, e]
+    final override  def equal[that <: List](that: that): equal[that] = delegate.equal(that)
+    final override type equal[that <: List]                          = delegate#equal[that]
 
-    final override  def reverse: reverse = delegate.reverse
-    final override type reverse          = delegate#reverse
+    final override  def equalWith[that <: List, e <: Equiv](that: that, e: e): equalWith[that, e] = delegate.equalWith(that, e)
+    final override type equalWith[that <: List, e <: Equiv]                                       = delegate#equalWith[that, e]
+
+    final override  def reverse: reverse = around(delegate.reverse)
+    final override type reverse          = around[delegate#reverse]
 
     final override  def zip[that <: List](that: that): zip[that] = around(delegate.zip(that))
     final override type zip[that <: List]                        = around[delegate#zip[that]]
@@ -148,7 +153,7 @@ trait Forwarder extends List {
     final override type step[n <: Nat]                = around[delegate#step[n]]
 
     final override  def times[n <: Nat](n: n): times[n] = around(delegate.times(n))
-    final override type times[n <: Nat]                = around[delegate#times[n]]
+    final override type times[n <: Nat]                 = around[delegate#times[n]]
 }
 
 
@@ -156,4 +161,4 @@ trait TrivialForwarder extends Forwarder {
     final override protected  def around[that <: List](that: that): around[that] = that
     final override protected type around[that <: List]                           = that
 }
-*/
+

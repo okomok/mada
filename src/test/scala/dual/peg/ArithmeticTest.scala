@@ -108,10 +108,18 @@ final case class ArithmeticC[num <: Peg](num: num) extends Peg {
 class ArithmeticTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial {
-       //println(ArithmeticC(Arithmetic.number).parse(_3 :: Ch.+ :: _2 :: Ch.- :: _1 :: Nil))
 
-        //        type k = Arithmetic.expr#matches[_3 :: Ch.+ :: _2 :: Ch.- :: _1 :: Nil]
-//       free.assert(Arithmetic.expr.matches(_3 :: Ch.+ :: _2 :: Nil))
+        final class myList extends list.Strong[_3 :: Ch.+ :: _2 :: Nil](_3 :: Ch.+ :: _2 :: Nil) { type self = myList }
+        val myList = new myList
+       free.assert(Arithmetic.expr.matches(myList))
+
+    //   free.assert(Arithmetic.expr.matches(_3 :: Ch.+ :: _2 :: Ch.- :: _1 :: Nil))
+
+   //    free.assert(Arithmetic.expr.matches(_3 :: Ch.+ :: _2 :: Nil))
+
+
+
+//       println(ArithmeticC(Arithmetic.number).parse(_3 :: Ch.+ :: _2 :: Ch.- :: _1 :: Nil))
 //       free.assert(Arithmetic.expr.matches(_2 :: Ch.+ :: Ch.`(` :: _3 :: Ch.+ :: _1 :: Ch.`)` :: Nil))
         ()
     }
