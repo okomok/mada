@@ -19,22 +19,22 @@ object DivMod {
         type self = Then[x, y]
 
         lazy val count2: count2 = x.size.minus(y.size)
-        type count2             = x#size#minus[y#size]
+            type count2         = x#size#minus[y#size]
 
         lazy val count1: count1 = count2.decrement
-        type count1             = count2#decrement
+            type count1         = count2#decrement
 
         lazy val canMinus1: canMinus1 = y.shiftLeftBy(count1)
-        type canMinus1                = y#shiftLeftBy[count1]
+            type canMinus1            = y#shiftLeftBy[count1]
 
         lazy val canMinus2: canMinus2 = canMinus1.shiftLeft
-        type canMinus2                = canMinus1#shiftLeft
+            type canMinus2            = canMinus1#shiftLeft
 
         lazy val quot1: quot1 = _1.shiftLeftBy(count1)
-        type quot1            = _1#shiftLeftBy[count1]
+            type quot1        = _1#shiftLeftBy[count1]
 
         lazy val quot2: quot2 = _1.shiftLeftBy(count2)
-        type quot2            = _1#shiftLeftBy[count2]
+            type quot2        = _1#shiftLeftBy[count2]
 
         override  def apply: apply =
             `if`(canMinus2.lteq(x), Next(x, y, quot2, canMinus2), Next(x, y, quot1, canMinus1)).apply.asInstanceOf[apply]
@@ -46,7 +46,7 @@ object DivMod {
         type self = Next[x, y, quot, canMinus]
 
         lazy val r: r = x.minus(canMinus).divMod(y)
-        type r        = x#minus[canMinus]#divMod[y]
+            type r    = x#minus[canMinus]#divMod[y]
 
         override  def apply: apply = Tuple2(quot.plus(r._1.asNat), r._2)
         override type apply        = Tuple2[quot#plus[r#_1#asNat], r#_2]

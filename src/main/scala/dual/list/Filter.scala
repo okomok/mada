@@ -17,7 +17,7 @@ object Filter {
         type self = Impl[xs, f]
 
         private lazy val ys: ys = xs.dropWhile(f.not)
-        private type ys         = xs#dropWhile[f#not]
+        private     type ys     = xs#dropWhile[f#not]
 
         override  def isEmpty: isEmpty = ys.isEmpty.asInstanceOf[isEmpty]
         override type isEmpty          = ys#isEmpty

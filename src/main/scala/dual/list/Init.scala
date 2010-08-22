@@ -17,7 +17,7 @@ object Init {
         type self = Impl[xs]
 
         private lazy val ys: ys = `if`(xs.tail.isEmpty, const0(Nil), const0(xs)).apply.asList
-        private type ys         = `if`[xs#tail#isEmpty, const0[Nil], const0[xs]]#apply#asList
+        private     type ys     = `if`[xs#tail#isEmpty, const0[Nil], const0[xs]]#apply#asList
 
         override  def isEmpty: isEmpty = ys.isEmpty
         override type isEmpty          = ys#isEmpty

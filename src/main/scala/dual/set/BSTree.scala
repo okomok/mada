@@ -12,6 +12,9 @@ private[dual]
 final case class BSTree[impl <: map.bstree.BSTree](impl: impl) extends AbstractSet {
     type self = BSTree[impl]
 
+    override  def undual: undual = impl.undual.keySet
+    override type undual         = scala.collection.Set[scala.Any]
+
     override  def size: size = impl.size
     override type size       = impl#size
 
@@ -32,6 +35,4 @@ final case class BSTree[impl <: map.bstree.BSTree](impl: impl) extends AbstractS
 
     override  def asList: asList = impl.keyList
     override type asList         = impl#keyList
-
-    override  def undual: undual = impl.undual.keySet
 }

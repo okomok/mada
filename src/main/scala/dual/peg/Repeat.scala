@@ -32,7 +32,7 @@ object Repeat {
     final case class Then[p <: Peg, r <: Result, n <: Nat, m <: Nat, xs <: List](p: p, r: r, n: n, m: m, xs: xs) extends Function0 {
         type self = Then[p, r, n, m, xs]
         private lazy val s: s = Repeat.apply(p, n.decrement, m.decrement).parse(r.next).asInstanceOf[s]
-        private type s        = Repeat.apply[p, n#decrement, m#decrement]#parse[r#next]
+        private     type s    = Repeat.apply[p, n#decrement, m#decrement]#parse[r#next]
         override  def apply: apply = `if`(s.successful, ThenThen(r, s), const0(Failure(xs))).apply
         override type apply        = `if`[s#successful, ThenThen[r, s], const0[Failure[xs]]]#apply
     }

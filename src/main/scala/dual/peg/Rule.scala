@@ -16,7 +16,7 @@ trait Rule extends AbstractPeg {
     protected type rule <: Peg
 
     private lazy val p: p = rule.asPeg
-    private type p        = rule#asPeg
+    private     type p    = rule#asPeg
 
     final override  def parse[xs <: List](xs: xs): parse[xs] = p.parse(xs)
     final override type parse[xs <: List]                    = p#parse[xs]

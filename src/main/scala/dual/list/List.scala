@@ -16,9 +16,7 @@ object List extends Common with ToSTuple
 */
 trait List extends Any {
     type self <: List
-
-    final override  def asList = self
-    final override type asList = self
+    type undual <: scala.collection.immutable.Seq[scala.Any]
 
     @constantTime
      def isEmpty: isEmpty
@@ -160,7 +158,4 @@ trait List extends Any {
 
      def times[n <: Nat](n: n): times[n]
     type times[n <: Nat] <: List
-
-    override type undual <: scala.collection.immutable.Seq[scala.Any]
-    override def canEqual(that: scala.Any) = that.isInstanceOf[List]
 }

@@ -11,14 +11,15 @@ package dual
 sealed abstract class Unit extends Any {
     type self = Unit
 
-    override  def asUnit = self
-    override type asUnit = self
+    override  def undual: undual = ()
+    override type undual         = scala.Unit
+
+    override  def asUnit: asUnit = self
+    override type asUnit         = self
 
     override  def naturalOrdering: naturalOrdering = _Unit.NaturalOrdering
     override type naturalOrdering                  = _Unit.NaturalOrdering
 
-    override  def undual: undual = ()
-    override type undual         = scala.Unit
     override  def canEqual(that: scala.Any) = that.isInstanceOf[Unit]
 }
 

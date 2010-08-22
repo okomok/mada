@@ -17,13 +17,13 @@ object Flatten {
         type self = Impl[xs]
 
         private lazy val ys: ys = xs.dropWhile(IsEmpty)
-        private type ys         = xs#dropWhile[IsEmpty]
+        private     type ys     = xs#dropWhile[IsEmpty]
 
         override  def isEmpty: isEmpty = ys.isEmpty
         override type isEmpty          = ys#isEmpty
 
         private lazy val local: local = ys.head.asList
-        private type local            = ys#head#asList
+        private     type local        = ys#head#asList
 
         override  def head: head = local.head
         override type head       = local#head

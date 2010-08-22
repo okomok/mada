@@ -13,9 +13,10 @@ package dual
  */
 sealed abstract class Either extends Any {
     type self <: Either
+    type undual <: scala.Either[_, _]
 
-    final override  def asEither = self
-    final override type asEither = self
+    final override  def asEither: asEither = self
+    final override type asEither           = self
 
      def get: get
     type get <: Any
@@ -38,7 +39,6 @@ sealed abstract class Either extends Any {
      def isRight: isRight
     type isRight <: Boolean
 
-    override type undual <: scala.Either[_, _]
     final override def canEqual(that: scala.Any) = that.isInstanceOf[Either]
 }
 
@@ -48,6 +48,9 @@ sealed abstract class Either extends Any {
  */
 final case class Left[e <: Any](override val get: e) extends Either {
     type self = Left[e]
+
+    override  def undual: undual = scala.Left(get.undual)
+    override type undual         = scala.Left[get#undual, _]
 
     override type get = e
 
@@ -68,9 +71,6 @@ final case class Left[e <: Any](override val get: e) extends Either {
 
     override  def isRight: isRight = `false`
     override type isRight          = `false`
-
-    override  def undual: undual = scala.Left(get.undual)
-    override type undual         = scala.Left[get#undual, _]
 }
 
 
@@ -79,6 +79,9 @@ final case class Left[e <: Any](override val get: e) extends Either {
  */
 final case class Right[e <: Any](override val get: e) extends Either {
     type self = Right[e]
+
+    override  def undual: undual = scala.Right(get.undual)
+    override type undual         = scala.Right[_, get#undual]
 
     override type get = e
 
@@ -99,7 +102,4 @@ final case class Right[e <: Any](override val get: e) extends Either {
 
     override  def isRight: isRight = `true`
     override type isRight          = `true`
-
-    override  def undual: undual = scala.Right(get.undual)
-    override type undual         = scala.Right[_, get#undual]
 }

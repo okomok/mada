@@ -10,9 +10,7 @@ package dual; package ordering
 
 sealed abstract class Result extends Any {
     type self <: Result
-
-    final override  def asOrderingResult = self
-    final override type asOrderingResult = self
+    type undual = scala.Int
 
      def equal[that <: Result](that: that): equal[that]
     type equal[that <: Result] <: Boolean
@@ -31,14 +29,14 @@ sealed abstract class Result extends Any {
     type isLTEQ <: Boolean
      def isGTEQ: isGTEQ
     type isGTEQ <: Boolean
-
-    final override type undual = scala.Int
-    final override def canEqual(that: scala.Any) = that.isInstanceOf[Result]
 }
 
 
 private[dual]
 sealed abstract class AbstractResult extends Result {
+    final override  def asOrderingResult: asOrderingResult = self
+    final override type asOrderingResult                   = self
+
     final override  def nequal[that <: Result](that: that): nequal[that] = equal(that).not
     final override type nequal[that <: Result]                           = equal[that]#not
 
@@ -46,11 +44,15 @@ sealed abstract class AbstractResult extends Result {
     final override type isLTEQ         = isLT#or[isEQ]
     final override  def isGTEQ: isGTEQ = isGT.or(isEQ)
     final override type isGTEQ         = isGT#or[isEQ]
+
+    final override def canEqual(that: scala.Any) = that.isInstanceOf[Result]
 }
 
 
 sealed abstract class LT extends AbstractResult {
     type self = LT
+
+    override  def undual: undual = -1
 
     override  def equal[that <: Result](that: that): equal[that] = that.isLT
     override type equal[that <: Result]                          = that#isLT
@@ -61,12 +63,12 @@ sealed abstract class LT extends AbstractResult {
     override type isGT       = `false`
     override  def isEQ: isEQ = `false`
     override type isEQ       = `false`
-
-    override  def undual: undual = -1
 }
 
 sealed abstract class GT extends AbstractResult {
     type self = GT
+
+    override  def undual: undual = 1
 
     override  def equal[that <: Result](that: that): equal[that] = that.isGT
     override type equal[that <: Result]                          = that#isGT
@@ -77,12 +79,12 @@ sealed abstract class GT extends AbstractResult {
     override type isGT       = `true`
     override  def isEQ: isEQ = `false`
     override type isEQ       = `false`
-
-    override  def undual: undual = 1
 }
 
 sealed abstract class EQ extends AbstractResult {
     type self = EQ
+
+    override  def undual: undual = 0
 
     override  def equal[that <: Result](that: that): equal[that] = that.isEQ
     override type equal[that <: Result]                          = that#isEQ
@@ -93,8 +95,6 @@ sealed abstract class EQ extends AbstractResult {
     override type isGT       = `false`
     override  def isEQ: isEQ = `true`
     override type isEQ       = `true`
-
-    override  def undual: undual = 0
 }
 
 

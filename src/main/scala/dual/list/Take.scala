@@ -17,7 +17,7 @@ object Take {
         type self = Impl[xs, n]
 
         private lazy val ys: ys = `if`(n.isZero, const0(Nil), const0(xs)).apply.asList
-        private type ys         = `if`[n#isZero, const0[Nil], const0[xs]]#apply#asList
+        private     type ys     = `if`[n#isZero, const0[Nil], const0[xs]]#apply#asList
 
         override  def isEmpty: isEmpty = ys.isEmpty
         override type isEmpty          = ys#isEmpty
@@ -40,7 +40,7 @@ object TakeWhile {
         type self = Impl[xs, f]
 
         private lazy val ys: ys = `if`(xs.isEmpty, const0(xs), Else(xs, f)).apply.asList
-        private type ys         = `if`[xs#isEmpty, const0[xs], Else[xs, f]]#apply#asList
+        private     type ys     = `if`[xs#isEmpty, const0[xs], Else[xs, f]]#apply#asList
 
         override  def isEmpty: isEmpty = ys.isEmpty
         override type isEmpty          = ys#isEmpty

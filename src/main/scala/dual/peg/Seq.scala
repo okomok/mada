@@ -32,7 +32,7 @@ object Seq {
         type self = Then[q, r, xs]
 
         private lazy val s: s = q.parse(r.next)
-        private type s        = q#parse[r#next]
+        private     type s    = q#parse[r#next]
 
         override  def apply: apply =
             `if`(s.successful, ThenThen(r, s), const0(Failure(xs))).apply.asPegResult

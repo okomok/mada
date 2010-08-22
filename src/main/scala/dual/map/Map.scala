@@ -16,9 +16,7 @@ object Map extends Common
  */
 trait Map extends Any {
     type self <: Map
-
-    final override  def asMap = self
-    final override type asMap = self
+    type undual <: scala.collection.Map[scala.Any, scala.Any]
 
      def size: size
     type size <: Nat
@@ -62,7 +60,4 @@ trait Map extends Any {
     // left-biased
      def union[that <: Map](that: that): union[that]
     type union[that <: Map] <: Map
-
-    final override type undual = scala.collection.Map[scala.Any, scala.Any]
-    override def canEqual(that: scala.Any) = that.isInstanceOf[Map]
 }

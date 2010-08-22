@@ -17,7 +17,7 @@ object UnfoldRight {
         type self = Impl[z, f]
 
         private lazy val acc: acc = f.apply(z).asOption
-        private type acc          = f#apply[z]#asOption
+        private     type acc      = f#apply[z]#asOption
 
         override  def isEmpty: isEmpty = acc.isEmpty
         override type isEmpty          = acc#isEmpty

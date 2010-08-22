@@ -9,6 +9,9 @@ package dual; package set
 
 
 trait AbstractSet extends Set {
+    final override  def asSet: asSet = self
+    final override type asSet        = self
+
     final override  def addList[xs <: List](xs: xs): addList[xs] = AddList.apply(self, xs)
     final override type addList[xs <: List]                      = AddList.apply[self, xs]
 
@@ -29,4 +32,6 @@ trait AbstractSet extends Set {
 
     final override  def subsetOf[that <: Set](that: that): subsetOf[that] = SubsetOf.apply(self, that)
     final override type subsetOf[that <: Set]                             = SubsetOf.apply[self, that]
+
+    override def canEqual(that: scala.Any) = that.isInstanceOf[Set]
 }

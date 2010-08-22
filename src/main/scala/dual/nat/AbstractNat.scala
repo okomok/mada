@@ -10,6 +10,9 @@ package dual; package nat
 
 private[dual]
 trait AbstractNat extends Nat {
+    final override  def asNat: asNat = self
+    final override type asNat        = self
+
     final override  def nequal[that <: Nat](that: that): nequal[that] = equal(that).not
     final override type nequal[that <: Nat]                           = equal[that]#not
 

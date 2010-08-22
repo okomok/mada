@@ -9,6 +9,9 @@ package dual; package ordering
 
 
 trait AbstractOrdering extends Ordering {
+    final override  def asOrdering: asOrdering = self
+    final override type asOrdering             = self
+
     final override  def lteq[x <: Any, y <: Any](x: x, y: y): lteq[x, y] = compare(x, y).isLTEQ
     final override type lteq[x <: Any, y <: Any]                         = compare[x, y]#isLTEQ
 

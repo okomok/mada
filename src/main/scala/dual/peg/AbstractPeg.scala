@@ -9,6 +9,9 @@ package dual; package peg
 
 
 trait AbstractPeg extends Peg {
+    final override  def asPeg: asPeg = self
+    final override type asPeg        = self
+
     final override  def seq[that <: Peg](that: that): seq[that] = Seq.apply(self, that)
     final override type seq[that <: Peg]                        = Seq.apply[self, that]
 

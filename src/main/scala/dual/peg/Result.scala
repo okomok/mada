@@ -10,9 +10,7 @@ package dual; package peg
 
 sealed abstract class Result extends Any {
     type self <: Result
-
-    final override  def asPegResult = self
-    final override type asPegResult = self
+    type undual <: UndualResult[_]
 
      def get: get
     type get <: Any
@@ -28,18 +26,23 @@ sealed abstract class Result extends Any {
 
      def append[f <: Function0](f: f): append[f]
     type append[f <: Function0] <: Result
-
-    override type undual <: UndualResult[_]
 }
 
 
 private[dual]
 sealed abstract class AbstractResult extends Result {
+    final override  def asPegResult: asPegResult = self
+    final override type asPegResult              = self
+
+    final override  def canEqual(that: scala.Any) = that.isInstanceOf[Result]
 }
 
 
 final case class Success[x <: Any, ys <: List](override val get: x, override val next: ys) extends AbstractResult {
     type self = Success[x, ys]
+
+    override  def undual: undual = UndualSuccess(get.undual, next.undual)
+    override type undual         = UndualSuccess[get#undual]
 
     override type get = x
     override type next = ys
@@ -52,14 +55,14 @@ final case class Success[x <: Any, ys <: List](override val get: x, override val
 
     override  def append[f <: Function0](f: f): append[f] = self
     override type append[f <: Function0]                  = self
-
-    override  def undual: undual = UndualSuccess(get.undual, next.undual)
-    override type undual         = UndualSuccess[get#undual]
 }
 
 
 final case class Failure[ys <: List](override val next: ys) extends AbstractResult {
     type self = Failure[ys]
+
+    override  def undual: undual = UndualFailure(next.undual)
+    override type undual         = UndualFailure
 
     override  def get: get = noSuchElement("peg.Failure.get")
     override type get      = noSuchElement[_]
@@ -73,7 +76,4 @@ final case class Failure[ys <: List](override val next: ys) extends AbstractResu
 
     override  def append[f <: Function0](f: f): append[f] = f.apply.asPegResult
     override type append[f <: Function0]                  = f#apply#asPegResult
-
-    override  def undual: undual = UndualFailure(next.undual)
-    override type undual         = UndualFailure
 }

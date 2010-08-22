@@ -14,8 +14,8 @@ import function._
 trait Function1 extends Any with ReferenceEquality {
     type self <: Function1
 
-    final override  def asFunction1 = self
-    final override type asFunction1 = self
+    final override  def asFunction1: asFunction1 = self
+    final override type asFunction1              = self
 
      def apply[v1 <: Any](v1: v1): apply[v1]
     type apply[v1 <: Any] <: Any

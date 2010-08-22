@@ -20,7 +20,7 @@ object ScanLeft {
         override type isEmpty          = xs#isEmpty
 
         override lazy val head: head = f.apply(z, xs.head)
-        override type head           = f#apply[z, xs#head]
+        override     type head       = f#apply[z, xs#head]
 
         override  def tail: tail = Impl(xs.tail, head, f)
         override type tail       = Impl[xs#tail, head, f]
@@ -38,7 +38,7 @@ object ScanRight {
     case class Else[xs <: List, z <: Any, f <: Function2](xs: xs, z: z, f: f) extends Function0 {
         type self = Else[xs, z, f]
         private lazy val ys: ys = ScanRight.apply(xs.tail, z, f)
-        private type ys         = ScanRight.apply[xs#tail, z, f]
+        private     type ys     = ScanRight.apply[xs#tail, z, f]
         override  def apply: apply = Cons(f.apply(xs.head, ys.head), ys)
         override type apply        = Cons[f#apply[xs#head, ys#head], ys]
     }

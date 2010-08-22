@@ -18,9 +18,6 @@ object Peano extends Common
 sealed trait Peano extends AbstractNat {
     type self <: Peano
 
-    final override  def asNatPeano = self
-    final override type asNatPeano = self
-
     override type increment <: Peano
     override type decrement <: Peano
     override type plus[that <: Nat] <: Peano
@@ -43,6 +40,9 @@ sealed trait Peano extends AbstractNat {
 
 private[dual]
 sealed abstract class AbstractPeano extends Peano {
+    final override  def asNatPeano: asNatPeano = self
+    final override type asNatPeano             = self
+
     final override  def increment: increment = Succ(self)
     final override type increment            = Succ[self]
 
@@ -121,7 +121,7 @@ final case class Succ[n <: Peano](override val decrement: n) extends AbstractPea
     override type foldRight[z <: Any, f <: Function2]                              = f#apply[self, decrement#foldRight[z, f]]
 
     override lazy val isEven: isEven = decrement.isEven.not
-    override type isEven             = decrement#isEven#not
+    override     type isEven         = decrement#isEven#not
 
     override def undual: undual = 1 + decrement.undual
 }

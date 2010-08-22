@@ -128,6 +128,6 @@ trait Any extends scala.Equals {
  */
 trait ReferenceEquality extends Any {
     final override lazy val undual: undual = new scala.AnyRef{}
-    final override type undual = scala.AnyRef
+    final override     type undual         = scala.AnyRef
     final override  def canEqual(that: scala.Any) = true
 }

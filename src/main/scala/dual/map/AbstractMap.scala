@@ -9,6 +9,9 @@ package dual; package map
 
 
 trait AbstractMap extends Map {
+    final override  def asMap: asMap = self
+    final override type asMap        = self
+
     final override  def putList[xs <: List](xs: xs): putList[xs] = PutList.apply(self, xs)
     final override type putList[xs <: List]                      = PutList.apply[self, xs]
 
@@ -23,4 +26,6 @@ trait AbstractMap extends Map {
 
     final override  def union[that <: Map](that: that): union[that] = that.putList(asList)
     final override type union[that <: Map]                          = that#putList[asList]
+
+    override def canEqual(that: scala.Any) = that.isInstanceOf[Map]
 }

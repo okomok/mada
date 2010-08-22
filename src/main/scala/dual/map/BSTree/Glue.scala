@@ -25,7 +25,7 @@ object Glue {
         type self = ElseThen[l, r]
 
         private lazy val d: d = RemoveMax.apply(l)
-        private type d        = RemoveMax.apply[l]
+        private     type d    = RemoveMax.apply[l]
 
         override  def apply: apply = Balance.apply(d._1.asProduct2._1, d._1.asProduct2._2, d._2.asMapBSTree, r)
         override type apply        = Balance.apply[d#_1#asProduct2#_1, d#_1#asProduct2#_2, d#_2#asMapBSTree, r]
@@ -35,7 +35,7 @@ object Glue {
         type self = ElseElse[l, r]
 
         private lazy val d: d = RemoveMin.apply(r)
-        private type d        = RemoveMin.apply[r]
+        private     type d    = RemoveMin.apply[r]
 
         override  def apply: apply = Balance.apply(d._1.asProduct2._1, d._1.asProduct2._2, l, d._2.asMapBSTree)
         override type apply        = Balance.apply[d#_1#asProduct2#_1, d#_1#asProduct2#_2, l, d#_2#asMapBSTree]
@@ -58,7 +58,7 @@ object RemoveMax { // => Tuple2(Tuple2(maxKey, value), map)
         type self = Else[m]
 
         private lazy val d: d = RemoveMax.apply(m.right)
-        private type d        = RemoveMax.apply[m#right]
+        private     type d    = RemoveMax.apply[m#right]
 
         override  def apply: apply = Tuple2(d._1, Balance.apply(m.key, m.value, m.left, d._2.asMapBSTree)).asInstanceOf[apply]
         override type apply        = Tuple2[d#_1, Balance.apply[m#key, m#value, m#left, d#_2#asMapBSTree]]
@@ -80,7 +80,7 @@ object RemoveMin { // => Tuple2(Tuple2(minKey, value), map)
         type self = Else[m]
 
         private lazy val d: d = RemoveMin.apply(m.left)
-        private type d        = RemoveMin.apply[m#left]
+        private     type d    = RemoveMin.apply[m#left]
 
         override  def apply: apply = Tuple2(d._1, Balance.apply(m.key, m.value, d._2.asMapBSTree, m.right)).asInstanceOf[apply]
         override type apply        = Tuple2[d#_1, Balance.apply[m#key, m#value, d#_2#asMapBSTree, m#right]]

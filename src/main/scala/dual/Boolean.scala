@@ -13,9 +13,7 @@ package dual
  */
 sealed abstract class Boolean extends Any {
     type self <: Boolean
-
-    final override  def asBoolean = self
-    final override type asBoolean = self
+    type undual = scala.Boolean
 
      def not: not
     type not <: Boolean
@@ -40,19 +38,21 @@ sealed abstract class Boolean extends Any {
 
     private[dual]  def isFalse: isFalse
     private[dual] type isFalse <: Boolean
-
-    final override type undual = scala.Boolean
-    final override  def canEqual(that: scala.Any) = that.isInstanceOf[Boolean]
 }
 
 
 private[dual]
 sealed abstract class AbstractBoolean extends Boolean {
+    final override  def asBoolean: asBoolean = self
+    final override type asBoolean            = self
+
     final override  def nequal[that <: Boolean](that: that): nequal[that] = equal(that).not
     final override type nequal[that <: Boolean]                           = equal[that]#not
 
     final override  def naturalOrdering: naturalOrdering = _Boolean.NaturalOrdering
     final override type naturalOrdering                  = _Boolean.NaturalOrdering
+
+    final override  def canEqual(that: scala.Any) = that.isInstanceOf[Boolean]
 }
 
 
@@ -61,6 +61,8 @@ sealed abstract class AbstractBoolean extends Boolean {
  */
 sealed abstract class `true` extends AbstractBoolean {
     type self = `true`
+
+    override  def undual: undual = true
 
     override  def not: not = `false`
     override type not      = `false`
@@ -80,8 +82,6 @@ sealed abstract class `true` extends AbstractBoolean {
     override  def asNat: asNat = nat.peano._1
     override type asNat        = nat.peano._1
 
-    override  def undual: undual = true
-
     override private[dual]  def isTrue: isTrue = `true`
     override private[dual] type isTrue         = `true`
 
@@ -95,6 +95,8 @@ sealed abstract class `true` extends AbstractBoolean {
  */
 sealed abstract class `false` extends AbstractBoolean {
     type self = `false`
+
+    override  def undual: undual = false
 
     override  def not: not = `true`
     override type not      = `true`
@@ -113,8 +115,6 @@ sealed abstract class `false` extends AbstractBoolean {
 
     override  def asNat: asNat = nat.peano._0
     override type asNat        = nat.peano._0
-
-    override  def undual: undual = false
 
     override private[dual]  def isTrue: isTrue = `false`
     override private[dual] type isTrue         = `false`

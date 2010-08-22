@@ -11,8 +11,8 @@ package dual
 trait Product extends Any {
     type self <: Product
 
-    final override  def asProduct = self
-    final override type asProduct = self
+    final override  def asProduct: asProduct = self
+    final override type asProduct            = self
 
      def arity: arity
     type arity <: Nat

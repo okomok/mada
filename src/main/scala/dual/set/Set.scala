@@ -16,9 +16,7 @@ object Set extends Common
  */
 trait Set extends Any {
     type self <: Set
-
-    final override  def asSet = self
-    final override type asSet = self
+    type undual <: scala.collection.Set[scala.Any]
 
      def size: size
     type size <: Nat
@@ -58,7 +56,4 @@ trait Set extends Any {
 
      def subsetOf[that <: Set](that: that): subsetOf[that]
     type subsetOf[that <: Set] <: Boolean
-
-    final override type undual = scala.collection.Set[scala.Any]
-    override def canEqual(that: scala.Any) = that.isInstanceOf[Set]
 }

@@ -12,9 +12,7 @@ package dual; package map; package bstree
 
 sealed abstract class BSTree extends AbstractMap {
     type self <: BSTree
-
-    final override  def asMapBSTree = self
-    final override type asMapBSTree = self
+    type undual = scala.collection.immutable.Map[scala.Any, scala.Any]
 
     override type put[k <: Any, v <: Any] <: BSTree
     override type remove[k <: Any] <: BSTree
@@ -38,6 +36,9 @@ sealed abstract class BSTree extends AbstractMap {
 
 
 sealed abstract class AbstractBSTree extends BSTree {
+    final override  def asMapBSTree: asMapBSTree = self
+    final override type asMapBSTree              = self
+
     final override  def keySet: keySet = set.BSTree(self)
     final override type keySet         = set.BSTree[self]
 
@@ -48,6 +49,8 @@ sealed abstract class AbstractBSTree extends BSTree {
 
 final case class Nil[o <: Ordering](override val ord: o) extends AbstractBSTree {
     type self = Nil[o]
+
+    override  def undual: undual = scala.collection.immutable.Map.empty
 
     override  def size: size = nat.dense._0
     override type size       = nat.dense._0
@@ -86,8 +89,6 @@ final case class Nil[o <: Ordering](override val ord: o) extends AbstractBSTree 
 
     override  def valueList: valueList = list.Nil
     override type valueList            = list.Nil
-
-    override  def undual: undual = scala.collection.immutable.Map.empty
 }
 
 
@@ -97,6 +98,8 @@ final case class Node[k <: Any, v <: Any, l <: BSTree, r <: BSTree](
     Predef.assert(left.ord.undual == right.ord.undual)
 
     type self = Node[k, v, l, r]
+
+    override  def undual: undual = (left.undual + (key.undual -> value.undual)) ++ right.undual
 
     override  val size: size = left.size.plus(right.size).increment.asInstanceOf[size]
     override type size       = left#size#plus[right#size]#increment
@@ -129,6 +132,4 @@ final case class Node[k <: Any, v <: Any, l <: BSTree, r <: BSTree](
 
     override  def valueList: valueList = left.valueList.append(value :: right.valueList).asInstanceOf[valueList]
     override type valueList            = left#valueList#append[value :: right#valueList]
-
-    override  def undual: undual = (left.undual + (key.undual -> value.undual)) ++ right.undual
 }

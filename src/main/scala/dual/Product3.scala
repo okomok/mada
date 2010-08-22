@@ -14,8 +14,8 @@ import nat.peano
 trait Product3 extends Product {
     type self <: Product3
 
-    final override  def asProduct3 = self
-    final override type asProduct3 = self
+    final override  def asProduct3: asProduct3 = self
+    final override type asProduct3             = self
 
      def _1: _1
     type _1 <: Any

@@ -20,7 +20,7 @@ object Or {
         override type parse[xs <: List]                    = _aux[p#parse[xs], xs]
 
         private lazy val pw: pw = p.width
-        private type pw         = p#width
+        private     type pw     = p#width
 
         override  def width: width =
             `if`(pw.equal(q.width), const0(pw), throw0(new UnsupportedOperationException("dual.peg.or.width"))).apply.asNat.asInstanceOf[width]

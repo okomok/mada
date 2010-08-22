@@ -8,9 +8,8 @@ package com.github.okomok.mada
 package dual; package list
 
 
-trait Forwarder extends List {
-    protected  def delegate: delegate
-    protected type delegate <: List
+trait Forwarder extends List with dual.Forwarder {
+    override protected type delegate <: List
 
     protected  def around[that <: List](that: that): around[that]
     protected type around[that <: List] <: List

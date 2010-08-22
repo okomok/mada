@@ -17,9 +17,6 @@ object Nat extends Common
 trait Nat extends Any {
     type self <: Nat
 
-    final override  def asNat = self
-    final override type asNat = self
-
     @constantTime
      def isZero: isZero
     type isZero <: Boolean

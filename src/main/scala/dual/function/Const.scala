@@ -12,5 +12,5 @@ private[dual]
 final class Const0[v <: Any](v: => v) extends Function0 {
     type self = Const0[v]
     override lazy val apply: apply = v
-    override type apply            = v
+    override     type apply        = v
 }

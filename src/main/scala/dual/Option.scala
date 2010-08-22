@@ -13,9 +13,7 @@ package dual
  */
 sealed abstract class Option extends Any {
     type self <: Option
-
-    final override  def asOption = self
-    final override type asOption = self
+    type undual <: scala.Option[_]
 
      def isEmpty: isEmpty
     type isEmpty <: Boolean
@@ -55,14 +53,14 @@ sealed abstract class Option extends Any {
 
      def orElse[f <: Function0](f: f): orElse[f]
     type orElse[f <: Function0] <: Option
-
-    override type undual <: scala.Option[_]
-    final override def canEqual(that: scala.Any) = that.isInstanceOf[Option]
 }
 
 
 private[dual]
 sealed abstract class AbstractOption extends Option {
+    final override  def asOption: asOption = self
+    final override type asOption           = self
+
     final override  def nonEmpty: nonEmpty = isEmpty.not
     final override type nonEmpty           = isEmpty#not
 
@@ -86,6 +84,8 @@ sealed abstract class AbstractOption extends Option {
 
     final override  def naturalOrdering: naturalOrdering = list.naturalOrdering
     final override type naturalOrdering                  = list.naturalOrdering
+
+    final override  def canEqual(that: scala.Any) = that.isInstanceOf[Option]
 }
 
 
@@ -94,6 +94,9 @@ sealed abstract class AbstractOption extends Option {
  */
 sealed abstract class None extends AbstractOption {
     type self = None
+
+    override  def undual: undual = scala.None
+    override type undual         = scala.None.type
 
     override  def isEmpty: isEmpty = `true`
     override type isEmpty          = `true`
@@ -120,9 +123,6 @@ sealed abstract class None extends AbstractOption {
 
     override  def asList: asList = Nil
     override type asList         = Nil
-
-    override  def undual: undual = scala.None
-    override type undual         = scala.None.type
 }
 
 
@@ -131,6 +131,9 @@ sealed abstract class None extends AbstractOption {
  */
 final case class Some[e <: Any](override val get: e) extends AbstractOption {
     type self = Some[e]
+
+    override  def undual: undual = scala.Some(get.undual)
+    override type undual         = scala.Some[get#undual]
 
     override  def isEmpty: isEmpty = `false`
     override type isEmpty          = `false`
@@ -156,9 +159,6 @@ final case class Some[e <: Any](override val get: e) extends AbstractOption {
 
     override  def asList: asList = get :: Nil
     override type asList         = get :: Nil
-
-    override  def undual: undual = scala.Some(get.undual)
-    override type undual         = scala.Some[get#undual]
 }
 
 

@@ -31,7 +31,7 @@ object FromList {
     final case class Else[r <: Option](r: r) extends Function0 {
         type self = Else[r]
         private lazy val p: p = r.get.asProduct2
-        private type p        = r#get#asProduct2
+        private     type p    = r#get#asProduct2
         override  def apply: apply = Success(p._1, p._2.asList)
         override type apply        = Success[p#_1, p#_2#asList]
     }

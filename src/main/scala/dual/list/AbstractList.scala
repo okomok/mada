@@ -9,6 +9,12 @@ package dual; package list
 
 
 trait AbstractList extends List {
+    final override  def asList: asList = self
+    final override type asList         = self
+
+    final override  def undual: undual = if (isEmpty.undual) scala.collection.immutable.Nil else (head.undual :: tail.undual.toList)
+    final override type undual         = scala.collection.immutable.List[scala.Any]
+
     final override  def ::[x <: Any](x: x): ::[x] = Cons(x, self)
     final override type ::[x <: Any]              = Cons[x, self]
 
@@ -19,7 +25,7 @@ trait AbstractList extends List {
     final override type foreach[f <: Function1]                   = Foreach.apply[self, f]
 
     final override lazy val length: length = Length.apply(self)
-    final override type length             = Length.apply[self]
+    final override     type length         = Length.apply[self]
 
     final override  def append[that <: List](that: that): append[that] = Append.apply(self, that)
     final override type append[that <: List]                           = Append.apply[self, that]
@@ -138,6 +144,5 @@ trait AbstractList extends List {
     final override  def naturalOrdering: naturalOrdering = list.naturalOrdering
     final override type naturalOrdering                  = list.naturalOrdering
 
-    final override  def undual: undual = if (isEmpty.undual) scala.collection.immutable.Nil else (head.undual :: tail.undual.toList)
-    final override type undual         = scala.collection.immutable.List[scala.Any]
+    override  def canEqual(that: scala.Any) = that.isInstanceOf[List]
 }

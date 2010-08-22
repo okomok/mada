@@ -11,8 +11,8 @@ package dual
 trait Equiv extends Any with ReferenceEquality {
     type self <: Equiv
 
-    final override  def asEquiv = self
-    final override type asEquiv = self
+    final override  def asEquiv: asEquiv = self
+    final override type asEquiv          = self
 
      def equiv[x <: Any, y <: Any](x: x, y: y): equiv[x, y]
     type equiv[x <: Any, y <: Any] <: Boolean

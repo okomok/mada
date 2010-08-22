@@ -17,9 +17,6 @@ object Dense extends Common
 sealed abstract class Dense extends AbstractNat {
     type self <: Dense
 
-    final override  def asNatDense = self
-    final override type asNatDense = self
-
      def head: head
     type head <: Boolean
 
@@ -57,6 +54,9 @@ sealed abstract class Dense extends AbstractNat {
 
 private[dual]
 sealed abstract class AbstractDense extends Dense {
+    final override  def asNatDense: asNatDense = self
+    final override type asNatDense             = self
+
     @equivalentTo("Cons(e. self)")
     final override  def ::[e <: Boolean](e: e): ::[e] = Cons(e, self)
     final override type ::[e <: Boolean]              = Cons[e, self]
@@ -89,6 +89,8 @@ sealed abstract class AbstractDense extends Dense {
 
 sealed class Nil extends AbstractDense {
     type self = Nil
+
+    override  def undual: undual = 0
 
     override  def head: head = noSuchElement("nat.dense.Nil.head")
     override type head       = noSuchElement[_]
@@ -128,8 +130,6 @@ sealed class Nil extends AbstractDense {
 
     override  def shiftLeftBy[n <: Peano](n: n): shiftLeftBy[n] = self
     override type shiftLeftBy[n <: Peano]                       = self
-
-    override def undual: undual = 0
 }
 
 
@@ -137,6 +137,8 @@ final case class Cons[x <: Boolean, xs <: Dense](override val head: x, override 
     assert(head.or(tail.isZero.not))
 
     type self = Cons[x, xs]
+
+    override  def undual: undual = (if (head.undual) 1 else 0) + (2 * tail.undual)
 
     override type head = x
     override type tail = xs
@@ -173,8 +175,6 @@ final case class Cons[x <: Boolean, xs <: Dense](override val head: x, override 
 
     override  def shiftLeftBy[n <: Peano](n: n): shiftLeftBy[n] = ConsShiftLeftBy.apply(self, n)
     override type shiftLeftBy[n <: Peano]                       = ConsShiftLeftBy.apply[self, n]
-
-    override def undual: undual = (if (head.undual) 1 else 0) + (2 * tail.undual)
 }
 
 
