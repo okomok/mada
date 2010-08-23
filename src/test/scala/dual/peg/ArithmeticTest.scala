@@ -109,7 +109,7 @@ class ArithmeticTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial {
 
-        final class myList extends list.Strong(_3 :: Ch.+ :: _2 :: Ch.- :: _1 :: Nil) { type self = myList }
+        final class myList extends list.Strong(_3 :: Ch.+ :: _2/* :: Ch.- :: _1*/ :: Nil) { type self = myList }
         val myList = new myList
        free.assert(Arithmetic.expr.matches(myList))
 
