@@ -23,6 +23,7 @@ trait CommonLiteral {
     private type __::[x <: Boolean, xs <: Dense] = Cons[x, xs]
 
 	 val  _0:  _0 = __Nil
+
 	 val  _1:  _1 = _1B :: __Nil
 	 val  _2:  _2 = _0B :: _1B :: __Nil
 	 val  _3:  _3 = _1B :: _1B :: __Nil
@@ -79,6 +80,7 @@ trait CommonLiteral {
      val _50: _50 = _0B :: _1B :: _0B :: _0B :: _1B :: _1B :: __Nil
 
 	type  _0 = Nil
+
 	type  _1 = _1B __:: Nil
 	type  _2 = _0B __:: _1B __:: Nil
 	type  _3 = _1B __:: _1B __:: Nil

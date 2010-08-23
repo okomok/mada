@@ -30,4 +30,6 @@ trait AbstractNat extends Nat {
 
     final override  def naturalOrdering: naturalOrdering = nat.naturalOrdering
     final override type naturalOrdering                  = nat.naturalOrdering
+
+    final override  def canEqual(that: scala.Any) = that.isInstanceOf[Nat]
 }

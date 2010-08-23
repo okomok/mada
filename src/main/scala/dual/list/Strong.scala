@@ -29,6 +29,6 @@ abstract class Strong[ys <: List](final override protected val delegate: ys) ext
     final override protected type delegate = ys
 
     final override  def asList: asList = self
-    final override type asList = self
+    final override type asList         = self
 }
 */

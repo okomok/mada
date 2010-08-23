@@ -16,6 +16,7 @@ object Nat extends Common
  */
 trait Nat extends Any {
     type self <: Nat
+    type undual = scala.Int
 
     @constantTime
      def isZero: isZero
@@ -73,7 +74,4 @@ trait Nat extends Any {
 
      def bitOr[that <: Nat](that: that): bitOr[that]
     type bitOr[that <: Nat] <: Nat
-
-    final override type undual = scala.Int
-    final override  def canEqual(that: scala.Any) = that.isInstanceOf[Nat]
 }
