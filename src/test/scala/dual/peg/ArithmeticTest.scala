@@ -40,6 +40,7 @@ object Arithmetic {
 */
 
 
+/*
     val expr = new expr
     final class expr extends peg.Rule {
         type self = expr
@@ -67,8 +68,7 @@ object Arithmetic {
         override  def rule: rule = peg.term(_1).or(peg.term(_2)).or(peg.term(_3))
         override type rule       = peg.term[_1]#or[peg.term[_2]]#or[peg.term[_3]]
     }
-
-
+*/
 
 /*
     // order matters.
@@ -84,6 +84,48 @@ object Arithmetic {
      val expr: expr = term.seq( peg.term(Ch.+).seq(term).or(peg.term(Ch.-).seq(term)).star )
     type expr       = term#seq[ peg.term[Ch.+]#seq[term]#or[peg.term[Ch.-]#seq[term]]#star ]
 */
+/*s.
+    val number: number = new number
+    final class number extends peg.Strong(peg.term(_1).or(peg.term(_2)).or(peg.term(_3))) { type self = number }
+
+     val factor: factor = number//.or( peg.term(Ch.`(`).seq(expr).seq(peg.term(Ch.`)`)) )
+    type factor         = number//#or[ peg.term[Ch.`(`]#seq[expr]#seq[peg.term[Ch.`)`]] ]
+
+    val term: term = new term
+    final class term extends peg.Strong(factor.seq( peg.term(Ch.*).seq(factor).or(peg.term(Ch./).seq(factor)).star )) { type self = term }
+
+    val expr: expr = new expr
+    final class expr extends peg.Strong(term.seq( peg.term(Ch.+).seq(term).or(peg.term(Ch.-).seq(term)).star )) { type self = expr }
+*/
+
+    // Hmm, nothing changes.
+    val T_1: T_1 = new T_1
+    final class T_1 extends peg.Strong(peg.term(_1)) { type self = T_1 }
+    val T_2: T_2 = new T_2
+    final class T_2 extends peg.Strong(peg.term(_2)) { type self = T_2 }
+    val T_3: T_3 = new T_3
+    final class T_3 extends peg.Strong(peg.term(_3)) { type self = T_3 }
+    val T_TIMES: T_TIMES = new T_TIMES
+    final class T_TIMES extends peg.Strong(peg.term(Ch.*)) { type self = T_TIMES }
+    val T_DIV: T_DIV = new T_DIV
+    final class T_DIV extends peg.Strong(peg.term(Ch./)) { type self = T_DIV }
+    val T_PLUS: T_PLUS = new T_PLUS
+    final class T_PLUS extends peg.Strong(peg.term(Ch.+)) { type self = T_PLUS }
+    val T_MINUS: T_MINUS = new T_MINUS
+    final class T_MINUS extends peg.Strong(peg.term(Ch.-)) { type self = T_MINUS }
+
+    val number: number = new number
+    final class number extends peg.Strong(T_1 or T_2 or T_3) { type self = number }
+
+     val factor: factor = number//.or( peg.term(Ch.`(`).seq(expr).seq(peg.term(Ch.`)`)) )
+    type factor         = number//#or[ peg.term[Ch.`(`]#seq[expr]#seq[peg.term[Ch.`)`]] ]
+
+    val term: term = new term
+    final class term extends peg.Strong(factor seq ((T_TIMES seq factor) or (T_DIV seq factor)).star) { type self = term }
+
+    val expr: expr = new expr
+    final class expr extends peg.Strong(term seq   ((T_PLUS seq term) or (T_MINUS seq term)).star ) { type self = expr }
+
 
 }
 
@@ -109,8 +151,9 @@ class ArithmeticTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial {
 
-        final class myList extends list.Strong(_3 :: Ch.+ :: _2/* :: Ch.- :: _1*/ :: Nil) { type self = myList }
+        final class myList extends list.Strong(_3 :: Ch.+ /*:: _2 :: Ch.-*/ :: _1 :: Nil) { type self = myList }
         val myList = new myList
+        //println(Arithmetic.expr.parse(myList))
        free.assert(Arithmetic.expr.matches(myList))
 
     //   free.assert(Arithmetic.expr.matches(_3 :: Ch.+ :: _2 :: Ch.- :: _1 :: Nil))

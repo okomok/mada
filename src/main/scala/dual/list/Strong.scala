@@ -12,21 +12,21 @@ package dual; package list
  * Sequence-derivation helper to work around suboptimal `nsc.symtab.Types.Type.isGround`.
  * (See "C++ Template Metaprogramming" 5.10 and C.3.7)
  */
-abstract class Strong[ys <: List](ys: ys) extends AbstractList {
-    override  def isEmpty: isEmpty = ys.isEmpty
-    override type isEmpty          = ys#isEmpty
+abstract class Strong[xs <: List](xs: xs) extends AbstractList {
+    override  def isEmpty: isEmpty = xs.isEmpty
+    override type isEmpty          = xs#isEmpty
 
-    override  def head: head = ys.head
-    override type head       = ys#head
+    override  def head: head = xs.head
+    override type head       = xs#head
 
-    override  def tail: tail = ys.tail
-    override type tail       = ys#tail
+    override  def tail: tail = xs.tail
+    override type tail       = xs#tail
 }
 
 /*
 // This is probably worse than above, accessing delegate type-expression earlier.
-abstract class Strong[ys <: List](final override protected val delegate: ys) extends TrivialForwarder {
-    final override protected type delegate = ys
+abstract class Strong[xs <: List](final override protected val delegate: xs) extends TrivialForwarder {
+    final override protected type delegate = xs
 
     final override  def asList: asList = self
     final override type asList         = self
