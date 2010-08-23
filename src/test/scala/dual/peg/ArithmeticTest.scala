@@ -12,7 +12,7 @@ import com.github.okomok.mada
 
 import mada.dual._
 import nat.dense.{AsciiLiteral => Ch}
-import nat.dense.Literal._
+import nat.dense.StrongLiteral._
 
 
 // too slow to compile
@@ -109,7 +109,7 @@ class ArithmeticTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial {
 
-        final class myList extends list.Strong(_3 :: Ch.+ :: _2 :: Nil) { type self = myList }
+        final class myList extends list.Strong(_3 :: Ch.+ :: _2 :: Ch.- :: _1 :: Nil) { type self = myList }
         val myList = new myList
        free.assert(Arithmetic.expr.matches(myList))
 

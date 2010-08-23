@@ -16,195 +16,385 @@ object AsciiLiteral {
     private  val _1B = `true`
     private type _1B = `true`
 
-     val ` `: ` ` = _0B :: _0B :: _0B :: _0B :: _0B :: _1B :: Nil
-     val  ! :  !  = _1B :: _0B :: _0B :: _0B :: _0B :: _1B :: Nil
-     val `"`: `"` = _0B :: _1B :: _0B :: _0B :: _0B :: _1B :: Nil
-     val `#`: `#` = _0B :: _1B :: _0B :: _0B :: _0B :: _1B :: Nil
-     val `$`: `$` = _0B :: _0B :: _1B :: _0B :: _0B :: _1B :: Nil
-     val  % :  %  = _1B :: _0B :: _1B :: _0B :: _0B :: _1B :: Nil
-     val  & :  &  = _0B :: _1B :: _1B :: _0B :: _0B :: _1B :: Nil
-     val `'`: `'` = _1B :: _1B :: _1B :: _0B :: _0B :: _1B :: Nil
-     val `(`: `(` = _0B :: _0B :: _0B :: _1B :: _0B :: _1B :: Nil
-     val `)`: `)` = _1B :: _0B :: _0B :: _1B :: _0B :: _1B :: Nil
-     val  * :  *  = _0B :: _1B :: _0B :: _1B :: _0B :: _1B :: Nil
-     val  + :  +  = _1B :: _1B :: _0B :: _1B :: _0B :: _1B :: Nil
-     val `,`: `,` = _0B :: _0B :: _1B :: _1B :: _0B :: _1B :: Nil
-     val  - :  -  = _1B :: _0B :: _1B :: _1B :: _0B :: _1B :: Nil
-     val `.`: `.` = _0B :: _1B :: _1B :: _1B :: _0B :: _1B :: Nil
-     val  / :  /  = _1B :: _1B :: _1B :: _1B :: _0B :: _1B :: Nil
-     val `0`: `0` = _0B :: _0B :: _0B :: _0B :: _1B :: _1B :: Nil
-     val `1`: `1` = _1B :: _0B :: _0B :: _0B :: _1B :: _1B :: Nil
-     val `2`: `2` = _0B :: _1B :: _0B :: _0B :: _1B :: _1B :: Nil
-     val `3`: `3` = _1B :: _1B :: _0B :: _0B :: _1B :: _1B :: Nil
-     val `4`: `4` = _0B :: _0B :: _1B :: _0B :: _1B :: _1B :: Nil
-     val `5`: `5` = _1B :: _0B :: _1B :: _0B :: _1B :: _1B :: Nil
-     val `6`: `6` = _0B :: _1B :: _1B :: _0B :: _1B :: _1B :: Nil
-     val `7`: `7` = _1B :: _1B :: _1B :: _0B :: _1B :: _1B :: Nil
-     val `8`: `8` = _0B :: _0B :: _0B :: _1B :: _1B :: _1B :: Nil
-     val `9`: `9` = _1B :: _0B :: _0B :: _1B :: _1B :: _1B :: Nil
-     val `:`: `:` = _0B :: _1B :: _0B :: _1B :: _1B :: _1B :: Nil
-     val `;`: `;` = _1B :: _1B :: _0B :: _1B :: _1B :: _1B :: Nil
-     val  < :  <  = _0B :: _0B :: _1B :: _1B :: _1B :: _1B :: Nil
-     val `=`: `=` = _1B :: _0B :: _1B :: _1B :: _1B :: _1B :: Nil
-     val  > :  >  = _0B :: _1B :: _1B :: _1B :: _1B :: _1B :: Nil
-     val  ? :  ?  = _1B :: _1B :: _1B :: _1B :: _1B :: _1B :: Nil
-	 val  A :  A  = _1B :: _0B :: _0B :: _0B :: _0B :: _0B :: _1B :: Nil
-	 val  B :  B  = _0B :: _1B :: _0B :: _0B :: _0B :: _0B :: _1B :: Nil
-	 val  C :  C  = _1B :: _1B :: _0B :: _0B :: _0B :: _0B :: _1B :: Nil
-	 val  D :  D  = _0B :: _0B :: _1B :: _0B :: _0B :: _0B :: _1B :: Nil
-	 val  E :  E  = _1B :: _0B :: _1B :: _0B :: _0B :: _0B :: _1B :: Nil
-	 val  F :  F  = _0B :: _1B :: _1B :: _0B :: _0B :: _0B :: _1B :: Nil
-	 val  G :  G  = _1B :: _1B :: _1B :: _0B :: _0B :: _0B :: _1B :: Nil
-	 val  H :  H  = _0B :: _0B :: _0B :: _1B :: _0B :: _0B :: _1B :: Nil
-	 val  I :  I  = _1B :: _0B :: _0B :: _1B :: _0B :: _0B :: _1B :: Nil
-     val  J :  J  = _0B :: _1B :: _0B :: _1B :: _0B :: _0B :: _1B :: Nil
-	 val  K :  K  = _1B :: _1B :: _0B :: _1B :: _0B :: _0B :: _1B :: Nil
-	 val  L :  L  = _0B :: _0B :: _1B :: _1B :: _0B :: _0B :: _1B :: Nil
-	 val  M :  M  = _1B :: _0B :: _1B :: _1B :: _0B :: _0B :: _1B :: Nil
-	 val  N :  N  = _0B :: _1B :: _1B :: _1B :: _0B :: _0B :: _1B :: Nil
-	 val  O :  O  = _1B :: _1B :: _1B :: _1B :: _0B :: _0B :: _1B :: Nil
-	 val  P :  P  = _0B :: _0B :: _0B :: _0B :: _1B :: _0B :: _1B :: Nil
-	 val  Q :  Q  = _1B :: _0B :: _0B :: _0B :: _1B :: _0B :: _1B :: Nil
-	 val  R :  R  = _0B :: _1B :: _0B :: _0B :: _1B :: _0B :: _1B :: Nil
-	 val  S :  S  = _1B :: _1B :: _0B :: _0B :: _1B :: _0B :: _1B :: Nil
-	 val  T :  T  = _0B :: _0B :: _1B :: _0B :: _1B :: _0B :: _1B :: Nil
-	 val  U :  U  = _1B :: _0B :: _1B :: _0B :: _1B :: _0B :: _1B :: Nil
-	 val  V :  V  = _0B :: _1B :: _1B :: _0B :: _1B :: _0B :: _1B :: Nil
-	 val  W :  W  = _1B :: _1B :: _1B :: _0B :: _1B :: _0B :: _1B :: Nil
-	 val  X :  X  = _0B :: _0B :: _0B :: _1B :: _1B :: _0B :: _1B :: Nil
-	 val  Y :  Y  = _1B :: _0B :: _0B :: _1B :: _1B :: _0B :: _1B :: Nil
-	 val  Z :  Z  = _0B :: _1B :: _0B :: _1B :: _1B :: _0B :: _1B :: Nil
-     val `[`: `[` = _1B :: _1B :: _0B :: _1B :: _1B :: _0B :: _1B :: Nil
-     val BSL: BSL = _0B :: _0B :: _1B :: _1B :: _1B :: _0B :: _1B :: Nil
-     val `]`: `]` = _1B :: _0B :: _1B :: _1B :: _1B :: _0B :: _1B :: Nil
-     val  ^ :  ^  = _0B :: _1B :: _1B :: _1B :: _1B :: _0B :: _1B :: Nil
-     val `_`: `_` = _1B :: _1B :: _1B :: _1B :: _1B :: _0B :: _1B :: Nil
-     val BQ : BQ  = _0B :: _0B :: _0B :: _0B :: _0B :: _1B :: _1B :: Nil
-     val  a :  a  = _1B :: _0B :: _0B :: _0B :: _0B :: _1B :: _1B :: Nil
-     val  b :  b  = _0B :: _1B :: _0B :: _0B :: _0B :: _1B :: _1B :: Nil
-     val  c :  c  = _1B :: _1B :: _0B :: _0B :: _0B :: _1B :: _1B :: Nil
-     val  d :  d  = _0B :: _0B :: _1B :: _0B :: _0B :: _1B :: _1B :: Nil
-     val  e :  e  = _1B :: _0B :: _1B :: _0B :: _0B :: _1B :: _1B :: Nil
-     val  f :  f  = _0B :: _1B :: _1B :: _0B :: _0B :: _1B :: _1B :: Nil
-     val  g :  g  = _1B :: _1B :: _1B :: _0B :: _0B :: _1B :: _1B :: Nil
-     val  h :  h  = _0B :: _0B :: _0B :: _1B :: _0B :: _1B :: _1B :: Nil
-     val  i :  i  = _1B :: _0B :: _0B :: _1B :: _0B :: _1B :: _1B :: Nil
-     val  j :  j  = _0B :: _1B :: _0B :: _1B :: _0B :: _1B :: _1B :: Nil
-     val  k :  k  = _1B :: _1B :: _0B :: _1B :: _0B :: _1B :: _1B :: Nil
-     val  l :  l  = _0B :: _0B :: _1B :: _1B :: _0B :: _1B :: _1B :: Nil
-     val  m :  m  = _1B :: _0B :: _1B :: _1B :: _0B :: _1B :: _1B :: Nil
-     val  n :  n  = _0B :: _1B :: _1B :: _1B :: _0B :: _1B :: _1B :: Nil
-     val  o :  o  = _1B :: _1B :: _1B :: _1B :: _0B :: _1B :: _1B :: Nil
-     val  p :  p  = _0B :: _0B :: _0B :: _0B :: _1B :: _1B :: _1B :: Nil
-     val  q :  q  = _1B :: _0B :: _0B :: _0B :: _1B :: _1B :: _1B :: Nil
-     val  r :  r  = _0B :: _1B :: _0B :: _0B :: _1B :: _1B :: _1B :: Nil
-     val  s :  s  = _1B :: _1B :: _0B :: _0B :: _1B :: _1B :: _1B :: Nil
-     val  t :  t  = _0B :: _0B :: _1B :: _0B :: _1B :: _1B :: _1B :: Nil
-     val  u :  u  = _1B :: _0B :: _1B :: _0B :: _1B :: _1B :: _1B :: Nil
-     val  v :  v  = _0B :: _1B :: _1B :: _0B :: _1B :: _1B :: _1B :: Nil
-     val  w :  w  = _1B :: _1B :: _1B :: _0B :: _1B :: _1B :: _1B :: Nil
-     val  x :  x  = _0B :: _0B :: _0B :: _1B :: _1B :: _1B :: _1B :: Nil
-     val  y :  y  = _1B :: _0B :: _0B :: _1B :: _1B :: _1B :: _1B :: Nil
-     val  z :  z  = _0B :: _1B :: _0B :: _1B :: _1B :: _1B :: _1B :: Nil
-     val `{`: `{` = _1B :: _1B :: _0B :: _1B :: _1B :: _1B :: _1B :: Nil
-     val  | :  |  = _0B :: _0B :: _1B :: _1B :: _1B :: _1B :: _1B :: Nil
-     val `}`: `}` = _1B :: _0B :: _1B :: _1B :: _1B :: _1B :: _1B :: Nil
-     val  ~ :  ~  = _0B :: _1B :: _1B :: _1B :: _1B :: _1B :: _1B :: Nil
+     val ` `: ` ` = new ` `{}
+     val  ! :  !  = new  ! {}
+     val `"`: `"` = new `"`{}
+     val `#`: `#` = new `#`{}
+     val `$`: `$` = new `$`{}
+     val  % :  %  = new  % {}
+     val  & :  &  = new  & {}
+     val `'`: `'` = new `'`{}
+     val `(`: `(` = new `(`{}
+     val `)`: `)` = new `)`{}
+     val  * :  *  = new  * {}
+     val  + :  +  = new  + {}
+     val `,`: `,` = new `,`{}
+     val  - :  -  = new  - {}
+     val `.`: `.` = new `.`{}
+     val  / :  /  = new  / {}
+     val `0`: `0` = new `0`{}
+     val `1`: `1` = new `1`{}
+     val `2`: `2` = new `2`{}
+     val `3`: `3` = new `3`{}
+     val `4`: `4` = new `4`{}
+     val `5`: `5` = new `5`{}
+     val `6`: `6` = new `6`{}
+     val `7`: `7` = new `7`{}
+     val `8`: `8` = new `8`{}
+     val `9`: `9` = new `9`{}
+     val `:`: `:` = new `:`{}
+     val `;`: `;` = new `;`{}
+     val  < :  <  = new  < {}
+     val `=`: `=` = new `=`{}
+     val  > :  >  = new  > {}
+     val  ? :  ?  = new  ? {}
+	 val  A :  A  = new  A {}
+	 val  B :  B  = new  B {}
+	 val  C :  C  = new  C {}
+	 val  D :  D  = new  D {}
+	 val  E :  E  = new  E {}
+	 val  F :  F  = new  F {}
+	 val  G :  G  = new  G {}
+	 val  H :  H  = new  H {}
+	 val  I :  I  = new  I {}
+     val  J :  J  = new  J {}
+	 val  K :  K  = new  K {}
+	 val  L :  L  = new  L {}
+	 val  M :  M  = new  M {}
+	 val  N :  N  = new  N {}
+	 val  O :  O  = new  O {}
+	 val  P :  P  = new  P {}
+	 val  Q :  Q  = new  Q {}
+	 val  R :  R  = new  R {}
+	 val  S :  S  = new  S {}
+	 val  T :  T  = new  T {}
+	 val  U :  U  = new  U {}
+	 val  V :  V  = new  V {}
+	 val  W :  W  = new  W {}
+	 val  X :  X  = new  X {}
+	 val  Y :  Y  = new  Y {}
+	 val  Z :  Z  = new  Z {}
+     val `[`: `[` = new `[`{}
+     val BSL: BSL = new BSL{}
+     val `]`: `]` = new `]`{}
+     val  ^ :  ^  = new  ^ {}
+     val UNS: UNS = new UNS{}
+     val BQ : BQ  = new BQ {}
+     val  a :  a  = new  a {}
+     val  b :  b  = new  b {}
+     val  c :  c  = new  c {}
+     val  d :  d  = new  d {}
+     val  e :  e  = new  e {}
+     val  f :  f  = new  f {}
+     val  g :  g  = new  g {}
+     val  h :  h  = new  h {}
+     val  i :  i  = new  i {}
+     val  j :  j  = new  j {}
+     val  k :  k  = new  k {}
+     val  l :  l  = new  l {}
+     val  m :  m  = new  m {}
+     val  n :  n  = new  n {}
+     val  o :  o  = new  o {}
+     val  p :  p  = new  p {}
+     val  q :  q  = new  q {}
+     val  r :  r  = new  r {}
+     val  s :  s  = new  s {}
+     val  t :  t  = new  t {}
+     val  u :  u  = new  u {}
+     val  v :  v  = new  v {}
+     val  w :  w  = new  w {}
+     val  x :  x  = new  x {}
+     val  y :  y  = new  y {}
+     val  z :  z  = new  z {}
+     val `{`: `{` = new `{`{}
+     val  | :  |  = new  | {}
+     val `}`: `}` = new `}`{}
+     val  ~ :  ~  = new  ~ {}
 
-    type ` ` = _0B :: _0B :: _0B :: _0B :: _0B :: _1B :: Nil
-    type  !  = _1B :: _0B :: _0B :: _0B :: _0B :: _1B :: Nil
-    type `"` = _0B :: _1B :: _0B :: _0B :: _0B :: _1B :: Nil
-    type `#` = _0B :: _1B :: _0B :: _0B :: _0B :: _1B :: Nil
-    type `$` = _0B :: _0B :: _1B :: _0B :: _0B :: _1B :: Nil
-    type  %  = _1B :: _0B :: _1B :: _0B :: _0B :: _1B :: Nil
-    type  &  = _0B :: _1B :: _1B :: _0B :: _0B :: _1B :: Nil
-    type `'` = _1B :: _1B :: _1B :: _0B :: _0B :: _1B :: Nil
-    type `(` = _0B :: _0B :: _0B :: _1B :: _0B :: _1B :: Nil
-    type `)` = _1B :: _0B :: _0B :: _1B :: _0B :: _1B :: Nil
-    type  *  = _0B :: _1B :: _0B :: _1B :: _0B :: _1B :: Nil
-    type  +  = _1B :: _1B :: _0B :: _1B :: _0B :: _1B :: Nil
-    type `,` = _0B :: _0B :: _1B :: _1B :: _0B :: _1B :: Nil
-    type  - = _1B :: _0B :: _1B :: _1B :: _0B :: _1B :: Nil
-    type `.` = _0B :: _1B :: _1B :: _1B :: _0B :: _1B :: Nil
-    type  /  = _1B :: _1B :: _1B :: _1B :: _0B :: _1B :: Nil
-    type `0` = _0B :: _0B :: _0B :: _0B :: _1B :: _1B :: Nil
-    type `1` = _1B :: _0B :: _0B :: _0B :: _1B :: _1B :: Nil
-    type `2` = _0B :: _1B :: _0B :: _0B :: _1B :: _1B :: Nil
-    type `3` = _1B :: _1B :: _0B :: _0B :: _1B :: _1B :: Nil
-    type `4` = _0B :: _0B :: _1B :: _0B :: _1B :: _1B :: Nil
-    type `5` = _1B :: _0B :: _1B :: _0B :: _1B :: _1B :: Nil
-    type `6` = _0B :: _1B :: _1B :: _0B :: _1B :: _1B :: Nil
-    type `7` = _1B :: _1B :: _1B :: _0B :: _1B :: _1B :: Nil
-    type `8` = _0B :: _0B :: _0B :: _1B :: _1B :: _1B :: Nil
-    type `9` = _1B :: _0B :: _0B :: _1B :: _1B :: _1B :: Nil
-    type `:` = _0B :: _1B :: _0B :: _1B :: _1B :: _1B :: Nil
-    type `;` = _1B :: _1B :: _0B :: _1B :: _1B :: _1B :: Nil
-    type  <  = _0B :: _0B :: _1B :: _1B :: _1B :: _1B :: Nil
-    type `=` = _1B :: _0B :: _1B :: _1B :: _1B :: _1B :: Nil
-    type  >  = _0B :: _1B :: _1B :: _1B :: _1B :: _1B :: Nil
-    type  ?  = _1B :: _1B :: _1B :: _1B :: _1B :: _1B :: Nil
-    type `@` = _0B :: _0B :: _0B :: _0B :: _0B :: _0B :: _1B :: Nil
-	type  A  = _1B :: _0B :: _0B :: _0B :: _0B :: _0B :: _1B :: Nil
-	type  B  = _0B :: _1B :: _0B :: _0B :: _0B :: _0B :: _1B :: Nil
-	type  C  = _1B :: _1B :: _0B :: _0B :: _0B :: _0B :: _1B :: Nil
-	type  D  = _0B :: _0B :: _1B :: _0B :: _0B :: _0B :: _1B :: Nil
-	type  E  = _1B :: _0B :: _1B :: _0B :: _0B :: _0B :: _1B :: Nil
-	type  F  = _0B :: _1B :: _1B :: _0B :: _0B :: _0B :: _1B :: Nil
-	type  G  = _1B :: _1B :: _1B :: _0B :: _0B :: _0B :: _1B :: Nil
-	type  H  = _0B :: _0B :: _0B :: _1B :: _0B :: _0B :: _1B :: Nil
-	type  I  = _1B :: _0B :: _0B :: _1B :: _0B :: _0B :: _1B :: Nil
-    type  J  = _0B :: _1B :: _0B :: _1B :: _0B :: _0B :: _1B :: Nil
-	type  K  = _1B :: _1B :: _0B :: _1B :: _0B :: _0B :: _1B :: Nil
-	type  L  = _0B :: _0B :: _1B :: _1B :: _0B :: _0B :: _1B :: Nil
-	type  M  = _1B :: _0B :: _1B :: _1B :: _0B :: _0B :: _1B :: Nil
-	type  N  = _0B :: _1B :: _1B :: _1B :: _0B :: _0B :: _1B :: Nil
-	type  O  = _1B :: _1B :: _1B :: _1B :: _0B :: _0B :: _1B :: Nil
-	type  P  = _0B :: _0B :: _0B :: _0B :: _1B :: _0B :: _1B :: Nil
-	type  Q  = _1B :: _0B :: _0B :: _0B :: _1B :: _0B :: _1B :: Nil
-	type  R  = _0B :: _1B :: _0B :: _0B :: _1B :: _0B :: _1B :: Nil
-	type  S  = _1B :: _1B :: _0B :: _0B :: _1B :: _0B :: _1B :: Nil
-	type  T  = _0B :: _0B :: _1B :: _0B :: _1B :: _0B :: _1B :: Nil
-	type  U  = _1B :: _0B :: _1B :: _0B :: _1B :: _0B :: _1B :: Nil
-	type  V  = _0B :: _1B :: _1B :: _0B :: _1B :: _0B :: _1B :: Nil
-	type  W  = _1B :: _1B :: _1B :: _0B :: _1B :: _0B :: _1B :: Nil
-	type  X  = _0B :: _0B :: _0B :: _1B :: _1B :: _0B :: _1B :: Nil
-	type  Y  = _1B :: _0B :: _0B :: _1B :: _1B :: _0B :: _1B :: Nil
-	type  Z  = _0B :: _1B :: _0B :: _1B :: _1B :: _0B :: _1B :: Nil
-    type `[` = _1B :: _1B :: _0B :: _1B :: _1B :: _0B :: _1B :: Nil
-    type BSL = _0B :: _0B :: _1B :: _1B :: _1B :: _0B :: _1B :: Nil
-    type `]` = _1B :: _0B :: _1B :: _1B :: _1B :: _0B :: _1B :: Nil
-    type  ^  = _0B :: _1B :: _1B :: _1B :: _1B :: _0B :: _1B :: Nil
-    type `_` = _1B :: _1B :: _1B :: _1B :: _1B :: _0B :: _1B :: Nil
-    type BQ  = _0B :: _0B :: _0B :: _0B :: _0B :: _1B :: _1B :: Nil
-    type  a  = _1B :: _0B :: _0B :: _0B :: _0B :: _1B :: _1B :: Nil
-    type  b  = _0B :: _1B :: _0B :: _0B :: _0B :: _1B :: _1B :: Nil
-    type  c  = _1B :: _1B :: _0B :: _0B :: _0B :: _1B :: _1B :: Nil
-    type  d  = _0B :: _0B :: _1B :: _0B :: _0B :: _1B :: _1B :: Nil
-    type  e  = _1B :: _0B :: _1B :: _0B :: _0B :: _1B :: _1B :: Nil
-    type  f  = _0B :: _1B :: _1B :: _0B :: _0B :: _1B :: _1B :: Nil
-    type  g  = _1B :: _1B :: _1B :: _0B :: _0B :: _1B :: _1B :: Nil
-    type  h  = _0B :: _0B :: _0B :: _1B :: _0B :: _1B :: _1B :: Nil
-    type  i  = _1B :: _0B :: _0B :: _1B :: _0B :: _1B :: _1B :: Nil
-    type  j  = _0B :: _1B :: _0B :: _1B :: _0B :: _1B :: _1B :: Nil
-    type  k  = _1B :: _1B :: _0B :: _1B :: _0B :: _1B :: _1B :: Nil
-    type  l  = _0B :: _0B :: _1B :: _1B :: _0B :: _1B :: _1B :: Nil
-    type  m  = _1B :: _0B :: _1B :: _1B :: _0B :: _1B :: _1B :: Nil
-    type  n  = _0B :: _1B :: _1B :: _1B :: _0B :: _1B :: _1B :: Nil
-    type  o  = _1B :: _1B :: _1B :: _1B :: _0B :: _1B :: _1B :: Nil
-    type  p  = _0B :: _0B :: _0B :: _0B :: _1B :: _1B :: _1B :: Nil
-    type  q  = _1B :: _0B :: _0B :: _0B :: _1B :: _1B :: _1B :: Nil
-    type  r  = _0B :: _1B :: _0B :: _0B :: _1B :: _1B :: _1B :: Nil
-    type  s  = _1B :: _1B :: _0B :: _0B :: _1B :: _1B :: _1B :: Nil
-    type  t  = _0B :: _0B :: _1B :: _0B :: _1B :: _1B :: _1B :: Nil
-    type  u  = _1B :: _0B :: _1B :: _0B :: _1B :: _1B :: _1B :: Nil
-    type  v  = _0B :: _1B :: _1B :: _0B :: _1B :: _1B :: _1B :: Nil
-    type  w  = _1B :: _1B :: _1B :: _0B :: _1B :: _1B :: _1B :: Nil
-    type  x  = _0B :: _0B :: _0B :: _1B :: _1B :: _1B :: _1B :: Nil
-    type  y  = _1B :: _0B :: _0B :: _1B :: _1B :: _1B :: _1B :: Nil
-    type  z  = _0B :: _1B :: _0B :: _1B :: _1B :: _1B :: _1B :: Nil
-    type `{` = _1B :: _1B :: _0B :: _1B :: _1B :: _1B :: _1B :: Nil
-    type  |  = _0B :: _0B :: _1B :: _1B :: _1B :: _1B :: _1B :: Nil
-    type `}` = _1B :: _0B :: _1B :: _1B :: _1B :: _1B :: _1B :: Nil
-    type  ~  = _0B :: _1B :: _1B :: _1B :: _1B :: _1B :: _1B :: Nil
+    sealed abstract class ` ` extends Strong(_0B :: _0B :: _0B :: _0B :: _0B :: _1B :: Nil) {
+        type self = ` `
+    }
+    sealed abstract class  !  extends Strong(_1B :: _0B :: _0B :: _0B :: _0B :: _1B :: Nil) {
+        type self =  !
+    }
+    sealed abstract class `"` extends Strong(_0B :: _1B :: _0B :: _0B :: _0B :: _1B :: Nil) {
+        type self = `"`
+    }
+    sealed abstract class `#` extends Strong(_0B :: _1B :: _0B :: _0B :: _0B :: _1B :: Nil) {
+        type self = `#`
+    }
+    sealed abstract class `$` extends Strong(_0B :: _0B :: _1B :: _0B :: _0B :: _1B :: Nil) {
+        type self = `$`
+    }
+    sealed abstract class  %  extends Strong(_1B :: _0B :: _1B :: _0B :: _0B :: _1B :: Nil) {
+        type self =  %
+    }
+    sealed abstract class  &  extends Strong(_0B :: _1B :: _1B :: _0B :: _0B :: _1B :: Nil) {
+        type self =  &
+    }
+    sealed abstract class `'` extends Strong(_1B :: _1B :: _1B :: _0B :: _0B :: _1B :: Nil) {
+        type self = `'`
+    }
+    sealed abstract class `(` extends Strong(_0B :: _0B :: _0B :: _1B :: _0B :: _1B :: Nil) {
+        type self = `(`
+    }
+    sealed abstract class `)` extends Strong(_1B :: _0B :: _0B :: _1B :: _0B :: _1B :: Nil) {
+        type self = `)`
+    }
+    sealed abstract class  *  extends Strong(_0B :: _1B :: _0B :: _1B :: _0B :: _1B :: Nil) {
+        type self =  *
+    }
+    sealed abstract class  +  extends Strong(_1B :: _1B :: _0B :: _1B :: _0B :: _1B :: Nil) {
+        type self =  +
+    }
+    sealed abstract class `,` extends Strong(_0B :: _0B :: _1B :: _1B :: _0B :: _1B :: Nil) {
+        type self = `,`
+    }
+    sealed abstract class  -  extends Strong(_1B :: _0B :: _1B :: _1B :: _0B :: _1B :: Nil) {
+        type self =  -
+    }
+    sealed abstract class `.` extends Strong(_0B :: _1B :: _1B :: _1B :: _0B :: _1B :: Nil) {
+        type self = `.`
+    }
+    sealed abstract class  /  extends Strong(_1B :: _1B :: _1B :: _1B :: _0B :: _1B :: Nil) {
+        type self =  /
+    }
+    sealed abstract class `0` extends Strong(_0B :: _0B :: _0B :: _0B :: _1B :: _1B :: Nil) {
+        type self = `0`
+    }
+    sealed abstract class `1` extends Strong(_1B :: _0B :: _0B :: _0B :: _1B :: _1B :: Nil) {
+        type self = `1`
+    }
+    sealed abstract class `2` extends Strong(_0B :: _1B :: _0B :: _0B :: _1B :: _1B :: Nil) {
+        type self = `2`
+    }
+    sealed abstract class `3` extends Strong(_1B :: _1B :: _0B :: _0B :: _1B :: _1B :: Nil) {
+        type self = `3`
+    }
+    sealed abstract class `4` extends Strong(_0B :: _0B :: _1B :: _0B :: _1B :: _1B :: Nil) {
+        type self = `4`
+    }
+    sealed abstract class `5` extends Strong(_1B :: _0B :: _1B :: _0B :: _1B :: _1B :: Nil) {
+        type self = `5`
+    }
+    sealed abstract class `6` extends Strong(_0B :: _1B :: _1B :: _0B :: _1B :: _1B :: Nil) {
+        type self = `6`
+    }
+    sealed abstract class `7` extends Strong(_1B :: _1B :: _1B :: _0B :: _1B :: _1B :: Nil) {
+        type self = `7`
+    }
+    sealed abstract class `8` extends Strong(_0B :: _0B :: _0B :: _1B :: _1B :: _1B :: Nil) {
+        type self = `8`
+    }
+    sealed abstract class `9` extends Strong(_1B :: _0B :: _0B :: _1B :: _1B :: _1B :: Nil) {
+        type self = `9`
+    }
+    sealed abstract class `:` extends Strong(_0B :: _1B :: _0B :: _1B :: _1B :: _1B :: Nil) {
+        type self = `:`
+    }
+    sealed abstract class `;` extends Strong(_1B :: _1B :: _0B :: _1B :: _1B :: _1B :: Nil) {
+        type self = `;`
+    }
+    sealed abstract class  <  extends Strong(_0B :: _0B :: _1B :: _1B :: _1B :: _1B :: Nil) {
+        type self =  <
+    }
+    sealed abstract class `=` extends Strong(_1B :: _0B :: _1B :: _1B :: _1B :: _1B :: Nil) {
+        type self = `=`
+    }
+    sealed abstract class  >  extends Strong(_0B :: _1B :: _1B :: _1B :: _1B :: _1B :: Nil) {
+        type self =  >
+    }
+    sealed abstract class  ?  extends Strong(_1B :: _1B :: _1B :: _1B :: _1B :: _1B :: Nil) {
+        type self =  ?
+    }
+    sealed abstract class `@` extends Strong(_0B :: _0B :: _0B :: _0B :: _0B :: _0B :: _1B :: Nil) {
+        type self = `@`
+    }
+	sealed abstract class  A  extends Strong(_1B :: _0B :: _0B :: _0B :: _0B :: _0B :: _1B :: Nil) {
+        type self =  A
+    }
+	sealed abstract class  B  extends Strong(_0B :: _1B :: _0B :: _0B :: _0B :: _0B :: _1B :: Nil) {
+        type self =  B
+    }
+	sealed abstract class  C  extends Strong(_1B :: _1B :: _0B :: _0B :: _0B :: _0B :: _1B :: Nil) {
+        type self =  C
+    }
+	sealed abstract class  D  extends Strong(_0B :: _0B :: _1B :: _0B :: _0B :: _0B :: _1B :: Nil) {
+        type self =  D
+    }
+	sealed abstract class  E  extends Strong(_1B :: _0B :: _1B :: _0B :: _0B :: _0B :: _1B :: Nil) {
+        type self =  E
+    }
+	sealed abstract class  F  extends Strong(_0B :: _1B :: _1B :: _0B :: _0B :: _0B :: _1B :: Nil) {
+        type self =  F
+    }
+	sealed abstract class  G  extends Strong(_1B :: _1B :: _1B :: _0B :: _0B :: _0B :: _1B :: Nil) {
+        type self =  G
+    }
+	sealed abstract class  H  extends Strong(_0B :: _0B :: _0B :: _1B :: _0B :: _0B :: _1B :: Nil) {
+        type self =  H
+    }
+	sealed abstract class  I  extends Strong(_1B :: _0B :: _0B :: _1B :: _0B :: _0B :: _1B :: Nil) {
+        type self =  I
+    }
+    sealed abstract class  J  extends Strong(_0B :: _1B :: _0B :: _1B :: _0B :: _0B :: _1B :: Nil) {
+        type self =  J
+    }
+	sealed abstract class  K  extends Strong(_1B :: _1B :: _0B :: _1B :: _0B :: _0B :: _1B :: Nil) {
+        type self =  K
+    }
+	sealed abstract class  L  extends Strong(_0B :: _0B :: _1B :: _1B :: _0B :: _0B :: _1B :: Nil) {
+        type self =  L
+    }
+	sealed abstract class  M  extends Strong(_1B :: _0B :: _1B :: _1B :: _0B :: _0B :: _1B :: Nil) {
+        type self =  M
+    }
+	sealed abstract class  N  extends Strong(_0B :: _1B :: _1B :: _1B :: _0B :: _0B :: _1B :: Nil) {
+        type self =  N
+    }
+	sealed abstract class  O  extends Strong(_1B :: _1B :: _1B :: _1B :: _0B :: _0B :: _1B :: Nil) {
+        type self =  O
+    }
+	sealed abstract class  P  extends Strong(_0B :: _0B :: _0B :: _0B :: _1B :: _0B :: _1B :: Nil) {
+        type self =  P
+    }
+	sealed abstract class  Q  extends Strong(_1B :: _0B :: _0B :: _0B :: _1B :: _0B :: _1B :: Nil) {
+        type self =  Q
+    }
+	sealed abstract class  R  extends Strong(_0B :: _1B :: _0B :: _0B :: _1B :: _0B :: _1B :: Nil) {
+        type self =  R
+    }
+	sealed abstract class  S  extends Strong(_1B :: _1B :: _0B :: _0B :: _1B :: _0B :: _1B :: Nil) {
+        type self =  S
+    }
+	sealed abstract class  T  extends Strong(_0B :: _0B :: _1B :: _0B :: _1B :: _0B :: _1B :: Nil) {
+        type self =  T
+    }
+	sealed abstract class  U  extends Strong(_1B :: _0B :: _1B :: _0B :: _1B :: _0B :: _1B :: Nil) {
+        type self =  U
+    }
+	sealed abstract class  V  extends Strong(_0B :: _1B :: _1B :: _0B :: _1B :: _0B :: _1B :: Nil) {
+        type self =  V
+    }
+	sealed abstract class  W  extends Strong(_1B :: _1B :: _1B :: _0B :: _1B :: _0B :: _1B :: Nil) {
+        type self =  W
+    }
+	sealed abstract class  X  extends Strong(_0B :: _0B :: _0B :: _1B :: _1B :: _0B :: _1B :: Nil) {
+        type self =  X
+    }
+	sealed abstract class  Y  extends Strong(_1B :: _0B :: _0B :: _1B :: _1B :: _0B :: _1B :: Nil) {
+        type self =  Y
+    }
+	sealed abstract class  Z  extends Strong(_0B :: _1B :: _0B :: _1B :: _1B :: _0B :: _1B :: Nil) {
+        type self =  Z
+    }
+    sealed abstract class `[` extends Strong(_1B :: _1B :: _0B :: _1B :: _1B :: _0B :: _1B :: Nil) {
+        type self = `[`
+    }
+    sealed abstract class BSL extends Strong(_0B :: _0B :: _1B :: _1B :: _1B :: _0B :: _1B :: Nil) {
+        type self = BSL
+    }
+    sealed abstract class `]` extends Strong(_1B :: _0B :: _1B :: _1B :: _1B :: _0B :: _1B :: Nil) {
+        type self = `]`
+    }
+    sealed abstract class  ^  extends Strong(_0B :: _1B :: _1B :: _1B :: _1B :: _0B :: _1B :: Nil) {
+        type self =  ^
+    }
+    sealed abstract class UNS extends Strong(_1B :: _1B :: _1B :: _1B :: _1B :: _0B :: _1B :: Nil) {
+        type self = UNS
+    }
+    sealed abstract class BQ  extends Strong(_0B :: _0B :: _0B :: _0B :: _0B :: _1B :: _1B :: Nil) {
+        type self = BQ
+    }
+    sealed abstract class  a  extends Strong(_1B :: _0B :: _0B :: _0B :: _0B :: _1B :: _1B :: Nil) {
+        type self =  a
+    }
+    sealed abstract class  b  extends Strong(_0B :: _1B :: _0B :: _0B :: _0B :: _1B :: _1B :: Nil) {
+        type self =  b
+    }
+    sealed abstract class  c  extends Strong(_1B :: _1B :: _0B :: _0B :: _0B :: _1B :: _1B :: Nil) {
+        type self =  c
+    }
+    sealed abstract class  d  extends Strong(_0B :: _0B :: _1B :: _0B :: _0B :: _1B :: _1B :: Nil) {
+        type self =  d
+    }
+    sealed abstract class  e  extends Strong(_1B :: _0B :: _1B :: _0B :: _0B :: _1B :: _1B :: Nil) {
+        type self =  e
+    }
+    sealed abstract class  f  extends Strong(_0B :: _1B :: _1B :: _0B :: _0B :: _1B :: _1B :: Nil) {
+        type self =  f
+    }
+    sealed abstract class  g  extends Strong(_1B :: _1B :: _1B :: _0B :: _0B :: _1B :: _1B :: Nil) {
+        type self =  g
+    }
+    sealed abstract class  h  extends Strong(_0B :: _0B :: _0B :: _1B :: _0B :: _1B :: _1B :: Nil) {
+        type self =  h
+    }
+    sealed abstract class  i  extends Strong(_1B :: _0B :: _0B :: _1B :: _0B :: _1B :: _1B :: Nil) {
+        type self =  i
+    }
+    sealed abstract class  j  extends Strong(_0B :: _1B :: _0B :: _1B :: _0B :: _1B :: _1B :: Nil) {
+        type self =  j
+    }
+    sealed abstract class  k  extends Strong(_1B :: _1B :: _0B :: _1B :: _0B :: _1B :: _1B :: Nil) {
+        type self =  k
+    }
+    sealed abstract class  l  extends Strong(_0B :: _0B :: _1B :: _1B :: _0B :: _1B :: _1B :: Nil) {
+        type self =  l
+    }
+    sealed abstract class  m  extends Strong(_1B :: _0B :: _1B :: _1B :: _0B :: _1B :: _1B :: Nil) {
+        type self =  m
+    }
+    sealed abstract class  n  extends Strong(_0B :: _1B :: _1B :: _1B :: _0B :: _1B :: _1B :: Nil) {
+        type self =  n
+    }
+    sealed abstract class  o  extends Strong(_1B :: _1B :: _1B :: _1B :: _0B :: _1B :: _1B :: Nil) {
+        type self =  o
+    }
+    sealed abstract class  p  extends Strong(_0B :: _0B :: _0B :: _0B :: _1B :: _1B :: _1B :: Nil) {
+        type self =  p
+    }
+    sealed abstract class  q  extends Strong(_1B :: _0B :: _0B :: _0B :: _1B :: _1B :: _1B :: Nil) {
+        type self =  q
+    }
+    sealed abstract class  r  extends Strong(_0B :: _1B :: _0B :: _0B :: _1B :: _1B :: _1B :: Nil) {
+        type self =  r
+    }
+    sealed abstract class  s  extends Strong(_1B :: _1B :: _0B :: _0B :: _1B :: _1B :: _1B :: Nil) {
+        type self =  s
+    }
+    sealed abstract class  t  extends Strong(_0B :: _0B :: _1B :: _0B :: _1B :: _1B :: _1B :: Nil) {
+        type self =  t
+    }
+    sealed abstract class  u  extends Strong(_1B :: _0B :: _1B :: _0B :: _1B :: _1B :: _1B :: Nil) {
+        type self =  u
+    }
+    sealed abstract class  v  extends Strong(_0B :: _1B :: _1B :: _0B :: _1B :: _1B :: _1B :: Nil) {
+        type self =  v
+    }
+    sealed abstract class  w  extends Strong(_1B :: _1B :: _1B :: _0B :: _1B :: _1B :: _1B :: Nil) {
+        type self =  w
+    }
+    sealed abstract class  x  extends Strong(_0B :: _0B :: _0B :: _1B :: _1B :: _1B :: _1B :: Nil) {
+        type self =  x
+    }
+    sealed abstract class  y  extends Strong(_1B :: _0B :: _0B :: _1B :: _1B :: _1B :: _1B :: Nil) {
+        type self =  y
+    }
+    sealed abstract class  z  extends Strong(_0B :: _1B :: _0B :: _1B :: _1B :: _1B :: _1B :: Nil) {
+        type self =  z
+    }
+    sealed abstract class `{` extends Strong(_1B :: _1B :: _0B :: _1B :: _1B :: _1B :: _1B :: Nil) {
+        type self = `{`
+    }
+    sealed abstract class  |  extends Strong(_0B :: _0B :: _1B :: _1B :: _1B :: _1B :: _1B :: Nil) {
+        type self =  |
+    }
+    sealed abstract class `}` extends Strong(_1B :: _0B :: _1B :: _1B :: _1B :: _1B :: _1B :: Nil) {
+        type self = `}`
+    }
+    sealed abstract class  ~  extends Strong(_0B :: _1B :: _1B :: _1B :: _1B :: _1B :: _1B :: Nil) {
+        type self =  ~
+    }
 
 }
