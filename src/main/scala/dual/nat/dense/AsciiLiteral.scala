@@ -306,6 +306,52 @@ object AsciiLiteral {
     sealed abstract class BQ  extends Strong(_0B :: _0B :: _0B :: _0B :: _0B :: _1B :: _1B :: Nil) {
         type self = BQ
     }
+    type a = _AsciiLiteral.a
+    type b = _AsciiLiteral.b
+    type c = _AsciiLiteral.c
+    type d = _AsciiLiteral.d
+    type e = _AsciiLiteral.e
+    type f = _AsciiLiteral.f
+    type g = _AsciiLiteral.g
+    type h = _AsciiLiteral.h
+    type i = _AsciiLiteral.i
+    type j = _AsciiLiteral.j
+    type k = _AsciiLiteral.k
+    type l = _AsciiLiteral.l
+    type m = _AsciiLiteral.m
+    type n = _AsciiLiteral.n
+    type o = _AsciiLiteral.o
+    type p = _AsciiLiteral.p
+    type q = _AsciiLiteral.q
+    type r = _AsciiLiteral.r
+    type s = _AsciiLiteral.s
+    type t = _AsciiLiteral.t
+    type u = _AsciiLiteral.u
+    type v = _AsciiLiteral.v
+    type w = _AsciiLiteral.w
+    type x = _AsciiLiteral.x
+    type y = _AsciiLiteral.y
+    type z = _AsciiLiteral.z
+    sealed abstract class `{` extends Strong(_1B :: _1B :: _0B :: _1B :: _1B :: _1B :: _1B :: Nil) {
+        type self = `{`
+    }
+    sealed abstract class  |  extends Strong(_0B :: _0B :: _1B :: _1B :: _1B :: _1B :: _1B :: Nil) {
+        type self =  |
+    }
+    sealed abstract class `}` extends Strong(_1B :: _0B :: _1B :: _1B :: _1B :: _1B :: _1B :: Nil) {
+        type self = `}`
+    }
+    sealed abstract class  ~  extends Strong(_0B :: _1B :: _1B :: _1B :: _1B :: _1B :: _1B :: Nil) {
+        type self =  ~
+    }
+
+}
+
+
+@compilerWorkaround("2.8.0") // One-letter names confuse JVM.
+private[dual]
+object _AsciiLiteral {
+
     sealed abstract class  a  extends Strong(_1B :: _0B :: _0B :: _0B :: _0B :: _1B :: _1B :: Nil) {
         type self =  a
     }
@@ -383,18 +429,6 @@ object AsciiLiteral {
     }
     sealed abstract class  z  extends Strong(_0B :: _1B :: _0B :: _1B :: _1B :: _1B :: _1B :: Nil) {
         type self =  z
-    }
-    sealed abstract class `{` extends Strong(_1B :: _1B :: _0B :: _1B :: _1B :: _1B :: _1B :: Nil) {
-        type self = `{`
-    }
-    sealed abstract class  |  extends Strong(_0B :: _0B :: _1B :: _1B :: _1B :: _1B :: _1B :: Nil) {
-        type self =  |
-    }
-    sealed abstract class `}` extends Strong(_1B :: _0B :: _1B :: _1B :: _1B :: _1B :: _1B :: Nil) {
-        type self = `}`
-    }
-    sealed abstract class  ~  extends Strong(_0B :: _1B :: _1B :: _1B :: _1B :: _1B :: _1B :: Nil) {
-        type self =  ~
     }
 
 }
