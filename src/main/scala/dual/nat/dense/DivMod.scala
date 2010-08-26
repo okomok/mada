@@ -68,13 +68,13 @@ object DivMod {
 
 private[dual]
 object ConsShiftLeftBy {
-     def apply[x <: Dense, n <: Peano](x: x, n: n): apply[x, n] = n.foldRight(x, Step).asNatDense
-    type apply[x <: Dense, n <: Peano]                          = n#foldRight[x, Step]#asNatDense
+     def apply[x <: Dense, n <: Peano](x: x, n: n): apply[x, n] = n.foldRight(x, Step).asNat.asDense
+    type apply[x <: Dense, n <: Peano]                          = n#foldRight[x, Step]#asNat#asDense
 
     val Step = new Step
     class Step extends Function2 {
         type self = Step
-        override  def apply[a <: Any, b <: Any](a: a, b: b): apply[a, b] = Cons(`false`, b.asNatDense)
-        override type apply[a <: Any, b <: Any]                          = Cons[`false`, b#asNatDense]
+        override  def apply[a <: Any, b <: Any](a: a, b: b): apply[a, b] = Cons(`false`, b.asNat.asDense)
+        override type apply[a <: Any, b <: Any]                          = Cons[`false`, b#asNat#asDense]
     }
 }

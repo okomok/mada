@@ -11,6 +11,12 @@ package dual; package nat
 trait Forwarder extends Nat with dual.Forwarder {
     override protected type delegate <: Nat
 
+    final override  def asDense: asDense = delegate.asDense
+    final override type asDense          = delegate#asDense
+
+    final override  def asPeano: asPeano = delegate.asPeano
+    final override type asPeano          = delegate#asPeano
+
     final override  def isZero: isZero = delegate.isZero
     final override type isZero         = delegate#isZero
 

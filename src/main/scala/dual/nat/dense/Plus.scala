@@ -12,10 +12,10 @@ private[dual]
 object Plus {
      def apply[xs <: Dense, ys <: Dense](xs: xs, ys: ys): apply[xs, ys] =
         Match(xs, ys, const0(Nil), const0(ys), const0(xs),
-            ConsMatch(xs, ys, CaseTT(xs, ys), CaseXF(xs, ys), CaseFX(xs, ys), CaseXF(xs, ys))).apply.asNatDense.asInstanceOf[apply[xs, ys]]
+            ConsMatch(xs, ys, CaseTT(xs, ys), CaseXF(xs, ys), CaseFX(xs, ys), CaseXF(xs, ys))).apply.asNat.asDense.asInstanceOf[apply[xs, ys]]
     type apply[xs <: Dense, ys <: Dense] =
         Match[xs, ys, const0[Nil], const0[ys], const0[xs],
-            ConsMatch[xs, ys, CaseTT[xs, ys], CaseXF[xs, ys], CaseFX[xs, ys], CaseXF[xs, ys]]]#apply#asNatDense
+            ConsMatch[xs, ys, CaseTT[xs, ys], CaseXF[xs, ys], CaseFX[xs, ys], CaseXF[xs, ys]]]#apply#asNat#asDense
 
     case class CaseTT[xs <: Dense, ys <: Dense](xs: xs, ys: ys) extends Function0 {
         type self = CaseTT[xs, ys]

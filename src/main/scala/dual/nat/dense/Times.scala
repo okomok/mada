@@ -11,9 +11,9 @@ package dual; package nat; package dense
 private[dual]
 object ConsTimes {
      def apply[x <: Boolean, xs <: Dense, ys <: Dense](x: x, xs: xs, ys: ys): apply[x, xs, ys] =
-        `if`(x, Then(x, xs, ys), Else(x, xs, ys)).apply.asNatDense
+        `if`(x, Then(x, xs, ys), Else(x, xs, ys)).apply.asNat.asDense
     type apply[x <: Boolean, xs <: Dense, ys <: Dense] =
-        `if`[x, Then[x, xs, ys], Else[x, xs, ys]]#apply#asNatDense
+        `if`[x, Then[x, xs, ys], Else[x, xs, ys]]#apply#asNat#asDense
 
     case class Then[x <: Boolean, xs <: Dense, ys <: Dense](x: x, xs: xs, ys: ys) extends Function0 {
         type self = Then[x, xs, ys]

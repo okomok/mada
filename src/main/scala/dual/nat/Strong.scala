@@ -13,10 +13,4 @@ abstract class Strong[n <: Nat](final override protected val delegate: n) extend
 
     final override  def asNat: asNat = self
     final override type asNat        = self
-
-    final override  def asNatDense: asNatDense = delegate.asNatDense
-    final override type asNatDense             = delegate#asNatDense
-
-    final override  def asNatPeano: asNatPeano = delegate.asNatPeano
-    final override type asNatPeano             = delegate#asNatPeano
 }

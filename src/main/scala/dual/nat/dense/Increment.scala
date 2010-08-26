@@ -11,9 +11,9 @@ package dual; package nat; package dense
 private[dual]
 object ConsIncrement {
      def apply[x <: Boolean, xs <: Dense](x: x, xs: xs): apply[x, xs] =
-        `if`(x, Then(x, xs), Else(x, xs)).apply.asNatDense
+        `if`(x, Then(x, xs), Else(x, xs)).apply.asNat.asDense
     type apply[x <: Boolean, xs <: Dense] =
-        `if`[x, Then[x, xs], Else[x, xs]]#apply#asNatDense
+        `if`[x, Then[x, xs], Else[x, xs]]#apply#asNat#asDense
 
     // (`true` :: xs).increment
     case class Then[x <: Boolean, xs <: Dense](x: x, xs: xs) extends Function0 {

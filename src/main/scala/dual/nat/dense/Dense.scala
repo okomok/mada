@@ -54,41 +54,44 @@ sealed abstract class Dense extends AbstractNat {
 
 private[dual]
 sealed abstract class AbstractDense extends Dense {
-    final override  def asNatDense: asNatDense = self
-    final override type asNatDense             = self
+    final override  def asDense: asDense = self
+    final override type asDense          = self
 
     @equivalentTo("Cons(e. self)")
     final override  def ::[e <: Boolean](e: e): ::[e] = Cons(e, self)
     final override type ::[e <: Boolean]              = Cons[e, self]
 
-    final override  def plus[that <: Nat](that: that): plus[that] = Plus.apply(self, that.asNatDense)
-    final override type plus[that <: Nat]                         = Plus.apply[self, that#asNatDense]
+    final override  def plus[that <: Nat](that: that): plus[that] = Plus.apply(self, that.asDense)
+    final override type plus[that <: Nat]                         = Plus.apply[self, that#asDense]
 
-    final override  def minus[that <: Nat](that: that): minus[that] = Minus.apply(self, that.asNatDense)
-    final override type minus[that <: Nat]                          = Minus.apply[self, that#asNatDense]
+    final override  def minus[that <: Nat](that: that): minus[that] = Minus.apply(self, that.asDense)
+    final override type minus[that <: Nat]                          = Minus.apply[self, that#asDense]
 
-    final override  def divMod[that <: Nat](that: that): divMod[that] = DivMod.apply(self, that.asNatDense)
-    final override type divMod[that <: Nat]                           = DivMod.apply[self, that#asNatDense]
+    final override  def divMod[that <: Nat](that: that): divMod[that] = DivMod.apply(self, that.asDense)
+    final override type divMod[that <: Nat]                           = DivMod.apply[self, that#asDense]
 
-    final override  def equal[that <: Nat](that: that): equal[that] = Equal.apply(self, that.asNatDense)
-    final override type equal[that <: Nat]                        = Equal.apply[self, that#asNatDense]
+    final override  def equal[that <: Nat](that: that): equal[that] = Equal.apply(self, that.asDense)
+    final override type equal[that <: Nat]                          = Equal.apply[self, that#asDense]
 
-    final override  def lt[that <: Nat](that: that): lt[that] = Lt.apply(self, that.asNatDense)
-    final override type lt[that <: Nat]                       = Lt.apply[self, that#asNatDense]
+    final override  def lt[that <: Nat](that: that): lt[that] = Lt.apply(self, that.asDense)
+    final override type lt[that <: Nat]                       = Lt.apply[self, that#asDense]
 
-    final override  def lteq[that <: Nat](that: that): lteq[that] = that.asNatDense.lt(self).not
-    final override type lteq[that <: Nat]                         = that#asNatDense#lt[self]#not
+    final override  def lteq[that <: Nat](that: that): lteq[that] = that.asDense.lt(self).not
+    final override type lteq[that <: Nat]                         = that#asDense#lt[self]#not
 
-    final override  def bitAnd[that <: Nat](that: that): bitAnd[that] = BitAnd.apply(self, that.asNatDense)
-    final override type bitAnd[that <: Nat]                           = BitAnd.apply[self, that#asNatDense]
+    final override  def bitAnd[that <: Nat](that: that): bitAnd[that] = BitAnd.apply(self, that.asDense)
+    final override type bitAnd[that <: Nat]                           = BitAnd.apply[self, that#asDense]
 
-    final override  def bitOr[that <: Nat](that: that): bitOr[that] = BitOr.apply(self, that.asNatDense)
-    final override type bitOr[that <: Nat]                          = BitOr.apply[self, that#asNatDense]
+    final override  def bitOr[that <: Nat](that: that): bitOr[that] = BitOr.apply(self, that.asDense)
+    final override type bitOr[that <: Nat]                          = BitOr.apply[self, that#asDense]
 }
 
 
 sealed class Nil extends AbstractDense {
     type self = Nil
+
+    override  def asPeano: asPeano = peano.Zero
+    override type asPeano          = peano.Zero
 
     override  def undual: undual = 0
 
@@ -113,17 +116,14 @@ sealed class Nil extends AbstractDense {
     override  def times[that <: Nat](that: that): times[that] = self
     override type times[that <: Nat]                          = self
 
-    override  def exp[that <: Nat](that: that): exp[that] = `if`(that.isZero, const0(_1), const0(self)).apply.asNatDense
-    override type exp[that <: Nat]                        = `if`[that#isZero, const0[_1], const0[self]]#apply#asNatDense
+    override  def exp[that <: Nat](that: that): exp[that] = `if`(that.isZero, const0(_1), const0(self)).apply.asNat.asDense
+    override type exp[that <: Nat]                        = `if`[that#isZero, const0[_1], const0[self]]#apply#asNat#asDense
 
     override  def shiftLeft: shiftLeft = self
     override type shiftLeft            = self
 
     override  def shiftRight: shiftRight = self
     override type shiftRight             = self
-
-    override  def asNatPeano: asNatPeano = peano.Zero
-    override type asNatPeano             = peano.Zero
 
     override  def foldRightWithNat[z <: Any, f <: Function2](z: z, f: f): foldRightWithNat[z, f] = z
     override type foldRightWithNat[z <: Any, f <: Function2]                                     = z
@@ -137,6 +137,9 @@ final case class Cons[x <: Boolean, xs <: Dense](override val head: x, override 
     assert(head.or(tail.isZero.not))
 
     type self = Cons[x, xs]
+
+    override  def asPeano: asPeano = peano.Succ(decrement.asPeano)
+    override type asPeano          = peano.Succ[decrement#asPeano]
 
     override  def undual: undual = (if (head.undual) 1 else 0) + (2 * tail.undual)
 
@@ -155,8 +158,8 @@ final case class Cons[x <: Boolean, xs <: Dense](override val head: x, override 
     override  def decrement: decrement = ConsDecrement.apply(head, tail)
     override type decrement            = ConsDecrement.apply[head, tail]
 
-    override  def times[that <: Nat](that: that): times[that] = ConsTimes.apply(head, tail, that.asNatDense)
-    override type times[that <: Nat]                          = ConsTimes.apply[head, tail, that#asNatDense]
+    override  def times[that <: Nat](that: that): times[that] = ConsTimes.apply(head, tail, that.asDense)
+    override type times[that <: Nat]                          = ConsTimes.apply[head, tail, that#asDense]
 
     override  def exp[that <: Nat](that: that): exp[that] = ConsExp.apply(self, that)
     override type exp[that <: Nat]                        = ConsExp.apply[self, that]
@@ -166,9 +169,6 @@ final case class Cons[x <: Boolean, xs <: Dense](override val head: x, override 
 
     override  def shiftRight: shiftRight = tail
     override type shiftRight             = tail
-
-    override  def asNatPeano: asNatPeano = peano.Succ(decrement.asNatPeano)
-    override type asNatPeano             = peano.Succ[decrement#asNatPeano]
 
     override  def foldRightWithNat[z <: Any, f <: Function2](z: z, f: f): foldRightWithNat[z, f] = f.apply(self, decrement.foldRightWithNat(z, f))
     override type foldRightWithNat[z <: Any, f <: Function2]                                     = f#apply[self, decrement#foldRightWithNat[z, f]]

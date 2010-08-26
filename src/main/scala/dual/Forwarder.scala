@@ -42,12 +42,6 @@ trait Forwarder extends Any {
     final override  def asNat: asNat = delegate.asNat
     final override type asNat        = delegate#asNat
 
-    final override  def asNatDense: asNatDense = delegate.asNatDense
-    final override type asNatDense             = delegate#asNatDense
-
-    final override  def asNatPeano: asNatPeano = delegate.asNatPeano
-    final override type asNatPeano             = delegate#asNatPeano
-
     final override  def asSet: asSet = delegate.asSet
     final override type asSet        = delegate#asSet
 

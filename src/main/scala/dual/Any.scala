@@ -47,12 +47,6 @@ trait Any extends scala.Equals {
      def asNat: asNat = unsupported("Any.asNat")
     type asNat <: Nat
 
-     def asNatDense: asNatDense = unsupported("Any.asNatDense")
-    type asNatDense <: nat.Dense
-
-     def asNatPeano: asNatPeano = unsupported("Any.asNatPeano")
-    type asNatPeano <: nat.Peano
-
      def asSet: asSet = unsupported("Any.asSet")
     type asSet <: Set
 

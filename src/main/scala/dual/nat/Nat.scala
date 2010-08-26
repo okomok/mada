@@ -18,6 +18,12 @@ trait Nat extends Any {
     type self <: Nat
     type undual = scala.Int
 
+     def asDense: asDense
+    type asDense <: Dense
+
+     def asPeano: asPeano
+    type asPeano <: Peano
+
     @constantTime
      def isZero: isZero
     type isZero <: Boolean
