@@ -18,6 +18,9 @@ trait Map extends Any {
     type self <: Map
     type undual <: scala.collection.Map[scala.Any, scala.Any]
 
+     def asBSTree: asBSTree = unsupported("Map.asBSTree")
+    type asBSTree <: bstree.BSTree
+
      def size: size
     type size <: Nat
 

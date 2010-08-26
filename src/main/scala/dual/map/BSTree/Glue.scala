@@ -11,9 +11,9 @@ package dual; package map; package bstree
 private[dual]
 object Glue {
      def apply[l <: BSTree, r <: BSTree](l: l, r: r): apply[l, r] =
-        `if`(l.isEmpty, const0(r), `if`(r.isEmpty, const0(l), Else(l, r))).apply.asMapBSTree.asInstanceOf[apply[l, r]]
+        `if`(l.isEmpty, const0(r), `if`(r.isEmpty, const0(l), Else(l, r))).apply.asMap.asBSTree.asInstanceOf[apply[l, r]]
     type apply[l <: BSTree, r <: BSTree] =
-        `if`[l#isEmpty, const0[r], `if`[r#isEmpty, const0[l], Else[l, r]]]#apply#asMapBSTree
+        `if`[l#isEmpty, const0[r], `if`[r#isEmpty, const0[l], Else[l, r]]]#apply#asMap#asBSTree
 
     case class Else[l <: BSTree, r <: BSTree](l: l, r: r) extends Function0 {
         type self = Else[l, r]
@@ -27,8 +27,8 @@ object Glue {
         private lazy val d: d = RemoveMax.apply(l)
         private     type d    = RemoveMax.apply[l]
 
-        override  def apply: apply = Balance.apply(d._1.asProduct2._1, d._1.asProduct2._2, d._2.asMapBSTree, r)
-        override type apply        = Balance.apply[d#_1#asProduct2#_1, d#_1#asProduct2#_2, d#_2#asMapBSTree, r]
+        override  def apply: apply = Balance.apply(d._1.asProduct2._1, d._1.asProduct2._2, d._2.asMap.asBSTree, r)
+        override type apply        = Balance.apply[d#_1#asProduct2#_1, d#_1#asProduct2#_2, d#_2#asMap#asBSTree, r]
     }
 
     case class ElseElse[l <: BSTree, r <: BSTree](l: l, r: r) extends Function0 {
@@ -37,8 +37,8 @@ object Glue {
         private lazy val d: d = RemoveMin.apply(r)
         private     type d    = RemoveMin.apply[r]
 
-        override  def apply: apply = Balance.apply(d._1.asProduct2._1, d._1.asProduct2._2, l, d._2.asMapBSTree)
-        override type apply        = Balance.apply[d#_1#asProduct2#_1, d#_1#asProduct2#_2, l, d#_2#asMapBSTree]
+        override  def apply: apply = Balance.apply(d._1.asProduct2._1, d._1.asProduct2._2, l, d._2.asMap.asBSTree)
+        override type apply        = Balance.apply[d#_1#asProduct2#_1, d#_1#asProduct2#_2, l, d#_2#asMap#asBSTree]
     }
 }
 
@@ -60,8 +60,8 @@ object RemoveMax { // => Tuple2(Tuple2(maxKey, value), map)
         private lazy val d: d = RemoveMax.apply(m.right)
         private     type d    = RemoveMax.apply[m#right]
 
-        override  def apply: apply = Tuple2(d._1, Balance.apply(m.key, m.value, m.left, d._2.asMapBSTree)).asInstanceOf[apply]
-        override type apply        = Tuple2[d#_1, Balance.apply[m#key, m#value, m#left, d#_2#asMapBSTree]]
+        override  def apply: apply = Tuple2(d._1, Balance.apply(m.key, m.value, m.left, d._2.asMap.asBSTree)).asInstanceOf[apply]
+        override type apply        = Tuple2[d#_1, Balance.apply[m#key, m#value, m#left, d#_2#asMap#asBSTree]]
     }
 }
 
@@ -82,7 +82,7 @@ object RemoveMin { // => Tuple2(Tuple2(minKey, value), map)
         private lazy val d: d = RemoveMin.apply(m.left)
         private     type d    = RemoveMin.apply[m#left]
 
-        override  def apply: apply = Tuple2(d._1, Balance.apply(m.key, m.value, d._2.asMapBSTree, m.right)).asInstanceOf[apply]
-        override type apply        = Tuple2[d#_1, Balance.apply[m#key, m#value, d#_2#asMapBSTree, m#right]]
+        override  def apply: apply = Tuple2(d._1, Balance.apply(m.key, m.value, d._2.asMap.asBSTree, m.right)).asInstanceOf[apply]
+        override type apply        = Tuple2[d#_1, Balance.apply[m#key, m#value, d#_2#asMap#asBSTree, m#right]]
     }
 }

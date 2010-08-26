@@ -41,9 +41,6 @@ trait Any extends scala.Equals {
      def asMap: asMap = unsupported("Any.asMap")
     type asMap <: Map
 
-     def asMapBSTree: asMapBSTree = unsupported("Any.asMapBSTree")
-    type asMapBSTree <: map.bstree.BSTree
-
      def asNat: asNat = unsupported("Any.asNat")
     type asNat <: Nat
 

@@ -11,6 +11,9 @@ package dual; package map
 trait Forwarder extends Map with dual.Forwarder {
     override protected type delegate <: Map
 
+    final override  def asBSTree: asBSTree = delegate.asBSTree
+    final override type asBSTree           = delegate#asBSTree
+
     final override  def size: size = delegate.size
     final override type size       = delegate#size
 

@@ -36,9 +36,6 @@ trait Forwarder extends Any {
     final override  def asMap: asMap = delegate.asMap
     final override type asMap        = delegate#asMap
 
-    final override  def asMapBSTree: asMapBSTree = delegate.asMapBSTree
-    final override type asMapBSTree              = delegate#asMapBSTree
-
     final override  def asNat: asNat = delegate.asNat
     final override type asNat        = delegate#asNat
 
