@@ -58,8 +58,8 @@ sealed abstract class AbstractPeano extends Peano {
     final override  def times[that <: Nat](that: that): times[that] = Times.apply(self, that.asPeano)
     final override type times[that <: Nat]                          = Times.apply[self, that#asPeano]
 
-    final override  def divMod[that <: Nat](that: that): divMod[that] = DivMod.apply(self, that.asPeano).asInstanceOf[divMod[that]]
-    final override type divMod[that <: Nat]                           = DivMod.apply[self, that#asPeano]
+    final override  def quotRem[that <: Nat](that: that): quotRem[that] = QuotRem.apply(self, that.asPeano).asInstanceOf[quotRem[that]]
+    final override type quotRem[that <: Nat]                            = QuotRem.apply[self, that#asPeano]
 
     final override  def exp[that <: Nat](that: that): exp[that] = asDense.exp(that).asPeano
     final override type exp[that <: Nat]                        = asDense#exp[that]#asPeano

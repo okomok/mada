@@ -35,8 +35,8 @@ trait Forwarder extends Nat with dual.Forwarder {
     final override  def times[that <: Nat](that: that): times[that] = delegate.times(that)
     final override type times[that <: Nat]                          = delegate#times[that]
 
-    final override  def divMod[that <: Nat](that: that): divMod[that] = delegate.divMod(that)
-    final override type divMod[that <: Nat]                           = delegate#divMod[that]
+    final override  def quotRem[that <: Nat](that: that): quotRem[that] = delegate.quotRem(that)
+    final override type quotRem[that <: Nat]                            = delegate#quotRem[that]
 
     final override  def exp[that <: Nat](that: that): exp[that] = delegate.exp(that)
     final override type exp[that <: Nat]                        = delegate#exp[that]
@@ -53,11 +53,11 @@ trait Forwarder extends Nat with dual.Forwarder {
     final override  def lt[that <: Nat](that: that): lt[that] = delegate.lt(that)
     final override type lt[that <: Nat]                       = delegate#lt[that]
 
-    final override  def div[that <: Nat](that: that): div[that] = delegate.div(that)
-    final override type div[that <: Nat]                        = delegate#div[that]
+    final override  def quot[that <: Nat](that: that): quot[that] = delegate.quot(that)
+    final override type quot[that <: Nat]                         = delegate#quot[that]
 
-    final override  def mod[that <: Nat](that: that): mod[that] = delegate.mod(that)
-    final override type mod[that <: Nat]                        = delegate#mod[that]
+    final override  def rem[that <: Nat](that: that): rem[that] = delegate.rem(that)
+    final override type rem[that <: Nat]                        = delegate#rem[that]
 
     final override  def gt[that <: Nat](that: that): gt[that] = delegate.gt(that)
     final override type gt[that <: Nat]                       = delegate#gt[that]

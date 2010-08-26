@@ -45,8 +45,8 @@ trait Nat extends Any {
      def times[that <: Nat](that: that): times[that]
     type times[that <: Nat] <: Nat
 
-     def divMod[that <: Nat](that: that): divMod[that]
-    type divMod[that <: Nat] <: Product2
+     def quotRem[that <: Nat](that: that): quotRem[that]
+    type quotRem[that <: Nat] <: Product2
 
      def exp[that <: Nat](that: that): exp[that]
     type exp[that <: Nat] <: Nat
@@ -63,11 +63,11 @@ trait Nat extends Any {
      def lt[that <: Nat](that: that): lt[that]
     type lt[that <: Nat] <: Boolean
 
-     def div[that <: Nat](that: that): div[that]
-    type div[that <: Nat] <: Nat
+     def quot[that <: Nat](that: that): quot[that]
+    type quot[that <: Nat] <: Nat
 
-     def mod[that <: Nat](that: that): mod[that]
-    type mod[that <: Nat] <: Nat
+     def rem[that <: Nat](that: that): rem[that]
+    type rem[that <: Nat] <: Nat
 
      def gt[that <: Nat](that: that): gt[that]
     type gt[that <: Nat] <: Boolean

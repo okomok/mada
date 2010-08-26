@@ -9,7 +9,7 @@ package dual; package nat; package dense
 
 
 private[dual]
-object DivMod {
+object QuotRem {
      def apply[x <: Dense, y <: Dense](x: x, y: y): apply[x, y] =
         `if`(y.size.lt(x.size), Then(x, y), Else(x, y)).apply.asProduct2.asInstanceOf[apply[x, y]]
     type apply[x <: Dense, y <: Dense] =
@@ -45,8 +45,8 @@ object DivMod {
     case class Next[x <: Dense, y <: Dense, quot <: Dense, canMinus <: Dense](x: x, y: y, quot: quot, canMinus: canMinus) extends Function0 {
         type self = Next[x, y, quot, canMinus]
 
-        lazy val r: r = x.minus(canMinus).divMod(y)
-            type r    = x#minus[canMinus]#divMod[y]
+        lazy val r: r = x.minus(canMinus).quotRem(y)
+            type r    = x#minus[canMinus]#quotRem[y]
 
         override  def apply: apply = Tuple2(quot.plus(r._1.asNat), r._2)
         override type apply        = Tuple2[quot#plus[r#_1#asNat], r#_2]

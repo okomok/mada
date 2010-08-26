@@ -67,8 +67,8 @@ sealed abstract class AbstractDense extends Dense {
     final override  def minus[that <: Nat](that: that): minus[that] = Minus.apply(self, that.asDense)
     final override type minus[that <: Nat]                          = Minus.apply[self, that#asDense]
 
-    final override  def divMod[that <: Nat](that: that): divMod[that] = DivMod.apply(self, that.asDense)
-    final override type divMod[that <: Nat]                           = DivMod.apply[self, that#asDense]
+    final override  def quotRem[that <: Nat](that: that): quotRem[that] = QuotRem.apply(self, that.asDense)
+    final override type quotRem[that <: Nat]                            = QuotRem.apply[self, that#asDense]
 
     final override  def equal[that <: Nat](that: that): equal[that] = Equal.apply(self, that.asDense)
     final override type equal[that <: Nat]                          = Equal.apply[self, that#asDense]

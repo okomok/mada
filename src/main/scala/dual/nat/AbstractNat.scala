@@ -16,11 +16,11 @@ trait AbstractNat extends Nat {
     final override  def nequal[that <: Nat](that: that): nequal[that] = equal(that).not
     final override type nequal[that <: Nat]                           = equal[that]#not
 
-    final override  def div[that <: Nat](that: that): div[that] = divMod(that)._1.asNat
-    final override type div[that <: Nat]                        = divMod[that]#_1#asNat
+    final override  def quot[that <: Nat](that: that): quot[that] = quotRem(that)._1.asNat
+    final override type quot[that <: Nat]                         = quotRem[that]#_1#asNat
 
-    final override  def mod[that <: Nat](that: that): mod[that] = divMod(that)._2.asNat
-    final override type mod[that <: Nat]                        = divMod[that]#_2#asNat
+    final override  def rem[that <: Nat](that: that): rem[that] = quotRem(that)._2.asNat
+    final override type rem[that <: Nat]                        = quotRem[that]#_2#asNat
 
     final override  def gt[that <: Nat](that: that): gt[that] = that.lt(self)
     final override type gt[that <: Nat]                       = that#lt[self]
