@@ -123,3 +123,22 @@ object SlowFibonacci5 {
         }
     }
 }
+
+
+
+object ShouldBeFastFibonacci {
+     def fibonacci[n <: Nat](n: n): fibonacci[n] = `if`(n  lt _2,  const0(n), Fib(_0, _1, n)).apply.asNat
+    type fibonacci[n <: Nat]                     = `if`[n# lt[_2], const0[n], Fib[_0, _1, n]]#apply#asNat
+
+    case class Fib[a <: Nat, b <: Nat, c <: Nat](a: a, b: b, c: c) extends Function0 {
+        type self = Fib[a, b, c]
+        override  def apply: apply = `if`(c.isZero, const0(a), FibElse(a, b, c)).apply.asNat
+        override type apply        = `if`[c#isZero, const0[a], FibElse[a, b, c]]#apply#asNat
+    }
+
+    case class FibElse[a <: Nat, b <: Nat, c <: Nat](a: a, b: b, c: c) extends Function0 {
+        type self = FibElse[a, b, c]
+        override  def apply: apply = Fib(a  plus b,  a, c.decrement).apply.asInstanceOf[apply]
+        override type apply        = Fib[a# plus[b], a, c#decrement]#apply
+    }
+}

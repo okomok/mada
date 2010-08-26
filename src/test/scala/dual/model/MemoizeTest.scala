@@ -15,7 +15,7 @@ import junit.framework.Assert._
 
 import mada.dual.nat.dense.Literal._
 import mada.dual.nat.dense.{Nil, ::, _1B, _0B}
-import FastFibonacci2._
+import FastFibonacci._
 
 
 class MemoizeTest {
