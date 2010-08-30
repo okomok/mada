@@ -66,6 +66,14 @@ class TrivialTest extends org.scalatest.junit.JUnit3Suite {
         free.assertSame[`true`, m#contains[_5]]
     }
 
+    def testSorted1 {
+        type m = map.sorted1[_3, Box[Int]]#put[_5, Box[Char]]#put[_1, Box[String]]
+        val m: m = map.sorted1(_3, Box(3)).put(_5, Box('c')).put(_1, Box("wow"))
+
+        free.assertSame[`false`, m#contains[_9]]
+        free.assertSame[`true`, m#contains[_5]]
+    }
+
     def testUndual {
         type m   = map.sorted[nat.naturalOrdering]#put[_3, _4]#put[_1, _2]#put[_5, _6]
         val m: m = map.sorted(nat.naturalOrdering).put(_3, _4).put(_1, _2).put(_5, _6)
