@@ -54,15 +54,15 @@
     import com.github.okomok.mada.dual
     import dual.{map, Nat, Box}
     import dual.nat.dense.Literal._
+    import junit.framework.Assert.assertEquals
 
-    // A dual version of abstract-factory pattern
-    class DocTest extends org.scalatest.junit.JUnit3Suite {
+    class AbstractFactoryTest extends org.scalatest.junit.JUnit3Suite {
         // Notice there is no common super trait.
         class WinButton {
-            def paint { println("I'm a WinButton") }
+            def paint = "I'm a WinButton"
         }
         class OSXButton {
-            def paint { println("I'm a OSXButton") }
+            def paint = "I'm a OSXButton"
         }
 
         object WinFactory {
@@ -84,10 +84,9 @@
             // Concrete types are preserved.
             val factory = createFactory(_0)
             val button = factory.createButton
-            button.paint // I'm a WinButton
+            assertEquals("I'm a WinButton", button.paint)
         }
     }
-
 
 For now, `dual` provides the dual version of `Nat`, `List`, `Map`, `Set`, `Ordering`, `Option`, `Either` and `FunctionN`.
 
@@ -96,6 +95,28 @@ Terminology:
 * _metatype_ is a type which extends `dual.Any`. (capitalized in source code.)
 * _metamethod_ is a type, or a type constructor which takes a metatype.
 * _dualmethod_ is an identifier which can be used as both method and metamethod.
+
+    import com.github.okomok.mada.dual
+    import dual.::
+    import dual.nat.dense.Literal._
+
+    class DualityTest extends org.scalatest.junit.JUnit3Suite {
+        // Define 0-ary dualmethod `not2`.
+        final class not2 extends dual.Function1 { // No meta-generics. `Function1` isn't parameterized.
+            type self = not2 // `self` is the dual version of `this` reference. Manual setup is needed.
+            // Again no free-generics. Downcast is needed as you did in 90s.
+            override  def apply[x <: dual.Any](x: x): apply[x] = x.asNat.equal(_2).not
+            override type apply[x <: dual.Any]                 = x#asNat#equal[_2]#not
+        }
+        val not2 = new not2
+
+        def testTrivial {
+            // Filter a heterogeneous list.
+            val xs = _2 :: _3 :: _4 :: _2 :: _5 :: _6 :: _2 :: dual.Nil
+            val ys = _3 :: _4 :: _5 :: _6 :: dual.Nil
+            val zs = xs.filter(not2).equal(ys)
+            dual.free.assert(zs) // checked in compile-time thanks to the duality.
+        }
 
 The computational model of Scala metaprogramming (maybe):
 
