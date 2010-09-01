@@ -8,6 +8,40 @@ package com.github.okomok.madatest; package dualtest
 
 
     import com.github.okomok.mada.dual
+    import dual.{map, Nat, Box}
+    import dual.nat.dense.Literal._
+
+    // A dual version of abstract-factory pattern
+    class DocTest extends org.scalatest.junit.JUnit3Suite {
+        // Notice there is no common super trait.
+        class WinButton {
+            def paint { println("I'm a WinButton") }
+        }
+        class OSXButton {
+            def paint { println("I'm a OSXButton") }
+        }
+
+        object WinFactory {
+            def createButton = new WinButton
+        }
+        object OSXFactory {
+            def createButton = new OSXButton
+        }
+
+        // Needs explicit boxing to make a dual object from a non-dual one.
+        val factoryMap = map.sorted1(_0, Box(WinFactory)).put(_1, Box(OSXFactory))
+
+        def createFactory[n <: Nat](n: n) = factoryMap.get(n).get.undual
+
+        def testTrivial {
+            val button = createFactory(_0).createButton
+            button.paint // I'm a WinButton
+        }
+    }
+
+
+/*
+    import com.github.okomok.mada.dual
     import dual.::
     import dual.nat.dense.Literal._
 
@@ -28,3 +62,5 @@ package com.github.okomok.madatest; package dualtest
             dual.free.assert(xs.filter(not2).equal(ys)) // checked in compile-time.
         }
     }
+    */
+
