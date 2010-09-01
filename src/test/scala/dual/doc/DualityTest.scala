@@ -24,7 +24,6 @@ package com.github.okomok.madatest; package dualtest; package doctest
             // Filter a heterogeneous list.
             val xs = _2 :: _3 :: _4 :: _2 :: _5 :: _6 :: _2 :: dual.Nil
             val ys = _3 :: _4 :: _5 :: _6 :: dual.Nil
-            val zs = xs.filter(not2).equal(ys)
-            dual.free.assert(zs) // checked in compile-time thanks to the duality.
+            dual.free.assert(xs.filter(not2).equal(ys)) // checked in compile-time thanks to the duality.
         }
     }
