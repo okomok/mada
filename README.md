@@ -1,4 +1,4 @@
-# `Mada` 1.0.0-SNAPSHOT
+# Mada 1.0.0-SNAPSHOT
 
 
 
@@ -22,7 +22,7 @@
 
 
 
-## `auto`
+## auto
 
 `auto` provides deterministic resource management within a block.
 
@@ -45,7 +45,7 @@
 
 
 
-## `dual`
+## dual
 
 **This package needs `Yrecursion 50` compiler option.**
 
@@ -116,7 +116,7 @@ References:
 
 
 
-## `peg`
+## peg
 
 `peg` package provides "pure" [PEG] parser combinators:
 
@@ -150,7 +150,7 @@ You might notice that:
 
 
 
-## `sequence`
+## sequence
 
 `sequence` provides four sequence types:
 
@@ -163,7 +163,7 @@ These construct a loosely arranged hierarchy (like Scala-2.7 collections):
 `List` and `Vector` isn't subtype of `Iterative` but implicitly-convertible to it.
 
 
-### `Iterative`
+### Iterative
 
 `Iterative` is yet another `Iterable`: any method is build upon the iterator abstraction.
 Unlike the scala library, `Iterative` is projection (a.k.a. view) by default.
@@ -177,7 +177,7 @@ When you need strictly-evaluated one, apply method `strict`.
 * Recursive sequence can't be built. (See below.)
 
 
-### `List`
+### List
 
 `List` emulates lazily-evaluated list like haskell's one,
 which is useful to build recursive sequences:
@@ -205,7 +205,7 @@ Note `scala.Stream` is not thread-safe, and its `foldRight`, which is the most i
 * Good at recursive sequence.
 
 
-### `Vector`
+### Vector
 
 `Vector` represents (optionally writable) random access sequence, that is, "array".
 It supports also parallel algorithms. Parallelization is explicit but transparent:
@@ -237,7 +237,7 @@ It supports also parallel algorithms. Parallelization is explicit but transparen
 * Recursive sequence is infeasible.
 
 
-### `Reactive`
+### Reactive
 
 `Reactive` sequence is a coarse-grained `scala.Responder` for sequences,
 or you could say a sequence-specific, thread-less and trivial `scala.Actor`.
