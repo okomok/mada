@@ -75,13 +75,19 @@
         // Needs explicit boxing to make a dual object from a non-dual one.
         val factoryMap = map.sorted1(_0, Box(WinFactory)).put(_1, Box(OSXFactory))
 
-        def createFactory[n <: Nat](n: n) = factoryMap.get(n).get.undual
+        def createFactory[n <: Nat](n: n) = {
+            val option = factoryMap.get(n)
+            option.get.undual
+        }
 
         def testTrivial {
-            val button = createFactory(_0).createButton
+            // Concrete types are preserved.
+            val factory = createFactory(_0)
+            val button = factory.createButton
             button.paint // I'm a WinButton
         }
     }
+
 
 For now, `dual` provides the dual version of `Nat`, `List`, `Map`, `Set`, `Ordering`, `Option`, `Either` and `FunctionN`.
 
