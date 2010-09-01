@@ -96,6 +96,8 @@ Terminology:
 * _metamethod_ is a type, or a type constructor which takes a metatype.
 * _dualmethod_ is an identifier which can be used as both method and metamethod.
 
+Thanks to dualmethods, objects move around with their own types:
+
     import com.github.okomok.mada.dual
     import dual.::
     import dual.nat.dense.Literal._
