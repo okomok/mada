@@ -106,7 +106,7 @@ Thanks to dualmethods, objects move around with their own types:
         // Define 0-ary dualmethod `not2`.
         final class not2 extends dual.Function1 { // No meta-generics. `Function1` isn't parameterized.
             type self = not2 // `self` is the dual version of `this` reference. Manual setup is needed.
-            // Again no free-generics. Downcast is needed as you did in 90s.
+            // Again no meta-generics. Downcast is needed as you did in 90s.
             override  def apply[x <: dual.Any](x: x): apply[x] = x.asNat.equal(_2).not
             override type apply[x <: dual.Any]                 = x#asNat#equal[_2]#not
         }
