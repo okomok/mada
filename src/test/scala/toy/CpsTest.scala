@@ -49,7 +49,7 @@ object cps {
 }
 
 
-class CpsTezt {
+class CpsTezt { // extends org.scalatest.junit.JUnit3Suite {
     import cps._
 
     def testSugar: Unit = {
@@ -326,7 +326,100 @@ class CpsTezt {
             }
         }
 
-        val m = new My
+        class My2 extends YieldReturnIterator[String] {
+            override def body = {
+                yieldReturn("ab").flatMap {
+                    case x1 =>
+                        yieldReturn("cdef").flatMap {
+                            case x2 =>
+                                yieldReturn("g").map {
+                                    case x3 => ()
+                                }
+                        }
+                }
+            }
+        }
+
+        class My3 extends YieldReturnIterator[String] {
+            override def body = {
+                shift { k1 =>
+                    yieldReturn("ab").fun { x1 =>
+                        yieldReturn("cdef").flatMap {
+                            case x2 =>
+                                yieldReturn("g").map {
+                                    case x3 => ()
+                                }
+                        }.fun(k1)
+                    }
+                }
+            }
+        }
+
+        class My4 extends YieldReturnIterator[String] {
+            override def body = {
+                // all the k's are the same. (the last empty continuation.)
+                shift { k =>
+                    yieldReturn("ab").fun {
+                        // continuation
+                        x1 =>
+                            shift { (k: Unit => Unit) =>
+                                yieldReturn("cdef").fun {
+                                    // continuation
+                                    x2 =>
+                                        yieldReturn("g").map {
+                                            case x3 => ()
+                                        }.fun(k)
+                                }
+                            }.fun(k)
+                    }
+                }
+            }
+        }
+
+        class My5 extends YieldReturnIterator[String] {
+            override def body = {
+                // all the k's are the same. (the last empty continuation.)
+                shift { k =>
+                    yieldReturn("ab").fun {
+                        // continuation
+                        x1 =>
+                            shift { (k: Unit => Unit) =>
+                                yieldReturn("cdef").fun {
+                                    // continuation
+                                    x2 =>
+                                        shift { (k: Unit => Unit) =>
+                                            yieldReturn("g").fun {
+                                                // continuation
+                                                x3 => k(())
+                                            }
+                                        }.fun(k)
+                                }
+                            }.fun(k)
+                    }
+                }
+            }
+        }
+
+        class My6 extends YieldReturnIterator[String] {
+            override def body = {
+                shift { k =>
+                    yieldReturn("ab").fun {
+                        // continuation
+                        x1 =>
+                            yieldReturn("cdef").fun {
+                                // continuation
+                                x2 =>
+                                    yieldReturn("g").fun {
+                                        // continuation
+                                        x3 => k(())
+                                    }
+                            }
+                    }
+                }
+            }
+        }
+
+        val m = new My6
         assertEquals("ab", m.next)
         assertEquals("cdef", m.next)
         assertEquals("g", m.next)
