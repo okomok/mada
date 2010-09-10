@@ -7,6 +7,9 @@
 package com.github.okomok.madatest; package toy; package cpstest
 
 
+// See: http://lamp.epfl.ch/~rompf/continuations-icfp09.pdf
+
+
 import com.github.okomok.mada
 
 import junit.framework.Assert._
@@ -40,6 +43,8 @@ object cps {
 
     def shift[A, B, C](fun: (A => B) => C): Shift[A, B, C] = new Shift(fun)
     def reset[A, C](c: Shift[A, A, C]): C = c.fun { (x: A) => x }
+
+    type Suspendable = Shift[Unit, Unit, Unit]
 
 }
 
@@ -281,14 +286,14 @@ class CpsTezt {
                 }
             }
 
-            protected def yieldReturn(e: A): Shift[Unit, Unit, Unit] = {
+            protected def yieldReturn(e: A): Suspendable = {
                 shift { (k: Unit => Unit) =>
                     nextValue = Some(Some(e))
                     getNext = k
                 }
             }
 
-            protected def body: Shift[Unit, Unit, Unit]
+            protected def body: Suspendable
 
             override def hasNext = {
                 if (nextValue.isEmpty) {
