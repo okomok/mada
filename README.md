@@ -39,6 +39,9 @@
                 channelCopy(source, dest)
             }
         }
+        def channelCopy(src: channels.ReadableByteChannel, dest: channels.WritableByteChannel) {
+            // exercise.
+        }
     }
 
 `dest.close` and `source.close` are automatically invoked in order.
@@ -144,7 +147,7 @@ References:
 `peg` package provides "pure" [PEG] parser combinators:
 
     import com.github.okomok.mada.peg._
-    import com.github.okomok.mada.peg.compatibles._
+    import com.github.okomok.mada.peg.Peg._
     import junit.framework.Assert._
 
     class DocTest {
