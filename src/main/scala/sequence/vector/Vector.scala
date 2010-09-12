@@ -261,7 +261,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
     /**
      * Reverts <code>zip</code>.
      */
-    def unzip[B, C](implicit pre: Vector[A] => Vector[(B, C)]): (Vector[B], Vector[C]) = (pre(this).map{ bc => bc._1 }, pre(this).map{ bc => bc._2 })
+    def unzip[B, C](implicit pre: Vector[A] <:< Vector[(B, C)]): (Vector[B], Vector[C]) = (pre(this).map{ bc => bc._1 }, pre(this).map{ bc => bc._2 })
 
     /**
      * Zips <code>this</code> and <code>that</code> applying <code>f</code>.
@@ -324,7 +324,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
      * Reverts <code>divide</code>.
      */
     @pre("each vector is the same size except for the last one.")
-    def undivide[B](implicit pre: Vector[A] => Vector[Vector[B]]): Vector[B] = Undivide(pre(this))
+    def undivide[B](implicit pre: Vector[A] <:< Vector[Vector[B]]): Vector[B] = Undivide(pre(this))
 
     @equivalentTo("span(function.not(p))")
     def break(p: A => Boolean): (Vector[A], Vector[A]) = span(function.not(p))
@@ -552,20 +552,20 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
 // string
 
     @conversion
-    def stringize(implicit pre: Vector[A] => Vector[Char]): String = {
+    def stringize(implicit pre: Vector[A] <:< Vector[Char]): String = {
         val sb = new StringBuilder(size)
         pre(this).foreach{ e => sb.append(e) }
         sb.toString
     }
 
     @conversion
-    def lowerCase(implicit pre: Vector[A] => Vector[Char]): Vector[Char] = LowerCase(pre(this))
+    def lowerCase(implicit pre: Vector[A] <:< Vector[Char]): Vector[Char] = LowerCase(pre(this))
 
     @conversion
-    def upperCase(implicit pre: Vector[A] => Vector[Char]): Vector[Char] = UpperCase(pre(this))
+    def upperCase(implicit pre: Vector[A] <:< Vector[Char]): Vector[Char] = UpperCase(pre(this))
 
     @conversion
-    def toJCharSequence(implicit pre: Vector[A] => Vector[Char]): java.lang.CharSequence = ToJCharSequence(pre(this))
+    def toJCharSequence(implicit pre: Vector[A] <:< Vector[Char]): java.lang.CharSequence = ToJCharSequence(pre(this))
 
 
 // trivials

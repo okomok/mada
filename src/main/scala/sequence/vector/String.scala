@@ -13,7 +13,7 @@ private[mada] case class Unstringize(_1: String) extends Vector[Char] {
     override def apply(i: Int) = _1.charAt(i)
 
     override def force = this
-    override def stringize(implicit pre: Vector[Char] => Vector[Char]) = _1 // to-from fusion
+    override def stringize(implicit pre: Vector[Char] <:< Vector[Char]) = _1 // to-from fusion
 }
 
 

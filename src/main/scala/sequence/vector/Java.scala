@@ -72,7 +72,7 @@ private class _FromJCharSequence(_1: java.lang.CharSequence) extends Vector[Char
     override def end = _1.length
     override def apply(i: Int) = _1.charAt(i)
 
-    override def toJCharSequence(implicit pre: Vector[Char] => Vector[Char]) = _1 // to-from fusion
+    override def toJCharSequence(implicit pre: Vector[Char] <:< Vector[Char]) = _1 // to-from fusion
 }
 
 private[mada] case class ToJCharSequence(_1: Vector[Char]) extends java.lang.CharSequence {

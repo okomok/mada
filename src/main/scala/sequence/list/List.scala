@@ -446,7 +446,7 @@ sealed abstract class List[+A] extends iterative.Sequence[A] {
     /**
      * Flattens a list of lists.
      */
-    def flatten[B](implicit pre: List[A] => List[List[B]]): List[B] = pre(this).foldRight(Nil.of[B])(_ ::: _())
+    def flatten[B](implicit pre: List[A] <:< List[List[B]]): List[B] = pre(this).foldRight(Nil.of[B])(_ ::: _())
 
 // misc
 
@@ -537,18 +537,18 @@ sealed abstract class List[+A] extends iterative.Sequence[A] {
     /**
      * Reverts <code>zip</code>.
      */
-    def unzip[B, C](implicit pre: List[A] => List[(B, C)]): (List[B], List[C]) =
+    def unzip[B, C](implicit pre: List[A] <:< List[(B, C)]): (List[B], List[C]) =
         pre(this).foldRight((Nil.of[B], Nil.of[C])){ (ab, abs) => (ab._1 :: abs()._1, ab._2 :: abs()._2) }
 
     /**
      * Folds all the elements by &&.
      */
-    def and(implicit pre: List[A] => List[Boolean]): Boolean = pre(this).foldRight(true)(_ && _())
+    def and(implicit pre: List[A] <:< List[Boolean]): Boolean = pre(this).foldRight(true)(_ && _())
 
     /**
      * Folds all the element by ||.
      */
-    def or(implicit pre: List[A] => List[Boolean]): Boolean = pre(this).foldRight(false)(_ || _())
+    def or(implicit pre: List[A] <:< List[Boolean]): Boolean = pre(this).foldRight(false)(_ || _())
 
 }
 

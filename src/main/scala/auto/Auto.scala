@@ -49,6 +49,6 @@ trait Auto[+A] {
     /**
      * Turns to a variable one.
      */
-    final def asVar[B](implicit pre: Auto[A] => Auto[B]): Auto[Var[B]] = AsVar(pre(this))
+    final def asVar[B](implicit pre: Auto[A] <:< Auto[B]): Auto[Var[B]] = AsVar(pre(this))
 
 }

@@ -233,7 +233,7 @@ trait Peg[A] {
     /**
      * Reads input as lower cases, then tries to match.
      */
-    final def lowerCaseRead(implicit pre: Peg[A] => Peg[Char]): Peg[Char] = LowerCaseRead(pre(this))
+    final def lowerCaseRead(implicit pre: Peg[A] <:< Peg[Char]): Peg[Char] = LowerCaseRead(pre(this))
 
     /**
      * Returns synchronized one.
