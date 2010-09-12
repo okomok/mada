@@ -7,9 +7,6 @@
 package com.github.okomok.mada; package auto
 
 
-import annotation.unchecked.uncheckedVariance
-
-
 object Auto extends Common with Compatibles
 
 
