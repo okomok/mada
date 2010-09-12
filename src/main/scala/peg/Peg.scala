@@ -7,16 +7,7 @@
 package com.github.okomok.mada; package peg
 
 
-object Peg extends Common with Compatibles {
-
-// methodization
-
-    sealed class _OfChar(_this: Peg[Char]) {
-        def lowerCaseRead: Peg[Char] = _this._lowerCaseRead(_this)
-    }
-    implicit def _ofChar(_this: Peg[Char]): _OfChar = new _OfChar(_this)
-
-}
+object Peg extends Common with Compatibles
 
 
 /**
@@ -242,8 +233,7 @@ trait Peg[A] {
     /**
      * Reads input as lower cases, then tries to match.
      */
-    @methodized
-    final def _lowerCaseRead(_this: Peg[Char]): Peg[Char] = LowerCaseRead(_this)
+    final def lowerCaseRead(implicit pre: Peg[A] => Peg[Char]): Peg[Char] = LowerCaseRead(pre(this))
 
     /**
      * Returns synchronized one.

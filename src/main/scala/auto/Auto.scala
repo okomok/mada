@@ -7,15 +7,10 @@
 package com.github.okomok.mada; package auto
 
 
-object Auto extends Common with Compatibles {
+import annotation.unchecked.uncheckedVariance
 
-// methodization
-    sealed class _OfInvariant[A](_this: Auto[A]) {
-        def asVar: Auto[Var[A]] = AsVar(_this)
-    }
-    implicit def _ofInvariant[A](_this: Auto[A]): _OfInvariant[A] = new _OfInvariant(_this)
 
-}
+object Auto extends Common with Compatibles
 
 
 /**
@@ -53,5 +48,10 @@ trait Auto[+A] {
 
     @aliasOf("usedBy")
     final def foreach[B](f: A => B): B = usedBy(f)
+
+    /**
+     * Turns to a variable one.
+     */
+    final def asVar[B](implicit pre: Auto[A] => Auto[B]): Auto[Var[B]] = AsVar(pre(this))
 
 }

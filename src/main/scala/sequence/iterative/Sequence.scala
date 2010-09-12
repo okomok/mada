@@ -81,32 +81,4 @@ object Sequence {
         override def equals(that: Any): Boolean = delegate.equals(that)
     }
 
-// methodization
-    sealed class _OfInvariant[A](_this: Iterative[A]) {
-        def groupBy[K](f: A => K): scala.collection.Map[K, Vector[A]] = _this._groupBy(_this, f)
-        def toSHashSet: scala.collection.Set[A] = _this._toSHashSet(_this)
-        def toJIterable: java.lang.Iterable[A] = _this._toJIterable(_this)
-        def toVector: Vector[A] = _this._toVector(_this)
-        def using(as: Auto[_]*): Auto[Iterative[A]] = auto.usedWith(as, _this) // final
-    }
-    implicit def _ofInvariant[A](_this: Sequence[A]): _OfInvariant[A] = new _OfInvariant(_this.asIterative)
-
-    sealed class _OfSequence[A](_this: Iterative[Iterative[A]]) {
-        def flatten: Iterative[A] = _this._flatten(_this)
-        def unsplit(sep: Iterative[A]): Iterative[A] = _this._unsplit(_this, sep)
-    }
-    implicit def _ofSequence[A](_this: Sequence[Sequence[A]]): _OfSequence[A] = new _OfSequence(_this.asIterative.map(_.asIterative))
-
-    sealed class _OfPair[A, B](_this: Iterative[(A, B)]) {
-        def unzip: (Iterative[A], Iterative[B]) = _this._unzip(_this)
-        def toSHashMap: scala.collection.Map[A, B] = _this._toSHashMap(_this)
-    }
-    implicit def _ofPair[A, B](_this: Sequence[(A, B)]): _OfPair[A, B] = new _OfPair(_this.asIterative)
-
-    sealed class _OfChar(_this: Iterative[Char]) {
-        def stringize: String = _this._stringize(_this)
-        def lexical: Lexical = Lexical(_this)
-    }
-    implicit def _ofChar(_this: Sequence[Char]): _OfChar = new _OfChar(_this.asIterative)
-
 }

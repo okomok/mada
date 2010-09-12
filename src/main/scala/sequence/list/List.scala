@@ -31,22 +31,6 @@ object List extends Common with Compatibles {
     }
     implicit def _ofName[A](_this: => List[A]): _OfName[A] = new _OfName(_this)
 
-    sealed class _OfList[A](_this: List[List[A]]) {
-        def flatten: List[A] = _this.foldRight(Nil.of[A])(_ ::: _())
-    }
-    implicit def _ofList[A](_this: List[List[A]]): _OfList[A] = new _OfList(_this)
-
-    sealed class _OfBoolean(_this: List[Boolean]) {
-        def and: Boolean = _this.foldRight(true)(_ && _())
-        def or: Boolean = _this.foldRight(false)(_ || _())
-    }
-    implicit def _ofBoolean(_this: List[Boolean]): _OfBoolean = new _OfBoolean(_this)
-
-    sealed class _OfPair[A, B](_this: List[(A, B)]) {
-        def unzip: (List[A], List[B]) = _this.foldRight((Nil.of[A], Nil.of[B])){ (ab, abs) => (ab._1 :: abs()._1, ab._2 :: abs()._2) }
-    }
-    implicit def _ofPair[A, B](_this: List[(A, B)]): _OfPair[A, B] = new _OfPair(_this)
-
 }
 
 
@@ -459,6 +443,10 @@ sealed abstract class List[+A] extends iterative.Sequence[A] {
     @equivalentTo("(take(n), drop(n))")
     def splitAt(n: Int): (List[A], List[A]) = (take(n), drop(n))
 
+    /**
+     * Flattens a list of lists.
+     */
+    def flatten[B](implicit pre: List[A] => List[List[B]]): List[B] = pre(this).foldRight(Nil.of[B])(_ ::: _())
 
 // misc
 
@@ -545,6 +533,22 @@ sealed abstract class List[+A] extends iterative.Sequence[A] {
         case (a :: as, b :: bs) => f(a, b) :: as().zipBy(bs())(f)
         case _ => Nil
     }
+
+    /**
+     * Reverts <code>zip</code>.
+     */
+    def unzip[B, C](implicit pre: List[A] => List[(B, C)]): (List[B], List[C]) =
+        pre(this).foldRight((Nil.of[B], Nil.of[C])){ (ab, abs) => (ab._1 :: abs()._1, ab._2 :: abs()._2) }
+
+    /**
+     * Folds all the elements by &&.
+     */
+    def and(implicit pre: List[A] => List[Boolean]): Boolean = pre(this).foldRight(true)(_ && _())
+
+    /**
+     * Folds all the element by ||.
+     */
+    def or(implicit pre: List[A] => List[Boolean]): Boolean = pre(this).foldRight(false)(_ || _())
 
 }
 

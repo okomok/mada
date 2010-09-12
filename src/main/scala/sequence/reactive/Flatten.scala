@@ -7,6 +7,6 @@
 package com.github.okomok.mada; package sequence; package reactive
 
 
-private[mada] case class Flatten[+A](_1: Reactive[Reactive[A]]) extends Forwarder[A] {
+private[mada] case class Flatten[+A](_1: Reactive[Sequence[A]]) extends Forwarder[A] {
     override protected val delegate = _1.unsplit(empty)
 }

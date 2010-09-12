@@ -7,15 +7,15 @@
 package com.github.okomok.mada; package sequence; package iterative
 
 
-private[mada] case class Unsplit[A](_1: Iterative[Iterative[A]], _2: Iterative[A]) extends Iterative[A] {
+private[mada] case class Unsplit[A](_1: Iterative[Sequence[A]], _2: Iterative[A]) extends Iterative[A] {
     override def begin: Iterator[A] = {
         val ii = _1.begin // needs a fresh iterator every time.
         if (!ii) {
             iterator.end
         } else {
-            val h = (~ii)
+            val h = (~ii).asIterative
             ii.++
-            (h ++ bind(ii).map{ s => _2 ++ s }.flatten).begin
+            (h ++ bind(ii).map{ s => _2 ++ s.asIterative }.flatten).begin
         }
     }
 }

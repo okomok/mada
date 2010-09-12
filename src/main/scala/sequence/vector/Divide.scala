@@ -18,7 +18,7 @@ private[mada] case class Divide[A](val _1: Vector[A], _2: Int) extends Vector[Ve
     }
     // isDefinedAt is restrictive because _1.end affects.
 
-    override def _undivide[B](_this: Vector[Vector[B]]): Vector[B] = _1.asInstanceOf[Vector[B]] // undivide-divide fusion
+    override def undivide[B](implicit pre: Vector[Vector[A]] => Vector[Vector[B]]): Vector[B] = _1.asInstanceOf[Vector[B]] // undivide-divide fusion
 }
 
 

@@ -49,7 +49,7 @@ trait Forwarder[A] extends TransformAdapter[A] with Sequence.Forwarder[A] {
     override def mix(x: Mixin): Vector[A] = around(delegate.mix(x))
     override def step(n: Int): Vector[A] = around(delegate.step(n))
     override def zip[B](that: Vector[B]): Vector[(A, B)] = around(delegate.zip(that))
-    override def _unzip[B, C](_this: Vector[(B, C)]): (Vector[B], Vector[C]) = around2(delegate.asInstanceOf[Vector[(B, C)]].unzip)
+    override def unzip[B, C](implicit pre: Vector[A] => Vector[(B, C)]): (Vector[B], Vector[C]) = around2(delegate.unzip)
     override def zipBy[B, C](that: Vector[B])(f: (A, B) => C): Vector[C] = around(delegate.zipBy(that)(f))
 
 // regions
@@ -62,7 +62,7 @@ trait Forwarder[A] extends TransformAdapter[A] with Sequence.Forwarder[A] {
     override def shallowEquals[B](that: Vector[B]): Boolean = delegate.shallowEquals(that)
 // division
     override def divide(n: Int): Vector[Vector[A]] = around(delegate.divide(n))
-    override def _undivide[B](_this: Vector[Vector[B]]): Vector[B] = around(delegate.asInstanceOf[Vector[Vector[B]]].undivide)
+    override def undivide[B](implicit pre: Vector[A] => Vector[Vector[B]]): Vector[B] = around(delegate.undivide)
     override def break(p: A => Boolean): (Vector[A], Vector[A]) = around2(delegate.break(p))
 // filter
     override def mutatingFilter(p: A => Boolean): Vector[A] = around(delegate.mutatingFilter(p))
@@ -106,7 +106,7 @@ trait Forwarder[A] extends TransformAdapter[A] with Sequence.Forwarder[A] {
     override def toSIndexedSeq: scala.collection.mutable.IndexedSeq[A] = delegate.toSIndexedSeq
     override def toJList: java.util.List[A] = delegate.toJList
 // string
-    override def _stringize(_this: Vector[Char]): String = delegate.asInstanceOf[Vector[Char]].stringize
-    override def _lowerCase(_this: Vector[Char]): Vector[Char] = delegate.asInstanceOf[Vector[Char]].lowerCase
-    override def _upperCase(_this: Vector[Char]): Vector[Char] = delegate.asInstanceOf[Vector[Char]].upperCase
+    override def stringize(implicit pre: Vector[A] => Vector[Char]): String = delegate.stringize
+    override def lowerCase(implicit pre: Vector[A] => Vector[Char]): Vector[Char] = delegate.lowerCase
+    override def upperCase(implicit pre: Vector[A] => Vector[Char]): Vector[Char] = delegate.upperCase
 }

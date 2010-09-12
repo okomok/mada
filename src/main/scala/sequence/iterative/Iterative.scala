@@ -106,11 +106,10 @@ trait Iterative[+A] extends Sequence[A] {
     /**
      * Creates a map of vector according to some discriminator function.
      */
-    @methodized
-    def _groupBy[B, K](_this: Iterative[B], f: B => K): scala.collection.Map[K, Vector[B]] = {
+    def groupBy[B, K](f: A => K)(implicit pre: Iterative[A] => Iterative[B]): scala.collection.Map[K, Vector[B]] = {
         val m = new scala.collection.mutable.HashMap[K, Vector[B]]
-        _this.foreach { e =>
-            val k = f(e)
+        pre(this).foreach { e =>
+            val k = f(e.asInstanceOf[A])
             assoc.lazyGet(m)(k)(Vector.from(new java.util.ArrayList[B])).
                 asInstanceOf[vector.FromJList[B]]._1.add(e)
         }
@@ -320,8 +319,7 @@ trait Iterative[+A] extends Sequence[A] {
     /**
      * Turns a sequence of sequences into flat sequence.
      */
-    @methodized
-    def _flatten[B](_this: Iterative[Iterative[B]]): Iterative[B] = Flatten(_this)
+    def flatten[B](implicit pre: Iterative[A] => Iterative[Sequence[B]]): Iterative[B] = Flatten(pre(this))
 
     /**
      * Makes every element access be lazy.
@@ -378,8 +376,7 @@ trait Iterative[+A] extends Sequence[A] {
     /**
      * Flattens <code>vs</code>, each vector appending <code>sep</code> except the last one.
      */
-    @methodized
-    def _unsplit[B](_this: Iterative[Iterative[B]], sep: Iterative[B]): Iterative[B] = Unsplit(_this, sep)
+    def unsplit[B](sep: Iterative[B])(implicit pre: Iterative[A] => Iterative[Sequence[B]]): Iterative[B] = Unsplit(pre(this), sep)
 
     /**
      * Zips <code>this</code> and <code>that</code>.
@@ -389,7 +386,7 @@ trait Iterative[+A] extends Sequence[A] {
     /**
      * Reverts <code>zip</code>.
      */
-    def _unzip[B, C](_this: Iterative[(B, C)]): (Iterative[B], Iterative[C]) = (_this.map{ bc => bc._1 }, _this.map{ bc => bc._2 })
+    def unzip[B, C](implicit pre: Iterative[A] => Iterative[(B, C)]): (Iterative[B], Iterative[C]) = (pre(this).map{ bc => bc._1 }, pre(this).map{ bc => bc._2 })
 
     /**
      * Zips <code>this</code> and <code>that</code> applying <code>f</code>.
@@ -399,16 +396,18 @@ trait Iterative[+A] extends Sequence[A] {
 
 // conversion
 
-    @methodized @conversion
-    def _stringize(_this: Iterative[Char]): String = {
+    @conversion
+    def stringize(implicit pre: Iterative[A] => Iterative[Char]): String = {
         val sb = new StringBuilder
-        val it = begin
+        val it = pre(this).begin
         while (it) {
             sb.append(~it)
             it.++
         }
         sb.toString
     }
+
+    def lexical(implicit pre: Iterative[A] => Iterative[Char]): Lexical = Lexical(pre(this))
 
     @conversion
     def toList: List[A] = {
@@ -422,8 +421,8 @@ trait Iterative[+A] extends Sequence[A] {
         }
     }
 
-    @methodized @conversion
-    def _toVector[B](_this: Iterative[B]): Vector[B] = ToVector(_this)
+    @conversion
+    def toVector[B](implicit pre: Iterative[A] => Iterative[B]): Vector[B] = ToVector(pre(this))
 
     @conversion
     def toSeq: Seq[A] = ToSeq(this)
@@ -431,10 +430,10 @@ trait Iterative[+A] extends Sequence[A] {
     @conversion
     def toSList: scala.collection.immutable.List[A] = toSeq.toList
 
-    @methodized @conversion
-    def _toSHashMap[K, V](_this: Iterative[(K, V)]): scala.collection.Map[K, V] = {
+    @conversion
+    def toSHashMap[K, V](implicit pre: Iterative[A] => Iterative[(K, V)]): scala.collection.Map[K, V] = {
         val r = new scala.collection.mutable.HashMap[K, V]
-        val it = _this.begin
+        val it = pre(this).begin
         while (it) {
             r += ~it
             it.++
@@ -442,10 +441,10 @@ trait Iterative[+A] extends Sequence[A] {
         r
     }
 
-    @methodized @conversion
-    def _toSHashSet[B](_this: Iterative[B]): scala.collection.Set[B] = {
+    @conversion
+    def toSHashSet[B](implicit pre: Iterative[A] => Iterative[B]): scala.collection.Set[B] = {
         val r = new scala.collection.mutable.HashSet[B]
-        val it = _this.begin
+        val it = pre(this).begin
         while (it) {
             r += ~it
             it.++
@@ -453,8 +452,8 @@ trait Iterative[+A] extends Sequence[A] {
         r
     }
 
-    @methodized @conversion
-    def _toJIterable[B](_this: Iterative[B]): java.lang.Iterable[B] = ToJIterable(_this)
+    @conversion
+    def toJIterable[B](implicit pre: Iterative[A] => Iterative[B]): java.lang.Iterable[B] = ToJIterable(pre(this))
 
 
 // sorted

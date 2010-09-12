@@ -136,8 +136,7 @@ trait Reactive[+A] extends Sequence[A] {
     /**
      * Turns a sequence of sequences into flat sequence.
      */
-    @methodized
-    def _flatten[B](_this: Reactive[Reactive[B]]): Reactive[B] = Flatten(_this)
+    def flatten[B](implicit pre: Reactive[A] => Reactive[Sequence[B]]): Reactive[B] = Flatten(pre(this))
 
     /**
      * Steps by the specified stride.
@@ -157,8 +156,7 @@ trait Reactive[+A] extends Sequence[A] {
     /**
      * Flattens <code>vs</code>, each reactive appending <code>sep</code> except the last one.
      */
-    @methodized
-    def _unsplit[B](_this: Reactive[Reactive[B]], sep: Reactive[B]): Reactive[B] = Unsplit(_this, sep)
+    def unsplit[B](sep: Reactive[B])(implicit pre: Reactive[A] => Reactive[Sequence[B]]): Reactive[B] = Unsplit(pre(this), sep)
 
     /**
      * Zips <code>this</code> and <code>that</code>.
@@ -168,7 +166,7 @@ trait Reactive[+A] extends Sequence[A] {
     /**
      * Reverts <code>zip</code>.
      */
-    def _unzip[B, C](_this: Reactive[(B, C)]): (Reactive[B], Reactive[C]) = (_this.map{ bc => bc._1 }, _this.map{ bc => bc._2 })
+    def unzip[B, C](implicit pre: Reactive[A] => Reactive[(B, C)]): (Reactive[B], Reactive[C]) = (pre(this).map{ bc => bc._1 }, pre(this).map{ bc => bc._2 })
 
     /**
      * Zips <code>this</code> and <code>that</code> applying <code>f</code>.

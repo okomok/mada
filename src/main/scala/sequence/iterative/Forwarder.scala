@@ -27,7 +27,7 @@ trait Forwarder[+A] extends Iterative[A] with Sequence.Forwarder[A] {
     override def filter(p: A => Boolean): Iterative[A] = around(delegate.filter(p))
     override def remove(p: A => Boolean): Iterative[A] = around(delegate.remove(p))
     override def partition(p: A => Boolean): (Iterative[A], Iterative[A]) = around2(delegate.partition(p))
-    override def _groupBy[B, K](_this: Iterative[B], f: B => K): scala.collection.Map[K, Vector[B]] = delegate.asInstanceOf[Iterative[B]].groupBy(f)
+    override def groupBy[B, K](f: A => K)(implicit pre: Iterative[A] => Iterative[B]): scala.collection.Map[K, Vector[B]] = delegate.groupBy(f)
     override def foreach(f: A => Unit): Unit = delegate.foreach(f)
     override def forall(p: A => Boolean): Boolean = delegate.forall(p)
     override def exists(p: A => Boolean): Boolean = delegate.exists(p)
@@ -55,7 +55,7 @@ trait Forwarder[+A] extends Iterative[A] with Sequence.Forwarder[A] {
     override def times(n: Int): Iterative[A] = delegate.times(n)
     override def force: Iterative[A] = around(delegate.force)
     override def strict: Iterative[A] = around(delegate.strict)
-    override def _flatten[B](_this: Iterative[Iterative[B]]): Iterative[B] = around(delegate.asInstanceOf[Iterative[Iterative[B]]].flatten)
+    override def flatten[B](implicit pre: Iterative[A] => Iterative[Sequence[B]]): Iterative[B] = around(delegate.flatten)
     override def memoize: Iterative[A] = around(delegate.memoize)
     override def nth(n: Int): A = delegate.nth(n)
     override def mix(x: Mixin): Iterative[A] = around(delegate.mix(x))
@@ -63,18 +63,19 @@ trait Forwarder[+A] extends Iterative[A] with Sequence.Forwarder[A] {
     override def step(n: Int): Iterative[A] = delegate.step(n)
     override def unique: Iterative[A] = around(delegate.unique)
     override def uniqueBy(p: (A, A) => Boolean): Iterative[A] = around(delegate.uniqueBy(p))
-    override def _unsplit[B](_this: Iterative[Iterative[B]], sep: Iterative[B]): Iterative[B] = around(delegate.asInstanceOf[Iterative[Iterative[B]]].unsplit(sep))
+    override def unsplit[B](sep: Iterative[B])(implicit pre: Iterative[A] => Iterative[Sequence[B]]): Iterative[B] = around(delegate.unsplit(sep))
     override def zip[B](that: Iterative[B]): Iterative[(A, B)] = around(delegate.zip(that))
-    override def _unzip[B, C](_this: Iterative[(B, C)]): (Iterative[B], Iterative[C]) = around2(delegate.asInstanceOf[Iterative[(B, C)]].unzip)
+    override def unzip[B, C](implicit pre: Iterative[A] => Iterative[(B, C)]): (Iterative[B], Iterative[C]) = around2(delegate.unzip)
     override def zipBy[B, C](that: Iterative[B])(f: (A, B) => C): Iterative[C] = around(delegate.zipBy(that)(f))
-    override def _stringize(_this: Iterative[Char]): String = delegate.asInstanceOf[Iterative[Char]].stringize
+    override def stringize(implicit pre: Iterative[A] => Iterative[Char]): String = delegate.stringize
+    override def lexical(implicit pre: Iterative[A] => Iterative[Char]): Lexical = delegate.lexical
     override def toList: List[A] = delegate.toList
-    override def _toVector[B](_this: Iterative[B]): Vector[B] = delegate.asInstanceOf[Iterative[B]].toVector
+    override def toVector[B](implicit pre: Iterative[A] => Iterative[B]): Vector[B] = delegate.toVector
     override def toSeq: Seq[A] = delegate.toSeq
     override def toSList: scala.collection.immutable.List[A] = delegate.toSList
-    override def _toSHashMap[K, V](_this: Iterative[(K, V)]): scala.collection.Map[K, V] = delegate.asInstanceOf[Iterative[(K, V)]].toSHashMap
-    override def _toSHashSet[B](_this: Iterative[B]): scala.collection.Set[B] = delegate.asInstanceOf[Iterative[B]].toSHashSet
-    override def _toJIterable[B](_this: Iterative[B]): java.lang.Iterable[B] = delegate.asInstanceOf[Iterative[B]].toJIterable
+    override def toSHashMap[K, V](implicit pre: Iterative[A] => Iterative[(K, V)]): scala.collection.Map[K, V] = delegate.toSHashMap
+    override def toSHashSet[B](implicit pre: Iterative[A] => Iterative[B]): scala.collection.Set[B] = delegate.toSHashSet
+    override def toJIterable[B](implicit pre: Iterative[A] => Iterative[B]): java.lang.Iterable[B] = delegate.toJIterable
 
     override def merge[B >: A](that: Iterative[B])(implicit c: Ordering[B]): Iterative[B] = around(delegate.merge(that)(c))
     override def union[B >: A](that: Iterative[B])(implicit c: Ordering[B]): Iterative[B] = around(delegate.union(that)(c))

@@ -42,12 +42,6 @@ class aliasOf(expr: String) extends equivalentTo(expr)
 
 
 /**
- * Provides pseudo methods to work around type constraints.
- */
-class methodized extends StaticAnnotation
-
-
-/**
  * Not thread-safe.
  */
 class notThreadSafe extends StaticAnnotation
