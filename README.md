@@ -127,7 +127,7 @@ The computational model of Scala metaprogramming (maybe):
 
 * Pure(no side-effects) and object-oriented.
 * The arguments to a metamethod are always evaluated completely before the metamethod is applied.
-* Memoization in the while metamethod call tree. (superior than Haskell.)
+* Memoization in the whole metamethod call tree. (superior than Haskell.)
 * No meta-`eq` (You can't tell two types are the same or not.)
 * Meta-generics doesn't work. (e.g. metatype can't be a parameter.)
 * Metamethod can't be re-overridden.
