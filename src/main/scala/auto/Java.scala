@@ -10,13 +10,12 @@ package auto
 
 private[auto]
 case class FromJCloseable[A <: java.io.Closeable](_1: A) extends Resource[A] {
-    override protected val get = _1
-    override protected def end = _1.close
+    override protected val open = _1
+    override protected def close = _1.close
 }
 
 private[auto]
 case class FromJLock[A <: java.util.concurrent.locks.Lock](_1: A) extends Resource[A] {
-    override protected val get = _1
-    override protected def begin = _1.lock
-    override protected def end = _1.unlock
+    override protected def open = { _1.lock; _1 }
+    override protected def close = _1.unlock
 }

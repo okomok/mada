@@ -29,9 +29,8 @@ class UsingTest extends org.scalatest.junit.JUnit3Suite {
                     _ > 3
                 } using {
                     new mada.auto.Resource[Unit] {
-                        override def get = ()
-                        override def begin = autoBegin = true
-                        override def end = autoEnd = true
+                        override def open = { autoBegin = true; () }
+                        override def close = autoEnd = true
                     }
                 }
 

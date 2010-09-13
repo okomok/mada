@@ -14,8 +14,8 @@ import auto.Resource
 // Char
 
 private[mada] case class CharFile(_1: RandomAccessFile) extends Resource[Vector[Char]] {
-    override protected def get: Vector[Char] = new CharFileVector(_1)
-    override protected def end = _1.close
+    override protected def open: Vector[Char] = new CharFileVector(_1)
+    override protected def close = _1.close
 }
 
 private class CharFileVector(_1: RandomAccessFile) extends Vector[Char] {
@@ -29,8 +29,8 @@ private class CharFileVector(_1: RandomAccessFile) extends Vector[Char] {
 // Int
 
 private[mada] case class IntFile(_1: RandomAccessFile) extends Resource[Vector[Int]] {
-    override protected def get: Vector[Int] = new IntFileVector(_1)
-    override protected def end = _1.close
+    override protected def open: Vector[Int] = new IntFileVector(_1)
+    override protected def close = _1.close
 }
 
 private class IntFileVector(_1: RandomAccessFile) extends Vector[Int] {
@@ -44,8 +44,8 @@ private class IntFileVector(_1: RandomAccessFile) extends Vector[Int] {
 // Long
 
 private[mada] case class LongFile(_1: RandomAccessFile) extends Resource[Vector[Long]] {
-    override protected def get: Vector[Long] = new LongFileVector(_1)
-    override protected def end = _1.close
+    override protected def open: Vector[Long] = new LongFileVector(_1)
+    override protected def close = _1.close
 }
 
 private class LongFileVector(_1: RandomAccessFile) extends Vector[Long] {

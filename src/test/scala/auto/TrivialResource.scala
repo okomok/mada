@@ -16,10 +16,12 @@ case class TrivialResource[A](res: A, b: Boolean = false) extends auto.Resource[
     var began = false
     var ended = false
 
-    override def begin = {
+    override def open = {
         if (b) throw new Error
         began = true
+        res
     }
-    override def end = ended = true
-    override def get = res
+    override def close {
+        ended = true
+    }
 }
