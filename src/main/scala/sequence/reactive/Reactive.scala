@@ -195,7 +195,7 @@ trait Reactive[+A] extends Sequence[A] {
     /**
      * Manages resources.
      */
-    def using(a: => Auto[Any]): Reactive[A] = Using(this, util.byLazy(a))
+    def using(a: Auto[Any]): Auto[Reactive[A]] = for (_ <- a) yield this //Using(this, util.byLazy(a))
 
     /**
      * Catches exceptions.

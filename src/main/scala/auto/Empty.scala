@@ -9,6 +9,6 @@ package auto
 
 
 private[auto]
-case class Filter[A](_1: Auto[A], _2: A => Boolean) extends Auto[A] {
-    override def foreach(f: A => Unit) = for (x <- _1) { if (_2(x)) f(x) }
+case class Empty() extends Auto[Nothing] {
+    override def foreach(f: Nothing => Unit) = ()
 }

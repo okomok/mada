@@ -24,22 +24,27 @@ class UsingTest extends org.scalatest.junit.JUnit3Suite {
         var thrown = false
 
         try {
-            t filter {
-                _ > 3
-            } using {
-                new mada.Auto[Unit] {
-                    override def get = ()
-                    override def begin = autoBegin = true
-                    override def end = autoEnd = true
+            val u =
+                t filter {
+                    _ > 3
+                } using {
+                    new mada.auto.Resource[Unit] {
+                        override def get = ()
+                        override def begin = autoBegin = true
+                        override def end = autoEnd = true
+                    }
                 }
-            } map { e =>
-                if (e == 8) {
-                    throw new AssertionError
-                } else {
-                    e + 10
+
+            for (x <- u) {
+                x.map { e =>
+                    if (e == 8) {
+                        throw new AssertionError
+                    } else {
+                        e + 10
+                    }
+                } foreach { e =>
+                    out.add(e)
                 }
-            } foreach { e =>
-                out.add(e)
             }
         } catch {
             case x: AssertionError => thrown = true
