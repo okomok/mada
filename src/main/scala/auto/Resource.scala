@@ -15,7 +15,7 @@ trait Resource[+A] extends Auto[A] {
     protected def begin: Unit = ()
     protected def end: Unit
 
-    override def foreach(f: A => Unit) = {
+    final override def foreach(f: A => Unit) = {
         begin
         var primary: Throwable = null
         try {

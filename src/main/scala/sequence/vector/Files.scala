@@ -8,13 +8,14 @@ package com.github.okomok.mada; package sequence; package vector
 
 
 import java.io.{File, RandomAccessFile, Closeable}
+import auto.Resource
 
 
 // Char
 
-private[mada] case class CharFile(_1: RandomAccessFile) extends Auto[Vector[Char]] {
-    private def get: Vector[Char] = new CharFileVector(_1)
-    override def foreach(f: Vector[Char] => Unit)  = try { f(get) } finally { _1.close }
+private[mada] case class CharFile(_1: RandomAccessFile) extends Resource[Vector[Char]] {
+    override protected def get: Vector[Char] = new CharFileVector(_1)
+    override protected def end = _1.close
 }
 
 private class CharFileVector(_1: RandomAccessFile) extends Vector[Char] {
@@ -27,9 +28,9 @@ private class CharFileVector(_1: RandomAccessFile) extends Vector[Char] {
 
 // Int
 
-private[mada] case class IntFile(_1: RandomAccessFile) extends Auto[Vector[Int]] {
-    private def get: Vector[Int] = new IntFileVector(_1)
-    override def foreach(f: Vector[Int] => Unit)  = try { f(get) } finally { _1.close }
+private[mada] case class IntFile(_1: RandomAccessFile) extends Resource[Vector[Int]] {
+    override protected def get: Vector[Int] = new IntFileVector(_1)
+    override protected def end = _1.close
 }
 
 private class IntFileVector(_1: RandomAccessFile) extends Vector[Int] {
@@ -42,9 +43,9 @@ private class IntFileVector(_1: RandomAccessFile) extends Vector[Int] {
 
 // Long
 
-private[mada] case class LongFile(_1: RandomAccessFile) extends Auto[Vector[Long]] {
-    private def get: Vector[Long] = new LongFileVector(_1)
-    override def foreach(f: Vector[Long] => Unit)  = try { f(get) } finally { _1.close }
+private[mada] case class LongFile(_1: RandomAccessFile) extends Resource[Vector[Long]] {
+    override protected def get: Vector[Long] = new LongFileVector(_1)
+    override protected def end = _1.close
 }
 
 private class LongFileVector(_1: RandomAccessFile) extends Vector[Long] {
