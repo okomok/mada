@@ -11,8 +11,8 @@ object Auto extends Common with Compatibles
 
 
 /**
- * Trait for "automatic reference"
- * This is nothing but a tiny Traversable.
+ * Trait for automatic resource management
+ * (this is nothing but a tiny Traversable.)
  */
 trait Auto[+A] {
 

@@ -8,24 +8,14 @@ package com.github.okomok.mada; package auto
 
 
 private[auto]
-case class FromJCloseable[A <: java.io.Closeable](_1: A) extends Auto[A] {
-    override def foreach(f: A => Unit) = {
-        try {
-            f(_1)
-        } finally {
-            _1.close
-        }
-    }
+case class FromJCloseable[A <: java.io.Closeable](_1: A) extends Resource[A] {
+    override protected val get = _1
+    override protected def end = _1.close
 }
 
 private[auto]
-case class FromJLock[A <: java.util.concurrent.locks.Lock](_1: A) extends Auto[A] {
-    override def foreach(f: A => Unit) = {
-        _1.lock
-        try {
-            f(_1)
-        } finally {
-            _1.unlock
-        }
-    }
+case class FromJLock[A <: java.util.concurrent.locks.Lock](_1: A) extends Resource[A] {
+    override protected val get = _1
+    override protected def begin = _1.lock
+    override protected def end = _1.unlock
 }

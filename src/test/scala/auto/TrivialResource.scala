@@ -12,15 +12,14 @@ import com.github.okomok.mada
 import mada.{auto, Auto}
 
 
-case class TrivialResource[A](res: A) extends Auto[A] {
+case class TrivialResource[A](res: A, b: Boolean = false) extends auto.Resource[A] {
     var began = false
     var ended = false
-    override def foreach(f: A => Unit) = {
+
+    override def begin = {
+        if (b) throw new Error
         began = true
-        try {
-            f(res)
-        } finally {
-            ended = true
-        }
     }
+    override def end = ended = true
+    override def get = res
 }

@@ -41,4 +41,31 @@ class ForTest extends org.scalatest.junit.JUnit3Suite {
         }
     }
 
+
+    def make3(r1: Auto[Int], r2: Auto[Int], r3: Auto[Int]): Auto[Int] = {
+        for {
+            s1 <- r1
+            s2 <- r2
+            s3 <- r3
+        } yield {
+            s1 + s2 + s3
+        }
+    }
+
+    def testBig {
+        val r1 = TrivialResource(1)
+        val r2 = TrivialResource(2)
+        val r3 = TrivialResource(3)
+        val r4 = TrivialResource(4)
+        val r5 = TrivialResource(5)
+        val r6 = TrivialResource(6)
+
+        for {
+            x <- make3(r1, r2, r3)
+            y <- make3(r4, r5, r6)
+        } {
+            assertEquals(1+2+3+4+5+6, x + y)
+        }
+    }
+
 }
