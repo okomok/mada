@@ -8,6 +8,6 @@ package com.github.okomok.mada; package auto
 
 
 private[auto]
-case class EndWith(_1: util.ByName[Unit]) extends Auto[Unit] {
-    override def foreach(f: Unit => Unit) = _1()
+case class Filter[A](_1: Auto[A], _2: A => Boolean) extends Auto[A] {
+    override def foreach(f: A => Unit): Unit = for (x <- _1) { if (_2(x)) f(x) }
 }

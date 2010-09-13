@@ -57,8 +57,8 @@ class FileTest extends org.scalatest.junit.JUnit3Suite {
         }
 
         def aSeq = {
-            val f = file[Char](n, "r")
-            f.get.map(e => e).using(f)
+            val f: mada.Auto[Vector[Char]] = file[Char](n, "r")
+            f//f.map(e => e).using(f)
         }
 
         using(aSeq) { v =>

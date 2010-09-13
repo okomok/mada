@@ -12,43 +12,21 @@ object Auto extends Common with Compatibles
 
 /**
  * Trait for "automatic reference"
+ * This is nothing but a tiny Traversable.
  */
 trait Auto[+A] {
 
     @returnThis
     final def asAuto: Auto[A] = this
 
-    /**
-     * Returns the associated reference.
-     */
-    def get: A
+    def foreach(f: A => Unit): Unit
 
-    /**
-     * Called when block begins.
-     */
-    def begin: Unit = ()
+    def map[B](f: A => B): Auto[B] = Map(this, f)
 
-    /**
-     * Called when block ends.
-     */
-    def end: Unit = ()
+    def flatMap[B](f: A => Auto[B]): Auto[B] = FlatMap(this, f)
 
-    @equivalentTo("begin; try { f(get) } finally { end }")
-    def usedBy[B](f: A => B): B = {
-        begin
-        try {
-            f(get)
-        } finally {
-            end
-        }
-    }
+    def filter(f: A => Boolean): Auto[A] = Filter(this, f)
 
-    @aliasOf("usedBy")
-    final def foreach[B](f: A => B): B = usedBy(f)
-
-    /**
-     * Turns to a variable one.
-     */
-    final def asVar[B](implicit pre: Auto[A] <:< Auto[B]): Auto[Var[B]] = AsVar(pre(this))
+    def append[B >: A](that: Auto[B]): Auto[B] = Append[B](this, that)
 
 }

@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.madatest
+package com.github.okomok.madatest; package autotest
 
 
 import com.github.okomok.mada
@@ -15,7 +15,7 @@ import mada.auto.use
 
 
 object MyFile {
-    implicit def _toAuto(from: MyFile): Auto[MyFile] = new Auto[MyFile] {
+    implicit def _toAuto(from: MyFile): Auto[MyFile] = new AutoResource[MyFile] {
         override def get = from
         override def end = from.ended = true
     }
@@ -26,7 +26,7 @@ class MyFile {
 }
 
 
-class HisFile[A] extends Auto[HisFile[A]] {
+class HisFile[A] extends AutoResource[HisFile[A]] {
     var began = false
     var ended = false
     override def begin = began = true
@@ -36,7 +36,7 @@ class HisFile[A] extends Auto[HisFile[A]] {
 }
 
 
-class MaybeThrow(b: Boolean) extends Auto[MaybeThrow] {
+class MaybeThrow(b: Boolean) extends AutoResource[MaybeThrow] {
     var ended = false
     override def get = this
     override def begin = if (b) throw new Error // might throw.
@@ -45,7 +45,7 @@ class MaybeThrow(b: Boolean) extends Auto[MaybeThrow] {
 
 
 
-class AutoTest extends org.scalatest.junit.JUnit3Suite {
+class TrivialTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial: Unit = {
         val file = new MyFile

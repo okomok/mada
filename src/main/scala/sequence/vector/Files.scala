@@ -13,8 +13,8 @@ import java.io.{File, RandomAccessFile, Closeable}
 // Char
 
 private[mada] case class CharFile(_1: RandomAccessFile) extends Auto[Vector[Char]] {
-    override def get: Vector[Char] = new CharFileVector(_1)
-    override def end = _1.close
+    private def get: Vector[Char] = new CharFileVector(_1)
+    override def foreach(f: Vector[Char] => Unit)  = try { f(get) } finally { _1.close }
 }
 
 private class CharFileVector(_1: RandomAccessFile) extends Vector[Char] {
@@ -28,8 +28,8 @@ private class CharFileVector(_1: RandomAccessFile) extends Vector[Char] {
 // Int
 
 private[mada] case class IntFile(_1: RandomAccessFile) extends Auto[Vector[Int]] {
-    override def get: Vector[Int] = new IntFileVector(_1)
-    override def end = _1.close
+    private def get: Vector[Int] = new IntFileVector(_1)
+    override def foreach(f: Vector[Int] => Unit)  = try { f(get) } finally { _1.close }
 }
 
 private class IntFileVector(_1: RandomAccessFile) extends Vector[Int] {
@@ -43,8 +43,8 @@ private class IntFileVector(_1: RandomAccessFile) extends Vector[Int] {
 // Long
 
 private[mada] case class LongFile(_1: RandomAccessFile) extends Auto[Vector[Long]] {
-    override def get: Vector[Long] = new LongFileVector(_1)
-    override def end = _1.close
+    private def get: Vector[Long] = new LongFileVector(_1)
+    override def foreach(f: Vector[Long] => Unit)  = try { f(get) } finally { _1.close }
 }
 
 private class LongFileVector(_1: RandomAccessFile) extends Vector[Long] {

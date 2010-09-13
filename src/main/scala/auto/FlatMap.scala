@@ -8,6 +8,6 @@ package com.github.okomok.mada; package auto
 
 
 private[auto]
-case class EndWith(_1: util.ByName[Unit]) extends Auto[Unit] {
-    override def foreach(f: Unit => Unit) = _1()
+case class FlatMap[A, +B](_1: Auto[A], _2: A => Auto[B]) extends Auto[B] {
+    override def foreach(f: B => Unit): Unit = for (x <- _1) { for (y <- _2(x)) f(y) }
 }
