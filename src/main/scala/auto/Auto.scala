@@ -12,22 +12,32 @@ object Auto extends Common with Compatibles
 
 
 /**
- * Trait for automatic resource management
- * (this is nothing but a tiny Traversable.)
+ * Mixin for automatic resource management
  */
-trait Auto[+A] {
+trait Auto[+A] extends sequence.Reactive[A] {
+    protected def open: A
+    protected def close: Unit
 
-    @returnThis
-    final def asAuto: Auto[A] = this
-
-    def foreach(f: A => Unit): Unit
-
-    def map[B](f: A => B): Auto[B] = Map(this, f)
-
-    def flatMap[B](f: A => Auto[B]): Auto[B] = FlatMap(this, f)
-
-    def filter(f: A => Boolean): Auto[A] = Filter(this, f)
-
-    def append[B >: A](that: Auto[B]): Auto[B] = Append[B](this, that)
-
+    override def foreach(f: A => Unit) = {
+        val r = open
+        var primary: Throwable = null
+        try {
+            f(r)
+        } catch {
+            case t: Throwable => {
+                primary = t
+                throw t
+            }
+        } finally {
+            if (null ne primary) {
+                try {
+                    close
+                } catch {
+                    case s: Exception => /*primary.addSuppressedException(s)*/
+                }
+            } else {
+                close
+            }
+        }
+    }
 }

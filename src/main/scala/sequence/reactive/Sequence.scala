@@ -7,9 +7,6 @@
 package com.github.okomok.mada; package sequence; package reactive
 
 
-import java.nio.channels.SelectionKey
-
-
 /**
  * The bridge between phisical and logical hierarchy
  */

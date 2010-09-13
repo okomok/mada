@@ -4,10 +4,8 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package sequence; package reactive
-
-
-import java.nio.channels.{Selector, SelectionKey}
+package com.github.okomok.mada
+package sequence; package reactive
 
 
 private[mada] class Common {

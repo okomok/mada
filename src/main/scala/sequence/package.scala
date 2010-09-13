@@ -37,10 +37,6 @@ package object sequence {
      val Reactive = reactive.Reactive
     type Reactive[+A] = reactive.Reactive[A]
 
-    @aliasOf("reactor.Reactor")
-     val Reactor = reactor.Reactor
-    type Reactor[-A] = reactor.Reactor[A]
-
     @aliasOf("vector.Vector")
      val Vector = vector.Vector
     type Vector[A] = vector.Vector[A]

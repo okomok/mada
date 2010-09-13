@@ -4,14 +4,23 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package sequence; package reactive
+package com.github.okomok.mada
+package sequence; package reactive
 
 
-private[mada] case class Drop[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
+private[reactive]
+case class Drop[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
     Precondition.nonnegative(_2, "drop")
 
-    override def activate(k: Reactor[A]) = {
-        _1.activate(reactor.make(_ => k.onEnd, new SkipTimes[A](e => k.react(e), _2)))
+    override def foreach(f: A => Unit) = {
+        var c = _2
+        for (x <- _1) {
+            if (c == 0) {
+                f(x)
+            } else {
+                c -= 1
+            }
+        }
     }
 
     override def drop(n: Int) = _1.drop(_2 + n) // drop-drop fusion

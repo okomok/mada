@@ -4,19 +4,19 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package sequence; package reactive
+package com.github.okomok.mada
+package sequence; package reactive
 
 
-private[mada] case class FromIterative[+A](_1: Iterative[A]) extends Reactive[A] {
-    override def activate(k: Reactor[A]) = {
-        _1.foreach{ e => k.react(e) }
-        k.onEnd
-    }
+private[reactive]
+case class FromIterative[+A](_1: Iterative[A]) extends Reactive[A] {
+    override def foreach(f: A => Unit) = for (x <- _1) f(x)
 }
 
 
-private[mada] case class ToIterative[A](_1: Reactive[A]) extends iterative.Forwarder[A] {
-    private val q = new java.util.concurrent.ConcurrentLinkedQueue[A]
-    _1.activate(reactor.make(_ => (), e => q.add(e)))
-    override protected val delegate = Iterative.from(q)
+private[reactive]
+case class ToIterative[A](_1: Reactive[A]) extends iterative.Forwarder[A] {
+    private val arr = new java.util.ArrayList[A]
+    for (x <- _1) arr.add(x)
+    override protected val delegate = Iterative.from(arr)
 }

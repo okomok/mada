@@ -11,6 +11,7 @@ import java.awt.Component
 
 
 object Swing {
+/*
 
 
 // ActionEvent
@@ -170,5 +171,5 @@ object Swing {
         }
         override def close = source.removeKeyListener(l)
     }
-
+*/
 }

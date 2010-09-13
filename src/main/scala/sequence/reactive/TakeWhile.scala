@@ -4,27 +4,16 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package sequence; package reactive
+package com.github.okomok.mada
+package sequence; package reactive
 
 
-@notThreadSafe
-private[mada] case class TakeWhile[A](_1: Reactive[A], _2: A => Boolean) extends Reactive[A] {
-    override def activate(k: Reactor[A]) = {
-        val j = new Reactor[A] {
-            private var ends = false
-            private val _onEnd = util.byLazy(k.onEnd)
-            override def onEnd = _onEnd()
-            override def react(e: A) = {
-                if (!ends) {
-                    if (_2(e)) {
-                        k.react(e)
-                    } else {
-                        ends = true
-                        _onEnd()
-                    }
-                }
-            }
+private[reactive]
+case class TakeWhile[A](_1: Reactive[A], _2: A => Boolean) extends Reactive[A] {
+    override def foreach(f: A => Unit): Unit = {
+        for (x <- _1) {
+            if (!_2(x)) return
+            f(x)
         }
-        _1.activate(j)
     }
 }

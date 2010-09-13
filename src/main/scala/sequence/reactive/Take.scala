@@ -4,32 +4,24 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package sequence; package reactive
+package com.github.okomok.mada
+package sequence; package reactive
 
 
-// A lock-free algorithm can't be found (as far as you need early onEnd),
-// for onEnd and react must not be overlapped.
-
-@notThreadSafe
-private[mada] case class Take[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
+private[reactive]
+case class Take[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
     Precondition.nonnegative(_2, "take")
 
-    override def activate(k: Reactor[A]) = {
-        val j = new Reactor[A] {
-            private var count = _2
-            private val _onEnd = util.byLazy(k.onEnd)
-            override def onEnd = _onEnd()
-            override def react(e: A) = {
-                if (count != 0) {
-                    k.react(e)
-                    count -= 1
-                    if (count == 0) {
-                        _onEnd()
-                    }
-                }
+    override def foreach(f: A => Unit): Unit = {
+        var c = _2
+        for (x <- _1) {
+            if (c == 0) {
+                return
+            } else {
+                f(x)
+                c -= 1
             }
         }
-        _1.activate(j)
     }
 
     override def take(n: Int) = _1.take(java.lang.Math.min(_2, n)) // take-take fusion

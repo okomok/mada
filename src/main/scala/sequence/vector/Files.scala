@@ -8,12 +8,11 @@ package com.github.okomok.mada; package sequence; package vector
 
 
 import java.io.{File, RandomAccessFile, Closeable}
-import auto.Resource
 
 
 // Char
 
-private[mada] case class CharFile(_1: RandomAccessFile) extends Resource[Vector[Char]] {
+private[mada] case class CharFile(_1: RandomAccessFile) extends Auto[Vector[Char]] {
     override protected def open: Vector[Char] = new CharFileVector(_1)
     override protected def close = _1.close
 }
@@ -28,7 +27,7 @@ private class CharFileVector(_1: RandomAccessFile) extends Vector[Char] {
 
 // Int
 
-private[mada] case class IntFile(_1: RandomAccessFile) extends Resource[Vector[Int]] {
+private[mada] case class IntFile(_1: RandomAccessFile) extends Auto[Vector[Int]] {
     override protected def open: Vector[Int] = new IntFileVector(_1)
     override protected def close = _1.close
 }
@@ -43,7 +42,7 @@ private class IntFileVector(_1: RandomAccessFile) extends Vector[Int] {
 
 // Long
 
-private[mada] case class LongFile(_1: RandomAccessFile) extends Resource[Vector[Long]] {
+private[mada] case class LongFile(_1: RandomAccessFile) extends Auto[Vector[Long]] {
     override protected def open: Vector[Long] = new LongFileVector(_1)
     override protected def close = _1.close
 }

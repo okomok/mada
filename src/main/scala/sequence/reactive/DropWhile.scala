@@ -4,11 +4,17 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package sequence; package reactive
+package com.github.okomok.mada
+package sequence; package reactive
 
 
-private[mada] case class DropWhile[A](_1: Reactive[A], _2: A => Boolean) extends Reactive[A] {
-    override def activate(k: Reactor[A]) = {
-        _1.activate(reactor.make(_ => k.onEnd, new SkipWhile[A](e => k.react(e), _2)))
+private[reactive]
+case class DropWhile[A](_1: Reactive[A], _2: A => Boolean) extends Reactive[A] {
+    override def foreach(f: A => Unit) = {
+        var go = false
+        for (x <- _1) {
+            if (!go && !_2(x)) go = true
+            if (go) f(x)
+        }
     }
 }

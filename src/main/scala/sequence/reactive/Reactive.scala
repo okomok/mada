@@ -4,30 +4,27 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package sequence; package reactive
-
-
-// See: scala.Responder
+package com.github.okomok.mada
+package sequence; package reactive
 
 
 object Reactive extends Common
 
 
+/**
+ * Yet another Traversable with Scala 2.7 style
+ */
 trait Reactive[+A] extends Sequence[A] {
-
 
     @returnThis
     final def of[B >: A]: Reactive[B] = this
 
-
     override def asReactive: Reactive[A] = this
 
-
     /**
-     * Activates the reactor.
+     * Applies <code>f</code> to each element.
      */
-    def activate(k: Reactor[A]): Unit
-
+    def foreach(f: A => Unit): Unit
 
     /**
      * Appends <code>that</code>.
@@ -59,42 +56,9 @@ trait Reactive[+A] extends Sequence[A] {
     def remove(p: A => Boolean): Reactive[A] = Remove(this, p)
 
     /**
-     * Applies <code>f</code> to each element.
-     */
-    def foreach(f: A => Unit): Unit = activate(reactor.make(_ => (), f))
-
-    @equivalentTo("foreach{ e => () }")
-    def start: Unit = foreach{ e => () }
-
-    /**
-     * Forks.
-     */
-    def fork(f: Reactive[A] => Unit): Reactive[A] = Fork(this, f)
-
-    /**
-     * Forks to a reactor.
-     */
-    def forkTo(k: Reactor[A]): Reactive[A] = ForkTo(this, k)
-
-    /**
-     * Loops with evaluating <code>f</code>.
-     */
-    def forLoop(f: A => Unit): Reactive[A] = ForLoop(this, f)
-
-    /**
-     * Ends with evaluating <code>z</code>.
-     */
-    def endWith(z: => Unit): Reactive[A] = EndWith(this, util.byName(z))
-
-    /**
      * Prefix sum folding left-associative.
      */
-    def folderLeft[B](z: B)(op: (B, A) => B): Reactive[B] = FolderLeft(this, z, op)
-
-    /**
-     * Prefix sum reducing left-associative.
-     */
-    def reducerLeft[B >: A](op: (B, A) => B): Reactive[B] = ReducerLeft(this, op)
+    def scanLeft[B](z: B)(op: (B, A) => B): Reactive[B] = ScanLeft(this, z, op)
 
     /**
      * Returns all the elements without the first one.
@@ -159,62 +123,14 @@ trait Reactive[+A] extends Sequence[A] {
     def unsplit[B](sep: Reactive[B])(implicit pre: Reactive[A] <:< Reactive[Sequence[B]]): Reactive[B] = Unsplit(pre(this), sep)
 
     /**
-     * Zips <code>this</code> and <code>that</code>.
-     */
-    def zip[B](that: Reactive[B]): Reactive[(A, B)] = Zip(this, that)
-
-    /**
      * Reverts <code>zip</code>.
      */
     def unzip[B, C](implicit pre: Reactive[A] <:< Reactive[(B, C)]): (Reactive[B], Reactive[C]) = (pre(this).map{ bc => bc._1 }, pre(this).map{ bc => bc._2 })
-
-    /**
-     * Zips <code>this</code> and <code>that</code> applying <code>f</code>.
-     */
-    def zipBy[B, C](that: Reactive[B])(f: (A, B) => C): Reactive[C] = ZipBy(this, that, f)
 
 
 // conversion
 
     @conversion
     def toIterative: Iterative[A] = ToIterative(this)
-
-
-// misc
-
-    /**
-     * Returns synchronized one.
-     */
-    def synchronize: Reactive[A] = Synchronize(this)
-
-    /**
-     * Combines the elements unorderly.
-     */
-    def merge[B >: A](that: Reactive[B]): Reactive[B] = Merge[B](this, that)
-
-    /**
-     * Manages resources.
-     */
-    def using(a: Auto[Any]): Auto[Reactive[A]] = for (_ <- a) yield this //Using(this, util.byLazy(a))
-
-    /**
-     * Catches exceptions.
-     */
-    def catching(f: Throwable => Unit): Reactive[A] = Catch(this, f)
-
-    /**
-     * Breaks the flow.
-     */
-    def break: Reactive[A] = Break(this)
-
-    /**
-     * Ends if <code>that</code> emits a reaction.
-     */
-    def before(that: Reactive[Any]): Reactive[A] = Before(this, that)
-
-    /**
-     * Changes lane to <code>that</code>.
-     */
-    def connect[B >: A](that: Reactive[B]): Reactive[B] = Connect[B](this, that)
 
 }

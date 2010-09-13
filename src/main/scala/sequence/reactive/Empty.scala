@@ -4,11 +4,11 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package sequence; package reactive
+package com.github.okomok.mada
+package sequence; package reactive
 
 
-private[mada] case class Empty() extends Reactive[Nothing] {
-    override def activate(k: Reactor[Nothing]) = {
-        k.onEnd
-    }
+private[reactive]
+case class Empty() extends Reactive[Nothing] {
+    override def foreach(f: Nothing => Unit) = ()
 }

@@ -4,16 +4,21 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package sequence; package reactive
+package com.github.okomok.mada
+package sequence; package reactive
 
 
-private[mada] case class Unsplit[A](_1: Reactive[Sequence[A]], _2: Reactive[A]) extends Reactive[A] {
-    override def activate(k: Reactor[A]) = {
-        val j = new Reactor[Sequence[A]] {
-            private val sep = new IfFirst[Unit](_ => (), _ => _2.activate(k.noEnd))
-            override def onEnd = k.onEnd
-            override def react(e: Sequence[A]) = { sep(); e.asReactive.activate(k.noEnd) }
+private[reactive]
+case class Unsplit[A](_1: Reactive[Sequence[A]], _2: Reactive[A]) extends Reactive[A] {
+    override def foreach(f: A => Unit) = {
+        var first = true
+        for (s <- _1) {
+            if (first) {
+                first = false
+            } else {
+                for (x <- _2) f(x)
+            }
+            for (x <- s.asReactive) f(x)
         }
-        _1.activate(j)
     }
 }
