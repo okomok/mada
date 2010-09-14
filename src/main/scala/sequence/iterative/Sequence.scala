@@ -10,10 +10,12 @@ package com.github.okomok.mada; package sequence; package iterative
 /**
  * The bridge between phisical and logical hierarchy
  */
-trait Sequence[+A] { // physical
+trait Sequence[+A] extends reactive.Sequence[A] { // physical
 
     @conversion
     def asIterative: Iterative[A] // logical
+
+    override def asReactive: Reactive[A] = AsReactive(asIterative) // logical super
 
     /**
      * Compares the specified object with this sequence for equality.
@@ -74,11 +76,12 @@ trait Sequence[+A] { // physical
 
 object Sequence {
 
-    trait Forwarder[+A] extends Sequence[A] with util.Forwarder {
+    trait Forwarder[+A] extends Sequence[A] with reactive.Sequence.Forwarder[A] {
         override protected def delegate: Sequence[A]
-
         override def asIterative = delegate.asIterative
-        override def equals(that: Any): Boolean = delegate.equals(that)
     }
+
+// logical hierarchy
+    implicit def _asReactive[A](from: Sequence[A]): Reactive[A] = from.asReactive
 
 }
