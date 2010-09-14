@@ -8,7 +8,11 @@ package com.github.okomok.mada
 package sequence; package reactive
 
 
-object Reactive extends Common
+object Reactive extends Common {
+
+    private val breaks = new scala.util.control.Breaks
+
+}
 
 
 /**
@@ -26,69 +30,41 @@ trait Reactive[+A] extends Sequence[A] {
      */
     def foreach(f: A => Unit): Unit
 
-    /**
-     * Appends <code>that</code>.
-     */
     def append[B >: A](that: Reactive[B]): Reactive[B] = Append[B](this, that)
 
     @aliasOf("append")
     final def ++[B >: A](that: Reactive[B]): Reactive[B] = append(that)
 
-    /**
-     * Maps elements using <code>f</code>.
-     */
     def map[B](f: A => B): Reactive[B] = Map(this, f)
 
     @equivalentTo("map(f).flatten")
     def flatMap[B](f: A => Reactive[B]): Reactive[B] = FlatMap(this, f)
 
-    /**
-     * Filters elements using <code>p</code>.
-     */
     def filter(p: A => Boolean): Reactive[A] = Filter(this, p)
 
     @aliasOf("filter")
     final def withFilter(p: A => Boolean): Reactive[A] = filter(p)
 
-    /**
-     * Filters elements using <code>funtion.not(p)</code>.
-     */
     def remove(p: A => Boolean): Reactive[A] = Remove(this, p)
 
     @equivalentTo("(filter(p), remove(p))")
     def partition(p: A => Boolean): (Reactive[A], Reactive[A]) = (filter(p), remove(p))
 
-    /**
-     * Prefix sum folding left-associative.
-     */
     def scanLeft[B](z: B)(op: (B, A) => B): Reactive[B] = ScanLeft(this, z, op)
 
-    /**
-     * Returns all the elements without the first one.
-     */
     def tail: Reactive[A] = Tail(this)
 
-    /**
-     * Takes at most <code>n</code> elements.
-     */
+    def init: Reactive[A] = Init(this)
+
     def take(n: Int): Reactive[A] = Take(this, n)
 
-    /**
-     * Drops at most <code>n</code> elements.
-     */
     def drop(n: Int): Reactive[A] = Drop(this, n)
 
     @equivalentTo("take(m).drop(n)")
     def slice(n: Int, m: Int): Reactive[A] = Slice(this, n, m)
 
-    /**
-     * Returns the longest prefix that satisfies the predicate.
-     */
     def takeWhile(p: A => Boolean): Reactive[A] = TakeWhile(this, p)
 
-    /**
-     * Returns the remaining suffix of <code>takeWhile</code>.
-     */
     def dropWhile(p: A => Boolean): Reactive[A] = DropWhile(this, p)
 
     @equivalentTo("(takeWhile(p), dropWhile(p))")
@@ -100,9 +76,6 @@ trait Reactive[+A] extends Sequence[A] {
         (take(n), drop(n))
     }
 
-    /**
-     * Turns a sequence of sequences into flat sequence.
-     */
     def flatten[B](implicit pre: Reactive[A] <:< Reactive[Sequence[B]]): Reactive[B] = Flatten(pre(this))
 
     /**
@@ -125,9 +98,6 @@ trait Reactive[+A] extends Sequence[A] {
      */
     def unsplit[B](sep: Reactive[B])(implicit pre: Reactive[A] <:< Reactive[Sequence[B]]): Reactive[B] = Unsplit(pre(this), sep)
 
-    /**
-     * Reverts <code>zip</code>.
-     */
     def unzip[B, C](implicit pre: Reactive[A] <:< Reactive[(B, C)]): (Reactive[B], Reactive[C]) = (pre(this).map{ bc => bc._1 }, pre(this).map{ bc => bc._2 })
 
 
@@ -135,5 +105,80 @@ trait Reactive[+A] extends Sequence[A] {
 
     @conversion
     def toIterative: Iterative[A] = ToIterative(this)
+
+
+// algorithm
+
+    import Reactive.breaks.{break => sbreak, breakable}
+
+    def isEmpty: Boolean = {
+        var result = true
+        breakable {
+            for (x <- this) {
+                result = false
+                sbreak
+            }
+        }
+        result
+    }
+
+    def forall(p: A => Boolean): Boolean = find(function.not(p)).isEmpty
+
+    def exists(p: A => Boolean): Boolean = !find(p).isEmpty
+
+    def find(p: A => Boolean): Option[A] = {
+        var result: Option[A] = None
+        breakable {
+            for (x <- this)
+            if (p(x)) { result = Some(x); sbreak }
+        }
+        result
+    }
+
+    def head: A = {
+        var result: () => A = () => throw new NoSuchElementException
+        breakable {
+            for (x <- this) {
+                result = () => x
+                sbreak
+            }
+        }
+        result()
+    }
+
+    def last: A = {
+        var lst = head
+        for (x <- this)
+            lst = x
+        lst
+    }
+
+
+// misc
+
+    def force: Reactive[A] = Force(this)
+
+    /**
+     * Loops with evaluating `f`.
+     */
+    def doing(f: A => Unit): Reactive[A] = Doing(this, f)
+
+    @equivalentTo("foreach(_ => ())")
+    def start: Unit = foreach(_ => ())
+
+    /**
+     * Forks.
+     */
+    def fork(f: Reactive[A] => Unit): Reactive[A] = Fork(this, f)
+
+    /**
+     * Throws if multiple foreach calls happen.
+     */
+    def singlePass: Reactive[A] = SinglePass(this)
+
+    /**
+     * Skips trailing forks.
+     */
+    def break: Reactive[A] = Break(this)
 
 }

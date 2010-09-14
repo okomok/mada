@@ -25,6 +25,7 @@ trait Forwarder[+A] extends Reactive[A] with Sequence.Forwarder[A] {
     override def partition(p: A => Boolean): (Reactive[A], Reactive[A]) = around2(delegate.partition(p))
     override def scanLeft[B](z: B)(op: (B, A) => B): Reactive[B] = around(delegate.scanLeft(z)(op))
     override def tail: Reactive[A] = around(delegate.tail)
+    override def init: Reactive[A] = around(delegate.init)
     override def take(n: Int): Reactive[A] = around(delegate.take(n))
     override def drop(n: Int): Reactive[A] = around(delegate.drop(n))
     override def slice(from: Int, until: Int): Reactive[A] = around(delegate.slice(from, until))
@@ -39,4 +40,16 @@ trait Forwarder[+A] extends Reactive[A] with Sequence.Forwarder[A] {
     override def unsplit[B](sep: Reactive[B])(implicit pre : Reactive[A] <:< Reactive[Sequence[B]]): Reactive[B] = around(delegate.unsplit(sep))
     override def unzip[B, C](implicit pre: Reactive[A] <:< Reactive[(B, C)]): (Reactive[B], Reactive[C]) = around2(delegate.unzip)
     override def toIterative: Iterative[A] = delegate.toIterative
+    override def isEmpty: Boolean = delegate.isEmpty
+    override def forall(p: A => Boolean): Boolean = delegate.forall(p)
+    override def exists(p: A => Boolean): Boolean = delegate.exists(p)
+    override def find(p: A => Boolean): Option[A] = delegate.find(p)
+    override def head: A = delegate.head
+    override def last: A = delegate.last
+    override def force: Reactive[A] = around(delegate.force)
+    override def doing(f: A => Unit): Reactive[A] = delegate.doing(f)
+    override def start: Unit = delegate.start
+    override def fork(f: Reactive[A] => Unit): Reactive[A] = around(delegate.fork(f))
+    override def singlePass: Reactive[A] = around(delegate.singlePass)
+    override def break: Reactive[A] = around(delegate.break)
 }
