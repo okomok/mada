@@ -38,7 +38,7 @@ class FutureDaemonTest extends org.scalatest.junit.JUnit3Suite {
     def testDaemon: Unit = {
         // In fact, junit always makes children daemon-ize,
         // so that I don't know how to test....
-        val a = util.future(while(true){})
+        //val a = util.future(while(true){})
         ()
     }
 }
