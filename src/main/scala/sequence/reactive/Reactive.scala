@@ -55,6 +55,9 @@ trait Reactive[+A] extends Sequence[A] {
      */
     def remove(p: A => Boolean): Reactive[A] = Remove(this, p)
 
+    @equivalentTo("(filter(p), remove(p))")
+    def partition(p: A => Boolean): (Reactive[A], Reactive[A]) = (filter(p), remove(p))
+
     /**
      * Prefix sum folding left-associative.
      */
