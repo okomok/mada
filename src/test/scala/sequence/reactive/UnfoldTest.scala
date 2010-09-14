@@ -17,7 +17,7 @@ class UnfoldTest extends org.scalatest.junit.JUnit3Suite {
     def testRight: Unit = {
         val r = reactive.unfoldRight(10){ b => if (b == 0) None else Some(b, b-1) }
         val out = new java.util.ArrayList[Int]
-        r.activate(reactor.make(_ => out.add(99), out.add(_)))
-        assertEquals(iterative.Of(10,9,8,7,6,5,4,3,2,1, 99), iterative.from(out))
+        r.foreach(out.add(_))
+        assertEquals(iterative.Of(10,9,8,7,6,5,4,3,2,1), iterative.from(out))
     }
 }

@@ -17,7 +17,7 @@ class SingleTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val t = reactive.single(1)
         val s = new java.util.ArrayList[Int]
-        t.activate(reactor.make(_ => s.add(99), s.add(_)))
-        assertEquals(vector.Of(1, 99), vector.from(s))
+        t.foreach(s.add(_))
+        assertEquals(vector.Of(1), vector.from(s))
     }
 }

@@ -19,10 +19,11 @@ class TakeTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial0: Unit = {
         val a = vector.Of(1,2,3,4,5,6)
         val b = new java.util.ArrayList[Int]
-        reactive.fromIterative(a).take(3).activate(reactor.make(_ => b.add(99), b.add(_)))
-        assertEquals(vector.Of(1,2,3,99), vector.from(b))
+        reactive.fromIterative(a).take(3).foreach(b.add(_))
+        assertEquals(vector.Of(1,2,3), vector.from(b))
     }
 
+/*
     def testTrivial: Unit = {
         val src = new IntSenders(ones, ones)
         val dst = new IntReceiver(vector.single(1).times(6))
@@ -31,7 +32,6 @@ class TakeTest extends org.scalatest.junit.JUnit3Suite {
         src.shutdown(dst.assertMe)
         ()
     }
-
     def testOrder: Unit = {
         val src = new IntSenders(vector.Of(1,2,3,4,5,6))
         val dst = new IntReceiver(vector.Of(1,2,3,4))
@@ -94,4 +94,5 @@ class TakeTest extends org.scalatest.junit.JUnit3Suite {
         src.shutdown(dst.assertMe)
         ()
     }
+*/
 }

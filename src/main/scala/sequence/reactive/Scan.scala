@@ -16,5 +16,6 @@ case class ScanLeft[A, B](_1: Reactive[A], _2: B, _3: (B, A) => B) extends React
             f(acc)
             acc = _3(acc, x)
         }
+        f(acc)
     }
 }

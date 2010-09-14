@@ -17,7 +17,7 @@ class SliceTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val t = reactive.Of(1,2,3,4,5,6,7,8)
         val s = new java.util.ArrayList[Int]
-        t.slice(1, 5).activate(reactor.make(_ => s.add(99), s.add(_)))
-        assertEquals(vector.Of(2,3,4,5, 99), vector.from(s))
+        t.slice(1, 5).foreach(s.add(_))
+        assertEquals(vector.Of(2,3,4,5), vector.from(s))
     }
 }

@@ -42,7 +42,7 @@ class ForTest extends org.scalatest.junit.JUnit3Suite {
     }
 
 
-    def make3(r1: Auto[Int], r2: Auto[Int], r3: Auto[Int]): Auto[Int] = {
+    def make3(r1: Auto[Int], r2: Auto[Int], r3: Auto[Int]): mada.sequence.Reactive[Int] = {
         for {
             s1 <- r1
             s2 <- r2

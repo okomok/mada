@@ -12,7 +12,7 @@ import com.github.okomok.mada
 import mada.{auto, Auto}
 
 
-case class TrivialResource[A](res: A, b: Boolean = false) extends auto.Resource[A] {
+case class TrivialResource[A](res: A, b: Boolean = false) extends Auto[A] {
     var began = false
     var ended = false
 

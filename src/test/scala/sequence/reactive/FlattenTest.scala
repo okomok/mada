@@ -18,8 +18,8 @@ class FlattenTest extends org.scalatest.junit.JUnit3Suite {
     def testFlatMap: Unit = {
         val tr = reactive.Of(1,2,3,4,5)
         val out = new java.util.ArrayList[Int]
-        tr.flatMap{e => reactive.fromIterative(vector.range(0, e))}.activate(reactor.make(_ => out.add(99), out.add(_)))
-        assertEquals(iterative.Of(0,0,1,0,1,2,0,1,2,3,0,1,2,3,4, 99), iterative.from(out))
+        tr.flatMap{e => reactive.fromIterative(vector.range(0, e))}.foreach(out.add(_))
+        assertEquals(iterative.Of(0,0,1,0,1,2,0,1,2,3,0,1,2,3,4), iterative.from(out))
     }
 
     def testUnsplit: Unit = {
@@ -30,8 +30,8 @@ class FlattenTest extends org.scalatest.junit.JUnit3Suite {
         val rs = reactive.Of(r1,r2,r3,r4)
         val sep = reactive.Of(77,88)
         val out = new java.util.ArrayList[Int]
-        rs.unsplit(sep).activate(reactor.make(_ => out.add(99), out.add(_)))
-        assertEquals(iterative.Of(1,2,77,88,3,4,77,88,5,77,88,6,7,8,9, 99), iterative.from(out))
+        rs.unsplit(sep).foreach(out.add(_))
+        assertEquals(iterative.Of(1,2,77,88,3,4,77,88,5,77,88,6,7,8,9), iterative.from(out))
     }
 
 }

@@ -20,7 +20,7 @@ class ForeachTest extends org.scalatest.junit.JUnit3Suite {
         reactive.fromIterative(a).foreach{ e => t.add(e) }
         assertEquals(a, iterative.from(t))
     }
-
+/*
     def testOnEnd: Unit = {
         val a = iterative.Of(1,6,7,10,14,17)
         val t = new java.util.ArrayList[Int]
@@ -41,4 +41,5 @@ class ForeachTest extends org.scalatest.junit.JUnit3Suite {
         reactive.fromIterative(a).forkTo{ reactor.make(_ => (), e => t.add(e)) }.start
         assertEquals(a, iterative.from(t))
     }
+*/
 }
