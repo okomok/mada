@@ -30,7 +30,7 @@ class ForTest extends org.scalatest.junit.JUnit3Suite {
         val fs = new java.util.ArrayList[MyFile]
         for {
             name <- Array("foo", "bar", "buz")
-            file <- use(new MyFile(name))
+            file <- Auto(new MyFile(name))
         } {
             fs.add(file)
         }

@@ -12,6 +12,9 @@ private[auto]
 class Common {
 
     @returnThat
+    def apply[A](that: Auto[A]): Auto[A] = that
+
+    @returnThat
     def use[A](that: Auto[A]): Auto[A] = that
 
     @equivalentTo("a.foreach(f)")
