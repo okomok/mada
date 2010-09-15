@@ -94,6 +94,8 @@ trait Reactive[+A] extends Sequence[A] {
      */
     def unsplit[B](sep: Reactive[B])(implicit pre: Reactive[A] <:< Reactive[Sequence[B]]): Reactive[B] = Unsplit(pre(this), sep)
 
+    def zip[B](that: Reactive[B]): Reactive[(A, B)] = Zip(this, that)
+
     def unzip[B, C](implicit pre: Reactive[A] <:< Reactive[(B, C)]): (Reactive[B], Reactive[C]) = (pre(this).map{ bc => bc._1 }, pre(this).map{ bc => bc._2 })
 
 

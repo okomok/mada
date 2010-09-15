@@ -18,56 +18,56 @@ class ZipTest extends org.scalatest.junit.JUnit3Suite {
         val t = reactive.Of(1,2,3)
         val u = reactive.Of("2","3","4")
         val out = new java.util.ArrayList[(Int, String)]
-        t.zip(u).activate(reactor.make(_ => out.add((99,"99")), out.add(_)))
-        assertEquals(iterative.Of((1,"2"),(2,"3"),(3,"4"),(99,"99")), iterative.from(out))
+        t.zip(u).foreach(out.add(_))
+        assertEquals(iterative.Of((1,"2"),(2,"3"),(3,"4")), iterative.from(out))
     }
 
     def testEmpty1: Unit = {
         val t = reactive.empty.of[Int]
         val u = reactive.Of("2","3","4")
         val out = new java.util.ArrayList[(Int, String)]
-        t.zip(u).activate(reactor.make(_ => out.add((99,"99")), out.add(_)))
-        assertEquals(iterative.Of((99,"99")), iterative.from(out))
+        t.zip(u).foreach(out.add(_))
+        assertTrue(out.isEmpty)
     }
 
     def testEmpty2: Unit = {
         val t = reactive.empty.of[Int]
         val u = reactive.empty.of[String]
         val out = new java.util.ArrayList[(Int, String)]
-        t.zip(u).activate(reactor.make(_ => out.add((99,"99")), out.add(_)))
-        assertEquals(iterative.Of((99,"99")), iterative.from(out))
+        t.zip(u).foreach(out.add(_))
+        assertTrue(out.isEmpty)
     }
 
     def testOneShorter1: Unit = {
         val t = reactive.Of(1,2)
         val u = reactive.Of("2","3","4")
         val out = new java.util.ArrayList[(Int, String)]
-        t.zip(u).activate(reactor.make(_ => out.add((99,"99")), out.add(_)))
-        assertEquals(iterative.Of((1,"2"),(2,"3"),(99,"99")), iterative.from(out))
+        t.zip(u).foreach(out.add(_))
+        assertEquals(iterative.Of((1,"2"),(2,"3")), iterative.from(out))
     }
 
     def testOneShorter2: Unit = {
         val t = reactive.Of(1,2,3)
         val u = reactive.Of("2","3")
         val out = new java.util.ArrayList[(Int, String)]
-        t.zip(u).activate(reactor.make(_ => out.add((99,"99")), out.add(_)))
-        assertEquals(iterative.Of((1,"2"),(2,"3"),(99,"99")), iterative.from(out))
+        t.zip(u).foreach(out.add(_))
+        assertEquals(iterative.Of((1,"2"),(2,"3")), iterative.from(out))
     }
 
     def testMuchShorter1: Unit = {
         val t = reactive.Of(1,2)
         val u = reactive.Of("2","3","4","5","6")
         val out = new java.util.ArrayList[(Int, String)]
-        t.zip(u).activate(reactor.make(_ => out.add((99,"99")), out.add(_)))
-        assertEquals(iterative.Of((1,"2"),(2,"3"),(99,"99")), iterative.from(out))
+        t.zip(u).foreach(out.add(_))
+        assertEquals(iterative.Of((1,"2"),(2,"3")), iterative.from(out))
     }
 
     def testMuchShorter2: Unit = {
         val t = reactive.Of(1,2,3,4,5,6)
         val u = reactive.Of("2","3")
         val out = new java.util.ArrayList[(Int, String)]
-        t.zip(u).activate(reactor.make(_ => out.add((99,"99")), out.add(_)))
-        assertEquals(iterative.Of((1,"2"),(2,"3"),(99,"99")), iterative.from(out))
+        t.zip(u).foreach(out.add(_))
+        assertEquals(iterative.Of((1,"2"),(2,"3")), iterative.from(out))
     }
 /*
     def testParallel: Unit = {
