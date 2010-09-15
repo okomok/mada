@@ -170,16 +170,15 @@ trait Reactive[+A] extends Sequence[A] {
     /**
      * Calls `f` on the beginning.
      */
-    def onBegin(f: => Unit): Reactive[A] = OnBegin(this, util.byLazy(f))
+    def onStart(f: => Unit): Reactive[A] = OnStart(this, util.byLazy(f))
 
     /**
-     * Calls `f` on the ending.
+     * Calls `f` on the beginning.
      */
-    def onEnd(f: => Unit): Reactive[A] = OnEnd(this, util.byName(f))
+    def onEnd(f: => Unit): Reactive[A] = OnEnd(this, util.byLazy(f))
 
     /**
-     *
+     * Takes elements until `that` starts.
      */
-    def until(that: Reactive[_]): Reactive[A] = Until(this, that)
-
+    def takeUntil(that: Reactive[_]): Reactive[A] = TakeUntil(this, that)
 }

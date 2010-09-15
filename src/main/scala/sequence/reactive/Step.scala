@@ -28,5 +28,5 @@ case class Step[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
         }
     }
 
-    override def step(n: Int) = _1.step(_2 * n) // step-step fusion
+    override def step(n: Int): Reactive[A] = _1.step(_2 * n) // step-step fusion
 }

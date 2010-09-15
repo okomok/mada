@@ -9,9 +9,14 @@ package sequence; package reactive
 
 
 private[reactive]
-case class OnEnd[+A](_1: Reactive[A], _2: util.ByName[Unit]) extends Reactive[A] {
+case class OnEnd[+A](_1: Reactive[A], _2: util.ByLazy[Unit]) extends Reactive[A] {
     override def foreach(f: A => Unit) = {
-        for (x <- _1) f(x)
-        _2()
+        var go = false
+        for (x <- _1) {
+            go = true
+            f(x)
+        }
+        if (go)
+            _2()
     }
 }

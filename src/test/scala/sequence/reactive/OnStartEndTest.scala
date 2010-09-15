@@ -13,13 +13,13 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
-class OnBeginTest extends org.scalatest.junit.JUnit3Suite {
+class OnStartTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val s = new java.util.ArrayList[Int]
-        for (x <- reactive.Of(1,2,3,4).onBegin(s.add(99))) {
+        for (x <- reactive.Of(1,2,3,4).onStart(s.add(99)).onStart(s.add(98))) {
             s.add(x)
         }
-        assertEquals(vector.Of(99, 1,2,3,4), vector.from(s))
+        assertEquals(vector.Of(99, 98, 1,2,3,4), vector.from(s))
     }
 }
 

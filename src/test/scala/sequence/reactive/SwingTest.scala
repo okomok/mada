@@ -17,7 +17,7 @@ import javax.swing
 import reactive.Swing
 
 
-class SwingTezt { // extends org.scalatest.junit.JUnit3Suite {
+class SwingTezt { //extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial: Unit = {
         val frame = new swing.JFrame("SwingTest")
@@ -32,12 +32,12 @@ class SwingTezt { // extends org.scalatest.junit.JUnit3Suite {
         val x = new Swing.MouseClicked(label)
         x.take {
             3
-        } doing { e =>
-            println("clicked")
         } onEnd {
             x.close
             closed = true
-        } start
+        } doing { e =>
+            println("clicked")
+        }  start
 
         Thread.sleep(10000)
         assertTrue(closed)
@@ -57,7 +57,9 @@ class SwingTezt { // extends org.scalatest.junit.JUnit3Suite {
             println("pressed")
             val draggedSeq = new Swing.MouseDragged(label)
             val releasedSeq = new Swing.MouseReleased(label)
-            draggedSeq until {
+            draggedSeq doing { _ =>
+                println("dragging")
+            } takeUntil {
                 releasedSeq
             } onEnd {
                 println("released")
