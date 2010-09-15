@@ -9,9 +9,11 @@ package sequence; package reactive
 
 
 private[reactive]
-case class Append[+A](_1: Reactive[A], _2: Reactive[A]) extends Reactive[A] {
+case class OnBegin[+A](_1: Reactive[A], _2: util.ByLazy[Unit]) extends Reactive[A] {
     override def foreach(f: A => Unit) = {
-        for (x <- _1) f(x)
-        for (y <- _2) f(y)
+        for (x <- _1) {
+            _2()
+            f(x)
+        }
     }
 }

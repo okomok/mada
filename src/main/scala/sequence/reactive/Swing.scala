@@ -1,17 +1,17 @@
 
 
-// Copyright Shunsuke Sogame 2008-2009.
+// Copyright Shunsuke Sogame 2008-2010.
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package sequence; package reactive
+package com.github.okomok.mada
+package sequence; package reactive
 
 
 import java.awt.Component
 
 
 object Swing {
-/*
 
 
 // ActionEvent
@@ -25,9 +25,9 @@ object Swing {
 
     class ActionPerformed(val source: ActionEventSource) extends Closeable[ActionEvent] {
         private val l = new OneTimeVar[ActionListener]
-        override def activate(k: Reactor[ActionEvent]) = {
+        override def foreach(f: ActionEvent => Unit) = {
             l := new ActionListener {
-                override def actionPerformed(e: ActionEvent) = k.react(e)
+                override def actionPerformed(e: ActionEvent) = f(e)
             }
             source.addActionListener(l)
         }
@@ -42,9 +42,9 @@ object Swing {
 
     class MouseClicked(val source: Component) extends Closeable[MouseEvent] {
         private val l = new OneTimeVar[MouseInputAdapter]
-        override def activate(k: Reactor[MouseEvent]) = {
+        override def foreach(f: MouseEvent => Unit) = {
             l := new MouseInputAdapter {
-                override def mouseClicked(e: MouseEvent) = k.react(e)
+                override def mouseClicked(e: MouseEvent) = f(e)
             }
             source.addMouseListener(l)
         }
@@ -53,9 +53,9 @@ object Swing {
 
     class MouseEntered(val source: Component) extends Closeable[MouseEvent] {
         private val l = new OneTimeVar[MouseInputAdapter]
-        override def activate(k: Reactor[MouseEvent]) = {
+        override def foreach(f: MouseEvent => Unit) = {
             l := new MouseInputAdapter {
-                override def mouseEntered(e: MouseEvent) = k.react(e)
+                override def mouseEntered(e: MouseEvent) = f(e)
             }
             source.addMouseListener(l)
         }
@@ -64,9 +64,9 @@ object Swing {
 
     class MouseExited(val source: Component) extends Closeable[MouseEvent] {
         private val l = new OneTimeVar[MouseInputAdapter]
-        override def activate(k: Reactor[MouseEvent]) = {
+        override def foreach(f: MouseEvent => Unit) = {
             l := new MouseInputAdapter {
-                override def mouseExited(e: MouseEvent) = k.react(e)
+                override def mouseExited(e: MouseEvent) = f(e)
             }
             source.addMouseListener(l)
         }
@@ -75,9 +75,9 @@ object Swing {
 
     class MousePressed(val source: Component) extends Closeable[MouseEvent] {
         private val l = new OneTimeVar[MouseInputAdapter]
-        override def activate(k: Reactor[MouseEvent]) = {
+        override def foreach(f: MouseEvent => Unit) = {
             l := new MouseInputAdapter {
-                override def mousePressed(e: MouseEvent) = k.react(e)
+                override def mousePressed(e: MouseEvent) = f(e)
             }
             source.addMouseListener(l)
         }
@@ -86,9 +86,9 @@ object Swing {
 
     class MouseReleased(val source: Component) extends Closeable[MouseEvent] {
         private val l = new OneTimeVar[MouseInputAdapter]
-        override def activate(k: Reactor[MouseEvent]) = {
+        override def foreach(f: MouseEvent => Unit) = {
             l := new MouseInputAdapter {
-                override def mouseReleased(e: MouseEvent) = k.react(e)
+                override def mouseReleased(e: MouseEvent) = f(e)
             }
             source.addMouseListener(l)
         }
@@ -99,9 +99,9 @@ object Swing {
 
     class MouseDragged(val source: Component) extends Closeable[MouseEvent] {
         private val l = new OneTimeVar[MouseInputAdapter]
-        override def activate(k: Reactor[MouseEvent]) = {
+        override def foreach(f: MouseEvent => Unit) = {
             l := new MouseInputAdapter {
-                override def mouseDragged(e: MouseEvent) = k.react(e)
+                override def mouseDragged(e: MouseEvent) = f(e)
             }
             source.addMouseMotionListener(l)
         }
@@ -110,9 +110,9 @@ object Swing {
 
     class MouseMoved(val source: Component) extends Closeable[MouseEvent] {
         private val l = new OneTimeVar[MouseInputAdapter]
-        override def activate(k: Reactor[MouseEvent]) = {
+        override def foreach(f: MouseEvent => Unit) = {
             l := new MouseInputAdapter {
-                override def mouseMoved(e: MouseEvent) = k.react(e)
+                override def mouseMoved(e: MouseEvent) = f(e)
             }
             source.addMouseMotionListener(l)
         }
@@ -123,9 +123,9 @@ object Swing {
 
     class MouseWheelMoved(val source: Component) extends Closeable[MouseWheelEvent] {
         private val l = new OneTimeVar[MouseInputAdapter]
-        override def activate(k: Reactor[MouseWheelEvent]) = {
+        override def foreach(f: MouseWheelEvent => Unit) = {
             l := new MouseInputAdapter {
-                override def mouseWheelMoved(e: MouseWheelEvent) = k.react(e)
+                override def mouseWheelMoved(e: MouseWheelEvent) = f(e)
             }
             source.addMouseWheelListener(l)
         }
@@ -141,9 +141,9 @@ object Swing {
 
     class KeyPressed(val source: Component) extends Closeable[KeyEvent] {
         private val l = new OneTimeVar[KeyAdapter]
-        override def activate(k: Reactor[KeyEvent]) = {
+        override def foreach(f: KeyEvent => Unit) = {
             l := new KeyAdapter {
-                override def keyPressed(e: KeyEvent) = k.react(e)
+                override def keyPressed(e: KeyEvent) = f(e)
             }
             source.addKeyListener(l)
         }
@@ -152,9 +152,9 @@ object Swing {
 
     class KeyReleased(val source: Component) extends Closeable[KeyEvent] {
         private val l = new OneTimeVar[KeyAdapter]
-        override def activate(k: Reactor[KeyEvent]) = {
+        override def foreach(f: KeyEvent => Unit) = {
             l := new KeyAdapter {
-                override def keyReleased(e: KeyEvent) = k.react(e)
+                override def keyReleased(e: KeyEvent) = f(e)
             }
             source.addKeyListener(l)
         }
@@ -163,13 +163,13 @@ object Swing {
 
     class KeyTyped(val source: Component) extends Closeable[KeyEvent] {
         private val l = new OneTimeVar[KeyAdapter]
-        override def activate(k: Reactor[KeyEvent]) = {
+        override def foreach(f: KeyEvent => Unit) = {
             l := new KeyAdapter {
-                override def keyTyped(e: KeyEvent) = k.react(e)
+                override def keyTyped(e: KeyEvent) = f(e)
             }
             source.addKeyListener(l)
         }
         override def close = source.removeKeyListener(l)
     }
-*/
+
 }

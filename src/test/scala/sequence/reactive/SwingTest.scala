@@ -17,11 +17,9 @@ import javax.swing
 import reactive.Swing
 
 
-class SwingTest extends org.scalatest.junit.JUnit3Suite {
+class SwingTezt { // extends org.scalatest.junit.JUnit3Suite {
 
-    def testOff: Unit = ()
-
-    def testTrivial(off: Int): Unit = {
+    def testTrivial: Unit = {
         val frame = new swing.JFrame("SwingTest")
         val label = new swing.JLabel("testTrivial")
         frame.getContentPane.add(label)
@@ -34,9 +32,9 @@ class SwingTest extends org.scalatest.junit.JUnit3Suite {
         val x = new Swing.MouseClicked(label)
         x.take {
             3
-        } forLoop { e =>
+        } doing { e =>
             println("clicked")
-        } endWith {
+        } onEnd {
             x.close
             closed = true
         } start
@@ -45,7 +43,7 @@ class SwingTest extends org.scalatest.junit.JUnit3Suite {
         assertTrue(closed)
     }
 
-    def testTrivial2(off: Int): Unit = {
+    def testTrivial2: Unit = {
         val frame = new swing.JFrame("SwingTest")
         val label = new swing.JLabel("testTrivial")
         frame.getContentPane.add(label)
@@ -55,13 +53,13 @@ class SwingTest extends org.scalatest.junit.JUnit3Suite {
 
         val pressedSeq = new Swing.MousePressed(label)
 
-        pressedSeq forLoop { _ =>
+        pressedSeq doing { _ =>
             println("pressed")
             val draggedSeq = new Swing.MouseDragged(label)
             val releasedSeq = new Swing.MouseReleased(label)
-            draggedSeq before {
+            draggedSeq until {
                 releasedSeq
-            } endWith {
+            } onEnd {
                 println("released")
                 draggedSeq.close
                 releasedSeq.close
@@ -87,15 +85,15 @@ class SwingTest extends org.scalatest.junit.JUnit3Suite {
         x.mouseEntered { y =>
             y.take {
                 3
-            } forLoop { e =>
+            } doing { e =>
                 println("entered")
             } start
         } mouseClicked { y =>
             y.take {
                 3
-            } forLoop { e =>
+            } doing { e =>
                 println("clicked")
-            } endWith {
+            } onEnd {
                 x.close
                 closed = true
             } start
@@ -120,14 +118,14 @@ class SwingTest extends org.scalatest.junit.JUnit3Suite {
 
         val ms = new Swing.MouseEventFrom(label)
         ms.mousePressed { y =>
-            y.forLoop { e =>
+            y.doing { e =>
                 println("pressed")
                 val m = new Swing.MouseMotionEventFrom(label)
                 val msr = new Swing.MouseEventFrom(label)
                 m.mouseDragged { k =>
                     k.until {
                         msr.mouseReleased { y =>
-                            y.endWith {
+                            y.onEnd {
                                 print("released")
                                 m.close
                                 msr.close

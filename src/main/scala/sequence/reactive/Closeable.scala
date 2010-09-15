@@ -8,7 +8,7 @@ package com.github.okomok.mada
 package sequence; package reactive
 
 
-private[reactive]
-case class Flatten[+A](_1: Reactive[Sequence[A]]) extends Forwarder[A] {
-    override protected val delegate = _1.unsplit(empty)
-}
+/**
+ * Mixin for a Closeable Reactive.
+ */
+trait Closeable[+A] extends Reactive[A] with java.io.Closeable

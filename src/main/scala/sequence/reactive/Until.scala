@@ -8,12 +8,17 @@ package com.github.okomok.mada
 package sequence; package reactive
 
 
+@notThreadSafe
 private[reactive]
-case class Doing[A](_1: Reactive[A], _2: A => Unit) extends Reactive[A] {
+case class Until[+A](_1: Reactive[A], _2: Reactive[_]) extends Reactive[A] {
     override def foreach(f: A => Unit) = {
+        var isEnd = false
+        _2.onBegin{isEnd = true}
+
         for (x <- _1) {
-            _2(x)
-            f(x)
+            if (!isEnd) {
+                f(x)
+            }
         }
     }
 }

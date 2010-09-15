@@ -1,6 +1,6 @@
 
 
-// Copyright Shunsuke Sogame 2008-2009.
+// Copyright Shunsuke Sogame 2008-2010.
 // Distributed under the terms of an MIT-style license.
 
 
@@ -15,9 +15,7 @@ case class Take[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
     override def foreach(f: A => Unit): Unit = {
         var c = _2
         for (x <- _1) {
-            if (c == 0) {
-                return
-            } else {
+            if (c != 0) {
                 f(x)
                 c -= 1
             }

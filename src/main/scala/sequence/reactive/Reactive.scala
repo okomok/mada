@@ -1,6 +1,6 @@
 
 
-// Copyright Shunsuke Sogame 2008-2009.
+// Copyright Shunsuke Sogame 2008-2010.
 // Distributed under the terms of an MIT-style license.
 
 
@@ -8,11 +8,7 @@ package com.github.okomok.mada
 package sequence; package reactive
 
 
-object Reactive extends Common {
-
-    private val breaks = new scala.util.control.Breaks
-
-}
+object Reactive extends Common
 
 
 /**
@@ -109,17 +105,11 @@ trait Reactive[+A] extends Sequence[A] {
 
 // algorithm
 
-    import Reactive.breaks.{break => sbreak, breakable}
-
     def isEmpty: Boolean = {
-        var result = true
-        breakable {
-            for (x <- this) {
-                result = false
-                sbreak
-            }
+        for (x <- this) {
+            return false
         }
-        result
+        true
     }
 
     def forall(p: A => Boolean): Boolean = find(function.not(p)).isEmpty
@@ -127,23 +117,19 @@ trait Reactive[+A] extends Sequence[A] {
     def exists(p: A => Boolean): Boolean = !find(p).isEmpty
 
     def find(p: A => Boolean): Option[A] = {
-        var result: Option[A] = None
-        breakable {
-            for (x <- this)
-            if (p(x)) { result = Some(x); sbreak }
+        for (x <- this) {
+            if (p(x)) {
+                return Some(x)
+            }
         }
-        result
+        None
     }
 
     def head: A = {
-        var result: () => A = () => throw new NoSuchElementException
-        breakable {
-            for (x <- this) {
-                result = () => x
-                sbreak
-            }
+        for (x <- this) {
+            return x
         }
-        result()
+        throw new NoSuchElementException
     }
 
     def last: A = {
@@ -180,5 +166,20 @@ trait Reactive[+A] extends Sequence[A] {
      * Skips trailing forks.
      */
     def break: Reactive[A] = Break(this)
+
+    /**
+     * Calls `f` on the beginning.
+     */
+    def onBegin(f: => Unit): Reactive[A] = OnBegin(this, util.byLazy(f))
+
+    /**
+     * Calls `f` on the ending.
+     */
+    def onEnd(f: => Unit): Reactive[A] = OnEnd(this, util.byName(f))
+
+    /**
+     *
+     */
+    def until(that: Reactive[_]): Reactive[A] = Until(this, that)
 
 }

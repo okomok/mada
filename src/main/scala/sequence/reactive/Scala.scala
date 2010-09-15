@@ -1,6 +1,6 @@
 
 
-// Copyright Shunsuke Sogame 2008-2009.
+// Copyright Shunsuke Sogame 2008-2010.
 // Distributed under the terms of an MIT-style license.
 
 
@@ -15,5 +15,5 @@ case class FromArray[A](_1: Array[A]) extends Forwarder[A] {
 
 private[reactive]
 case class FromSIterable[+A](_1: Iterable[A]) extends Reactive[A] {
-    override def foreach(f: A => Unit) = for (x <- _1) f(x)
+    override def foreach(f: A => Unit) = _1.foreach(f)
 }

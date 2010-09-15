@@ -1,6 +1,6 @@
 
 
-// Copyright Shunsuke Sogame 2008-2009.
+// Copyright Shunsuke Sogame 2008-2010.
 // Distributed under the terms of an MIT-style license.
 
 
@@ -13,6 +13,6 @@ case class SinglePassException[A](_1: Reactive[A]) extends UnsupportedOperationE
 
 private[reactive]
 case class SinglePass[+A](_1: Reactive[A]) extends Reactive[A] {
-    private val i = IfFirst[A => Unit](_1.foreach(_), _ => throw SinglePassException(_1))
-    override def foreach(f: A => Unit) = i(f)
+    private val t = new IfFirst[A => Unit](_1.foreach(_), _ => throw SinglePassException(_1))
+    override def foreach(f: A => Unit) = t(f)
 }

@@ -1,6 +1,6 @@
 
 
-// Copyright Shunsuke Sogame 2008-2009.
+// Copyright Shunsuke Sogame 2008-2010.
 // Distributed under the terms of an MIT-style license.
 
 
@@ -12,7 +12,7 @@ import java.util.concurrent.atomic
 
 
 private[reactive]
-case class IfFirst[-T](_then: T => Unit, _else: T => Unit) extends Function1[T, Unit] {
+class IfFirst[-T](_then: T => Unit, _else: T => Unit) extends Function1[T, Unit] {
     private val first = new atomic.AtomicBoolean(true)
 
     override def apply(x: T): Unit = {
@@ -30,7 +30,7 @@ case class IfFirst[-T](_then: T => Unit, _else: T => Unit) extends Function1[T, 
  * Equivalent to `lazy val` with `isDone`.
  */
 private[reactive]
-case class OnlyFirst[-T](f: T => Unit) extends Function1[T, Unit] {
+class OnlyFirst[-T](f: T => Unit) extends Function1[T, Unit] {
     private val delegate = new IfFirst[T](f, _ => ())
     override def apply(x: T) = delegate(x)
 
@@ -39,7 +39,7 @@ case class OnlyFirst[-T](f: T => Unit) extends Function1[T, Unit] {
 
 
 private[reactive]
-case class SkipFirst[-T](f: T => Unit) extends Function1[T, Unit] {
+class SkipFirst[-T](f: T => Unit) extends Function1[T, Unit] {
     private val delegate = new IfFirst[T](_ => (), f)
     override def apply(x: T) = delegate(x)
 
@@ -47,7 +47,7 @@ case class SkipFirst[-T](f: T => Unit) extends Function1[T, Unit] {
 }
 
 private[reactive]
-case class SkipTimes[-T](f: T => Unit, n: Int) extends Function1[T, Unit] {
+class SkipTimes[-T](f: T => Unit, n: Int) extends Function1[T, Unit] {
     private val count = new atomic.AtomicInteger(n)
 
     override def apply(x: T): Unit = {
@@ -63,7 +63,7 @@ case class SkipTimes[-T](f: T => Unit, n: Int) extends Function1[T, Unit] {
 
 
 private[reactive]
-case class SkipWhile[-T](f: T => Unit, p: T => Boolean) extends Function1[T, Unit] {
+class SkipWhile[-T](f: T => Unit, p: T => Boolean) extends Function1[T, Unit] {
     @volatile private var begins = false
 
     override def apply(x: T): Unit = {
