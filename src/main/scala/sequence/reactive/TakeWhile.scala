@@ -18,7 +18,7 @@ case class TakeWhile[A](_1: Reactive[A], _2: A => Boolean) extends Reactive[A] {
         }
     }
 
-    override def onEnd(f: => Unit): Reactive[A] = TakeWhileThen(_1, _2, util.byLazy(f))
+    override def then(f: => Unit): Reactive[A] = TakeWhileThen(_1, _2, util.byLazy(f))
 }
 
 

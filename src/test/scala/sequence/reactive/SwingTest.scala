@@ -17,7 +17,9 @@ import javax.swing
 import reactive.Swing
 
 
-class SwingTezt { //extends org.scalatest.junit.JUnit3Suite {
+class SwingTezt
+    {
+    //extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial: Unit = {
         val frame = new swing.JFrame("SwingTest")
@@ -32,7 +34,7 @@ class SwingTezt { //extends org.scalatest.junit.JUnit3Suite {
         val x = new Swing.MouseClicked(label)
         x.take {
             3
-        } onEnd {
+        } then {
             x.close
             closed = true
         } doing { e =>
@@ -61,7 +63,7 @@ class SwingTezt { //extends org.scalatest.junit.JUnit3Suite {
                 println("dragging")
             } takeUntil {
                 releasedSeq
-            } onEnd {
+            } then {
                 println("released")
                 draggedSeq.close
                 releasedSeq.close
@@ -95,7 +97,7 @@ class SwingTezt { //extends org.scalatest.junit.JUnit3Suite {
                 3
             } doing { e =>
                 println("clicked")
-            } onEnd {
+            } then {
                 x.close
                 closed = true
             } start
@@ -127,7 +129,7 @@ class SwingTezt { //extends org.scalatest.junit.JUnit3Suite {
                 m.mouseDragged { k =>
                     k.until {
                         msr.mouseReleased { y =>
-                            y.onEnd {
+                            y.then {
                                 print("released")
                                 m.close
                                 msr.close

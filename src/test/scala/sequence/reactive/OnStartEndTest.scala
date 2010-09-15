@@ -13,6 +13,7 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
+/*
 class OnStartTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val s = new java.util.ArrayList[Int]
@@ -33,3 +34,4 @@ class OnEndTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals(vector.Of(1,2,3,4, 99), vector.from(s))
     }
 }
+*/

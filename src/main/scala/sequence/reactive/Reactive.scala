@@ -103,7 +103,7 @@ trait Reactive[+A] extends Sequence[A] {
     def toIterative: Iterative[A] = ToIterative(this)
 
 
-// algorithm
+// algorithm (will be removed?)
 
     def isEmpty: Boolean = {
         for (x <- this) {
@@ -166,7 +166,7 @@ trait Reactive[+A] extends Sequence[A] {
      * Skips trailing forks.
      */
     def break: Reactive[A] = Break(this)
-
+/*
     /**
      * Calls `f` on the beginning.
      */
@@ -176,9 +176,14 @@ trait Reactive[+A] extends Sequence[A] {
      * Calls `f` on the beginning.
      */
     def onEnd(f: => Unit): Reactive[A] = OnEnd(this, util.byLazy(f))
-
+*/
     /**
      * Takes elements until `that` starts.
      */
     def takeUntil(that: Reactive[_]): Reactive[A] = TakeUntil(this, that)
+
+    /**
+     * Calls `f` on the end of subsequence.
+     */
+    def then(f: => Unit): Reactive[A] = throw new UnsupportedOperationException("Reactive.then")
 }
