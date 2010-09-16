@@ -26,10 +26,7 @@ trait Reactive[+A] extends Sequence[A] {
      */
     def foreach(f: A => Unit): Unit
 
-    def append[B >: A](that: Reactive[B]): Reactive[B] = Append[B](this, that)
-
-    @aliasOf("append")
-    final def ++[B >: A](that: Reactive[B]): Reactive[B] = append(that)
+    def merge[B >: A](that: Reactive[B]): Reactive[B] = Merge[B](this, that)
 
     def map[B](f: A => B): Reactive[B] = Map(this, f)
 
@@ -101,50 +98,11 @@ trait Reactive[+A] extends Sequence[A] {
 
 // conversion
 
-    @conversion
+    @conversion @visibleForTesting
     def toIterative: Iterative[A] = ToIterative(this)
 
 
-// algorithm (will be removed?)
-
-    def isEmpty: Boolean = {
-        for (x <- this) {
-            return false
-        }
-        true
-    }
-
-    def forall(p: A => Boolean): Boolean = find(function.not(p)).isEmpty
-
-    def exists(p: A => Boolean): Boolean = !find(p).isEmpty
-
-    def find(p: A => Boolean): Option[A] = {
-        for (x <- this) {
-            if (p(x)) {
-                return Some(x)
-            }
-        }
-        None
-    }
-
-    def head: A = {
-        for (x <- this) {
-            return x
-        }
-        throw new NoSuchElementException
-    }
-
-    def last: A = {
-        var lst = head
-        for (x <- this)
-            lst = x
-        lst
-    }
-
-
 // misc
-
-    def force: Reactive[A] = Force(this)
 
     /**
      * Loops with evaluating `f`.
@@ -168,17 +126,7 @@ trait Reactive[+A] extends Sequence[A] {
      * Skips trailing forks.
      */
     def break: Reactive[A] = Break(this)
-/*
-    /**
-     * Calls `f` on the beginning.
-     */
-    def onStart(f: => Unit): Reactive[A] = OnStart(this, util.byLazy(f))
 
-    /**
-     * Calls `f` on the beginning.
-     */
-    def onEnd(f: => Unit): Reactive[A] = OnEnd(this, util.byLazy(f))
-*/
     /**
      * Takes elements until `that` starts.
      */
