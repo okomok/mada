@@ -98,7 +98,7 @@ trait Reactive[+A] extends Sequence[A] {
 
 // conversion
 
-    @conversion @visibleForTesting
+    @conversion
     def toIterative: Iterative[A] = ToIterative(this)
 
 

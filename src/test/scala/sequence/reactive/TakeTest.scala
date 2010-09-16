@@ -28,7 +28,7 @@ class TakeTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals(iterative.Of(4,5,1,3,2), k.toIterative)
         val k_ = t.take(50)
         assertEquals(iterative.Of(4,5,1,3,2,9,7,10), k_.toIterative)
-        assertTrue(t.take(0).isEmpty)
+        assertTrue(t.take(0).toIterative.isEmpty)
     }
 
 }

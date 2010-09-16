@@ -24,7 +24,7 @@ class InitTest extends org.scalatest.junit.JUnit3Suite {
     def testEmpty {
         val t = reactive.empty
         val k = t.init
-        assertTrue(k.isEmpty)
+        assertTrue(k.toIterative.isEmpty)
     }
 
 }

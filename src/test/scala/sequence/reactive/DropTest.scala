@@ -22,9 +22,9 @@ class DropTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals(iterative.Of(9,7,10), k.toIterative)
         val k_ = t.drop(7)
         assertEquals(iterative.Of(10), k_.toIterative)
-        assertTrue(t.drop(8).isEmpty)
-        assertTrue(t.drop(9).isEmpty)
-        assertTrue(t.drop(80).isEmpty)
+        assertTrue(t.drop(8).toIterative.isEmpty)
+        assertTrue(t.drop(9).toIterative.isEmpty)
+        assertTrue(t.drop(80).toIterative.isEmpty)
     }
 
 }
