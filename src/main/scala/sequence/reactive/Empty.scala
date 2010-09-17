@@ -8,7 +8,7 @@ package com.github.okomok.mada
 package sequence; package reactive
 
 
-private[reactive]
+private
 case class Empty() extends Reactive[Nothing] {
     override def foreach(f: Nothing => Unit) = ()
 }

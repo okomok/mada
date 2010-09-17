@@ -8,7 +8,7 @@ package com.github.okomok.mada
 package sequence; package reactive
 
 
-private[reactive]
+private
 case class FlatMap[A, +B](_1: Reactive[A], _2: A => Reactive[B]) extends Reactive[B] {
     override def foreach(f: B => Unit) = for (x <- _1) { for (y <- _2(x)) f(y) }
 }

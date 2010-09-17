@@ -8,7 +8,7 @@ package com.github.okomok.mada
 package sequence; package reactive
 
 
-private[reactive]
+private
 case class OnStart[+A](_1: Reactive[A], _2: util.ByLazy[Unit]) extends Reactive[A] {
     override def foreach(f: A => Unit) = {
         for (x <- _1) {

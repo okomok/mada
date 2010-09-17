@@ -12,7 +12,7 @@ import java.util.LinkedList
 
 
 @notThreadSafe
-private[reactive]
+private
 case class Zip[A, B](_1: Reactive[A], _2: Reactive[B]) extends Reactive[Tuple2[A, B]] {
     override def foreach(f: Tuple2[A, B] => Unit) = {
         var ends1 = false

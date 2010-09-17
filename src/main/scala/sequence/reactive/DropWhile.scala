@@ -8,7 +8,7 @@ package com.github.okomok.mada
 package sequence; package reactive
 
 
-private[reactive]
+private
 case class DropWhile[A](_1: Reactive[A], _2: A => Boolean) extends Reactive[A] {
     override def foreach(f: A => Unit) = {
         var go = false

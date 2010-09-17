@@ -8,7 +8,7 @@ package com.github.okomok.mada
 package sequence; package reactive
 
 
-private[reactive]
+private
 case class Break[+A](_1: Reactive[A]) extends Reactive[A] {
     override def foreach(f: A => Unit) = _1.start
     override def break: Reactive[A] = _1.break // break-break fusion

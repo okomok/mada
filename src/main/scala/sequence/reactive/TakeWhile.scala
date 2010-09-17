@@ -8,7 +8,7 @@ package com.github.okomok.mada
 package sequence; package reactive
 
 
-private[reactive]
+private
 case class TakeWhile[A](_1: Reactive[A], _2: A => Boolean) extends Reactive[A] {
     override def foreach(f: A => Unit): Unit = {
         for (x <- _1) {
@@ -22,7 +22,7 @@ case class TakeWhile[A](_1: Reactive[A], _2: A => Boolean) extends Reactive[A] {
 }
 
 
-private[reactive]
+private
 case class TakeWhileThen[A](_1: Reactive[A], _2: A => Boolean, _3: util.ByLazy[Unit]) extends Reactive[A] {
     override def foreach(f: A => Unit): Unit = {
         for (x <- _1) {

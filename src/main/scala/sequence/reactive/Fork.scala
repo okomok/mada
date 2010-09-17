@@ -8,7 +8,7 @@ package com.github.okomok.mada
 package sequence; package reactive
 
 
-private[reactive]
+private
 case class Fork[A](_1: Reactive[A], _2: Reactive[A] => Unit) extends Reactive[A] {
     override def foreach(f: A => Unit) = {
         var one = _1

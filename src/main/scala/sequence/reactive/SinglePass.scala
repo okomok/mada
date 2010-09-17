@@ -11,7 +11,7 @@ package sequence; package reactive
 case class SinglePassException[A](_1: Reactive[A]) extends UnsupportedOperationException("single pass only")
 
 
-private[reactive]
+private
 case class SinglePass[+A](_1: Reactive[A]) extends Reactive[A] {
     private val t = new IfFirst[A => Unit](_1.foreach(_), _ => throw SinglePassException(_1))
     override def foreach(f: A => Unit) = t(f)

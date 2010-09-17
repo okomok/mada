@@ -8,7 +8,7 @@ package com.github.okomok.mada
 package sequence; package reactive
 
 
-private[reactive]
+private
 case class Take[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
     Precondition.nonnegative(_2, "take")
 
@@ -27,7 +27,7 @@ case class Take[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
 }
 
 
-private[reactive]
+private
 case class TakeThen[+A](_1: Reactive[A], _2: Int, _3: util.ByLazy[Unit]) extends Reactive[A] {
     Precondition.positive(_2, "takeThen")
 

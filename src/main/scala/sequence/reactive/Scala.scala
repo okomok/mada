@@ -8,12 +8,12 @@ package com.github.okomok.mada
 package sequence; package reactive
 
 
-private[reactive]
+private
 case class FromArray[A](_1: Array[A]) extends Forwarder[A] {
     override protected val delegate = fromSIterable(_1)
 }
 
-private[reactive]
+private
 case class FromSIterable[+A](_1: Iterable[A]) extends Reactive[A] {
     override def foreach(f: A => Unit) = _1.foreach(f)
 }

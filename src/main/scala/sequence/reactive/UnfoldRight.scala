@@ -8,7 +8,7 @@ package com.github.okomok.mada
 package sequence; package reactive
 
 
-private[reactive]
+private
 case class UnfoldRight[A, +B](_1: A, _2: A => Option[(B, A)]) extends Reactive[B] {
     override def foreach(f: B => Unit) = {
         var acc = _2(_1)

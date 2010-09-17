@@ -8,12 +8,12 @@ package com.github.okomok.mada
 package sequence; package reactive
 
 
-private[reactive]
+private
 case class Filter[A](_1: Reactive[A], _2: A => Boolean) extends Reactive[A] {
     override def foreach(f: A => Unit) = for (x <- _1) { if (_2(x)) f(x) }
 }
 
-private[reactive]
+private
 case class Remove[A](_1: Reactive[A], _2: A => Boolean) extends Forwarder[A] {
     override protected val delegate = _1.filter(function.not(_2))
 }
