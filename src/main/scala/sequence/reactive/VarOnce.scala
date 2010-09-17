@@ -10,7 +10,7 @@ package sequence; package reactive
 
 @notThreadSafe
 private[reactive]
-class OneTimeVar[A] {
+class VarOnce[A] {
     private var x: Option[A] = None
     def value: A = x.get
     def :=(y: A) = {
@@ -23,6 +23,6 @@ class OneTimeVar[A] {
 }
 
 private[reactive]
-object OneTimeVar {
-    implicit def _toValue[A](from: OneTimeVar[A]): A = from.value
+object VarOnce {
+    implicit def _toValue[A](from: VarOnce[A]): A = from.value
 }
