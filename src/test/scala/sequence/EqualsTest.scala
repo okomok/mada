@@ -107,12 +107,17 @@ class EqualsTest extends org.scalatest.junit.JUnit3Suite {
         AssertNotEquals(R2, R1)
 
         val I1: Iterative[Int] = Iterative(27,10,14,7,4,1,2)
+        val I2: Iterative[Int] = Iterative(27,10,14,7,4,1,2)
         val V1: Vector[Int] = Vector(27,10,14,7,4,1,2)
 
         AssertNotEquals(I1, R1)
         AssertNotEquals(R1, I1)
         AssertNotEquals(V1, R1)
         AssertNotEquals(R1, V1)
+
+        val RR = new reactive.Forwarder[Int] { override val delegate = I2.asReactive }
+        AssertNotEquals(I1, RR)
+        AssertNotEquals(RR, I1)
     }
 
 }
