@@ -9,11 +9,12 @@ package sequence; package reactive
 
 
 private
-case class OnStart[+A](_1: Reactive[A], _2: util.ByLazy[Unit]) extends Reactive[A] {
+case class Iterate[A](_1: A, _2: A => A) extends Reactive[A] {
     override def foreach(f: A => Unit) = {
-        for (x <- _1) {
-            _2()
-            f(x)
+        var acc = _1
+        while (true) {
+            f(acc)
+            acc = _2(acc)
         }
     }
 }

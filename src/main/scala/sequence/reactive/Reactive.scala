@@ -12,7 +12,7 @@ object Reactive extends Common
 
 
 /**
- * Yet another Traversable with Scala 2.7 style
+ * Yet another Traversable with asynchronous foreach.
  */
 trait Reactive[+A] extends Sequence[A] {
 
@@ -22,7 +22,7 @@ trait Reactive[+A] extends Sequence[A] {
     override def asReactive: Reactive[A] = this
 
     /**
-     * Applies <code>f</code> to each element.
+     * `f` is applied to each element, but it is unspecified when|where `f` is called.
      */
     def foreach(f: A => Unit): Unit
 
@@ -30,17 +30,14 @@ trait Reactive[+A] extends Sequence[A] {
 
     def map[B](f: A => B): Reactive[B] = Map(this, f)
 
-    @equivalentTo("map(f).flatten")
     def flatMap[B](f: A => Reactive[B]): Reactive[B] = FlatMap(this, f)
 
     def filter(p: A => Boolean): Reactive[A] = Filter(this, p)
 
-    @aliasOf("filter")
     final def withFilter(p: A => Boolean): Reactive[A] = filter(p)
 
     def remove(p: A => Boolean): Reactive[A] = Remove(this, p)
 
-    @equivalentTo("(filter(p), remove(p))")
     def partition(p: A => Boolean): (Reactive[A], Reactive[A]) = (filter(p), remove(p))
 
     def scanLeft[B](z: B)(op: (B, A) => B): Reactive[B] = ScanLeft(this, z, op)
@@ -53,17 +50,14 @@ trait Reactive[+A] extends Sequence[A] {
 
     def drop(n: Int): Reactive[A] = Drop(this, n)
 
-    @equivalentTo("take(m).drop(n)")
     def slice(n: Int, m: Int): Reactive[A] = Slice(this, n, m)
 
     def takeWhile(p: A => Boolean): Reactive[A] = TakeWhile(this, p)
 
     def dropWhile(p: A => Boolean): Reactive[A] = DropWhile(this, p)
 
-    @equivalentTo("(takeWhile(p), dropWhile(p))")
     def span(p: A => Boolean): (Reactive[A], Reactive[A]) = (takeWhile(p), dropWhile(p))
 
-    @equivalentTo("(take(n), drop(n))")
     def splitAt(n: Int): (Reactive[A], Reactive[A]) = {
         Precondition.nonnegative(n, "splitAt")
         (take(n), drop(n))

@@ -8,7 +8,8 @@ package com.github.okomok.mada
 package sequence; package reactive
 
 
-private[mada] class Common {
+private[reactive]
+class Common {
 
 
 // constructors
@@ -25,6 +26,16 @@ private[mada] class Common {
      * A sequence with a single element.
      */
     def single[A](e: A): Reactive[A] = Single(e)
+
+    /**
+     * Creates an infinite sequence repeatedly applying <code>op</code>.
+     */
+    def iterate[A](z: A)(op: A => A): Reactive[A] = Iterate(z, op)
+
+    /**
+     * Repeats <code>e</code> infinitely.
+     */
+    def repeat[A](e: A): Reactive[A] = Repeat(e)
 
     /**
      * Unfolds right-associative.

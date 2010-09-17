@@ -21,15 +21,25 @@ class UnfoldTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals(iterative.Of(10,9,8,7,6,5,4,3,2,1), iterative.from(out))
     }
 
-
-    def testBreak: Unit = {
+    def testIterate: Unit = {
         val br = new scala.util.control.Breaks
         import br._
-        val r = reactive.unfoldRight(10){ b => Some(b, b-1) }
+        val r = reactive.iterate(10){ b => b-1 }
         val out = new java.util.ArrayList[Int]
         breakable{
             r.take(10).then(break).foreach(out.add(_))
         }
         assertEquals(iterative.Of(10,9,8,7,6,5,4,3,2,1), iterative.from(out))
+    }
+
+    def testRepeat: Unit = {
+        val br = new scala.util.control.Breaks
+        import br._
+        val r = reactive.repeat(10)
+        val out = new java.util.ArrayList[Int]
+        breakable{
+            r.take(5).then(break).foreach(out.add(_))
+        }
+        assertEquals(iterative.Of(10,10,10,10,10), iterative.from(out))
     }
 }
