@@ -132,6 +132,14 @@ private[mada] class Common {
     @aliasOf("Of.unapplySeq")
     def unapplySeq[A](from: Vector[A]): Option[Seq[A]] = Of.unapplySeq(from)
 
+    /**
+     * Creates a sequence initially containing the specified elements.
+     */
+    object Of {
+        def apply[A](from: A*): Vector[A] = Iterative.from(from).toVector
+        def unapplySeq[A](from: Vector[A]): Option[Seq[A]] = Some(from.toSIndexedSeq)
+    }
+
 
 // Ordering
 

@@ -103,6 +103,7 @@ class EqualsTest extends org.scalatest.junit.JUnit3Suite {
         val R2 = reactive.Of(12,3,4)
         assertEquals(R1, R1)
         assertEquals(R2, R2)
+
         AssertNotEquals(R1, R2)
         AssertNotEquals(R2, R1)
 

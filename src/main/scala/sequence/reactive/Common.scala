@@ -42,13 +42,23 @@ class Common {
      */
     def unfoldRight[A, B](z: A)(op: A => Option[(B, A)]): Reactive[B] = UnfoldRight(z, op)
 
+    /**
+     * Creates a sequence initially containing the specified elements.
+     */
+    object Of {
+        def apply[A](from: A*): Reactive[A] = fromSIterable(from)
+    }
+
 
 // conversion
 
     @conversion
-    def fromIterative[A](from: iterative.Sequence[A]): Reactive[A] = FromIterative(from.asIterative)
+    def fromIterative[A](from: iterative.Sequence[A]): Reactive[A] = new FromIterative(from.asIterative)
 
     @conversion
-    def fromSIterable[A](from: Iterable[A]): Reactive[A] = FromSIterable(from)
+    def fromArray[A](from: Array[A]): Reactive[A] = new FromArray(from)
+
+    @conversion
+    def fromSIterable[A](from: Iterable[A]): Reactive[A] = new FromSIterable(from)
 
 }

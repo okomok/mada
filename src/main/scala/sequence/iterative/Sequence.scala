@@ -10,7 +10,7 @@ package com.github.okomok.mada; package sequence; package iterative
 /**
  * The bridge between phisical and logical hierarchy
  */
-trait Sequence[+A] extends reactive.Sequence[A] { // physical
+trait Sequence[+A] extends reactive.Sequence[A] with Equals { // physical
 
     @conversion
     def asIterative: Iterative[A] // logical

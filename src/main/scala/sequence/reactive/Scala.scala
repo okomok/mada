@@ -9,11 +9,11 @@ package sequence; package reactive
 
 
 private
-case class FromArray[A](_1: Array[A]) extends Forwarder[A] {
+class FromArray[A](_1: Array[A]) extends Forwarder[A] {
     override protected val delegate = fromSIterable(_1)
 }
 
 private
-case class FromSIterable[+A](_1: Iterable[A]) extends Reactive[A] {
+class FromSIterable[+A](_1: Iterable[A]) extends Reactive[A] {
     override def foreach(f: A => Unit) = _1.foreach(f)
 }
