@@ -17,26 +17,14 @@ trait Sequence[+A] extends reactive.Sequence[A] { // physical
 
     override def asReactive: Reactive[A] = AsReactive(asIterative) // logical super
 
-    /**
-     * Compares the specified object with this sequence for equality.
-     * Returns true if and only if the specified object is also a sequence,
-     * both sequences have the same size, and all corresponding pairs of
-     * elements in the two sequences are equal.
-     * You shall not override this in a purpose except optimization.
-     * (In this regard, JCL hierarchy is broken. E.g. <code>unmodifiableCollection</code> can't forward <code>equals</code>.
-     * Probably <code>List/Set</code> shouldn't have been a subclass of <code>Collection</code>.)
-     *
-     * @see Effective Java 2nd Edition - Item 8
-     */
     @pre("Both sequences are finite if result is `true`.")
     override def equals(that: Any) = that match {
-        case that: Sequence[_] => asIterative.equalsIf(that.asIterative)(function.equal)
+        case that: Sequence[_] => (that canEqual this) && asIterative.equalsIf(that.asIterative)(function.equal)
         case _ => false
     }
 
-    /**
-     * Returns a hash code of this sequence.
-     */
+    override def canEqual(that: Any) = that.isInstanceOf[Sequence[_]]
+
     @pre("This sequence is finite.")
     override def hashCode = {
         var r = 1
@@ -48,9 +36,6 @@ trait Sequence[+A] extends reactive.Sequence[A] { // physical
         r
     }
 
-    /**
-     * Returns a string representation of this sequence.
-     */
     @pre("This sequence is finite.")
     override def toString = {
         val sb = new StringBuilder

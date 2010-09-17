@@ -19,7 +19,7 @@ trait Sequence[A] extends iterative.Sequence[A] { // physical
 
     @optimize
     override def equals(that: Any): Boolean = that match {
-        case that: Sequence[_] => asVector.equalsIf(that.asVector)(function.equal)
+        case that: Sequence[_] => (that canEqual this) && asVector.equalsIf(that.asVector)(function.equal)
         case _ => super.equals(that)
     }
 
