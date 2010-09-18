@@ -14,6 +14,25 @@ import java.awt.Component
 object Swing {
 
 
+// Invoke
+
+    object InvokeLater extends Reactive[Unit] {
+        override def foreach(f: Unit => Unit) = {
+            javax.swing.SwingUtilities.invokeLater(new Runnable {
+                override def run = f
+            })
+        }
+    }
+
+    object InvokeAndWait extends Reactive[Unit] {
+        override def foreach(f: Unit => Unit) = {
+            javax.swing.SwingUtilities.invokeAndWait(new Runnable {
+                override def run = f
+            })
+        }
+    }
+
+
 // ActionEvent
 
     import java.awt.event.{ActionEvent, ActionListener}
