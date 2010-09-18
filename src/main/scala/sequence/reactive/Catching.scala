@@ -15,7 +15,7 @@ case class Catching[+A](_1: Reactive[A], _2: Throwable => Unit) extends Reactive
             try {
                 f(x)
             } catch {
-                case e => _2(e)
+                case t: Throwable => _2(t)
             }
         }
     }
