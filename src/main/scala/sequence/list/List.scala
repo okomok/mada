@@ -67,7 +67,7 @@ final class Cons[+A](val _1: A, val _2: util.ByLazy[List[A]]) extends List[A] {
  * <ul>
  * <li/>Backtrackable to any subsequence, while <code>Iterative</code> is backtrackable only to "begin".
  * <li/>No iterators, while number of iterator objects may be exponential growth in recursive <code>Iterative</code>.
- * <li/>A projection method usually need an entire copy. It can be lazy, though.
+ * <li/>A projection method usually needs an entire copy. It can be lazy, though.
  * </ul>
  */
 sealed abstract class List[+A] extends iterative.Sequence[A] {
