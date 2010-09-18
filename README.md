@@ -265,13 +265,32 @@ It supports also parallel algorithms. Parallelization is explicit but transparen
 
 ### Reactive
 
-`Reactive` sequence is a coarse-grained `scala.Responder` for sequences,
-or you could say a sequence-specific, thread-less and trivial `scala.Actor`.
+`Reactive` sequence is a logical base trait for all kinds of `mada` sequences.
+This is built upon (possibly) asynchronous `foreach`:
+
+    pressedSeq doing { _ =>
+        println("pressed")
+        val draggedSeq = new Swing.MouseDragged(label)
+        val releasedSeq = new Swing.MouseReleased(label)
+        draggedSeq doing { _ =>
+            println("dragging")
+        } takeUntil {
+            releasedSeq
+        } then {
+            println("released")
+            draggedSeq.close
+            releasedSeq.close
+        } start
+    } start
 
 `Reactive` summary:
 
-* TODO.
+* `foreach` may be asynchronous; a function passed to `foreach` may be called later.
+* Synchronous algorithms(`isEmpty`, `head` etc) are not supplied.
 
+References:
+
+* [Reactive Extensions]
 
 
 ## Links
@@ -294,3 +313,4 @@ Shunsuke Sogame <<okomok@gmail.com>>
 [Michid's Weblog]: http://michid.wordpress.com/ "Michid's Weblog"
 [Apocalisp]: http://apocalisp.wordpress.com/ "Apocalisp"
 [Boost.Fusion]: http://www.boost.org/doc/libs/release/libs/fusion/ "Boost.Fusion"
+[Reactive Extensions]: http://msdn.microsoft.com/en-us/devlabs/ee794896.aspx "Reactive Extensions"
