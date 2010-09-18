@@ -11,7 +11,7 @@ package sequence; package reactive
 private
 case class Unsplit[A](_1: Reactive[Sequence[A]], _2: Reactive[A]) extends Reactive[A] {
     override def foreach(f: A => Unit) = {
-        var first = true
+        @volatile var first = true
         for (s <- _1) {
             if (first) {
                 first = false

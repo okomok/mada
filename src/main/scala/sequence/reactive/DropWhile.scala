@@ -11,7 +11,7 @@ package sequence; package reactive
 private
 case class DropWhile[A](_1: Reactive[A], _2: A => Boolean) extends Reactive[A] {
     override def foreach(f: A => Unit) = {
-        var go = false
+        @volatile var go = false
         for (x <- _1) {
             if (!go && !_2(x)) go = true
             if (go) f(x)
