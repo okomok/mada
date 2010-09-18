@@ -136,4 +136,14 @@ trait Reactive[+A] extends Sequence[A] {
      */
     def then(f: => Unit): Reactive[A] = throw new UnsupportedOperationException("Reactive.then")
 
+    /**
+     * Pseudo catch-statement
+     */
+    def catching(f: Throwable => Unit): Reactive[A] = Catching(this, f)
+
+    /**
+     * Attach a resource.
+     */
+    def using(c: java.io.Closeable): Reactive[A] = Using(this, c)
+
 }

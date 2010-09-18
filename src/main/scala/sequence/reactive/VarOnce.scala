@@ -13,6 +13,8 @@ private
 class VarOnce[A] {
     @volatile private var x: Option[A] = None
     def value: A = x.get
+    def isEmpty: Boolean = x.isEmpty
+
     def :=(y: A) = {
         if (x.isEmpty) {
             x = Some(y)

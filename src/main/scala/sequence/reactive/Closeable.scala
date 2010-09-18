@@ -11,4 +11,6 @@ package sequence; package reactive
 /**
  * Mixin for a Closeable Reactive.
  */
-trait Closeable[+A] extends Reactive[A] with java.io.Closeable
+trait Closeable[+A] extends Reactive[A] with java.io.Closeable {
+    def used: Reactive[A] = using(this)
+}

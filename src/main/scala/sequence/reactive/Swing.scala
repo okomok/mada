@@ -50,7 +50,7 @@ object Swing {
             }
             source.addActionListener(l)
         }
-        override def close = source.removeActionListener(l)
+        override def close = if (!l.isEmpty) source.removeActionListener(l)
     }
 
 
@@ -67,7 +67,7 @@ object Swing {
             }
             source.addMouseListener(l)
         }
-        override def close = source.removeMouseListener(l)
+        override def close = if (!l.isEmpty) source.removeMouseListener(l)
     }
 
     class MouseEntered(val source: Component) extends Closeable[MouseEvent] {
@@ -78,7 +78,7 @@ object Swing {
             }
             source.addMouseListener(l)
         }
-        override def close = source.removeMouseListener(l)
+        override def close = if (!l.isEmpty) source.removeMouseListener(l)
     }
 
     class MouseExited(val source: Component) extends Closeable[MouseEvent] {
@@ -89,7 +89,7 @@ object Swing {
             }
             source.addMouseListener(l)
         }
-        override def close = source.removeMouseListener(l)
+        override def close = if (!l.isEmpty) source.removeMouseListener(l)
     }
 
     class MousePressed(val source: Component) extends Closeable[MouseEvent] {
@@ -100,7 +100,7 @@ object Swing {
             }
             source.addMouseListener(l)
         }
-        override def close = source.removeMouseListener(l)
+        override def close = if (!l.isEmpty) source.removeMouseListener(l)
     }
 
     class MouseReleased(val source: Component) extends Closeable[MouseEvent] {
@@ -111,7 +111,7 @@ object Swing {
             }
             source.addMouseListener(l)
         }
-        override def close = source.removeMouseListener(l)
+        override def close = if (!l.isEmpty) source.removeMouseListener(l)
     }
 
   // MouseMotionListener
@@ -124,7 +124,7 @@ object Swing {
             }
             source.addMouseMotionListener(l)
         }
-        override def close = source.removeMouseMotionListener(l)
+        override def close = if (!l.isEmpty) source.removeMouseMotionListener(l)
     }
 
     class MouseMoved(val source: Component) extends Closeable[MouseEvent] {
@@ -135,7 +135,7 @@ object Swing {
             }
             source.addMouseMotionListener(l)
         }
-        override def close = source.removeMouseMotionListener(l)
+        override def close = if (!l.isEmpty) source.removeMouseMotionListener(l)
     }
 
   // MouseWheelListener
@@ -148,7 +148,7 @@ object Swing {
             }
             source.addMouseWheelListener(l)
         }
-        override def close = source.removeMouseWheelListener(l)
+        override def close = if (!l.isEmpty) source.removeMouseWheelListener(l)
     }
 
 
@@ -166,7 +166,7 @@ object Swing {
             }
             source.addKeyListener(l)
         }
-        override def close = source.removeKeyListener(l)
+        override def close = if (!l.isEmpty) source.removeKeyListener(l)
     }
 
     class KeyReleased(val source: Component) extends Closeable[KeyEvent] {
@@ -177,7 +177,7 @@ object Swing {
             }
             source.addKeyListener(l)
         }
-        override def close = source.removeKeyListener(l)
+        override def close = if (!l.isEmpty) source.removeKeyListener(l)
     }
 
     class KeyTyped(val source: Component) extends Closeable[KeyEvent] {
@@ -188,7 +188,7 @@ object Swing {
             }
             source.addKeyListener(l)
         }
-        override def close = source.removeKeyListener(l)
+        override def close = if (!l.isEmpty) source.removeKeyListener(l)
     }
 
 }

@@ -13,8 +13,9 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
-class TryTest extends org.scalatest.junit.JUnit3Suite {
-    def testTrivial: Unit = {
+class CatchingTest extends org.scalatest.junit.JUnit3Suite {
+
+    def testCatch: Unit = {
         val t = reactive.Of(1,2,3,4,5,6,7,8,9)
 
         val out = new java.util.ArrayList[Int]
@@ -35,6 +36,7 @@ class TryTest extends org.scalatest.junit.JUnit3Suite {
 
         assertEquals(iterative.Of(14,15,16,17,88,19), iterative.from(out))
     }
+
 /*
     def testTrivial: Unit = {
         val t = reactive.Of(1,2,3,4,5,6,7,8,9)
