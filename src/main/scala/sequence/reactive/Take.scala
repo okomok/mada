@@ -37,8 +37,9 @@ case class TakeThen[+A](_1: Reactive[A], _2: Int, _3: util.ByLazy[Unit]) extends
             if (c != 0) {
                 f(x)
                 c -= 1
-            } else {
-                _3()
+                if (c == 0) {
+                    _3()
+                }
             }
         }
     }
