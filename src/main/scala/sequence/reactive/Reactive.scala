@@ -95,11 +95,10 @@ trait Reactive[+A] extends Sequence[A] {
     @conversion @visibleForTesting
     def toIterative: Iterative[A] = ToIterative(this)
 
-    @compatibleConversion
+    @conversion
     def toResponder: Responder[A] = ToResponder(this)
 
-    @conversion
-    def toActor(implicit pre: Reactive[A] <:< Reactive[Unit]): scala.actors.Actor = scala.actors.Actor.reactor(pre(this).toResponder)
+    def actor: scala.actors.Actor = scala.actors.Actor.actor(start)
 
 
 // misc
