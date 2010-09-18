@@ -11,9 +11,6 @@ package sequence; package reactive
 private[reactive]
 class Common {
 
-
-// constructors
-
     @returnThat
     def from[A](to: Reactive[A]): Reactive[A] = to
 
@@ -46,19 +43,7 @@ class Common {
      * Creates a sequence initially containing the specified elements.
      */
     object Of {
-        def apply[A](from: A*): Reactive[A] = fromSIterable(from)
+        def apply[A](from: A*): Reactive[A] = new FromSIterable(from)
     }
-
-
-// conversion
-
-    @conversion
-    def fromIterative[A](from: iterative.Sequence[A]): Reactive[A] = new FromIterative(from.asIterative)
-
-    @conversion
-    def fromArray[A](from: Array[A]): Reactive[A] = new FromArray(from)
-
-    @conversion
-    def fromSIterable[A](from: Iterable[A]): Reactive[A] = new FromSIterable(from)
 
 }

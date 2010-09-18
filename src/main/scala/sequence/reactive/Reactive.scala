@@ -8,11 +8,11 @@ package com.github.okomok.mada
 package sequence; package reactive
 
 
-object Reactive extends Common
+object Reactive extends Common with Compatibles
 
 
 /**
- * Yet another Traversable with asynchronous foreach.
+ * Yet another Responder with asynchronous foreach.
  */
 trait Reactive[+A] extends Sequence[A] {
 
@@ -95,6 +95,12 @@ trait Reactive[+A] extends Sequence[A] {
     @conversion @visibleForTesting
     def toIterative: Iterative[A] = ToIterative(this)
 
+    @compatibleConversion
+    def toResponder: Responder[A] = ToResponder(this)
+
+    @conversion
+    def toActor(implicit pre: Reactive[A] <:< Reactive[Unit]): scala.actors.Actor = scala.actors.Actor.reactor(pre(this).toResponder)
+
 
 // misc
 
@@ -130,4 +136,5 @@ trait Reactive[+A] extends Sequence[A] {
      * Calls `f` on the end of subsequence.
      */
     def then(f: => Unit): Reactive[A] = throw new UnsupportedOperationException("Reactive.then")
+
 }

@@ -18,7 +18,7 @@ class FlattenTest extends org.scalatest.junit.JUnit3Suite {
     def testFlatMap: Unit = {
         val tr = reactive.Of(1,2,3,4,5)
         val out = new java.util.ArrayList[Int]
-        tr.flatMap{e => reactive.fromIterative(vector.range(0, e))}.foreach(out.add(_))
+        tr.flatMap{e => reactive.from(vector.range(0, e))}.foreach(out.add(_))
         assertEquals(iterative.Of(0,0,1,0,1,2,0,1,2,3,0,1,2,3,4), iterative.from(out))
     }
 

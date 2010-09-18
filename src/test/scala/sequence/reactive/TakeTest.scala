@@ -18,7 +18,7 @@ class TakeTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial0: Unit = {
         val a = vector.Of(1,2,3,4,5,6)
         val b = new java.util.ArrayList[Int]
-        reactive.fromIterative(a).take(3).foreach(b.add(_))
+        reactive.from(a).take(3).foreach(b.add(_))
         assertEquals(vector.Of(1,2,3), vector.from(b))
     }
 

@@ -20,7 +20,7 @@ class IterativeTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testLong: Unit = {
-        val r = reactive.fromIterative(vector.range(0,400))
+        val r = reactive.from(vector.range(0,400))
         assertEquals(vector.range(0,400), r.toIterative)
     }
 }
