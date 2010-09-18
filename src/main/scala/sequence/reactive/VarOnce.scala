@@ -8,10 +8,10 @@ package com.github.okomok.mada
 package sequence; package reactive
 
 
-@notThreadSafe
+@notThreadSafe // fail-fast only
 private
 class VarOnce[A] {
-    private var x: Option[A] = None
+    @volatile private var x: Option[A] = None
     def value: A = x.get
     def :=(y: A) = {
         if (x.isEmpty) {
