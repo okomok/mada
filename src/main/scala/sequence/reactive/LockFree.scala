@@ -29,6 +29,7 @@ class IfFirst[-T](_then: T => Unit, _else: T => Unit) extends Function1[T, Unit]
 /**
  * Equivalent to `lazy val` with `isDone`.
  */
+@deprecated("unused")
 private
 class OnlyFirst[-T](f: T => Unit) extends Function1[T, Unit] {
     private val delegate = new IfFirst[T](f, _ => ())
@@ -38,6 +39,7 @@ class OnlyFirst[-T](f: T => Unit) extends Function1[T, Unit] {
 }
 
 
+@deprecated("unused")
 private
 class SkipFirst[-T](f: T => Unit) extends Function1[T, Unit] {
     private val delegate = new IfFirst[T](_ => (), f)
@@ -46,6 +48,8 @@ class SkipFirst[-T](f: T => Unit) extends Function1[T, Unit] {
     def isSkipped: Boolean = delegate.isFirstDone
 }
 
+
+@deprecated("unused")
 private
 class SkipTimes[-T](f: T => Unit, n: Int) extends Function1[T, Unit] {
     private val count = new atomic.AtomicInteger(n)
@@ -62,6 +66,7 @@ class SkipTimes[-T](f: T => Unit, n: Int) extends Function1[T, Unit] {
 }
 
 
+@deprecated("unused")
 private
 class SkipWhile[-T](f: T => Unit, p: T => Boolean) extends Function1[T, Unit] {
     @volatile private var begins = false

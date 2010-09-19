@@ -180,7 +180,7 @@ You might notice that:
 
 `sequence` provides four sequence types:
 
-1. `Iterative`, single-pass sequence
+1. `Iterative`, iterable sequence
 1. `List`, recursive sequence
 1. `Vector`, random-access sequence
 1. `Reactive`, reactive sequence
@@ -281,9 +281,9 @@ This is built upon (possibly) asynchronous `foreach`:
             case object OK
             val cur = Actor.self
 
-            val a = new Reactor
-            // build an Actor using Reactive combinators.
-            a collect {
+            val a = new Reactor // A Reactive compatible actor
+            // Build Actor's behavior using Reactive combinators.
+            a.reactive collect {
                 case e: Int => e + 10
             } drop {
                 1

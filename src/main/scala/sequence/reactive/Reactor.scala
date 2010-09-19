@@ -13,7 +13,7 @@ import scala.actors.IScheduler
 
 
 class Reactor(sc: IScheduler = null) extends Actor { self =>
-    private val func = new VarOnce[Any => Unit]
+    private var func: Any => Unit = null
 
     override def act = {
         Actor.loop {
@@ -23,17 +23,12 @@ class Reactor(sc: IScheduler = null) extends Actor { self =>
         }
     }
 
-    lazy val reactive: Reactive[Any] = new Reactive[Any] {
-        override def foreach(f: Any => Unit) = {
-            self.func := f
+    lazy val reactive: Reactive[Any] = new ReactiveOnce[Any] {
+        override protected def foreachOnce(f: Any => Unit) = {
+            self.func = f
             self.start
         }
     }
 
     override def scheduler = if (sc == null) super.scheduler else sc
-}
-
-
-object Reactor {
-    implicit def _toReactive(from: Reactor): Reactive[Any] = from.reactive
 }

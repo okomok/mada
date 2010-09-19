@@ -23,7 +23,7 @@ class ReactorTest extends org.scalatest.junit.JUnit3Suite {
         val cur = Actor.self
 
         val a = new Reactor
-        a collect {
+        a.reactive collect {
             case e: Int => e
         } take {
             3
@@ -53,7 +53,7 @@ class ReactorTest extends org.scalatest.junit.JUnit3Suite {
         val cur = Actor.self
 
         val a = new Reactor(new scala.actors.scheduler.SingleThreadedScheduler)
-        a collect {
+        a.reactive collect {
             case e: Int => e
         }  take {
             3

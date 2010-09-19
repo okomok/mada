@@ -119,11 +119,6 @@ trait Reactive[+A] extends Sequence[A] {
     def fork(f: Reactive[A] => Unit): Reactive[A] = Fork(this, f)
 
     /**
-     * Throws if multiple foreach calls happen.
-     */
-    def singlePass: Reactive[A] = SinglePass(this)
-
-    /**
      * Skips trailing forks.
      */
     def break: Reactive[A] = Break(this)

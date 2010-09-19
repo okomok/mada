@@ -8,6 +8,7 @@ package com.github.okomok.mada
 package sequence; package reactive
 
 
+@deprecated("unused")
 private
 class VarOnce[A] {
     private var x: Option[A] = None
@@ -23,6 +24,7 @@ class VarOnce[A] {
     }
 }
 
+@deprecated("unused")
 private
 object VarOnce {
     implicit def _toValue[A](from: VarOnce[A]): A = from.value

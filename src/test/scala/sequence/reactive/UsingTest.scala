@@ -56,7 +56,7 @@ class UsingTest extends org.scalatest.junit.JUnit3Suite {
 
         class TrivialResource extends reactive.Closeable[Int] {
             override def close = autoEnd = true
-            override def foreach(f: Int => Unit) {
+            override protected def foreachOnce(f: Int => Unit) {
                 f(10)
                 f(12)
                 f(2)
@@ -81,6 +81,15 @@ class UsingTest extends org.scalatest.junit.JUnit3Suite {
         assertTrue(thrown)
         assertTrue(autoEnd)
         assertEquals(iterative.Of(10, 12), iterative.from(out))
+
+        thrown = false
+        try {
+            r.start
+        } catch {
+            case reactive.ReactiveOnceException(_) => thrown = true
+            case _ => fail("doh")
+        }
+        assertTrue(thrown)
 
     }
 }

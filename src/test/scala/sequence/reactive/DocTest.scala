@@ -20,9 +20,9 @@ package com.github.okomok.madatest; package sequencetest; package reactivetest
             case object OK
             val cur = Actor.self
 
-            val a = new Reactor
-            // build an Actor using Reactive combinators.
-            a collect {
+            val a = new Reactor // A Reactive compatible actor
+            // Build Actor's behavior using Reactive combinators.
+            a.reactive collect {
                 case e: Int => e + 10
             } drop {
                 1
