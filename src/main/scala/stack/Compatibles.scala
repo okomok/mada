@@ -9,7 +9,7 @@ package com.github.okomok.mada; package stack
 
 @compilerWorkaround("2.8.0") // can't be placed in `Common`; stack namespace is so wrongly? associated that ambiguity error occurs.
 @compatibles
-private[mada] trait Compatibles {
+trait Compatibles {
     implicit def fromJDeque[A](from: java.util.Deque[A]): Stack[A] = FromJDeque(from)
     implicit def fromSStack[A](from: scala.collection.mutable.Stack[A]): Stack[A] = FromSStack(from)
     implicit def fromSArrayStack[A](from: scala.collection.mutable.ArrayStack[A]): Stack[A] = FromSArrayStack(from)
