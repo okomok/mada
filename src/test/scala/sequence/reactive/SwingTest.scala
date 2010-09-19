@@ -17,9 +17,8 @@ import javax.swing
 import reactive.Swing
 
 
-class SwingTezt
-    {
-    //extends org.scalatest.junit.JUnit3Suite {
+class SwingTezt {
+//class SwingTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial: Unit = {
         val frame = new swing.JFrame("SwingTest")
@@ -37,9 +36,13 @@ class SwingTezt
         } then {
             x.close
             closed = true
-        } doing { e =>
+        } doing { _ =>
             println("clicked")
-        }  start
+        } scanl(0) by {
+            (b, _) =>  b + 1
+        } doing { i =>
+            println("click count: " + i)
+        } start
 
         Thread.sleep(10000)
         assertTrue(closed)

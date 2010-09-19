@@ -44,6 +44,12 @@ trait Reactive[+A] extends Sequence[A] {
 
     def scanLeft[B](z: B)(op: (B, A) => B): Reactive[B] = ScanLeft(this, z, op)
 
+    def scanLeft1[B >: A](op: (B, A) => B): Reactive[B] = ScanLeft1(this, op)
+
+    final def scanl[B](z: B) = new {
+        def by(op: (B, A) => B): Reactive[B] = scanLeft(z)(op)
+    }
+
     def tail: Reactive[A] = Tail(this)
 
     def init: Reactive[A] = Init(this)

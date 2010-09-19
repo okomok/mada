@@ -12,10 +12,25 @@ private
 case class ScanLeft[A, B](_1: Reactive[A], _2: B, _3: (B, A) => B) extends Reactive[B] {
     override def foreach(f: B => Unit) = {
         var acc = _2
-        for (x <- _1) {
-            f(acc)
-            acc = _3(acc, x)
-        }
         f(acc)
+        for (x <- _1) {
+            acc = _3(acc, x)
+            f(acc)
+        }
+    }
+}
+
+private
+case class ScanLeft1[A, B >: A](_1: Reactive[A], _3: (B, A) => B) extends Reactive[B] {
+    override def foreach(f: B => Unit) = {
+        var acc: Option[B] = None
+        for (x <- _1) {
+            if (acc.isEmpty) {
+                acc = Some(x)
+            } else {
+                acc = Some(_3(acc.get, x))
+            }
+            f(acc.get)
+        }
     }
 }

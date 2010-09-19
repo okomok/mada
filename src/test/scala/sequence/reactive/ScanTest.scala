@@ -13,8 +13,8 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
-class ScanTest extends org.scalatest.junit.JUnit3Suite {
-    def testFolderLeft: Unit = {
+class ScanLeftTest extends org.scalatest.junit.JUnit3Suite {
+    def testTrivial: Unit = {
         val t = reactive.Of(1,2,3,4,5,6,7,8)
         val u = vector.Of(5,6,8,11,15,20,26,33,41)
         val s = new java.util.ArrayList[Int]
@@ -22,7 +22,7 @@ class ScanTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals(u, vector.from(s))
     }
 
-    def testScanLeft1: Unit = {
+    def testTrivial2: Unit = {
         val t = reactive.Of(1)
         val u = vector.Of(5,6)
         val s = new java.util.ArrayList[Int]
@@ -30,7 +30,7 @@ class ScanTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals(u, vector.from(s))
     }
 
-    def testScanEmpty: Unit = {
+    def testEmpty: Unit = {
         val s = new java.util.ArrayList[Int]
         reactive.empty.of[Int].scanLeft(0)(_ + _).foreach(s.add(_))
         assertEquals(vector.Of(0), vector.from(s))
@@ -60,3 +60,28 @@ class ScanTest extends org.scalatest.junit.JUnit3Suite {
     }
 */
 }
+
+class ScanLeft1Test extends org.scalatest.junit.JUnit3Suite {
+    def testTrivial: Unit = {
+        val t = reactive.Of(5,1,2, 3, 4, 5, 6, 7, 8)
+        val u = vector.  Of(5,6,8,11,15,20,26,33,41)
+        val s = new java.util.ArrayList[Int]
+        t.scanLeft1(_ + _).foreach(s.add(_))
+        assertEquals(u, vector.from(s))
+    }
+
+    def testTrivial2: Unit = {
+        val t = reactive.Of(5,1)
+        val u = vector.Of(5,6)
+        val s = new java.util.ArrayList[Int]
+        t.scanLeft1(_ + _).foreach(s.add(_))
+        assertEquals(u, vector.from(s))
+    }
+
+    def testEmpty: Unit = {
+        val s = new java.util.ArrayList[Int]
+        reactive.empty.of[Int].scanLeft1(_ + _).foreach(s.add(_))
+        assertTrue(vector.from(s).isEmpty)
+    }
+}
+
