@@ -68,6 +68,7 @@ class ReactorTest extends org.scalatest.junit.JUnit3Suite {
 
         a ! 1
         a ! 2
+        a ! "ignored"
         a ! 3
         Actor.receive {
             case OK =>
