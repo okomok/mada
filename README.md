@@ -268,20 +268,43 @@ It supports also parallel algorithms. Parallelization is explicit but transparen
 `Reactive` sequence is a logical base trait for all kinds of `mada` sequences.
 This is built upon (possibly) asynchronous `foreach`:
 
-    pressedSeq doing { _ =>
-        println("pressed")
-        val draggedSeq = new Swing.MouseDragged(label)
-        val releasedSeq = new Swing.MouseReleased(label)
-        draggedSeq doing { _ =>
-            println("dragging")
-        } takeUntil {
-            releasedSeq
-        } then {
-            println("released")
-            draggedSeq.close
-            releasedSeq.close
-        } start
-    } start
+    import com.github.okomok.mada
+    import mada.sequence._
+    import reactive.Reactor
+    import junit.framework.Assert._
+    import scala.actors.Actor
+
+    class DocTest extends org.scalatest.junit.JUnit3Suite {
+        def testTrivial: Unit = {
+            val out = new java.util.ArrayList[Int]
+
+            case object OK
+            val cur = Actor.self
+
+            val a = new Reactor
+            // build an Actor using Reactive combinators.
+            a collect {
+                case e: Int => e + 10
+            } drop {
+                1
+            } take {
+                3
+            } then {
+                cur ! OK
+                Actor.exit
+            } doing { x =>
+                out.add(x)
+            } start
+
+            a ! 0
+            a ! 1
+            a ! "ignored"
+            a ! 2
+            a ! 3
+            Actor.receive { case OK => }
+            assertEquals(iterative.Of(11,12,13), iterative.from(out))
+        }
+    }
 
 `Reactive` summary:
 
