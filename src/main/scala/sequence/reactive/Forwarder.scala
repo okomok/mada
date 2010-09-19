@@ -21,6 +21,7 @@ trait Forwarder[+A] extends Reactive[A] with Sequence.Forwarder[A] {
     override def map[B](f: A => B): Reactive[B] = around(delegate.map(f))
     override def flatMap[B](f: A => Reactive[B]): Reactive[B] = around(delegate.flatMap(f))
     override def filter(p: A => Boolean): Reactive[A] = around(delegate.filter(p))
+    override def collect[B](f: PartialFunction[A, B]): Reactive[B] = around(delegate.collect(f))
     override def remove(p: A => Boolean): Reactive[A] = around(delegate.remove(p))
     override def partition(p: A => Boolean): (Reactive[A], Reactive[A]) = around2(delegate.partition(p))
     override def scanLeft[B](z: B)(op: (B, A) => B): Reactive[B] = around(delegate.scanLeft(z)(op))

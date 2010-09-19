@@ -12,19 +12,19 @@ import scala.actors.Actor
 import scala.actors.IScheduler
 
 
-class Reactor[A](sc: IScheduler = null) extends Actor { self =>
-    private val func = new VarOnce[A => Unit]
+class Reactor(sc: IScheduler = null) extends Actor { self =>
+    private val func = new VarOnce[Any => Unit]
 
     override def act = {
         Actor.loop {
             react {
-                case e => func(e.asInstanceOf[A])
+                case e => func(e)
             }
         }
     }
 
-    lazy val reactive: Reactive[A] = new Reactive[A] {
-        override def foreach(f: A => Unit) = {
+    lazy val reactive: Reactive[Any] = new Reactive[Any] {
+        override def foreach(f: Any => Unit) = {
             self.func := f
             self.start
         }
@@ -35,5 +35,5 @@ class Reactor[A](sc: IScheduler = null) extends Actor { self =>
 
 
 object Reactor {
-    implicit def _toReactive[A](from: Reactor[A]): Reactive[A] = from.reactive
+    implicit def _toReactive(from: Reactor): Reactive[Any] = from.reactive
 }

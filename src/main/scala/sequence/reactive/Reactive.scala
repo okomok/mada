@@ -36,6 +36,8 @@ trait Reactive[+A] extends Sequence[A] {
 
     final def withFilter(p: A => Boolean): Reactive[A] = filter(p)
 
+    def collect[B](f: PartialFunction[A, B]): Reactive[B] = Collect(this, f)
+
     def remove(p: A => Boolean): Reactive[A] = Remove(this, p)
 
     def partition(p: A => Boolean): (Reactive[A], Reactive[A]) = (filter(p), remove(p))

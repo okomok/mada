@@ -22,8 +22,10 @@ class ReactorTest extends org.scalatest.junit.JUnit3Suite {
         case object OK
         val cur = Actor.self
 
-        val a = new Reactor[Int]
-        a take {
+        val a = new Reactor
+        a collect {
+            case e: Int => e
+        } take {
             3
         } then {
             cur ! OK
@@ -35,6 +37,7 @@ class ReactorTest extends org.scalatest.junit.JUnit3Suite {
         } start
 
         a ! 1
+        a ! "ignored"
         a ! 2
         a ! 3
         Actor.receive {
@@ -49,8 +52,10 @@ class ReactorTest extends org.scalatest.junit.JUnit3Suite {
         case object OK
         val cur = Actor.self
 
-        val a = new Reactor[Int](new scala.actors.scheduler.SingleThreadedScheduler)
-        a take {
+        val a = new Reactor(new scala.actors.scheduler.SingleThreadedScheduler)
+        a collect {
+            case e: Int => e
+        }  take {
             3
         } then {
             cur ! OK
