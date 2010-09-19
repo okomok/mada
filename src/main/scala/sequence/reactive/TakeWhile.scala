@@ -25,11 +25,12 @@ case class TakeWhile[A](_1: Reactive[A], _2: A => Boolean) extends Reactive[A] {
 private
 case class TakeWhileThen[A](_1: Reactive[A], _2: A => Boolean, _3: util.ByName[Unit]) extends Reactive[A] {
     override def foreach(f: A => Unit): Unit = {
+        val g = util.byLazy(_3())
         for (x <- _1) {
             if (_2(x)) {
                 f(x)
             } else {
-                _3()
+                g()
             }
         }
     }

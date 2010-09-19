@@ -16,7 +16,7 @@ case class Step[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
     Precondition.positive(_2, "step")
 
     override def foreach(f: A => Unit) = {
-        @volatile var c = 0
+        var c = 0
         for (x <- _1) {
             if (c == 0) {
                 f(x)

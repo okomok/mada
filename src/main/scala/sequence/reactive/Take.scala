@@ -13,7 +13,7 @@ case class Take[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
     Precondition.nonnegative(_2, "take")
 
     override def foreach(f: A => Unit): Unit = {
-        @volatile var c = _2
+        var c = _2
         for (x <- _1) {
             if (c != 0) {
                 f(x)
@@ -32,7 +32,7 @@ case class TakeThen[+A](_1: Reactive[A], _2: Int, _3: util.ByName[Unit]) extends
     Precondition.positive(_2, "takeThen")
 
     override def foreach(f: A => Unit): Unit = {
-        @volatile var c = _2
+        var c = _2
         for (x <- _1) {
             if (c != 0) {
                 f(x)

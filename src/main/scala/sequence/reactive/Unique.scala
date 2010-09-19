@@ -17,7 +17,7 @@ case class Unique[+A](_1: Reactive[A]) extends Forwarder[A] {
 private
 case class UniqueBy[A](_1: Reactive[A], _2: (A, A) => Boolean) extends Reactive[A] {
     override def foreach(f: A => Unit) = {
-        @volatile var prev: Option[A] = None
+        var prev: Option[A] = None
         for (x <- _1) {
             if (prev.isEmpty || !_2(prev.get, x)) {
                 f(x)
