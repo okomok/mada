@@ -9,6 +9,7 @@ package com.github.okomok.madatest; package sequencetest; package reactivetest
 
 import com.github.okomok.mada
 import mada.sequence._
+import reactive.Reactor
 import junit.framework.Assert._
 import scala.actors.Actor
 
@@ -21,17 +22,17 @@ class ReactorTest extends org.scalatest.junit.JUnit3Suite {
         case object OK
         val cur = Actor.self
 
-        val a = new reactive.Reactor[Int]
-        a.reactive take {
-                3
-            } then {
-                cur ! OK
-                Actor.exit
-            } doing { x =>
-                out.add(x)
-            } doing { x =>
-                out.add(x)
-            } start
+        val a = new Reactor[Int]
+        a take {
+            3
+        } then {
+            cur ! OK
+            Actor.exit
+        } doing { x =>
+            out.add(x)
+        } doing { x =>
+            out.add(x+10)
+        } start
 
         a ! 1
         a ! 2
@@ -39,7 +40,7 @@ class ReactorTest extends org.scalatest.junit.JUnit3Suite {
         Actor.receive {
             case OK =>
         }
-        assertEquals(iterative.Of(1,1,2,2,3,3), iterative.from(out))
+        assertEquals(iterative.Of(1,11,2,12,3,13), iterative.from(out))
     }
 
     def testSingleThreaded: Unit = {
@@ -48,17 +49,17 @@ class ReactorTest extends org.scalatest.junit.JUnit3Suite {
         case object OK
         val cur = Actor.self
 
-        val a = new reactive.Reactor[Int](new scala.actors.scheduler.SingleThreadedScheduler)
-        a.reactive take {
-                3
-            } then {
-                cur ! OK
-                Actor.exit
-            } doing { x =>
-                out.add(x)
-            } doing { x =>
-                out.add(x)
-            } start
+        val a = new Reactor[Int](new scala.actors.scheduler.SingleThreadedScheduler)
+        a take {
+            3
+        } then {
+            cur ! OK
+            Actor.exit
+        } doing { x =>
+            out.add(x)
+        } doing { x =>
+            out.add(x+10)
+        } start
 
         a ! 1
         a ! 2
@@ -66,6 +67,6 @@ class ReactorTest extends org.scalatest.junit.JUnit3Suite {
         Actor.receive {
             case OK =>
         }
-        assertEquals(iterative.Of(1,1,2,2,3,3), iterative.from(out))
+        assertEquals(iterative.Of(1,11,2,12,3,13), iterative.from(out))
     }
 }

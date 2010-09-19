@@ -23,7 +23,7 @@ class Reactor[A](sc: IScheduler = null) extends Actor { self =>
         }
     }
 
-    def reactive: Reactive[A] = new Reactive[A] {
+    lazy val reactive: Reactive[A] = new Reactive[A] {
         override def foreach(f: A => Unit) = {
             self.func := f
             self.start
@@ -31,4 +31,9 @@ class Reactor[A](sc: IScheduler = null) extends Actor { self =>
     }
 
     override def scheduler = if (sc == null) super.scheduler else sc
+}
+
+
+object Reactor {
+    implicit def _toReactive[A](from: Reactor[A]): Reactive[A] = from.reactive
 }
