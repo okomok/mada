@@ -11,5 +11,5 @@ package sequence; package reactive
 private
 case class Slice[+A](_1: Reactive[A], _2: Int, _3: Int) extends Forwarder[A] {
     Precondition.range(_2, _3, "slice")
-    override protected val delegate = _1.take(_3).drop(_2)
+    override protected val delegate = _1.drop(_2).take(_3 - _2)
 }
