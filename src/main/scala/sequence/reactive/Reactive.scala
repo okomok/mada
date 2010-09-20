@@ -149,4 +149,9 @@ trait Reactive[+A] extends Sequence[A] {
      */
     def using(c: java.io.Closeable): Reactive[A] = Using(this, c)
 
+    /**
+     * Prepends an Iterative.
+     */
+    def header[B >: A](it: Iterative[B]): Reactive[B] = Header[B](this, it)
+
 }
