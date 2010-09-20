@@ -269,40 +269,29 @@ It supports also parallel algorithms. Parallelization is explicit but transparen
 This is built upon (possibly) asynchronous `foreach`:
 
     import com.github.okomok.mada
-    import mada.sequence._
-    import reactive.Reactor
-    import junit.framework.Assert._
-    import scala.actors.Actor
+    import mada.sequence.reactive.Swing
+    import javax.swing
 
     class DocTest extends org.scalatest.junit.JUnit3Suite {
-        def testTrivial: Unit = {
-            val out = new java.util.ArrayList[Int]
+        def testTrivial {
+            val frame = new swing.JFrame("SwingTest")
+            val label1 = new swing.JLabel("Left")
+            val label2 = new swing.JLabel("Right")
+            frame.getContentPane.add(label1, java.awt.BorderLayout.WEST)
+            frame.getContentPane.add(label2, java.awt.BorderLayout.EAST)
+            frame.setDefaultCloseOperation(swing.JFrame.EXIT_ON_CLOSE)
+            frame.pack
+            frame.setVisible(true)
 
-            case object OK
-            val cur = Actor.self
+            val l = new Swing.MouseClicked(label1)
+            val r = new Swing.MouseClicked(label2)
+            l.merge(r).
+                take(5).
+                then{l.close; r.close}.
+                scanLeft(0){(b, _) =>  b + 1}.
+                foreach{i => println("click count: " + i)}
 
-            val a = new Reactor // A Reactive compatible actor
-            // Build Actor's behavior using Reactive combinators.
-            a.reactive collect {
-                case e: Int => e + 10
-            } drop {
-                1
-            } take {
-                3
-            } then {
-                cur ! OK
-                Actor.exit
-            } doing { x =>
-                out.add(x)
-            } start
-
-            a ! 0
-            a ! 1
-            a ! "ignored"
-            a ! 2
-            a ! 3
-            Actor.receive { case OK => }
-            assertEquals(iterative.Of(11,12,13), iterative.from(out))
+            Thread.sleep(10000)
         }
     }
 
