@@ -69,15 +69,15 @@ class ZipTest extends org.scalatest.junit.JUnit3Suite {
         t.zip(u).foreach(out.add(_))
         assertEquals(iterative.Of((1,"2"),(2,"3")), iterative.from(out))
     }
-/*
+
     def testParallel: Unit = {
         for (_ <- 0 to 30) {
             val src = new IntSenders(vector.Of(1,2,3,4,5,6), vector.Of(7,7,7,7))
             val dst = new IntReceiver(vector.Of(8,9,10,11))
-            (src(0).zipBy(src(1))(_ + _)).activate(dst)
+            (src(0) zip src(1)).map{case (x, y) => x + y}.foreach(dst)
             src.activate
             src.shutdown(dst.assertMe)
         }
     }
-*/
+
 }

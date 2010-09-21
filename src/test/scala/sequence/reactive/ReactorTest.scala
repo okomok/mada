@@ -75,4 +75,20 @@ class ReactorTest extends org.scalatest.junit.JUnit3Suite {
         }
         assertEquals(iterative.Of(1,11,2,12,3,13), iterative.from(out))
     }
+
+    def testSignal {
+        import scala.actors.Actor
+        val cur = Actor.self
+        var answer: Option[Int] = None
+        case object OK
+        val a = new reactive.Reactor
+        val b = new reactive.Reactor
+        a.reactive.zip(b.reactive).
+            collect{ case (x: Int, y: Int) => x + y }.
+            foreach{ sum => answer = Some(sum); cur ! OK }
+        a ! 7
+        b ! 35
+        Actor.receive { case OK => }
+        assertEquals(42, answer.get)
+    }
 }
