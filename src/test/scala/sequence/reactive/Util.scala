@@ -45,6 +45,7 @@ class IntSender(datum: Vector[Int], barrier: CyclicBarrier) extends Reactive[Int
 
                 for (i <- datum) {
                     f(i)
+                    Thread.sleep(100)
                 }
 
                 barrier.await
@@ -62,6 +63,6 @@ class IntReceiver(expected: Vector[Int]) extends Function1[Int, Unit] {
     override def apply(e: Int) = synchronized { buf.add(e) }
 
     def assertMe = {
-        assertEquals(expected, vector.from(buf).sort)
+        assertTrue("expected: " + expected + " actural: " + vector.from(buf), expected == vector.from(buf).sort)
     }
 }

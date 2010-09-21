@@ -11,7 +11,7 @@ package sequence; package reactive
 /**
  * A sequence of variables
  */
-final class Var[A](private var x: Option[A] = None) extends Reactive[A] {
+final class Var[A](private var x: Option[A] = None) extends Reactive[A] with Function1[A, Unit] {
     def this(x: A) = this(Some(x))
 
     override def head: A = if (x.isEmpty) super.head else x.get
@@ -27,5 +27,8 @@ final class Var[A](private var x: Option[A] = None) extends Reactive[A] {
     /**
      * Assigns `e`.
      */
-    def :=(e: A): Unit = if (out == null) { x = Some(e) } else out(e)
+    def :=(e: A): Unit = out(e)
+
+    @equivalentTo(":=(e)")
+    override def apply(e: A): Unit = this := e
 }
