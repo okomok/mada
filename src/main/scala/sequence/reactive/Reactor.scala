@@ -12,6 +12,9 @@ import scala.actors.Actor
 import scala.actors.IScheduler
 
 
+/**
+ * The Reactive Actor
+ */
 class Reactor(sc: IScheduler = null) extends Actor { self =>
     private var func: Any => Unit = null
 

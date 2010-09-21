@@ -91,4 +91,20 @@ class ReactorTest extends org.scalatest.junit.JUnit3Suite {
         Actor.receive { case OK => }
         assertEquals(42, answer.get)
     }
+
+    def testSignalSingleThreaded {
+        import scala.actors.Actor
+        val cur = Actor.self
+        var answer: Option[Int] = None
+        case object OK
+        val a = new reactive.Reactor(new scala.actors.scheduler.SingleThreadedScheduler)
+        val b = new reactive.Reactor(new scala.actors.scheduler.SingleThreadedScheduler)
+        a.reactive.zip(b.reactive).
+            collect{ case (x: Int, y: Int) => x + y }.
+            foreach{ sum => answer = Some(sum); cur ! OK }
+        a ! 7
+        b ! 35
+        Actor.receive { case OK => }
+        assertEquals(42, answer.get)
+    }
 }
