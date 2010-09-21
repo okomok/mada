@@ -11,7 +11,6 @@ package sequence; package reactive
 import java.util.concurrent.atomic
 
 
-@deprecated("unused")
 private
 class IfFirst[-T](_then: T => Unit, _else: T => Unit) extends Function1[T, Unit] {
     private val first = new atomic.AtomicBoolean(true)
@@ -23,7 +22,14 @@ class IfFirst[-T](_then: T => Unit, _else: T => Unit) extends Function1[T, Unit]
         _else(x)
     }
 
-    def isFirstDone: Boolean = !first.get
+    def isSecond: Boolean = !first.get
+}
+
+private
+object IfFirst {
+    def apply[T](_then: T => Unit) = new {
+        def Else(_else: T => Unit): IfFirst[T] = new IfFirst[T](_then, _else)
+    }
 }
 
 
@@ -36,7 +42,7 @@ class OnlyFirst[-T](f: T => Unit) extends Function1[T, Unit] {
     private val delegate = new IfFirst[T](f, _ => ())
     override def apply(x: T) = delegate(x)
 
-    def isDone: Boolean = delegate.isFirstDone
+    def isDone: Boolean = delegate.isSecond
 }
 
 
@@ -46,7 +52,7 @@ class SkipFirst[-T](f: T => Unit) extends Function1[T, Unit] {
     private val delegate = new IfFirst[T](_ => (), f)
     override def apply(x: T) = delegate(x)
 
-    def isSkipped: Boolean = delegate.isFirstDone
+    def isSkipped: Boolean = delegate.isSecond
 }
 
 
