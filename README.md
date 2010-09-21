@@ -303,9 +303,10 @@ This is built upon (possibly) asynchronous `foreach`:
 
 References:
 
-* [Reactive Extensions]
+* [scala.react]
 * [scala.Responder]
 * [scala.collection.Traversable]
+* [Reactive Extensions]
 
 
 ## Links
@@ -328,6 +329,7 @@ Shunsuke Sogame <<okomok@gmail.com>>
 [Michid's Weblog]: http://michid.wordpress.com/ "Michid's Weblog"
 [Apocalisp]: http://apocalisp.wordpress.com/ "Apocalisp"
 [Boost.Fusion]: http://www.boost.org/doc/libs/release/libs/fusion/ "Boost.Fusion"
+[scala.react]: http://lamp.epfl.ch/~imaier/ "scala.react"
 [Reactive Extensions]: http://msdn.microsoft.com/en-us/devlabs/ee794896.aspx "Reactive Extensions"
 [scala.Responder]: http://scala.sygneca.com/libs/responder "scala.Responder"
 [scala.collection.Traversable]: http://www.scala-lang.org/archives/downloads/distrib/files/nightly/docs/library/scala/collection/Traversable.html "scala.collection.Traversable"
