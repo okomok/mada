@@ -70,4 +70,69 @@ class VarTest extends org.scalatest.junit.JUnit3Suite {
     //    }
     }
 
+    def testSignal {
+        val out = new java.util.ArrayList[Int]
+        val a = new reactive.Var[Int](1)
+        val b = new reactive.Var[Int](2)
+        for (x <- a; y <- b) {
+            out.add(x + y)
+        }
+        assertEquals(vector.Of(3), vector.from(out))
+        a := 7
+        b := 35
+        b := 36
+        a := 8
+        assertEquals(vector.Of(3,9,42,43,44), vector.from(out))
+    }
+
+    def testSignal2 {
+        val out = new java.util.ArrayList[Int]
+        val a = new reactive.Var(1)
+        val b = new reactive.Var(2)
+
+        a.zip(b).
+            collect{ case (x: Int, y: Int) => x + y }.
+            foreach{ sum => out.add(sum) }
+        a := 7
+        b := 35
+        assertEquals(vector.Of(3,42), vector.from(out))
+    }
+
+    def testSignal3 {
+        val out = new java.util.ArrayList[Int]
+        val a = new reactive.Var[Int](1)
+        val b = new reactive.Var[Int]//(2)
+        val c = new reactive.Var[Int](3)
+        for (x <- a; y <- b; z <- c) {
+            out.add(x + y + z)
+        }
+        assertEquals(vector.empty[Int], vector.from(out)); out.clear
+
+        b := 2
+        assertEquals(vector.Of(1+2+3), vector.from(out)); out.clear
+
+        a := 2
+        assertEquals(vector.Of(2+2+3), vector.from(out)); out.clear
+
+        b := 1
+        assertEquals(vector.Of(2+1+3), vector.from(out)); out.clear
+
+        c := 4
+        assertEquals(vector.Of(2+1+4), vector.from(out)); out.clear
+
+        b := 5
+        assertEquals(vector.Of(2+5+4), vector.from(out)); out.clear
+
+        c := 7
+        assertEquals(vector.Of(2+5+7), vector.from(out)); out.clear
+
+        a := 8
+        assertEquals(vector.Of(8+5+7), vector.from(out)); out.clear
+
+        a := 9
+        assertEquals(vector.Of(9+5+7), vector.from(out)); out.clear
+
+        c := 3
+        assertEquals(vector.Of(9+5+3), vector.from(out)); out.clear
+    }
 }
