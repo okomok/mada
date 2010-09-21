@@ -8,13 +8,12 @@ package com.github.okomok.mada
 package sequence; package reactive
 
 
-case class ReactiveOnceException[A](_1: Reactive[A]) extends
-    RuntimeException("multiple `foreach` calls not allowed")
-
 /**
  * Mixin for a sequence which doesn't allow re-foreach.
  */
 trait ReactiveOnce[+A] extends Reactive[A] {
+    protected def foreachOnce(f: A => Unit): Unit
+
     private val k =
         IfFirst[A => Unit] { f =>
             foreachOnce(f)
@@ -23,6 +22,7 @@ trait ReactiveOnce[+A] extends Reactive[A] {
         }
 
     final override def foreach(f: A => Unit) = k(f)
-
-    protected def foreachOnce(f: A => Unit): Unit
 }
+
+case class ReactiveOnceException[A](_1: Reactive[A]) extends
+    RuntimeException("multiple `foreach` calls not allowed")

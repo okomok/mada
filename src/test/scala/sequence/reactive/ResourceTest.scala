@@ -26,7 +26,7 @@ class ResourceTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial {
         val r = new TrivialResource
-        val again: Unit => Unit = { _ =>
+        def doIt() {
             val out = new java.util.ArrayList[Int]
             r.foreach { x =>
                 out.add(x)
@@ -36,14 +36,12 @@ class ResourceTest extends org.scalatest.junit.JUnit3Suite {
             assertEquals(iterative.Of(10, 12, 2, 8), iterative.from(out))
         }
 
-        again()
-        again()
-        again()
+        doIt()
     }
 
     def testThrown {
         val r = new TrivialResource
-        val again: Unit => Unit = { _ =>
+        def doIt() {
             val out = new java.util.ArrayList[Int]
             r.foreach { x =>
                 out.add(x)
@@ -53,14 +51,15 @@ class ResourceTest extends org.scalatest.junit.JUnit3Suite {
             assertEquals(iterative.Of(10, 12, 2, 8), iterative.from(out))
         }
 
-        again()
+        doIt()
         var thrown = false
         try {
-            again()
+            doIt()
         } catch {
-            case reactive.ResourceException(_) => thrown = true
+            case reactive.ReactiveOnceException(_) => thrown = true
             case _ => fail("doh")
         }
         assertTrue(thrown)
     }
+
 }

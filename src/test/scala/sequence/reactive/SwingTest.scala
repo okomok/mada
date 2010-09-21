@@ -57,10 +57,10 @@ class SwingTezt {
         frame.setVisible(true)
 
         val pressedSeq = new Swing.MousePressed(label)
-        val draggedSeq = new Swing.MouseDragged(label)
-        val releasedSeq = new Swing.MouseReleased(label)
 
         pressedSeq doing { _ =>
+            val draggedSeq = new Swing.MouseDragged(label)
+            val releasedSeq = new Swing.MouseReleased(label)
             println("pressed")
             draggedSeq.used using {
                 releasedSeq
