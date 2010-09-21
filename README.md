@@ -30,7 +30,7 @@
     import java.nio.channels
     import java.nio.channels.Channels
 
-    class DocTezt extends junit.framework.TestCase {
+    class DocTezt { // extends org.scalatest.junit.JUnit3Suite {
         def testTrivial: Unit = {
             for {
                 source <- use(Channels.newChannel(System.in))
@@ -39,6 +39,7 @@
                 channelCopy(source, dest)
             }
         }
+
         def channelCopy(src: channels.ReadableByteChannel, dest: channels.WritableByteChannel) {
             // exercise.
         }
@@ -146,16 +147,16 @@ References:
 
 `peg` package provides "pure" [PEG] parser combinators:
 
-    import com.github.okomok.mada.peg._
-    import com.github.okomok.mada.peg.Peg._
+    import mada.peg._
+    import mada.peg.Compatibles._
     import junit.framework.Assert._
 
-    class DocTest {
+    class DocTest extends org.scalatest.junit.JUnit3Suite {
         val S, A, B = new Rule[Char]
 
         S ::= ~(A >> !"b") >> from("a").+ >> B >> !("a"|"b"|"c")
         A ::= "a" >> A.? >> "b"
-        B ::= ("b" >> B.? >> "c"){ println(_) }
+        B ::= ("b" >> B.? >> "c")//{ println(_) }
 
         def testTrivial: Unit = {
             assertTrue(S matches "abc")
