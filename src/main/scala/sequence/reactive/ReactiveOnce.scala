@@ -9,13 +9,20 @@ package sequence; package reactive
 
 
 case class ReactiveOnceException[A](_1: Reactive[A]) extends
-    UnsupportedOperationException("multiple foreach calls not allowed")
+    UnsupportedOperationException("multiple `foreach` calls not allowed")
 
 /**
  * Mixin for a sequence which doesn't allow re-foreach.
  */
 trait ReactiveOnce[+A] extends Reactive[A] {
-    private val t = new IfFirst[A => Unit](foreachOnce(_), _ => throw ReactiveOnceException(this))
+    private var isFirst = true
     protected def foreachOnce(f: A => Unit): Unit
-    final override def foreach(f: A => Unit) = t(f)
+    final override def foreach(f: A => Unit) = {
+        if (isFirst) {
+            isFirst = false
+            foreachOnce(f)
+        } else {
+            throw ReactiveOnceException(this)
+        }
+    }
 }

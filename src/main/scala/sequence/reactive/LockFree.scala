@@ -11,6 +11,7 @@ package sequence; package reactive
 import java.util.concurrent.atomic
 
 
+@deprecated("unused")
 private
 class IfFirst[-T](_then: T => Unit, _else: T => Unit) extends Function1[T, Unit] {
     private val first = new atomic.AtomicBoolean(true)

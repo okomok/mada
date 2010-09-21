@@ -54,25 +54,25 @@ class UsingTest extends org.scalatest.junit.JUnit3Suite {
         var autoEnd = false
         var thrown = false
 
-        class TrivialResource extends reactive.Closeable[Int] {
-            override def close = autoEnd = true
-            override protected def foreachOnce(f: Int => Unit) {
-                f(10)
-                f(12)
-                f(2)
-                f(8)
+        class TrivialResource extends reactive.Resource[Int] {
+            override def closeResource = autoEnd = true
+            override protected def openResource(f: Int => Unit) {
+                job = _ => {f(10); f(12); f(2); f(8)}
             }
+            var job: Unit => Unit = null
         }
 
         val r = new TrivialResource
-        try {
-            for (x <- r.used) {
-                if (x == 2) {
-                    throw new AssertionError
-                } else {
-                    out.add(x)
-                }
+        r.used.foreach { x =>
+            if (x == 2) {
+                throw new AssertionError
+            } else {
+                out.add(x)
             }
+        }
+
+        try {
+            r.job()
         } catch {
             case x: AssertionError => thrown = true
             case _ => fail("doh")
@@ -81,15 +81,5 @@ class UsingTest extends org.scalatest.junit.JUnit3Suite {
         assertTrue(thrown)
         assertTrue(autoEnd)
         assertEquals(iterative.Of(10, 12), iterative.from(out))
-
-        thrown = false
-        try {
-            r.start
-        } catch {
-            case reactive.ReactiveOnceException(_) => thrown = true
-            case _ => fail("doh")
-        }
-        assertTrue(thrown)
-
     }
 }

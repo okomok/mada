@@ -42,15 +42,15 @@ object Swing {
         def removeActionListener(l: ActionListener)
     }
 
-    class ActionPerformed(val source: ActionEventSource) extends Closeable[ActionEvent] {
+    class ActionPerformed(val source: ActionEventSource) extends Resource[ActionEvent] {
         private var l: ActionListener = null
-        override protected def foreachOnce(f: ActionEvent => Unit) = {
+        override protected def openResource(f: ActionEvent => Unit) = {
             l = new ActionListener {
                 override def actionPerformed(e: ActionEvent) = f(e)
             }
             source.addActionListener(l)
         }
-        override def close = if (l ne null) source.removeActionListener(l)
+        override protected def closeResource = source.removeActionListener(l)
     }
 
 
@@ -59,96 +59,96 @@ object Swing {
     import java.awt.event.{MouseEvent, MouseWheelEvent}
     import javax.swing.event.MouseInputAdapter
 
-    class MouseClicked(val source: Component) extends Closeable[MouseEvent] {
+    class MouseClicked(val source: Component) extends Resource[MouseEvent] {
         private var l: MouseInputAdapter = null
-        override protected def foreachOnce(f: MouseEvent => Unit) = {
+        override protected def openResource(f: MouseEvent => Unit) = {
             l = new MouseInputAdapter {
                 override def mouseClicked(e: MouseEvent) = f(e)
             }
             source.addMouseListener(l)
         }
-        override def close = if (l ne null) source.removeMouseListener(l)
+        override protected def closeResource = source.removeMouseListener(l)
     }
 
-    class MouseEntered(val source: Component) extends Closeable[MouseEvent] {
+    class MouseEntered(val source: Component) extends Resource[MouseEvent] {
         private var l: MouseInputAdapter = null
-        override protected def foreachOnce(f: MouseEvent => Unit) = {
+        override protected def openResource(f: MouseEvent => Unit) = {
             l = new MouseInputAdapter {
                 override def mouseEntered(e: MouseEvent) = f(e)
             }
             source.addMouseListener(l)
         }
-        override def close = if (l ne null) source.removeMouseListener(l)
+        override protected def closeResource = source.removeMouseListener(l)
     }
 
-    class MouseExited(val source: Component) extends Closeable[MouseEvent] {
+    class MouseExited(val source: Component) extends Resource[MouseEvent] {
         private var l: MouseInputAdapter = null
-        override protected def foreachOnce(f: MouseEvent => Unit) = {
+        override protected def openResource(f: MouseEvent => Unit) = {
             l = new MouseInputAdapter {
                 override def mouseExited(e: MouseEvent) = f(e)
             }
             source.addMouseListener(l)
         }
-        override def close = if (l ne null) source.removeMouseListener(l)
+        override protected def closeResource = source.removeMouseListener(l)
     }
 
-    class MousePressed(val source: Component) extends Closeable[MouseEvent] {
+    class MousePressed(val source: Component) extends Resource[MouseEvent] {
         private var l: MouseInputAdapter = null
-        override protected def foreachOnce(f: MouseEvent => Unit) = {
+        override protected def openResource(f: MouseEvent => Unit) = {
             l = new MouseInputAdapter {
                 override def mousePressed(e: MouseEvent) = f(e)
             }
             source.addMouseListener(l)
         }
-        override def close = if (l ne null) source.removeMouseListener(l)
+        override protected def closeResource = source.removeMouseListener(l)
     }
 
-    class MouseReleased(val source: Component) extends Closeable[MouseEvent] {
+    class MouseReleased(val source: Component) extends Resource[MouseEvent] {
         private var l: MouseInputAdapter = null
-        override protected def foreachOnce(f: MouseEvent => Unit) = {
+        override protected def openResource(f: MouseEvent => Unit) = {
             l = new MouseInputAdapter {
                 override def mouseReleased(e: MouseEvent) = f(e)
             }
             source.addMouseListener(l)
         }
-        override def close = if (l ne null) source.removeMouseListener(l)
+        override protected def closeResource = source.removeMouseListener(l)
     }
 
   // MouseMotionListener
 
-    class MouseDragged(val source: Component) extends Closeable[MouseEvent] {
+    class MouseDragged(val source: Component) extends Resource[MouseEvent] {
         private var l: MouseInputAdapter = null
-        override protected def foreachOnce(f: MouseEvent => Unit) = {
+        override protected def openResource(f: MouseEvent => Unit) = {
             l = new MouseInputAdapter {
                 override def mouseDragged(e: MouseEvent) = f(e)
             }
             source.addMouseMotionListener(l)
         }
-        override def close = if (l ne null) source.removeMouseMotionListener(l)
+        override protected def closeResource = source.removeMouseMotionListener(l)
     }
 
-    class MouseMoved(val source: Component) extends Closeable[MouseEvent] {
+    class MouseMoved(val source: Component) extends Resource[MouseEvent] {
         private var l: MouseInputAdapter = null
-        override protected def foreachOnce(f: MouseEvent => Unit) = {
+        override protected def openResource(f: MouseEvent => Unit) = {
             l = new MouseInputAdapter {
                 override def mouseMoved(e: MouseEvent) = f(e)
             }
             source.addMouseMotionListener(l)
         }
-        override def close = if (l ne null) source.removeMouseMotionListener(l)
+        override protected def closeResource = source.removeMouseMotionListener(l)
     }
 
   // MouseWheelListener
 
-    class MouseWheelMoved(val source: Component) extends Closeable[MouseWheelEvent] {
+    class MouseWheelMoved(val source: Component) extends Resource[MouseWheelEvent] {
         private var l: MouseInputAdapter = null
-        override protected def foreachOnce(f: MouseWheelEvent => Unit) = {
+        override protected def openResource(f: MouseWheelEvent => Unit) = {
             l = new MouseInputAdapter {
                 override def mouseWheelMoved(e: MouseWheelEvent) = f(e)
             }
             source.addMouseWheelListener(l)
         }
-        override def close = if (l ne null) source.removeMouseWheelListener(l)
+        override protected def closeResource = source.removeMouseWheelListener(l)
     }
 
 
@@ -158,37 +158,37 @@ object Swing {
 
   // KeyListener
 
-    class KeyPressed(val source: Component) extends Closeable[KeyEvent] {
+    class KeyPressed(val source: Component) extends Resource[KeyEvent] {
         private var l: KeyAdapter = null
-        override protected def foreachOnce(f: KeyEvent => Unit) = {
+        override protected def openResource(f: KeyEvent => Unit) = {
             l = new KeyAdapter {
                 override def keyPressed(e: KeyEvent) = f(e)
             }
             source.addKeyListener(l)
         }
-        override def close = if (l ne null) source.removeKeyListener(l)
+        override protected def closeResource = source.removeKeyListener(l)
     }
 
-    class KeyReleased(val source: Component) extends Closeable[KeyEvent] {
+    class KeyReleased(val source: Component) extends Resource[KeyEvent] {
         private var l: KeyAdapter = null
-        override protected def foreachOnce(f: KeyEvent => Unit) = {
+        override protected def openResource(f: KeyEvent => Unit) = {
             l = new KeyAdapter {
                 override def keyReleased(e: KeyEvent) = f(e)
             }
             source.addKeyListener(l)
         }
-        override def close = if (l ne null) source.removeKeyListener(l)
+        override protected def closeResource = source.removeKeyListener(l)
     }
 
-    class KeyTyped(val source: Component) extends Closeable[KeyEvent] {
+    class KeyTyped(val source: Component) extends Resource[KeyEvent] {
         private var l: KeyAdapter = null
-        override protected def foreachOnce(f: KeyEvent => Unit) = {
+        override protected def openResource(f: KeyEvent => Unit) = {
             l = new KeyAdapter {
                 override def keyTyped(e: KeyEvent) = f(e)
             }
             source.addKeyListener(l)
         }
-        override def close = if (l ne null) source.removeKeyListener(l)
+        override protected def closeResource = source.removeKeyListener(l)
     }
 
 }
