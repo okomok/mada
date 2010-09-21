@@ -9,6 +9,7 @@ package sequence; package reactive
 
 
 private
-case class Repeat[+A](_1: A) extends Reactive[A] {
-    override def foreach(f: A => Unit) = while (true) f(_1)
+case class Repeat[A](_1: A) extends TrivialGenerator[A] {
+    override def generateOne = out(_1)
+    override val head = _1
 }

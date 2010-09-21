@@ -18,6 +18,7 @@ case class ScanLeft[A, B](_1: Reactive[A], _2: B, _3: (B, A) => B) extends React
             f(acc)
         }
     }
+    override val head = _2
 }
 
 private

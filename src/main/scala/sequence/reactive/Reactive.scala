@@ -50,6 +50,8 @@ trait Reactive[+A] extends Sequence[A] {
         def by(op: (B, A) => B): Reactive[B] = scanLeft(z)(op)
     }
 
+    def head: A = throw new UnsupportedOperationException("Reactive.head")
+
     def tail: Reactive[A] = Tail(this)
 
     def init: Reactive[A] = Init(this)

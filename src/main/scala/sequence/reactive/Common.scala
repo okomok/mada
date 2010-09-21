@@ -27,17 +27,17 @@ class Common {
     /**
      * Creates an infinite sequence repeatedly applying <code>op</code>.
      */
-    def iterate[A](z: A)(op: A => A): Reactive[A] = Iterate(z, op)
+    def iterate[A](z: A)(op: A => A): Generator[A] = Iterate(z, op)
 
     /**
      * Repeats <code>e</code> infinitely.
      */
-    def repeat[A](e: A): Reactive[A] = Repeat(e)
+    def repeat[A](e: A): Generator[A] = Repeat(e)
 
     /**
      * Unfolds right-associative.
      */
-    def unfoldRight[A, B](z: A)(op: A => Option[(B, A)]): Reactive[B] = UnfoldRight(z, op)
+    def unfoldRight[A, B](z: A)(op: A => Option[(B, A)]): Generator[B] = UnfoldRight(z, op)
 
     /**
      * Creates a sequence initially containing the specified elements.

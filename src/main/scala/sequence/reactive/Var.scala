@@ -13,24 +13,19 @@ package sequence; package reactive
  */
 final class Var[A](private var x: Option[A] = None) extends Reactive[A] {
     def this(x: A) = this(Some(x))
-    def head: A = x.get
 
-    @volatile private var k: A => Unit = null
+    override def head: A = if (x.isEmpty) super.head else x.get
+
+    @volatile private var out: A => Unit = null
     override def foreach(f: A => Unit) = {
         if (!x.isEmpty) {
             f(x.get)
         }
-        k = f
+        out = f
     }
 
     /**
      * Assigns `e`.
      */
-    def :=(e: A): Unit = {
-        if (k == null) {
-            x = Some(e)
-        } else {
-            k(e)
-        }
-    }
+    def :=(e: A): Unit = if (out == null) { x = Some(e) } else out(e)
 }
