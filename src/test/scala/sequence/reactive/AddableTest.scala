@@ -57,7 +57,7 @@ class AddableTest extends org.scalatest.junit.JUnit3Suite {
         }
         a add 7
         b add 35
-        assertEquals(vector.Of(3,9,42), vector.from(out))
+        assertEquals(vector.Of(3,9,36,42), vector.from(out))
 
     }
 
@@ -85,8 +85,7 @@ class AddableTest extends org.scalatest.junit.JUnit3Suite {
         a add 7
         assertEquals(vector.Of(5,6,6,7,7,8,11,12), vector.from(out))
         b add 35
-        // wow counter-intuitive.
-        assertEquals(vector.Of(5,6,6,7,7,8,11,12,42), vector.from(out))
+        assertEquals(vector.Of(5,6,6,7,7,8,11,12,36,37,38,42), vector.from(out))
 
     }
 }

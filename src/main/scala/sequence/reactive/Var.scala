@@ -9,16 +9,14 @@ package sequence; package reactive
 
 
 /**
- * A sequence of variables
+ * Equivant to zero-or-one element Addable.
  */
 final class Var[A](private var x: Option[A] = None) extends Reactive[A] with (A => Unit) {
     def this(x: A) = this(Some(x))
 
     @volatile private var out: A => Unit = null
     override def foreach(f: A => Unit) = {
-        if (!x.isEmpty) {
-            f(x.get)
-        }
+        if (!x.isEmpty) f(x.get)
         out = f
     }
 
