@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.madatest; package sequencetest; package reactivetest
+package com.github.okomok.madatest; package sequencetest; package reactivetest; package doctest
 
 
     import com.github.okomok.mada

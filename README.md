@@ -270,29 +270,25 @@ It supports also parallel algorithms. Parallelization is explicit but transparen
 This is built upon (possibly) asynchronous `foreach`:
 
     import com.github.okomok.mada
-    import mada.sequence.reactive.Swing
-    import javax.swing
+    import mada.sequence.reactive
+    import junit.framework.Assert._
 
-    class DocTest extends org.scalatest.junit.JUnit3Suite {
+    class VarTest extends org.scalatest.junit.JUnit3Suite {
         def testTrivial {
-            val frame = new swing.JFrame("SwingTest")
-            val label1 = new swing.JLabel("Left")
-            val label2 = new swing.JLabel("Right")
-            frame.getContentPane.add(label1, java.awt.BorderLayout.WEST)
-            frame.getContentPane.add(label2, java.awt.BorderLayout.EAST)
-            frame.setDefaultCloseOperation(swing.JFrame.EXIT_ON_CLOSE)
-            frame.pack
-            frame.setVisible(true)
+            // `Var` is a mutable one-element sequence.
+            val a = new reactive.Var(1)
+            val b = new reactive.Var(2)
 
-            val l = new Swing.MouseClicked(label1)
-            val r = new Swing.MouseClicked(label2)
-            l.merge(r).
-                take(5).
-                then{l.close; r.close}.
-                scanLeft(0){(b, _) =>  b + 1}.
-                foreach{i => println("click count: " + i)}
+            var z = 0
+            for (x <- a; y <- b) {
+                z = x + y
+            }
 
-            Thread.sleep(10000)
+            assertEquals(3, z)
+            a := 7
+            assertEquals(9, z)
+            b := 35
+            assertEquals(42, z)
         }
     }
 
