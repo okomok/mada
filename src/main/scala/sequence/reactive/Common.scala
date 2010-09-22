@@ -46,4 +46,9 @@ class Common {
         def apply[A](from: A*): Reactive[A] = new FromSIterable(from)
     }
 
+    /**
+     * Calls all the functions in a Reactive sequence.
+     */
+    def reactions[A](fs: Sequence[A => Unit]): A => Unit = Reactions(fs.asReactive)
+
 }
