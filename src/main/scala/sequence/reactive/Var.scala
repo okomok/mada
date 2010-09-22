@@ -9,7 +9,7 @@ package sequence; package reactive
 
 
 /**
- * Equivant to zero-or-one element Addable.
+ * Reactive variable
  */
 final class Var[A](private var x: Option[A] = None) extends Reactive[A] with (A => Unit) {
     def this(x: A) = this(Some(x))
