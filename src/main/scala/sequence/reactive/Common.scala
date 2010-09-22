@@ -49,6 +49,11 @@ class Common {
     /**
      * Calls all the functions in a Reactive sequence.
      */
-    def reactions[A](fs: Sequence[A => Unit]): A => Unit = Reactions(fs.asReactive)
+    def reactions[A](fs: Reactive[A => Unit]): A => Unit = Reactions(fs)
+
+    /**
+     * Calls all the functions in a Reactive sequence.
+     */
+    def reactions[A](fs: Iterative[A => Unit]): A => Unit = Reactions(fs)
 
 }
