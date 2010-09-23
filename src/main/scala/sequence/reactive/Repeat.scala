@@ -9,7 +9,7 @@ package sequence; package reactive
 
 
 private
-case class Repeat[A](_1: A) extends TrivialGenerator[A] {
+case class Repeat[A](_1: A) extends GeneratorOnce[A] {
     override def generateOne = out(_1)
     override val head = _1
 }

@@ -11,18 +11,27 @@ package sequence; package reactive
 /**
  * A sequence which generates an element on demand.
  */
-trait Generator[+A] extends Reactive[A] {
+trait Generator[+A] extends ReactiveOnce[A] {
+    /**
+     * Generates one element.
+     */
     def generateOne: Unit
+
+    @equivalentTo("for (_ <- 0 until n) generateOne")
     def generate(n: Int = 1) = for (_ <- 0 until n) generateOne
+
+    /**
+     * Generates all the elements.
+     */
     def generateAll: Unit = throw new UnsupportedOperationException("Generator.generateAll")
 }
 
 
 /**
- * Mixin to implement a trivial Generator
+ * Mixin for a Generator which doesn't allow re-foreach.
  */
-trait TrivialGenerator[A] extends Generator[A] {
-    private var _out: A => Unit = null
+trait GeneratorOnce[A] extends Generator[A] with ReactiveOnce[A] {
+    @volatile private var _out: A => Unit = null
     protected def out(x: A): Unit = if (_out != null) _out(x)
-    final override def foreach(f: A => Unit) = _out = f
+    final override def foreachOnce(f: A => Unit) = _out = f
 }

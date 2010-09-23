@@ -9,7 +9,7 @@ package sequence; package reactive
 
 
 /**
- * A sequence of variables, considered as a lightweight `Stream`.
+ * A sequence of variables, considered as a lightweight reactive.ArrayList.
  * This can hold only one listener. You can't place this in nested
  * position of for-expression if outer sequence has multiple elements.
  */

@@ -9,7 +9,7 @@ package sequence; package reactive
 
 
 private
-case class UnfoldRight[A, B](_1: A, _2: A => Option[(B, A)]) extends TrivialGenerator[B] {
+case class UnfoldRight[A, B](_1: A, _2: A => Option[(B, A)]) extends GeneratorOnce[B] {
     private var acc = _2(_1)
     override def generateOne = if (!acc.isEmpty) _next
     override def generateAll = while (!acc.isEmpty) _next

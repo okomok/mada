@@ -13,25 +13,25 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
-class StreamTest extends org.scalatest.junit.JUnit3Suite {
+class ArrayListTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial {
-        val rx = reactive.Stream(12,13)
+        val rx = reactive.ArrayList(12,13)
         val out = new java.util.ArrayList[Int]
         rx.foreach(out.add(_))
-        rx write 5
-        rx write 4
-        rx write 6
+        rx add 5
+        rx add 4
+        rx add 6
         assertEquals(iterative.Of(12,13,5,4,6), iterative.from(out))
     }
 
     def testTrivial2 {
-        val rx = reactive.Stream[Int]()
+        val rx = reactive.ArrayList[Int]()
         val out = new java.util.ArrayList[Int]
         rx.foreach(out.add(_))
-        rx write 5
-        rx write 4
-        rx write 6
+        rx add 5
+        rx add 4
+        rx add 6
         assertEquals(iterative.Of(5,4,6), iterative.from(out))
     }
 
@@ -39,7 +39,7 @@ class StreamTest extends org.scalatest.junit.JUnit3Suite {
     //    for (_ <- 0 to 30) {
             val src = new IntSenders(vector.Of(1,2,3,4,5,6,7,8,9,10), vector.Of(7,7,7,7,7,7,7,7,7,7))
             val dst = new IntReceiver(vector.Of(1,2,3,4,5,6,7,7,7,7,7,7,7,7,7,7,7,8,9,10,10))
-            val rx = reactive.Stream[Int](10)
+            val rx = reactive.ArrayList[Int](10)
             rx.foreach(dst)
             src(0).foreach(rx)
             src(1).foreach(rx)
@@ -50,41 +50,41 @@ class StreamTest extends org.scalatest.junit.JUnit3Suite {
 
     def testSignal {
         val out = new java.util.ArrayList[Int]
-        val a = reactive.Stream(1)
-        val b = reactive.Stream(2)
+        val a = reactive.ArrayList(1)
+        val b = reactive.ArrayList(2)
         for (x <- a; y <- b) {
             out.add(x + y)
         }
-        a write 7
-        b write 35
+        a add 7
+        b add 35
         assertEquals(vector.Of(3,9,36,42), vector.from(out))
 
     }
 
     def testSignal2 {
         val out = new java.util.ArrayList[Int]
-        val a = reactive.Stream(1)
-        val b = reactive.Stream(2)
+        val a = reactive.ArrayList(1)
+        val b = reactive.ArrayList(2)
 
         a.zip(b).
             collect{ case (x: Int, y: Int) => x + y }.
             foreach{ sum => out.add(sum) }
-        a write 7
-        b write 35
+        a add 7
+        b add 35
         assertEquals(vector.Of(3,42), vector.from(out))
     }
 
     def testSignal3 {
         val out = new java.util.ArrayList[Int]
-        val a = reactive.Stream(1,2,3)
-        val b = reactive.Stream(4,5)
+        val a = reactive.ArrayList(1,2,3)
+        val b = reactive.ArrayList(4,5)
         for (x <- a; y <- b) {
             out.add(x + y)
         }
         assertEquals(vector.Of(5,6,6,7,7,8), vector.from(out))
-        a write 7
+        a add 7
         assertEquals(vector.Of(5,6,6,7,7,8,11,12), vector.from(out))
-        b write 35
+        b add 35
         assertEquals(vector.Of(5,6,6,7,7,8,11,12,36,37,38,42), vector.from(out))
 
     }
