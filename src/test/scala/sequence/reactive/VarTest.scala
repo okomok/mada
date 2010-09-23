@@ -135,4 +135,30 @@ class VarTest extends org.scalatest.junit.JUnit3Suite {
         c := 3
         assertEquals(vector.Of(9+5+3), vector.from(out)); out.clear
     }
+
+    def testTwice {
+        val out = new java.util.ArrayList[Int]
+        val a = new reactive.Var(1)
+        val b = reactive.Var(2)
+        for (x <- a; y <- b) {
+            out.add(x + y)
+        }
+        assertEquals(vector.Of(3), vector.from(out))
+        a := 7
+        b := 35
+        b := 36
+        a := 8
+        assertEquals(vector.Of(3,9,42,43,44), vector.from(out))
+
+        // reset foreach.
+        out.clear
+        for (x <- a; y <- b) {
+            out.add(x - y)
+        }
+        assertEquals(vector.Of(8 - 36), vector.from(out)); out.clear
+        a := 3
+        assertEquals(vector.Of(3 - 36), vector.from(out)); out.clear
+        b := 5
+        assertEquals(vector.Of(3 - 5), vector.from(out)); out.clear
+    }
 }

@@ -86,6 +86,34 @@ class ArrayListTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals(vector.Of(5,6,6,7,7,8,11,12), vector.from(out))
         b add 35
         assertEquals(vector.Of(5,6,6,7,7,8,11,12,36,37,38,42), vector.from(out))
+    }
+
+
+    def testTwice {
+        val out = new java.util.ArrayList[Int]
+        val a = reactive.ArrayList(1,2,3)
+        val b = reactive.ArrayList(4,5)
+        for (x <- a; y <- b) {
+            out.add(x + y) //  old listner
+        }
+        assertEquals(vector.Of(5,6,6,7,7,8), vector.from(out))
+        a add 7
+        assertEquals(vector.Of(5,6,6,7,7,8,11,12), vector.from(out))
+        b add 35
+        assertEquals(vector.Of(5,6,6,7,7,8,11,12,36,37,38,42), vector.from(out))
+
+        // now, a: 1,2,3,7, b:4,5,35
+        out.clear
+        for (x <- a; y <- b) {
+            out.add(x * y)
+        }
+        assertEquals(vector.Of(4,5,35, 8,10,70, 12,15,105, 28,35,35*7), vector.from(out))
+        out.clear
+        a add 10 // now, a:1,2,3,7,10
+        assertEquals(vector.Of(14,15,35+10,  40,50,350), vector.from(out)) // old listner still listen.
+        out.clear
+        b add 30
+        assertEquals(vector.Of(31,32,33,37,  30,30*2,30*3,30*7,  30+10, 30*10), vector.from(out))
 
     }
 }
