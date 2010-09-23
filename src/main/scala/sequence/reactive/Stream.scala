@@ -28,15 +28,13 @@ object Stream {
     /**
      * Constructs a canonical Stream with initial values.
      */
-    def apply[A](inits: A*): Stream[A] = {
-        val xs = new LinkedList[A]
-        for (x <- inits) xs.add(x)
-        new Trivial(xs)
-    }
+    def apply[A](inits: A*): Stream[A] = new Trivial(inits)
 
     private
-    final class Trivial[A](xs: LinkedList[A]) extends Stream[A] {
-        private var outs = new LinkedList[A => Unit]
+    final class Trivial[A](inits: Iterative[A]) extends Stream[A] {
+        private val xs = new LinkedList[A]
+        private val outs = new LinkedList[A => Unit]
+        for (x <- inits) xs.add(x)
 
         override def foreach(f: A => Unit) = {
             for (x <- iterative.from(xs)) f(x)
