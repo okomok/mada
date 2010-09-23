@@ -13,7 +13,7 @@ package sequence; package reactive
  * This can hold only one listener. You can't place this in nested
  * position of for-expression if outer sequence has multiple elements.
  */
-final class Var[A](private var x: Option[A] = None) extends Stream[A] {
+final class Var[A](private var x: Option[A] = None) extends Reactive[A] with (A => Unit) {
     def this(x: A) = this(Some(x))
 
     @volatile private var out: A => Unit = null
@@ -22,16 +22,15 @@ final class Var[A](private var x: Option[A] = None) extends Stream[A] {
         if (!x.isEmpty) f(x.get)
         out = f
     }
+    override def head: A = x.getOrElse(super.head)
 
-    @aliasOf("write")
-    def :=(y: A): Unit = write(y)
-
-    override def write(y: A) = {
+    def :=(y: A): Unit = {
         x = Some(y)
         out(y)
     }
 
-    override def head: A = x.getOrElse(super.head)
+    @aliasOf(":=")
+    override def apply(y: A) = this := y
 }
 
 

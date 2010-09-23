@@ -14,7 +14,7 @@ import java.util.{ArrayList => JArrayList}
 /**
  * Canonical mutable sequence
  */
-final class ArrayList[A] extends Stream[A] {
+final class ArrayList[A] extends Reactive[A] with (A => Unit) {
     private val xs = new JArrayList[A]
     private val outs = new JArrayList[A => Unit]
 
@@ -22,15 +22,16 @@ final class ArrayList[A] extends Stream[A] {
         for (x <- iterative.from(xs)) f(x)
         outs.add(f)
     }
-
-    @aliasOf("write")
-    def add(x: A): Unit = write(x)
-
     override def head: A = xs.get(0)
-    override def write(x: A) = {
-        xs.add(x)
-        for (out <- iterative.from(outs)) out(x)
+
+    def add(y: A): Unit = {
+        xs.add(y)
+        for (out <- iterative.from(outs)) out(y)
     }
+    def addAll(ys: Iterative[A]): Unit = for (y <- ys) add(y)
+
+    @aliasOf("add")
+    override def apply(y: A) = add(y)
 }
 
 
@@ -40,7 +41,7 @@ object ArrayList {
      */
     def apply[A](inits: A*): ArrayList[A] = {
         val that = new ArrayList[A]
-        that.writeAll(inits)
+        that.addAll(inits)
         that
     }
 }
