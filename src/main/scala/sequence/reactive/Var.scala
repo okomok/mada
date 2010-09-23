@@ -9,26 +9,33 @@ package sequence; package reactive
 
 
 /**
- * Reactive variable
+ * A sequence of variables, considered as a lightweight `Stream`.
+ * This can hold only one listener. You can't place this in nested
+ * position of for-expression if outer sequence has multiple elements.
  */
-final class Var[A](private var x: Option[A] = None) extends Reactive[A] with (A => Unit) {
+final class Var[A](private var x: Option[A] = None) extends Stream[A] {
     def this(x: A) = this(Some(x))
 
     @volatile private var out: A => Unit = null
+
     override def foreach(f: A => Unit) = {
         if (!x.isEmpty) f(x.get)
         out = f
     }
 
-    /**
-     * Assigns `e`.
-     */
-    def :=(e: A): Unit = {
-        x = Some(e)
-        out(e)
+    @aliasOf("write")
+    def :=(y: A): Unit = write(y)
+
+    override def write(y: A) = {
+        x = Some(y)
+        out(y)
     }
 
-    @equivalentTo(":=(e)")
-    override def apply(e: A): Unit = this := e
-    override def head: A = if (x.isEmpty) super.head else x.get
+    override def head: A = x.getOrElse(super.head)
+}
+
+
+object Var {
+    @equivalentTo("new Var(x)")
+    def apply[A](x: A): Var[A] = new Var(x)
 }

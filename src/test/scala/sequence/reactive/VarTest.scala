@@ -72,8 +72,8 @@ class VarTest extends org.scalatest.junit.JUnit3Suite {
 
     def testSignal {
         val out = new java.util.ArrayList[Int]
-        val a = new reactive.Var[Int](1)
-        val b = new reactive.Var[Int](2)
+        val a = new reactive.Var(1)
+        val b = reactive.Var(2)
         for (x <- a; y <- b) {
             out.add(x + y)
         }

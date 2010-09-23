@@ -275,7 +275,7 @@ This is built upon (possibly) asynchronous `foreach`:
 
     class VarTest extends org.scalatest.junit.JUnit3Suite {
         def testTrivial {
-            // `Var` is a mutable one-element sequence.
+            // `Var` is a stream of variables.
             val a = new reactive.Var(1)
             val b = new reactive.Var(2)
 
