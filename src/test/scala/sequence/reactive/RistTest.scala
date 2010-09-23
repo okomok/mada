@@ -13,10 +13,10 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
-class ArrayListTest extends org.scalatest.junit.JUnit3Suite {
+class RistTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial {
-        val rx = reactive.ArrayList(12,13)
+        val rx = reactive.Rist(12,13)
         val out = new java.util.ArrayList[Int]
         rx.foreach(out.add(_))
         rx add 5
@@ -26,7 +26,7 @@ class ArrayListTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testTrivial2 {
-        val rx = reactive.ArrayList[Int]()
+        val rx = reactive.Rist[Int]()
         val out = new java.util.ArrayList[Int]
         rx.foreach(out.add(_))
         rx add 5
@@ -39,7 +39,7 @@ class ArrayListTest extends org.scalatest.junit.JUnit3Suite {
     //    for (_ <- 0 to 30) {
             val src = new IntSenders(vector.Of(1,2,3,4,5,6,7,8,9,10), vector.Of(7,7,7,7,7,7,7,7,7,7))
             val dst = new IntReceiver(vector.Of(1,2,3,4,5,6,7,7,7,7,7,7,7,7,7,7,7,8,9,10,10))
-            val rx = reactive.ArrayList[Int](10)
+            val rx = reactive.Rist[Int](10)
             rx.foreach(dst)
             src(0).foreach(rx)
             src(1).foreach(rx)
@@ -50,8 +50,8 @@ class ArrayListTest extends org.scalatest.junit.JUnit3Suite {
 
     def testSignal {
         val out = new java.util.ArrayList[Int]
-        val a = reactive.ArrayList(1)
-        val b = reactive.ArrayList(2)
+        val a = reactive.Rist(1)
+        val b = reactive.Rist(2)
         for (x <- a; y <- b) {
             out.add(x + y)
         }
@@ -63,8 +63,8 @@ class ArrayListTest extends org.scalatest.junit.JUnit3Suite {
 
     def testSignal2 {
         val out = new java.util.ArrayList[Int]
-        val a = reactive.ArrayList(1)
-        val b = reactive.ArrayList(2)
+        val a = reactive.Rist(1)
+        val b = reactive.Rist(2)
 
         a.zip(b).
             collect{ case (x: Int, y: Int) => x + y }.
@@ -76,8 +76,8 @@ class ArrayListTest extends org.scalatest.junit.JUnit3Suite {
 
     def testSignal3 {
         val out = new java.util.ArrayList[Int]
-        val a = reactive.ArrayList(1,2,3)
-        val b = reactive.ArrayList(4,5)
+        val a = reactive.Rist(1,2,3)
+        val b = reactive.Rist(4,5)
         for (x <- a; y <- b) {
             out.add(x + y)
         }
@@ -91,8 +91,8 @@ class ArrayListTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTwice {
         val out = new java.util.ArrayList[Int]
-        val a = reactive.ArrayList(1,2,3)
-        val b = reactive.ArrayList(4,5)
+        val a = reactive.Rist(1,2,3)
+        val b = reactive.Rist(4,5)
         for (x <- a; y <- b) {
             out.add(x + y) //  old listner
         }

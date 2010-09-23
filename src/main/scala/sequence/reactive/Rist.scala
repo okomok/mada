@@ -8,15 +8,15 @@ package com.github.okomok.mada
 package sequence; package reactive
 
 
-import java.util.{ArrayList => JArrayList}
+import java.util.ArrayList
 
 
 /**
- * Canonical mutable sequence
+ * Reactive list (immutable)
  */
-final class ArrayList[A] extends Reactive[A] with (A => Unit) {
-    private val xs = new JArrayList[A]
-    private val outs = new JArrayList[A => Unit]
+final class Rist[A] extends Reactive[A] with (A => Unit) {
+    private val xs = new ArrayList[A]
+    private val outs = new ArrayList[A => Unit]
 
     override def foreach(f: A => Unit) = {
         for (x <- iterative.from(xs)) f(x)
@@ -35,12 +35,12 @@ final class ArrayList[A] extends Reactive[A] with (A => Unit) {
 }
 
 
-object ArrayList {
+object Rist {
     /**
-     * Constructs an ArrayList with initial values.
+     * Constructs a Rist with initial values.
      */
-    def apply[A](inits: A*): ArrayList[A] = {
-        val that = new ArrayList[A]
+    def apply[A](inits: A*): Rist[A] = {
+        val that = new Rist[A]
         that.addAll(inits)
         that
     }
