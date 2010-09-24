@@ -63,8 +63,8 @@ class VarTest extends org.scalatest.junit.JUnit3Suite {
             val dst = new IntReceiver(vector.Of(1,2,3,4,5,6,7,7,7,7,7,7,7,7,7,7,7,8,9,10,10))
             val rx = new reactive.Var[Int](10)
             rx.foreach(dst)
-            src(0).foreach(rx)
-            src(1).foreach(rx)
+            src(0).foreach(rx.:=)
+            src(1).foreach(rx.:=)
             src.activate
             src.shutdown(dst.assertMe)
     //    }

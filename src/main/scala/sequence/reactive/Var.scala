@@ -13,7 +13,7 @@ package sequence; package reactive
  * This can hold only one listener. You can't place this in nested
  * position of for-expression if outer sequence has multiple elements.
  */
-final class Var[A](private var x: Option[A] = None) extends Reactive[A] with (A => Unit) {
+final class Var[A](private var x: Option[A] = None) extends Reactive[A] {
     def this(x: A) = this(Some(x))
 
     @volatile private var out: A => Unit = null
@@ -28,9 +28,6 @@ final class Var[A](private var x: Option[A] = None) extends Reactive[A] with (A 
         x = Some(y)
         out(y)
     }
-
-    @aliasOf(":=")
-    override def apply(y: A) = this := y
 }
 
 

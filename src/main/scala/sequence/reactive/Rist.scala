@@ -14,7 +14,7 @@ import java.util.ArrayList
 /**
  * Reactive list (immutable)
  */
-final class Rist[A] extends Reactive[A] with (A => Unit) {
+final class Rist[A] extends Reactive[A] {
     private val xs = new ArrayList[A]
     private val outs = new ArrayList[A => Unit]
 
@@ -29,9 +29,6 @@ final class Rist[A] extends Reactive[A] with (A => Unit) {
         for (out <- iterative.from(outs)) out(y)
     }
     def addAll(ys: Iterative[A]): Unit = for (y <- ys) add(y)
-
-    @aliasOf("add")
-    override def apply(y: A) = add(y)
 }
 
 
