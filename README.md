@@ -147,6 +147,7 @@ References:
 
 `peg` package provides "pure" [PEG] parser combinators:
 
+    import com.github.okomok.mada
     import mada.peg._
     import mada.peg.Compatibles._
     import junit.framework.Assert._
@@ -156,7 +157,7 @@ References:
 
         S ::= ~(A >> !"b") >> from("a").+ >> B >> !("a"|"b"|"c")
         A ::= "a" >> A.? >> "b"
-        B ::= ("b" >> B.? >> "c")//{ println(_) }
+        B ::= ("b" >> B.? >> "c"){ println(_) }
 
         def testTrivial: Unit = {
             assertTrue(S matches "abc")

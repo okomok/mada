@@ -7,8 +7,8 @@
 package com.github.okomok.madatest; package pegtest
 
 
-import com.github.okomok.mada
 
+    import com.github.okomok.mada
     import mada.peg._
     import mada.peg.Compatibles._
     import junit.framework.Assert._
