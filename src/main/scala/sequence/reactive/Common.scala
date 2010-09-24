@@ -25,6 +25,16 @@ class Common {
     def single[A](e: A): Reactive[A] = Single(e)
 
     /**
+     * Creates an `Int` sequence from `n` to `m`.
+     */
+    def range(n: Int, m: Int): Generator[Int] = Range(n, m)
+
+    /**
+     * Creates an `Int` sequence from `n` to `m`.
+     */
+    def range(n: Int, m: Int, then: => Unit): Generator[Int] = Range(n, m, util.byName(then))
+
+    /**
      * Creates an infinite sequence repeatedly applying <code>op</code>.
      */
     def iterate[A](z: A)(op: A => A): Generator[A] = Iterate(z, op)

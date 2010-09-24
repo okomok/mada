@@ -48,4 +48,11 @@ class TakeWhileTest extends org.scalatest.junit.JUnit3Suite {
         reactive.from(a).takeWhile(_ <= 4).then(b.add(99))foreach(b.add(_))
         assertEquals(vector.Of(1,2,3,4,99), vector.from(b))
     }
+
+    def testThen2: Unit = {
+        val a = vector.Of(1,2,3,4,5,6)
+        val b = new java.util.ArrayList[Int]
+        reactive.from(a).takeWhile(_ <= 4).then(b.add(99)).then(b.add(98)).foreach(b.add(_))
+        assertEquals(vector.Of(1,2,3,4,99,98), vector.from(b))
+    }
 }
