@@ -97,6 +97,8 @@ trait Reactive[+A] extends Sequence[A] {
 
     def zip[B](that: Reactive[B]): Reactive[(A, B)] = Zip(this, that)
 
+    def zipBy[B, C](that: Reactive[B])(f: (A, B) => C): Reactive[C] = ZipBy(this, that, f)
+
     def unzip[B, C](implicit pre: Reactive[A] <:< Reactive[(B, C)]): (Reactive[B], Reactive[C]) = (pre(this).map{ bc => bc._1 }, pre(this).map{ bc => bc._2 })
 
 

@@ -11,10 +11,15 @@ package sequence; package reactive
 import java.util.LinkedList
 
 
+private
+case class Zip[+A, +B](_1: Reactive[A], _2: Reactive[B]) extends Forwarder[(A, B)] {
+    override protected val delegate = _1.zipBy(_2){ (a, b) => (a, b) }
+}
+
 // Lock-free please!
 private
-case class Zip[A, B](_1: Reactive[A], _2: Reactive[B]) extends Reactive[Tuple2[A, B]] {
-    override def foreach(f: Tuple2[A, B] => Unit) = {
+case class ZipBy[A, B, +C](_1: Reactive[A], _2: Reactive[B], _3: (A, B) => C) extends Reactive[C] {
+    override def foreach(f: C => Unit) = {
         val q1 = new LinkedList[A]
         val q2 = new LinkedList[B]
         val lock = new AnyRef
@@ -26,7 +31,7 @@ case class Zip[A, B](_1: Reactive[A], _2: Reactive[B]) extends Reactive[Tuple2[A
                 if (q2.isEmpty) {
                     q1.add(x)
                 } else {
-                    f(x, q2.poll)
+                    f(_3(x, q2.poll))
                 }
             }
         }
@@ -37,7 +42,7 @@ case class Zip[A, B](_1: Reactive[A], _2: Reactive[B]) extends Reactive[Tuple2[A
                 if (q1.isEmpty) {
                     q2.add(y)
                 } else {
-                    f(q1.poll, y)
+                    f(_3(q1.poll, y))
                 }
             }
         }
