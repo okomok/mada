@@ -13,7 +13,7 @@ case class TakeUntil[A](_1: Reactive[A], _2: Reactive[_], _3: Reactive[A] => Uni
     override def close = _1.close
     override def foreach(f: A => Unit) = {
         @volatile var go = true
-        val g = util.byLazy(_3(_1))
+        val g = util.byLazy{_3(_1);_2.close} // _2 can be closed?
         for (y <- _2) {
             go = false
             g()

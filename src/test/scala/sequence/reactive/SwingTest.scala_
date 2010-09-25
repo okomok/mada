@@ -30,7 +30,7 @@ class SwingTezt {
 
         var closed = false
 
-        val x = new Swing.MouseClicked(label)
+        val x = Swing.Mouse(label).Clicked
         x.used take {
             3
         } then {
@@ -56,11 +56,11 @@ class SwingTezt {
         frame.pack
         frame.setVisible(true)
 
-        val pressedSeq = new Swing.MousePressed(label)
+        val pressedSeq = Swing.Mouse(label).Pressed
 
         pressedSeq doing { _ =>
-            val draggedSeq = new Swing.MouseDragged(label)
-            val releasedSeq = new Swing.MouseReleased(label)
+            val draggedSeq = Swing.Mouse(label).Dragged
+            val releasedSeq = Swing.Mouse(label).Released
             println("pressed")
             draggedSeq.used using {
                 releasedSeq
@@ -78,6 +78,14 @@ class SwingTezt {
         Thread.sleep(20000)
         pressedSeq.close
     }
+
+
+
+
+
+
+
+
 
 /*
     def testTrivial(off: Int): Unit = {

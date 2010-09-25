@@ -11,6 +11,35 @@ package com.github.okomok.madatest; package sequencetest; package reactivetest; 
     import mada.sequence.reactive.Swing
     import javax.swing
 
+
+    import com.github.okomok.mada
+    import mada.sequence.reactive.Swing
+    import javax.swing
+
+    class SwingTezt {
+//    class SwingTest extends org.scalatest.junit.JUnit3Suite {
+        def testTrivial {
+            val frame = new swing.JFrame("SwingTest")
+            val label = new swing.JLabel("testTrivial")
+            frame.getContentPane.add(label)
+            frame.setDefaultCloseOperation(swing.JFrame.EXIT_ON_CLOSE)
+            frame.pack
+            frame.setVisible(true)
+
+            val mouse = Swing.Mouse(label)
+            for {
+                _ <- mouse.Pressed.take(10).doing(_ => println("pressed"))
+                _ <- mouse.Dragged.takeUntil(mouse.Released).then(println("released"))
+            } {
+                println("dragging")
+            }
+
+            Thread.sleep(20000)
+        }
+    }
+
+
+    /*
     class SwingTezt { // extends org.scalatest.junit.JUnit3Suite {
         def testTrivial {
             val frame = new swing.JFrame("SwingTest")
@@ -22,8 +51,8 @@ package com.github.okomok.madatest; package sequencetest; package reactivetest; 
             frame.pack
             frame.setVisible(true)
 
-            val l = new Swing.MouseClicked(label1)
-            val r = new Swing.MouseClicked(label2)
+            val l = Swing.Mouse(label1).Clicked
+            val r = Swing.Mouse(label2).Clicked
             l.merge(r).
                 take(5).
                 scanLeft(0){(b, _) =>  b + 1}.
@@ -32,3 +61,5 @@ package com.github.okomok.madatest; package sequencetest; package reactivetest; 
             Thread.sleep(10000)
         }
     }
+    */
+
