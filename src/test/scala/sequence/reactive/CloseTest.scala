@@ -13,7 +13,7 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
-class CloserTest extends org.scalatest.junit.JUnit3Suite {
+class CloseTest extends org.scalatest.junit.JUnit3Suite {
 
     class MyResource extends reactive.Resource[Int] {
         private var out: Int => Unit = null
