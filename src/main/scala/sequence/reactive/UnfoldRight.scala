@@ -22,7 +22,7 @@ case class UnfoldRight[A, B](_1: A, _2: A => Option[(B, A)], _3: util.ByName[Uni
         if (acc.isEmpty) onEnd()
     }
 
-    override def then(f: => Unit): Reactive[B] = {
+    override def endWith(f: => Unit): Reactive[B] = {
         val old = onEnd.copy()
         onEnd = util.byName{old();f}
         this

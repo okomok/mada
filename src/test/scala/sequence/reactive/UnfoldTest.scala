@@ -22,10 +22,10 @@ class UnfoldTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals(iterative.Of(10,9,8,7,6,5,4,3,2,1), iterative.from(out))
     }
 
-    def testThen: Unit = {
+    def testEndWith: Unit = {
         val r = reactive.unfoldRight(10){ b => if (b == 0) None else Some(b, b-1) }
         val out = new java.util.ArrayList[Int]
-        r.then(out.add(99)).then(out.add(98)).foreach(out.add(_))
+        r.endWith(out.add(99)).endWith(out.add(98)).foreach(out.add(_))
         r.generateAll
         assertEquals(iterative.Of(10,9,8,7,6,5,4,3,2,1,99,98), iterative.from(out))
     }

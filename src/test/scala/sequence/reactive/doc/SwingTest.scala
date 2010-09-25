@@ -26,7 +26,7 @@ package com.github.okomok.madatest; package sequencetest; package reactivetest; 
             val r = new Swing.MouseClicked(label2)
             l.merge(r).
                 take(5).
-                then{l.close; r.close}.
+                endWith{l.close; r.close}.
                 scanLeft(0){(b, _) =>  b + 1}.
                 foreach{i => println("click count: " + i)}
 

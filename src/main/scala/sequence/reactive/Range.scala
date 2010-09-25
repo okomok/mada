@@ -13,17 +13,18 @@ case class Range(_1: Int, _2: Int, _3: util.ByName[Unit] = util.byName(())) exte
     private var cur = _1
     private var onEnd = _3
 
-    override def generateOne = {
-        if (cur != _2) {
-            out(cur)
-            cur += 1
-            if (cur == _2) {
-                onEnd()
-            }
+    override def generateOne = if (cur != _2) _next
+    override def generateAll = while (cur != _2) _next
+
+    private def _next = {
+        out(cur)
+        cur += 1
+        if (cur == _2) {
+            onEnd()
         }
     }
 
-    override def then(f: => Unit): Reactive[Int] = {
+    override def endWith(f: => Unit): Reactive[Int] = {
         val old = onEnd.copy()
         onEnd = util.byName{old();f}
         this

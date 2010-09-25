@@ -23,8 +23,8 @@ case class Take[+A](_1: Reactive[A], _2: Int, _3: util.ByName[Unit] = util.byNam
         }
     }
 
-    override def then(f: => Unit): Reactive[A] = {
-        Precondition.positive(_2, "take.then")
+    override def endWith(f: => Unit): Reactive[A] = {
+        Precondition.positive(_2, "take.endWith")
         Take(_1, _2, util.byName{_3();f})
     }
 

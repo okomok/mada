@@ -31,17 +31,17 @@ class TakeTest extends org.scalatest.junit.JUnit3Suite {
         assertTrue(t.take(0).toIterative.isEmpty)
     }
 
-    def testThen: Unit = {
+    def testEndWith: Unit = {
         val a = vector.Of(1,2,3,4,5,6)
         val b = new java.util.ArrayList[Int]
-        reactive.from(a).take(3).then(b.add(99)).foreach(b.add(_))
+        reactive.from(a).take(3).endWith(b.add(99)).foreach(b.add(_))
         assertEquals(vector.Of(1,2,3,99), vector.from(b))
     }
 
-    def testThen2: Unit = {
+    def testEndWith2: Unit = {
         val a = vector.Of(1,2,3,4,5,6)
         val b = new java.util.ArrayList[Int]
-        reactive.from(a).take(3).then(b.add(99)).then(b.add(98)).foreach(b.add(_))
+        reactive.from(a).take(3).endWith(b.add(99)).endWith(b.add(98)).foreach(b.add(_))
         assertEquals(vector.Of(1,2,3,99,98), vector.from(b))
     }
 
