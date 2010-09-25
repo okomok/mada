@@ -67,4 +67,30 @@ class CloserTest extends org.scalatest.junit.JUnit3Suite {
         assertTrue(r.closed) // compromise
     }
 
+    def testZip {
+        val l = new MyResource
+        val r = new MyResource
+        l.take(5).zip(r.take(8)).take(3).start
+        l.generate(3); r.generate(3)
+        l.generate(3); r.generate(3)
+        assertFalse(l.closed)
+        assertFalse(r.closed)
+        l.generate(3); r.generate(3)
+        assertTrue(l.closed)
+        assertTrue(r.closed)
+    }
+
+    def testZipBy {
+        val l = new MyResource
+        val r = new MyResource
+        l.take(5).zipBy(r.take(8))((x,y)=>x+y).take(3).start
+        l.generate(3); r.generate(3)
+        l.generate(3); r.generate(3)
+        assertFalse(l.closed)
+        assertFalse(r.closed)
+        l.generate(3); r.generate(3)
+        assertTrue(l.closed)
+        assertTrue(r.closed)
+    }
+
 }
