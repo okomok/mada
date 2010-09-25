@@ -14,31 +14,31 @@ import java.util.Random
 object Randoms {
 
     class OfBoolean(val random: Random) extends GeneratorOnce[Boolean] {
-        override def generateOne = out(random.nextBoolean)
+        override def generate = out(random.nextBoolean)
     }
 
     class OfDouble(val random: Random) extends GeneratorOnce[Double] {
-        override def generateOne = out(random.nextDouble)
+        override def generate = out(random.nextDouble)
     }
 
     class OfFloat(val random: Random) extends GeneratorOnce[Float] {
-        override def generateOne = out(random.nextFloat)
+        override def generate = out(random.nextFloat)
     }
 
     class OfGaussian(val random: Random) extends GeneratorOnce[Double] {
-        override def generateOne = out(random.nextGaussian)
+        override def generate = out(random.nextGaussian)
     }
 
     class OfInt(val random: Random) extends GeneratorOnce[Int] {
-        override def generateOne = out(random.nextInt)
+        override def generate = out(random.nextInt)
     }
 
     class OfLong(val random: Random) extends GeneratorOnce[Long] {
-        override def generateOne = out(random.nextLong)
+        override def generate = out(random.nextLong)
     }
 
     class OfBytes(val random: Random, val length: Int) extends GeneratorOnce[Array[Byte]] {
-        override def generateOne = {
+        override def generate = {
             val arr = new Array[Byte](length)
             random.nextBytes(arr)
             out(arr)

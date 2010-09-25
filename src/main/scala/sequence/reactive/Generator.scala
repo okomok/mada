@@ -15,10 +15,10 @@ trait Generator[+A] extends ReactiveOnce[A] {
     /**
      * Generates one element.
      */
-    def generateOne: Unit
+    def generate: Unit
 
-    @equivalentTo("for (_ <- 0 until n) generateOne")
-    def generate(n: Int = 1) = if (n == 1) generateOne else for (_ <- 0 until n) generateOne
+    @equivalentTo("for (_ <- 0 until n) generate")
+    def generateN(n: Int) = for (_ <- 0 until n) generate
 
     /**
      * Generates all the elements.
