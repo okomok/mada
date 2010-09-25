@@ -9,13 +9,14 @@ package sequence; package reactive
 
 
 private
-case class Fork[A](_1: Reactive[A], _2: Reactive[A] => Unit) extends Reactive[A] {
+case class Fork[A](_1: Reactive[A], _2: Reactive[A] => Unit) extends TransformAdapter[A] {
+    override def underlying = _1
     override def foreach(f: A => Unit) = {
-        var one = _1
-        val two = new Reactive[A] {
-            override def foreach(g: A => Unit) = { one = _1.doing(g) }
+        var parent = _1
+        val child = new Reactive[A] {
+            override def foreach(g: A => Unit) = { parent = _1.doing(g) }
         }
-        _2(two)
-        one.foreach(f)
+        _2(child)
+        parent.foreach(f)
     }
 }
