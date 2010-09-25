@@ -19,6 +19,7 @@ case class Zip[+A, +B](_1: Reactive[A], _2: Reactive[B]) extends Forwarder[(A, B
 // Lock-free please!
 private
 case class ZipBy[A, B, +C](_1: Reactive[A], _2: Reactive[B], _3: (A, B) => C) extends Reactive[C] {
+    override def close = { _1.close; _2.close }
     override def foreach(f: C => Unit) = {
         val q1 = new LinkedList[A]
         val q2 = new LinkedList[B]

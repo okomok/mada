@@ -9,10 +9,10 @@ package sequence; package reactive
 
 
 private
-case class Drop[A](_1: Reactive[A], _2: Int)  extends TransformAdapter[A] {
+case class Drop[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
     Precondition.nonnegative(_2, "drop")
 
-    override def underlying = _1
+    override def close = _1.close
     override def foreach(f: A => Unit) = {
         var c = _2
         for (x <- _1) {

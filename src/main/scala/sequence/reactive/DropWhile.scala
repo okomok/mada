@@ -9,8 +9,8 @@ package sequence; package reactive
 
 
 private
-case class DropWhile[A](_1: Reactive[A], _2: A => Boolean) extends TransformAdapter[A] {
-    override def underlying = _1
+case class DropWhile[A](_1: Reactive[A], _2: A => Boolean) extends Reactive[A] {
+    override def close = _1.close
     override def foreach(f: A => Unit) = {
         var go = false
         for (x <- _1) {

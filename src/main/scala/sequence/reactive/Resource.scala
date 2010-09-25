@@ -11,7 +11,7 @@ package sequence; package reactive
 /**
  * Mixin for a Reactive resource.
  */
-trait Resource[+A] extends ReactiveOnce[A] with java.io.Closeable {
+trait Resource[+A] extends ReactiveOnce[A] {
     @equivalentTo("using(this)")
     final def used: Reactive[A] = using(this)
 

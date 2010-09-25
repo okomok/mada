@@ -15,8 +15,7 @@ object Auto extends Common with Compatibles
  * Mixin for automatic resource management
  */
 trait Auto[+A] extends sequence.Reactive[A] {
-    protected def open: A
-    protected def close: Unit
+    def open: A
 
     override def foreach(f: A => Unit) = {
         val r = open

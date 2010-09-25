@@ -12,14 +12,16 @@ object Reactive extends Common with Compatibles
 
 
 /**
- * Yet another Responder with asynchronous foreach.
+ * Reactive sequence, which is built upon asynchronous foreach.
  */
-trait Reactive[+A] extends Sequence[A] {
+trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
 
     @returnThis
     final def of[B >: A]: Reactive[B] = this
 
     override def asReactive: Reactive[A] = this
+
+    override def close: Unit = ()
 
     /**
      * `f` is applied to each element, but it is unspecified when|where `f` is called.

@@ -9,8 +9,8 @@ package sequence; package reactive
 
 
 private
-case class Tail[A](_1: Reactive[A]) extends TransformAdapter[A] {
-    override def underlying = _1
+case class Tail[+A](_1: Reactive[A]) extends Reactive[A] {
+    override def close = _1.close
     override def foreach(f: A => Unit) = {
         var first = true
         for (x <- _1) {

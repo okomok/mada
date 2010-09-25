@@ -61,7 +61,4 @@ class Common {
      */
     def reactions[A](fs: Iterative[A => Unit]): A => Unit = Reactions(fs)
 
-    @aliasOf("Adapter[A, A]")
-    type TransformAdapter[A] = Adapter[A, A]
-
 }
