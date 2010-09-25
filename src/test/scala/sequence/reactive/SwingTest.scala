@@ -17,8 +17,8 @@ import javax.swing
 import reactive.Swing
 
 
-//class SwingTezt {
-class SwingTest extends org.scalatest.junit.JUnit3Suite {
+class SwingTezt {
+//class SwingTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial: Unit = {
         val frame = new swing.JFrame("SwingTest")
