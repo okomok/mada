@@ -27,5 +27,5 @@ case class TakeUntil[+A](_1: Reactive[A], _2: Reactive[_], _3: util.ByName[Unit]
         }
     }
 
-    override def endWith(f: => Unit): Reactive[A] = TakeUntil(_1, _2, util.byName{_3();f})
+    override def then(f: => Unit): Reactive[A] = TakeUntil(_1, _2, util.byName{_3();f})
 }

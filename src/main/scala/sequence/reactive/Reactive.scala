@@ -141,7 +141,7 @@ trait Reactive[+A] extends Sequence[A] {
     /**
      * Calls `f` on the end of subsequence.
      */
-    def endWith(f: => Unit): Reactive[A] = throw new UnsupportedOperationException("Reactive.endWith")
+    def then(f: => Unit): Reactive[A] = throw new UnsupportedOperationException("Reactive.then")
 
     /**
      * Pseudo catch-statement

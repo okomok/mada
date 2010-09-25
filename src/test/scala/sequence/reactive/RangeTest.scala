@@ -30,10 +30,10 @@ class RangeTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals(iterative.Of(1,2,3,4,5), iterative.from(out))
     }
 
-    def testEndWith: Unit = {
+    def testThen: Unit = {
         val r = reactive.range(1,6)
         val out = new java.util.ArrayList[Int]
-        r.endWith(out.add(99)).endWith(out.add(98)).foreach(out.add(_))
+        r.then(out.add(99)).then(out.add(98)).foreach(out.add(_))
         r.generateAll
         assertEquals(iterative.Of(1,2,3,4,5,99,98), iterative.from(out))
     }

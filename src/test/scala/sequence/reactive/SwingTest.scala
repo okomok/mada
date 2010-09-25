@@ -33,7 +33,7 @@ class SwingTezt {
         val x = new Swing.MouseClicked(label)
         x.used take {
             3
-        } endWith {
+        } then {
             x.close
             closed = true
         } doing { _ =>
@@ -68,7 +68,7 @@ class SwingTezt {
                 println("dragging")
             } takeUntil {
                 releasedSeq
-            } endWith {
+            } then {
                 println("released")
                 draggedSeq.close
                 releasedSeq.close
@@ -102,7 +102,7 @@ class SwingTezt {
                 3
             } doing { e =>
                 println("clicked")
-            } endWith {
+            } then {
                 x.close
                 closed = true
             } start
@@ -134,7 +134,7 @@ class SwingTezt {
                 m.mouseDragged { k =>
                     k.until {
                         msr.mouseReleased { y =>
-                            y.endWith {
+                            y.then {
                                 print("released")
                                 m.close
                                 msr.close

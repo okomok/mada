@@ -24,7 +24,7 @@ case class Range(_1: Int, _2: Int, _3: util.ByName[Unit] = util.byName(())) exte
         }
     }
 
-    override def endWith(f: => Unit): Reactive[Int] = {
+    override def then(f: => Unit): Reactive[Int] = {
         val old = onEnd.copy()
         onEnd = util.byName{old();f}
         this

@@ -21,5 +21,5 @@ case class TakeWhile[A](_1: Reactive[A], _2: A => Boolean, _3: util.ByName[Unit]
         }
     }
 
-    override def endWith(f: => Unit): Reactive[A] = TakeWhile(_1, _2, util.byName{_3();f})
+    override def then(f: => Unit): Reactive[A] = TakeWhile(_1, _2, util.byName{_3();f})
 }
