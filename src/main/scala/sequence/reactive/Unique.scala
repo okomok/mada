@@ -15,7 +15,8 @@ case class Unique[+A](_1: Reactive[A]) extends Forwarder[A] {
 }
 
 private
-case class UniqueBy[A](_1: Reactive[A], _2: (A, A) => Boolean) extends Reactive[A] {
+case class UniqueBy[A](_1: Reactive[A], _2: (A, A) => Boolean) extends TransformAdapter[A] {
+    override def underlying = _1
     override def foreach(f: A => Unit) = {
         var prev: Option[A] = None
         for (x <- _1) {

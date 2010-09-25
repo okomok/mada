@@ -11,7 +11,7 @@ package com.github.okomok.madatest; package sequencetest; package reactivetest; 
     import mada.sequence.reactive.Swing
     import javax.swing
 
-    class DocTezt { // extends org.scalatest.junit.JUnit3Suite {
+    class SwingTezt { // extends org.scalatest.junit.JUnit3Suite {
         def testTrivial {
             val frame = new swing.JFrame("SwingTest")
             val label1 = new swing.JLabel("Left")
@@ -26,7 +26,6 @@ package com.github.okomok.madatest; package sequencetest; package reactivetest; 
             val r = new Swing.MouseClicked(label2)
             l.merge(r).
                 take(5).
-                then{l.close; r.close}.
                 scanLeft(0){(b, _) =>  b + 1}.
                 foreach{i => println("click count: " + i)}
 

@@ -9,7 +9,8 @@ package sequence; package reactive
 
 
 private
-case class ScanLeft[A, B](_1: Reactive[A], _2: B, _3: (B, A) => B) extends Reactive[B] {
+case class ScanLeft[A, B](_1: Reactive[A], _2: B, _3: (B, A) => B) extends Adapter[A, B] {
+    override def underlying = _1
     override def foreach(f: B => Unit) = {
         var acc = _2
         f(acc)
@@ -22,7 +23,8 @@ case class ScanLeft[A, B](_1: Reactive[A], _2: B, _3: (B, A) => B) extends React
 }
 
 private
-case class ScanLeft1[A, B >: A](_1: Reactive[A], _3: (B, A) => B) extends Reactive[B] {
+case class ScanLeft1[A, B >: A](_1: Reactive[A], _3: (B, A) => B) extends Adapter[A, B] {
+    override def underlying = _1
     override def foreach(f: B => Unit) = {
         var acc: Option[B] = None
         for (x <- _1) {

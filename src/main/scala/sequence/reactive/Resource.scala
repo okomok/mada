@@ -19,5 +19,5 @@ trait Resource[+A] extends ReactiveOnce[A] with java.io.Closeable {
     protected def closeResource: Unit
 
     final override def foreachOnce(f: A => Unit) = openResource(f)
-    final override def close = closeResource
+    final override lazy val close = closeResource
 }

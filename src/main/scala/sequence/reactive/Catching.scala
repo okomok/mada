@@ -9,7 +9,8 @@ package sequence; package reactive
 
 
 private
-case class Catching[+A](_1: Reactive[A], _2: Throwable => Unit) extends Reactive[A] {
+case class Catching[A](_1: Reactive[A], _2: Throwable => Unit) extends TransformAdapter[A] {
+    override def underlying = _1
     override def foreach(f: A => Unit) = {
         for (x <- _1) {
             try {

@@ -9,7 +9,8 @@ package sequence; package reactive
 
 
 private
-case class Merge[+A](_1: Reactive[A], _2: Reactive[A]) extends Reactive[A] {
+case class Merge[A](_1: Reactive[A], _2: Reactive[A]) extends TransformAdapter[A] {
+    override def underlying = _1
     override def foreach(f: A => Unit) = {
         for (x <- _1) f(x)
         for (y <- _2) f(y)

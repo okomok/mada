@@ -9,7 +9,8 @@ package sequence; package reactive
 
 
 private
-case class Break[+A](_1: Reactive[A]) extends Reactive[A] {
+case class Break[A](_1: Reactive[A]) extends TransformAdapter[A] {
+    override def underlying = _1
     override def foreach(f: A => Unit) = _1.start
     override def break: Reactive[A] = _1.break // break-break fusion
 }

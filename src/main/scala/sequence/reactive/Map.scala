@@ -9,6 +9,7 @@ package sequence; package reactive
 
 
 private
-case class Map[A, +B](_1: Reactive[A], _2: A => B) extends Reactive[B] {
+case class Map[A, +B](_1: Reactive[A], _2: A => B) extends Adapter[A, B] {
+    override def underlying = _1
     override def foreach(f: B => Unit) = for (x <- _1) { f(_2(x)) }
 }

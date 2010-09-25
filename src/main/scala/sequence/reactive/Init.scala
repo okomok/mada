@@ -9,7 +9,8 @@ package sequence; package reactive
 
 
 private
-case class Init[+A](_1: Reactive[A]) extends Reactive[A] {
+case class Init[A](_1: Reactive[A]) extends TransformAdapter[A] {
+    override def underlying = _1
     override def foreach(f: A => Unit) = {
         var prev: Option[A] = None
         for (x <- _1) {

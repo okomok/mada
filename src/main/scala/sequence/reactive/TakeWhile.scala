@@ -9,9 +9,10 @@ package sequence; package reactive
 
 
 private
-case class TakeWhile[A](_1: Reactive[A], _2: A => Boolean, _3: util.ByName[Unit] = util.byName(())) extends Reactive[A] {
+case class TakeWhile[A](_1: Reactive[A], _2: A => Boolean, _3: Reactive[A] => Unit = Closer) extends TransformAdapter[A] {
+    override def underlying = _1
     override def foreach(f: A => Unit): Unit = {
-        val g = util.byLazy(_3())
+        val g = util.byLazy(_3(_1))
         for (x <- _1) {
             if (_2(x)) {
                 f(x)
@@ -21,5 +22,5 @@ case class TakeWhile[A](_1: Reactive[A], _2: A => Boolean, _3: util.ByName[Unit]
         }
     }
 
-    override def then(f: => Unit): Reactive[A] = TakeWhile(_1, _2, util.byName{_3();f})
+    override def then(f: => Unit): Reactive[A] = TakeWhile(_1, _2, (r: Reactive[A]) => {f;_3(r)})
 }

@@ -32,7 +32,7 @@ class ResourceTest extends org.scalatest.junit.JUnit3Suite {
                 out.add(x)
             }
             r.job()
-            r.close()
+            r.close
             assertEquals(iterative.Of(10, 12, 2, 8), iterative.from(out))
         }
 

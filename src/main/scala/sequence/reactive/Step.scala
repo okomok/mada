@@ -12,7 +12,8 @@ package sequence; package reactive
 
 
 private
-case class Step[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
+case class Step[A](_1: Reactive[A], _2: Int) extends TransformAdapter[A] {
+    override def underlying = _1
     Precondition.positive(_2, "step")
 
     override def foreach(f: A => Unit) = {
