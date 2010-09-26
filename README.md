@@ -272,24 +272,28 @@ This is built upon (possibly) asynchronous `foreach`:
 
     import com.github.okomok.mada
     import mada.sequence.reactive
-    import junit.framework.Assert._
+    import javax.swing
 
-    class VarTest extends org.scalatest.junit.JUnit3Suite {
+    class SwingTezt {
+//    class SwingTest extends org.scalatest.junit.JUnit3Suite {
         def testTrivial {
-            // `Var` is a stream of variables.
-            val a = new reactive.Var(1)
-            val b = new reactive.Var(2)
+            val frame = new swing.JFrame("SwingTest")
+            val label = new swing.JLabel("testTrivial")
+            frame.getContentPane.add(label)
+            frame.setDefaultCloseOperation(swing.JFrame.EXIT_ON_CLOSE)
+            frame.pack
+            frame.setVisible(true)
 
-            var z = 0
-            for (x <- a; y <- b) {
-                z = x + y
+            // This is really built upon `foreach` only.
+            val mouse = reactive.Swing.Mouse(label)
+            for {
+                _ <- mouse.Pressed.take(10).exec(println("pressed"))
+                e <- mouse.Dragged.takeUntil(mouse.Released).then(println("released"))
+            } {
+                println("dragging at: " + (e.getX, e.getY))
             }
 
-            assertEquals(3, z)
-            a := 7
-            assertEquals(9, z)
-            b := 35
-            assertEquals(42, z)
+            Thread.sleep(20000)
         }
     }
 

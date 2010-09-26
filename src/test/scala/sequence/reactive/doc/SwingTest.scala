@@ -8,12 +8,7 @@ package com.github.okomok.madatest; package sequencetest; package reactivetest; 
 
 
     import com.github.okomok.mada
-    import mada.sequence.reactive.Swing
-    import javax.swing
-
-
-    import com.github.okomok.mada
-    import mada.sequence.reactive.Swing
+    import mada.sequence.reactive
     import javax.swing
 
     class SwingTezt {
@@ -26,12 +21,13 @@ package com.github.okomok.madatest; package sequencetest; package reactivetest; 
             frame.pack
             frame.setVisible(true)
 
-            val mouse = Swing.Mouse(label)
+            // This is really built upon `foreach` only.
+            val mouse = reactive.Swing.Mouse(label)
             for {
                 _ <- mouse.Pressed.take(10).exec(println("pressed"))
-                _ <- mouse.Dragged.takeUntil(mouse.Released).then(println("released"))
+                e <- mouse.Dragged.takeUntil(mouse.Released).then(println("released"))
             } {
-                println("dragging")
+                println("dragging at: " + (e.getX, e.getY))
             }
 
             Thread.sleep(20000)
