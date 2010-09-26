@@ -28,7 +28,7 @@ package com.github.okomok.madatest; package sequencetest; package reactivetest; 
 
             val mouse = Swing.Mouse(label)
             for {
-                _ <- mouse.Pressed.take(10).doing(_ => println("pressed"))
+                _ <- mouse.Pressed.take(10).exec(println("pressed"))
                 _ <- mouse.Dragged.takeUntil(mouse.Released).then(println("released"))
             } {
                 println("dragging")

@@ -61,7 +61,4 @@ class Common {
      */
     def reactions[A](fs: Iterative[A => Unit]): A => Unit = Reactions(fs)
 
-    @equivalentTo("scala.Responder.exec")
-    def exec[A](x: => Unit): Boolean = { x; true }
-
 }
