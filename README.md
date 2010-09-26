@@ -274,8 +274,7 @@ This is built upon (possibly) asynchronous `foreach`:
     import mada.sequence.reactive
     import javax.swing
 
-    class SwingTezt {
-//    class SwingTest extends org.scalatest.junit.JUnit3Suite {
+    class SwingTest extends org.scalatest.junit.JUnit3Suite {
         def testTrivial {
             val frame = new swing.JFrame("SwingTest")
             val label = new swing.JLabel("testTrivial")
