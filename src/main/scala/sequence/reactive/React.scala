@@ -9,7 +9,7 @@ package sequence; package reactive
 
 
 private
-case class Doing[A](_1: Reactive[A], _2: A => Unit) extends Reactive[A] {
+case class React[A](_1: Reactive[A], _2: A => Unit) extends Reactive[A] {
     override def close = _1.close
     override def foreach(f: A => Unit) = {
         for (x <- _1) {

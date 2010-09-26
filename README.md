@@ -286,7 +286,7 @@ This is built upon (possibly) asynchronous `foreach`:
             // This is really built upon `foreach` only.
             val mouse = reactive.Swing.Mouse(label)
             for {
-                _ <- mouse.Pressed.take(10).exec(println("pressed"))
+                _ <- mouse.Pressed.take(10).doing(println("pressed"))
                 e <- mouse.Dragged.takeUntil(mouse.Released).then(println("released"))
             } {
                 println("dragging at: " + (e.getX, e.getY))

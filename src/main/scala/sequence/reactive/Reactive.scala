@@ -120,10 +120,10 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
     /**
      * Loops with evaluating `f`.
      */
-    def doing(f: A => Unit): Reactive[A] = Doing(this, f)
+    def react(f: A => Unit): Reactive[A] = React(this, f)
 
-    @equivalentTo("doing(_ => f)")
-    final def exec(f: => Unit): Reactive[A] = doing(_ => f)
+    @equivalentTo("react(_ => f)")
+    final def doing(f: => Unit): Reactive[A] = react(_ => f)
 
     @equivalentTo("foreach(_ => ())")
     def start: Unit = foreach(_ => ())
