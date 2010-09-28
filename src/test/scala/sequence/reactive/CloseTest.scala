@@ -35,6 +35,13 @@ class CloseTest extends org.scalatest.junit.JUnit3Suite {
         assertTrue(r.closed)
     }
 
+    def testTake0 {
+        val r = new MyResource
+        assertFalse(r.closed)
+        r.take(0).start
+        assertTrue(r.closed)
+    }
+
     def testChain {
         val r = new MyResource
         r.react(_ => ()).filter(_ => true).take(3).start
