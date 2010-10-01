@@ -23,9 +23,9 @@ trait Reactor extends Actor { self =>
 
     private var g: Any => Unit = null
 
-    private class _Impl extends ReactiveOnce[Any] {
-        override def close = Actor.exit
-        override protected def foreachOnce(f: Any => Unit) = { self.g = f }
+    private class _Impl extends Resource[Any] {
+        override protected def openResource(f: Any => Unit) = { self.g = f }
+        override protected def closeResource = Actor.exit
     }
 
     final override def act = {
