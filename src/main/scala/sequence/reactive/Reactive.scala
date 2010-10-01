@@ -163,4 +163,9 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
      */
     def header[B >: A](it: Iterative[B]): Reactive[B] = Header[B](this, it)
 
+    /**
+     * Ignores `close` call.
+     */
+    def protect: Reactive[A] = Protect(this)
+
 }

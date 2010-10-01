@@ -35,6 +35,16 @@ class CloseTest extends org.scalatest.junit.JUnit3Suite {
         assertTrue(r.closed)
     }
 
+    def testProtect {
+        val r = new MyResource
+        r.protect.take(3).start
+        r.generate(3)
+        r.generate(3)
+        assertFalse(r.closed)
+        r.generate(3)
+        assertFalse(r.closed)
+    }
+
     def testTake0 {
         val r = new MyResource
         assertFalse(r.closed)
