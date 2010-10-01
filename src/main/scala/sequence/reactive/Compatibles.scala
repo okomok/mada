@@ -13,5 +13,5 @@ trait Compatibles {
     implicit def fromArray[A](from: Array[A]): Reactive[A] = new FromArray(from)
     implicit def fromSIterable[A](from: Iterable[A]): Reactive[A] = new FromSIterable(from)
     implicit def fromResponder[A](from: Responder[A]): Reactive[A] = FromResponder(from)
-    implicit def fromReactor(from: Reactor): Reactive[Any] = from.reactive
+    //implicit def fromReactor(from: Reactor): Reactive[Any] = from.reactive
 }

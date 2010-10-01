@@ -15,23 +15,76 @@ import scala.actors.IScheduler
 /**
  * The Reactive Actor
  */
-class Reactor(sc: IScheduler = null) extends Actor { self =>
-    private var func: Any => Unit = null
+trait Reactor extends Actor { self =>
+    /**
+     * Override to build a Reactive.
+     */
+    protected def startReactive(r: Reactive[Any]): Unit
 
-    override def act = {
+    private var out: Any => Unit = null
+
+    final override def act = {
         Actor.loop {
             react {
-                case e => func(e)
+                case e => out(e)
             }
         }
     }
 
-    lazy val reactive: Reactive[Any] = new ReactiveOnce[Any] {
-        override protected def foreachOnce(f: Any => Unit) = {
-            self.func = f
-            self.start
+    final override def start = {
+        startReactive(new Reactive[Any] {
+            override def close = Actor.exit
+            override def foreach(f: Any => Unit) = { self.out = f }
+        })
+        super.start
+    }
+
+    final override def restart = {
+        startReactive(new Reactive[Any] {
+            override def close = Actor.exit
+            override def foreach(f: Any => Unit) = { self.out = f }
+        })
+        super.restart
+    }
+}
+
+
+object Reactor {
+    /**
+     * Constructs a trivial Reactor.
+     */
+    def apply(f: Reactive[Any] => Unit): Actor = {
+        val a = new Reactor {
+            override def startReactive(r: Reactive[Any]) = f(r)
+        }
+        a.start
+    }
+}
+
+
+/*
+class Reactor extends Reactive[Any] { self =>
+    private var out: Any => Unit = null
+
+    private def startActor = actor.getState match {
+        case Actor.State.Terminated => actor.restart
+        case _ => actor.start
+    }
+
+    val actor = new Actor {
+        override def act = {
+            Actor.loop {
+                react {
+                    case e => self.out(e)
+                }
+            }
         }
     }
 
-    override def scheduler = if (sc == null) super.scheduler else sc
+    override def close = Actor.exit
+    override def foreach(f: Any => Unit) = {
+        out = f
+        startActor
+    }
 }
+*/
