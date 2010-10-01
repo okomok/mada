@@ -99,6 +99,31 @@ class ReactorTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals(iterative.Of(1,11,2,12,3,13), iterative.from(out))
     }
 
+    def testEmpty {
+        val out = new java.util.ArrayList[Int]
+
+        case object OK
+        val cur = Actor.self
+
+        val a = new Reactor {
+            override def scheduler = new scala.actors.scheduler.SingleThreadedScheduler
+            override def startReactive(r: Reactive[Any]) {
+                r collect {
+                    case e: Int => e
+                } take {
+                    0
+                } then {
+                    cur ! OK
+                } start
+            }
+        }
+        a.start
+
+        Actor.receive {
+            case OK =>
+        }
+    }
+
     /*
     def testSignal {
         import scala.actors.Actor
