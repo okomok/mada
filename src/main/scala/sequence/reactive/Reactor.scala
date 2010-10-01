@@ -21,29 +21,28 @@ trait Reactor extends Actor { self =>
      */
     protected def startReactive(r: Reactive[Any]): Unit
 
-    private var out: Any => Unit = null
+    private var g: Any => Unit = null
+
+    private val r = new Reactive[Any] {
+        override def close = Actor.exit
+        override def foreach(f: Any => Unit) = { self.g = f }
+    }
 
     final override def act = {
         Actor.loop {
             react {
-                case e => out(e)
+                case e => g(e)
             }
         }
     }
 
     final override def start = {
-        startReactive(new Reactive[Any] {
-            override def close = Actor.exit
-            override def foreach(f: Any => Unit) = { self.out = f }
-        })
+        startReactive(r)
         super.start
     }
 
     final override def restart = {
-        startReactive(new Reactive[Any] {
-            override def close = Actor.exit
-            override def foreach(f: Any => Unit) = { self.out = f }
-        })
+        startReactive(r)
         super.restart
     }
 }
@@ -60,31 +59,3 @@ object Reactor {
         a.start
     }
 }
-
-
-/*
-class Reactor extends Reactive[Any] { self =>
-    private var out: Any => Unit = null
-
-    private def startActor = actor.getState match {
-        case Actor.State.Terminated => actor.restart
-        case _ => actor.start
-    }
-
-    val actor = new Actor {
-        override def act = {
-            Actor.loop {
-                react {
-                    case e => self.out(e)
-                }
-            }
-        }
-    }
-
-    override def close = Actor.exit
-    override def foreach(f: Any => Unit) = {
-        out = f
-        startActor
-    }
-}
-*/
