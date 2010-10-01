@@ -23,9 +23,9 @@ trait Reactor extends Actor { self =>
 
     private var g: Any => Unit = null
 
-    private val r = new Reactive[Any] {
+    private class _Impl extends ReactiveOnce[Any] {
         override def close = Actor.exit
-        override def foreach(f: Any => Unit) = { self.g = f }
+        override protected def foreachOnce(f: Any => Unit) = { self.g = f }
     }
 
     final override def act = {
@@ -37,12 +37,12 @@ trait Reactor extends Actor { self =>
     }
 
     final override def start = {
-        startReactive(r)
+        startReactive(new _Impl)
         super.start
     }
 
     final override def restart = {
-        startReactive(r)
+        startReactive(new _Impl)
         super.restart
     }
 }
