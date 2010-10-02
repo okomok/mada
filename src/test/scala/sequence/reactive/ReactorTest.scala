@@ -44,20 +44,6 @@ class ReactorTest extends org.scalatest.junit.JUnit3Suite {
         Actor.receive {
             case OK =>
         }
-        //assertEquals(Actor.State.Terminated, a.getState) // indeteministic
-        a ! "abandoned"
-        assertEquals(iterative.Of(1,11,2,12,3,13), iterative.from(out))
-        out.clear
-
-        a.restart // indeteministic?
-        a ! 1
-        a ! "ignored"
-        a ! 2
-        a ! 3
-        Actor.receive {
-            case OK =>
-        }
-        //assertEquals(Actor.State.Terminated, a.getState) // indeteministic
         a ! "abandoned"
         assertEquals(iterative.Of(1,11,2,12,3,13), iterative.from(out))
     }
@@ -99,7 +85,7 @@ class ReactorTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals(iterative.Of(1,11,2,12,3,13), iterative.from(out))
         out.clear
 
-        a.restart // indeteministic?
+        a.restart
         a ! 1
         a ! "ignored"
         a ! 2
