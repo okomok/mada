@@ -83,6 +83,11 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
     def step(n: Int): Reactive[A] = Step(this, n)
 
     /**
+     * Steps by the specified time-span(millisecond).
+     */
+    def stepTime(i: Long): Reactive[A] = StepTime(this, i)
+
+    /**
      * Removes duplicates using <code>==</code>.
      */
     def unique: Reactive[A] = Unique(this)
