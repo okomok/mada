@@ -178,4 +178,14 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
      */
     def tokenize[B](p: Peg[B])(implicit pre: Reactive[A] <:< Reactive[B]): Reactive[Vector[B]] = Tokenize(pre(this), p)
 
+    /**
+     * Retrieves adjacent pairs.
+     */
+    def adjacent: Reactive[(A, A)] = Adjacent(this)
+
+    /**
+     * Retrieves adjacent pairs then maps `f`.
+     */
+    def adjacentBy[B](f: (A, A) => B): Reactive[B] = AdjacentBy(this, f)
+
 }
