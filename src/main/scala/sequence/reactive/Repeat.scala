@@ -9,7 +9,6 @@ package sequence; package reactive
 
 
 private
-case class Repeat[A](_1: A) extends GeneratorOnce[A] {
-    override def generate = out(_1)
-    override val head = _1
+case class Repeat[A](_1: A) extends Generator.Trivial[A] {
+    override protected def generateTo(f: A => Unit) = f(_1)
 }

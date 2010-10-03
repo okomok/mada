@@ -44,13 +44,13 @@ object Swing {
 
     class ActionPerformed(val source: ActionEventSource) extends Resource[ActionEvent] {
         private var l: ActionListener = null
+        override protected def closeResource = source.removeActionListener(l)
         override protected def openResource(f: ActionEvent => Unit) = {
             l = new ActionListener {
                 override def actionPerformed(e: ActionEvent) = f(e)
             }
             source.addActionListener(l)
         }
-        override protected def closeResource = source.removeActionListener(l)
     }
 
 
@@ -64,61 +64,61 @@ object Swing {
 
         class Clicked extends Resource[MouseEvent] {
             private var l: MouseInputAdapter = null
+            override protected def closeResource = source.removeMouseListener(l)
             override protected def openResource(f: MouseEvent => Unit) = {
                 l = new MouseInputAdapter {
                     override def mouseClicked(e: MouseEvent) = f(e)
                 }
                 source.addMouseListener(l)
             }
-            override protected def closeResource = source.removeMouseListener(l)
         }
         def Clicked: Resource[MouseEvent] = new Clicked
 
         class Entered extends Resource[MouseEvent] {
             private var l: MouseInputAdapter = null
+            override protected def closeResource = source.removeMouseListener(l)
             override protected def openResource(f: MouseEvent => Unit) = {
                 l = new MouseInputAdapter {
                     override def mouseEntered(e: MouseEvent) = f(e)
                 }
                 source.addMouseListener(l)
             }
-            override protected def closeResource = source.removeMouseListener(l)
         }
         def Entered: Resource[MouseEvent] = new Entered
 
         class Exited extends Resource[MouseEvent] {
             private var l: MouseInputAdapter = null
+            override protected def closeResource = source.removeMouseListener(l)
             override protected def openResource(f: MouseEvent => Unit) = {
                 l = new MouseInputAdapter {
                     override def mouseExited(e: MouseEvent) = f(e)
                 }
                 source.addMouseListener(l)
             }
-            override protected def closeResource = source.removeMouseListener(l)
         }
         def Exited: Resource[MouseEvent] = new Exited
 
         class Pressed extends Resource[MouseEvent] {
             private var l: MouseInputAdapter = null
+            override protected def closeResource = source.removeMouseListener(l)
             override protected def openResource(f: MouseEvent => Unit) = {
                 l = new MouseInputAdapter {
                     override def mousePressed(e: MouseEvent) = f(e)
                 }
                 source.addMouseListener(l)
             }
-            override protected def closeResource = source.removeMouseListener(l)
         }
         def Pressed: Resource[MouseEvent] = new Pressed
 
         class Released extends Resource[MouseEvent] {
             private var l: MouseInputAdapter = null
+            override protected def closeResource = source.removeMouseListener(l)
             override protected def openResource(f: MouseEvent => Unit) = {
                 l = new MouseInputAdapter {
                     override def mouseReleased(e: MouseEvent) = f(e)
                 }
                 source.addMouseListener(l)
             }
-            override protected def closeResource = source.removeMouseListener(l)
         }
         def Released: Resource[MouseEvent] = new Released
 
@@ -126,25 +126,25 @@ object Swing {
 
         class Dragged extends Resource[MouseEvent] {
             private var l: MouseInputAdapter = null
+            override protected def closeResource = source.removeMouseMotionListener(l)
             override protected def openResource(f: MouseEvent => Unit) = {
                 l = new MouseInputAdapter {
                     override def mouseDragged(e: MouseEvent) = f(e)
                 }
                 source.addMouseMotionListener(l)
             }
-            override protected def closeResource = source.removeMouseMotionListener(l)
         }
         def Dragged: Resource[MouseEvent] = new Dragged
 
         class Moved extends Resource[MouseEvent] {
             private var l: MouseInputAdapter = null
+            override protected def closeResource = source.removeMouseMotionListener(l)
             override protected def openResource(f: MouseEvent => Unit) = {
                 l = new MouseInputAdapter {
                     override def mouseMoved(e: MouseEvent) = f(e)
                 }
                 source.addMouseMotionListener(l)
             }
-            override protected def closeResource = source.removeMouseMotionListener(l)
         }
         def Moved: Resource[MouseEvent] = new Moved
 
@@ -152,13 +152,13 @@ object Swing {
 
         class WheelMoved extends Resource[MouseWheelEvent] {
             private var l: MouseInputAdapter = null
+            override protected def closeResource = source.removeMouseWheelListener(l)
             override protected def openResource(f: MouseWheelEvent => Unit) = {
                 l = new MouseInputAdapter {
                     override def mouseWheelMoved(e: MouseWheelEvent) = f(e)
                 }
                 source.addMouseWheelListener(l)
             }
-            override protected def closeResource = source.removeMouseWheelListener(l)
         }
         def WheelMoved: Resource[MouseEvent] = new WheelMoved
 
@@ -175,37 +175,37 @@ object Swing {
 
         class Pressed extends Resource[KeyEvent] {
             private var l: KeyAdapter = null
+            override protected def closeResource = source.removeKeyListener(l)
             override protected def openResource(f: KeyEvent => Unit) = {
                 l = new KeyAdapter {
                     override def keyPressed(e: KeyEvent) = f(e)
                 }
                 source.addKeyListener(l)
             }
-            override protected def closeResource = source.removeKeyListener(l)
         }
         def Pressed: Resource[KeyEvent] = new Pressed
 
         class Released extends Resource[KeyEvent] {
             private var l: KeyAdapter = null
+            override protected def closeResource = source.removeKeyListener(l)
             override protected def openResource(f: KeyEvent => Unit) = {
                 l = new KeyAdapter {
                     override def keyReleased(e: KeyEvent) = f(e)
                 }
                 source.addKeyListener(l)
             }
-            override protected def closeResource = source.removeKeyListener(l)
         }
         def Released: Resource[KeyEvent] = new Released
 
         class Typed extends Resource[KeyEvent] {
             private var l: KeyAdapter = null
+            override protected def closeResource = source.removeKeyListener(l)
             override protected def openResource(f: KeyEvent => Unit) = {
                 l = new KeyAdapter {
                     override def keyTyped(e: KeyEvent) = f(e)
                 }
                 source.addKeyListener(l)
             }
-            override protected def closeResource = source.removeKeyListener(l)
         }
         def Typed: Resource[KeyEvent] = new Typed
 

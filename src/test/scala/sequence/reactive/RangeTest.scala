@@ -18,7 +18,7 @@ class RangeTest extends org.scalatest.junit.JUnit3Suite {
     def testEmpty: Unit = {
         val r = reactive.range(1,1)
         val out = new java.util.ArrayList[Int]
-        r.foreach(out.add(_))
+        r.sequence.foreach(out.add(_))
         r.generateAll
         assertTrue(iterative.from(out).isEmpty)
     }
@@ -26,7 +26,7 @@ class RangeTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val r = reactive.range(1,6)
         val out = new java.util.ArrayList[Int]
-        r.foreach(out.add(_))
+        r.sequence.foreach(out.add(_))
         r.generate
         r.generate
         r.generate

@@ -9,8 +9,7 @@ package sequence; package reactive
 
 
 private
-case class Iterate[A](_1: A, _2: A => A) extends GeneratorOnce[A] {
+case class Iterate[A](_1: A, _2: A => A) extends Generator.Trivial[A] {
     private var acc = _1
-    override def generate = { out(acc); acc = _2(acc) }
-    override val head = _1
+    override protected def generateTo(f: A => Unit) = synchronized { f(acc); acc = _2(acc) }
 }

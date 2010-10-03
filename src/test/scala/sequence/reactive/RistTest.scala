@@ -34,7 +34,7 @@ class RistTest extends org.scalatest.junit.JUnit3Suite {
         rx add 6
         assertEquals(iterative.Of(5,4,6), iterative.from(out))
     }
-
+/*
     def testParallel: Unit = {
     //    for (_ <- 0 to 30) {
             val src = new IntSenders(vector.Of(1,2,3,4,5,6,7,8,9,10), vector.Of(7,7,7,7,7,7,7,7,7,7))
@@ -47,7 +47,7 @@ class RistTest extends org.scalatest.junit.JUnit3Suite {
             src.shutdown(dst.assertMe)
     //    }
     }
-
+*/
     def testSignal {
         val out = new java.util.ArrayList[Int]
         val a = reactive.Rist(1)

@@ -9,9 +9,9 @@ package sequence; package reactive
 
 
 /**
- * A sequence which generates an element on demand.
+ * Generates an element on demand.
  */
-trait Generator[+A] extends ReactiveOnce[A] {
+trait Generator[+A] {
     /**
      * Generates one element.
      */
@@ -24,14 +24,44 @@ trait Generator[+A] extends ReactiveOnce[A] {
      * Generates all the elements.
      */
     def generateAll: Unit = throw new UnsupportedOperationException("Generator.generateAll")
+
+    /**
+     * Retrieves a snapshot.
+     */
+    def sequence: Reactive[A]
 }
 
 
-/**
- * Mixin for a Generator which doesn't allow re-foreach.
- */
-trait GeneratorOnce[A] extends Generator[A] with ReactiveOnce[A] {
-    @volatile private var _out: A => Unit = null
-    protected def out(x: A): Unit = if (_out != null) _out(x)
-    final override def foreachOnce(f: A => Unit) = _out = f
+object Generator {
+
+    /**
+     * Mixin to build a trivial Generator.
+     */
+    abstract class Trivial[A] extends Generator[A] { self =>
+        protected def generateTo(f: A => Unit): Unit
+        protected def generateAllTo(fs: Iterative[A => Unit]): Unit = throw new UnsupportedOperationException("Generator.generateAll")
+
+        private val outs = new java.util.concurrent.CopyOnWriteArrayList[A => Unit]
+
+        final override def generate = iterative.from(outs).foreach(generateTo(_))
+        final override def generateAll = generateAllTo(iterative.from(outs))
+
+        final override def sequence: Reactive[A] = new Resource[A] {
+            private var out: A => Unit = null
+            override protected def closeResource = self.outs.remove(out)
+            override protected def openResource(f: A => Unit) = {
+                out = Reaction(f)
+                self.outs.add(out)
+            }
+        }
+    }
+
+    private
+    case class Reaction[A](from: A => Unit) extends (A => Unit) {
+        override def apply(x: A) = from(x)
+    }
+
 }
+
+
+

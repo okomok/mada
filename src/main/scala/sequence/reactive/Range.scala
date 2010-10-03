@@ -9,16 +9,14 @@ package sequence; package reactive
 
 
 private
-case class Range(_1: Int, _2: Int) extends GeneratorOnce[Int] {
+case class Range(_1: Int, _2: Int) extends Generator.Trivial[Int] {
     private var cur = _1
+    private def _next(f: Int => Unit) = { f(cur); cur += 1 }
 
-    override def generate = if (cur != _2) _next
-    override def generateAll = while (cur != _2) _next
-
-    private def _next: Unit = {
-        out(cur)
-        cur += 1
+    override protected def generateTo(f: Int => Unit) = if (cur != _2) _next(f)
+    override protected def generateAllTo(fs: Iterative[Int => Unit]) = {
+        for (f <- fs) {
+            while (cur != _2) _next(f)
+        }
     }
-
-    override val head = _1
 }
