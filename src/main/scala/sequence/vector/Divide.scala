@@ -7,7 +7,8 @@
 package com.github.okomok.mada; package sequence; package vector
 
 
-private[mada] case class Divide[A](val _1: Vector[A], _2: Int) extends Vector[Vector[A]] {
+private
+case class Divide[A](val _1: Vector[A], _2: Int) extends Vector[Vector[A]] {
     Precondition.positive(_2, "stride")
 
     override def start = 0
@@ -22,7 +23,8 @@ private[mada] case class Divide[A](val _1: Vector[A], _2: Int) extends Vector[Ve
 }
 
 
-private[mada] case class Undivide[A](_1: Vector[Vector[A]]) extends Forwarder[A] {
+private
+case class Undivide[A](_1: Vector[Vector[A]]) extends Forwarder[A] {
     override protected val delegate: Vector[A] = {
         if (_1.isEmpty) {
             empty[A]

@@ -7,14 +7,17 @@
 package com.github.okomok.mada; package function
 
 
-private[mada] case class Empty1() extends Function1[Any, Unit] {
+private
+case class Empty1() extends Function1[Any, Unit] {
     override def apply(v1: Any) = ()
 }
 
-private[mada] case class Empty2() extends Function2[Any, Any, Unit] {
+private
+case class Empty2() extends Function2[Any, Any, Unit] {
     override def apply(v1: Any, v2: Any) = ()
 }
 
-private[mada] case class Empty3() extends Function3[Any, Any, Any, Unit] {
+private
+case class Empty3() extends Function3[Any, Any, Any, Unit] {
     override def apply(v1: Any, v2: Any, v3: Any) = ()
 }

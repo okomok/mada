@@ -7,7 +7,8 @@
 package com.github.okomok.mada; package sequence; package iterative
 
 
-private[mada] case class Unsplit[A](_1: Iterative[Sequence[A]], _2: Iterative[A]) extends Iterative[A] {
+private
+case class Unsplit[A](_1: Iterative[Sequence[A]], _2: Iterative[A]) extends Iterative[A] {
     override def begin: Iterator[A] = {
         val ii = _1.begin // needs a fresh iterator every time.
         if (!ii) {

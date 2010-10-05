@@ -33,7 +33,8 @@
 package com.github.okomok.mada; package sequence; package vector; package stl
 
 
-private[mada] object InsertionSort {
+private[vector]
+object InsertionSort {
     def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Ordering[A]): Unit = {
         if (__first == __last) {
             return
@@ -46,7 +47,8 @@ private[mada] object InsertionSort {
     }
 }
 
-private[mada] object LinearInsert {
+private[vector]
+object LinearInsert {
     def apply[A](* : Vector[A], __first: Int, __last: Int, __val: A, __comp: Ordering[A]): Unit = {
         if (__comp.lt(__val, *(__first))) {
             CopyBackward(*, __first, __last, *, __last + 1)
@@ -58,7 +60,8 @@ private[mada] object LinearInsert {
 }
 
 
-private[mada] object UnguardedInsertionSort {
+private[vector]
+object UnguardedInsertionSort {
     def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Ordering[A]): Unit = {
         var __i = __first
         while (__i != __last) {
@@ -68,7 +71,8 @@ private[mada] object UnguardedInsertionSort {
     }
 }
 
-private[mada] object UnguardedLinearInsert {
+private[vector]
+object UnguardedLinearInsert {
     def apply[A](* : Vector[A], last: Int, __val: A, __comp: Ordering[A]): Unit = {
         var __last = last
         var __next = __last
@@ -84,7 +88,8 @@ private[mada] object UnguardedLinearInsert {
 }
 
 
-private[mada] object ChunkInsertionSort {
+private[vector]
+object ChunkInsertionSort {
     def apply[A](* : Vector[A], first: Int, __last: Int, __chunk_size: Int, __comp: Ordering[A]): Unit = {
         var __first = first
 

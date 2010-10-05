@@ -7,7 +7,8 @@
 package com.github.okomok.mada; package peg
 
 
-private[mada] class TheSymbolSet[A](tree: TSTree[A, Unit]) extends Peg[A] with scala.collection.mutable.Set[sequence.Vector[A]] {
+private
+class TheSymbolSet[A](tree: TSTree[A, Unit]) extends Peg[A] with scala.collection.mutable.Set[sequence.Vector[A]] {
 
 // Peg
     override def parse(v: sequence.Vector[A], start: Int, end: Int) = {

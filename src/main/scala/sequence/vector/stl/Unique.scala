@@ -33,7 +33,8 @@
 package com.github.okomok.mada; package sequence; package vector; package stl
 
 
-private[mada] object Unique {
+private[vector]
+object Unique {
     def apply[A](v: Vector[A], first: Int, __last: Int): Int = {
         apply(v, first, __last, function.equal)
     }

@@ -48,7 +48,8 @@ class Infinite[A] extends Iterative[A] {
 }
 
 
-private[mada] case class Infinitize[A](_1: Iterative[A]) extends Iterative[Option[A]] {
+private
+case class Infinitize[A](_1: Iterative[A]) extends Iterative[Option[A]] {
     override def begin = new Iterator[Option[A]] {
         private var i = 0
         private var it: Iterator[A] = null

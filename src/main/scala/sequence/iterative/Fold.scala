@@ -7,7 +7,8 @@
 package com.github.okomok.mada; package sequence; package iterative
 
 
-private[mada] case class FolderLeft[A, B](_1: Iterative[A], _2: B, _3: (B, A) => B) extends Forwarder[B] {
+private
+case class FolderLeft[A, B](_1: Iterative[A], _2: B, _3: (B, A) => B) extends Forwarder[B] {
     override protected val delegate = single(_2) ++ new _FolderLeft(_1, _2, _3)
 }
 
@@ -26,7 +27,8 @@ private class _FolderLeft[A, B](_1: Iterative[A], _2: B, _3: (B, A) => B) extend
 }
 
 
-private[mada] case class ReducerLeft[A, B >: A](_1: Iterative[A], _2: (B, A) => B) extends Iterative[B] {
+private
+case class ReducerLeft[A, B >: A](_1: Iterative[A], _2: (B, A) => B) extends Iterative[B] {
     override def begin = {
         Precondition.notEmpty(_1, "reducerLeft")
         val it = _1.begin // needs a fresh iterator every time.

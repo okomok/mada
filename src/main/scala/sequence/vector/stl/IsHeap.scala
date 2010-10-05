@@ -33,7 +33,8 @@
 package com.github.okomok.mada; package sequence; package vector; package stl
 
 
-private[mada] object IsHeap {
+private[vector]
+object IsHeap {
     def apply[A](v: Vector[A], __first: Int, __last: Int, __comp: Ordering[A]): Boolean = {
         __apply(v, __first, __comp, __last - __first)
     }

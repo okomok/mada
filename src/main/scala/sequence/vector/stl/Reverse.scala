@@ -33,7 +33,8 @@
 package com.github.okomok.mada; package sequence; package vector; package stl
 
 
-private[mada] object Reverse {
+private[vector]
+object Reverse {
     def apply[A](v: Vector[A], first: Int, last: Int): Unit = {
         var __first = first; var __last = last
 

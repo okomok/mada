@@ -11,7 +11,8 @@ package com.github.okomok.mada; package function
 //      at http://citeseer.ist.psu.edu/51062.html
 
 
-private[mada] case class Memoize[T, R](_1: (T => R) => T => R) extends (T => R) {
+private
+case class Memoize[T, R](_1: (T => R) => T => R) extends (T => R) {
     private val f = {
         val m = new java.util.concurrent.ConcurrentHashMap[T, () => R]
         val wrap = { (fixed: (T => R)) => (v: T) => assoc.lazyGet(m)(v){ _1(fixed)(v) } }

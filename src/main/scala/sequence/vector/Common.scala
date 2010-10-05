@@ -7,7 +7,8 @@
 package com.github.okomok.mada; package sequence; package vector
 
 
-private[mada] class Common {
+private[vector]
+class Common {
 
 
 // aliases

@@ -7,7 +7,8 @@
 package com.github.okomok.mada; package sequence; package vector
 
 
-private[mada] case class Memoize[A](_1: Vector[A]) extends TransformAdapter[A] with NotWritable[A] {
+private
+case class Memoize[A](_1: Vector[A]) extends TransformAdapter[A] with NotWritable[A] {
     override protected val underlying = _1
 
     private val table = new java.util.concurrent.ConcurrentHashMap[Int, () => A]

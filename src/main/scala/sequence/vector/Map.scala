@@ -7,7 +7,8 @@
 package com.github.okomok.mada; package sequence; package vector
 
 
-private[mada] case class Map[Z, A](_1: Vector[Z], _2: Z => A) extends Adapter[Z, A] with NotWritable[A] {
+private
+case class Map[Z, A](_1: Vector[Z], _2: Z => A) extends Adapter[Z, A] with NotWritable[A] {
     override protected val underlying = _1
 
     override def apply(i: Int) = _2(underlying(i))

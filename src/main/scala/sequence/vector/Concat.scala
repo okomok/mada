@@ -7,6 +7,7 @@
 package com.github.okomok.mada; package sequence; package vector
 
 
-private[mada] case class Concat[A](_1: Seq[Vector[A]]) extends Forwarder[A] {
+private
+case class Concat[A](_1: Seq[Vector[A]]) extends Forwarder[A] {
     override protected val delegate = _1.foldLeft(empty[A]){ (r, v) => r ++ v }
 }

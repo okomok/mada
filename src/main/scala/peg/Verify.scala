@@ -13,7 +13,8 @@ package com.github.okomok.mada; package peg
 case class VerificationException[A](peg: Peg[A], vector: sequence.Vector[A]) extends RuntimeException
 
 
-private[mada] case class Verify[A](_1: Peg[A]) extends Peg[A] {
+private
+case class Verify[A](_1: Peg[A]) extends Peg[A] {
     override def parse(v: sequence.Vector[A], start: Int, end: Int) = {
         val cur = _1.parse(v, start, end)
         if (cur == FAILURE) {

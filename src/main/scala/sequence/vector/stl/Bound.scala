@@ -33,7 +33,8 @@
 package com.github.okomok.mada; package sequence; package vector; package stl
 
 
-private[mada] object LowerBound {
+private[vector]
+object LowerBound {
     def apply[A](* : Vector[A], first: Int, __last: Int, __val: A, __comp: Ordering[A]): Int = {
         var __first = first
 
@@ -57,7 +58,8 @@ private[mada] object LowerBound {
     }
 }
 
-private[mada] object UpperBound {
+private[vector]
+object UpperBound {
     def apply[A](* : Vector[A], first: Int, __last: Int, __val: A, __comp: Ordering[A]): Int = {
         LowerBound(*, first, __last, __val, new Ordering[A] { override def compare(x: A, y: A) = - __comp.compare(y, x) })
     }

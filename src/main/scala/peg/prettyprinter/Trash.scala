@@ -7,7 +7,8 @@
 package com.github.okomok.mada; package peg; package prettyprinter
 
 
-private[mada] case class Trash() extends PrettyPrinter {
+private
+case class Trash() extends PrettyPrinter {
     override def close = ()
     override def print[A](p: Peg[A]) = p
 }

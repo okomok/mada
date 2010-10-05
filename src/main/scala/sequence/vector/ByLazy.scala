@@ -7,6 +7,7 @@
 package com.github.okomok.mada; package sequence; package vector
 
 
-private[mada] case class ByLazy[A](_1: util.ByLazy[Vector[A]]) extends Forwarder[A] {
+private
+case class ByLazy[A](_1: util.ByLazy[Vector[A]]) extends Forwarder[A] {
     override protected def delegate = _1()
 }

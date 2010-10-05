@@ -33,13 +33,15 @@
 package com.github.okomok.mada; package sequence; package vector; package stl
 
 
-private[mada] object ReplaceCopy {
+private[vector]
+object ReplaceCopy {
     def apply[A, B >: A](v : Vector[A], __first: Int, __last: Int, ^ : Vector[B], result: Int, __old_value: Any, __new_value: A): Int = {
         ReplaceCopyIf(v, __first, __last, ^, result, (_: A) == __old_value, __new_value)
     }
 }
 
-private[mada] object ReplaceCopyIf {
+private[vector]
+object ReplaceCopyIf {
     def apply[A, B >: A](v : Vector[A], __first: Int, __last: Int, ^ : Vector[B], result: Int, __pred: A => Boolean, __new_value: A): Int = {
         var __result = result
         ForEach(v, __first, __last, { (value: A) =>  ^(__result) = if (__pred(value)) __new_value else value; __result += 1 })

@@ -7,7 +7,8 @@
 package com.github.okomok.mada; package sequence; package vector
 
 
-private object Div { // doesn't return a tuple to avoid heap-allocation.
+private
+object Div { // doesn't return a tuple to avoid heap-allocation.
     def quotient(a: Int, b: Int): Int = {
         assert(b > 0)
         val q = a / b

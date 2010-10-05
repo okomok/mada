@@ -7,7 +7,8 @@
 package com.github.okomok.mada; package sequence; package list
 
 
-private[mada] class Common {
+private[list]
+class Common {
 
 
 // trivial

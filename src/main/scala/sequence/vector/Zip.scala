@@ -7,7 +7,8 @@
 package com.github.okomok.mada; package sequence; package vector
 
 
-private[mada] case class Zip[A, B](_1: Vector[A], _2: Vector[B]) extends Vector[(A, B)] {
+private
+case class Zip[A, B](_1: Vector[A], _2: Vector[B]) extends Vector[(A, B)] {
     override def start = 0
     override def end = java.lang.Math.min(_1.nth.size, _2.nth.size)
 
@@ -16,7 +17,8 @@ private[mada] case class Zip[A, B](_1: Vector[A], _2: Vector[B]) extends Vector[
     override def isDefinedAt(i: Int) = _1.nth.isDefinedAt(i) && _2.nth.isDefinedAt(i)
 }
 
-private[mada] case class ZipBy[A, B, C](_1: Vector[A], _2: Vector[B], _3: (A, B) => C) extends Vector[C] {
+private
+case class ZipBy[A, B, C](_1: Vector[A], _2: Vector[B], _3: (A, B) => C) extends Vector[C] {
     override def start = 0
     override def end = java.lang.Math.min(_1.nth.size, _2.nth.size)
 

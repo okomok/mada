@@ -33,7 +33,8 @@
 package com.github.okomok.mada; package sequence; package vector; package stl
 
 
-private[mada] object SwapRanges {
+private[vector]
+object SwapRanges {
     def apply[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int): Int = {
         var __first1 = first1
         var __first2 = first2

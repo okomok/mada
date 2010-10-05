@@ -7,11 +7,13 @@
 package com.github.okomok.mada; package peg
 
 
-private[mada] case class FromSequence[A](_1: sequence.Iterative[A]) extends Forwarder[A] {
+private
+case class FromSequence[A](_1: sequence.Iterative[A]) extends Forwarder[A] {
     override protected val delegate = fromSequenceBy(_1)(function.equal)
 }
 
-private[mada] case class FromSequenceBy[A](_1: sequence.Iterative[A], _2: (A, A) => Boolean) extends Forwarder[A] {
+private
+case class FromSequenceBy[A](_1: sequence.Iterative[A], _2: (A, A) => Boolean) extends Forwarder[A] {
     override protected val delegate: Peg[A] = _1 match {
         case _1: sequence.Vector[_] => new _FromVectorBy(_1.asInstanceOf[sequence.Vector[A]], _2)
         case _ => new _FromSequenceBy(_1, _2)

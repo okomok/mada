@@ -7,7 +7,8 @@
 package com.github.okomok.mada; package sequence; package iterative
 
 
-private object Sorted {
+private
+object Sorted {
 
     def derefBy[A](it1: Iterator[A], it2: Iterator[A], _3: Ordering[A]): A = {
         if (!it1) {
@@ -32,7 +33,8 @@ private object Sorted {
 }
 
 
-private[mada] case class Merge[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) extends Iterative[A] {
+private
+case class Merge[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) extends Iterative[A] {
     override def begin = new Iterator[A] {
         private val it1 = _1.begin
         private val it2 = _2.begin
@@ -44,7 +46,8 @@ private[mada] case class Merge[A](_1: Iterative[A], _2: Iterative[A], _3: Orderi
 }
 
 
-private[mada] case class Union[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) extends Iterative[A] {
+private
+case class Union[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) extends Iterative[A] {
     override def begin = new Iterator[A] {
         private val it1 = _1.begin
         private val it2 = _2.begin
@@ -76,7 +79,8 @@ private[mada] case class Union[A](_1: Iterative[A], _2: Iterative[A], _3: Orderi
 }
 
 
-private[mada] case class Intersection[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) extends Iterative[A] {
+private
+case class Intersection[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) extends Iterative[A] {
     override def begin = new Iterator[A] {
         private val it1 = _1.begin
         private val it2 = _2.begin
@@ -106,7 +110,8 @@ private[mada] case class Intersection[A](_1: Iterative[A], _2: Iterative[A], _3:
 }
 
 
-private[mada] case class Difference[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) extends Iterative[A] {
+private
+case class Difference[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) extends Iterative[A] {
     override def begin = new Iterator[A] {
         private val it1 = _1.begin
         private val it2 = _2.begin
@@ -136,7 +141,8 @@ private[mada] case class Difference[A](_1: Iterative[A], _2: Iterative[A], _3: O
 }
 
 
-private[mada] case class SymmetricDifference[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) extends Iterative[A] {
+private
+case class SymmetricDifference[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) extends Iterative[A] {
     override def begin = new Iterator[A] {
         private val it1 = _1.begin
         private val it2 = _2.begin

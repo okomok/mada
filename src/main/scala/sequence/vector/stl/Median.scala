@@ -33,7 +33,8 @@
 package com.github.okomok.mada; package sequence; package vector; package stl
 
 
-private[mada] object Median {
+private[vector]
+object Median {
     def apply[A](__a: A, __b: A, __c: A, __comp: Ordering[A]): A = {
         if (__comp.lt(__a, __b)) {
             if (__comp.lt(__b, __c)) {

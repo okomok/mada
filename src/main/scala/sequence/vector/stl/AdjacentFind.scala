@@ -33,7 +33,8 @@
 package com.github.okomok.mada; package sequence; package vector; package stl
 
 
-private[mada] object AdjacentFind {
+private[vector]
+object AdjacentFind {
     def apply[A](* : Vector[A], first: Int, __last: Int): Int = {
         apply(*, first, __last, function.equal)
     }

@@ -33,7 +33,8 @@
 package com.github.okomok.mada; package sequence; package vector; package stl
 
 
-private[mada] object IntroSort {
+private[vector]
+object IntroSort {
     def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Ordering[A]): Unit = {
         if (__first != __last) {
             loop(*, __first, __last, depthLimit(__first, __last), __comp)

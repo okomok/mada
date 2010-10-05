@@ -7,7 +7,8 @@
 package com.github.okomok.mada; package peg
 
 
-private[mada] case class Range[A](_1: A, _2: A, _3: Ordering[A]) extends Peg[A] {
+private
+case class Range[A](_1: A, _2: A, _3: Ordering[A]) extends Peg[A] {
     override def parse(v: sequence.Vector[A], start: Int, end: Int) = {
         if (start == end) {
             FAILURE

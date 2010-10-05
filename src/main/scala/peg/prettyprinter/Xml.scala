@@ -7,7 +7,8 @@
 package com.github.okomok.mada; package peg; package prettyprinter
 
 
-private[mada] case class Xml(_1: java.io.Writer, _2: Int) extends PrettyPrinter {
+private[peg]
+case class Xml(_1: java.io.Writer, _2: Int) extends PrettyPrinter {
     _1.write("<?xml version=\"1.0\" encoding=\"UTF-16\" standalone=\"yes\"?>\n")
 
     private var indentLevel = 0

@@ -7,7 +7,8 @@
 package com.github.okomok.mada; package sequence; package vector
 
 
-private[mada] case class Copy[A](_1: Vector[A]) extends Forwarder[A] {
+private
+case class Copy[A](_1: Vector[A]) extends Forwarder[A] {
     override protected val delegate = {
         val r = allocate[A](_1.size)
         _1.copyTo(r)

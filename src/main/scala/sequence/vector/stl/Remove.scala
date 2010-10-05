@@ -33,13 +33,15 @@
 package com.github.okomok.mada; package sequence; package vector; package stl
 
 
-private[mada] object Remove {
+private[vector]
+object Remove {
     def apply[A](v: Vector[A], first: Int, __last: Int, e: Any): Int = {
         RemoveIf(v, first, __last, (_: A) == e)
     }
 }
 
-private[mada] object RemoveIf {
+private[vector]
+object RemoveIf {
     def apply[A](v: Vector[A], first: Int, __last: Int, __pred: A => Boolean): Int = {
         var __first = first
 

@@ -7,7 +7,8 @@
 package com.github.okomok.mada; package peg
 
 
-private[mada] case class Multiple[A](_1: scala.collection.Set[A]) extends Peg[A] {
+private
+case class Multiple[A](_1: scala.collection.Set[A]) extends Peg[A] {
     override def parse(v: sequence.Vector[A], start: Int, end: Int) = {
         if (start == end || !_1.contains(v(start))) {
             FAILURE

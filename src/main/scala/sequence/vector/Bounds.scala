@@ -7,7 +7,8 @@
 package com.github.okomok.mada; package sequence; package vector
 
 
-private[mada] case class Bounds[A](_1: Vector[A]) extends TransformAdapter[A] {
+private
+case class Bounds[A](_1: Vector[A]) extends TransformAdapter[A] {
     override protected val underlying = _1
 
     override def apply(i: Int) = { inBounds(i); underlying.apply(i) }

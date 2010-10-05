@@ -7,7 +7,8 @@
 package com.github.okomok.mada; package peg
 
 
-private object Precondition {
+private
+object Precondition {
 
     def zeroWidth[A](p: Peg[A], method: String): Unit = {
         if (IsZeroWidth(p)) {

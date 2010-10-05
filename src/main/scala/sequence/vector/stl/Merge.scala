@@ -33,7 +33,8 @@
 package com.github.okomok.mada; package sequence; package vector; package stl
 
 
-private[mada] object Merge {
+private[vector]
+object Merge {
     def apply[A](v1 : Vector[A], first1: Int, __last1: Int, v2 : Vector[A], first2: Int, __last2: Int, ^ : Vector[A], result: Int, __comp: Ordering[A]): Int = {
         var __first1 = first1
         var __first2 = first2
@@ -54,7 +55,8 @@ private[mada] object Merge {
 }
 
 
-private[mada] object MergeSortWithBuffer {
+private[vector]
+object MergeSortWithBuffer {
     val CHUNK_SIZE = 7
 
     def apply[A](* : Vector[A], __first: Int, __last: Int, ^ : Vector[A], __buffer: Int, __comp: Ordering[A]): Unit = {

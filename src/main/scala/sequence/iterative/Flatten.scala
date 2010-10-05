@@ -7,7 +7,8 @@
 package com.github.okomok.mada; package sequence; package iterative
 
 
-private[mada] case class Flatten[+A](_1: Iterative[Sequence[A]]) extends Iterative[A] {
+private
+case class Flatten[+A](_1: Iterative[Sequence[A]]) extends Iterative[A] {
     override def begin = new Iterator[A] {
         private val ii = _1.begin
         private var it = ready

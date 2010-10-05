@@ -7,6 +7,7 @@
 package com.github.okomok.mada; package function
 
 
-private[mada] case class Identity[T]() extends Transform[T] {
+private
+case class Identity[T]() extends Transform[T] {
     override def apply(x: T) = x
 }

@@ -12,7 +12,8 @@ import stl.IntroSort.depthLimit
 import stl.{UnguardedPartition, Median}
 
 
-private object ParallelSort {
+private
+object ParallelSort {
     def apply[A](_1: Vector[A], _2: Ordering[A], _3: Int): Vector[A] = {
         assert(!IsParallel(_1))
         impl(_1, _1.start, _1.end, _2, _3 * 2) // best grain size?

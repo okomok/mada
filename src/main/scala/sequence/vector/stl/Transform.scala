@@ -33,7 +33,8 @@
 package com.github.okomok.mada; package sequence; package vector; package stl
 
 
-private[mada] object Transform {
+private[vector]
+object Transform {
     def apply[A, B](v : Vector[A], first: Int, __last: Int, ^ : Vector[B], result: Int, __opr: A => B): Int = {
         var __first = first
         var __result = result

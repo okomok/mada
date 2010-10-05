@@ -7,7 +7,8 @@
 package com.github.okomok.mada; package peg
 
 
-private[mada] case class Lookbehind[A](_1: Peg[A]) extends Peg[A] with ZeroWidth[A] {
+private
+case class Lookbehind[A](_1: Peg[A]) extends Peg[A] with ZeroWidth[A] {
     override def parse(v: sequence.Vector[A], start: Int, end: Int) = {
         val len = _1.width
         if (start - len < v.start) {

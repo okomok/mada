@@ -7,22 +7,26 @@
 package com.github.okomok.mada; package peg
 
 
-private[mada] case class Opt[A](_1: Peg[A]) extends QuantifiedForwarder[A] {
+private
+case class Opt[A](_1: Peg[A]) extends QuantifiedForwarder[A] {
     override protected val delegate = _1.repeat(0, 1)
 }
 
-private[mada] case class Plus[A](_1: Peg[A]) extends QuantifiedForwarder[A] {
+private
+case class Plus[A](_1: Peg[A]) extends QuantifiedForwarder[A] {
     Precondition.zeroWidth(_1, "plus")
     override protected val delegate = _1.repeat(1, ())
 }
 
-private[mada] case class Star[A](_1: Peg[A]) extends QuantifiedForwarder[A] {
+private
+case class Star[A](_1: Peg[A]) extends QuantifiedForwarder[A] {
     Precondition.zeroWidth(_1, "star")
     override protected val delegate = _1.repeat(0, ())
 }
 
 
-private[mada] case class Repeat[A](_1: Peg[A], _2: Int, _3: Int) extends Forwarder[A] with Quantified[A] {
+private
+case class Repeat[A](_1: Peg[A], _2: Int, _3: Int) extends Forwarder[A] with Quantified[A] {
     if (_2 < 0 || _2 > _3) {
         throw new IllegalArgumentException("repeat" + (_2, _3))
     }
@@ -33,7 +37,8 @@ private[mada] case class Repeat[A](_1: Peg[A], _2: Int, _3: Int) extends Forward
 }
 
 
-private[mada] class RepeatExactly[A](_1: Peg[A], _2: Int) extends Peg[A] {
+private
+class RepeatExactly[A](_1: Peg[A], _2: Int) extends Peg[A] {
     override def parse(v: sequence.Vector[A], start: Int, end: Int): Int = {
         var cur = start
         var i = 0
@@ -51,7 +56,8 @@ private[mada] class RepeatExactly[A](_1: Peg[A], _2: Int) extends Peg[A] {
 }
 
 
-private[mada] class RepeatAtMost[A](_1: Peg[A], _2: Int) extends Peg[A] {
+private
+class RepeatAtMost[A](_1: Peg[A], _2: Int) extends Peg[A] {
     // RepeatAtMostUntil(_1, _2, !_1) would include redundant parsing.
     override def parse(v: sequence.Vector[A], start: Int, end: Int): Int = {
         var cur = start
@@ -69,7 +75,8 @@ private[mada] class RepeatAtMost[A](_1: Peg[A], _2: Int) extends Peg[A] {
 }
 
 
-private[mada] class RepeatAtMostUntil[A](_1: Peg[A], _2: Int, _3: Peg[A]) extends Peg[A] {
+private
+class RepeatAtMostUntil[A](_1: Peg[A], _2: Int, _3: Peg[A]) extends Peg[A] {
     override def parse(v: sequence.Vector[A], start: Int, end: Int) = parseImpl(v, start, end)._3
 
     def parseImpl(v: sequence.Vector[A], start: Int, end: Int): (Int, Int, Int) = {

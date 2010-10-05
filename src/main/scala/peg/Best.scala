@@ -7,11 +7,13 @@
 package com.github.okomok.mada; package peg
 
 
-private[mada] case class Longest[A](_1: sequence.Iterative[Peg[A]]) extends Forwarder[A] {
+private
+case class Longest[A](_1: sequence.Iterative[Peg[A]]) extends Forwarder[A] {
     override protected val delegate: Peg[A] = new Best(_1, java.lang.Math.max)
 }
 
-private[mada] case class Shortest[A](_1: sequence.Iterative[Peg[A]]) extends Forwarder[A] {
+private
+case class Shortest[A](_1: sequence.Iterative[Peg[A]]) extends Forwarder[A] {
     override protected val delegate: Peg[A] = new Best(_1, java.lang.Math.min)
 }
 

@@ -31,32 +31,39 @@ case class Region[A](_1: Vector[A], _2: Int, _3: Int) extends TransformAdapter[A
 }
 
 
-private[mada] case class Take[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
+private
+case class Take[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
     override protected val delegate = _1(_1.start, java.lang.Math.min(_1.start + _2, _1.end))
 }
 
-private[mada] case class Drop[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
+private
+case class Drop[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
     override protected val delegate = _1(java.lang.Math.min(_1.start + _2, _1.end), _1.end)
 }
 
-private[mada] case class Slice[A](_1: Vector[A], _2: Int, _3: Int) extends Forwarder[A] {
+private
+case class Slice[A](_1: Vector[A], _2: Int, _3: Int) extends Forwarder[A] {
     override protected val delegate = _1.drop(_2).take(_3 - _2)
 }
 
 
-private[mada] case class Init[A](_1: Vector[A]) extends Forwarder[A] {
+private
+case class Init[A](_1: Vector[A]) extends Forwarder[A] {
     Precondition.notEmpty(_1, "init")
     override protected val delegate = _1(_1.start, _1.end - 1)
 }
 
-private[mada] case class Clear[A](_1: Vector[A]) extends Forwarder[A] {
+private
+case class Clear[A](_1: Vector[A]) extends Forwarder[A] {
     override protected val delegate = _1(_1.start, _1.start)
 }
 
-private[mada] case class Window[A](_1: Vector[A], _2: Int, _3: Int) extends Forwarder[A] {
+private
+case class Window[A](_1: Vector[A], _2: Int, _3: Int) extends Forwarder[A] {
     override protected val delegate = _1(_1.start + _2, _1.start + _3)
 }
 
-private[mada] case class Offset[A](_1: Vector[A], _2: Int, _3: Int) extends Forwarder[A] {
+private
+case class Offset[A](_1: Vector[A], _2: Int, _3: Int) extends Forwarder[A] {
     override protected val delegate = _1(_1.start + _2, _1.end + _3)
 }

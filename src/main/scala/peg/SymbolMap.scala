@@ -7,7 +7,8 @@
 package com.github.okomok.mada; package peg
 
 
-private[mada] class TheSymbolMap[A](tree: TSTree[A, Peg[A]]) extends Peg[A] with scala.collection.mutable.Map[sequence.Vector[A], Peg[A]] {
+private
+class TheSymbolMap[A](tree: TSTree[A, Peg[A]]) extends Peg[A] with scala.collection.mutable.Map[sequence.Vector[A], Peg[A]] {
 
 // Peg
     override def parse(v: sequence.Vector[A], start: Int, end: Int) = {

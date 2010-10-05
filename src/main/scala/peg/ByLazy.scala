@@ -7,6 +7,7 @@
 package com.github.okomok.mada; package peg
 
 
-private[mada] case class ByLazy[A](_1: util.ByLazy[Peg[A]]) extends Forwarder[A] {
+private
+case class ByLazy[A](_1: util.ByLazy[Peg[A]]) extends Forwarder[A] {
     override protected def delegate = _1()
 }

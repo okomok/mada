@@ -7,6 +7,7 @@
 package com.github.okomok.mada; package sequence; package iterative
 
 
-private[mada] case class Seal[+A](_1: Iterative[A]) extends Iterative[A] {
+private
+case class Seal[+A](_1: Iterative[A]) extends Iterative[A] {
     override def begin = _1.begin
 }

@@ -7,7 +7,8 @@
 package com.github.okomok.mada; package sequence; package iterative
 
 
-private[mada] case class ToVector[A](_1: Iterative[A]) extends vector.Forwarder[A] {
+private
+case class ToVector[A](_1: Iterative[A]) extends vector.Forwarder[A] {
     override protected val delegate = {
         val it = _1.begin
         val a = new java.util.ArrayList[A]

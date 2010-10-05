@@ -7,7 +7,8 @@
 package com.github.okomok.mada; package sequence
 
 
-private object Precondition {
+private
+object Precondition {
 
     def positive(n: Int, msg: String): Unit = {
         if (n <= 0) {

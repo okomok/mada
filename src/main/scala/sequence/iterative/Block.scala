@@ -12,7 +12,8 @@ import java.util.ArrayDeque
 import java.util.concurrent.Exchanger
 
 
-private[mada] case class Block[+A](_1: Yield[A] => Unit) extends Iterative[A] {
+private
+case class Block[+A](_1: Yield[A] => Unit) extends Iterative[A] {
     override def begin = new Iterator[A] {
         private var in = new _Block._Data[A]
         private val x = new Exchanger[_Block._Data[A]]
@@ -41,7 +42,8 @@ private[mada] case class Block[+A](_1: Yield[A] => Unit) extends Iterative[A] {
 }
 
 
-private object _Block {
+private
+object _Block {
 
     val CAPACITY = 20
 

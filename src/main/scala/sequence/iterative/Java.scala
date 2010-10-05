@@ -7,16 +7,19 @@
 package com.github.okomok.mada; package sequence; package iterative
 
 
-private[mada] case class FromJIterable[A](_1: java.lang.Iterable[A]) extends Iterative[A] {
+private
+case class FromJIterable[A](_1: java.lang.Iterable[A]) extends Iterative[A] {
     override def begin = Iterator.fromJIterator(_1.iterator)
 }
 
-private[mada] case class ToJIterable[A](_1: Iterative[A]) extends java.lang.Iterable[A] {
+private
+case class ToJIterable[A](_1: Iterative[A]) extends java.lang.Iterable[A] {
     override def iterator = sequence.iterator.toJIterator(_1.begin)
 }
 
 
-private[mada] case class FromJObjectInput(_1: java.io.ObjectInput) extends Iterative[AnyRef] {
+private
+case class FromJObjectInput(_1: java.io.ObjectInput) extends Iterative[AnyRef] {
     override def begin = new Iterator[AnyRef] {
         private var e = ready // Note that null is a valid data.
 
@@ -35,7 +38,8 @@ private[mada] case class FromJObjectInput(_1: java.io.ObjectInput) extends Itera
 }
 
 
-private[mada] case class FromJReader(_1: java.io.Reader) extends Iterative[Char] {
+private
+case class FromJReader(_1: java.io.Reader) extends Iterative[Char] {
     override def begin = new Iterator[Char] {
         _1.reset
         private var e = ready

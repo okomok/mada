@@ -7,7 +7,8 @@
 package com.github.okomok.mada; package sequence; package vector
 
 
-private object _Step {
+private
+object _Step {
     def count(start: Int, end: Int, stride: Int): Int = {
         if (start == end) {
             0
@@ -17,7 +18,8 @@ private object _Step {
     }
 }
 
-private[mada] case class Step[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
+private
+case class Step[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
     Precondition.positive(_2, "step")
 
     override protected val delegate = _1.permutation{ i => i * _2 }.nth(0, _Step.count(_1.start, _1.end, _2))

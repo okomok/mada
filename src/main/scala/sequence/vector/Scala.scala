@@ -9,7 +9,8 @@ package com.github.okomok.mada; package sequence; package vector
 
 // Iterable
 
-private[mada] case class FromSIterable[A](_1: scala.Iterable[A]) extends Forwarder[A] {
+private
+case class FromSIterable[A](_1: scala.Iterable[A]) extends Forwarder[A] {
     override protected val delegate = {
         val r = new java.util.ArrayList[A]
         for (e <- _1.view) {
@@ -22,7 +23,8 @@ private[mada] case class FromSIterable[A](_1: scala.Iterable[A]) extends Forward
 
 // IndexedSeq
 
-private[mada] case class FromSIndexedSeq[A](_1: scala.collection.IndexedSeq[A]) extends Forwarder[A] {
+private
+case class FromSIndexedSeq[A](_1: scala.collection.IndexedSeq[A]) extends Forwarder[A] {
     override protected val delegate: Vector[A] = _1 match {
         case ToSIndexedSeq(from) => from // from-to fusion
         case _: scala.collection.mutable.IndexedSeq[_] => new _FromSMutableIndexedSeq(_1.asInstanceOf[scala.collection.mutable.IndexedSeq[A]])
@@ -45,7 +47,8 @@ private class _FromSMutableIndexedSeq[A](_1: scala.collection.mutable.IndexedSeq
     override def toSIndexedSeq = _1 // to-from fusion
 }
 
-private[mada] case class ToSIndexedSeq[A](_1: Vector[A]) extends scala.collection.mutable.IndexedSeq[A] {
+private
+case class ToSIndexedSeq[A](_1: Vector[A]) extends scala.collection.mutable.IndexedSeq[A] {
     override def length = _1.nth.size
     override def apply(i: Int) = _1.nth(i)
     override def update(i: Int, e: A) = _1.nth(i) = e

@@ -10,7 +10,8 @@ package com.github.okomok.mada; package sequence; package vector
 import util.future
 
 
-private object ParallelEach {
+private
+object ParallelEach {
     def apply[A](_1: Vector[A], _2: A => Unit, _3: Int): Unit = {
         assert(!IsParallel(_1))
 

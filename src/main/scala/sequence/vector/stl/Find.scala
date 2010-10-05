@@ -7,13 +7,15 @@
 package com.github.okomok.mada; package sequence; package vector; package stl
 
 
-private[mada] object Find {
+private[vector]
+object Find {
     def apply[A](v: Vector[A], __first: Int, __last: Int, __val: Any): Int = {
         FindIf(v, __first, __last, (_: A) == __val)
     }
 }
 
-private[mada] object FindIf {
+private[vector]
+object FindIf {
     def apply[A](v: Vector[A], __first: Int, __last: Int, __pred: A => Boolean): Int = {
         var __i = __first
         v.loop(__first, __last, { (e: A) => if (__pred(e)) { false } else { __i += 1; true } })

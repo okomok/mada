@@ -7,6 +7,7 @@
 package com.github.okomok.mada; package sequence; package iterative
 
 
-private[mada] case class SinglePass[+A](_1: Iterative[A]) extends Iterative[A] {
+private
+case class SinglePass[+A](_1: Iterative[A]) extends Iterative[A] {
     override val begin = _1.begin
 }

@@ -33,13 +33,15 @@
 package com.github.okomok.mada; package sequence; package vector; package stl
 
 
-private[mada] object Replace {
+private[vector]
+object Replace {
     def apply[A](* : Vector[A], first: Int, __last: Int, __old_value: Any, __new_value: A): Unit = {
         ReplaceIf(*, first, __last, (_: A) == __old_value, __new_value)
     }
 }
 
-private[mada] object ReplaceIf {
+private[vector]
+object ReplaceIf {
     def apply[A](* : Vector[A], first: Int, __last: Int, __pred: A => Boolean, __new_value: A): Unit = {
         var __first = first
 

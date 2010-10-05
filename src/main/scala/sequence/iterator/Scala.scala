@@ -7,7 +7,8 @@
 package com.github.okomok.mada; package sequence; package iterator
 
 
-private[mada] case class FromSIterator[A](_1: scala.Iterator[A]) extends Forwarder[A] {
+private
+case class FromSIterator[A](_1: scala.Iterator[A]) extends Forwarder[A] {
     override protected val delegate: Iterator[A] = _1 match {
         case ToSIterator(from) => from // from-to fusion
         case _ => new _FromSIterator(_1)
@@ -28,7 +29,8 @@ private class _FromSIterator[A](_1: scala.Iterator[A]) extends Iterator[A] {
 }
 
 
-private[mada] case class ToSIterator[A](_1: Iterator[A]) extends scala.Iterator[A] {
+private
+case class ToSIterator[A](_1: Iterator[A]) extends scala.Iterator[A] {
     override def hasNext = !_1.isEnd
     override def next = {
         val tmp = ~_1

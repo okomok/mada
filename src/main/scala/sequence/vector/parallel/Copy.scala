@@ -7,7 +7,8 @@
 package com.github.okomok.mada; package sequence; package vector
 
 
-private[mada] case class ParallelCopy[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
+private
+case class ParallelCopy[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
     assert(!IsParallel(_1))
 
     override protected val delegate = {
@@ -17,7 +18,8 @@ private[mada] case class ParallelCopy[A](_1: Vector[A], _2: Int) extends Forward
     }
 }
 
-private object ParallelCopyTo {
+private
+object ParallelCopyTo {
     def apply[A, B >: A](_1: Vector[A], _2: Vector[B], _3: Int): Vector[B] = {
         assert(!IsParallel(_1))
         Precondition.range(_1.size, _2.size, "parallel.copyTo")

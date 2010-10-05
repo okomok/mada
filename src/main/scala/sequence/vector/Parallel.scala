@@ -7,7 +7,8 @@
 package com.github.okomok.mada; package sequence; package vector
 
 
-private[mada] case class Parallel[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
+private
+case class Parallel[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
     assert(!IsParallel(_1))
     Precondition.positive(_2, "grain size")
 
@@ -49,6 +50,7 @@ private[mada] case class Parallel[A](_1: Vector[A], _2: Int) extends Forwarder[A
 }
 
 
-private object IsParallel {
+private
+object IsParallel {
     def apply[A](v: Vector[A]): Boolean = v.isInstanceOf[Parallel[_]]
 }

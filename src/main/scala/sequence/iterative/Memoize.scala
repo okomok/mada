@@ -10,7 +10,8 @@ package com.github.okomok.mada; package sequence; package iterative
 import java.util.concurrent.ConcurrentHashMap
 
 
-private[mada] case class Memoize[A](_1: Iterative[A]) extends Iterative[A] {
+private
+case class Memoize[A](_1: Iterative[A]) extends Iterative[A] {
     private val derefMemo = new ConcurrentHashMap[Int, () => A]
     //private val isEndMemo = new ConcurrentHashMap[Int, () => Boolean]
 

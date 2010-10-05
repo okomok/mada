@@ -7,7 +7,8 @@
 package com.github.okomok.mada; package stack
 
 
-private[mada] case class FromJDeque[A](_1: java.util.Deque[A]) extends Stack[A] {
+private
+case class FromJDeque[A](_1: java.util.Deque[A]) extends Stack[A] {
     override def push(e: A) = _1.push(e)
     override def pop = _1.pop
     override def peek = _1.peek

@@ -7,6 +7,7 @@
 package com.github.okomok.mada; package peg
 
 
-private[mada] case class Icase(_1: sequence.Vector[Char]) extends Forwarder[Char] {
+private
+case class Icase(_1: sequence.Vector[Char]) extends Forwarder[Char] {
     override protected val delegate = fromSequence(_1.lowerCase).lowerCaseRead
 }

@@ -35,7 +35,8 @@ package com.github.okomok.mada; package sequence; package vector; package stl
 
 // PushHeap
 
-private[mada] object PushHeap {
+private[vector]
+object PushHeap {
     def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Ordering[A]): Unit = {
         __apply(*, __first, (__last - __first) - 1, 0, *(__last - 1), __comp)
     }
@@ -56,7 +57,8 @@ private[mada] object PushHeap {
 
 // PopHeap
 
-private[mada] object PopHeap {
+private[vector]
+object PopHeap {
     def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Ordering[A]): Unit = {
         __apply(*, __first, __last - 1, __last - 1, *(__last - 1), __comp)
     }
@@ -70,7 +72,8 @@ private[mada] object PopHeap {
 
 // MakeHeap
 
-private[mada] object MakeHeap {
+private[vector]
+object MakeHeap {
     def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Ordering[A]): Unit = {
         if (__last - __first < 2) {
             return
@@ -91,7 +94,8 @@ private[mada] object MakeHeap {
 
 // SortHeap
 
-private[mada] object SortHeap {
+private[vector]
+object SortHeap {
     def apply[A](* : Vector[A], __first: Int, last: Int, __comp: Ordering[A]): Unit = {
         var __last = last
 
@@ -105,7 +109,8 @@ private[mada] object SortHeap {
 
 // AdjustHeap
 
-private[mada] object AdjustHeap {
+private[vector]
+object AdjustHeap {
     def apply[A](* : Vector[A], __first: Int, holeIndex: Int, __len: Int, __value: A, __comp: Ordering[A]): Unit = {
         var __holeIndex = holeIndex
 

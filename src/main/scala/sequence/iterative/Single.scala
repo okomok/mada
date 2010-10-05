@@ -7,7 +7,8 @@
 package com.github.okomok.mada; package sequence; package iterative
 
 
-private[mada] case class Single[+A](_1: A) extends Iterative[A] {
+private
+case class Single[+A](_1: A) extends Iterative[A] {
     override def begin = new Iterator[A] {
         private var ends = false
 

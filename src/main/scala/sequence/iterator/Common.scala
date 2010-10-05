@@ -7,7 +7,8 @@
 package com.github.okomok.mada; package sequence; package iterator
 
 
-private[mada] class Common {
+private[iterator]
+class Common {
 
     @returnThat
     def from[A](to: Iterator[A]) = to

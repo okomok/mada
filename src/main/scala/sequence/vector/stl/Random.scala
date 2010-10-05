@@ -33,13 +33,15 @@
 package com.github.okomok.mada; package sequence; package vector; package stl
 
 
-private[mada] class DefaultRandomNumberGenerator extends (Int => Int) {
+private[vector]
+class DefaultRandomNumberGenerator extends (Int => Int) {
     private val rnd = new java.util.Random
     override def apply(__n: Int) = rnd.nextInt(__n)
 }
 
 
-private[mada] object RandomShuffle {
+private[vector]
+object RandomShuffle {
     def apply[A](v: Vector[A], __first: Int, __last: Int): Unit = {
         RandomShuffle(v, __first, __last, new DefaultRandomNumberGenerator)
     }
@@ -57,7 +59,8 @@ private[mada] object RandomShuffle {
 }
 
 
-private[mada] object RandomSample {
+private[vector]
+object RandomSample {
     def apply[A, B >: A](v : Vector[A], first: Int, __last: Int, ^ : Vector[B], __out_first: Int, __out_last: Int): Int = {
         apply(v, first, __last, ^, __out_first, __out_last, new DefaultRandomNumberGenerator)
     }
@@ -89,7 +92,8 @@ private[mada] object RandomSample {
     }
 }
 
-private[mada] object RandomSampleN {
+private[vector]
+object RandomSampleN {
     def apply[A, B >: A](v : Vector[A], first: Int, __last: Int, ^ : Vector[B], out_ite: Int, __n: Int): Int = {
         apply(v, first, __last, ^, out_ite, __n, new DefaultRandomNumberGenerator)
     }

@@ -33,7 +33,8 @@
 package com.github.okomok.mada; package sequence; package vector; package stl
 
 
-private[mada] object Fill {
+private[vector]
+object Fill {
     def apply[A](* : Vector[A], first: Int, __last: Int, __val: A): Unit = {
         var __first = first
 

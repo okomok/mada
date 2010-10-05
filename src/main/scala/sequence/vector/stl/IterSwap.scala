@@ -33,7 +33,8 @@
 package com.github.okomok.mada; package sequence; package vector; package stl
 
 
-private[mada] object IterSwap {
+private[vector]
+object IterSwap {
     def apply[A](v1: Vector[A], __i1: Int, v2: Vector[A], __i2: Int): Unit = {
         val tmp = v1(__i1)
         v1(__i1) = v2(__i2)

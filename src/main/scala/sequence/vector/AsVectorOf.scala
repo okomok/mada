@@ -7,6 +7,7 @@
 package com.github.okomok.mada; package sequence; package vector
 
 
-private[mada] case class AsVectorOf[A, B](_1: Vector[A]) extends Adapter[A, B] {
+private
+case class AsVectorOf[A, B](_1: Vector[A]) extends Adapter[A, B] {
     override protected val underlying = _1
 }

@@ -7,7 +7,8 @@
 package com.github.okomok.mada; package peg
 
 
-private[mada] case class Xor[A](_1: Peg[A], _2: Peg[A]) extends Peg[A] {
+private
+case class Xor[A](_1: Peg[A], _2: Peg[A]) extends Peg[A] {
     override def parse(v: sequence.Vector[A], start: Int, end: Int) = {
         val cur1 = _1.parse(v, start, end)
         val cur2 = _2.parse(v, start, end)

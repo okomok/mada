@@ -33,7 +33,8 @@
 package com.github.okomok.mada; package sequence; package vector; package stl
 
 
-private[mada] object UnguardedPartition {
+private[vector]
+object UnguardedPartition {
     def apply[A](* : Vector[A], first: Int, last: Int, __pivot: A, __comp: Ordering[A]): Int = {
         var __first = first; var __last = last
 

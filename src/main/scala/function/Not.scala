@@ -7,14 +7,17 @@
 package com.github.okomok.mada; package function
 
 
-private[mada] case class Not1[-T1](_1: Predicate1[T1]) extends Predicate1[T1] {
+private
+case class Not1[-T1](_1: Predicate1[T1]) extends Predicate1[T1] {
     override def apply(v1: T1) = !_1(v1)
 }
 
-private[mada] case class Not2[-T1, -T2](_1: Predicate2[T1, T2]) extends Predicate2[T1, T2] {
+private
+case class Not2[-T1, -T2](_1: Predicate2[T1, T2]) extends Predicate2[T1, T2] {
     override def apply(v1: T1, v2: T2) = !_1(v1, v2)
 }
 
-private[mada] case class Not3[-T1, -T2, -T3](_1: Predicate3[T1, T2, T3]) extends Predicate3[T1, T2, T3] {
+private
+case class Not3[-T1, -T2, -T3](_1: Predicate3[T1, T2, T3]) extends Predicate3[T1, T2, T3] {
     override def apply(v1: T1, v2: T2, v3: T3) = !_1(v1, v2, v3)
 }

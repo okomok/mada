@@ -9,13 +9,15 @@ package com.github.okomok.mada; package sequence; package vector
 
 // List
 
-private[mada] case class FromJList[A](_1: java.util.List[A]) extends Forwarder[A] {
+private[sequence]
+case class FromJList[A](_1: java.util.List[A]) extends Forwarder[A] {
     override protected val delegate: Vector[A] = _1 match {
         case ToJList(from) => from // from-to fusion
         case _ => new _FromJList(_1)
     }
 }
 
+private
 class _FromJList[A](_1: java.util.List[A]) extends Vector[A] {
     override def start = 0
     override def end = _1.size
@@ -35,7 +37,8 @@ class _FromJList[A](_1: java.util.List[A]) extends Vector[A] {
     override def toJList = _1 // to-from fusion
 }
 
-private[mada] case class ToJList[A](_1: Vector[A]) extends java.util.AbstractList[A] with java.util.RandomAccess {
+private
+case class ToJList[A](_1: Vector[A]) extends java.util.AbstractList[A] with java.util.RandomAccess {
     override def get(index: Int) = _1.nth(index)
     override def set(index: Int, element: A) = {
         val old = _1.nth(index)
@@ -49,7 +52,8 @@ private[mada] case class ToJList[A](_1: Vector[A]) extends java.util.AbstractLis
 // ArrayList
 
 @deprecated("unused")
-private object ToJArrayList {
+private
+object ToJArrayList {
     def apply[A](from: Vector[A]): java.util.ArrayList[A] = {
         val r = new java.util.ArrayList[A](from.size)
         from.foreach{ e => r.add(e) }
@@ -60,7 +64,8 @@ private object ToJArrayList {
 
 // CharSequence
 
-private[mada] case class FromJCharSequence(_1: java.lang.CharSequence) extends Forwarder[Char] {
+private
+case class FromJCharSequence(_1: java.lang.CharSequence) extends Forwarder[Char] {
     override protected val delegate: Vector[Char] = _1 match {
         case ToJCharSequence(from) => from // from-to fusion
         case _ => new _FromJCharSequence(_1)
@@ -75,7 +80,8 @@ private class _FromJCharSequence(_1: java.lang.CharSequence) extends Vector[Char
     override def toJCharSequence(implicit pre: Vector[Char] <:< Vector[Char]) = _1 // to-from fusion
 }
 
-private[mada] case class ToJCharSequence(_1: Vector[Char]) extends java.lang.CharSequence {
+private
+case class ToJCharSequence(_1: Vector[Char]) extends java.lang.CharSequence {
     override def charAt(index: Int) = _1.nth(index)
     override def length = _1.nth.size
     override def subSequence(start: Int, end: Int): java.lang.CharSequence = new ToJCharSequence(_1.nth(start, end))

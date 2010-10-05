@@ -7,7 +7,8 @@
 package com.github.okomok.mada; package sequence; package vector
 
 
-private object ParallelSeek {
+private
+object ParallelSeek {
     def apply[A](_1: Vector[A], _2: A => Boolean, _3: Int): Option[A] = {
         assert(!IsParallel(_1))
 

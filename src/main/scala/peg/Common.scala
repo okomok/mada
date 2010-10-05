@@ -7,7 +7,8 @@
 package com.github.okomok.mada; package peg
 
 
-private[mada] class Common {
+private[peg]
+class Common {
 
 
 // aliases
