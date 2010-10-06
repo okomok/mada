@@ -13,6 +13,11 @@ package sequence; package reactive
  */
 trait Generator[+A] {
     /**
+     * Returns true iif no more elments generated. infinite by default.
+     */
+    def isEnd: Boolean = false
+
+    /**
      * Generates one element.
      */
     def generate: Unit
