@@ -20,38 +20,6 @@ class Common {
     val empty: Reactive[Nothing] = Empty()
 
     /**
-     * A sequence with a single element.
-     */
-    def single[A](e: A): Reactive[A] = Single(e)
-
-    /**
-     * Creates an `Int` sequence from `n` to `m`.
-     */
-    def range(n: Int, m: Int): Generator[Int] = Range(n, m)
-
-    /**
-     * Creates an infinite sequence repeatedly applying <code>op</code>.
-     */
-    def iterate[A](z: A)(op: A => A): Generator[A] = Iterate(z, op)
-
-    /**
-     * Repeats <code>e</code> infinitely.
-     */
-    def repeat[A](e: A): Generator[A] = Repeat(e)
-
-    /**
-     * Unfolds right-associative.
-     */
-    def unfoldRight[A, B](z: A)(op: A => Option[(B, A)]): Generator[B] = UnfoldRight(z, op)
-
-    /**
-     * Creates a sequence initially containing the specified elements.
-     */
-    object Of {
-        def apply[A](from: A*): Reactive[A] = new FromSIterable(from)
-    }
-
-    /**
      * Calls all the functions in a Reactive sequence.
      */
     def reactions[A](fs: Reactive[A => Unit]): A => Unit = Reactions(fs)
@@ -60,5 +28,16 @@ class Common {
      * Calls all the functions in a Reactive sequence.
      */
     def reactions[A](fs: Iterative[A => Unit]): A => Unit = Reactions(fs)
+
+    /**
+     * Creates a sequence initially containing the specified elements.
+     */
+    object Of {
+        def apply[A](from: A*): Reactive[A] = new FromSIterable(from)
+    }
+
+    @aliasOf("generator.Generator")
+     val Generator = generator.Generator
+    type Generator[+A] = generator.Generator[A]
 
 }

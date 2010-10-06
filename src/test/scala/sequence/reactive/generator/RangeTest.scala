@@ -4,19 +4,20 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.madatest; package sequencetest; package reactivetest
+package com.github.okomok.madatest;
+package sequencetest; package reactivetest; package generatortest
 
 
 import com.github.okomok.mada
-
-import mada.sequence._
+import mada.sequence.iterative
+import mada.sequence.reactive.generator
 import junit.framework.Assert._
 
 
 class RangeTest extends org.scalatest.junit.JUnit3Suite {
 
     def testEmpty: Unit = {
-        val r = reactive.range(1,1)
+        val r = generator.range(1,1)
         val out = new java.util.ArrayList[Int]
         r.sequence.foreach(out.add(_))
         r.generateAll
@@ -24,7 +25,7 @@ class RangeTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testTrivial: Unit = {
-        val r = reactive.range(1,6)
+        val r = generator.range(1,6)
         val out = new java.util.ArrayList[Int]
         r.sequence.foreach(out.add(_))
         r.generate
@@ -36,13 +37,13 @@ class RangeTest extends org.scalatest.junit.JUnit3Suite {
 /* rejected
     def testEmptyWithEnd: Unit = {
         val out = new java.util.ArrayList[Int]
-        val r = reactive.range(1,1,out.add(99))
+        val r = generator.range(1,1,out.add(99))
         r.foreach(out.add(_))
         r.generateAll
         assertEquals(iterative.Of(99), iterative.from(out))
     }
     def testEndWith: Unit = {
-        val r = reactive.range(1,6,out.add(99))
+        val r = generator.range(1,6,out.add(99))
         val out = new java.util.ArrayList[Int]
         r.then(out.add(99)).foreach(out.add(_))
         r.generateAll

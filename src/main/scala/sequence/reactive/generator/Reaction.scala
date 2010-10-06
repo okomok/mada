@@ -9,6 +9,6 @@ package sequence; package reactive
 
 
 private
-case class Repeat[A](_1: A) extends Generator.Trivial[A] {
-    override protected def generateTo(f: A => Unit) = f(_1)
+case class Reaction[A](from: A => Unit) extends (A => Unit) {
+    override def apply(x: A) = from(x)
 }

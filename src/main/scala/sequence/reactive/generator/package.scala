@@ -5,7 +5,7 @@
 
 
 package com.github.okomok.mada
-package sequence
+package sequence; package reactive
 
 
-package object reactive extends reactive.Common
+package object generator extends generator.Common
