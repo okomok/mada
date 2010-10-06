@@ -15,22 +15,22 @@ class Common {
     def from[A](to: Generator[A]): Generator[A] = to
 
     /**
-     * The empty sequence
+     * The empty Generator
      */
     val empty: Generator[Nothing] = Empty()
 
     /**
-     * A sequence with a single element.
+     * A Generator with a single element.
      */
     def single[A](e: A): Generator[A] = Single(e)
 
     /**
-     * Creates an `Int` sequence from `n` to `m`.
+     * Creates an `Int` Generator from `n` to `m`.
      */
     def range(n: Int, m: Int): Generator[Int] = Range(n, m)
 
     /**
-     * Creates an infinite sequence repeatedly applying <code>op</code>.
+     * Creates an infinite Generator repeatedly applying <code>op</code>.
      */
     def iterate[A](z: A)(op: A => A): Generator[A] = Iterate(z, op)
 
@@ -45,10 +45,10 @@ class Common {
     def unfoldRight[A, B](z: A)(op: A => Option[(B, A)]): Generator[B] = UnfoldRight(z, op)
 
     /**
-     * Creates a sequence initially containing the specified elements.
+     * Creates a Generator initially containing the specified elements.
      */
     object Of {
-        def apply[A](from: A*): Reactive[A] = new FromSIterable(from)
+        def apply[A](from: A*): Generator[A] = new FromSIterable(from)
     }
 
 }

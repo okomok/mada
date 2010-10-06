@@ -18,11 +18,11 @@ case class Range(_1: Int, _2: Int) extends TrivialGenerator[Int] {
         f(now)
     }
 
-    override def isEnd = cur == _2
-    override protected def generateTo(f: Int => Unit) = if (!isEnd) _next(f)
+    override def isEmpty = cur == _2
+    override protected def generateTo(f: Int => Unit) = if (!isEmpty) _next(f)
     override protected def generateAllTo(fs: Iterative[Int => Unit]) = {
         for (f <- fs) {
-            while (!isEnd) _next(f)
+            while (!isEmpty) _next(f)
         }
     }
 }

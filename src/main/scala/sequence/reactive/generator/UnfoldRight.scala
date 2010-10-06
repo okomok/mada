@@ -17,11 +17,11 @@ case class UnfoldRight[A, B](_1: A, _2: A => Option[(B, A)]) extends TrivialGene
         f(now)
     }
 
-    override def isEnd = synchronized { acc.isEmpty }
-    override protected def generateTo(f: B => Unit) = synchronized { if (!isEnd) _next(f) }
+    override def isEmpty = synchronized { acc.isEmpty }
+    override protected def generateTo(f: B => Unit) = synchronized { if (!isEmpty) _next(f) }
     override protected def generateAllTo(fs: Iterative[B => Unit]) = {
         for (f <- fs) {
-            synchronized { while (!isEnd) _next(f) }
+            synchronized { while (!isEmpty) _next(f) }
         }
     }
 }

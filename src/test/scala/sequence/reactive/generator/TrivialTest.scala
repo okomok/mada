@@ -16,6 +16,17 @@ import junit.framework.Assert._
 
 class TrivialTest extends org.scalatest.junit.JUnit3Suite {
 
+    def testEmpty: Unit = {
+        val r = generator.empty
+        assertTrue(r.isEmpty)
+        val out = new java.util.ArrayList[Int]
+        r.sequence.foreach(out.add(_))
+        r.generate
+        r.generate
+        assertTrue(iterative.from(out).isEmpty)
+        r.generate
+    }
+
     def testUnfoldRight: Unit = {
         val r = generator.unfoldRight(10){ b => if (b == 0) None else Some(b, b-1) }
         val out = new java.util.ArrayList[Int]

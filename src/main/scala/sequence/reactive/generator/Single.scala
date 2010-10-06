@@ -11,7 +11,7 @@ package sequence; package reactive; package generator
 private
 case class Single[A](_1: A) extends TrivialGenerator[A] {
     private var x: Option[A] = Some(_1)
-    override def isEnd = synchronized { x.isEmpty }
+    override def isEmpty = synchronized { x.isEmpty }
     override protected def generateTo(f: A => Unit) = synchronized {
         if (!x.isEmpty) {
             val now = x.get

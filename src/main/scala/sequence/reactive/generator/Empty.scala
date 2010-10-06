@@ -10,6 +10,6 @@ package sequence; package reactive; package generator
 
 private
 case class Empty() extends TrivialGenerator[Nothing] {
-    override def isEnd = true
+    override def isEmpty = true
     override protected def generateTo(f: Nothing => Unit) = ()
 }

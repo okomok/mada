@@ -14,14 +14,21 @@ import mada.sequence._
 import junit.framework.Assert._
 
 
-class SingleTest extends org.scalatest.junit.JUnit3Suite {
+class OfTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
-        val t = reactive.generator.single(1)
+        val t = reactive.generator.Of(1,2,3,4,5)
         val s = new java.util.ArrayList[Int]
         t.sequence.foreach(s.add(_))
-        assertFalse(t.isEmpty)
         t.generate
-        assertEquals(vector.Of(1), vector.from(s))
+        t.generate
+        assertEquals(vector.Of(1,2), vector.from(s))
+        assertFalse(t.isEmpty)
+        s.clear
+
+        t.generate
+        t.generate
+        t.generate
+        assertEquals(vector.Of(3,4,5), vector.from(s))
         assertTrue(t.isEmpty)
 
         // no effects.

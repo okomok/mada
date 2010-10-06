@@ -8,7 +8,7 @@ package com.github.okomok.mada
 package sequence; package reactive; package generator
 
 
-object Generator extends Common
+object Generator extends Common with Compatibles
 
 
 /**
@@ -19,7 +19,7 @@ trait Generator[+A] {
      * Returns true iif no more elments generated.
      * `false` by default.
      */
-    def isEnd: Boolean = false
+    def isEmpty: Boolean = false
 
     /**
      * Generates one element.
