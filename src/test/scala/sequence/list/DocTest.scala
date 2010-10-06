@@ -14,7 +14,7 @@ import com.github.okomok.mada
 
     class DocTest extends org.scalatest.junit.JUnit3Suite {
         def testTrivial: Unit = {
-            lazy val fibs: List[Int] = 0 :: 1 :: fibs.zipBy(fibs.tail)(_ + _)
+            lazy val fibs: List[Int] = 0 :: 1 :: fibs.zip(fibs.tail).map2(_ + _)
             assertEquals(832040, fibs.nth(30))
         }
     }

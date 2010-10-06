@@ -62,20 +62,20 @@ class RecursiveTest extends org.scalatest.junit.JUnit3Suite {
 
     def testFibs: Unit = {
         val fibs = new Recursive[Int]
-        fibs := Of(0, 1) ++ fibs.zipBy(fibs.tail)(_ + _)
+        fibs := Of(0, 1) ++ fibs.zip(fibs.tail).map2(_ + _)
         assertEquals(_Recursive.theFibs, fibs.take(_Recursive.theFibs.size))
     }
 
     def testFibsIndirect: Unit = {
         val fibs, fibs_tail = new Recursive[Int]
-        fibs := Of(0, 1) ++ fibs.zipBy(fibs_tail)(_ + _)
+        fibs := Of(0, 1) ++ fibs.zip(fibs_tail).map2(_ + _)
         fibs_tail := fibs.tail
         assertEquals(_Recursive.theFibs.step(3), fibs.take(_Recursive.theFibs.size).step(3))
     }
 
     def testLongFibs: Unit = {
         val fibs = new Infinite[Int]()
-        fibs := Of(0, 1) ++ fibs.zipBy(fibs.tail)(_ + _)
+        fibs := Of(0, 1) ++ fibs.zip(fibs.tail).map2(_ + _)
         assertEquals(_Recursive.theLongFibs, fibs.take(_Recursive.theLongFibs.size))
     }
 /*

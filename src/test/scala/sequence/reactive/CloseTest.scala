@@ -100,7 +100,7 @@ class CloseTest extends org.scalatest.junit.JUnit3Suite {
     def testZipBy {
         val l = new MyResource
         val r = new MyResource
-        l.take(5).zipBy(r.take(8))((x,y)=>x+y).take(3).start
+        l.take(5).zip(r.take(8)).map2(_ + _).take(3).start
         l.generate(3); r.generate(3)
         l.generate(3); r.generate(3)
         assertFalse(l.closed)

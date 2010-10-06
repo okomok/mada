@@ -31,6 +31,11 @@ object List extends Common with Compatibles {
     }
     implicit def _ofName[A](_this: => List[A]): _OfName[A] = new _OfName(_this)
 
+    sealed class _OfPair[A, B](_this: List[(A, B)]) {
+        def map2[C](f: (A, B) => C): List[C] = _this.map{case (a, b) => f(a, b)}
+    }
+    implicit def _ofPair[A, B](_this: List[(A, B)]): _OfPair[A, B] = new _OfPair(_this)
+
 }
 
 
@@ -524,13 +529,8 @@ sealed abstract class List[+A] extends iterative.Sequence[A] {
     /**
      * Zips <code>this</code> and <code>that</code>.
      */
-    def zip[B](that: List[B]): List[(A, B)] = zipBy(that){ (a, b) => (a, b) }
-
-    /**
-     * Zips <code>this</code> and <code>that</code> applying <code>f</code>.
-     */
-    def zipBy[B, C](that: List[B])(f: (A, B) => C): List[C] = (this, that) match {
-        case (a :: as, b :: bs) => f(a, b) :: as().zipBy(bs())(f)
+    def zip[B](that: List[B]): List[(A, B)] = (this, that) match {
+        case (a :: as, b :: bs) => (a, b) :: as().zip(bs())
         case _ => Nil
     }
 

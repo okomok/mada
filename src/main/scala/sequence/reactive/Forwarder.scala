@@ -44,7 +44,6 @@ trait Forwarder[+A] extends Reactive[A] with Sequence.Forwarder[A] {
     override def uniqueBy(p: (A, A) => Boolean): Reactive[A] = around(delegate.uniqueBy(p))
     override def unsplit[B](sep: Reactive[B])(implicit pre : Reactive[A] <:< Reactive[Sequence[B]]): Reactive[B] = around(delegate.unsplit(sep))
     override def zip[B](that: Reactive[B]): Reactive[(A, B)] = around(delegate.zip(that))
-    override def zipBy[B, C](that: Reactive[B])(f: (A, B) => C): Reactive[C] = around(delegate.zipBy(that)(f))
     override def unzip[B, C](implicit pre: Reactive[A] <:< Reactive[(B, C)]): (Reactive[B], Reactive[C]) = around2(delegate.unzip)
     override def toIterative: Iterative[A] = delegate.toIterative
     override def toResponder: Responder[A] = delegate.toResponder
@@ -61,5 +60,4 @@ trait Forwarder[+A] extends Reactive[A] with Sequence.Forwarder[A] {
     override def protect: Reactive[A] = around(delegate.protect)
     override def tokenize[B](p: Peg[B])(implicit pre: Reactive[A] <:< Reactive[B]): Reactive[Vector[B]] = around(delegate.tokenize(p))
     override def adjacent: Reactive[(A, A)] = around(delegate.adjacent)
-    override def adjacentBy[B](f: (A, A) => B): Reactive[B] = around(delegate.adjacentBy(f))
 }

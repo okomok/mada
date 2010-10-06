@@ -51,4 +51,10 @@ object Sequence {
 // logical hierarchy
     implicit def _asIterative[A](from: Sequence[A]): Iterative[A] = from.asIterative
 
+// methodization
+    sealed class _OfPair[A, B](_this: Sequence[(A, B)]) {
+        def map2[C](f: (A, B) => C): Vector[C] = _this.asVector.map{case (a, b) => f(a, b)}
+    }
+    implicit def _ofPair[A, B](_this: Sequence[(A, B)]): _OfPair[A, B] = new _OfPair(_this)
+
 }

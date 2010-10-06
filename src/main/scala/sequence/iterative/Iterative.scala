@@ -388,11 +388,6 @@ trait Iterative[+A] extends Sequence[A] {
      */
     def unzip[B, C](implicit pre: Iterative[A] <:< Iterative[(B, C)]): (Iterative[B], Iterative[C]) = (pre(this).map{ bc => bc._1 }, pre(this).map{ bc => bc._2 })
 
-    /**
-     * Zips <code>this</code> and <code>that</code> applying <code>f</code>.
-     */
-    def zipBy[B, C](that: Iterative[B])(f: (A, B) => C): Iterative[C] = ZipBy(this, that, f)
-
 
 // conversion
 

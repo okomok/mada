@@ -26,4 +26,10 @@ object Sequence {
         override def asReactive = delegate.asReactive
     }
 
+// methodization
+    sealed class _OfPair[A, B](_this: Sequence[(A, B)]) {
+        def map2[C](f: (A, B) => C): Reactive[C] = _this.asReactive.map{case (a, b) => f(a, b)}
+    }
+    implicit def _ofPair[A, B](_this: Sequence[(A, B)]): _OfPair[A, B] = new _OfPair(_this)
+
 }

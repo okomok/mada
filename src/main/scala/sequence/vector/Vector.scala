@@ -264,11 +264,6 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
     def unzip[B, C](implicit pre: Vector[A] <:< Vector[(B, C)]): (Vector[B], Vector[C]) = (pre(this).map{ bc => bc._1 }, pre(this).map{ bc => bc._2 })
 
     /**
-     * Zips <code>this</code> and <code>that</code> applying <code>f</code>.
-     */
-    def zipBy[B, C](that: Vector[B])(f: (A, B) => C): Vector[C] = ZipBy(this, that, f)
-
-    /**
      * Installs auto relation.
      */
     final def using(a: Reactive[_]): Reactive[Vector[A]] = for (_ <- a) yield this
