@@ -16,7 +16,7 @@ import junit.framework.Assert._
 
 class SingleTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
-        val t = reactive.generator.single(1)
+        val t = reactive.Generator.from(iterative.single(1))
         val s = new java.util.ArrayList[Int]
         t.sequence.foreach(s.add(_))
         assertFalse(t.isEmpty)

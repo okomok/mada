@@ -36,8 +36,4 @@ class Common {
         def apply[A](from: A*): Reactive[A] = new FromSIterable(from)
     }
 
-    @aliasOf("generator.Generator")
-     val Generator = generator.Generator
-    type Generator[+A] = generator.Generator[A]
-
 }

@@ -10,14 +10,14 @@ package sequencetest; package reactivetest; package generatortest
 
 import com.github.okomok.mada
 import mada.sequence.iterative
-import mada.sequence.reactive.generator
+import mada.sequence.reactive.Generator
 import junit.framework.Assert._
 
 
 class TrivialTest extends org.scalatest.junit.JUnit3Suite {
 
     def testEmpty: Unit = {
-        val r = generator.empty
+        val r = Generator.from(iterative.empty)
         assertTrue(r.isEmpty)
         val out = new java.util.ArrayList[Int]
         r.sequence.foreach(out.add(_))
@@ -28,7 +28,7 @@ class TrivialTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testUnfoldRight: Unit = {
-        val r = generator.unfoldRight(10){ b => if (b == 0) None else Some(b, b-1) }
+        val r = Generator.from(iterative.unfoldRight(10){ b => if (b == 0) None else Some(b, b-1) })
         val out = new java.util.ArrayList[Int]
         r.sequence.foreach(out.add(_))
         r.generateAll
@@ -38,7 +38,7 @@ class TrivialTest extends org.scalatest.junit.JUnit3Suite {
     def testIterate: Unit = {
         val br = new scala.util.control.Breaks
         import br._
-        val r = generator.iterate(10){ b => b-1 }
+        val r = Generator.from(iterative.iterate(10){ b => b-1 })
         val out = new java.util.ArrayList[Int]
         r.sequence.take(10).foreach(out.add(_))
         r.generateN(10)
@@ -48,7 +48,7 @@ class TrivialTest extends org.scalatest.junit.JUnit3Suite {
     def testRepeat: Unit = {
         val br = new scala.util.control.Breaks
         import br._
-        val r = generator.repeat(10)
+        val r = Generator.from(iterative.repeat(10))
         val out = new java.util.ArrayList[Int]
         r.sequence.take(5).foreach(out.add(_))
         r.generateN(15)

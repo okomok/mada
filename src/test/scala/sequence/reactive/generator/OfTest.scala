@@ -16,7 +16,7 @@ import junit.framework.Assert._
 
 class OfTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
-        val t = reactive.generator.Of(1,2,3,4,5)
+        val t = reactive.Generator.Of(1,2,3,4,5)
         val s = new java.util.ArrayList[Int]
         t.sequence.foreach(s.add(_))
         t.generate
