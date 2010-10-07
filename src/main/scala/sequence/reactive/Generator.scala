@@ -46,8 +46,13 @@ object Generator {
     implicit def fromIterative[A](from: Iterative[A]): Generator[A] = new FromIterative(from)
     implicit def fromIterativeSequence[A](from: iterative.Sequence[A]): Generator[A] = fromIterative(from.asIterative)
     implicit def fromArray[A](from: Array[A]): Generator[A] = fromIterative(from)
+    implicit def fromOption[A](from: Option[A]): Generator[A] = fromIterative(from)
     implicit def fromSIterable[A](from: Iterable[A]): Generator[A] = fromIterative(from)
     implicit def fromJIterable[A](from: java.lang.Iterable[A]): Generator[A] = fromIterative(from)
+    implicit def fromJObjectInput(from: java.io.ObjectInput): Generator[AnyRef] = fromIterative(from)
+    implicit def fromJReader(from: java.io.Reader): Generator[Char] = fromIterative(from)
+    // cf. https://lampsvn.epfl.ch/trac/scala/ticket/3152
+    // implicit def fromIterativeLike[A, B](from: A)(implicit pre: A <%< iterative.Sequence[B]): Generator[B] = fromIterative(pre(from).asIterative)
 
     /**
      * Creates a Generator initially containing the specified elements.
