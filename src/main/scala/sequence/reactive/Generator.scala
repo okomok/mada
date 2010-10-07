@@ -40,29 +40,20 @@ trait Generator[+A] {
 
 object Generator {
 
-    @returnThat
-    def from[A](to: Generator[A]): Generator[A] = to
-
-    implicit def fromIterative[A](from: Iterative[A]): Generator[A] = new FromIterative(from)
-    implicit def fromIterativeSequence[A](from: iterative.Sequence[A]): Generator[A] = fromIterative(from.asIterative)
-    implicit def fromArray[A](from: Array[A]): Generator[A] = fromIterative(from)
-    implicit def fromOption[A](from: Option[A]): Generator[A] = fromIterative(from)
-    implicit def fromSIterable[A](from: Iterable[A]): Generator[A] = fromIterative(from)
-    implicit def fromJIterable[A](from: java.lang.Iterable[A]): Generator[A] = fromIterative(from)
-    implicit def fromJObjectInput(from: java.io.ObjectInput): Generator[AnyRef] = fromIterative(from)
-    implicit def fromJReader(from: java.io.Reader): Generator[Char] = fromIterative(from)
-    // cf. https://lampsvn.epfl.ch/trac/scala/ticket/3152
-    // implicit def fromIterativeLike[A, B](from: A)(implicit pre: A <%< iterative.Sequence[B]): Generator[B] = fromIterative(pre(from).asIterative)
+    /**
+     * Creates a Generator from Iterative.
+     */
+    def by[A](it: Iterative[A]): Generator[A] = new By(it)
 
     /**
      * Creates a Generator initially containing the specified elements.
      */
     object Of {
-        def apply[A](from: A*): Generator[A] = fromIterative(from)
+        def apply[A](from: A*): Generator[A] = by(from)
     }
 
     @aliasOf("Of.apply")
-    def apply[A](from: A*): Generator[A] = fromIterative(from)
+    def apply[A](from: A*): Generator[A] = by(from)
 
     /**
      * Helps to implement a trivial Generator.
@@ -87,7 +78,7 @@ object Generator {
     }
 
     private
-    class FromIterative[A](_1: Iterative[A]) extends Trivial[A] {
+    class By[A](_1: Iterative[A]) extends Trivial[A] {
         private val it = _1.begin
         private def _next(f: A => Unit) = {
             val x = ~it

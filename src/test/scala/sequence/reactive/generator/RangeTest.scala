@@ -17,7 +17,7 @@ import junit.framework.Assert._
 class RangeTest extends org.scalatest.junit.JUnit3Suite {
 
     def testEmpty: Unit = {
-        val r = Generator.from(vector.range(1,1))
+        val r = Generator.by(vector.range(1,1))
         val out = new java.util.ArrayList[Int]
         assertTrue(r.isEmpty)
         r.sequence.foreach(out.add(_))
@@ -30,7 +30,7 @@ class RangeTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testTrivial: Unit = {
-        val r = Generator.from(vector.range(1,6))
+        val r = Generator.by(vector.range(1,6))
         val out = new java.util.ArrayList[Int]
         r.sequence.foreach(out.add(_))
         r.generate
