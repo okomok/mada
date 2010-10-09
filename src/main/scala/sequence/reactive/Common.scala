@@ -20,6 +20,11 @@ class Common {
     val empty: Reactive[Nothing] = Empty()
 
     /**
+     * The infinite sequence
+     */
+    def infinite: Reactive[Unit] = Infinite()
+
+    /**
      * Calls all the functions in a Reactive sequence.
      */
     def reactions[A](fs: Reactive[A => Unit]): A => Unit = Reactions(fs)

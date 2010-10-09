@@ -5,7 +5,10 @@
 
 
 package com.github.okomok.mada
-package sequence; package reactive; package generator
+package sequence; package reactive
+
+
+// Will be removed.
 
 
 import java.util.Random

@@ -186,4 +186,9 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
      */
     def post: Reactive[A] = Post(this)
 
+    /**
+     * Replaces elements by those of `it`.
+     */
+    def replace[B](it: Iterative[B]): Reactive[B] = Replace(this, it)
+
 }

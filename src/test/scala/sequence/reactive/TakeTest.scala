@@ -45,5 +45,11 @@ class TakeTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals(vector.Of(1,2,3,98,99), vector.from(b))
     }
 
+    def testThenNotEnough: Unit = {
+        val a = vector.Of(1,2,3,4,5)
+        val b = new java.util.ArrayList[Int]
+        reactive.from(a).take(30).then(b.add(99)).foreach(b.add(_))
+        assertEquals(vector.Of(1,2,3,4,5), vector.from(b))
+    }
 
 }
