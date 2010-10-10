@@ -16,7 +16,7 @@ class NaturalsTezt {
 
     def naturals: Reactive[Int] = {
         val t = new java.util.Timer(true)
-        val s: Reactive[Unit] = reactive.TimerRun{ task => t.schedule(task, 0, 1000) }
+        val s: Reactive[Unit] = reactive.Schedule(t.schedule(_, 0, 1000))
         s.replace(iterative.iterate(0)(_ + 1))
     }
 
@@ -26,4 +26,3 @@ class NaturalsTezt {
     }
 
 }
-
