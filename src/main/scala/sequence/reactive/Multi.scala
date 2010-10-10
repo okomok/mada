@@ -9,6 +9,6 @@ package sequence; package reactive
 
 
 private
-case class Reactions[A](_1: Reactive[A => Unit]) extends (A => Unit) {
+case class Multi[A](_1: Reactive[A => Unit]) extends (A => Unit) {
     override def apply(x: A) = for (f <- _1) f(x)
 }

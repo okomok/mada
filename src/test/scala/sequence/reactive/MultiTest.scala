@@ -14,7 +14,7 @@ import junit.framework.Assert._
 import mada.sequence.iterative
 
 
-class ReactionsTest extends org.scalatest.junit.JUnit3Suite {
+class MultiTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial {
         val out = new java.util.ArrayList[Int]
@@ -22,7 +22,7 @@ class ReactionsTest extends org.scalatest.junit.JUnit3Suite {
         rs.add(x => out.add(x+10))
         rs.add(x => out.add(x+20))
         val t = reactive.Of(4,5,1,3)
-        val k_ = t.foreach(reactive.reactions(rs))
+        val k_ = t.foreach(reactive.multi(rs))
         assertEquals(vector.Of(14,24,15,25,11,21,13,23), vector.from(out))
     }
 
@@ -32,7 +32,7 @@ class ReactionsTest extends org.scalatest.junit.JUnit3Suite {
         rs.add(x => out.add(x+10))
         rs.add(x => out.add(x+20))
         val t = reactive.Of(4,5,1,3)
-        val k_ = t.foreach(reactive.reactions(reactive.from(iterative.from(rs))))
+        val k_ = t.foreach(reactive.multi(reactive.from(iterative.from(rs))))
         assertEquals(vector.Of(14,24,15,25,11,21,13,23), vector.from(out))
     }
 

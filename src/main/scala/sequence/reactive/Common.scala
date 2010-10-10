@@ -27,12 +27,12 @@ class Common {
     /**
      * Calls all the functions in a Reactive sequence.
      */
-    def reactions[A](fs: Reactive[A => Unit]): A => Unit = Reactions(fs)
+    def multi[A](fs: Reactive[A => Unit]): A => Unit = Multi(fs)
 
     /**
-     * Calls all the functions in a Reactive sequence.
+     * Calls all the functions in a Iterative sequence.
      */
-    def reactions[A](fs: Iterative[A => Unit]): A => Unit = Reactions(fs)
+    def multi[A](fs: Iterative[A => Unit]): A => Unit = Multi(fs)
 
     /**
      * Creates a sequence initially containing the specified elements.
