@@ -29,7 +29,6 @@ class ReactorTest extends org.scalatest.junit.JUnit3Suite {
                 3
             } then {
                 cur ! OK
-                //Actor.exit
             } react { x =>
                 out.add(x)
             } react { x =>
@@ -56,21 +55,54 @@ class ReactorTest extends org.scalatest.junit.JUnit3Suite {
 
         val a = new Reactor {
             override def scheduler = new scala.actors.scheduler.SingleThreadedScheduler
-            override def startReactive(r: Reactive[Any]) {
-                r collect {
+        }
+        a.sequence collect {
                     case e: Int => e
                 } take {
                     3
                 } then {
                     cur ! OK
-                    //Actor.exit
                 } react { x =>
                     out.add(x)
                 } react { x =>
                     out.add(x+10)
                 } start
-            }
+
+        a.start
+
+        a ! 1
+        a ! "ignored"
+        a ! 2
+        a ! 3
+        Actor.receive {
+            case OK =>
         }
+        a ! "abandoned"
+        assertEquals(iterative.Of(1,11,2,12,3,13), iterative.from(out))
+    }
+
+    def testRestart: Unit = {
+        val out = new java.util.ArrayList[Int]
+
+        case object OK
+        val cur = Actor.self
+
+        val a = new Reactor {
+            override def scheduler = new scala.actors.scheduler.SingleThreadedScheduler
+        }
+        a.sequence collect {
+                    case e: Int => e
+                } take {
+                    3
+                } then {
+                    cur ! OK
+                    Actor.exit
+                } react { x =>
+                    out.add(x)
+                } react { x =>
+                    out.add(x+10)
+                } start
+
         a.start
 
         a ! 1
@@ -84,6 +116,19 @@ class ReactorTest extends org.scalatest.junit.JUnit3Suite {
         a ! "abandoned"
         assertEquals(iterative.Of(1,11,2,12,3,13), iterative.from(out))
         out.clear
+
+        a.sequence collect {
+                    case e: Int => e
+                } take {
+                    3
+                } then {
+                    cur ! OK
+                    Actor.exit
+                } react { x =>
+                    out.add(x)
+                } react { x =>
+                    out.add(x+10)
+                } start
 
         a.restart
         a ! 1
@@ -106,16 +151,15 @@ class ReactorTest extends org.scalatest.junit.JUnit3Suite {
 
         val a = new Reactor {
             override def scheduler = new scala.actors.scheduler.SingleThreadedScheduler
-            override def startReactive(r: Reactive[Any]) {
-                r collect {
+        }
+        a.sequence collect {
                     case e: Int => e
                 } take {
                     0
                 } then {
                     cur ! OK
                 } start
-            }
-        }
+
         a.start
 
         Actor.receive {

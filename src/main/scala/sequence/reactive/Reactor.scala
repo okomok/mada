@@ -9,57 +9,58 @@ package sequence; package reactive
 
 
 import scala.actors.Actor
-import scala.actors.IScheduler
+import java.util.concurrent.CopyOnWriteArrayList
 
 
 /**
  * The Reactive Actor
  */
 trait Reactor extends Actor {
-    /**
-     * Override to build a Reactive.
-     */
-    protected def startReactive(r: Reactive[Any]): Unit
-
-    @volatile private var g: Any => Unit = null
+    private val outs = new CopyOnWriteArrayList[Any => Unit]
 
     final override def act = {
         Actor.loop {
             react {
                 case Reactor.Exit => Actor.exit
-                case e => g(e)
+                case x => iterative.from(outs).foreach{f => f(x)}
             }
         }
     }
 
-    final override def start: Actor = {
-        super.start
-        startReactive(new Reactor.Impl(this))
-        this
-    }
-
-    final override def restart = {
-        super.restart
-        startReactive(new Reactor.Impl(this))
-    }
+    final def sequence: Reactive[Any] = Reactor.Sequence(this)
 }
 
 
 object Reactor {
-    private object Exit
 
-    private class Impl(r: Reactor) extends Resource[Any] {
-        override protected def openResource(f: Any => Unit) = { r.g = f }
-        override protected def closeResource = r ! Exit
-    }
+    /**
+     * Message to exit a Reactor.
+     */
+    object Exit
 
     /**
      * Constructs a trivial Reactor.
      */
-    def apply(f: Reactive[Any] => Unit): Actor = {
-        val a = new Reactor {
-            override def startReactive(r: Reactive[Any]) = f(r)
-        }
+    def apply(f: Reactive[Any] => Unit): Reactor = {
+        val a = new Reactor{}
+        f(a.sequence)
         a.start
+        a
     }
+
+    private
+    final class OutWrap(f: Any => Unit) extends (Any => Unit) {
+        override def apply(x: Any) = f(x)
+    }
+
+    private
+    case class Sequence(_1: Reactor) extends Resource[Any] {
+        private var out: Any => Unit = null
+        override protected def closeResource = _1.outs.remove(out)
+        override protected def openResource(f: Any => Unit) = {
+            out = new Reactor.OutWrap(f)
+            _1.outs.add(out)
+        }
+    }
+
 }
