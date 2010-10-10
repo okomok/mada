@@ -42,7 +42,7 @@ object Swing {
         def removeActionListener(l: ActionListener)
     }
 
-    class ActionPerformed(val source: ActionEventSource) extends Resource[ActionEvent] {
+    case class ActionPerformed(source: ActionEventSource) extends Resource[ActionEvent] {
         private var l: ActionListener = null
         override protected def closeResource = source.removeActionListener(l)
         override protected def openResource(f: ActionEvent => Unit) = {
