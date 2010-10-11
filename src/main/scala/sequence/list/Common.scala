@@ -44,6 +44,14 @@ class Common {
     }
 
     /**
+     * A list of range.
+     */
+    def range(n: Int, m: Int): List[Int] = {
+        Precondition.range(n, m, "list.range")
+        if (n == m) Nil else n :: range(n + 1, m)
+    }
+
+    /**
      * A list of length <code>n</code> with <code>x</code> the value of every element.
      */
     def replicate[A](n: Int, x: A): List[A] = repeat(x).take(n)

@@ -388,6 +388,11 @@ trait Iterative[+A] extends Sequence[A] {
      */
     def unzip[B, C](implicit pre: Iterative[A] <:< Iterative[(B, C)]): (Iterative[B], Iterative[C]) = (pre(this).map{ bc => bc._1 }, pre(this).map{ bc => bc._2 })
 
+    /**
+     * Constructs adjacent pairs.
+     */
+    def adjacent: Iterative[(A, A)] = Adjacent(this)
+
 
 // conversion
 

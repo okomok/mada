@@ -50,6 +50,7 @@ trait Forwarder[A] extends TransformAdapter[A] with Sequence.Forwarder[A] {
     override def step(n: Int): Vector[A] = around(delegate.step(n))
     override def zip[B](that: Vector[B]): Vector[(A, B)] = around(delegate.zip(that))
     override def unzip[B, C](implicit pre: Vector[A] <:< Vector[(B, C)]): (Vector[B], Vector[C]) = around2(delegate.unzip)
+    override def adjacent: Vector[(A, A)] = around(delegate.adjacent)
 
 // regions
     override def region(_start: Int, _end: Int): Vector[A] = around(delegate.region(_start, _end))

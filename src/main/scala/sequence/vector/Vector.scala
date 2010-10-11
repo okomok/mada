@@ -268,6 +268,11 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
      */
     final def using(a: Reactive[_]): Reactive[Vector[A]] = for (_ <- a) yield this
 
+    /**
+     * Constructs adjacent pairs.
+     */
+    def adjacent: Vector[(A, A)] = Adjacent(this)
+
 
 // regions
 

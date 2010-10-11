@@ -541,6 +541,11 @@ sealed abstract class List[+A] extends iterative.Sequence[A] {
         pre(this).foldRight((Nil.of[B], Nil.of[C])){ (ab, abs) => (ab._1 :: abs()._1, ab._2 :: abs()._2) }
 
     /**
+     * Constructs adjacent pairs.
+     */
+    def adjacent: List[(A, A)] = if (isEmpty) Nil else zip(tail)
+
+    /**
      * Folds all the elements by &&.
      */
     def and(implicit pre: List[A] <:< List[Boolean]): Boolean = pre(this).foldRight(true)(_ && _())
