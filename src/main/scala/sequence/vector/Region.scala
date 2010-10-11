@@ -4,7 +4,8 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package sequence; package vector
+package com.github.okomok.mada
+package sequence; package vector
 
 
 case class Region[A](_1: Vector[A], _2: Int, _3: Int) extends TransformAdapter[A] {

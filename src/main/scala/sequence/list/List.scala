@@ -4,7 +4,8 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package sequence; package list
+package com.github.okomok.mada
+package sequence; package list
 
 
 import annotation.tailrec

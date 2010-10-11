@@ -4,7 +4,8 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package sequence; package iterative
+package com.github.okomok.mada
+package sequence; package iterative
 
 
 trait Forwarder[+A] extends Iterative[A] with Sequence.Forwarder[A] {

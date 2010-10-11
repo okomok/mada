@@ -30,7 +30,8 @@
  */
 
 
-package com.github.okomok.mada; package sequence; package vector; package stl
+package com.github.okomok.mada
+package sequence; package vector; package stl
 
 
 // PushHeap
