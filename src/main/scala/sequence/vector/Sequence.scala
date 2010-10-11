@@ -11,7 +11,7 @@ package sequence; package vector
 /**
  * The bridge between phisical and logical hierarchy
  */
-trait Sequence[A] extends iterative.Sequence[A] { // physical
+trait Sequence[+A] extends iterative.Sequence[A] { // physical
 
     @conversion
     def asVector: Vector[A] // logical
@@ -44,7 +44,7 @@ trait Sequence[A] extends iterative.Sequence[A] { // physical
 
 object Sequence {
 
-    trait Forwarder[A] extends Sequence[A] with iterative.Sequence.Forwarder[A] {
+    trait Forwarder[+A] extends Sequence[A] with iterative.Sequence.Forwarder[A] {
         override protected def delegate: Sequence[A]
         override def asVector = delegate.asVector
     }

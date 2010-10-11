@@ -8,10 +8,13 @@ package com.github.okomok.mada
 package sequence; package vector
 
 
+import scala.annotation.unchecked.uncheckedVariance
+
+
 /**
  * Adapts underlying vector.
  */
-trait Adapter[From, To] extends Vector[To] {
+trait Adapter[From, +To] extends Vector[To] {
     /**
      * Underlying vector, overridden in subclasses.
      */
@@ -27,7 +30,7 @@ trait Adapter[From, To] extends Vector[To] {
     override def apply(i: Int): To = underlying(i).asInstanceOf[To]
 
     @equivalentTo("underlying(i) = e.asInstanceOf[From]")
-    override def update(i: Int, e: To): Unit = underlying(i) = e.asInstanceOf[From]
+    override def update(i: Int, e: To @uncheckedVariance): Unit = underlying(i) = e.asInstanceOf[From]
 
     @equivalentTo("underlying.isDefinedAt(i)")
     override def isDefinedAt(i: Int): Boolean = underlying.isDefinedAt(i)

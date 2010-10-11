@@ -25,7 +25,7 @@ class VectorTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testEmpty: Unit = {
-        val p = peg.from(sequence.vector.empty[Char])
+        val p = peg.from(sequence.vector.empty.of[Char])
         assertTrue("123" >> p >> "XYZ" matches "123XYZ")
         assertFalse("123" >> p >> "XYZ" matches "123aXYZ")
     }

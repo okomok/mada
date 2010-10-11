@@ -9,7 +9,7 @@ package sequence; package vector
 
 
 private
-case class Empty[A]() extends Vector[A] {
+case class Empty() extends Vector[Nothing] {
     override def start = 0
     override def end = 0
 }

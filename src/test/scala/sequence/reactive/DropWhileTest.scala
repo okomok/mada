@@ -33,7 +33,7 @@ class DropWhileTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testEmpty: Unit = {
-        val a = vector.empty[Int]
+        val a = vector.empty.of[Int]
         val b = new java.util.ArrayList[Int]
         for (x <- a.dropWhile(_ <= 10)) {
             b.add(x)

@@ -23,7 +23,7 @@ class AdjacentTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testEmpty {
-        val v = vector.empty[Int]
+        val v = vector.empty.of[Int]
         assertTrue(v.adjacent(3).isEmpty)
     }
 

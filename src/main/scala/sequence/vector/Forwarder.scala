@@ -8,6 +8,9 @@ package com.github.okomok.mada
 package sequence; package vector
 
 
+import scala.annotation.unchecked.uncheckedVariance
+
+
 trait Forwarder[A] extends TransformAdapter[A] with Sequence.Forwarder[A] {
     override protected def delegate: Vector[A]
     final override def underlying = delegate
@@ -22,7 +25,7 @@ trait Forwarder[A] extends TransformAdapter[A] with Sequence.Forwarder[A] {
     override def equalsIf[B](that: Vector[B])(p: (A, B) => Boolean): Boolean = delegate.equalsIf(that)(p)
     override def isEmpty: Boolean = delegate.isEmpty
     override def size: Int = delegate.size
-    override def append(that: Vector[A]): Vector[A] = around(delegate.append(that))
+    override def append[B >: A](that: Vector[B]): Vector[B] = around(delegate.append(that))
     override def map[B](f: A => B): Vector[B] = around(delegate.map(f))
     override def foreach(f: A => Unit): Unit = delegate.foreach(f)
     override def forall(p: A => Boolean): Boolean = delegate.forall(p)
@@ -97,15 +100,15 @@ trait Forwarder[A] extends TransformAdapter[A] with Sequence.Forwarder[A] {
     override def grainSize: Int = delegate.grainSize
     override def defaultGrainSize: Int = delegate.defaultGrainSize
 // associative folding
-    override def fold(z: A)(op: (A, A) => A): A = delegate.fold(z)(op)
-    override def reduce(op: (A, A) => A): A = delegate.reduce(op)
-    override def folder(z: A)(op: (A, A) => A): Vector[A] = around(delegate.folder(z)(op))
-    override def reducer(op: (A, A) => A): Vector[A] = around(delegate.reducer(op))
+    override def fold[B >: A](z: B)(op: (B, B) => B): B = delegate.fold(z)(op)
+    override def reduce[B >: A](op: (B, B) => B): B = delegate.reduce(op)
+    override def folder[B >: A](z: B)(op: (B, B) => B): Vector[B] = around(delegate.folder(z)(op))
+    override def reducer[B >: A](op: (B, B) => B): Vector[B] = around(delegate.reducer(op))
 // conversion
     override def toArray[B >: A : ClassManifest]: Array[B] = delegate.toArray
     override def toProduct: Product = delegate.toProduct
-    override def toSIndexedSeq: scala.collection.mutable.IndexedSeq[A] = delegate.toSIndexedSeq
-    override def toJList: java.util.List[A] = delegate.toJList
+    override def toSIndexedSeq: scala.collection.mutable.IndexedSeq[A @uncheckedVariance] = delegate.toSIndexedSeq
+    override def toJList: java.util.List[A @uncheckedVariance] = delegate.toJList
 // string
     override def stringize(implicit pre: Vector[A] <:< Vector[Char]): String = delegate.stringize
     override def lowerCase(implicit pre: Vector[A] <:< Vector[Char]): Vector[Char] = delegate.lowerCase

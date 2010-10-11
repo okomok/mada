@@ -29,7 +29,7 @@ class AccessTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals(1, A1.headOption.get)
         assertEquals(17, A1.lastOption.get)
 
-        val A2 = vector.empty[Int]
+        val A2 = vector.empty.of[Int]
         assertEquals(None, A2.headOption)
         assertEquals(None, A2.lastOption)
     }

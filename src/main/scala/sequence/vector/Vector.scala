@@ -8,6 +8,9 @@ package com.github.okomok.mada
 package sequence; package vector
 
 
+import scala.annotation.unchecked.uncheckedVariance
+
+
 object Vector extends Common with Compatibles with math.LowPriorityOrderingImplicits {
 // eligibles
     implicit def _theOrdering[A](implicit c: Ordering[A]): Ordering[Vector[A]] = lexicographicalOrdering(c)
@@ -24,8 +27,11 @@ object Vector extends Common with Compatibles with math.LowPriorityOrderingImpli
  *
  * Unless otherwise specified, these methods return projections to keep readability and writability.
  */
-trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
+trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
 
+
+    @returnThis
+    final def of[B >: A]: Vector[B] = this
 
     override def asVector: Vector[A] = this
 
@@ -61,7 +67,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
      */
     @pre("this vector is writable.")
     @pre("`isDefinedAt(i)`")
-    def update(i: Int, e: A): Unit = throw NotWritableException(this)
+    def update(i: Int, e: A @uncheckedVariance): Unit = throw NotWritableException(this)
 
     /**
      * @return  <code>i in [start, end)</code>, possibly overridden in subclasses.
@@ -95,10 +101,10 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
     /**
      * Appends <code>that</code>.
      */
-    def append(that: Vector[A]): Vector[A] = Append(this, that)
+    def append[B >: A](that: Vector[B]): Vector[B] = Append[B](this, that)
 
     @aliasOf("append")
-    final def ++(that: Vector[A]): Vector[A] = append(that)
+    final def ++[B >: A](that: Vector[B]): Vector[B] = append(that)
 
     /**
      * Maps elements using <code>f</code>.
@@ -407,7 +413,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
      * @param   lt  strict weak ordering
      * @return  this vector sorted according to <code>lt</code>.
      */
-    def sort(implicit c: Ordering[A]): Vector[A] = { stl.Sort(this, start, end, c); this }
+    def sort(implicit c: Ordering[A @uncheckedVariance]): Vector[A] = { stl.Sort(this, start, end, c); this }
 
     /**
      * Stable sort this vector according to the comparison function <code>lt</code>.
@@ -416,7 +422,7 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
      * @param   lt  strict weak ordering
      * @return  this vector sorted according to <code>lt</code>.
      */
-    def stableSort(implicit c: Ordering[A]): Vector[A] = { stl.StableSort(this, start, end, c); this }
+    def stableSort(implicit c: Ordering[A @uncheckedVariance]): Vector[A] = { stl.StableSort(this, start, end, c); this }
 
 
 // permutation
@@ -510,25 +516,25 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
      * @return  <code>foldLeft(z)(op)</code>.
      */
     @pre("`op` is associative.")
-    def fold(z: A)(op: (A, A) => A): A = foldLeft(z)(op)
+    def fold[B >: A](z: B)(op: (B, B) => B): B = foldLeft(z)(op)
 
     /**
      * @return  <code>reduceLeft(op)</code>.
      */
     @pre("`op` is associative.")
-    def reduce(op: (A, A) => A): A = reduceLeft(op)
+    def reduce[B >: A](op: (B, B) => B): B = reduceLeft(op)
 
     /**
      * @return  <code>asIterative.folderLeft(z)(op).toVector</code>.
      */
     @pre("`op` is associative.")
-    def folder(z: A)(op: (A, A) => A): Vector[A] = Folder(this, z, op)
+    def folder[B >: A](z: B)(op: (B, B) => B): Vector[B] = Folder(this, z, op)
 
     /**
      * @return  <code>asIterative.reducerLeft(op).toVector</code>.
      */
     @pre("`op` is associative.")
-    def reducer(op: (A, A) => A): Vector[A] = Reducer(this, op)
+    def reducer[B >: A](op: (B, B) => B): Vector[B] = Reducer(this, op)
 
 
 // conversion
@@ -544,10 +550,10 @@ trait Vector[A] extends PartialFunction[Int, A] with Sequence[A] {
     def toProduct: Product = new ToProduct(this)
 
     @conversion
-    def toSIndexedSeq: scala.collection.mutable.IndexedSeq[A] = ToSIndexedSeq(this)
+    def toSIndexedSeq: scala.collection.mutable.IndexedSeq[A @uncheckedVariance] = ToSIndexedSeq(this)
 
     @conversion
-    def toJList: java.util.List[A] = ToJList(this)
+    def toJList: java.util.List[A @uncheckedVariance] = ToJList(this)
 
 
 // string

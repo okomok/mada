@@ -106,7 +106,7 @@ class VarTest extends org.scalatest.junit.JUnit3Suite {
         for (x <- a; y <- b; z <- c) {
             out.add(x + y + z)
         }
-        assertEquals(vector.empty[Int], vector.from(out)); out.clear
+        assertEquals(vector.empty.of[Int], vector.from(out)); out.clear
 
         b := 2
         assertEquals(vector.Of(1+2+3), vector.from(out)); out.clear

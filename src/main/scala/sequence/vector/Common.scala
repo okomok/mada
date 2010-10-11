@@ -15,16 +15,16 @@ class Common {
 // aliases
 
     @aliasOf("Vector[A] => B")
-    type Func[A, B] = Vector[A] => B
+    type Func[-A, B] = Vector[A] => B
 
     @aliasOf("(Vector[A], Int, Int) => B")
-    type Func3[A, B] = (Vector[A], Int, Int) => B
+    type Func3[-A, B] = (Vector[A], Int, Int) => B
 
     @aliasOf("Func[A, Boolean]")
-    type Pred[A] = Func[A, Boolean]
+    type Pred[-A] = Func[A, Boolean]
 
     @aliasOf("Func3[A, Boolean]")
-    type Pred3[A] = Func3[A, Boolean]
+    type Pred3[-A] = Func3[A, Boolean]
 
     @aliasOf("Adapter[A, A]")
     type TransformAdapter[A] = Adapter[A, A]
@@ -51,7 +51,7 @@ class Common {
     /**
      * @return  an empty vector.
      */
-    def empty[A]: Vector[A] = Empty.apply[A]
+    val empty: Vector[Nothing] = Empty()
 
     /**
      * Concatenate all argument sequences into a single vector.

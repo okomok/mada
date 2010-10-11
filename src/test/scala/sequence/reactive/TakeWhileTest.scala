@@ -29,7 +29,7 @@ class TakeWhileTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testEmpty: Unit = {
-        val a = vector.empty[Int]
+        val a = vector.empty.of[Int]
         val b = new java.util.ArrayList[Int]
         reactive.from(a).takeWhile(_ <= 10).foreach(b.add(_))
         assertTrue(b.isEmpty)

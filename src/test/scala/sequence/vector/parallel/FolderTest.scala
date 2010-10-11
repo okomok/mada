@@ -25,6 +25,6 @@ class FolderTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testBound: Unit = {
-        assertEquals(vector.single(3), empty[Int].parallel.folder(3)(_ + _))
+        assertEquals(vector.single(3), empty.of[Int].parallel.folder(3)(_ + _))
     }
 }
