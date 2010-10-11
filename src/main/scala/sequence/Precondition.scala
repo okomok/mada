@@ -4,10 +4,11 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package sequence
+package com.github.okomok.mada
+package sequence
 
 
-private
+private[sequence]
 object Precondition {
 
     def positive(n: Int, msg: String): Unit = {

@@ -4,23 +4,26 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package sequence; package iterative
+package com.github.okomok.mada
+package sequence; package iterative
 
 
 private
-case class Adjacent[+A](_1: Iterative[A]) extends Iterative[(A, A)] {
+case class Adjacent[A](_1: Iterative[A], _2: Int) extends Iterative[Vector[A]] {
     override def begin = {
-        val it = _1.begin
-        if (!it) {
-            iterator.end
-        } else {
-            new Iterator[(A, A)] {
-                private var prev = ~it
+        new Iterator[Vector[A]] {
+            private val it = _1.begin
+            private val buf = new AdjacentBuffer[A](_2)
+            while (it && !buf.isFull) {
+                buf.addLast(~it)
                 it.++
-                override def isEnd = !it
-                override def deref = (prev, ~it)
-                override def increment = {
-                    prev = ~it
+            }
+            override def isEnd = !buf.isFull
+            override def deref = buf.toVector
+            override def increment = {
+                buf.removeFirst
+                if (it) {
+                    buf.addLast(~it)
                     it.++
                 }
             }

@@ -543,7 +543,7 @@ sealed abstract class List[+A] extends iterative.Sequence[A] {
     /**
      * Constructs adjacent pairs.
      */
-    def adjacent: List[(A, A)] = if (isEmpty) Nil else zip(tail)
+    def adjacent[B](n: Int)(implicit pre: List[A] <:< List[B]): List[Vector[B]] = pre(this).asIterative.adjacent(n).toList
 
     /**
      * Folds all the elements by &&.

@@ -8,18 +8,17 @@ package com.github.okomok.mada
 package sequence; package reactive
 
 
-// drop . zip
-
 private
-case class Adjacent[A](_1: Reactive[A]) extends Reactive[(A, A)] {
+case class Adjacent[A](_1: Reactive[A], _2: Int) extends Reactive[Vector[A]] {
     override def close = _1.close
-    override def foreach(f: Tuple2[A, A] => Unit) = {
-        var prev: Option[A] = None
+    override def foreach(f: Vector[A] => Unit) = {
+        val buf = new AdjacentBuffer[A](_2)
         for (x <- _1) {
-            if (!prev.isEmpty) {
-                f(prev.get, x)
+            buf.addLast(x)
+            if (buf.isFull) {
+                f(buf.toVector)
+                buf.removeFirst
             }
-            prev = Some(x)
         }
     }
 }

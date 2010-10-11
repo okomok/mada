@@ -391,7 +391,7 @@ trait Iterative[+A] extends Sequence[A] {
     /**
      * Constructs adjacent pairs.
      */
-    def adjacent: Iterative[(A, A)] = Adjacent(this)
+    def adjacent[B](n: Int)(implicit pre: Iterative[A] <:< Iterative[B]): Iterative[Vector[B]] = Adjacent(pre(this), n)
 
 
 // conversion
