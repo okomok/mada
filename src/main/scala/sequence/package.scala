@@ -39,6 +39,6 @@ package object sequence {
 
     @aliasOf("vector.Vector")
      val Vector = vector.Vector
-    type Vector[A] = vector.Vector[A]
+    type Vector[+A] = vector.Vector[A]
 
 }

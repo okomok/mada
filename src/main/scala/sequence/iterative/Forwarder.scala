@@ -67,11 +67,11 @@ trait Forwarder[+A] extends Iterative[A] with Sequence.Forwarder[A] {
     override def unsplit[B](sep: Iterative[B])(implicit pre: Iterative[A] <:< Iterative[Sequence[B]]): Iterative[B] = around(delegate.unsplit(sep))
     override def zip[B](that: Iterative[B]): Iterative[(A, B)] = around(delegate.zip(that))
     override def unzip[B, C](implicit pre: Iterative[A] <:< Iterative[(B, C)]): (Iterative[B], Iterative[C]) = around2(delegate.unzip)
-    override def adjacent[B](n: Int)(implicit pre: Iterative[A] <:< Iterative[B]): Iterative[Vector[B]] = around(delegate.adjacent(n))
+    override def adjacent(n: Int): Iterative[Vector[A]] = around(delegate.adjacent(n))
     override def stringize(implicit pre: Iterative[A] <:< Iterative[Char]): String = delegate.stringize
     override def lexical(implicit pre: Iterative[A] <:< Iterative[Char]): Lexical = delegate.lexical
     override def toList: List[A] = delegate.toList
-    override def toVector[B](implicit pre: Iterative[A] <:< Iterative[B]): Vector[B] = delegate.toVector
+    override def toVector: Vector[A] = delegate.toVector
     override def toSeq: Seq[A] = delegate.toSeq
     override def toSList: scala.collection.immutable.List[A] = delegate.toSList
     override def toSHashMap[K, V](implicit pre: Iterative[A] <:< Iterative[(K, V)]): scala.collection.Map[K, V] = delegate.toSHashMap

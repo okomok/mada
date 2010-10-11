@@ -59,7 +59,7 @@ trait Forwarder[+A] extends Reactive[A] with Sequence.Forwarder[A] {
     override def header[B >: A](it: Iterative[B]): Reactive[B] = around(delegate.header(it))
     override def protect: Reactive[A] = around(delegate.protect)
     override def tokenize[B](p: Peg[B])(implicit pre: Reactive[A] <:< Reactive[B]): Reactive[Vector[B]] = around(delegate.tokenize(p))
-    override def adjacent[B](n: Int)(implicit pre: Reactive[A] <:< Reactive[B]): Reactive[Vector[B]] = around(delegate.adjacent(n))
+    override def adjacent(n: Int): Reactive[Vector[A]] = around(delegate.adjacent(n))
     override def post: Reactive[A] = around(delegate.post)
     override def replace[B](it: Iterative[B]): Reactive[B] = around(delegate.replace(it))
 }
