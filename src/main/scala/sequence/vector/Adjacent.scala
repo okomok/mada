@@ -9,7 +9,7 @@ package sequence; package vector
 
 
 private
-case class Adjacent[A](val _1: Vector[A], _2: Int) extends Vector[Vector[A]] {
+case class Adjacent[A](val _1: Vector[A], _2: Int) extends Vector[Vector[A]] with NotWritable[Vector[A]] {
     Precondition.positive(_2, "adjacent count")
 
     override def start = 0
