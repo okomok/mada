@@ -8,6 +8,6 @@ package com.github.okomok.mada; package peg
 
 
 private
-case class Call[A](_1: util.ByName[Unit]) extends Forwarder[A] {
-    override protected val delegate = eps[A] act { _ => _1() }
+case class Call(_1: util.ByName[Unit]) extends Forwarder[Any] {
+    override protected val delegate = eps act { _ => _1() }
 }

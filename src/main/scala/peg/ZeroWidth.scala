@@ -10,7 +10,7 @@ package com.github.okomok.mada; package peg
 /**
  * Trivial mixin for zero-width peg.
  */
-trait ZeroWidth[A] extends Peg[A] {
+trait ZeroWidth[-A] extends Peg[A] {
     @equivalentTo("0")
     override def width = 0
 }

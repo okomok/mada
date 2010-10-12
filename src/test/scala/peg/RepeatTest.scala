@@ -48,7 +48,7 @@ class RepeatTest extends org.scalatest.junit.JUnit3Suite {
 
 
 class RepeatUntilTest extends org.scalatest.junit.JUnit3Suite {
-    val any3 = peg.dot[Char] >> peg.dot[Char] >> peg.dot[Char]
+    val any3 = peg.dot.of[Char] >> peg.dot.of[Char] >> peg.dot.of[Char]
 
     def testRepeat: Unit = {
         assertTrue(any3.repeat(2, 4).until("DE") matches "abcabcDE")

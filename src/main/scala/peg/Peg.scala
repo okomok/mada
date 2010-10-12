@@ -12,11 +12,11 @@ object Peg extends Common with Compatibles {
 
 // methodization
     sealed class _OfFuncArg[A](_this: Peg[A]) {
-        final def act(f: Action[A]): Peg[A] = Act(_this, f)
-        final def act3(f: Action3[A]): Peg[A] = Act3(_this, f)
-        final def apply(f: Action[A]): Peg[A] = act(f)
-        final def andIf(pred: sequence.vector.Pred[A]): Peg[A] = AndIf(_this, pred)
-        final def andIf3(pred: sequence.vector.Pred3[A]): Peg[A] = AndIf3(_this, pred)
+        def act(f: Action[A]): Peg[A] = Act(_this, f)
+        def act3(f: Action3[A]): Peg[A] = Act3(_this, f)
+        def apply(f: Action[A]): Peg[A] = act(f)
+        def andIf(pred: sequence.vector.Pred[A]): Peg[A] = AndIf(_this, pred)
+        def andIf3(pred: sequence.vector.Pred3[A]): Peg[A] = AndIf3(_this, pred)
     }
     implicit def _ofFuncArg[A](_this: Peg[A]): _OfFuncArg[A] = new _OfFuncArg(_this)
 

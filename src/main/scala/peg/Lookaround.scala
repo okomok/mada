@@ -25,23 +25,23 @@ case class Lookaround3[A](_1: sequence.vector.Pred3[A]) extends Peg[A] with Zero
 
 
 private
-case class Begin[A]() extends Forwarder[A] {
-    override protected val delegate = lookaround3[A]{ (v, i, _) => i == v.start }
+case class Begin() extends Forwarder[Any] {
+    override protected val delegate = lookaround3[Any]{ (v, i, _) => i == v.start }
 }
 
 private
-case class End[A]() extends Forwarder[A] {
-    override protected val delegate = lookaround3[A]{ (v, i, _) => i == v.end }
-}
-
-
-private
-case class Eps[A]() extends Forwarder[A] {
-    override protected val delegate = lookaround3[A]{ (_, _, _) => true }
+case class End() extends Forwarder[Any] {
+    override protected val delegate = lookaround3[Any]{ (v, i, _) => i == v.end }
 }
 
 
 private
-case class Fail[A]() extends Forwarder[A] {
-    override protected val delegate = lookaround3[A]{ (_, _, _) => false }
+case class Eps() extends Forwarder[Any] {
+    override protected val delegate = lookaround3[Any]{ (_, _, _) => true }
+}
+
+
+private
+case class Fail() extends Forwarder[Any] {
+    override protected val delegate = lookaround3[Any]{ (_, _, _) => false }
 }

@@ -20,7 +20,7 @@ class Common {
     type Action3[-A] = sequence.vector.Func3[A, Unit]
 
     @compatibles
-    val Compatibles: Compatibles = Peg
+    lazy val Compatibles: Compatibles = Peg
 
 
 // constants
@@ -45,35 +45,35 @@ class Common {
      *
      * @param   n   the increment count
      */
-    def advance[A](n: Int): Peg[A] = Advance[A](n)
+    def advance(n: Int): Peg[Any] = Advance(n)
 
     /**
      * Matches the beginning of input.
      */
-    def begin[A]: Peg[A] = Begin[A]()
+    lazy val begin: Peg[Any] = Begin()
 
     /**
      * Matches the end of input.
      */
-    def end[A]: Peg[A] = End[A]()
+    lazy val end: Peg[Any] = End()
 
-    @equivalentTo("eps[A] act { _ => body }")
-    def call[A](body: => Unit): Peg[A] = Call[A](util.byName(body))
+    @equivalentTo("eps act { _ => body }")
+    def call(body: => Unit): Peg[Any] = Call(util.byName(body))
 
     /**
      * Matches any one element.
      */
-    def dot[A]: Peg[A] = Dot[A]()
+    lazy val dot: Peg[Any] = Dot()
 
     /**
      * Epsilon; Matches an empty input.
      */
-    def eps[A]: Peg[A] = Eps[A]()
+    lazy val eps: Peg[Any] = Eps()
 
     /**
      * Doesn't match any input.
      */
-    def fail[A]: Peg[A] = Fail[A]()
+    lazy val fail: Peg[Any] = Fail()
 
     /**
      * java.lang.Mathches case-insensitively.
@@ -109,7 +109,7 @@ class Common {
     /**
      * Always results in assertion failure.
      */
-    def undefined[A]: Peg[A] = Undefined[A]()
+    lazy val undefined: Peg[Any] = Undefined()
 
 
 // pseudo

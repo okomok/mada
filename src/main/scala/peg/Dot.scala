@@ -8,6 +8,6 @@ package com.github.okomok.mada; package peg
 
 
 private
-case class Dot[A]() extends Forwarder[A] {
-    override protected val delegate = advance[A](1)
+case class Dot() extends Forwarder[Any] {
+    override protected val delegate = advance(1)
 }

@@ -15,8 +15,8 @@ import junit.framework.Assert._
 
 class EpsTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
-        assertTrue(eps[Int].matches(mada.sequence.vector.empty.of[Int]))
-        assertFalse(eps[Int].matches(mada.sequence.vector.Of(1,2,3)))
+        assertTrue(eps.of[Int].matches(mada.sequence.vector.empty.of[Int]))
+        assertFalse(eps.of[Int].matches(mada.sequence.vector.Of(1,2,3)))
     }
 
     def testCompile(v: mada.sequence.Vector[Char]): Unit = {
