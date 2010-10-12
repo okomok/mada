@@ -4,7 +4,8 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package peg; package prettyprinter
+package com.github.okomok.mada
+package peg; package prettyprinter
 
 
 private[peg]

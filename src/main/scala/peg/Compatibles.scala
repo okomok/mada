@@ -4,7 +4,8 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package peg
+package com.github.okomok.mada
+package peg
 
 
 // So long names that wildcard import can unambiguously be used.

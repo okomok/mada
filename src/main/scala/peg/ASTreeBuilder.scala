@@ -4,7 +4,8 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package peg
+package com.github.okomok.mada
+package peg
 
 
 import javax.swing.tree.{MutableTreeNode, DefaultMutableTreeNode}
