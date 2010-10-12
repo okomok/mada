@@ -407,20 +407,12 @@ trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
 // sort
 
     /**
-     * Sort this vector according to the comparison function <code>lt</code>.
-     * Note this vector is mutated.
-     *
-     * @param   lt  strict weak ordering
-     * @return  this vector sorted according to <code>lt</code>.
+     * Sort this vector. Note this vector is mutated.
      */
     def sort(implicit c: Ordering[A @uncheckedVariance]): Vector[A] = { stl.Sort(this, start, end, c); this }
 
     /**
-     * Stable sort this vector according to the comparison function <code>lt</code>.
-     * Note this vector is mutated.
-     *
-     * @param   lt  strict weak ordering
-     * @return  this vector sorted according to <code>lt</code>.
+     * Stable sort this vector. Note this vector is mutated.
      */
     def stableSort(implicit c: Ordering[A @uncheckedVariance]): Vector[A] = { stl.StableSort(this, start, end, c); this }
 
