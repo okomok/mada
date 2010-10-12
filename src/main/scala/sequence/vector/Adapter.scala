@@ -14,7 +14,7 @@ import scala.annotation.unchecked.uncheckedVariance
 /**
  * Adapts underlying vector.
  */
-trait Adapter[From, +To] extends Vector[To] {
+trait Adapter[+From, +To] extends Vector[To] {
     /**
      * Underlying vector, overridden in subclasses.
      */

@@ -25,13 +25,13 @@ class _FromJList[A](_1: java.util.List[A]) extends Vector[A] {
     override def apply(i: Int) = _1.get(i)
     override def update(i: Int, e: A) = _1.set(i, e)
 
-    override def sort(implicit c: Ordering[A]) = {
-        java.util.Collections.sort(_1, c)
+    override def sort[B >: A](implicit c: Ordering[B]) = {
+        java.util.Collections.sort(_1.asInstanceOf[java.util.List[B]], c)
         this
     }
 
-    override def stableSort(implicit c: Ordering[A]) = {
-        java.util.Collections.sort(_1, c)
+    override def stableSort[B >: A](implicit c: Ordering[B]) = {
+        java.util.Collections.sort(_1.asInstanceOf[java.util.List[B]], c)
         this
     }
 

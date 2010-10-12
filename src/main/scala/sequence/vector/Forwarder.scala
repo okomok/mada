@@ -11,7 +11,7 @@ package sequence; package vector
 import scala.annotation.unchecked.uncheckedVariance
 
 
-trait Forwarder[A] extends TransformAdapter[A] with Sequence.Forwarder[A] {
+trait Forwarder[+A] extends TransformAdapter[A] with Sequence.Forwarder[A] {
     override protected def delegate: Vector[A]
     final override def underlying = delegate
 
@@ -82,8 +82,8 @@ trait Forwarder[A] extends TransformAdapter[A] with Sequence.Forwarder[A] {
     override def foldRight[B](z: B)(op: (A, B) => B): B = delegate.foldRight(z)(op)
     override def reduceRight[B >: A](op: (A, B) => B): B = delegate.reduceRight(op)
 // sort
-    override def sort(implicit c: Ordering[A]): Vector[A] = around(delegate.sort(c))
-    override def stableSort(implicit c: Ordering[A]): Vector[A] = around(delegate.stableSort(c))
+    override def sort[B >: A](implicit c: Ordering[B]): Vector[A] = around(delegate.sort(c))
+    override def stableSort[B >: A](implicit c: Ordering[B]): Vector[A] = around(delegate.stableSort(c))
 // permutation
     override def permutation(f: Int => Int): Vector[A] = around(delegate.permutation(f))
     override def nth: Vector[A] = around(delegate.nth)

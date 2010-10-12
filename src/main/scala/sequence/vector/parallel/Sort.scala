@@ -15,10 +15,9 @@ import stl.{UnguardedPartition, Median}
 
 private
 object ParallelSort {
-    def apply[A](_1: Vector[A], _2: Ordering[A], _3: Int): Vector[A] = {
+    def apply[A](_1: Vector[A], _2: Ordering[A], _3: Int): Unit = {
         assert(!IsParallel(_1))
         impl(_1, _1.start, _1.end, _2, _3 * 2) // best grain size?
-        _1
     }
 
     def impl[A](v: Vector[A], first: Int, last: Int, c: Ordering[A], grainSize: Int): Unit = {

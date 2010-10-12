@@ -409,12 +409,12 @@ trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
     /**
      * Sort this vector. Note this vector is mutated.
      */
-    def sort(implicit c: Ordering[A @uncheckedVariance]): Vector[A] = { stl.Sort(this, start, end, c); this }
+    def sort[B >: A](implicit c: Ordering[B]): Vector[A] = { stl.Sort(this, start, end, c); this }
 
     /**
      * Stable sort this vector. Note this vector is mutated.
      */
-    def stableSort(implicit c: Ordering[A @uncheckedVariance]): Vector[A] = { stl.StableSort(this, start, end, c); this }
+    def stableSort[B >: A](implicit c: Ordering[B]): Vector[A] = { stl.StableSort(this, start, end, c); this }
 
 
 // permutation

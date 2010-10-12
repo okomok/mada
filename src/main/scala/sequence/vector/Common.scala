@@ -27,7 +27,7 @@ class Common {
     type Pred3[-A] = Func3[A, Boolean]
 
     @aliasOf("Adapter[A, A]")
-    type TransformAdapter[A] = Adapter[A, A]
+    type TransformAdapter[+A] = Adapter[A, A]
 
 
 // constants
