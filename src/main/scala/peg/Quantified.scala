@@ -10,21 +10,21 @@ package com.github.okomok.mada; package peg
 /**
  * Adds reluctant methods for quantified peg.
  */
-trait Quantified[A] extends Peg[A] {
+trait Quantified[-A] extends Peg[A] {
     /**
      * Stops including <code>that</code>.
      *
      * @see     >>> as alias.
      */
-    def until(that: Peg[A]): Peg[A]
+    def until[B <: A](that: Peg[B]): Peg[B]
 
     @aliasOf("until")
-    final def >>>(that: Peg[A]): Peg[A] = until(that)
+    final def >>>[B <: A](that: Peg[B]): Peg[B] = until(that)
 }
 
 
-trait QuantifiedForwarder[A] extends Forwarder[A] with Quantified[A] {
+trait QuantifiedForwarder[-A] extends Forwarder[A] with Quantified[A] {
     override protected def delegate: Quantified[A]
 
-    override def until(that: Peg[A]) = delegate.until(that)
+    override def until[B <: A](that: Peg[B]) = delegate.until(that)
 }

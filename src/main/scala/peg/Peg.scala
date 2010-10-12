@@ -4,10 +4,23 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package peg
+package com.github.okomok.mada
+package peg
 
 
-object Peg extends Common with Compatibles
+object Peg extends Common with Compatibles {
+
+// methodization
+    sealed class _OfFuncArg[A](_this: Peg[A]) {
+        final def act(f: Action[A]): Peg[A] = Act(_this, f)
+        final def act3(f: Action3[A]): Peg[A] = Act3(_this, f)
+        final def apply(f: Action[A]): Peg[A] = act(f)
+        final def andIf(pred: sequence.vector.Pred[A]): Peg[A] = AndIf(_this, pred)
+        final def andIf3(pred: sequence.vector.Pred3[A]): Peg[A] = AndIf3(_this, pred)
+    }
+    implicit def _ofFuncArg[A](_this: Peg[A]): _OfFuncArg[A] = new _OfFuncArg(_this)
+
+}
 
 
 /**
@@ -27,7 +40,7 @@ object Peg extends Common with Compatibles
  * <li/><code>java.util.regex</code> is trivially compatible to <code>mada.Peg</code>.
  * </ul>
  */
-trait Peg[A] {
+trait Peg[-A] {
 
 
 // kernel interface
@@ -56,28 +69,28 @@ trait Peg[A] {
      *
      * @see     &amp; as alias.
      */
-    final def and(that: Peg[A]): Peg[A] = And(this, that)
+    final def and[B <: A](that: Peg[B]): Peg[B] = And[B](this, that)
 
     /**
      * Ordered choice
      *
      * @see     | as alias.
      */
-    final def or(that: Peg[A]): Peg[A] = Or(this, that)
+    final def or[B <: A](that: Peg[B]): Peg[B] = Or[B](this, that)
 
     /**
      * Matches <code>this</code>, but not <code>that</code>.
      *
      * @see     - as alias.
      */
-    final def minus(that: Peg[A]): Peg[A] = Minus(this, that)
+    final def minus[B <: A](that: Peg[B]): Peg[B] = Minus[B](this, that)
 
     /**
      * Matches <code>this</code> or <code>that</code>, but not both.
      *
      * @see     ^ as alias.
      */
-    final def xor(that: Peg[A]): Peg[A] = Xor(this, that)
+    final def xor[B <: A](that: Peg[B]): Peg[B] = Xor[B](this, that)
 
     /**
      * Matches if this peg not match, then advances <code>width</code>.
@@ -95,20 +108,20 @@ trait Peg[A] {
      *
      * @see     &gt;&gt; as alias.
      */
-    final def seqAnd(that: Peg[A]): Peg[A] = SeqAnd(this, that)
+    final def seqAnd[B <: A](that: Peg[B]): Peg[B] = SeqAnd[B](this, that)
 
     /**
      * @return  <code>(this &gt;&gt; that.?) | that</code>.
      * @see     &gt;|&gt; as alias.
      */
-    final def seqOr(that: Peg[A]): Peg[A] = SeqOr(this, that)
+    final def seqOr[B <: A](that: Peg[B]): Peg[B] = SeqOr[B](this, that)
 
     /**
      * Equivalent to <code>!this | this &gt;&gt; that</code>, but parses <code>this</code> once.
      *
      * @see     &gt;-&gt; as alias.
      */
-    final def seqImply(that: Peg[A]): Peg[A] = SeqImply(this, that)
+    final def seqImply[B <: A](that: Peg[B]): Peg[B] = SeqImply[B](this, that)
 
     /**
      * Goes sequence as long as possible.
@@ -116,7 +129,7 @@ trait Peg[A] {
      * @return  <code>that &gt;&gt; this.?</code>.
      * @see     &gt;?&gt;: as alias.
      */
-    final def seqOpt_:(that: Peg[A]): Peg[A] = SeqOpt(this, that)
+    final def seqOpt_:[B <: A](that: Peg[B]): Peg[B] = SeqOpt[B](this, that)
 
 
 // quantifiers
@@ -191,12 +204,12 @@ trait Peg[A] {
      *
      * @see     apply as alias.
      */
-    final def act(f: peg.Action[A]): Peg[A] = Act(this, f)
+//    final def act(f: peg.Action[A]): Peg[A] = Act(this, f)
 
     /**
      * Associates semantic action. (no heap allocations)
      */
-    final def act3(f: peg.Action3[A]): Peg[A] = Act3(this, f)
+//    final def act3(f: peg.Action3[A]): Peg[A] = Act3(this, f)
 
 
 // utilities
@@ -204,12 +217,12 @@ trait Peg[A] {
     /**
      * Matches if matched region meets condition <code>pred</code>.
      */
-    final def andIf(pred: sequence.vector.Pred[A]): Peg[A] = AndIf(this, pred)
+//    final def andIf(pred: sequence.vector.Pred[A]): Peg[A] = AndIf(this, pred)
 
     /**
      * Matches if matched region meets condition <code>pred</code>. (no heap allocations)
      */
-    final def andIf3(pred: sequence.vector.Pred3[A]): Peg[A] = AndIf3(this, pred)
+//    final def andIf3(pred: sequence.vector.Pred3[A]): Peg[A] = AndIf3(this, pred)
 
     /**
      * Returns an alias of this peg.
@@ -246,7 +259,7 @@ trait Peg[A] {
     /**
      * Finds <code>sequence.vector.Region</code> which this peg matches.
      */
-    final def find(v: sequence.Vector[A]): Option[sequence.Vector[A]] = {
+    final def find[B <: A](v: sequence.Vector[B]): Option[sequence.Vector[B]] = {
         val (i, j) = findRange(v, v.start, v.end)
         if (j == FAILURE) {
             None
@@ -293,23 +306,23 @@ trait Peg[A] {
     /**
      * Splits input using this peg.
      */
-    final def split(v: sequence.Vector[A]): sequence.Iterative[sequence.Vector[A]] = Split(this, v)
+    final def split[B <: A](v: sequence.Vector[B]): sequence.Iterative[sequence.Vector[B]] = Split(this, v)
 
     /**
      * Tokenizes input using this peg.
      */
-    final def tokenize(v: sequence.Vector[A]): sequence.Iterative[sequence.Vector[A]] = Tokenize(this, v)
+    final def tokenize[B <: A](v: sequence.Vector[B]): sequence.Iterative[sequence.Vector[B]] = Tokenize(this, v)
 
     /**
      * Filters input using this peg.
      */
-    final def filterFrom(v: sequence.Vector[A]): sequence.Iterative[A] = FilterFrom(this, v)
+    final def filterFrom[B <: A](v: sequence.Vector[B]): sequence.Iterative[B] = FilterFrom(this, v)
 
 
 // aliases
 
-    @aliasOf("act")
-    final def apply(f: peg.Action[A]): Peg[A] = act(f)
+//    @aliasOf("act")
+//    final def apply(f: peg.Action[A]): Peg[A] = act(f)
 
     /**
      * And-predicate
@@ -327,34 +340,34 @@ trait Peg[A] {
     final def unary_- : Peg[A] = negate
 
     @aliasOf("and")
-    final def &(that: Peg[A]): Peg[A] = and(that)
+    final def &[B <: A](that: Peg[B]): Peg[B] = and(that)
 
     /**
      * Ordered choice
      */
     @aliasOf("or")
-    final def |(that: Peg[A]): Peg[A] = or(that)
+    final def |[B <: A](that: Peg[B]): Peg[B] = or(that)
 
     @aliasOf("minus")
-    final def -(that: Peg[A]): Peg[A] = minus(that)
+    final def -[B <: A](that: Peg[B]): Peg[B] = minus(that)
 
     @aliasOf("xor")
-    final def ^(that: Peg[A]): Peg[A] = xor(that)
+    final def ^[B <: A](that: Peg[B]): Peg[B] = xor(that)
 
     /**
      * Sequence
      */
     @aliasOf("seqAnd")
-    final def >>(that: Peg[A]): Peg[A] = seqAnd(that)
+    final def >>[B <: A](that: Peg[B]): Peg[B] = seqAnd(that)
 
     @aliasOf("seqOr")
-    final def >|>(that: Peg[A]): Peg[A] = seqOr(that)
+    final def >|>[B <: A](that: Peg[B]): Peg[B] = seqOr(that)
 
     @aliasOf("seqImply")
-    final def >->(that: Peg[A]): Peg[A] = seqImply(that)
+    final def >->[B <: A](that: Peg[B]): Peg[B] = seqImply(that)
 
     @aliasOf("seqOpt_:")
-    final def >?>:(that: Peg[A]): Peg[A] = seqOpt_:(that)
+    final def >?>:[B <: A](that: Peg[B]): Peg[B] = seqOpt_:(that)
 
     /**
      * Zero-or-more
@@ -390,9 +403,12 @@ trait Peg[A] {
 // misc
 
     @returnThis
+    final def of[B <: A]: Peg[B] = this
+
+    @returnThis
     final def asPeg: Peg[A] = this
 
     @equivalentTo("(e, this)")
-    final def inCase(e: A): (A, Peg[A]) = (e, this)
+    final def inCase[B <: A](e: B): (B, Peg[B]) = (e, this)
 
 }

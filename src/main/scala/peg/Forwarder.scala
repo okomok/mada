@@ -7,7 +7,7 @@
 package com.github.okomok.mada; package peg
 
 
-trait Forwarder[A] extends Peg[A] with util.Forwarder {
+trait Forwarder[-A] extends Peg[A] with util.Forwarder {
     override protected def delegate: Peg[A]
 
     override def parse(v: sequence.Vector[A], start: Int, end: Int) = delegate.parse(v, start, end)

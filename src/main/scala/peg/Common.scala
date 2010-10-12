@@ -14,10 +14,10 @@ class Common {
 // aliases
 
     @aliasOf("sequence.vector.Func[A, Unit]")
-    type Action[A] = sequence.vector.Func[A, Unit]
+    type Action[-A] = sequence.vector.Func[A, Unit]
 
     @aliasOf("sequence.vector.Func3[A, Unit]")
-    type Action3[A] = sequence.vector.Func3[A, Unit]
+    type Action3[-A] = sequence.vector.Func3[A, Unit]
 
     @compatibles
     val Compatibles: Compatibles = Peg
