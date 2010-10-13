@@ -22,9 +22,9 @@
 
 
 
-## auto
+## arm
 
-`auto` provides deterministic resource management within a block.
+`arm` provides deterministic resource management within a block.
 
     import com.github.okomok.mada.arm.use
     import java.nio.channels
