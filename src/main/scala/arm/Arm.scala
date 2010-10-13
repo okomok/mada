@@ -5,16 +5,16 @@
 
 
 package com.github.okomok.mada
-package auto
+package arm
 
 
-object Auto extends Common with Compatibles
+object Arm extends Common with Compatibles
 
 
 /**
  * Mixin for automatic resource management
  */
-trait Auto[+A] extends sequence.Reactive[A] {
+trait Arm[+A] extends sequence.Reactive[A] {
     def open: A
 
     override def foreach(f: A => Unit) = {

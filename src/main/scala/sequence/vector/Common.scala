@@ -110,20 +110,20 @@ class Common {
     /**
      * Creates a file vector with the specified primitive type.
      */
-    def file[A](f: java.io.RandomAccessFile)(implicit rm: scala.reflect.Manifest[A]): Auto[Vector[A]] = {
+    def file[A](f: java.io.RandomAccessFile)(implicit rm: scala.reflect.Manifest[A]): Arm[Vector[A]] = {
         (rm.toString match {
             case "Char" => CharFile(f)
             case "Int" => IntFile(f)
             case "Long" => LongFile(f)
             case _ => throw new UnsupportedOperationException("coming soon: " + rm.toString)
-        }).asInstanceOf[Auto[Vector[A]]]
+        }).asInstanceOf[Arm[Vector[A]]]
     }
 
     @equivalentTo("file[A](new java.io.RandomAccessFile(f, m))(rm)")
-    def file[A](f: java.io.File, m: String)(implicit rm: scala.reflect.Manifest[A]): Auto[Vector[A]] = file[A](new java.io.RandomAccessFile(f, m))(rm)
+    def file[A](f: java.io.File, m: String)(implicit rm: scala.reflect.Manifest[A]): Arm[Vector[A]] = file[A](new java.io.RandomAccessFile(f, m))(rm)
 
     @equivalentTo("file[A](new java.io.RandomAccessFile(n, m))(rm)")
-    def file[A](n: String, m: String)(implicit rm: scala.reflect.Manifest[A]): Auto[Vector[A]] = file[A](new java.io.RandomAccessFile(n, m))(rm)
+    def file[A](n: String, m: String)(implicit rm: scala.reflect.Manifest[A]): Arm[Vector[A]] = file[A](new java.io.RandomAccessFile(n, m))(rm)
 
 
 // pattern matching

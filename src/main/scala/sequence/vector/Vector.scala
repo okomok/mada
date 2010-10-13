@@ -276,7 +276,7 @@ trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
     def adjacent(n: Int): Vector[Vector[A]] = Adjacent(this, n)
 
     /**
-     * Installs auto relation.
+     * Installs arm relation.
      */
     final def using(a: Reactive[_]): Reactive[Vector[A]] = for (_ <- a) yield this
 

@@ -10,7 +10,7 @@ package com.github.okomok.madatest; package sequencetest; package vectortest
 import com.github.okomok.mada
 
 import mada.sequence.vector._
-import mada.auto.using
+import mada.arm.using
 import junit.framework.Assert._
 
 
@@ -57,7 +57,7 @@ class FileTest extends org.scalatest.junit.JUnit3Suite {
         }
 
         def aSeq = {
-            val f: mada.Auto[Vector[Char]] = file[Char](n, "r")
+            val f: mada.Arm[Vector[Char]] = file[Char](n, "r")
             f//f.map(e => e).using(f) // owns myself?
         }
 

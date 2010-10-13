@@ -2,11 +2,11 @@
 
 
 
-`Mada` is a set of packages for Scala:
+`Mada` contains the following packages in Scala:
 
-- `auto`
+- `arm`
 
-    Emulating `C# using` statement.
+    Automatic resource management facility
 
 - `dual`
 
@@ -26,7 +26,7 @@
 
 `auto` provides deterministic resource management within a block.
 
-    import com.github.okomok.mada.auto.use
+    import com.github.okomok.mada.arm.use
     import java.nio.channels
     import java.nio.channels.Channels
 
@@ -47,6 +47,10 @@
 
 `dest.close` and `source.close` are automatically invoked in order.
 
+References:
+
+* [scala-arm]
+* [ARM in Java]
 
 
 ## dual
@@ -333,3 +337,6 @@ Shunsuke Sogame <<okomok@gmail.com>>
 [Reactive Extensions]: http://msdn.microsoft.com/en-us/devlabs/ee794896.aspx "Reactive Extensions"
 [scala.Responder]: http://scala.sygneca.com/libs/responder "scala.Responder"
 [scala.collection.Traversable]: http://www.scala-lang.org/archives/downloads/distrib/files/nightly/docs/library/scala/collection/Traversable.html "scala.collection.Traversable"
+[scala-arm]: http://github.com/jsuereth/scala-arm "scala-arm"
+[ARM in Java]: http://www.infoq.com/news/2010/08/arm-blocks "Automatic Resource Management in Java"
+

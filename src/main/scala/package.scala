@@ -9,9 +9,9 @@ package com.github.okomok
 
 package object mada {
 
-    @aliasOf("auto.Auto")
-     val Auto = auto.Auto
-    type Auto[+A] = auto.Auto[A]
+    @aliasOf("arm.Arm")
+     val Arm = arm.Arm
+    type Arm[+A] = arm.Arm[A]
 
     @aliasOf("peg.Peg")
      val Peg = peg.Peg

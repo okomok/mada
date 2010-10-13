@@ -4,13 +4,13 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.madatest; package autotest
+package com.github.okomok.madatest; package armtest
 
 
 import com.github.okomok.mada
 
-import mada.auto._
-import mada.Auto
+import mada.arm._
+import mada.Arm
 import junit.framework.Assert._
 
 

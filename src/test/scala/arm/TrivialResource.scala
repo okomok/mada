@@ -4,15 +4,15 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.madatest; package autotest
+package com.github.okomok.madatest; package armtest
 
 
 import com.github.okomok.mada
 
-import mada.{auto, Auto}
+import mada.{arm, Arm}
 
 
-case class TrivialResource[A](res: A, b: Boolean = false) extends Auto[A] {
+case class TrivialResource[A](res: A, b: Boolean = false) extends Arm[A] {
     var began = false
     var ended = false
 

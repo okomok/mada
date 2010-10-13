@@ -7,4 +7,4 @@
 package com.github.okomok.mada
 
 
-package object auto extends auto.Common
+package object arm extends arm.Common

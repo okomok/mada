@@ -4,10 +4,10 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.madatest; package autotest
+package com.github.okomok.madatest; package armtest
 
 
-    import com.github.okomok.mada.auto.use
+    import com.github.okomok.mada.arm.use
     import java.nio.channels
     import java.nio.channels.Channels
 

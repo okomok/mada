@@ -4,14 +4,14 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.madatest; package autotest
+package com.github.okomok.madatest; package armtest
 
 
 import com.github.okomok.mada
 
-import mada.{auto, Auto}
+import mada.{arm, Arm}
 import junit.framework.Assert._
-import mada.auto.use
+import mada.arm.use
 
 
 class TrivialTest extends org.scalatest.junit.JUnit3Suite {
@@ -31,7 +31,7 @@ class TrivialTest extends org.scalatest.junit.JUnit3Suite {
         val r = TrivialResource("res")
         assertFalse(r.began)
         assertFalse(r.ended)
-        auto.using(r){ s =>
+        arm.using(r){ s =>
             assertEquals(s, "res")
         }
         assertTrue(r.began)
@@ -44,7 +44,7 @@ class TrivialTest extends org.scalatest.junit.JUnit3Suite {
         assertFalse(r.ended)
         assertFalse(thrown)
         try {
-            auto.using(r){ s =>
+            arm.using(r){ s =>
                 assertEquals("res", s)
                 throw new Error("wow")
             }

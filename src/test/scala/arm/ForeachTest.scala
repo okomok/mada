@@ -4,14 +4,14 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.madatest; package autotest
+package com.github.okomok.madatest; package armtest
 
 
 import com.github.okomok.mada
 
-import mada.{auto, Auto}
+import mada.{arm, Arm}
 import junit.framework.Assert._
-import mada.auto.use
+import mada.arm.use
 
 
 class ForeachTest extends org.scalatest.junit.JUnit3Suite {

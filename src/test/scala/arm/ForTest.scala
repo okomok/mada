@@ -4,13 +4,13 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.madatest; package autotest
+package com.github.okomok.madatest; package armtest
 
 
 import com.github.okomok.mada
 
-import mada.auto.use
-import mada.Auto
+import mada.arm.use
+import mada.Arm
 import junit.framework.Assert._
 
 
@@ -30,7 +30,7 @@ class ForTest extends org.scalatest.junit.JUnit3Suite {
         val fs = new java.util.ArrayList[MyFile]
         for {
             name <- Array("foo", "bar", "buz")
-            file <- Auto(new MyFile(name))
+            file <- Arm.use(new MyFile(name))
         } {
             fs.add(file)
         }
@@ -42,7 +42,7 @@ class ForTest extends org.scalatest.junit.JUnit3Suite {
     }
 
 
-    def make3(r1: Auto[Int], r2: Auto[Int], r3: Auto[Int]): mada.sequence.Reactive[Int] = {
+    def make3(r1: Arm[Int], r2: Arm[Int], r3: Arm[Int]): mada.sequence.Reactive[Int] = {
         for {
             s1 <- r1
             s2 <- r2

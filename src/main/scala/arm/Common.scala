@@ -5,19 +5,16 @@
 
 
 package com.github.okomok.mada
-package auto
+package arm
 
 
-private[auto]
+private[arm]
 class Common {
 
     @returnThat
-    def apply[A](that: Auto[A]): Auto[A] = that
-
-    @returnThat
-    def use[A](that: Auto[A]): Auto[A] = that
+    def use[A](that: Arm[A]): Arm[A] = that
 
     @equivalentTo("a.foreach(f)")
-    def using[A](a: Auto[A])(f: A => Unit): Unit = a.foreach(f)
+    def using[A](a: Arm[A])(f: A => Unit): Unit = a.foreach(f)
 
 }
