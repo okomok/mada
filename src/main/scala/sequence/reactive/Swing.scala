@@ -21,7 +21,7 @@ object Swing {
     private[reactive]
     case class InvokeLater[+A](_1: Reactive[A]) extends Reactive[A] {
         override def close = _1.close
-        override def foreach(f: A => Unit) = {
+        override def foreach(f: A => Unit) {
             for (x <- _1) {
                 SwingUtilities.invokeLater(new Runnable {
                     override def run = f(x)
@@ -33,7 +33,7 @@ object Swing {
     private[reactive]
     case class InvokeAndWait[+A](_1: Reactive[A]) extends Reactive[A] {
         override def close = _1.close
-        override def foreach(f: A => Unit) = {
+        override def foreach(f: A => Unit) {
             for (x <- _1) {
                 SwingUtilities.invokeAndWait(new Runnable {
                     override def run = f(x)

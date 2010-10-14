@@ -11,7 +11,7 @@ package sequence; package reactive
 private
 case class TakeUntil[A](_1: Reactive[A], _2: Reactive[_], _3: Reactive[A] => Unit = Closer) extends Reactive[A] {
     override def close = _1.close
-    override def foreach(f: A => Unit) = {
+    override def foreach(f: A => Unit) {
         @volatile var go = true
         val g = util.byLazy{_3(_1);_2.close} // _2 can be closed?
         for (y <- _2) {

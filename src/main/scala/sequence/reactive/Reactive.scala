@@ -182,9 +182,9 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
     def adjacent(n: Int): Reactive[Vector[A]] = Adjacent(this, n)
 
     /**
-     * Calls reaction asynchronously.
+     * Reactions are invoked in an Actor.
      */
-    def post: Reactive[A] = Post(this)
+    def active: Reactive[A] = Active(this)
 
     /**
      * Replaces elements by those of `it`.

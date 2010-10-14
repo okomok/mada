@@ -11,7 +11,7 @@ package sequence; package reactive
 private
 case class React[A](_1: Reactive[A], _2: A => Unit) extends Reactive[A] {
     override def close = _1.close
-    override def foreach(f: A => Unit) = {
+    override def foreach(f: A => Unit) {
         for (x <- _1) {
             _2(x)
             f(x)

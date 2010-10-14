@@ -13,7 +13,7 @@ package sequence; package reactive
 private
 case class Header[+A](_1: Reactive[A], _2: Iterative[A]) extends Reactive[A] {
     override def close = _1.close
-    override def foreach(f: A => Unit) = {
+    override def foreach(f: A => Unit) {
         for (y <- _2) f(y)
         for (x <- _1) f(x)
     }

@@ -11,7 +11,7 @@ package sequence; package reactive
 private
 case class Fork[A](_1: Reactive[A], _2: Reactive[A] => Unit) extends Reactive[A] {
     override def close = _1.close
-    override def foreach(f: A => Unit) = {
+    override def foreach(f: A => Unit) {
         var parent = _1
         val child = new Reactive[A] {
             override def foreach(g: A => Unit) = { parent = _1.react(g) }

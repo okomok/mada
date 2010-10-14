@@ -18,7 +18,7 @@ final class Rist[A] extends Reactive[A] {
     private val xs = new ArrayList[A]
     private val outs = new ArrayList[A => Unit]
 
-    override def foreach(f: A => Unit) = {
+    override def foreach(f: A => Unit) {
         for (x <- iterative.from(xs)) f(x)
         outs.add(f)
     }

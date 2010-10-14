@@ -12,7 +12,7 @@ import scala.actors.Actor
 
 
 private
-case class Post[+A](_1: Reactive[A]) extends Reactive[A] {
+case class Active[+A](_1: Reactive[A]) extends Reactive[A] {
     override def close = _1.close
     override def foreach(f: A => Unit) {
         val a = new Actor {

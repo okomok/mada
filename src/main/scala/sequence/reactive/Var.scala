@@ -18,7 +18,7 @@ final class Var[A](private var x: Option[A] = None) extends Reactive[A] {
 
     @volatile private var out: A => Unit = null
 
-    override def foreach(f: A => Unit) = {
+    override def foreach(f: A => Unit) {
         if (!x.isEmpty) f(x.get)
         out = f
     }
