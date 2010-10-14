@@ -19,7 +19,7 @@ case class Zip[A, B](_1: Reactive[A], _2: Reactive[B]) extends Reactive[(A, B)] 
         val q1 = new LinkedList[A]
         val q2 = new LinkedList[B]
         val lock = new AnyRef
-        def invariant() = assert(q1.isEmpty || q2.isEmpty)
+        def invariant = assert(q1.isEmpty || q2.isEmpty)
 
         for (x <- _1) {
             lock.synchronized {
@@ -34,7 +34,7 @@ case class Zip[A, B](_1: Reactive[A], _2: Reactive[B]) extends Reactive[(A, B)] 
 
         for (y <- _2) {
             lock.synchronized {
-                invariant()
+                invariant
                 if (q1.isEmpty) {
                     q2.add(y)
                 } else {

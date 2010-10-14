@@ -191,4 +191,17 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
      */
     def replace[B](it: Iterative[B]): Reactive[B] = Replace(this, it)
 
+
+// swing
+
+    /**
+     * Reactions are invoked in swing event-dispatch-thread asynchronously.
+     */
+    final def swingInvokeLater: Reactive[A] = Swing.InvokeLater(this)
+
+    /**
+     * Reactions are invoked in swing event-dispatch-thread synchronously.
+     */
+    final def swingInvokeAndWait: Reactive[A] = Swing.InvokeAndWait(this)
+
 }
