@@ -182,26 +182,13 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
     def adjacent(n: Int): Reactive[Vector[A]] = Adjacent(this, n)
 
     /**
-     * Reactions are invoked in an Actor.
+     * Reactions are invoked in somewhere you specify.
      */
-    def active: Reactive[A] = Active(this)
+    def shift(g: util.ByName[Unit] => Unit): Reactive[A] = Shift(this, g)
 
     /**
      * Replaces elements by those of `it`.
      */
     def replace[B](it: Iterative[B]): Reactive[B] = Replace(this, it)
-
-
-// swing
-
-    /**
-     * Reactions are invoked in swing event-dispatch-thread asynchronously.
-     */
-    final def swingInvokeLater: Reactive[A] = Swing.InvokeLater(this)
-
-    /**
-     * Reactions are invoked in swing event-dispatch-thread synchronously.
-     */
-    final def swingInvokeAndWait: Reactive[A] = Swing.InvokeAndWait(this)
 
 }
