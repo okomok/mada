@@ -182,13 +182,18 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
     def adjacent(n: Int): Reactive[Vector[A]] = Adjacent(this, n)
 
     /**
+     * Replaces elements by those of `it`.
+     */
+    def replace[B](it: Iterative[B]): Reactive[B] = Replace(this, it)
+
+    /**
      * Reactions are invoked in somewhere you specify.
      */
     def shift(g: util.ByName[Unit] => Unit): Reactive[A] = Shift(this, g)
 
     /**
-     * Replaces elements by those of `it`.
+     * Reactions are invoked by somehow you specify.
      */
-    def replace[B](it: Iterative[B]): Reactive[B] = Replace(this, it)
+    def shiftReact[B >: A](g: B => (B => Unit) => Unit): Reactive[B] = ShiftReact[B](this, g)
 
 }

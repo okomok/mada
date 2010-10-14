@@ -9,13 +9,16 @@ package sequence; package reactive
 
 
 private
-case class Shift[+A](_1: Reactive[A], _2: util.ByName[Unit] => Unit) extends Reactive[A] {
+case class Shift[+A](_1: Reactive[A], _2: util.ByName[Unit] => Unit) extends Forwarder[A] {
+    override protected val delegate = _1.shiftReact{ x => f => _2(util.byName{f(x)}) }
+}
+
+private
+case class ShiftReact[A](_1: Reactive[A], _2: A => (A => Unit) => Unit) extends Reactive[A] {
     override def close = _1.close
     override def foreach(f: A => Unit) {
         for (x <- _1) {
-            _2 {
-                util.byName{f(x)}
-            }
+            _2(x)(f)
         }
     }
 }
