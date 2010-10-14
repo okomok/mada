@@ -23,7 +23,7 @@ class ShiftTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals(vector.Of(1,2,3,4,5), vector.from(s))
     }
 
-    def testTrivial(off: Int) {
+    def testSwing(off: Int) {
         val s = new java.util.ArrayList[Int]
         reactive.Of(0,1,2,3,4) shift { k =>
             javax.swing.SwingUtilities.invokeLater(k)
