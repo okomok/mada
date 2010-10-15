@@ -45,7 +45,7 @@ class IntSender(datum: Vector[Int], barrier: CyclicBarrier) extends Reactive[Int
 
                 for (i <- datum) {
                     f(i)
-                    Thread.sleep(100)
+                    //Thread.sleep(100)
                 }
 
                 barrier.await
