@@ -164,7 +164,12 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
     /**
      * Calls `f` on the head of sequence.
      */
-    def onHead(f: => Unit): Reactive[A] = OnHead(this, util.ByName(f))
+    def onHead(f: A => Unit): Reactive[A] = OnHead(this, f)
+
+    /**
+     * Calls `f` on the nth of sequence.
+     */
+    def onNth(n: Int)(f: A => Unit): Reactive[A] = OnNth(this, n, f)
 
     /**
      * Pseudo catch-statement
