@@ -202,9 +202,19 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
     def adjacent(n: Int): Reactive[Vector[A]] = Adjacent(this, n)
 
     /**
-     * Replaces elements by those of `it`.
+     * Replaces elements by those of `it`. The length of this sequence never becomes longer.
      */
-    def replace[B](it: Iterative[B]): Reactive[B] = Replace(this, it)
+    def generate[B](it: Iterative[B]): Reactive[B] = Generate(this, it)
+
+    /**
+     * Replaces elements by those of `it`. The length of this sequence never be changed.
+     */
+    def replace[B >: A](it: Iterative[B]): Reactive[B] = Replace[B](this, it)
+
+    /**
+     * Replaces elements by those of `it`. The length of this sequence never be changed.
+     */
+    def replaceRegion[B >: A](n: Int, m: Int, it: Iterative[B]): Reactive[B] = ReplaceRegion[B](this, n, m, it)
 
     /**
      * Reactions are invoked in somewhere you specify.

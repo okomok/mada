@@ -9,24 +9,23 @@ package sequence; package reactive
 
 
 private
-case class Replace[A, +B](_1: Reactive[A], _2: Iterative[B], _3: Reactive[A] => Unit = Closer) extends Reactive[B] {
+case class Replace[A](_1: Reactive[A], _2: Iterative[A]) extends Reactive[A] {
     override def close = _1.close
-    override def foreach(f: B => Unit) {
+    override def foreach(f: A => Unit) {
         val it = _2.begin
-        if (!it) {
-            _3(_1)
-        } else {
-            for (_ <- _1) {
-                if (it) {
-                    f(~it)
-                    it.++
-                    if (!it) {
-                        _3(_1)
-                    }
-                }
+        for (x <- _1) {
+            if (it) {
+                f(~it)
+                it.++
+            } else {
+                f(x)
             }
         }
     }
+}
 
-    override def then(f: => Unit): Reactive[B] = Replace[A, B](_1, _2, r => {f;_3(r)})
+private
+case class ReplaceRegion[A](_1: Reactive[A], _2: Int, _3: Int, _4: Iterative[A]) extends Reactive[A] {
+    override def close = _1.close
+    override def foreach(f: A => Unit) = _1.fork{r => r.slice(_2, _3).replace(_4).foreach(f)}.drop(_3).foreach(f)
 }

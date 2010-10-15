@@ -22,26 +22,26 @@ class CloseTest extends org.scalatest.junit.JUnit3Suite {
             out = f
         }
         override protected def closeResource = closed = true
-        def generate(i: Int) = out(i)
+        def gen(i: Int) = out(i)
     }
 
     def testTrivial {
         val r = new MyResource
         r.take(3).start
-        r.generate(3)
-        r.generate(3)
+        r.gen(3)
+        r.gen(3)
         assertFalse(r.closed)
-        r.generate(3)
+        r.gen(3)
         assertTrue(r.closed)
     }
 
     def testProtect {
         val r = new MyResource
         r.protect.take(3).start
-        r.generate(3)
-        r.generate(3)
+        r.gen(3)
+        r.gen(3)
         assertFalse(r.closed)
-        r.generate(3)
+        r.gen(3)
         assertFalse(r.closed)
     }
 
@@ -55,10 +55,10 @@ class CloseTest extends org.scalatest.junit.JUnit3Suite {
     def testChain {
         val r = new MyResource
         r.reactTotal(_ => ()).filter(_ => true).take(3).start
-        r.generate(3)
-        r.generate(3)
+        r.gen(3)
+        r.gen(3)
         assertFalse(r.closed)
-        r.generate(3)
+        r.gen(3)
         assertTrue(r.closed)
     }
 
@@ -66,11 +66,11 @@ class CloseTest extends org.scalatest.junit.JUnit3Suite {
         val l = new MyResource
         val r = new MyResource
         l.take(5).merge(r.take(8)).take(3).start
-        l.generate(3)
-        r.generate(3)
+        l.gen(3)
+        r.gen(3)
         assertFalse(l.closed)
         assertFalse(r.closed)
-        r.generate(3)
+        r.gen(3)
         assertTrue(l.closed)
         assertTrue(r.closed)
     }
@@ -78,9 +78,9 @@ class CloseTest extends org.scalatest.junit.JUnit3Suite {
     def testFork {
         val r = new MyResource
         r.fork{s => s.take(5).start}.take(3).start
-        r.generate(3)
-        r.generate(3)
-        r.generate(3)
+        r.gen(3)
+        r.gen(3)
+        r.gen(3)
         assertTrue(r.closed) // compromise
     }
 
@@ -88,11 +88,11 @@ class CloseTest extends org.scalatest.junit.JUnit3Suite {
         val l = new MyResource
         val r = new MyResource
         l.take(5).zip(r.take(8)).take(3).start
-        l.generate(3); r.generate(3)
-        l.generate(3); r.generate(3)
+        l.gen(3); r.gen(3)
+        l.gen(3); r.gen(3)
         assertFalse(l.closed)
         assertFalse(r.closed)
-        l.generate(3); r.generate(3)
+        l.gen(3); r.gen(3)
         assertTrue(l.closed)
         assertTrue(r.closed)
     }
@@ -101,11 +101,11 @@ class CloseTest extends org.scalatest.junit.JUnit3Suite {
         val l = new MyResource
         val r = new MyResource
         l.take(5).zip(r.take(8)).map2(_ + _).take(3).start
-        l.generate(3); r.generate(3)
-        l.generate(3); r.generate(3)
+        l.gen(3); r.gen(3)
+        l.gen(3); r.gen(3)
         assertFalse(l.closed)
         assertFalse(r.closed)
-        l.generate(3); r.generate(3)
+        l.gen(3); r.gen(3)
         assertTrue(l.closed)
         assertTrue(r.closed)
     }
