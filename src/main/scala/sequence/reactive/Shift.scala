@@ -10,7 +10,7 @@ package sequence; package reactive
 
 private
 case class Shift[+A](_1: Reactive[A], _2: util.ByName[Unit] => Unit) extends Forwarder[A] {
-    override protected val delegate = _1.shiftReact{ x => f => _2(util.byName{f(x)}) }
+    override protected val delegate = _1.shiftReact{ x => f => _2(util.ByName{f(x)}) }
 }
 
 private

@@ -8,7 +8,7 @@ package com.github.okomok.mada
 package sequence; package vector
 
 
-import util.future
+import util.Future
 
 
 private
@@ -17,9 +17,9 @@ object ParallelEach {
         assert(!IsParallel(_1))
 
         if (_3 == 1) {
-            _1.map{ e => future(_2(e)) }.force.foreach{ u => u() }
+            _1.map{ e => Future(_2(e)) }.force.foreach{ u => u() }
         } else {
-            _1.divide(_3).map{ w => future(w.foreach(_2)) }.
+            _1.divide(_3).map{ w => Future(w.foreach(_2)) }.
                 force. // start tasks.
                     foreach{ u => u() } // join all.
         }

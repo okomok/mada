@@ -4,7 +4,8 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package util
+package com.github.okomok.mada
+package util
 
 
 case class Future[+R](_1: Function0[R]) extends Function0[R] {
@@ -16,4 +17,8 @@ case class Future[+R](_1: Function0[R]) extends Function0[R] {
         }
     }
     override def apply = f()
+}
+
+object Future {
+    def apply[R](body: => R, dummy: Int = 0): Future[R] = new Future(() => body)
 }

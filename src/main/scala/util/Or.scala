@@ -4,7 +4,8 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package util
+package com.github.okomok.mada
+package util
 
 
 // See: http://cleverlytitled.blogspot.com/2009/03/disjoint-bounded-views-redux.html

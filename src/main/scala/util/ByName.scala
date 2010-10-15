@@ -4,7 +4,8 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package util
+package com.github.okomok.mada
+package util
 
 
 case class ByName[+R](_1: Function0[R]) extends Function0[R] {
@@ -15,7 +16,7 @@ case class ByName[+R](_1: Function0[R]) extends Function0[R] {
     }
 }
 
-
 object ByName {
+    def apply[R](body: => R, dummy: Int = 0): ByName[R] = new ByName(() => body)
     implicit def _toRunnable(from: ByName[Unit]): Runnable = from.toRunnable
 }

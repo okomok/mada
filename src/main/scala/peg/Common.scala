@@ -59,7 +59,7 @@ class Common {
     lazy val end: Peg[Any] = End()
 
     @equivalentTo("eps act { _ => body }")
-    def call(body: => Unit): Peg[Any] = Call(util.byName(body))
+    def call(body: => Unit): Peg[Any] = Call(util.ByName(body))
 
     /**
      * Matches any one element.
@@ -118,12 +118,12 @@ class Common {
     /**
      * Constructs a Peg by-lazy.
      */
-    def byLazy[A](p: => Peg[A]): Peg[A] = ByLazy(util.byLazy(p))
+    def byLazy[A](p: => Peg[A]): Peg[A] = ByLazy(util.ByLazy(p))
 
     /**
      * Constructs a Peg by-name.
      */
-    def byName[A](p: => Peg[A]): Peg[A] = ByName(util.byName(p))
+    def byName[A](p: => Peg[A]): Peg[A] = ByName(util.ByName(p))
 
     /**
      * Constructs a pseudo try-catch expression.

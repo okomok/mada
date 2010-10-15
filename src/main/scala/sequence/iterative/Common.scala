@@ -33,12 +33,12 @@ class Common {
     /**
      * Refers a sequence by lazy.
      */
-    def byLazy[A](it: => Iterative[A]): Iterative[A] = ByLazy(util.byLazy(it))
+    def byLazy[A](it: => Iterative[A]): Iterative[A] = ByLazy(util.ByLazy(it))
 
     /**
      * Refers a sequence by name.
      */
-    def byName[A](it: => Iterative[A]): Iterative[A] = ByName(util.byName(it))
+    def byName[A](it: => Iterative[A]): Iterative[A] = ByName(util.ByName(it))
 
     /**
      * Creates an infinite sequence repeatedly applying <code>op</code>.
@@ -63,7 +63,7 @@ class Common {
     /**
      * Creates a sequence starting from <code>it<code>, which is evaluated by-name.
      */
-    def bindName[A](it: => Iterator[A]): Iterative[A] = BindName(util.byName(it))
+    def bindName[A](it: => Iterator[A]): Iterative[A] = BindName(util.ByName(it))
 
     /**
      * Constructs a sequence from traversing block.

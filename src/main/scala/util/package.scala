@@ -48,29 +48,6 @@ package object util {
     def compatible[A, B](implicit c: A <%< B = null): Boolean = null ne c
 
 
-// evaluation strategy
-
-    /**
-     * A function calculating <code>body</code> by <code>name</code>.
-     */
-    def byName[R](body: => R): ByName[R] = ByName(() => body)
-
-    /**
-     * A function calculating <code>body</code> by <code>lazy</code>.
-     */
-    def byLazy[R](body: => R): ByLazy[R] = ByLazy(() => body)
-
-    /**
-     * A function calculating <code>body</code> in possibly other threads.
-     */
-    def future[R](body: => R): Future[R] = Future(() => body)
-
-    /**
-     * A function calculating <code>body</code> in other threads.
-     */
-    def parallel[R](body: => R): Parallel[R] = Parallel(() => body)
-
-
 // hash code
 
     /**

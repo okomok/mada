@@ -8,7 +8,7 @@ package com.github.okomok.mada
 package sequence; package vector
 
 
-import util.future
+import util.Future
 
 
 // Note that parallel.map is projection, that is, non-blocking.
@@ -18,9 +18,9 @@ case class ParallelMap[Z, A](_1: Vector[Z], _2: Z => A, _3: Int) extends Forward
 
     override protected val delegate = {
         if (_3 == 1) {
-            _1.map{ e => future(_2(e)) }.force.map{ u => u() }
+            _1.map{ e => Future(_2(e)) }.force.map{ u => u() }
         } else {
-            _1.divide(_3).map{ w => future(w.map(_2).force) }.
+            _1.divide(_3).map{ w => Future(w.map(_2).force) }.
                 force. // start tasks.
                     map{ u => u() }. // get result by projection.
                         undivide

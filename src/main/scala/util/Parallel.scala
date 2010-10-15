@@ -4,7 +4,8 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.mada; package util
+package com.github.okomok.mada
+package util
 
 
 import java.util.concurrent
@@ -13,7 +14,7 @@ import java.util.concurrent
 case class Parallel[R](_1: Function0[R]) extends Function0[R] {
     private val u = {
         val c = new concurrent.Callable[R] { override def call() = _1() }
-        Parallels.executor.synchronized { Parallels.executor.submit(c) }
+        Parallel.executor.synchronized { Parallel.executor.submit(c) }
     }
     override def apply() = {
         try {
@@ -24,9 +25,10 @@ case class Parallel[R](_1: Function0[R]) extends Function0[R] {
     }
 }
 
-
-object Parallels {
+object Parallel {
     import concurrent._
+
+    def apply[R](body: => R, dummy: Int = 0): Parallel[R] = new Parallel(() => body)
 
     val poolSize: Int = 2 * java.lang.Runtime.getRuntime.availableProcessors
 
