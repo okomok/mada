@@ -19,9 +19,9 @@ class ForkTest extends org.scalatest.junit.JUnit3Suite {
         val out = new java.util.ArrayList[Int]
         r.
             fork{r => r.foreach(e => out.add(e *  2))}.
-            fork{r => ()}.
+            fork{r => r.start}.
             fork{r => r.foreach(e => out.add(e + 10))}.
-            fork{r => ()}.
+            fork{r => r.start}.
             start
 
         assertEquals(iterative.Of(2,11,4,12,6,13,8,14,10,15,12,16), iterative.from(out))

@@ -35,4 +35,16 @@ class ReactTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals(iterative.Of(1,2,3,4,5), iterative.from(out))
     }
 
+
+    def testTotal2 {
+        val a = reactive.Of(1,2,3,4,5)
+        val out = new java.util.ArrayList[Int]
+        a reactTotal {
+            x => out.add(x)
+        } take {
+            3
+        } start;
+        assertEquals(iterative.Of(1,2,3,4,5), iterative.from(out))
+    }
+
 }

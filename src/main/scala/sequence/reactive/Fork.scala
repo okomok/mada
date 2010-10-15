@@ -9,6 +9,16 @@ package sequence; package reactive
 
 
 private
+case class Fork[A](_1: Reactive[A], _2: Reactive[A] => Unit) extends Forwarder[A] {
+    override protected lazy val delegate = {
+        val (xs, ys) = _1.branch
+        _2(xs) // `xs.foreach` must be called.
+        ys
+    }
+}
+
+/*
+private
 case class Fork[A](_1: Reactive[A], _2: Reactive[A] => Unit) extends Reactive[A] {
     override def close = _1.close
     override def foreach(f: A => Unit) {
@@ -20,3 +30,4 @@ case class Fork[A](_1: Reactive[A], _2: Reactive[A] => Unit) extends Reactive[A]
         parent.foreach(f)
     }
 }
+*/

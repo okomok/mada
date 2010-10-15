@@ -19,10 +19,10 @@ class BreakTest extends org.scalatest.junit.JUnit3Suite {
         val out = new java.util.ArrayList[Int]
         r.
             fork{r => r.foreach(e => out.add(e *  2))}.
-            fork{r => ()}.
+            fork{r => r.start}.
             break.
             fork{r => r.foreach(e => out.add(e + 10))}.
-            fork{r => ()}.
+            fork{r => r.start}.
             start
 
         assertEquals(iterative.Of(2,4,6,8,10,12), iterative.from(out))

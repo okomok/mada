@@ -81,7 +81,10 @@ class CloseTest extends org.scalatest.junit.JUnit3Suite {
         r.gen(3)
         r.gen(3)
         r.gen(3)
-        assertTrue(r.closed) // compromise
+        assertFalse(r.closed)
+        r.gen(3)
+        r.gen(3)
+        assertTrue(r.closed)
     }
 
     def testZip {

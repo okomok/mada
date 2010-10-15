@@ -42,7 +42,9 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
 
     def remove(p: A => Boolean): Reactive[A] = Remove(this, p)
 
-    def partition(p: A => Boolean): (Reactive[A], Reactive[A]) = (filter(p), remove(p))
+    def partition(p: A => Boolean): (Reactive[A], Reactive[A]) = branch match {
+        case (xs, ys) => (xs.filter(p), ys.remove(p))
+    }
 
     def scanLeft[B](z: B)(op: (B, A) => B): Reactive[B] = ScanLeft(this, z, op)
 
@@ -68,11 +70,15 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
 
     def dropWhile(p: A => Boolean): Reactive[A] = DropWhile(this, p)
 
-    def span(p: A => Boolean): (Reactive[A], Reactive[A]) = (takeWhile(p), dropWhile(p))
+    def span(p: A => Boolean): (Reactive[A], Reactive[A]) = branch match {
+        case (xs, ys) => (xs.takeWhile(p), ys.dropWhile(p))
+    }
 
     def splitAt(n: Int): (Reactive[A], Reactive[A]) = {
         Precondition.nonnegative(n, "splitAt")
-        (take(n), drop(n))
+        branch match {
+            case (xs, ys) => (xs.take(n), ys.drop(n))
+        }
     }
 
     def flatten[B](implicit pre: Reactive[A] <:< Reactive[Sequence[B]]): Reactive[B] = Flatten(pre(this))
@@ -104,7 +110,9 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
 
     def zip[B](that: Reactive[B]): Reactive[(A, B)] = Zip(this, that)
 
-    def unzip[B, C](implicit pre: Reactive[A] <:< Reactive[(B, C)]): (Reactive[B], Reactive[C]) = (pre(this).map{ bc => bc._1 }, pre(this).map{ bc => bc._2 })
+    def unzip[B, C](implicit pre: Reactive[A] <:< Reactive[(B, C)]): (Reactive[B], Reactive[C]) = pre(this).branch match {
+        case (xs, ys) => (xs.map(_._1), ys.map(_._2))
+    }
 
 
 // conversion
@@ -130,7 +138,7 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
      */
     def reactTotal(f: A => Unit): Reactive[A] = ReactTotal(this, f)
 
-    @equivalentTo("react(_ => f)")
+    @equivalentTo("reactTotal(_ => f)")
     final def doing(f: => Unit): Reactive[A] = reactTotal(_ => f)
 
     @equivalentTo("foreach(_ => ())")
@@ -140,6 +148,11 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
      * Forks.
      */
     def fork(f: Reactive[A] => Unit): Reactive[A] = Fork(this, f)
+
+    /**
+     * Creates a branch.
+     */
+    def branch: (Reactive[A], Reactive[A]) = { val b = Branch(this); (b, b) }
 
     /**
      * Skips trailing forks.
