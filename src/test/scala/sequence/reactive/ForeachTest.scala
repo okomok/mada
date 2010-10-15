@@ -29,7 +29,7 @@ class ForeachTest extends org.scalatest.junit.JUnit3Suite {
 
         reactive.from(a).activate(new Reactor[Int] {
             override def onEnd = c()
-            override def react(e: Int) = t.add(e)
+            override def reactTotal(e: Int) = t.add(e)
         })
 
         assertTrue(c.isCalled)

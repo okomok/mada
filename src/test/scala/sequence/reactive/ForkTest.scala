@@ -31,8 +31,8 @@ class ForkTest extends org.scalatest.junit.JUnit3Suite {
         val r = reactive.Of(1,2,3,4,5,6)
         val out = new java.util.ArrayList[Int]
         r.
-            react(e => out.add(e *  2)).
-            react(e => out.add(e + 10)).
+            reactTotal(e => out.add(e *  2)).
+            reactTotal(e => out.add(e + 10)).
             start
 
         assertEquals(iterative.Of(2,11,4,12,6,13,8,14,10,15,12,16), iterative.from(out))
