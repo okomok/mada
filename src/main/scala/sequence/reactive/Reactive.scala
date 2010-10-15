@@ -142,14 +142,24 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
     def break: Reactive[A] = Break(this)
 
     /**
-     * Takes elements until `that` starts.
+     * Takes elements until `that` starts. `that` may be closed.
      */
     def takeUntil(that: Reactive[_]): Reactive[A] = TakeUntil(this, that)
+
+    /**
+     * Drops elements until `that` starts. `that` may be closed.
+     */
+    def dropUntil(that: Reactive[_]): Reactive[A] = DropUntil(this, that)
 
     /**
      * Calls `f` on the end of subsequence.
      */
     def then(f: => Unit): Reactive[A] = throw new UnsupportedOperationException("Reactive.then")
+
+    /**
+     * Calls `f` on the head of sequence.
+     */
+    def onHead(f: => Unit): Reactive[A] = OnHead(this, util.byName(f))
 
     /**
      * Pseudo catch-statement

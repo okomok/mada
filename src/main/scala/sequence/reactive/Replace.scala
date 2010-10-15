@@ -28,5 +28,5 @@ case class Replace[A, +B](_1: Reactive[A], _2: Iterative[B], _3: Reactive[A] => 
         }
     }
 
-    override def then(f: => Unit): Reactive[B] = Replace(_1, _2, (r: Reactive[A]) => {f;_3(r)})
+    override def then(f: => Unit): Reactive[B] = Replace[A, B](_1, _2, r => {f;_3(r)})
 }
