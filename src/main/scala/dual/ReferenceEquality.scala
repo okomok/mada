@@ -15,9 +15,5 @@ trait ReferenceEquality extends Any {
     override def equals(that: scala.Any) = refEquals(that)
     override def hashCode = refHashCode
     override def toString = refToString
-    override def canEqual(that: scala.Any) = true
-    /*
-    final override lazy val undual: undual = new scala.AnyRef{}
-    final override     type undual         = scala.AnyRef
-    */
+    override def canEqual(that: scala.Any): scala.Boolean = throw new UnsupportedOperationException("ReferenceEquality.canEqual")
 }

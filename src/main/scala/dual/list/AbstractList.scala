@@ -129,6 +129,9 @@ trait AbstractList extends List {
     final override  def zip[that <: List](that: that): zip[that] = Zip.apply(self, that)
     final override type zip[that <: List]                        = Zip.apply[self, that]
 
+    final override  def zipBy[that <: List, f <: Function2](that: that, f: f): zipBy[that, f] = ZipBy.apply(self, that, f)
+    final override type zipBy[that <: List, f <: Function2]                                   = ZipBy.apply[self, that, f]
+
     final override  def unzip: unzip = Unzip.apply(self)
     final override type unzip        = Unzip.apply[self]
 

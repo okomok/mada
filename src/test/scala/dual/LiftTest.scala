@@ -8,35 +8,35 @@ package com.github.okomok.madatest
 package dualtest
 
 
+// See: http://apocalisp.wordpress.com/2010/10/15/type-level-programming-in-scala-part-6e-hlist%C2%A0apply/
+
+
 import com.github.okomok.mada
 import mada.dual._
 import nat.peano.Literal._
 import junit.framework.Assert._
 
-/*
-class BoxTest extends org.scalatest.junit.JUnit3Suite {
 
-    class Apply extends Function2 {
-        override type self = Apply
-        override  def apply[fx <: Any](fx: fx): apply[xy] = Box(xy.asProduct2._1.undual.asInstanceOf[Function1[_]].apply(xy.asProduct2._2))
-        override type apply[fx <: Any] =
+class LiftTest extends org.scalatest.junit.JUnit3Suite {
+
+    object Apply extends Function2 {
+        override type self = Apply.type
+        override  def apply[f <: Any, x <: Any](f: f, x: x): apply[f, x] = f.asFunction1.apply(x)
+        override type apply[f <: Any, x <: Any]                          = f#asFunction1#apply[x]
     }
-    val Apply = new Apply
 
     def testTrivial {
         val y1 = Box(9.75) :: Box('x') :: Nil
         val y2 = Box(-2.125) :: Box('X') :: Nil
 
-        val z = Box((_: Double) + .5) :: Box((_: Char).isUpper) :: Nil
+        val z = Lift1((_: Double) + .5) :: Lift1((_: Char).isUpper) :: Nil
 
+        val z1: Box[scala.Double] :: Box[scala.Boolean] :: Nil = z.zipBy(y1, Apply).force
+        val 10.25 :: false :: scala.Nil = z1.undual
 
-
-
-        type xs = _5 :: _6 :: _7 :: _8 :: _9 :: Nil
-        val xs: xs = _5 :: _6 :: _7 :: _8 :: _9 :: Nil
-        val u: xs#forall[Gt3] = xs.forall(Gt3())
-        free.assertSame[`true`, xs#forall[Gt3]]
-        assertEquals(`true`, u)
+        val z2: Box[scala.Double] :: Box[scala.Boolean] :: Nil = z.zipBy(y2, Apply).force
+        val -1.625 :: true :: scala.Nil = z2.undual
+        ()
     }
 }
-*/
+

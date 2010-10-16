@@ -147,6 +147,9 @@ trait List extends Any {
      def zip[that <: List](that: that): zip[that]
     type zip[that <: List] <: List
 
+     def zipBy[that <: List, f <: Function2](that: that, f: f): zipBy[that, f]
+    type zipBy[that <: List, f <: Function2] <: List
+
      def unzip: unzip
     type unzip <: Product2
 

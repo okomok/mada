@@ -26,3 +26,22 @@ object Zip {
         override type tail       = Impl[xs#tail, ys#tail]
     }
 }
+
+private[dual]
+object ZipBy {
+     def apply[xs <: List, ys <: List, f <: Function2](xs: xs, ys: ys, f: f): apply[xs, ys, f] = Impl(xs, ys, f)
+    type apply[xs <: List, ys <: List, f <: Function2]                                         = Impl[xs, ys, f]
+
+    case class Impl[xs <: List, ys <: List, f <: Function2](xs: xs, ys: ys, f: f) extends AbstractList {
+        type self = Impl[xs, ys, f]
+
+        override  def isEmpty: isEmpty = xs.isEmpty.or(ys.isEmpty)
+        override type isEmpty          = xs#isEmpty#or[ys#isEmpty]
+
+        override  def head: head = f.apply(xs.head, ys.head)
+        override type head       = f#apply[xs#head, ys#head]
+
+        override  def tail: tail = Impl(xs.tail, ys.tail, f)
+        override type tail       = Impl[xs#tail, ys#tail, f]
+    }
+}
