@@ -42,7 +42,7 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
 
     def remove(p: A => Boolean): Reactive[A] = Remove(this, p)
 
-    def partition(p: A => Boolean): (Reactive[A], Reactive[A]) = branch match {
+    def partition(p: A => Boolean): (Reactive[A], Reactive[A]) = duplicate match {
         case (xs, ys) => (xs.filter(p), ys.remove(p))
     }
 
@@ -70,13 +70,13 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
 
     def dropWhile(p: A => Boolean): Reactive[A] = DropWhile(this, p)
 
-    def span(p: A => Boolean): (Reactive[A], Reactive[A]) = branch match {
+    def span(p: A => Boolean): (Reactive[A], Reactive[A]) = duplicate match {
         case (xs, ys) => (xs.takeWhile(p), ys.dropWhile(p))
     }
 
     def splitAt(n: Int): (Reactive[A], Reactive[A]) = {
         Precondition.nonnegative(n, "splitAt")
-        branch match {
+        duplicate match {
             case (xs, ys) => (xs.take(n), ys.drop(n))
         }
     }
@@ -110,7 +110,7 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
 
     def zip[B](that: Reactive[B]): Reactive[(A, B)] = Zip(this, that)
 
-    def unzip[B, C](implicit pre: Reactive[A] <:< Reactive[(B, C)]): (Reactive[B], Reactive[C]) = pre(this).branch match {
+    def unzip[B, C](implicit pre: Reactive[A] <:< Reactive[(B, C)]): (Reactive[B], Reactive[C]) = pre(this).duplicate match {
         case (xs, ys) => (xs.map(_._1), ys.map(_._2))
     }
 
@@ -150,9 +150,9 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
     def fork(f: Reactive[A] => Unit): Reactive[A] = Fork(this, f)
 
     /**
-     * Creates a branch.
+     * Creates a duplicate.
      */
-    def branch: (Reactive[A], Reactive[A]) = { val b = Branch(this); (b, b) }
+    def duplicate: (Reactive[A], Reactive[A]) = { val b = Duplicate(this); (b, b) }
 
     /**
      * Skips trailing forks.

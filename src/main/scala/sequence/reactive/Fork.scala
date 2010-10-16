@@ -11,7 +11,7 @@ package sequence; package reactive
 private
 case class Fork[A](_1: Reactive[A], _2: Reactive[A] => Unit) extends Forwarder[A] {
     override protected lazy val delegate = {
-        val (xs, ys) = _1.branch
+        val (xs, ys) = _1.duplicate
         _2(xs) // `xs.foreach` must be called.
         ys
     }

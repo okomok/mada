@@ -52,7 +52,7 @@ trait Forwarder[+A] extends Reactive[A] with Sequence.Forwarder[A] {
     override def reactTotal(f: A => Unit): Reactive[A] = around(delegate.reactTotal(f))
     override def start: Unit = delegate.start
     override def fork(f: Reactive[A] => Unit): Reactive[A] = around(delegate.fork(f))
-    override def branch: (Reactive[A], Reactive[A]) = around2(delegate.branch)
+    override def duplicate: (Reactive[A], Reactive[A]) = around2(delegate.duplicate)
     override def break: Reactive[A] = around(delegate.break)
     override def takeUntil(that: Reactive[_]): Reactive[A] = around(delegate.takeUntil(that))
     override def dropUntil(that: Reactive[_]): Reactive[A] = around(delegate.dropUntil(that))

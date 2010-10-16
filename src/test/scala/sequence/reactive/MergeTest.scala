@@ -36,4 +36,14 @@ class MergeTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals(iterative.Of(1,2,3,4,5,6,7,8,9), iterative.from(out))
     }
 
+    def testDuplicate {
+        val r = reactive.Of(1,2,3,4,5)
+        val (r1, r2) = r.duplicate
+        val out = new java.util.ArrayList[Int]
+        for (x <- r1 merge r2) {
+            out.add(x)
+        }
+        assertEquals(iterative.Of(1,1,2,2,3,3,4,4,5,5), iterative.from(out))
+    }
+
 }
