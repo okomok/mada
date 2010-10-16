@@ -9,11 +9,9 @@ package dual
 
 
 /**
- * A boxed non-dual type
+ * Boxed non-dual type
  */
-final case class Box[A](unbox: A) extends Any {
+final case class Box[A](override val undual: A) extends Any {
     type self = Box[A]
-    type unbox = A
-    override  def undual: undual = unbox
-    override type undual         = unbox
+    override type undual = A
 }

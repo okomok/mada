@@ -20,7 +20,7 @@ class OptionTest extends org.scalatest.junit.JUnit3Suite {
         type s = Some[Box[Int]]
         val s: s = Some(Box(3))
         val e: s#get = s.get
-        val k: Int = e.unbox
+        val k: Int = e.undual
         assertEquals(3, k)
 
         type n = None

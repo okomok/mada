@@ -99,6 +99,10 @@ trait Any extends scala.Equals {
     override def hashCode = undual.hashCode
     override def toString = "dual." + undual.toString
 
+    final protected def refEquals(that: scala.Any) = super.equals(that)
+    final protected def refHashCode = super.hashCode
+    final protected def refToString = super.toString
+
     /**
      * Trivial helper to throw UnsupportedOperationException
      */
@@ -111,14 +115,4 @@ trait Any extends scala.Equals {
     protected  def noSuchElement(what: Predef.String): noSuchElement[_] = throw new NoSuchElementException("dual." + what)
     protected type noSuchElement[_] = Nothing
 
-}
-
-
-/**
- * Mixin for a metatype whose `equals` is reference-equality.
- */
-trait ReferenceEquality extends Any {
-    final override lazy val undual: undual = new scala.AnyRef{}
-    final override     type undual         = scala.AnyRef
-    final override  def canEqual(that: scala.Any) = true
 }

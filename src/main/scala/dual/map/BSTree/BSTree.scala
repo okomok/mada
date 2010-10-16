@@ -95,7 +95,7 @@ final case class Nil[o <: Ordering](override val ord: o) extends AbstractBSTree 
 final case class Node[k <: Any, v <: Any, l <: BSTree, r <: BSTree](
     override val key: k, override val value: v, override val left: l, override val right: r) extends AbstractBSTree
 {
-    Predef.assert(left.ord.undual == right.ord.undual)
+    Predef.assert(left.ord eq right.ord)
 
     type self = Node[k, v, l, r]
 

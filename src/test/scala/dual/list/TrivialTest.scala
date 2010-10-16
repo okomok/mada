@@ -22,14 +22,14 @@ class TrivialTest extends org.scalatest.junit.JUnit3Suite {
         val i = new java.lang.Integer(10)
         val lst = Box(3) :: Box("hello") :: Box(i) :: Box('a') :: Nil
         val a1: Box[Int] = lst.nth(_0)
-        assertEquals(3, a1.unbox)
+        assertEquals(3, a1.undual)
         val a2: Box[String] = lst.nth(_1)
-        assertEquals("hello", a2.unbox)
+        assertEquals("hello", a2.undual)
         val a3: Box[java.lang.Integer] = lst.nth(_2)
-        assertSame(i, a3.unbox)
+        assertSame(i, a3.undual)
         val a4: Box[Char] = lst.nth(_3)
-        assertEquals('a', a4.unbox)
-        assertEquals(10, lst.nth(_2).unbox.intValue)
+        assertEquals('a', a4.undual)
+        assertEquals(10, lst.nth(_2).undual.intValue)
     }
 
     def testSize {
