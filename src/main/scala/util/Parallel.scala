@@ -28,7 +28,7 @@ case class Parallel[R](_1: Function0[R]) extends Function0[R] {
 object Parallel {
     import concurrent._
 
-    def apply[R](body: => R, dummy: Int = 0): Parallel[R] = new Parallel(() => body)
+    def apply[R](body: => R, dummy: Unit = ()): Parallel[R] = new Parallel(() => body)
 
     val poolSize: Int = 2 * java.lang.Runtime.getRuntime.availableProcessors
 
