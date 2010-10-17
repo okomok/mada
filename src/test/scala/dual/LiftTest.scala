@@ -19,6 +19,8 @@ import junit.framework.Assert._
 
 class LiftTest extends org.scalatest.junit.JUnit3Suite {
 
+    //val :: = mada.dual.list.Cons // oops
+
     object Apply extends Function2 {
         override type self = Apply.type
         override  def apply[f <: Any, x <: Any](f: f, x: x): apply[f, x] = f.asFunction1.apply(x)
@@ -32,11 +34,25 @@ class LiftTest extends org.scalatest.junit.JUnit3Suite {
         val z = Lift1((_: Double) + .5) :: Lift1((_: Char).isUpper) :: Nil
 
         val z1: Box[scala.Double] :: Box[scala.Boolean] :: Nil = z.zipBy(y1, Apply).force
-        val 10.25 :: false :: scala.Nil = z1.undual
+        val Box(10.25) :: Box(false) :: Nil = z1
 
         val z2: Box[scala.Double] :: Box[scala.Boolean] :: Nil = z.zipBy(y2, Apply).force
-        val -1.625 :: true :: scala.Nil = z2.undual
+        val Box(-1.625) :: Box(true) :: Nil = z2
+
+        {
+            val :: = scala.::
+            val 10.25 :: false :: scala.Nil = z1.undual
+            val -1.625 :: true :: scala.Nil = z2.undual
+        }
         ()
     }
+
+    def testTrivial2 {
+        val y1 = Box(9.75) :: Box('x') :: Nil
+        val z = Lift1((_: Double) + .5) :: Box(3) :: Nil
+        z.zipBy(y1, Apply)
+        ()
+    }
+
 }
 

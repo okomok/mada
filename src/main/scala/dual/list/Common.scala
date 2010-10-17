@@ -13,6 +13,8 @@ trait Common {
     @equivalentTo("new Nil{}")
      val Nil = _Nil.value
 
+    @equivalentTo("Cons")
+     val :: = Cons
     @equivalentTo("x# ::[xs]")
     type ::[x <: Any, xs <: List] = xs# ::[x]
 

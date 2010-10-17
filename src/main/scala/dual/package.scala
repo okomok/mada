@@ -49,6 +49,7 @@ package object dual {
     type Nil = list.Nil
 
     @aliasOf("list.::")
+     val :: = list.::
     type ::[x <: Any, xs <: List] = list.::[x, xs]
 
 
