@@ -1,8 +1,29 @@
+
+
+
 # Mada 1.0.0-SNAPSHOT
 
+Mada is a general purpose library for Scala.
+The current status is pre-alpha: being updated day by day.
 
 
-`Mada` contains the following packages in Scala:
+
+## Setup Dependencies for sbt
+
+Append this in your project definition:
+
+    val mada = "com.github.okomok" % "mada_2.8.0" % "1.0.0-SNAPSHOT"
+    val okomokSnapshots = "okomok Maven2 Snapshots Repository" at "http://github.com/okomok/maven-repo/raw/master/snapshots"
+
+When you use `dual` package, append this to `compileOptions`:
+
+    ++ compileOptions("-Yrecursion", "50")
+
+
+
+## Package Overview
+
+`Mada` contains the following packages:
 
 - `arm`
 
