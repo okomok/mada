@@ -307,4 +307,12 @@ class OptionTest extends org.scalatest.junit.JUnit3Suite {
         free.assert(s.naturalOrdering.equiv(s, t))
     }
 
+    def testLift {
+        val x = Option.lift(scala.None)
+        assertEquals(scala.None, x.undual)
+        val y = Option.lift(scala.Some(15))
+        val scala.Some(15) = y.undual
+        ()
+    }
+
 }

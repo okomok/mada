@@ -8,6 +8,19 @@ package com.github.okomok.mada
 package dual
 
 
+object Option {
+
+    /**
+     * Lifts `scala.Option` to dual one.
+     */
+    def lift(x: scala.None.type): None = liftNone(x)
+    def lift[A](x: scala.Some[A]): Some[Box[A]] = liftSome(x)
+    def liftNone(x: scala.None.type): None = None
+    def liftSome[A](x: scala.Some[A]): Some[Box[A]] = Some(Box(x.get))
+
+}
+
+
 /**
  * The dual Option
  */

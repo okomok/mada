@@ -17,8 +17,8 @@ trait Function0 extends Any {
      def apply: apply
     type apply <: Any
 
-    override lazy val undual: undual = () => apply.undual
-    override     type undual         = () => apply#undual
+    override  val undual: undual = () => apply.undual
+    override type undual         = () => apply#undual
 
     override def canEqual(that: scala.Any) = that.isInstanceOf[Function0]
 }
