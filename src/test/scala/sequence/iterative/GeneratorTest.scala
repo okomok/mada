@@ -13,11 +13,11 @@ import mada.sequence.iterative
 import junit.framework.Assert._
 
 
-class BlockTest extends org.scalatest.junit.JUnit3Suite {
+class GeneratorTest extends org.scalatest.junit.JUnit3Suite {
     def makeEmpty(y: Int => Unit): Int = 999
 
     def testEmpty: Unit = {
-        val tr = iterative.block(makeEmpty)
+        val tr = iterative.generator(makeEmpty)
         assertTrue(tr.isEmpty)
         assertTrue(tr.isEmpty) // run again.
     }
@@ -29,7 +29,7 @@ class BlockTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def withMakeValuesTo(n: Int): Unit = {
-        val tr = iterative.block(makeValuesTo(n))
+        val tr = iterative.generator(makeValuesTo(n))
         assertEquals(iterative.from(1 to n), tr)
         assertEquals(iterative.from(1 to n), tr) // run again.
     }
@@ -61,7 +61,7 @@ class BlockTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testThrow(testOff: Int): Unit = {
-        val tr = iterative.block(throwSome)
+        val tr = iterative.generator(throwSome)
         var ret = false
         try {
             ret = iterative.from(1 to 27) == tr
@@ -79,9 +79,9 @@ class BlockTest extends org.scalatest.junit.JUnit3Suite {
     }
 }
 
-class BlockLockCompile extends Benchmark {
-    val b = new BlockTest
-    val tr = iterative.block(b.makeValuesTo(100000))
+class GeneratorLockCompile extends Benchmark {
+    val b = new GeneratorTest
+    val tr = iterative.generator(b.makeValuesTo(100000))
     override def run = {
         val a = tr.size
         ()

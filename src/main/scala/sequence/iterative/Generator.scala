@@ -14,12 +14,12 @@ import java.util.concurrent.Exchanger
 
 
 private
-case class Block[+A](_1: Yield[A] => Unit) extends Iterative[A] {
+case class Generator[+A](_1: Yield[A] => Unit) extends Iterative[A] {
     override def begin = new Iterator[A] {
-        private var in = new _Block._Data[A]
-        private val x = new Exchanger[_Block._Data[A]]
+        private var in = new _Generator._Data[A]
+        private val x = new Exchanger[_Generator._Data[A]]
 
-        new _Block._Thread(_1, x).start
+        new _Generator._Thread(_1, x).start
         doExchange
 
         override def isEnd = in.buf.isEmpty
@@ -44,7 +44,7 @@ case class Block[+A](_1: Yield[A] => Unit) extends Iterative[A] {
 
 
 private
-object _Block {
+object _Generator {
 
     val CAPACITY = 20
 

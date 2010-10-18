@@ -66,9 +66,9 @@ class Common {
     def bindName[A](it: => Iterator[A]): Iterative[A] = BindName(util.ByName(it))
 
     /**
-     * Constructs a sequence from traversing block.
+     * Constructs a sequence from `Yield` expressions.
      */
-    def block[A](op: Yield[A] => Unit): Iterative[A] = Block(op)
+    def generator[A](op: Yield[A] => Unit): Iterative[A] = Generator(op)
 
     @aliasOf("Function1[A, Unit]")
     type Yield[-A] = Function1[A, Unit]

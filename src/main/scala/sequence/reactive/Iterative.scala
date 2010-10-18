@@ -16,7 +16,7 @@ class FromIterative[+A](_1: Iterative[A]) extends Reactive[A] {
 
 private
 case class ToIterative[A](_1: Reactive[A]) extends iterative.Forwarder[A] {
-    override protected val delegate = iterative.block(impl)
+    override protected val delegate = iterative.generator(impl)
 
     private def impl(y: iterative.Yield[A]): Unit = {
         for (x <- _1) {
