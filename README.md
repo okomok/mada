@@ -12,8 +12,8 @@ The current status is pre-alpha: being updated day by day.
 
 Append this in your project definition:
 
-    val mada = "com.github.okomok" % "mada_2.8.0" % "1.0.0-SNAPSHOT"
-    val okomokSnapshots = "okomok Maven2 Snapshots Repository" at "http://github.com/okomok/maven-repo/raw/master/snapshots"
+    val mada = "com.github.okomok" %% "mada" % "1.0.0-SNAPSHOT"
+    val okomokSnapshots = "okomok snapshots" at "http://okomok.github.com/maven-repo/snapshots"
 
 When you use `dual` package, append this to `compileOptions`:
 

@@ -17,11 +17,11 @@ class Mada(info: ProjectInfo) extends DefaultProject(info) {
         <distributionManagement>
             <repository>
                 <id>repo</id>
-                <url>http://github.com/okomok/maven-repo/raw/master/releases</url>
+                <url>http://okomok.github.com/maven-repo/releases</url>
             </repository>
             <repository>
                 <id>snapshot-repo</id>
-                <url>http://github.com/okomok/maven-repo/raw/master/snapshots</url>
+                <url>http://okomok.github.com/maven-repo/snapshots</url>
             </repository>
         </distributionManagement>
     lazy val publishTo = Resolver.file("Publish", new java.io.File("../maven-repo/snapshots/"))
