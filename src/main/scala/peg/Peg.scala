@@ -303,6 +303,10 @@ trait Peg[-A] {
         e == parse(v, v.start, e)
     }
 
+    final def unapply[B <: A](v: sequence.Vector[B]): Option[sequence.Vector[B]] = {
+        if (matches(v)) Some(v) else None
+    }
+
     /**
      * Splits input using this peg.
      */
