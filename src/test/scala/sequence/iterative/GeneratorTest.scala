@@ -53,6 +53,19 @@ class GeneratorTest extends org.scalatest.junit.JUnit3Suite {
         withMakeValuesTo(310)
     }
 
+    def testTrivial2 {
+        def example = iterative.generator[Any] { `yield` =>
+            `yield`("first")
+            for (i <- 1 until 4) {
+                `yield`(i)
+            }
+            `yield`("last")
+        }
+        for (a <- example) {
+            //println(a)
+        }
+    }
+
     def throwSome(y: iterative.Yield[Int]): Unit = {
         for (i <- 1 to 27) {
             y(i)
