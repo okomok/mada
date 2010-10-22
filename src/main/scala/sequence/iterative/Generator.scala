@@ -13,6 +13,11 @@ import java.util.ArrayDeque
 import java.util.concurrent.Exchanger
 
 
+trait Yield[-A] extends (A => Unit) {
+    def flush: Unit
+}
+
+
 private
 case class Generator[+A](_1: Yield[A] => Unit) extends Iterative[A] {
     override def begin = new Iterator[A] {
@@ -49,12 +54,19 @@ object _Generator {
     val CAPACITY = 20
 
     class _Thread[A](op: Yield[A] => Unit, x: Exchanger[_Data[A]]) extends java.lang.Thread {
+        setDaemon(true)
+
         private var out = new _Data[A]
 
         private val y = new Yield[A] {
             override def apply(e: A) = {
                 out.buf.addLast(e)
                 if (out.buf.size == CAPACITY) {
+                    doExchange
+                }
+            }
+            override def flush = {
+                if (out.buf.size != 0) {
                     doExchange
                 }
             }

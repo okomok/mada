@@ -90,6 +90,28 @@ class GeneratorTest extends org.scalatest.junit.JUnit3Suite {
         }
         assertTrue(ret)
     }
+
+    def testFlush {
+        def sample = iterative.generator[Int] { y =>
+            for (i <- 0 until 20) {
+                y(i)
+            } // exchange.
+            y(20)
+            y(21)
+            y(22)
+            y.flush // exchange.
+            Thread.sleep(80000)
+        }
+        val ret = new java.util.ArrayList[Int]
+        val it = sample.begin
+        assertEquals(0, ~it)
+        for (_ <- 1 until 23) {
+            it.++ // may exchange.
+            ret.add(~it)
+        }
+        assertEquals(iterative.from(1 until 23), iterative.from(ret))
+    }
+
 }
 
 class GeneratorLockCompile extends Benchmark {

@@ -70,9 +70,6 @@ class Common {
      */
     def generator[A](op: Yield[A] => Unit): Iterative[A] = Generator(op)
 
-    @aliasOf("Function1[A, Unit]")
-    type Yield[-A] = Function1[A, Unit]
-
     /**
      * Creates a sequence initially containing the specified elements.
      */
