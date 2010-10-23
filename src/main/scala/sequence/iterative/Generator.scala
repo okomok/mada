@@ -21,10 +21,10 @@ trait Yield[-A] extends (A => Unit) {
 private
 case class Generator[+A](_1: Yield[A] => Unit) extends Iterative[A] {
     override def begin = new Iterator[A] {
-        private var in = new _Generator._Data[A]
-        private val x = new Exchanger[_Generator._Data[A]]
+        private var in = new _Generator.Data[A]
+        private val x = new Exchanger[_Generator.Data[A]]
 
-        new _Generator._Thread(_1, x).start
+        util.Parallel{new _Generator.Task(_1, x).run}
         doExchange
 
         override def isEnd = in.buf.isEmpty
@@ -53,10 +53,8 @@ object _Generator {
 
     val CAPACITY = 20
 
-    class _Thread[A](op: Yield[A] => Unit, x: Exchanger[_Data[A]]) extends java.lang.Thread {
-        setDaemon(true)
-
-        private var out = new _Data[A]
+    class Task[A](op: Yield[A] => Unit, x: Exchanger[Data[A]]) {
+        private var out = new Data[A]
 
         private val y = new Yield[A] {
             override def apply(e: A) = {
@@ -72,7 +70,7 @@ object _Generator {
             }
         }
 
-        override def run() = {
+        def run: Unit = {
             try {
                 op(y)
             } finally {
@@ -87,7 +85,7 @@ object _Generator {
         }
     }
 
-    class _Data[A](val buf: ArrayDeque[A], var isLast: Boolean) {
+    class Data[A](val buf: ArrayDeque[A], var isLast: Boolean) {
         def this() = this(new ArrayDeque[A](CAPACITY), false)
     }
 
