@@ -114,10 +114,6 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
         case (xs, ys) => (xs.map(_._1), ys.map(_._2))
     }
 
-    def append[B >: A](that: => Reactive[B]): Reactive[B] = Append[B](this, util.ByName(that))
-
-    final def ++[B >: A](that: => Reactive[B]): Reactive[B] = append(that)
-
 
 // conversion
 

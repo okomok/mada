@@ -45,7 +45,6 @@ trait Forwarder[+A] extends Reactive[A] with Sequence.Forwarder[A] {
     override def unsplit[B](sep: Reactive[B])(implicit pre : Reactive[A] <:< Reactive[Sequence[B]]): Reactive[B] = around(delegate.unsplit(sep))
     override def zip[B](that: Reactive[B]): Reactive[(A, B)] = around(delegate.zip(that))
     override def unzip[B, C](implicit pre: Reactive[A] <:< Reactive[(B, C)]): (Reactive[B], Reactive[C]) = around2(delegate.unzip)
-    override def append[B >: A](that: => Reactive[B]): Reactive[B] = append(that)
     override def toIterative: Iterative[A] = delegate.toIterative
     override def toResponder: Responder[A] = delegate.toResponder
     override def actor: scala.actors.Actor = delegate.actor
