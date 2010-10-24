@@ -45,6 +45,7 @@ trait Forwarder[+A] extends Reactive[A] with Sequence.Forwarder[A] {
     override def unsplit[B](sep: Reactive[B])(implicit pre : Reactive[A] <:< Reactive[Sequence[B]]): Reactive[B] = around(delegate.unsplit(sep))
     override def zip[B](that: Reactive[B]): Reactive[(A, B)] = around(delegate.zip(that))
     override def unzip[B, C](implicit pre: Reactive[A] <:< Reactive[(B, C)]): (Reactive[B], Reactive[C]) = around2(delegate.unzip)
+    override def append[B >: A](that: => Reactive[B]): Reactive[B] = append(that)
     override def toIterative: Iterative[A] = delegate.toIterative
     override def toResponder: Responder[A] = delegate.toResponder
     override def actor: scala.actors.Actor = delegate.actor
@@ -56,9 +57,9 @@ trait Forwarder[+A] extends Reactive[A] with Sequence.Forwarder[A] {
     override def break: Reactive[A] = around(delegate.break)
     override def takeUntil(that: Reactive[_]): Reactive[A] = around(delegate.takeUntil(that))
     override def dropUntil(that: Reactive[_]): Reactive[A] = around(delegate.dropUntil(that))
-    override def then(f: => Unit): Reactive[A] = around(delegate.then(f))
     override def onHead(f: A => Unit): Reactive[A] = around(delegate.onHead(f))
     override def onNth(n: Int)(f: A => Unit): Reactive[A] = around(delegate.onNth(n)(f))
+    override def onClose(f: => Unit): Reactive[A] = around(delegate.onClose(f))
     override def catching(f: Throwable => Unit): Reactive[A] = around(delegate.catching(f))
     override def using(c: java.io.Closeable): Reactive[A] = around(delegate.using(c))
     override def header[B >: A](it: Iterative[B]): Reactive[B] = around(delegate.header(it))

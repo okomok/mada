@@ -114,6 +114,10 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
         case (xs, ys) => (xs.map(_._1), ys.map(_._2))
     }
 
+    def append[B >: A](that: => Reactive[B]): Reactive[B] = Append[B](this, util.ByName(that))
+
+    final def ++[B >: A](that: => Reactive[B]): Reactive[B] = append(that)
+
 
 // conversion
 
@@ -170,11 +174,6 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
     def dropUntil(that: Reactive[_]): Reactive[A] = DropUntil(this, that)
 
     /**
-     * Calls `f` on the end of subsequence.
-     */
-    def then(f: => Unit): Reactive[A] = throw new UnsupportedOperationException("Reactive.then")
-
-    /**
      * Calls `f` on the head of sequence.
      */
     def onHead(f: A => Unit): Reactive[A] = OnHead(this, f)
@@ -183,6 +182,11 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
      * Calls `f` on the nth of sequence.
      */
     def onNth(n: Int)(f: A => Unit): Reactive[A] = OnNth(this, n, f)
+
+    /**
+     * Calls `f` on the closing of sequence.
+     */
+    def onClose(f: => Unit): Reactive[A] = OnClose(this, util.ByName(f))
 
     /**
      * Pseudo catch-statement
