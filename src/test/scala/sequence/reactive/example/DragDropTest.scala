@@ -24,8 +24,8 @@ class DragDropTezt {
 
         val mouse = reactive.Swing.Mouse(label)
         for {
-            _ <- mouse.Pressed.doing(println("pressed")).take(10)
-            e <- mouse.Dragged.onClose(println("released")).takeUntil(mouse.Released)
+            _ <- mouse.Pressed.take(10).doing(println("pressed"))
+            e <- mouse.Dragged.takeUntil(mouse.Released).then(println("released"))
         } {
             println("dragging at: " + (e.getX, e.getY))
         }

@@ -185,6 +185,11 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
     def onClose(f: => Unit): Reactive[A] = OnClose(this, util.ByName(f))
 
     /**
+     * Calls `f` on the closing of sequence.
+     */
+    def then(f: => Unit): Reactive[A] = throw new UnsupportedOperationException("Reactive.then")
+
+    /**
      * Pseudo catch-statement
      */
     def catching(f: Throwable => Unit): Reactive[A] = Catching(this, f)

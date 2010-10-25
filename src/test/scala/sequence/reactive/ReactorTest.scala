@@ -25,10 +25,10 @@ class ReactorTest extends org.scalatest.junit.JUnit3Suite {
         val a = Reactor { r =>
             r collect {
                 case e: Int => e
-            } onClose {
-                cur ! OK
             } take {
                 3
+            } then {
+                cur ! OK
             } reactTotal { x =>
                 out.add(x)
             } reactTotal { x =>
@@ -58,10 +58,10 @@ class ReactorTest extends org.scalatest.junit.JUnit3Suite {
         }
         a.sequence collect {
                     case e: Int => e
-                } onClose {
-                    cur ! OK
                 } take {
                     3
+                } then {
+                    cur ! OK
                 } reactTotal { x =>
                     out.add(x)
                 } reactTotal { x =>
@@ -92,11 +92,11 @@ class ReactorTest extends org.scalatest.junit.JUnit3Suite {
         }
         a.sequence collect {
                     case e: Int => e
-                } onClose {
-                    cur ! OK
-                    Actor.exit
                 } take {
                     3
+                } then {
+                    cur ! OK
+                    Actor.exit
                 } reactTotal { x =>
                     out.add(x)
                 } reactTotal { x =>
@@ -154,10 +154,10 @@ class ReactorTest extends org.scalatest.junit.JUnit3Suite {
         }
         a.sequence collect {
                     case e: Int => e
-                } onClose {
-                    cur ! OK
                 } take {
                     0
+                } then {
+                    cur ! OK
                 } start
 
         a.start

@@ -21,4 +21,6 @@ case class TakeWhile[A](_1: Reactive[A], _2: A => Boolean) extends Reactive[A] {
             }
         }
     }
+
+    override def then(f: => Unit): Reactive[A] = _1.onClose(f).takeWhile(_2)
 }

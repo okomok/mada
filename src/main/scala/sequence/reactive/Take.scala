@@ -28,5 +28,6 @@ case class Take[A](_1: Reactive[A], _2: Int) extends Reactive[A] {
         }
     }
 
+    override def then(f: => Unit): Reactive[A] = _1.onClose(f).take(_2)
     override def take(n: Int): Reactive[A] = _1.take(java.lang.Math.min(_2, n)) // take-take fusion
 }

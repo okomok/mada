@@ -27,4 +27,6 @@ case class Generate[A, +B](_1: Reactive[A], _2: Iterative[B]) extends Reactive[B
             }
         }
     }
+
+    override def then(f: => Unit): Reactive[B] = _1.onClose(f).generate(_2)
 }
