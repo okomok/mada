@@ -9,24 +9,25 @@ package sequence; package reactive
 
 
 private
-case class TakeUntil[A](_1: Reactive[A], _2: Reactive[_]) extends Reactive[A] {
+case class TakeUntil[A](_1: Reactive[A], _2: Reactive[_], _3: (A => Unit) => Unit = function.empty1) extends Reactive[A] {
     override def close = { _1.close; _2.close }
     override def foreach(f: A => Unit) {
         @volatile var go = true
-        val g = util.ByLazy{close}
+        val k = util.ByLazy{close; _3(f)}
         for (y <- _2) {
             go = false
-            g()
+            k()
         }
 
         for (x <- _1) {
             if (go) {
                 f(x)
             } else {
-                g()
+                k()
             }
         }
     }
 
-    override def then(f: => Unit): Reactive[A] = _1.onClose(f).takeUntil(_2)
+    override def then(f: => Unit): Reactive[A] = TakeUntil[A](_1, _2, g => {_3(g);f}) // _1.onClose(f).takeUntil(_2)
+    override def then_++[B >: A](that: Reactive[B]): Reactive[B] = TakeUntil[B](_1, _2, g => {_3(g);that.foreach(g)})
 }
