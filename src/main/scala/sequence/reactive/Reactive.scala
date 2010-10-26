@@ -192,7 +192,7 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
     /**
      * Append `that` on the end of sequence. (optional operation)
      */
-    def then_++[B >: A](that: Reactive[B]): Reactive[B] = throw new UnsupportedOperationException("Reactive.then_++")
+    def then_++[B >: A](that: => Reactive[B]): Reactive[B] = throw new UnsupportedOperationException("Reactive.then_++")
 
     /**
      * Pseudo catch-statement

@@ -55,4 +55,12 @@ class GenerateTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals(vector.Of(9,8,7,6,5,99), vector.from(s))
     }
 
+    def testThenAppend: Unit = {
+        val s = new java.util.ArrayList[Int]
+        for (x <- reactive.infinite.generate(Iterative.Of(9,8,7,6,5)).then_++(reactive.Of(2,3,4))) {
+            s.add(x)
+        }
+        assertEquals(vector.Of(9,8,7,6,5,2,3,4), vector.from(s))
+    }
+
 }
