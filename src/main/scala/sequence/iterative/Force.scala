@@ -10,7 +10,7 @@ package sequence; package iterative
 
 @visibleForTesting
 case class Force[+A](_1: Iterative[A]) extends Iterative[A] {
-    private val k = { // should not be lazy; that's "force".
+    private[this] val k = { // should not be lazy; that's "force".
         val r = new java.util.ArrayList[A]
         val it = _1.begin
         while (it) {

@@ -11,7 +11,7 @@ package sequence; package iterative
 private
 case class Iterate[A](_1: A, _2: A => A) extends Iterative[A] {
     override def begin = new Iterator[A] {
-        private var acc = _1
+        private[this] var acc = _1
 
         override def isEnd = false
         override def deref = acc

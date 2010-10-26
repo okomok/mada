@@ -11,8 +11,8 @@ package sequence; package iterative
 private
 case class Append[+A](_1: Iterative[A], _2: Iterative[A]) extends Iterative[A] {
     override def begin = new Iterator[A] {
-        private var it = _1.begin
-        private var inLeft = true
+        private[this] var it = _1.begin
+        private[this] var inLeft = true
         ready
 
         override def isEnd = !it

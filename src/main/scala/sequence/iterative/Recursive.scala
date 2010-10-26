@@ -13,7 +13,7 @@ package sequence; package iterative
  */
 @deprecated("use List instead")
 class Recursive[A] extends Iterative[A] {
-    @volatile private var f: Function0[Iterative[A]] = null
+    @volatile private[this] var f: Function0[Iterative[A]] = null
 
     /**
      * Assigns <code>that</code>.
@@ -31,7 +31,7 @@ class Recursive[A] extends Iterative[A] {
 
 @deprecated("use List instead")
 class RecursiveForwarder[A] extends Forwarder[A] {
-    @volatile private var f: Function0[Iterative[A]] = null
+    @volatile private[this] var f: Function0[Iterative[A]] = null
 
     /**
      * Assigns <code>that</code>.

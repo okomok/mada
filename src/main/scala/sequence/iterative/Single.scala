@@ -11,7 +11,7 @@ package sequence; package iterative
 private
 case class Single[+A](_1: A) extends Iterative[A] {
     override def begin = new Iterator[A] {
-        private var ends = false
+        private[this] var ends = false
 
         override def isEnd = ends
         override def deref = { preDeref; _1 }

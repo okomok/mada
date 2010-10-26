@@ -36,7 +36,7 @@ package sequence; package vector; package stl
 
 private[vector]
 class DefaultRandomNumberGenerator extends (Int => Int) {
-    private val rnd = new java.util.Random
+    private[this] val rnd = new java.util.Random
     override def apply(__n: Int) = rnd.nextInt(__n)
 }
 

@@ -14,7 +14,7 @@ package sequence; package reactive
 trait ReactiveOnce[+A] extends Reactive[A] {
     protected def foreachOnce(f: A => Unit): Unit
 
-    private val k =
+    private[this] val k =
         IfFirst[A => Unit] { f =>
             foreachOnce(f)
         } Else { _ =>

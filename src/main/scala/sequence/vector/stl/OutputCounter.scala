@@ -17,7 +17,7 @@ class OutputCounter(val from: Int) extends OutputVector[Any] {
      */
     def this() = this(0)
 
-    private var c = from
+    private[this] var c = from
 
     /**
      * Increments counter.

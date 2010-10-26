@@ -32,7 +32,7 @@ case class Repeat[A](_1: Peg[A], _2: Int, _3: Int) extends Forwarder[A] with Qua
         throw new IllegalArgumentException("repeat" + (_2, _3))
     }
 
-    private val prefix = new RepeatExactly(_1, _2)
+    private[this] val prefix = new RepeatExactly(_1, _2)
     override protected val delegate = prefix >> new RepeatAtMost(_1, _3 - _2)
     override def until[B <: A](that: Peg[B]) = prefix >> new RepeatAtMostUntil(_1, _3 - _2, that)
 }

@@ -12,7 +12,7 @@ package peg
  * Suppresses actions until outer <code>Peg</code> is matched.
  */
 class ByNeedActions[A] {
-    private val queue = new java.util.ArrayDeque[(Action[A], sequence.Vector[A])]
+    private[this] val queue = new java.util.ArrayDeque[(Action[A], sequence.Vector[A])]
 
     @aliasOf("byNeed")
     final def apply(f: Action[A]): Action[A] = byNeed(f)

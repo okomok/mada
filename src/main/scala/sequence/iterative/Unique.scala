@@ -18,7 +18,7 @@ case class Unique[+A](_1: Iterative[A]) extends Forwarder[A] {
 private
 case class UniqueBy[A](_1: Iterative[A], _2: (A, A) => Boolean) extends Iterative[A] {
     override def begin = new Iterator[A] {
-        private val it = _1.begin
+        private[this] val it = _1.begin
 
         override def isEnd = !it
         override def deref = ~it

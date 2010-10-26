@@ -12,7 +12,7 @@ import java.util.concurrent
 
 
 case class Parallel[R](_1: Function0[R]) extends Function0[R] {
-    private val u = {
+    private[this] val u = {
         val c = new concurrent.Callable[R] { override def call() = _1() }
         Parallel.executor.synchronized { Parallel.executor.submit(c) }
     }

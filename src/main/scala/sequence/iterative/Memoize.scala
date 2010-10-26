@@ -13,12 +13,12 @@ import java.util.concurrent.ConcurrentHashMap
 
 private
 case class Memoize[A](_1: Iterative[A]) extends Iterative[A] {
-    private val derefMemo = new ConcurrentHashMap[Int, () => A]
-    //private val isEndMemo = new ConcurrentHashMap[Int, () => Boolean]
+    private[this] val derefMemo = new ConcurrentHashMap[Int, () => A]
+    //private[this] val isEndMemo = new ConcurrentHashMap[Int, () => Boolean]
 
     override def begin = new Iterator[A] {
-        private var i = 0
-        private val it = _1.begin
+        private[this] var i = 0
+        private[this] val it = _1.begin
 
         override def isEnd = !it //assoc.lazyGet(isEndMemo)(i)(!it)
         override def deref = assoc.lazyGet(derefMemo)(i)(~it)

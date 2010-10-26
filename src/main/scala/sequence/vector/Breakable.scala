@@ -12,14 +12,14 @@ package sequence; package vector
 
 
 private class Breakable1[A](p: A => Boolean, ret: Boolean) extends (A => Boolean) {
-    @volatile private var _breaks = false
+    @volatile private[this] var _breaks = false
     def breaks: Boolean = _breaks
     def break: Unit = _breaks = true
     override def apply(a: A) = if (_breaks) ret else p(a)
 }
 
 private class Breakable2[A, B](p: (A, B) => Boolean, ret: Boolean) extends ((A, B) => Boolean) {
-    @volatile private var _breaks = false
+    @volatile private[this] var _breaks = false
     def breaks: Boolean = _breaks
     def break: Unit = _breaks = true
     override def apply(a: A, b: B) = if (_breaks) ret else p(a, b)

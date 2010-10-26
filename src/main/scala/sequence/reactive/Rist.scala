@@ -15,8 +15,8 @@ import java.util.ArrayList
  * Reactive list (immutable)
  */
 final class Rist[A] extends Reactive[A] {
-    private val xs = new ArrayList[A]
-    private val outs = new ArrayList[A => Unit]
+    private[this] val xs = new ArrayList[A]
+    private[this] val outs = new ArrayList[A => Unit]
 
     override def foreach(f: A => Unit) {
         for (x <- iterative.from(xs)) f(x)

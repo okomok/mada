@@ -13,7 +13,7 @@ package sequence; package iterative
  * This sequence is implicitly memoized.
  */
 class Infinite[A] extends Iterative[A] {
-    @volatile private var f: Function0[Iterative[A]] = null
+    @volatile private[this] var f: Function0[Iterative[A]] = null
 
     /**
      * Assigns <code>that</code>.
@@ -24,8 +24,8 @@ class Infinite[A] extends Iterative[A] {
 
     // init-memoize guarantees number of iterators never be exponential growth.
     override def begin = new Iterator[A] {
-        private var i = 0
-        private var it: Iterator[A] = null
+        private[this] var i = 0
+        private[this] var it: Iterator[A] = null
 
         override def isEnd = false // infinite
         override def deref = { init; ~it }
@@ -52,8 +52,8 @@ class Infinite[A] extends Iterative[A] {
 private
 case class Infinitize[A](_1: Iterative[A]) extends Iterative[Option[A]] {
     override def begin = new Iterator[Option[A]] {
-        private var i = 0
-        private var it: Iterator[A] = null
+        private[this] var i = 0
+        private[this] var it: Iterator[A] = null
 
         override def isEnd = false
         override def deref = {

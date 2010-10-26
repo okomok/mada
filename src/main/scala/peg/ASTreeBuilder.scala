@@ -46,7 +46,7 @@ object ASTreeBuilder {
  * @param   cloner  a function returns shallow-copy of <code>T</code> object
  */
 class ASTreeBuilder[T <: MutableTreeNode](root: T, cloner: T => T) {
-    private val branches = new java.util.ArrayDeque[T]
+    private[this] val branches = new java.util.ArrayDeque[T]
     branches.push(root)
 
     /**

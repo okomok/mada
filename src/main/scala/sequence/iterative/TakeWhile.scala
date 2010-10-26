@@ -11,7 +11,7 @@ package sequence; package iterative
 private
 case class TakeWhile[A](_1: Iterative[A], _2: A => Boolean) extends Iterative[A] {
     override def begin = new Iterator[A] {
-        private var it = _1.begin
+        private[this] var it = _1.begin
         ready
 
         override def isEnd = !it

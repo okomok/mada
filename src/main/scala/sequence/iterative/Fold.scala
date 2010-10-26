@@ -15,8 +15,8 @@ case class FolderLeft[A, B](_1: Iterative[A], _2: B, _3: (B, A) => B) extends Fo
 
 private class _FolderLeft[A, B](_1: Iterative[A], _2: B, _3: (B, A) => B) extends Iterative[B] {
     override def begin = new Iterator[B] {
-        private val it = _1.begin
-        private var z = _2
+        private[this] val it = _1.begin
+        private[this] var z = _2
 
         override def isEnd = !it
         override def deref = _3(z, ~it)

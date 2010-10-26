@@ -10,7 +10,7 @@ package sequence; package reactive
 
 private
 case class Infinite() extends Resource[Unit] {
-    @volatile private var isClosed = false
+    @volatile private[this] var isClosed = false
     override protected def closeResource = isClosed = true
     override protected def openResource(f: Unit => Unit) = {
         while (!isClosed) {

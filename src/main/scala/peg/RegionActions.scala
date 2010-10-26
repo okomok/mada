@@ -12,7 +12,7 @@ package peg
  * Associates actions where Peg can't be placed.
  */
 class RegionActions[A] {
-    private val stack = new java.util.ArrayDeque[Int]
+    private[this] val stack = new java.util.ArrayDeque[Int]
 
     /**
      * Marks starting point of actions.

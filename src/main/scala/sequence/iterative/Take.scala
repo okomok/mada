@@ -13,8 +13,8 @@ case class Take[+A](_1: Iterative[A], _2: Int) extends Iterative[A] {
     Precondition.nonnegative(_2, "take")
 
     override def begin = new Iterator[A] {
-        private var it = _1.begin
-        private var i = _2
+        private[this] var it = _1.begin
+        private[this] var i = _2
         ready
 
         override def isEnd = !it

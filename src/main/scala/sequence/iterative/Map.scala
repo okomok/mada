@@ -11,7 +11,7 @@ package sequence; package iterative
 @visibleForTesting
 case class Map[A, +B](_1: Iterative[A], _2: A => B) extends Iterative[B] {
     override def begin = new Iterator[B] {
-        private val it = _1.begin
+        private[this] val it = _1.begin
 
         override def isEnd = !it
         override def deref = _2(~it)

@@ -24,7 +24,7 @@ class Memoizer[A](val input: sequence.Vector[A]) {
     def memoize(p: Peg[A]): Peg[A] = Memoize(p)
 
     case class Memoize(_1: Peg[A]) extends Peg[A] {
-        private val memoTable = new java.util.concurrent.ConcurrentHashMap[Pair[Int, Int], () => Int]
+        private[this] val memoTable = new java.util.concurrent.ConcurrentHashMap[Pair[Int, Int], () => Int]
 
         override def parse(v: sequence.Vector[A], start: Int, end: Int) = {
             if (v.regionBase eq input.regionBase) {

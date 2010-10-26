@@ -13,7 +13,7 @@ import java.util.concurrent.atomic
 
 private
 class IfFirst[-T](_then: T => Unit, _else: T => Unit) extends Function1[T, Unit] {
-    private val first = new atomic.AtomicBoolean(true)
+    private[this] val first = new atomic.AtomicBoolean(true)
 
     override def apply(x: T): Unit = {
         if (first.get && first.compareAndSet(true, false)) {
@@ -39,7 +39,7 @@ object IfFirst {
 @deprecated("unused")
 private
 class OnlyFirst[-T](f: T => Unit) extends Function1[T, Unit] {
-    private val delegate = new IfFirst[T](f, _ => ())
+    private[this] val delegate = new IfFirst[T](f, _ => ())
     override def apply(x: T) = delegate(x)
 
     def isDone: Boolean = delegate.isSecond
@@ -49,7 +49,7 @@ class OnlyFirst[-T](f: T => Unit) extends Function1[T, Unit] {
 @deprecated("unused")
 private
 class SkipFirst[-T](f: T => Unit) extends Function1[T, Unit] {
-    private val delegate = new IfFirst[T](_ => (), f)
+    private[this] val delegate = new IfFirst[T](_ => (), f)
     override def apply(x: T) = delegate(x)
 
     def isSkipped: Boolean = delegate.isSecond
@@ -59,7 +59,7 @@ class SkipFirst[-T](f: T => Unit) extends Function1[T, Unit] {
 @deprecated("unused")
 private
 class SkipTimes[-T](f: T => Unit, n: Int) extends Function1[T, Unit] {
-    private val count = new atomic.AtomicInteger(n)
+    private[this] val count = new atomic.AtomicInteger(n)
 
     override def apply(x: T): Unit = {
         var old = 0
@@ -76,7 +76,7 @@ class SkipTimes[-T](f: T => Unit, n: Int) extends Function1[T, Unit] {
 @deprecated("unused")
 private
 class SkipWhile[-T](f: T => Unit, p: T => Boolean) extends Function1[T, Unit] {
-    @volatile private var begins = false
+    @volatile private[this] var begins = false
 
     override def apply(x: T): Unit = {
         if (begins) {

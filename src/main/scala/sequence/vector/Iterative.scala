@@ -11,7 +11,7 @@ package sequence; package vector
 private
 case class AsIterative[A](_1: Vector[A]) extends Iterative[A] {
     override def begin = new Iterator[A] {
-        private var i = _1.start
+        private[this] var i = _1.start
         override def isEnd = i == _1.end
         override def deref = { preDeref; _1(i) }
         override def increment = { preIncrement; i += 1 }

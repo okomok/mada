@@ -21,8 +21,8 @@ trait Yield[-A] extends (A => Unit) {
 private
 case class Generator[+A](_1: Yield[A] => Unit) extends Iterative[A] {
     override def begin = new Iterator[A] {
-        private var in = new _Generator.Data[A]
-        private val x = new Exchanger[_Generator.Data[A]]
+        private[this] var in = new _Generator.Data[A]
+        private[this] val x = new Exchanger[_Generator.Data[A]]
 
         util.Parallel{new _Generator.Task(_1, x).run}
         doExchange
@@ -54,9 +54,9 @@ object _Generator {
     val CAPACITY = 20
 
     class Task[A](op: Yield[A] => Unit, x: Exchanger[Data[A]]) {
-        private var out = new Data[A]
+        private[this] var out = new Data[A]
 
-        private val y = new Yield[A] {
+        private[this] val y = new Yield[A] {
             override def apply(e: A) = {
                 out.buf.addLast(e)
                 if (out.buf.size == CAPACITY) {

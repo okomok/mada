@@ -20,7 +20,7 @@ case class FromSIterator[A](_1: scala.Iterator[A]) extends Forwarder[A] {
 }
 
 private class _FromSIterator[A](_1: scala.Iterator[A]) extends Iterator[A] {
-    private var e = ready
+    private[this] var e = ready
 
     override def isEnd = e.isEmpty
     override def deref = { preDeref; e.get }

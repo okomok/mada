@@ -12,7 +12,7 @@ import java.util.TimerTask
 
 
 case class Schedule(scheduler: TimerTask => Unit) extends Resource[Unit] {
-    private var l: TimerTask = null
+    private[this] var l: TimerTask = null
     override protected def closeResource = l.cancel()
     override protected def openResource(f: Unit => Unit) = {
         l = new TimerTask {

@@ -13,8 +13,8 @@ case class Split[A](_1: Peg[A], _2: sequence.Vector[A]) extends sequence.Iterati
     Precondition.zeroWidth(_1, "split")
 
     override def begin = new sequence.Iterator[sequence.Vector[A]] {
-        private val u = new RepeatAtMostUntil(dot, java.lang.Integer.MAX_VALUE, end | _1)
-        private var (k, b, l) = u.parseImpl(_2, _2.start, _2.end)
+        private[this] val u = new RepeatAtMostUntil(dot, java.lang.Integer.MAX_VALUE, end | _1)
+        private[this] var (k, b, l) = u.parseImpl(_2, _2.start, _2.end)
 
         override def isEnd = k == l
         override def deref = {

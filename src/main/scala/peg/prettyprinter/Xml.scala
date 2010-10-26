@@ -12,10 +12,10 @@ private[peg]
 case class Xml(_1: java.io.Writer, _2: Int) extends PrettyPrinter {
     _1.write("<?xml version=\"1.0\" encoding=\"UTF-16\" standalone=\"yes\"?>\n")
 
-    private var indentLevel = 0
-    private val indentString = sequence.vector.single(' ').times(_2)
+    private[this] var indentLevel = 0
+    private[this] val indentString = sequence.vector.single(' ').times(_2)
     private def indent = indentString.times(indentLevel)
-    private val stack = new java.util.ArrayDeque[Any]
+    private[this] val stack = new java.util.ArrayDeque[Any]
 
     /**
      * Writes start element tag with new line.

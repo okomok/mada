@@ -11,8 +11,8 @@ package sequence; package iterative
 private
 case class Flatten[+A](_1: Iterative[Sequence[A]]) extends Iterative[A] {
     override def begin = new Iterator[A] {
-        private val ii = _1.begin
-        private var it = ready
+        private[this] val ii = _1.begin
+        private[this] var it = ready
 
         override def isEnd = !it
         override def deref = ~it

@@ -38,7 +38,7 @@ object Randoms {
     }
 
     case class OfBytes(random: Random, length: Int) extends Forwarder[Array[Byte]] {
-        private val a = new Array[Byte](length)
+        private[this] val a = new Array[Byte](length)
         private def _nextBytes = { random.nextBytes(a); a }
         override protected val delegate = iterate(_nextBytes){_ => _nextBytes}
     }

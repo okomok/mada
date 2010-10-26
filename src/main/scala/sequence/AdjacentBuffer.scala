@@ -11,7 +11,7 @@ package sequence
 private[sequence]
 final class AdjacentBuffer[A](capacity: Int) {
     Precondition.positive(capacity, "Reactive.adjacent")
-    private val impl = new java.util.ArrayList[A](capacity)
+    private[this] val impl = new java.util.ArrayList[A](capacity)
     def isFull: Boolean = impl.size == capacity
     def removeFirst: Unit = impl.remove(0)
     def addLast(x: A): Unit = { assert(!isFull); impl.add(x) }

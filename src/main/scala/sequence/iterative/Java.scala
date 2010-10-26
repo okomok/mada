@@ -22,7 +22,7 @@ case class ToJIterable[A](_1: Iterative[A]) extends java.lang.Iterable[A] {
 private
 case class FromJObjectInput(_1: java.io.ObjectInput) extends Iterative[AnyRef] {
     override def begin = new Iterator[AnyRef] {
-        private var e = ready // Note that null is a valid data.
+        private[this] var e = ready // Note that null is a valid data.
 
         override def isEnd = e.isEmpty
         override def deref = { preDeref; e.get }
@@ -43,7 +43,7 @@ private
 case class FromJReader(_1: java.io.Reader) extends Iterative[Char] {
     override def begin = new Iterator[Char] {
         _1.reset
-        private var e = ready
+        private[this] var e = ready
 
         override def isEnd = e.isEmpty
         override def deref = { preDeref; e.get }

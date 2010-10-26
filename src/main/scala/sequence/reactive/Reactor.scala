@@ -55,7 +55,7 @@ object Reactor {
 
     private
     case class Sequence(_1: Reactor) extends Resource[Any] {
-        private var out: Any => Unit = null
+        private[this] var out: Any => Unit = null
         override protected def closeResource = _1.outs.remove(out)
         override protected def openResource(f: Any => Unit) = {
             out = new Reactor.OutWrap(f)

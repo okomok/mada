@@ -37,8 +37,8 @@ object Sorted {
 private
 case class Merge[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) extends Iterative[A] {
     override def begin = new Iterator[A] {
-        private val it1 = _1.begin
-        private val it2 = _2.begin
+        private[this] val it1 = _1.begin
+        private[this] val it2 = _2.begin
 
         override def isEnd = !it1 && !it2
         override def deref = Sorted.derefBy(it1, it2, _3)
@@ -50,8 +50,8 @@ case class Merge[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) extends
 private
 case class Union[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) extends Iterative[A] {
     override def begin = new Iterator[A] {
-        private val it1 = _1.begin
-        private val it2 = _2.begin
+        private[this] val it1 = _1.begin
+        private[this] val it2 = _2.begin
 
         override def isEnd = !it1 && !it2
         override def deref = {
@@ -83,8 +83,8 @@ case class Union[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) extends
 private
 case class Intersection[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) extends Iterative[A] {
     override def begin = new Iterator[A] {
-        private val it1 = _1.begin
-        private val it2 = _2.begin
+        private[this] val it1 = _1.begin
+        private[this] val it2 = _2.begin
         ready
 
         override def isEnd = !it1 || !it2
@@ -114,8 +114,8 @@ case class Intersection[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) 
 private
 case class Difference[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) extends Iterative[A] {
     override def begin = new Iterator[A] {
-        private val it1 = _1.begin
-        private val it2 = _2.begin
+        private[this] val it1 = _1.begin
+        private[this] val it2 = _2.begin
         ready
 
         override def isEnd = !it1
@@ -145,8 +145,8 @@ case class Difference[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) ex
 private
 case class SymmetricDifference[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) extends Iterative[A] {
     override def begin = new Iterator[A] {
-        private val it1 = _1.begin
-        private val it2 = _2.begin
+        private[this] val it1 = _1.begin
+        private[this] val it2 = _2.begin
         ready
 
         override def isEnd = !it1 && !it2

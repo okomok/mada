@@ -12,7 +12,7 @@ package peg
  * Helps to define recursive grammars.
  */
 class Rule[A] extends Peg[A] { // essentially shall not be a forwarder.
-    @volatile private var f: Function0[Peg[A]] = null
+    @volatile private[this] var f: Function0[Peg[A]] = null
 
     /**
      * Assigns <code>that</code>.

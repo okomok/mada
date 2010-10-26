@@ -9,7 +9,7 @@ package util
 
 
 case class Future[+R](_1: Function0[R]) extends Function0[R] {
-    private val f = {
+    private[this] val f = {
         try {
             Parallel(_1)
         } catch {
