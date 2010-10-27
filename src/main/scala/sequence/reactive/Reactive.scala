@@ -12,7 +12,7 @@ object Reactive extends Common with Compatibles {
 
 // methodization
     sealed class _OfName[A](_this: => Reactive[A]) {
-        def byName: Reactive[A] = ByName(util.ByName(_this))
+        def byName: Reactive[A] = ByName(_this)
     }
     implicit def _ofName[A](_this: => Reactive[A]): _OfName[A] = new _OfName(_this)
 
@@ -190,7 +190,7 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
     /**
      * Calls `f` on the closing of sequence.
      */
-    def onClose(f: => Unit): Reactive[A] = OnClose(this, util.ByName(f))
+    def onClose(f: => Unit): Reactive[A] = OnClose(this, f)
 
     /**
      * Calls `f` on the end of sequence. (optional operation)

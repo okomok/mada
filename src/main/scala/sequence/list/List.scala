@@ -25,7 +25,7 @@ object List extends Common with Compatibles {
 // methodization
 
     sealed class _OfName[A](_this: => List[A]) {
-        def ::(x: A): List[A] = new Cons(x, util.ByLazy(_this))
+        def ::(x: A): List[A] = new Cons(x, _this)
     // right-associative
         def :::(prefix: List[A]): List[A] = prefix.append(_this)
         def reverse_:::(prefix: List[A]): List[A] = prefix.reverseAppend(_this)
@@ -50,7 +50,7 @@ case object Nil extends List[Nothing] {
     override def head = throw new NoSuchElementException("head on empty list")
     override def tail = throw new UnsupportedOperationException("tail on empty list")
 
-    def ::[A](x: A): List[A] = new Cons[A](x, util.ByLazy(this))
+    def ::[A](x: A): List[A] = new Cons[A](x, this)
 }
 
 
@@ -275,7 +275,7 @@ sealed abstract class List[+A] extends iterative.Sequence[A] {
      */
     def foldRight[B](z: B)(f: (A, util.ByLazy[B]) => B): B = this match {
         case Nil => z
-        case x :: xs => f(x, util.ByLazy(xs().foldRight(z)(f)))
+        case x :: xs => f(x, xs().foldRight(z)(f))
     }
 
     @aliasOf("foldRight")
@@ -294,7 +294,7 @@ sealed abstract class List[+A] extends iterative.Sequence[A] {
      */
     def reduceRight[B >: A](f: (A, util.ByLazy[B]) => B): B = this match {
         case x #:: Nil => x
-        case x :: xs => f(x, util.ByLazy(xs().reduceRight(f)))
+        case x :: xs => f(x, xs().reduceRight(f))
         case Nil => throw new UnsupportedOperationException("reduceRight on empty list")
     }
 
@@ -315,7 +315,7 @@ sealed abstract class List[+A] extends iterative.Sequence[A] {
         case Nil => q0 :: Nil
         case x :: xs => {
             lazy val qs = xs().folderRight(q0)(f)
-            f(x, util.ByLazy(qs.head)) :: qs
+            f(x, qs.head) :: qs
         }
     }
 
@@ -335,7 +335,7 @@ sealed abstract class List[+A] extends iterative.Sequence[A] {
         case x #:: Nil => this
         case x :: xs => {
             lazy val qs = xs().reducerRight(f)
-            f(x, util.ByLazy(qs.head)) :: qs
+            f(x, qs.head) :: qs
         }
     }
 
@@ -568,7 +568,7 @@ object :: {
         if (xs.isNil) {
             None
         } else {
-            Some(xs.head, util.ByLazy(xs.tail))
+            Some(xs.head, xs.tail)
         }
     }
 

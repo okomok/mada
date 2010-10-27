@@ -84,12 +84,12 @@ class Common {
     /**
      * Returns by-lazy vector.
      */
-    def byLazy[A](v: => Vector[A]) = ByLazy(util.ByLazy(v))
+    def byLazy[A](v: => Vector[A]) = ByLazy(v)
 
     /**
      * Returns by-name vector.
      */
-    def byName[A](v: => Vector[A]) = ByName(util.ByName(v))
+    def byName[A](v: => Vector[A]) = ByName(v)
 
 
 // triplify
