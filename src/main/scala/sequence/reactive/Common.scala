@@ -25,6 +25,11 @@ class Common {
     def infinite: Reactive[Unit] = Infinite()
 
     /**
+     * Turns into a by-name expression.
+     */
+    def byName[A](r: => Reactive[A]): Reactive[A] = ByName(r)
+
+    /**
      * Calls all the functions in a Reactive sequence.
      */
     def multi[A](fs: Reactive[A => Unit]): A => Unit = Multi(fs)
