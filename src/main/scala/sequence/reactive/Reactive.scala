@@ -8,7 +8,15 @@ package com.github.okomok.mada
 package sequence; package reactive
 
 
-object Reactive extends Common with Compatibles
+object Reactive extends Common with Compatibles {
+
+// methodization
+    sealed class _OfName[A](_this: => Reactive[A]) {
+        def byName: Reactive[A] = ByName(util.ByName(_this))
+    }
+    implicit def _ofName[A](_this: => Reactive[A]): _OfName[A] = new _OfName(_this)
+
+}
 
 
 /**
@@ -192,7 +200,7 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
     /**
      * Append `that` on the end of sequence. (optional operation)
      */
-    def then_++[B >: A](that: => Reactive[B]): Reactive[B] = throw new UnsupportedOperationException("Reactive.then_++")
+    def then_++[B >: A](that: Reactive[B]): Reactive[B] = throw new UnsupportedOperationException("Reactive.then_++")
 
     /**
      * Pseudo catch-statement

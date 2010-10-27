@@ -23,7 +23,7 @@ class TimerTest extends org.scalatest.junit.JUnit3Suite {
 
     def testRecursive: Unit = {
         val b = new java.util.ArrayList[Int]
-        def rx: Reactive[Int] = naturals.take(3).then_++(rx)
+        def rx: Reactive[Int] = naturals.take(3).then_++(rx.byName)
         rx.take(10).foreach(b.add(_))
         Thread.sleep(2000)
         assertEquals(vector.Of(0,1,2,0,1,2,0,1,2,0), vector.from(b))

@@ -23,5 +23,5 @@ case class TakeWhile[A, B >: A](_1: Reactive[A], _2: A => Boolean, _3: (B => Uni
     }
 
     override def then(f: => Unit): Reactive[B] = TakeWhile[A, B](_1, _2, g => {_3(g);f}) // _1.onClose(f).takeWhile(_2)
-    override def then_++[C >: B](that: => Reactive[C]): Reactive[C] = TakeWhile[A, C](_1, _2, g => {_3(g);that.foreach(g)})
+    override def then_++[C >: B](that: Reactive[C]): Reactive[C] = TakeWhile[A, C](_1, _2, g => {_3(g);that.foreach(g)})
 }

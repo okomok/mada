@@ -15,4 +15,5 @@ case class ByLazy[+R](_1: Function0[R]) extends Function0[R] {
 
 object ByLazy {
     def apply[R](body: => R, dummy: Unit = ()): ByLazy[R] = new ByLazy(() => body)
+    implicit def _fromExpr[R](from: => R): ByLazy[R] = apply(from)
 }

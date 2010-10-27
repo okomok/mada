@@ -29,5 +29,5 @@ case class TakeUntil[A](_1: Reactive[A], _2: Reactive[_], _3: (A => Unit) => Uni
     }
 
     override def then(f: => Unit): Reactive[A] = TakeUntil[A](_1, _2, g => {_3(g);f}) // _1.onClose(f).takeUntil(_2)
-    override def then_++[B >: A](that: => Reactive[B]): Reactive[B] = TakeUntil[B](_1, _2, g => {_3(g);that.foreach(g)})
+    override def then_++[B >: A](that: Reactive[B]): Reactive[B] = TakeUntil[B](_1, _2, g => {_3(g);that.foreach(g)})
 }

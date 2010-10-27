@@ -30,5 +30,5 @@ case class Generate[+A](_1: Reactive[_], _2: Iterative[A], _3: (A => Unit) => Un
     }
 
     override def then(f: => Unit): Reactive[A] = Generate[A](_1, _2, g => {_3(g);f}) // _1.onClose(f).generate(_2)
-    override def then_++[B >: A](that: => Reactive[B]): Reactive[B] = Generate[B](_1, _2, g => {_3(g);that.foreach(g)})
+    override def then_++[B >: A](that: Reactive[B]): Reactive[B] = Generate[B](_1, _2, g => {_3(g);that.foreach(g)})
 }

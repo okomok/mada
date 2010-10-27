@@ -18,5 +18,6 @@ case class ByName[+R](_1: Function0[R]) extends Function0[R] {
 
 object ByName {
     def apply[R](body: => R, dummy: Unit = ()): ByName[R] = new ByName(() => body)
+    implicit def _fromExpr[R](from: => R): ByName[R] = apply(from)
     implicit def _toRunnable(from: ByName[Unit]): Runnable = from.toRunnable
 }
