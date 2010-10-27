@@ -15,8 +15,8 @@ import junit.framework.Assert._
 
 class TimerTest extends org.scalatest.junit.JUnit3Suite {
 
+    val t = new java.util.Timer(true)
     def naturals: Reactive[Int] = {
-        val t = new java.util.Timer(true)
         val s: Reactive[Unit] = reactive.Schedule(t.schedule(_, 0, 100))
         s.generate(iterative.iterate(0)(_ + 1))
     }
