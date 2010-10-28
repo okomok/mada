@@ -11,6 +11,7 @@
 ## Metaprogramming in Scala のハジマリ
 
 * [MetaScala]
+    * `Yrecursion`オプションの提案
 * [Michid's Weblog]
 * [Scalaで型レベルプログラミング] @kmizu
 * [Apocalisp]
@@ -294,6 +295,7 @@ Metaprogramming in Scalaは:
     }
 
 これは`O(n^2)`になります。再帰呼び出し中の式のカタチが異なっており、メモ化されないからです。
+[C++ Template Metaprogramming]のAPPENDIX C.1.1を見てください。
 
 ちなみに、どういうわけか
 
@@ -335,6 +337,12 @@ metaな`asInstanceOf`を`dual.Any.asXXX`で実装しましたが、これによって
 ## 実装の注意点
 
 
+### 型が複雑になると遅くなる
+
+[C++ Template Metaprogramming]のAPPENDIX C.3.7を見てください。
+感覚的には`O(n^2)`です。これは深刻な欠陥かもしれません。(nsc/symtab/Types.scalaの`isGround`が膨大な回数呼ばれる)
+
+
 ### class内classを避ける
 
     class Outer[m <: dual.Nat](m: m) {
@@ -347,7 +355,7 @@ metaな`asInstanceOf`を`dual.Any.asXXX`で実装しましたが、これによって
         }
     }
 
-このようなカタチをしたクラスは、コンパイルがとても遅くなる場合があります。
+このようなカタチをしたクラスは、コンパイルがとても遅くなる場合があります。(nsc/symtab/Names.scalaの`equals`が遅いと思われる)
 面倒になりますが、object内classなら問題ないです。
 
 
@@ -397,3 +405,4 @@ Shunsuke Sogame <<okomok@gmail.com>>
 [scala-arm]: http://github.com/jsuereth/scala-arm "scala-arm"
 [ARM in Java]: http://www.infoq.com/news/2010/08/arm-blocks "Automatic Resource Management in Java"
 [Scalaで型レベルプログラミング]: http://d.hatena.ne.jp/kmizushima/20090418/1240072077 "Scalaで型レベルプログラミング"
+[C++ Template Metaprogramming]:http://www.amazon.com/Template-Metaprogramming-Concepts-Techniques-Beyond/dp/0321227255 "C++ Template Metaprogramming"
