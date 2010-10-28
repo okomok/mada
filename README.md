@@ -1,3 +1,4 @@
+
 # Mada 1.0.0-SNAPSHOT
 
 Mada is a general purpose library for Scala.

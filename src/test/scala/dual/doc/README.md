@@ -1,4 +1,5 @@
-﻿# dualjp
+﻿
+# dualjp
 
 `mada.dual` について説明したページです。
 
