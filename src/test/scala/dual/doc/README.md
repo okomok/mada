@@ -1,7 +1,7 @@
 ﻿
 
 
-# dual_jp
+# dualjp
 
 `mada.dual` について説明したページです。
 
@@ -295,7 +295,7 @@ Metaprogramming in Scalaは:
     }
 
 これは`O(n^2)`になります。再帰呼び出し中の式のカタチが異なっており、メモ化されないからです。
-[C++ Template Metaprogramming]のAPPENDIX C.1.1を見てください。
+[C++ Template Metaprogramming]のAPPENDIX C.3.1を見てください。
 
 ちなみに、どういうわけか
 
