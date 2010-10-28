@@ -1,111 +1,111 @@
-
+ï»¿
 
 
 # dual_jp
 
-`mada.dual` ‚É‚Â‚¢‚Äà–¾‚µ‚½ƒy[ƒW‚Å‚·B
+`mada.dual` ã«ã¤ã„ã¦èª¬æ˜ã—ãŸãƒšãƒ¼ã‚¸ã§ã™ã€‚
 
 
 
 
-## Metaprogramming in Scala ‚ÌƒnƒWƒ}ƒŠ
+## Metaprogramming in Scala ã®ãƒã‚¸ãƒãƒª
 
 * [MetaScala]
-    * `Yrecursion`ƒIƒvƒVƒ‡ƒ“‚Ì’ñˆÄ
+    * `Yrecursion`ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã®ææ¡ˆ
 * [Michid's Weblog]
-* [Scala‚ÅŒ^ƒŒƒxƒ‹ƒvƒƒOƒ‰ƒ~ƒ“ƒO] @kmizu
+* [Scalaã§å‹ãƒ¬ãƒ™ãƒ«ãƒ—ãƒ­ã‚°ãƒ©ãƒŸãƒ³ã‚°] @kmizu
 * [Apocalisp]
 
 
 
 
-## —pŒê‚Ì’è‹`
+## ç”¨èªã®å®šç¾©
 
-‚±‚ê‚ç‚Í‰´—l—pŒê‚Å‚ ‚èA‘¼Š‚Å‚Í’Ê‚¶‚È‚¢ê‡‚ª‚ ‚è‚Ü‚·B
+ã“ã‚Œã‚‰ã¯ä¿ºæ§˜ç”¨èªã§ã‚ã‚Šã€ä»–æ‰€ã§ã¯é€šã˜ãªã„å ´åˆãŒã‚ã‚Šã¾ã™ã€‚
 
 
 ### metatype
 
-`dual.Any`‚Ìsubtype‚ğ_metatype_‚Æ’è‹`‚µ‚Ü‚·B
+`dual.Any`ã®subtypeã‚’_metatype_ã¨å®šç¾©ã—ã¾ã™ã€‚
 
     package dual
     sealed abstract class Boolean extends dual.Any { ...
 
-‚±‚ê‚ªmeta‚È¢ŠE‚ÌŒ^‚É‚È‚è‚Ü‚·B`dual.Any`‚ª‚í‚´‚í‚´•K—v‚È——R‚ÍŒãqB
+ã“ã‚ŒãŒmetaãªä¸–ç•Œã®å‹ã«ãªã‚Šã¾ã™ã€‚`dual.Any`ãŒã‚ã–ã‚ã–å¿…è¦ãªç†ç”±ã¯å¾Œè¿°ã€‚
 
 
 ### metamethod
 
-_metamethod_ ‚Æ‚ÍAmetatype‚ğˆø”‚Æ‚·‚éAtype‚ ‚é‚¢‚Ítype-constructor‚Å‚·B
+_metamethod_ ã¨ã¯ã€metatypeã‚’å¼•æ•°ã¨ã™ã‚‹ã€typeã‚ã‚‹ã„ã¯type-constructorã§ã™ã€‚
 
-abstract metamethod‚ÌƒJƒ^ƒ`‚Í‚±‚¤‚È‚è‚Ü‚·:
+abstract metamethodã®ã‚«ã‚¿ãƒã¯ã“ã†ãªã‚Šã¾ã™:
 
-    type not <: dual.Boolean // ˆø”‚È‚µ
-    type equal[that <: dual.Boolean] <: dual.Boolean // ˆø”ˆêŒÂ
+    type not <: dual.Boolean // å¼•æ•°ãªã—
+    type equal[that <: dual.Boolean] <: dual.Boolean // å¼•æ•°ä¸€å€‹
 
-metamethod‚ğoverride‚·‚é‚É‚Í‚±‚¤‚µ‚Ü‚·:
+metamethodã‚’overrideã™ã‚‹ã«ã¯ã“ã†ã—ã¾ã™:
 
     override type not = ...
     override type equal[that <: dual.Boolean] = ...
 
-`override`‚Í–³‚­‚Ä‚àŒ‹\‚Å‚·Bmetamethod‚ÍÄ`override`‚Å‚«‚È‚¢‚±‚Æ‚É’ˆÓB
+`override`ã¯ç„¡ãã¦ã‚‚çµæ§‹ã§ã™ã€‚metamethodã¯å†`override`ã§ããªã„ã“ã¨ã«æ³¨æ„ã€‚
 
-metamethod‚ÌŒÄ‚Ño‚µ‚É‚ÍA`#`‚ğg‚¢‚Ü‚·:
+metamethodã®å‘¼ã³å‡ºã—ã«ã¯ã€`#`ã‚’ä½¿ã„ã¾ã™:
 
     type foo[b <: dual.Boolean, c <: dual.Boolean] = b#equal[c]
 
 
-ˆø”‚Ì‚È‚¢metamethod‚Í‚µ‚Î‚µ‚Î_metavalue_‚ÆŒÄ‚Î‚ê‚Ü‚·B
-Œµ–§‚É‚ÍAmeta‚È`val`‚Æ‚¢‚¤‚Ì‚Í‚ ‚è‚Ü‚¹‚ñ‚ªAƒƒ‚‰»‚³‚ê‚é‚½‚ßA`lazy val`‚Æ“¯‚¶ˆÓ–¡‚É‚È‚è‚Ü‚·B
+å¼•æ•°ã®ãªã„metamethodã¯ã—ã°ã—ã°_metavalue_ã¨å‘¼ã°ã‚Œã¾ã™ã€‚
+å³å¯†ã«ã¯ã€metaãª`val`ã¨ã„ã†ã®ã¯ã‚ã‚Šã¾ã›ã‚“ãŒã€ãƒ¡ãƒ¢åŒ–ã•ã‚Œã‚‹ãŸã‚ã€`lazy val`ã¨åŒã˜æ„å‘³ã«ãªã‚Šã¾ã™ã€‚
 
 
 ### metadependent
 
-metamethod‚ÌŒÄ‚Ño‚µ‚ª‚»‚ê‚ğæ‚èˆÍ‚Şmetamethod‚Ìˆø”‚ÉˆË‘¶‚µ‚Ä‚¢‚éê‡A‚»‚ê‚Í_metadependent_‚Å‚ ‚éA‚ÆŒ¾‚¢‚Ü‚·B
+metamethodã®å‘¼ã³å‡ºã—ãŒãã‚Œã‚’å–ã‚Šå›²ã‚€metamethodã®å¼•æ•°ã«ä¾å­˜ã—ã¦ã„ã‚‹å ´åˆã€ãã‚Œã¯_metadependent_ã§ã‚ã‚‹ã€ã¨è¨€ã„ã¾ã™ã€‚
 
     class foo[b <: dual.Boolean] {
         type bar = b#not
     }
 
-¡A`bar`‚Ímetadependent‚Å‚·B
+ä»Šã€`bar`ã¯metadependentã§ã™ã€‚
 
     class wow[b <: dual.Boolean] {
         type buz = dual.`true`#not
     }
 
-`buz`‚Ímetadependent‚Å‚Í‚ ‚è‚Ü‚¹‚ñB
+`buz`ã¯metadependentã§ã¯ã‚ã‚Šã¾ã›ã‚“ã€‚
 
 
 ### dualmethod
 
-polymorphic-method‚Æ‚µ‚Ä‚àmetamethod‚Æ‚µ‚Ä‚àA __—‚½‚æ‚¤‚ÈŠ´‚¶‚Å__—˜—p‚Å‚«‚é–¼‘O‚ğA_dualmethod_‚ÆŒ¾‚¢‚Ü‚·B
+polymorphic-methodã¨ã—ã¦ã‚‚metamethodã¨ã—ã¦ã‚‚ã€ __ä¼¼ãŸã‚ˆã†ãªæ„Ÿã˜ã§__åˆ©ç”¨ã§ãã‚‹åå‰ã‚’ã€_dualmethod_ã¨è¨€ã„ã¾ã™ã€‚
 
      def foo[b <: dual.Boolean, c <: dual.Boolean](b: b, c: c): foo[b, c] = b.equal(c)
     type foo[b <: dual.Boolean, c <: dual.Boolean] = b#equal[c]
 
-¡Adualmethod‚Å‚ ‚é`foo`‚ªA“¯‚¶‚­dualmethod‚Å‚ ‚é`equal`‚ğŒÄ‚Ño‚µ‚Ä‚¢‚Ü‚·B
+ä»Šã€dualmethodã§ã‚ã‚‹`foo`ãŒã€åŒã˜ãdualmethodã§ã‚ã‚‹`equal`ã‚’å‘¼ã³å‡ºã—ã¦ã„ã¾ã™ã€‚
 
-ˆø”‚Ì‚È‚¢dualmethod‚Í‚µ‚Î‚µ‚Î_dualvalue_‚ÆŒÄ‚Î‚ê‚Ü‚·B
-
-
+å¼•æ•°ã®ãªã„dualmethodã¯ã—ã°ã—ã°_dualvalue_ã¨å‘¼ã°ã‚Œã¾ã™ã€‚
 
 
-## meta-generics‚Í“®‚©‚È‚¢
 
-meta‚È¢ŠE‚Ì`if`‚ğì‚é‚±‚Æ‚ğl‚¦‚Ü‚·B‚Ü‚¸ƒtƒc[‚Ì¢ŠE‚Ål‚¦‚Ü‚·B
+
+## meta-genericsã¯å‹•ã‹ãªã„
+
+metaãªä¸–ç•Œã®`if`ã‚’ä½œã‚‹ã“ã¨ã‚’è€ƒãˆã¾ã™ã€‚ã¾ãšãƒ•ãƒ„ãƒ¼ã®ä¸–ç•Œã§è€ƒãˆã¾ã™ã€‚
 
     def myIf[T](b: scala.Boolean, _then: => T, _else: => T): T
 
-‚±‚ê‚Ípolymorphic-method(‚¢‚í‚ä‚égenerics)‚Å‚·B
-‚±‚ê‚ğmeta‚È¢ŠE‚ÉˆÚA‚µ‚Ü‚·Bby-nameˆø”‚Í‚Ğ‚Æ‚Ü‚¸–³‹‚µ‚ÄA
+ã“ã‚Œã¯polymorphic-method(ã„ã‚ã‚†ã‚‹generics)ã§ã™ã€‚
+ã“ã‚Œã‚’metaãªä¸–ç•Œã«ç§»æ¤ã—ã¾ã™ã€‚by-nameå¼•æ•°ã¯ã²ã¨ã¾ãšç„¡è¦–ã—ã¦ã€
 
     type metaIf[T, b <: dual.Boolean, _then <: T, _else <: T] <: T // ???
 
-‚±‚ê‚ÍAmeta‚È¢ŠE‚Ìgenerics‚Å‚ ‚é‚Æl‚¦‚ç‚ê‚Ü‚·B‚µ‚©‚µA‚±‚ê‚Í‚¤‚Ü‚­“®‚«‚Ü‚¹‚ñB
-©•ª‚ÌŒoŒ±‚É‚æ‚é‚ÆAˆê”Ê‚Émeta‚Ègenerics‚Í‚Ç‚ñ‚ÈŒ`®‚Å‚ ‚êA‚¤‚Ü‚­“®‚©‚È‚¢‚æ‚¤‚Å‚·B
+ã“ã‚Œã¯ã€metaãªä¸–ç•Œã®genericsã§ã‚ã‚‹ã¨è€ƒãˆã‚‰ã‚Œã¾ã™ã€‚ã—ã‹ã—ã€ã“ã‚Œã¯ã†ã¾ãå‹•ãã¾ã›ã‚“ã€‚
+è‡ªåˆ†ã®çµŒé¨“ã«ã‚ˆã‚‹ã¨ã€ä¸€èˆ¬ã«metaãªgenericsã¯ã©ã‚“ãªå½¢å¼ã§ã‚ã‚Œã€ã†ã¾ãå‹•ã‹ãªã„ã‚ˆã†ã§ã™ã€‚
 
-d•û‚È‚¢‚Ì‚ÅAGenerics‚àby-nameˆø”‚à‚È‚¢¢ŠE(‚Â‚Ü‚èAÌ‚ÌJava)‚Å`if`‚ğl‚¦‚Ü‚·B
-ƒtƒc[‚Ì¢ŠE:
+ä»•æ–¹ãªã„ã®ã§ã€Genericsã‚‚by-nameå¼•æ•°ã‚‚ãªã„ä¸–ç•Œ(ã¤ã¾ã‚Šã€æ˜”ã®Java)ã§`if`ã‚’è€ƒãˆã¾ã™ã€‚
+ãƒ•ãƒ„ãƒ¼ã®ä¸–ç•Œ:
 
     trait MyFuntion0 {
         def apply: scala.Any
@@ -113,8 +113,8 @@ meta‚È¢ŠE‚Ì`if`‚ğì‚é‚±‚Æ‚ğl‚¦‚Ü‚·B‚Ü‚¸ƒtƒc[‚Ì¢ŠE‚Ål‚¦‚Ü‚·B
 
     def myIf(b: scala.Boolean, _then: MyFunction0, _else: MyFunction0): MyFunction0
 
-by-nameˆø”‚Ì‘ã‚í‚è‚ÉA`MyFunction0`‚Å‘ã—p‚µ‚Ü‚·B–ß‚è’lŒ^‚ª`MyFunction0`‚È‚Ì‚ÍA`if`‚ğƒlƒXƒg‚·‚é‚É•Ö—˜‚¾‚©‚ç‚Å‚·B
-‚³‚ÄA‚±‚ê‚ğmeta‚È¢ŠE‚ÉˆÚA‚·‚é‚ÆA
+by-nameå¼•æ•°ã®ä»£ã‚ã‚Šã«ã€`MyFunction0`ã§ä»£ç”¨ã—ã¾ã™ã€‚æˆ»ã‚Šå€¤å‹ãŒ`MyFunction0`ãªã®ã¯ã€`if`ã‚’ãƒã‚¹ãƒˆã™ã‚‹æ™‚ã«ä¾¿åˆ©ã ã‹ã‚‰ã§ã™ã€‚
+ã•ã¦ã€ã“ã‚Œã‚’metaãªä¸–ç•Œã«ç§»æ¤ã™ã‚‹ã¨ã€
 
     package dual
 
@@ -132,8 +132,8 @@ by-nameˆø”‚Ì‘ã‚í‚è‚ÉA`MyFunction0`‚Å‘ã—p‚µ‚Ü‚·B–ß‚è’lŒ^‚ª`MyFunction0`‚È‚Ì‚Í
 
 ### meta-asInstanceOf
 
-Meta-generics‚ª–³‚¢‚Ì‚ÅA‚¢‚í‚ä‚éƒ_ƒEƒ“ƒLƒƒƒXƒg‚ª•K—v‚Å‚·B
-‚Â‚Ü‚èAmeta‚È`asInstanceOf`‚ğ©‘O‚ÅÀ‘•‚µ‚È‚¯‚ê‚Î‚È‚è‚Ü‚¹‚ñB‚»‚ê‚ª`dual.Any`‚Ìd–‚É‚È‚è‚Ü‚·:
+Meta-genericsãŒç„¡ã„ã®ã§ã€ã„ã‚ã‚†ã‚‹ãƒ€ã‚¦ãƒ³ã‚­ãƒ£ã‚¹ãƒˆãŒå¿…è¦ã§ã™ã€‚
+ã¤ã¾ã‚Šã€metaãª`asInstanceOf`ã‚’è‡ªå‰ã§å®Ÿè£…ã—ãªã‘ã‚Œã°ãªã‚Šã¾ã›ã‚“ã€‚ãã‚ŒãŒ`dual.Any`ã®ä»•äº‹ã«ãªã‚Šã¾ã™:
 
     package dual
     
@@ -148,13 +148,13 @@ Meta-generics‚ª–³‚¢‚Ì‚ÅA‚¢‚í‚ä‚éƒ_ƒEƒ“ƒLƒƒƒXƒg‚ª•K—v‚Å‚·B
         // ...
     }
 
-‚±‚ê‚Åƒ_ƒEƒ“ƒLƒƒƒXƒg‚ğÀ‘•‚Å‚«‚Ü‚µ‚½B
-meta‚È`isInstanceOf`‚Í(‰Â”\‚Å‚Í‚ ‚é‚à‚Ì‚Ì)‚Ü‚¾À‘•‚³‚ê‚Ä‚¢‚Ü‚¹‚ñB
+ã“ã‚Œã§ãƒ€ã‚¦ãƒ³ã‚­ãƒ£ã‚¹ãƒˆã‚’å®Ÿè£…ã§ãã¾ã—ãŸã€‚
+metaãª`isInstanceOf`ã¯(å¯èƒ½ã§ã¯ã‚ã‚‹ã‚‚ã®ã®)ã¾ã å®Ÿè£…ã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚
 
 
 ### meta-this
 
-meta‚È`this`QÆ‚à©‘O‚Å‰Šú‰»‚µ‚È‚¢‚Æ‚¢‚¯‚Ü‚¹‚ñB`self`‚Æ‚¢‚¤–¼‘O‚É‚È‚Á‚Ä‚¢‚Ü‚·:
+metaãª`this`å‚ç…§ã‚‚è‡ªå‰ã§åˆæœŸåŒ–ã—ãªã„ã¨ã„ã‘ã¾ã›ã‚“ã€‚`self`ã¨ã„ã†åå‰ã«ãªã£ã¦ã„ã¾ã™:
 
     package dual
 
@@ -173,25 +173,25 @@ meta‚È`this`QÆ‚à©‘O‚Å‰Šú‰»‚µ‚È‚¢‚Æ‚¢‚¯‚Ü‚¹‚ñB`self`‚Æ‚¢‚¤–¼‘O‚É‚È‚Á‚Ä‚¢‚Ü‚·
 
 ## Primitives
 
-Scala‚Ímeta‚È¢ŠE‚Ìprimitive‚ğ—pˆÓ‚µ‚Ä‚­‚ê‚Ä‚È‚¢‚Ì‚ÅA‘S‚Ä©‘O‚ÅÀ‘•‚µ‚Ü‚·B
-`dual`‚Ì’ñ‹Ÿ‚·‚éprimitive‚Èmetatype‚Í:
+Scalaã¯metaãªä¸–ç•Œã®primitiveã‚’ç”¨æ„ã—ã¦ãã‚Œã¦ãªã„ã®ã§ã€å…¨ã¦è‡ªå‰ã§å®Ÿè£…ã—ã¾ã™ã€‚
+`dual`ã®æä¾›ã™ã‚‹primitiveãªmetatypeã¯:
 
 * `Boolean`
-* `Nat` (©‘R”Œ^)
+* `Nat` (è‡ªç„¶æ•°å‹)
 * `Unit`
 * `FunctionN`
 * `TupleN`
 
-`Nat`‚ÌÀ‘•‚Æ‚µ‚ÄA`dual.nat.peano`‚Æ`dual.nat.dense`‚Ì“ñ‚Â‚ª—pˆÓ‚³‚ê‚Ä‚¢‚Ü‚·B
-‘OÒ‚Í¬‚³‚È”šAŒãÒ‚Í‘å‚«‚È”š‚ª“¾ˆÓ‚Å‚·B
+`Nat`ã®å®Ÿè£…ã¨ã—ã¦ã€`dual.nat.peano`ã¨`dual.nat.dense`ã®äºŒã¤ãŒç”¨æ„ã•ã‚Œã¦ã„ã¾ã™ã€‚
+å‰è€…ã¯å°ã•ãªæ•°å­—ã€å¾Œè€…ã¯å¤§ããªæ•°å­—ãŒå¾—æ„ã§ã™ã€‚
 
 
 
 
 ## Duality
 
-`mada.dual`‚Å’ñ‹Ÿ‚³‚ê‚é‹@”\‚Í‚Ù‚Æ‚ñ‚Ç‘S•”Adualmethod‚É‚È‚Á‚Ä‚¢‚Ü‚·B
-’l‚ÌŒvZ‚Æ‹¤‚ÉAŒ^‚à•Ï‰»‚µ‚Ä‚ä‚«‚Ü‚·:
+`mada.dual`ã§æä¾›ã•ã‚Œã‚‹æ©Ÿèƒ½ã¯ã»ã¨ã‚“ã©å…¨éƒ¨ã€dualmethodã«ãªã£ã¦ã„ã¾ã™ã€‚
+å€¤ã®è¨ˆç®—ã¨å…±ã«ã€å‹ã‚‚å¤‰åŒ–ã—ã¦ã‚†ãã¾ã™:
 
     def myAssert(a: dual.`true`) = ()
 
@@ -205,12 +205,12 @@ Scala‚Ímeta‚È¢ŠE‚Ìprimitive‚ğ—pˆÓ‚µ‚Ä‚­‚ê‚Ä‚È‚¢‚Ì‚ÅA‘S‚Ä©‘O‚ÅÀ‘•‚µ‚Ü‚·B
 
 
 
-## ƒtƒc[‚Ì¢ŠE‚Æ‚Ì‘Î˜b
+## ãƒ•ãƒ„ãƒ¼ã®ä¸–ç•Œã¨ã®å¯¾è©±
 
 
 ### undual
 
-`dual.Any.undual`‚É‚æ‚Á‚Ädual‚È¢ŠE‚©‚çƒtƒc[‚Ì¢ŠE‚Ö”²‚¯o‚·‚±‚Æ‚ª‚Å‚«‚Ü‚·:
+`dual.Any.undual`ã«ã‚ˆã£ã¦dualãªä¸–ç•Œã‹ã‚‰ãƒ•ãƒ„ãƒ¼ã®ä¸–ç•Œã¸æŠœã‘å‡ºã™ã“ã¨ãŒã§ãã¾ã™:
 
     import dual.nat.peano.Literal._
 
@@ -222,22 +222,22 @@ Scala‚Ímeta‚È¢ŠE‚Ìprimitive‚ğ—pˆÓ‚µ‚Ä‚­‚ê‚Ä‚È‚¢‚Ì‚ÅA‘S‚Ä©‘O‚ÅÀ‘•‚µ‚Ü‚·B
 
 ### Boxing
 
-ƒtƒc[‚ÌŒ^‚ÍAdual‚È¢ŠE‚Åg‚¤‚½‚ß‚É`dual.Box`‚ğg‚Á‚Ä•ÏŠ·‚µ‚È‚¢‚Æ‚¢‚¯‚Ü‚¹‚ñ:
+ãƒ•ãƒ„ãƒ¼ã®å‹ã¯ã€dualãªä¸–ç•Œã§ä½¿ã†ãŸã‚ã«`dual.Box`ã‚’ä½¿ã£ã¦å¤‰æ›ã—ãªã„ã¨ã„ã‘ã¾ã›ã‚“:
 
     def testBox {
         val j = dual.Tuple2(dual.Box(2), dual.Box(3))
         assertEquals(3, j._2.undual)
     }
 
-c”O‚È‚ª‚çauto-boxing‚Í‚ ‚è‚Ü‚¹‚ñB
+æ®‹å¿µãªãŒã‚‰auto-boxingã¯ã‚ã‚Šã¾ã›ã‚“ã€‚
 
 
 
 
 ## Heterogeneous List
 
-`mada.dual`‚Ìƒf[ƒ^\‘¢‚Í‘S‚ÄHeterogeneous‚Å‚·BŒ^‚Í‚»‚Ì‚Ü‚Ü•Û‘¶‚³‚ê‚Ü‚·B
-—á‚Æ‚µ‚Ä`dual.List`‚ğg‚Á‚Ä‚İ‚Ü‚·:
+`mada.dual`ã®ãƒ‡ãƒ¼ã‚¿æ§‹é€ ã¯å…¨ã¦Heterogeneousã§ã™ã€‚å‹ã¯ãã®ã¾ã¾ä¿å­˜ã•ã‚Œã¾ã™ã€‚
+ä¾‹ã¨ã—ã¦`dual.List`ã‚’ä½¿ã£ã¦ã¿ã¾ã™:
 
     import dual.nat.peano.Literal._
 
@@ -257,26 +257,26 @@ Scala‚Ímeta‚È¢ŠE‚Ìprimitive‚ğ—pˆÓ‚µ‚Ä‚­‚ê‚Ä‚È‚¢‚Ì‚ÅA‘S‚Ä©‘O‚ÅÀ‘•‚µ‚Ü‚·B
         }
     }
 
-`add2`‚Ì‚æ‚¤‚È`dual.FunctionN`‚ÌÀ‘•‚ğon-the-fly‚Åì‚é‚±‚Æ‚Ío—ˆ‚È‚¢‚Ì‚ÅA‚¢‚¿‚¢‚¿’è‹`‚µ‚È‚¢‚Æ‚¢‚¯‚Ü‚¹‚ñB
-‚Ü‚½A`dual.List`‚Ìdualmethod‚Í(‚½‚¢‚Ä‚¢)view‚ğ•Ô‚·‚±‚Æ‚É’ˆÓ‚µ‚Ä‚­‚¾‚³‚¢B`force`‚Å__canonical__‚ÈƒJƒ^ƒ`‚É•ÏŠ·‚Å‚«‚Ü‚·B
+`add2`ã®ã‚ˆã†ãª`dual.FunctionN`ã®å®Ÿè£…ã‚’on-the-flyã§ä½œã‚‹ã“ã¨ã¯å‡ºæ¥ãªã„ã®ã§ã€ã„ã¡ã„ã¡å®šç¾©ã—ãªã„ã¨ã„ã‘ã¾ã›ã‚“ã€‚
+ã¾ãŸã€`dual.List`ã®dualmethodã¯(ãŸã„ã¦ã„)viewã‚’è¿”ã™ã“ã¨ã«æ³¨æ„ã—ã¦ãã ã•ã„ã€‚`force`ã§__canonical__ãªã‚«ã‚¿ãƒã«å¤‰æ›ã§ãã¾ã™ã€‚
 
-[MetaScala]‚Æˆá‚Á‚ÄA`mada.dual`‚Í`implicit`‚ğg‚Á‚Ä‚¢‚Ü‚¹‚ñB
-ˆê”Ê‚ÉA`implicit`‚Í__composable__‚Å‚Í‚ ‚è‚Ü‚¹‚ñB¬‚³‚Èmethod‚©‚ç‘å‚«‚Èmethod‚ğ‘g‚İ—§‚Ä‚é‚Ì‚ª¢“ï‚Å‚·B
-
-
+[MetaScala]ã¨é•ã£ã¦ã€`mada.dual`ã¯`implicit`ã‚’ä½¿ã£ã¦ã„ã¾ã›ã‚“ã€‚
+ä¸€èˆ¬ã«ã€`implicit`ã¯__composable__ã§ã¯ã‚ã‚Šã¾ã›ã‚“ã€‚å°ã•ãªmethodã‹ã‚‰å¤§ããªmethodã‚’çµ„ã¿ç«‹ã¦ã‚‹ã®ãŒå›°é›£ã§ã™ã€‚
 
 
-## ŒvZƒ‚ƒfƒ‹
 
-Metaprogramming in Scala‚Í:
 
-* Pure(•›ì—p‚È‚µ)‚ÈƒIƒuƒWƒFƒNƒgwŒü‚Å‚·B(‚»‚ñ‚ÈŒ¾Œê¡‚Ü‚Å‚ ‚è‚Ü‚·‚©H)
-* metamehod‚Ö“n‚·ˆø”‚ÍA“n‚·‚Ü‚¦‚É•]‰¿‚³‚ê‚Ü‚·Bby-nameˆø”‚Í‚ ‚è‚Ü‚¹‚ñ‚ªA‘ã‚í‚è‚É`dual.Function0`‚ğg‚¦‚Ü‚·B
-* meta‚È`eq`‚Í‚ ‚è‚Ü‚¹‚ñBŒ^‚ª“¯‚¶‚©‚Ç‚¤‚©”»’f‚·‚é‚±‚Æ‚Ío—ˆ‚Ü‚¹‚ñB
-* metadependent‚Å‚È‚¢metamethod‚ÌŒÄ‚Ño‚µ‚Ì–ß‚è’l‚É‚ÍAˆÃ–Ù‚É`asXXX`‚ª•t‰Á‚³‚ê‚Ü‚·B
-* ƒƒ‚‰»‚ª‚ ‚è‚Ü‚·Bmetamethod‚ÌŒÄ‚Ño‚µ‚ÍA‚»‚ê‚ª“¯‚¶®‚Å‚ ‚è‚³‚¦‚·‚ê‚ÎAˆê“x‚µ‚©•]‰¿‚³‚ê‚Ü‚¹‚ñB
+## è¨ˆç®—ãƒ¢ãƒ‡ãƒ«
 
-ƒtƒBƒ{ƒiƒbƒ`”‚Ì—á:
+Metaprogramming in Scalaã¯:
+
+* Pure(å‰¯ä½œç”¨ãªã—)ãªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆæŒ‡å‘ã§ã™ã€‚(ãã‚“ãªè¨€èªä»Šã¾ã§ã‚ã‚Šã¾ã™ã‹ï¼Ÿ)
+* metamehodã¸æ¸¡ã™å¼•æ•°ã¯ã€æ¸¡ã™ã¾ãˆã«è©•ä¾¡ã•ã‚Œã¾ã™ã€‚by-nameå¼•æ•°ã¯ã‚ã‚Šã¾ã›ã‚“ãŒã€ä»£ã‚ã‚Šã«`dual.Function0`ã‚’ä½¿ãˆã¾ã™ã€‚
+* metaãª`eq`ã¯ã‚ã‚Šã¾ã›ã‚“ã€‚å‹ãŒåŒã˜ã‹ã©ã†ã‹åˆ¤æ–­ã™ã‚‹ã“ã¨ã¯å‡ºæ¥ã¾ã›ã‚“ã€‚
+* metadependentã§ãªã„metamethodã®å‘¼ã³å‡ºã—ã®æˆ»ã‚Šå€¤ã«ã¯ã€æš—é»™ã«`asXXX`ãŒä»˜åŠ ã•ã‚Œã¾ã™ã€‚
+* ãƒ¡ãƒ¢åŒ–ãŒã‚ã‚Šã¾ã™ã€‚metamethodã®å‘¼ã³å‡ºã—ã¯ã€ãã‚ŒãŒåŒã˜å¼ã§ã‚ã‚Šã•ãˆã™ã‚Œã°ã€ä¸€åº¦ã—ã‹è©•ä¾¡ã•ã‚Œã¾ã›ã‚“ã€‚
+
+ãƒ•ã‚£ãƒœãƒŠãƒƒãƒæ•°ã®ä¾‹:
 
     type fibonacci[n <: dual.Nat] = dual.`if`[n#lt[_2], dual.const0[n], FibElse[n]]#apply#asNat
 
@@ -285,7 +285,7 @@ Metaprogramming in Scala‚Í:
         override type apply = fibonacci[n#decrement]#plus[fibonacci[n#decrement#decrement]]
     }
 
-‚±‚Ì`fibonacci`‚Í`O(n)`‚Å“®‚«‚Ü‚·B‚µ‚©‚µ:
+ã“ã®`fibonacci`ã¯`O(n)`ã§å‹•ãã¾ã™ã€‚ã—ã‹ã—:
 
     type fibonacci[n <: dual.Nat] = dual.`if`[n#lt[_2], dual.const0[n], FibElse[n]]#apply#asNat
 
@@ -294,56 +294,56 @@ Metaprogramming in Scala‚Í:
         override type apply = fibonacci[n#minus[_1]]#plus[fibonacci[n#decrement#decrement]]
     }
 
-‚±‚ê‚Í`O(n^2)`‚É‚È‚è‚Ü‚·BÄ‹AŒÄ‚Ño‚µ’†‚Ì®‚ÌƒJƒ^ƒ`‚ªˆÙ‚È‚Á‚Ä‚¨‚èAƒƒ‚‰»‚³‚ê‚È‚¢‚©‚ç‚Å‚·B
-[C++ Template Metaprogramming]‚ÌAPPENDIX C.1.1‚ğŒ©‚Ä‚­‚¾‚³‚¢B
+ã“ã‚Œã¯`O(n^2)`ã«ãªã‚Šã¾ã™ã€‚å†å¸°å‘¼ã³å‡ºã—ä¸­ã®å¼ã®ã‚«ã‚¿ãƒãŒç•°ãªã£ã¦ãŠã‚Šã€ãƒ¡ãƒ¢åŒ–ã•ã‚Œãªã„ã‹ã‚‰ã§ã™ã€‚
+[C++ Template Metaprogramming]ã®APPENDIX C.1.1ã‚’è¦‹ã¦ãã ã•ã„ã€‚
 
-‚¿‚È‚İ‚ÉA‚Ç‚¤‚¢‚¤‚í‚¯‚©
+ã¡ãªã¿ã«ã€ã©ã†ã„ã†ã‚ã‘ã‹
 
     class wow {
         type f = fibonacci[_10]
         type g = fibonacci[_10]
     }
 
-‚±‚Ì`fibonacci[_10]`‚ÍA“ñ‰ñ‚Æ‚à•]‰¿‚³‚ê‚Ü‚·Bmetadependent‚Å‚È‚¢‚©‚çA‚Æ„‘ª‚³‚ê‚Ü‚·B
+ã“ã®`fibonacci[_10]`ã¯ã€äºŒå›ã¨ã‚‚è©•ä¾¡ã•ã‚Œã¾ã™ã€‚metadependentã§ãªã„ã‹ã‚‰ã€ã¨æ¨æ¸¬ã•ã‚Œã¾ã™ã€‚
 
 
 
 
-## dual‚Ì–â‘è“_
+## dualã®å•é¡Œç‚¹
 
 
-### ƒ†[ƒU’è‹`Œ^
+### ãƒ¦ãƒ¼ã‚¶å®šç¾©å‹
 
-meta‚È`asInstanceOf`‚ğ`dual.Any.asXXX`‚ÅÀ‘•‚µ‚Ü‚µ‚½‚ªA‚±‚ê‚É‚æ‚Á‚Ä
-`mada.dual`‚Ì—˜—pÒ‚ªmetatype‚ğì‚é‚±‚Æ‚ª•s‰Â”\‚É‚È‚è‚Ü‚µ‚½B
-‘ã‚í‚è‚É`dual.TupleN`‚â`dual.map`‚ğ‹ìg‚·‚é•K—v‚ª‚ ‚è‚Ü‚·B
+metaãª`asInstanceOf`ã‚’`dual.Any.asXXX`ã§å®Ÿè£…ã—ã¾ã—ãŸãŒã€ã“ã‚Œã«ã‚ˆã£ã¦
+`mada.dual`ã®åˆ©ç”¨è€…ãŒmetatypeã‚’ä½œã‚‹ã“ã¨ãŒä¸å¯èƒ½ã«ãªã‚Šã¾ã—ãŸã€‚
+ä»£ã‚ã‚Šã«`dual.TupleN`ã‚„`dual.map`ã‚’é§†ä½¿ã™ã‚‹å¿…è¦ãŒã‚ã‚Šã¾ã™ã€‚
 
 
-### Œ^ˆÀ‘S«
+### å‹å®‰å…¨æ€§
 
-`dual.Any.asXXX`‚Ì•s³‚ÈŒÄ‚Ño‚µ‚ÍƒRƒ“ƒpƒCƒ‹ƒGƒ‰[‚É‚È‚è‚Ü‚¹‚ñ(`Nothing`“I‚È‚à‚Ì‚ğ•Ô‚·)B
-‚±‚Ì‚½‚ßAŒ^ˆÀ‘S«‚ª__­‚µ__ã‚Ü‚Á‚Ä‚¢‚Ü‚·B
+`dual.Any.asXXX`ã®ä¸æ­£ãªå‘¼ã³å‡ºã—ã¯ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã‚¨ãƒ©ãƒ¼ã«ãªã‚Šã¾ã›ã‚“(`Nothing`çš„ãªã‚‚ã®ã‚’è¿”ã™)ã€‚
+ã“ã®ãŸã‚ã€å‹å®‰å…¨æ€§ãŒ__å°‘ã—__å¼±ã¾ã£ã¦ã„ã¾ã™ã€‚
 
 
 ### assertion
 
-ƒRƒ“ƒpƒCƒ‹assertion‚ÍÀ‘•‚Å‚«‚È‚¢‚Æv‚í‚ê‚Ü‚·B
-‚½‚¾‚µAmetadependent‚Å‚È‚¢•¶–¬‚Å‚Í`dual.free.assert`‚ªg—p‚Å‚«‚Ü‚·B
-À‘•‚Íã‹L‚Ì`myAssert`‚Æ“¯‚¶‚Å‚·B
+ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«æ™‚assertionã¯å®Ÿè£…ã§ããªã„ã¨æ€ã‚ã‚Œã¾ã™ã€‚
+ãŸã ã—ã€metadependentã§ãªã„æ–‡è„ˆã§ã¯`dual.free.assert`ãŒä½¿ç”¨ã§ãã¾ã™ã€‚
+å®Ÿè£…ã¯ä¸Šè¨˜ã®`myAssert`ã¨åŒã˜ã§ã™ã€‚
 
 
 
 
-## À‘•‚Ì’ˆÓ“_
+## å®Ÿè£…ã®æ³¨æ„ç‚¹
 
 
-### Œ^‚ª•¡G‚É‚È‚é‚Æ’x‚­‚È‚é
+### å‹ãŒè¤‡é›‘ã«ãªã‚‹ã¨é…ããªã‚‹
 
-[C++ Template Metaprogramming]‚ÌAPPENDIX C.3.7‚ğŒ©‚Ä‚­‚¾‚³‚¢B
-Š´Šo“I‚É‚Í`O(n^2)`‚Å‚·B‚±‚ê‚Í[‚ÈŒ‡Š×‚©‚à‚µ‚ê‚Ü‚¹‚ñB(nsc/symtab/Types.scala‚Ì`isGround`‚ª–c‘å‚È‰ñ”ŒÄ‚Î‚ê‚é)
+[C++ Template Metaprogramming]ã®APPENDIX C.3.7ã‚’è¦‹ã¦ãã ã•ã„ã€‚
+æ„Ÿè¦šçš„ã«ã¯`O(n^2)`ã§ã™ã€‚ã“ã‚Œã¯æ·±åˆ»ãªæ¬ é™¥ã‹ã‚‚ã—ã‚Œã¾ã›ã‚“ã€‚(nsc/symtab/Types.scalaã®`isGround`ãŒè†¨å¤§ãªå›æ•°å‘¼ã°ã‚Œã‚‹)
 
 
-### class“àclass‚ğ”ğ‚¯‚é
+### classå†…classã‚’é¿ã‘ã‚‹
 
     class Outer[m <: dual.Nat](m: m) {
         type apply[n <: dual.Nat] = ...
@@ -355,24 +355,24 @@ meta‚È`asInstanceOf`‚ğ`dual.Any.asXXX`‚ÅÀ‘•‚µ‚Ü‚µ‚½‚ªA‚±‚ê‚É‚æ‚Á‚Ä
         }
     }
 
-‚±‚Ì‚æ‚¤‚ÈƒJƒ^ƒ`‚ğ‚µ‚½ƒNƒ‰ƒX‚ÍAƒRƒ“ƒpƒCƒ‹‚ª‚Æ‚Ä‚à’x‚­‚È‚éê‡‚ª‚ ‚è‚Ü‚·B(nsc/symtab/Names.scala‚Ì`equals`‚ª’x‚¢‚Æv‚í‚ê‚é)
-–Ê“|‚É‚È‚è‚Ü‚·‚ªAobject“àclass‚È‚ç–â‘è‚È‚¢‚Å‚·B
+ã“ã®ã‚ˆã†ãªã‚«ã‚¿ãƒã‚’ã—ãŸã‚¯ãƒ©ã‚¹ã¯ã€ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ãŒã¨ã¦ã‚‚é…ããªã‚‹å ´åˆãŒã‚ã‚Šã¾ã™ã€‚(nsc/symtab/Names.scalaã®`equals`ãŒé…ã„ã¨æ€ã‚ã‚Œã‚‹)
+é¢å€’ã«ãªã‚Šã¾ã™ãŒã€objectå†…classãªã‚‰å•é¡Œãªã„ã§ã™ã€‚
 
 
-### case class‚Í’x‚­‚È‚¢
+### case classã¯é…ããªã„
 
-case‚ğ•t‚¯‚Ä‚àƒRƒ“ƒpƒCƒ‹ŠÔ‚É‰e‹¿‚µ‚È‚¢‚æ‚¤‚Å‚·B‚¨‚©‚°‚Ådualmethod‚ğŠÈ’P‚É’è‹`‚Å‚«‚Ü‚·B
+caseã‚’ä»˜ã‘ã¦ã‚‚ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«æ™‚é–“ã«å½±éŸ¿ã—ãªã„ã‚ˆã†ã§ã™ã€‚ãŠã‹ã’ã§dualmethodã‚’ç°¡å˜ã«å®šç¾©ã§ãã¾ã™ã€‚
 
 
-### metatype‚ÉÀ‘•‚ğ‘‚©‚È‚¢
+### metatypeã«å®Ÿè£…ã‚’æ›¸ã‹ãªã„
 
     trait MyMetatype extends dual.Any {
         type foo <: dual.Nat
         type bar = foo#plus[foo] // !!?
     }
 
-•¡G‚Èó‹µ‚ÉŒÀ‚è‚Ü‚·‚ªA`bar`‚ÌŒÄ‚Ño‚µ‚É‚æ‚Á‚ÄAƒRƒ“ƒpƒCƒ‰‚ªƒNƒ‰ƒbƒVƒ…‚·‚é‚±‚Æ‚ª‚ ‚è‚Ü‚·B
-‰ñ”ğô‚ÍAÀ‘•ê—p‚Ì’†ŠÔƒNƒ‰ƒX‚ğì‚é‚±‚Æ‚Å‚·B(Java‚Æ“¯‚¶‚æ‚¤‚É)
+è¤‡é›‘ãªçŠ¶æ³ã«é™ã‚Šã¾ã™ãŒã€`bar`ã®å‘¼ã³å‡ºã—ã«ã‚ˆã£ã¦ã€ã‚³ãƒ³ãƒ‘ã‚¤ãƒ©ãŒã‚¯ãƒ©ãƒƒã‚·ãƒ¥ã™ã‚‹ã“ã¨ãŒã‚ã‚Šã¾ã™ã€‚
+å›é¿ç­–ã¯ã€å®Ÿè£…å°‚ç”¨ã®ä¸­é–“ã‚¯ãƒ©ã‚¹ã‚’ä½œã‚‹ã“ã¨ã§ã™ã€‚(Javaã¨åŒã˜ã‚ˆã†ã«)
 
 
 
@@ -404,5 +404,5 @@ Shunsuke Sogame <<okomok@gmail.com>>
 [scala.collection.Traversable]: http://www.scala-lang.org/archives/downloads/distrib/files/nightly/docs/library/scala/collection/Traversable.html "scala.collection.Traversable"
 [scala-arm]: http://github.com/jsuereth/scala-arm "scala-arm"
 [ARM in Java]: http://www.infoq.com/news/2010/08/arm-blocks "Automatic Resource Management in Java"
-[Scala‚ÅŒ^ƒŒƒxƒ‹ƒvƒƒOƒ‰ƒ~ƒ“ƒO]: http://d.hatena.ne.jp/kmizushima/20090418/1240072077 "Scala‚ÅŒ^ƒŒƒxƒ‹ƒvƒƒOƒ‰ƒ~ƒ“ƒO"
+[Scalaã§å‹ãƒ¬ãƒ™ãƒ«ãƒ—ãƒ­ã‚°ãƒ©ãƒŸãƒ³ã‚°]: http://d.hatena.ne.jp/kmizushima/20090418/1240072077 "Scalaã§å‹ãƒ¬ãƒ™ãƒ«ãƒ—ãƒ­ã‚°ãƒ©ãƒŸãƒ³ã‚°"
 [C++ Template Metaprogramming]:http://www.amazon.com/Template-Metaprogramming-Concepts-Techniques-Beyond/dp/0321227255 "C++ Template Metaprogramming"
