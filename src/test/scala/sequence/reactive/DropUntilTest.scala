@@ -19,22 +19,16 @@ class DropUntilTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val out = new java.util.ArrayList[Int]
 
-        val b = new Reactor {
-            override def scheduler = new scala.actors.scheduler.SingleThreadedScheduler
-        }
-        b.start
-
-        val a = new Reactor {
-            override def scheduler = new scala.actors.scheduler.SingleThreadedScheduler
-        }
-        a.sequence collect {
+        val b = Reactor.singleThreaded()
+        val a = Reactor.singleThreaded { r =>
+            r collect {
                 case e: Int => e
             } dropUntil {
-                b.sequence
+                b
             } reactTotal { x =>
                 out.add(x)
-            } start;
-        a.start
+            } start
+        }
 
         a ! 1
         a ! 2

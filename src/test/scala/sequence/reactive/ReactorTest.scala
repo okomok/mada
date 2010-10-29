@@ -53,22 +53,19 @@ class ReactorTest extends org.scalatest.junit.JUnit3Suite {
         case object OK
         val cur = Actor.self
 
-        val a = new Reactor {
-            override def scheduler = new scala.actors.scheduler.SingleThreadedScheduler
+        val a = Reactor.singleThreaded { r =>
+            r collect {
+                case e: Int => e
+            } take {
+                3
+            } then {
+                cur ! OK
+            } reactTotal { x =>
+                out.add(x)
+            } reactTotal { x =>
+                out.add(x+10)
+            } start
         }
-        a.sequence collect {
-                    case e: Int => e
-                } take {
-                    3
-                } then {
-                    cur ! OK
-                } reactTotal { x =>
-                    out.add(x)
-                } reactTotal { x =>
-                    out.add(x+10)
-                } start
-
-        a.start
 
         a ! 1
         a ! "ignored"
@@ -87,23 +84,20 @@ class ReactorTest extends org.scalatest.junit.JUnit3Suite {
         case object OK
         val cur = Actor.self
 
-        val a = new Reactor {
-            override def scheduler = new scala.actors.scheduler.SingleThreadedScheduler
+        val a = Reactor.singleThreaded { r =>
+            r collect {
+                case e: Int => e
+            } take {
+                3
+            } then {
+                cur ! OK
+                Actor.exit
+            } reactTotal { x =>
+                out.add(x)
+            } reactTotal { x =>
+                out.add(x+10)
+            } start
         }
-        a.sequence collect {
-                    case e: Int => e
-                } take {
-                    3
-                } then {
-                    cur ! OK
-                    Actor.exit
-                } reactTotal { x =>
-                    out.add(x)
-                } reactTotal { x =>
-                    out.add(x+10)
-                } start
-
-        a.start
 
         a ! 1
         a ! "ignored"
@@ -116,19 +110,6 @@ class ReactorTest extends org.scalatest.junit.JUnit3Suite {
         a ! "abandoned"
         assertEquals(iterative.Of(1,11,2,12,3,13), iterative.from(out))
         out.clear
-
-        a.sequence collect {
-                    case e: Int => e
-                } onClose {
-                    cur ! OK
-                    Actor.exit
-                } take {
-                    3
-                } reactTotal { x =>
-                    out.add(x)
-                } reactTotal { x =>
-                    out.add(x+10)
-                } start
 
         a.restart
         a ! 1
@@ -149,18 +130,15 @@ class ReactorTest extends org.scalatest.junit.JUnit3Suite {
         case object OK
         val cur = Actor.self
 
-        val a = new Reactor {
-            override def scheduler = new scala.actors.scheduler.SingleThreadedScheduler
+        val a = Reactor.singleThreaded { r =>
+            r collect {
+                case e: Int => e
+            } take {
+                0
+            } then {
+                cur ! OK
+            } start
         }
-        a.sequence collect {
-                    case e: Int => e
-                } take {
-                    0
-                } then {
-                    cur ! OK
-                } start
-
-        a.start
 
         Actor.receive {
             case OK =>
