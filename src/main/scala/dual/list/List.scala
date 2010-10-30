@@ -32,8 +32,8 @@ trait List extends Any {
 
      def ::[e <: Any](e: e): ::[e]
     type ::[e <: Any] <: List
-
-    final def ::[e](e: e, dummy: scala.Unit = ()): ::[Box[e]] = ::(Box(e))
+    final def #::[e](e: e): ::[Box[e]] = ::(Box(e))
+//    final def ::[e](e: e, o: util.Overload = ()): ::[Box[e]] = ::(Box(e))
 
     @constantTime
      def clear: clear

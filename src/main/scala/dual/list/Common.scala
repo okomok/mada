@@ -26,6 +26,7 @@ trait Common {
     @equivalentTo("Nil.::(x)")
      def single[x <: Any](x: x): single[x] = Nil. ::(x)
     type single[x <: Any]                  = Nil# ::[x]
+//     def single[x](x: x, o: util.Overload = ()): single[Box[x]] = single(Box(x)) // scalac sucks.
 
      def range[n <: Nat, m <: Nat](n: n, m: m): range[n, m] = Range.apply(n, m)
     type range[n <: Nat, m <: Nat]                          = Range.apply[n, m]

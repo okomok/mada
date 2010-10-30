@@ -35,6 +35,7 @@ trait Map extends Any {
 
      def put[k <: Any, v <: Any](k: k, v: v): put[k, v]
     type put[k <: Any, v <: Any] <: Map
+//    final def put[k <: Any, v](k: k, v: v, o: util.Overload = ()): put[k, Box[v]] = put(k, Box(v))
 
      def putList[xs <: List](xs: xs): putList[xs]
     type putList[xs <: List] <: Map

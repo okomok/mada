@@ -12,7 +12,7 @@ package dual
  * Boxed non-dual type
  */
 final case class Box[A](override val undual: A) extends Any {
-    Predef.assert(!undual.isInstanceOf[Box[_]])
+    Predef.assert(!undual.isInstanceOf[Any], "unneeded boxing")
     type self = Box[A]
     override type undual = A
 }
