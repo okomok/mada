@@ -13,7 +13,7 @@ import mada.dual._
 import junit.framework.Assert._
 
 
-class AutoBoxingTest extends org.scalatest.junit.JUnit3Suite {
+class BoxTest extends org.scalatest.junit.JUnit3Suite {
 
     def testList {
         val xs = 1 #:: 2 #:: Nil
@@ -29,6 +29,15 @@ class AutoBoxingTest extends org.scalatest.junit.JUnit3Suite {
         val xs = new Wow #:: "boxing" #:: Nil
         val x: Box[Wow] = xs.head
         xs.head.foo
+    }
+
+    def testTuple {
+        val t1 = Tuple1.box(1)
+        val t2 = Pair.box(1, 2)
+        val t3 = Tuple3.box(1, 2, 3)
+        assertEquals(1, t1.undual._1)
+        assertEquals(2, t2.undual._2)
+        assertEquals(3, t3.undual._3)
     }
 /*
     def testListSingle {
