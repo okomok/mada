@@ -8,6 +8,9 @@ package com.github.okomok.mada
 package sequence; package reactive
 
 
+import scala.util.continuations
+
+
 private[reactive]
 class Common {
 
@@ -45,5 +48,8 @@ class Common {
     object Of {
         def apply[A](from: A*): Reactive[A] = new FromSIterable(from)
     }
+
+    @aliasOf("scala.util.continuations.reset[Unit, Unit]")
+    def reset(ctx: =>(Unit @continuations.cpsParam[Unit, Unit])): Unit = continuations.reset(ctx)
 
 }

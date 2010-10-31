@@ -7,10 +7,14 @@
 import sbt._
 
 
-class Mada(info: ProjectInfo) extends DefaultProject(info) {
+class Mada(info: ProjectInfo) extends DefaultProject(info) with AutoCompilerPlugins {
+    val continuations = compilerPlugin("org.scala-lang.plugins" % "continuations" % buildScalaVersion)
     val junit = "junit" % "junit" % "3.8.2" % "test"
     val scalatest = "org.scalatest" % "scalatest" % "1.2" % "test"
-    override def compileOptions = Seq(Deprecation, Unchecked/*, ExplainTypes*/) ++ compileOptions("-Yrecursion", "50") ++ super.compileOptions
+
+    override def compileOptions = super.compileOptions ++
+        Seq(Deprecation, Unchecked/*, ExplainTypes*/) ++
+        compileOptions("-Yrecursion", "50") ++ compileOptions("-P:continuations:enable")
 
     override def managedStyle = ManagedStyle.Maven
     override def pomExtra =

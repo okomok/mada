@@ -8,6 +8,9 @@ package com.github.okomok.mada
 package sequence; package reactive
 
 
+import scala.util.continuations
+
+
 object Reactive extends Common with Compatibles {
 
 // methodization
@@ -256,5 +259,10 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
      * Reactions are invoked by somehow you specify.
      */
     def shiftReact[B >: A](g: B => (B => Unit) => Unit): Reactive[B] = ShiftReact[B](this, g)
+
+    /**
+     * Helps to build a cps style expression.
+     */
+    final def await: A @continuations.suspendable = continuations.shift { (k: A => Unit) => foreach(k) }
 
 }
