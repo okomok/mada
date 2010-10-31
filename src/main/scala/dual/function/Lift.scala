@@ -8,7 +8,9 @@ package com.github.okomok.mada
 package dual; package function
 
 
-private[dual]
+/**
+ * Turns a function into dual one.
+ */
 final case class Lift0[R](override val undual: () => R) extends Function0 {
     type self = Lift0[R]
     override type undual = () => R
@@ -18,7 +20,6 @@ final case class Lift0[R](override val undual: () => R) extends Function0 {
 }
 
 
-private[dual]
 final case class Lift1[T1, R](override val undual: T1 => R) extends Function1 with ValueEquality {
     type self = Lift1[T1, R]
     override type undual = T1 => R
@@ -28,7 +29,6 @@ final case class Lift1[T1, R](override val undual: T1 => R) extends Function1 wi
 }
 
 
-private[dual]
 final case class Lift2[T1, T2, R](override val undual: (T1, T2) => R) extends Function2 with ValueEquality {
     type self = Lift2[T1, T2, R]
     override type undual = (T1, T2) => R
@@ -38,7 +38,6 @@ final case class Lift2[T1, T2, R](override val undual: (T1, T2) => R) extends Fu
 }
 
 
-private[dual]
 final case class Lift3[T1, T2, T3, R](override val undual: (T1, T2, T3) => R) extends Function3 with ValueEquality {
     type self = Lift3[T1, T2, T3, R]
     override type undual = (T1, T2, T3) => R

@@ -15,7 +15,6 @@ import com.github.okomok.mada
 import mada.dual._
 import nat.peano.Literal._
 import junit.framework.Assert._
-import function.lift
 
 
 class LiftTest extends org.scalatest.junit.JUnit3Suite {
@@ -29,12 +28,12 @@ class LiftTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial {
         // Normal types are not first-class citizen in dual world.
-        // `Box` turns them into dual ones. (No "autoboxing".)
-        val y1 = Box(9.75) :: Box('x') :: Nil
-        val y2 = Box(-2.125) :: Box('X') :: Nil
+        // `Box` turns them into dual ones.
+        val y1 = 9.75 #:: 'x' #:: Nil // == Box(9.75) :: Box('x') :: Nil
+        val y2 = -2.125 #:: 'X' #:: Nil
 
-        // `lift` too is a kind of boxing, which turns a normal function into dual one.
-        val z = lift((_: Double) + .5) :: lift((_: Char).isUpper) :: Nil
+        // `Function` too is a kind of boxing, which turns a normal function into dual one.
+        val z = function.Lift1((_: Double) + .5) :: function.Lift1((_: Char).isUpper) :: Nil
 
         // `zipBy` returns a view(unspecified type). `force` turns a view into a concrete list.
         val z1: Box[scala.Double] :: Box[scala.Boolean] :: Nil = z.zipBy(y1, Apply).force
@@ -53,8 +52,8 @@ class LiftTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testTrivial2 {
-        val y1 = Box(9.75) :: Box('x') :: Nil
-        val z = lift((_: Double) + .5) :: Box(3) :: Nil
+        val y1 = 9.75 #:: 'x' #:: Nil
+        val z = fnction.Lift1((_: Double) + .5) :: Box(3) :: Nil
         z.zipBy(y1, Apply) // doesn't crash for now, because this is a view...
         ()
     }

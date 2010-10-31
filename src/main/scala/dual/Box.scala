@@ -18,5 +18,5 @@ final case class Box[A](override val undual: A) extends Any {
 }
 
 object Box {
-    implicit def _autounboxing[A](from: Box[A]): A = from.undual
+//    implicit def _autounboxing[A](from: Box[A]): A = from.undual // rejected
 }
