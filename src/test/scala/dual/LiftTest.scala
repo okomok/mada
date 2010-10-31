@@ -33,7 +33,7 @@ class LiftTest extends org.scalatest.junit.JUnit3Suite {
         val y2 = -2.125 #:: 'X' #:: Nil
 
         // `Function` too is a kind of boxing, which turns a normal function into dual one.
-        val z = function.Lift1((_: Double) + .5) :: function.Lift1((_: Char).isUpper) :: Nil
+        val z = Function((_: Double) + .5) :: Function((_: Char).isUpper) :: Nil
 
         // `zipBy` returns a view(unspecified type). `force` turns a view into a concrete list.
         val z1: Box[scala.Double] :: Box[scala.Boolean] :: Nil = z.zipBy(y1, Apply).force
@@ -42,18 +42,17 @@ class LiftTest extends org.scalatest.junit.JUnit3Suite {
         val z2: Box[scala.Double] :: Box[scala.Boolean] :: Nil = z.zipBy(y2, Apply).force
         val Box(-1.625) :: Box(true) :: Nil = z2
 
-        {
+        locally {
             // escape from the dual world using `undual`.
             val :: = scala.::
             val 10.25 :: false :: scala.Nil = z1.undual
             val -1.625 :: true :: scala.Nil = z2.undual
         }
-        ()
     }
 
     def testTrivial2 {
         val y1 = 9.75 #:: 'x' #:: Nil
-        val z = fnction.Lift1((_: Double) + .5) :: Box(3) :: Nil
+        val z = Function((_: Double) + .5) :: Box(3) :: Nil
         z.zipBy(y1, Apply) // doesn't crash for now, because this is a view...
         ()
     }

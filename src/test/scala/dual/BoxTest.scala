@@ -33,9 +33,9 @@ class BoxTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testTuple {
-        val t1 = tuple.Lift1((1))
-        val t2 = tuple.Lift2((1, 2))
-        val t3 = tuple.Lift3((1, 2, 3))
+        val t1 = Tuple(1)
+        val t2 = Tuple(1, 2)
+        val t3 = Tuple(1, 2, 3)
         assertEquals(1, t1.undual._1)
         assertEquals(2, t2.undual._2)
         assertEquals(3, t3.undual._3)
