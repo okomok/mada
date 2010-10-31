@@ -50,6 +50,6 @@ class Common {
     }
 
     @aliasOf("scala.util.continuations.reset[Unit, Unit]")
-    def reset(ctx: =>(Unit @continuations.cpsParam[Unit, Unit])): Unit = continuations.reset(ctx)
+    def async(ctx: =>(Unit @continuations.cpsParam[Unit, Unit])): Unit = continuations.reset(ctx)
 
 }
