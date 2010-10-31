@@ -8,13 +8,22 @@ package com.github.okomok.mada
 package arm
 
 
+import scala.util.continuations
+
+
 private[arm]
 class Common {
 
     @returnThat
-    def use[A](that: Arm[A]): Arm[A] = that
+    def from[A](that: Arm[A]): Arm[A] = that
 
     @equivalentTo("a.foreach(f)")
     def using[A](a: Arm[A])(f: A => Unit): Unit = a.foreach(f)
+
+    @aliasOf("a.each")
+    def use[A](a: Arm[A]): A @continuations.suspendable = a.each
+
+    @aliasOf("sequence.reactive.block")
+    def scope(ctx: =>(Unit @continuations.cpsParam[Unit, Unit])): Unit = sequence.reactive.block(ctx)
 
 }

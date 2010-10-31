@@ -25,7 +25,7 @@ object ParallelCopyTo {
         assert(!IsParallel(_1))
         Precondition.range(_1.size, _2.size, "parallel.copyTo")
 
-        (_1.divide(_3) zip _2.divide(_3)).parallelBy(1).each{ case (v1, w1) => v1.copyTo(w1) }
+        (_1.divide(_3) zip _2.divide(_3)).parallelBy(1).pareach{ case (v1, w1) => v1.copyTo(w1) }
         _2.window(0, _1.size)
     }
 }

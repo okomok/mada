@@ -263,6 +263,6 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
     /**
      * Helps to build a cps style expression.
      */
-    final def await: A @continuations.suspendable = continuations.shift { (k: A => Unit) => foreach(k) }
+    final def each: A @continuations.suspendable = continuations.shift { (k: A => Unit) => foreach(k) }
 
 }

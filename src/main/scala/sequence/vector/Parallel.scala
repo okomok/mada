@@ -25,7 +25,7 @@ case class Parallel[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
 // filter
     override def mutatingFilter(p: A => Boolean): Vector[A] = ParallelMutatingFilter(delegate, p, grainSize)
 // loop
-    override def each(f: A => Unit): Unit = ParallelEach(delegate, f, grainSize)
+    override def pareach(f: A => Unit): Unit = ParallelEach(delegate, f, grainSize)
 // search
     override def seek(p: A => Boolean): Option[A] = ParallelSeek(delegate, p, grainSize)
     override def count(p: A => Boolean): Int = ParallelCount(delegate, p, grainSize)

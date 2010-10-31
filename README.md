@@ -45,16 +45,15 @@ When you use `dual` package, append this to `compileOptions`:
 
 `arm` provides deterministic resource management within a block.
 
-    import com.github.okomok.mada.arm.use
+    import com.github.okomok.mada.arm.{scope, use}
     import java.nio.channels
     import java.nio.channels.Channels
 
     class DocTezt { // extends org.scalatest.junit.JUnit3Suite {
-        def testTrivial: Unit = {
-            for {
-                source <- use(Channels.newChannel(System.in))
-                dest <- use(Channels.newChannel(System.out))
-            } {
+        def testTrivial {
+            scope {
+                val source = use(Channels.newChannel(System.in))
+                val dest = use(Channels.newChannel(System.out))
                 channelCopy(source, dest)
             }
         }
@@ -262,10 +261,10 @@ Note `scala.Stream` is not thread-safe, and its `foldRight`, which is the most i
 `Vector` represents (optionally writable) random access sequence, that is, "array".
 It supports also parallel algorithms. Parallelization is explicit but transparent:
 
-    import com.github.okomok.mada.sequence._
+    import mada.sequence._
     import junit.framework.Assert._
 
-    class DocTest {
+    class DocTest extends org.scalatest.junit.JUnit3Suite {
         def testTrivial: Unit = {
             val v = Vector(0,1,2,3,4).parallelize
             v.map(_ + 10).seek(_ == 13) match {
@@ -274,7 +273,7 @@ It supports also parallel algorithms. Parallelization is explicit but transparen
             }
 
             val i = new java.util.concurrent.atomic.AtomicInteger(0)
-            v.each {
+            v.pareach {
                 _ => i.incrementAndGet
             }
             assertEquals(5, i.get)
@@ -298,7 +297,7 @@ This is built upon (possibly) asynchronous `foreach`:
     import mada.sequence.reactive
     import javax.swing
 
-    class SwingTest extends org.scalatest.junit.JUnit3Suite {
+    class DragDropTest extends org.scalatest.junit.JUnit3Suite {
         def testTrivial {
             val frame = new swing.JFrame("SwingTest")
             val label = new swing.JLabel("testTrivial")
@@ -307,13 +306,12 @@ This is built upon (possibly) asynchronous `foreach`:
             frame.pack
             frame.setVisible(true)
 
-            // This is really built upon `foreach` only.
             val mouse = reactive.Swing.Mouse(label)
-            for {
-                _ <- mouse.Pressed.take(10).doing(println("pressed"))
-                e <- mouse.Dragged.takeUntil(mouse.Released).then(println("released"))
-            } {
-                println("dragging at: " + (e.getX, e.getY))
+            reactive.block {
+                val p = mouse.Pressed.take(10).each
+                println("pressed at: " + (p.getX, p.getY))
+                val d = mouse.Dragged.takeUntil(mouse.Released).then(println("released")).each
+                println("dragging at: " + (d.getX, d.getY))
             }
 
             Thread.sleep(20000)

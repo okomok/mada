@@ -9,7 +9,6 @@ package com.github.okomok.madatest; package armtest
 
 import com.github.okomok.mada
 
-import mada.arm.use
 import mada.Arm
 import junit.framework.Assert._
 
@@ -30,7 +29,7 @@ class ForTest extends org.scalatest.junit.JUnit3Suite {
         val fs = new java.util.ArrayList[MyFile]
         for {
             name <- Array("foo", "bar", "buz")
-            file <- Arm.use(new MyFile(name))
+            file <- Arm.from(new MyFile(name))
         } {
             fs.add(file)
         }

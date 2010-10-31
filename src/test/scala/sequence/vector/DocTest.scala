@@ -21,7 +21,7 @@ import com.github.okomok.mada
             }
 
             val i = new java.util.concurrent.atomic.AtomicInteger(0)
-            v.each {
+            v.pareach {
                 _ => i.incrementAndGet
             }
             assertEquals(5, i.get)

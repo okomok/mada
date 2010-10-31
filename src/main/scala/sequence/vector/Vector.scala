@@ -374,7 +374,7 @@ trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
      *
      * @param   f   a function that is applied to every element.
      */
-    def each(f: A => Unit): Unit = foreach(f)
+    def pareach(f: A => Unit): Unit = foreach(f)
 
 
 // search

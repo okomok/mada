@@ -75,7 +75,7 @@ trait Forwarder[+A] extends TransformAdapter[A] with Sequence.Forwarder[A] {
     override def asVectorOf[B]: Vector[B] = around(delegate.asVectorOf[B])
 // loop
     override def loop[F <: (A => Boolean)](i: Int, j: Int, f: F): F = delegate.loop(i, j, f)
-    override def each(f: A => Unit): Unit = delegate.each(f)
+    override def pareach(f: A => Unit): Unit = delegate.pareach(f)
 // search
     override def seek(p: A => Boolean): Option[A] = delegate.seek(p)
 // folding

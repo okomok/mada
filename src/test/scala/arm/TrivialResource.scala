@@ -25,3 +25,11 @@ case class TrivialResource[A](res: A, b: Boolean = false) extends Arm[A] {
         ended = true
     }
 }
+
+
+class TrivialCloseable extends java.io.Closeable {
+    var ended = false
+    override def close {
+        ended = true
+    }
+}

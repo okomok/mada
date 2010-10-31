@@ -31,8 +31,8 @@ class DependTest extends org.scalatest.junit.JUnit3Suite {
         val f2 = new MyFile("f2")
 
         for {
-            _f1 <- use(f1)
-            _f2 <- use(depends(f2, _f1))
+            _f1 <- from(f1)
+            _f2 <- from(depends(f2, _f1))
         } {
             assertSame(_f1, f1)
             assertSame(_f2, f2)

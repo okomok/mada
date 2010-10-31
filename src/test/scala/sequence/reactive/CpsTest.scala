@@ -21,9 +21,9 @@ class CpsTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial {
         val arr = new java.util.ArrayList[(Int, Int)]
-        reactive.async {
-            val x = naturals.take(2).await // 0, 1
-            val y = naturals.take(3).await // 0, 1, 2
+        reactive.block {
+            val x = naturals.take(2).each // 0, 1
+            val y = naturals.take(3).each // 0, 1, 2
             arr.add((x, y))
             ()
         }

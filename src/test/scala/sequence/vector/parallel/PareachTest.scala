@@ -16,12 +16,12 @@ import com.github.okomok.madatest.sequencetest.vectortest.detail.Example._
 import com.github.okomok.madatest.sequencetest.vectortest.detail._
 
 
-class EachTest extends org.scalatest.junit.JUnit3Suite {
+class PareachTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val ex = Array(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14)
-        mada.sequence.vector.from(ex).parallel.each(print(_))
-        mada.sequence.vector.from(ex).parallelBy(6).each(print(_))
-        mada.sequence.vector.from(ex).parallelBy(100).each(print(_))
+        mada.sequence.vector.from(ex).parallel.pareach(print(_))
+        mada.sequence.vector.from(ex).parallelBy(6).pareach(print(_))
+        mada.sequence.vector.from(ex).parallelBy(100).pareach(print(_))
     }
 
     def print(i: Int) = {

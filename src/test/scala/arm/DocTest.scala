@@ -7,16 +7,15 @@
 package com.github.okomok.madatest; package armtest
 
 
-    import com.github.okomok.mada.arm.use
+    import com.github.okomok.mada.arm.{scope, use}
     import java.nio.channels
     import java.nio.channels.Channels
 
     class DocTezt { // extends org.scalatest.junit.JUnit3Suite {
-        def testTrivial: Unit = {
-            for {
-                source <- use(Channels.newChannel(System.in))
-                dest <- use(Channels.newChannel(System.out))
-            } {
+        def testTrivial {
+            scope {
+                val source = use(Channels.newChannel(System.in))
+                val dest = use(Channels.newChannel(System.out))
                 channelCopy(source, dest)
             }
         }
