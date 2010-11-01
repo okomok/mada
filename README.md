@@ -208,18 +208,63 @@ You might notice that:
 
 `sequence` provides four sequence types:
 
+1. `Reactive`, reactive sequence
 1. `Iterative`, iterable sequence
 1. `List`, recursive sequence
 1. `Vector`, random-access sequence
-1. `Reactive`, reactive sequence
 
 These construct a loosely arranged hierarchy (like Scala-2.7 collections):
-`List` and `Vector` isn't subtype of `Iterative` but implicitly-convertible to it.
+`List` and `Vector` is compatible to `Iterative`, which is compatible to `Reactive`.
+
+
+### Reactive
+
+`Reactive` sequence is a logical base trait for all kinds of `mada` sequences.
+This is built upon (possibly) asynchronous `foreach`:
+
+    import com.github.okomok.mada
+    import mada.sequence.reactive
+    import javax.swing
+
+    class DragDropTest extends org.scalatest.junit.JUnit3Suite {
+        def testTrivial {
+            val frame = new swing.JFrame("SwingTest")
+            val label = new swing.JLabel("testTrivial")
+            frame.getContentPane.add(label)
+            frame.setDefaultCloseOperation(swing.JFrame.EXIT_ON_CLOSE)
+            frame.pack
+            frame.setVisible(true)
+
+            val mouse = reactive.Swing.Mouse(label)
+            reactive.block {
+                val p = mouse.Pressed.take(10).each
+                println("pressed at: " + (p.getX, p.getY))
+                val d = mouse.Dragged.takeUntil(mouse.Released).then(println("released")).each
+                println("dragging at: " + (d.getX, d.getY))
+            }
+
+            Thread.sleep(20000)
+        }
+    }
+
+`Reactive` summary:
+
+* `foreach` may be asynchronous; a function passed to `foreach` may be called later.
+* `block` can be used to build a sugared for-comprehension with the help of continuations plugin.
+* Synchronous algorithms(`isEmpty`, `head` etc) are not supplied.
+
+References:
+
+* [scala.react]
+* [scala.Responder]
+* [scala.collection.Traversable]
+* [Reactive Extensions]
+* [nafg's reactive](http://github.com/nafg/reactive "nafg's reactive")
 
 
 ### Iterative
 
-`Iterative` is yet another `Iterable`: any method is build upon the iterator abstraction.
+`Iterative` is yet another `Iterable`: any method is built upon the iterator abstraction.
 Unlike the scala library, `Iterative` is projection (a.k.a. view) by default.
 When you need strictly-evaluated one, apply method `strict`.
 
@@ -290,48 +335,6 @@ It supports also parallel algorithms. Parallelization is explicit but transparen
 * Parallel algorithm support. (`fold`, `seek`, and `sort` etc.)
 * Recursive sequence is infeasible.
 
-
-### Reactive
-
-`Reactive` sequence is a logical base trait for all kinds of `mada` sequences.
-This is built upon (possibly) asynchronous `foreach`:
-
-    import com.github.okomok.mada
-    import mada.sequence.reactive
-    import javax.swing
-
-    class DragDropTest extends org.scalatest.junit.JUnit3Suite {
-        def testTrivial {
-            val frame = new swing.JFrame("SwingTest")
-            val label = new swing.JLabel("testTrivial")
-            frame.getContentPane.add(label)
-            frame.setDefaultCloseOperation(swing.JFrame.EXIT_ON_CLOSE)
-            frame.pack
-            frame.setVisible(true)
-
-            val mouse = reactive.Swing.Mouse(label)
-            reactive.block {
-                val p = mouse.Pressed.take(10).each
-                println("pressed at: " + (p.getX, p.getY))
-                val d = mouse.Dragged.takeUntil(mouse.Released).then(println("released")).each
-                println("dragging at: " + (d.getX, d.getY))
-            }
-
-            Thread.sleep(20000)
-        }
-    }
-
-`Reactive` summary:
-
-* `foreach` may be asynchronous; a function passed to `foreach` may be called later.
-* Synchronous algorithms(`isEmpty`, `head` etc) are not supplied.
-
-References:
-
-* [scala.react]
-* [scala.Responder]
-* [scala.collection.Traversable]
-* [Reactive Extensions]
 
 
 ## Links
