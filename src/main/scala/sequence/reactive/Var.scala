@@ -34,4 +34,7 @@ final class Var[A](private[this] var x: Option[A] = None) extends Reactive[A] {
 object Var {
     @equivalentTo("new Var(x)")
     def apply[A](x: A): Var[A] = new Var(x)
+
+    @equivalentTo("new Var[A]")
+    def apply[A]: Var[A] = new Var[A]
 }
