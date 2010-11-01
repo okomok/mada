@@ -20,8 +20,6 @@ class CpsTest extends org.scalatest.junit.JUnit3Suite {
         s.generate(iterative.iterate(0)(_ + 1))
     }
 
-    def each[A](r: Reactive[A]): A @cpsParam[Any, Any] = shift[A, Any, Any] { (k: A => Any) => r.foreach(x => k(x)) }
-
     def testTrivial {
         val arr = new java.util.ArrayList[(Int, Int)]
         reactive.block {
