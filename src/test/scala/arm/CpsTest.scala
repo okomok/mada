@@ -27,6 +27,7 @@ class CpsTest extends org.scalatest.junit.JUnit3Suite {
             assertEquals(s1, "res1")
             assertEquals(s2, "res2")
             assertEquals(s3, "res3")
+            999
         }
         assertTrue(r1.began)
         assertTrue(r1.ended)

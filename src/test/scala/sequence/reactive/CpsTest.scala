@@ -9,6 +9,7 @@ package com.github.okomok.madatest; package sequencetest; package reactivetest
 
 import com.github.okomok.mada.sequence._
 import junit.framework.Assert._
+import scala.util.continuations.{shift, suspendable, cpsParam}
 
 
 class CpsTest extends org.scalatest.junit.JUnit3Suite {
@@ -19,13 +20,14 @@ class CpsTest extends org.scalatest.junit.JUnit3Suite {
         s.generate(iterative.iterate(0)(_ + 1))
     }
 
+    def each[A](r: Reactive[A]): A @cpsParam[Any, Any] = shift[A, Any, Any] { (k: A => Any) => r.foreach(x => k(x)) }
+
     def testTrivial {
         val arr = new java.util.ArrayList[(Int, Int)]
         reactive.block {
             val x = naturals.take(2).each // 0, 1
             val y = naturals.take(3).each // 0, 1, 2
             arr.add((x, y))
-            ()
         }
         Thread.sleep(1200)
         assertEquals(Vector((0,0), (0,1), (0,2), (1,0), (1,1), (1,2)), Vector.from(arr).sort)

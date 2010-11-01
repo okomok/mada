@@ -21,9 +21,9 @@ class Common {
     def using[A](a: Arm[A])(f: A => Unit): Unit = a.foreach(f)
 
     @aliasOf("a.each")
-    def use[A](a: Arm[A]): A @continuations.suspendable = a.each
+    def use[A](a: Arm[A]): A @continuations.cpsParam[Any, Any] = a.each
 
     @aliasOf("sequence.reactive.block")
-    def scope(ctx: =>(Unit @continuations.cpsParam[Unit, Unit])): Unit = sequence.reactive.block(ctx)
+    def scope[A](ctx: =>(A @continuations.cpsParam[A, Any])): Unit = sequence.reactive.block(ctx)
 
 }

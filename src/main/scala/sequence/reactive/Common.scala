@@ -49,7 +49,7 @@ class Common {
         def apply[A](from: A*): Reactive[A] = new FromSIterable(from)
     }
 
-    @aliasOf("scala.util.continuations.reset[Unit, Unit]")
-    def block(ctx: =>(Unit @continuations.cpsParam[Unit, Unit])): Unit = continuations.reset(ctx)
+    @aliasOf("scala.util.continuations.reset[A, Any]")
+    def block[A](ctx: =>(A @continuations.cpsParam[A, Any])): Unit = continuations.reset(ctx)
 
 }
