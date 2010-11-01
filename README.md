@@ -17,6 +17,9 @@ When you use `dual` package, append this to `compileOptions`:
 
     ++ compileOptions("-Yrecursion", "50")
 
+When you use `arm` or `reactive` package,
+set up the continuations plugin following [this](http://code.google.com/p/simple-build-tool/wiki/CompilerPlugins "CompilerPlugins").
+
 
 
 ## Package Overview
