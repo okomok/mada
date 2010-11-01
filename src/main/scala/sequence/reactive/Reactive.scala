@@ -65,7 +65,7 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
         def by(op: (B, A) => B): Reactive[B] = scanLeft(z)(op)
     }
 
-    def head: A = throw new UnsupportedOperationException("Reactive.head")
+//    def head: A = throw new UnsupportedOperationException("Reactive.head")
 
     def tail: Reactive[A] = Tail(this)
 
@@ -261,8 +261,14 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
     def shiftReact[B >: A](g: B => (B => Unit) => Unit): Reactive[B] = ShiftReact[B](this, g)
 
     /**
-     * Helps to build a cps style expression.
+     * Returns each element in cps style.
      */
     final def each: A @continuations.cpsParam[Any, Any] = continuations.shift { (k: A => Any) => foreach(x => k(x)) }
+
+    final def head: A @continuations.cpsParam[Any, Any] = take(1).each
+
+    final def nth(n: Int): A @continuations.cpsParam[Any, Any] = drop(n).take(1).each
+
+    final def find(p: A => Boolean): A @continuations.cpsParam[Any, Any] = dropWhile(function.not(p)).take(1).each
 
 }

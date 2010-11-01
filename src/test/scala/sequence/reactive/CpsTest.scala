@@ -30,4 +30,28 @@ class CpsTest extends org.scalatest.junit.JUnit3Suite {
         Thread.sleep(1200)
         assertEquals(Vector((0,0), (0,1), (0,2), (1,0), (1,1), (1,2)), Vector.from(arr).sort)
     }
+
+    def testNth {
+        val arr = new java.util.ArrayList[(Int, Int, Int)]
+        reactive.block {
+            val x = naturals.nth(3)
+            val y = naturals.head
+            val z = naturals.find(_ == 5)
+            arr.add((x, y, z))
+        }
+        Thread.sleep(1200)
+        assertEquals(Vector((3,0,5)), Vector.from(arr))
+    }
+
+    def testNthEmpty {
+        val arr = new java.util.ArrayList[(Int, Int, Int)]
+        reactive.block {
+            val x = naturals.take(3).nth(4)
+            val y = naturals.head
+            val z = naturals.find(_ == 5)
+            arr.add((x, y, z))
+        }
+        Thread.sleep(1200)
+        assertTrue(arr.isEmpty)
+    }
 }
