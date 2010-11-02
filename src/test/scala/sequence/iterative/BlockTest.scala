@@ -11,25 +11,28 @@ import com.github.okomok.mada
 
 import mada.sequence.iterative
 import junit.framework.Assert._
+import scala.util.continuations.suspendable
 
 
-class GeneratorTest extends org.scalatest.junit.JUnit3Suite {
-    def makeEmpty(y: Int => Unit): Int = 999
+class BlockTest extends org.scalatest.junit.JUnit3Suite {
+    def makeEmpty(y: Int => Unit@ suspendable): Unit @suspendable = ()
 
     def testEmpty: Unit = {
-        val tr = iterative.generator(makeEmpty)
+        val tr = iterative.block(makeEmpty)
         assertTrue(tr.isEmpty)
         assertTrue(tr.isEmpty) // run again.
     }
 
-    def makeValuesTo(n: Int)(y: iterative.Yield[Int]): Unit = {
-        for (i <- 1 to n) {
+    def makeValuesTo(n: Int)(y: Int => Unit @suspendable): Unit @suspendable = {
+        var i = 1
+        while (i <= n) {
             y(i)
+            i += 1
         }
     }
 
     def withMakeValuesTo(n: Int): Unit = {
-        val tr = iterative.generator(makeValuesTo(n))
+        val tr = iterative.block(makeValuesTo(n))
         assertEquals(iterative.from(1 to n), tr)
         assertEquals(iterative.from(1 to n), tr) // run again.
     }
@@ -54,10 +57,12 @@ class GeneratorTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testTrivial2 {
-        def example = iterative.generator[Any] { `yield` =>
+        def example = iterative.block[Any] { `yield` =>
             `yield`("first")
-            for (i <- 1 until 4) {
+            var i = 1
+            while (i < 4) {
                 `yield`(i)
+                i += 1
             }
             `yield`("last")
         }
@@ -67,14 +72,16 @@ class GeneratorTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testExceptionForwarding: Unit = {
-        def throwSome(y: iterative.Yield[Int]): Unit = {
-            for (i <- 1 to 27) {
+        def throwSome(y: Int => Unit @suspendable): Unit @suspendable = {
+            var i = 1
+            while (i <= 27) {
                 y(i)
+                i += 1
             }
             throw new Error("exception forwarding")
         }
 
-        val tr = iterative.generator(throwSome)
+        val tr = iterative.block(throwSome)
 
         var thrown = false
         val arr = new java.util.ArrayList[Int]
@@ -93,10 +100,10 @@ class GeneratorTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testExceptionForwardingEmpty: Unit = {
-        def throwImmediately(y: iterative.Yield[Int]) {
+        def throwImmediately(y: Int => Unit @suspendable): Unit @suspendable = {
             throw new Error("exception forwarding")
         }
-        val tr = iterative.generator(throwImmediately)
+        val tr = iterative.block(throwImmediately)
 
         var thrown = false
         val arr = new java.util.ArrayList[Int]
@@ -111,36 +118,5 @@ class GeneratorTest extends org.scalatest.junit.JUnit3Suite {
         }
         assertTrue(thrown)
         assertTrue(arr.isEmpty)
-    }
-
-    def testFlush {
-        def sample = iterative.generator[Int] { y =>
-            for (i <- 0 until 20) {
-                y(i)
-            } // exchange.
-            y(20)
-            y(21)
-            y(22)
-            y.flush // exchange.
-            Thread.sleep(80000)
-        }
-        val ret = new java.util.ArrayList[Int]
-        val it = sample.begin
-        assertEquals(0, ~it)
-        for (_ <- 1 until 23) {
-            it.++ // may exchange.
-            ret.add(~it)
-        }
-        assertEquals(iterative.from(1 until 23), iterative.from(ret))
-    }
-
-}
-
-class GeneratorLockCompile extends Benchmark {
-    val b = new GeneratorTest
-    val tr = iterative.generator(b.makeValuesTo(100000))
-    override def run = {
-        val a = tr.size
-        ()
     }
 }

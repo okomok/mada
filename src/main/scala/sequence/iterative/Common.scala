@@ -8,6 +8,9 @@ package com.github.okomok.mada
 package sequence; package iterative
 
 
+import scala.util.continuations.suspendable
+
+
 private[iterative]
 class Common {
 
@@ -69,6 +72,11 @@ class Common {
      * Constructs a sequence from `Yield` expressions.
      */
     def generator[A](op: Yield[A] => Unit): Iterative[A] = Generator(op)
+
+    /**
+     * Constructs a sequence from cps expressions.
+     */
+    def block[A](op: (A => Unit @suspendable) => Unit @suspendable): Iterative[A] = Block(op)
 
     /**
      * Creates a sequence initially containing the specified elements.

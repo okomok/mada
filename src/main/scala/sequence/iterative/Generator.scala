@@ -26,6 +26,7 @@ case class Generator[+A](_1: Yield[A] => Unit) extends Iterative[A] {
 
         util.Parallel{new _Generator.Task(_1, x).run}
         doExchange
+        forwardExn
 
         override def isEnd = in.buf.isEmpty
         override def deref = {
@@ -38,9 +39,16 @@ case class Generator[+A](_1: Yield[A] => Unit) extends Iterative[A] {
             if (in.buf.isEmpty && !in.isLast) {
                 doExchange
             }
+            forwardExn
         }
 
-        private def doExchange: Unit = {
+        private def forwardExn {
+            if (in.buf.isEmpty && in.isLast && !in.exn.isEmpty) {
+                throw in.exn.get
+            }
+        }
+
+        private def doExchange {
             assert(in.buf.isEmpty)
             in = x.exchange(in)
         }
@@ -70,23 +78,25 @@ object _Generator {
             }
         }
 
-        def run: Unit = {
+        def run {
             try {
                 op(y)
+            } catch {
+                case t: Throwable => out.exn = Some(t)
             } finally {
                 out.isLast = true
                 doExchange
             }
         }
 
-        private def doExchange: Unit = {
+        private def doExchange {
             out = x.exchange(out)
             assert(out.buf.isEmpty)
         }
     }
 
-    class Data[A](val buf: ArrayDeque[A], var isLast: Boolean) {
-        def this() = this(new ArrayDeque[A](CAPACITY), false)
+    class Data[A](val buf: ArrayDeque[A], var isLast: Boolean, var exn: Option[Throwable]) {
+        def this() = this(new ArrayDeque[A](CAPACITY), false, None)
     }
 
 }
