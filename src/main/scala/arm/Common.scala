@@ -24,6 +24,6 @@ class Common {
     def use[A](a: Arm[A]): A @continuations.cpsParam[Any, Any] = a.each
 
     @aliasOf("sequence.reactive.block")
-    def scope[A](ctx: =>(A @continuations.cpsParam[A, Any])): Unit = sequence.reactive.block(ctx)
+    def scope[A](ctx: => (A @continuations.cpsParam[A, Any])): Unit = sequence.reactive.block(ctx)
 
 }

@@ -261,7 +261,7 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
     def shiftReact[B >: A](g: B => (B => Unit) => Unit): Reactive[B] = ShiftReact[B](this, g)
 
     /**
-     * Returns each element in cps style.
+     * Returns each element in cpstyle.
      */
     final def each: A @continuations.cpsParam[Any, Any] = continuations.shift { (k: A => Any) => foreach(x => k(x)) }
 

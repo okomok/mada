@@ -54,4 +54,5 @@ class CpsTest extends org.scalatest.junit.JUnit3Suite {
         Thread.sleep(1200)
         assertTrue(arr.isEmpty)
     }
+
 }

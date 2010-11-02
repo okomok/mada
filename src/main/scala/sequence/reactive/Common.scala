@@ -50,6 +50,6 @@ class Common {
     }
 
     @aliasOf("scala.util.continuations.reset[A, Any]")
-    def block[A](ctx: =>(A @continuations.cpsParam[A, Any])): Unit = continuations.reset(ctx)
+    def block[A](ctx: => (A @continuations.cpsParam[A, Any])): Unit = continuations.reset(ctx)
 
 }
