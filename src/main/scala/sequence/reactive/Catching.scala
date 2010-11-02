@@ -9,14 +9,14 @@ package sequence; package reactive
 
 
 private
-case class Catching[+A](_1: Reactive[A], _2: Throwable => Unit) extends Reactive[A] {
+case class Catching[+A](_1: Reactive[A], _2: PartialFunction[Throwable, Unit]) extends Reactive[A] {
     override def close = _1.close
     override def foreach(f: A => Unit) {
         for (x <- _1) {
             try {
                 f(x)
             } catch {
-                case t: Throwable => _2(t)
+                case t: Throwable => if (_2.isDefinedAt(t)) _2(t) else throw t
             }
         }
     }

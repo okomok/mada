@@ -208,7 +208,7 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
     /**
      * Pseudo catch-statement
      */
-    def catching(f: Throwable => Unit): Reactive[A] = Catching(this, f)
+    def catching(f: PartialFunction[Throwable, Unit]): Reactive[A] = Catching(this, f)
 
     /**
      * Attach a resource.

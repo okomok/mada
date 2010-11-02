@@ -37,6 +37,35 @@ class CatchingTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals(iterative.Of(14,15,16,17,88,19), iterative.from(out))
     }
 
+    def testThrough: Unit = {
+        val t = reactive.Of(1,2,3,4,5,6,7,8,9)
+
+        val out = new java.util.ArrayList[Int]
+
+        class MyError extends Error
+
+        var thrown = false
+        try {
+            t.filter {
+                _ > 3
+            } catching {
+                case x: MyError => out.add(88)
+            } map { e =>
+                if (e == 8) {
+                    throw new AssertionError
+                } else {
+                    e + 10
+                }
+            } foreach { e =>
+                out.add(e)
+            }
+        } catch {
+            case x: AssertionError => thrown = true
+        }
+
+        assertTrue(thrown)
+    }
+
 /*
     def testTrivial: Unit = {
         val t = reactive.Of(1,2,3,4,5,6,7,8,9)
