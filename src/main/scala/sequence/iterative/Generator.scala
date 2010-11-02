@@ -51,6 +51,7 @@ case class Generator[+A](_1: Yield[A] => Unit) extends Iterative[A] {
         private def doExchange {
             assert(in.buf.isEmpty)
             in = x.exchange(in)
+            assert(!in.buf.isEmpty || in.isLast)
         }
     }
 }
@@ -72,7 +73,7 @@ object _Generator {
                 }
             }
             override def flush = {
-                if (out.buf.size != 0) {
+                if (!out.buf.isEmpty) {
                     doExchange
                 }
             }
