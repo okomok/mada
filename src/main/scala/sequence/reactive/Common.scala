@@ -46,7 +46,7 @@ class Common {
      * Creates a sequence initially containing the specified elements.
      */
     object Of {
-        def apply[A](from: A*): Reactive[A] = new FromSIterable(from)
+        def apply[A](from: A*): Reactive[A] = from
     }
 
     @aliasOf("scala.util.continuations.reset[A, Any]")

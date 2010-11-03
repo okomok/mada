@@ -15,7 +15,7 @@ class FromArray[A](_1: Array[A]) extends Forwarder[A] {
 
 
 private
-class FromSIterable[+A](_1: Iterable[A]) extends Reactive[A] {
+class FromTraversable[+A](_1: scala.collection.Traversable[A]) extends Reactive[A] {
     override def foreach(f: A => Unit) = _1.foreach(f)
 }
 
