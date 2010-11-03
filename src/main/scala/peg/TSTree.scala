@@ -16,7 +16,7 @@ package peg
 class TSTree[A, V](implicit __comp: Ordering[A]) extends java.lang.Cloneable {
     private var rootNode: TSTreeNode[A, V] = null
 
-    def clear: Unit = {
+    def clear {
         rootNode = null
     }
 
@@ -123,7 +123,7 @@ class TSTree[A, V](implicit __comp: Ordering[A]) extends java.lang.Cloneable {
         }
     }
 
-    def print(out: prettyprinter.Xml): Unit = {
+    def print(out: prettyprinter.Xml) {
         out.writeStartElement("tstree")
         if (rootNode ne null) {
             rootNode.print(out)
@@ -227,7 +227,7 @@ private class TSTreeNode[A, V](val elem: A, val parent: TSTreeNode[A, V]) {
         data.isEmpty && isLeaf
     }
 
-    def collectGarbage: Unit = {
+    def collectGarbage {
         if ((parent ne null) && isGarbage) {
             if (parent.left eq this) {
                 parent.left = null
@@ -242,7 +242,7 @@ private class TSTreeNode[A, V](val elem: A, val parent: TSTreeNode[A, V]) {
         }
     }
 
-    def print(out: prettyprinter.Xml): Unit = {
+    def print(out: prettyprinter.Xml) {
         def _print(c: TSTreeNode[A, V], s: String) = {
             if (c ne null) {
                 out.writeStartElement(s)

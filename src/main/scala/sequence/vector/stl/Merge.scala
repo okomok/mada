@@ -60,7 +60,7 @@ private[vector]
 object MergeSortWithBuffer {
     val CHUNK_SIZE = 7
 
-    def apply[A](* : Vector[A], __first: Int, __last: Int, ^ : Vector[A], __buffer: Int, __comp: Ordering[A]): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __last: Int, ^ : Vector[A], __buffer: Int, __comp: Ordering[A]) {
         val __len = __last - __first
         val __buffer_last = __buffer + __len
 
@@ -75,7 +75,7 @@ object MergeSortWithBuffer {
         }
     }
 
-    def loop[A](* : Vector[A], first: Int, __last: Int, ^ : Vector[A], result: Int, step_size: Int, __comp: Ordering[A]): Unit = {
+    def loop[A](* : Vector[A], first: Int, __last: Int, ^ : Vector[A], result: Int, step_size: Int, __comp: Ordering[A]) {
         var __first = first
         var __result = result
         var __step_size = step_size

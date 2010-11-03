@@ -15,12 +15,12 @@ import stl.{UnguardedPartition, Median}
 
 private
 object ParallelSort {
-    def apply[A](_1: Vector[A], _2: Ordering[A], _3: Int): Unit = {
+    def apply[A](_1: Vector[A], _2: Ordering[A], _3: Int) {
         assert(!IsParallel(_1))
         impl(_1, _1.start, _1.end, _2, _3 * 2) // best grain size?
     }
 
-    def impl[A](v: Vector[A], first: Int, last: Int, c: Ordering[A], grainSize: Int): Unit = {
+    def impl[A](v: Vector[A], first: Int, last: Int, c: Ordering[A], grainSize: Int) {
         if (first != last) {
             val rs = new ArrayList[Vector[A]]
             loop(v, first, last, depthLimit(first, last), c, grainSize, rs)
@@ -29,7 +29,7 @@ object ParallelSort {
     }
 
     // See: stl.IntroSort
-    def loop[A](* : Vector[A], __first: Int, last: Int, depth_limit: Int, __comp: Ordering[A], grainSize: Int, rs: ArrayList[Vector[A]]): Unit = {
+    def loop[A](* : Vector[A], __first: Int, last: Int, depth_limit: Int, __comp: Ordering[A], grainSize: Int, rs: ArrayList[Vector[A]]) {
         var __last = last
         var __depth_limit = depth_limit
 

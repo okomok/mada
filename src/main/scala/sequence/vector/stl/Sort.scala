@@ -10,7 +10,7 @@ package sequence; package vector; package stl
 
 private[vector]
 object Sort {
-    def apply[A](v: Vector[A], __first: Int, __last: Int, __comp: Ordering[A]): Unit = {
+    def apply[A](v: Vector[A], __first: Int, __last: Int, __comp: Ordering[A]) {
         IntroSort(v, __first, __last, __comp)
     }
 }

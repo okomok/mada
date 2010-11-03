@@ -20,7 +20,7 @@ case class Xml(_1: java.io.Writer, _2: Int) extends PrettyPrinter {
     /**
      * Writes start element tag with new line.
      */
-    def writeStartElement(tag: Any): Unit = {
+    def writeStartElement(tag: Any) {
         stack.push(tag)
         _1.write((indent ++ "<" ++ tag.toString ++ ">\n").stringize)
         _1.flush
@@ -30,7 +30,7 @@ case class Xml(_1: java.io.Writer, _2: Int) extends PrettyPrinter {
     /**
      * Writes end element tag with new line.
      */
-    def writeEndElement: Unit = {
+    def writeEndElement {
         indentLevel -= 1
         _1.write((indent ++ "</" ++ stack.pop.toString ++ ">\n").stringize)
         _1.flush
@@ -39,13 +39,13 @@ case class Xml(_1: java.io.Writer, _2: Int) extends PrettyPrinter {
     /**
      * Writes element without new line.
      */
-    def writeElement(tag: Any, chars: Any): Unit = {
+    def writeElement(tag: Any, chars: Any) {
         _1.write((indent ++ "<" ++ tag.toString ++ ">" ++ chars.toString ++ "</" ++ tag.toString ++ ">\n").stringize)
         _1.flush
     }
 
     @equivalentTo("_1.close")
-    override def close: Unit = {
+    override def close {
         assert(stack.isEmpty)
         _1.close
     }

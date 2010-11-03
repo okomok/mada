@@ -36,14 +36,14 @@ package sequence; package vector; package stl
 
 private[vector]
 object IntroSort {
-    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Ordering[A]): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Ordering[A]) {
         if (__first != __last) {
             loop(*, __first, __last, depthLimit(__first, __last), __comp)
             finalInsertionSort(*, __first, __last, __comp)
         }
     }
 
-    def loop[A](* : Vector[A], __first: Int, last: Int, depth_limit: Int, __comp: Ordering[A]): Unit = {
+    def loop[A](* : Vector[A], __first: Int, last: Int, depth_limit: Int, __comp: Ordering[A]) {
         var __last = last
         var __depth_limit = depth_limit
 
@@ -59,7 +59,7 @@ object IntroSort {
         }
     }
 
-    def finalInsertionSort[A](* : Vector[A], __first: Int, __last: Int, __comp: Ordering[A]): Unit = {
+    def finalInsertionSort[A](* : Vector[A], __first: Int, __last: Int, __comp: Ordering[A]) {
         if (__last - __first > THRESHOLD) {
             InsertionSort(*, __first, __first + THRESHOLD, __comp)
             UnguardedInsertionSort(*, __first + THRESHOLD, __last, __comp)

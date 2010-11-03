@@ -43,11 +43,11 @@ class DefaultRandomNumberGenerator extends (Int => Int) {
 
 private[vector]
 object RandomShuffle {
-    def apply[A](v: Vector[A], __first: Int, __last: Int): Unit = {
+    def apply[A](v: Vector[A], __first: Int, __last: Int) {
         RandomShuffle(v, __first, __last, new DefaultRandomNumberGenerator)
     }
 
-    def apply[A](v: Vector[A], __first: Int, __last: Int, __rand: Int => Int): Unit = {
+    def apply[A](v: Vector[A], __first: Int, __last: Int, __rand: Int => Int) {
         if (__first == __last) {
             return
         }

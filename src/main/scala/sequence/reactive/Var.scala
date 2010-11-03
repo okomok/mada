@@ -24,7 +24,7 @@ final class Var[A](private[this] var x: Option[A] = None) extends Reactive[A] {
     }
 //    override def head: A = x.getOrElse(super.head)
 
-    def :=(y: A): Unit = {
+    def :=(y: A) {
         x = Some(y)
         out(y)
     }

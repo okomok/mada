@@ -36,7 +36,7 @@ package sequence; package vector; package stl
 
 private[vector]
 object PartialSort {
-    def apply[A](* : Vector[A], __first: Int, __middle: Int, __last: Int, __comp: Ordering[A]): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __middle: Int, __last: Int, __comp: Ordering[A]) {
         MakeHeap(*, __first, __middle, __comp)
         var __i = __middle
         while (__i < __last) {

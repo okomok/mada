@@ -18,7 +18,7 @@ class Recursive[A] extends Iterative[A] {
     /**
      * Assigns <code>that</code>.
      */
-    def :=(that: => Iterative[A]): Unit = {
+    def :=(that: => Iterative[A]) {
         f = util.ByLazy(that)
     }
 
@@ -36,7 +36,7 @@ class RecursiveForwarder[A] extends Forwarder[A] {
     /**
      * Assigns <code>that</code>.
      */
-    def :=(that: => Iterative[A]): Unit = {
+    def :=(that: => Iterative[A]) {
         f = util.ByLazy(that)
     }
 

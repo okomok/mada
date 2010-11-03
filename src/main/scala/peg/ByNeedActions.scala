@@ -41,7 +41,7 @@ class ByNeedActions[A] {
         override def width = _1.width
     }
 
-    private def fireActions: Unit = {
+    private def fireActions {
         val it = queue.iterator
         while (it.hasNext) {
             val (f, v) = it.next

@@ -21,12 +21,12 @@ case class ToJIterable[A](_1: Iterative[A]) extends java.lang.Iterable[A] {
 
 private
 case class FromJObjectInput(_1: java.io.ObjectInput) extends Iterative[AnyRef] {
-    override def begin = new Iterator[AnyRef] {
+    override def begin = new _Iterator[AnyRef] {
         private[this] var e = ready // Note that null is a valid data.
 
-        override def isEnd = e.isEmpty
-        override def deref = { preDeref; e.get }
-        override def increment = { preIncrement; e = ready }
+        override protected def _isEnd = e.isEmpty
+        override protected def _deref = e.get
+        override protected def _increment = e = ready
 
         private def ready: Option[AnyRef] = {
             try {
@@ -41,13 +41,13 @@ case class FromJObjectInput(_1: java.io.ObjectInput) extends Iterative[AnyRef] {
 
 private
 case class FromJReader(_1: java.io.Reader) extends Iterative[Char] {
-    override def begin = new Iterator[Char] {
+    override def begin = new _Iterator[Char] {
         _1.reset
         private[this] var e = ready
 
-        override def isEnd = e.isEmpty
-        override def deref = { preDeref; e.get }
-        override def increment = { preIncrement; e = ready }
+        override protected def _isEnd = e.isEmpty
+        override protected def _deref = e.get
+        override protected def _increment = e = ready
 
         private def ready: Option[Char] = {
             val c = _1.read

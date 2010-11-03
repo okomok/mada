@@ -19,12 +19,12 @@ case class FromSIterator[A](_1: scala.Iterator[A]) extends Forwarder[A] {
     // override def toSIterator = _1
 }
 
-private class _FromSIterator[A](_1: scala.Iterator[A]) extends Iterator[A] {
+private class _FromSIterator[A](_1: scala.Iterator[A]) extends _Iterator[A] {
     private[this] var e = ready
 
-    override def isEnd = e.isEmpty
-    override def deref = { preDeref; e.get }
-    override def increment = { preIncrement; e = ready }
+    override protected def _isEnd = e.isEmpty
+    override protected def _deref = e.get
+    override protected def _increment = e = ready
 
     private def ready: Option[A] = if (_1.hasNext) Some(_1.next) else None
 }

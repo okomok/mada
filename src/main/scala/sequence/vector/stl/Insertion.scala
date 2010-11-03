@@ -36,7 +36,7 @@ package sequence; package vector; package stl
 
 private[vector]
 object InsertionSort {
-    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Ordering[A]): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Ordering[A]) {
         if (__first == __last) {
             return
         }
@@ -50,7 +50,7 @@ object InsertionSort {
 
 private[vector]
 object LinearInsert {
-    def apply[A](* : Vector[A], __first: Int, __last: Int, __val: A, __comp: Ordering[A]): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __last: Int, __val: A, __comp: Ordering[A]) {
         if (__comp.lt(__val, *(__first))) {
             CopyBackward(*, __first, __last, *, __last + 1)
             *(__first) = __val
@@ -63,7 +63,7 @@ object LinearInsert {
 
 private[vector]
 object UnguardedInsertionSort {
-    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Ordering[A]): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Ordering[A]) {
         var __i = __first
         while (__i != __last) {
             UnguardedLinearInsert(*, __i, *(__i), __comp)
@@ -74,7 +74,7 @@ object UnguardedInsertionSort {
 
 private[vector]
 object UnguardedLinearInsert {
-    def apply[A](* : Vector[A], last: Int, __val: A, __comp: Ordering[A]): Unit = {
+    def apply[A](* : Vector[A], last: Int, __val: A, __comp: Ordering[A]) {
         var __last = last
         var __next = __last
 
@@ -91,7 +91,7 @@ object UnguardedLinearInsert {
 
 private[vector]
 object ChunkInsertionSort {
-    def apply[A](* : Vector[A], first: Int, __last: Int, __chunk_size: Int, __comp: Ordering[A]): Unit = {
+    def apply[A](* : Vector[A], first: Int, __last: Int, __chunk_size: Int, __comp: Ordering[A]) {
         var __first = first
 
         while (__last - __first >= __chunk_size) {

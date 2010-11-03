@@ -20,7 +20,7 @@ case class Adjacent[A](_1: Iterative[A], _2: Int) extends Iterative[Vector[A]] {
             }
             override def isEnd = !buf.isFull
             override def deref = buf.toVector
-            override def increment = {
+            override def increment {
                 buf.removeFirst
                 if (it) {
                     buf.addLast(~it)

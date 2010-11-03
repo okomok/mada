@@ -13,7 +13,7 @@ import util.Future
 
 private
 object ParallelEach {
-    def apply[A](_1: Vector[A], _2: A => Unit, _3: Int): Unit = {
+    def apply[A](_1: Vector[A], _2: A => Unit, _3: Int) {
         assert(!IsParallel(_1))
 
         if (_3 == 1) {

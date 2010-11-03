@@ -20,7 +20,7 @@ private class _FolderLeft[A, B](_1: Iterative[A], _2: B, _3: (B, A) => B) extend
 
         override def isEnd = !it
         override def deref = _3(z, ~it)
-        override def increment = {
+        override def increment {
             z = deref
             it.++
         }

@@ -19,13 +19,13 @@ case class Take[+A](_1: Iterative[A], _2: Int) extends Iterative[A] {
 
         override def isEnd = !it
         override def deref = ~it
-        override def increment = {
+        override def increment {
             it.++
             i -= 1
             ready
         }
 
-        private def ready: Unit = {
+        private def ready {
             if (i == 0) {
                 it = iterator.end
             }

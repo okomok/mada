@@ -120,7 +120,7 @@ trait Iterative[+A] extends Sequence[A] {
     /**
      * Applies <code>f</code> to each element.
      */
-    def foreach(f: A => Unit): Unit = {
+    def foreach(f: A => Unit) {
         val it = begin
         while (it) {
             f(~it)

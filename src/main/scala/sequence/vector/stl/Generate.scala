@@ -36,7 +36,7 @@ package sequence; package vector; package stl
 
 private[vector]
 object Generate {
-    def apply[A](v : Vector[A], first: Int, __last: Int, __gen: Unit => A): Unit = {
+    def apply[A](v : Vector[A], first: Int, __last: Int, __gen: Unit => A) {
         var __first = first
 
         while (__first != __last) {
@@ -48,7 +48,7 @@ object Generate {
 
 private[vector]
 object GenerateN {
-    def apply[A](^ : Vector[A], first: Int, n: Int, __gen: Unit => A): Unit = {
+    def apply[A](^ : Vector[A], first: Int, n: Int, __gen: Unit => A) {
         var __first = first
         var __n = n
 

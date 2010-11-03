@@ -45,10 +45,6 @@ trait Iterator[+A] {
     @aliasOf("increment")
     final def ++ = increment
 
-    // Do you know NVI pattern?
-    protected def preDeref: Unit = if (isEnd) throw new NoSuchElementException("deref on end iterator")
-    protected def preIncrement: Unit = if (isEnd) throw new UnsupportedOperationException("increment on end iterator")
-
     @conversion @aliasOf("!isEnd")
     final def toBoolean: Boolean = !isEnd
 
@@ -58,7 +54,7 @@ trait Iterator[+A] {
     /**
      * Advances <code>n</code>.
      */
-    final def advance(n: Int): Unit = {
+    final def advance(n: Int) {
         var it = n
         while (it != 0 && !isEnd) {
             increment
@@ -69,7 +65,7 @@ trait Iterator[+A] {
     /**
      * Advances while satisfying the predicate.
      */
-    final def advanceWhile(p: A => Boolean): Unit = {
+    final def advanceWhile(p: A => Boolean) {
         while (!isEnd && p(deref)) {
             increment
         }

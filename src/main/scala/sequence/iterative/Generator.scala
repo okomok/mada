@@ -20,7 +20,7 @@ trait Yield[-A] extends (A => Unit) {
 
 private
 case class Generator[+A](_1: Yield[A] => Unit) extends Iterative[A] {
-    override def begin = new Iterator[A] {
+    override def begin = new _Iterator[A] {
         private[this] var in = new _Generator.Data[A]
         private[this] val x = new Exchanger[_Generator.Data[A]]
 
@@ -28,13 +28,9 @@ case class Generator[+A](_1: Yield[A] => Unit) extends Iterative[A] {
         doExchange
         forwardExn
 
-        override def isEnd = in.buf.isEmpty
-        override def deref = {
-            preDeref
-            in.buf.getFirst
-        }
-        override def increment = {
-            preIncrement
+        override protected def _isEnd = in.buf.isEmpty
+        override protected def _deref = in.buf.getFirst
+        override protected def _increment {
             in.buf.removeFirst
             if (in.buf.isEmpty && !in.isLast) {
                 doExchange

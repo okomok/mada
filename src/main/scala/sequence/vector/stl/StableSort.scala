@@ -36,7 +36,7 @@ package sequence; package vector; package stl
 
 private[vector]
 object StableSort {
-    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Ordering[A]): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Ordering[A]) {
         val __len = (__last - __first + 1) / 2
         val __middle = __first + __len
 

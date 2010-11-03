@@ -15,6 +15,6 @@ case class Iterate[A](_1: A, _2: A => A) extends Iterative[A] {
 
         override def isEnd = false
         override def deref = acc
-        override def increment = { acc = _2(acc) }
+        override def increment { acc = _2(acc) }
     }
 }

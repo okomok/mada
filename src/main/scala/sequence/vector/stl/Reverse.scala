@@ -36,7 +36,7 @@ package sequence; package vector; package stl
 
 private[vector]
 object Reverse {
-    def apply[A](v: Vector[A], first: Int, last: Int): Unit = {
+    def apply[A](v: Vector[A], first: Int, last: Int) {
         var __first = first; var __last = last
 
         while (__first < __last) {

@@ -11,7 +11,7 @@ package peg
 private
 object Precondition {
 
-    def zeroWidth[A](p: Peg[A], method: String): Unit = {
+    def zeroWidth[A](p: Peg[A], method: String) {
         if (IsZeroWidth(p)) {
             throw new IllegalArgumentException(method + " doesn't allow zero-width.")
         }

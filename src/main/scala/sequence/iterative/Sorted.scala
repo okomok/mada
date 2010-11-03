@@ -21,7 +21,7 @@ object Sorted {
         }
     }
 
-    def incrementBy[A](it1: Iterator[A], it2: Iterator[A], _3: Ordering[A]): Unit = {
+    def incrementBy[A](it1: Iterator[A], it2: Iterator[A], _3: Ordering[A]) {
         if (!it1) {
             it2.++
         } else if (!it2) {
@@ -49,17 +49,13 @@ case class Merge[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) extends
 
 private
 case class Union[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) extends Iterative[A] {
-    override def begin = new Iterator[A] {
+    override def begin = new _Iterator[A] {
         private[this] val it1 = _1.begin
         private[this] val it2 = _2.begin
 
-        override def isEnd = !it1 && !it2
-        override def deref = {
-            preDeref
-            Sorted.derefBy(it1, it2, _3)
-        }
-        override def increment = {
-            preIncrement
+        override protected def _isEnd = !it1 && !it2
+        override protected def _deref = Sorted.derefBy(it1, it2, _3)
+        override protected def _increment {
             if (!it1) {
                 it2.++
             } else if (!it2) {
@@ -89,13 +85,13 @@ case class Intersection[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) 
 
         override def isEnd = !it1 || !it2
         override def deref = ~it1
-        override def increment = {
+        override def increment {
             it1.++
             it2.++
             ready
         }
 
-        private def ready: Unit = {
+        private def ready {
             while (it1 && it2)  {
                 val way = _3.compare(~it2, ~it1)
                 if (way < 0) {
@@ -120,12 +116,12 @@ case class Difference[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) ex
 
         override def isEnd = !it1
         override def deref = ~it1
-        override def increment = {
+        override def increment {
             it1.++
             ready
         }
 
-        private def ready: Unit = {
+        private def ready {
             while (it1 && it2)  {
                 val way = _3.compare(~it2, ~it1)
                 if (way < 0) {
@@ -144,23 +140,19 @@ case class Difference[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) ex
 
 private
 case class SymmetricDifference[A](_1: Iterative[A], _2: Iterative[A], _3: Ordering[A]) extends Iterative[A] {
-    override def begin = new Iterator[A] {
+    override def begin = new _Iterator[A] {
         private[this] val it1 = _1.begin
         private[this] val it2 = _2.begin
         ready
 
-        override def isEnd = !it1 && !it2
-        override def deref = {
-            preDeref
-            Sorted.derefBy(it1, it2, _3)
-        }
-        override def increment = {
-            preIncrement
+        override protected def _isEnd = !it1 && !it2
+        override protected def _deref = Sorted.derefBy(it1, it2, _3)
+        override protected def _increment {
             Sorted.incrementBy(it1, it2, _3)
             ready
         }
 
-        private def ready: Unit = {
+        private def ready {
             while (it1 && it2)  {
                 val way = _3.compare(~it2, ~it1)
                 if (way < 0) {

@@ -17,7 +17,7 @@ import continuations.suspendable
 
 private
 case class Block[+A](_1: (A => Unit @suspendable) => Unit @suspendable) extends Iterative[A] {
-    override def begin = new Iterator[A] {
+    override def begin = new _Iterator[A] {
         private[this] var _e: Option[A] = None
         private[this] var _k: Unit => Unit = null
         private[this] val _y = new (A => Unit @suspendable) {
@@ -33,13 +33,9 @@ case class Block[+A](_1: (A => Unit @suspendable) => Unit @suspendable) extends 
         }
         _k()
 
-        override def isEnd = _e.isEmpty
-        override def deref = {
-            preDeref
-            _e.get
-        }
-        override def increment = {
-            preIncrement
+        override protected def _isEnd = _e.isEmpty
+        override protected def _deref = _e.get
+        override protected def _increment {
             _e = None
             _k()
         }

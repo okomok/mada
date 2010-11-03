@@ -18,7 +18,7 @@ class Infinite[A] extends Iterative[A] {
     /**
      * Assigns <code>that</code>.
      */
-    def :=(that: => Iterative[A]): Unit = {
+    def :=(that: => Iterative[A]) {
         f = util.ByLazy(that.memoize)
     }
 
@@ -29,7 +29,7 @@ class Infinite[A] extends Iterative[A] {
 
         override def isEnd = false // infinite
         override def deref = { init; ~it }
-        override def increment = {
+        override def increment {
             if (it eq null) {
                 i += 1
             } else {
@@ -37,7 +37,7 @@ class Infinite[A] extends Iterative[A] {
             }
         }
 
-        private def init: Unit = {
+        private def init {
             if (it eq null) {
                 it = f().begin // wrapped around memoized deref.
                 it.advance(i)
@@ -60,7 +60,7 @@ case class Infinitize[A](_1: Iterative[A]) extends Iterative[Option[A]] {
             init
             if (it) Some(~it) else None
         }
-        override def increment = {
+        override def increment {
             if (it eq null) {
                 i += 1
             } else if (it) {
@@ -68,7 +68,7 @@ case class Infinitize[A](_1: Iterative[A]) extends Iterative[Option[A]] {
             }
         }
 
-        private def init: Unit = {
+        private def init {
             if (it eq null) {
                 it = _1.begin
                 it.advance(i)

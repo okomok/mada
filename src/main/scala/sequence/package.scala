@@ -16,6 +16,7 @@ package object sequence {
     @aliasOf("iterator.Iterator")
      val Iterator = iterator.Iterator
     type Iterator[+A] = iterator.Iterator[A]
+    type _Iterator[+A] = iterator._Iterator[A]
 
     @aliasOf("list.List")
      val List = list.List

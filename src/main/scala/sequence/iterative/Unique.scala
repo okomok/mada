@@ -22,7 +22,7 @@ case class UniqueBy[A](_1: Iterative[A], _2: (A, A) => Boolean) extends Iterativ
 
         override def isEnd = !it
         override def deref = ~it
-        override def increment = {
+        override def increment {
             val tmp = ~it
             it.++
             it.advanceWhile{ e => _2(tmp, e) }

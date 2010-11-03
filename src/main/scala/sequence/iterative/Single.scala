@@ -10,12 +10,12 @@ package sequence; package iterative
 
 private
 case class Single[+A](_1: A) extends Iterative[A] {
-    override def begin = new Iterator[A] {
+    override def begin = new _Iterator[A] {
         private[this] var ends = false
 
-        override def isEnd = ends
-        override def deref = { preDeref; _1 }
-        override def increment = { preIncrement; ends = true }
+        override protected def _isEnd = ends
+        override protected def _deref = _1
+        override protected def _increment = ends = true
     }
 
     override def cycle = repeat(_1) // cycle-single fusion

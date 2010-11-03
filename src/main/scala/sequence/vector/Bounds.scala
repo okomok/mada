@@ -18,7 +18,7 @@ case class Bounds[A](_1: Vector[A]) extends TransformAdapter[A] {
 
     override def bounds = this // bounds-bounds fusion
 
-    private def inBounds(i: Int): Unit = {
+    private def inBounds(i: Int) {
         if (!isDefinedAt(i)) {
             throw new IndexOutOfBoundsException(i.toString)
         }

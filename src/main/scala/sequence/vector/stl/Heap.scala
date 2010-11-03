@@ -38,11 +38,11 @@ package sequence; package vector; package stl
 
 private[vector]
 object PushHeap {
-    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Ordering[A]): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Ordering[A]) {
         __apply(*, __first, (__last - __first) - 1, 0, *(__last - 1), __comp)
     }
 
-    def __apply[A](* : Vector[A], __first: Int, holeIndex: Int, __topIndex: Int, __value: A, __comp: Ordering[A]): Unit = {
+    def __apply[A](* : Vector[A], __first: Int, holeIndex: Int, __topIndex: Int, __value: A, __comp: Ordering[A]) {
         var __holeIndex = holeIndex
 
         var __parent = (__holeIndex - 1) / 2
@@ -60,11 +60,11 @@ object PushHeap {
 
 private[vector]
 object PopHeap {
-    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Ordering[A]): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Ordering[A]) {
         __apply(*, __first, __last - 1, __last - 1, *(__last - 1), __comp)
     }
 
-    def __apply[A](* : Vector[A], __first: Int, __last: Int, __result: Int, __value: A, __comp: Ordering[A]): Unit = {
+    def __apply[A](* : Vector[A], __first: Int, __last: Int, __result: Int, __value: A, __comp: Ordering[A]) {
         *(__result) = *(__first)
         AdjustHeap(*, __first, 0, __last - __first, __value, __comp);
     }
@@ -75,7 +75,7 @@ object PopHeap {
 
 private[vector]
 object MakeHeap {
-    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Ordering[A]): Unit = {
+    def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Ordering[A]) {
         if (__last - __first < 2) {
             return
         }
@@ -97,7 +97,7 @@ object MakeHeap {
 
 private[vector]
 object SortHeap {
-    def apply[A](* : Vector[A], __first: Int, last: Int, __comp: Ordering[A]): Unit = {
+    def apply[A](* : Vector[A], __first: Int, last: Int, __comp: Ordering[A]) {
         var __last = last
 
         while (__last - __first > 1) {
@@ -112,7 +112,7 @@ object SortHeap {
 
 private[vector]
 object AdjustHeap {
-    def apply[A](* : Vector[A], __first: Int, holeIndex: Int, __len: Int, __value: A, __comp: Ordering[A]): Unit = {
+    def apply[A](* : Vector[A], __first: Int, holeIndex: Int, __len: Int, __value: A, __comp: Ordering[A]) {
         var __holeIndex = holeIndex
 
         val __topIndex = __holeIndex;

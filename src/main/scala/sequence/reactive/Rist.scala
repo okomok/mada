@@ -24,7 +24,7 @@ final class Rist[A] extends Reactive[A] {
     }
 //    override def head: A = xs.get(0)
 
-    def add(y: A): Unit = {
+    def add(y: A) {
         xs.add(y)
         for (out <- iterative.from(outs)) out(y)
     }

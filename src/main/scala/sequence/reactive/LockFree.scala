@@ -15,7 +15,7 @@ private
 class IfFirst[-T](_then: T => Unit, _else: T => Unit) extends Function1[T, Unit] {
     private[this] val first = new atomic.AtomicBoolean(true)
 
-    override def apply(x: T): Unit = {
+    override def apply(x: T) {
         if (first.get && first.compareAndSet(true, false)) {
             return _then(x)
         }
@@ -61,7 +61,7 @@ private
 class SkipTimes[-T](f: T => Unit, n: Int) extends Function1[T, Unit] {
     private[this] val count = new atomic.AtomicInteger(n)
 
-    override def apply(x: T): Unit = {
+    override def apply(x: T) {
         var old = 0
         do {
             old = count.get
@@ -78,7 +78,7 @@ private
 class SkipWhile[-T](f: T => Unit, p: T => Boolean) extends Function1[T, Unit] {
     @volatile private[this] var begins = false
 
-    override def apply(x: T): Unit = {
+    override def apply(x: T) {
         if (begins) {
             return f(x)
         }

@@ -16,12 +16,12 @@ case class Filter[A](_1: Iterative[A], _2: A => Boolean) extends Iterative[A] {
 
         override def isEnd = !it
         override def deref = ~it
-        override def increment = {
+        override def increment {
             it.++
             ready
         }
 
-        private def ready: Unit = {
+        private def ready {
             while (it && !_2(~it)) {
                 it.++
             }

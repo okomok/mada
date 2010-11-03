@@ -36,7 +36,7 @@ package sequence; package vector; package stl
 
 private[vector]
 object Fill {
-    def apply[A](* : Vector[A], first: Int, __last: Int, __val: A): Unit = {
+    def apply[A](* : Vector[A], first: Int, __last: Int, __val: A) {
         var __first = first
 
         var __n = __last - __first
