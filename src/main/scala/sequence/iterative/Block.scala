@@ -12,7 +12,7 @@ package sequence; package iterative
 
 
 import scala.util.continuations
-import continuations.{cpsParam, suspendable}
+import continuations.suspendable
 
 
 private
