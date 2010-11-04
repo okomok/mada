@@ -86,4 +86,18 @@ class Common {
         def unapplySeq[A](from: Iterative[A]): Option[Seq[A]] = Some(from.toSeq)
     }
 
+    /*
+     * Zips Iteratives.
+    def zipAll(v: Vector[Sequence[Any]]): Iterative[Vector[Any]] = ZipAll(v)
+    def zip[T1, T2](v1: Iterative[T1], v2: Iterative[T2]): Iterative[(T1, T2)] = v1.zip(v2)
+    def zip[T1, T2, T3](v1: Iterative[T1], v2: Iterative[T2], v3: Iterative[T3]): Iterative[(T1, T2, T3)] = {
+        ZipAll(Vector(v1, v2, v3)).map(v => (v.nth(0).asInstanceOf[T1], v.nth(1).asInstanceOf[T2], v.nth(2).asInstanceOf[T3]))
+    }
+    def zip[T1, T2, T3, T4](v1: Iterative[T1], v2: Iterative[T2], v3: Iterative[T3], v4: Iterative[T4]): Iterative[(T1, T2, T3, T4)] = {
+        ZipAll(Vector(v1, v2, v3, v4)).map(v => (v.nth(0).asInstanceOf[T1], v.nth(1).asInstanceOf[T2], v.nth(2).asInstanceOf[T3], v.nth(3).asInstanceOf[T4]))
+    }
+    def zip[T1, T2, T3, T4, T5](v1: Iterative[T1], v2: Iterative[T2], v3: Iterative[T3], v4: Iterative[T4], v5: Iterative[T5]): Iterative[(T1, T2, T3, T4, T5)] = {
+        ZipAll(Vector(v1, v2, v3, v4, v5)).map(v => (v.nth(0).asInstanceOf[T1], v.nth(1).asInstanceOf[T2], v.nth(2).asInstanceOf[T3], v.nth(3).asInstanceOf[T4], v.nth(4).asInstanceOf[T5]))
+    }
+     */
 }

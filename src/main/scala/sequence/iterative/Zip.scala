@@ -19,3 +19,16 @@ case class Zip[A, B](_1: Iterative[A], _2: Iterative[B]) extends Iterative[(A, B
         override protected def _increment = { it1.++; it2.++ }
     }
 }
+
+
+@deprecated("unused")
+private
+case class ZipAll(_1: Vector[Sequence[Any]]) extends Iterative[Vector[Any]] {
+    override def begin = new _Iterator[Vector[Any]] {
+        private[this] val its: Vector[Iterator[Any]] = _1.map(_.asIterative.begin).force
+
+        override protected def _isEnd = its.exists(_.isEnd)
+        override protected def _deref = its.map(_.deref)
+        override protected def _increment = its.foreach(_.increment)
+    }
+}
