@@ -45,6 +45,11 @@ package object function {
      * A function returning argument as is
      */
     def identity[T]: Transform[T] = Identity[T]()
+    def identity1[T1]: Function1[T1, Tuple1[T1]] = Identity1[T1]()
+    def identity2[T1, T2]: Function2[T1, T2, (T1, T2)] = Identity2[T1, T2]()
+    def identity3[T1, T2, T3]: Function3[T1, T2, T3, (T1, T2, T3)] = Identity3[T1, T2, T3]()
+    def identity4[T1, T2, T3, T4]: Function4[T1, T2, T3, T4, (T1, T2, T3, T4)] = Identity4[T1, T2, T3, T4]()
+    def identity5[T1, T2, T3, T4, T5]: Function5[T1, T2, T3, T4, T5, (T1, T2, T3, T4, T5)] = Identity5[T1, T2, T3, T4, T5]()
 
     /**
      * Fixed point combinator
@@ -55,6 +60,11 @@ package object function {
      * Memoizes <code>g</code>.
      */
     def memoize[T, R](g: (T => R) => T => R): T => R = Memoize(g)
+
+    /**
+     * Value discarding
+     */
+    def discard[T, U](f: T => U): T => Unit = Discard(f)
 
 
 // empty

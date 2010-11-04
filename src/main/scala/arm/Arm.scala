@@ -17,7 +17,7 @@ object Arm extends Common with Compatibles
 trait Arm[+A] extends sequence.Reactive[A] {
     def open: A
 
-    override def foreach(f: A => Unit) = {
+    override def foreach(f: A => Unit) {
         val r = open
         var primary: Throwable = null
         try {

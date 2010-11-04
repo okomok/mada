@@ -263,7 +263,7 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
     /**
      * Returns each element in cpstyle.
      */
-    final def each: A @continuations.cpsParam[Any, Any] = continuations.shift { (k: A => Any) => foreach(x => k(x)) }
+    final def each: A @continuations.cpsParam[Any, Any] = continuations.shift { (k: A => Any) => foreach(function.discard(k)) }
 
     final def head: A @continuations.cpsParam[Any, Any] = take(1).each
 

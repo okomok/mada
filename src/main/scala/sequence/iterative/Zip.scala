@@ -20,7 +20,7 @@ case class Zip[A, B](_1: Iterative[A], _2: Iterative[B]) extends Iterative[(A, B
     }
 }
 
-
+/*
 @deprecated("unused")
 private
 case class ZipAll(_1: Vector[Sequence[Any]]) extends Iterative[Vector[Any]] {
@@ -32,3 +32,4 @@ case class ZipAll(_1: Vector[Sequence[Any]]) extends Iterative[Vector[Any]] {
         override protected def _increment = its.foreach(_.increment)
     }
 }
+*/

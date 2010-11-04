@@ -10,7 +10,5 @@ package sequence; package iterative
 
 private[iterative]
 case class AsReactive[+A](_1: Iterative[A]) extends Reactive[A] {
-    override def foreach(f: A => Unit) = {
-        _1.foreach(f)
-    }
+    override def foreach(f: A => Unit) = _1.foreach(f)
 }
