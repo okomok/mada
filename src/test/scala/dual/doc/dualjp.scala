@@ -124,4 +124,11 @@ class NormalTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals(3, j._2.undual)
     }
 
+    def testLift {
+        val j = dual.Tuple(2, 30) // == Tuple2(Box(2), Box(3))
+        val xs = 3 #:: 4 #:: 5 #:: dual.Nil // == Box(1) :: j._1 :: Box(3) :: Nil
+        val y = xs.foldLeft(j._1, dual.Function((y: Int, x: Int) => y + x))
+        assertEquals(2+3+4+5, y.undual)
+    }
+
 }
