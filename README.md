@@ -47,6 +47,7 @@ set up the continuations plugin following [this](http://code.google.com/p/simple
 ## arm
 
 `arm` provides deterministic resource management within a block:
+
 ```scala
     import com.github.okomok.mada.arm.{scope, use}
     import java.nio.channels
