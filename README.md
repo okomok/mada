@@ -46,8 +46,9 @@ set up the continuations plugin following [this](http://code.google.com/p/simple
 
 ## arm
 
-`arm` provides deterministic resource management within a block.
+`arm` provides deterministic resource management within a block:
 
+    ```scala
     import com.github.okomok.mada.arm.{scope, use}
     import java.nio.channels
     import java.nio.channels.Channels
@@ -65,6 +66,7 @@ set up the continuations plugin following [this](http://code.google.com/p/simple
             // exercise.
         }
     }
+    ```
 
 `dest.close` and `source.close` are automatically invoked in order.
 
