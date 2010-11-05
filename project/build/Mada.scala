@@ -9,8 +9,12 @@ import sbt._
 
 class Mada(info: ProjectInfo) extends DefaultProject(info) with AutoCompilerPlugins {
     val continuations = compilerPlugin("org.scala-lang.plugins" % "continuations" % buildScalaVersion)
-    val junit = "junit" % "junit" % "3.8.2" % "test"
+    val junit = "junit" % "junit" % "4.4" % "test"
     val scalatest = "org.scalatest" % "scalatest" % "1.2" % "test"
+
+    val testng = "org.testng" % "testng" % "5.14" % "test"
+    val fest = "org.easytesting" % "fest-swing" % "1.2" % "test"
+    val festRelease = "fast release" at "http://repository.codehaus.org"
 
     override def compileOptions = super.compileOptions ++
         Seq(Deprecation, Unchecked/*, ExplainTypes*/) ++
