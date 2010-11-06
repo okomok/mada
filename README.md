@@ -22,6 +22,12 @@ setup the continuations plugin following [this](http://code.google.com/p/simple-
 
 
 
+## scaladoc
+
+See [mada API](http://okomok.github.com/mada/api "mada API").
+
+
+
 ## Package Overview
 
 `Mada` contains the following packages:
