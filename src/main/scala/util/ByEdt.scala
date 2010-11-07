@@ -24,11 +24,7 @@ case class ByEdt[R](_1: Function0[R]) extends Function0[R] {
         }
     }
     private lazy val _apply = {
-        try {
-            c.await
-        } catch {
-            case _: InterruptedException => Thread.currentThread.interrupt
-        }
+        c.await
         r match {
             case Left(r) => r
             case Right(t) => throw t
