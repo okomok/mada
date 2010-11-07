@@ -71,6 +71,11 @@ package object util {
     }
     implicit def |>[A](x: A): ForwardPipe[A] = new ForwardPipe(x)
 
+    sealed class BackwardPipe[A](x: A) {
+        def |<(f: A => Any): A = { f(x); x }
+    }
+    implicit def |<[A](x: A): BackwardPipe[A] = new BackwardPipe(x)
+
 
 // misc
 
@@ -109,6 +114,30 @@ package object util {
      */
     def timesParallel(n: Int)(body: => Unit) {
         sequence.vector.range(0, n).parallel.pareach(_ => body)
+    }
+
+    /**
+     * Evaluates <code>body</code> in the event-dispatch-thread.
+     */
+    def inEdt[R](body: => R): R = {
+        import javax.swing.SwingUtilities
+        if (SwingUtilities.isEventDispatchThread) {
+            body
+        } else {
+            var r: Option[R] = None
+            try {
+                SwingUtilities.invokeAndWait {
+                    new Runnable {
+                        override def run {
+                            r = Some(body)
+                        }
+                    }
+                }
+            } catch {
+                case e: java.lang.reflect.InvocationTargetException => throw e.getCause
+            }
+            r.get
+        }
     }
 
 }

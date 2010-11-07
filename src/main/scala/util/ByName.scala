@@ -8,16 +8,24 @@ package com.github.okomok.mada
 package util
 
 
+import java.util.concurrent.Callable
+
+
 case class ByName[+R](_1: Function0[R]) extends Function0[R] {
     override def apply = _1()
 
-    def toRunnable(implicit pre: R <:< Unit): Runnable = new Runnable {
-        override def run() = pre(apply)
+    def toRunnable: Runnable = new Runnable {
+        override def run = apply
+    }
+
+    def toCallable[S](implicit pre: R <:< S): Callable[S] = new Callable[S] {
+        override def call: S = pre(apply)
     }
 }
 
 object ByName {
     def apply[R](body: => R, o: Overload = ()): ByName[R] = new ByName(() => body)
     implicit def _fromExpr[R](from: => R): ByName[R] = apply(from)
-    implicit def _toRunnable(from: ByName[Unit]): Runnable = from.toRunnable
+    implicit def _toRunnable[R](from: ByName[R]): Runnable = from.toRunnable
+    implicit def _toCallable[R](from: ByName[R]): Callable[R] = from.toCallable
 }

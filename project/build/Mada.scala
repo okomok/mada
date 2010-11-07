@@ -14,7 +14,8 @@ class Mada(info: ProjectInfo) extends DefaultProject(info) with AutoCompilerPlug
 
     val testng = "org.testng" % "testng" % "5.14" % "test"
     val fest = "org.easytesting" % "fest-swing" % "1.2" % "test"
-    val festRelease = "fast release" at "http://repository.codehaus.org"
+    val festng = "org.easytesting" % "fest-swing-testng" % "1.2" % "test"
+    val festRelease = "fest release" at "http://repository.codehaus.org"
 
     override def compileOptions = super.compileOptions ++
         Seq(Deprecation, Unchecked/*, ExplainTypes*/) ++
