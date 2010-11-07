@@ -34,5 +34,5 @@ case class ByEdt[R](_1: Function0[R]) extends Function0[R] {
 }
 
 object ByEdt {
-    def apply[R](body: => R, dummy: Unit = ()): ByEdt[R] = new ByEdt(() => body)
+    def apply[R](body: => R, o: Overload = ()): ByEdt[R] = new ByEdt(() => body)
 }
