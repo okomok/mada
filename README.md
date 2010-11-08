@@ -234,22 +234,29 @@ This is built upon (possibly) asynchronous `foreach`:
 
     class DragDropTest extends org.scalatest.junit.JUnit3Suite {
         def testTrivial {
-            val frame = new swing.JFrame("SwingTest")
-            val label = new swing.JLabel("testTrivial")
-            frame.getContentPane.add(label)
-            frame.setDefaultCloseOperation(swing.JFrame.EXIT_ON_CLOSE)
-            frame.pack
-            frame.setVisible(true)
+            val frame = mada.util.inEdt {
+                val frame = new swing.JFrame("DragDropTest")
+                val label = new swing.JLabel("testTrivial")
+                frame.getContentPane.add(label)
 
-            val mouse = reactive.Swing.Mouse(label)
-            reactive.block {
-                val p = mouse.Pressed.take(10).each
-                println("pressed at: " + (p.getX, p.getY))
-                val d = mouse.Dragged.takeUntil(mouse.Released).then(println("released")).each
-                println("dragging at: " + (d.getX, d.getY))
+                reactive.block {
+                    val mouse = reactive.Swing.Mouse(label)
+                    val p = mouse.Pressed.take(10).each
+                    println("pressed at: " + (p.getX, p.getY))
+                    val d = mouse.Dragged.stepTime(100).
+                        takeUntil(mouse.Released).then(println("released")).each
+                    println("dragging at: " + (d.getX, d.getY))
+                }
+
+                frame.pack
+                frame.setVisible(true)
+                frame
             }
 
             Thread.sleep(20000)
+            mada.util.inEdt {
+                frame.setVisible(false)
+            }
         }
     }
 
