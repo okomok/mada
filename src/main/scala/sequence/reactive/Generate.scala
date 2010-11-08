@@ -13,16 +13,16 @@ case class Generate[+A](_1: Reactive[_], _2: Iterative[A], _3: (A => Unit) => Un
     override def close = _1.close
     override def foreach(f: A => Unit) {
         val it = _2.begin
-        val k = util.ByName{close;_3(f)}
+        def k = {close;_3(f)}
         if (!it) {
-            k()
+            k
         } else {
             for (_ <- _1) {
                 if (it) {
                     f(~it)
                     it.++
                     if (!it) {
-                        k()
+                        k
                     }
                 }
             }

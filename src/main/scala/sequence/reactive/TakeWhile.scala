@@ -12,7 +12,7 @@ private
 case class TakeWhile[A, B >: A](_1: Reactive[A], _2: A => Boolean, _3: (B => Unit) => Unit = function.empty1) extends Reactive[B] {
     override def close = _1.close
     override def foreach(f: B => Unit) {
-        val k = util.ByLazy{close; _3(f)}
+        val k = util.ByLazy{close;_3(f)}
         for (x <- _1) {
             if (_2(x)) {
                 f(x)

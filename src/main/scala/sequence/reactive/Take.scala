@@ -12,9 +12,9 @@ private
 case class Take[+A](_1: Reactive[A], _2: Int, _3: (A => Unit) => Unit = function.empty1) extends Reactive[A] {
     override def close = _1.close
     override def foreach(f: A => Unit) {
-        val k = util.ByName{close;_3(f)}
+        def k = {close;_3(f)}
         if (_2 == 0) {
-            k()
+            k
         } else {
             var c = _2
             for (x <- _1) {
@@ -22,7 +22,7 @@ case class Take[+A](_1: Reactive[A], _2: Int, _3: (A => Unit) => Unit = function
                     f(x)
                     c -= 1
                     if (c == 0) {
-                        k()
+                        k
                     }
                 }
             }
