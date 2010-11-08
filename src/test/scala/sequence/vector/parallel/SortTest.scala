@@ -51,16 +51,18 @@ class SortTest extends org.scalatest.junit.JUnit3Suite {
     }
 }
 
-class SortParallelPerfTezt extends Benchmark {
+class SortParallelPerfTest extends Benchmark /*with org.scalatest.Suite*/ {
     override def run = {
-        longSample1.copy.parallel.sort(Ordering.fromLessThan[Int]{ (x, y) => util.times(5)(longCalc); x < y })
+        for (_ <- 0 to 50)
+            longSample1.copy.parallel.sort(Ordering.fromLessThan[Int]{ (x, y) => x < y })
     }
     override val grainCount = 1
 }
 
-class SortNonParallelPerfTezt extends Benchmark {
+class SortNonParallelPerfTest extends Benchmark /*with org.scalatest.Suite*/ {
     override def run = {
-        longSample1.copy.sort(Ordering.fromLessThan[Int]{ (x, y) => util.times(5)(longCalc); x < y })
+        for (_ <- 0 to 50)
+            longSample1.copy.sort(Ordering.fromLessThan[Int]{ (x, y) => x < y })
     }
     override val grainCount = 1
 }
