@@ -187,7 +187,7 @@ References:
 
         S ::= ~(A >> !"b") >> from("a").+ >> B >> !("a"|"b"|"c")
         A ::= "a" >> A.? >> "b"
-        B ::= ("b" >> B.? >> "c")//{ println(_) }
+        B ::= ("b" >> B.? >> "c"){ println(_) }
 
         def testTrivial {
             assert(S matches "abc")
