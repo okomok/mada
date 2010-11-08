@@ -4,12 +4,11 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.madatest; package dualtest; package doctest
+package com.github.okomok.madatest; package dualtest; package example
 
     import com.github.okomok.mada.dual
     import dual.{map, Nat, Box}
     import dual.nat.dense.Literal._
-    import junit.framework.Assert.assertEquals
 
     class AbstractFactoryTest extends org.scalatest.junit.JUnit3Suite {
         // Notice there is no common super trait.
@@ -39,6 +38,6 @@ package com.github.okomok.madatest; package dualtest; package doctest
             // Concrete types are preserved.
             val factory = createFactory(_0)
             val button = factory.createButton
-            assertEquals("I'm a WinButton", button.paint)
+            expect("I'm a WinButton")(button.paint)
         }
     }

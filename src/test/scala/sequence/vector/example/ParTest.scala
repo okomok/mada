@@ -4,19 +4,16 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.madatest; package sequencetest; package vectortest
+package com.github.okomok.madatest; package sequencetest; package vectortest; package example
 
 
-import com.github.okomok.mada
+    import com.github.okomok.mada.sequence._
 
-    import mada.sequence._
-    import junit.framework.Assert._
-
-    class DocTest extends org.scalatest.junit.JUnit3Suite {
-        def testTrivial: Unit = {
+    class ParTest extends org.scalatest.junit.JUnit3Suite {
+        def testTrivial {
             val v = Vector(0,1,2,3,4).parallelize
             v.map(_ + 10).seek(_ == 13) match {
-                case Some(e) => assertEquals(13, e)
+                case Some(e) => expect(13)(e)
                 case None => fail("doh")
             }
 
@@ -24,6 +21,6 @@ import com.github.okomok.mada
             v.pareach {
                 _ => i.incrementAndGet
             }
-            assertEquals(5, i.get)
+            expect(5)(i.get)
         }
     }

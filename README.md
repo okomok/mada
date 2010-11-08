@@ -90,7 +90,6 @@ References:
     import com.github.okomok.mada.dual
     import dual.{map, Nat, Box}
     import dual.nat.dense.Literal._
-    import junit.framework.Assert.assertEquals
 
     class AbstractFactoryTest extends org.scalatest.junit.JUnit3Suite {
         // Notice there is no common super trait.
@@ -120,7 +119,7 @@ References:
             // Concrete types are preserved.
             val factory = createFactory(_0)
             val button = factory.createButton
-            assertEquals("I'm a WinButton", button.paint)
+            expect("I'm a WinButton")(button.paint)
         }
     }
 
@@ -182,20 +181,19 @@ References:
     import com.github.okomok.mada
     import mada.peg._
     import mada.peg.Compatibles._
-    import junit.framework.Assert._
 
-    class DocTest extends org.scalatest.junit.JUnit3Suite {
+    class AbcTest extends org.scalatest.junit.JUnit3Suite {
         val S, A, B = new Rule[Char]
 
         S ::= ~(A >> !"b") >> from("a").+ >> B >> !("a"|"b"|"c")
         A ::= "a" >> A.? >> "b"
-        B ::= ("b" >> B.? >> "c"){ println(_) }
+        B ::= ("b" >> B.? >> "c")//{ println(_) }
 
-        def testTrivial: Unit = {
-            assertTrue(S matches "abc")
-            assertTrue(S matches "aabbcc")
-            assertTrue(S matches "aaabbbccc")
-            assertFalse(S matches "aaabbccc")
+        def testTrivial {
+            assert(S matches "abc")
+            assert(S matches "aabbcc")
+            assert(S matches "aaabbbccc")
+            assert(!(S matches "aaabbccc"))
         }
     }
 
@@ -295,12 +293,11 @@ When you need strictly-evaluated one, apply method `strict`.
 which is useful to build recursive sequences:
 
     import com.github.okomok.mada.sequence._
-    import junit.framework.Assert._
 
-    class DocTest {
-        def testTrivial: Unit = {
-            lazy val fibs: List[Int] = 0 :: 1 :: fibs.zipBy(fibs.tail)(_ + _)
-            assertEquals(832040, fibs.nth(30))
+    class FibonacciTest extends org.scalatest.junit.JUnit3Suite {
+        def testTrivial {
+            lazy val fibs: List[Int] = 0 :: 1 :: fibs.zip(fibs.tail).map2(_ + _)
+            expect(832040)(fibs.nth(30))
         }
     }
 
@@ -322,14 +319,13 @@ Note `scala.Stream` is not thread-safe, and its `foldRight`, which is the most i
 `Vector` represents (optionally writable) random access sequence, that is, "array".
 It supports also parallel algorithms. Parallelization is explicit but transparent:
 
-    import mada.sequence._
-    import junit.framework.Assert._
+    import com.github.okomok.mada.sequence._
 
-    class DocTest extends org.scalatest.junit.JUnit3Suite {
-        def testTrivial: Unit = {
+    class ParTest extends org.scalatest.junit.JUnit3Suite {
+        def testTrivial {
             val v = Vector(0,1,2,3,4).parallelize
             v.map(_ + 10).seek(_ == 13) match {
-                case Some(e) => assertEquals(13, e)
+                case Some(e) => expect(13)(e)
                 case None => fail("doh")
             }
 
@@ -337,7 +333,7 @@ It supports also parallel algorithms. Parallelization is explicit but transparen
             v.pareach {
                 _ => i.incrementAndGet
             }
-            assertEquals(5, i.get)
+            expect(5)(i.get)
         }
     }
 

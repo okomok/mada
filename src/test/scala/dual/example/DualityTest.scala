@@ -4,7 +4,7 @@
 // Distributed under the terms of an MIT-style license.
 
 
-package com.github.okomok.madatest; package dualtest; package doctest
+package com.github.okomok.madatest; package dualtest; package example
 
     import com.github.okomok.mada.dual
     import dual.::
