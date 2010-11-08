@@ -1,0 +1,14 @@
+
+
+package com.github.okomok.madatest
+package defecttest; package lazyvalunit
+
+
+class LazyValUnitTest {// extends org.scalatest.junit.JUnit3Suite {
+    def testTrivial {
+        lazy val x: Unit = { (); println("hey") }
+        x
+        x
+        x
+    }
+}

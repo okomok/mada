@@ -1,0 +1,20 @@
+
+
+package com.github.okomok.madatest
+package defecttest; package elidablecrash
+
+
+import annotation.elidable
+import annotation.elidable.ALL
+
+
+class ElidableCrashTest {
+    trait My
+
+    @elidable(ALL)
+    def foo[a >: My <: My]: scala.Unit = ()
+
+   // foo[My]
+
+}
+
