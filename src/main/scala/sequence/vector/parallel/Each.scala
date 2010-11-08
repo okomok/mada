@@ -8,6 +8,7 @@ package com.github.okomok.mada
 package sequence; package vector
 
 
+// import java.util.concurrent
 import util.Future
 
 
@@ -22,6 +23,20 @@ object ParallelEach {
             _1.divide(_3).map{ w => Future(w.foreach(_2)) }.
                 force. // start tasks.
                     foreach{ u => u() } // join all.
+/*
+            // slightly faster...
+            val xss = _1.divide(_3)
+            val c = new concurrent.CountDownLatch(xss.size)
+            xss.foreach { xs =>
+                def f = { xs.foreach(_2); c.countDown }
+                try {
+                    util.Parallel(f)
+                } catch {
+                    case _: concurrent.RejectedExecutionException => f
+                }
+            }
+            c.await
+*/
         }
     }
 }
