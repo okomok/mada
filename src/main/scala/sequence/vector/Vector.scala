@@ -428,7 +428,7 @@ trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
      * Turns this vector into "0-to-size" indexing vector.
      */
     def nth: Vector[A] = _nth
-    private lazy val _nth: Vector[A] = Nth(this)
+    private[this] lazy val _nth: Vector[A] = Nth(this)
 
     /**
      * Reverses order of elements.

@@ -9,7 +9,7 @@ package util
 
 
 case class ByLazy[+R](_1: Function0[R]) extends Function0[R] {
-    private lazy val v = _1()
+    private[this] lazy val v = _1()
     override def apply = v
 }
 

@@ -24,7 +24,7 @@ case class ByEdt[R](_1: Function0[R]) extends Function0[R] {
             }
         }
     }
-    private lazy val _apply = {
+    private[this] lazy val _apply = {
         c.await
         r match {
             case Left(r) => r

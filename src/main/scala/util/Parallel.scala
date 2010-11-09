@@ -16,7 +16,7 @@ case class Parallel[R](_1: Function0[R]) extends Function0[R] {
         val c = new concurrent.Callable[R] { override def call() = _1() }
         Parallel.executor.synchronized { Parallel.executor.submit(c) }
     }
-    override def apply() = {
+    override def apply = {
         try {
             u.get
         } catch {
