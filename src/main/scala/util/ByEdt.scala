@@ -18,8 +18,9 @@ case class ByEdt[R](_1: Function0[R]) extends Function0[R] {
                     r = Left(_1())
                 } catch {
                     case t: Throwable => r = Right(t)
+                } finally {
+                    c.countDown
                 }
-                c.countDown
             }
         }
     }
