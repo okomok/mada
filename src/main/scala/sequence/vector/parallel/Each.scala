@@ -18,13 +18,11 @@ object ParallelEach {
         assert(!IsParallel(_1))
 
         if (_3 == 1) {
-            _1.map{ e => Future(_2(e)) }.force.foreach{ u => u() }
+            JoinFutures(_1.map{ e => Future(_2(e)) }.force)
         } else {
-            _1.divide(_3).map{ w => Future(w.foreach(_2)) }.
-                force. // start tasks.
-                    foreach{ u => u() } // join all.
+            JoinFutures(_1.divide(_3).map{ w => Future(w.foreach(_2)) }.force)
 /*
-            // slightly faster...
+            // more scalable?
             val xss = _1.divide(_3)
             val c = new concurrent.CountDownLatch(xss.size)
             xss.foreach { xs =>
