@@ -17,7 +17,7 @@ case class Parallel[+R](_1: Function0[R]) extends Function0[R] {
         try {
             Execute(_1)
         } catch {
-            case _: java.util.concurrent.RejectedExecutionException => _1
+            case _: java.util.concurrent.RejectedExecutionException => Strict(_1)
         }
     }
     override def apply = f()

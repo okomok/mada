@@ -24,6 +24,9 @@ package object util {
     @equivalentTo("null.asInstanceOf[A]")
     def nullInstance[A]: A = null.asInstanceOf[A]
 
+    @equivalentTo("new Overload{}")
+    val asFunction = Overload.value
+
 
 // type constraints
 

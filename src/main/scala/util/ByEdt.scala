@@ -27,14 +27,14 @@ case class ByEdt[R](_1: Function0[R]) extends Function0[R] {
             }
         }
     }
-    private[this] lazy val _apply = {
+    private[this] lazy val v = {
         c.await
         r match {
             case Left(r) => r
             case Right(t) => throw t
         }
     }
-    override def apply = _apply
+    override def apply = v
 }
 
 object ByEdt {

@@ -11,6 +11,6 @@ package util
 sealed abstract class Overload
 
 object Overload {
-    private val value = new Overload{}
+    private[util] val value = new Overload{}
     implicit def _fromUnit(from: Unit): Overload = value
 }
