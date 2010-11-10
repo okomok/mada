@@ -36,11 +36,7 @@ package sequence; package vector; package stl
 
 private[vector]
 object AdjacentFind {
-    def apply[A](* : Vector[A], first: Int, __last: Int): Int = {
-        apply(*, first, __last, function.equal)
-    }
-
-    def apply[A](* : Vector[A], first: Int, __last: Int, __binary_pred: (A, A) => Boolean): Int = {
+    def apply[A](* : Vector[A], first: Int, __last: Int, __binary_pred: (A, A) => Boolean = function.equal): Int = {
         var __first = first
 
         if (__first == __last) {

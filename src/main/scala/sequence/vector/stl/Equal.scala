@@ -36,11 +36,7 @@ package sequence; package vector; package stl
 
 private[mada]
 object Equal {
-    def apply[A1, A2](v1: Vector[A1], first1: Int, __last1: Int, v2: Vector[A2], first2: Int): Boolean = {
-        apply(v1, first1, __last1, v2, first2, function.equal)
-    }
-
-    def apply[A1, A2](v1: Vector[A1], first1: Int, __last1: Int, v2: Vector[A2], first2: Int, __binary_pred: (A1, A2) => Boolean): Boolean = {
+    def apply[A1, A2](v1: Vector[A1], first1: Int, __last1: Int, v2: Vector[A2], first2: Int, __binary_pred: (A1, A2) => Boolean = function.equal): Boolean = {
         var __first1 = first1
         var __first2 = first2
 

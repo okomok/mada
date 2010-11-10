@@ -36,11 +36,7 @@ package sequence; package vector; package stl
 
 private[vector]
 object UniqueCopy {
-    def apply[A, B >: A](v : Vector[A], first: Int, __last: Int, ^ : Vector[B], result: Int): Int = {
-        apply(v, first, __last, ^, result, function.equal)
-    }
-
-    def apply[A, B >: A](v : Vector[A], first: Int, __last: Int, ^ : Vector[B], result: Int, __binary_pred: (A, B) => Boolean): Int = {
+    def apply[A, B >: A](v : Vector[A], first: Int, __last: Int, ^ : Vector[B], result: Int, __binary_pred: (A, B) => Boolean = function.equal): Int = {
         var __first = first
         var __result = result
 
