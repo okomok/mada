@@ -46,7 +46,7 @@ class ParallelTest extends org.scalatest.junit.JUnit3Suite {
                     Thread.sleep(7)
                 }
             } catch {
-                case _ => _break = true
+                case _: mada.util.RejectedParallelException => _break = true
             }
         }
 

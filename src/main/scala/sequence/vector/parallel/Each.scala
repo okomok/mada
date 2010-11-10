@@ -26,13 +26,12 @@ object ParallelEach {
             val xss = _1.divide(_3)
             val c = new concurrent.CountDownLatch(xss.size)
             xss.foreach { xs =>
-                util.Parallel {
+                util.Parallel(
                     try {
                         xs.foreach(_2)
                     } finally {
                         c.countDown
-                    }
-                }
+                    }, util.ByStrict)
             }
             c.await
 */
