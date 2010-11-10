@@ -304,7 +304,7 @@ which is useful to build recursive sequences:
 In fact, you could build recursive sequences using only iterator abstraction,
 but number of iterator instances would be exponential-growth in a recursive sequence like above.
 
-Note `scala.Stream` is not thread-safe, and its `foldRight`, which is the most important method, is not lazy.
+Note `scala.Stream.foldRight` is not lazy.
 
 `List` summary:
 
