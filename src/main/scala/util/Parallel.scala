@@ -10,19 +10,19 @@ package util
 
 /**
  * Runs (possibly) in the thread-pool.
- * If the thread-pool is full, _1 runs in the constructor-call-site.
+ * If the thread-pool is full, _2 determines the evaluation strategy.
  */
-case class Parallel[+R](_1: Function0[R]) extends Function0[R] {
+case class Parallel[+R](_1: Function0[R], _2: EvaluationStrategy) extends Function0[R] {
     private[this] val f = {
         try {
             Execute(_1)
         } catch {
-            case _: java.util.concurrent.RejectedExecutionException => Strict(_1)
+            case _: java.util.concurrent.RejectedExecutionException => _2.install(_1)
         }
     }
     override def apply = f()
 }
 
 object Parallel {
-    def apply[R](body: => R, o: Overload = ()): Parallel[R] = new Parallel(() => body)
+    def apply[R](body: => R, stg: EvaluationStrategy, o: Overload = ()): Parallel[R] = new Parallel(() => body, stg)
 }

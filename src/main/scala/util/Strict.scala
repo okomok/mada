@@ -16,6 +16,7 @@ case class Strict[+R](_1: Function0[R]) extends Function0[R] {
     override def apply = v
 }
 
-object Strict {
+object Strict extends EvaluationStrategy {
+    override def install[R](to: Function0[R]): Function0[R] = new Strict(to)
     def apply[R](body: => R, o: Overload = ()): Strict[R] = new Strict(() => body)
 }

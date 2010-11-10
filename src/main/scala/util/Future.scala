@@ -13,13 +13,7 @@ package util
  * If the thread-pool is full, _1 runs in the result-retrieving-site.
  */
 case class Future[+R](_1: Function0[R]) extends Function0[R] {
-    private[this] val f = {
-        try {
-            Execute(_1)
-        } catch {
-            case _: java.util.concurrent.RejectedExecutionException => ByLazy(_1)
-        }
-    }
+    private[this] val f = Parallel(_1, ByLazy)
     override def apply = f()
 }
 

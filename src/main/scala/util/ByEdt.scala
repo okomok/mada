@@ -12,31 +12,11 @@ package util
  * Runs in the event-dispatch-thread.
  */
 case class ByEdt[R](_1: Function0[R]) extends Function0[R] {
-    val c = new java.util.concurrent.CountDownLatch(1)
-    var r: Either[R, Throwable] = null
-    javax.swing.SwingUtilities.invokeLater {
-        new Runnable {
-            override def run {
-                try {
-                    r = Left(_1())
-                } catch {
-                    case t: Throwable => r = Right(t)
-                } finally {
-                    c.countDown
-                }
-            }
-        }
-    }
-    private[this] lazy val v = {
-        c.await
-        r match {
-            case Left(r) => r
-            case Right(t) => throw t
-        }
-    }
-    override def apply = v
+    private[this] val f = Invoke(_1, r => javax.swing.SwingUtilities.invokeLater(r))
+    override def apply = f()
 }
 
-object ByEdt {
+object ByEdt extends EvaluationStrategy {
+    override def install[R](to: Function0[R]): Function0[R] = new ByEdt(to)
     def apply[R](body: => R, o: Overload = ()): ByEdt[R] = new ByEdt(() => body)
 }
