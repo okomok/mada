@@ -84,6 +84,7 @@ trait Forwarder[+A] extends TransformAdapter[A] with Sequence.Forwarder[A] {
 // sort
     override def sort[B >: A](implicit c: Ordering[B]): Vector[A] = around(delegate.sort(c))
     override def stableSort[B >: A](implicit c: Ordering[B]): Vector[A] = around(delegate.stableSort(c))
+    override def isSorted[B >: A](implicit c: Ordering[B]): Boolean = delegate.isSorted(c)
     override def shuffle: Vector[A] = around(delegate.shuffle)
     override def shuffleBy(g: Int => Int): Vector[A] = around(delegate.shuffleBy(g))
 // permutation

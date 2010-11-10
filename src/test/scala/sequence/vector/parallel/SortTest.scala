@@ -16,13 +16,13 @@ import mada.util
 import mada.sequence.{Vector, vector}
 import mada.sequence.vector._
 import junit.framework.Assert._
-import com.github.okomok.madatest.sequencetest.vectortest.detail.Example._
+import com.github.okomok.madatest.sequencetest.vectortest.detail.Sample._
 
 
 class SortTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial {
-        val actual = from(example1).seal.parallel.sort
-        detail.TeztVectorReadOnly(example1Sorted, actual)
+        val actual = from(sample1).seal.parallel.sort
+        detail.TeztVectorReadOnly(sample1Sorted, actual)
     }
 
     def testLong: Unit = {
@@ -31,23 +31,23 @@ class SortTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testImplicit: Unit = {
-        val actual = from(example1).seal.parallel.sort
-        detail.TeztVectorReadOnly(example1Sorted, actual)
+        val actual = from(sample1).seal.parallel.sort
+        detail.TeztVectorReadOnly(sample1Sorted, actual)
     }
 
     def testOptimizeArray {
-        val actual = from(example1).parallel.sort
-        detail.TeztVectorReadOnly(example1Sorted, actual)
+        val actual = from(sample1).parallel.sort
+        detail.TeztVectorReadOnly(sample1Sorted, actual)
     }
 
     def testOptimizeArrayWindow {
-        val actual = from(example1).window(0, 0).window(0, example1.length).parallel.sort
-        detail.TeztVectorReadOnly(example1Sorted, actual)
+        val actual = from(sample1).window(0, 0).window(0, sample1.length).parallel.sort
+        detail.TeztVectorReadOnly(sample1Sorted, actual)
     }
 
     def testOptimizeArrayList {
-        val actual = from(from(example1).toJList).parallel.sort
-        detail.TeztVectorReadOnly(example1Sorted, actual)
+        val actual = from(from(sample1).toJList).parallel.sort
+        detail.TeztVectorReadOnly(sample1Sorted, actual)
     }
 }
 

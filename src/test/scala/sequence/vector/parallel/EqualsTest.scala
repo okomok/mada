@@ -13,15 +13,15 @@ import mada.sequence.vector._
 
 
 import junit.framework.Assert._
-import com.github.okomok.madatest.sequencetest.vectortest.detail.Example._
+import com.github.okomok.madatest.sequencetest.vectortest.detail.Sample._
 import com.github.okomok.madatest.sequencetest.vectortest.detail._
 
 
 class EqualsTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
-        assertTrue(from(example1).parallelBy(1000) == mada.sequence.vector.from(example1))
-        assertTrue(from(example1).parallelBy(6) == mada.sequence.vector.from(example1))
-        assertTrue(from(example1).parallel == mada.sequence.vector.from(example1))
-        assertFalse(from(example1).parallel == mada.sequence.vector.from(example2))
+        assertTrue(from(sample1).parallelBy(1000) == mada.sequence.vector.from(sample1))
+        assertTrue(from(sample1).parallelBy(6) == mada.sequence.vector.from(sample1))
+        assertTrue(from(sample1).parallel == mada.sequence.vector.from(sample1))
+        assertFalse(from(sample1).parallel == mada.sequence.vector.from(sample2))
     }
 }

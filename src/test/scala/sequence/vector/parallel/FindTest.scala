@@ -12,7 +12,7 @@ import com.github.okomok.mada
 import mada.sequence.{Vector, vector}
 
 import junit.framework.Assert._
-import com.github.okomok.madatest.sequencetest.vectortest.detail.Example._
+import com.github.okomok.madatest.sequencetest.vectortest.detail.Sample._
 import com.github.okomok.madatest.sequencetest.vectortest.detail._
 
 

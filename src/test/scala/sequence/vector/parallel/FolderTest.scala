@@ -14,7 +14,7 @@ import mada.sequence.{Vector, vector}
 import mada.sequence.vector._
 
 import junit.framework.Assert._
-import com.github.okomok.madatest.sequencetest.vectortest.detail.Example._
+import com.github.okomok.madatest.sequencetest.vectortest.detail.Sample._
 import com.github.okomok.madatest.sequencetest.vectortest.detail._
 
 

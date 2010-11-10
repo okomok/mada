@@ -419,6 +419,11 @@ trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
     def stableSort[B >: A](implicit c: Ordering[B]): Vector[A] = { stl.StableSort(this, start, end, c); this }
 
     /**
+     * Is this vector sorted?
+     */
+    def isSorted[B >: A](implicit c: Ordering[B]): Boolean = stl.IsSorted(this, start, end, c)
+
+    /**
      * Randomly shuffles elements.
      */
     @pre("writable")

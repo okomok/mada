@@ -13,7 +13,7 @@ import mada.sequence.{Vector, vector}
 import mada.sequence.vector.from
 import junit.framework.Assert._
 import mada.sequence.{Vector, vector}
-import com.github.okomok.madatest.sequencetest.vectortest.detail.Example._
+import com.github.okomok.madatest.sequencetest.vectortest.detail.Sample._
 
 
 class CompatiblesTest extends org.scalatest.junit.JUnit3Suite {

@@ -15,22 +15,22 @@ import com.github.okomok.mada
 import mada.sequence.vector._
 import mada.sequence.{Vector, vector}
 import junit.framework.Assert._
-import com.github.okomok.madatest.sequencetest.vectortest.detail.Example._
+import com.github.okomok.madatest.sequencetest.vectortest.detail.Sample._
 import com.github.okomok.madatest.sequencetest.vectortest.detail._
 
 
 class RandomShuffleTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
-        val v = from(example1)
+        val v = from(sample1)
         mada.sequence.vector.stl.randomShuffle(v, 0, v.size)
 //        println(v.toString)
         mada.sequence.vector.stl.sort(v, 0, v.size)
-        TeztVectorReadOnly(example1Sorted, v)
+        TeztVectorReadOnly(sample1Sorted, v)
     }
 
     def testMethod {
-        val v = from(example1)
+        val v = from(sample1)
         v.shuffle.sort
-        TeztVectorReadOnly(example1Sorted, v)
+        TeztVectorReadOnly(sample1Sorted, v)
     }
 }

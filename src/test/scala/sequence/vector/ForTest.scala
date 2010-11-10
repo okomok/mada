@@ -12,18 +12,18 @@ import com.github.okomok.mada
 import mada.sequence._
 import mada.sequence.vector.from
 import junit.framework.Assert._
-import detail.Example._
+import detail.Sample._
 
 
 class ForTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
-        val v = vector.from(example1)
+        val v = vector.from(sample1)
         val w = for (e <- v) yield e
         assertEquals(v, w)
     }
 
     def testFilter: Unit = {
-        val v = vector.from(example1)
+        val v = vector.from(sample1)
         val w = for (e <- v; if (e < 999)) yield e
         assertFalse(w.isInstanceOf[Vector[_]])
         assertTrue(w.isInstanceOf[Iterative[_]])
@@ -31,7 +31,7 @@ class ForTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testForeach: Unit = {
-        val v = vector.from(example1)
+        val v = vector.from(sample1)
         val a = new java.util.ArrayList[Int]
         for (e <- v) a.add(e)
         assertEquals(vector.from(a), v)

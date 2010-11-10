@@ -12,12 +12,12 @@ import com.github.okomok.mada
 import junit.framework.Assert._
 
 
-object Example {
-    def example1 = Array(0,18,14,17,19, 8,13, 6, 4,23, 0,12,15,11, 4) // 15 elements
-    def example1Sorted = Array(0, 0, 4, 4, 6, 8,11,12,13,14,15,17,18,19,23)
-    def example1Reversed = Array(4,11,15,12, 0,23, 4, 6,13, 8,19,17,14,18, 0)
-    def example1ReversedSorted = Array(23,19,18,17,15,14,13,12,11, 8, 6, 4, 4, 0, 0)
-    def example2 = Array(0,18,14,17,19, 8,13, 6, 4,29, 0,12,15,11, 4) // 15 elements
+object Sample {
+    def sample1 = Array(0,18,14,17,19, 8,13, 6, 4,23, 0,12,15,11, 4) // 15 elements
+    def sample1Sorted = Array(0, 0, 4, 4, 6, 8,11,12,13,14,15,17,18,19,23)
+    def sample1Reversed = Array(4,11,15,12, 0,23, 4, 6,13, 8,19,17,14,18, 0)
+    def sample1ReversedSorted = Array(23,19,18,17,15,14,13,12,11, 8, 6, 4, 4, 0, 0)
+    def sample2 = Array(0,18,14,17,19, 8,13, 6, 4,29, 0,12,15,11, 4) // 15 elements
 
     def empty1 = new Array[Int](0)
 
@@ -39,13 +39,13 @@ object Example {
 }
 
 
-class ExampleTest extends org.scalatest.junit.JUnit3Suite {
+class SampleTest extends org.scalatest.junit.JUnit3Suite {
     def testEmpty1 {
-        assertEquals(0, Example.empty1.length)
+        assertEquals(0, Sample.empty1.length)
     }
 
     def testSingle {
-        val s = Example.single(99)
+        val s = Sample.single(99)
         assertEquals(1, s.length)
         assertEquals(99, s(0))
     }

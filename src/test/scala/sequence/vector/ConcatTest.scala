@@ -18,7 +18,7 @@ class ConcatTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val v1 = vector.from(Array(0,1,2))
         val v2 = vector.from(Array(3,4))
-        val v3 = vector.from(detail.Example.empty1)
+        val v3 = vector.from(detail.Sample.empty1)
         val v4 = vector.from(Array(5,6))
         val v5 = vector.from(Array(7,8,9,10))
         val vv = vector.concat(v1,v2,v3,v4,v5)
@@ -27,9 +27,9 @@ class ConcatTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testEmpty: Unit = {
-        val v1 = vector.from(detail.Example.empty1)
-        val v2 = vector.from(detail.Example.empty1)
-        val v3 = vector.from(detail.Example.empty1)
+        val v1 = vector.from(detail.Sample.empty1)
+        val v2 = vector.from(detail.Sample.empty1)
+        val v3 = vector.from(detail.Sample.empty1)
         val vv = vector.concat(v1,v2,v3)
         detail.TeztEmpty(vv)
     }

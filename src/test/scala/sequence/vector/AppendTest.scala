@@ -12,13 +12,13 @@ import com.github.okomok.mada
 import mada.sequence.{Vector, vector}
 import mada.sequence.vector.from
 import junit.framework.Assert._
-import com.github.okomok.madatest.sequencetest.vectortest.detail.Example._
+import com.github.okomok.madatest.sequencetest.vectortest.detail.Sample._
 
 
 class AppendTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial {
         val actual = from(Array(0,18,14,17)) ++ from(Array(19, 8,13, 6, 4,23, 0,12,15,11, 4))
-        detail.TeztVectorReadWrite(example1, actual)
+        detail.TeztVectorReadWrite(sample1, actual)
     }
 
     def testNontrivial {
@@ -26,7 +26,7 @@ class AppendTest extends org.scalatest.junit.JUnit3Suite {
             from(Array(19, 8,13, 6, 4)) ++ from(empty1) ++
             from(Array(23, 0,12,15)) ++ from(empty1) ++
             from(Array(11, 4)) ++ from(empty1) ++ from(empty1)
-        detail.TeztVectorReadWrite(example1, actual)
+        detail.TeztVectorReadWrite(sample1, actual)
     }
 
     def testEmpty {

@@ -11,7 +11,7 @@ import com.github.okomok.mada
 
 import mada.sequence.vector._
 import junit.framework.Assert._
-import detail.Example._
+import detail.Sample._
 
 
 class CycleTest extends org.scalatest.junit.JUnit3Suite {
@@ -27,7 +27,7 @@ class CycleTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testEmpty2 {
-        val actual = from(example1).times(0)
+        val actual = from(sample1).times(0)
         detail.TeztEmpty(actual)
     }
 

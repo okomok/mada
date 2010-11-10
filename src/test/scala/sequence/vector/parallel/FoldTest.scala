@@ -12,13 +12,13 @@ import com.github.okomok.mada
 import mada.sequence.vector._
 
 import junit.framework.Assert._
-import com.github.okomok.madatest.sequencetest.vectortest.detail.Example._
+import com.github.okomok.madatest.sequencetest.vectortest.detail.Sample._
 import com.github.okomok.madatest.sequencetest.vectortest.detail._
 
 
 class FoldTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
-        val v = mada.sequence.vector.from(example1)
+        val v = mada.sequence.vector.from(sample1)
         assertEquals(v.foldLeft(3)(_ + _), v.parallel.fold(3)(_ + _))
         assertEquals(v.foldLeft(3)(_ + _), v.parallelBy(6).fold(3)(_ + _))
         assertEquals(v.foldLeft(3)(_ + _), v.parallelBy(1000).fold(3)(_ + _))

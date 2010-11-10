@@ -13,7 +13,7 @@ import mada.sequence.vector._
 import mada.sequence.{Vector, vector}
 
 import junit.framework.Assert._
-import com.github.okomok.madatest.sequencetest.vectortest.detail.Example._
+import com.github.okomok.madatest.sequencetest.vectortest.detail.Sample._
 
 
 class FolderTest extends org.scalatest.junit.JUnit3Suite {
