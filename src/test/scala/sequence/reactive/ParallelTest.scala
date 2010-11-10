@@ -42,7 +42,7 @@ class ParallelTest extends org.scalatest.junit.JUnit3Suite {
         var _break = false
         while (!_break) {
             try {
-                mada.util.Execute {
+                mada.util.Parallel {
                     Thread.sleep(7)
                 }
             } catch {

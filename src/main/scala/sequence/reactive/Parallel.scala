@@ -16,14 +16,14 @@ case class Parallel() extends Resource[Unit] {
         val THRESHOLD = 16
         while (!isClosed) {
             try {
-                util.Execute {
+                util.Parallel {
                     while (!isClosed) {
                         f()
                     }
                 }
                 return
             } catch {
-                case _: java.util.concurrent.RejectedExecutionException => {
+                case _: util.RejectedParallelException => {
                     var i = 0
                     while (!isClosed && i < THRESHOLD) {
                         f()
