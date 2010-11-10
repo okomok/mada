@@ -23,9 +23,14 @@ class Common {
     val empty: Reactive[Nothing] = Empty()
 
     /**
-     * The infinite sequence
+     * An infinite sequence
      */
     def infinite: Reactive[Unit] = Infinite()
+
+    /**
+     * A (possibly) parallel infinite sequence
+     */
+    def parallel: Reactive[Unit] = Parallel()
 
     /**
      * Turns into a by-name expression.

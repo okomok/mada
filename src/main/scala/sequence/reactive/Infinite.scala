@@ -12,7 +12,7 @@ private
 case class Infinite() extends Resource[Unit] {
     @volatile private[this] var isClosed = false
     override protected def closeResource = isClosed = true
-    override protected def openResource(f: Unit => Unit) = {
+    override protected def openResource(f: Unit => Unit) {
         while (!isClosed) {
             f()
         }
