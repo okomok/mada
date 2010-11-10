@@ -510,7 +510,7 @@ trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
     /**
      * Specifies the default grain size.
      */
-    def defaultGrainSize: Int = java.lang.Math.max(1, size / util.Parallel.poolSize)
+    def defaultGrainSize: Int = java.lang.Math.max(1, size / util.Execute.poolSize)
 
     @equivalentTo("mix(Mixin.parallel)")
     final def parallelize: Vector[A] = mix(Mixin.parallel)

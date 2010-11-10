@@ -8,10 +8,14 @@ package com.github.okomok.mada
 package util
 
 
+/**
+ * Runs (possibly) in the thread-pool.
+ * If the thread-pool is full, _1 runs in the result-retrieving-site.
+ */
 case class Future[+R](_1: Function0[R]) extends Function0[R] {
     private[this] val f = {
         try {
-            Parallel(_1)
+            Execute(_1)
         } catch {
             case _: java.util.concurrent.RejectedExecutionException => ByLazy(_1)
         }

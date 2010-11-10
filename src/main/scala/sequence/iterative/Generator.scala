@@ -10,7 +10,7 @@ package sequence; package iterative
 
 import java.lang.InterruptedException
 import java.util.ArrayDeque
-import java.util.concurrent.Exchanger
+import java.util.concurrent
 
 
 trait Yield[-A] extends (A => Unit) {
@@ -22,9 +22,17 @@ private
 case class Generator[+A](_1: Yield[A] => Unit) extends Iterative[A] {
     override def begin = new _Iterator[A] {
         private[this] var in = new _Generator.Data[A]
-        private[this] val x = new Exchanger[_Generator.Data[A]]
+        private[this] val x = new concurrent.Exchanger[_Generator.Data[A]]
 
-        util.Parallel{new _Generator.Task(_1, x).run}
+        locally {
+            val t = new _Generator.Task(_1, x)
+            try {
+                util.Execute{t.run}
+            } catch {
+                case _: concurrent.RejectedExecutionException => new Thread(t).start
+            }
+        }
+
         doExchange
         forwardExn
 
@@ -58,7 +66,7 @@ object _Generator {
 
     val CAPACITY = 20
 
-    class Task[A](op: Yield[A] => Unit, x: Exchanger[Data[A]]) {
+    class Task[A](op: Yield[A] => Unit, x: concurrent.Exchanger[Data[A]]) extends Runnable {
         private[this] var out = new Data[A]
 
         private[this] val y = new Yield[A] {
@@ -75,7 +83,7 @@ object _Generator {
             }
         }
 
-        def run {
+        override def run {
             try {
                 op(y)
             } catch {

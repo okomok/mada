@@ -8,6 +8,9 @@ package com.github.okomok.mada
 package util
 
 
+/**
+ * Runs in the event-dispatch-thread.
+ */
 case class ByEdt[R](_1: Function0[R]) extends Function0[R] {
     val c = new java.util.concurrent.CountDownLatch(1)
     var r: Either[R, Throwable] = null
