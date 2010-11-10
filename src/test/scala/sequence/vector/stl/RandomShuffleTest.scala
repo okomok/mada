@@ -27,4 +27,10 @@ class RandomShuffleTest extends org.scalatest.junit.JUnit3Suite {
         mada.sequence.vector.stl.sort(v, 0, v.size)
         TeztVectorReadOnly(example1Sorted, v)
     }
+
+    def testMethod {
+        val v = from(example1)
+        v.shuffle.sort
+        TeztVectorReadOnly(example1Sorted, v)
+    }
 }

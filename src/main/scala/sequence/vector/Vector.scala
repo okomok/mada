@@ -53,7 +53,7 @@ trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
      * @return  the element at the specified position in this vector.
      * @throws  vector.NotReadableException if not overridden.
      */
-    @pre("this vector is readable.")
+    @pre("readable")
     @pre("`isDefinedAt(i)`")
     override def apply(i: Int): A = throw NotReadableException(this)
 
@@ -65,7 +65,7 @@ trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
      * @param   e   element to be stored at the specified position.
      * @throws  vector.NotWritableException if not overridden.
      */
-    @pre("this vector is writable.")
+    @pre("writable")
     @pre("`isDefinedAt(i)`")
     def update(i: Int, e: A @uncheckedVariance): Unit = throw NotWritableException(this)
 
@@ -407,14 +407,28 @@ trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
 // sort
 
     /**
-     * Sort this vector. Note this vector is mutated.
+     * Sort this vector.
      */
+    @pre("writable")
     def sort[B >: A](implicit c: Ordering[B]): Vector[A] = { stl.Sort(this, start, end, c); this }
 
     /**
-     * Stable sort this vector. Note this vector is mutated.
+     * Stable-sort this vector.
      */
+    @pre("writable")
     def stableSort[B >: A](implicit c: Ordering[B]): Vector[A] = { stl.StableSort(this, start, end, c); this }
+
+    /**
+     * Randomly shuffles elements.
+     */
+    @pre("writable")
+    def shuffle: Vector[A] = { stl.RandomShuffle(this, start, end); this }
+
+    /**
+     * Randomly shuffles elements by a random number generator.
+     */
+    @pre("writable")
+    def shuffleBy(g: Int => Int): Vector[A] = { stl.RandomShuffle(this, start, end, g); this }
 
 
 // permutation
