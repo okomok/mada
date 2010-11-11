@@ -26,11 +26,11 @@ class AccessTest extends org.scalatest.junit.JUnit3Suite {
 
     def testHeadLastOption: Unit = {
         val A1 = vector.Of(1,6,7,10,14,17)
-        assertEquals(1, A1.headOption.get)
-        assertEquals(17, A1.lastOption.get)
+        assertEquals(1, mada.util.optional(A1.head).get)
+        assertEquals(17, mada.util.optional(A1.last).get)
 
         val A2 = vector.empty.of[Int]
-        assertEquals(None, A2.headOption)
-        assertEquals(None, A2.lastOption)
+        assertEquals(None, mada.util.optional(A2.head))
+        assertEquals(None, mada.util.optional(A2.last))
     }
 }

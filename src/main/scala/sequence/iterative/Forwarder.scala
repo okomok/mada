@@ -39,10 +39,8 @@ trait Forwarder[+A] extends Iterative[A] with Sequence.Forwarder[A] {
     override def scanLeft[B](z: B)(op: (B, A) => B): Iterative[B] = around(delegate.scanLeft(z)(op))
     override def scanLeft1[B >: A](op: (B, A) => B): Iterative[B] = around(delegate.scanLeft1(op))
     override def head: A = delegate.head
-    override def headOption: Option[A] = delegate.headOption
     override def tail: Iterative[A] = around(delegate.tail)
     override def last: A = delegate.last
-    override def lastOption: Option[A] = delegate.lastOption
     override def take(n: Int): Iterative[A] = around(delegate.take(n))
     override def drop(n: Int): Iterative[A] = around(delegate.drop(n))
     override def slice(from: Int, until: Int): Iterative[A] = around(delegate.slice(from, until))

@@ -339,14 +339,6 @@ sealed abstract class List[+A] extends iterative.Sequence[A] {
     }
 
     /**
-     * Optionally returns the first element.
-     */
-    def headOption: Option[A] = this match {
-        case x :: _ => Some(x)
-        case Nil => None
-    }
-
-    /**
      * Removes the last element.
      */
     def init: List[A] = this match {
@@ -363,16 +355,6 @@ sealed abstract class List[+A] extends iterative.Sequence[A] {
         case x #:: Nil => x
         case _ :: xs => xs().last
         case Nil => throw new UnsupportedOperationException("last on empty list")
-    }
-
-    /**
-     * Optionally returns the last element.
-     */
-    @tailrec
-    final def lastOption: Option[A] = this match {
-        case x #:: Nil => Some(x)
-        case _ :: xs => xs().lastOption
-        case Nil => None
     }
 
     /**

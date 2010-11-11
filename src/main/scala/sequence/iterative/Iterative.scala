@@ -211,22 +211,11 @@ trait Iterative[+A] extends Sequence[A] {
      * Returns the first element.
      */
     def head: A = {
-        val e = headOption
-        if (e.isEmpty){
-            throw new NoSuchElementException("head on empty sequence")
-        }
-        e.get
-    }
-
-    /**
-     * Optionally returns the first element.
-     */
-    def headOption: Option[A] = {
         val it = begin
         if (!it) {
-            None
+            throw new NoSuchElementException("head on empty sequence")
         } else {
-            Some(~it)
+            ~it
         }
     }
 
@@ -239,24 +228,13 @@ trait Iterative[+A] extends Sequence[A] {
      * Returns the last element.
      */
     def last: A = {
-        val e = lastOption
-        if (e.isEmpty) {
-            throw new NoSuchElementException("last on empty sequence")
-        }
-        e.get
-    }
-
-    /**
-     * Optionally returns the last element.
-     */
-    def lastOption: Option[A] = {
         var e = util.NoneOf[A]
         val it = begin
         while (it) {
             e = Some(~it)
             it.++
         }
-        e
+        e.getOrElse{throw new NoSuchElementException("last on empty sequence")}
     }
 
     /**

@@ -35,10 +35,8 @@ trait Forwarder[+A] extends TransformAdapter[A] with Sequence.Forwarder[A] {
     override def foldLeft[B](z: B)(op: (B, A) => B): B = delegate.foldLeft(z)(op)
     override def reduceLeft[B >: A](op: (B, A) => B): B = delegate.reduceLeft(op)
     override def head: A = delegate.head
-    override def headOption: Option[A] = delegate.headOption
     override def tail: Vector[A] = around(delegate.tail)
     override def last: A = delegate.last
-    override def lastOption: Option[A] = delegate.lastOption
     override def take(n: Int): Vector[A] = around(delegate.take(n))
     override def drop(n: Int): Vector[A] = around(delegate.drop(n))
     override def slice(n: Int, m: Int): Vector[A] = around(delegate.slice(n, m))
