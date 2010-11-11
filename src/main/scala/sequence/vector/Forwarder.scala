@@ -105,8 +105,8 @@ trait Forwarder[+A] extends TransformAdapter[A] with Sequence.Forwarder[A] {
 // associative folding
     override def fold[B >: A](z: B)(op: (B, B) => B): B = delegate.fold(z)(op)
     override def reduce[B >: A](op: (B, B) => B): B = delegate.reduce(op)
-    override def folder[B >: A](z: B)(op: (B, B) => B): Vector[B] = around(delegate.folder(z)(op))
-    override def reducer[B >: A](op: (B, B) => B): Vector[B] = around(delegate.reducer(op))
+    override def scan[B >: A](z: B)(op: (B, B) => B): Vector[B] = around(delegate.scan(z)(op))
+    override def scan1[B >: A](op: (B, B) => B): Vector[B] = around(delegate.scan1(op))
 // conversion
     override def toArray[B >: A : ClassManifest]: Array[B] = delegate.toArray
     override def toProduct: Product = delegate.toProduct

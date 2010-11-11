@@ -9,11 +9,11 @@ package sequence; package iterative
 
 
 private
-case class FolderLeft[A, B](_1: Iterative[A], _2: B, _3: (B, A) => B) extends Forwarder[B] {
-    override protected val delegate = single(_2) ++ new _FolderLeft(_1, _2, _3)
+case class ScanLeft[A, B](_1: Iterative[A], _2: B, _3: (B, A) => B) extends Forwarder[B] {
+    override protected val delegate = single(_2) ++ new _ScanLeft(_1, _2, _3)
 }
 
-private class _FolderLeft[A, B](_1: Iterative[A], _2: B, _3: (B, A) => B) extends Iterative[B] {
+private class _ScanLeft[A, B](_1: Iterative[A], _2: B, _3: (B, A) => B) extends Iterative[B] {
     override def begin = new Iterator[B] {
         private[this] val it = _1.begin
         private[this] var z = _2
@@ -29,12 +29,12 @@ private class _FolderLeft[A, B](_1: Iterative[A], _2: B, _3: (B, A) => B) extend
 
 
 private
-case class ReducerLeft[A, B >: A](_1: Iterative[A], _2: (B, A) => B) extends Iterative[B] {
+case class ScanLeft1[A, B >: A](_1: Iterative[A], _2: (B, A) => B) extends Iterative[B] {
     override def begin = {
-        Precondition.notEmpty(_1, "reducerLeft")
+        Precondition.notEmpty(_1, "scanLeft1")
         val it = _1.begin // needs a fresh iterator every time.
         val e = ~it
         it.++
-        bind(it).folderLeft[B](e)(_2).begin
+        bind(it).scanLeft[B](e)(_2).begin
     }
 }

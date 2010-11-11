@@ -536,16 +536,16 @@ trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
     def reduce[B >: A](op: (B, B) => B): B = reduceLeft(op)
 
     /**
-     * @return  <code>asIterative.folderLeft(z)(op).toVector</code>.
+     * @return  <code>asIterative.scanLeft(z)(op).toVector</code>.
      */
     @pre("`op` is associative.")
-    def folder[B >: A](z: B)(op: (B, B) => B): Vector[B] = Folder(this, z, op)
+    def scan[B >: A](z: B)(op: (B, B) => B): Vector[B] = Scan(this, z, op)
 
     /**
-     * @return  <code>asIterative.reducerLeft(op).toVector</code>.
+     * @return  <code>asIterative.scanLeft1(op).toVector</code>.
      */
     @pre("`op` is associative.")
-    def reducer[B >: A](op: (B, B) => B): Vector[B] = Reducer(this, op)
+    def scan1[B >: A](op: (B, B) => B): Vector[B] = Scan1(this, op)
 
 
 // conversion

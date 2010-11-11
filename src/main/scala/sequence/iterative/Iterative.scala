@@ -200,12 +200,12 @@ trait Iterative[+A] extends Sequence[A] {
     /**
      * Prefix sum folding left-associative.
      */
-    def folderLeft[B](z: B)(op: (B, A) => B): Iterative[B] = FolderLeft(this, z, op)
+    def scanLeft[B](z: B)(op: (B, A) => B): Iterative[B] = ScanLeft(this, z, op)
 
     /**
      * Prefix sum reducing left-associative.
      */
-    def reducerLeft[B >: A](op: (B, A) => B): Iterative[B] = ReducerLeft(this, op)
+    def scanLeft1[B >: A](op: (B, A) => B): Iterative[B] = ScanLeft1(this, op)
 
     /**
      * Returns the first element.

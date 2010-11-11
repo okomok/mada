@@ -27,22 +27,22 @@ object ParallelReduce {
 
 
 private
-case class ParallelFolder[A](_1: Vector[A], _2: A, _3: (A, A) => A, _4: Int) extends Forwarder[A] {
+case class ParallelScan[A](_1: Vector[A], _2: A, _3: (A, A) => A, _4: Int) extends Forwarder[A] {
     assert(!IsParallel(_1))
-    override protected val delegate = (single(_2) ++ _1).parallelBy(_4).reducer(_3)
+    override protected val delegate = (single(_2) ++ _1).parallelBy(_4).scan1(_3)
 }
 
 private
-case class ParallelReducer[A](_1: Vector[A], _2: (A, A) => A, _3: Int) extends Forwarder[A] {
+case class ParallelScan1[A](_1: Vector[A], _2: (A, A) => A, _3: Int) extends Forwarder[A] {
     assert(!IsParallel(_1))
-    Precondition.notEmpty(_1, "paralell.reducer")
+    Precondition.notEmpty(_1, "paralell.scan1")
 
     override protected val delegate = {
-        val rss = _1.divide(_3).parallelBy(1).map(_.reducer(_2))
+        val rss = _1.divide(_3).parallelBy(1).map(_.scan1(_2))
         if (rss.size == 1) {
             rss.head
         } else {
-            val ls = rss.init.map{ w => w.last }.reducer(_2)
+            val ls = rss.init.map{ w => w.last }.scan1(_2)
             rss.head ++ (ls zip rss.tail).parallelBy(1).map{ case (l, rs) => rs.map{ r => _2(l, r) } }.undivide
         }
     }

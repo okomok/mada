@@ -36,8 +36,8 @@ trait Forwarder[+A] extends Iterative[A] with Sequence.Forwarder[A] {
     override def find(p: A => Boolean): Option[A] = delegate.find(p)
     override def foldLeft[B](z: B)(op: (B, A) => B): B = delegate.foldLeft(z)(op)
     override def reduceLeft[B >: A](op: (B, A) => B): B = delegate.reduceLeft(op)
-    override def folderLeft[B](z: B)(op: (B, A) => B): Iterative[B] = around(delegate.folderLeft(z)(op))
-    override def reducerLeft[B >: A](op: (B, A) => B): Iterative[B] = around(delegate.reducerLeft(op))
+    override def scanLeft[B](z: B)(op: (B, A) => B): Iterative[B] = around(delegate.scanLeft(z)(op))
+    override def scanLeft1[B >: A](op: (B, A) => B): Iterative[B] = around(delegate.scanLeft1(op))
     override def head: A = delegate.head
     override def headOption: Option[A] = delegate.headOption
     override def tail: Iterative[A] = around(delegate.tail)

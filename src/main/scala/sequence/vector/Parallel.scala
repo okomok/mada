@@ -40,8 +40,8 @@ case class Parallel[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
 // associative folding
     override def fold[B >: A](z: B)(op: (B, B) => B): B = ParallelFold(delegate, z, op, grainSize)
     override def reduce[B >: A](op: (B, B) => B): B = ParallelReduce(delegate, op, grainSize)
-    override def folder[B >: A](z: B)(op: (B, B) => B): Vector[B] = ParallelFolder(delegate, z, op, grainSize)
-    override def reducer[B >: A](op: (B, B) => B): Vector[B] = ParallelReducer(delegate, op, grainSize)
+    override def scan[B >: A](z: B)(op: (B, B) => B): Vector[B] = ParallelScan(delegate, z, op, grainSize)
+    override def scan1[B >: A](op: (B, B) => B): Vector[B] = ParallelScan1(delegate, op, grainSize)
 // conversion
     override def toArray[B >: A : ClassManifest]: Array[B] = {
         val r = new Array[B](size)

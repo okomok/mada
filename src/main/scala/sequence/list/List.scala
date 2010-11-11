@@ -300,20 +300,20 @@ sealed abstract class List[+A] extends iterative.Sequence[A] {
     /**
      * Prefix sum folding left-associative. (a.k.a. scanl)
      */
-    def folderLeft[B](q: => B)(f: (B, A) => B): List[B] = {
+    def scanLeft[B](q: => B)(f: (B, A) => B): List[B] = {
         q :: (this match {
             case Nil => Nil
-            case x :: xs => xs().folderLeft(f(q, x))(f)
+            case x :: xs => xs().scanLeft(f(q, x))(f)
         })
     }
 
     /**
      * Prefix sum folding right-associative. (a.k.a. scanr)
      */
-    def folderRight[B](q0: B)(f: (A, eval.ByLazy[B]) => B): List[B] = this match {
+    def scanRight[B](q0: B)(f: (A, eval.ByLazy[B]) => B): List[B] = this match {
         case Nil => q0 :: Nil
         case x :: xs => {
-            lazy val qs = xs().folderRight(q0)(f)
+            lazy val qs = xs().scanRight(q0)(f)
             f(x, qs.head) :: qs
         }
     }
@@ -321,19 +321,19 @@ sealed abstract class List[+A] extends iterative.Sequence[A] {
     /**
      * Prefix sum reducing left-associative. (a.k.a. scanl1)
      */
-    def reducerLeft[B >: A](f: (B, A) => B): List[B] = this match {
-        case x :: xs => xs().folderLeft[B](x)(f)
+    def scanLeft1[B >: A](f: (B, A) => B): List[B] = this match {
+        case x :: xs => xs().scanLeft[B](x)(f)
         case Nil => Nil
     }
 
     /**
      * Reduces right-associative. (a.k.a. scanr1)
      */
-    def reducerRight[B >: A](f: (A, eval.ByLazy[B]) => B): List[B] = this match {
+    def scanRight1[B >: A](f: (A, eval.ByLazy[B]) => B): List[B] = this match {
         case Nil => Nil
         case x #:: Nil => this
         case x :: xs => {
-            lazy val qs = xs().reducerRight(f)
+            lazy val qs = xs().scanRight1(f)
             f(x, qs.head) :: qs
         }
     }
