@@ -18,5 +18,5 @@ case class Future[+R](_1: Function0[R]) extends Function0[R] {
 }
 
 object Future {
-    def apply[R](body: => R, o: AsFunction = ()): Future[R] = new Future(() => body)
+    def apply[R](body: => R, o: util.Overload = ()): Future[R] = new Future(() => body)
 }

@@ -24,9 +24,7 @@ case class Generator[+A](_1: Yield[A] => Unit) extends Iterative[A] {
         private[this] var in = new _Generator.Data[A]
         private[this] val x = new concurrent.Exchanger[_Generator.Data[A]]
 
-        eval.Async {
-            new _Generator.Task(_1, x).run
-        }
+        eval.Async(new _Generator.Task(_1, x))
         doExchange
         forwardExn
 
@@ -60,7 +58,7 @@ object _Generator {
 
     val CAPACITY = 20
 
-    class Task[A](op: Yield[A] => Unit, x: concurrent.Exchanger[Data[A]]) {
+    class Task[A](op: Yield[A] => Unit, x: concurrent.Exchanger[Data[A]]) extends Function0[Unit] {
         private[this] var out = new Data[A]
 
         private[this] val y = new Yield[A] {
@@ -77,7 +75,7 @@ object _Generator {
             }
         }
 
-        def run {
+        override def apply {
             try {
                 op(y)
             } catch {

@@ -9,8 +9,7 @@ package com.github.okomok.mada
 
 package object eval {
 
-    @aliasOf("util.Overload")
+    @aliasOf("()")
      val asFunction = ()
-    type AsFunction = util.Overload
 
 }

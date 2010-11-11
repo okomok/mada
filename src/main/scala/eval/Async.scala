@@ -18,5 +18,5 @@ case class Async[+R](_1: Function0[R]) extends Function0[R] {
 }
 
 object Async {
-    def apply[R](body: => R, o: AsFunction = ()): Async[R] = new Async(() => body)
+    def apply[R](body: => R, o: util.Overload = ()): Async[R] = new Async(() => body)
 }
