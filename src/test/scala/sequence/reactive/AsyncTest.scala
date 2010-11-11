@@ -61,4 +61,10 @@ class AsyncTest extends org.scalatest.junit.JUnit3Suite {
         expect(vector.range(0, 100))(vector.from(b))
     }
 
+    def testReallyLazyVal {
+        def anError = reactive.async.generate(reactive.LazyVal{throw new Error; 999})
+        anError take 100
+        ()
+    }
+
 }

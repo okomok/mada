@@ -16,6 +16,9 @@ trait Sequence[+A] extends reactive.Sequence[A] with Equals { // physical
     @conversion
     def asIterative: Iterative[A] // logical
 
+    @conversion
+    final def toIterative: Iterative[A] = asIterative // logical override
+
     override def asReactive: Reactive[A] = AsReactive(asIterative) // logical super
 
     @pre("Both sequences are finite if result is `true`.")

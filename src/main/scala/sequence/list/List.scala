@@ -82,7 +82,6 @@ sealed abstract class List[+A] extends iterative.Sequence[A] {
     @returnThis
     final def of[B >: A]: List[B] = this
 
-
     override def asIterative: Iterative[A] = AsIterative(this) // logical super
 
     @optimize

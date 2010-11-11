@@ -128,7 +128,7 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
 
 // conversion
 
-    @conversion @visibleForTesting
+    @conversion @pre("synchronous")
     def toIterative: Iterative[A] = ToIterative(this)
 
     @conversion

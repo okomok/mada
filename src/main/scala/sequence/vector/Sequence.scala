@@ -16,6 +16,9 @@ trait Sequence[+A] extends iterative.Sequence[A] { // physical
     @conversion
     def asVector: Vector[A] // logical
 
+    @conversion
+    final def toVector: Vector[A] = asVector // logical override
+
     override def asIterative: Iterative[A] = AsIterative(asVector) // logical super
 
     @optimize
