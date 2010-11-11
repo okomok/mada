@@ -20,7 +20,7 @@ case class Parallel[+R](_1: Function0[R], _2: Strategy) extends Function0[R] {
         try {
             new Parallel.Execute(_1)
         } catch {
-            case _: concurrent.RejectedExecutionException => _2.install(_1)
+            case _: concurrent.RejectedExecutionException => _2(_1)
         }
     }
     override def apply = f()

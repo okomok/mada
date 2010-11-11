@@ -9,5 +9,5 @@ package eval
 
 
 trait Strategy {
-    def install[R](to: Function0[R]): Function0[R]
+    def apply[R](f: Function0[R]): Function0[R]
 }
