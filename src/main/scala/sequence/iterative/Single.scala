@@ -21,3 +21,9 @@ case class Single[+A](_1: A) extends Iterative[A] {
     override def cycle = repeat(_1) // cycle-single fusion
     override def times(n: Int) = repeat(_1).take(n) // times-single fusion
 }
+
+
+private
+case class LazySingle[+A](_1: eval.ByLazy[A]) extends Forwarder[A] {
+    override protected val delegate = byLazy(single(_1()))
+}

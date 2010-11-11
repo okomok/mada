@@ -34,6 +34,11 @@ class Common {
     def single[A](e: A): Iterative[A] = Single(e)
 
     /**
+     * A sequence with a single element.
+     */
+    def lazySingle[A](e: => A): Iterative[A] = LazySingle(e)
+
+    /**
      * Refers a sequence by lazy.
      */
     def byLazy[A](it: => Iterative[A]): Iterative[A] = ByLazy(it)

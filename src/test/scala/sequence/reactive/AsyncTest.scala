@@ -62,7 +62,7 @@ class AsyncTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testReallyLazyVal {
-        def anError = reactive.async.generate(reactive.LazyVal{throw new Error; 999})
+        def anError = reactive.async.generate(iterative.lazySingle{throw new Error; 999})
         anError take 100
         ()
     }
