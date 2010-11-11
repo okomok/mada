@@ -17,6 +17,6 @@ case class Async[+R](_1: Function0[R]) extends Function0[R] {
     override def apply = f()
 }
 
-object Async {
-    def apply[R](body: => R, o: util.Overload = ()): Async[R] = new Async(() => body)
+object Async extends Strategy {
+    override def apply[R](body: => R, o: util.Overload = ()) = new Async(() => body)
 }

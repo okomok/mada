@@ -17,5 +17,5 @@ case class ByThread[R](_1: Function0[R]) extends Function0[R] {
 }
 
 object ByThread extends Strategy {
-    def apply[R](body: => R, o: util.Overload = ()): ByThread[R] = new ByThread(() => body)
+    override def apply[R](body: => R, o: util.Overload = ()) = new ByThread(() => body)
 }

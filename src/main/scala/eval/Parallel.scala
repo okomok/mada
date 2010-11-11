@@ -28,10 +28,12 @@ case class Parallel[+R](_1: Function0[R], _2: Strategy) extends Function0[R] {
 
 
 object Parallel {
-    import concurrent._
+    def or(s: Strategy): Strategy = new Strategy {
+        override def apply[R](f: Function0[R]) = new Parallel(f, s)
+        override def apply[R](body: => R, o: util.Overload) = new Parallel(() => body, s)
+    }
 
-    def apply[R](body: => R): Parallel[R] = new Parallel(() => body, ByReject)
-    def apply[R](body: => R, stg: Strategy, o: util.Overload = ()): Parallel[R] = new Parallel(() => body, stg)
+    import concurrent._
 
     val poolSize: Int = 2 * java.lang.Runtime.getRuntime.availableProcessors
     private val minPoolSize: Int = java.lang.Math.min(4, poolSize)

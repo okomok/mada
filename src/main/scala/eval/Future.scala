@@ -17,6 +17,6 @@ case class Future[+R](_1: Function0[R]) extends Function0[R] {
     override def apply = f()
 }
 
-object Future {
-    def apply[R](body: => R, o: util.Overload = ()): Future[R] = new Future(() => body)
+object Future extends Strategy {
+    override def apply[R](body: => R, o: util.Overload = ()) = new Future(() => body)
 }

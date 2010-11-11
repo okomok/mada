@@ -15,7 +15,7 @@ import mada.sequence._
 class AsyncTest extends org.scalatest.junit.JUnit3Suite {
 
     def naturals: Reactive[Int] = {
-        reactive.async.generate(0 until 1000)
+        reactive.origin(mada.eval.Async).generate(0 until 1000)
     }
 
     def testTrivial {
@@ -41,7 +41,7 @@ class AsyncTest extends org.scalatest.junit.JUnit3Suite {
         var _break = false
         while (!_break) {
             try {
-                mada.eval.Parallel {
+                mada.eval.Parallel.or(mada.eval.ByReject) {
                     Thread.sleep(7)
                 }
             } catch {
@@ -62,7 +62,7 @@ class AsyncTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testReallyLazyVal {
-        def anError = reactive.async.generate(iterative.lazySingle{throw new Error; 999})
+        def anError = reactive.origin(mada.eval.Async).generate(iterative.lazySingle{throw new Error; 999})
         anError take 100
         ()
     }

@@ -17,6 +17,6 @@ case class ByLazy[+R](_1: Function0[R]) extends Function0[R] {
 }
 
 object ByLazy extends Strategy {
-    def apply[R](body: => R, o: util.Overload = ()): ByLazy[R] = new ByLazy(() => body)
+    override def apply[R](body: => R, o: util.Overload = ()) = new ByLazy(() => body)
     implicit def _fromExpr[R](from: => R): ByLazy[R] = apply(from)
 }

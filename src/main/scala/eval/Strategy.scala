@@ -10,4 +10,5 @@ package eval
 
 trait Strategy {
     def apply[R](f: Function0[R]): Function0[R]
+    def apply[R](body: => R, o: util.Overload = ()): Function0[R]
 }

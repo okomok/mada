@@ -25,12 +25,7 @@ class Common {
     /**
      * An infinite sequence
      */
-    def infinite: Reactive[Unit] = Infinite()
-
-    /**
-     * An asynchronous infinite sequence
-     */
-    def async: Reactive[Unit] = Async()
+    def origin(s: eval.Strategy): Reactive[Unit] = Origin(s)
 
     /**
      * Turns into a by-name expression.
@@ -54,7 +49,7 @@ class Common {
         def apply[A](from: A*): Reactive[A] = from
     }
 
-    @aliasOf("scala.util.continuations.reset[A, Any]")
-    def block[A](ctx: => (A @continuations.cpsParam[A, Any])): Unit = continuations.reset(ctx)
+    @equivalentTo("scala.util.continuations.reset[A, Any]")
+    def block[A](ctx: => A @continuations.cpsParam[A, Any]): Unit = continuations.reset(ctx)
 
 }

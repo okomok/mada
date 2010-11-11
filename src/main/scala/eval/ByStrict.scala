@@ -17,5 +17,5 @@ case class ByStrict[+R](_1: Function0[R]) extends Function0[R] {
 }
 
 object ByStrict extends Strategy {
-    def apply[R](body: => R, o: util.Overload = ()): ByStrict[R] = new ByStrict(() => body)
+    override def apply[R](body: => R, o: util.Overload = ()) = new ByStrict(() => body)
 }

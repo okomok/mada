@@ -17,5 +17,5 @@ case class ByEdt[R](_1: Function0[R]) extends Function0[R] {
 }
 
 object ByEdt extends Strategy {
-    def apply[R](body: => R, o: util.Overload = ()): ByEdt[R] = new ByEdt(() => body)
+    override def apply[R](body: => R, o: util.Overload = ()) = new ByEdt(() => body)
 }

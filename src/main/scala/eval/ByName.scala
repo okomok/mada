@@ -24,7 +24,7 @@ case class ByName[+R](_1: Function0[R]) extends Function0[R] {
 }
 
 object ByName extends Strategy {
-    def apply[R](body: => R, o: util.Overload = ()): ByName[R] = new ByName(() => body)
+    override def apply[R](body: => R, o: util.Overload = ()) = new ByName(() => body)
     implicit def _fromExpr[R](from: => R): ByName[R] = apply(from)
     implicit def _toRunnable[R](from: ByName[R]): Runnable = from.toRunnable
     implicit def _toCallable[R](from: ByName[R]): Callable[R] = from.toCallable
