@@ -9,6 +9,6 @@ package sequence; package iterative
 
 
 private
-case class ByName[+A](_1: util.ByName[Iterative[A]]) extends Forwarder[A] {
+case class ByName[+A](_1: eval.ByName[Iterative[A]]) extends Forwarder[A] {
     override protected def delegate = _1()
 }

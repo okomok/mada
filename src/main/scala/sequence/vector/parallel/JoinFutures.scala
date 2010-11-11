@@ -10,5 +10,5 @@ package sequence; package vector
 
 private
 object JoinFutures {
-    def apply(fs: Vector[util.Future[Unit]]) = fs.foreach(f => f())
+    def apply(fs: Vector[eval.Future[Unit]]) = fs.foreach(f => f())
 }

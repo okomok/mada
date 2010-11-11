@@ -9,7 +9,7 @@ package sequence; package vector
 
 
 import java.util.ArrayList
-import util.Future
+import eval.Future
 import stl.IntroSort.depthLimit
 import stl.{UnguardedPartition, Median}
 

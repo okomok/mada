@@ -19,7 +19,7 @@ class Infinite[A] extends Iterative[A] {
      * Assigns <code>that</code>.
      */
     def :=(that: => Iterative[A]) {
-        f = util.ByLazy(that.memoize)
+        f = eval.ByLazy(that.memoize)
     }
 
     // init-memoize guarantees number of iterators never be exponential growth.

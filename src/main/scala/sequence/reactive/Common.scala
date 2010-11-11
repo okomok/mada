@@ -28,9 +28,9 @@ class Common {
     def infinite: Reactive[Unit] = Infinite()
 
     /**
-     * A (possibly) parallel infinite sequence
+     * An asynchronous infinite sequence
      */
-    def parallel: Reactive[Unit] = Parallel()
+    def async: Reactive[Unit] = Async()
 
     /**
      * Turns into a by-name expression.

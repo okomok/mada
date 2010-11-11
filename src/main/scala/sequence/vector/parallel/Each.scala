@@ -9,7 +9,7 @@ package sequence; package vector
 
 
 // import java.util.concurrent
-import util.Future
+import eval.Future
 
 
 private
@@ -26,12 +26,12 @@ object ParallelEach {
             val xss = _1.divide(_3)
             val c = new concurrent.CountDownLatch(xss.size)
             xss.foreach { xs =>
-                util.Parallel(
+                eval.Parallel(
                     try {
                         xs.foreach(_2)
                     } finally {
                         c.countDown
-                    }, util.ByStrict)
+                    }, eval.ByStrict)
             }
             c.await
 */

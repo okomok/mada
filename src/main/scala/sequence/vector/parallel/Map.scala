@@ -8,7 +8,7 @@ package com.github.okomok.mada
 package sequence; package vector
 
 
-import util.Future
+import eval.Future
 
 
 // Note that parallel.map is projection, that is, non-blocking.

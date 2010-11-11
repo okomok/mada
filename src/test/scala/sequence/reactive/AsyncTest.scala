@@ -12,11 +12,10 @@ import com.github.okomok.mada
 import mada.sequence._
 
 
-class ParallelTest extends org.scalatest.junit.JUnit3Suite {
+class AsyncTest extends org.scalatest.junit.JUnit3Suite {
 
     def naturals: Reactive[Int] = {
-        val s: Reactive[Unit] = reactive.parallel
-        s.generate(0 until 1000)
+        reactive.async.generate(0 until 1000)
     }
 
     def testTrivial {
@@ -42,11 +41,11 @@ class ParallelTest extends org.scalatest.junit.JUnit3Suite {
         var _break = false
         while (!_break) {
             try {
-                mada.util.Parallel {
+                mada.eval.Parallel {
                     Thread.sleep(7)
                 }
             } catch {
-                case _: mada.util.RejectedParallelException => _break = true
+                case _: mada.eval.RejectedParallelException => _break = true
             }
         }
 
@@ -61,4 +60,5 @@ class ParallelTest extends org.scalatest.junit.JUnit3Suite {
         c.await
         expect(vector.range(0, 100))(vector.from(b))
     }
+
 }

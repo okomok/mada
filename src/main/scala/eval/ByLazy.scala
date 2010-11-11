@@ -1,11 +1,11 @@
 
 
-// Copyright Shunsuke Sogame 2008-2009.
+// Copyright Shunsuke Sogame 2008-2010.
 // Distributed under the terms of an MIT-style license.
 
 
 package com.github.okomok.mada
-package util
+package eval
 
 
 /**
@@ -16,8 +16,8 @@ case class ByLazy[+R](_1: Function0[R]) extends Function0[R] {
     override def apply = v
 }
 
-object ByLazy extends EvaluationStrategy {
+object ByLazy extends Strategy {
     override def install[R](to: Function0[R]): Function0[R] = new ByLazy(to)
-    def apply[R](body: => R, o: Overload = ()): ByLazy[R] = new ByLazy(() => body)
+    def apply[R](body: => R, o: AsFunction = ()): ByLazy[R] = new ByLazy(() => body)
     implicit def _fromExpr[R](from: => R): ByLazy[R] = apply(from)
 }

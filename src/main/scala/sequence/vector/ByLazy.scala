@@ -9,6 +9,6 @@ package sequence; package vector
 
 
 private
-case class ByLazy[A](_1: util.ByLazy[Vector[A]]) extends Forwarder[A] {
+case class ByLazy[A](_1: eval.ByLazy[Vector[A]]) extends Forwarder[A] {
     override protected def delegate = _1()
 }

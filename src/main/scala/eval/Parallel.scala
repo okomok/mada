@@ -1,11 +1,11 @@
 
 
-// Copyright Shunsuke Sogame 2008-2009.
+// Copyright Shunsuke Sogame 2008-2010.
 // Distributed under the terms of an MIT-style license.
 
 
 package com.github.okomok.mada
-package util
+package eval
 
 
 import java.util.concurrent
@@ -15,7 +15,7 @@ import java.util.concurrent
  * Runs (possibly) in the thread-pool.
  * If the thread-pool is full, _2 determines the evaluation strategy.
  */
-case class Parallel[+R](_1: Function0[R], _2: EvaluationStrategy) extends Function0[R] {
+case class Parallel[+R](_1: Function0[R], _2: Strategy) extends Function0[R] {
     private[this] val f = {
         try {
             new Parallel.Execute(_1)
@@ -31,7 +31,7 @@ object Parallel {
     import concurrent._
 
     def apply[R](body: => R): Parallel[R] = new Parallel(() => body, ByReject)
-    def apply[R](body: => R, stg: EvaluationStrategy, o: Overload = ()): Parallel[R] = new Parallel(() => body, stg)
+    def apply[R](body: => R, stg: Strategy, o: AsFunction = ()): Parallel[R] = new Parallel(() => body, stg)
 
     val poolSize: Int = 2 * java.lang.Runtime.getRuntime.availableProcessors
 

@@ -24,7 +24,7 @@ class HelloApplet extends JApplet {
     override def init {
         try {
             SwingUtilities.invokeAndWait {
-                mada.util.ByName {
+                mada.eval.ByName {
                     add(new JLabel("Hello World"))
                 }
             }

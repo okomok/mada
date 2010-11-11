@@ -9,6 +9,6 @@ package sequence; package vector
 
 
 private
-case class ByName[A](_1: util.ByName[Vector[A]]) extends Forwarder[A] {
+case class ByName[A](_1: eval.ByName[Vector[A]]) extends Forwarder[A] {
     override protected def delegate = _1()
 }

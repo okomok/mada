@@ -24,7 +24,9 @@ case class Generator[+A](_1: Yield[A] => Unit) extends Iterative[A] {
         private[this] var in = new _Generator.Data[A]
         private[this] val x = new concurrent.Exchanger[_Generator.Data[A]]
 
-        util.Parallel(new _Generator.Task(_1, x).run, util.ByThread)
+        eval.Async {
+            new _Generator.Task(_1, x).run
+        }
         doExchange
         forwardExn
 

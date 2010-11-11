@@ -1,11 +1,11 @@
 
 
-// Copyright Shunsuke Sogame 2008-2009.
+// Copyright Shunsuke Sogame 2008-2010.
 // Distributed under the terms of an MIT-style license.
 
 
 package com.github.okomok.mada
-package util
+package eval
 
 
 /**
@@ -16,7 +16,7 @@ case class ByThread[R](_1: Function0[R]) extends Function0[R] {
     override def apply = f()
 }
 
-object ByThread extends EvaluationStrategy {
+object ByThread extends Strategy {
     override def install[R](to: Function0[R]): Function0[R] = new ByThread(to)
-    def apply[R](body: => R, o: Overload = ()): ByThread[R] = new ByThread(() => body)
+    def apply[R](body: => R, o: AsFunction = ()): ByThread[R] = new ByThread(() => body)
 }

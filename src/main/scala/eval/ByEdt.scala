@@ -1,11 +1,11 @@
 
 
-// Copyright Shunsuke Sogame 2008-2009.
+// Copyright Shunsuke Sogame 2008-2010.
 // Distributed under the terms of an MIT-style license.
 
 
 package com.github.okomok.mada
-package util
+package eval
 
 
 /**
@@ -16,7 +16,7 @@ case class ByEdt[R](_1: Function0[R]) extends Function0[R] {
     override def apply = f()
 }
 
-object ByEdt extends EvaluationStrategy {
+object ByEdt extends Strategy {
     override def install[R](to: Function0[R]): Function0[R] = new ByEdt(to)
-    def apply[R](body: => R, o: Overload = ()): ByEdt[R] = new ByEdt(() => body)
+    def apply[R](body: => R, o: AsFunction = ()): ByEdt[R] = new ByEdt(() => body)
 }

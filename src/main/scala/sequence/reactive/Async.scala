@@ -9,6 +9,20 @@ package sequence; package reactive
 
 
 private
+case class Async() extends Resource[Unit] {
+    @volatile private[this] var isClosed = false
+    override protected def closeResource = isClosed = true
+    override protected def openResource(f: Unit => Unit) {
+        eval.Async {
+            while (!isClosed) {
+                f()
+            }
+        }
+    }
+}
+
+/*
+private
 case class Parallel() extends Resource[Unit] {
     @volatile private[this] var isClosed = false
     override protected def closeResource = isClosed = true
@@ -16,7 +30,7 @@ case class Parallel() extends Resource[Unit] {
         val THRESHOLD = 16
         while (!isClosed) {
             try {
-                util.Parallel {
+                eval.Parallel {
                     while (!isClosed) {
                         f()
                     }
@@ -34,3 +48,4 @@ case class Parallel() extends Resource[Unit] {
         }
     }
 }
+*/

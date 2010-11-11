@@ -9,6 +9,6 @@ package peg
 
 
 private
-case class Call(_1: util.ByName[Unit]) extends Forwarder[Any] {
+case class Call(_1: eval.ByName[Unit]) extends Forwarder[Any] {
     override protected val delegate = eps act { _ => _1() }
 }

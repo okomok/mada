@@ -19,7 +19,7 @@ class Recursive[A] extends Iterative[A] {
      * Assigns <code>that</code>.
      */
     def :=(that: => Iterative[A]) {
-        f = util.ByLazy(that)
+        f = eval.ByLazy(that)
     }
 
     // For Recursive to correctly work,
@@ -37,7 +37,7 @@ class RecursiveForwarder[A] extends Forwarder[A] {
      * Assigns <code>that</code>.
      */
     def :=(that: => Iterative[A]) {
-        f = util.ByLazy(that)
+        f = eval.ByLazy(that)
     }
 
     override protected def delegate = f()
