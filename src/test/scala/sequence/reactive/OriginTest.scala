@@ -11,10 +11,35 @@ import com.github.okomok.mada
 
 import mada.sequence._
 import junit.framework.Assert._
+import mada.eval
 
 
 class OriginTest extends org.scalatest.junit.JUnit3Suite {
 
+    def testThreaded { // force to create a thread.
+        val c = new java.util.concurrent.CountDownLatch(1)
+        val a = new java.util.ArrayList[Int]
+        for (x <- reactive.origin(eval.Threaded).generate(0 until 10).then(c.countDown)) {
+            a.add(x)
+        }
+        c.await
+        expect(Vector.range(0, 10))(Vector.from(a))
+    }
+
+    def testAsync { // in the thread pool.
+        val c = new java.util.concurrent.CountDownLatch(1)
+        val a = new java.util.ArrayList[Int]
+        for (x <- reactive.origin(eval.Async).generate(0 until 10).then(c.countDown)) {
+            a.add(x)
+        }
+        c.await
+        expect(Vector.range(0, 10))(Vector.from(a))
+    }
+
+}
+
+
+class OriginStrictTest  extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val s = new java.util.ArrayList[Int]
         for (x <- reactive.origin(mada.eval.Strict).generate(Iterative.Of(9,8,7,6,5))) {
@@ -40,5 +65,4 @@ class OriginTest extends org.scalatest.junit.JUnit3Suite {
         }
         assertEquals(3, s.size)
     }
-
 }
