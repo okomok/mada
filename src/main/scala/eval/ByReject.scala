@@ -10,7 +10,12 @@ package eval
 
 case class RejectedParallelException(_1: String) extends java.util.concurrent.RejectedExecutionException(_1)
 
+
+case class ByReject[R](_1: ByName[R]) extends Function0[R] {
+    throw new RejectedParallelException("parallel execution rejected")
+    override def apply = throw new Error("unreachable")
+}
+
 object ByReject extends Strategy {
-    override def apply[R](to: Function0[R]) = throw new RejectedParallelException("parallel execution rejected")
-    override def apply[R](body: => R, o: util.Overload = ()) = throw new RejectedParallelException("parallel execution rejected")
+    override def apply[R](f: => R) = new ByReject(f)
 }

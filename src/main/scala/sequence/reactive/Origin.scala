@@ -14,10 +14,8 @@ case class Origin(_1: eval.Strategy) extends Resource[Unit] {
     override protected def closeResource = isClosed = true
     override protected def openResource(f: Unit => Unit) {
         _1 {
-            eval.ByName {
-                while (!isClosed) {
-                    f()
-                }
+            while (!isClosed) {
+                f()
             }
         }
     }

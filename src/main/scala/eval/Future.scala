@@ -12,11 +12,11 @@ package eval
  * Runs (possibly) in the thread-pool.
  * If the thread-pool is full, _1 runs in the result-retrieving-site.
  */
-case class Future[+R](_1: Function0[R]) extends Function0[R] {
+case class Future[+R](_1: ByName[R]) extends Function0[R] {
     private[this] val f = Parallel(_1, ByLazy)
     override def apply = f()
 }
 
 object Future extends Strategy {
-    override def apply[R](body: => R, o: util.Overload = ()) = new Future(() => body)
+    override def apply[R](f: => R) = new Future(f)
 }

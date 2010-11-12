@@ -9,6 +9,6 @@ package eval
 
 
 trait Strategy {
-    def apply[R](f: Function0[R]): Function0[R]
-    def apply[R](body: => R, o: util.Overload = ()): Function0[R]
+    def apply[R](f: ByName[R]): Function0[R]
+    def apply[R](f: => R): Function0[R] // needed: http://lampsvn.epfl.ch/trac/scala/ticket/3237
 }

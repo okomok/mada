@@ -11,8 +11,10 @@ package eval
 import java.util.concurrent.Callable
 
 
-case class ByName[+R](_1: Function0[R]) extends Function0[R] {
-    override def apply = _1()
+class ByName[+R](f: => R) extends Function0[R] {
+    override def apply = f
+
+    def _1: Function0[R] = () => f
 
     def toRunnable: Runnable = new Runnable {
         override def run = apply
@@ -24,8 +26,10 @@ case class ByName[+R](_1: Function0[R]) extends Function0[R] {
 }
 
 object ByName extends Strategy {
-    override def apply[R](body: => R, o: util.Overload = ()) = new ByName(() => body)
-    implicit def _fromExpr[R](from: => R): ByName[R] = apply(from)
+    def apply[R](f: => R) = new ByName(f)
+    def unapply[R](from: ByName[R]): Option[Function0[R]] = Some(from._1)
+    override def apply[R](f: ByName[R]) = new ByName(f())
+    implicit def _fromExpr[R](from: => R): ByName[R] = new ByName(from)
     implicit def _toRunnable[R](from: ByName[R]): Runnable = from.toRunnable
     implicit def _toCallable[R](from: ByName[R]): Callable[R] = from.toCallable
 }

@@ -15,7 +15,7 @@ import java.util.concurrent
  * Runs (possibly) in the thread-pool.
  * If the thread-pool is full, _2 determines the evaluation strategy.
  */
-case class Parallel[+R](_1: Function0[R], _2: Strategy) extends Function0[R] {
+case class Parallel[+R](_1: ByName[R], _2: Strategy) extends Function0[R] {
     private[this] val f = {
         try {
             new Parallel.Execute(_1)
@@ -29,8 +29,8 @@ case class Parallel[+R](_1: Function0[R], _2: Strategy) extends Function0[R] {
 
 object Parallel {
     def or(s: Strategy): Strategy = new Strategy {
-        override def apply[R](f: Function0[R]) = new Parallel(f, s)
-        override def apply[R](body: => R, o: util.Overload) = new Parallel(() => body, s)
+        override def apply[R](f: ByName[R]) = new Parallel(f, s)
+        override def apply[R](f: => R) = new Parallel(f, s)
     }
 
     import concurrent._
