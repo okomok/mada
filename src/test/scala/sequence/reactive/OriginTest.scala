@@ -17,7 +17,7 @@ class OriginTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial: Unit = {
         val s = new java.util.ArrayList[Int]
-        for (x <- reactive.origin(mada.eval.ByStrict).generate(Iterative.Of(9,8,7,6,5))) {
+        for (x <- reactive.origin(mada.eval.Strict).generate(Iterative.Of(9,8,7,6,5))) {
             s.add(x)
         }
         assertEquals(vector.Of(9,8,7,6,5), vector.from(s))
@@ -25,7 +25,7 @@ class OriginTest extends org.scalatest.junit.JUnit3Suite {
 
     def testEmpty: Unit = {
         val s = new java.util.ArrayList[Int]
-        for (x <- reactive.origin(mada.eval.ByStrict).generate(Iterative.empty.of[Int])) {
+        for (x <- reactive.origin(mada.eval.Strict).generate(Iterative.empty.of[Int])) {
             s.add(x)
         }
         assertTrue(s.isEmpty)
@@ -34,7 +34,7 @@ class OriginTest extends org.scalatest.junit.JUnit3Suite {
     def testRandom: Unit = {
         val k = new java.util.Random
         val s = new java.util.ArrayList[Int]
-        for (x <- reactive.origin(mada.eval.ByStrict).generate(iterative.Randoms.OfInt(k)).take(3)) {
+        for (x <- reactive.origin(mada.eval.Strict).generate(iterative.Randoms.OfInt(k)).take(3)) {
             s.add(x)
             //println(x)
         }

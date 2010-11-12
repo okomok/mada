@@ -34,23 +34,23 @@ class RecursiveTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testTrivialForwarder: Unit = {
-        val tr = new RecursiveForwarder[Int] // overrides are valid, but needs byLazy.
-        tr := Of(1,2,3) ++ byLazy(tr.take(2))
+        val tr = new RecursiveForwarder[Int] // overrides are valid, but needs `lazy`.
+        tr := Of(1,2,3) ++ `lazy`(tr.take(2))
         assertEquals(Of(1,2,3,1,2), tr)
     }
 
     def testTrivialLazy: Unit = {
-        lazy val tr: Type[Int] = Of(1,2,3) ++ byLazy(tr.take(2)) // same as above.
+        lazy val tr: Type[Int] = Of(1,2,3) ++ `lazy`(tr.take(2)) // same as above.
         assertEquals(Of(1,2,3,1,2), tr)
     }
 /*
     malformed.
     def testTrivialVal1: Unit = {
-        val tr: Type[Int] = byLazy(Of(1,2,3) ++ tr.take(2))
+        val tr: Type[Int] = `lazy`(Of(1,2,3) ++ tr.take(2))
         assertEquals(Of(1,2,3,1,2), tr)
     }
     def testTrivialVal2: Unit = {
-        val tr :Type[Int] = Of(1,2,3) ++ byLazy(tr) // finite
+        val tr :Type[Int] = Of(1,2,3) ++ `lazy`(tr) // finite
         assertEquals(Of(1,2,3,1,2), tr)
     }
 */

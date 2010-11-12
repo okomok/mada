@@ -41,7 +41,7 @@ class Common {
     /**
      * Refers a sequence by lazy.
      */
-    def byLazy[A](it: => Iterative[A]): Iterative[A] = ByLazy(it)
+    def `lazy`[A](it: => Iterative[A]): Iterative[A] = Lazy(it)
 
     /**
      * Refers a sequence by name.

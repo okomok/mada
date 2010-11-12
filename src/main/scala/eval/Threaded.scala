@@ -11,11 +11,11 @@ package eval
 /**
  * Runs in a newly created thread.
  */
-case class ByThread[R](_1: ByName[R]) extends Function0[R] {
+case class Threaded[R](_1: ByName[R]) extends Function0[R] {
     private[this] val f = Invoke(_1, r => new Thread(r).start)
     override def apply = f()
 }
 
-object ByThread extends Strategy {
-    override def apply[R](f: => R) = new ByThread(f)
+object Threaded extends Strategy {
+    override def apply[R](f: => R) = new Threaded(f)
 }

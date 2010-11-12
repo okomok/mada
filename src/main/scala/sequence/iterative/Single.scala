@@ -24,6 +24,6 @@ case class Single[+A](_1: A) extends Iterative[A] {
 
 
 private
-case class LazySingle[+A](_1: eval.ByLazy[A]) extends Forwarder[A] {
-    override protected val delegate = byLazy(single(_1()))
+case class LazySingle[+A](_1: eval.Lazy[A]) extends Forwarder[A] {
+    override protected val delegate = `lazy`(single(_1()))
 }

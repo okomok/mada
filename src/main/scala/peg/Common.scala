@@ -118,7 +118,7 @@ class Common {
     /**
      * Constructs a Peg by-lazy.
      */
-    def byLazy[A](p: => Peg[A]): Peg[A] = ByLazy(p)
+    def `lazy`[A](p: => Peg[A]): Peg[A] = Lazy(p)
 
     /**
      * Constructs a Peg by-name.

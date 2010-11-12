@@ -9,6 +9,6 @@ package peg
 
 
 private
-case class ByLazy[A](_1: eval.ByLazy[Peg[A]]) extends Forwarder[A] {
+case class Lazy[A](_1: eval.Lazy[Peg[A]]) extends Forwarder[A] {
     override protected def delegate = _1()
 }

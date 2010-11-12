@@ -18,7 +18,7 @@ class ByNameTest extends org.scalatest.junit.JUnit3Suite {
 
     def testLazy: Unit = {
         c = 0
-        val t = byLazy(makeT)
+        val t = `lazy`(makeT)
 
         val s1 = t.map(_ + 1)
         assertEquals(1, c)

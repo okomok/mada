@@ -59,7 +59,7 @@ case object Nil extends List[Nothing] {
 /**
  * The cons list
  */
-final class Cons[+A](val _1: A, val _2: eval.ByLazy[List[A]]) extends List[A] {
+final class Cons[+A](val _1: A, val _2: eval.Lazy[List[A]]) extends List[A] {
     override def isNil = false
     override def head = _1
     override def tail = _2()
@@ -272,13 +272,13 @@ sealed abstract class List[+A] extends iterative.Sequence[A] {
     /**
      * Folds right-associative. (a.k.a. foldr)
      */
-    def foldRight[B](z: B)(f: (A, eval.ByLazy[B]) => B): B = this match {
+    def foldRight[B](z: B)(f: (A, eval.Lazy[B]) => B): B = this match {
         case Nil => z
         case x :: xs => f(x, xs().foldRight(z)(f))
     }
 
     @aliasOf("foldRight")
-    final def :\[B](z: B)(f: (A, eval.ByLazy[B]) => B): B = foldRight(z)(f)
+    final def :\[B](z: B)(f: (A, eval.Lazy[B]) => B): B = foldRight(z)(f)
 
     /**
      * Reduces left-associative. (a.k.a. foldl1)
@@ -291,7 +291,7 @@ sealed abstract class List[+A] extends iterative.Sequence[A] {
     /**
      * Reduces right-associative. (a.k.a. foldr1)
      */
-    def reduceRight[B >: A](f: (A, eval.ByLazy[B]) => B): B = this match {
+    def reduceRight[B >: A](f: (A, eval.Lazy[B]) => B): B = this match {
         case x #:: Nil => x
         case x :: xs => f(x, xs().reduceRight(f))
         case Nil => throw new UnsupportedOperationException("reduceRight on empty list")
@@ -310,7 +310,7 @@ sealed abstract class List[+A] extends iterative.Sequence[A] {
     /**
      * Prefix sum folding right-associative. (a.k.a. scanr)
      */
-    def scanRight[B](q0: B)(f: (A, eval.ByLazy[B]) => B): List[B] = this match {
+    def scanRight[B](q0: B)(f: (A, eval.Lazy[B]) => B): List[B] = this match {
         case Nil => q0 :: Nil
         case x :: xs => {
             lazy val qs = xs().scanRight(q0)(f)
@@ -329,7 +329,7 @@ sealed abstract class List[+A] extends iterative.Sequence[A] {
     /**
      * Reduces right-associative. (a.k.a. scanr1)
      */
-    def scanRight1[B >: A](f: (A, eval.ByLazy[B]) => B): List[B] = this match {
+    def scanRight1[B >: A](f: (A, eval.Lazy[B]) => B): List[B] = this match {
         case Nil => Nil
         case x #:: Nil => this
         case x :: xs => {
@@ -545,7 +545,7 @@ sealed abstract class List[+A] extends iterative.Sequence[A] {
  */
 object :: {
 
-    def unapply[A](xs: List[A]): Option[(A, eval.ByLazy[List[A]])] = {
+    def unapply[A](xs: List[A]): Option[(A, eval.Lazy[List[A]])] = {
         if (xs.isNil) {
             None
         } else {

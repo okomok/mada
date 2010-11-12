@@ -41,11 +41,11 @@ class AsyncTest extends org.scalatest.junit.JUnit3Suite {
         var _break = false
         while (!_break) {
             try {
-                mada.eval.Parallel.or(mada.eval.ByReject) {
+                mada.eval.Parallel.or(mada.eval.Reject) {
                     Thread.sleep(7)
                 }
             } catch {
-                case _: mada.eval.RejectedParallelException => _break = true
+                case _: mada.eval.RejectedException => _break = true
             }
         }
 

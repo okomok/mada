@@ -32,7 +32,7 @@ package object assoc {
     def lazyGet[K, V](m: java.util.concurrent.ConcurrentMap[K, () => V])(key: K)(value: => V): V = {
         // See: Java Concurrency in Practice - Listing 5.19
         Option(m.get(key)).getOrElse{
-            val v = eval.ByLazy(value)
+            val v = eval.Lazy(value)
             Option(m.putIfAbsent(key, v)).getOrElse{
                 v
             }

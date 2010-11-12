@@ -13,7 +13,7 @@ package eval
  * If the thread-pool is full, _1 runs in the result-retrieving-site.
  */
 case class Future[+R](_1: ByName[R]) extends Function0[R] {
-    private[this] val f = Parallel(_1, ByLazy)
+    private[this] val f = Parallel(_1, Lazy)
     override def apply = f()
 }
 

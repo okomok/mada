@@ -84,7 +84,7 @@ class Common {
     /**
      * Returns by-lazy vector.
      */
-    def byLazy[A](v: => Vector[A]) = ByLazy(v)
+    def `lazy`[A](v: => Vector[A]) = Lazy(v)
 
     /**
      * Returns by-name vector.

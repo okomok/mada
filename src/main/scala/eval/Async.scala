@@ -13,7 +13,7 @@ package eval
  * If the thread-pool is full, _1 runs in another thread.
  */
 case class Async[+R](_1: ByName[R]) extends Function0[R] {
-    private[this] val f = Parallel(_1, ByThread)
+    private[this] val f = Parallel(_1, Threaded)
     override def apply = f()
 }
 
