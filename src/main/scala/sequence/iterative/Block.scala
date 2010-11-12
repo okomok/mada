@@ -8,7 +8,9 @@ package com.github.okomok.mada
 package sequence; package iterative
 
 
-// See: http://jim-mcbeath.blogspot.com/2010/09/standalone-generic-scala-generator.html
+// See:
+//   http://jim-mcbeath.blogspot.com/2010/09/standalone-generic-scala-generator.html
+//   http://notes.langdale.com.au/Generators_in_Scala.html
 
 
 import scala.util.continuations
