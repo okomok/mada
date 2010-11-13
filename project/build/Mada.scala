@@ -36,9 +36,12 @@ class Mada(info: ProjectInfo) extends DefaultProject(info) with AutoCompilerPlug
     lazy val publishTo = Resolver.file("Publish", new java.io.File("../maven-repo/snapshots/"))
 
     def isGuiTest(s: String) = s.contains("GuiTest")
-    def testConOptions = TestFilter(!isGuiTest(_)) :: testOptions.toList
-    def testGuiOptions = TestFilter(isGuiTest) :: testOptions.toList
+    def isPerfTest(s: String) = s.contains("PerfTest")
+    def testConOptions = TestFilter(!isGuiTest(_)) :: TestFilter(!isPerfTest(_)) :: testOptions.toList
+    def testGuiOptions = TestFilter(isGuiTest) :: TestFilter(!isPerfTest(_)) :: testOptions.toList
+    def testPerfOptions = TestFilter(isPerfTest) :: testOptions.toList
     lazy val testCon = defaultTestTask(testConOptions)
     lazy val testGui = defaultTestTask(testGuiOptions)
+    lazy val testPerf = defaultTestTask(testPerfOptions)
     override protected def testAction = task(None).dependsOn(testCon, testGui)
 }

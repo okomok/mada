@@ -52,8 +52,8 @@ class SortTest extends org.scalatest.junit.JUnit3Suite {
 }
 
 class SortParallelPerfTest extends Benchmark
-    {
-    //with org.scalatest.Suite {
+    //{
+    with org.scalatest.Suite {
     override def run = {
         for (_ <- 0 to 10)
             longSample2.copy.parallel.sort(Ordering.fromLessThan[Int]{ (x, y) => x < y })
@@ -62,8 +62,8 @@ class SortParallelPerfTest extends Benchmark
 }
 
 class SortNonParallelPerfTest extends Benchmark
-    {
-    //with org.scalatest.Suite {
+    //{
+    with org.scalatest.Suite {
     override def run = {
         for (_ <- 0 to 10)
             longSample2.copy.sort(Ordering.fromLessThan[Int]{ (x, y) => x < y })
