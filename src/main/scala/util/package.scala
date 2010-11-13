@@ -71,10 +71,15 @@ package object util {
     }
     implicit def |>[A](x: A): ForwardPipe[A] = new ForwardPipe(x)
 
-    sealed class BackwardPipe[A](x: A) {
+    sealed class BackwardPipe[A, B](f: A => B) {
+        def <|(x: A): B = f(x)
+    }
+    implicit def <|[A, B](f: A => B): BackwardPipe[A, B] = new BackwardPipe(f)
+
+    sealed class SideEffectPipe[A](x: A) {
         def |<(f: A => Any): A = { f(x); x }
     }
-    implicit def |<[A](x: A): BackwardPipe[A] = new BackwardPipe(x)
+    implicit def |<[A](x: A): SideEffectPipe[A] = new SideEffectPipe(x)
 
 
 // misc

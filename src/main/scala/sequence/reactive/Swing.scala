@@ -35,9 +35,10 @@ object Swing {
     }
 
 
+// Mouse
+
     import java.awt.event.{MouseEvent, MouseWheelEvent}
     import javax.swing.event.MouseInputAdapter
-
 
     case class Mouse(source: Component) {
 
