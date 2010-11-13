@@ -17,5 +17,5 @@ case class Copy[A](_1: Vector[A]) extends Forwarder[A] {
     }
 
     // Comment-out: force should remove any indirection.
-    // override def force: Vector[A] = readOnly // force-copy fusion
+    // override def force: Vector[A] = readOnly // copy.force fusion
 }

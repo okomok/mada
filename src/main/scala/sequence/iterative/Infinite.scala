@@ -45,7 +45,7 @@ class Infinite[A] extends Iterative[A] {
         }
     }
 
-    override def memoize: Iterative[A] = this // memoize-memoize fusion
+    override def memoize: Iterative[A] = this // memoize.memoize fusion
 }
 
 

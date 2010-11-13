@@ -12,7 +12,7 @@ private
 case class Unique[+A](_1: Iterative[A]) extends Forwarder[A] {
     override protected val delegate = _1.uniqueBy(function.equal)
 
-    override def unique: Iterative[A] = this // unique-unique fusion
+    override def unique: Iterative[A] = this // unique.unique fusion
 }
 
 private

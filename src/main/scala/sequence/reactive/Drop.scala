@@ -24,5 +24,5 @@ case class Drop[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
         }
     }
 
-    override def drop(n: Int): Reactive[A] = _1.drop(_2 + n) // drop-drop fusion
+    override def drop(n: Int): Reactive[A] = _1.drop(_2 + n) // drop.drop fusion
 }

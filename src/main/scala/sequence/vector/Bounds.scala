@@ -16,7 +16,7 @@ case class Bounds[A](_1: Vector[A]) extends TransformAdapter[A] {
     override def update(i: Int, e: A) = { inBounds(i);  underlying(i) = e }
     override def isDefinedAt(i: Int) = underlying.start <= i && i < underlying.end
 
-    override def bounds = this // bounds-bounds fusion
+    override def bounds = this // bounds.bounds fusion
 
     private def inBounds(i: Int) {
         if (!isDefinedAt(i)) {

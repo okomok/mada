@@ -32,5 +32,5 @@ case class Take[+A](_1: Iterative[A], _2: Int) extends Iterative[A] {
         }
     }
 
-    override def take(n: Int) = _1.take(java.lang.Math.min(_2, n)) // take-take fusion
+    override def take(n: Int) = _1.take(java.lang.Math.min(_2, n)) // take.take fusion
 }

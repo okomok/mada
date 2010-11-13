@@ -25,5 +25,5 @@ case class Memoize[A](_1: Iterative[A]) extends Iterative[A] {
         override def increment { i += 1; it.++ }
     }
 
-    override def memoize: Iterative[A] = this // memoize-memoize fusion
+    override def memoize: Iterative[A] = this // memoize.memoize fusion
 }

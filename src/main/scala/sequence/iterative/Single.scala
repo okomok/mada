@@ -18,8 +18,8 @@ case class Single[+A](_1: A) extends Iterative[A] {
         override protected def _increment = ends = true
     }
 
-    override def cycle = repeat(_1) // cycle-single fusion
-    override def times(n: Int) = repeat(_1).take(n) // times-single fusion
+    override def cycle = repeat(_1) // single.cycle fusion
+    override def times(n: Int) = repeat(_1).take(n) // single.times fusion
 }
 
 

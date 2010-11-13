@@ -18,5 +18,5 @@ case class Map[A, +B](_1: Iterative[A], _2: A => B) extends Iterative[B] {
         override def increment = it.++
     }
 
-    override def map[C](f: B => C) = _1.map(f compose _2) // map-map fusion
+    override def map[C](f: B => C) = _1.map(f compose _2) // map.map fusion
 }

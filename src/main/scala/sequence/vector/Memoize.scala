@@ -15,5 +15,5 @@ case class Memoize[A](_1: Vector[A]) extends TransformAdapter[A] with NotWritabl
     private[this] val table = new java.util.concurrent.ConcurrentHashMap[Int, () => A]
     override def apply(i: Int) = assoc.lazyGet(table)(i){ underlying(i) }
 
-    override def memoize = this // memoize-memoize fusion
+    override def memoize = this // memoize.memoize fusion
 }

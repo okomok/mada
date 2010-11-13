@@ -21,5 +21,5 @@ case class Force[+A](_1: Iterative[A]) extends Iterative[A] {
     }
     override def begin = k.begin
 
-    override def force: Iterative[A] = this // force-force fusion
+    override def force: Iterative[A] = this // force.force fusion
 }

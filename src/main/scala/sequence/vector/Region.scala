@@ -19,7 +19,7 @@ case class Region[A](_1: Vector[A], _2: Int, _3: Int) extends TransformAdapter[A
      * Rewrites region of region into flat region.
      * <code>vector.seal</code> can work around this rewriting.
      */
-    override def region(_start: Int, _end: Int) = { // region-region fusion
+    override def region(_start: Int, _end: Int) = { // region.region fusion
         if (_start == start && _end == end) {
             this
         } else {

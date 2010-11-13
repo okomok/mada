@@ -11,7 +11,7 @@ package sequence; package reactive
 private
 case class Unique[+A](_1: Reactive[A]) extends Forwarder[A] {
     override protected val delegate = _1.uniqueBy(function.equal)
-    override def unique: Reactive[A] = this // unique-unique fusion
+    override def unique: Reactive[A] = this // unique.unique fusion
 }
 
 private

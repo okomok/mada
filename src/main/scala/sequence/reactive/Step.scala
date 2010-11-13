@@ -28,7 +28,7 @@ case class Step[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
         }
     }
 
-    override def step(n: Int): Reactive[A] = _1.step(_2 * n) // step-step fusion
+    override def step(n: Int): Reactive[A] = _1.step(_2 * n) // step.step fusion
 }
 
 
@@ -46,5 +46,5 @@ case class StepTime[+A](_1: Reactive[A], _2: Long) extends Reactive[A] {
         }
     }
 
-    override def stepTime(i: Long): Reactive[A] = _1.stepTime(_2 * i) // stepTime-stepTime fusion
+    override def stepTime(i: Long): Reactive[A] = _1.stepTime(_2 * i) // stepTime.stepTime fusion
 }

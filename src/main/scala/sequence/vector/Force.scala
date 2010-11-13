@@ -17,5 +17,5 @@ case class Force[A](_1: Vector[A]) extends TransformAdapter[A] with NotWritable[
         r
     }
 
-    override def force: Vector[A] = this // force-force fusion
+    override def force: Vector[A] = this // force.force fusion
 }

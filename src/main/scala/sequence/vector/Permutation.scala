@@ -27,14 +27,19 @@ case class Nth[A](_1: Vector[A]) extends Vector[A] {
     override def update(i: Int, e: A) = _1(_1.start + i) = e
     override def isDefinedAt(i: Int) = _1.isDefinedAt(_1.start + i)
 
-    override def nth: Vector[A] = this // nth-nth fusion
+    override def nth: Vector[A] = this // nth.nth fusion
 }
 
 
 private
 case class Reverse[A](_1: Vector[A]) extends Forwarder[A] {
     override protected val delegate = _1.permutation{ i => _1.size - i - 1 }
-    override def reverse = _1 // reverse-reverse fusion
+    override def reverse = _1 // reverse.reverse fusion
+    override def copy: Vector[A] = { // reverse.copy fusion
+        val r = _1.copy
+        stl.reverse(r, r.start, r.end)
+        r
+    }
 }
 
 

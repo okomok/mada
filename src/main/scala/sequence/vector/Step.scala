@@ -25,7 +25,7 @@ case class Step[A](_1: Vector[A], _2: Int) extends Forwarder[A] {
 
     override protected val delegate = _1.permutation{ i => i * _2 }.nth(0, _Step.count(_1.start, _1.end, _2))
 
-    override def step(n: Int) = _1.step(_2 * n) // step-step fusion
+    override def step(n: Int) = _1.step(_2 * n) // step.step fusion
 
     // This can't keep writability.
     // override val delegate = range(0, _Step.count(_1.start, _1.end, _2)).map{ i => _1.nth(i * _2) }
