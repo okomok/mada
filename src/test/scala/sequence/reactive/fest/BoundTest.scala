@@ -16,9 +16,9 @@ import org.fest.swing.core.ComponentDragAndDrop
 import javax.swing
 import java.awt.{Color, BorderLayout}
 import com.github.okomok.mada
-import mada.util.|<
 import mada.sequence.reactive.{Swing, Beans}
 import java.lang.Math
+import FestUtil.textAsName
 
 
 class BoundTest extends
@@ -30,8 +30,8 @@ class BoundTest extends
     override protected def onSetUp {
         val f = mada.eval.InEdt {
             val f = new swing.JFrame("Button Sample")
-            val b1 = new swing.JButton("Select Me") |< { _.setName("Select Me") }
-            val b2 = new swing.JButton("No Select Me") |< { _.setName("No Select Me") }
+            val b1 = new swing.JButton("Select Me").textAsName
+            val b2 = new swing.JButton("No Select Me").textAsName
 
             for (e <- Swing.ActionPerformed(b1) merge Swing.ActionPerformed(b2)) {
                 val s = e.getSource.asInstanceOf[swing.JButton]
@@ -47,11 +47,9 @@ class BoundTest extends
                 }
             }
 
-            f.getContentPane |< {
-                _.add(b1, BorderLayout.NORTH)
-            } |< {
-                _.add(b2, BorderLayout.SOUTH)
-            }
+            f.getContentPane
+            f.add(b1, BorderLayout.NORTH)
+            f.add(b2, BorderLayout.SOUTH)
             f.setSize(300, 100)
             f.setVisible(true)
             f

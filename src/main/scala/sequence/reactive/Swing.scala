@@ -35,6 +35,27 @@ object Swing {
     }
 
 
+// ChangeEvent
+
+    import javax.swing.event.{ChangeEvent, ChangeListener}
+
+    type ChangeEventSource = {
+        def addChangeListener(l: ChangeListener)
+        def removeChangeListener(l: ChangeListener)
+    }
+
+    case class StateChanged(source: ChangeEventSource) extends Resource[ChangeEvent] {
+        private[this] var l: ChangeListener = null
+        override protected def closeResource = source.removeChangeListener(l)
+        override protected def openResource(f: ChangeEvent => Unit) {
+            l = new ChangeListener {
+                override def stateChanged(e: ChangeEvent) = f(e)
+            }
+            source.addChangeListener(l)
+        }
+    }
+
+
 // Mouse
 
     import java.awt.event.{MouseEvent, MouseWheelEvent}
@@ -153,8 +174,6 @@ object Swing {
 
     case class Key(source: Component) {
 
-        // KeyListener
-
         class Pressed extends Resource[KeyEvent] {
             private[this] var l: KeyAdapter = null
             override protected def closeResource = source.removeKeyListener(l)
@@ -191,6 +210,38 @@ object Swing {
         }
         def Typed: Resource[KeyEvent] = new Typed
 
+    }
+
+
+// FocusEvent
+
+    import java.awt.event.{FocusEvent, FocusAdapter}
+
+    case class Focus(source: Component) {
+
+        class Gained extends Resource[FocusEvent] {
+            private[this] var l: FocusAdapter = null
+            override protected def closeResource = source.removeFocusListener(l)
+            override protected def openResource(f: FocusEvent => Unit) {
+                l = new FocusAdapter {
+                    override def focusGained(e: FocusEvent) = f(e)
+                }
+                source.addFocusListener(l)
+            }
+        }
+        def Gained: Resource[FocusEvent] = new Gained
+
+        class Lost extends Resource[FocusEvent] {
+            private[this] var l: FocusAdapter = null
+            override protected def closeResource = source.removeFocusListener(l)
+            override protected def openResource(f: FocusEvent => Unit) {
+                l = new FocusAdapter {
+                    override def focusLost(e: FocusEvent) = f(e)
+                }
+                source.addFocusListener(l)
+            }
+        }
+        def Lost: Resource[FocusEvent] = new Lost
     }
 
 }
