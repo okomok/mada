@@ -36,12 +36,11 @@ object Parallel {
     import concurrent._
 
     val poolSize: Int = 2 * java.lang.Runtime.getRuntime.availableProcessors
-    private val minPoolSize: Int = java.lang.Math.min(4, poolSize)
 
     // A task which has internal dependencies needs direct-handoffs(SynchronousQueue).
     // (scala.actors.Future doesn't support such tasks.)
     val executor: ThreadPoolExecutor = {
-        val ex = new ThreadPoolExecutor(minPoolSize, poolSize, 60L, TimeUnit.SECONDS, new SynchronousQueue[Runnable])
+        val ex = new ThreadPoolExecutor(0, poolSize, 60L, TimeUnit.SECONDS, new SynchronousQueue[Runnable])
         ex.setThreadFactory(new DaemonThreadFactory(ex.getThreadFactory))
         ex
     }
@@ -59,7 +58,7 @@ object Parallel {
     class Execute[R](_1: Function0[R]) extends Function0[R] {
         private[this] val u = {
             val c = new Callable[R] { override def call() = _1() }
-            executor.synchronized { executor.submit(c) }
+            executor.submit(c)
         }
         override def apply = {
             try {
