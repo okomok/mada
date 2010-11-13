@@ -8,14 +8,14 @@ package com.github.okomok.mada
 package sequence; package vector; package stl
 
 
-private[vector]
+private
 object Find {
     def apply[A](v: Vector[A], __first: Int, __last: Int, __val: Any): Int = {
         FindIf(v, __first, __last, (_: A) == __val)
     }
 }
 
-private[vector]
+private
 object FindIf {
     def apply[A](v: Vector[A], __first: Int, __last: Int, __pred: A => Boolean): Int = {
         var __i = __first

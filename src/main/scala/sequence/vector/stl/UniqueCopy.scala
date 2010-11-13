@@ -34,7 +34,7 @@ package com.github.okomok.mada
 package sequence; package vector; package stl
 
 
-private[vector]
+private
 object UniqueCopy {
     def apply[A, B >: A](v : Vector[A], first: Int, __last: Int, ^ : Vector[B], result: Int, __binary_pred: (A, B) => Boolean = function.equal): Int = {
         var __first = first

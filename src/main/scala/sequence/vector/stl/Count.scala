@@ -8,14 +8,14 @@ package com.github.okomok.mada
 package sequence; package vector; package stl
 
 
-private[vector]
+private
 object Count {
     def apply[A](v: Vector[A], __first: Int, __last: Int, e: Any): Int = {
         CountIf(v, __first, __last, (_: A) == e)
     }
 }
 
-private[vector]
+private
 object CountIf {
     def apply[A](v: Vector[A], __first: Int, __last: Int, __pred: A => Boolean): Int = {
         var __n = 0

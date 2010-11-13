@@ -47,7 +47,7 @@ private class _FromVectorBy[A](_1: sequence.Vector[A], _2: (A, A) => Boolean) ex
         val wsize = _1.size
         if (end - start < wsize) {
             FAILURE
-        } else if (sequence.vector.stl.Equal(_1, _1.start, _1.end, v, start, _2)) {
+        } else if (sequence.vector.stl.equalIf(_1, _1.start, _1.end)(v, start)(_2)) {
             start + wsize
         } else {
             FAILURE

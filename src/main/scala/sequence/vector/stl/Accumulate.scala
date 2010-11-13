@@ -8,7 +8,7 @@ package com.github.okomok.mada
 package sequence; package vector; package stl
 
 
-private[vector]
+private
 object Accumulate {
     def apply[A, B](v: Vector[A], __first: Int, __last: Int, init: B, __binary_op: (B, A) => B): B = {
         var __init = init

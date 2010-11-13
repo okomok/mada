@@ -86,7 +86,7 @@ trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
         if (size != that.size) {
             false
         } else {
-            stl.Equal(this, start, end, that, that.start, p)
+            stl.equalIf(this, start, end)(that, that.start)(p)
         }
     }
 
@@ -114,7 +114,7 @@ trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
     /**
      * Applies <code>f</code> to each element.
      */
-    def foreach(f: A => Unit): Unit = stl.ForEach(this, start, end, f)
+    def foreach(f: A => Unit): Unit = stl.forEach(this, start, end, f)
 
     /**
      * Determines if all the elements satisfy the predicate.
@@ -129,13 +129,13 @@ trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
     /**
      * Counts elements which satisfy the predicate.
      */
-    def count(p: A => Boolean): Int = stl.CountIf(this, start, end, p)
+    def count(p: A => Boolean): Int = stl.countIf(this, start, end)(p)
 
     /**
      * Finds an element which satisfies the predicate.
      */
     def find(p: A => Boolean): Option[A] = {
-        val i = stl.FindIf(this, start, end, p)
+        val i = stl.findIf(this, start, end)(p)
         if (i == end) {
             None
         } else {
@@ -146,7 +146,7 @@ trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
     /**
      * Folds left-associative.
      */
-    def foldLeft[B](z: B)(op: (B, A) => B): B = stl.Accumulate(this, start, end, z, op)
+    def foldLeft[B](z: B)(op: (B, A) => B): B = stl.accumulate(this, start, end)(z)(op)
 
     @aliasOf("foldLeft")
     final def /:[B](z: B)(op: (B, A) => B): B = foldLeft(z)(op)
@@ -205,7 +205,7 @@ trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
 
     @equivalentTo("(takeWhile(p), dropWhile(p))")
     def span(p: A => Boolean): (Vector[A], Vector[A]) = {
-        val middle = stl.FindIf(this, start, end, function.not(p))
+        val middle = stl.findIf(this, start, end)(function.not(p))
         (this(start, middle), this(middle, end))
     }
 
@@ -329,7 +329,7 @@ trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
 
 // filter
 
-    def mutatingFilter(p: A => Boolean): Vector[A] = this(start, stl.RemoveIf(this, start, end, function.not(p)))
+    def mutatingFilter(p: A => Boolean): Vector[A] = this(start, stl.removeIf(this, start, end)(function.not(p)))
 
     @equivalentTo("mutatingFilter(function.not(p))")
     def mutatingRemove(p: A => Boolean): Vector[A] = mutatingFilter(function.not(p))
@@ -400,30 +400,30 @@ trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
      * Sort this vector.
      */
     @pre("writable")
-    def sort[B >: A](implicit c: Ordering[B]): Vector[A] = { stl.Sort(this, start, end, c); this }
+    def sort[B >: A](implicit c: Ordering[B]): Vector[A] = { stl.sort[B](this, start, end)(c); this }
 
     /**
      * Stable-sort this vector.
      */
     @pre("writable")
-    def stableSort[B >: A](implicit c: Ordering[B]): Vector[A] = { stl.StableSort(this, start, end, c); this }
+    def stableSort[B >: A](implicit c: Ordering[B]): Vector[A] = { stl.stableSort[B](this, start, end)(c); this }
 
     /**
      * Is this vector sorted?
      */
-    def isSorted[B >: A](implicit c: Ordering[B]): Boolean = stl.IsSorted(this, start, end, c)
+    def isSorted[B >: A](implicit c: Ordering[B]): Boolean = stl.isSorted[B](this, start, end)(c)
 
     /**
      * Randomly shuffles elements.
      */
     @pre("writable")
-    def shuffle: Vector[A] = { stl.RandomShuffle(this, start, end); this }
+    def shuffle: Vector[A] = { stl.randomShuffle(this, start, end); this }
 
     /**
      * Randomly shuffles elements by a random number generator.
      */
     @pre("writable")
-    def shuffleBy(g: Int => Int): Vector[A] = { stl.RandomShuffle(this, start, end, g); this }
+    def shuffleBy(g: Int => Int): Vector[A] = { stl.randomShuffleBy(this, start, end)(g); this }
 
 
 // permutation
@@ -478,7 +478,7 @@ trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
     @pre("`that` is writable.")
     def copyTo[B >: A](that: Vector[B]): Vector[B] = {
         Precondition.range(this.size, that.size, "copyTo")
-        that(that.start, stl.Copy(this, start, end, that, that.start))
+        that(that.start, stl.copy(this, start, end)(that, that.start))
     }
 
 

@@ -15,7 +15,7 @@ import junit.framework.Assert._
 
 class DropWhileTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial0: Unit = {
-        val a = vector.Of(1,2,3,4,5,6)
+        val a = reactive.Of(1,2,3,4,5,6)
         val b = new java.util.ArrayList[Int]
         for (x <- a.dropWhile(_ <= 4)) {
             b.add(x)
@@ -24,7 +24,7 @@ class DropWhileTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testAll: Unit = {
-        val a = vector.Of(1,2,3,4,5,6)
+        val a = reactive.Of(1,2,3,4,5,6)
         val b = new java.util.ArrayList[Int]
         for (x <- a.dropWhile(_ <= 10)) {
             b.add(x)
@@ -33,7 +33,7 @@ class DropWhileTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testEmpty: Unit = {
-        val a = vector.empty.of[Int]
+        val a = reactive.empty.of[Int]
         val b = new java.util.ArrayList[Int]
         for (x <- a.dropWhile(_ <= 10)) {
             b.add(x)
@@ -42,7 +42,7 @@ class DropWhileTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testNone: Unit = {
-        val a = vector.Of(1,2,3,4,5,6)
+        val a = reactive.Of(1,2,3,4,5,6)
         val b = new java.util.ArrayList[Int]
         for (x <- a.dropWhile(_ > 10)) {
             b.add(x)

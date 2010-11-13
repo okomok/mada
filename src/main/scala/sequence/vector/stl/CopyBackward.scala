@@ -34,7 +34,7 @@ package com.github.okomok.mada
 package sequence; package vector; package stl
 
 
-private[vector]
+private
 object CopyBackward {
     def apply[A, B >: A](v : Vector[A], __first: Int, last: Int, ^ : Vector[B], result: Int): Int = {
         var __last = last

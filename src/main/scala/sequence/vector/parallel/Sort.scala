@@ -34,7 +34,7 @@ object ParallelSort {
         var __last = last
         var __depth_limit = depth_limit
 
-        def go(f: Int, l: Int) = fs.add(Future{stl.Sort(*, f, l, __comp)}) // call stl directly for speed.
+        def go(f: Int, l: Int) = fs.add(Future{stl.sort(*, f, l)(__comp)}) // call stl directly for speed.
 
         while (__last - __first > grainSize) {
             if (__depth_limit == 0) {

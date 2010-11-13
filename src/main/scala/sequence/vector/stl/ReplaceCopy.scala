@@ -34,14 +34,14 @@ package com.github.okomok.mada
 package sequence; package vector; package stl
 
 
-private[vector]
+private
 object ReplaceCopy {
     def apply[A, B >: A](v : Vector[A], __first: Int, __last: Int, ^ : Vector[B], result: Int, __old_value: Any, __new_value: A): Int = {
         ReplaceCopyIf(v, __first, __last, ^, result, (_: A) == __old_value, __new_value)
     }
 }
 
-private[vector]
+private
 object ReplaceCopyIf {
     def apply[A, B >: A](v : Vector[A], __first: Int, __last: Int, ^ : Vector[B], result: Int, __pred: A => Boolean, __new_value: A): Int = {
         var __result = result

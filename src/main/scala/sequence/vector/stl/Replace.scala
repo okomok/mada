@@ -34,14 +34,14 @@ package com.github.okomok.mada
 package sequence; package vector; package stl
 
 
-private[vector]
+private
 object Replace {
     def apply[A](* : Vector[A], first: Int, __last: Int, __old_value: Any, __new_value: A) {
         ReplaceIf(*, first, __last, (_: A) == __old_value, __new_value)
     }
 }
 
-private[vector]
+private
 object ReplaceIf {
     def apply[A](* : Vector[A], first: Int, __last: Int, __pred: A => Boolean, __new_value: A) {
         var __first = first

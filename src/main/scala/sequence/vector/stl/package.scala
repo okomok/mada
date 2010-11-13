@@ -58,15 +58,15 @@ package object stl {
     def fill[A](v: Vector[A], first: Int, last: Int)(value: A): Unit = Fill(v, first, last, value)
 
     def find[A](v: Vector[A], first: Int, last: Int, value: Any): Int = Find(v, first, last, value)
-    def findIf[A](v: Vector[A], first: Int, last: Int)(pred: A => Boolean): Int = Find(v, first, last, pred)
+    def findIf[A](v: Vector[A], first: Int, last: Int)(pred: A => Boolean): Int = FindIf(v, first, last, pred)
 
     def forEach[A, F <: (A => Any)](v: Vector[A], first: Int, last: Int, f: F): F = ForEach(v, first, last, f)
 
     def generate[A](v : Vector[A], first: Int, last: Int)(gen: Unit => A): Unit = Generate(v, first, last, gen)
     def generateN[A](^ : Vector[A], first: Int, n: Int)(gen: Unit => A): Unit = GenerateN(^, first, n, gen)
 
-    def lexicographicalCompare[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int)(implicit c: Ordering[A]): Boolean = LexicographicalCompare(v1, first1, __last1, v2, first2, __last2, c)
-    def lexicographicalCompare3way[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int)(implicit c: Ordering[A]): Int = LexicographicalCompare3way(v1, first1, __last1, v2, first2, __last2, c)
+    def lexicographicalCompare[A](v1: Vector[A], first1: Int, __last1: Int)(v2: Vector[A], first2: Int, __last2: Int)(implicit c: Ordering[A]): Boolean = LexicographicalCompare(v1, first1, __last1, v2, first2, __last2, c)
+    def lexicographicalCompare3way[A](v1: Vector[A], first1: Int, __last1: Int)(v2: Vector[A], first2: Int, __last2: Int)(implicit c: Ordering[A]): Int = LexicographicalCompare3way(v1, first1, __last1, v2, first2, __last2, c)
 
     def merge[A](v1 : Vector[A], first1: Int, last1: Int)(v2 : Vector[A], first2: Int, last2: Int)(^ : Vector[A], result: Int)(implicit c: Ordering[A]): Int = Merge(v1, first1, last1, v2, first2, last2, ^, result, c)
 
@@ -90,7 +90,7 @@ package object stl {
     def randomSampleNBy[A](v : Vector[A], first: Int, last: Int)(^ : Vector[_ >: A], out_ite: Int, n: Int)(rand: Int => Int): Int = RandomSampleN(v, first, last, ^, out_ite, n, rand)
 
     def remove[A](v: Vector[A], first: Int, last: Int)(e: Any): Int = Remove(v, first, last, e)
-    def removeIf[A](v: Vector[A], first: Int, last: Int)(pred: A => Boolean): Int = Remove(v, first, last, pred)
+    def removeIf[A](v: Vector[A], first: Int, last: Int)(pred: A => Boolean): Int = RemoveIf(v, first, last, pred)
 
     def removeCopy[A](v : Vector[A], first: Int, last: Int)(^ : Vector[_ >: A], result: Int)(e: Any): Int = RemoveCopy(v, first, last, ^, result, e)
     def removeCopyIf[A](v : Vector[A], first: Int, last: Int)(^ : Vector[_ >: A], result: Int)(pred: A => Boolean): Int = RemoveCopyIf(v, first, last, ^, result, pred)

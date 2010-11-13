@@ -34,7 +34,7 @@ package com.github.okomok.mada
 package sequence; package vector; package stl
 
 
-private[vector]
+private
 object MinElement {
     def apply[A](* : Vector[A], first: Int, __last: Int, __comp: Ordering[A]): Int = {
         var __first = first
@@ -54,7 +54,7 @@ object MinElement {
     }
 }
 
-private[vector]
+private
 object MaxElement {
     def apply[A](* : Vector[A], first: Int, __last: Int, __comp: Ordering[A]): Int = {
         MinElement(*, first, __last, __comp.reverse)

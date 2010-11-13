@@ -34,7 +34,7 @@ package com.github.okomok.mada
 package sequence; package vector; package stl
 
 
-private[vector]
+private
 object Unique {
     def apply[A](v: Vector[A], first: Int, __last: Int, __binary_pred: (A, A) => Boolean = function.equal): Int = {
         var __first = first

@@ -36,7 +36,7 @@ package sequence; package vector; package stl
 
 // PushHeap
 
-private[vector]
+private
 object PushHeap {
     def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Ordering[A]) {
         __apply(*, __first, (__last - __first) - 1, 0, *(__last - 1), __comp)
@@ -58,7 +58,7 @@ object PushHeap {
 
 // PopHeap
 
-private[vector]
+private
 object PopHeap {
     def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Ordering[A]) {
         __apply(*, __first, __last - 1, __last - 1, *(__last - 1), __comp)
@@ -73,7 +73,7 @@ object PopHeap {
 
 // MakeHeap
 
-private[vector]
+private
 object MakeHeap {
     def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Ordering[A]) {
         if (__last - __first < 2) {
@@ -95,7 +95,7 @@ object MakeHeap {
 
 // SortHeap
 
-private[vector]
+private
 object SortHeap {
     def apply[A](* : Vector[A], __first: Int, last: Int, __comp: Ordering[A]) {
         var __last = last
@@ -110,7 +110,7 @@ object SortHeap {
 
 // AdjustHeap
 
-private[vector]
+private
 object AdjustHeap {
     def apply[A](* : Vector[A], __first: Int, holeIndex: Int, __len: Int, __value: A, __comp: Ordering[A]) {
         var __holeIndex = holeIndex

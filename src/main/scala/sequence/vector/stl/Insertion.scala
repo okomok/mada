@@ -34,7 +34,7 @@ package com.github.okomok.mada
 package sequence; package vector; package stl
 
 
-private[vector]
+private
 object InsertionSort {
     def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Ordering[A]) {
         if (__first == __last) {
@@ -48,7 +48,7 @@ object InsertionSort {
     }
 }
 
-private[vector]
+private
 object LinearInsert {
     def apply[A](* : Vector[A], __first: Int, __last: Int, __val: A, __comp: Ordering[A]) {
         if (__comp.lt(__val, *(__first))) {
@@ -61,7 +61,7 @@ object LinearInsert {
 }
 
 
-private[vector]
+private
 object UnguardedInsertionSort {
     def apply[A](* : Vector[A], __first: Int, __last: Int, __comp: Ordering[A]) {
         var __i = __first
@@ -72,7 +72,7 @@ object UnguardedInsertionSort {
     }
 }
 
-private[vector]
+private
 object UnguardedLinearInsert {
     def apply[A](* : Vector[A], last: Int, __val: A, __comp: Ordering[A]) {
         var __last = last
@@ -89,7 +89,7 @@ object UnguardedLinearInsert {
 }
 
 
-private[vector]
+private
 object ChunkInsertionSort {
     def apply[A](* : Vector[A], first: Int, __last: Int, __chunk_size: Int, __comp: Ordering[A]) {
         var __first = first

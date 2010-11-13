@@ -34,7 +34,7 @@ package com.github.okomok.mada
 package sequence; package vector; package stl
 
 
-private[vector]
+private
 object LexicographicalCompare {
     def apply[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int, __comp: Ordering[A]): Boolean = {
         if (LexicographicalCompare3way(v1, first1, __last1, v2, first2, __last2, __comp) < 0) true else false
@@ -42,7 +42,7 @@ object LexicographicalCompare {
 }
 
 
-private[vector]
+private
 object LexicographicalCompare3way {
     def apply[A](v1: Vector[A], first1: Int, __last1: Int, v2: Vector[A], first2: Int, __last2: Int, __comp: Ordering[A]): Int = {
         var __first1 = first1

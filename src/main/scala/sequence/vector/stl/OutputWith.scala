@@ -8,12 +8,12 @@ package com.github.okomok.mada
 package sequence; package vector; package stl
 
 
-private[vector]
+private
 object OutputBy {
     def apply[A](f: A => Unit): Vector[A] = new OutputBy(f)
 }
 
-private[vector]
+private
 class OutputBy[A](f: A => Unit) extends OutputVector[A] {
     override def output(e: A) = f(e)
 }

@@ -15,14 +15,14 @@ package sequence; package vector; package stl
 // v.copy(0, v.size, Output(aStream.put(_)), 0)
 
 
-private[vector]
+private
 object Copy {
     def apply[A, B >: A](v : Vector[A], __first: Int, __last: Int, ^ : Vector[B], result: Int): Int = {
         CopyIf(v, __first, __last, ^, result, { (e: A) => true })
     }
 }
 
-private[vector]
+private
 object CopyIf {
     def apply[A, B >: A](v : Vector[A], __first: Int, __last: Int, ^ : Vector[B], result: Int, __pred: A => Boolean): Int = {
         var __result = result

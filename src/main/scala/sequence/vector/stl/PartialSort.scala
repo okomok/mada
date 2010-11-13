@@ -34,7 +34,7 @@ package com.github.okomok.mada
 package sequence; package vector; package stl
 
 
-private[vector]
+private
 object PartialSort {
     def apply[A](* : Vector[A], __first: Int, __middle: Int, __last: Int, __comp: Ordering[A]) {
         MakeHeap(*, __first, __middle, __comp)

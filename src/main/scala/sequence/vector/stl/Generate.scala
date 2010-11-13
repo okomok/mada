@@ -34,7 +34,7 @@ package com.github.okomok.mada
 package sequence; package vector; package stl
 
 
-private[vector]
+private
 object Generate {
     def apply[A](v : Vector[A], first: Int, __last: Int, __gen: Unit => A) {
         var __first = first
@@ -46,7 +46,7 @@ object Generate {
     }
 }
 
-private[vector]
+private
 object GenerateN {
     def apply[A](^ : Vector[A], first: Int, n: Int, __gen: Unit => A) {
         var __first = first

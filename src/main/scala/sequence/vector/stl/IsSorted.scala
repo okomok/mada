@@ -34,7 +34,7 @@ package com.github.okomok.mada
 package sequence; package vector; package stl
 
 
-private[vector]
+private
 object IsSorted {
     def apply[A](* : Vector[A], first: Int, __last: Int, __comp: Ordering[A]): Boolean = {
         var __first = first
