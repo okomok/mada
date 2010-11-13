@@ -21,9 +21,9 @@ import java.lang.Math
 import FestUtil.textAsName
 
 
-class BoundTest extends
-    NotFestSuite
-//    FestTestNGSuite
+class BoundGuiTest extends
+//    NotFestSuite
+    FestTestNGSuite
 {
     private var fx: FrameFixture = null
 
