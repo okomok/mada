@@ -11,11 +11,11 @@ package eval
 /**
  * Runs in the event-dispatch-thread.
  */
-case class ByEdt[R](_1: ByName[R]) extends Function0[R] {
+case class InEdt[R](_1: ByName[R]) extends Function0[R] {
     private[this] val f = Invoke(_1, r => javax.swing.SwingUtilities.invokeLater(r))
     override def apply = f()
 }
 
-object ByEdt extends Strategy {
-    override def apply[R](f: => R) = new ByEdt(f)
+object InEdt extends Strategy {
+    override def apply[R](f: => R) = new InEdt(f)
 }

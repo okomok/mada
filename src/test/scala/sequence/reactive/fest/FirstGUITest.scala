@@ -15,6 +15,7 @@ import javax.swing
 import com.github.okomok.mada.sequence.reactive
 
 
+/*
 class MyFrame extends swing.JFrame {
     val panel = new swing.JPanel
     panel.setLayout(new swing.BoxLayout(panel, swing.BoxLayout.PAGE_AXIS))
@@ -68,3 +69,4 @@ class FirstGUITest extends org.scalatest.testng.TestNGSuite {
         window.label("copiedText").requireText("Some random text")
     }
 }
+*/

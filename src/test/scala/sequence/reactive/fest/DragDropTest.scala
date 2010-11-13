@@ -20,12 +20,15 @@ import mada.util.|<
 import mada.sequence.reactive
 
 
-class DragDropTest extends FestTestNGSuite {
+class DragDropTest extends
+    NotFestSuite
+//    FestTestNGSuite
+{
 
     private var fixt: FrameFixture = null
 
     override protected def onSetUp {
-        val jf = mada.util.inEdt {
+        val jf = mada.eval.InEdt {
             val jf = new swing.JFrame("DragDropTest")
             val jl = new swing.JLabel("Drag") |< (_.setName("Drag")) |< (jf.getContentPane.add(_))
             reactive.block {
@@ -36,7 +39,7 @@ class DragDropTest extends FestTestNGSuite {
                 println("dragging at: " + (d.getX, d.getY))
             }
             jf
-        }
+        } apply
 
         fixt = new FrameFixture(robot, jf)
         fixt.show()

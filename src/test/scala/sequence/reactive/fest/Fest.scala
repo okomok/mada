@@ -9,10 +9,12 @@ package com.github.okomok.madatest
 package sequencetest.reactivetest.festtest
 
 
-import org.fest.swing.edt
-
-
 abstract class FestTestNGSuite extends
     org.fest.swing.testng.testcase.FestSwingTestngTestCase with
     org.scalatest.testng.TestNGSuite
 
+
+abstract class NotFestSuite extends NotSuite {
+    protected def onSetUp: Unit = throw new Error("NotFestSuite.onSetUp")
+    def robot = throw new Error("NotFestSuite.robot")
+}
