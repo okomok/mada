@@ -33,7 +33,7 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
     override def asReactive: Reactive[A] = this
 
     /**
-     * Shall be thread-safe.
+     * Should be thread-safe.
      */
     override def close(): Unit = ()
 
@@ -262,6 +262,11 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
      * Reactions are invoked by somehow you specify.
      */
     def shiftReact[B >: A](g: B => (B => Unit) => Unit): Reactive[B] = ShiftReact[B](this, g)
+
+    /**
+     * Elements with a break function.
+     */
+    def breakable: Reactive[(A, Function0[Unit])] = Breakable(this)
 
     /**
      * Returns each element in cpstyle.
