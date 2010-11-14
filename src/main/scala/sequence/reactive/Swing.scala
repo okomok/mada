@@ -462,8 +462,6 @@ object Swing {
 
     case class Mouse(source: AComponent) {
 
-        // MouseEvent
-
         class Event extends Resource[MouseEvent] {
             private[this] var l: MouseInputAdapter = null
             override protected def closeResource = source.removeMouseListener(l)
