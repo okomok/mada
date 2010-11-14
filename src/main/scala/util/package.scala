@@ -124,6 +124,7 @@ package object util {
     /**
      * Evaluates <code>body</code> in the event-dispatch-thread.
      */
+    @deprecated("use eval.InEdt.apply instead")
     def inEdt[R](body: => R): R = {
         import javax.swing.SwingUtilities
         if (SwingUtilities.isEventDispatchThread) {

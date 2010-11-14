@@ -16,7 +16,7 @@ package sequencetest; package reactivetest; package example
         NotSuite {
         //org.scalatest.junit.JUnit3Suite {
         def testTrivial {
-            val frame = mada.util.inEdt {
+            val frame = mada.eval.InEdt {
                 val frame = new swing.JFrame("DragDropTest")
                 val label = new swing.JLabel("testTrivial")
                 frame.getContentPane.add(label)
@@ -33,12 +33,12 @@ package sequencetest; package reactivetest; package example
                 frame.pack
                 frame.setVisible(true)
                 frame
-            }
+            } apply
 
             Thread.sleep(20000)
-            mada.util.inEdt {
+            mada.eval.InEdt {
                 frame.setVisible(false)
-            }
+            } apply
         }
     }
 

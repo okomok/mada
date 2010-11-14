@@ -11,7 +11,7 @@ package arm
 private
 case class FromJCloseable[A <: java.io.Closeable](_1: A) extends Arm[A] {
     override val open = _1
-    override def close = _1.close
+    override lazy val close = _1.close
 }
 
 private
