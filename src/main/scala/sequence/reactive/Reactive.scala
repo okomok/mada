@@ -158,7 +158,7 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
     /**
      * Forks.
      */
-    def fork(f: Reactive[A] => Unit): Reactive[A] = Fork(this, f)
+    def fork(f: Reactive[A] => Reactive[_]): Reactive[A] = Fork(this, f)
 
     /**
      * Creates a duplicate.

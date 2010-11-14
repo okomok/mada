@@ -25,5 +25,5 @@ case class OnHead[A](_1: Reactive[A], _2: A => Unit) extends Reactive[A] {
 
 private
 case class OnNth[A](_1: Reactive[A], _2: Int, _3: A => Unit) extends Forwarder[A] {
-    override protected val delegate = _1.fork{ r => r.drop(_2).onHead(_3).start }
+    override protected val delegate = _1.fork{ r => r.drop(_2).onHead(_3) }
 }
