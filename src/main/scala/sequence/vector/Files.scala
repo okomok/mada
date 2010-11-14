@@ -16,7 +16,7 @@ import java.io.{File, RandomAccessFile, Closeable}
 private
 case class CharFile(_1: RandomAccessFile) extends Arm[Vector[Char]] {
     override def open: Vector[Char] = new CharFileVector(_1)
-    override lazy val close = _1.close()
+    override def close() = _1.close()
 }
 
 private class CharFileVector(_1: RandomAccessFile) extends Vector[Char] {
@@ -32,7 +32,7 @@ private class CharFileVector(_1: RandomAccessFile) extends Vector[Char] {
 private
 case class IntFile(_1: RandomAccessFile) extends Arm[Vector[Int]] {
     override def open: Vector[Int] = new IntFileVector(_1)
-    override lazy val close = _1.close()
+    override def close() = _1.close()
 }
 
 private class IntFileVector(_1: RandomAccessFile) extends Vector[Int] {
@@ -48,7 +48,7 @@ private class IntFileVector(_1: RandomAccessFile) extends Vector[Int] {
 private
 case class LongFile(_1: RandomAccessFile) extends Arm[Vector[Long]] {
     override def open: Vector[Long] = new LongFileVector(_1)
-    override lazy val close = _1.close()
+    override def close() = _1.close()
 }
 
 private class LongFileVector(_1: RandomAccessFile) extends Vector[Long] {
