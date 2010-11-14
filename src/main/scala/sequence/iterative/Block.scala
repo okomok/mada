@@ -25,23 +25,23 @@ case class Block[+A](_1: (A => Unit @suspendable) => Unit @suspendable) extends 
         private[this] val _y = new (A => Unit @suspendable) {
             override def apply(e: A) = {
                 _e = Some(e)
-                _suspend
+                _suspend()
             }
         }
 
         continuations.reset {
-            _suspend
+            _suspend()
             _1(_y)
         }
         _k()
 
         override protected def _isEnd = _e.isEmpty
         override protected def _deref = _e.get
-        override protected def _increment {
+        override protected def _increment() {
             _e = None
             _k()
         }
 
-        private def _suspend: Unit @suspendable = continuations.shift { (k: Unit => Unit) => _k = k }
+        private def _suspend(): Unit @suspendable = continuations.shift { (k: Unit => Unit) => _k = k }
     }
 }

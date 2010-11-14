@@ -134,7 +134,7 @@ package object util {
             try {
                 SwingUtilities.invokeAndWait {
                     new Runnable {
-                        override def run {
+                        override def run() {
                             r = Some(body)
                         }
                     }

@@ -16,7 +16,7 @@ trait PrettyPrinter {
     /**
      * Closes output resource.
      */
-    def close: Unit
+    def close(): Unit
 
     /**
      * Outputs matched inputs.

@@ -23,7 +23,7 @@ object ParallelSeek {
                 if (!x.isEmpty && !p.breaks) {
                     // benign data races
                     r = x
-                    p.break
+                    p.break()
                 }
             }
             r

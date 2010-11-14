@@ -26,7 +26,7 @@ case class FromJObjectInput(_1: java.io.ObjectInput) extends Iterative[AnyRef] {
 
         override protected def _isEnd = e.isEmpty
         override protected def _deref = e.get
-        override protected def _increment = e = ready
+        override protected def _increment() = e = ready
 
         private def ready: Option[AnyRef] = {
             try {
@@ -47,7 +47,7 @@ case class FromJReader(_1: java.io.Reader) extends Iterative[Char] {
 
         override protected def _isEnd = e.isEmpty
         override protected def _deref = e.get
-        override protected def _increment = e = ready
+        override protected def _increment() = e = ready
 
         private def ready: Option[Char] = {
             val c = _1.read

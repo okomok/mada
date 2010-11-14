@@ -14,7 +14,7 @@ import java.util.concurrent
 
 
 trait Yield[-A] extends (A => Unit) {
-    def flush: Unit
+    def flush(): Unit
 }
 
 
@@ -25,28 +25,28 @@ case class Generator[+A](_1: Yield[A] => Unit) extends Iterative[A] {
         private[this] val x = new concurrent.Exchanger[_Generator.Data[A]]
 
         eval.Async {
-            new _Generator.Task(_1, x).run
+            new _Generator.Task(_1, x).run()
         }
-        doExchange
-        forwardExn
+        doExchange()
+        forwardExn()
 
         override protected def _isEnd = in.buf.isEmpty
         override protected def _deref = in.buf.getFirst
-        override protected def _increment {
-            in.buf.removeFirst
+        override protected def _increment() {
+            in.buf.removeFirst()
             if (in.buf.isEmpty && !in.isLast) {
-                doExchange
+                doExchange()
             }
-            forwardExn
+            forwardExn()
         }
 
-        private def forwardExn {
+        private def forwardExn() {
             if (in.buf.isEmpty && in.isLast && !in.exn.isEmpty) {
                 throw in.exn.get
             }
         }
 
-        private def doExchange {
+        private def doExchange() {
             assert(in.buf.isEmpty)
             in = x.exchange(in)
             assert(!in.buf.isEmpty || in.isLast)
@@ -64,31 +64,31 @@ object _Generator {
         private[this] var out = new Data[A]
 
         private[this] val y = new Yield[A] {
-            override def apply(e: A) = {
+            override def apply(e: A) {
                 out.buf.addLast(e)
                 if (out.buf.size == CAPACITY) {
-                    doExchange
+                    doExchange()
                 }
             }
-            override def flush = {
+            override def flush() {
                 if (!out.buf.isEmpty) {
-                    doExchange
+                    doExchange()
                 }
             }
         }
 
-        def run {
+        def run() {
             try {
                 op(y)
             } catch {
                 case t: Throwable => out.exn = Some(t)
             } finally {
                 out.isLast = true
-                doExchange
+                doExchange()
             }
         }
 
-        private def doExchange {
+        private def doExchange() {
             out = x.exchange(out)
             assert(out.buf.isEmpty)
         }

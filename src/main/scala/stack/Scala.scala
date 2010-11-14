@@ -14,7 +14,7 @@ case class FromSStack[A](_1: scala.collection.mutable.Stack[A]) extends Stack[A]
     override def peek = _1.top
     override def size = _1.length
     override def isEmpty = _1.isEmpty
-    override def clear = _1.clear
+    override def clear() = _1.clear
 }
 
 
@@ -25,5 +25,5 @@ case class FromSArrayStack[A](_1: scala.collection.mutable.ArrayStack[A]) extend
     override def peek = _1.top
     override def size = _1.size
     override def isEmpty = _1.isEmpty
-    override def clear = _1.clear
+    override def clear() = _1.clear
 }

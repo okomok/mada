@@ -13,7 +13,7 @@ final class AdjacentBuffer[A](capacity: Int) {
     Precondition.positive(capacity, "Reactive.adjacent")
     private[this] val impl = new java.util.ArrayList[A](capacity)
     def isFull: Boolean = impl.size == capacity
-    def removeFirst: Unit = impl.remove(0)
+    def removeFirst(): Unit = impl.remove(0)
     def addLast(x: A) { assert(!isFull); impl.add(x) }
     def toVector: Vector[A] = vector.from(impl).force
 }

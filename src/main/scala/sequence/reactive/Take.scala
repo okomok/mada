@@ -10,9 +10,9 @@ package sequence; package reactive
 
 private
 case class Take[+A](_1: Reactive[A], _2: Int, _3: (A => Unit) => Unit = function.empty1) extends Reactive[A] {
-    override def close = _1.close
+    override def close() = _1.close()
     override def foreach(f: A => Unit) {
-        def k = {close;_3(f)}
+        def k = {close();_3(f)}
         if (_2 == 0) {
             k
         } else {

@@ -15,6 +15,6 @@ case class UnfoldRight[A, +B](_1: A, _2: A => Option[(B, A)]) extends Iterative[
 
         override protected def _isEnd = acc.isEmpty
         override protected def _deref = acc.get._1
-        override protected def _increment = acc = _2(acc.get._2)
+        override protected def _increment() = acc = _2(acc.get._2)
     }
 }

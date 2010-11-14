@@ -33,15 +33,15 @@ class ByNeedActions[A] {
         override def parse(v: sequence.Vector[A], start: Int, end: Int) = {
             val cur = _1.parse(v, start, end)
             if (cur != FAILURE) {
-                fireActions
+                fireActions()
             }
-            queue.clear
+            queue.clear()
             cur
         }
         override def width = _1.width
     }
 
-    private def fireActions {
+    private def fireActions() {
         val it = queue.iterator
         while (it.hasNext) {
             val (f, v) = it.next

@@ -10,7 +10,7 @@ package sequence; package reactive
 
 private
 case class OnHead[A](_1: Reactive[A], _2: A => Unit) extends Reactive[A] {
-    override def close = _1.close
+    override def close() = _1.close()
     override def foreach(f: A => Unit) {
         var go = true
         for (x <- _1) {

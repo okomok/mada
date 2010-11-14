@@ -15,7 +15,7 @@ case class Single[+A](_1: A) extends Iterative[A] {
 
         override protected def _isEnd = ends
         override protected def _deref = _1
-        override protected def _increment = ends = true
+        override protected def _increment() = ends = true
     }
 
     override def cycle = repeat(_1) // single.cycle fusion

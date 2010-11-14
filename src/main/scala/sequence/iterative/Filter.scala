@@ -12,16 +12,16 @@ private
 case class Filter[A](_1: Iterative[A], _2: A => Boolean) extends Iterative[A] {
     override def begin = new Iterator[A] {
         private[this] val it = _1.begin
-        ready
+        ready()
 
         override def isEnd = !it
         override def deref = ~it
-        override def increment {
+        override def increment() {
             it.++
-            ready
+            ready()
         }
 
-        private def ready {
+        private def ready() {
             while (it && !_2(~it)) {
                 it.++
             }

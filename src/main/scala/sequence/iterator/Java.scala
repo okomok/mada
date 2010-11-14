@@ -24,7 +24,7 @@ private class _FromJIterator[A](_1: java.util.Iterator[A]) extends _Iterator[A] 
 
     override protected def _isEnd = e.isEmpty
     override protected def _deref = e.get
-    override protected def _increment = e = ready
+    override protected def _increment() = e = ready
 
     private def ready: Option[A] = if (_1.hasNext) Some(_1.next) else None
 }

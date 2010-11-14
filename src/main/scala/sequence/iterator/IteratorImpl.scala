@@ -14,7 +14,7 @@ package sequence; package iterator
 trait _Iterator[+A] extends Iterator[A] {
     protected def _isEnd: Boolean
     protected def _deref: A
-    protected def _increment: Unit
+    protected def _increment(): Unit
 
     final override def isEnd: Boolean = _isEnd
 
@@ -25,10 +25,10 @@ trait _Iterator[+A] extends Iterator[A] {
         _deref
     }
 
-    final override def increment {
+    final override def increment() {
         if (isEnd) {
             throw new UnsupportedOperationException("increment on end iterator")
         }
-        _increment
+        _increment()
     }
 }

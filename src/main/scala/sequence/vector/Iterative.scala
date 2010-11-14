@@ -14,7 +14,7 @@ case class AsIterative[A](_1: Vector[A]) extends Iterative[A] {
         private[this] var i = _1.start
         override protected def _isEnd = i == _1.end
         override protected def _deref = _1(i)
-        override protected def _increment = i += 1
+        override protected def _increment() = i += 1
     }
 
     // TODO: override optimizable methods.

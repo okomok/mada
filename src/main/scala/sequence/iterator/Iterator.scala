@@ -34,7 +34,7 @@ trait Iterator[+A] {
     /**
      * Traverses to the next position.
      */
-    def increment: Unit
+    def increment(): Unit
 
     @aliasOf("isEnd")
     final def unary_! = isEnd
@@ -43,7 +43,7 @@ trait Iterator[+A] {
     final def unary_~ = deref
 
     @aliasOf("increment")
-    final def ++ = increment
+    final def ++ = increment()
 
     @conversion @aliasOf("!isEnd")
     final def toBoolean: Boolean = !isEnd
@@ -57,7 +57,7 @@ trait Iterator[+A] {
     final def advance(n: Int) {
         var it = n
         while (it != 0 && !isEnd) {
-            increment
+            increment()
             it -= 1
         }
     }
@@ -67,7 +67,7 @@ trait Iterator[+A] {
      */
     final def advanceWhile(p: A => Boolean) {
         while (!isEnd && p(deref)) {
-            increment
+            increment()
         }
     }
 /*

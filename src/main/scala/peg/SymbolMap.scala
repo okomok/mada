@@ -30,7 +30,7 @@ class TheSymbolMap[A](tree: TSTree[A, Peg[A]]) extends Peg[A] with scala.collect
 
     override def +=(kv: (sequence.Vector[A], Peg[A])) = { tree.put(kv._1, kv._2); this }
     override def -=(key: sequence.Vector[A]) = { tree.remove(key); this }
-    override def clear = tree.clear
+    override def clear() = tree.clear()
     override def clone: SymbolMap[A] = new TheSymbolMap(tree.clone)
 
 }

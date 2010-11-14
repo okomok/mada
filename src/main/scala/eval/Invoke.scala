@@ -14,19 +14,19 @@ case class Invoke[R](_1: Function0[R], _2: Runnable => Unit) extends Function0[R
     private[this] var r: Either[R, Throwable] = null
     _2 {
         new Runnable {
-            override def run {
+            override def run() {
                 try {
                     r = Left(_1())
                 } catch {
                     case t: Throwable => r = Right(t)
                 } finally {
-                    c.countDown
+                    c.countDown()
                 }
             }
         }
     }
     private[this] lazy val v = {
-        c.await
+        c.await()
         r match {
             case Left(r) => r
             case Right(t) => throw t

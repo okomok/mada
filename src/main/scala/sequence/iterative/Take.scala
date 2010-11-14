@@ -15,17 +15,17 @@ case class Take[+A](_1: Iterative[A], _2: Int) extends Iterative[A] {
     override def begin = new Iterator[A] {
         private[this] var it = _1.begin
         private[this] var i = _2
-        ready
+        ready()
 
         override def isEnd = !it
         override def deref = ~it
-        override def increment {
+        override def increment() {
             it.++
             i -= 1
-            ready
+            ready()
         }
 
-        private def ready {
+        private def ready() {
             if (i == 0) {
                 it = iterator.end
             }

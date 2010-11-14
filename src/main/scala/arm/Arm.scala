@@ -30,12 +30,12 @@ trait Arm[+A] extends sequence.Reactive[A] {
         } finally {
             if (null ne primary) {
                 try {
-                    close
+                    close()
                 } catch {
                     case s: Exception => /*primary.addSuppressedException(s)*/
                 }
             } else {
-                close
+                close()
             }
         }
     }

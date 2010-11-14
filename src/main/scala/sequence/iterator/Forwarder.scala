@@ -13,5 +13,5 @@ trait Forwarder[+A] extends Iterator[A] with util.Forwarder {
 
     override def isEnd = delegate.isEnd
     override def deref = delegate.deref
-    override def increment = delegate.increment
+    override def increment() = delegate.increment()
 }

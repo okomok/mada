@@ -10,12 +10,12 @@ package arm
 
 private
 case class FromJCloseable[A <: java.io.Closeable](_1: A) extends Arm[A] {
-    override val open = _1
-    override lazy val close = _1.close
+    override def open = _1
+    override def close() = _1.close()
 }
 
 private
 case class FromJLock[A <: java.util.concurrent.locks.Lock](_1: A) extends Arm[A] {
     override def open = { _1.lock; _1 }
-    override def close = _1.unlock
+    override def close() = _1.unlock
 }

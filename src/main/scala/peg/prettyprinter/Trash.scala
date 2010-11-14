@@ -10,6 +10,6 @@ package peg; package prettyprinter
 
 private
 case class Trash() extends PrettyPrinter {
-    override def close = ()
+    override def close() = ()
     override def print[A](p: Peg[A]) = p
 }

@@ -30,7 +30,7 @@ class TheSymbolSet[A](tree: TSTree[A, Unit]) extends Peg[A] with scala.collectio
 
     override def +=(v: sequence.Vector[A]) = { tree.put(v, ()); this }
     override def -=(v: sequence.Vector[A]) = { tree.remove(v); this }
-    override def clear = tree.clear
+    override def clear() = tree.clear()
     override def clone: SymbolSet[A] = new TheSymbolSet(tree.clone)
 
 }

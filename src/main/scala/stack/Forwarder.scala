@@ -15,5 +15,5 @@ trait Forwarder[A] extends Stack[A] with util.Forwarder {
     override def peek: A = delegate.peek
     override def isEmpty: Boolean = delegate.isEmpty
     override def size: Int = delegate.size
-    override def clear: Unit = delegate.clear
+    override def clear(): Unit = delegate.clear()
 }

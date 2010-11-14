@@ -16,7 +16,7 @@ case class Flatten[+A](_1: Iterative[Sequence[A]]) extends Iterative[A] {
 
         override def isEnd = !it
         override def deref = ~it
-        override def increment {
+        override def increment() {
             it.++
             if (!it) {
                 ii.++

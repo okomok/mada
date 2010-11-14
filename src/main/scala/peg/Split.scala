@@ -18,7 +18,7 @@ case class Split[A](_1: Peg[A], _2: sequence.Vector[A]) extends sequence.Iterati
 
         override protected def _isEnd = k == l
         override protected def _deref = new sequence.vector.Region(_2, k, b)
-        override protected def _increment = k_b_l_assign(u.parseImpl(_2, l, _2.end))
+        override protected def _increment() = k_b_l_assign(u.parseImpl(_2, l, _2.end))
 
         private def k_b_l_assign(r: (Int, Int, Int)) {
             k = r._1; b = r._2; l = r._3;

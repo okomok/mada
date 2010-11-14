@@ -20,7 +20,7 @@ private class _ScanLeft[A, B](_1: Iterative[A], _2: B, _3: (B, A) => B) extends 
 
         override def isEnd = !it
         override def deref = _3(z, ~it)
-        override def increment {
+        override def increment() {
             z = deref
             it.++
         }

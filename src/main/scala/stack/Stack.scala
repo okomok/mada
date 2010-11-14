@@ -43,7 +43,7 @@ trait Stack[A] {
     /**
      * Clears this stack.
      */
-    def clear: Unit
+    def clear(): Unit
 
     @conversion
     def toSStack: scala.collection.mutable.Stack[A] = throw new Error

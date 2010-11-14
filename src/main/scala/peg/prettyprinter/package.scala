@@ -33,7 +33,7 @@ package object prettyprinter {
 
     /**
      * Creates a <code>PrettyPrinter</code> which outputs XML.
-     * You must call <code>close</code> later.
+     * You must call <code>close()</code> later.
      *
      * @param   out         where xml printed
      * @param   indentWidth indent width

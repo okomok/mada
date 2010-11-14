@@ -13,16 +13,16 @@ case class Append[+A](_1: Iterative[A], _2: Iterative[A]) extends Iterative[A] {
     override def begin = new Iterator[A] {
         private[this] var it = _1.begin
         private[this] var inLeft = true
-        ready
+        ready()
 
         override def isEnd = !it
         override def deref = ~it
-        override def increment {
+        override def increment() {
             it.++
-            ready
+            ready()
         }
 
-        private def ready {
+        private def ready() {
             if (!it && inLeft) {
                 it = _2.begin
                 inLeft = false

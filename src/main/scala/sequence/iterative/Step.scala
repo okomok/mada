@@ -17,7 +17,7 @@ case class Step[+A](_1: Iterative[A], _2: Int) extends Iterative[A] {
 
         override def isEnd = !it
         override def deref = ~it
-        override def increment = it.advance(_2)
+        override def increment() = it.advance(_2)
     }
 
     override def step(n: Int) = _1.step(_2 * n) // step.step fusion

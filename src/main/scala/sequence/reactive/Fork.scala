@@ -12,7 +12,7 @@ private
 case class Fork[A](_1: Reactive[A], _2: Reactive[A] => Reactive[_]) extends Forwarder[A] {
     override protected lazy val delegate = {
         val (xs, ys) = _1.duplicate
-        _2(xs).start
+        _2(xs).start()
         ys
     }
 }
@@ -20,7 +20,7 @@ case class Fork[A](_1: Reactive[A], _2: Reactive[A] => Reactive[_]) extends Forw
 /*
 private
 case class Fork[A](_1: Reactive[A], _2: Reactive[A] => Unit) extends Reactive[A] {
-    override def close = _1.close
+    override def close() = _1.close()
     override def foreach(f: A => Unit) {
         var parent = _1
         val child = new Reactive[A] {

@@ -103,7 +103,7 @@ object Reactor {
     private[reactive]
     case class Secondary(_1: Reactor) extends Resource[Any] {
         private[this] var g: Any => Unit = null
-        override protected def closeResource = _1._gs.remove(g)
+        override protected def closeResource() = _1._gs.remove(g)
         override protected def openResource(f: Any => Unit) {
             g = new Wrap(f)
             _1._gs.add(g)

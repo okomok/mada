@@ -13,6 +13,6 @@ case class Repeat[+A](_1: A) extends Iterative[A] {
     override def begin = new Iterator[A] {
         override def isEnd = false
         override def deref = _1
-        override def increment = ()
+        override def increment() = ()
     }
 }

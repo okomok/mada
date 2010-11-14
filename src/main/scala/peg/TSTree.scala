@@ -16,7 +16,7 @@ package peg
 class TSTree[A, V](implicit __comp: Ordering[A]) extends java.lang.Cloneable {
     private var rootNode: TSTreeNode[A, V] = null
 
-    def clear {
+    def clear() {
         rootNode = null
     }
 
@@ -68,7 +68,7 @@ class TSTree[A, V](implicit __comp: Ordering[A]) extends java.lang.Cloneable {
     override def toString: String = {
         val out = prettyprinter.Xml(new java.io.StringWriter, prettyprinter.defaultIndentWidth)
         print(out)
-        out.close
+        out.close()
         out._1.toString
     }
 
@@ -227,7 +227,7 @@ private class TSTreeNode[A, V](val elem: A, val parent: TSTreeNode[A, V]) {
         data.isEmpty && isLeaf
     }
 
-    def collectGarbage {
+    def collectGarbage() {
         if ((parent ne null) && isGarbage) {
             if (parent.left eq this) {
                 parent.left = null
@@ -238,7 +238,7 @@ private class TSTreeNode[A, V](val elem: A, val parent: TSTreeNode[A, V]) {
             if (parent.right eq this) {
                 parent.right = null
             }
-            parent.collectGarbage
+            parent.collectGarbage()
         }
     }
 
@@ -247,7 +247,7 @@ private class TSTreeNode[A, V](val elem: A, val parent: TSTreeNode[A, V]) {
             if (c ne null) {
                 out.writeStartElement(s)
                 c.print(out)
-                out.writeEndElement
+                out.writeEndElement()
             }
         }
         out.writeStartElement("node")
@@ -258,7 +258,7 @@ private class TSTreeNode[A, V](val elem: A, val parent: TSTreeNode[A, V]) {
         _print(left, "left")
         _print(middle, "middle")
         _print(right, "right")
-        out.writeEndElement
+        out.writeEndElement()
     }
 
     override def toString = string.concat("TSTreeNode(elem: ", elem, ", data: ", data, ')')

@@ -16,9 +16,9 @@ trait Resource[+A] extends ReactiveOnce[A] {
     final def used: Reactive[A] = using(this)
 
     protected def openResource(f: A => Unit): Unit
-    protected def closeResource: Unit
+    protected def closeResource(): Unit
 
     final override def foreachOnce(f: A => Unit) = openResource(f)
-    final override def close = c
-    private[this] lazy val c = closeResource
+    final override def close() = c
+    private[this] lazy val c = closeResource()
 }

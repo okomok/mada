@@ -15,7 +15,7 @@ case class Shift[+A](_1: Reactive[A], _2: eval.ByName[Unit] => Unit) extends For
 
 private
 case class ShiftReact[A](_1: Reactive[A], _2: A => (A => Unit) => Unit) extends Reactive[A] {
-    override def close = _1.close
+    override def close() = _1.close()
     override def foreach(f: A => Unit) {
         for (x <- _1) {
             _2(x)(f)

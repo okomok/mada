@@ -14,5 +14,5 @@ case class FromJDeque[A](_1: java.util.Deque[A]) extends Stack[A] {
     override def peek = _1.peek
     override def size = _1.size
     override def isEmpty = _1.isEmpty
-    override def clear = _1.clear
+    override def clear() = _1.clear()
 }

@@ -35,7 +35,7 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
     /**
      * Shall be thread-safe.
      */
-    override def close: Unit = ()
+    override def close(): Unit = ()
 
     /**
      * `f` is applied to each element, but it is unspecified when|where `f` is called.
@@ -156,7 +156,7 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
     final def doing(f: => Unit): Reactive[A] = react(_ => f)
 
     @equivalentTo("foreach(_ => ())")
-    def start: Unit = foreach(_ => ())
+    def start(): Unit = foreach(_ => ())
 
     /**
      * Forks.
@@ -224,7 +224,7 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
     def header[B >: A](it: Iterative[B]): Reactive[B] = Header[B](this, it)
 
     /**
-     * Ignores `close` call.
+     * Ignores `close()` call.
      */
     def protect: Reactive[A] = Protect(this)
 

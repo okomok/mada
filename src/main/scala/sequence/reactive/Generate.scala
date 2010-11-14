@@ -10,10 +10,10 @@ package sequence; package reactive
 
 private
 case class Generate[+A](_1: Reactive[_], _2: Iterative[A], _3: (A => Unit) => Unit = function.empty1) extends Reactive[A] {
-    override def close = _1.close
+    override def close() = _1.close()
     override def foreach(f: A => Unit) {
         val it = _2.begin
-        def k = {close;_3(f)}
+        def k = {close();_3(f)}
         if (!it) {
             k
         } else {

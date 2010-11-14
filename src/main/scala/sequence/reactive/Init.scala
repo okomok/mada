@@ -10,7 +10,7 @@ package sequence; package reactive
 
 private
 case class Init[+A](_1: Reactive[A]) extends Reactive[A] {
-    override def close = _1.close
+    override def close() = _1.close()
     override def foreach(f: A => Unit) {
         var prev: Option[A] = None
         for (x <- _1) {

@@ -12,7 +12,7 @@ package eval
  * Runs in a newly created thread.
  */
 case class Threaded[R](_1: ByName[R]) extends Function0[R] {
-    private[this] val f = Invoke(_1, r => new Thread(r).start)
+    private[this] val f = Invoke(_1, r => new Thread(r).start())
     override def apply = f()
 }
 

@@ -14,7 +14,7 @@ case class AsIterative[A](_1: List[A]) extends Iterative[A] {
         private[this] var it = _1
         override protected def _isEnd = it.isEmpty
         override protected def _deref = it.head
-        override protected def _increment = it = it.tail
+        override protected def _increment() = it = it.tail
     }
 
     override def isEmpty = _1.isEmpty

@@ -33,7 +33,7 @@ object Nio {
                         for (key <- Iterative.from(keys)) {
                             f(key.asInstanceOf[SelectionKey])
                         }
-                        keys.clear
+                        keys.clear()
                     }
                 }
             } catch  {

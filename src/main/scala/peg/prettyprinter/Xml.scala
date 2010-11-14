@@ -23,17 +23,17 @@ case class Xml(_1: java.io.Writer, _2: Int) extends PrettyPrinter {
     def writeStartElement(tag: Any) {
         stack.push(tag)
         _1.write((indent ++ "<" ++ tag.toString ++ ">\n").stringize)
-        _1.flush
+        _1.flush()
         indentLevel += 1
     }
 
     /**
      * Writes end element tag with new line.
      */
-    def writeEndElement {
+    def writeEndElement() {
         indentLevel -= 1
         _1.write((indent ++ "</" ++ stack.pop.toString ++ ">\n").stringize)
-        _1.flush
+        _1.flush()
     }
 
     /**
@@ -41,13 +41,13 @@ case class Xml(_1: java.io.Writer, _2: Int) extends PrettyPrinter {
      */
     def writeElement(tag: Any, chars: Any) {
         _1.write((indent ++ "<" ++ tag.toString ++ ">" ++ chars.toString ++ "</" ++ tag.toString ++ ">\n").stringize)
-        _1.flush
+        _1.flush()
     }
 
-    @equivalentTo("_1.close")
-    override def close {
+    @equivalentTo("_1.close()")
+    override def close() {
         assert(stack.isEmpty)
-        _1.close
+        _1.close()
     }
 
     override def print[A](p: Peg[A]): Peg[A] = Print(p)
@@ -64,7 +64,7 @@ case class Xml(_1: java.io.Writer, _2: Int) extends PrettyPrinter {
                 writeElement("parsed", v(start, cur))
             }
 
-            writeEndElement
+            writeEndElement()
             cur
         }
         override def width = _1.width

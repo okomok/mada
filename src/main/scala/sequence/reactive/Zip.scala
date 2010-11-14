@@ -14,7 +14,7 @@ import java.util.LinkedList
 // Lock-free please!
 private
 case class Zip[A, B](_1: Reactive[A], _2: Reactive[B]) extends Reactive[(A, B)] {
-    override def close = { _1.close; _2.close }
+    override def close() = { _1.close(); _2.close() }
     override def foreach(f: Tuple2[A, B] => Unit) {
         val q1 = new LinkedList[A]
         val q2 = new LinkedList[B]

@@ -15,5 +15,5 @@ import scala.compat.Platform
 class Bench extends Arm[Unit] {
     private var s: Long = _
     override def open = s = Platform.currentTime
-    override def close = println((Platform.currentTime - s) + "ms")
+    override def close() = println((Platform.currentTime - s) + "ms")
 }
