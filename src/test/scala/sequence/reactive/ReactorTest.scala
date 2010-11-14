@@ -29,9 +29,9 @@ class ReactorTest extends org.scalatest.junit.JUnit3Suite {
                 3
             } then {
                 cur ! OK
-            } reactTotal { x =>
+            } react { x =>
                 out.add(x)
-            } reactTotal { x =>
+            } react { x =>
                 out.add(x+10)
             } start
         }
@@ -60,9 +60,9 @@ class ReactorTest extends org.scalatest.junit.JUnit3Suite {
                 3
             } then {
                 cur ! OK
-            } reactTotal { x =>
+            } react { x =>
                 out.add(x)
-            } reactTotal { x =>
+            } react { x =>
                 out.add(x+10)
             } start
         }
@@ -92,9 +92,9 @@ class ReactorTest extends org.scalatest.junit.JUnit3Suite {
             } then {
                 cur ! OK
                 Actor.exit
-            } reactTotal { x =>
+            } react { x =>
                 out.add(x)
-            } reactTotal { x =>
+            } react { x =>
                 out.add(x+10)
             } start
         }

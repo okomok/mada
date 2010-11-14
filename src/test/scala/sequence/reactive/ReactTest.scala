@@ -19,7 +19,7 @@ class ReactTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial {
         val a = reactive.Of(1,2,3,2,5)
         val out = new java.util.ArrayList[Int]
-        a react {
+        a reactMatch {
             case 2 => out.add(20)
             case 3 => out.add(30)
         } start;
@@ -29,7 +29,7 @@ class ReactTest extends org.scalatest.junit.JUnit3Suite {
     def testTotal {
         val a = reactive.Of(1,2,3,4,5)
         val out = new java.util.ArrayList[Int]
-        a react {
+        a reactMatch {
             case x => out.add(x)
         } start;
         assertEquals(iterative.Of(1,2,3,4,5), iterative.from(out))
@@ -39,7 +39,7 @@ class ReactTest extends org.scalatest.junit.JUnit3Suite {
     def testTotal2 {
         val a = reactive.Of(1,2,3,4,5)
         val out = new java.util.ArrayList[Int]
-        a reactTotal {
+        a react {
             x => out.add(x)
         } take {
             3

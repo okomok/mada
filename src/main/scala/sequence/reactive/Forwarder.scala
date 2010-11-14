@@ -48,8 +48,8 @@ trait Forwarder[+A] extends Reactive[A] with Sequence.Forwarder[A] {
     override def toIterative: Iterative[A] = delegate.toIterative
     override def toResponder: Responder[A] = delegate.toResponder
     override def actor: scala.actors.Actor = delegate.actor
-    override def react(f: PartialFunction[A, Unit]): Reactive[A] = around(delegate.react(f))
-    override def reactTotal(f: A => Unit): Reactive[A] = around(delegate.reactTotal(f))
+    override def react(f: A => Unit): Reactive[A] = around(delegate.react(f))
+    override def reactMatch(f: PartialFunction[A, Unit]): Reactive[A] = around(delegate.reactMatch(f))
     override def start: Unit = delegate.start
     override def fork(f: Reactive[A] => Reactive[_]): Reactive[A] = around(delegate.fork(f))
     override def duplicate: (Reactive[A], Reactive[A]) = around2(delegate.duplicate)
