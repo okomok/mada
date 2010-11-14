@@ -33,7 +33,7 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
     override def asReactive: Reactive[A] = this
 
     /**
-     * Must be idempotent and thread-safe.
+     * Shall be thread-safe.
      */
     override def close: Unit = ()
 
