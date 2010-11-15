@@ -27,7 +27,7 @@ class ShiftTest extends org.scalatest.junit.JUnit3Suite {
         val s = new java.util.ArrayList[Int]
         val k: (=> Unit) => Any = mada.eval.InEdt[Unit]
         reactive.Of(0,1,2,3,4) shift {
-            reactive.InEdt
+            mada.eval.InEdt
         } map { x =>
             x + 1
         } foreach { x =>

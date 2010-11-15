@@ -257,6 +257,7 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
      * Reactions are invoked in somewhere you specify.
      */
     def shift(k: (=> Unit) => Unit): Reactive[A] = Shift(this, k)
+    final def shift(s: eval.Strategy): Reactive[A] = Shift(this, function.discard(s.apply[Unit]))
 
     /**
      * Reactions are invoked by somehow you specify.

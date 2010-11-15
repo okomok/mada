@@ -26,6 +26,7 @@ class Common {
      * An infinite sequence
      */
     def origin(k: (=> Unit) => Unit): Reactive[Unit] = Origin(k)
+    def origin(s: eval.Strategy): Reactive[Unit] = Origin(function.discard(s.apply[Unit]))
 
     /**
      * Turns into a by-name expression.

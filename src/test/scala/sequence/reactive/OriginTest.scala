@@ -19,7 +19,7 @@ class OriginTest extends org.scalatest.junit.JUnit3Suite {
     def testThreaded { // force to create a thread.
         val c = new java.util.concurrent.CountDownLatch(1)
         val a = new java.util.ArrayList[Int]
-        for (x <- reactive.origin(reactive.Threaded).generate(0 until 10).then(c.countDown)) {
+        for (x <- reactive.origin(mada.eval.Threaded).generate(0 until 10).then(c.countDown)) {
             a.add(x)
         }
         c.await
@@ -29,7 +29,7 @@ class OriginTest extends org.scalatest.junit.JUnit3Suite {
     def testAsync { // in the thread pool.
         val c = new java.util.concurrent.CountDownLatch(1)
         val a = new java.util.ArrayList[Int]
-        for (x <- reactive.origin(reactive.Async).generate(0 until 10).then(c.countDown)) {
+        for (x <- reactive.origin(mada.eval.Async).generate(0 until 10).then(c.countDown)) {
             a.add(x)
         }
         c.await
@@ -42,7 +42,7 @@ class OriginTest extends org.scalatest.junit.JUnit3Suite {
 class OriginStrictTest  extends org.scalatest.junit.JUnit3Suite {
     def testTrivial: Unit = {
         val s = new java.util.ArrayList[Int]
-        for (x <- reactive.origin(reactive.Strict).generate(Iterative.Of(9,8,7,6,5))) {
+        for (x <- reactive.origin(mada.eval.Strict).generate(Iterative.Of(9,8,7,6,5))) {
             s.add(x)
         }
         assertEquals(vector.Of(9,8,7,6,5), vector.from(s))
@@ -50,7 +50,7 @@ class OriginStrictTest  extends org.scalatest.junit.JUnit3Suite {
 
     def testEmpty: Unit = {
         val s = new java.util.ArrayList[Int]
-        for (x <- reactive.origin(reactive.Strict).generate(Iterative.empty.of[Int])) {
+        for (x <- reactive.origin(mada.eval.Strict).generate(Iterative.empty.of[Int])) {
             s.add(x)
         }
         assertTrue(s.isEmpty)
@@ -59,7 +59,7 @@ class OriginStrictTest  extends org.scalatest.junit.JUnit3Suite {
     def testRandom: Unit = {
         val k = new java.util.Random
         val s = new java.util.ArrayList[Int]
-        for (x <- reactive.origin(reactive.Strict).generate(iterative.Randoms.OfInt(k)).take(3)) {
+        for (x <- reactive.origin(mada.eval.Strict).generate(iterative.Randoms.OfInt(k)).take(3)) {
             s.add(x)
             //println(x)
         }
