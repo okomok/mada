@@ -396,6 +396,27 @@ object Swing {
     }
 
 
+// ItemEvent
+
+    import java.awt.event.{ItemEvent, ItemListener}
+
+    type ItemEventSource = {
+        def addItemListener(l: ItemListener)
+        def removeItemListener(l: ItemListener)
+    }
+
+    case class ItemStateChanged(source: ItemEventSource) extends Resource[ItemEvent] {
+        private[this] var l: ItemListener = null
+        override protected def closeResource() = source.removeItemListener(l)
+        override protected def openResource(f: ItemEvent => Unit) {
+            l = new ItemListener {
+                override def itemStateChanged(e: ItemEvent) = f(e)
+            }
+            source.addItemListener(l)
+        }
+    }
+
+
 // KeyEvent
 
     import java.awt.event.{KeyEvent, KeyAdapter}
