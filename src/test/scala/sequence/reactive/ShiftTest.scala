@@ -17,7 +17,7 @@ class ShiftTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial: Unit = {
         val s = new java.util.ArrayList[Int]
-        for (x <- reactive.Of(0,1,2,3,4).shift(k => {s.add(99);k();k()}).map(_+1)) {
+        for (x <- reactive.Of(0,1,2,3,4).shift(k => {s.add(99);k;k}).map(_+1)) {
             s.add(x)
         }
         assertEquals(vector.Of(99,1,1,99,2,2,99,3,3,99,4,4,99,5,5), vector.from(s))
@@ -25,8 +25,9 @@ class ShiftTest extends org.scalatest.junit.JUnit3Suite {
 
     def testSwing(off: Int) {
         val s = new java.util.ArrayList[Int]
-        reactive.Of(0,1,2,3,4) shift { k =>
-            javax.swing.SwingUtilities.invokeLater(k)
+        val k: (=> Unit) => Any = mada.eval.InEdt[Unit]
+        reactive.Of(0,1,2,3,4) shift {
+            reactive.InEdt
         } map { x =>
             x + 1
         } foreach { x =>

@@ -9,7 +9,7 @@ package sequence; package reactive
 
 
 private
-case class Origin(_1: eval.Strategy) extends Resource[Unit] {
+case class Origin(_1: (=> Unit) => Unit) extends Resource[Unit] {
     @volatile private[this] var isClosed = false
     override protected def closeResource() = isClosed = true
     override protected def openResource(f: Unit => Unit) {

@@ -15,7 +15,7 @@ import mada.sequence._
 class BreakableTest extends org.scalatest.junit.JUnit3Suite {
 
     def naturals: Reactive[Int] = {
-        reactive.origin(mada.eval.Async).generate(0 until 1000)
+        reactive.origin(reactive.Async).generate(0 until 1000)
     }
 
     def testTrivial {
