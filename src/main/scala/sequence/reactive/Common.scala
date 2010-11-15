@@ -52,4 +52,10 @@ class Common {
     @equivalentTo("scala.util.continuations.reset[A, Any]")
     def block[A](ctx: => A @continuations.cpsParam[A, Any]): Unit = continuations.reset(ctx)
 
+    @equivalentTo("from(util.optional(body))")
+    def optional[A](body: => A): Reactive[A] = from(util.optional(body))
+
+    @equivalentTo("from(util.optionalErr(body))")
+    def optionalErr[A](body: => A): Reactive[A] = from(util.optionalErr(body))
+
 }

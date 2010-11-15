@@ -95,7 +95,20 @@ package object util {
     def optional[R](body: => R): Option[R] = try {
         Some(body)
     } catch {
-        case _ => None
+        case _: Throwable => None
+    }
+
+    /**
+     * Returns an Option value instead of exception printing error log.
+     */
+    def optionalErr[R](body: => R): Option[R] = try {
+        Some(body)
+    } catch {
+        case x: Throwable => {
+            val d = new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new java.util.Date())
+            java.lang.System.err.println("[optional-error]["+ d + "] " + x.toString)
+            None
+        }
     }
 
     /**

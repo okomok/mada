@@ -21,7 +21,17 @@ class FromTraversable[+A](_1: scala.collection.Traversable[A]) extends Reactive[
 
 
 private
-case class FromResponder[+A](_1: Responder[A]) extends Reactive[A] {
+class FromOption[+A](_1: Option[A]) extends Reactive[A] {
+    override def foreach(f: A => Unit) {
+        if (!_1.isEmpty) {
+            f(_1.get)
+        }
+    }
+}
+
+
+private
+class FromResponder[+A](_1: Responder[A]) extends Reactive[A] {
     override def foreach(f: A => Unit) = _1.respond(f)
 }
 
