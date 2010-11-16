@@ -12,7 +12,15 @@ private
 case class Merge[+A](_1: Reactive[A], _2: Reactive[A]) extends Reactive[A] {
     override def close() = { _1.close(); _2.close() }
     override def foreach(f: A => Unit) {
-        for (x <- _1) f(x)
-        for (y <- _2) f(y)
+        for (x <- _1) {
+            f.synchronized {
+                f(x)
+            }
+        }
+        for (y <- _2) {
+            f.synchronized {
+                f(y)
+            }
+        }
     }
 }

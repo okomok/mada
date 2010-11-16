@@ -12,7 +12,12 @@ import java.util.concurrent.atomic
 
 
 private
-class IfFirst[-T](_then: T => Unit, _else: T => Unit) extends Function1[T, Unit] {
+case class IfFirst[T](_then: T => Unit) {
+    def Else(_else: T => Unit): _IfFirst[T] = new _IfFirst[T](_then, _else)
+}
+
+private
+class _IfFirst[-T](_then: T => Unit, _else: T => Unit) extends Function1[T, Unit] {
     private[this] val first = new atomic.AtomicBoolean(true)
 
     override def apply(x: T) {
@@ -25,13 +30,6 @@ class IfFirst[-T](_then: T => Unit, _else: T => Unit) extends Function1[T, Unit]
     def isSecond: Boolean = !first.get
 }
 
-private
-object IfFirst {
-    def apply[T](_then: T => Unit) = new {
-        def Else(_else: T => Unit): IfFirst[T] = new IfFirst[T](_then, _else)
-    }
-}
-
 
 /**
  * Equivalent to `lazy val` with `isDone`.
@@ -39,7 +37,7 @@ object IfFirst {
 @deprecated("unused")
 private
 class OnlyFirst[-T](f: T => Unit) extends Function1[T, Unit] {
-    private[this] val delegate = new IfFirst[T](f, _ => ())
+    private[this] val delegate = new _IfFirst[T](f, _ => ())
     override def apply(x: T) = delegate(x)
 
     def isDone: Boolean = delegate.isSecond
@@ -49,7 +47,7 @@ class OnlyFirst[-T](f: T => Unit) extends Function1[T, Unit] {
 @deprecated("unused")
 private
 class SkipFirst[-T](f: T => Unit) extends Function1[T, Unit] {
-    private[this] val delegate = new IfFirst[T](_ => (), f)
+    private[this] val delegate = new _IfFirst[T](_ => (), f)
     override def apply(x: T) = delegate(x)
 
     def isSkipped: Boolean = delegate.isSecond
