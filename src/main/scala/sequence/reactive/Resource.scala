@@ -12,9 +12,6 @@ package sequence; package reactive
  * Mixin for a Reactive resource.
  */
 trait Resource[+A] extends ReactiveOnce[A] {
-    @equivalentTo("using(this)")
-    final def used: Reactive[A] = using(this)
-
     protected def openResource(f: A => Unit): Unit
     protected def closeResource(): Unit
 

@@ -62,7 +62,7 @@ object Swing {
                 source.addAncestorListener(l)
             }
         }
-        def Event: Resource[AncestorEvent] = new Event
+        def Event: Reactive[AncestorEvent] = new Event
 
         private
         class Added extends Resource[AncestorEvent] {
@@ -75,7 +75,7 @@ object Swing {
                 source.addAncestorListener(l)
             }
         }
-        def Added: Resource[AncestorEvent] = new Added
+        def Added: Reactive[AncestorEvent] = new Added
 
         private
         class Moved extends Resource[AncestorEvent] {
@@ -88,7 +88,7 @@ object Swing {
                 source.addAncestorListener(l)
             }
         }
-        def Moved: Resource[AncestorEvent] = new Moved
+        def Moved: Reactive[AncestorEvent] = new Moved
 
         private
         class Removed extends Resource[AncestorEvent] {
@@ -101,7 +101,7 @@ object Swing {
                 source.addAncestorListener(l)
             }
         }
-        def Removed: Resource[AncestorEvent] = new Removed
+        def Removed: Reactive[AncestorEvent] = new Removed
 
     }
 
@@ -147,7 +147,7 @@ object Swing {
                 source.addComponentListener(l)
             }
         }
-        def Event: Resource[ComponentEvent] = new Event
+        def Event: Reactive[ComponentEvent] = new Event
 
         private
         class Hidden extends Resource[ComponentEvent] {
@@ -160,7 +160,7 @@ object Swing {
                 source.addComponentListener(l)
             }
         }
-        def Hidden: Resource[ComponentEvent] = new Hidden
+        def Hidden: Reactive[ComponentEvent] = new Hidden
 
         private
         class Moved extends Resource[ComponentEvent] {
@@ -173,7 +173,7 @@ object Swing {
                 source.addComponentListener(l)
             }
         }
-        def Moved: Resource[ComponentEvent] = new Moved
+        def Moved: Reactive[ComponentEvent] = new Moved
 
         private
         class Resized extends Resource[ComponentEvent] {
@@ -186,7 +186,7 @@ object Swing {
                 source.addComponentListener(l)
             }
         }
-        def Resized: Resource[ComponentEvent] = new Resized
+        def Resized: Reactive[ComponentEvent] = new Resized
 
         private
         class Shown extends Resource[ComponentEvent] {
@@ -199,7 +199,7 @@ object Swing {
                 source.addComponentListener(l)
             }
         }
-        def Shown: Resource[ComponentEvent] = new Shown
+        def Shown: Reactive[ComponentEvent] = new Shown
     }
 
 
@@ -221,7 +221,7 @@ object Swing {
                 source.addContainerListener(l)
             }
         }
-        def Event: Resource[ContainerEvent] = new Event
+        def Event: Reactive[ContainerEvent] = new Event
 
         private
         class Added extends Resource[ContainerEvent] {
@@ -234,7 +234,7 @@ object Swing {
                 source.addContainerListener(l)
             }
         }
-        def Added: Resource[ContainerEvent] = new Added
+        def Added: Reactive[ContainerEvent] = new Added
 
         private
         class Removed extends Resource[ContainerEvent] {
@@ -247,7 +247,7 @@ object Swing {
                 source.addContainerListener(l)
             }
         }
-        def Removed: Resource[ContainerEvent] = new Removed
+        def Removed: Reactive[ContainerEvent] = new Removed
 
     }
 
@@ -270,7 +270,7 @@ object Swing {
                 source.addFocusListener(l)
             }
         }
-        def Event: Resource[FocusEvent] = new Event
+        def Event: Reactive[FocusEvent] = new Event
 
         private
         class Gained extends Resource[FocusEvent] {
@@ -283,7 +283,7 @@ object Swing {
                 source.addFocusListener(l)
             }
         }
-        def Gained: Resource[FocusEvent] = new Gained
+        def Gained: Reactive[FocusEvent] = new Gained
 
         private
         class Lost extends Resource[FocusEvent] {
@@ -296,7 +296,7 @@ object Swing {
                 source.addFocusListener(l)
             }
         }
-        def Lost: Resource[FocusEvent] = new Lost
+        def Lost: Reactive[FocusEvent] = new Lost
 
     }
 
@@ -318,7 +318,7 @@ object Swing {
                 source.addHierarchyListener(l)
             }
         }
-        def Changed: Resource[HierarchyEvent] = new Changed
+        def Changed: Reactive[HierarchyEvent] = new Changed
 
         private
         class Bounds extends Resource[HierarchyEvent] {
@@ -332,7 +332,7 @@ object Swing {
                 source.addHierarchyBoundsListener(l)
             }
         }
-        def Bounds: Resource[HierarchyEvent] = new Bounds
+        def Bounds: Reactive[HierarchyEvent] = new Bounds
 
         private
         class Moved extends Resource[HierarchyEvent] {
@@ -345,7 +345,7 @@ object Swing {
                 source.addHierarchyBoundsListener(l)
             }
         }
-        def Moved: Resource[HierarchyEvent] = new Moved
+        def Moved: Reactive[HierarchyEvent] = new Moved
 
         private
         class Resized extends Resource[HierarchyEvent] {
@@ -358,7 +358,7 @@ object Swing {
                 source.addHierarchyBoundsListener(l)
             }
         }
-        def Resized: Resource[HierarchyEvent] = new Resized
+        def Resized: Reactive[HierarchyEvent] = new Resized
 
     }
 
@@ -387,7 +387,7 @@ object Swing {
                 source.addInputMethodListener(l)
             }
         }
-        def Event: Resource[InputMethodEvent] = new Event
+        def Event: Reactive[InputMethodEvent] = new Event
 
         private
         class CaretPositionChanged extends Resource[InputMethodEvent] {
@@ -400,7 +400,7 @@ object Swing {
                 source.addInputMethodListener(l)
             }
         }
-        def CaretPositionChanged: Resource[InputMethodEvent] = new CaretPositionChanged
+        def CaretPositionChanged: Reactive[InputMethodEvent] = new CaretPositionChanged
 
         private
         class TextChanged extends Resource[InputMethodEvent] {
@@ -413,7 +413,7 @@ object Swing {
                 source.addInputMethodListener(l)
             }
         }
-        def TextChanged: Resource[InputMethodEvent] = new TextChanged
+        def TextChanged: Reactive[InputMethodEvent] = new TextChanged
 
     }
 
@@ -458,7 +458,7 @@ object Swing {
                 source.addKeyListener(l)
             }
         }
-        def Event: Resource[KeyEvent] = new Event
+        def Event: Reactive[KeyEvent] = new Event
 
         private
         class Pressed extends Resource[KeyEvent] {
@@ -471,7 +471,7 @@ object Swing {
                 source.addKeyListener(l)
             }
         }
-        def Pressed: Resource[KeyEvent] = new Pressed
+        def Pressed: Reactive[KeyEvent] = new Pressed
 
         private
         class Released extends Resource[KeyEvent] {
@@ -484,7 +484,7 @@ object Swing {
                 source.addKeyListener(l)
             }
         }
-        def Released: Resource[KeyEvent] = new Released
+        def Released: Reactive[KeyEvent] = new Released
 
         private
         class Typed extends Resource[KeyEvent] {
@@ -497,7 +497,7 @@ object Swing {
                 source.addKeyListener(l)
             }
         }
-        def Typed: Resource[KeyEvent] = new Typed
+        def Typed: Reactive[KeyEvent] = new Typed
 
     }
 
@@ -533,7 +533,7 @@ object Swing {
                 source.addMenuListener(l)
             }
         }
-        def Event: Resource[MenuEvent] = new Event
+        def Event: Reactive[MenuEvent] = new Event
 
         private
         class Canceled extends Resource[MenuEvent] {
@@ -546,7 +546,7 @@ object Swing {
                 source.addMenuListener(l)
             }
         }
-        def Canceled: Resource[MenuEvent] = new Canceled
+        def Canceled: Reactive[MenuEvent] = new Canceled
 
         private
         class Deselected extends Resource[MenuEvent] {
@@ -559,7 +559,7 @@ object Swing {
                 source.addMenuListener(l)
             }
         }
-        def Deselected: Resource[MenuEvent] = new Deselected
+        def Deselected: Reactive[MenuEvent] = new Deselected
 
         private
         class Selected extends Resource[MenuEvent] {
@@ -572,7 +572,7 @@ object Swing {
                 source.addMenuListener(l)
             }
         }
-        def Selected: Resource[MenuEvent] = new Selected
+        def Selected: Reactive[MenuEvent] = new Selected
 
     }
 
@@ -610,7 +610,7 @@ object Swing {
                 source.addMenuDragMouseListener(l)
             }
         }
-        def Event: Resource[MenuDragMouseEvent] = new Event
+        def Event: Reactive[MenuDragMouseEvent] = new Event
 
         private
         class Dragged extends Resource[MenuDragMouseEvent] {
@@ -623,7 +623,7 @@ object Swing {
                 source.addMenuDragMouseListener(l)
             }
         }
-        def Dragged: Resource[MenuDragMouseEvent] = new Dragged
+        def Dragged: Reactive[MenuDragMouseEvent] = new Dragged
 
         private
         class Entered extends Resource[MenuDragMouseEvent] {
@@ -636,7 +636,7 @@ object Swing {
                 source.addMenuDragMouseListener(l)
             }
         }
-        def Entered: Resource[MenuDragMouseEvent] = new Entered
+        def Entered: Reactive[MenuDragMouseEvent] = new Entered
 
         private
         class Exited extends Resource[MenuDragMouseEvent] {
@@ -649,7 +649,7 @@ object Swing {
                 source.addMenuDragMouseListener(l)
             }
         }
-        def Exited: Resource[MenuDragMouseEvent] = new Exited
+        def Exited: Reactive[MenuDragMouseEvent] = new Exited
 
         private
         class Released extends Resource[MenuDragMouseEvent] {
@@ -662,7 +662,7 @@ object Swing {
                 source.addMenuDragMouseListener(l)
             }
         }
-        def Released: Resource[MenuDragMouseEvent] = new Released
+        def Released: Reactive[MenuDragMouseEvent] = new Released
 
     }
 
@@ -698,7 +698,7 @@ object Swing {
                 source.addMenuKeyListener(l)
             }
         }
-        def Event: Resource[MenuKeyEvent] = new Event
+        def Event: Reactive[MenuKeyEvent] = new Event
 
         private
         class Pressed extends Resource[MenuKeyEvent] {
@@ -711,7 +711,7 @@ object Swing {
                 source.addMenuKeyListener(l)
             }
         }
-        def Pressed: Resource[MenuKeyEvent] = new Pressed
+        def Pressed: Reactive[MenuKeyEvent] = new Pressed
 
         private
         class Released extends Resource[MenuKeyEvent] {
@@ -724,7 +724,7 @@ object Swing {
                 source.addMenuKeyListener(l)
             }
         }
-        def Released: Resource[MenuKeyEvent] = new Released
+        def Released: Reactive[MenuKeyEvent] = new Released
 
         private
         class Typed extends Resource[MenuKeyEvent] {
@@ -737,7 +737,7 @@ object Swing {
                 source.addMenuKeyListener(l)
             }
         }
-        def Typed: Resource[MenuKeyEvent] = new Typed
+        def Typed: Reactive[MenuKeyEvent] = new Typed
 
     }
 
@@ -764,7 +764,7 @@ object Swing {
                 source.addMouseListener(l)
             }
         }
-        def Event: Resource[MouseEvent] = new Event
+        def Event: Reactive[MouseEvent] = new Event
 
         private
         class Clicked extends Resource[MouseEvent] {
@@ -777,7 +777,7 @@ object Swing {
                 source.addMouseListener(l)
             }
         }
-        def Clicked: Resource[MouseEvent] = new Clicked
+        def Clicked: Reactive[MouseEvent] = new Clicked
 
         private
         class Entered extends Resource[MouseEvent] {
@@ -790,7 +790,7 @@ object Swing {
                 source.addMouseListener(l)
             }
         }
-        def Entered: Resource[MouseEvent] = new Entered
+        def Entered: Reactive[MouseEvent] = new Entered
 
         private
         class Exited extends Resource[MouseEvent] {
@@ -803,7 +803,7 @@ object Swing {
                 source.addMouseListener(l)
             }
         }
-        def Exited: Resource[MouseEvent] = new Exited
+        def Exited: Reactive[MouseEvent] = new Exited
 
         private
         class Pressed extends Resource[MouseEvent] {
@@ -816,7 +816,7 @@ object Swing {
                 source.addMouseListener(l)
             }
         }
-        def Pressed: Resource[MouseEvent] = new Pressed
+        def Pressed: Reactive[MouseEvent] = new Pressed
 
         private
         class Released extends Resource[MouseEvent] {
@@ -829,7 +829,7 @@ object Swing {
                 source.addMouseListener(l)
             }
         }
-        def Released: Resource[MouseEvent] = new Released
+        def Released: Reactive[MouseEvent] = new Released
 
         // Motion MouseEvent
 
@@ -845,7 +845,7 @@ object Swing {
                 source.addMouseMotionListener(l)
             }
         }
-        def Motion: Resource[MouseEvent] = new Motion
+        def Motion: Reactive[MouseEvent] = new Motion
 
         private
         class Dragged extends Resource[MouseEvent] {
@@ -858,7 +858,7 @@ object Swing {
                 source.addMouseMotionListener(l)
             }
         }
-        def Dragged: Resource[MouseEvent] = new Dragged
+        def Dragged: Reactive[MouseEvent] = new Dragged
 
         private
         class Moved extends Resource[MouseEvent] {
@@ -871,7 +871,7 @@ object Swing {
                 source.addMouseMotionListener(l)
             }
         }
-        def Moved: Resource[MouseEvent] = new Moved
+        def Moved: Reactive[MouseEvent] = new Moved
 
         // MouseWheelEvent
 
@@ -886,7 +886,7 @@ object Swing {
                 source.addMouseWheelListener(l)
             }
         }
-        def WheelMoved: Resource[MouseEvent] = new WheelMoved
+        def WheelMoved: Reactive[MouseEvent] = new WheelMoved
 
     }
 
@@ -922,7 +922,7 @@ object Swing {
                 source.addPopupMenuListener(l)
             }
         }
-        def Event: Resource[PopupMenuEvent] = new Event
+        def Event: Reactive[PopupMenuEvent] = new Event
 
         private
         class Canceled extends Resource[PopupMenuEvent] {
@@ -935,7 +935,7 @@ object Swing {
                 source.addPopupMenuListener(l)
             }
         }
-        def Canceled: Resource[PopupMenuEvent] = new Canceled
+        def Canceled: Reactive[PopupMenuEvent] = new Canceled
 
         private
         class WillBecomeInvisible extends Resource[PopupMenuEvent] {
@@ -948,7 +948,7 @@ object Swing {
                 source.addPopupMenuListener(l)
             }
         }
-        def WillBecomeInvisible: Resource[PopupMenuEvent] = new WillBecomeInvisible
+        def WillBecomeInvisible: Reactive[PopupMenuEvent] = new WillBecomeInvisible
 
         private
         class WillBecomeVisible extends Resource[PopupMenuEvent] {
@@ -961,7 +961,7 @@ object Swing {
                 source.addPopupMenuListener(l)
             }
         }
-        def WillBecomeVisible: Resource[PopupMenuEvent] = new WillBecomeVisible
+        def WillBecomeVisible: Reactive[PopupMenuEvent] = new WillBecomeVisible
 
     }
 

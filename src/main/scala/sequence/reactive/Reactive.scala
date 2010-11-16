@@ -218,6 +218,9 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
      */
     def using(c: java.io.Closeable): Reactive[A] = Using(this, c)
 
+    @aliasOf("using(this)")
+    final def used: Reactive[A] = using(this)
+
     /**
      * Prepends an Iterative.
      */
