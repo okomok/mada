@@ -125,6 +125,7 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
     def unsplit[B](sep: Reactive[B])(implicit pre: Reactive[A] <:< Reactive[Sequence[B]]): Reactive[B] = Unsplit(pre(this), sep)
 
     def zip[B](that: Reactive[B]): Reactive[(A, B)] = Zip(this, that)
+    def zipWithIndex: Reactive[(A, Int)] = ZipWithIndex(this)
 
     def unzip[B, C](implicit pre: Reactive[A] <:< Reactive[(B, C)]): (Reactive[B], Reactive[C]) = pre(this).duplicate match {
         case (xs, ys) => (xs.map(_._1), ys.map(_._2))

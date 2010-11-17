@@ -549,7 +549,7 @@ object :: {
         if (xs.isNil) {
             None
         } else {
-            Some(xs.head, xs.tail)
+            Some((xs.head, eval.Lazy(xs.tail)))
         }
     }
 
