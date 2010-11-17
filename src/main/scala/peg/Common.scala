@@ -159,7 +159,7 @@ class Common {
     /**
      * Matches any element of set.
      */
-    def multiple[A](es: A*): Peg[A] = Multiple(sequence.Iterative.from(es).toSHashSet)
+    def multiple[A](es: A*): Peg[A] = Multiple(sequence.Iterative.from(es).breakOut: scala.collection.mutable.HashSet[A])
 
     /**
      * Matches any element of set.
@@ -169,7 +169,7 @@ class Common {
     /**
      * Matches a key, then tries to match its value.
      */
-    def switch[A](es: (A, Peg[A])*): Peg[A] = Switch(sequence.Iterative.from(es).toSHashMap)
+    def switch[A](es: (A, Peg[A])*): Peg[A] = Switch(sequence.Iterative.from(es).breakOut: scala.collection.mutable.HashMap[A, Peg[A]])
 
     /**
      * Matches a key, then tries to match its value.

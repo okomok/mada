@@ -407,32 +407,17 @@ trait Iterative[+A] extends Sequence[A] {
     def toSeq: Seq[A] = ToSeq(this)
 
     @conversion
-    def toSList: scala.collection.immutable.List[A] = toSeq.toList
-
-    @conversion
-    def toSHashMap[K, V](implicit pre: Iterative[A] <:< Iterative[(K, V)]): scala.collection.Map[K, V] = {
-        val r = new scala.collection.mutable.HashMap[K, V]
-        val it = pre(this).begin
-        while (it) {
-            r += ~it
-            it.++
-        }
-        r
-    }
-
-    @conversion
-    def toSHashSet[B](implicit pre: Iterative[A] <:< Iterative[B]): scala.collection.Set[B] = {
-        val r = new scala.collection.mutable.HashSet[B]
-        val it = pre(this).begin
-        while (it) {
-            r += ~it
-            it.++
-        }
-        r
-    }
+    def toSIterable: scala.collection.Iterable[A] = ToSIterable(this)
 
     @conversion
     def toJIterable[B](implicit pre: Iterative[A] <:< Iterative[B]): java.lang.Iterable[B] = ToJIterable(pre(this))
+
+    @conversion
+    def breakOut[To](implicit bf: scala.collection.generic.CanBuildFrom[Nothing, A, To]): To = {
+        val b = bf()
+        b ++= toSIterable
+        b.result
+    }
 
 
 // sorted

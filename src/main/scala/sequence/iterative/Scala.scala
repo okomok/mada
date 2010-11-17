@@ -19,6 +19,11 @@ case class FromSIterable[+A](_1: Iterable[A]) extends Iterative[A] {
 }
 
 private
+case class ToSIterable[+A](_1: Iterative[A]) extends scala.collection.Iterable[A] {
+    override def iterator = _1.begin.toSIterator
+}
+
+private
 case class ToSeq[+A](_1: Iterative[A]) extends Seq[A] {
     override def iterator = _1.begin.toSIterator
     override def apply(n: Int) = _1.nth(n)

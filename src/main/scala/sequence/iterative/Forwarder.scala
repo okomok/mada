@@ -71,10 +71,8 @@ trait Forwarder[+A] extends Iterative[A] with Sequence.Forwarder[A] {
     override def toList: List[A] = delegate.toList
     override def toVector: Vector[A] = delegate.toVector
     override def toSeq: Seq[A] = delegate.toSeq
-    override def toSList: scala.collection.immutable.List[A] = delegate.toSList
-    override def toSHashMap[K, V](implicit pre: Iterative[A] <:< Iterative[(K, V)]): scala.collection.Map[K, V] = delegate.toSHashMap
-    override def toSHashSet[B](implicit pre: Iterative[A] <:< Iterative[B]): scala.collection.Set[B] = delegate.toSHashSet
     override def toJIterable[B](implicit pre: Iterative[A] <:< Iterative[B]): java.lang.Iterable[B] = delegate.toJIterable
+    override def breakOut[To](implicit bf: scala.collection.generic.CanBuildFrom[Nothing, A, To]) = delegate.breakOut
 
     override def merge[B >: A](that: Iterative[B])(implicit c: Ordering[B]): Iterative[B] = around(delegate.merge(that)(c))
     override def union[B >: A](that: Iterative[B])(implicit c: Ordering[B]): Iterative[B] = around(delegate.union(that)(c))
