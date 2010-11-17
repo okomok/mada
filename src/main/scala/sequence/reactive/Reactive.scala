@@ -64,7 +64,9 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
 
     def scanLeft1[B >: A](op: (B, A) => B): Reactive[B] = ScanLeft1(this, op)
 
-    final def scanl[B](z: B) = new {
+    final def scanl[B](z: B): _ScanlBy[B] = new _ScanlBy(z)
+    sealed class _ScanlBy[B](z: B) {
+        @equivalentTo("scanLeft(z)(op)")
         def by(op: (B, A) => B): Reactive[B] = scanLeft(z)(op)
     }
 
