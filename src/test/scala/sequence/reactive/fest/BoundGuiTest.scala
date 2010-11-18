@@ -22,8 +22,8 @@ import FestUtil.textAsName
 
 
 class BoundGuiTest extends
-//    NotFestSuite
-    FestTestNGSuite
+    NotFestSuite
+//    FestTestNGSuite
 {
     private var fx: FrameFixture = null
 

@@ -71,6 +71,7 @@ trait Forwarder[+A] extends Reactive[A] with Sequence.Forwarder[A] {
     override def generate[B](it: Iterative[B]): Reactive[B] = around(delegate.generate(it))
     override def replace[B >: A](it: Iterative[B]): Reactive[B] = around(delegate.replace(it))
     override def replaceRegion[B >: A](n: Int, m: Int, it: Iterative[B]): Reactive[B] = around(delegate.replaceRegion(n, m, it))
+    override def indices: Reactive[Int] = around(delegate.indices)
     override def shift(k: (=> Unit) => Unit): Reactive[A] = around(delegate.shift(k))
     override def shiftReact[B >: A](g: B => (B => Unit) => Unit): Reactive[B] = around(delegate.shiftReact(g))
     override def breakable: Reactive[(A, Function0[Unit])] = around(delegate.breakable)

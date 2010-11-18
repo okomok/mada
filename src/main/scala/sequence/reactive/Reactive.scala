@@ -259,6 +259,9 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
      */
     def replaceRegion[B >: A](n: Int, m: Int, it: Iterative[B]): Reactive[B] = ReplaceRegion[B](this, n, m, it)
 
+    @equivalentTo("replace(Stream.from(0))")
+    def indices: Reactive[Int] = Indices(this)
+
     /**
      * Reactions are invoked in somewhere you specify.
      */

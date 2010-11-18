@@ -22,8 +22,8 @@ import mada.eval
 
 
 class PrimesProgressGuiTest
-    extends NotFestSuite
-//    extends FestTestNGSuite
+//    extends NotFestSuite
+    extends FestTestNGSuite
 {
     private var fx: FrameFixture = null
     private val gate = new java.util.concurrent.CountDownLatch(1)
@@ -66,7 +66,7 @@ class PrimesProgressGuiTest
                 ps.onNth(Q-1) { p =>
                     resultLabel.setText(p.toString)
                     ps.close()
-                }.replace(Stream.from(0)).stepTime(100).foreach { i =>
+                }.indices.stepTime(100).foreach { i =>
                     if (monitor.isCanceled) {
                         resultLabel.setText("Canceled")
                         ps.close()
