@@ -47,7 +47,7 @@ class PrimesProgressGuiTest
 
             for (actionEvent <- Swing.ActionPerformed(startButton)) {
                 val parent = actionEvent.getSource.asInstanceOf[awt.Component]
-                val monitor = new swing.ProgressMonitor(parent, "Loading Progress", "Getting Startet...", 0, Q)
+                val monitor = new swing.ProgressMonitor(parent, "Loading Progress", "Getting Started...", 0, Q)
                 monitor.setMillisToDecideToPopup(0)
                 monitor.setMillisToPopup(0)
 
