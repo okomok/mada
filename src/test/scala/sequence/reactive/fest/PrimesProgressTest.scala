@@ -28,12 +28,13 @@ class PrimesProgressGuiTest
     private var fx: FrameFixture = null
     private val gate = new java.util.concurrent.CountDownLatch(1)
 
+    // See: http://haskell.org/haskellwiki/Prime_numbers
     val primes: List[Int] = 2 :: 3 :: List.iterate(5)(n => n + 2).filter(isPrime(_))
     def isPrime(n: Int): Boolean = primes.tail.takeWhile(p => p*p <= n).forall(notDivs(n, _))
     def notDivs(n: Int, p: Int): Boolean = n % p != 0
 
     val Q = 10000
-    val A = 104729 // Q-nth prime
+    val A = 104729 // 10000th prime
 
     override protected def onSetUp {
         val f = eval.InEdt {
