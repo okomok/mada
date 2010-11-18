@@ -16,31 +16,9 @@ import javax.swing
 import java.awt
 import com.github.okomok.mada
 import FestUtil.textAsName
-import mada.sequence._
-import mada.sequence.reactive.{Swing, Beans}
+import mada.sequence.{Reactive, List}
+import mada.sequence.reactive.Swing
 import mada.eval
-
-
-object Primes {
-    val primes: List[Int] = 2 :: 3 :: List.iterate(5)(n => n + 2).filter(isPrime(_))
-    def isPrime(n: Int): Boolean = primes.tail.takeWhile(p => p * p <= n).forall(notDivs(n, _))
-    def notDivs(n: Int, p: Int): Boolean = n % p != 0
-
-    def inEdt = {
-        Reactive.origin {
-            eval.Async
-        } catching {
-            case t: Throwable => {
-                t.printStackTrace
-                throw t
-            }
-        } generate {
-            primes
-        } shift {
-            eval.InEdt
-        }
-    }
-}
 
 
 class PrimesProgressGuiTest
@@ -48,31 +26,52 @@ class PrimesProgressGuiTest
 //    extends FestTestNGSuite
 {
     private var fx: FrameFixture = null
-    private var monitor: swing.ProgressMonitor = null
     private val gate = new java.util.concurrent.CountDownLatch(1)
 
+    val primes: List[Int] = 2 :: 3 :: List.iterate(5)(n => n + 2).filter(isPrime(_))
+    def isPrime(n: Int): Boolean = primes.tail.takeWhile(p => p*p <= n).forall(notDivs(n, _))
+    def notDivs(n: Int, p: Int): Boolean = n % p != 0
+
+    val Q = 10000
+    val A = 104729 // Q-nth prime
+
     override protected def onSetUp {
-        val f = mada.eval.InEdt {
+        val f = eval.InEdt {
             val frame = new swing.JFrame("ProgressMonitor Sample")
             frame.setLayout(new awt.GridLayout(0, 1))
             val startButton = new swing.JButton("Start") textAsName
-            val resultLabel = new swing.JLabel("Result") textAsName
-
+            val resultLabel = new swing.JLabel("Result") textAsName;
             frame.add(startButton)
             frame.add(resultLabel)
 
             for (actionEvent <- Swing.ActionPerformed(startButton)) {
                 val parent = actionEvent.getSource.asInstanceOf[awt.Component]
-                val n = 20000
-                monitor = new swing.ProgressMonitor(parent, "Loading Progress", "Getting Startet...", 0, n)
-                val ps = Primes.inEdt
-                ps.zipWithIndex foreach { case (x, i) =>
-                    monitor.setProgress(i)
-                    monitor.setNote("Calculated " + i + " primes")
-                    if (i == n-1) {
-                        resultLabel.setText(x.toString)
+                val monitor = new swing.ProgressMonitor(parent, "Loading Progress", "Getting Startet...", 0, Q)
+                monitor.setMillisToDecideToPopup(0)
+                monitor.setMillisToPopup(0)
+
+                val ps = Reactive.origin {
+                    eval.Async // primes in thread-group.
+                } catching {
+                    case t: Throwable => t.printStackTrace()
+                } generate {
+                    primes
+                } onClose {
+                    gate.countDown()
+                } shift {
+                    eval.InEdt // reactions in EDT.
+                }
+
+                ps.onNth(Q-1) { p =>
+                    resultLabel.setText(p.toString)
+                    ps.close()
+                }.replace(Stream.from(0)).stepTime(100).foreach { i =>
+                    if (monitor.isCanceled) {
+                        resultLabel.setText("Canceled")
                         ps.close()
-                        gate.countDown()
+                    } else {
+                        monitor.setProgress(i)
+                        monitor.setNote("Calculated " + i + " primes")
                     }
                 }
             }
@@ -87,8 +86,8 @@ class PrimesProgressGuiTest
     }
 
     @Test def testTrivial {
-        fx.button("Start").click
-        gate.await
-        fx.label("Result").requireText("224737")
+        fx.button("Start").click()
+        gate.await()
+        fx.label("Result").requireText(A.toString)
     }
 }
