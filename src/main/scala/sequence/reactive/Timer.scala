@@ -11,7 +11,7 @@ package sequence; package reactive
 import java.util.TimerTask
 
 
-case class Schedule(scheduler: TimerTask => Unit) extends Resource[Unit] {
+case class Schedule(scheduler: TimerTask => Unit) extends NoEndResource[Unit] {
     private[this] var l: TimerTask = null
     override protected def closeResource() = l.cancel()
     override protected def openResource(f: Unit => Unit) {

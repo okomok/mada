@@ -11,34 +11,62 @@ package sequence; package reactive
 import java.util.LinkedList
 
 
-// Lock-free please!
 private
 case class Zip[A, B](_1: Reactive[A], _2: Reactive[B]) extends Reactive[(A, B)] {
     override def close() = { _1.close(); _2.close() }
-    override def foreach(f: Tuple2[A, B] => Unit) {
+    override def forloop(f: Tuple2[A, B] => Unit, k: => Unit) {
+        var ends1 = false
+        var ends2 = false
         val q1 = new LinkedList[A]
         val q2 = new LinkedList[B]
-        val lock = new AnyRef
+        val lock = new AnyRef{}
+        var kDone = false
         def invariant = assert(q1.isEmpty || q2.isEmpty)
 
-        for (x <- _1) {
+        _1 _for { x =>
             lock.synchronized {
                 invariant
-                if (q2.isEmpty) {
-                    q1.add(x)
-                } else {
-                    f(x, q2.poll)
+                if (!kCalled) {
+                    if (q2.isEmpty) {
+                        q1.add(x)
+                    } else {
+                        f(x, q2.poll)
+                    }
+                }
+            }
+        } _then {
+            lock.synchronized {
+                invariant
+                ends1 = true
+                if (ends2 || q1.isEmpty) {
+                    if (!kDone) {
+                        kDone = true
+                        k
+                    }
                 }
             }
         }
 
-        for (y <- _2) {
+        _2 _for { y =>
             lock.synchronized {
                 invariant
-                if (q1.isEmpty) {
-                    q2.add(y)
-                } else {
-                    f(q1.poll, y)
+                if (!kCalled) {
+                    if (q1.isEmpty) {
+                        q2.add(y)
+                    } else {
+                        f(q1.poll, y)
+                    }
+                }
+            }
+        } _then {
+            lock.synchronized {
+                invariant
+                ends2 = true
+                if (ends1 || q2.isEmpty) {
+                    if (!kDone) {
+                        kDone = true
+                        k
+                    }
                 }
             }
         }

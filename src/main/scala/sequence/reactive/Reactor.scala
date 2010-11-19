@@ -10,6 +10,7 @@ package sequence; package reactive
 
 import scala.actors.Actor
 import java.util.concurrent.CopyOnWriteArrayList
+import eval.ByName
 
 
 /**
@@ -22,15 +23,21 @@ trait Reactor extends Actor {
     protected def startReactive(r: Reactive[Any]): Unit
 
     private var _f: Any => Unit = function.empty1 // primary
-    private val _gs = new CopyOnWriteArrayList[Any => Unit] // secondaries
+    private var _k: ByName[Unit] = ByName(())
+    private val _fs = new CopyOnWriteArrayList[Any => Unit] // secondaries
+    private val _ks = new CopyOnWriteArrayList[ByName[Unit]]
 
     final override def act = {
         Actor.loop {
             react {
-                case Reactor.Exit => Actor.exit
+                case Reactor.Exit => {
+                    _k() // ?
+                    iterative.from(_ks).foreach{k => k()}
+                    Actor.exit
+                }
                 case x => {
                     _f(x)
-                    iterative.from(_gs).foreach{g => g(x)}
+                    iterative.from(_fs).foreach{f => f(x)}
                 }
             }
         }
@@ -95,18 +102,25 @@ object Reactor {
 
     private
     case class Primary(_1: Reactor) extends Reactive[Any] {
-        override def foreach(f: Any => Unit) {
+        override def forloop(f: Any => Unit, k: => Unit) {
             _1._f = f
+            _1._k = ByName(k)
         }
     }
 
     private[reactive]
     case class Secondary(_1: Reactor) extends Resource[Any] {
-        private[this] var g: Any => Unit = null
-        override protected def closeResource() = _1._gs.remove(g)
-        override protected def openResource(f: Any => Unit) {
-            g = new Wrap(f)
-            _1._gs.add(g)
+        private[this] var _f: Any => Unit = null
+        private[this] var _k: ByName[Unit] = null
+        override protected def closeResource() {
+            _1._ks.remove(_k)
+            _1._fs.remove(_f)
+        }
+        override protected def openResource(f: Any => Unit, k: => Unit) {
+            _f = new Wrap(f)
+            _k = ByName(k)
+            _1._fs.add(_f)
+            _1._ks.add(_k)
         }
     }
 

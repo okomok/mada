@@ -12,13 +12,13 @@ import java.util.ArrayList
 
 
 /**
- * Reactive list (immutable)
+ * Infinite Reactive list (immutable)
  */
-final class Rist[A] extends Infinite[A] {
+final class Rist[A] extends Reactive[A] {
     private[this] val xs = new ArrayList[A]
     private[this] val outs = new ArrayList[A => Unit]
 
-    override protected def forever(f: A => Unit) {
+    override def forloop(f: A => Unit, k: => Unit) {
         for (x <- iterative.from(xs)) f(x)
         outs.add(f)
     }

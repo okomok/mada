@@ -8,20 +8,23 @@ package com.github.okomok.mada
 package sequence; package reactive
 
 
+import eval.ByName
+
+
 /**
  * Mixin for a sequence which doesn't allow re-foreach.
  */
 trait ReactiveOnce[+A] extends Reactive[A] {
-    protected def foreachOnce(f: A => Unit): Unit
+    protected def forloopOnce(f: A => Unit, k: => Unit): Unit
 
-    private[this] val k =
-        IfFirst[A => Unit] { f =>
-            foreachOnce(f)
+    private[this] val _forloop =
+        IfFirst[(A => Unit, ByName[Unit])] { case (f, k) =>
+            forloopOnce(f, k)
         } Else { _ =>
             throw ReactiveOnceException(this)
         }
 
-    final override def foreach(f: A => Unit) = k(f)
+    final override def forloop(f: A => Unit, k: => Unit) = _forloop(f, ByName(k))
 }
 
 case class ReactiveOnceException[A](_1: Reactive[A]) extends

@@ -11,9 +11,9 @@ package sequence; package reactive
 private
 case class Tokenize[A](_1: Reactive[A], _2: Peg[A]) extends Reactive[Vector[A]] {
     override def close() = _1.close()
-    override def foreach(f: Vector[A] => Unit) {
+    override def forloop(f: Vector[A] => Unit, k: => Unit) {
         val buf = new java.util.ArrayList[A]
-        for (x <- _1) {
+        _1 _for { x =>
             buf.add(x)
             val ts = _2.tokenize(vector.from(buf).readOnly)
             var last = 0
@@ -22,6 +22,8 @@ case class Tokenize[A](_1: Reactive[A], _2: Peg[A]) extends Reactive[Vector[A]] 
                 last = j
             }
             buf.subList(0, last).clear()
+        } _then {
+            k
         }
     }
 }
