@@ -16,23 +16,30 @@ class FromArray[A](_1: Array[A]) extends Forwarder[A] {
 
 private
 class FromTraversable[+A](_1: scala.collection.Traversable[A]) extends Reactive[A] {
-    override def foreach(f: A => Unit) = _1.foreach(f)
+    override def forloop(f: A => Unit, k: => Unit) {
+        _1.foreach(f)
+        k
+    }
 }
 
 
 private
 class FromOption[+A](_1: Option[A]) extends Reactive[A] {
-    override def foreach(f: A => Unit) {
+    override def forloop(f: A => Unit, k: => Unit) {
         if (!_1.isEmpty) {
             f(_1.get)
         }
+        k
     }
 }
 
 
 private
 class FromResponder[+A](_1: Responder[A]) extends Reactive[A] {
-    override def foreach(f: A => Unit) = _1.respond(f)
+    override def forloop(f: A => Unit, k: => Unit) {
+        _1.respond(f)
+        k
+    }
 }
 
 private

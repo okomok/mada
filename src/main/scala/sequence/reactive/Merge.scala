@@ -11,7 +11,7 @@ package sequence; package reactive
 private
 case class Merge[+A](_1: Reactive[A], _2: Reactive[A]) extends Reactive[A] {
     override def close() = { _1.close(); _2.close() }
-    override def foreach(f: A => Unit, k: => Unit) {
+    override def forloop(f: A => Unit, k: => Unit) {
         val _k = IfFirst[Unit => Unit] { _ => () } Else { _ = k }
         val lock = new AnyRef{}
         _1 _for { x =>

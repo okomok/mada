@@ -8,11 +8,27 @@ package com.github.okomok.mada
 package sequence; package reactive
 
 
+import eval.ByName
+
+
 private
 case class Duplicate[A](_1: Reactive[A]) extends Reactive[A] {
-    private[this] var g: A => Unit = null
-    private[this] val _close = IfFirst[Unit] { _ => () } Else { _ => _1.close() }
-    private[this] val _foreach = IfFirst[A => Unit] { f => g = f } Else { f => _1.react(g).foreach(f) }
+    private[this] var _f: A => Unit = null
+    private[this] var _k: ByName[Unit] = null
+    private[this] val _close = {
+        IfFirst[Unit] {
+            _ => ()
+        } Else {
+            _ => _1.close()
+        }
+    }
+    private[this] val _foreach = {
+        IfFirst[(A => Unit, ByName[Unit])] {
+            case (f, k) => _f = f; _k = k
+        } Else {
+            case (f, k) => _1.react(_f).onEnd(_k).forloop(f, k)
+        }
+    }
     override def close() = _close()
-    override def foreach(f: A => Unit) = _foreach(f)
+    override def forloop(f: A => Unit, k: => Unit) = _foreach(f, ByName(k))
 }
