@@ -11,14 +11,16 @@ package sequence; package reactive
 private
 case class OnHead[A](_1: Reactive[A], _2: A => Unit) extends Reactive[A] {
     override def close() = _1.close()
-    override def foreach(f: A => Unit) {
+    override def forloop(f: A => Unit, k: => Unit) {
         var go = true
-        for (x <- _1) {
+        _1 _for { x =>
             if (go) {
                 go = false
                 _2(x)
             }
             f(x)
+        } _then {
+            k
         }
     }
 }

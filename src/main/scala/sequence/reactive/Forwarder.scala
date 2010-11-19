@@ -17,7 +17,9 @@ trait Forwarder[+A] extends Reactive[A] with Sequence.Forwarder[A] {
     }
 
     override def close(): Unit = delegate.close()
-    override def foreach(f: A => Unit): Unit = delegate.foreach(f)
+    def forloop(f: A => Unit, k: => Unit): Unit = delegate.forloop(f, k)
+//    override def foreach(f: A => Unit): Unit = delegate.foreach(f)
+    override def append[B >: A](that: Reactive[B]): Reactive[B] = around(delegate.append(that))
     override def merge[B >: A](that: Reactive[B]): Reactive[B] = around(delegate.merge(that))
     override def map[B](f: A => B): Reactive[B] = around(delegate.map(f))
     override def flatMap[B](f: A => Reactive[B]): Reactive[B] = around(delegate.flatMap(f))

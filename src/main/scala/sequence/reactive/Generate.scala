@@ -9,26 +9,25 @@ package sequence; package reactive
 
 
 private
-case class Generate[+A](_1: Reactive[_], _2: Iterative[A], _3: (A => Unit) => Unit = function.empty1) extends Reactive[A] {
+case class Generate[+A](_1: Reactive[_], _2: Iterative[A]) extends Reactive[A] {
     override def close() = _1.close()
-    override def foreach(f: A => Unit) {
+    override def foreach(f: A => Unit, k: => Unit) {
         val it = _2.begin
-        def k = {close();_3(f)}
+        val _k = eval.Lazy{close();k}
         if (!it) {
-            k
+            _k()
         } else {
-            for (_ <- _1) {
+            _1 _for { _ =>
                 if (it) {
                     f(~it)
                     it.++
                     if (!it) {
-                        k
+                        _k()
                     }
                 }
+            } _then {
+                _k()
             }
         }
     }
-
-    override def then(f: => Unit): Reactive[A] = Generate[A](_1, _2, g => {_3(g);f}) // _1.onClose(f).generate(_2)
-    override def then_++[B >: A](that: Reactive[B]): Reactive[B] = Generate[B](_1, _2, g => {_3(g);that.foreach(g)})
 }

@@ -9,18 +9,17 @@ package sequence; package reactive
 
 
 private
-case class Tail[+A](_1: Reactive[A]) extends Reactive[A] {
-    override def close() = _1.close()
+case class Append[+A](_1: Reactive[A], _2: Reactive[A]) extends Reactive[A] {
+    override def close() = { _1.close(); _2.close() }
     override def forloop(f: A => Unit, k: => Unit) {
-        var first = true
         _1 _for { x =>
-            if (first) {
-                first = false
-            } else {
-                f(x)
-            }
+            f(x)
         } _then {
-            k
+            _2 _for { y =>
+                f(y)
+            } _then {
+                k
+            }
         }
     }
 }

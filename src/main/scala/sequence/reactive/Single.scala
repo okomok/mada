@@ -10,5 +10,8 @@ package sequence; package reactive
 
 private
 case class Single[+A](_1: A) extends Reactive[A] {
-    override def foreach(f: A => Unit) = f(_1)
+    override def forloop(f: A => Unit, k: => Unit) {
+        f(_1)
+        k
+    }
 }

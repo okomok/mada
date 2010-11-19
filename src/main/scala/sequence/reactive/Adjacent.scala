@@ -11,14 +11,18 @@ package sequence; package reactive
 private
 case class Adjacent[A](_1: Reactive[A], _2: Int) extends Reactive[Vector[A]] {
     override def close() = _1.close()
-    override def foreach(f: Vector[A] => Unit) {
+    override def foreach(f: Vector[A] => Unit, k: => Unit) {
         val buf = new AdjacentBuffer[A](_2)
-        for (x <- _1) {
+        _1 _for { x =>
             buf.addLast(x)
             if (buf.isFull) {
                 f(buf.toVector)
                 buf.removeFirst()
             }
+        } _then {
+            // FIXME: flush buffer
+            k
         }
+
     }
 }

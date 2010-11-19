@@ -9,19 +9,18 @@ package sequence; package reactive
 
 
 private
-case class TakeWhile[A, B >: A](_1: Reactive[A], _2: A => Boolean, _3: (B => Unit) => Unit = function.empty1) extends Reactive[B] {
+case class TakeWhile[A, B >: A](_1: Reactive[A], _2: A => Boolean) extends Reactive[B] {
     override def close() = _1.close()
-    override def foreach(f: B => Unit) {
-        val k = eval.Lazy{close();_3(f)}
-        for (x <- _1) {
+    override def foreach(f: B => Unit, k: => Unit) {
+        val _k = eval.Lazy{close();k}
+        _1 _for { x =>
             if (_2(x)) {
                 f(x)
             } else {
-                k()
+                _k()
             }
+        } _then {
+            k()
         }
     }
-
-    override def then(f: => Unit): Reactive[B] = TakeWhile[A, B](_1, _2, g => {_3(g);f}) // _1.onClose(f).takeWhile(_2)
-    override def then_++[C >: B](that: Reactive[C]): Reactive[C] = TakeWhile[A, C](_1, _2, g => {_3(g);that.foreach(g)})
 }

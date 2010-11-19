@@ -27,10 +27,14 @@ object Reactive extends Common with Compatibles {
  */
 trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
 
+
     @returnThis
     final def of[B >: A]: Reactive[B] = this
 
     override def asReactive: Reactive[A] = this
+
+
+// kernel
 
     /**
      * Should be thread-safe.
@@ -40,7 +44,23 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
     /**
      * `f` is applied to each element, but it is unspecified when|where `f` is called.
      */
-    def foreach(f: A => Unit): Unit
+    def forloop(f: A => Unit, g: => Unit): Unit
+
+    @equivalentTo("forloop(f, ())")
+    final def foreach(f: A => Unit) = forloop(f, ())
+
+    final protected def _for(f: A => Unit): _ForThen = new _ForThen(f)
+    sealed protected class _ForThen(f: A => Unit) {
+        def _then(g: => Unit): Unit = forloop(f, g)
+    }
+
+
+// combinator
+
+    def append[B >: A](that: Reactive[B]): Reactive[B] = Append[B](this, that)
+
+    @aliasOf("append")
+    final def ++[B >: A](that: Reactive[B]): Reactive[B] = append(that)
 
     def merge[B >: A](that: Reactive[B]): Reactive[B] = Merge[B](this, that)
 

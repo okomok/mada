@@ -11,12 +11,14 @@ package sequence; package reactive
 private
 case class ScanLeft[A, B](_1: Reactive[A], _2: B, _3: (B, A) => B) extends Reactive[B] {
     override def close() = _1.close()
-    override def foreach(f: B => Unit) {
+    override def forloop(f: B => Unit, k: => Unit) {
         var acc = _2
         f(acc)
-        for (x <- _1) {
+        _1 _for { x =>
             acc = _3(acc, x)
             f(acc)
+        } _then {
+            k
         }
     }
 //    override def head = _2
@@ -25,15 +27,17 @@ case class ScanLeft[A, B](_1: Reactive[A], _2: B, _3: (B, A) => B) extends React
 private
 case class ScanLeft1[A, B >: A](_1: Reactive[A], _3: (B, A) => B) extends Reactive[B] {
     override def close() = _1.close()
-    override def foreach(f: B => Unit) {
+    override def forloop(f: B => Unit, k: => Unit) {
         var acc: Option[B] = None
-        for (x <- _1) {
+        _1 _for { x =>
             if (acc.isEmpty) {
                 acc = Some(x)
             } else {
                 acc = Some(_3(acc.get, x))
             }
             f(acc.get)
+        } _then {
+            k
         }
     }
 }

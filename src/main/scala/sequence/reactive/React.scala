@@ -11,10 +11,12 @@ package sequence; package reactive
 private
 case class React[A](_1: Reactive[A], _2: A => Unit) extends Reactive[A] {
     override def close() = _1.close()
-    override def foreach(f: A => Unit) {
-        for (x <- _1) {
+    override def forloop(f: A => Unit, k: => Unit) {
+        _1 _for { x =>
             _2(x)
             f(x)
+        } _then {
+            k
         }
     }
 }
@@ -22,10 +24,14 @@ case class React[A](_1: Reactive[A], _2: A => Unit) extends Reactive[A] {
 private
 case class ReactMatch[A](_1: Reactive[A], _2: PartialFunction[A, Unit]) extends Reactive[A] {
     override def close() = _1.close()
-    override def foreach(f: A => Unit) {
-        for (x <- _1) {
-            if (_2.isDefinedAt(x)) _2(x)
+    override def forloop(f: A => Unit, k: => Unit) {
+        _1 _for { x =>
+            if (_2.isDefinedAt(x)) {
+                _2(x)
+            }
             f(x)
+        } _then {
+            k
         }
     }
 }

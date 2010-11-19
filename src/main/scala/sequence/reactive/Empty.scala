@@ -10,5 +10,5 @@ package sequence; package reactive
 
 private
 case class Empty() extends Reactive[Nothing] {
-    override def foreach(f: Nothing => Unit) = ()
+    override def forloop(f: Nothing => Unit, k: => Unit) = k
 }

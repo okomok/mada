@@ -11,7 +11,15 @@ package sequence; package reactive
 private
 case class Filter[A](_1: Reactive[A], _2: A => Boolean) extends Reactive[A] {
     override def close() = _1.close()
-    override def foreach(f: A => Unit) = for (x <- _1) { if (_2(x)) f(x) }
+    override def forloop(f: A => Unit, k: => Unit) {
+        _1 _for { x =>
+            if (_2(x)) {
+                f(x)
+            }
+        } _then {
+            k
+        }
+    }
 }
 
 private

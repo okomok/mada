@@ -13,14 +13,16 @@ case class Drop[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
     Precondition.nonnegative(_2, "drop")
 
     override def close() = _1.close()
-    override def foreach(f: A => Unit) {
+    override def forloop(f: A => Unit, k: => Unit) {
         var c = _2
-        for (x <- _1) {
+        _1 _for { x =>
             if (c == 0) {
                 f(x)
             } else {
                 c -= 1
             }
+        } _then {
+            k
         }
     }
 
