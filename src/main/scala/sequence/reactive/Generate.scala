@@ -13,7 +13,7 @@ case class Generate[+A](_1: Reactive[_], _2: Iterative[A]) extends Reactive[A] {
     override def close() = _1.close()
     override def forloop(f: A => Unit, k: => Unit) {
         val it = _2.begin
-        val _k = eval.Lazy{close();k}
+        val _k = eval.Lazy{k;close()}
         if (!it) {
             _k()
         } else {

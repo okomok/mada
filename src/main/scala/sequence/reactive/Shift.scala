@@ -9,8 +9,15 @@ package sequence; package reactive
 
 
 private
-case class Shift[+A](_1: Reactive[A], _2: (=> Unit) => Unit) extends Forwarder[A] {
-    override protected val delegate = _1.shiftReact{ x => f => _2(f(x)) }
+case class Shift[+A](_1: Reactive[A], _2: (=> Unit) => Unit) extends Reactive[A] {
+    override def close() = _1.close()
+    override def forloop(f: A => Unit, k: => Unit) {
+        _1 _for { x =>
+            _2{f(x)}
+        } _then {
+            _2{k}
+        }
+    }
 }
 
 private

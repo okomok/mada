@@ -21,7 +21,7 @@ trait Resource[+A] extends ReactiveOnce[A] {
 }
 
 /**
- * Mixin for a Reactive resource.
+ * Mixin for a Reactive resource which has no end.
  */
 trait NoEndResource[+A] extends ReactiveOnce[A] {
     protected def openResource(f: A => Unit): Unit

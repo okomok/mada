@@ -42,14 +42,20 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
     override def close(): Unit = ()
 
     /**
-     * `f` is applied to each element, but it is unspecified when|where `f` is called.
+     * Optionally asynchronous foreach with end reaction.
+     *
+     * @param f reaction for each element
+     * @param k reaction for the end of sequence
      */
-    def forloop(f: A => Unit, g: => Unit): Unit
+    def forloop(f: A => Unit, k: => Unit): Unit
 
     @equivalentTo("forloop(f, ())")
     final def foreach(f: A => Unit) = forloop(f, ())
 
+    private[reactive]
     final def _for(f: A => Unit): _ForThen = new _ForThen(f)
+
+    private[reactive]
     sealed class _ForThen(f: A => Unit) {
         def _then(g: => Unit): Unit = forloop(f, g)
     }

@@ -20,7 +20,6 @@ case class Adjacent[A](_1: Reactive[A], _2: Int) extends Reactive[Vector[A]] {
                 buf.removeFirst()
             }
         } _then {
-            // FIXME: flush buffer
             k
         }
 

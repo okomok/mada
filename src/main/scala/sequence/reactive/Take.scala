@@ -12,7 +12,7 @@ private
 case class Take[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
     override def close() = _1.close()
     override def forloop(f: A => Unit, k: => Unit) {
-        val _k = eval.Lazy{close();k}
+        val _k = eval.Lazy{k;close()}
         if (_2 == 0) {
             _k()
         } else {
