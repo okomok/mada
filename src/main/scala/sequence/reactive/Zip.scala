@@ -21,6 +21,7 @@ case class Zip[A, B](_1: Reactive[A], _2: Reactive[B]) extends Reactive[(A, B)] 
         val q2 = new LinkedList[B]
         val lock = new AnyRef{}
         var kDone = false
+        def _k() = if (!kDone) { kDone = true; k; close() }
         def invariant = assert(q1.isEmpty || q2.isEmpty)
 
         _1 _for { x =>
@@ -39,10 +40,7 @@ case class Zip[A, B](_1: Reactive[A], _2: Reactive[B]) extends Reactive[(A, B)] 
                 invariant
                 ends1 = true
                 if (ends2 || q1.isEmpty) {
-                    if (!kDone) {
-                        kDone = true
-                        k
-                    }
+                    _k()
                 }
             }
         }
@@ -63,10 +61,7 @@ case class Zip[A, B](_1: Reactive[A], _2: Reactive[B]) extends Reactive[(A, B)] 
                 invariant
                 ends2 = true
                 if (ends1 || q2.isEmpty) {
-                    if (!kDone) {
-                        kDone = true
-                        k
-                    }
+                    _k()
                 }
             }
         }
