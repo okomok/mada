@@ -35,7 +35,7 @@ class DragDropTest extends
                 val mouse = reactive.Swing.Mouse(jl)
                 val p = mouse.Pressed.head
                 println("pressed at: " + (p.getX, p.getY))
-                val d = mouse.Dragged.takeUntil(mouse.Released).then(println("released")).each
+                val d = mouse.Dragged.takeUntil(mouse.Released).onEnd(println("released")).each
                 println("dragging at: " + (d.getX, d.getY))
             }
             jf

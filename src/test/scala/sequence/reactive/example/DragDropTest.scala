@@ -26,7 +26,7 @@ package sequencetest; package reactivetest; package example
                     val p = mouse.Pressed.take(10).each
                     println("pressed at: " + (p.getX, p.getY))
                     val d = mouse.Dragged.stepTime(100).
-                        takeUntil(mouse.Released).then(println("released")).each
+                        takeUntil(mouse.Released).onEnd(println("released")).each
                     println("dragging at: " + (d.getX, d.getY))
                 }
 

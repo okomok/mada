@@ -38,7 +38,7 @@ class IntSenders(_data: Vector[Int]*) {
 
 
 class IntSender(datum: Vector[Int], barrier: CyclicBarrier) extends Reactive[Int] {
-    override def foreach(f: Int => Unit) = {
+    override def forloop(f: Int => Unit, k: => Unit) = {
         new Thread {
             override def run = {
                 barrier.await

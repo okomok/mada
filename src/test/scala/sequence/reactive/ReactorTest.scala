@@ -27,7 +27,7 @@ class ReactorTest extends org.scalatest.junit.JUnit3Suite {
                 case e: Int => e
             } take {
                 3
-            } then {
+            } onEnd {
                 cur ! OK
             } react { x =>
                 out.add(x)
@@ -58,7 +58,7 @@ class ReactorTest extends org.scalatest.junit.JUnit3Suite {
                 case e: Int => e
             } take {
                 3
-            } then {
+            } onEnd {
                 cur ! OK
             } react { x =>
                 out.add(x)
@@ -89,7 +89,7 @@ class ReactorTest extends org.scalatest.junit.JUnit3Suite {
                 case e: Int => e
             } take {
                 3
-            } then {
+            } onEnd {
                 cur ! OK
                 Actor.exit
             } react { x =>
@@ -135,7 +135,7 @@ class ReactorTest extends org.scalatest.junit.JUnit3Suite {
                 case e: Int => e
             } take {
                 0
-            } then {
+            } onEnd {
                 cur ! OK
             } start
         }

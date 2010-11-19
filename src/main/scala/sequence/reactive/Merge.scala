@@ -12,7 +12,7 @@ private
 case class Merge[+A](_1: Reactive[A], _2: Reactive[A]) extends Reactive[A] {
     override def close() = { _1.close(); _2.close() }
     override def forloop(f: A => Unit, k: => Unit) {
-        val _k = IfFirst[Unit => Unit] { _ => () } Else { _ = k }
+        val _k = IfFirst[Unit] { _ => () } Else { _ => k }
         val lock = new AnyRef{}
         _1 _for { x =>
             lock.synchronized {
@@ -29,7 +29,7 @@ case class Merge[+A](_1: Reactive[A], _2: Reactive[A]) extends Reactive[A] {
                 f(y)
             }
         } _then {
-            lock.synchornized {
+            lock.synchronized {
                 _k()
             }
         }

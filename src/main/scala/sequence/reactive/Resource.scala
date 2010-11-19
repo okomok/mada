@@ -15,7 +15,7 @@ trait Resource[+A] extends ReactiveOnce[A] {
     protected def openResource(f: A => Unit, k: => Unit): Unit
     protected def closeResource(): Unit
 
-    final override def onceOnly(f: A => Unit, k: => Unit) = openResource(f, k)
+    final override def forloopOnce(f: A => Unit, k: => Unit) = openResource(f, k)
     final override def close() = c
     private[this] lazy val c = closeResource()
 }
@@ -27,7 +27,7 @@ trait NoEndResource[+A] extends ReactiveOnce[A] {
     protected def openResource(f: A => Unit): Unit
     protected def closeResource(): Unit
 
-    final override def onceOnly(f: A => Unit, k: => Unit) = openResource(f)
+    final override def forloopOnce(f: A => Unit, k: => Unit) = openResource(f)
     final override def close() = c
     private[this] lazy val c = closeResource()
 }

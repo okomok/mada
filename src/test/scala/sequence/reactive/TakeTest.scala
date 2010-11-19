@@ -34,35 +34,35 @@ class TakeTest extends org.scalatest.junit.JUnit3Suite {
     def testThen: Unit = {
         val a = vector.Of(1,2,3,4,5,6)
         val b = new java.util.ArrayList[Int]
-        reactive.from(a).take(3).then(b.add(99)).foreach(b.add(_))
+        reactive.from(a).take(3).onEnd(b.add(99)).foreach(b.add(_))
         assertEquals(vector.Of(1,2,3,99), vector.from(b))
     }
 
     def testThen2: Unit = {
         val a = vector.Of(1,2,3,4,5,6)
         val b = new java.util.ArrayList[Int]
-        reactive.from(a).take(3).then(b.add(98)).then(b.add(99)).foreach(b.add(_))
+        reactive.from(a).take(3).onEnd(b.add(98)).onEnd(b.add(99)).foreach(b.add(_))
         assertEquals(vector.Of(1,2,3,98,99), vector.from(b))
     }
-
+/*
     def testThenNotEnough: Unit = {
         val a = vector.Of(1,2,3,4,5)
         val b = new java.util.ArrayList[Int]
-        reactive.from(a).take(30).then(b.add(99)).foreach(b.add(_))
+        reactive.from(a).take(30).onEnd(b.add(99)).foreach(b.add(_))
         assertEquals(vector.Of(1,2,3,4,5), vector.from(b))
     }
-
+*/
     def testThenAppend: Unit = {
         val a = vector.Of(1,2,3,4,5)
         val b = new java.util.ArrayList[Int]
-        reactive.from(a).take(3).then_++(reactive.Of(6,7,8)).foreach(b.add(_))
+        (reactive.from(a).take(3) ++ reactive.Of(6,7,8)).foreach(b.add(_))
         assertEquals(vector.Of(1,2,3,6,7,8), vector.from(b))
     }
 
     def testThenAppendThen: Unit = {
         val a = vector.Of(1,2,3,4,5)
         val b = new java.util.ArrayList[Int]
-        reactive.from(a).take(3).then_++(reactive.Of(6,7,8)).then(b.add(99)).foreach(b.add(_))
+        (reactive.from(a).take(3) ++ reactive.Of(6,7,8)).onEnd(b.add(99)).foreach(b.add(_))
         assertEquals(vector.Of(1,2,3,6,7,8,99), vector.from(b))
     }
 

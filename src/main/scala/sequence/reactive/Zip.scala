@@ -26,7 +26,7 @@ case class Zip[A, B](_1: Reactive[A], _2: Reactive[B]) extends Reactive[(A, B)] 
         _1 _for { x =>
             lock.synchronized {
                 invariant
-                if (!kCalled) {
+                if (!kDone) {
                     if (q2.isEmpty) {
                         q1.add(x)
                     } else {
@@ -50,7 +50,7 @@ case class Zip[A, B](_1: Reactive[A], _2: Reactive[B]) extends Reactive[(A, B)] 
         _2 _for { y =>
             lock.synchronized {
                 invariant
-                if (!kCalled) {
+                if (!kDone) {
                     if (q1.isEmpty) {
                         q2.add(y)
                     } else {

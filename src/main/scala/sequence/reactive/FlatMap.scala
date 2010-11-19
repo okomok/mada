@@ -13,7 +13,7 @@ case class FlatMap[A, +B](_1: Reactive[A], _2: A => Reactive[B]) extends Reactiv
     override def close() = _1.close()
     override def forloop(f: B => Unit, k: => Unit) {
         _1 _for { x =>
-            for (y <- _2(x))
+            for (y <- _2(x)) {
                 f(y)
             }
         } _then {

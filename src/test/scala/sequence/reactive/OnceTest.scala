@@ -19,7 +19,7 @@ class OnceTest extends org.scalatest.junit.JUnit3Suite {
         var thrown = false
 
         class Trivial extends reactive.ReactiveOnce[Int] {
-            override protected def foreachOnce(f: Int => Unit) {
+            override protected def forloopOnce(f: Int => Unit, k: => Unit) {
                 f(10)
                 f(5)
             }

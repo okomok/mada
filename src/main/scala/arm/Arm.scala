@@ -18,7 +18,7 @@ trait Arm[+A] extends sequence.Reactive[A] {
     def open: A
 
     @pre("f is synchronous")
-    override def foreach(f: A => Unit) {
+    override def forloop(f: A => Unit, k: => Unit) {
         val r = open
         var primary: Throwable = null
         try {
@@ -39,5 +39,6 @@ trait Arm[+A] extends sequence.Reactive[A] {
                 close()
             }
         }
+        k // ?
     }
 }

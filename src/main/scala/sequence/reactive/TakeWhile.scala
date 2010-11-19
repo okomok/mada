@@ -20,7 +20,7 @@ case class TakeWhile[A, B >: A](_1: Reactive[A], _2: A => Boolean) extends React
                 _k()
             }
         } _then {
-            k()
+            _k()
         }
     }
 }

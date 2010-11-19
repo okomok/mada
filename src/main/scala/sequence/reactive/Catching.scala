@@ -22,6 +22,7 @@ case class Catching[+A](_1: Reactive[A], _2: PartialFunction[Throwable, Unit]) e
                     } else {
                         throw t
                     }
+                }
             }
         } _then {
             k

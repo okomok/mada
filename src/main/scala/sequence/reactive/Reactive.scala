@@ -49,8 +49,8 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
     @equivalentTo("forloop(f, ())")
     final def foreach(f: A => Unit) = forloop(f, ())
 
-    final protected def _for(f: A => Unit): _ForThen = new _ForThen(f)
-    sealed protected class _ForThen(f: A => Unit) {
+    final def _for(f: A => Unit): _ForThen = new _ForThen(f)
+    sealed class _ForThen(f: A => Unit) {
         def _then(g: => Unit): Unit = forloop(f, g)
     }
 
@@ -238,11 +238,6 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
 
     @aliasOf("using(this)")
     final def used: Reactive[A] = using(this)
-
-    /**
-     * Prepends an Iterative.
-     */
-    def header[B >: A](it: Iterative[B]): Reactive[B] = Header[B](this, it)
 
     /**
      * Ignores `close()` call.

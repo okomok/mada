@@ -70,7 +70,7 @@ class ForeachTest extends org.scalatest.junit.JUnit3Suite {
     import mada.sequence.Reactive
 
     case class Res1[A](res: A) extends Reactive[A] {
-        override def foreach(f: A => Unit) = {
+        override def forloop(f: A => Unit, k: => Unit) = {
             arr.add(10)
             try {
                 f(res)
@@ -80,7 +80,7 @@ class ForeachTest extends org.scalatest.junit.JUnit3Suite {
         }
     }
     case class Res2[A](res: A) extends Reactive[A] {
-        override def foreach(f: A => Unit) = {
+        override def forloop(f: A => Unit, k: => Unit) = {
             arr.add(20)
             try {
                 f(res)
@@ -90,7 +90,7 @@ class ForeachTest extends org.scalatest.junit.JUnit3Suite {
         }
     }
     case class Res3[A](res: A) extends Reactive[A] {
-        override def foreach(f: A => Unit) = {
+        override def forloop(f: A => Unit, k: => Unit) = {
             arr.add(30)
             try {
                 f(res)

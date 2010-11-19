@@ -22,7 +22,7 @@ import com.github.okomok.mada
         }
         def testTrivial: Unit = {
             // too many instances.
-            def fibs: Reactive[Int] = naturals.take(2) then_++ ((fibs zip fibs.tail).map2(_ + _)).byName
+            def fibs: Reactive[Int] = naturals.take(2) ++ ((fibs zip fibs.tail).map2(_ + _)).byName
             var answer: Int = 0
             fibs.foreach(println(_))
         }
