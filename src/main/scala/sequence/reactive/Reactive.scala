@@ -56,10 +56,10 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
     @equivalentTo("foreach(_ => ())")
     final def start(): Unit = foreach(_ => ())
 
-    private[reactive]
+    private[mada]
     final def _for(f: A => Unit): _ForThen = new _ForThen(f)
 
-    private[reactive]
+    private[mada]
     sealed class _ForThen(f: A => Unit) {
         def _then(g: => Unit): Unit = forloop(f, g)
     }

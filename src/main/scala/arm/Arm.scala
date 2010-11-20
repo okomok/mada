@@ -8,13 +8,16 @@ package com.github.okomok.mada
 package arm
 
 
+import sequence.Reactive
+
+
 object Arm extends Common with Compatibles
 
 
 /**
  * Mixin for automatic resource management
  */
-trait Arm[+A] extends sequence.Reactive[A] {
+trait Arm[+A] extends Reactive[A] {
     def open: A
 
     @pre("f is synchronous")
@@ -41,4 +44,6 @@ trait Arm[+A] extends sequence.Reactive[A] {
         }
         k
     }
+
+    def usedBy[B](f: A => Reactive[B]): Reactive[B] = UsedBy(this, f)
 }
