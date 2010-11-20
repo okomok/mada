@@ -18,7 +18,6 @@ trait Forwarder[+A] extends Reactive[A] with Sequence.Forwarder[A] {
 
     override def close(): Unit = delegate.close()
     def forloop(f: A => Unit, k: => Unit): Unit = delegate.forloop(f, k)
-//    override def foreach(f: A => Unit): Unit = delegate.foreach(f)
     override def append[B >: A](that: Reactive[B]): Reactive[B] = around(delegate.append(that))
     override def merge[B >: A](that: Reactive[B]): Reactive[B] = around(delegate.merge(that))
     override def map[B](f: A => B): Reactive[B] = around(delegate.map(f))
@@ -29,7 +28,6 @@ trait Forwarder[+A] extends Reactive[A] with Sequence.Forwarder[A] {
     override def partition(p: A => Boolean): (Reactive[A], Reactive[A]) = around2(delegate.partition(p))
     override def scanLeft[B](z: B)(op: (B, A) => B): Reactive[B] = around(delegate.scanLeft(z)(op))
     override def scanLeft1[B >: A](op: (B, A) => B): Reactive[B] = around(delegate.scanLeft1(op))
-//    override def head: A = delegate.head
     override def tail: Reactive[A] = around(delegate.tail)
     override def init: Reactive[A] = around(delegate.init)
     override def take(n: Int): Reactive[A] = around(delegate.take(n))
@@ -53,7 +51,6 @@ trait Forwarder[+A] extends Reactive[A] with Sequence.Forwarder[A] {
     override def actor: scala.actors.Actor = delegate.actor
     override def react(f: A => Unit): Reactive[A] = around(delegate.react(f))
     override def reactMatch(f: PartialFunction[A, Unit]): Reactive[A] = around(delegate.reactMatch(f))
-    override def start(): Unit = delegate.start()
     override def fork(f: Reactive[A] => Reactive[_]): Reactive[A] = around(delegate.fork(f))
     override def duplicate: (Reactive[A], Reactive[A]) = around2(delegate.duplicate)
     override def break: Reactive[A] = around(delegate.break)

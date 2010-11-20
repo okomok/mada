@@ -42,7 +42,8 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
     override def close(): Unit = ()
 
     /**
-     * Optionally asynchronous foreach with end reaction.
+     * Possibly asynchronous foreach with end reaction.
+     * Shall guarantee reactions `f*k?`(in regex) are called in a serialized fashion.
      *
      * @param f reaction for each element
      * @param k reaction for the end of sequence
@@ -51,6 +52,9 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
 
     @equivalentTo("forloop(f, ())")
     final def foreach(f: A => Unit) = forloop(f, ())
+
+    @equivalentTo("foreach(_ => ())")
+    final def start(): Unit = foreach(_ => ())
 
     private[reactive]
     final def _for(f: A => Unit): _ForThen = new _ForThen(f)
@@ -183,9 +187,6 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
 
     @equivalentTo("react(_ => f)")
     final def doing(f: => Unit): Reactive[A] = react(_ => f)
-
-    @equivalentTo("foreach(_ => ())")
-    def start(): Unit = foreach(_ => ())
 
     /**
      * Forks.
