@@ -29,7 +29,7 @@ trait Arm[+A] extends sequence.Reactive[A] {
                 throw t
             }
         } finally {
-            if (null ne primary) {
+            if (primary != null) {
                 try {
                     close()
                 } catch {
@@ -39,6 +39,6 @@ trait Arm[+A] extends sequence.Reactive[A] {
                 close()
             }
         }
-        k // ?
+        k
     }
 }
