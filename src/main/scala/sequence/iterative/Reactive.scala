@@ -8,20 +8,15 @@ package com.github.okomok.mada
 package sequence; package iterative
 
 
-import reactive.{Exit, End, Thrown}
+import reactive.Exit
 
 
 private[iterative]
 case class AsReactive[+A](_1: Iterative[A]) extends Reactive[A] {
     override def forloop(f: A => Unit, k: Exit => Unit) = {
-        try {
+        Exit.tryCatch(k) {
             _1.foreach(f)
-        } catch {
-            case t: Throwable => {
-                k(Thrown(t))
-                throw t
-            }
         }
-        k(End)
+        k(Exit.End)
     }
 }

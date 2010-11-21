@@ -9,7 +9,7 @@ package arm
 
 
 import sequence.Reactive
-import sequence.reactive.{Exit, End, Thrown}
+import sequence.reactive.Exit
 
 
 object Arm extends Common with Compatibles
@@ -30,7 +30,7 @@ trait Arm[+A] extends Reactive[A] {
         } catch {
             case t: Throwable => {
                 primary = t
-                k(Thrown(t))
+                k(Exit.Thrown(t))
                 throw t
             }
         } finally {
@@ -41,7 +41,7 @@ trait Arm[+A] extends Reactive[A] {
                     case s: Exception => /*primary.addSuppressedException(s)*/
                 }
             } else {
-                k(End)
+                k(Exit.End)
                 close()
             }
         }

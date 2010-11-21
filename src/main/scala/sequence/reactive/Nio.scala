@@ -26,21 +26,19 @@ object Nio {
 
     private class _Selection(_1: Selector, _2: Selector => Long) extends Reactive[SelectionKey] {
         override def forloop(f: SelectionKey => Unit, k: Exit => Unit) {
-            try {
-                while (true) {
-                    if (_2(_1) != 0) {
-                        val keys = _1.selectedKeys
-                        for (key <- Iterative.from(keys)) {
-                            f(key.asInstanceOf[SelectionKey])
+            Exit.tryCatch(k) {
+                try {
+                    while (true) {
+                        if (_2(_1) != 0) {
+                            val keys = _1.selectedKeys
+                            for (key <- Iterative.from(keys)) {
+                                f(key.asInstanceOf[SelectionKey])
+                            }
+                            keys.clear()
                         }
-                        keys.clear()
                     }
-                }
-            } catch  {
-                case _: ClosedSelectorException => // k(End)? k(Closed)?
-                case t: Throwable => {
-                    k(Thrown(t))
-                    throw t
+                } catch  {
+                    case _: ClosedSelectorException => // k(End)? k(Closed)?
                 }
             }
         }

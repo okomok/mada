@@ -14,14 +14,9 @@ case class Origin(_1: (=> Unit) => Unit) extends Resource[Unit] {
     override protected def closeResource() = isClosed = true
     override protected def openResource(f: Unit => Unit, k: Exit => Unit) {
         _1 {
-            try {
+            Exit.tryCatch(k) {
                 while (!isClosed) {
                     f()
-                }
-            } catch {
-                case t: Throwable => {
-                    k(Thrown(t))
-                    throw t
                 }
             }
         }
