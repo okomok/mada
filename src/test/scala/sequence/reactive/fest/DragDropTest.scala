@@ -22,8 +22,8 @@ import mada.sequence.Reactive
 
 
 class DragDropTest extends
-//    NotFestSuite
-    FestTestNGSuite
+    NotFestSuite
+//    FestTestNGSuite
 {
     private var fixt: FrameFixture = null
 

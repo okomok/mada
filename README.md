@@ -232,31 +232,32 @@ This is built upon (possibly) asynchronous `foreach`:
 
     class DragDropTest extends org.scalatest.junit.JUnit3Suite {
         def testTrivial {
-            val frame = mada.util.inEdt {
+            val frame = mada.eval.InEdt {
                 val frame = new swing.JFrame("DragDropTest")
                 val label = new swing.JLabel("testTrivial")
                 frame.getContentPane.add(label)
 
-                reactive.block {
+                reactive.block { B =>
+                    import B._
                     val mouse = reactive.Swing.Mouse(label)
-                    val p = mouse.Pressed.take(10).each
+                    val p = each(mouse.Pressed)
                     println("pressed at: " + (p.getX, p.getY))
-                    val d = mouse.Dragged.stepTime(100).
-                        takeUntil(mouse.Released).then(println("released")).each
-                    println("dragging at: " + (d.getX, d.getY))
+                    for (d <- until(mouse.Dragged.stepTime(100), mouse.Released)) {
+                        println("dragging at: " + (d.getX, d.getY))
+                    }
+                    println("released")
                 }
 
                 frame.pack
                 frame.setVisible(true)
                 frame
-            }
+            } apply
 
             Thread.sleep(20000)
-            mada.util.inEdt {
+            mada.eval.InEdt {
                 frame.setVisible(false)
-            }
+            } apply
         }
-    }
 
 `Reactive` summary:
 
