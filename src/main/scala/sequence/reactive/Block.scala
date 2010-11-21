@@ -29,7 +29,7 @@ trait BlockContext {
         } }
     }
 
-    def until[A](xs: Reactive[A], ys: Reactive[_]) = new {
+    case class until[A](xs: Reactive[A], ys: Reactive[_]) {
         def foreach(f: A => Unit): Unit @cpsParam[Any, Any] = forUntil(xs, ys)(f)
     }
 
