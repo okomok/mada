@@ -9,14 +9,14 @@ package sequence; package reactive
 
 
 private
-case class OnEnd[+A](_1: Reactive[A], _2: eval.ByName[Unit]) extends Reactive[A] {
+case class OnExit[+A](_1: Reactive[A], _2: Exit => Unit) extends Reactive[A] {
     override def close() = _1.close()
-    override def forloop(f: A => Unit, k: => Unit) {
+    override def forloop(f: A => Unit, k: Exit => Unit) {
         _1 _for { x =>
             f(x)
-        } _then {
-            _2()
-            k
+        } _then { q =>
+            _2(q)
+            k(q)
         }
     }
 }

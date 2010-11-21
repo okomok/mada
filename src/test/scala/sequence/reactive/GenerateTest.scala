@@ -49,7 +49,7 @@ class GenerateTest extends org.scalatest.junit.JUnit3Suite {
 
     def testThen: Unit = {
         val s = new java.util.ArrayList[Int]
-        for (x <- reactive.origin(mada.eval.Strict).generate(Iterative.Of(9,8,7,6,5)).onEnd(s.add(99))) {
+        for (x <- reactive.origin(mada.eval.Strict).generate(Iterative.Of(9,8,7,6,5)).onExit(_ =>s.add(99))) {
             s.add(x)
         }
         assertEquals(vector.Of(9,8,7,6,5,99), vector.from(s))

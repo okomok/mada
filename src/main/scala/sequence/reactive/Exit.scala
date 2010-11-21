@@ -8,7 +8,10 @@ package com.github.okomok.mada
 package sequence; package reactive
 
 
-private
-case class Empty() extends Reactive[Nothing] {
-    override def forloop(f: Nothing => Unit, k: Exit => Unit) = k(End)
-}
+sealed abstract class Exit
+
+case object End extends Exit
+
+case object Closed extends Exit // TODO?
+
+case class Thrown(what: Throwable) extends Exit

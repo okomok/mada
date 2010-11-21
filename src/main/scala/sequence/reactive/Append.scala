@@ -11,10 +11,10 @@ package sequence; package reactive
 private
 case class Append[+A](_1: Reactive[A], _2: Reactive[A]) extends Reactive[A] {
     override def close() = { _1.close(); _2.close() }
-    override def forloop(f: A => Unit, k: => Unit) {
+    override def forloop(f: A => Unit, k: Exit => Unit) {
         _1 _for { x =>
             f(x)
-        } _then {
+        } _then { _ =>
             _2 _for { y =>
                 f(y)
             } _then {

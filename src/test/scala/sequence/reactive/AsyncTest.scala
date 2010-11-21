@@ -24,7 +24,7 @@ class AsyncTest extends org.scalatest.junit.JUnit3Suite {
 
         naturals take {
             100
-        } onEnd {
+        } onExit { _ =>
             c.countDown
         } foreach {
             b.add(_)
@@ -51,7 +51,7 @@ class AsyncTest extends org.scalatest.junit.JUnit3Suite {
 
         naturals take {
             100
-        } onEnd {
+        } onExit { _ =>
             c.countDown
         } foreach { x =>
             b.add(x)

@@ -9,6 +9,7 @@ package arm
 
 
 import sequence.Reactive
+import sequence.reactive.{Exit, End, Thrown}
 
 
 object Arm extends Common with Compatibles
@@ -21,7 +22,7 @@ trait Arm[+A] extends Reactive[A] {
     def open: A
 
     @pre("f is synchronous")
-    override def forloop(f: A => Unit, k: => Unit) {
+    override def forloop(f: A => Unit, k: Exit => Unit) {
         val r = open
         var primary: Throwable = null
         try {
@@ -29,6 +30,7 @@ trait Arm[+A] extends Reactive[A] {
         } catch {
             case t: Throwable => {
                 primary = t
+                k(Thrown(t))
                 throw t
             }
         } finally {
@@ -39,10 +41,10 @@ trait Arm[+A] extends Reactive[A] {
                     case s: Exception => /*primary.addSuppressedException(s)*/
                 }
             } else {
+                k(End)
                 close()
             }
         }
-        k
     }
 
     def usedBy[B](f: A => Reactive[B]): Reactive[B] = UsedBy(this, f)

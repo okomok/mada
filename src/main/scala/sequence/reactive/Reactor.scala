@@ -101,7 +101,7 @@ object Reactor {
 
     private
     case class Primary(_1: Reactor) extends Reactive[Any] {
-        override def forloop(f: Any => Unit, k: => Unit) {
+        override def forloop(f: Any => Unit, k: Exit => Unit) {
             _1._f = f
 //            _1._k = eval.ByName(k)
         }
@@ -115,7 +115,7 @@ object Reactor {
             _1._fs.remove(_f)
 //            _1._ks.remove(_k)
         }
-        override protected def openResource(f: Any => Unit, k: => Unit) {
+        override protected def openResource(f: Any => Unit, k: Exit => Unit) {
             _f = new Wrap(f)
 //            _k = eval.ByName(k)
             _1._fs.add(_f)

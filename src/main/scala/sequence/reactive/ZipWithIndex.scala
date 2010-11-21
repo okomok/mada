@@ -11,7 +11,7 @@ package sequence; package reactive
 private
 case class ZipWithIndex[+A](_1: Reactive[A]) extends Reactive[(A, Int)] {
     override def close() = _1.close()
-    override def forloop(f: Tuple2[A, Int] => Unit, k: => Unit) {
+    override def forloop(f: Tuple2[A, Int] => Unit, k: Exit => Unit) {
         var i = 0
         _1 _for { x =>
             f(x, i)

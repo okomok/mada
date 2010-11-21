@@ -11,7 +11,7 @@ package sequence; package reactive
 private
 case class DropUntil[A](_1: Reactive[A], _2: Reactive[_]) extends Reactive[A] {
     override def close() = { _1.close(); _2.close() }
-    override def forloop(f: A => Unit, k: => Unit) {
+    override def forloop(f: A => Unit, k: Exit => Unit) {
         @volatile var go = false
         val g = eval.Lazy{_2.close()}
 

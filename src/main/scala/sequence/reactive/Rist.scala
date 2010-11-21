@@ -18,17 +18,25 @@ final class Rist[A] extends Reactive[A] {
     private[this] val xs = new ArrayList[A]
     private[this] val outs = new ArrayList[A => Unit]
 
-    override def forloop(f: A => Unit, k: => Unit) {
-        for (x <- iterative.from(xs)) f(x)
+    override def forloop(f: A => Unit, k: Exit => Unit) {
+        for (x <- iterative.from(xs)) {
+            f(x)
+        }
         outs.add(f)
     }
 //    override def head: A = xs.get(0)
 
     def add(y: A) {
         xs.add(y)
-        for (out <- iterative.from(outs)) out(y)
+        for (out <- iterative.from(outs)) {
+            out(y)
+        }
     }
-    def addAll(ys: Iterative[A]): Unit = for (y <- ys) add(y)
+    def addAll(ys: Iterative[A]) {
+        for (y <- ys) {
+            add(y)
+        }
+    }
 }
 
 

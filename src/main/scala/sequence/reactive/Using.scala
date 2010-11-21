@@ -21,7 +21,7 @@ case class Using[+A](_1: Reactive[A], _2: java.io.Closeable) extends Forwarder[A
                     throw t
                 }
             }
-        } onEnd {
+        } onExit { _ =>
             _2.close()
         }
     }

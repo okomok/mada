@@ -10,8 +10,15 @@ package sequence; package reactive
 
 private
 case class Single[+A](_1: A) extends Reactive[A] {
-    override def forloop(f: A => Unit, k: => Unit) {
-        f(_1)
-        k
+    override def forloop(f: A => Unit, k: Exit => Unit) {
+        try {
+            f(_1)
+        } catch {
+            case t: Throwable => {
+                k(Thrown(t))
+                throw t
+            }
+        }
+        k(End)
     }
 }

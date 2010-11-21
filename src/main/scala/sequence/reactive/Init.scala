@@ -11,7 +11,7 @@ package sequence; package reactive
 private
 case class Init[+A](_1: Reactive[A]) extends Reactive[A] {
     override def close() = _1.close()
-    override def forloop(f: A => Unit, k: => Unit) {
+    override def forloop(f: A => Unit, k: Exit => Unit) {
         var prev: Option[A] = None
         _1 _for { x =>
             if (!prev.isEmpty) {

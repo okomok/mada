@@ -15,7 +15,7 @@ case class Step[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
     Precondition.positive(_2, "step")
 
     override def close() = _1.close()
-    override def forloop(f: A => Unit, k: => Unit) {
+    override def forloop(f: A => Unit, k: Exit => Unit) {
         var c = 0
         _1 _for { x =>
             if (c == 0) {
@@ -37,7 +37,7 @@ case class Step[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
 private
 case class StepTime[+A](_1: Reactive[A], _2: Long) extends Reactive[A] {
     override def close() = _1.close()
-    override def forloop(f: A => Unit, k: => Unit) {
+    override def forloop(f: A => Unit, k: Exit => Unit) {
         var past = 0L
         _1 _for { x =>
             val now = System.currentTimeMillis

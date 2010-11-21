@@ -16,29 +16,50 @@ class FromArray[A](_1: Array[A]) extends Forwarder[A] {
 
 private
 class FromTraversable[+A](_1: scala.collection.Traversable[A]) extends Reactive[A] {
-    override def forloop(f: A => Unit, k: => Unit) {
-        _1.foreach(f)
-        k
+    override def forloop(f: A => Unit, k: Exit => Unit) {
+        try {
+            _1.foreach(f)
+        } catch {
+            case t: Throwable => {
+                k(Thrown(t))
+                throw t
+            }
+        }
+        k(End)
     }
 }
 
 
 private
 class FromOption[+A](_1: Option[A]) extends Reactive[A] {
-    override def forloop(f: A => Unit, k: => Unit) {
-        if (!_1.isEmpty) {
-            f(_1.get)
+    override def forloop(f: A => Unit, k: Exit => Unit) {
+        try {
+            if (!_1.isEmpty) {
+                f(_1.get)
+            }
+        } catch {
+            case t: Throwable => {
+                k(Thrown(t))
+                throw t
+            }
         }
-        k
+        k(End)
     }
 }
 
 
 private
 class FromResponder[+A](_1: Responder[A]) extends Reactive[A] {
-    override def forloop(f: A => Unit, k: => Unit) {
-        _1.respond(f)
-        k
+    override def forloop(f: A => Unit, k: Exit => Unit) {
+        try {
+            _1.respond(f)
+        } catch {
+            case t: Throwable => {
+                k(Thrown(t))
+                throw t
+            }
+        }
+        k(End)
     }
 }
 

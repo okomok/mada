@@ -11,12 +11,12 @@ package sequence; package reactive
 private
 case class Breakable[A](_1: Reactive[A]) extends Reactive[Tuple2[A, Function0[Unit]]] {
     override def close() = _1.close()
-    override def forloop(f: Tuple2[A, Function0[Unit]] => Unit, k: => Unit) {
-        val _k = eval.Lazy{k;close()}
+    override def forloop(f: Tuple2[A, Function0[Unit]] => Unit, k: Exit => Unit) {
+        val _k = IfFirst[Exit] { q => k(q);close() } Else { _ => () }
         _1 _for { x =>
-            f(x, () => _k())
-        } _then {
-            _k()
+            f(x, () => _k(End))
+        } _then { q =>
+            _k(q)
         }
     }
 }

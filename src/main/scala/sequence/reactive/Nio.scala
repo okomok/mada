@@ -25,7 +25,7 @@ object Nio {
     }
 
     private class _Selection(_1: Selector, _2: Selector => Long) extends Reactive[SelectionKey] {
-        override def forloop(f: SelectionKey => Unit, k: => Unit) {
+        override def forloop(f: SelectionKey => Unit, k: Exit => Unit) {
             try {
                 while (true) {
                     if (_2(_1) != 0) {
@@ -37,7 +37,11 @@ object Nio {
                     }
                 }
             } catch  {
-                case _: ClosedSelectorException => () // k?
+                case _: ClosedSelectorException => // k(End)? k(Closed)?
+                case t: Throwable => {
+                    k(Thrown(t))
+                    throw t
+                }
             }
         }
     }

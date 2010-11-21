@@ -11,7 +11,7 @@ package sequence; package reactive
 private
 case class Catching[+A](_1: Reactive[A], _2: PartialFunction[Throwable, Unit]) extends Reactive[A] {
     override def close() = _1.close()
-    override def forloop(f: A => Unit, k: => Unit) {
+    override def forloop(f: A => Unit, k: Exit => Unit) {
         _1 _for { x =>
             try {
                 f(x)

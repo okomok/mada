@@ -12,6 +12,7 @@ import com.github.okomok.mada
 import mada.{arm, Arm}
 import arm.{use, scope}
 import junit.framework.Assert._
+import mada.sequence.reactive.Exit
 
 
 class CpsTest extends org.scalatest.junit.JUnit3Suite {
@@ -70,7 +71,7 @@ class CpsTest extends org.scalatest.junit.JUnit3Suite {
     import mada.sequence.Reactive
 
     case class Res1[A](res: A) extends Reactive[A] {
-        override def forloop(f: A => Unit, k: => Unit) = {
+        override def forloop(f: A => Unit, k: Exit => Unit) = {
             arr.add(10)
             try {
                 f(res)
@@ -80,7 +81,7 @@ class CpsTest extends org.scalatest.junit.JUnit3Suite {
         }
     }
     case class Res2[A](res: A) extends Reactive[A] {
-        override def forloop(f: A => Unit, k: => Unit) = {
+        override def forloop(f: A => Unit, k: Exit => Unit) = {
             arr.add(20)
             try {
                 f(res)
@@ -90,7 +91,7 @@ class CpsTest extends org.scalatest.junit.JUnit3Suite {
         }
     }
     case class Res3[A](res: A) extends Reactive[A] {
-        override def forloop(f: A => Unit, k: => Unit) = {
+        override def forloop(f: A => Unit, k: Exit => Unit) = {
             arr.add(30)
             try {
                 f(res)

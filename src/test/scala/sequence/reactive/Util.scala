@@ -12,6 +12,7 @@ import com.github.okomok.mada
 import mada.sequence._
 import java.util.concurrent.CyclicBarrier
 import java.util.ArrayList
+import mada.sequence.reactive.Exit
 
 
 class IntSenders(_data: Vector[Int]*) {
@@ -38,7 +39,7 @@ class IntSenders(_data: Vector[Int]*) {
 
 
 class IntSender(datum: Vector[Int], barrier: CyclicBarrier) extends Reactive[Int] {
-    override def forloop(f: Int => Unit, k: => Unit) = {
+    override def forloop(f: Int => Unit, k: Exit => Unit) = {
         new Thread {
             override def run = {
                 barrier.await

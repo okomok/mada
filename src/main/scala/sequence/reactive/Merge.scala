@@ -11,17 +11,17 @@ package sequence; package reactive
 private
 case class Merge[+A](_1: Reactive[A], _2: Reactive[A]) extends Reactive[A] {
     override def close() = { _1.close(); _2.close() }
-    override def forloop(f: A => Unit, k: => Unit) {
-        val _k = IfFirst[Unit] { _ => () } Else { _ => k }
+    override def forloop(f: A => Unit, k: Exit => Unit) {
+        val _k = IfFirst[Exit] { _ => () } Else { q => k(q) }
         val lock = new AnyRef{}
 
         _1 _for { x =>
             lock.synchronized {
                 f(x)
             }
-        } _then {
+        } _then { q =>
             lock.synchronized {
-                _k()
+                _k(q)
             }
         }
 
@@ -29,9 +29,9 @@ case class Merge[+A](_1: Reactive[A], _2: Reactive[A]) extends Reactive[A] {
             lock.synchronized {
                 f(y)
             }
-        } _then {
+        } _then { q =>
             lock.synchronized {
-                _k()
+                _k(q)
             }
         }
     }

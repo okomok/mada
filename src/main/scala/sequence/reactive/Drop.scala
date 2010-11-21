@@ -13,7 +13,7 @@ case class Drop[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
     Precondition.nonnegative(_2, "drop")
 
     override def close() = _1.close()
-    override def forloop(f: A => Unit, k: => Unit) {
+    override def forloop(f: A => Unit, k: Exit => Unit) {
         var c = _2
         _1 _for { x =>
             if (c == 0) {

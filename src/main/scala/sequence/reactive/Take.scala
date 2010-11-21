@@ -11,10 +11,10 @@ package sequence; package reactive
 private
 case class Take[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
     override def close() = _1.close()
-    override def forloop(f: A => Unit, k: => Unit) {
-        val _k = eval.Lazy{k;close()}
+    override def forloop(f: A => Unit, k: Exit => Unit) {
+        val _k = IfFirst[Exit] { q => k(q);close() } Else { _ => () }
         if (_2 == 0) {
-            _k()
+            _k(End)
         } else {
             var c = _2
             _1 _for { x =>
@@ -22,11 +22,11 @@ case class Take[+A](_1: Reactive[A], _2: Int) extends Reactive[A] {
                     f(x)
                     c -= 1
                     if (c == 0) {
-                        _k()
+                        _k(End)
                     }
                 }
-            } _then {
-                _k()
+            } _then { q =>
+                _k(q)
             }
         }
     }

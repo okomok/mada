@@ -11,7 +11,7 @@ package sequence; package reactive
 private
 case class Unsplit[A](_1: Reactive[Sequence[A]], _2: Reactive[A]) extends Reactive[A] {
     override def close() = _1.close()
-    override def forloop(f: A => Unit, k: => Unit) {
+    override def forloop(f: A => Unit, k: Exit => Unit) {
         var first = true
         _1 _for { s =>
             if (first) {

@@ -10,21 +10,15 @@ package sequence; package reactive
 
 private
 case class Duplicate[A](_1: Reactive[A]) extends Reactive[A] {
-    private[this] var _fk: (A => Unit, eval.ByName[Unit]) = null
-    private[this] val _close = {
-        IfFirst[Unit] {
-            _ => ()
-        } Else {
-            _ => _1.close()
-        }
-    }
+    private[this] var _fk: (A => Unit, Exit => Unit) = null
+    private[this] val _close = IfFirst[Unit] { _ => () } Else { _ => _1.close() }
     private[this] val _forloop = {
-        IfFirst[(A => Unit, eval.ByName[Unit])] {
+        IfFirst[(A => Unit, Exit => Unit)] {
             case (f, k) => _fk = (f, k)
         } Else {
-            case (f, k) => _1.react(_fk._1).onEnd(_fk._2()).forloop(f, k)
+            case (f, k) => _1.react(_fk._1).onExit(_fk._2).forloop(f, k)
         }
     }
     override def close() = _close()
-    override def forloop(f: A => Unit, k: => Unit) = _forloop(f, eval.ByName(k))
+    override def forloop(f: A => Unit, k: Exit => Unit) = _forloop(f, k)
 }

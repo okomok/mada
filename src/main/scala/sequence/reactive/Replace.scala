@@ -11,7 +11,7 @@ package sequence; package reactive
 private
 case class Replace[+A](_1: Reactive[A], _2: Iterative[A]) extends Reactive[A] {
     override def close() = _1.close()
-    override def forloop(f: A => Unit, k: => Unit) {
+    override def forloop(f: A => Unit, k: Exit => Unit) {
         val it = _2.begin
         _1 _for { x =>
             if (it) {
@@ -29,9 +29,9 @@ case class Replace[+A](_1: Reactive[A], _2: Iterative[A]) extends Reactive[A] {
 private
 case class ReplaceRegion[+A](_1: Reactive[A], _2: Int, _3: Int, _4: Iterative[A]) extends Reactive[A] {
     override def close() = _1.close()
-    override def forloop(f: A => Unit, k: => Unit) =
+    override def forloop(f: A => Unit, k: Exit => Unit) =
         _1.fork{ _.take(_2).react(f) }.
            fork{ _.slice(_2, _3).replace(_4).react(f) }.
-           fork{ _.drop(_3).react(f).onEnd(k) }.
+           fork{ _.drop(_3).react(f).onExit(k) }.
            start()
 }

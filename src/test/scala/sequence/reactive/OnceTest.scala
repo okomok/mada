@@ -11,6 +11,7 @@ import com.github.okomok.mada
 
 import mada.sequence._
 import junit.framework.Assert._
+import mada.sequence.reactive.Exit
 
 
 class OnceTest extends org.scalatest.junit.JUnit3Suite {
@@ -19,7 +20,7 @@ class OnceTest extends org.scalatest.junit.JUnit3Suite {
         var thrown = false
 
         class Trivial extends reactive.ReactiveOnce[Int] {
-            override protected def forloopOnce(f: Int => Unit, k: => Unit) {
+            override protected def forloopOnce(f: Int => Unit, k: Exit => Unit) {
                 f(10)
                 f(5)
             }

@@ -19,7 +19,7 @@ class OriginTest extends org.scalatest.junit.JUnit3Suite {
     def testThreaded { // force to create a thread.
         val c = new java.util.concurrent.CountDownLatch(1)
         val a = new java.util.ArrayList[Int]
-        for (x <- reactive.origin(mada.eval.Threaded).generate(0 until 10).onEnd(c.countDown)) {
+        for (x <- reactive.origin(mada.eval.Threaded).generate(0 until 10).onExit(_ =>c.countDown)) {
             a.add(x)
         }
         c.await
@@ -29,7 +29,7 @@ class OriginTest extends org.scalatest.junit.JUnit3Suite {
     def testAsync { // in the thread pool.
         val c = new java.util.concurrent.CountDownLatch(1)
         val a = new java.util.ArrayList[Int]
-        for (x <- reactive.origin(mada.eval.Async).generate(0 until 10).onEnd(c.countDown)) {
+        for (x <- reactive.origin(mada.eval.Async).generate(0 until 10).onExit(_ =>c.countDown)) {
             a.add(x)
         }
         c.await

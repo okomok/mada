@@ -11,16 +11,16 @@ package sequence; package reactive
 private
 case class TakeWhile[A, B >: A](_1: Reactive[A], _2: A => Boolean) extends Reactive[B] {
     override def close() = _1.close()
-    override def forloop(f: B => Unit, k: => Unit) {
-        val _k = eval.Lazy{k;close()}
+    override def forloop(f: B => Unit, k: Exit => Unit) {
+        val _k = IfFirst[Exit] { q => k(q);close() } Else { _ => () }
         _1 _for { x =>
             if (_2(x)) {
                 f(x)
             } else {
-                _k()
+                _k(End)
             }
-        } _then {
-            _k()
+        } _then { q =>
+            _k(q)
         }
     }
 }
