@@ -167,10 +167,11 @@ class VarTest extends org.scalatest.junit.JUnit3Suite {
         val a = new reactive.Var[Int](1)
         val b = reactive.Var[Int]//(2)
         val c = new reactive.Var[Int](3)
-        reactive.block {
-            val x = a.each
-            val y = b.each
-            val z = c.each
+        reactive.block { Y =>
+            import Y._
+            val x = each(a)
+            val y = each(b)
+            val z = each(c)
             out.add(x + y + z)
         }
         assertEquals(vector.empty.of[Int], vector.from(out)); out.clear

@@ -20,10 +20,10 @@ class Common {
     @equivalentTo("a.foreach(f)")
     def using[A](a: Arm[A])(f: A => Unit): Unit = a.foreach(f)
 
-    @equivalentTo("a.each")
-    def use[A](a: Arm[A]): A @continuations.cpsParam[Any, Any] = a.each
+    @equivalentTo("sequence.reactive.BlockContext.default.each(a)")
+    def use[A](a: Arm[A]): A @continuations.cpsParam[Any, Any] = sequence.reactive.BlockContext.default.each(a)
 
     @equivalentTo("sequence.reactive.block")
-    def scope[A](ctx: => A @continuations.cpsParam[A, Any]): Unit = sequence.reactive.block(ctx)
+    def scope[A](ctx: => A @continuations.cpsParam[A, Any]): Unit = continuations.reset(ctx)
 
 }

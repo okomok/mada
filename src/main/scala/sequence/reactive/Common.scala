@@ -49,8 +49,8 @@ class Common {
         def apply[A](from: A*): Reactive[A] = from
     }
 
-    @equivalentTo("scala.util.continuations.reset[A, Any]")
-    def block[A](ctx: => A @continuations.cpsParam[A, Any]): Unit = continuations.reset(ctx)
+    @equivalentTo("continuations.reset(ctx(BlockContext.default))")
+    def block[A](ctx: BlockContext => A @continuations.cpsParam[A, Any]): Unit = continuations.reset(ctx(BlockContext.default))
 
     @equivalentTo("from(util.optional(body))")
     def optional[A](body: => A): Reactive[A] = from(util.optional(body))

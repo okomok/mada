@@ -21,12 +21,13 @@ package sequencetest; package reactivetest; package example
                 val label = new swing.JLabel("testTrivial")
                 frame.getContentPane.add(label)
 
-                reactive.block {
+                reactive.block { Y =>
+                    import Y._
                     val mouse = reactive.Swing.Mouse(label)
-                    val p = mouse.Pressed.take(10).each
+                    val p = each(mouse.Pressed.take(10))
                     println("pressed at: " + (p.getX, p.getY))
-                    val d = mouse.Dragged.stepTime(100).
-                        takeUntil(mouse.Released).onExit(_ =>println("released")).each
+                    val d = each(mouse.Dragged.stepTime(100).
+                        takeUntil(mouse.Released).onExit(_ =>println("released")))
                     println("dragging at: " + (d.getX, d.getY))
                 }
 

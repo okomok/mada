@@ -15,15 +15,17 @@ import mada.sequence._
 class ScalaTest extends org.scalatest.junit.JUnit3Suite {
 
     def testOption {
-        reactive.block {
-            val k = reactive.optional(12).each
+        reactive.block { Y =>
+            import Y._
+            val k = each(reactive.optional(12))
             expect(12)(k)
         }
     }
 
     def testOptionEmpty {
-        reactive.block {
-            val k = reactive.optional(throw new Error("doh")).each
+        reactive.block { Y =>
+            import Y._
+            val k = each(reactive.optional(throw new Error("doh")))
             throw new Error
         }
     }

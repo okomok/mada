@@ -8,9 +8,6 @@ package com.github.okomok.mada
 package sequence; package reactive
 
 
-import scala.util.continuations
-
-
 object Reactive extends Common with Compatibles {
 
 // methodization
@@ -293,16 +290,5 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
      * Elements with a break function.
      */
     def breakable: Reactive[(A, Function0[Unit])] = Breakable(this)
-
-    /**
-     * Returns each element in cpstyle.
-     */
-    final def each: A @continuations.cpsParam[Any, Any] = continuations.shift { (k: A => Any) => foreach(function.discard(k)) }
-
-    final def head: A @continuations.cpsParam[Any, Any] = take(1).each
-
-    final def nth(n: Int): A @continuations.cpsParam[Any, Any] = drop(n).take(1).each
-
-    final def find(p: A => Boolean): A @continuations.cpsParam[Any, Any] = dropWhile(function.not(p)).take(1).each
 
 }

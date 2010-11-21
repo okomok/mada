@@ -18,26 +18,42 @@ import javax.swing
 import com.github.okomok.mada
 import mada.util.|<
 import mada.sequence.reactive
+import mada.sequence.Reactive
 
 
 class DragDropTest extends
-    NotFestSuite
-//    FestTestNGSuite
+//    NotFestSuite
+    FestTestNGSuite
 {
-
     private var fixt: FrameFixture = null
 
     override protected def onSetUp {
         val jf = mada.eval.InEdt {
             val jf = new swing.JFrame("DragDropTest")
             val jl = new swing.JLabel("Drag") |< (_.setName("Drag")) |< (jf.getContentPane.add(_))
-            reactive.block {
+
+            reactive.block { Y =>
+                import Y._
                 val mouse = reactive.Swing.Mouse(jl)
-                val p = mouse.Pressed.head
+                val p = head(mouse.Pressed)
                 println("pressed at: " + (p.getX, p.getY))
-                val d = mouse.Dragged.takeUntil(mouse.Released).onExit(_ =>println("released")).each
+                for (d <- until(mouse.Dragged.stepTime(100), mouse.Released)) {
+                    println("dragging at: " + (d.getX, d.getY))
+                }
+                println("released")
+                99
+            }
+/*
+            reactive.block { Y =>
+                import Y._
+                val mouse = reactive.Swing.Mouse(jl)
+                val p = each(mouse.Pressed.take(10))
+                println("pressed at: " + (p.getX, p.getY))
+                val d = each(mouse.Dragged.stepTime(100).
+                    takeUntil(mouse.Released).onExit(_ => println("released")))
                 println("dragging at: " + (d.getX, d.getY))
             }
+*/
             jf
         } apply
 

@@ -106,10 +106,11 @@ class CpsTest extends org.scalatest.junit.JUnit3Suite {
         val r2 = Res2("res2")
         val r3 = Res3("res3")
 
-        scope {
-            val s1 = r1.each
-            val s2 = r2.each
-            val s3 = r3.each
+        mada.sequence.reactive.block { Y =>
+            import Y._
+            val s1 = each(r1)
+            val s2 = each(r2)
+            val s3 = each(r3)
             arr.add(1)
             arr.add(2)
             arr.add(3)

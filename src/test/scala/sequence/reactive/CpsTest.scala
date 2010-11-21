@@ -22,9 +22,10 @@ class CpsTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial {
         val arr = new java.util.ArrayList[(Int, Int)]
-        reactive.block {
-            val x = naturals.take(2).each // 0, 1
-            val y = naturals.take(3).each // 0, 1, 2
+        reactive.block { Y =>
+            import Y._
+            val x = each(naturals.take(2)) // 0, 1
+            val y = each(naturals.take(3)) // 0, 1, 2
             arr.add((x, y))
         }
         Thread.sleep(1200)
@@ -33,10 +34,11 @@ class CpsTest extends org.scalatest.junit.JUnit3Suite {
 
     def testNth {
         val arr = new java.util.ArrayList[(Int, Int, Int)]
-        reactive.block {
-            val x = naturals.nth(3)
-            val y = naturals.head
-            val z = naturals.find(_ == 5)
+        reactive.block { Y =>
+            import Y._
+            val x = nth(naturals)(3)
+            val y = head(naturals)
+            val z = find(naturals)(_ == 5)
             arr.add((x, y, z))
         }
         Thread.sleep(1200)
@@ -45,10 +47,11 @@ class CpsTest extends org.scalatest.junit.JUnit3Suite {
 
     def testNthEmpty {
         val arr = new java.util.ArrayList[(Int, Int, Int)]
-        reactive.block {
-            val x = naturals.take(3).nth(4)
-            val y = naturals.head
-            val z = naturals.find(_ == 5)
+        reactive.block { Y =>
+            import Y._
+            val x = nth(naturals.take(3))(4)
+            val y = head(naturals)
+            val z = find(naturals)(_ == 5)
             arr.add((x, y, z))
         }
         Thread.sleep(1200)
