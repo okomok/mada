@@ -7,7 +7,7 @@
 package com.github.okomok.madatest;
 package sequencetest; package reactivetest; package example
 
-
+/*
     import com.github.okomok.mada
     import mada.sequence.reactive
     import javax.swing
@@ -21,12 +21,11 @@ package sequencetest; package reactivetest; package example
                 val label = new swing.JLabel("testTrivial")
                 frame.getContentPane.add(label)
 
-                reactive.block { B =>
-                    import B._
+                reactive.block { * =>
                     val mouse = reactive.Swing.Mouse(label)
-                    val p = each(mouse.Pressed)
+                    val p = *.each(mouse.Pressed)
                     println("pressed at: " + (p.getX, p.getY))
-                    for (d <- until(mouse.Dragged.stepTime(100), mouse.Released)) {
+                    for (d <- *.until(mouse.Dragged.stepTime(100), mouse.Released)) {
                         println("dragging at: " + (d.getX, d.getY))
                     }
                     println("released")
@@ -43,7 +42,7 @@ package sequencetest; package reactivetest; package example
             } apply
         }
     }
-
+*/
 
 /*
 class DragDropTezt {

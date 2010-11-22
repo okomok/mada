@@ -8,10 +8,10 @@ package com.github.okomok.mada
 package sequence; package reactive
 
 
-import scala.util.continuations.{cpsParam, shift}
+import scala.util.continuations.{cpsParam, reset, shift}
 
 
-trait BlockContext {
+object BlockContext {
 
     def each[A](xs: Reactive[A]): A @cpsParam[Any, Any] = shift { (k: A => Any) => xs.foreach(function.discard(k)) }
 
@@ -21,20 +21,16 @@ trait BlockContext {
 
     def find[A](xs: Reactive[A])(p: A => Boolean): A @cpsParam[Any, Any] = each(xs.dropWhile(function.not(p)).take(1))
 
-    def forUntil[A](xs: Reactive[A], ys: Reactive[_])(_f: A => Unit): Unit @cpsParam[Any, Any] = {
-        each { new Reactive[Unit] {
-            override def forloop(f: Unit => Unit, k: Exit => Unit) {
-                xs.takeUntil(ys).onExit(_ => f()).foreach(_f)
+    def apply[A](xs: Reactive[A]): Forloop[A] = new Forloop(xs)
+
+    class Forloop[A](xs: Reactive[A]) {
+        def foreach(g: A => Any @cpsParam[Any, Any]): Exit @cpsParam[Any, Any] = each {
+            new Reactive[Exit] {
+                override def forloop(cp: Exit => Unit, k: Exit => Unit) {
+                    xs.onExit(q => cp(q)).forloop(x => reset{g(x);()}, k)
+                }
             }
-        } }
+        }
     }
 
-    case class until[A](xs: Reactive[A], ys: Reactive[_]) {
-        def foreach(f: A => Unit): Unit @cpsParam[Any, Any] = forUntil(xs, ys)(f)
-    }
-
-}
-
-object BlockContext {
-    val default: BlockContext = new BlockContext{}
 }

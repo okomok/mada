@@ -20,10 +20,47 @@ import mada.util.|<
 import mada.sequence.reactive
 import mada.sequence.Reactive
 
+import scala.util.continuations
+
+
+/*
+object Rx {
+
+    def block[A](ctx: BlockContext => A @continuations.cpsParam[A, Any]): Unit = continuations.reset(ctx(new BlockContext))
+
+    class BlockContext {
+        // loop{...
+        def apply[A](ctx: BlockContext => A @continuations.cpsParam[Any, Any]): reactive.Exit @continuations.cpsParam[Any, Any] = {
+            println("BlockContext.apply")
+            val c = new BlockContext
+            ctx(c)
+            assert(c._xs != null)
+            assert(c._f != null)
+            new reactive.BlockContext{}.each { new Reactive[reactive.Exit] {
+                override def forloop(f: reactive.Exit => Unit, k: reactive.Exit => Unit) {
+                    println("hey")
+                    c._xs.onExit(q => f(q)).foreach(x => c._f(x))
+                }
+            } }
+        }
+    }
+
+    class BlockContext {
+        var _xs: Reactive[Any] = null
+        var _f: Any => Any = null
+        // next(...
+        def apply[A](xs: Reactive[A]): A @continuations.cpsParam[Any, Any] = {
+            println("BlockContext.apply")
+            continuations.shift { (k: A => Any) => _xs = xs; _f = k.asInstanceOf[Any => Any] } //xs.foreach(function.discard(k)) }
+        }
+    }
+
+}
+*/
 
 class DragDropTest extends
-    NotFestSuite
-//    FestTestNGSuite
+//    NotFestSuite
+    FestTestNGSuite
 {
     private var fixt: FrameFixture = null
 
@@ -32,26 +69,43 @@ class DragDropTest extends
             val jf = new swing.JFrame("DragDropTest")
             val jl = new swing.JLabel("Drag") |< (_.setName("Drag")) |< (jf.getContentPane.add(_))
 
-            reactive.block { Y =>
-                import Y._
+            reactive.block { * =>
                 val mouse = reactive.Swing.Mouse(jl)
-                val p = head(mouse.Pressed)
+                for (p <- *(mouse.Pressed)) {
+                    println("pressed at: " + (p.getX, p.getY))
+                    for (d <- *(mouse.Dragged.stepTime(100).takeUntil(mouse.Released))) {
+                        println("dragging at: " + (d.getX, d.getY))
+                    }
+                    println("released")
+                    999 // check value-discarding.
+                }
+            }
+/*
+            Rx.block { loop =>
+                val ex = loop { next =>
+                    val mouse = reactive.Swing.Mouse(jl)
+                    val p = next(mouse.Pressed)
+                    println("pressed at: " + (p.getX, p.getY))
+                    val ex = loop { next =>
+                        val d = next(mouse.Dragged.stepTime(100).takeUntil(mouse.Released))
+                        println("dragging at: " + (d.getX, d.getY))
+                    }
+                    println("released: " + ex)
+                    99
+                }
+                println("hooo: " + ex)
+            }
+*/
+/*
+            reactive.block { next =>
+                val mouse = reactive.Swing.Mouse(jl)
+                val p = next.head(mouse.Pressed)
                 println("pressed at: " + (p.getX, p.getY))
-                for (d <- until(mouse.Dragged.stepTime(100), mouse.Released)) {
+                for (d <- next.until(mouse.Dragged.stepTime(100), mouse.Released)) {
                     println("dragging at: " + (d.getX, d.getY))
                 }
                 println("released")
                 99
-            }
-/*
-            reactive.block { Y =>
-                import Y._
-                val mouse = reactive.Swing.Mouse(jl)
-                val p = each(mouse.Pressed.take(10))
-                println("pressed at: " + (p.getX, p.getY))
-                val d = each(mouse.Dragged.stepTime(100).
-                    takeUntil(mouse.Released).onExit(_ => println("released")))
-                println("dragging at: " + (d.getX, d.getY))
             }
 */
             jf
