@@ -58,6 +58,21 @@ object Rx {
 }
 */
 
+/*
+    class Forloop[A](xs: Reactive[A]) {
+        import reactive.Exit
+        import reactive.BlockContext.each
+        import scala.util.continuations._
+        def foreach(g: A => Any @cpsParam[Unit, Any]): Exit @cpsParam[Any, Unit] = each {
+            new Reactive[Exit] {
+                override def forloop(cp: Exit => Unit, k: Exit => Unit) {
+                    xs.onExit(q => cp(q)).forloop(x => reset{g(x);()}, k)
+                }
+            }
+        }
+    }
+*/
+
 class DragDropTest extends
 //    NotFestSuite
     FestTestNGSuite
@@ -80,6 +95,7 @@ class DragDropTest extends
                     999 // check value-discarding.
                 }
             }
+
 /*
             Rx.block { loop =>
                 val ex = loop { next =>

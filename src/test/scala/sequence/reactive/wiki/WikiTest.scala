@@ -11,7 +11,7 @@ package sequencetest; package reactivetest; package wikitest
 import com.github.okomok.mada
 
 
-class WikiTest extends org.scalatest.junit.JUnit3Suite {
+class WikiTezt extends NotSuite {//extends org.scalatest.junit.JUnit3Suite {
 
 
 // Concepts
