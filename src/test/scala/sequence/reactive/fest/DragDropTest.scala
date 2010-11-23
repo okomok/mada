@@ -92,7 +92,6 @@ class DragDropTest extends
                         println("dragging at: " + (d.getX, d.getY))
                     }
                     println("released")
-                    999 // check value-discarding.
                 }
             }
 
