@@ -26,17 +26,17 @@ import scala.util.continuations
 /*
 object Rx {
 
-    def block[A](ctx: BlockContext => A @continuations.cpsParam[A, Any]): Unit = continuations.reset(ctx(new BlockContext))
+    def block[A](ctx: BlockEnv => A @continuations.cpsParam[A, Any]): Unit = continuations.reset(ctx(new BlockEnv))
 
-    class BlockContext {
+    class BlockEnv {
         // loop{...
-        def apply[A](ctx: BlockContext => A @continuations.cpsParam[Any, Any]): reactive.Exit @continuations.cpsParam[Any, Any] = {
-            println("BlockContext.apply")
-            val c = new BlockContext
+        def apply[A](ctx: BlockEnv => A @continuations.cpsParam[Any, Any]): reactive.Exit @continuations.cpsParam[Any, Any] = {
+            println("BlockEnv.apply")
+            val c = new BlockEnv
             ctx(c)
             assert(c._xs != null)
             assert(c._f != null)
-            new reactive.BlockContext{}.each { new Reactive[reactive.Exit] {
+            new reactive.BlockEnv{}.each { new Reactive[reactive.Exit] {
                 override def forloop(f: reactive.Exit => Unit, k: reactive.Exit => Unit) {
                     println("hey")
                     c._xs.onExit(q => f(q)).foreach(x => c._f(x))
@@ -45,12 +45,12 @@ object Rx {
         }
     }
 
-    class BlockContext {
+    class BlockEnv {
         var _xs: Reactive[Any] = null
         var _f: Any => Any = null
         // next(...
         def apply[A](xs: Reactive[A]): A @continuations.cpsParam[Any, Any] = {
-            println("BlockContext.apply")
+            println("BlockEnv.apply")
             continuations.shift { (k: A => Any) => _xs = xs; _f = k.asInstanceOf[Any => Any] } //xs.foreach(function.discard(k)) }
         }
     }
@@ -61,7 +61,7 @@ object Rx {
 /*
     class Forloop[A](xs: Reactive[A]) {
         import reactive.Exit
-        import reactive.BlockContext.each
+        import reactive.BlockEnv.each
         import scala.util.continuations._
         def foreach(g: A => Any @cpsParam[Unit, Any]): Exit @cpsParam[Any, Unit] = each {
             new Reactive[Exit] {

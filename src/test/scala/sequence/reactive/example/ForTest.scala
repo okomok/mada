@@ -20,7 +20,7 @@ class ForTest extends org.scalatest.junit.JUnit3Suite {
     def testTrivial {
         val out = new java.util.ArrayList[Int]
         reset {
-            val x = reactive.BlockContext.each(Reactive.from(1 to 10))
+            val x = reactive.BlockEnv.each(Reactive.from(1 to 10))
             if (x % 2 == 0) {
                 out.add(x)
             }

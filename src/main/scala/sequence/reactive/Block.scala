@@ -11,7 +11,7 @@ package sequence; package reactive
 import scala.util.continuations.{cpsParam, reset, shift}
 
 
-object BlockContext {
+object BlockEnv {
 
     def each[A](xs: Reactive[A]): A @cpsParam[Any, Unit] = xs.toCps
 
