@@ -226,7 +226,7 @@ These construct a loosely arranged hierarchy (like Scala-2.7 collections):
 `Reactive` sequence is a logical base trait for all kinds of `mada` sequences.
 This is built upon (possibly) asynchronous `foreach`:
 
-   reactive.block { * =>
+    reactive.block { * =>
         val mouse = reactive.Swing.Mouse(jl)
         for (p <- *(mouse.Pressed)) {
             println("pressed at: " + (p.getX, p.getY))
