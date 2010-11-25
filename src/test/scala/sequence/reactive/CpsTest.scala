@@ -9,7 +9,7 @@ package com.github.okomok.madatest; package sequencetest; package reactivetest
 
 import com.github.okomok.mada.sequence._
 import junit.framework.Assert._
-import scala.util.continuations.{shift, suspendable, cpsParam}
+import scala.util.continuations.{shift, suspendable, cpsParam, reset}
 
 
 class CpsTest extends org.scalatest.junit.JUnit3Suite {
@@ -57,5 +57,25 @@ class CpsTest extends org.scalatest.junit.JUnit3Suite {
         Thread.sleep(1200)
         assertTrue(arr.isEmpty)
     }
+
+    def testFrom {
+        val arr = new java.util.ArrayList[Int]
+        val xs = reactive.fromCps(shift{(k: Int => Unit) => k(0);k(1);k(2)})
+        for (x <- xs) {
+            arr.add(x)
+        }
+        assertEquals(Vector(0,1,2), Vector.from(arr))
+    }
+
+    def testToFrom {
+        val arr = new java.util.ArrayList[Int]
+        val xs = reactive.Of(0,1,2)
+        reactive.block { * =>
+            val x = reactive.fromCps(xs.toCps).toCps
+            arr.add(x)
+        }
+        assertEquals(Vector(0,1,2), Vector.from(arr))
+    }
+
 
 }

@@ -58,4 +58,7 @@ class Common {
     @equivalentTo("from(util.optionalErr(body))")
     def optionalErr[A](body: => A): Reactive[A] = from(util.optionalErr(body))
 
+    @conversion
+    def fromCps[A](from: => A @scala.util.continuations.suspendable): Reactive[A] = new FromCps(from)
+
 }

@@ -15,5 +15,5 @@ trait Compatibles {
     implicit def fromOption[A](from: Option[A]): Reactive[A] = new FromOption(from)
     implicit def fromResponder[A](from: Responder[A]): Reactive[A] = new FromResponder(from)
     implicit def fromReactor(from: Reactor): Reactive[Any] = Reactor.Secondary(from)
-    implicit def fromCps[A](from: => A @scala.util.continuations.suspendable): Reactive[A] = new FromCps(from)
+//    implicit def fromCps[A](from: => A @scala.util.continuations.suspendable): Reactive[A] = new FromCps(from) // doesn't work.
 }

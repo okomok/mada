@@ -169,7 +169,7 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
 
     def actor: scala.actors.Actor = scala.actors.Actor.actor(start)
 
-    @compatibleConversion
+    @conversion
     final def toCps: A @scala.util.continuations.cpsParam[Any, Unit] = ToCps(this)
 
 
