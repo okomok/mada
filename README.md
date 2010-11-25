@@ -226,38 +226,16 @@ These construct a loosely arranged hierarchy (like Scala-2.7 collections):
 `Reactive` sequence is a logical base trait for all kinds of `mada` sequences.
 This is built upon (possibly) asynchronous `foreach`:
 
-    import com.github.okomok.mada
-    import mada.sequence.reactive
-    import javax.swing
-
-    class DragDropTest extends org.scalatest.junit.JUnit3Suite {
-        def testTrivial {
-            val frame = mada.eval.InEdt {
-                val frame = new swing.JFrame("DragDropTest")
-                val label = new swing.JLabel("testTrivial")
-                frame.getContentPane.add(label)
-
-                reactive.block { B =>
-                    import B._
-                    val mouse = reactive.Swing.Mouse(label)
-                    val p = each(mouse.Pressed)
-                    println("pressed at: " + (p.getX, p.getY))
-                    for (d <- until(mouse.Dragged.stepTime(100), mouse.Released)) {
-                        println("dragging at: " + (d.getX, d.getY))
-                    }
-                    println("released")
-                }
-
-                frame.pack
-                frame.setVisible(true)
-                frame
-            } apply
-
-            Thread.sleep(20000)
-            mada.eval.InEdt {
-                frame.setVisible(false)
-            } apply
+   reactive.block { * =>
+        val mouse = reactive.Swing.Mouse(jl)
+        for (p <- *(mouse.Pressed)) {
+            println("pressed at: " + (p.getX, p.getY))
+            for (d <- *(mouse.Dragged.stepTime(100).takeUntil(mouse.Released))) {
+                println("dragging at: " + (d.getX, d.getY))
+            }
+            println("released")
         }
+    }
 
 `Reactive` summary:
 
@@ -324,14 +302,14 @@ It supports also parallel algorithms. Parallelization is explicit but transparen
 
     class ParTest extends org.scalatest.junit.JUnit3Suite {
         def testTrivial {
-            val v = Vector(0,1,2,3,4).parallelize
+            val v = Vector(0,1,2,3,4).par
             v.map(_ + 10).seek(_ == 13) match {
                 case Some(e) => expect(13)(e)
                 case None => fail("doh")
             }
 
             val i = new java.util.concurrent.atomic.AtomicInteger(0)
-            v.pareach {
+            v.each {
                 _ => i.incrementAndGet
             }
             expect(5)(i.get)

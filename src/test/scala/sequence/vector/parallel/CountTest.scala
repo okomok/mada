@@ -49,7 +49,7 @@ class CountParallelCountTezt extends Benchmark {
 class CountParallelEachTezt extends Benchmark {
     override def run = {
         val n = new java.util.concurrent.atomic.AtomicInteger(0)
-        longSample1.parallelBy(longSample1.defaultGrainSize).pareach({ e => if (e % 2 == 0) n.incrementAndGet })
+        longSample1.parallelBy(longSample1.defaultGrainSize).each({ e => if (e % 2 == 0) n.incrementAndGet })
         n.get
         ()
     }

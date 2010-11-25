@@ -131,7 +131,7 @@ package object util {
      * Evaluates <code>body</code> <code>n</code> times in possibly parallel.
      */
     def timesParallel(n: Int)(body: => Unit) {
-        sequence.vector.range(0, n).parallel.pareach(_ => body)
+        sequence.vector.range(0, n).parallel.each(_ => body)
     }
 
     /**

@@ -364,7 +364,7 @@ trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
      *
      * @param   f   a function that is applied to every element.
      */
-    def pareach(f: A => Unit): Unit = foreach(f)
+    def each(f: A => Unit): Unit = foreach(f)
 
 
 // search
@@ -503,7 +503,7 @@ trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
     def defaultGrainSize: Int = java.lang.Math.max(1, size / eval.Parallel.poolSize)
 
     @equivalentTo("mix(Mixin.parallel)")
-    final def parallelize: Vector[A] = mix(Mixin.parallel)
+    final def par: Vector[A] = mix(Mixin.parallel)
 
     /**
      * Makes parallel map computation join.
