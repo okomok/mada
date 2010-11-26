@@ -12,7 +12,7 @@ package peg
  * Trivial mixin for zero-width peg.
  */
 trait ZeroWidth[-A] extends Peg[A] {
-    @equivalentTo("0")
+    @annotation.equivalentTo("0")
     override def width = 0
 }
 

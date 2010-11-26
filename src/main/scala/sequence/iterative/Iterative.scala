@@ -17,7 +17,7 @@ object Iterative extends Common with Compatibles
 trait Iterative[+A] extends Sequence[A] {
 
 
-    @returnThis
+    @annotation.returnThis
     final def of[B >: A]: Iterative[B] = this
 
 
@@ -77,7 +77,7 @@ trait Iterative[+A] extends Sequence[A] {
      */
     def append[B >: A](that: Iterative[B]): Iterative[B] = Append[B](this, that)
 
-    @aliasOf("append")
+    @annotation.aliasOf("append")
     final def ++[B >: A](that: Iterative[B]): Iterative[B] = append(that)
 
     /**
@@ -85,7 +85,7 @@ trait Iterative[+A] extends Sequence[A] {
      */
     def map[B](f: A => B): Iterative[B] = Map(this, f)
 
-    @equivalentTo("map(f).flatten")
+    @annotation.equivalentTo("map(f).flatten")
     def flatMap[B](f: A => Iterative[B]): Iterative[B] = FlatMap(this, f)
 
     /**
@@ -93,7 +93,7 @@ trait Iterative[+A] extends Sequence[A] {
      */
     def filter(p: A => Boolean): Iterative[A] = Filter(this, p)
 
-    @aliasOf("filter")
+    @annotation.aliasOf("filter")
     final def withFilter(p: A => Boolean): Iterative[A] = filter(p)
 
     /**
@@ -101,7 +101,7 @@ trait Iterative[+A] extends Sequence[A] {
      */
     def remove(p: A => Boolean): Iterative[A] = Remove(this, p)
 
-    @equivalentTo("(filter(p), remove(p))")
+    @annotation.equivalentTo("(filter(p), remove(p))")
     def partition(p: A => Boolean): (Iterative[A], Iterative[A]) = (filter(p), remove(p))
 
     /**
@@ -181,7 +181,7 @@ trait Iterative[+A] extends Sequence[A] {
         acc
     }
 
-    @aliasOf("foldLeft")
+    @annotation.aliasOf("foldLeft")
     final def /:[B](z: B)(op: (B, A) => B): B = foldLeft(z)(op)
 
     /**
@@ -247,7 +247,7 @@ trait Iterative[+A] extends Sequence[A] {
      */
     def drop(n: Int): Iterative[A] = Drop(this, n)
 
-    @equivalentTo("take(m).drop(n)")
+    @annotation.equivalentTo("take(m).drop(n)")
     def slice(n: Int, m: Int): Iterative[A] = Slice(this, n, m)
 
     /**
@@ -260,10 +260,10 @@ trait Iterative[+A] extends Sequence[A] {
      */
     def dropWhile(p: A => Boolean): Iterative[A] = DropWhile(this, p)
 
-    @equivalentTo("(takeWhile(p), dropWhile(p))")
+    @annotation.equivalentTo("(takeWhile(p), dropWhile(p))")
     def span(p: A => Boolean): (Iterative[A], Iterative[A]) = (takeWhile(p), dropWhile(p))
 
-    @equivalentTo("(take(n), drop(n))")
+    @annotation.equivalentTo("(take(n), drop(n))")
     def splitAt(n: Int): (Iterative[A], Iterative[A]) = {
         Precondition.nonnegative(n, "splitAt")
         (take(n), drop(n))
@@ -292,7 +292,7 @@ trait Iterative[+A] extends Sequence[A] {
      */
     def force: Iterative[A] = Force(this)
 
-    @equivalentTo("mix(Mixin.force)")
+    @annotation.equivalentTo("mix(Mixin.force)")
     def strict: Iterative[A] = Strict(this)
 
     /**
@@ -375,7 +375,7 @@ trait Iterative[+A] extends Sequence[A] {
 
 // conversion
 
-    @conversion
+    @annotation.conversion
     def stringize(implicit pre: Iterative[A] <:< Iterative[Char]): String = {
         val sb = new StringBuilder
         val it = pre(this).begin
@@ -388,7 +388,7 @@ trait Iterative[+A] extends Sequence[A] {
 
     def lexical(implicit pre: Iterative[A] <:< Iterative[Char]): Lexical = Lexical(pre(this))
 
-    @conversion
+    @annotation.conversion
     def toList: List[A] = {
         val it = begin
         if (it) {
@@ -400,19 +400,19 @@ trait Iterative[+A] extends Sequence[A] {
         }
     }
 
-    @conversion
+    @annotation.conversion
     def toVector: Vector[A] = ToVector(this)
 
-    @conversion
+    @annotation.conversion
     def toSeq: Seq[A] = ToSeq(this)
 
-    @conversion
+    @annotation.conversion
     def toSIterable: scala.collection.Iterable[A] = ToSIterable(this)
 
-    @conversion
+    @annotation.conversion
     def toJIterable[B](implicit pre: Iterative[A] <:< Iterative[B]): java.lang.Iterable[B] = ToJIterable(pre(this))
 
-    @conversion
+    @annotation.conversion
     def breakOut[To](implicit bf: scala.collection.generic.CanBuildFrom[Nothing, A, To]): To = {
         val b = bf()
         b ++= toSIterable

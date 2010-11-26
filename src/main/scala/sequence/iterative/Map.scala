@@ -8,7 +8,7 @@ package com.github.okomok.mada
 package sequence; package iterative
 
 
-@visibleForTesting
+@annotation.visibleForTesting
 case class Map[A, +B](_1: Iterative[A], _2: A => B) extends Iterative[B] {
     override def begin = new Iterator[B] {
         private[this] val it = _1.begin

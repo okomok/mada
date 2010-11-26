@@ -16,7 +16,7 @@ package object assoc {
     /**
      * Gets the value: puts only if <code>key</code> is not contained.
      */
-    @notThreadSafe
+    @annotation.notThreadSafe
     def lazyGet[K, V](m: scala.collection.mutable.Map[K, V])(key: K)(value: => V): V = m.get(key) match {
         case None => {
             val v = value

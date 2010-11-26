@@ -13,15 +13,15 @@ package sequence; package iterative
  */
 trait Sequence[+A] extends reactive.Sequence[A] with Equals { // physical
 
-    @conversion
+    @annotation.conversion
     def asIterative: Iterative[A] // logical
 
-    @conversion
+    @annotation.conversion
     final def toIterative: Iterative[A] = asIterative // logical override
 
     override def asReactive: Reactive[A] = AsReactive(asIterative) // logical super
 
-    @pre("Both sequences are finite if result is `true`.")
+    @annotation.pre("Both sequences are finite if result is `true`.")
     override def equals(that: Any) = that match {
         case that: Sequence[_] => (that canEqual this) && asIterative.equalsIf(that.asIterative)(function.equal)
         case _ => false
@@ -29,7 +29,7 @@ trait Sequence[+A] extends reactive.Sequence[A] with Equals { // physical
 
     override def canEqual(that: Any) = that.isInstanceOf[Sequence[_]]
 
-    @pre("This sequence is finite.")
+    @annotation.pre("This sequence is finite.")
     override def hashCode = {
         var r = 1
         val it = asIterative.begin
@@ -40,7 +40,7 @@ trait Sequence[+A] extends reactive.Sequence[A] with Equals { // physical
         r
     }
 
-    @pre("This sequence is finite.")
+    @annotation.pre("This sequence is finite.")
     override def toString = {
         val sb = new StringBuilder
         sb.append('[')

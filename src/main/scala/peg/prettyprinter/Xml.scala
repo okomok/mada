@@ -44,7 +44,7 @@ case class Xml(_1: java.io.Writer, _2: Int) extends PrettyPrinter {
         _1.flush()
     }
 
-    @equivalentTo("_1.close()")
+    @annotation.equivalentTo("_1.close()")
     override def close() {
         assert(stack.isEmpty)
         _1.close()

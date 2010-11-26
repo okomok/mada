@@ -10,7 +10,7 @@ package peg
 
 // So long names that wildcard import can unambiguously be used.
 
-@compatibles
+@annotation.compatibles
 trait Compatibles { this: Peg.type =>
     implicit def _madaPegFromChar(from: Char): Peg[Char] = FromChar(from)
     implicit def _madaPegFromRegexPattern(from: java.util.regex.Pattern): Peg[Char] = FromRegexPattern(from)

@@ -26,10 +26,10 @@ trait Forwarder {
         }
     }
 
-    @equivalentTo("delegate.hashCode")
+    @annotation.equivalentTo("delegate.hashCode")
     override def hashCode: Int = delegate.hashCode
 
-    @equivalentTo("delegate.toString")
+    @annotation.equivalentTo("delegate.toString")
     override def toString: String = delegate.toString
 
 }

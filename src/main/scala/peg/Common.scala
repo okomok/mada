@@ -14,13 +14,13 @@ class Common {
 
 // aliases
 
-    @aliasOf("sequence.vector.Func[A, Unit]")
+    @annotation.aliasOf("sequence.vector.Func[A, Unit]")
     type Action[-A] = sequence.vector.Func[A, Unit]
 
-    @aliasOf("sequence.vector.Func3[A, Unit]")
+    @annotation.aliasOf("sequence.vector.Func3[A, Unit]")
     type Action3[-A] = sequence.vector.Func3[A, Unit]
 
-    @compatibles
+    @annotation.compatibles
     lazy val Compatibles: Compatibles = Peg
 
 
@@ -58,7 +58,7 @@ class Common {
      */
     lazy val end: Peg[Any] = End()
 
-    @equivalentTo("eps act { _ => body }")
+    @annotation.equivalentTo("eps act { _ => body }")
     def call(body: => Unit): Peg[Any] = Call(body)
 
     /**
@@ -181,7 +181,7 @@ class Common {
 
     type SymbolSet[A] = Peg[A] with scala.collection.mutable.Set[sequence.Vector[A]]
 
-    @equivalentTo("symbolSet(vs)(c)")
+    @annotation.equivalentTo("symbolSet(vs)(c)")
     def symbolSet[A](vs: sequence.Vector[A]*)(implicit c: Ordering[A]): SymbolSet[A] = symbolSet(sequence.Iterative.from(vs))(c)
 
     /**
@@ -197,7 +197,7 @@ class Common {
 
     type SymbolMap[A] = Peg[A] with scala.collection.mutable.Map[sequence.Vector[A], Peg[A]]
 
-    @equivalentTo("symbolMap(es)(c)")
+    @annotation.equivalentTo("symbolMap(es)(c)")
     def symbolMap[A](es: (sequence.Vector[A], Peg[A])*)(implicit c: Ordering[A]): SymbolMap[A] = symbolMap(sequence.Iterative.from(es))(c)
 
     /**
@@ -227,22 +227,22 @@ class Common {
 
 // conversion
 
-    @compatibleConversion
+    @annotation.compatibleConversion
     def fromChar(from: Char): Peg[Char] = FromChar(from)
 
-    @compatibleConversion
+    @annotation.compatibleConversion
     def unstringize(from: String): Peg[Char] = Unstringize(from)
 
-    @compatibleConversion
+    @annotation.compatibleConversion
     def fromRegexPattern(from: java.util.regex.Pattern): Peg[Char] = FromRegexPattern(from)
 
-    @compatibleConversion
+    @annotation.compatibleConversion
     def fromSequence[A](from: sequence.Iterative[A]): Peg[A] = FromSequence(from)
 
-    @compatibleConversion
+    @annotation.compatibleConversion
     def fromSIterable[A](from: scala.Iterable[A]): Peg[A] = FromSIterable(from)
 
-    @compatibleConversion
+    @annotation.compatibleConversion
     def fromSRegex(from: scala.util.matching.Regex): Peg[Char] = FromSRegex(from)
 
     /**

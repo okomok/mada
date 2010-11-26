@@ -16,7 +16,7 @@ case class FromJByteBuffer(_1: java.nio.ByteBuffer) extends Vector[Byte] {
     override def update(i: Int, e: Byte) = _1.put(i, e)
 }
 
-@visibleForTesting
+@annotation.visibleForTesting
 case class FromJCharBuffer(_1: java.nio.CharBuffer) extends Vector[Char] {
     override def start = 0
     override def end = _1.limit

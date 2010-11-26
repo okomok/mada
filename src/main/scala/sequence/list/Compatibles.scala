@@ -8,7 +8,7 @@ package com.github.okomok.mada
 package sequence; package list
 
 
-@compatibles
+@annotation.compatibles
 trait Compatibles {
     implicit def fromOption[A](from: Option[A]): List[A] = if (from.isEmpty) empty else single(from.get)
 }

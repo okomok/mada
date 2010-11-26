@@ -14,13 +14,13 @@ import scala.util.continuations.suspendable
 private[iterative]
 class Common {
 
-    @returnThat
+    @annotation.returnThat
     def from[A](to: Iterative[A]): Iterative[A] = to
 
-    @aliasOf("Of.apply")
+    @annotation.aliasOf("Of.apply")
     def apply[A](from: A*): Iterative[A] = Of.apply(from: _*)
 
-    @aliasOf("Of.unapplySeq")
+    @annotation.aliasOf("Of.unapplySeq")
     def unapplySeq[A](from: Iterative[A]): Option[Seq[A]] = Of.unapplySeq(from)
 
     /**

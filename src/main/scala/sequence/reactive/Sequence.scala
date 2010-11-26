@@ -13,7 +13,7 @@ package sequence; package reactive
  */
 trait Sequence[+A] { // physical
 
-    @conversion
+    @annotation.conversion
     def asReactive: Reactive[A] // logical
 
 }

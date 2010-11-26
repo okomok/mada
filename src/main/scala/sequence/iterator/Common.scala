@@ -11,7 +11,7 @@ package sequence; package iterator
 private[iterator]
 class Common {
 
-    @returnThat
+    @annotation.returnThat
     def from[A](to: Iterator[A]) = to
 
     /**
@@ -19,13 +19,13 @@ class Common {
      */
     val end: Iterator[Nothing] = End()
 
-    @conversion
+    @annotation.conversion
     def fromSIterator[A](from: scala.Iterator[A]): Iterator[A] = FromSIterator(from)
 
-    @conversion
+    @annotation.conversion
     def fromJIterator[A](from: java.util.Iterator[A]): Iterator[A] = FromJIterator(from)
 
-    @conversion
+    @annotation.conversion
     def toJIterator[A](from: Iterator[A]): java.util.Iterator[A] = ToJIterator(from) // invariant can't be method.
 
 }

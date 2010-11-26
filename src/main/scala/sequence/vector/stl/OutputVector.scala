@@ -17,10 +17,10 @@ trait OutputVector[A] extends Vector[A] {
      */
     def output(e: A): Unit
 
-    @aliasOf("SINGULAR")
+    @annotation.aliasOf("SINGULAR")
     final override def start = SINGULAR
 
-    @aliasOf("SINGULAR")
+    @annotation.aliasOf("SINGULAR")
     final override def end = SINGULAR
 
     /**

@@ -25,7 +25,7 @@ object Reactive extends Common with Compatibles {
 trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
 
 
-    @returnThis
+    @annotation.returnThis
     final def of[B >: A]: Reactive[B] = this
 
     override def asReactive: Reactive[A] = this
@@ -47,10 +47,10 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
      */
     def forloop(f: A => Unit, k: Exit => Unit): Unit
 
-    @equivalentTo("forloop(f, ())")
+    @annotation.equivalentTo("forloop(f, ())")
     final def foreach(f: A => Unit) = forloop(f, _ => ())
 
-    @equivalentTo("foreach(_ => ())")
+    @annotation.equivalentTo("foreach(_ => ())")
     final def start(): Unit = foreach(_ => ())
 
     private[mada]
@@ -66,7 +66,7 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
 
     def append[B >: A](that: Reactive[B]): Reactive[B] = Append[B](this, that)
 
-    @aliasOf("append")
+    @annotation.aliasOf("append")
     final def ++[B >: A](that: Reactive[B]): Reactive[B] = append(that)
 
     def merge[B >: A](that: Reactive[B]): Reactive[B] = Merge[B](this, that)
@@ -93,7 +93,7 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
 
     final def scanl[B](z: B): _ScanlBy[B] = new _ScanlBy(z)
     sealed class _ScanlBy[B](z: B) {
-        @equivalentTo("scanLeft(z)(op)")
+        @annotation.equivalentTo("scanLeft(z)(op)")
         def by(op: (B, A) => B): Reactive[B] = scanLeft(z)(op)
     }
 
@@ -161,15 +161,15 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
 
 // conversion
 
-    @conversion @pre("synchronous")
+    @annotation.conversion @annotation.pre("synchronous")
     def toIterative: Iterative[A] = ToIterative(this)
 
-    @conversion
+    @annotation.conversion
     def toResponder: Responder[A] = ToResponder(this)
 
     def actor: scala.actors.Actor = scala.actors.Actor.actor(start)
 
-    @conversion
+    @annotation.conversion
     final def toCps: A @scala.util.continuations.cpsParam[Any, Unit] = ToCps(this)
 
 
@@ -185,7 +185,7 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
      */
     def reactMatch(f: PartialFunction[A, Unit]): Reactive[A] = ReactMatch(this, f)
 
-    @equivalentTo("react(_ => f)")
+    @annotation.equivalentTo("react(_ => f)")
     final def doing(f: => Unit): Reactive[A] = react(_ => f)
 
     /**
@@ -243,7 +243,7 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
      */
     def using(c: java.io.Closeable): Reactive[A] = Using(this, c)
 
-    @aliasOf("using(this)")
+    @annotation.aliasOf("using(this)")
     final def used: Reactive[A] = using(this)
 
     /**
@@ -276,7 +276,7 @@ trait Reactive[+A] extends Sequence[A] with java.io.Closeable {
      */
     def replaceRegion[B >: A](n: Int, m: Int, it: Iterative[B]): Reactive[B] = ReplaceRegion[B](this, n, m, it)
 
-    @equivalentTo("replace(Stream.from(0))")
+    @annotation.equivalentTo("replace(Stream.from(0))")
     def indices: Reactive[Int] = Indices(this)
 
     /**

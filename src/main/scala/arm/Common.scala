@@ -14,16 +14,16 @@ import scala.util.continuations
 private[arm]
 class Common {
 
-    @returnThat
+    @annotation.returnThat
     def from[A](that: Arm[A]): Arm[A] = that
 
-    @equivalentTo("a.foreach(f)")
+    @annotation.equivalentTo("a.foreach(f)")
     def using[A](a: Arm[A])(f: A => Unit): Unit = a.foreach(f)
 
-    @equivalentTo("a.toCps")
+    @annotation.equivalentTo("a.toCps")
     def use[A](a: Arm[A]): A @continuations.cpsParam[Any, Unit] = a.toCps
 
-    @equivalentTo("continuations.reset(ctx)")
+    @annotation.equivalentTo("continuations.reset(ctx)")
     def scope[A](ctx: => A @continuations.cpsParam[A, Any]): Unit = continuations.reset(ctx)
 
 }

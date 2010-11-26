@@ -13,21 +13,21 @@ package sequence; package vector
  */
 trait Sequence[+A] extends iterative.Sequence[A] { // physical
 
-    @conversion
+    @annotation.conversion
     def asVector: Vector[A] // logical
 
-    @conversion
+    @annotation.conversion
     final def toVector: Vector[A] = asVector // logical override
 
     override def asIterative: Iterative[A] = AsIterative(asVector) // logical super
 
-    @optimize
+    @annotation.optimize
     override def equals(that: Any): Boolean = that match {
         case that: Sequence[_] => (that canEqual this) && asVector.equalsIf(that.asVector)(function.equal)
         case _ => super.equals(that)
     }
 
-    @optimize
+    @annotation.optimize
     override def hashCode: Int = {
         val v = asVector
         var r = 1
@@ -39,7 +39,7 @@ trait Sequence[+A] extends iterative.Sequence[A] { // physical
         r
     }
 
-    @optimize
+    @annotation.optimize
     override def toString = asVector.toJList.toString
 
 }

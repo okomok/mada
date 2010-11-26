@@ -14,10 +14,10 @@ class Common {
 
 // trivial
 
-    @aliasOf("Nil")
+    @annotation.aliasOf("Nil")
     val empty: List[Nothing] = Nil
 
-    @equivalentTo("x :: Nil")
+    @annotation.equivalentTo("x :: Nil")
     def single[A](x: A): List[A] = x :: Nil
 
 
@@ -60,10 +60,10 @@ class Common {
 
 // pattern matching
 
-    @aliasOf("Of.apply")
+    @annotation.aliasOf("Of.apply")
     def apply[A](from: A*): List[A] = Of.apply(from: _*)
 
-    @aliasOf("Of.unapplySeq")
+    @annotation.aliasOf("Of.unapplySeq")
     def unapplySeq[A](from: List[A]): Option[Seq[A]] = Of.unapplySeq(from)
 
     /**

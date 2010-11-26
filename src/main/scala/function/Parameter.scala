@@ -22,7 +22,7 @@ trait Parameter[A] { self =>
      */
     def argument: A = throw new IllegalArgumentException("missing argument: " + this)
 
-    @aliasOf("pass")
+    @annotation.aliasOf("pass")
     final def ->(v: A): Parameter[A] = pass(v)
 
     /**

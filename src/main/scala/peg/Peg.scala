@@ -139,7 +139,7 @@ trait Peg[-A] {
      *
      * @see     * as alias.
      */
-    @pre("`this` is not instance of `ZeroWidth`.")
+    @annotation.pre("`this` is not instance of `ZeroWidth`.")
     final def star: Quantified[A] = Star(this)
 
     /**
@@ -147,7 +147,7 @@ trait Peg[-A] {
      *
      * @see     + as alias.
      */
-    @pre("`this` is not instance of `ZeroWidth`.")
+    @annotation.pre("`this` is not instance of `ZeroWidth`.")
     final def plus: Quantified[A] = Plus(this)
 
     /**
@@ -237,10 +237,10 @@ trait Peg[-A] {
     /**
      * Temporarily converts input using one-to-one projection <code>f</code>.
      */
-    @pre("`v.size == f(v).size` for any `v`.")
+    @annotation.pre("`v.size == f(v).size` for any `v`.")
     final def readMap[Z](f: sequence.Vector[Z] => sequence.Vector[A]): Peg[Z] = ReadMap(this, f)
 
-    @equivalentTo("readMap{ v => v.map(f) }")
+    @annotation.equivalentTo("readMap{ v => v.map(f) }")
     final def unmap[Z](f: Z => A): Peg[Z] = Unmap(this, f)
 
     /**
@@ -325,94 +325,94 @@ trait Peg[-A] {
 
 // aliases
 
-//    @aliasOf("act")
+//    @annotation.aliasOf("act")
 //    final def apply(f: peg.Action[A]): Peg[A] = act(f)
 
     /**
      * And-predicate
      */
-    @aliasOf("lookahead")
+    @annotation.aliasOf("lookahead")
     final def unary_~ : Peg[A] = lookahead
 
     /**
      * Not-predicate
      */
-    @aliasOf("lookahead.negate")
+    @annotation.aliasOf("lookahead.negate")
     final def unary_! : Peg[A] = lookahead.negate
 
-    @aliasOf("negate")
+    @annotation.aliasOf("negate")
     final def unary_- : Peg[A] = negate
 
-    @aliasOf("and")
+    @annotation.aliasOf("and")
     final def &[B <: A](that: Peg[B]): Peg[B] = and(that)
 
     /**
      * Ordered choice
      */
-    @aliasOf("or")
+    @annotation.aliasOf("or")
     final def |[B <: A](that: Peg[B]): Peg[B] = or(that)
 
-    @aliasOf("minus")
+    @annotation.aliasOf("minus")
     final def -[B <: A](that: Peg[B]): Peg[B] = minus(that)
 
-    @aliasOf("xor")
+    @annotation.aliasOf("xor")
     final def ^[B <: A](that: Peg[B]): Peg[B] = xor(that)
 
     /**
      * Sequence
      */
-    @aliasOf("seqAnd")
+    @annotation.aliasOf("seqAnd")
     final def >>[B <: A](that: Peg[B]): Peg[B] = seqAnd(that)
 
-    @aliasOf("seqOr")
+    @annotation.aliasOf("seqOr")
     final def >|>[B <: A](that: Peg[B]): Peg[B] = seqOr(that)
 
-    @aliasOf("seqImply")
+    @annotation.aliasOf("seqImply")
     final def >->[B <: A](that: Peg[B]): Peg[B] = seqImply(that)
 
-    @aliasOf("seqOpt_:")
+    @annotation.aliasOf("seqOpt_:")
     final def >?>:[B <: A](that: Peg[B]): Peg[B] = seqOpt_:(that)
 
     /**
      * Zero-or-more
      */
-    @aliasOf("star")
+    @annotation.aliasOf("star")
     final def * : Quantified[A] = star
 
     /**
      * One-or-more
      */
-    @aliasOf("plus")
+    @annotation.aliasOf("plus")
     final def + : Quantified[A] = plus
 
     /**
      * Optional
      */
-    @aliasOf("opt")
+    @annotation.aliasOf("opt")
     final def ? : Quantified[A] = opt
 
-    @aliasOf("lookbehind")
+    @annotation.aliasOf("lookbehind")
     final def <=~ : Peg[A] = lookbehind
 
-    @aliasOf("lookbehind.negate")
+    @annotation.aliasOf("lookbehind.negate")
     final def <=! : Peg[A] = lookbehind.negate
 
-    @aliasOf("lookback")
+    @annotation.aliasOf("lookback")
     final def <<~ : Peg[A] = lookback
 
-    @aliasOf("lookback.negate")
+    @annotation.aliasOf("lookback.negate")
     final def <<! : Peg[A] = lookback.negate
 
 
 // misc
 
-    @returnThis
+    @annotation.returnThis
     final def of[B <: A]: Peg[B] = this
 
-    @returnThis
+    @annotation.returnThis
     final def asPeg: Peg[A] = this
 
-    @equivalentTo("(e, this)")
+    @annotation.equivalentTo("(e, this)")
     final def inCase[B <: A](e: B): (B, Peg[B]) = (e, this)
 
 }

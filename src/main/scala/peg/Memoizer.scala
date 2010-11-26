@@ -15,7 +15,7 @@ package peg
  * @param   input   the target sequence.vector of this memoization
  */
 class Memoizer[A](val input: sequence.Vector[A]) {
-    @aliasOf("memoize")
+    @annotation.aliasOf("memoize")
     final def apply(p: Peg[A]): Peg[A] = memoize(p)
 
     /**

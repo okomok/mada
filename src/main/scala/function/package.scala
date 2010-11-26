@@ -12,25 +12,25 @@ package object function {
 
 // type aliases
 
-    @aliasOf("Function1[T, T]")
+    @annotation.aliasOf("Function1[T, T]")
     type Transform[T] = Function1[T, T]
 
-    @aliasOf("Function1[T1, Boolean]")
+    @annotation.aliasOf("Function1[T1, Boolean]")
     type Predicate1[-T1] = Function1[T1, Boolean]
 
-    @aliasOf("Function2[T1, T2, Boolean]")
+    @annotation.aliasOf("Function2[T1, T2, Boolean]")
     type Predicate2[-T1, -T2] = Function2[T1, T2, Boolean]
 
-    @aliasOf("Function3[T1, T2, T3, Boolean]")
+    @annotation.aliasOf("Function3[T1, T2, T3, Boolean]")
     type Predicate3[-T1, -T2, -T3] = Function3[T1, T2, T3, Boolean]
 
 
 // equal
 
-    @equivalentTo("{ (x, y) => x == y }")
+    @annotation.equivalentTo("{ (x, y) => x == y }")
     val equal: Predicate2[Any, Any] = Equal()
 
-    @equivalentTo("{ y => x == y }")
+    @annotation.equivalentTo("{ y => x == y }")
     def equalTo(x: Any): Predicate1[Any] = EqualTo(x)
 
 

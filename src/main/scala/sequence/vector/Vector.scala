@@ -30,7 +30,7 @@ object Vector extends Common with Compatibles with math.LowPriorityOrderingImpli
 trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
 
 
-    @returnThis
+    @annotation.returnThis
     final def of[B >: A]: Vector[B] = this
 
     override def asVector: Vector[A] = this
@@ -53,8 +53,8 @@ trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
      * @return  the element at the specified position in this vector.
      * @throws  vector.NotReadableException if not overridden.
      */
-    @pre("readable")
-    @pre("`isDefinedAt(i)`")
+    @annotation.pre("readable")
+    @annotation.pre("`isDefinedAt(i)`")
     override def apply(i: Int): A = throw NotReadableException(this)
 
     /**
@@ -65,8 +65,8 @@ trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
      * @param   e   element to be stored at the specified position.
      * @throws  vector.NotWritableException if not overridden.
      */
-    @pre("writable")
-    @pre("`isDefinedAt(i)`")
+    @annotation.pre("writable")
+    @annotation.pre("`isDefinedAt(i)`")
     def update(i: Int, e: A @uncheckedVariance): Unit = throw NotWritableException(this)
 
     /**
@@ -90,7 +90,7 @@ trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
         }
     }
 
-    @equivalentTo("start == end")
+    @annotation.equivalentTo("start == end")
     def isEmpty: Boolean = start == end
 
     /**
@@ -103,7 +103,7 @@ trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
      */
     def append[B >: A](that: Vector[B]): Vector[B] = Append[B](this, that)
 
-    @aliasOf("append")
+    @annotation.aliasOf("append")
     final def ++[B >: A](that: Vector[B]): Vector[B] = append(that)
 
     /**
@@ -148,7 +148,7 @@ trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
      */
     def foldLeft[B](z: B)(op: (B, A) => B): B = stl.accumulate(this, start, end)(z)(op)
 
-    @aliasOf("foldLeft")
+    @annotation.aliasOf("foldLeft")
     final def /:[B](z: B)(op: (B, A) => B): B = foldLeft(z)(op)
 
     /**
@@ -190,7 +190,7 @@ trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
      */
     def drop(n: Int): Vector[A] = Drop(this, n)
 
-    @equivalentTo("drop(n).take(n - m)")
+    @annotation.equivalentTo("drop(n).take(n - m)")
     def slice(n: Int, m: Int): Vector[A] = Slice(this, n, m)
 
     /**
@@ -203,13 +203,13 @@ trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
      */
     def dropWhile(p: A => Boolean): Vector[A] = DropWhile(this, p)
 
-    @equivalentTo("(takeWhile(p), dropWhile(p))")
+    @annotation.equivalentTo("(takeWhile(p), dropWhile(p))")
     def span(p: A => Boolean): (Vector[A], Vector[A]) = {
         val middle = stl.findIf(this, start, end)(function.not(p))
         (this(start, middle), this(middle, end))
     }
 
-    @equivalentTo("(take(n), drop(n))")
+    @annotation.equivalentTo("(take(n), drop(n))")
     def splitAt(i: Int): (Vector[A], Vector[A]) = {
         val middle = java.lang.Math.min(start + i, end)
         (this(start, middle), this(middle, end))
@@ -277,31 +277,31 @@ trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
      * Replaces <code>start</code> and <code>end</code> of this vector.
      * Note that a larger vector than <code>this</code> is ALLOWED as far as <code>isDefinedAt</code> says ok.
      */
-    @pre("start <= end")
+    @annotation.pre("start <= end")
     def region(_start: Int, _end: Int): Vector[A] = Region(this, _start, _end)
 
-    @returnThis
+    @annotation.returnThis
     def regionBase: Vector[A] = this
 
-    @aliasOf("region")
+    @annotation.aliasOf("region")
     final def apply(_start: Int, _end: Int): Vector[A] = region(_start, _end)
 
     /**
      * @return  <code>this(start, end - 1)</code>.
      */
-    @pre("!isEmpty")
+    @annotation.pre("!isEmpty")
     def init: Vector[A] = Init(this)
 
-    @equivalentTo("this(start, start)")
+    @annotation.equivalentTo("this(start, start)")
     def clear: Vector[A] = Clear(this)
 
-    @equivalentTo("this(start + n, start + m)")
+    @annotation.equivalentTo("this(start + n, start + m)")
     def window(n: Int, m: Int): Vector[A] = Window(this, n, m)
 
-    @equivalentTo("this(start + i, end + j)")
+    @annotation.equivalentTo("this(start + i, end + j)")
     def offset(i: Int, j: Int): Vector[A] = Offset(this, i, j)
 
-    @equivalentTo("(regionBase eq that.regionBase) && (start == that.start) && (end == that.end)")
+    @annotation.equivalentTo("(regionBase eq that.regionBase) && (start == that.start) && (end == that.end)")
     def shallowEquals[B](that: Vector[B]): Boolean = (regionBase eq that.regionBase) && (start == that.start) && (end == that.end)
 
 
@@ -320,10 +320,10 @@ trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
     /**
      * Reverts <code>divide</code>.
      */
-    @pre("each vector is the same size except for the last one.")
+    @annotation.pre("each vector is the same size except for the last one.")
     def undivide[B](implicit pre: Vector[A] <:< Vector[Vector[B]]): Vector[B] = Undivide(pre(this))
 
-    @equivalentTo("span(function.not(p))")
+    @annotation.equivalentTo("span(function.not(p))")
     def break(p: A => Boolean): (Vector[A], Vector[A]) = span(function.not(p))
 
 
@@ -331,7 +331,7 @@ trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
 
     def mutatingFilter(p: A => Boolean): Vector[A] = this(start, stl.removeIf(this, start, end)(function.not(p)))
 
-    @equivalentTo("mutatingFilter(function.not(p))")
+    @annotation.equivalentTo("mutatingFilter(function.not(p))")
     def mutatingRemove(p: A => Boolean): Vector[A] = mutatingFilter(function.not(p))
 
 
@@ -399,13 +399,13 @@ trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
     /**
      * Sort this vector.
      */
-    @pre("writable")
+    @annotation.pre("writable")
     def sort[B >: A](implicit c: Ordering[B]): Vector[A] = { stl.sort[B](this, start, end)(c); this }
 
     /**
      * Stable-sort this vector.
      */
-    @pre("writable")
+    @annotation.pre("writable")
     def stableSort[B >: A](implicit c: Ordering[B]): Vector[A] = { stl.stableSort[B](this, start, end)(c); this }
 
     /**
@@ -416,13 +416,13 @@ trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
     /**
      * Randomly shuffles elements.
      */
-    @pre("writable")
+    @annotation.pre("writable")
     def shuffle: Vector[A] = { stl.randomShuffle(this, start, end); this }
 
     /**
      * Randomly shuffles elements by a random number generator.
      */
-    @pre("writable")
+    @annotation.pre("writable")
     def shuffleBy(g: Int => Int): Vector[A] = { stl.randomShuffleBy(this, start, end)(g); this }
 
 
@@ -444,7 +444,7 @@ trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
      */
     def reverse: Vector[A] = Reverse(this)
 
-    @equivalentTo("this(i, end) ++ this(start, i)")
+    @annotation.equivalentTo("this(i, end) ++ this(start, i)")
     def rotate(i: Int): Vector[A] = Rotate(this, i)
 
 
@@ -474,8 +474,8 @@ trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
     /**
      * Copies all the elements into another.
      */
-    @pre("size <= that.size")
-    @pre("`that` is writable.")
+    @annotation.pre("size <= that.size")
+    @annotation.pre("`that` is writable.")
     def copyTo[B >: A](that: Vector[B]): Vector[B] = {
         Precondition.range(this.size, that.size, "copyTo")
         that(that.start, stl.copy(this, start, end)(that, that.start))
@@ -484,7 +484,7 @@ trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
 
 // parallel support
 
-    @equivalentTo("parallelBy(defaultGrainSize)")
+    @annotation.equivalentTo("parallelBy(defaultGrainSize)")
     final def parallel: Vector[A] = parallelBy(defaultGrainSize)
 
     /**
@@ -502,7 +502,7 @@ trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
      */
     def defaultGrainSize: Int = java.lang.Math.max(1, size / eval.Parallel.poolSize)
 
-    @equivalentTo("mix(Mixin.parallel)")
+    @annotation.equivalentTo("mix(Mixin.parallel)")
     final def par: Vector[A] = mix(Mixin.parallel)
 
     /**
@@ -516,72 +516,72 @@ trait Vector[+A] extends PartialFunction[Int, A] with Sequence[A] {
     /**
      * @return  <code>foldLeft(z)(op)</code>.
      */
-    @pre("`op` is associative.")
+    @annotation.pre("`op` is associative.")
     def fold[B >: A](z: B)(op: (B, B) => B): B = foldLeft(z)(op)
 
     /**
      * @return  <code>reduceLeft(op)</code>.
      */
-    @pre("`op` is associative.")
+    @annotation.pre("`op` is associative.")
     def reduce[B >: A](op: (B, B) => B): B = reduceLeft(op)
 
     /**
      * @return  <code>asIterative.scanLeft(z)(op).toVector</code>.
      */
-    @pre("`op` is associative.")
+    @annotation.pre("`op` is associative.")
     def scan[B >: A](z: B)(op: (B, B) => B): Vector[B] = Scan(this, z, op)
 
     /**
      * @return  <code>asIterative.scanLeft1(op).toVector</code>.
      */
-    @pre("`op` is associative.")
+    @annotation.pre("`op` is associative.")
     def scan1[B >: A](op: (B, B) => B): Vector[B] = Scan1(this, op)
 
 
 // conversion
 
-    @conversion
+    @annotation.conversion
     def toArray[B >: A : ClassManifest]: Array[B] = {
         val r = new Array[B](size)
         copyTo(from(r))
         r
     }
 
-    @conversion
+    @annotation.conversion
     def toProduct: Product = new ToProduct(this)
 
-    @conversion
+    @annotation.conversion
     def toSIndexedSeq: scala.collection.mutable.IndexedSeq[A @uncheckedVariance] = ToSIndexedSeq(this)
 
-    @conversion
+    @annotation.conversion
     def toJList: java.util.List[A @uncheckedVariance] = ToJList(this)
 
 
 // string
 
-    @conversion
+    @annotation.conversion
     def stringize(implicit pre: Vector[A] <:< Vector[Char]): String = {
         val sb = new StringBuilder(size)
         pre(this).foreach{ e => sb.append(e) }
         sb.toString
     }
 
-    @conversion
+    @annotation.conversion
     def lowerCase(implicit pre: Vector[A] <:< Vector[Char]): Vector[Char] = LowerCase(pre(this))
 
-    @conversion
+    @annotation.conversion
     def upperCase(implicit pre: Vector[A] <:< Vector[Char]): Vector[Char] = UpperCase(pre(this))
 
-    @conversion
+    @annotation.conversion
     def toJCharSequence(implicit pre: Vector[A] <:< Vector[Char]): java.lang.CharSequence = ToJCharSequence(pre(this))
 
 
 // trivials
 
-    @equivalentTo("f(this); this")
+    @annotation.equivalentTo("f(this); this")
     final def sideEffect(f: Vector[A] => Unit): Vector[A] = { f(this); this }
 
-    @equivalentTo("range(start, end)")
+    @annotation.equivalentTo("range(start, end)")
     final def indices: Vector[Int] = range(start, end)
 
 }

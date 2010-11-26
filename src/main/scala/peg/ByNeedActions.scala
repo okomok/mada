@@ -14,7 +14,7 @@ package peg
 class ByNeedActions[A] {
     private[this] val queue = new java.util.ArrayDeque[(Action[A], sequence.Vector[A])]
 
-    @aliasOf("byNeed")
+    @annotation.aliasOf("byNeed")
     final def apply(f: Action[A]): Action[A] = byNeed(f)
 
     /**

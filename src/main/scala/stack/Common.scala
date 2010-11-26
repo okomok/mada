@@ -10,7 +10,7 @@ package com.github.okomok.mada; package stack
 private[stack]
 class Common {
 
-    @returnThat
+    @annotation.returnThat
     def from[A](to: Stack[A]): Stack[A] = to
 
 }

@@ -24,16 +24,16 @@ class StackActions[A, B](override val delegate: Stack[B]) extends stack.Forwarde
 
 // apply
 
-    @aliasOf("eval0")
+    @annotation.aliasOf("eval0")
     final def apply(f: Function1[sequence.Vector[A], B]): Action[A] = eval0(f)
 
-    @aliasOf("eval1")
+    @annotation.aliasOf("eval1")
     final def apply(f: Function2[sequence.Vector[A], B, B]): Action[A] = eval1(f)
 
-    @aliasOf("eval2")
+    @annotation.aliasOf("eval2")
     final def apply(f: Function3[sequence.Vector[A], B, B, B]): Action[A] = eval2(f)
 
-    @aliasOf("eval3")
+    @annotation.aliasOf("eval3")
     final def apply(f: Function4[sequence.Vector[A], B, B, B, B]): Action[A] = eval3(f)
 
 

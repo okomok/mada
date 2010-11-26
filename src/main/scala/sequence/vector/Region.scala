@@ -27,7 +27,7 @@ case class Region[A](_1: Vector[A], _2: Int, _3: Int) extends TransformAdapter[A
         }
     }
 
-    @equivalentTo("underlying")
+    @annotation.equivalentTo("underlying")
     override def regionBase = underlying
 }
 

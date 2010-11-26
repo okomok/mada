@@ -8,7 +8,7 @@ package com.github.okomok.mada
 package sequence; package iterative
 
 
-@compatibles
+@annotation.compatibles
 trait Compatibles {
     implicit def unstringize(from: String): Iterative[Char] = Unstringize(from)
     implicit def fromArray[A](from: Array[A]): Iterative[A] = FromArray(from)

@@ -18,7 +18,7 @@ object Iterator extends Common {
  * Unlike <code>Iterator</code>, this separates element-access and traversing method.
  * (E.g. <code>.map(f).length</code> is inefficient in scala.Iterator abstraction.)
  */
-@notThreadSafe
+@annotation.notThreadSafe
 trait Iterator[+A] {
 
     /**
@@ -36,19 +36,19 @@ trait Iterator[+A] {
      */
     def increment(): Unit
 
-    @aliasOf("isEnd")
+    @annotation.aliasOf("isEnd")
     final def unary_! = isEnd
 
-    @aliasOf("deref")
+    @annotation.aliasOf("deref")
     final def unary_~ = deref
 
-    @aliasOf("increment")
+    @annotation.aliasOf("increment")
     final def ++ = increment()
 
-    @conversion @aliasOf("!isEnd")
+    @annotation.conversion @annotation.aliasOf("!isEnd")
     final def toBoolean: Boolean = !isEnd
 
-    @conversion
+    @annotation.conversion
     final def toSIterator: scala.Iterator[A] = ToSIterator(this)
 
     /**

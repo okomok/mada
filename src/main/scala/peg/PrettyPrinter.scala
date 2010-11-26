@@ -23,13 +23,13 @@ trait PrettyPrinter {
      */
     def print[A](p: Peg[A]): Peg[A]
 
-    @equivalentTo("print(p.named(name))")
+    @annotation.equivalentTo("print(p.named(name))")
     final def print[A](name: String)(p: Peg[A]): Peg[A] = print(p.named(name))
 
-    @aliasOf("print")
+    @annotation.aliasOf("print")
     final def apply[A](p: Peg[A]): Peg[A] = print(p)
 
-    @aliasOf("print")
+    @annotation.aliasOf("print")
     final def apply[A](name: String)(p: Peg[A]): Peg[A] = print(name)(p)
 
 }

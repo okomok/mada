@@ -12,10 +12,10 @@ package com.github.okomok.mada; package function
  */
 package object ref {
 
-    @equivalentTo("{ (v1, v2) => v1 eq v2 }")
+    @annotation.equivalentTo("{ (v1, v2) => v1 eq v2 }")
     val equal: Predicate2[AnyRef, AnyRef] = { (v1, v2) => v1 eq v2 }
 
-    @equivalentTo("{ v2 => v1 eq v2 }")
+    @annotation.equivalentTo("{ v2 => v1 eq v2 }")
     def equalTo(v1: AnyRef): Predicate1[AnyRef] = { v2 => v1 eq v2 }
 
 }

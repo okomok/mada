@@ -12,16 +12,16 @@ package object util {
 
 // language
 
-    @aliasOf("()")
+    @annotation.aliasOf("()")
     val theUnit: Unit = ()
 
-    @equivalentTo("()")
+    @annotation.equivalentTo("()")
     def ignore(x: Any): Unit = ()
 
-    @equivalentTo("!pre || post")
+    @annotation.equivalentTo("!pre || post")
     def implies(pre: Boolean, post: => Boolean): Boolean = !pre || post
 
-    @equivalentTo("null.asInstanceOf[A]")
+    @annotation.equivalentTo("null.asInstanceOf[A]")
     def nullInstance[A]: A = null.asInstanceOf[A]
 
 
@@ -60,7 +60,7 @@ package object util {
      */
     def hashCodeOfLong(x: Long): Int = (x ^ (x >>> 32)).toInt
 
-    @equivalentTo("java.lang.System.idenityHashCode(x)")
+    @annotation.equivalentTo("java.lang.System.idenityHashCode(x)")
     def hashCodeOfRef(x: AnyRef): Int = java.lang.System.identityHashCode(x)
 
 

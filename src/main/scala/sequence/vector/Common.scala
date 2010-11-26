@@ -14,19 +14,19 @@ class Common {
 
 // aliases
 
-    @aliasOf("Vector[A] => B")
+    @annotation.aliasOf("Vector[A] => B")
     type Func[-A, B] = Vector[A] => B
 
-    @aliasOf("(Vector[A], Int, Int) => B")
+    @annotation.aliasOf("(Vector[A], Int, Int) => B")
     type Func3[-A, B] = (Vector[A], Int, Int) => B
 
-    @aliasOf("Func[A, Boolean]")
+    @annotation.aliasOf("Func[A, Boolean]")
     type Pred[-A] = Func[A, Boolean]
 
-    @aliasOf("Func3[A, Boolean]")
+    @annotation.aliasOf("Func3[A, Boolean]")
     type Pred3[-A] = Func3[A, Boolean]
 
-    @aliasOf("Adapter[A, A]")
+    @annotation.aliasOf("Adapter[A, A]")
     type TransformAdapter[+A] = Adapter[A, A]
 
 
@@ -40,7 +40,7 @@ class Common {
 
 // constructors
 
-    @returnThat
+    @annotation.returnThat
     def from[A](to: Vector[A]): Vector[A] = to
 
     /**
@@ -119,19 +119,19 @@ class Common {
         }).asInstanceOf[Arm[Vector[A]]]
     }
 
-    @equivalentTo("file[A](new java.io.RandomAccessFile(f, m))(rm)")
+    @annotation.equivalentTo("file[A](new java.io.RandomAccessFile(f, m))(rm)")
     def file[A](f: java.io.File, m: String)(implicit rm: scala.reflect.Manifest[A]): Arm[Vector[A]] = file[A](new java.io.RandomAccessFile(f, m))(rm)
 
-    @equivalentTo("file[A](new java.io.RandomAccessFile(n, m))(rm)")
+    @annotation.equivalentTo("file[A](new java.io.RandomAccessFile(n, m))(rm)")
     def file[A](n: String, m: String)(implicit rm: scala.reflect.Manifest[A]): Arm[Vector[A]] = file[A](new java.io.RandomAccessFile(n, m))(rm)
 
 
 // pattern matching
 
-    @aliasOf("Of.apply")
+    @annotation.aliasOf("Of.apply")
     def apply[A](from: A*): Vector[A] = Of.apply(from: _*)
 
-    @aliasOf("Of.unapplySeq")
+    @annotation.aliasOf("Of.unapplySeq")
     def unapplySeq[A](from: Vector[A]): Option[Seq[A]] = Of.unapplySeq(from)
 
     /**

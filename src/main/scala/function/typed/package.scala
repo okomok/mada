@@ -12,7 +12,7 @@ package com.github.okomok.mada; package function
  */
 package object typed {
 
-    @equivalentTo("{ (v1, v2) => v1 == v2 }")
+    @annotation.equivalentTo("{ (v1, v2) => v1 == v2 }")
     def equal[T1, T2]: Predicate2[T1, T2] = function.equal.asInstanceOf[Predicate2[T1, T2]]
 
 }

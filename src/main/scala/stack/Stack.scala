@@ -45,13 +45,13 @@ trait Stack[A] {
      */
     def clear(): Unit
 
-    @conversion
+    @annotation.conversion
     def toSStack: scala.collection.mutable.Stack[A] = throw new Error
 
-    @aliasOf("peek")
+    @annotation.aliasOf("peek")
     final def top: A = peek
 
-    @aliasOf("size")
+    @annotation.aliasOf("size")
     final def length: Int = size
 
 }

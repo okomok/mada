@@ -8,7 +8,7 @@ package com.github.okomok.mada
 package sequence; package iterative
 
 
-@visibleForTesting
+@annotation.visibleForTesting
 case class Force[+A](_1: Iterative[A]) extends Iterative[A] {
     private[this] val k = { // should not be lazy; that's "force".
         val r = new java.util.ArrayList[A]

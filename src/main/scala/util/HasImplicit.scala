@@ -8,7 +8,7 @@ package com.github.okomok.mada
 package util
 
 
-@specializer
+@annotation.specializer
 sealed abstract class HasImplicit[+A] extends Function0[Boolean]
 
 

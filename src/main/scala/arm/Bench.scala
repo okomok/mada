@@ -11,7 +11,7 @@ package arm
 import scala.compat.Platform
 
 
-@visibleForTesting
+@annotation.visibleForTesting
 class Bench extends Arm[Unit] {
     private var s: Long = _
     override def open = s = Platform.currentTime

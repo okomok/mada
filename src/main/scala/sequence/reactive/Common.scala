@@ -14,7 +14,7 @@ import scala.util.continuations
 private[reactive]
 class Common {
 
-    @returnThat
+    @annotation.returnThat
     def from[A](to: Reactive[A]): Reactive[A] = to
 
     /**
@@ -49,16 +49,16 @@ class Common {
         def apply[A](from: A*): Reactive[A] = from
     }
 
-    @equivalentTo("continuations.reset(ctx(BlockEnv))")
+    @annotation.equivalentTo("continuations.reset(ctx(BlockEnv))")
     def block[A](ctx: BlockEnv.type => A @continuations.cpsParam[A, Any]): Unit = continuations.reset(ctx(BlockEnv))
 
-    @equivalentTo("from(util.optional(body))")
+    @annotation.equivalentTo("from(util.optional(body))")
     def optional[A](body: => A): Reactive[A] = from(util.optional(body))
 
-    @equivalentTo("from(util.optionalErr(body))")
+    @annotation.equivalentTo("from(util.optionalErr(body))")
     def optionalErr[A](body: => A): Reactive[A] = from(util.optionalErr(body))
 
-    @conversion
+    @annotation.conversion
     def fromCps[A](from: => A @scala.util.continuations.suspendable): Reactive[A] = new FromCps(from)
 
 }

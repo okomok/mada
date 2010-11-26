@@ -26,7 +26,7 @@ class RegionActions[A] {
         }
     }
 
-    @aliasOf("endWith")
+    @annotation.aliasOf("endWith")
     final def apply(f: Action[A]): Peg[A] = endWith(f)
 
     /**

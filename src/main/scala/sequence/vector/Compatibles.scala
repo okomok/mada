@@ -8,7 +8,7 @@ package com.github.okomok.mada
 package sequence; package vector
 
 
-@compatibles
+@annotation.compatibles
 trait Compatibles {
     implicit def unstringize(from: String): Vector[Char] = Unstringize(from)
     implicit def fromArray[A](from: Array[A]): Vector[A] = FromArray(from)

@@ -20,7 +20,7 @@ package object string {
         sb.toString
     }
 
-    @equivalentTo("flatten(ss)")
+    @annotation.equivalentTo("flatten(ss)")
     def concat(ss: Any*): String = flatten(ss)
 
 }

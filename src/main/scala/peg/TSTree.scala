@@ -12,7 +12,7 @@ package peg
 //      at http://www.javaworld.com/javaworld/jw-02-2001/jw-0216-ternary.html
 
 
-@visibleForTesting
+@annotation.visibleForTesting
 class TSTree[A, V](implicit __comp: Ordering[A]) extends java.lang.Cloneable {
     private var rootNode: TSTreeNode[A, V] = null
 

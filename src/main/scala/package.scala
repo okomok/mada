@@ -9,15 +9,15 @@ package com.github.okomok
 
 package object mada {
 
-    @aliasOf("arm.Arm")
+    @annotation.aliasOf("arm.Arm")
      val Arm = arm.Arm
     type Arm[+A] = arm.Arm[A]
 
-    @aliasOf("peg.Peg")
+    @annotation.aliasOf("peg.Peg")
      val Peg = peg.Peg
     type Peg[A] = peg.Peg[A]
 
-    @aliasOf("stack.Stack")
+    @annotation.aliasOf("stack.Stack")
      val Stack = stack.Stack
     type Stack[A] = stack.Stack[A]
 

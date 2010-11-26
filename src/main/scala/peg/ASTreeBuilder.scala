@@ -62,7 +62,7 @@ class ASTreeBuilder[T <: MutableTreeNode](root: T, cloner: T => T) {
         n
     }
 
-    @aliasOf("node")
+    @annotation.aliasOf("node")
     final def apply[A](p: Peg[A])(f: Action[A]): Peg[A] = node(p)(f)
 
     /**

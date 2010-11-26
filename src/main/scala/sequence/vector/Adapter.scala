@@ -20,18 +20,18 @@ trait Adapter[+From, +To] extends Vector[To] {
      */
     protected def underlying: Vector[From]
 
-    @equivalentTo("underlying.start")
+    @annotation.equivalentTo("underlying.start")
     override def start = underlying.start
 
-    @equivalentTo("underlying.end")
+    @annotation.equivalentTo("underlying.end")
     override def end = underlying.end
 
-    @equivalentTo("underlying(i).asInstanceOf[To]")
+    @annotation.equivalentTo("underlying(i).asInstanceOf[To]")
     override def apply(i: Int): To = underlying(i).asInstanceOf[To]
 
-    @equivalentTo("underlying(i) = e.asInstanceOf[From]")
+    @annotation.equivalentTo("underlying(i) = e.asInstanceOf[From]")
     override def update(i: Int, e: To @uncheckedVariance): Unit = underlying(i) = e.asInstanceOf[From]
 
-    @equivalentTo("underlying.isDefinedAt(i)")
+    @annotation.equivalentTo("underlying.isDefinedAt(i)")
     override def isDefinedAt(i: Int): Boolean = underlying.isDefinedAt(i)
 }

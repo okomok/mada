@@ -8,7 +8,7 @@ package com.github.okomok.mada
 package sequence; package list
 
 
-import annotation.tailrec
+import scala.annotation.tailrec
 
 
 // See: http://www.haskell.org/onlinereport/standard-prelude.html
@@ -79,18 +79,18 @@ final class Cons[+A](val _1: A, val _2: eval.Lazy[List[A]]) extends List[A] {
 sealed abstract class List[+A] extends iterative.Sequence[A] {
 
 
-    @returnThis
+    @annotation.returnThis
     final def of[B >: A]: List[B] = this
 
     override def asIterative: Iterative[A] = AsIterative(this) // logical super
 
-    @optimize
+    @annotation.optimize
     override def equals(that: Any): Boolean = that match {
         case that: List[_] => equalsIf(that.asInstanceOf[List[A]])(function.equal)
         case _ => super.equals(that)
     }
 
-    @optimize
+    @annotation.optimize
     override def hashCode = {
         var r = 1
         var it = this
@@ -122,7 +122,7 @@ sealed abstract class List[+A] extends iterative.Sequence[A] {
 
 // strict cons
 
-    @equivalentTo("x :: this")
+    @annotation.equivalentTo("x :: this")
     def #::[B >: A](x: B): List[B] = x :: of[B]
 
 
@@ -145,7 +145,7 @@ sealed abstract class List[+A] extends iterative.Sequence[A] {
         it.isNil && jt.isNil
     }
 
-    @aliasOf("isNil")
+    @annotation.aliasOf("isNil")
     final def isEmpty: Boolean = isNil
 
     /**
@@ -186,7 +186,7 @@ sealed abstract class List[+A] extends iterative.Sequence[A] {
         case x :: xs => f(x) :: xs().map(f)
     }
 
-    @equivalentTo("map(f).flatten")
+    @annotation.equivalentTo("map(f).flatten")
     def flatMap[B](f: A => List[B]): List[B] = map(f).flatten
 
     /**
@@ -203,7 +203,7 @@ sealed abstract class List[+A] extends iterative.Sequence[A] {
         }
     }
 
-    @aliasOf("filter")
+    @annotation.aliasOf("filter")
     def withFilter(p: A => Boolean): List[A] = filter(p)
 
     /**
@@ -211,7 +211,7 @@ sealed abstract class List[+A] extends iterative.Sequence[A] {
      */
     def remove(p: A => Boolean): List[A] = filter(function.not(p))
 
-    @equivalentTo("(filter(p), remove(p))")
+    @annotation.equivalentTo("(filter(p), remove(p))")
     def partition(p: A => Boolean): (List[A], List[A]) = (filter(p), remove(p))
 
     /**
@@ -266,7 +266,7 @@ sealed abstract class List[+A] extends iterative.Sequence[A] {
         case x :: xs => xs().foldLeft(f(z, x))(f)
     }
 
-    @aliasOf("foldLeft")
+    @annotation.aliasOf("foldLeft")
     final def /:[B](z: B)(f: (B, A) => B): B = foldLeft(z)(f)
 
     /**
@@ -277,7 +277,7 @@ sealed abstract class List[+A] extends iterative.Sequence[A] {
         case x :: xs => f(x, xs().foldRight(z)(f))
     }
 
-    @aliasOf("foldRight")
+    @annotation.aliasOf("foldRight")
     final def :\[B](z: B)(f: (A, eval.Lazy[B]) => B): B = foldRight(z)(f)
 
     /**
@@ -376,7 +376,7 @@ sealed abstract class List[+A] extends iterative.Sequence[A] {
         case (n, _ :: xs) => xs().drop(n - 1)
     }
 
-    @equivalentTo("take(m).drop(n)")
+    @annotation.equivalentTo("take(m).drop(n)")
     def slice(n: Int, m: Int): List[A] = take(m).drop(n)
 
     /**
@@ -408,7 +408,7 @@ sealed abstract class List[+A] extends iterative.Sequence[A] {
         }
     }
 
-    @equivalentTo("(takeWhile(p), dropWhile(p))")
+    @annotation.equivalentTo("(takeWhile(p), dropWhile(p))")
     def span(p: A => Boolean): (List[A], List[A]) = {
         var it = this
         var _1, _2 = Nil.of[A]
@@ -427,13 +427,14 @@ sealed abstract class List[+A] extends iterative.Sequence[A] {
         (_1, _2)
     }
 
-    @equivalentTo("(take(n), drop(n))")
+    @annotation.equivalentTo("(take(n), drop(n))")
     def splitAt(n: Int): (List[A], List[A]) = (take(n), drop(n))
 
     /**
      * Flattens a list of lists.
      */
     def flatten[B](implicit pre: List[A] <:< List[List[B]]): List[B] = pre(this).foldRight(Nil.of[B])(_ ::: _())
+
 
 // misc
 
@@ -463,7 +464,7 @@ sealed abstract class List[+A] extends iterative.Sequence[A] {
      */
     def force: List[A] = { foreach{ _ => () }; this }
 
-    @returnThis
+    @annotation.returnThis
     def memoize: List[A] = this
 
     /**
@@ -497,7 +498,7 @@ sealed abstract class List[+A] extends iterative.Sequence[A] {
         case x :: xs => x :: xs().drop(n - 1).step1(n)
     }
 
-    @equivalentTo("uniqueBy(function.equal)")
+    @annotation.equivalentTo("uniqueBy(function.equal)")
     def unique: List[A] = uniqueBy(function.equal)
 
     /**

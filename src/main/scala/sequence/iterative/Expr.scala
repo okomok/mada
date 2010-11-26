@@ -8,7 +8,7 @@ package com.github.okomok.mada
 package sequence; package iterative
 
 
-@visibleForTesting
+@annotation.visibleForTesting
 case class Expr[+A](_1: Iterative[A]) extends Forwarder[A] {
     override protected val delegate: Iterative[A] = new ExprWrap(_1)
     override protected def around[B](that: => Iterative[B]) = Expr(that)
