@@ -13,10 +13,6 @@ Append this in your project definition:
     val mada = "com.github.okomok" %% "mada" % "1.0.0-SNAPSHOT"
     val okomokSnapshots = "okomok snapshots" at "http://okomok.github.com/maven-repo/snapshots"
 
-When you use `dual` package, append this to `compileOptions`:
-
-    ++ compileOptions("-Yrecursion", "50")
-
 When you use `arm` or `reactive` package,
 setup the continuations plugin following [this](http://code.google.com/p/simple-build-tool/wiki/CompilerPlugins "CompilerPlugins").
 
@@ -35,10 +31,6 @@ See [mada API](http://okomok.github.com/mada/api "mada API").
 - `arm`
 
     Automatic resource management facility
-
-- `dual`
-
-    Offers method and metamethod duality.
 
 - `peg`
 
@@ -79,98 +71,6 @@ References:
 * [scala-arm]
 * [ARM in Java]
 
-
-
-## dual
-
-**This package needs `Yrecursion 50` compiler option.**
-
-`dual` introduces a new style of metaprogramming (now implicit parameters are unneeded!):
-
-    import com.github.okomok.mada.dual
-    import dual.{map, Nat, Box}
-    import dual.nat.dense.Literal._
-
-    class AbstractFactoryTest extends org.scalatest.junit.JUnit3Suite {
-        // Notice there is no common super trait.
-        class WinButton {
-            def paint = "I'm a WinButton"
-        }
-        class OSXButton {
-            def paint = "I'm a OSXButton"
-        }
-
-        object WinFactory {
-            def createButton = new WinButton
-        }
-        object OSXFactory {
-            def createButton = new OSXButton
-        }
-
-        // Needs explicit boxing to make a dual object from a non-dual one.
-        val factoryMap = map.sorted1(_0, Box(WinFactory)).put(_1, Box(OSXFactory))
-
-        def createFactory[n <: Nat](n: n) = {
-            val option = factoryMap.get(n)
-            option.get.undual
-        }
-
-        def testTrivial {
-            // Concrete types are preserved.
-            val factory = createFactory(_0)
-            val button = factory.createButton
-            expect("I'm a WinButton")(button.paint)
-        }
-    }
-
-For now, `dual` provides the dual version of `Nat`, `List`, `Map`, `Set`, `Ordering`, `Option`, `Either` and `FunctionN`.
-
-Terminology:
-
-* _metatype_ is a type which extends `dual.Any`. (capitalized in source code.)
-* _metamethod_ is a type, or a type constructor which takes a metatype.
-* _dualmethod_ is an identifier which can be used as both method and metamethod.
-
-Thanks to dualmethods, objects move around with their own types:
-
-    import com.github.okomok.mada.dual
-    import dual.::
-    import dual.nat.dense.Literal._
-
-    class DualityTest extends org.scalatest.junit.JUnit3Suite {
-        // Define 0-ary dualmethod `not2`.
-        final class not2 extends dual.Function1 { // No meta-generics. `Function1` isn't parameterized.
-            type self = not2 // `self` is the dual version of `this` reference. Manual setup is needed.
-            // Again no meta-generics. Downcast is needed as you did in 90s.
-            override  def apply[x <: dual.Any](x: x): apply[x] = x.asNat.equal(_2).not
-            override type apply[x <: dual.Any]                 = x#asNat#equal[_2]#not
-        }
-        val not2 = new not2
-
-        def testTrivial {
-            // Filter a heterogeneous list.
-            val xs = _2 :: _3 :: _4 :: _2 :: _5 :: _6 :: _2 :: dual.Nil
-            val ys = _3 :: _4 :: _5 :: _6 :: dual.Nil
-            dual.free.assert(xs.filter(not2).equal(ys)) // checked in compile-time thanks to the duality.
-        }
-    }
-
-The computational model of Scala metaprogramming (maybe):
-
-* Pure(no side-effects) and object-oriented.
-* The arguments to a metamethod are always evaluated completely before the metamethod is applied.
-* Memoization in the whole metamethod call tree. (superior than Haskell.)
-* No meta-`eq` (You can't tell two types are the same or not.)
-* Meta-generics doesn't work. (e.g. metatype can't be a parameter.)
-* Metamethod can't be re-overridden.
-* Metatype is resurrected in parameter-nondependent context.
-
-References:
-
-* [MetaScala]
-* [Michid's Weblog]
-* [Apocalisp]
-* [Boost.Fusion]
 
 
 

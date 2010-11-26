@@ -18,8 +18,7 @@ class Mada(info: ProjectInfo) extends DefaultProject(info) with AutoCompilerPlug
     val festRelease = "fest release" at "http://repository.codehaus.org"
 
     override def compileOptions = super.compileOptions ++
-        Seq(Deprecation, Unchecked/*, ExplainTypes*/) ++
-        compileOptions("-Yrecursion", "50") ++ compileOptions("-P:continuations:enable")
+        Seq(Deprecation, Unchecked/*, ExplainTypes*/) ++ compileOptions("-P:continuations:enable")
 
     override def managedStyle = ManagedStyle.Maven
     override def pomExtra =
