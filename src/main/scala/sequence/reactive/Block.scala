@@ -13,6 +13,7 @@ import scala.util.continuations.{cpsParam, reset, shift}
 
 object BlockEnv {
 
+    def amb[A](xs: Reactive[A]): A @cpsParam[Any, Unit] = xs.toCps
     def each[A](xs: Reactive[A]): A @cpsParam[Any, Unit] = xs.toCps
 
     def head[A](xs: Reactive[A]): A @cpsParam[Any, Unit] = xs.take(1).toCps
@@ -29,6 +30,14 @@ object BlockEnv {
                 xs.onExit(q => cp(q)).forloop(x => reset{g(x);()}, k)
             }
         } toCps
+    }
+
+    def require(cond: => Boolean): Unit @cpsParam[Any, Unit] = {
+        if (!cond) {
+            empty.toCps
+        } else {
+            single(()).toCps
+        }
     }
 
 }

@@ -23,6 +23,11 @@ class Common {
     val empty: Reactive[Nothing] = Empty()
 
     /**
+     * A single-element sequence
+     */
+    def single[A](x: A): Reactive[A] = Single(x)
+
+    /**
      * An infinite sequence
      */
     def origin(k: (=> Unit) => Unit): Reactive[Unit] = Origin(k)
